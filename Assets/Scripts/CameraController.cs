@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour, ICameraController
 	public GameObject friendlyCruiser;
 	public GameObject enemyCruiser;
 
+	public CameraPosition CameraPosition { get; private set; }
+
 	void Start() 
 	{
 		FocusOnFriendlyCruiser();	
@@ -14,14 +16,24 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	public void FocusOnFriendlyCruiser()
 	{
-//		Vector3 cameraPosition = new Vector3(friendlyCruiser.transform.position.x, 0, 0);
-		Vector3 cameraPosition = transform.position;
-		cameraPosition.x = friendlyCruiser.transform.position.x;
-		transform.position = cameraPosition;
+		if (CameraPosition != CameraPosition.FriendlyCruiser)
+		{
+			Vector3 cameraPosition = transform.position;
+			cameraPosition.x = friendlyCruiser.transform.position.x;
+			transform.position = cameraPosition;
+			CameraPosition = CameraPosition.FriendlyCruiser;
+		}
 	}
 
 	public void FocusOnEnemyCruiser()
 	{
+		if (CameraPosition != CameraPosition.EnemyCruiser)
+		{
+			Vector3 cameraPosition = transform.position;
+			cameraPosition.x = enemyCruiser.transform.position.x;
+			transform.position = cameraPosition;
+			CameraPosition = CameraPosition.EnemyCruiser;
+		}
 	}
 
 	public void ShowFullMapView()

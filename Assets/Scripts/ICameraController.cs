@@ -4,3 +4,8 @@
 	void FocusOnEnemyCruiser();
 	void ShowFullMapView();
 }
+
+public enum CameraPosition
+{
+	Unitialized, FriendlyCruiser, EnemyCruiser, Center
+}
