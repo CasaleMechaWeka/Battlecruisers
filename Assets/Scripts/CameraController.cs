@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour, ICameraController
 	
 	public Transform target;
 	public float smoothTime = 0.3F;
+	public float cruiserOrthographicSize = 5;
+	public float overviewOrthographicSize = 20;
 
 	void Start() 
 	{
@@ -31,10 +33,10 @@ public class CameraController : MonoBehaviour, ICameraController
 		MoveCameraGradually(CameraPosition.EnemyCruiser);
 	}
 
+
 	public void ShowFullMapView()
 	{
-		// NEXT
-		throw new NotImplementedException();
+		Camera.main.orthographicSize = overviewOrthographicSize;
 	}
 
 	void Update()
