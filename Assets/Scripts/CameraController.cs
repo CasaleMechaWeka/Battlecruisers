@@ -30,12 +30,14 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	public void FocusOnFriendlyCruiser()
 	{
-		MoveCamera(CameraState.FriendlyCruiser);
+		bool isInstant = _cameraState != CameraState.Center;
+		MoveCamera(CameraState.FriendlyCruiser, isInstant);
 	}
 
 	public void FocusOnEnemyCruiser()
 	{
-		MoveCamera(CameraState.EnemyCruiser);
+		bool isInstant = _cameraState != CameraState.Center;
+		MoveCamera(CameraState.EnemyCruiser, isInstant);
 	}
 
 	public void ShowFullMapView()
@@ -44,7 +46,7 @@ public class CameraController : MonoBehaviour, ICameraController
 	}
 
 	/// <returns><c>true</c>, if camera was or will be moved, <c>false</c> otherwise.</returns>
-	private bool MoveCamera(CameraState targetState, bool isInstant = true)
+	private bool MoveCamera(CameraState targetState, bool isInstant)
 	{
 		bool willMoveCamera = 
 			_cameraState != CameraState.InTransition
