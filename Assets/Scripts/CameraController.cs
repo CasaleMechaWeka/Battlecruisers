@@ -97,18 +97,29 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	void Update()
 	{
+		// Camera position
 		bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
 		if (!isInPosition)
 		{
 			transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
 		}
+		else if (transform.position != _cameraPositionTarget)
+		{
+			transform.position = _cameraPositionTarget;
+		}
 
+		// Camera zoom
 		bool isRightOrthographicSize = Math.Abs(Camera.main.orthographicSize - _cameraOrthographicSizeTarget) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
 		if (!isRightOrthographicSize)
 		{
 			Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
 		}
+		else if (Camera.main.orthographicSize != -_cameraOrthographicSizeTarget)
+		{
+			Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
+		}
 
+		// Camera state
 		if (_cameraState != _cameraStateTarget 
 			&& isInPosition 
 			&& isRightOrthographicSize)
