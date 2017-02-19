@@ -5,8 +5,9 @@ using System;
 
 public class CameraController : MonoBehaviour, ICameraController 
 {
+	private CameraState _cameraState;
+	private CameraState _cameraStateTarget;
 	private Vector3 _cameraVelocity = Vector3.zero;
-	private CameraPosition _cameraPosition;
 	private Vector3 _cameraPositionTarget;
 
 	private float _cameraOrthographicSizeChangeVelocity = 0;
@@ -15,66 +16,102 @@ public class CameraController : MonoBehaviour, ICameraController
 	public GameObject friendlyCruiser;
 	public GameObject enemyCruiser;
 	
-	public float smoothTime = 0.3F;
-	public float cruiserOrthographicSize = 5;
-	public float overviewOrthographicSize = 20;
+	public float smoothTime;
+	public float cruiserOrthographicSize;
+	public float overviewOrthographicSize;
+
+	private const float POSITION_EQUALITY_MARGIN = 0.1f;
+	private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 
 	void Start() 
 	{
-		_cameraPosition = CameraPosition.Unitialized;
-		_cameraOrthographicSizeTarget = cruiserOrthographicSize;
-
-		MoveCameraGradually(CameraPosition.FriendlyCruiser);
+		FocusOnFriendlyCruiser();
 	}
 
 	public void FocusOnFriendlyCruiser()
 	{
-		MoveCameraGradually(CameraPosition.FriendlyCruiser);
+		MoveCamera(CameraState.FriendlyCruiser);
 	}
 
 	public void FocusOnEnemyCruiser()
 	{
-		MoveCameraGradually(CameraPosition.EnemyCruiser);
+		MoveCamera(CameraState.EnemyCruiser);
 	}
-
 
 	public void ShowFullMapView()
 	{
-		_cameraOrthographicSizeTarget = overviewOrthographicSize;
+		MoveCamera(CameraState.Center, isInstant: false);
 	}
 
-	void Update()
+	/// <returns><c>true</c>, if camera was or will be moved, <c>false</c> otherwise.</returns>
+	private bool MoveCamera(CameraState targetState, bool isInstant = true)
 	{
-		if (transform.position != _cameraPositionTarget)
-		{
-			transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
-		}
+		bool willMoveCamera = 
+			_cameraState != CameraState.InTransition
+		    && _cameraState != targetState;
 
-		if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
-		{
-			Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
-		}
-	}
+		Debug.Log($"MoveCamera targetState: {targetState}  willMoveCamera: {willMoveCamera}  _cameraState: {_cameraState}");
 
-	private void MoveCameraGradually(CameraPosition cameraDestination)
-	{
-		if (cameraDestination != _cameraPosition)
+		if (willMoveCamera)
 		{
 			_cameraPositionTarget = transform.position;
+			_cameraStateTarget = targetState;
 
-			switch (cameraDestination)
+			switch (targetState)
 			{
-				case CameraPosition.FriendlyCruiser:
-					_cameraPositionTarget.x = friendlyCruiser.transform.position.x;
-					break;
-				case CameraPosition.EnemyCruiser:
+				case CameraState.EnemyCruiser:
 					_cameraPositionTarget.x = enemyCruiser.transform.position.x;
+					_cameraOrthographicSizeTarget = cruiserOrthographicSize;
 					break;
+
+				case CameraState.FriendlyCruiser:
+					_cameraPositionTarget.x = friendlyCruiser.transform.position.x;
+					_cameraOrthographicSizeTarget = cruiserOrthographicSize;
+					break;
+
+				case CameraState.Center:
+					_cameraPositionTarget.x = (friendlyCruiser.transform.position.x + enemyCruiser.transform.position.x) / 2;
+					_cameraOrthographicSizeTarget = overviewOrthographicSize;
+					break;
+
 				default:
 					throw new ArgumentException();
 			}
 
-			_cameraPosition = cameraDestination;
+			if (isInstant)
+			{
+				transform.position = _cameraPositionTarget;
+				Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
+				_cameraState = targetState;
+			}
+			else
+			{
+				_cameraState = CameraState.InTransition;
+			}
+		}
+
+		return willMoveCamera;
+	}
+
+	void Update()
+	{
+		bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
+		if (!isInPosition)
+		{
+			transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
+		}
+
+		bool isRightOrthographicSize = Math.Abs(Camera.main.orthographicSize - _cameraOrthographicSizeTarget) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
+		if (!isRightOrthographicSize)
+		{
+			Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
+		}
+
+		if (_cameraState != _cameraStateTarget 
+			&& isInPosition 
+			&& isRightOrthographicSize)
+		{
+			_cameraState = _cameraStateTarget;
 		}
 	}
 }

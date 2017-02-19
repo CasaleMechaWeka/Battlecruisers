@@ -1,11 +1,14 @@
-﻿public interface ICameraController 
+﻿using System.ComponentModel;
+
+public interface ICameraController 
 {
 	void FocusOnFriendlyCruiser();
 	void FocusOnEnemyCruiser();
 	void ShowFullMapView();
 }
 
-public enum CameraPosition
+[DefaultValue(Unitialized)]
+public enum CameraState
 {
-	Unitialized, FriendlyCruiser, EnemyCruiser, Center
+	Unitialized, FriendlyCruiser, EnemyCruiser, Center, InTransition
 }
