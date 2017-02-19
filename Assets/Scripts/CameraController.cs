@@ -7,12 +7,14 @@ public class CameraController : MonoBehaviour, ICameraController
 {
 	private Vector3 _cameraVelocity = Vector3.zero;
 	private CameraPosition _cameraPosition;
-	private Vector3 _cameraTarget;
+	private Vector3 _cameraPositionTarget;
+
+	private float _cameraOrthographicSizeChangeVelocity = 0;
+	private float _cameraOrthographicSizeTarget;
 
 	public GameObject friendlyCruiser;
 	public GameObject enemyCruiser;
 	
-	public Transform target;
 	public float smoothTime = 0.3F;
 	public float cruiserOrthographicSize = 5;
 	public float overviewOrthographicSize = 20;
@@ -20,6 +22,8 @@ public class CameraController : MonoBehaviour, ICameraController
 	void Start() 
 	{
 		_cameraPosition = CameraPosition.Unitialized;
+		_cameraOrthographicSizeTarget = cruiserOrthographicSize;
+
 		MoveCameraGradually(CameraPosition.FriendlyCruiser);
 	}
 
@@ -36,14 +40,19 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	public void ShowFullMapView()
 	{
-		Camera.main.orthographicSize = overviewOrthographicSize;
+		_cameraOrthographicSizeTarget = overviewOrthographicSize;
 	}
 
 	void Update()
 	{
-		if (transform.position != _cameraTarget)
+		if (transform.position != _cameraPositionTarget)
 		{
-			transform.position = Vector3.SmoothDamp(transform.position, _cameraTarget, ref _cameraVelocity, smoothTime);
+			transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
+		}
+
+		if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
+		{
+			Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
 		}
 	}
 
@@ -51,15 +60,15 @@ public class CameraController : MonoBehaviour, ICameraController
 	{
 		if (cameraDestination != _cameraPosition)
 		{
-			_cameraTarget = transform.position;
+			_cameraPositionTarget = transform.position;
 
 			switch (cameraDestination)
 			{
 				case CameraPosition.FriendlyCruiser:
-					_cameraTarget.x = friendlyCruiser.transform.position.x;
+					_cameraPositionTarget.x = friendlyCruiser.transform.position.x;
 					break;
 				case CameraPosition.EnemyCruiser:
-					_cameraTarget.x = enemyCruiser.transform.position.x;
+					_cameraPositionTarget.x = enemyCruiser.transform.position.x;
 					break;
 				default:
 					throw new ArgumentException();
