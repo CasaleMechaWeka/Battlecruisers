@@ -15,7 +15,8 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	public GameObject friendlyCruiser;
 	public GameObject enemyCruiser;
-	
+
+	// Set from parent game object
 	public float smoothTime;
 	public float cruiserOrthographicSize;
 	public float overviewOrthographicSize;
