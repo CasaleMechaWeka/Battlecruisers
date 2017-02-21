@@ -6,16 +6,19 @@ using UnityEngine;
 // FELIX  Allow speed up of fire rate (for when engineers are helping?)
 public class Cruiser : MonoBehaviour 
 {
-	public Rigidbody2D artilleryPrefab;
-
-	// FELIX  TEMP
-	private Rigidbody2D _artillery;
+	public Artillery artilleryPrefab;
+	public GameObject otherCruiser;
 
 	void Start ()
 	{
 		Vector2 position = transform.position;
 		position.x += 2;
 		position.y += 2;
-		_artillery = Instantiate(artilleryPrefab, position, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+
+		IArtillery artillery = Instantiate(artilleryPrefab, position, Quaternion.Euler(new Vector3(0,0,0)));
+		// FELIX  Don't hardcode
+		ITurretStats turretStats = new TurretStats(1, 1, 20, 20);
+		artillery.TurretStats = turretStats;
+		artillery.Target = otherCruiser;
 	}
 }

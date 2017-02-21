@@ -1,13 +1,22 @@
-﻿public class TurretStats : ITurretStats
+﻿using System;
+
+public class TurretStats : ITurretStats
 {
 	public float FireRatePerS { get; private set; }
 	public float Accuracy { get; private set; }
 	public int Damage { get; private set; }
+	public float BulletVelocityInMPerS { get; private set; }
 
-	public TurretStats(float fireRatePerS, float accuracy, int damage)
+	public TurretStats(float fireRatePerS, float accuracy, int damage, float bulletVelocityInMPerS)
 	{
+		if (accuracy <= 0 || accuracy > 1)
+		{
+			throw new ArgumentException();
+		}
+
 		FireRatePerS = fireRatePerS;
 		Accuracy = accuracy;
 		Damage = damage;
+		BulletVelocityInMPerS = bulletVelocityInMPerS;
 	}
 }

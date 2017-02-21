@@ -5,63 +5,90 @@ using UnityEngine;
 
 public class Artillery : MonoBehaviour, IArtillery
 {
-	public GameObject Target { set; private get; }
-	public ITurretStats TurretStats { set; private get; }
-	public Rigidbody2D ShellPrefab { set; private get; }
-	public Vector2 ShellOrigin { set; private get; }
-
-	// FELIX  TEMP
+	// FELIX  Allow to vary depending on artillery?
 	public Rigidbody2D shellPrefab;
-	public Vector2 initialVelocity;
 
-	public float spawnTime;		// The amount of time between each spawn.
-	public float spawnDelay;		// The amount of time before spawning starts.
+	// FELIX  Change if artillery has to point towards enemy first
+	private float _fireDelayInS = 1f; // The amount of time before Fireing starts.
 
 	private const float GRAVITY = 9.8f;  // m/s^2
 	private const float PI = 3.14f;
 
-	void Start()
-	{
-		Debug.Log("Artillery.Start()");
-
-		Debug.Log($"spawnDelay: {spawnDelay}  spawnTime: {spawnTime}");
-		InvokeRepeating("Spawn", spawnDelay, spawnTime);
+	private GameObject _target;
+	public GameObject Target 
+	{ 
+		set
+		{
+			_target = value;
+			if (_target == null)
+			{
+				StopFiring();
+			}
+			else
+			{
+				StartFiring();
+			}
+		}
+		get { return _target; }
 	}
 
-	void Spawn()
+	public ITurretStats TurretStats { set; private get; }
+	public Rigidbody2D ShellPrefab { set; private get; }
+	// FELIX:  use or remove
+	public Vector2 ShellOrigin { set; private get; }
+
+	private void StartFiring()
 	{
-		Debug.Log("Spawn()");
+		if (TurretStats == null)
+		{
+			throw new InvalidOperationException();
+		}
+
+		float fireIntervalInS = 1 / TurretStats.FireRatePerS;
+		InvokeRepeating("Fire", _fireDelayInS, fireIntervalInS);
+	}
+
+	private void StopFiring()
+	{
+		CancelInvoke("Fire");
+	}
+
+	private void Fire()
+	{
+		Debug.Log("Fire()");
+
+		if (TurretStats == null || ShellOrigin == null)
+		{
+			throw new InvalidOperationException();
+		}
 
 		// FELIX  Test for shooting both from left to right, and vice versa
-		float velocityMagnitude = 20;
-		float distance = 40;  // m
-//		float distance = -20 -20;  // m
-		float angleInRadians = CalculateAngleLaunch(velocityMagnitude, distance);
-		float angleInDegrees = angleInRadians * 180 / PI;
+		float distance = transform.position.x - Target.transform.position.x;
+		float angleInRadians = CalculateAngleLaunch(TurretStats.BulletVelocityInMPerS, distance);
 
-		Debug.Log($"angle: {angleInDegrees}");
+		Debug.Log($"angle: {angleInRadians}");
 
-		Rigidbody2D shell = Instantiate(shellPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-//		Rigidbody2D shell = Instantiate(shellPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, angleInDegrees))) as Rigidbody2D;
+		float zRotation = 0;
+		if (angleInRadians < 0)
+		{
+			angleInRadians *= -1;
+			zRotation = 180;
+		}
 
-		float velocityX = (float)(velocityMagnitude * Math.Cos(angleInRadians));
-		float velocityY = (float)(velocityMagnitude * Math.Sin(angleInRadians));
+		Rigidbody2D shell = Instantiate(shellPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, zRotation))) as Rigidbody2D;
+
+		float velocityX = (float)(TurretStats.BulletVelocityInMPerS * Math.Cos(angleInRadians));
+		float velocityY = (float)(TurretStats.BulletVelocityInMPerS * Math.Sin(angleInRadians));
 
 		shell.velocity = new Vector2(velocityX, velocityY);
 	}
 
-	// FELIX  Move to separate class
-	// FELIX  Assumes no y axis change
+	/// <summary>
+	/// Assumes no y axis difference in source and target
+	/// </summary>
 	private float CalculateAngleLaunch(float velocityInMPerS, float distanceInM)
 	{
 		Debug.Log($"CalculateAngleLaunch() velocityInMPerS: {velocityInMPerS}  distanceInM: {distanceInM}");
 		return (float) (0.5 * Math.Asin(GRAVITY * distanceInM / (velocityInMPerS * velocityInMPerS)));
-
-
-//		bool isXVelocityPositive = target.x > source.x;
-//		float distance = Math.Abs(target.x - source.x);
-//
-//		float xVelocity = distance / (timeInMs * 1000);
-//		float yVelocity = 
 	}
 }
