@@ -84,6 +84,7 @@ public class Artillery : MonoBehaviour, IArtillery
 		Debug.Log($"angle: {angleInRadians}");
 
 		Rigidbody2D shell = Instantiate(shellPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+		shell.GetComponent<IBulletController>().Damage = TurretStats.Damage;
 
 		float velocityX = (float)(TurretStats.BulletVelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
 		float velocityY = (float)(TurretStats.BulletVelocityInMPerS * Math.Sin(angleInRadians));

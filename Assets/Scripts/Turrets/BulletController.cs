@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour 
+public class BulletController : MonoBehaviour, IBulletController
 {
+	public float Damage { get; set; }
+
 	void OnTriggerEnter2D(Collider2D collider)
 	{
 		switch (collider.tag)
 		{
 			case Constants.TagNames.FRIENDLY_CRUISER:
 			case Constants.TagNames.ENEMY_CRUISER:
-				collider.gameObject.GetComponent<Cruiser>().TakeDamage();
+				collider.gameObject.GetComponent<ICruiser>().TakeDamage(Damage);
 				Destroy(gameObject);
 				break;
 		}

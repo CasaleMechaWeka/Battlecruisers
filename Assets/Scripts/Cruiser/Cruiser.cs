@@ -4,7 +4,7 @@ using UnityEngine;
 
 // FELIX  Refactor, create Artillery class?
 // FELIX  Allow speed up of fire rate (for when engineers are helping?)
-public class Cruiser : MonoBehaviour 
+public class Cruiser : MonoBehaviour, ICruiser
 {
 	public Artillery artilleryPrefab;
 	public GameObject otherCruiser;
@@ -21,8 +21,8 @@ public class Cruiser : MonoBehaviour
 		artillery.Target = otherCruiser;
 	}
 
-	public void TakeDamage()
+	public void TakeDamage(float damage)
 	{
-		Debug.Log("Ich bin schwer verwundet, und kann mich nicht bewegen!");
+		Debug.Log("Ich bin schwer verwundet, und kann mich nicht bewegen! " + damage);
 	}
 }
