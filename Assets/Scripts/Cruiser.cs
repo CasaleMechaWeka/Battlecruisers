@@ -12,7 +12,6 @@ public class Cruiser : MonoBehaviour
 	void Start ()
 	{
 		Vector2 position = transform.position;
-		position.x += 2;
 		position.y += 2;
 
 		IArtillery artillery = Instantiate(artilleryPrefab, position, Quaternion.Euler(new Vector3(0,0,0)));
@@ -20,5 +19,10 @@ public class Cruiser : MonoBehaviour
 		ITurretStats turretStats = new TurretStats(1, 1, 20, 24);
 		artillery.TurretStats = turretStats;
 		artillery.Target = otherCruiser;
+	}
+
+	public void TakeDamage()
+	{
+		Debug.Log("Ich bin schwer verwundet, und kann mich nicht bewegen!");
 	}
 }
