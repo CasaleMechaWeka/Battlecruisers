@@ -17,7 +17,7 @@ public class Cruiser : MonoBehaviour
 
 		IArtillery artillery = Instantiate(artilleryPrefab, position, Quaternion.Euler(new Vector3(0,0,0)));
 		// FELIX  Don't hardcode
-		ITurretStats turretStats = new TurretStats(1, 1, 20, 20);
+		ITurretStats turretStats = new TurretStats(1, 1, 20, 24);
 		artillery.TurretStats = turretStats;
 		artillery.Target = otherCruiser;
 	}
