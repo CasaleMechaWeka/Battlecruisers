@@ -8,6 +8,7 @@ public class Cruiser : MonoBehaviour, ICruiser
 {
 	public Artillery artilleryPrefab;
 	public GameObject otherCruiser;
+	public Direction cruiserDirection;
 
 	public Factory factoryPrefab;
 	// FELIX  Should not be part of factory logic
@@ -33,9 +34,18 @@ public class Cruiser : MonoBehaviour, ICruiser
 		boatPrefab.TurretStats = null;
 
 		Vector2 factoryPosition = transform.position;
-		factoryPosition.x += 5;
+		if (cruiserDirection == Direction.Right)
+		{
+			factoryPosition.x += 5;
+		}
+		else
+		{
+			factoryPosition.x -= 5;
+		}
+
 		IFactory factory = Instantiate(factoryPrefab, factoryPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
 		factory.BuildPoints = 1;
+		factory.SpawnDirection = cruiserDirection;
 		factory.Unit = boatPrefab;
 	}
 

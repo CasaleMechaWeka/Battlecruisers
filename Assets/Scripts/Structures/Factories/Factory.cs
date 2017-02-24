@@ -1,6 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
+public enum Direction
+{
+	Left, Right
+}
+
 public interface IFactory
 {
 	// FELIX  Let this be generic
@@ -8,6 +13,7 @@ public interface IFactory
 	AttackBoatController Unit { set; }
 	int BuildPoints { set; }
 	int NumOfAidingDrones { set; }
+	Direction SpawnDirection { set; }
 }
 
 public class Factory : MonoBehaviour, IFactory
@@ -15,6 +21,7 @@ public class Factory : MonoBehaviour, IFactory
 	// FELIX  Use
 	public int BuildPoints { set; private get; }
 	public int NumOfAidingDrones { set; private get; }
+	public Direction SpawnDirection { set; private get; }
 
 	private AttackBoatController _unit;
 	public AttackBoatController Unit 
@@ -65,14 +72,21 @@ public class Factory : MonoBehaviour, IFactory
 
 		// FELIX  Determine direction
 
+		float yRotationInDegrees = 0;
+		float directionMultiplier = 1;
+
+		if (SpawnDirection == Direction.Left)
+		{
+			yRotationInDegrees = 180f;
+			directionMultiplier = -1;
+		}
+
 		Vector3 spawnPosition = transform.position;
-		spawnPosition.x += 3;
-		AttackBoatController unit = Instantiate(_unit, spawnPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as AttackBoatController;
+		spawnPosition.x += directionMultiplier * 3;
+
+		AttackBoatController unit = Instantiate(_unit, spawnPosition, Quaternion.Euler(new Vector3(0, yRotationInDegrees, 0))) as AttackBoatController;
 		Rigidbody2D unitAsRigidbody = unit.GetComponent<Rigidbody2D>();
 
-		Debug.Log("Boat velocity: " + _unit.VelocityInMPerS);
-
-		unitAsRigidbody.velocity = new Vector2(12, 0);
-//		unitAsRigidbody.velocity = new Vector2(_unit.VelocityInMPerS, 0);
+		unitAsRigidbody.velocity = new Vector2(directionMultiplier * _unit.VelocityInMPerS, 0);
 	}
 }
