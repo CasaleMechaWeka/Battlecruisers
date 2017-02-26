@@ -8,6 +8,8 @@ public class BulletController : MonoBehaviour, IBulletController
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
+		Debug.Log("BulletController.OnTriggerEnter2D()");
+
 		switch (collider.tag)
 		{
 			case Constants.TagNames.FRIENDLY_CRUISER:

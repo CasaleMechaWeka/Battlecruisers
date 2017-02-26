@@ -9,7 +9,7 @@ public class Artillery : MonoBehaviour, IArtillery
 	public Rigidbody2D shellPrefab;
 
 	// FELIX  Change if artillery has to point towards enemy first
-	private float _fireDelayInS = 1f; // The amount of time before Fireing starts.
+	private float _fireDelayInS = 1f; // The amount of time before fireing starts.
 	private float _maxRange;
 
 	private const float GRAVITY = 9.8f;  // m/s^2
