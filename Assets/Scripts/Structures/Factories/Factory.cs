@@ -85,6 +85,10 @@ public class Factory : MonoBehaviour, IFactory
 		spawnPosition.x += directionMultiplier * 3;
 
 		AttackBoatController unit = Instantiate(_unit, spawnPosition, Quaternion.Euler(new Vector3(0, yRotationInDegrees, 0))) as AttackBoatController;
+
+		// FELIX
+//		unit.tag = "Enemy";
+		
 		Rigidbody2D unitAsRigidbody = unit.GetComponent<Rigidbody2D>();
 
 		unitAsRigidbody.velocity = new Vector2(directionMultiplier * _unit.VelocityInMPerS, 0);
