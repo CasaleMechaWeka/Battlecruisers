@@ -11,11 +11,20 @@ using UnityEngine;
 // 3. Enemy => Stop & attack
 // 4. Enemy leaves/gets destroyed => Stop attacking & advance
 // 5. Collision, die?
+
+/// <summary>
+/// Assumptions:
+/// 1. Boats only move horizontally, and are all at the same height
+/// 2. Boats only engage one enemy at a time
+/// 3. All enemies will come towards the front of the boat, and all allies will come
+/// 	towards the rear of the boat.
+/// </summary>
 public class AttackBoatController : MonoBehaviour, IDamagable
 //public class AttackBoatController : MonoBehaviour, IDetectorControllerListener
 {
 	private Rigidbody2D _rigidBody;
 	private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
+	private Collider2D _enemyCollider;
 
 	// FELIX  Allow to vary depending on boat?
 	public Rigidbody2D shellPrefab;
@@ -36,14 +45,30 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 		// FELIX  Don't hardcode string, add to Constants class?
 		IDetectionController enemyDetector = transform.Find("EnemyDetector").GetComponent<IDetectionController>();
 		enemyDetector.OnEntered = OnEnemyEntered;
-		enemyDetector.OnExited = OnEnemyExited;
 
 		// FELIX  Inject, don't hardcode
 		TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
 		Health = startingHealth;
 
 		// FELIX TEMP
+		VelocityInMPerS = startingVelocityX;
 		_rigidBody.velocity = new Vector2(startingVelocityX, 0);
+	}
+
+	void Update()
+	{
+		if (_rigidBody.velocity.x == 0
+		    && _enemyCollider == null)
+		{
+			// Enemy has been destroyed
+			StopAttacking();
+			_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+		}
+	}
+
+	private void StopAttacking()
+	{
+		CancelInvoke("Attack");
 	}
 
 	/// <summary>
@@ -51,6 +76,7 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 	/// </summary>
 	private void OnEnemyEntered(Collider2D collider)
 	{
+		_enemyCollider = collider;
 		_rigidBody.velocity = new Vector2(0, 0);
 		StartAttacking();
 	}
@@ -65,14 +91,6 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 
 		float fireIntervalInS = 1 / TurretStats.FireRatePerS;
 		InvokeRepeating("Attack", _fireDelayInS, fireIntervalInS);
-	}
-
-	/// <summary>
-	/// Stop shooting and start moving.
-	/// </summary>
-	private void OnEnemyExited(Collider2D collider)
-	{
-		CancelInvoke("Attack");
 	}
 
 	private void Attack()
