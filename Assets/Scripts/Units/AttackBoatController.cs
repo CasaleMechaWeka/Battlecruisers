@@ -11,7 +11,7 @@ using UnityEngine;
 // 3. Enemy => Stop & attack
 // 4. Enemy leaves/gets destroyed => Stop attacking & advance
 // 5. Collision, die?
-public class AttackBoatController : MonoBehaviour
+public class AttackBoatController : MonoBehaviour, IDamagable
 //public class AttackBoatController : MonoBehaviour, IDetectorControllerListener
 {
 	private Rigidbody2D _rigidBody;
@@ -116,8 +116,8 @@ public class AttackBoatController : MonoBehaviour
 		shell.velocity = new Vector2(velocityX, 0);
 	}
 
-	void OnTriggerEnter2D(Collider2D collider)
+	public void TakeDamage(float damage)
 	{
-//		Debug.Log("AttackBoatController.OnTriggerEnter2D()");
+		Debug.Log("AttackBoatController.TakeDamage()");
 	}
 }

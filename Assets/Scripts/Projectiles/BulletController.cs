@@ -10,13 +10,11 @@ public class BulletController : MonoBehaviour, IBulletController
 	{
 		Debug.Log("BulletController.OnTriggerEnter2D()");
 
-		switch (collider.tag)
+		IDamagable damagableObject = collider.gameObject.GetComponent<IDamagable>();
+		if (damagableObject != null)
 		{
-			case Constants.TagNames.FRIENDLY_CRUISER:
-			case Constants.TagNames.ENEMY_CRUISER:
-				collider.gameObject.GetComponent<ICruiser>().TakeDamage(Damage);
-				Destroy(gameObject);
-				break;
+			damagableObject.TakeDamage(Damage);
+			Destroy(gameObject);
 		}
 	}
 }
