@@ -1,11 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-public enum Direction
-{
-	Left, Right
-}
-
 public interface IFactory
 {
 	// FELIX  Let this be generic

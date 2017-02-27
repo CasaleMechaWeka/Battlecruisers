@@ -18,13 +18,15 @@ using UnityEngine;
 /// 2. Boats only engage one enemy at a time
 /// 3. All enemies will come towards the front of the boat, and all allies will come
 /// 	towards the rear of the boat.
+/// 4. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
+/// 	enemy, in which case this boat will continue moving.
 /// </summary>
-public class AttackBoatController : MonoBehaviour, IDamagable
+public class AttackBoatController : Unit, IDamagable
 //public class AttackBoatController : MonoBehaviour, IDetectorControllerListener
 {
 	private Rigidbody2D _rigidBody;
 	private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
-	private Collider2D _enemyCollider;
+	private IUnit _enemyUnit;
 
 	// FELIX  Allow to vary depending on boat?
 	public Rigidbody2D shellPrefab;
@@ -32,35 +34,42 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 	// FELIX  TEMP
 	public float startingVelocityX;
 	public float startingHealth;
+	public UnitType type;
+	public Direction direction;
 
 	public float VelocityInMPerS { get; set; }
 	public ITurretStats TurretStats { private get; set; }
 	public int BuildTimeInS { get; set;}
-	public float Health { get; set; }
 
 	void Start() 
 	{
 		_rigidBody = GetComponent<Rigidbody2D>();
 
-		// FELIX  Don't hardcode string, add to Constants class?
-		IDetectionController enemyDetector = transform.Find("EnemyDetector").GetComponent<IDetectionController>();
-		enemyDetector.OnEntered = OnEnemyEntered;
-
 		// FELIX  Inject, don't hardcode
 		TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
 		Health = startingHealth;
-
+		Type = type;
+		FacingDirection = direction;
+		
 		// FELIX TEMP
 		VelocityInMPerS = startingVelocityX;
 		_rigidBody.velocity = new Vector2(startingVelocityX, 0);
+
+		// FELIX  Don't hardcode string, add to Constants class?
+		EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
+		enemyDetector.OnEntered = OnEnemyEntered;
+		enemyDetector.OwnType = Type;
+
+		FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
+		friendDetector.OnEntered = OnFriendEntered;
+		friendDetector.OwnType = Type;
 	}
 
 	void Update()
 	{
 		if (_rigidBody.velocity.x == 0
-		    && _enemyCollider == null)
+			&& _enemyUnit.IsDestroyed)
 		{
-			// Enemy has been destroyed
 			StopAttacking();
 			_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
 		}
@@ -74,9 +83,9 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 	/// <summary>
 	/// Stop and shoot.
 	/// </summary>
-	private void OnEnemyEntered(Collider2D collider)
+	private void OnEnemyEntered(IUnit enemeyUnit)
 	{
-		_enemyCollider = collider;
+		_enemyUnit = enemeyUnit;
 		_rigidBody.velocity = new Vector2(0, 0);
 		StartAttacking();
 	}
@@ -128,6 +137,11 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 
 		float velocityX = TurretStats.BulletVelocityInMPerS * directionMultiplier;
 		shell.velocity = new Vector2(velocityX, 0);
+	}
+
+	private void OnFriendEntered(IUnit friendlyUnit)
+	{
+
 	}
 
 	public void TakeDamage(float damage)
