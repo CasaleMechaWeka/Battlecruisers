@@ -27,6 +27,7 @@ public class AttackBoatController : Unit, IDamagable
 	private Rigidbody2D _rigidBody;
 	private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
 	private IUnit _enemyUnit;
+	private IUnit _blockingFriendlyUnit;
 
 	// FELIX  Allow to vary depending on boat?
 	public Rigidbody2D shellPrefab;
@@ -67,11 +68,16 @@ public class AttackBoatController : Unit, IDamagable
 
 	void Update()
 	{
-		if (_rigidBody.velocity.x == 0
-			&& _enemyUnit.IsDestroyed)
+		if (_rigidBody.velocity.x == 0)
 		{
-			StopAttacking();
-			_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+			// Check if enemy has been destroyed
+			if (_enemyUnit != null && _enemyUnit.IsDestroyed)
+			{
+				StopAttacking();
+				_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+			}
+
+			// Check if blocking friendly has been destroyed
 		}
 	}
 
@@ -141,7 +147,14 @@ public class AttackBoatController : Unit, IDamagable
 
 	private void OnFriendEntered(IUnit friendlyUnit)
 	{
-
+		if ((FacingDirection == Direction.Right
+		    	&& friendlyUnit.GameObject.transform.position.x > transform.position.x)
+			|| (FacingDirection == Direction.Left
+		 	   && friendlyUnit.GameObject.transform.position.x < transform.position.x))
+		{
+			// Friendly unit is in front of us
+			_rigidBody.velocity = new Vector2(0, 0);
+		}
 	}
 
 	public void TakeDamage(float damage)

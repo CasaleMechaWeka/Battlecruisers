@@ -18,6 +18,7 @@ public interface IUnit
 	Direction FacingDirection { get; }
 	float Health { get; }
 	bool IsDestroyed { get; }
+	GameObject GameObject { get; }
 }
 
 public class Unit : MonoBehaviour, IUnit
@@ -26,4 +27,5 @@ public class Unit : MonoBehaviour, IUnit
 	public Direction FacingDirection { get; protected set; }
 	public float Health { get; protected set; }
 	public bool IsDestroyed { get { return Health <= 0; } }
+	public GameObject GameObject { get { return gameObject; } }
 }
