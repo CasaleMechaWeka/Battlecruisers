@@ -22,10 +22,12 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 
 	// FELIX  TEMP
 	public float startingVelocityX;
+	public float startingHealth;
 
-	public float VelocityInMPerS { set; get; }
-	public ITurretStats TurretStats { set; private get; }
-	public int BuildTimeInS { set; get; }
+	public float VelocityInMPerS { get; set; }
+	public ITurretStats TurretStats { private get; set; }
+	public int BuildTimeInS { get; set;}
+	public float Health { get; set; }
 
 	void Start() 
 	{
@@ -37,7 +39,8 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 		enemyDetector.OnExited = OnEnemyExited;
 
 		// FELIX  Inject, don't hardcode
-		TurretStats = new TurretStats(0.5f, 1f, 10, 3f, ignoreGravity: true);
+		TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
+		Health = startingHealth;
 
 		// FELIX TEMP
 		_rigidBody.velocity = new Vector2(startingVelocityX, 0);
@@ -48,15 +51,8 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 	/// </summary>
 	private void OnEnemyEntered(Collider2D collider)
 	{
-		// FELIX  TEMP
-//		_rigidBody.velocity = -1 * _rigidBody.velocity;
-
-		// Stop
 		_rigidBody.velocity = new Vector2(0, 0);
-
-		// Start shooting
-//		StartAttacking();
-		Attack();
+		StartAttacking();
 	}
 
 	// FELIX  Extract firing functionality, common with artillery
@@ -119,5 +115,12 @@ public class AttackBoatController : MonoBehaviour, IDamagable
 	public void TakeDamage(float damage)
 	{
 		Debug.Log("AttackBoatController.TakeDamage()");
+
+		Health -= damage;
+
+		if (Health <= 0)
+		{
+			Destroy(gameObject);
+		}
 	}
 }

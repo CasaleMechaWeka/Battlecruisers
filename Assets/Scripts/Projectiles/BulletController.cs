@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IBulletController
+{
+	float Damage { get; set; }
+}
+
 public class BulletController : MonoBehaviour, IBulletController
 {
 	public float Damage { get; set; }
