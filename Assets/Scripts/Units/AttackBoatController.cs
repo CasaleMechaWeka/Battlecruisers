@@ -51,10 +51,7 @@ public class AttackBoatController : Unit, IDamagable
 		Health = startingHealth;
 		Type = type;
 		FacingDirection = direction;
-		
-		// FELIX TEMP
 		VelocityInMPerS = startingVelocityX;
-		_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
 
 		// FELIX  Don't hardcode string, add to Constants class?
 		EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
@@ -75,10 +72,19 @@ public class AttackBoatController : Unit, IDamagable
 			if (_enemyUnit != null && _enemyUnit.IsDestroyed)
 			{
 				StopAttacking();
-				_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+				_enemyUnit = null;
 			}
 
 			// Check if blocking friendly has been destroyed
+			if (_blockingFriendlyUnit != null && _blockingFriendlyUnit.IsDestroyed)
+			{
+				_blockingFriendlyUnit = null;
+			}
+
+			if (_enemyUnit == null && _blockingFriendlyUnit == null)
+			{
+				StartMoving();
+			}
 		}
 	}
 
@@ -93,7 +99,7 @@ public class AttackBoatController : Unit, IDamagable
 	private void OnEnemyEntered(IUnit enemeyUnit)
 	{
 		_enemyUnit = enemeyUnit;
-		_rigidBody.velocity = new Vector2(0, 0);
+		StopMoving();
 		StartAttacking();
 	}
 
@@ -148,19 +154,37 @@ public class AttackBoatController : Unit, IDamagable
 
 	private void OnFriendEntered(IUnit friendlyUnit)
 	{
-		if ((FacingDirection == Direction.Right
-		    	&& friendlyUnit.GameObject.transform.position.x > transform.position.x)
-			|| (FacingDirection == Direction.Left
-		 	   && friendlyUnit.GameObject.transform.position.x < transform.position.x))
+		if (IsUnitInFront(friendlyUnit))
 		{
-			// Friendly unit is in front of us
-			_rigidBody.velocity = new Vector2(0, 0);
+			_blockingFriendlyUnit = friendlyUnit;
+			StopMoving();
 		}
 	}
 
 	private void OnFriendExited(IUnit friendlyUnit)
 	{
+		if (IsUnitInFront(friendlyUnit))
+		{
+			StartMoving();
+		}
+	}
+
+	private bool IsUnitInFront(IUnit unit)
+	{
+		return (FacingDirection == Direction.Right
+				&& unit.GameObject.transform.position.x > transform.position.x)
+			|| (FacingDirection == Direction.Left
+				&& unit.GameObject.transform.position.x < transform.position.x);
+	}
+
+	private void StartMoving()
+	{
 		_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+	}
+
+	private void StopMoving()
+	{
+		_rigidBody.velocity = new Vector2(0, 0);
 	}
 
 	public void TakeDamage(float damage)

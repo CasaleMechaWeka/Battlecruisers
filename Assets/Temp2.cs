@@ -13,6 +13,6 @@ public class Temp2 : MonoBehaviour
 	private IEnumerator Example() 
 	{
 		yield return new WaitForSeconds(2);
-		Destroy(gameObject);
+		gameObject.GetComponent<AttackBoatController>().TakeDamage(1000);
 	}
 }
