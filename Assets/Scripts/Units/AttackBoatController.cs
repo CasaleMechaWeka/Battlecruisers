@@ -54,7 +54,7 @@ public class AttackBoatController : Unit, IDamagable
 		
 		// FELIX TEMP
 		VelocityInMPerS = startingVelocityX;
-		_rigidBody.velocity = new Vector2(startingVelocityX, 0);
+		_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
 
 		// FELIX  Don't hardcode string, add to Constants class?
 		EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
@@ -63,6 +63,7 @@ public class AttackBoatController : Unit, IDamagable
 
 		FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
 		friendDetector.OnEntered = OnFriendEntered;
+		friendDetector.OnExited = OnFriendExited;
 		friendDetector.OwnType = Type;
 	}
 
@@ -155,6 +156,11 @@ public class AttackBoatController : Unit, IDamagable
 			// Friendly unit is in front of us
 			_rigidBody.velocity = new Vector2(0, 0);
 		}
+	}
+
+	private void OnFriendExited(IUnit friendlyUnit)
+	{
+		_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
 	}
 
 	public void TakeDamage(float damage)
