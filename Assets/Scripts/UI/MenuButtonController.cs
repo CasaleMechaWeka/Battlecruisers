@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuButtonController : MonoBehaviour 
 {
-	// Use this for initialization
-	void Start () 
+	public void Initialize(string name, Action onClick)
 	{
-		
+		Button button = GetComponent<Button>();
+		button.GetComponentInChildren<Text>().text = name;
+		button.onClick.AddListener(TaskOnClick);
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
+
+	void TaskOnClick(){
+		Debug.Log ("You have clicked the button!");
 	}
 }

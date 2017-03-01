@@ -66,10 +66,13 @@ public class BuildMenuController : MonoBehaviour
 //		buildingGroupsPanel.transform.
 
 		// Create building category menu panels
+		HorizontalLayoutGroup buttonGroup = buildingGroupsPanel.GetComponent<HorizontalLayoutGroup>();
+
 		foreach (BuildingGroup group in BuildingGroups)
 		{
-//			Button button = (Button)Instantiate(buttonPrefab);
-//			button.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
+			Button button = (Button)Instantiate(buttonPrefab);
+			button.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
+			button.GetComponent<MenuButtonController>().Initialize(group.Name, () => ShowBuildings(group.BuildingCategory));
 		}
 
 //		factoriesPanel.Initialize(this, buttonPrefab, Factories);
@@ -88,6 +91,11 @@ public class BuildMenuController : MonoBehaviour
 		// Instantiate building buttons
 
 		Debug.Log("BuildMenuController.Start()  END");
+	}
+
+	private void ShowBuildings(BuildingCategory category)
+	{
+		Debug.Log($"category: {category}");
 	}
 
 	public void ShowBuildingGroups()
