@@ -58,14 +58,13 @@ public class BuildMenuController : MonoBehaviour
 	{
 		_canvas = GetComponent<Canvas>();
 
-		// Create building category buttons
+		// Create building category menu panel
 		GameObject buildingGroupsPanel = Instantiate(menuPanelPrefab);
 		buildingGroupsPanel.transform.SetParent(_canvas.transform);
 		RectTransform rectTransform = buildingGroupsPanel.GetComponent<RectTransform>();
 		rectTransform.anchoredPosition = new Vector2(0, 0);
-//		buildingGroupsPanel.transform.
 
-		// Create building category menu panels
+		// Create building category buttons
 		HorizontalLayoutGroup buttonGroup = buildingGroupsPanel.GetComponent<HorizontalLayoutGroup>();
 
 		foreach (BuildingGroup group in BuildingGroups)
