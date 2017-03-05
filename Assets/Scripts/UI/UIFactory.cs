@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public interface IUIFactory
 {
 	GameObject CreatePanel(bool isActive);
-	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group, IBuildMenuController menuController);
+	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group);
 }
 
 public class UIFactory : MonoBehaviour, IUIFactory
 {
 	private Canvas _canvas;
 
+	public BuildMenuController buildMenu;
 	public GameObject panelPrefab;
 	public Button buildingCategoryButtonPrefab;
 	public Button buildingButtonPrefab;
@@ -33,11 +34,19 @@ public class UIFactory : MonoBehaviour, IUIFactory
 		return panel;
 	}
 
-	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group, IBuildMenuController menuController)
+	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group)
 	{
 		Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
 		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-		button.GetComponent<BuildingCategoryButton>().Initialize(group, menuController);
+		button.GetComponent<BuildingCategoryButton>().Initialize(group, buildMenu);
+		return button;
+	}
+
+	public Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuilding building)
+	{
+		Button button = (Button)Instantiate(buildingButtonPrefab);
+		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+		button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu);
 		return button;
 	}
 }

@@ -73,7 +73,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		{
 			// Create category button
 			IBuildingGroup group = BuildingGroups[i];
-			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group, this);
+			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 			// Create category panel
 			GameObject panel = _uiFactory.CreatePanel(isActive: false);

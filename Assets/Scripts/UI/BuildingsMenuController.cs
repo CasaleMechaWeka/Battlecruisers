@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BuildingsMenuController : MonoBehaviour 
 {
+	private IUIFactory _uiFactory;
+
 	// FELIX  Don't really need these fields?
 	private BuildMenuController _buildMenu;
 	private Button _buttonPrefab;
