@@ -7,6 +7,8 @@ public interface IUIFactory
 {
 	GameObject CreatePanel(bool isActive);
 	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group);
+	Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuilding building);
+	Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 }
 
 public class UIFactory : MonoBehaviour, IUIFactory
@@ -48,5 +50,13 @@ public class UIFactory : MonoBehaviour, IUIFactory
 		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 		button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu);
 		return button;
+	}
+
+	public Button CreateBackButton(HorizontalLayoutGroup buttonParent)
+	{
+		Button backButton = (Button)Instantiate(backButtonPrefab);
+		backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+		backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
+		return backButton;
 	}
 }

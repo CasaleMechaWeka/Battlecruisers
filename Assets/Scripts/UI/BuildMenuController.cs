@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public interface IBuildMenuController
 {
-//	BuildingGroup[] Buildings { set; }
-
 	void ShowBuildingGroups();
 	void ShowBuildingGroup(IBuildingGroup buildingGroup);
 	void ShowBuilding(IBuilding building);
@@ -19,17 +17,6 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private GameObject _homePanel;
 	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 	private GameObject _currentPanel;
-
-	// FELIX  Remove!
-	public Button buildingCategoryButtonPrefab;
-	public Button buildingButtonPrefab;
-	public Button backButtonPrefab;
-
-//	public RectTransform panel;
-
-//	public Canvas canvas;
-//	public GameObject panelPrefab;
-//	public Button buttonPrefab;
 
 	private BuildingGroup[] _buildingGroups;
 	public BuildingGroup[] BuildingGroups 
@@ -47,9 +34,6 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 			_buildingGroups = value;
 		}
 	}
-
-//	public Building[] Factories { private get; set; }
-//	public Building[] Turrets { private get; set; }
 
 	// User needs to be able to build at least one building
 	private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
@@ -78,7 +62,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 			// Create category panel
 			GameObject panel = _uiFactory.CreatePanel(isActive: false);
 			_buildingGroupPanels[group.BuildingCategory] = panel;
-			panel.GetComponent<BuildingsMenuController>().Initialize(this, buildingButtonPrefab, backButtonPrefab, group.Buildings);
+			panel.GetComponent<BuildingsMenuController>().Initialize(_uiFactory, group.Buildings);
 		}
 
 		Debug.Log("BuildMenuController.Start()  END");
