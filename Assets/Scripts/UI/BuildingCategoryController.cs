@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingButton : MonoBehaviour 
+public class BuildingCategoryController : MonoBehaviour 
 {
 	// Use this for initialization
 	void Start () 

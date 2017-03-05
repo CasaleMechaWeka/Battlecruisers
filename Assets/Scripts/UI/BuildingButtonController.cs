@@ -1,0 +1,14 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BuildingButtonController : MonoBehaviour 
+{
+	public void Initialize(IBuilding building, IBuildMenuController buildMenuController)
+	{
+		Button button = GetComponent<Button>();
+		button.GetComponentInChildren<Text>().text = building.Name;
+		button.onClick.AddListener(() => buildMenuController.ShowBuilding(building));
+	}
+}

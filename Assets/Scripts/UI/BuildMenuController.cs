@@ -10,7 +10,7 @@ public interface IBuildMenuController
 
 	void ShowBuildingGroups();
 	void ShowBuildingGroup(IBuildingGroup buildingGroup);
-//	void ShowBuilding(IBuilding building);
+	void ShowBuilding(IBuilding building);
 }
 
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
@@ -21,7 +21,8 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private GameObject _currentPanel;
 
 	public GameObject menuPanelPrefab;
-	public Button buttonPrefab;
+	public Button buildingCategoryButtonPrefab;
+	public Button buildingButtonPrefab;
 	public Button backButtonPrefab;
 
 //	public RectTransform panel;
@@ -76,7 +77,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		{
 			// FELIX:  Map category to panel
 			IBuildingGroup group = BuildingGroups[i];
-			Button button = (Button)Instantiate(buttonPrefab);
+			Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(homeButtonGroup.transform, worldPositionStays: false);
 			button.GetComponent<BuildingCategoryButton>().Initialize(group, this);
 
@@ -87,7 +88,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 			rectTransform = panel.GetComponent<RectTransform>();
 			rectTransform.anchoredPosition = new Vector2(0, 0);
 			_buildingGroupPanels[group.BuildingCategory] = panel;
-			panel.GetComponent<BuildingsMenuController>().Initialize(this, buttonPrefab, backButtonPrefab, group.Buildings);
+			panel.GetComponent<BuildingsMenuController>().Initialize(this, buildingButtonPrefab, backButtonPrefab, group.Buildings);
 		}
 
 		Debug.Log("BuildMenuController.Start()  END");
