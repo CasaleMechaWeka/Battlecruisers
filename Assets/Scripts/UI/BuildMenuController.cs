@@ -15,13 +15,12 @@ public interface IBuildMenuController
 
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
 {
-	private Canvas _canvas;
-	private UIFactory _uiFactory;
+	private IUIFactory _uiFactory;
 	private GameObject _homePanel;
 	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 	private GameObject _currentPanel;
 
-	public GameObject menuPanelPrefab;
+	// FELIX  Remove!
 	public Button buildingCategoryButtonPrefab;
 	public Button buildingButtonPrefab;
 	public Button backButtonPrefab;
@@ -60,9 +59,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	// Use this for initialization
 	void Start () 
 	{
-		_canvas = GetComponent<Canvas>();
 		_uiFactory = GetComponent<UIFactory>();
-		_uiFactory.Initialize(_canvas, menuPanelPrefab);
 
 		// Create main menu panel
 		_currentPanel = _homePanel;
@@ -76,9 +73,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		{
 			// Create category button
 			IBuildingGroup group = BuildingGroups[i];
-			Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
-			button.transform.SetParent(homeButtonGroup.transform, worldPositionStays: false);
-			button.GetComponent<BuildingCategoryButton>().Initialize(group, this);
+			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group, this);
 
 			// Create category panel
 			GameObject panel = _uiFactory.CreatePanel(isActive: false);

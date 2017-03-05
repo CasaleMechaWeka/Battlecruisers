@@ -6,26 +6,38 @@ using UnityEngine.UI;
 public interface IUIFactory
 {
 	GameObject CreatePanel(bool isActive);
+	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group, IBuildMenuController menuController);
 }
 
 public class UIFactory : MonoBehaviour, IUIFactory
 {
 	private Canvas _canvas;
-	private GameObject _panelPrefab;
 
-	public void Initialize(Canvas canvas, GameObject panelPrefab)
+	public GameObject panelPrefab;
+	public Button buildingCategoryButtonPrefab;
+	public Button buildingButtonPrefab;
+	public Button backButtonPrefab;
+
+	public void Awake()
 	{
-		_canvas = canvas;
-		_panelPrefab = panelPrefab;
+		_canvas = GetComponent<Canvas>();
 	}
 
 	public GameObject CreatePanel(bool isActive)
 	{
-		GameObject panel = Instantiate(_panelPrefab);
+		GameObject panel = Instantiate(panelPrefab);
 		panel.SetActive(isActive);
 		panel.transform.SetParent(_canvas.transform);
 		RectTransform rectTransform = panel.GetComponent<RectTransform>();
 		rectTransform.anchoredPosition = new Vector2(0, 0);
 		return panel;
+	}
+
+	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group, IBuildMenuController menuController)
+	{
+		Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
+		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+		button.GetComponent<BuildingCategoryButton>().Initialize(group, menuController);
+		return button;
 	}
 }
