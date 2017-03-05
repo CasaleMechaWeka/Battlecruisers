@@ -2,56 +2,94 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// FELIX  Refactor, create Artillery class?
-// FELIX  Allow speed up of fire rate (for when engineers are helping?)
-public class Cruiser : MonoBehaviour
-//public class Cruiser : MonoBehaviour, ICruiser
+public class SlotStats
 {
-	public Artillery artilleryPrefab;
-	public GameObject otherCruiser;
-	public Direction cruiserDirection;
+	public int NumOfSternSlots { get; private set; }
+	public int NumOfBowSlots { get; private set; }
+	public int NumOfPlatformSlots { get; private set; }
+	public int NumOfDeckSlots { get; private set; }
+	public int NumOfUtilitySlots { get; private set; }
+	public int NumOfMastSlots { get; private set; }
+}
 
-	public Factory factoryPrefab;
-	// FELIX  Should not be part of factory logic
-	public AttackBoatController boatPrefab;
+public interface ICruiser : IDamagable
+{
+	float Health { get; }
+	SlotStats SlotStats { get; }
 
-	// FELIX  TEMP  Only create buildings when user builds them
-	void Start ()
+	bool IsSlotAvailable(SlotType slotType);
+	void HighlightSlots(SlotType slotType);
+}
+
+public class Cruiser : MonoBehaviour, ICruiser
+{
+	private IDictionary<SlotType, IList<Slot>> _slots;
+	private GameObject _slotsWrapper;
+
+	public float Health { get; private set; }
+
+	// FELIX  Unused?
+	public SlotStats SlotStats { get; private set; }
+
+	void Start()
 	{
-//		// Artillery
-//		Vector2 position = transform.position;
-//		position.y += 2;
-//
-//		IArtillery artillery = Instantiate(artilleryPrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
-//		// FELIX  Don't hardcode
-//		ITurretStats turretStats = new TurretStats(1, 1, 20, 24, ignoreGravity: false);
-//		artillery.TurretStats = turretStats;
-//		artillery.Target = otherCruiser;
+		_slots = new Dictionary<SlotType, IList<Slot>>();
+		_slotsWrapper = transform.FindChild("SlotsWrapper").gameObject;
 
-		// Naval factory
-		boatPrefab.BuildTimeInS = 3;
-		boatPrefab.VelocityInMPerS = 4;
-		// FELIX
-		boatPrefab.TurretStats = null;
+		Slot[] slots = GetComponentsInChildren<Slot>();
+		Debug.Log($"slots.Length: {slots.Length}");
 
-		Vector2 factoryPosition = transform.position;
-		if (cruiserDirection == Direction.Right)
+		foreach (Slot slot in slots)
 		{
-			factoryPosition.x += 5;
-		}
-		else
-		{
-			factoryPosition.x -= 5;
+			if (!_slots.ContainsKey(slot.type))
+			{
+				_slots[slot.type] = new List<Slot>();
+			}
+
+			_slots[slot.type].Add(slot);
 		}
 
-		IFactory factory = Instantiate(factoryPrefab, factoryPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
-		factory.BuildPoints = 1;
-		factory.SpawnDirection = cruiserDirection;
-		factory.Unit = boatPrefab;
+		// FELIX TEMP
+		foreach (SlotType type in _slots.Keys)
+		{
+			Debug.Log($"{_slots[type].Count} {type} slots");
+		}
+	}
+
+	public bool IsSlotAvailable(SlotType slotType)
+	{
+		return true;
+	}
+
+	public void ShowAllSlots()
+	{
+		_slotsWrapper.SetActive(true);
+	}
+
+	public void HideAllSlots()
+	{
+		_slotsWrapper.SetActive(false);
+	}
+
+	// FELIX  Disable clicking on other slots?
+	public void HighlightSlots(SlotType slotType)
+	{
+		foreach (Slot slot in _slots[slotType])
+		{
+			slot.GetComponent<SpriteRenderer>().color = Slot.ACTIVE_COLOUR;
+		}
+	}
+
+	public void UnhighlightSlots(SlotType slotType)
+	{
+		foreach (Slot slot in _slots[slotType])
+		{
+			slot.GetComponent<SpriteRenderer>().color = Slot.DEFAULT_COLOUR;
+		}
 	}
 
 	public void TakeDamage(float damage)
 	{
-		Debug.Log("Ich bin schwer verwundet, und kann mich nicht bewegen! " + damage);
+
 	}
 }
