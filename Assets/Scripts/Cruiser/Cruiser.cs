@@ -4,7 +4,8 @@ using UnityEngine;
 
 // FELIX  Refactor, create Artillery class?
 // FELIX  Allow speed up of fire rate (for when engineers are helping?)
-public class Cruiser : MonoBehaviour, ICruiser
+public class Cruiser : MonoBehaviour
+//public class Cruiser : MonoBehaviour, ICruiser
 {
 	public Artillery artilleryPrefab;
 	public GameObject otherCruiser;
