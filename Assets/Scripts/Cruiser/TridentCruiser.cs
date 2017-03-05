@@ -18,12 +18,13 @@ public interface ICruiser : IDamagable
 	SlotStats SlotStats { get; }
 
 	bool IsSlotAvailable(SlotType slotType);
-	void ShowAvailableSlots(SlotType slotType);
+	void HighlightSlots(SlotType slotType);
 }
 
 public class TridentCruiser : MonoBehaviour, ICruiser
 {
 	private IDictionary<SlotType, IList<Slot>> _slots;
+	private GameObject _slotsWrapper;
 
 	public float Health { get; private set; }
 
@@ -33,6 +34,7 @@ public class TridentCruiser : MonoBehaviour, ICruiser
 	void Start()
 	{
 		_slots = new Dictionary<SlotType, IList<Slot>>();
+		_slotsWrapper = transform.FindChild("SlotsWrapper").gameObject;
 
 		Slot[] slots = GetComponentsInChildren<Slot>();
 		Debug.Log($"slots.Length: {slots.Length}");
@@ -59,8 +61,31 @@ public class TridentCruiser : MonoBehaviour, ICruiser
 		return true;
 	}
 
-	public void ShowAvailableSlots(SlotType slotType)
+	public void ShowAllSlots()
 	{
+		_slotsWrapper.SetActive(true);
+	}
+
+	public void HideAllSlots()
+	{
+		_slotsWrapper.SetActive(false);
+	}
+
+	// FELIX  Disable clicking on other slots?
+	public void HighlightSlots(SlotType slotType)
+	{
+		foreach (Slot slot in _slots[slotType])
+		{
+			slot.GetComponent<SpriteRenderer>().color = Slot.ACTIVE_COLOUR;
+		}
+	}
+
+	public void UnhighlightSlots(SlotType slotType)
+	{
+		foreach (Slot slot in _slots[slotType])
+		{
+			slot.GetComponent<SpriteRenderer>().color = Slot.DEFAULT_COLOUR;
+		}
 	}
 
 	public void TakeDamage(float damage)

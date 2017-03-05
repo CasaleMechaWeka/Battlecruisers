@@ -22,6 +22,9 @@ public class Slot : MonoBehaviour, ISlot
 	public bool IsFree { get { return Building == null; } }
 	public IBuilding Building { get; private set; }
 
+	public static Color DEFAULT_COLOUR = Color.yellow;
+	public static Color ACTIVE_COLOUR = Color.green;
+
 	public void BuildBuilding(IBuilding building)
 	{
 		throw new System.NotImplementedException();
