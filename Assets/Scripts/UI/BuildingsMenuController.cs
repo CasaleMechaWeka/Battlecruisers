@@ -7,12 +7,12 @@ public class BuildingsMenuController : MonoBehaviour
 {
 	private BuildMenuController _buildMenu;
 	private Button _buttonPrefab;
-	private IBuilding[] _buildings;
+	private IList<IBuilding> _buildings;
 
 	public void Initialize(
 		BuildMenuController buildMenu,
 		Button buttonPrefab,
-		IBuilding[] buildings)
+		IList<IBuilding> buildings)
 	{
 		_buildMenu = buildMenu;
 		_buttonPrefab = buttonPrefab;
@@ -21,7 +21,7 @@ public class BuildingsMenuController : MonoBehaviour
 		// Create building buttons
 		HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
 
-		for (int i = 0; i < _buildings.Length; ++i)
+		for (int i = 0; i < _buildings.Count; ++i)
 		{
 			Button button = (Button)Instantiate(buttonPrefab);
 			button.transform.SetParent(buttonGroup.transform, worldPositionStays: false);

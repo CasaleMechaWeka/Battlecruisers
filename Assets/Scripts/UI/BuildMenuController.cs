@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//public interface IBuildMenuController
-//{
+public interface IBuildMenuController
+{
 //	BuildingGroup[] Buildings { set; }
-//
-//	void ShowBuildingGroups();
-//	void ShowBuildingGroup(IBuildingGroup buildingGroup);
-//	void ShowBuilding(IBuilding building);
-//}
 
-public class BuildMenuController : MonoBehaviour
+//	void ShowBuildingGroups();
+	void ShowBuildingGroup(IBuildingGroup buildingGroup);
+//	void ShowBuilding(IBuilding building);
+}
+
+public class BuildMenuController : MonoBehaviour, IBuildMenuController
 {
 	private Canvas _canvas;
+	private GameObject _homePanel;
+	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
+	private GameObject _currentPanel;
 
 	public GameObject menuPanelPrefab;
 	public Button buttonPrefab;
@@ -59,52 +62,72 @@ public class BuildMenuController : MonoBehaviour
 		_canvas = GetComponent<Canvas>();
 
 		// Create building category menu panel
-		GameObject buildingGroupsPanel = Instantiate(menuPanelPrefab);
-		buildingGroupsPanel.transform.SetParent(_canvas.transform);
-		RectTransform rectTransform = buildingGroupsPanel.GetComponent<RectTransform>();
+		// FELIX  Avoid duplicate code, PanelFactory?
+		_currentPanel = _homePanel;
+		_homePanel = Instantiate(menuPanelPrefab);
+		_homePanel.transform.SetParent(_canvas.transform);
+		RectTransform rectTransform = _homePanel.GetComponent<RectTransform>();
 		rectTransform.anchoredPosition = new Vector2(0, 0);
 
 		// Create building category buttons
-		HorizontalLayoutGroup buttonGroup = buildingGroupsPanel.GetComponent<HorizontalLayoutGroup>();
+		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
+		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(BuildingGroups.Length);
 
-		foreach (BuildingGroup group in BuildingGroups)
+		for (int i = 0; i < BuildingGroups.Length; ++i)
 		{
+			// FELIX:  Map category to panel
+			IBuildingGroup group = BuildingGroups[i];
 			Button button = (Button)Instantiate(buttonPrefab);
-			button.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
-			button.GetComponent<MenuButtonController>().Initialize(group.Name, () => ShowBuildings(group.BuildingCategory));
+			button.transform.SetParent(homeButtonGroup.transform, worldPositionStays: false);
+			button.GetComponent<BuildingCategoryButton>().Initialize(group, this);
+
+			// Create panel
+			GameObject panel = Instantiate(menuPanelPrefab);
+			panel.SetActive(false);
+			panel.transform.SetParent(_canvas.transform);
+			rectTransform = panel.GetComponent<RectTransform>();
+			rectTransform.anchoredPosition = new Vector2(0, 0);
+			_buildingGroupPanels[group.BuildingCategory] = panel;
+			panel.GetComponent<BuildingsMenuController>().Initialize(this, buttonPrefab, group.Buildings);
 		}
-
-//		factoriesPanel.Initialize(this, buttonPrefab, Factories);
-
-//		_factoriesPanel = (BuildMenuPanelController)GetComponent("
-
-//		BuildMenuPanelController panelController = Instantiate(panelPrefab).GetComponent<BuildMenuPanelController>();
-//		panelController.transform.parent = canvas.transform;
-//		HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
-//
-//		// Instantiate group buttons
-//		for (int i = 0; i < 5; ++i)
-//		{
-//		}
-
-		// Instantiate building buttons
 
 		Debug.Log("BuildMenuController.Start()  END");
 	}
 
-	private void ShowBuildings(BuildingCategory category)
-	{
-		Debug.Log($"category: {category}");
-	}
-
 	public void ShowBuildingGroups()
 	{
-		throw new System.NotImplementedException();
+		Debug.Log("ShowBuildingGroups");
 	}
 
 	public void ShowBuildingGroup(IBuildingGroup buildingGroup)
 	{
-		throw new System.NotImplementedException();
+		Debug.Log("ShowBuildingGroup");
+
+		if (!_buildingGroupPanels.ContainsKey(buildingGroup.BuildingCategory))
+		{
+			throw new ArgumentException();
+		}
+
+		GameObject panel = _buildingGroupPanels[buildingGroup.BuildingCategory];
+		ChangePanel(panel);
+	}
+
+	private bool ChangePanel(GameObject panel)
+	{
+		if (_currentPanel != panel)
+		{
+			if (_currentPanel != null)
+			{
+				_currentPanel.SetActive(false);
+			}
+
+			panel.SetActive(true);
+			_currentPanel = panel;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public void ShowBuilding(IBuilding building)

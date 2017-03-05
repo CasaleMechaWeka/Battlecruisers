@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
+
+public class BuildingCategoryButton : MonoBehaviour 
+{
+	public void Initialize(IBuildingGroup buildingGroup, IBuildMenuController buildMenuController)
+	{
+		Button button = GetComponent<Button>();
+		button.GetComponentInChildren<Text>().text = buildingGroup.Name;
+		button.onClick.AddListener(() => buildMenuController.ShowBuildingGroup(buildingGroup));
+	}
+}
