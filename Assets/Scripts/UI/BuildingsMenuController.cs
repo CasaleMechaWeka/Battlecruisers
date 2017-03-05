@@ -35,16 +35,4 @@ public class BuildingsMenuController : MonoBehaviour
 		backButton.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
 		backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
 	}
-
-	// Use this for initialization
-	void Start () 
-	{
-		Debug.Log("BuildMenuPanelController.Start()");
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
 }

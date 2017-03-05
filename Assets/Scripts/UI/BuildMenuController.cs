@@ -16,6 +16,7 @@ public interface IBuildMenuController
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
 {
 	private Canvas _canvas;
+	private UIFactory _uiFactory;
 	private GameObject _homePanel;
 	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 	private GameObject _currentPanel;
@@ -60,14 +61,12 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	void Start () 
 	{
 		_canvas = GetComponent<Canvas>();
+		_uiFactory = GetComponent<UIFactory>();
+		_uiFactory.Initialize(_canvas, menuPanelPrefab);
 
-		// Create building category menu panel
-		// FELIX  Avoid duplicate code, PanelFactory?
+		// Create main menu panel
 		_currentPanel = _homePanel;
-		_homePanel = Instantiate(menuPanelPrefab);
-		_homePanel.transform.SetParent(_canvas.transform);
-		RectTransform rectTransform = _homePanel.GetComponent<RectTransform>();
-		rectTransform.anchoredPosition = new Vector2(0, 0);
+		_homePanel = _uiFactory.CreatePanel(isActive: true);
 
 		// Create building category buttons
 		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
@@ -75,18 +74,14 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 		for (int i = 0; i < BuildingGroups.Length; ++i)
 		{
-			// FELIX:  Map category to panel
+			// Create category button
 			IBuildingGroup group = BuildingGroups[i];
 			Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(homeButtonGroup.transform, worldPositionStays: false);
 			button.GetComponent<BuildingCategoryButton>().Initialize(group, this);
 
-			// Create panel
-			GameObject panel = Instantiate(menuPanelPrefab);
-			panel.SetActive(false);
-			panel.transform.SetParent(_canvas.transform);
-			rectTransform = panel.GetComponent<RectTransform>();
-			rectTransform.anchoredPosition = new Vector2(0, 0);
+			// Create category panel
+			GameObject panel = _uiFactory.CreatePanel(isActive: false);
 			_buildingGroupPanels[group.BuildingCategory] = panel;
 			panel.GetComponent<BuildingsMenuController>().Initialize(this, buildingButtonPrefab, backButtonPrefab, group.Buildings);
 		}
