@@ -32,7 +32,7 @@ public class BuildingsMenuController : MonoBehaviour
 		// Create a back butotn
 		Button backButton = (Button)Instantiate(backButtonPrefab);
 		backButton.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
-
+		backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
 	}
 
 	// Use this for initialization

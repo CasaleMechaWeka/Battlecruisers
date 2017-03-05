@@ -8,7 +8,7 @@ public interface IBuildMenuController
 {
 //	BuildingGroup[] Buildings { set; }
 
-//	void ShowBuildingGroups();
+	void ShowBuildingGroups();
 	void ShowBuildingGroup(IBuildingGroup buildingGroup);
 //	void ShowBuilding(IBuilding building);
 }
@@ -96,6 +96,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuildingGroups()
 	{
 		Debug.Log("ShowBuildingGroups");
+		ChangePanel(_homePanel);
 	}
 
 	public void ShowBuildingGroup(IBuildingGroup buildingGroup)
