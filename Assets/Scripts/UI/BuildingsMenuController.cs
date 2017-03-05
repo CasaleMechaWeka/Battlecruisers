@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuildingsMenuController : MonoBehaviour 
 {
+	// FELIX  Don't really need these fields?
 	private BuildMenuController _buildMenu;
 	private Button _buttonPrefab;
 	private IList<IBuilding> _buildings;
@@ -12,6 +13,7 @@ public class BuildingsMenuController : MonoBehaviour
 	public void Initialize(
 		BuildMenuController buildMenu,
 		Button buttonPrefab,
+		Button backButtonPrefab,
 		IList<IBuilding> buildings)
 	{
 		_buildMenu = buildMenu;
@@ -26,6 +28,11 @@ public class BuildingsMenuController : MonoBehaviour
 			Button button = (Button)Instantiate(buttonPrefab);
 			button.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
 		}
+
+		// Create a back butotn
+		Button backButton = (Button)Instantiate(backButtonPrefab);
+		backButton.transform.SetParent(buttonGroup.transform, worldPositionStays: false);
+
 	}
 
 	// Use this for initialization

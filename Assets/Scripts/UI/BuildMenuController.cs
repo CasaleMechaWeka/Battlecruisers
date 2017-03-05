@@ -22,8 +22,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public GameObject menuPanelPrefab;
 	public Button buttonPrefab;
-
-	public BuildingsMenuController factoriesPanel;
+	public Button backButtonPrefab;
 
 //	public RectTransform panel;
 
@@ -88,7 +87,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 			rectTransform = panel.GetComponent<RectTransform>();
 			rectTransform.anchoredPosition = new Vector2(0, 0);
 			_buildingGroupPanels[group.BuildingCategory] = panel;
-			panel.GetComponent<BuildingsMenuController>().Initialize(this, buttonPrefab, group.Buildings);
+			panel.GetComponent<BuildingsMenuController>().Initialize(this, buttonPrefab, backButtonPrefab, group.Buildings);
 		}
 
 		Debug.Log("BuildMenuController.Start()  END");
@@ -132,6 +131,6 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public void ShowBuilding(IBuilding building)
 	{
-		throw new System.NotImplementedException();
+		Debug.Log("ShowBuilding()");
 	}
 }
