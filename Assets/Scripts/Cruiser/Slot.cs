@@ -58,7 +58,8 @@ public class Slot : MonoBehaviour, ISlot
 				throw new InvalidProgramException();
 			}
 
-			Vector3 spawnPosition = transform.position + (transform.up * (buildingToBuild.Size.y - _renderer.bounds.size.y));
+			float heightChange = (_renderer.bounds.size.y + buildingToBuild.Size.y) / 2;
+			Vector3 spawnPosition = transform.position + (transform.up * heightChange);
 			_building = Instantiate<Building>(buildingToBuild, spawnPosition, transform.rotation);
 			_building.ShowBuilding();
 
