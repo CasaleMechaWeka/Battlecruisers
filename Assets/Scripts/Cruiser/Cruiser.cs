@@ -74,10 +74,12 @@ public class Cruiser : MonoBehaviour, ICruiser
 	}
 
 	// FELIX  Disable clicking on other slots?
+	// Only highlight one slot type at a time
 	public void HighlightAvailableSlots(SlotType slotType)
 	{
 		if (_highlightedSlotType != slotType)
 		{
+			UnhighlightSlots();
 			_highlightedSlotType = slotType;
 
 			foreach (Slot slot in _slots[slotType])

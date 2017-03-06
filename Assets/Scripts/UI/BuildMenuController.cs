@@ -73,6 +73,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuildingGroups()
 	{
 		Debug.Log("ShowBuildingGroups");
+		friendlyCruiser.UnhighlightSlots();
 		ChangePanel(_homePanel);
 	}
 
