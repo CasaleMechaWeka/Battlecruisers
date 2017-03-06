@@ -8,7 +8,7 @@ public class BuildingButtonController : MonoBehaviour
 	public void Initialize(Building building, IBuildMenuController buildMenuController)
 	{
 		Button button = GetComponent<Button>();
-		button.GetComponentInChildren<Text>().text = building.name;
+		button.GetComponentInChildren<Text>().text = building.buildingName;
 		button.onClick.AddListener(() => buildMenuController.ShowBuilding(building));
 	}
 }

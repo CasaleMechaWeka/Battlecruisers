@@ -9,9 +9,17 @@ public enum BuildingCategory
 
 public class Building : MonoBehaviour
 {
-	public string name;
+	private Renderer _renderer;
+
+	public string buildingName;
 	public string description;
 	public int numOfDronesRequired;
 	public BuildingCategory category;
 	public SlotType slotType;
+
+	void Awake()
+	{
+		_renderer = GetComponent<Renderer>();
+		_renderer.enabled = false;
+	}
 }

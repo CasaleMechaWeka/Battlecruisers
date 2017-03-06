@@ -8,7 +8,7 @@ public class BuildingGroup : MonoBehaviour
 {
 	public Building[] Buildings { get; private set; }
 	public BuildingCategory buildingCategory;
-	public string buildingName;
+	public string buildingGroupName;
 	public string description;
 
 	private int MAX_NUM_OF_BUILDINGS = 5;
