@@ -18,6 +18,8 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 	private GameObject _currentPanel;
 
+	public Cruiser friendlyCruiser;
+
 	private BuildingGroup[] _buildingGroups;
 	public BuildingGroup[] BuildingGroups 
 	{ 
@@ -108,5 +110,8 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuilding(IBuilding building)
 	{
 		Debug.Log("ShowBuilding()");
+		friendlyCruiser.HighlightSlots(building.SlotType);
+
+		// FELIX  Show building details
 	}
 }

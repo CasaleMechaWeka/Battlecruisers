@@ -25,6 +25,7 @@ public class Cruiser : MonoBehaviour, ICruiser
 {
 	private IDictionary<SlotType, IList<Slot>> _slots;
 	private GameObject _slotsWrapper;
+	private SlotType? _highlightedSlotType;
 
 	public float Health { get; private set; }
 
@@ -74,9 +75,24 @@ public class Cruiser : MonoBehaviour, ICruiser
 	// FELIX  Disable clicking on other slots?
 	public void HighlightSlots(SlotType slotType)
 	{
-		foreach (Slot slot in _slots[slotType])
+
+		if (_highlightedSlotType != slotType)
 		{
-			slot.GetComponent<SpriteRenderer>().color = Slot.ACTIVE_COLOUR;
+			_highlightedSlotType = slotType;
+
+			foreach (Slot slot in _slots[slotType])
+			{
+				slot.GetComponent<SpriteRenderer>().color = Slot.ACTIVE_COLOUR;
+			}
+		}
+	}
+
+	public void UnhighlightSlots()
+	{
+		if (_highlightedSlotType != null)
+		{
+			UnhighlightSlots((SlotType)_highlightedSlotType);
+			_highlightedSlotType = null;
 		}
 	}
 
