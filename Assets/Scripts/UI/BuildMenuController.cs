@@ -56,6 +56,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	{
 		Debug.Log("ShowBuildingGroups");
 		friendlyCruiser.UnhighlightSlots();
+		friendlyCruiser.HideAllSlots();
 		ChangePanel(_homePanel);
 	}
 
@@ -70,6 +71,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 		GameObject panel = _buildingGroupPanels[buildingGroup.buildingCategory];
 		ChangePanel(panel);
+		friendlyCruiser.ShowAllSlots();
 	}
 
 	private bool ChangePanel(GameObject panel)

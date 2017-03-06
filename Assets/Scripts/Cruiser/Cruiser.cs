@@ -52,6 +52,8 @@ public class Cruiser : MonoBehaviour, ICruiser
 			_slots[slot.type].Add(slot);
 		}
 
+		HideAllSlots();
+
 		// FELIX TEMP
 		foreach (SlotType type in _slots.Keys)
 		{
