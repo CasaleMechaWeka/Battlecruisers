@@ -17,34 +17,34 @@ public class GameGod : MonoBehaviour
 	// FELIX  Don't hardcode
 	private void InitializeBuildMenuController()
 	{
-		Building[] factories = 
-		{
-			new Building("Naval Factory", "Makes ships", 2, BuildingCategory.Factory, SlotType.Bow),
-			new Building("Aircraft Factory", "Makes aircraft", 2, BuildingCategory.Factory, SlotType.Platform)
-		};
-		BuildingGroup factoriesGroup = new BuildingGroup(
-			factories, 
-			BuildingCategory.Factory,
-			"Factories",
-			"Buildings that produce units");
+//		Building[] factories = 
+//		{
+//			new Building("Naval Factory", "Makes ships", 2, BuildingCategory.Factory, SlotType.Bow),
+//			new Building("Aircraft Factory", "Makes aircraft", 2, BuildingCategory.Factory, SlotType.Platform)
+//		};
+//		BuildingGroup factoriesGroup = new BuildingGroup(
+//			factories, 
+//			BuildingCategory.Factory,
+//			"Factories",
+//			"Buildings that produce units");
+//
+//		Building[] turrets = 
+//		{
+//			new Building("Solid Shooter", "Small turret good against weak ships", 2, BuildingCategory.Turret, SlotType.Deck),
+//			new Building("Big Bad Blaster", "Strong turret good against all ships", 6, BuildingCategory.Turret, SlotType.Deck)
+//		};
+//		BuildingGroup turretsGroup = new BuildingGroup(
+//			turrets, 
+//			BuildingCategory.Turret,
+//			"Turrets",
+//			"Buildings that defent your cruieser");
 
-		Building[] turrets = 
-		{
-			new Building("Solid Shooter", "Small turret good against weak ships", 2, BuildingCategory.Turret, SlotType.Deck),
-			new Building("Big Bad Blaster", "Strong turret good against all ships", 6, BuildingCategory.Turret, SlotType.Deck)
-		};
-		BuildingGroup turretsGroup = new BuildingGroup(
-			turrets, 
-			BuildingCategory.Turret,
-			"Turrets",
-			"Buildings that defent your cruieser");
-
-		BuildingGroup[] buildingGroups = new BuildingGroup[]
-		{
-			factoriesGroup, turretsGroup
-		};
-
-		buildMenuController.BuildingGroups = buildingGroups;
+//		BuildingGroup[] buildingGroups = new BuildingGroup[]
+//		{
+////			factoriesGroup, turretsGroup
+//		};
+//
+//		buildMenuController.BuildingGroups = buildingGroups;
 	}
 
 	// Use this for initialization

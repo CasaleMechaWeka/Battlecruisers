@@ -28,8 +28,9 @@ public class Cruiser : MonoBehaviour, ICruiser
 	private GameObject _slotsWrapper;
 	private SlotType? _highlightedSlotType;
 
-	public float Health { get; private set; }
+	public BuildingLoadout loadout;
 
+	public float Health { get; private set; }
 	// FELIX  Unused?
 	public SlotStats SlotStats { get; private set; }
 

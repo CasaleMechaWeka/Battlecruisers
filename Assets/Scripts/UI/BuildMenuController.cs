@@ -20,28 +20,6 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public Cruiser friendlyCruiser;
 
-	private BuildingGroup[] _buildingGroups;
-	public BuildingGroup[] BuildingGroups 
-	{ 
-		get { return _buildingGroups; }
-		set
-		{
-			if (value == null
-				|| value.Length < MIN_NUM_OF_BUILDING_GROUPS
-			    || value.Length > MAX_NUM_OF_BUILDING_GROUPS)
-			{
-				throw new ArgumentException();
-			}
-
-			_buildingGroups = value;
-		}
-	}
-
-	// User needs to be able to build at least one building
-	private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
-	// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
-	private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -52,18 +30,19 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		_homePanel = _uiFactory.CreatePanel(isActive: true);
 
 		// Create building category buttons
+		BuildingGroup[] buildingGroups = friendlyCruiser.loadout.BuildingGroups;
 		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
-		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(BuildingGroups.Length);
+		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(buildingGroups.Length);
 
-		for (int i = 0; i < BuildingGroups.Length; ++i)
+		for (int i = 0; i < buildingGroups.Length; ++i)
 		{
 			// Create category button
-			BuildingGroup group = BuildingGroups[i];
+			BuildingGroup group = buildingGroups[i];
 			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 			// Create category panel
 			GameObject panel = _uiFactory.CreatePanel(isActive: false);
-			_buildingGroupPanels[group.BuildingCategory] = panel;
+			_buildingGroupPanels[group.buildingCategory] = panel;
 			panel.GetComponent<BuildingsMenuController>().Initialize(_uiFactory, group.Buildings);
 		}
 
@@ -81,12 +60,12 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	{
 		Debug.Log("ShowBuildingGroup");
 
-		if (!_buildingGroupPanels.ContainsKey(buildingGroup.BuildingCategory))
+		if (!_buildingGroupPanels.ContainsKey(buildingGroup.buildingCategory))
 		{
 			throw new ArgumentException();
 		}
 
-		GameObject panel = _buildingGroupPanels[buildingGroup.BuildingCategory];
+		GameObject panel = _buildingGroupPanels[buildingGroup.buildingCategory];
 		ChangePanel(panel);
 	}
 
@@ -111,7 +90,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuilding(Building building)
 	{
 		Debug.Log("ShowBuilding()");
-		friendlyCruiser.HighlightAvailableSlots(building.SlotType);
+		friendlyCruiser.HighlightAvailableSlots(building.slotType);
 
 		// FELIX  Show building details
 	}

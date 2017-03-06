@@ -10,7 +10,7 @@ public class BuildingCategoryButton : MonoBehaviour
 	public void Initialize(BuildingGroup buildingGroup, IBuildMenuController buildMenuController)
 	{
 		Button button = GetComponent<Button>();
-		button.GetComponentInChildren<Text>().text = buildingGroup.Name;
+		button.GetComponentInChildren<Text>().text = buildingGroup.name;
 		button.onClick.AddListener(() => buildMenuController.ShowBuildingGroup(buildingGroup));
 	}
 }
