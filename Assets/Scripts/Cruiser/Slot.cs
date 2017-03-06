@@ -61,6 +61,8 @@ public class Slot : MonoBehaviour, ISlot
 			Vector3 spawnPosition = transform.position + (transform.up * (buildingToBuild.Size.y - _renderer.bounds.size.y));
 			_building = Instantiate<Building>(buildingToBuild, spawnPosition, transform.rotation);
 			_building.ShowBuilding();
+
+			buildMenu.ShowBuildingGroups();
 		}
 	}
 }
