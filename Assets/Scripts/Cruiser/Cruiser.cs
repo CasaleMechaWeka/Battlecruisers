@@ -18,7 +18,8 @@ public interface ICruiser : IDamagable
 	SlotStats SlotStats { get; }
 
 	bool IsSlotAvailable(SlotType slotType);
-	void HighlightSlots(SlotType slotType);
+	void HighlightAvailableSlots(SlotType slotType);
+	void UnhighlightSlots();
 }
 
 public class Cruiser : MonoBehaviour, ICruiser
@@ -73,16 +74,18 @@ public class Cruiser : MonoBehaviour, ICruiser
 	}
 
 	// FELIX  Disable clicking on other slots?
-	public void HighlightSlots(SlotType slotType)
+	public void HighlightAvailableSlots(SlotType slotType)
 	{
-
 		if (_highlightedSlotType != slotType)
 		{
 			_highlightedSlotType = slotType;
 
 			foreach (Slot slot in _slots[slotType])
 			{
-				slot.GetComponent<SpriteRenderer>().color = Slot.ACTIVE_COLOUR;
+				if (slot.IsFree)
+				{
+					slot.Colour = Slot.ACTIVE_COLOUR;
+				}
 			}
 		}
 	}
@@ -96,11 +99,11 @@ public class Cruiser : MonoBehaviour, ICruiser
 		}
 	}
 
-	public void UnhighlightSlots(SlotType slotType)
+	private void UnhighlightSlots(SlotType slotType)
 	{
 		foreach (Slot slot in _slots[slotType])
 		{
-			slot.GetComponent<SpriteRenderer>().color = Slot.DEFAULT_COLOUR;
+			slot.Colour = Slot.DEFAULT_COLOUR;
 		}
 	}
 

@@ -110,7 +110,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuilding(IBuilding building)
 	{
 		Debug.Log("ShowBuilding()");
-		friendlyCruiser.HighlightSlots(building.SlotType);
+		friendlyCruiser.HighlightAvailableSlots(building.SlotType);
 
 		// FELIX  Show building details
 	}
