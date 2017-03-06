@@ -9,6 +9,6 @@ public class BuildingButtonController : MonoBehaviour
 	{
 		Button button = GetComponent<Button>();
 		button.GetComponentInChildren<Text>().text = building.buildingName;
-		button.onClick.AddListener(() => buildMenuController.ShowBuilding(building));
+		button.onClick.AddListener(() => buildMenuController.SelectBuilding(building));
 	}
 }

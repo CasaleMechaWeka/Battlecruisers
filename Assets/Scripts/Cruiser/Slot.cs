@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,30 +11,28 @@ public enum SlotType
 public interface ISlot
 {
 	bool IsFree { get; }
-	Building Building { get; }
-	Color Colour { set; }
-
-	void BuildBuilding(Building building);
+	bool IsActive { set; }
 }
 
 public class Slot : MonoBehaviour, ISlot
 {
 	private SpriteRenderer _renderer;
+	private Building _building;
 
 	public SlotType type;
+	public BuildMenuController buildMenu;
 
-	public bool IsFree { get { return Building == null; } }
-	public Building Building { get; private set; }
+	public bool IsFree { get { return _building == null; } }
 
-	private Color _colour;
-	public Color Colour
+	private bool _isActive;
+	public bool IsActive
 	{
 		set
 		{
-			if (value != _colour)
+			if (_isActive != value)
 			{
-				_colour = value;
-				_renderer.color = value;
+				_isActive = value;
+				_renderer.color = _isActive ? ACTIVE_COLOUR : DEFAULT_COLOUR;
 			}
 		}
 	}
@@ -43,12 +42,24 @@ public class Slot : MonoBehaviour, ISlot
 
 	void Awake()
 	{
-		_colour = DEFAULT_COLOUR;
+		_isActive = false;
 		_renderer = GetComponent<SpriteRenderer>();
+		_renderer.color = DEFAULT_COLOUR;
 	}
 
-	public void BuildBuilding(Building building)
+	void OnMouseDown()
 	{
-		throw new System.NotImplementedException();
+		if (_isActive)
+		{
+			Building buildingToBuild = buildMenu.SelectedBuilding;
+
+			if (buildingToBuild == null || buildingToBuild.slotType != type)
+			{
+				throw new InvalidProgramException();
+			}
+
+			_building = Instantiate<Building>(buildingToBuild);
+			_building.ShowBuilding();
+		}
 	}
 }

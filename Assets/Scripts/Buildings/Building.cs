@@ -22,4 +22,11 @@ public class Building : MonoBehaviour
 		_renderer = GetComponent<Renderer>();
 		_renderer.enabled = false;
 	}
+
+	public void ShowBuilding()
+	{
+		_renderer.enabled = true;
+
+		// FELIX  Position!
+	}
 }

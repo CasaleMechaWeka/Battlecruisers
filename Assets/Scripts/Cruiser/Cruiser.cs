@@ -87,7 +87,7 @@ public class Cruiser : MonoBehaviour, ICruiser
 			{
 				if (slot.IsFree)
 				{
-					slot.Colour = Slot.ACTIVE_COLOUR;
+					slot.IsActive = true;
 				}
 			}
 		}
@@ -106,7 +106,7 @@ public class Cruiser : MonoBehaviour, ICruiser
 	{
 		foreach (Slot slot in _slots[slotType])
 		{
-			slot.Colour = Slot.DEFAULT_COLOUR;
+			slot.IsActive = false;
 		}
 	}
 

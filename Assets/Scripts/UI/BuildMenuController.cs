@@ -8,7 +8,7 @@ public interface IBuildMenuController
 {
 	void ShowBuildingGroups();
 	void ShowBuildingGroup(BuildingGroup buildingGroup);
-	void ShowBuilding(Building building);
+	void SelectBuilding(Building building);
 }
 
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
@@ -19,6 +19,9 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private GameObject _currentPanel;
 
 	public Cruiser friendlyCruiser;
+
+	private Building _selectedBuilding;
+	public Building SelectedBuilding { get { return _selectedBuilding; } }
 
 	// Use this for initialization
 	void Start () 
@@ -87,9 +90,10 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		return false;
 	}
 
-	public void ShowBuilding(Building building)
+	public void SelectBuilding(Building building)
 	{
 		Debug.Log("ShowBuilding()");
+		_selectedBuilding = building;
 		friendlyCruiser.HighlightAvailableSlots(building.slotType);
 
 		// FELIX  Show building details
