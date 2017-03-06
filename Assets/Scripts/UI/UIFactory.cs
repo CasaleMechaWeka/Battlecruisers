@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public interface IUIFactory
 {
 	GameObject CreatePanel(bool isActive);
-	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group);
-	Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuilding building);
+	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
+	Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
 	Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 }
 
@@ -36,7 +36,7 @@ public class UIFactory : MonoBehaviour, IUIFactory
 		return panel;
 	}
 
-	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup group)
+	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group)
 	{
 		Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
 		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
@@ -44,7 +44,7 @@ public class UIFactory : MonoBehaviour, IUIFactory
 		return button;
 	}
 
-	public Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuilding building)
+	public Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building)
 	{
 		Button button = (Button)Instantiate(buildingButtonPrefab);
 		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);

@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class BuildingCategoryButton : MonoBehaviour 
 {
-	public void Initialize(IBuildingGroup buildingGroup, IBuildMenuController buildMenuController)
+	public void Initialize(BuildingGroup buildingGroup, IBuildMenuController buildMenuController)
 	{
 		Button button = GetComponent<Button>();
 		button.GetComponentInChildren<Text>().text = buildingGroup.Name;

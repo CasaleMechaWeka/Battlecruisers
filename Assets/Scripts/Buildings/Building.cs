@@ -15,32 +15,29 @@ public enum TechLevel
 // FELIX
 // - Image?
 // - Support building taking >1 slot?
-public interface IBuilding
-{
-	string Name { get; }
-	string Description { get; }
-	int NumOfDronesRequired { get; }
-	TechLevel TechLevel { get; }
-	BuildingCategory Category { get; }
-	SlotType SlotType { get; }
-}
+//public interface Building
+//{
+//	string Name { get; }
+//	string Description { get; }
+//	int NumOfDronesRequired { get; }
+//	BuildingCategory Category { get; }
+//	SlotType SlotType { get; }
+//}
 
 // FELIX  Don't need to extend MonoBehaviour?
-public class Building : IBuilding
+public class Building : MonoBehaviour
 {
 	public string Name { get; private set; }
 	public string Description { get; private set; }
 	public int NumOfDronesRequired { get; private set; }
-	public TechLevel TechLevel { get; private set; }
 	public BuildingCategory Category { get; private set; }
 	public SlotType SlotType { get; private set; }
 
-	public Building(string name, string description, int numOfDronesRequired, TechLevel techLevel, BuildingCategory category, SlotType slotType)
+	public Building(string name, string description, int numOfDronesRequired, BuildingCategory category, SlotType slotType)
 	{
 		Name = name;
 		Description = description;
 		NumOfDronesRequired = numOfDronesRequired;
-		TechLevel = techLevel;
 		Category = category;
 		SlotType = slotType;
 	}

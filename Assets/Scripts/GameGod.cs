@@ -19,8 +19,8 @@ public class GameGod : MonoBehaviour
 	{
 		Building[] factories = 
 		{
-			new Building("Naval Factory", "Makes ships", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Bow),
-			new Building("Aircraft Factory", "Makes aircraft", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Platform)
+			new Building("Naval Factory", "Makes ships", 2, BuildingCategory.Factory, SlotType.Bow),
+			new Building("Aircraft Factory", "Makes aircraft", 2, BuildingCategory.Factory, SlotType.Platform)
 		};
 		BuildingGroup factoriesGroup = new BuildingGroup(
 			factories, 
@@ -30,8 +30,8 @@ public class GameGod : MonoBehaviour
 
 		Building[] turrets = 
 		{
-			new Building("Solid Shooter", "Small turret good against weak ships", 2, TechLevel.T1, BuildingCategory.Turret, SlotType.Deck),
-			new Building("Big Bad Blaster", "Strong turret good against all ships", 6, TechLevel.T2, BuildingCategory.Turret, SlotType.Deck)
+			new Building("Solid Shooter", "Small turret good against weak ships", 2, BuildingCategory.Turret, SlotType.Deck),
+			new Building("Big Bad Blaster", "Strong turret good against all ships", 6, BuildingCategory.Turret, SlotType.Deck)
 		};
 		BuildingGroup turretsGroup = new BuildingGroup(
 			turrets, 

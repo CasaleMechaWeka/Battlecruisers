@@ -10,10 +10,10 @@ public enum SlotType
 public interface ISlot
 {
 	bool IsFree { get; }
-	IBuilding Building { get; }
+	Building Building { get; }
 	Color Colour { set; }
 
-	void BuildBuilding(IBuilding building);
+	void BuildBuilding(Building building);
 }
 
 public class Slot : MonoBehaviour, ISlot
@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour, ISlot
 	public SlotType type;
 
 	public bool IsFree { get { return Building == null; } }
-	public IBuilding Building { get; private set; }
+	public Building Building { get; private set; }
 
 	private Color _colour;
 	public Color Colour
@@ -47,7 +47,7 @@ public class Slot : MonoBehaviour, ISlot
 		_renderer = GetComponent<SpriteRenderer>();
 	}
 
-	public void BuildBuilding(IBuilding building)
+	public void BuildBuilding(Building building)
 	{
 		throw new System.NotImplementedException();
 	}

@@ -7,7 +7,7 @@ public class BuildingsMenuController : MonoBehaviour
 {
 	public void Initialize(
 		IUIFactory uiFactory,
-		IList<IBuilding> buildings)
+		IList<Building> buildings)
 	{
 		// Create building buttons
 		HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BuildingButtonController : MonoBehaviour 
 {
-	public void Initialize(IBuilding building, IBuildMenuController buildMenuController)
+	public void Initialize(Building building, IBuildMenuController buildMenuController)
 	{
 		Button button = GetComponent<Button>();
 		button.GetComponentInChildren<Text>().text = building.Name;

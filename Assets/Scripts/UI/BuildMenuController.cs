@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public interface IBuildMenuController
 {
 	void ShowBuildingGroups();
-	void ShowBuildingGroup(IBuildingGroup buildingGroup);
-	void ShowBuilding(IBuilding building);
+	void ShowBuildingGroup(BuildingGroup buildingGroup);
+	void ShowBuilding(Building building);
 }
 
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
@@ -58,7 +58,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		for (int i = 0; i < BuildingGroups.Length; ++i)
 		{
 			// Create category button
-			IBuildingGroup group = BuildingGroups[i];
+			BuildingGroup group = BuildingGroups[i];
 			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 			// Create category panel
@@ -77,7 +77,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		ChangePanel(_homePanel);
 	}
 
-	public void ShowBuildingGroup(IBuildingGroup buildingGroup)
+	public void ShowBuildingGroup(BuildingGroup buildingGroup)
 	{
 		Debug.Log("ShowBuildingGroup");
 
@@ -108,7 +108,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		return false;
 	}
 
-	public void ShowBuilding(IBuilding building)
+	public void ShowBuilding(Building building)
 	{
 		Debug.Log("ShowBuilding()");
 		friendlyCruiser.HighlightAvailableSlots(building.SlotType);
