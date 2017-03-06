@@ -19,8 +19,8 @@ public class GameGod : MonoBehaviour
 	{
 		Building[] factories = 
 		{
-			new Building("Naval Factory", "Makes ships", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Platform),
-			new Building("Aircraft Factory", "Makes aircraft", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Bow)
+			new Building("Naval Factory", "Makes ships", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Bow),
+			new Building("Aircraft Factory", "Makes aircraft", 2, TechLevel.T1, BuildingCategory.Factory, SlotType.Platform)
 		};
 		BuildingGroup factoriesGroup = new BuildingGroup(
 			factories, 
