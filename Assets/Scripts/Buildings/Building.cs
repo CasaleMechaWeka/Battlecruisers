@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BuildingCategory
 {
@@ -16,6 +17,8 @@ public class Building : MonoBehaviour
 	public int numOfDronesRequired;
 	public BuildingCategory category;
 	public SlotType slotType;
+
+	public Vector3 Size { get { return _renderer.bounds.size; } }
 
 	void Awake()
 	{

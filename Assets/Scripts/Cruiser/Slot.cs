@@ -58,7 +58,8 @@ public class Slot : MonoBehaviour, ISlot
 				throw new InvalidProgramException();
 			}
 
-			_building = Instantiate<Building>(buildingToBuild);
+			Vector3 spawnPosition = transform.position + (transform.up * (buildingToBuild.Size.y - _renderer.bounds.size.y));
+			_building = Instantiate<Building>(buildingToBuild, spawnPosition, transform.rotation);
 			_building.ShowBuilding();
 		}
 	}
