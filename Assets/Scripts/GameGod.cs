@@ -35,18 +35,6 @@ public class GameGod : MonoBehaviour
 		PrefabFetcher prefabFetcher = new PrefabFetcher();
 
 		BuildingLoadout buildingLoadout = new BuildingLoadout(prefabFetcher, buildingKeys);
-		buildMenuController.BuildingGroups = buildingLoadout.BuildingGroups;
-	}
-
-	// Use this for initialization
-	void Start () 
-	{
-				
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
+		buildMenuController.Initialise(buildingLoadout.BuildingGroups);
 	}
 }

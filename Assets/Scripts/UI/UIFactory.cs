@@ -14,6 +14,7 @@ public interface IUIFactory
 public class UIFactory : MonoBehaviour, IUIFactory
 {
 	private Canvas _canvas;
+	private SpriteFetcher _spriteFetcher;
 
 	public BuildMenuController buildMenu;
 	public GameObject panelPrefab;
@@ -24,6 +25,7 @@ public class UIFactory : MonoBehaviour, IUIFactory
 	public void Awake()
 	{
 		_canvas = GetComponent<Canvas>();
+		_spriteFetcher = new SpriteFetcher();
 	}
 
 	public GameObject CreatePanel(bool isActive)
@@ -48,7 +50,8 @@ public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		Button button = (Button)Instantiate(buildingButtonPrefab);
 		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-		button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu);
+		Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
+		button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu, slotSprite);
 		return button;
 	}
 

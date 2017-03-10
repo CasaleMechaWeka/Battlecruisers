@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum SlotType
 {
-	Stern, Bow, Platform, Deck, Utility, Mast
+	SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
 }
 
 public interface ISlot

@@ -15,6 +15,7 @@ public class Building : MonoBehaviour
 	public string buildingName;
 	public string description;
 	public int numOfDronesRequired;
+	public int buildTimeInS;
 	public BuildingCategory category;
 	public SlotType slotType;
 

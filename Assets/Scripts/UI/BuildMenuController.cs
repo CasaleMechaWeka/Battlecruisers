@@ -17,18 +17,29 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private GameObject _homePanel;
 	private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 	private GameObject _currentPanel;
+	private IList<BuildingGroup> _buildingGroups;
+	private bool _isInitialised = false;
 
 	public Cruiser friendlyCruiser;
-
-	public IList<BuildingGroup> BuildingGroups;
 
 	private Building _selectedBuilding;
 	public Building SelectedBuilding { get { return _selectedBuilding; } }
 
+	public void Initialise(IList<BuildingGroup> buildingGroups)
+	{
+		_buildingGroups = buildingGroups;
+		_isInitialised = true;
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
-		Debug.Log("BuildingGroups.Count: " + BuildingGroups.Count);
+		if (!_isInitialised)
+		{
+			throw new InvalidProgramException();
+		}
+
+		Debug.Log("BuildingGroups.Count: " + _buildingGroups.Count);
 
 		_uiFactory = GetComponent<UIFactory>();
 
@@ -39,12 +50,12 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		// Create building category buttons
 		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
 
-		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(BuildingGroups.Count);
+		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(_buildingGroups.Count);
 
-		for (int i = 0; i < BuildingGroups.Count; ++i)
+		for (int i = 0; i < _buildingGroups.Count; ++i)
 		{
 			// Create category button
-			BuildingGroup group = BuildingGroups[i];
+			BuildingGroup group = _buildingGroups[i];
 			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 			// Create category panel
