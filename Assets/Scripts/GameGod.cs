@@ -29,7 +29,9 @@ public class GameGod : MonoBehaviour
 		// Tactical
 		// FELIX
 
-		BuildingLoadout buildingLoadout = new BuildingLoadout(buildingKeys);
+		PrefabFetcher prefabFetcher = new PrefabFetcher();
+
+		BuildingLoadout buildingLoadout = new BuildingLoadout(prefabFetcher, buildingKeys);
 		buildMenuController.BuildingGroups = buildingLoadout.BuildingGroups;
 	}
 
