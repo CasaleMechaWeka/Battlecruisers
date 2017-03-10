@@ -23,11 +23,11 @@ public class GameGod : MonoBehaviour
 		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
 		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 
-		// Turrets
+		// Tactical
 		buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
-		// Tactical
-		// FELIX
+		// Turrets
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Turret, "ShootyTurret"));
 
 		PrefabFetcher prefabFetcher = new PrefabFetcher();
 

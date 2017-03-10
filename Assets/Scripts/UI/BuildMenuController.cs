@@ -33,8 +33,8 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		_uiFactory = GetComponent<UIFactory>();
 
 		// Create main menu panel
-		_currentPanel = _homePanel;
 		_homePanel = _uiFactory.CreatePanel(isActive: true);
+		_currentPanel = _homePanel;
 
 		// Create building category buttons
 		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
