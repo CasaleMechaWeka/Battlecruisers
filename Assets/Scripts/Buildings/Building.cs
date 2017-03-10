@@ -18,17 +18,19 @@ public class Building : MonoBehaviour
 	public BuildingCategory category;
 	public SlotType slotType;
 
-	public Vector3 Size { get { return _renderer.bounds.size; } }
+	public virtual Vector3 Size { get { return _renderer.bounds.size; } }
 
 	void Awake()
 	{
 		_renderer = GetComponent<Renderer>();
-		_renderer.enabled = false;
+
+		// FELIX  TEMP:  Only while I have one of each building instantiated :P
+		gameObject.SetActive(false);
 	}
 
 	public void ShowBuilding()
 	{
-		_renderer.enabled = true;
+		gameObject.SetActive(true);
 
 		// FELIX  Position!
 	}

@@ -17,34 +17,20 @@ public class GameGod : MonoBehaviour
 	// FELIX  Don't hardcode
 	private void InitializeBuildMenuController()
 	{
-//		Building[] factories = 
-//		{
-//			new Building("Naval Factory", "Makes ships", 2, BuildingCategory.Factory, SlotType.Bow),
-//			new Building("Aircraft Factory", "Makes aircraft", 2, BuildingCategory.Factory, SlotType.Platform)
-//		};
-//		BuildingGroup factoriesGroup = new BuildingGroup(
-//			factories, 
-//			BuildingCategory.Factory,
-//			"Factories",
-//			"Buildings that produce units");
-//
-//		Building[] turrets = 
-//		{
-//			new Building("Solid Shooter", "Small turret good against weak ships", 2, BuildingCategory.Turret, SlotType.Deck),
-//			new Building("Big Bad Blaster", "Strong turret good against all ships", 6, BuildingCategory.Turret, SlotType.Deck)
-//		};
-//		BuildingGroup turretsGroup = new BuildingGroup(
-//			turrets, 
-//			BuildingCategory.Turret,
-//			"Turrets",
-//			"Buildings that defent your cruieser");
+		IList<BuildingKey> buildingKeys = new List<BuildingKey>();
 
-//		BuildingGroup[] buildingGroups = new BuildingGroup[]
-//		{
-////			factoriesGroup, turretsGroup
-//		};
-//
-//		buildMenuController.BuildingGroups = buildingGroups;
+		// Factories
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+
+		// Turrets
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+
+		// Tactical
+		// FELIX
+
+		BuildingLoadout buildingLoadout = new BuildingLoadout(buildingKeys);
+		buildMenuController.BuildingGroups = buildingLoadout.BuildingGroups;
 	}
 
 	// Use this for initialization

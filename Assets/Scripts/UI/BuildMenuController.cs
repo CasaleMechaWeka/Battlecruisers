@@ -20,12 +20,16 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public Cruiser friendlyCruiser;
 
+	public IList<BuildingGroup> BuildingGroups;
+
 	private Building _selectedBuilding;
 	public Building SelectedBuilding { get { return _selectedBuilding; } }
 
 	// Use this for initialization
 	void Start () 
 	{
+		Debug.Log("BuildingGroups.Count: " + BuildingGroups.Count);
+
 		_uiFactory = GetComponent<UIFactory>();
 
 		// Create main menu panel
@@ -33,19 +37,19 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		_homePanel = _uiFactory.CreatePanel(isActive: true);
 
 		// Create building category buttons
-		BuildingGroup[] buildingGroups = friendlyCruiser.loadout.BuildingGroups;
 		HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
-		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(buildingGroups.Length);
 
-		for (int i = 0; i < buildingGroups.Length; ++i)
+		_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(BuildingGroups.Count);
+
+		for (int i = 0; i < BuildingGroups.Count; ++i)
 		{
 			// Create category button
-			BuildingGroup group = buildingGroups[i];
+			BuildingGroup group = BuildingGroups[i];
 			_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 			// Create category panel
 			GameObject panel = _uiFactory.CreatePanel(isActive: false);
-			_buildingGroupPanels[group.buildingCategory] = panel;
+			_buildingGroupPanels[group.BuildingCategory] = panel;
 			panel.GetComponent<BuildingsMenuController>().Initialize(_uiFactory, group.Buildings);
 		}
 
@@ -64,12 +68,12 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	{
 		Debug.Log("ShowBuildingGroup");
 
-		if (!_buildingGroupPanels.ContainsKey(buildingGroup.buildingCategory))
+		if (!_buildingGroupPanels.ContainsKey(buildingGroup.BuildingCategory))
 		{
 			throw new ArgumentException();
 		}
 
-		GameObject panel = _buildingGroupPanels[buildingGroup.buildingCategory];
+		GameObject panel = _buildingGroupPanels[buildingGroup.BuildingCategory];
 		ChangePanel(panel);
 		friendlyCruiser.ShowAllSlots();
 	}
