@@ -22,6 +22,12 @@ public class Building : MonoBehaviour
 
 	void Awake()
 	{
+		// FELIX  TEMP
+//		Collider2D c = GetComponent<Collider2D>();
+//		c.bounds.size
+
+
+
 		_renderer = GetComponent<Renderer>();
 
 		// FELIX  TEMP:  Only while I have one of each building instantiated :P
