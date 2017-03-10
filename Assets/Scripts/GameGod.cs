@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Initialises everything :D
@@ -11,6 +12,8 @@ public class GameGod : MonoBehaviour
 
 	void Awake()
 	{
+		Assert.raiseExceptions = true;
+
 		InitializeBuildMenuController();
 	}
 
@@ -27,8 +30,7 @@ public class GameGod : MonoBehaviour
 		buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
 		// Turrets
-		// FELIX
-//		buildingKeys.Add(new BuildingKey(BuildingCategory.Turret, "ShootyTurret"));
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Turret, "ShootyTurret"));
 
 		PrefabFetcher prefabFetcher = new PrefabFetcher();
 

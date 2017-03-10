@@ -18,7 +18,13 @@ public class Building : MonoBehaviour
 	public BuildingCategory category;
 	public SlotType slotType;
 
-	public virtual Vector3 Size { get { return _renderer.bounds.size; } }
+	public virtual Vector3 Size 
+	{ 
+		get 
+		{ 
+			return _renderer.bounds.size; 
+		} 
+	}
 
 	void Awake()
 	{
