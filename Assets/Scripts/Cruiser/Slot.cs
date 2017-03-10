@@ -49,6 +49,8 @@ public class Slot : MonoBehaviour, ISlot
 
 	void OnMouseDown()
 	{
+		Debug.Log($"Slot.OnMouseDown()  _isActive: {_isActive}");
+
 		if (_isActive)
 		{
 			Building buildingToBuild = buildMenu.SelectedBuilding;
@@ -58,10 +60,13 @@ public class Slot : MonoBehaviour, ISlot
 				throw new InvalidProgramException();
 			}
 
-			float heightChange = (_renderer.bounds.size.y + buildingToBuild.Size.y) / 2;
+			_building = Instantiate<Building>(buildingToBuild);
+
+			float heightChange = (_renderer.bounds.size.y + _building.Size.y) / 2;
 			Vector3 spawnPosition = transform.position + (transform.up * heightChange);
-			_building = Instantiate<Building>(buildingToBuild, spawnPosition, transform.rotation);
-			_building.ShowBuilding();
+
+			_building.transform.position = spawnPosition;
+			_building.transform.rotation = transform.rotation;
 
 			buildMenu.ShowBuildingGroups();
 		}
