@@ -21,6 +21,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	private bool _isInitialised = false;
 
 	public Cruiser friendlyCruiser;
+	public BuildingDetailsController buildingDetails;
 
 	private Building _selectedBuilding;
 	public Building SelectedBuilding { get { return _selectedBuilding; } }
@@ -70,8 +71,12 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 	public void ShowBuildingGroups()
 	{
 		Debug.Log("ShowBuildingGroups");
+
 		friendlyCruiser.UnhighlightSlots();
 		friendlyCruiser.HideAllSlots();
+
+		buildingDetails.Building = null;
+
 		ChangePanel(_homePanel);
 	}
 
@@ -112,7 +117,6 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		Debug.Log("ShowBuilding()");
 		_selectedBuilding = building;
 		friendlyCruiser.HighlightAvailableSlots(building.slotType);
-
-		// FELIX  Show building details
+		buildingDetails.Building = building;
 	}
 }
