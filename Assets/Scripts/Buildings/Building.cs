@@ -27,6 +27,19 @@ public class Building : MonoBehaviour
 		} 
 	}
 
+	protected Sprite _buidlingSprite;
+	public virtual Sprite BuildingSprite
+	{
+		get
+		{
+			if (_buidlingSprite == null)
+			{
+				_buidlingSprite = GetComponent<SpriteRenderer>().sprite;
+			}
+			return _buidlingSprite;
+		}
+	}
+
 	void Awake()
 	{
 		Debug.Log("Building.Awake()");

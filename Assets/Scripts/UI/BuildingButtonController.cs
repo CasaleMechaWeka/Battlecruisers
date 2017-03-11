@@ -14,8 +14,7 @@ public class BuildingButtonController : MonoBehaviour
 		button.GetComponentInChildren<Text>().text = building.buildingName;
 		button.onClick.AddListener(() => buildMenuController.SelectBuilding(building));
 
-		SpriteRenderer spriteRenderer = building.GetComponent<SpriteRenderer>();
-		buildingImage.sprite = spriteRenderer.sprite;
+		buildingImage.sprite = building.BuildingSprite;
 		slotImage.sprite = slotSprite;
 	}
 }

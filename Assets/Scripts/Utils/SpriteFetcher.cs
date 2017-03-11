@@ -11,7 +11,8 @@ public class SpriteFetcher
 	public Sprite GetSlotSprite(SlotType slotType)
 	{
 		string spritePath = GetSlotFilePath(slotType);
-		Debug.Log($"spritePath: {spritePath}");
+		// FELIX TEMP
+//		Debug.Log($"spritePath: {spritePath}");
 
 		Sprite sprite = Resources.Load<Sprite>(spritePath);
 		if (sprite == null)

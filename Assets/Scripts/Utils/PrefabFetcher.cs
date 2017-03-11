@@ -29,7 +29,9 @@ public class PrefabFetcher
 	public Building GetBuildingPrefab(BuildingKey buildingKey)
 	{
 		string buildingPrefabPath = GetPrefabPath(buildingKey);
-		Debug.Log($"buildingPrefabPath: {buildingPrefabPath}");
+
+		// FELIX TEMP
+//		Debug.Log($"buildingPrefabPath: {buildingPrefabPath}");
 
 		GameObject prefabObject = Resources.Load(buildingPrefabPath) as GameObject;
 		if (prefabObject == null)

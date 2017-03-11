@@ -20,11 +20,9 @@ public class BuildingGroup
 		string groupName,
 		string description)
 	{
-		Debug.Log($"buildings.Length: {buildings.Count}");
-
 		if (buildings.Count < MIN_NUM_OF_BUILDINGS || buildings.Count > MAX_NUM_OF_BUILDINGS)
 		{
-			throw new ArgumentException();
+			throw new ArgumentException($"Invalid building count: {buildings.Count}");
 		}
 
 		// Check building category matches this group's category

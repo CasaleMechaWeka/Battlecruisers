@@ -53,12 +53,6 @@ public class Cruiser : MonoBehaviour, ICruiser
 		}
 
 		HideAllSlots();
-
-		// FELIX TEMP
-		foreach (SlotType type in _slots.Keys)
-		{
-			Debug.Log($"{_slots[type].Count} {type} slots");
-		}
 	}
 
 	public bool IsSlotAvailable(SlotType slotType)

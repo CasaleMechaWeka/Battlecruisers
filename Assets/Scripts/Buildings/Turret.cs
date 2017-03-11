@@ -18,6 +18,18 @@ public class Turret : Building
 		} 
 	}
 
+	public override Sprite BuildingSprite
+	{
+		get
+		{
+			if (_buidlingSprite == null)
+			{
+				_buidlingSprite = turretBarrel.GetComponent<SpriteRenderer>().sprite;
+			}
+			return _buidlingSprite;
+		}
+	}
+
 	void Awake()
 	{
 		Debug.Log("Turret.Awake()");
