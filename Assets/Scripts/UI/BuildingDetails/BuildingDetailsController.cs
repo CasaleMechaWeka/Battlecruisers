@@ -13,6 +13,7 @@ public class BuildingDetailsController : MonoBehaviour
 	public Text buildingDescription;
 	public Image buildingImage;
 	public Image slotImage;
+	public Button deleteBuildingButton;
 
 	// FELIX  Change to:  ShowBuilding()
 	private Building _building;

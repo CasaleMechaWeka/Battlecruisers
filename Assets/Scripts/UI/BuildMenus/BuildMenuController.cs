@@ -114,7 +114,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public void SelectBuilding(Building building)
 	{
-		Debug.Log("ShowBuilding()");
+		Debug.Log("SelectBuilding()");
 		_selectedBuilding = building;
 		friendlyCruiser.HighlightAvailableSlots(building.slotType);
 		buildingDetails.Building = building;
