@@ -25,7 +25,7 @@ public class Building : MonoBehaviour
 	// FELIX  Use or remove?
 	public ITurretStats turretStats;
 
-	public BuildingDetailsController BuildingDetails { private get; set; }
+	public BuildMenuController BuildingMenu { private get; set; }
 
 	public Action OnDestroyed;
 
@@ -58,8 +58,7 @@ public class Building : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		Debug.Log("Kaboom!!");
-		BuildingDetails.ShowBuildingDetails(this, allowDelete: true);
+		BuildingMenu.ShowExistingBuildingDetails(this);
 	}
 
 	void OnDestroy()
