@@ -14,6 +14,7 @@ public interface IUIFactory
 public class UIFactory : MonoBehaviour, IUIFactory
 {
 	private Canvas _canvas;
+	// FELIX  Inject?
 	private SpriteFetcher _spriteFetcher;
 
 	public BuildMenuController buildMenu;
