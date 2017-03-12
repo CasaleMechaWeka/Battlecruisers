@@ -12,11 +12,8 @@ public class SlotStats
 	public int NumOfMastSlots { get; private set; }
 }
 
-public interface ICruiser : IDamagable
+public interface ICruiser : IDamagable, IRepairable
 {
-	float Health { get; }
-	SlotStats SlotStats { get; }
-
 	bool IsSlotAvailable(SlotType slotType);
 	void HighlightAvailableSlots(SlotType slotType);
 	void UnhighlightSlots();
@@ -29,30 +26,48 @@ public class Cruiser : MonoBehaviour, ICruiser
 	private SlotType? _highlightedSlotType;
 
 	public BuildingLoadout loadout;
+	public HealthBarController healthBarController;
 
-	public float Health { get; private set; }
-	// FELIX  Unused?
-	public SlotStats SlotStats { get; private set; }
+	private float _health;
+	private float Health
+	{ 
+		get { return _health; }
+		set
+		{
+			_health = value;
+			healthBarController.Health = _health;
+		}
+	}
+	public float startingHealth;
 
 	void Start()
 	{
+		SetupSlots();
+		HideAllSlots();
+		healthBarController.Initialise(startingHealth);
+		Health = startingHealth;
+
+		// FELIX TEMP
+		Health *= 0.8f;
+	}
+
+	private void SetupSlots()
+	{
 		_slots = new Dictionary<SlotType, IList<Slot>>();
 		_slotsWrapper = transform.FindChild("SlotsWrapper").gameObject;
-
+		
 		Slot[] slots = GetComponentsInChildren<Slot>();
 		Debug.Log($"slots.Length: {slots.Length}");
-
+		
 		foreach (Slot slot in slots)
 		{
 			if (!_slots.ContainsKey(slot.type))
 			{
 				_slots[slot.type] = new List<Slot>();
 			}
-
+			
 			_slots[slot.type].Add(slot);
 		}
-
-		HideAllSlots();
 	}
 
 	public bool IsSlotAvailable(SlotType slotType)
@@ -106,7 +121,12 @@ public class Cruiser : MonoBehaviour, ICruiser
 		}
 	}
 
-	public void TakeDamage(float damage)
+	public void TakeDamage(float damageAmount)
+	{
+
+	}
+
+	public void Repair(float repairAmount)
 	{
 
 	}
