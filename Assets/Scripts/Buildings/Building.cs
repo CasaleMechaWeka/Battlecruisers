@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,10 @@ public class Building : MonoBehaviour
 	public float health;
 	// FELIX  Load from file?
 	public ITurretStats turretStats;
+
+	public BuildMenuController BuildMenuController { private get; set; }
+
+	public Action OnDestroyed;
 
 	public virtual Vector3 Size 
 	{ 
@@ -47,5 +52,31 @@ public class Building : MonoBehaviour
 	{
 		Debug.Log("Building.Awake()");
 		_renderer = GetComponent<Renderer>();
+	}
+
+	void OnMouseDown()
+	{
+		Debug.Log("Kaboom!!");
+		BuildMenuController.SelectBuilding(this, allowDelete: true);
+	}
+
+	void OnDestroy()
+	{
+		Debug.Log("Building.OnDestroy()");
+		if (OnDestroyed != null)
+		{
+			OnDestroyed.Invoke();
+			OnDestroyed = null;
+		}
+	}
+
+	public void InitiateDelete()
+	{
+		Destroy(gameObject);
+	}
+
+	public void CancelDelete()
+	{
+
 	}
 }

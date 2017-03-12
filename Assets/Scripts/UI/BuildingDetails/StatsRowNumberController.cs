@@ -10,7 +10,7 @@ public class StatsRowNumberController : MonoBehaviour
 
 	public void Initialise(string label, string value)
 	{
-		Debug.Log($"StatsRowNumberController.Initialise() label: {label}  value: {value}");
+//		Debug.Log($"StatsRowNumberController.Initialise() label: {label}  value: {value}");
 
 		rowLabel.text = label;
 		rowValue.text = value;

@@ -21,7 +21,7 @@ public class StatsRowStarsController : MonoBehaviour
 
 	public void Initialise(string statName, int statRating)
 	{
-		Debug.Log($"StatsRowStarsController.Initialise() statName: {statName}  statRating: {statRating}");
+//		Debug.Log($"StatsRowStarsController.Initialise() statName: {statName}  statRating: {statRating}");
 
 		_rowLabel.text = statName;
 

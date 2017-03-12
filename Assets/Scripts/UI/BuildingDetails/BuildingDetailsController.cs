@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class BuildingDetailsController : MonoBehaviour 
 {
+	private Building _building;
+	private bool _allowDelete;
 	// FELIX  Inject?
 	private SpriteFetcher _spriteFetcher;
 
@@ -15,44 +18,46 @@ public class BuildingDetailsController : MonoBehaviour
 	public Image slotImage;
 	public Button deleteBuildingButton;
 
-	// FELIX  Change to:  ShowBuilding()
-	private Building _building;
-	public Building Building
-	{
-		set
-		{
-			if (value != _building)
-			{
-				_building = value;
-
-				if (_building == null)
-				{
-					gameObject.SetActive(false);
-				}
-				else
-				{
-					gameObject.SetActive(true);
-					Populate(_building);
-				}
-			}
-		}
-	}
-
-	private void Populate(Building building)
-	{
-		statsController.ShowBuildingStats(building);
-		buildingName.text = building.buildingName;
-		buildingDescription.text = building.description;
-		buildingImage.sprite = building.BuildingSprite;
-		slotImage.sprite = _spriteFetcher.GetSlotSprite(building.slotType);
-	}
-
 	// Use this for initialization
 	void Start () 
 	{
 		_spriteFetcher = new SpriteFetcher();
+		_allowDelete = false;
+		Hide();
+	}
 
-		// FELIX  TEMP
-		gameObject.SetActive(false);	
+	public void ShowBuildingDetails(Building building, bool allowDelete)
+	{
+		Assert.IsNotNull(building);
+
+		_building = building;
+		_allowDelete = allowDelete;
+		gameObject.SetActive(true);
+
+		statsController.ShowBuildingStats(_building);
+		buildingName.text = _building.buildingName;
+		buildingDescription.text = _building.description;
+		buildingImage.sprite = _building.BuildingSprite;
+		slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);
+
+		deleteBuildingButton.gameObject.SetActive(allowDelete);
+		if (allowDelete)
+		{
+			deleteBuildingButton.onClick.AddListener(DeleteBuilding);
+		}
+	}
+
+	public void DeleteBuilding()
+	{
+		Assert.IsTrue(_allowDelete);
+		Assert.IsNotNull(_building);
+
+		_building.InitiateDelete();
+		Hide();
+	}
+
+	public void Hide()
+	{
+		gameObject.SetActive(false);
 	}
 }

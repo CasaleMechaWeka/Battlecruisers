@@ -69,6 +69,14 @@ public class Slot : MonoBehaviour, ISlot
 			_building.transform.rotation = transform.rotation;
 
 			buildMenu.ShowBuildingGroups();
+
+			_building.OnDestroyed = OnBuildingDestroyed;
+			_building.BuildMenuController = buildMenu;
 		}
+	}
+
+	private void OnBuildingDestroyed()
+	{
+		_building = null;
 	}
 }
