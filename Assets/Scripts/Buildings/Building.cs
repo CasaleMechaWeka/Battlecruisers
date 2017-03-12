@@ -20,10 +20,12 @@ public class Building : MonoBehaviour
 	public BuildingCategory category;
 	public SlotType slotType;
 	public float health;
+
 	// FELIX  Load from file?
+	// FELIX  Use or remove?
 	public ITurretStats turretStats;
 
-	public BuildMenuController BuildMenuController { private get; set; }
+	public BuildingDetailsController BuildingDetails { private get; set; }
 
 	public Action OnDestroyed;
 
@@ -57,7 +59,7 @@ public class Building : MonoBehaviour
 	void OnMouseDown()
 	{
 		Debug.Log("Kaboom!!");
-		BuildMenuController.SelectBuilding(this, allowDelete: true);
+		BuildingDetails.ShowBuildingDetails(this, allowDelete: true);
 	}
 
 	void OnDestroy()

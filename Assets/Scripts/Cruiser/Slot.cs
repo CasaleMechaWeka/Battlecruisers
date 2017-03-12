@@ -71,7 +71,7 @@ public class Slot : MonoBehaviour, ISlot
 			buildMenu.ShowBuildingGroups();
 
 			_building.OnDestroyed = OnBuildingDestroyed;
-			_building.BuildMenuController = buildMenu;
+			_building.BuildingDetails = buildMenu.buildingDetails;
 		}
 	}
 

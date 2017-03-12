@@ -8,7 +8,7 @@ public interface IBuildMenuController
 {
 	void ShowBuildingGroups();
 	void ShowBuildingGroup(BuildingGroup buildingGroup);
-	void SelectBuilding(Building building, bool allowDelete = false);
+	void SelectBuilding(Building building);
 }
 
 public class BuildMenuController : MonoBehaviour, IBuildMenuController
@@ -112,11 +112,11 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 		return false;
 	}
 
-	public void SelectBuilding(Building building, bool allowDelete = false)
+	public void SelectBuilding(Building building)
 	{
 		Debug.Log("SelectBuilding()");
 		_selectedBuilding = building;
 		friendlyCruiser.HighlightAvailableSlots(building.slotType);
-		buildingDetails.ShowBuildingDetails(building, allowDelete);
+		buildingDetails.ShowBuildingDetails(building, allowDelete: false);
 	}
 }
