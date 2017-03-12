@@ -7,6 +7,7 @@ public interface ITurretStats
 	float Damage { get; }
 	float BulletVelocityInMPerS { get; }
 	bool IgnoreGravity { get; }
+	float DamangePerS { get; }
 }
 
 public class TurretStats : ITurretStats
@@ -16,6 +17,7 @@ public class TurretStats : ITurretStats
 	public float Damage { get; private set; }
 	public float BulletVelocityInMPerS { get; private set; }
 	public bool IgnoreGravity { get; private set; }
+	public float DamangePerS { get { return Damage * FireRatePerS; } }
 
 	public TurretStats(float fireRatePerS, float accuracy, float damage, float bulletVelocityInMPerS, bool ignoreGravity)
 	{

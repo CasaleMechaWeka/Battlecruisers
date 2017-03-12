@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BuildingDetailsController : MonoBehaviour 
 {
+	public BuildingStatsController statsController;
+
+	// FELIX  Change to:  ShowBuilding()
 	private Building _building;
 	public Building Building
 	{
@@ -28,18 +31,13 @@ public class BuildingDetailsController : MonoBehaviour
 
 	private void Populate(Building building)
 	{
-
+		statsController.ShowBuildingStats(building);
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
+		// FELIX  TEMP
 		gameObject.SetActive(false);	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
 	}
 }

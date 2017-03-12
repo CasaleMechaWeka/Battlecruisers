@@ -18,6 +18,9 @@ public class Building : MonoBehaviour
 	public int buildTimeInS;
 	public BuildingCategory category;
 	public SlotType slotType;
+	public float health;
+	// FELIX  Load from file?
+	public ITurretStats turretStats;
 
 	public virtual Vector3 Size 
 	{ 
