@@ -19,8 +19,8 @@ public class BuildingGroupFactory
 				return "Factories";
 			case BuildingCategory.Tactical:
 				return "Tactical";
-			case BuildingCategory.Turret:
-				return "Turrets";
+			case BuildingCategory.Defence:
+				return "Defence";
 			default:
 				throw new ArgumentException();
 		}
@@ -34,7 +34,7 @@ public class BuildingGroupFactory
 				return "Buildings that produce units";
 			case BuildingCategory.Tactical:
 				return "Specialised buildings";
-			case BuildingCategory.Turret:
+			case BuildingCategory.Defence:
 				return "Defensive buildings to protect your cruiser";
 			default:
 				throw new ArgumentException();

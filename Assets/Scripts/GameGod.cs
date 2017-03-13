@@ -30,7 +30,7 @@ public class GameGod : MonoBehaviour
 		buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
 		// Turrets
-		buildingKeys.Add(new BuildingKey(BuildingCategory.Turret, "ShootyTurret"));
+		buildingKeys.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 
 		PrefabFetcher prefabFetcher = new PrefabFetcher();
 

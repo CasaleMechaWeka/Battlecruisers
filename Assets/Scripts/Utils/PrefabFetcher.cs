@@ -23,7 +23,7 @@ public class PrefabFetcher
 	{
 		public const string FACTORIES = "Factories";
 		public const string TACTICAL = "Tactical";
-		public const string TURRETS  = "Turrets";
+		public const string DEFENCE  = "Defence";
 	}
 
 	public Building GetBuildingPrefab(BuildingKey buildingKey)
@@ -61,8 +61,8 @@ public class PrefabFetcher
 				return PrefabFolderNames.FACTORIES;
 			case BuildingCategory.Tactical:
 				return PrefabFolderNames.TACTICAL;
-			case BuildingCategory.Turret:
-				return PrefabFolderNames.TURRETS;
+			case BuildingCategory.Defence:
+				return PrefabFolderNames.DEFENCE;
 			default:
 				throw new ArgumentException();
 		}

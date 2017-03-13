@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum BuildingCategory
 {
-	Factory, Turret, Support, Tactical, AntiCruiser, Experimental
+	Factory, Defence, Offence, Tactical, Support, Ultras
 }
 
 public class Building : MonoBehaviour
