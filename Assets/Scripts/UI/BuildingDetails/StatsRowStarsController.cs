@@ -12,7 +12,7 @@ public class StatsRowStarsController : MonoBehaviour
 	private const int MIN_RATING = 0;
 	private const int MAX_RATING = 5;
 
-	void Start() 
+	void Awake() 
 	{
 		_rowLabel = GetComponentInChildren<Text>();
 		_stars = GetComponentsInChildren<Image>();

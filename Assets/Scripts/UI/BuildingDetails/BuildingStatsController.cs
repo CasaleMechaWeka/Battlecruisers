@@ -19,7 +19,7 @@ public class BuildingStatsController : MonoBehaviour
 
 	private const string BUILD_TIME_SUFFIX = "s";
 
-	void Start()
+	void Awake()
 	{
 		_valueToStarsConverter = new ValueToStarsConverter();
 	}
