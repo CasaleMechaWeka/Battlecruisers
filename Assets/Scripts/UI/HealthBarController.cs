@@ -35,19 +35,23 @@ public class HealthBarController : MonoBehaviour
 
 	private const float MIN_HEALTH = 0;
 
-	void Start()
+	void Awake()
 	{
 		_outlineWidth = ((RectTransform)healthBarOutline.transform).rect.width;
 	}
 
 	public void Initialise(float maxHealth)
 	{
+		Debug.Log($"HealthBarController.Initialise()  maxHealth: {maxHealth}");
+
 		Assert.IsTrue(maxHealth > MIN_HEALTH);
 		_maxHealth = maxHealth;
 	}
 
 	private void UpdateRemainingHealth(float health)
 	{
+		Debug.Log($"HealthBarController.UpdateRemainingHealth()  health: {health}");
+
 		RectTransform newHealth = (RectTransform)remainingHealth.transform;
 		newHealth.sizeDelta = new Vector2((health / _maxHealth) * _outlineWidth, newHealth.sizeDelta.y);
 	}

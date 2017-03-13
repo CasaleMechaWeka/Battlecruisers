@@ -26,7 +26,8 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	void Start() 
 	{
-		FocusOnFriendlyCruiser();
+		// FELIX
+//		FocusOnFriendlyCruiser();
 	}
 
 	public void FocusOnFriendlyCruiser()
@@ -98,6 +99,9 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	void Update()
 	{
+		// FELIX
+		return;
+
 		// Camera position
 		bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
 		if (!isInPosition)
