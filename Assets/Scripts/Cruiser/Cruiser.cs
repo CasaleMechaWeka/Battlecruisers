@@ -130,4 +130,9 @@ public class Cruiser : MonoBehaviour, ICruiser
 	{
 
 	}
+
+	void OnMouseDown()
+	{
+		Debug.Log("Cruiesr.OnMouseDown()");
+	}
 }
