@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildings.Turrets;
-using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildings
 		// FELIX  Use or remove?
 		public ITurretStats turretStats;
 
-		public BuildMenuController BuildingMenu { private get; set; }
+		public UIManager UIManager { private get; set; }
 
 		public Action OnDestroyed;
 
@@ -63,7 +63,8 @@ namespace BattleCruisers.Buildings
 
 		void OnMouseDown()
 		{
-			BuildingMenu.ShowExistingBuildingDetails(this);
+			// FELIX  Differentiate between friendly and enemy cruiser
+			UIManager.SelectBuildingFromFriendlyCruiser(this);
 		}
 
 		void OnDestroy()
@@ -83,7 +84,7 @@ namespace BattleCruisers.Buildings
 
 		public void CancelDelete()
 		{
-
+			throw new NotImplementedException();
 		}
 	}
 }

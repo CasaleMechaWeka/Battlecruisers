@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BuildMenus;
+﻿using BattleCruisers.UI;
 using BattleCruisers.Buildings.Buttons;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildings
 		// FELIX  Inject?
 		private SpriteFetcher _spriteFetcher;
 
-		public BuildMenuController buildMenu;
+		public UIManager uiManager;
 		public GameObject panelPrefab;
 		public Button buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildings
 		{
 			Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<BuildingCategoryButton>().Initialize(group, buildMenu);
+			button.GetComponent<BuildingCategoryButton>().Initialize(group, uiManager);
 			return button;
 		}
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Buildings
 			Button button = (Button)Instantiate(buildingButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
-			button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu, slotSprite);
+			button.GetComponent<BuildingButtonController>().Initialize(building, uiManager, slotSprite);
 			return button;
 		}
 
@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildings
 		{
 			Button backButton = (Button)Instantiate(backButtonPrefab);
 			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
+			backButton.GetComponent<BackButtonController>().Initialize(uiManager);
 			return backButton;
 		}
 	}

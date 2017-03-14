@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BuildMenus;
+﻿using BattleCruisers.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildings.Buttons
 		public Text buildingName;
 		public Text droneLevel;
 
-		public void Initialize(Building building, IBuildMenuController buildMenuController, Sprite slotSprite)
+		public void Initialize(Building building, UIManager uiManager, Sprite slotSprite)
 		{
 			buildingName.text = building.buildingName;
 			droneLevel.text = building.numOfDronesRequired.ToString();
@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildings.Buttons
 			slotImage.sprite = slotSprite;
 			
 			Button button = GetComponent<Button>();
-			button.onClick.AddListener(() => buildMenuController.SelectBuilding(building));
+			button.onClick.AddListener(() => uiManager.SelectBuildingFromMenu(building));
 		}
 	}
 }

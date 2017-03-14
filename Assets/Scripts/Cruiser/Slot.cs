@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildings;
-using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
 		private Building _building;
 
 		public SlotType type;
-		public BuildMenuController buildMenu;
+		public UIManager uiManager;
 
 		public bool IsFree { get { return _building == null; } }
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Cruisers
 
 			if (_isActive)
 			{
-				Building buildingToBuild = buildMenu.SelectedBuilding;
+				Building buildingToBuild = uiManager.SelectedBuilding;
 
 				if (buildingToBuild == null || buildingToBuild.slotType != type)
 				{
@@ -72,10 +72,10 @@ namespace BattleCruisers.Cruisers
 				_building.transform.position = spawnPosition;
 				_building.transform.rotation = transform.rotation;
 
-				buildMenu.ShowBuildingGroups();
+				uiManager.ShowBuildingGroups();
 
 				_building.OnDestroyed = OnBuildingDestroyed;
-				_building.BuildingMenu = buildMenu;
+				_building.UIManager = uiManager;
 			}
 		}
 

@@ -9,15 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BuildMenus
 {
-	public interface IBuildMenuController
-	{
-		void ShowBuildingGroups();
-		void ShowBuildingGroup(BuildingGroup buildingGroup);
-		void SelectBuilding(Building building);
-		void ShowExistingBuildingDetails(Building building);
-	}
-
-	public class BuildMenuController : MonoBehaviour, IBuildMenuController
+	public class BuildMenuController : MonoBehaviour
 	{
 		private IUIFactory _uiFactory;
 		private GameObject _homePanel;
@@ -26,12 +18,7 @@ namespace BattleCruisers.UI.BuildMenus
 		private IList<BuildingGroup> _buildingGroups;
 		private bool _isInitialised = false;
 
-		public Cruiser friendlyCruiser;
-		// FELIX  Move to UIManager
-		public BuildingDetailsController buildingDetails;
-
-		private Building _selectedBuilding;
-		public Building SelectedBuilding { get { return _selectedBuilding; } }
+		public UIManager uiManager;
 
 		public void Initialise(IList<BuildingGroup> buildingGroups)
 		{
@@ -39,7 +26,7 @@ namespace BattleCruisers.UI.BuildMenus
 			_isInitialised = true;
 		}
 
-		// Use this for initialization
+		// Use this for initialization`
 		void Start () 
 		{
 			if (!_isInitialised)
@@ -77,7 +64,7 @@ namespace BattleCruisers.UI.BuildMenus
 
 		public void HideBuildMenu()
 		{
-			ShowBuildingGroups();
+			ChangePanel(_homePanel);
 			_currentPanel.SetActive(false);
 		}
 
@@ -86,30 +73,20 @@ namespace BattleCruisers.UI.BuildMenus
 			_currentPanel.SetActive(true);
 		}
 
-		public void ShowBuildingGroups()
+		public void ShowBuildingGroupsMenu()
 		{
-			Debug.Log("ShowBuildingGroups");
-
-			buildingDetails.Hide();
-
-			friendlyCruiser.UnhighlightSlots();
-			friendlyCruiser.HideAllSlots();
-
 			ChangePanel(_homePanel);
 		}
 
-		public void ShowBuildingGroup(BuildingGroup buildingGroup)
+		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
-			Debug.Log("ShowBuildingGroup");
-
-			if (!_buildingGroupPanels.ContainsKey(buildingGroup.BuildingCategory))
+			if (!_buildingGroupPanels.ContainsKey(buildingCategory))
 			{
 				throw new ArgumentException();
 			}
 
-			GameObject panel = _buildingGroupPanels[buildingGroup.BuildingCategory];
+			GameObject panel = _buildingGroupPanels[buildingCategory];
 			ChangePanel(panel);
-			friendlyCruiser.ShowAllSlots();
 		}
 
 		private bool ChangePanel(GameObject panel)
@@ -128,23 +105,6 @@ namespace BattleCruisers.UI.BuildMenus
 			}
 
 			return false;
-		}
-
-		public void SelectBuilding(Building building)
-		{
-			Debug.Log("SelectBuilding()");
-			_selectedBuilding = building;
-			friendlyCruiser.HighlightAvailableSlots(building.slotType);
-			buildingDetails.ShowBuildingDetails(building, allowDelete: false);
-		}
-
-		public void ShowExistingBuildingDetails(Building building)
-		{
-			Debug.Log("ShowExistingBuildingDetails()");
-
-			_selectedBuilding = null;
-			friendlyCruiser.UnhighlightSlots();
-			buildingDetails.ShowBuildingDetails(building, allowDelete: true);
 		}
 	}
 }

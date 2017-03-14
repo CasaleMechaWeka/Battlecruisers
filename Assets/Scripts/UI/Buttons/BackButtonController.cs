@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BuildMenus;
+﻿using BattleCruisers.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +8,10 @@ namespace BattleCruisers.Buildings.Buttons
 {
 	public class BackButtonController : MonoBehaviour 
 	{
-		public void Initialize(IBuildMenuController buildMenuController)
+		public void Initialize(UIManager uiManager)
 		{
 			Button button = GetComponent<Button>();
-			button.onClick.AddListener(() => buildMenuController.ShowBuildingGroups());
+			button.onClick.AddListener(() => uiManager.ShowBuildingGroups());
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BuildMenus;
+﻿using BattleCruisers.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +10,11 @@ namespace BattleCruisers.Buildings.Buttons
 {
 	public class BuildingCategoryButton : MonoBehaviour 
 	{
-		public void Initialize(BuildingGroup buildingGroup, IBuildMenuController buildMenuController)
+		public void Initialize(BuildingGroup buildingGroup, UIManager uiManager)
 		{
 			Button button = GetComponent<Button>();
 			button.GetComponentInChildren<Text>().text = buildingGroup.BuildingGroupName;
-			button.onClick.AddListener(() => buildMenuController.ShowBuildingGroup(buildingGroup));
+			button.onClick.AddListener(() => uiManager.SelectBuildingGroup(buildingGroup.BuildingCategory));
 		}
 	}
 }
