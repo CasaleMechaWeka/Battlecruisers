@@ -35,7 +35,10 @@ public class Cruiser : MonoBehaviour, ICruiser
 		set
 		{
 			_health = value;
-			healthBarController.Health = _health;
+			if (healthBarController != null)
+			{
+				healthBarController.Health = _health;
+			}
 		}
 	}
 	public float startingHealth;
@@ -44,7 +47,10 @@ public class Cruiser : MonoBehaviour, ICruiser
 	{
 		SetupSlots();
 		HideAllSlots();
-		healthBarController.Initialise(startingHealth);
+		if (healthBarController != null)
+		{
+			healthBarController.Initialise(startingHealth);
+		}
 		Health = startingHealth;
 
 		// FELIX TEMP

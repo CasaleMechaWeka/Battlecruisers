@@ -32,16 +32,14 @@ public class CameraController : MonoBehaviour, ICameraController
 	public float smoothTime;
 	public float cruiserOrthographicSize;
 	public float overviewOrthographicSize;
+	public float centerPositionY;
 
 	private const float POSITION_EQUALITY_MARGIN = 0.1f;
 	private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 
 	void Start() 
 	{
-		// FELIX TEMP  Force non-instant camera transition
 		_cameraState = CameraState.Center;
-
-		// FELIX
 		FocusOnFriendlyCruiser();
 	}
 
@@ -80,16 +78,19 @@ public class CameraController : MonoBehaviour, ICameraController
 			{
 				case CameraState.EnemyCruiser:
 					_cameraPositionTarget.x = enemyCruiser.transform.position.x;
+					_cameraPositionTarget.y = enemyCruiser.transform.position.y;
 					_cameraOrthographicSizeTarget = cruiserOrthographicSize;
 					break;
 
 				case CameraState.FriendlyCruiser:
 					_cameraPositionTarget.x = friendlyCruiser.transform.position.x;
+					_cameraPositionTarget.y = friendlyCruiser.transform.position.y;
 					_cameraOrthographicSizeTarget = cruiserOrthographicSize;
 					break;
 
 				case CameraState.Center:
 					_cameraPositionTarget.x = (friendlyCruiser.transform.position.x + enemyCruiser.transform.position.x) / 2;
+					_cameraPositionTarget.y = centerPositionY;
 					_cameraOrthographicSizeTarget = overviewOrthographicSize;
 					break;
 
@@ -126,6 +127,7 @@ public class CameraController : MonoBehaviour, ICameraController
 		else if (transform.position != _cameraPositionTarget)
 		{
 			transform.position = _cameraPositionTarget;
+			Debug.Log("CameraController position done");
 		}
 
 		// Camera zoom
@@ -134,9 +136,10 @@ public class CameraController : MonoBehaviour, ICameraController
 		{
 			Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
 		}
-		else if (Camera.main.orthographicSize != -_cameraOrthographicSizeTarget)
+		else if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
 		{
 			Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
+			Debug.Log("CameraController zoom done");
 		}
 
 		// Camera state
