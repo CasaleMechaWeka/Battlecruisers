@@ -40,6 +40,7 @@ namespace BattleCruisers.Buildings
 		void Awake()
 		{
 			_outlineWidth = ((RectTransform)healthBarOutline.transform).rect.width;
+			gameObject.SetActive(false);
 		}
 
 		public void Initialise(float maxHealth)

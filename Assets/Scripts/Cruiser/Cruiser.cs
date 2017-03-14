@@ -38,10 +38,7 @@ namespace BattleCruisers.Cruisers
 			set
 			{
 				_health = value;
-				if (healthBarController != null)
-				{
-					healthBarController.Health = _health;
-				}
+				healthBarController.Health = _health;
 			}
 		}
 		public float startingHealth;
@@ -50,10 +47,7 @@ namespace BattleCruisers.Cruisers
 		{
 			SetupSlots();
 			HideAllSlots();
-			if (healthBarController != null)
-			{
-				healthBarController.Initialise(startingHealth);
-			}
+			healthBarController.Initialise(startingHealth);
 			Health = startingHealth;
 
 			// FELIX TEMP

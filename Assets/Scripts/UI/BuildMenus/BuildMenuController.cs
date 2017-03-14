@@ -29,6 +29,9 @@ namespace BattleCruisers.UI.BuildMenus
 		public Cruiser friendlyCruiser;
 		public BuildingDetailsController buildingDetails;
 		public CameraController cameraController;
+		// FELIX  Perhaps this class should not know about these?  Not part of BuildMenus?  UIManager?
+		public HealthBarController friendlyCruiserHealthBar;
+		public HealthBarController enemyCruiserHealthBar;
 
 		private Building _selectedBuilding;
 		public Building SelectedBuilding { get { return _selectedBuilding; } }
@@ -80,15 +83,32 @@ namespace BattleCruisers.UI.BuildMenus
 
 		private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
 		{
-			ShowBuildingGroups();
-			_currentPanel.SetActive(false);
+			switch (e.Origin)
+			{
+				case CameraState.FriendlyCruiser:
+					ShowBuildingGroups();
+					_currentPanel.SetActive(false);
+					friendlyCruiserHealthBar.gameObject.SetActive(false);
+					break;
+
+				case CameraState.EnemyCruiser:
+					enemyCruiserHealthBar.gameObject.SetActive(false);
+					break;
+			}
 		}
 
 		private void OnCameraTransitionCompleted(object sender, CameraTransitionArgs e)
 		{
-			if (e.Destination == CameraState.FriendlyCruiser)
+			switch (e.Destination)
 			{
-				_currentPanel.SetActive(true);
+				case CameraState.FriendlyCruiser:
+					_currentPanel.SetActive(true);
+					friendlyCruiserHealthBar.gameObject.SetActive(true);
+					break;
+
+				case CameraState.EnemyCruiser:
+					enemyCruiserHealthBar.gameObject.SetActive(true);
+					break;
 			}
 		}
 
