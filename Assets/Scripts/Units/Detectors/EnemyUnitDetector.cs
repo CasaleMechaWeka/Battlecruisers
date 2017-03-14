@@ -3,22 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyUnitDetector : UnitDetector 
+namespace BattleCruisers.Units.Detectors
 {
-	public UnitType OwnType { private get; set; }
-
-	protected override bool ShouldTriggerOnEntered(IUnit unit)
+	public class EnemyUnitDetector : UnitDetector 
 	{
-		return ShouldTrigger(unit);
-	}
+		public UnitType OwnType { private get; set; }
 
-	protected override bool ShouldTriggerOnExited(IUnit unit)
-	{
-		return ShouldTrigger(unit);
-	}
+		protected override bool ShouldTriggerOnEntered(IUnit unit)
+		{
+			return ShouldTrigger(unit);
+		}
 
-	private bool ShouldTrigger(IUnit unit)
-	{
-		return unit.Type != OwnType;
+		protected override bool ShouldTriggerOnExited(IUnit unit)
+		{
+			return ShouldTrigger(unit);
+		}
+
+		private bool ShouldTrigger(IUnit unit)
+		{
+			return unit.Type != OwnType;
+		}
 	}
 }

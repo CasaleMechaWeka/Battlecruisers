@@ -1,16 +1,20 @@
-﻿using System;
+﻿using BattleCruisers.UI.BuildMenus;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class BuildingCategoryButton : MonoBehaviour 
+namespace BattleCruisers.Buildings.Buttons
 {
-	public void Initialize(BuildingGroup buildingGroup, IBuildMenuController buildMenuController)
+	public class BuildingCategoryButton : MonoBehaviour 
 	{
-		Button button = GetComponent<Button>();
-		button.GetComponentInChildren<Text>().text = buildingGroup.BuildingGroupName;
-		button.onClick.AddListener(() => buildMenuController.ShowBuildingGroup(buildingGroup));
+		public void Initialize(BuildingGroup buildingGroup, IBuildMenuController buildMenuController)
+		{
+			Button button = GetComponent<Button>();
+			button.GetComponentInChildren<Text>().text = buildingGroup.BuildingGroupName;
+			button.onClick.AddListener(() => buildMenuController.ShowBuildingGroup(buildingGroup));
+		}
 	}
 }

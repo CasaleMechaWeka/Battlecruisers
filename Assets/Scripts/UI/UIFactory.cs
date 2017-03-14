@@ -1,66 +1,72 @@
-﻿using System.Collections;
+﻿using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.Buildings.Buttons;
+using BattleCruisers.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUIFactory
+namespace BattleCruisers.Buildings
 {
-	GameObject CreatePanel(bool isActive);
-	Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
-	Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
-	Button CreateBackButton(HorizontalLayoutGroup buttonParent);
-}
-
-public class UIFactory : MonoBehaviour, IUIFactory
-{
-	private Canvas _canvas;
-	// FELIX  Inject?
-	private SpriteFetcher _spriteFetcher;
-
-	public BuildMenuController buildMenu;
-	public GameObject panelPrefab;
-	public Button buildingCategoryButtonPrefab;
-	public Button buildingButtonPrefab;
-	public Button backButtonPrefab;
-
-	public void Awake()
+	public interface IUIFactory
 	{
-		_canvas = GetComponent<Canvas>();
-		_spriteFetcher = new SpriteFetcher();
+		GameObject CreatePanel(bool isActive);
+		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
+		Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
+		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 	}
 
-	public GameObject CreatePanel(bool isActive)
+	public class UIFactory : MonoBehaviour, IUIFactory
 	{
-		GameObject panel = Instantiate(panelPrefab);
-		panel.SetActive(isActive);
-		panel.transform.SetParent(_canvas.transform);
-		RectTransform rectTransform = panel.GetComponent<RectTransform>();
-		rectTransform.anchoredPosition = new Vector2(-25, 25);
-		return panel;
-	}
+		private Canvas _canvas;
+		// FELIX  Inject?
+		private SpriteFetcher _spriteFetcher;
 
-	public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group)
-	{
-		Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
-		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-		button.GetComponent<BuildingCategoryButton>().Initialize(group, buildMenu);
-		return button;
-	}
+		public BuildMenuController buildMenu;
+		public GameObject panelPrefab;
+		public Button buildingCategoryButtonPrefab;
+		public Button buildingButtonPrefab;
+		public Button backButtonPrefab;
 
-	public Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building)
-	{
-		Button button = (Button)Instantiate(buildingButtonPrefab);
-		button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-		Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
-		button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu, slotSprite);
-		return button;
-	}
+		public void Awake()
+		{
+			_canvas = GetComponent<Canvas>();
+			_spriteFetcher = new SpriteFetcher();
+		}
 
-	public Button CreateBackButton(HorizontalLayoutGroup buttonParent)
-	{
-		Button backButton = (Button)Instantiate(backButtonPrefab);
-		backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-		backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
-		return backButton;
+		public GameObject CreatePanel(bool isActive)
+		{
+			GameObject panel = Instantiate(panelPrefab);
+			panel.SetActive(isActive);
+			panel.transform.SetParent(_canvas.transform);
+			RectTransform rectTransform = panel.GetComponent<RectTransform>();
+			rectTransform.anchoredPosition = new Vector2(-25, 25);
+			return panel;
+		}
+
+		public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group)
+		{
+			Button button = (Button)Instantiate(buildingCategoryButtonPrefab);
+			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			button.GetComponent<BuildingCategoryButton>().Initialize(group, buildMenu);
+			return button;
+		}
+
+		public Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building)
+		{
+			Button button = (Button)Instantiate(buildingButtonPrefab);
+			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
+			button.GetComponent<BuildingButtonController>().Initialize(building, buildMenu, slotSprite);
+			return button;
+		}
+
+		public Button CreateBackButton(HorizontalLayoutGroup buttonParent)
+		{
+			Button backButton = (Button)Instantiate(backButtonPrefab);
+			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			backButton.GetComponent<BackButtonController>().Initialize(buildMenu);
+			return backButton;
+		}
 	}
 }

@@ -4,55 +4,58 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour 
+namespace BattleCruisers.Buildings
 {
-	public Image healthBarOutline;
-	public Image remainingHealth;
-
-	private float _outlineWidth;
-	private float _maxHealth;
-
-	private float _health;
-	public float Health
+	public class HealthBarController : MonoBehaviour 
 	{
-		set
+		public Image healthBarOutline;
+		public Image remainingHealth;
+
+		private float _outlineWidth;
+		private float _maxHealth;
+
+		private float _health;
+		public float Health
 		{
-			if (value < MIN_HEALTH)
+			set
 			{
-				_health = MIN_HEALTH;
-			}
-			else if (value > _maxHealth)
-			{
-				_health = _maxHealth;
-			}
-			else if (_health != value)
-			{
-				_health = value;
-				UpdateRemainingHealth(_health);
+				if (value < MIN_HEALTH)
+				{
+					_health = MIN_HEALTH;
+				}
+				else if (value > _maxHealth)
+				{
+					_health = _maxHealth;
+				}
+				else if (_health != value)
+				{
+					_health = value;
+					UpdateRemainingHealth(_health);
+				}
 			}
 		}
-	}
 
-	private const float MIN_HEALTH = 0;
+		private const float MIN_HEALTH = 0;
 
-	void Awake()
-	{
-		_outlineWidth = ((RectTransform)healthBarOutline.transform).rect.width;
-	}
+		void Awake()
+		{
+			_outlineWidth = ((RectTransform)healthBarOutline.transform).rect.width;
+		}
 
-	public void Initialise(float maxHealth)
-	{
-		Debug.Log($"HealthBarController.Initialise()  maxHealth: {maxHealth}");
+		public void Initialise(float maxHealth)
+		{
+			Debug.Log($"HealthBarController.Initialise()  maxHealth: {maxHealth}");
 
-		Assert.IsTrue(maxHealth > MIN_HEALTH);
-		_maxHealth = maxHealth;
-	}
+			Assert.IsTrue(maxHealth > MIN_HEALTH);
+			_maxHealth = maxHealth;
+		}
 
-	private void UpdateRemainingHealth(float health)
-	{
-		Debug.Log($"HealthBarController.UpdateRemainingHealth()  health: {health}");
+		private void UpdateRemainingHealth(float health)
+		{
+			Debug.Log($"HealthBarController.UpdateRemainingHealth()  health: {health}");
 
-		RectTransform newHealth = (RectTransform)remainingHealth.transform;
-		newHealth.sizeDelta = new Vector2((health / _maxHealth) * _outlineWidth, newHealth.sizeDelta.y);
+			RectTransform newHealth = (RectTransform)remainingHealth.transform;
+			newHealth.sizeDelta = new Vector2((health / _maxHealth) * _outlineWidth, newHealth.sizeDelta.y);
+		}
 	}
 }

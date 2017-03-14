@@ -1,29 +1,33 @@
-﻿using System;
+﻿using BattleCruisers.Cruisers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteFetcher
+namespace BattleCruisers.Utils
 {
-	private const string SLOT_SPRITES_BASE_PATH = "Sprites/Slots/";
-	private const string SLOT_SPRITE_NAME_PREFIX = "slot-";
-
-	public Sprite GetSlotSprite(SlotType slotType)
+	public class SpriteFetcher
 	{
-		string spritePath = GetSlotFilePath(slotType);
-		// FELIX TEMP
-//		Debug.Log($"spritePath: {spritePath}");
+		private const string SLOT_SPRITES_BASE_PATH = "Sprites/Slots/";
+		private const string SLOT_SPRITE_NAME_PREFIX = "slot-";
 
-		Sprite sprite = Resources.Load<Sprite>(spritePath);
-		if (sprite == null)
+		public Sprite GetSlotSprite(SlotType slotType)
 		{
-			throw new ArgumentException($"Invalid sprite path: {spritePath}");
-		}
-		return sprite;
-	}
+			string spritePath = GetSlotFilePath(slotType);
+			// FELIX TEMP
+	//		Debug.Log($"spritePath: {spritePath}");
 
-	private string GetSlotFilePath(SlotType slotType)
-	{
-		return SLOT_SPRITES_BASE_PATH + SLOT_SPRITE_NAME_PREFIX + slotType.ToString().ToLower();
+			Sprite sprite = Resources.Load<Sprite>(spritePath);
+			if (sprite == null)
+			{
+				throw new ArgumentException($"Invalid sprite path: {spritePath}");
+			}
+			return sprite;
+		}
+
+		private string GetSlotFilePath(SlotType slotType)
+		{
+			return SLOT_SPRITES_BASE_PATH + SLOT_SPRITE_NAME_PREFIX + slotType.ToString().ToLower();
+		}
 	}
 }

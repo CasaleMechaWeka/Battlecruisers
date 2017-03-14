@@ -3,41 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// FELIX  Have a nicer way of creating these?  (No hardcoded strings?)  Similar to Resources.resw in UWP?
-public class BuildingGroupFactory
+namespace BattleCruisers.Buildings
 {
-	public BuildingGroup CreateBuildingGroup(BuildingCategory category, IList<Building> buildings)
+	// FELIX  Have a nicer way of creating these?  (No hardcoded strings?)  Similar to Resources.resw in UWP?
+	public class BuildingGroupFactory
 	{
-		return new BuildingGroup(buildings, GetGroupName(category), GetGroupDescription(category));
-	}
-
-	private string GetGroupName(BuildingCategory category)
-	{
-		switch (category)
+		public BuildingGroup CreateBuildingGroup(BuildingCategory category, IList<Building> buildings)
 		{
-			case BuildingCategory.Factory:
-				return "Factories";
-			case BuildingCategory.Tactical:
-				return "Tactical";
-			case BuildingCategory.Defence:
-				return "Defence";
-			default:
-				throw new ArgumentException();
+			return new BuildingGroup(buildings, GetGroupName(category), GetGroupDescription(category));
 		}
-	}
 
-	private string GetGroupDescription(BuildingCategory category)
-	{
-		switch (category)
+		private string GetGroupName(BuildingCategory category)
 		{
-			case BuildingCategory.Factory:
-				return "Buildings that produce units";
-			case BuildingCategory.Tactical:
-				return "Specialised buildings";
-			case BuildingCategory.Defence:
-				return "Defensive buildings to protect your cruiser";
-			default:
-				throw new ArgumentException();
+			switch (category)
+			{
+				case BuildingCategory.Factory:
+					return "Factories";
+				case BuildingCategory.Tactical:
+					return "Tactical";
+				case BuildingCategory.Defence:
+					return "Defence";
+				default:
+					throw new ArgumentException();
+			}
+		}
+
+		private string GetGroupDescription(BuildingCategory category)
+		{
+			switch (category)
+			{
+				case BuildingCategory.Factory:
+					return "Buildings that produce units";
+				case BuildingCategory.Tactical:
+					return "Specialised buildings";
+				case BuildingCategory.Defence:
+					return "Defensive buildings to protect your cruiser";
+				default:
+					throw new ArgumentException();
+			}
 		}
 	}
 }

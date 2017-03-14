@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using BattleCruisers.UI.BuildMenus;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackButtonController : MonoBehaviour 
+namespace BattleCruisers.Buildings.Buttons
 {
-	public void Initialize(IBuildMenuController buildMenuController)
+	public class BackButtonController : MonoBehaviour 
 	{
-		Button button = GetComponent<Button>();
-		button.onClick.AddListener(() => buildMenuController.ShowBuildingGroups());
+		public void Initialize(IBuildMenuController buildMenuController)
+		{
+			Button button = GetComponent<Button>();
+			button.onClick.AddListener(() => buildMenuController.ShowBuildingGroups());
+		}
 	}
 }

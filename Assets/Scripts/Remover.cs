@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class Remover : MonoBehaviour 
+namespace BattleCruisers
 {
-	void OnTriggerEnter2D(Collider2D collider)
+	public class Remover : MonoBehaviour 
 	{
-		Destroy(collider.gameObject);
+		void OnTriggerEnter2D(Collider2D collider)
+		{
+			Destroy(collider.gameObject);
+		}
 	}
 }

@@ -1,63 +1,68 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Buildings;
+using BattleCruisers.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class BuildingDetailsController : MonoBehaviour 
+namespace BattleCruisers.UI.BuildingDetails
 {
-	private Building _building;
-	private bool _allowDelete;
-	// FELIX  Inject?
-	private SpriteFetcher _spriteFetcher;
-
-	public BuildingStatsController statsController;
-	public Text buildingName;
-	public Text buildingDescription;
-	public Image buildingImage;
-	public Image slotImage;
-	public Button deleteBuildingButton;
-
-	// Use this for initialization
-	void Start () 
+	public class BuildingDetailsController : MonoBehaviour 
 	{
-		_spriteFetcher = new SpriteFetcher();
-		_allowDelete = false;
-		Hide();
-	}
+		private Building _building;
+		private bool _allowDelete;
+		// FELIX  Inject?
+		private SpriteFetcher _spriteFetcher;
 
-	public void ShowBuildingDetails(Building building, bool allowDelete)
-	{
-		Assert.IsNotNull(building);
+		public BuildingStatsController statsController;
+		public Text buildingName;
+		public Text buildingDescription;
+		public Image buildingImage;
+		public Image slotImage;
+		public Button deleteBuildingButton;
 
-		_building = building;
-		_allowDelete = allowDelete;
-		gameObject.SetActive(true);
-
-		statsController.ShowBuildingStats(_building);
-		buildingName.text = _building.buildingName;
-		buildingDescription.text = _building.description;
-		buildingImage.sprite = _building.BuildingSprite;
-		slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);
-
-		deleteBuildingButton.gameObject.SetActive(allowDelete);
-		if (allowDelete)
+		// Use this for initialization
+		void Start () 
 		{
-			deleteBuildingButton.onClick.AddListener(DeleteBuilding);
+			_spriteFetcher = new SpriteFetcher();
+			_allowDelete = false;
+			Hide();
 		}
-	}
 
-	public void DeleteBuilding()
-	{
-		Assert.IsTrue(_allowDelete);
-		Assert.IsNotNull(_building);
+		public void ShowBuildingDetails(Building building, bool allowDelete)
+		{
+			Assert.IsNotNull(building);
 
-		_building.InitiateDelete();
-		Hide();
-	}
+			_building = building;
+			_allowDelete = allowDelete;
+			gameObject.SetActive(true);
 
-	public void Hide()
-	{
-		gameObject.SetActive(false);
+			statsController.ShowBuildingStats(_building);
+			buildingName.text = _building.buildingName;
+			buildingDescription.text = _building.description;
+			buildingImage.sprite = _building.BuildingSprite;
+			slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);
+
+			deleteBuildingButton.gameObject.SetActive(allowDelete);
+			if (allowDelete)
+			{
+				deleteBuildingButton.onClick.AddListener(DeleteBuilding);
+			}
+		}
+
+		public void DeleteBuilding()
+		{
+			Assert.IsTrue(_allowDelete);
+			Assert.IsNotNull(_building);
+
+			_building.InitiateDelete();
+			Hide();
+		}
+
+		public void Hide()
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }

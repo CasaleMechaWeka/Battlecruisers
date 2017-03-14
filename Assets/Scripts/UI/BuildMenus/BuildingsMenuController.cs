@@ -1,22 +1,26 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Buildings;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingsMenuController : MonoBehaviour 
+namespace BattleCruisers.UI.BuildMenus
 {
-	public void Initialize(
-		IUIFactory uiFactory,
-		IList<Building> buildings)
+	public class BuildingsMenuController : MonoBehaviour 
 	{
-		// Create building buttons
-		HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
-
-		for (int i = 0; i < buildings.Count; ++i)
+		public void Initialize(
+			IUIFactory uiFactory,
+			IList<Building> buildings)
 		{
-			uiFactory.CreateBuildingButton(buttonGroup, buildings[i]);
-		}
+			// Create building buttons
+			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
 
-		uiFactory.CreateBackButton(buttonGroup);
+			for (int i = 0; i < buildings.Count; ++i)
+			{
+				uiFactory.CreateBuildingButton(buttonGroup, buildings[i]);
+			}
+
+			uiFactory.CreateBackButton(buttonGroup);
+		}
 	}
 }

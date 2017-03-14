@@ -1,64 +1,67 @@
 ﻿using System;
 using UnityEngine;
 
-public interface IUnitDetector
+namespace BattleCruisers.Units.Detectors
 {
-	Action<IUnit> OnEntered { set; }
-	Action<IUnit> OnExited { set; }
-}
-
-public class UnitDetector : MonoBehaviour, IUnitDetector
-{
-	public Action<IUnit> OnEntered { private get; set; }
-	public Action<IUnit> OnExited { private get; set; }
-
-	void OnTriggerEnter2D(Collider2D collider)
+	public interface IUnitDetector
 	{
-		Debug.Log("DetectionController.OnTriggerEnter2D()");
+		Action<IUnit> OnEntered { set; }
+		Action<IUnit> OnExited { set; }
+	}
 
-		if (OnEntered != null)
+	public class UnitDetector : MonoBehaviour, IUnitDetector
+	{
+		public Action<IUnit> OnEntered { private get; set; }
+		public Action<IUnit> OnExited { private get; set; }
+
+		void OnTriggerEnter2D(Collider2D collider)
 		{
-			IUnit unit = GetUnit(collider);
-			if (ShouldTriggerOnEntered(unit))
+			Debug.Log("DetectionController.OnTriggerEnter2D()");
+
+			if (OnEntered != null)
 			{
-				OnEntered(unit);
+				IUnit unit = GetUnit(collider);
+				if (ShouldTriggerOnEntered(unit))
+				{
+					OnEntered(unit);
+				}
 			}
 		}
-	}
 
-	protected virtual bool ShouldTriggerOnEntered(IUnit unit)
-	{
-		return true;
-	}
-
-	void OnTriggerExit2D(Collider2D collider)
-	{
-		Debug.Log("DetectionController.OnTriggerExit2D()");
-
-		if (OnExited != null)
+		protected virtual bool ShouldTriggerOnEntered(IUnit unit)
 		{
-			IUnit unit = GetUnit(collider);
-			if (ShouldTriggerOnExited(unit))
+			return true;
+		}
+
+		void OnTriggerExit2D(Collider2D collider)
+		{
+			Debug.Log("DetectionController.OnTriggerExit2D()");
+
+			if (OnExited != null)
 			{
-				OnExited(unit);
+				IUnit unit = GetUnit(collider);
+				if (ShouldTriggerOnExited(unit))
+				{
+					OnExited(unit);
+				}
 			}
 		}
-	}
 
-	protected virtual bool ShouldTriggerOnExited(IUnit unit)
-	{
-		return true;
-	}
-
-	private IUnit GetUnit(Collider2D collider)
-	{
-		IUnit unit = collider.gameObject.GetComponent<IUnit>();
-
-		if (unit == null)
+		protected virtual bool ShouldTriggerOnExited(IUnit unit)
 		{
-			throw new InvalidOperationException("Should only collide with game objects that have a IUnit component.");
+			return true;
 		}
 
-		return unit;
+		private IUnit GetUnit(Collider2D collider)
+		{
+			IUnit unit = collider.gameObject.GetComponent<IUnit>();
+
+			if (unit == null)
+			{
+				throw new InvalidOperationException("Should only collide with game objects that have a IUnit component.");
+			}
+
+			return unit;
+		}
 	}
 }

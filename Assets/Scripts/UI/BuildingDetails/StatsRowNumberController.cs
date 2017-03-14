@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatsRowNumberController : MonoBehaviour 
+namespace BattleCruisers.UI.BuildingDetails
 {
-	public Text rowLabel;
-	public Text rowValue;
-
-	public void Initialise(string label, string value)
+	public class StatsRowNumberController : MonoBehaviour 
 	{
-//		Debug.Log($"StatsRowNumberController.Initialise() label: {label}  value: {value}");
+		public Text rowLabel;
+		public Text rowValue;
 
-		rowLabel.text = label;
-		rowValue.text = value;
+		public void Initialise(string label, string value)
+		{
+	//		Debug.Log($"StatsRowNumberController.Initialise() label: {label}  value: {value}");
+
+			rowLabel.text = label;
+			rowValue.text = value;
+		}
 	}
 }

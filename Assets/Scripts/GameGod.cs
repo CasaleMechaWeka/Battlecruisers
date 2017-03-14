@@ -1,40 +1,46 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Buildings;
+using BattleCruisers.UI.BuildMenus;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-/// <summary>
-/// Initialises everything :D
-/// </summary>
-public class GameGod : MonoBehaviour 
+namespace BattleCruisers
 {
-	public BuildMenuController buildMenuController;
-
-	void Awake()
+	/// <summary>
+	/// Initialises everything :D
+	/// </summary>
+	public class GameGod : MonoBehaviour 
 	{
-		Assert.raiseExceptions = true;
+		public BuildMenuController buildMenuController;
 
-		InitializeBuildMenuController();
-	}
+		void Awake()
+		{
+			Assert.raiseExceptions = true;
 
-	// FELIX  Don't hardcode
-	private void InitializeBuildMenuController()
-	{
-		IList<BuildingKey> buildingKeys = new List<BuildingKey>();
+			InitializeBuildMenuController();
+		}
 
-		// Factories
-		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-		buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+		// FELIX  Don't hardcode
+		private void InitializeBuildMenuController()
+		{
+			IList<BuildingKey> buildingKeys = new List<BuildingKey>();
 
-		// Tactical
-		buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+			// Factories
+			buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
+			buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 
-		// Turrets
-		buildingKeys.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			// Tactical
+			buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
-		PrefabFetcher prefabFetcher = new PrefabFetcher();
+			// Turrets
+			buildingKeys.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 
-		BuildingLoadout buildingLoadout = new BuildingLoadout(prefabFetcher, buildingKeys);
-		buildMenuController.Initialise(buildingLoadout.BuildingGroups);
+			PrefabFetcher prefabFetcher = new PrefabFetcher();
+
+			BuildingLoadout buildingLoadout = new BuildingLoadout(prefabFetcher, buildingKeys);
+			buildMenuController.Initialise(buildingLoadout.BuildingGroups);
+		}
 	}
 }

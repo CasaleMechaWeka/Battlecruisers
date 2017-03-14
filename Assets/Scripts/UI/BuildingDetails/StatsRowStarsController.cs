@@ -4,31 +4,34 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class StatsRowStarsController : MonoBehaviour 
+namespace BattleCruisers.UI.BuildingDetails
 {
-	private Text _rowLabel;
-	private Image[] _stars;
-
-	private const int MIN_RATING = 0;
-	private const int MAX_RATING = 5;
-
-	void Awake() 
+	public class StatsRowStarsController : MonoBehaviour 
 	{
-		_rowLabel = GetComponentInChildren<Text>();
-		_stars = GetComponentsInChildren<Image>();
-		Assert.IsTrue(_stars.Length == MAX_RATING);
-	}
+		private Text _rowLabel;
+		private Image[] _stars;
 
-	public void Initialise(string statName, int statRating)
-	{
-//		Debug.Log($"StatsRowStarsController.Initialise() statName: {statName}  statRating: {statRating}");
+		private const int MIN_RATING = 0;
+		private const int MAX_RATING = 5;
 
-		_rowLabel.text = statName;
-
-		for (int i = 0; i < _stars.Length; ++i)
+		void Awake() 
 		{
-			Image star = _stars[i];
-			star.gameObject.SetActive(i < statRating);
+			_rowLabel = GetComponentInChildren<Text>();
+			_stars = GetComponentsInChildren<Image>();
+			Assert.IsTrue(_stars.Length == MAX_RATING);
+		}
+
+		public void Initialise(string statName, int statRating)
+		{
+	//		Debug.Log($"StatsRowStarsController.Initialise() statName: {statName}  statRating: {statRating}");
+
+			_rowLabel.text = statName;
+
+			for (int i = 0; i < _stars.Length; ++i)
+			{
+				Image star = _stars[i];
+				star.gameObject.SetActive(i < statRating);
+			}
 		}
 	}
 }

@@ -1,47 +1,51 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// FELIX Create interface
-// FELIX Create PrefabFetcher class?
-public class BuildingLoadout 
+namespace BattleCruisers.Buildings
 {
-	private readonly BuildingGroupFactory _buildingGroupFactory;
-
-	public IList<BuildingGroup> BuildingGroups { get; private set; }
-
-	// User needs to be able to build at least one building
-	private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
-	// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
-	private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
-
-	public BuildingLoadout(PrefabFetcher prefabFetcher, IList<BuildingKey> buildingKeys)
+	// FELIX Create interface
+	// FELIX Create PrefabFetcher class?
+	public class BuildingLoadout 
 	{
-		// Get Building prefabs for all building keys
-		IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups 
-			= new Dictionary<BuildingCategory, IList<Building>>();
+		private readonly BuildingGroupFactory _buildingGroupFactory;
 
-		foreach (BuildingKey buildingKey in buildingKeys)
+		public IList<BuildingGroup> BuildingGroups { get; private set; }
+
+		// User needs to be able to build at least one building
+		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
+		// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
+		private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
+
+		public BuildingLoadout(PrefabFetcher prefabFetcher, IList<BuildingKey> buildingKeys)
 		{
-			Building building = prefabFetcher.GetBuildingPrefab(buildingKey);
+			// Get Building prefabs for all building keys
+			IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups 
+				= new Dictionary<BuildingCategory, IList<Building>>();
 
-			if (!buildingCategoryToGroups.ContainsKey(buildingKey.Category))
+			foreach (BuildingKey buildingKey in buildingKeys)
 			{
-				buildingCategoryToGroups[buildingKey.Category] = new List<Building>();
+				Building building = prefabFetcher.GetBuildingPrefab(buildingKey);
+
+				if (!buildingCategoryToGroups.ContainsKey(buildingKey.Category))
+				{
+					buildingCategoryToGroups[buildingKey.Category] = new List<Building>();
+				}
+
+				buildingCategoryToGroups[buildingKey.Category].Add(building);
 			}
 
-			buildingCategoryToGroups[buildingKey.Category].Add(building);
-		}
+			// Create BuildingGroups
+			_buildingGroupFactory = new BuildingGroupFactory();
+			BuildingGroups = new List<BuildingGroup>(buildingCategoryToGroups.Count);
 
-		// Create BuildingGroups
-		_buildingGroupFactory = new BuildingGroupFactory();
-		BuildingGroups = new List<BuildingGroup>(buildingCategoryToGroups.Count);
-
-		foreach (KeyValuePair<BuildingCategory, IList<Building>> categoryToBuildings in buildingCategoryToGroups)
-		{
-			BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
-			BuildingGroups.Add(group);
+			foreach (KeyValuePair<BuildingCategory, IList<Building>> categoryToBuildings in buildingCategoryToGroups)
+			{
+				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
+				BuildingGroups.Add(group);
+			}
 		}
 	}
 }

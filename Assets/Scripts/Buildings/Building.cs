@@ -1,83 +1,89 @@
-﻿using System;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Buildings.Turrets;
+using BattleCruisers.UI.BuildMenus;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BuildingCategory
+namespace BattleCruisers.Buildings
 {
-	Factory, Defence, Offence, Tactical, Support, Ultras
-}
+	public enum BuildingCategory
+	{
+		Factory, Defence, Offence, Tactical, Support, Ultras
+	}
 
-public class Building : MonoBehaviour
-{
-	private Renderer _renderer;
+	public class Building : MonoBehaviour
+	{
+		private Renderer _renderer;
 
-	public string buildingName;
-	public string description;
-	public int numOfDronesRequired;
-	public int buildTimeInS;
-	public BuildingCategory category;
-	public SlotType slotType;
-	public float health;
+		public string buildingName;
+		public string description;
+		public int numOfDronesRequired;
+		public int buildTimeInS;
+		public BuildingCategory category;
+		public SlotType slotType;
+		public float health;
 
-	// FELIX  Load from file?
-	// FELIX  Use or remove?
-	public ITurretStats turretStats;
+		// FELIX  Load from file?
+		// FELIX  Use or remove?
+		public ITurretStats turretStats;
 
-	public BuildMenuController BuildingMenu { private get; set; }
+		public BuildMenuController BuildingMenu { private get; set; }
 
-	public Action OnDestroyed;
+		public Action OnDestroyed;
 
-	public virtual Vector3 Size 
-	{ 
-		get 
+		public virtual Vector3 Size 
 		{ 
-			return _renderer.bounds.size; 
-		} 
-	}
+			get 
+			{ 
+				return _renderer.bounds.size; 
+			} 
+		}
 
-	protected Sprite _buidlingSprite;
-	public virtual Sprite BuildingSprite
-	{
-		get
+		protected Sprite _buidlingSprite;
+		public virtual Sprite BuildingSprite
 		{
-			if (_buidlingSprite == null)
+			get
 			{
-				_buidlingSprite = GetComponent<SpriteRenderer>().sprite;
+				if (_buidlingSprite == null)
+				{
+					_buidlingSprite = GetComponent<SpriteRenderer>().sprite;
+				}
+				return _buidlingSprite;
 			}
-			return _buidlingSprite;
 		}
-	}
 
-	void Awake()
-	{
-		Debug.Log("Building.Awake()");
-		_renderer = GetComponent<Renderer>();
-	}
-
-	void OnMouseDown()
-	{
-		BuildingMenu.ShowExistingBuildingDetails(this);
-	}
-
-	void OnDestroy()
-	{
-		Debug.Log("Building.OnDestroy()");
-		if (OnDestroyed != null)
+		void Awake()
 		{
-			OnDestroyed.Invoke();
-			OnDestroyed = null;
+			Debug.Log("Building.Awake()");
+			_renderer = GetComponent<Renderer>();
 		}
-	}
 
-	public void InitiateDelete()
-	{
-		Destroy(gameObject);
-	}
+		void OnMouseDown()
+		{
+			BuildingMenu.ShowExistingBuildingDetails(this);
+		}
 
-	public void CancelDelete()
-	{
+		void OnDestroy()
+		{
+			Debug.Log("Building.OnDestroy()");
+			if (OnDestroyed != null)
+			{
+				OnDestroyed.Invoke();
+				OnDestroyed = null;
+			}
+		}
 
+		public void InitiateDelete()
+		{
+			Destroy(gameObject);
+		}
+
+		public void CancelDelete()
+		{
+
+		}
 	}
 }
