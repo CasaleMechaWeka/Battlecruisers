@@ -27,6 +27,7 @@ namespace BattleCruisers.Utils
 			public const string FACTORIES = "Factories";
 			public const string TACTICAL = "Tactical";
 			public const string DEFENCE  = "Defence";
+			public const string OFFENCE  = "Offence";
 		}
 
 		public Building GetBuildingPrefab(BuildingKey buildingKey)
@@ -66,6 +67,8 @@ namespace BattleCruisers.Utils
 					return PrefabFolderNames.TACTICAL;
 				case BuildingCategory.Defence:
 					return PrefabFolderNames.DEFENCE;
+				case BuildingCategory.Offence:
+					return PrefabFolderNames.OFFENCE;
 				default:
 					throw new ArgumentException();
 			}

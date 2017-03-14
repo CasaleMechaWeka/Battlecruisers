@@ -61,7 +61,6 @@ namespace BattleCruisers.Cruisers
 			_slotsWrapper = transform.FindChild("SlotsWrapper").gameObject;
 			
 			Slot[] slots = GetComponentsInChildren<Slot>();
-			Debug.Log($"slots.Length: {slots.Length}");
 			
 			foreach (Slot slot in slots)
 			{

@@ -55,8 +55,8 @@ namespace BattleCruisers
 
 		void Start() 
 		{
-			_cameraState = CameraState.Center;
-			FocusOnFriendlyCruiser();
+			_cameraState = CameraState.FriendlyCruiser;
+			_cameraStateTarget = _cameraState;
 		}
 
 		public void FocusOnFriendlyCruiser()
@@ -135,44 +135,42 @@ namespace BattleCruisers
 
 		void Update()
 		{
-			// FELIX  NEXT
-	//		return;
-
-			// Camera position
-			bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
-			if (!isInPosition)
+			if (_cameraState != _cameraStateTarget)
 			{
-				transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
-			}
-			else if (transform.position != _cameraPositionTarget)
-			{
-				transform.position = _cameraPositionTarget;
-				Debug.Log("CameraController position done");
-			}
-
-			// Camera zoom
-			bool isRightOrthographicSize = Math.Abs(Camera.main.orthographicSize - _cameraOrthographicSizeTarget) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
-			if (!isRightOrthographicSize)
-			{
-				Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
-			}
-			else if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
-			{
-				Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
-				Debug.Log("CameraController zoom done");
-			}
-
-			// Camera state
-			if (_cameraState != _cameraStateTarget 
-				&& isInPosition 
-				&& isRightOrthographicSize)
-			{
-				if (CameraTransitionCompleted != null)
+				// Camera position
+				bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
+				if (!isInPosition)
 				{
-					CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(_cameraState, _cameraStateTarget));
+					transform.position = Vector3.SmoothDamp(transform.position, _cameraPositionTarget, ref _cameraVelocity, smoothTime);
+				}
+				else if (transform.position != _cameraPositionTarget)
+				{
+					transform.position = _cameraPositionTarget;
+					Debug.Log("CameraController position done");
 				}
 
-				_cameraState = _cameraStateTarget;
+				// Camera zoom
+				bool isRightOrthographicSize = Math.Abs(Camera.main.orthographicSize - _cameraOrthographicSizeTarget) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
+				if (!isRightOrthographicSize)
+				{
+					Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, _cameraOrthographicSizeTarget, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
+				}
+				else if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
+				{
+					Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
+					Debug.Log("CameraController zoom done");
+				}
+
+				// Camera state
+				if (isInPosition && isRightOrthographicSize)
+				{
+					if (CameraTransitionCompleted != null)
+					{
+						CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(_cameraState, _cameraStateTarget));
+					}
+
+					_cameraState = _cameraStateTarget;
+				}
 			}
 		}
 	}

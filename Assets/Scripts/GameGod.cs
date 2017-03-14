@@ -34,8 +34,11 @@ namespace BattleCruisers
 			// Tactical
 			buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
-			// Turrets
+			// Defence
 			buildingKeys.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+
+			// Offence
+			buildingKeys.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 

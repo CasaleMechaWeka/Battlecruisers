@@ -23,6 +23,8 @@ namespace BattleCruisers.Buildings
 					return "Tactical";
 				case BuildingCategory.Defence:
 					return "Defence";
+				case BuildingCategory.Offence:
+					return "Offence";
 				default:
 					throw new ArgumentException();
 			}
@@ -38,6 +40,8 @@ namespace BattleCruisers.Buildings
 					return "Specialised buildings";
 				case BuildingCategory.Defence:
 					return "Defensive buildings to protect your cruiser";
+				case BuildingCategory.Offence:
+					return "Offensive buildings to destroy the enemy cruiser";
 				default:
 					throw new ArgumentException();
 			}

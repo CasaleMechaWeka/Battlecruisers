@@ -11,35 +11,20 @@ namespace BattleCruisers.UI.BuildMenus
 {
 	public class BuildMenuController : MonoBehaviour
 	{
-		private IUIFactory _uiFactory;
 		private GameObject _homePanel;
 		private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
 		private GameObject _currentPanel;
 		private IList<BuildingGroup> _buildingGroups;
-		private bool _isInitialised = false;
 
+		public UIFactory uiFactory;
 		public UIManager uiManager;
 
 		public void Initialise(IList<BuildingGroup> buildingGroups)
 		{
 			_buildingGroups = buildingGroups;
-			_isInitialised = true;
-		}
-
-		// Use this for initialization`
-		void Start () 
-		{
-			if (!_isInitialised)
-			{
-				throw new InvalidProgramException();
-			}
-
-			Debug.Log("BuildingGroups.Count: " + _buildingGroups.Count);
-
-			_uiFactory = GetComponent<UIFactory>();
 
 			// Create main menu panel
-			_homePanel = _uiFactory.CreatePanel(isActive: true);
+			_homePanel = uiFactory.CreatePanel(isActive: true);
 			_currentPanel = _homePanel;
 
 			// Create building category buttons
@@ -51,15 +36,13 @@ namespace BattleCruisers.UI.BuildMenus
 			{
 				// Create category button
 				BuildingGroup group = _buildingGroups[i];
-				_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
+				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 				// Create category panel
-				GameObject panel = _uiFactory.CreatePanel(isActive: false);
+				GameObject panel = uiFactory.CreatePanel(isActive: false);
 				_buildingGroupPanels[group.BuildingCategory] = panel;
-				panel.GetComponent<BuildingsMenuController>().Initialize(_uiFactory, group.Buildings);
+				panel.GetComponent<BuildingsMenuController>().Initialize(uiFactory, group.Buildings);
 			}
-
-			Debug.Log("BuildMenuController.Start()  END");
 		}
 
 		public void HideBuildMenu()
