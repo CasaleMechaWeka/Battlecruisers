@@ -23,6 +23,7 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 
 	public Cruiser friendlyCruiser;
 	public BuildingDetailsController buildingDetails;
+	public CameraController cameraController;
 
 	private Building _selectedBuilding;
 	public Building SelectedBuilding { get { return _selectedBuilding; } }
@@ -66,7 +67,24 @@ public class BuildMenuController : MonoBehaviour, IBuildMenuController
 			panel.GetComponent<BuildingsMenuController>().Initialize(_uiFactory, group.Buildings);
 		}
 
+		cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
+		cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
+
 		Debug.Log("BuildMenuController.Start()  END");
+	}
+
+	private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
+	{
+		ShowBuildingGroups();
+		_currentPanel.SetActive(false);
+	}
+
+	private void OnCameraTransitionCompleted(object sender, CameraTransitionArgs e)
+	{
+		if (e.Destination == CameraState.FriendlyCruiser)
+		{
+			_currentPanel.SetActive(true);
+		}
 	}
 
 	public void ShowBuildingGroups()

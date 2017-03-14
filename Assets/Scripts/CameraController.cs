@@ -8,6 +8,18 @@ public enum CameraState
 	FriendlyCruiser, EnemyCruiser, Center, InTransition
 }
 
+public class CameraTransitionArgs : EventArgs
+{
+	public CameraState Origin { get; private set; }
+	public CameraState Destination  { get; private set; }
+
+	public CameraTransitionArgs(CameraState origin, CameraState destination)
+	{
+		Origin = origin;
+		Destination = destination;
+	}
+}
+
 public interface ICameraController 
 {
 	void FocusOnFriendlyCruiser();
@@ -28,11 +40,13 @@ public class CameraController : MonoBehaviour, ICameraController
 	public GameObject friendlyCruiser;
 	public GameObject enemyCruiser;
 
-	// Set from parent game object
 	public float smoothTime;
 	public float cruiserOrthographicSize;
 	public float overviewOrthographicSize;
 	public float centerPositionY;
+
+	public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
+	public event EventHandler<CameraTransitionArgs> CameraTransitionCompleted;
 
 	private const float POSITION_EQUALITY_MARGIN = 0.1f;
 	private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
@@ -74,6 +88,11 @@ public class CameraController : MonoBehaviour, ICameraController
 			_cameraPositionTarget = transform.position;
 			_cameraStateTarget = targetState;
 
+			if (CameraTransitionStarted != null)
+			{
+				CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _cameraStateTarget));
+			}
+
 			switch (targetState)
 			{
 				case CameraState.EnemyCruiser:
@@ -102,7 +121,6 @@ public class CameraController : MonoBehaviour, ICameraController
 			{
 				transform.position = _cameraPositionTarget;
 				Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
-				_cameraState = targetState;
 			}
 			else
 			{
@@ -147,6 +165,11 @@ public class CameraController : MonoBehaviour, ICameraController
 			&& isInPosition 
 			&& isRightOrthographicSize)
 		{
+			if (CameraTransitionCompleted != null)
+			{
+				CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(_cameraState, _cameraStateTarget));
+			}
+
 			_cameraState = _cameraStateTarget;
 		}
 	}
