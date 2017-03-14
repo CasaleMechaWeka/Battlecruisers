@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum CameraState
+{
+	FriendlyCruiser, EnemyCruiser, Center, InTransition
+}
+
+public interface ICameraController 
+{
+	void FocusOnFriendlyCruiser();
+	void FocusOnEnemyCruiser();
+	void ShowFullMapView();
+}
+
 public class CameraController : MonoBehaviour, ICameraController 
 {
 	private CameraState _cameraState;
@@ -26,8 +38,11 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	void Start() 
 	{
+		// FELIX TEMP  Force non-instant camera transition
+		_cameraState = CameraState.Center;
+
 		// FELIX
-//		FocusOnFriendlyCruiser();
+		FocusOnFriendlyCruiser();
 	}
 
 	public void FocusOnFriendlyCruiser()
@@ -99,8 +114,8 @@ public class CameraController : MonoBehaviour, ICameraController
 
 	void Update()
 	{
-		// FELIX
-		return;
+		// FELIX  NEXT
+//		return;
 
 		// Camera position
 		bool isInPosition = (transform.position - _cameraPositionTarget).magnitude < POSITION_EQUALITY_MARGIN;
