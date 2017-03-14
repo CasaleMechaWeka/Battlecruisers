@@ -35,7 +35,7 @@ public class UIFactory : MonoBehaviour, IUIFactory
 		panel.SetActive(isActive);
 		panel.transform.SetParent(_canvas.transform);
 		RectTransform rectTransform = panel.GetComponent<RectTransform>();
-		rectTransform.anchoredPosition = new Vector2(0, 0);
+		rectTransform.anchoredPosition = new Vector2(-25, 25);
 		return panel;
 	}
 
