@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Cruisers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Buildings.Turrets
 		public GameObject turretBase;
 		public GameObject turretBarrelWrapper;
 		public GameObject turretBarrel;
+		public ProjectileSpawner projectileSpawner;
 
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 3;
 
@@ -36,6 +38,28 @@ namespace BattleCruisers.Buildings.Turrets
 			}
 		}
 
+		private GameObject _target;
+		public GameObject Target
+		{ 
+			protected get { return _target; }
+			set
+			{
+				_target = value;
+				projectileSpawner.Target = _target;
+			}
+		}
+
+		private ITurretStats _turretStats;
+		public ITurretStats TurretStats
+		{
+			private get { return _turretStats; }
+			set
+			{
+				_turretStats = value;
+				projectileSpawner.TurretStats = _turretStats;
+			}
+		}
+
 		void Awake()
 		{
 			Debug.Log("Turret.Awake()");
@@ -44,7 +68,7 @@ namespace BattleCruisers.Buildings.Turrets
 
 		void Update()
 		{
-			RotateTurret();
+//			RotateTurret();
 		}
 
 		private void RotateTurret()

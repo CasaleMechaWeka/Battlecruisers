@@ -25,6 +25,8 @@ namespace BattleCruisers.Cruisers
 
 		public SlotType type;
 		public UIManager uiManager;
+		public Cruiser parentCruiser;
+		public BuildingFactory buildingFactory;
 
 		public bool IsFree { get { return _building == null; } }
 
@@ -64,7 +66,7 @@ namespace BattleCruisers.Cruisers
 					throw new InvalidProgramException();
 				}
 
-				_building = Instantiate<Building>(buildingToBuild);
+				_building = buildingFactory.CreateBuilding(buildingToBuild, parentCruiser);
 
 				float heightChange = (_renderer.bounds.size.y + _building.Size.y) / 2;
 				Vector3 spawnPosition = transform.position + (transform.up * heightChange);
@@ -75,7 +77,6 @@ namespace BattleCruisers.Cruisers
 				uiManager.ShowBuildingGroups();
 
 				_building.OnDestroyed = OnBuildingDestroyed;
-				_building.UIManager = uiManager;
 			}
 		}
 

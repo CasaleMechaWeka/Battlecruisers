@@ -26,11 +26,8 @@ namespace BattleCruisers.Buildings
 		public SlotType slotType;
 		public float health;
 
-		// FELIX  Load from file?
-		// FELIX  Use or remove?
-		public ITurretStats turretStats;
-
 		public UIManager UIManager { private get; set; }
+		public Cruiser ParentCruiser { protected get; set; }
 
 		public Action OnDestroyed;
 

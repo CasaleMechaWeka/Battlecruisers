@@ -5,16 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildings.Turrets
 {
-	public interface IArtillery
-	{
-		GameObject Target { set; }
-		ITurretStats TurretStats { set; }
-		Rigidbody2D ShellPrefab { set; }
-		// FELIX:  Hmmm  should artillery determine this itself?
-		Vector2 ShellOrigin { set; }
-	}
-
-	public class Artillery : MonoBehaviour, IArtillery
+	public class ProjectileSpawner : MonoBehaviour 
 	{
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
@@ -49,9 +40,6 @@ namespace BattleCruisers.Buildings.Turrets
 
 		public ITurretStats TurretStats { set; private get; }
 		public Rigidbody2D ShellPrefab { set; private get; }
-		// FELIX:  Hmmm  should artillery determine this itself?
-		// FELIX:  use or remove
-		public Vector2 ShellOrigin { set; private get; }
 
 		private void StartFiring()
 		{
