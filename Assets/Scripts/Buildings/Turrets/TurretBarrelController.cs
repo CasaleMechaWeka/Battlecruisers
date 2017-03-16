@@ -16,10 +16,6 @@ namespace BattleCruisers.Buildings.Turrets
 	{
 		protected GameObject _targetObject;
 		protected float _shellVelocityInMPerS;
-		private Vector2 _targetPosition;
-
-		private float _targetAngleInRadians;
-		private Action _onRotationCompleted;
 
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
 		private const float ROTATION_EQUALITY_MARGIN_IN_RADIANS = 0.01f;
@@ -33,31 +29,19 @@ namespace BattleCruisers.Buildings.Turrets
 			if (_targetObject != null)
 			{
 				DesiredAngleInRadians = FindDesiredAngle();
-				bool isCorrectAngle = Math.Abs(transform.rotation.z - DesiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
-
-				Debug.Log($"TurretBarrelController.Update():  DesiredAngleInRadians: {DesiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
+				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+				bool isCorrectAngle = Math.Abs(currentAngleInRadians - DesiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
+//				Debug.Log($"TurretBarrelController.Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {DesiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
 
 				if (!isCorrectAngle)
 				{
 					float directionMultiplier = transform.rotation.z > DesiredAngleInRadians ? -1 : 1;
 					Vector3 rotationIncrement = Vector3.forward * Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S * directionMultiplier;
-
-					Debug.Log($"rotationIncrement: {rotationIncrement.ToString()}");
-
 					transform.Rotate(rotationIncrement);
 				}
 				else
 				{
-					Debug.Log("TurretBarrelController.Update():  Have reached desired angle");
-					
-					// Make current rotation exactly the same as the desired rotation, to correct
-					// for the ROTATION_EQUALITY_MARGIN_IN_RADIANS margin of error.
-					transform.rotation = new Quaternion(
-						transform.rotation.x,
-						transform.rotation.y,
-						DesiredAngleInRadians,
-						transform.rotation.w);
-
+//					Debug.Log("TurretBarrelController.Update():  Have reached desired angle");
 					if (OnTarget != null)
 					{
 						OnTarget.Invoke(this, EventArgs.Empty);

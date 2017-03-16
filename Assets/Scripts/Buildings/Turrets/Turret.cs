@@ -114,6 +114,9 @@ namespace BattleCruisers.Buildings.Turrets
 			float xMultipler = distance < 0 ? -1 : 1;
 			float velocityX = (float)(TurretStats.BulletVelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
 			float velocityY = (float)(TurretStats.BulletVelocityInMPerS * Math.Sin(angleInRadians));
+
+			Debug.Log($"Turret.FindShellVelocity():  angleInRadians: {angleInRadians}  velocityX: {velocityX}  velocityY: {velocityY}");
+
 			return new Vector2(velocityX, velocityY);
 		}
 
