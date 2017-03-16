@@ -11,7 +11,7 @@ using UnityEngine;
 public class TempCruiser : MonoBehaviour
 //public class Cruiser : MonoBehaviour, ICruiser
 {
-	public Artillery artilleryPrefab;
+//	public Artillery artilleryPrefab;
 	public GameObject otherCruiser;
 	public Direction cruiserDirection;
 

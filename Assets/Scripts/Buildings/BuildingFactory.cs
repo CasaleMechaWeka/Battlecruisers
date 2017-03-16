@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildings
 			if (turret != null)
 			{
 				// FELIX  Don't hardcode all turret stats :P
-				turret.TurretStats = new TurretStats(0.3f, 0.5f, 250f, 30f, ignoreGravity: false);
+				turret.TurretStats = GetStatsForTurret(turret.buildingName);
 				turret.Target = GetEnemyCruiser(parentCruiser).gameObject;
 			}
 
@@ -44,6 +44,21 @@ namespace BattleCruisers.Buildings
 			else
 			{
 				throw new InvalidProgramException();
+			}
+		}
+
+
+		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
+		private ITurretStats GetStatsForTurret(string turretName)
+		{
+			switch (turretName)
+			{
+				case "Shooty Turret":
+					return new TurretStats(1.5f, 1f, 20f, 30f, ignoreGravity: true);
+				case "Artillery":
+					return new TurretStats(0.3f, 0.5f, 250f, 30f, ignoreGravity: false);
+				default:
+					throw new ArgumentException();
 			}
 		}
 	}
