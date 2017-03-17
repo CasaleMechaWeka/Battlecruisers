@@ -47,6 +47,9 @@ namespace BattleCruisers
 			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			buildMenuController.Initialise(buildingGroups);
+
+			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout);
+			buildingFactory.Units = units;
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?
@@ -81,6 +84,7 @@ namespace BattleCruisers
 
 			// Ships
 			IList<UnitKey> ships = new List<UnitKey>();
+			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
 
 			// Ultra units
 			IList<UnitKey> ultraUnits = new List<UnitKey>();
@@ -99,8 +103,7 @@ namespace BattleCruisers
 
 		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser)
 		{
-			IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups 
-			= new Dictionary<BuildingCategory, IList<Building>>();
+			IDictionary<BuildingCategory, IList<Building>> categoryToBuildings = new Dictionary<BuildingCategory, IList<Building>>();
 			
 			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
@@ -109,17 +112,17 @@ namespace BattleCruisers
 				if (buildingKeys.Count != 0)
 				{
 					IList<Building> buildings = new List<Building>();
-					buildingCategoryToGroups[category] = buildings;
+					categoryToBuildings[category] = buildings;
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
 						Building building = buildingFactory.GetBuildingPrefab(buildingKey, parentCruiser, enemyCruiser);
-						buildingCategoryToGroups[buildingKey.Category].Add(building);
+						categoryToBuildings[buildingKey.Category].Add(building);
 					}
 				}
 			}
 
-			return buildingCategoryToGroups;
+			return categoryToBuildings;
 		}
 
 		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups)
@@ -139,6 +142,37 @@ namespace BattleCruisers
 			}
 			
 			return buildingGroups;
+		}
+	
+		private IDictionary<UnitCategory, IList<Unit>> GetUnitsFromKeys(Loadout loadout)
+		{
+			IDictionary<UnitCategory, IList<Unit>> categoryToUnits = new Dictionary<UnitCategory, IList<Unit>>();
+
+			foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
+			{
+				IList<UnitKey> unitKeys = loadout.GetUnits(unitCategory);
+
+				if (unitKeys.Count != 0)
+				{
+					categoryToUnits[unitCategory] = GetUnits(unitKeys);
+				}
+			}
+
+			return categoryToUnits;
+		}
+
+		private IList<Unit> GetUnits(IList<UnitKey> unitKeys)
+		{
+			IList<Unit> units = new List<Unit>(unitKeys.Count);
+
+			foreach (UnitKey unitKey in unitKeys)
+			{
+				// FELIX  Create unit factory?
+				Unit unit = _prefabFetcher.GetUnitPrefab(unitKey);
+				units.Add(unit);
+			}
+
+			return units;
 		}
 	}
 }

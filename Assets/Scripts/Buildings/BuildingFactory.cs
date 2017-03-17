@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildings
 		private UIManager _uiManager;
 		private PrefabFetcher _prefabFetcher;
 
+		public IDictionary<UnitCategory, IList<Unit>> Units { private get; set; }
+
 		public void Initialise(UIManager uiManager, PrefabFetcher prefabFetcher)
 		{
 			_uiManager = uiManager;
@@ -42,6 +44,7 @@ namespace BattleCruisers.Buildings
 			}
 		}
 
+		// FELIX  Factory should nto really store these either?
 		public IList<Unit> GetFactoryUnits(string factoryName)
 		{
 			IList<Unit> units = new List<Unit>();
@@ -49,6 +52,7 @@ namespace BattleCruisers.Buildings
 			switch (factoryName)
 			{
 				case "Naval Factory":
+					return Units[UnitCategory.Naval];
 					break;
 				default:
 					throw new ArgumentException();

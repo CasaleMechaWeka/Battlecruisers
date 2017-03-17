@@ -34,7 +34,7 @@ namespace BattleCruisers.Utils
 	public class PrefabFetcher
 	{
 		private const string BUILDINGS_BASE_PATH = "Prefabs/Buildings/";
-		private const string UNITS_BASE_PATH = "Prefabs/Buildings/";
+		private const string UNITS_BASE_PATH = "Prefabs/Units/";
 
 		private static class BuildingFolderNames
 		{
