@@ -11,6 +11,9 @@ namespace BattleCruisers.Buildings.Turrets
 	public class Turret : Building
 	{
 		private Renderer _turretBaseRenderer;
+		private float _maxRange;
+		private Vector2 _shellVelocity;
+		private float _timeSinceLastFireInS;
 
 		public GameObject turretBase;
 		public TurretBarrelController turretBarrelController;
@@ -18,9 +21,6 @@ namespace BattleCruisers.Buildings.Turrets
 		public GameObject projectileSpawner;
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
-
-		private float _maxRange;
-		private Vector2 _shellVelocity;
 
 		public ITurretStats TurretStats { private get; set; }
 
@@ -81,12 +81,22 @@ namespace BattleCruisers.Buildings.Turrets
 		{
 			Debug.Log("Turret.Awake()");
 			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
+			_timeSinceLastFireInS = float.MaxValue;
+		}
+
+		void Update()
+		{
+			_timeSinceLastFireInS += Time.deltaTime;
 		}
 
 		// FELIX  Limit fire rate :P
 		private void OnTarget(object sender, EventArgs e)
 		{
-			Fire(turretBarrelController.DesiredAngleInRadians);
+			if (_timeSinceLastFireInS >= TurretStats.FireIntervalInS)
+			{
+				Fire(turretBarrelController.DesiredAngleInRadians);
+				_timeSinceLastFireInS = 0;
+			}
 		}
 
 		private void Fire(float angleInRadians)

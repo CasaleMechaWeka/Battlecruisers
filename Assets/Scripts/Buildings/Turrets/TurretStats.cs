@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Buildings.Turrets
 {
@@ -10,6 +11,7 @@ namespace BattleCruisers.Buildings.Turrets
 		float BulletVelocityInMPerS { get; }
 		bool IgnoreGravity { get; }
 		float DamangePerS { get; }
+		float FireIntervalInS { get; }
 	}
 
 	public class TurretStats : ITurretStats
@@ -19,7 +21,8 @@ namespace BattleCruisers.Buildings.Turrets
 		public float Damage { get; private set; }
 		public float BulletVelocityInMPerS { get; private set; }
 		public bool IgnoreGravity { get; private set; }
-		public float DamangePerS { get { return Damage * FireRatePerS; } }
+		public float DamangePerS { get; private set; }
+		public float FireIntervalInS { get; private set; }
 
 		public TurretStats(float fireRatePerS, float accuracy, float damage, float bulletVelocityInMPerS, bool ignoreGravity)
 		{
@@ -37,6 +40,9 @@ namespace BattleCruisers.Buildings.Turrets
 			Damage = damage;
 			BulletVelocityInMPerS = bulletVelocityInMPerS;
 			IgnoreGravity = ignoreGravity;
+
+			DamangePerS = Damage * FireRatePerS;
+			FireIntervalInS = 1 / FireRatePerS;
 		}
 	}
 }
