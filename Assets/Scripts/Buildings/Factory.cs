@@ -1,19 +1,21 @@
-﻿using BattleCruisers.Units;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI;
+using BattleCruisers.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildings
 {
 	public class Factory : Building
 	{
+		private IList<Unit> _units;
+
 		// FELIX  Use
 		public int BuildPoints { set; private get; }
 		public int NumOfAidingDrones { set; private get; }
 		public Direction SpawnDirection { set; private get; }
-
-		// public so that it will be copied via Instantiate
-		public IList<Unit> units;
 
 		// FELIX  Let the factory build more than one unit :P
 		private AttackBoatController _unit;
@@ -34,11 +36,19 @@ namespace BattleCruisers.Buildings
 			private get { return _unit; }
 		}
 
-		public override void Initialise(BattleCruisers.UI.UIManager uiManagerArg, BattleCruisers.Cruisers.Cruiser parentCruiser, BattleCruisers.Cruisers.Cruiser enemyCruiser, BuildingFactory buildingFactory)
+		public override void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
 			base.Initialise(uiManagerArg, parentCruiser, enemyCruiser, buildingFactory);
+			_units = buildingFactory.GetFactoryUnits(buildingName);
+		}
 
+		public override void Initialise(Building building)
+		{
+			base.Initialise(building);
 
+			Factory factory = building as Factory;
+			Assert.IsNotNull(factory);
+			_units = factory._units;
 		}
 
 		void Start()
