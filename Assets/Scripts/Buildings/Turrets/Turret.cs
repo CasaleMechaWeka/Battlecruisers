@@ -101,14 +101,14 @@ namespace BattleCruisers.Buildings.Turrets
 
 		private void Fire(float angleInRadians)
 		{
-			Debug.Log("Fire()");
+//			Debug.Log("Turret.Fire()");
 
 			Rigidbody2D shell = Instantiate(shellPrefab, projectileSpawner.transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
 			if (TurretStats.IgnoreGravity)
 			{
 				shell.gravityScale = 0;
 			}
-			shell.GetComponent<IBulletController>().Damage = TurretStats.Damage;
+			shell.GetComponent<IShellController>().Damage = TurretStats.Damage;
 			shell.velocity = FindShellVelocity(turretBarrelController.DesiredAngleInRadians);
 		}
 
@@ -125,7 +125,7 @@ namespace BattleCruisers.Buildings.Turrets
 			float velocityX = (float)(TurretStats.BulletVelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
 			float velocityY = (float)(TurretStats.BulletVelocityInMPerS * Math.Sin(angleInRadians));
 
-			Debug.Log($"Turret.FindShellVelocity():  angleInRadians: {angleInRadians}  velocityX: {velocityX}  velocityY: {velocityY}");
+//			Debug.Log($"Turret.FindShellVelocity():  angleInRadians: {angleInRadians}  velocityX: {velocityX}  velocityY: {velocityY}");
 
 			return new Vector2(velocityX, velocityY);
 		}

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildings.Turrets
 {
-	public interface IBulletController
+	public interface IShellController
 	{
 		float Damage { get; set; }
 	}
 
-	public class BulletController : MonoBehaviour, IBulletController
+	public class ShellController : MonoBehaviour, IShellController
 	{
 		public float Damage { get; set; }
 

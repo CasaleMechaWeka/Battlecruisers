@@ -126,7 +126,11 @@ namespace BattleCruisers.Cruisers
 
 		public void TakeDamage(float damageAmount)
 		{
-
+			Health -= damageAmount;
+			if (Health <= 0)
+			{
+				Destroy(gameObject);
+			}
 		}
 
 		public void Repair(float repairAmount)

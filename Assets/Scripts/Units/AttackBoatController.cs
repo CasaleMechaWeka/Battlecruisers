@@ -150,7 +150,7 @@ namespace BattleCruisers.Units
 
 			Rigidbody2D shell = Instantiate(shellPrefab, spawnPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
 
-			shell.GetComponent<IBulletController>().Damage = TurretStats.Damage;
+			shell.GetComponent<IShellController>().Damage = TurretStats.Damage;
 			shell.gravityScale = 0;
 
 			float velocityX = TurretStats.BulletVelocityInMPerS * directionMultiplier;
