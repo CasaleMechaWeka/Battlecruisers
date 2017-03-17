@@ -42,67 +42,102 @@ namespace BattleCruisers
 			friendlyCruiser.direction = Direction.Right;
 			enemyCruiser.direction = Direction.Left;
 
-			InitializeBuildMenuController();
-		}
+			Loadout loadout = CreateLoadout();
 
-		// FELIX  Don't hardcode
-		private void InitializeBuildMenuController()
-		{
-			IList<BuildingKey> buildingKeys = new List<BuildingKey>();
-
-			// Factories
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
-
-			// Tactical
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
-
-			// Defence
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
-
-			// Offence
-			buildingKeys.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-
-			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildingKeys, friendlyCruiser, enemyCruiser);
+			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser);
+			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			buildMenuController.Initialise(buildingGroups);
 		}
 
-
-		private IList<BuildingGroup> CreateBuildingGroups(IList<BuildingKey> buildingKeys, Cruiser parentCruiser, Cruiser enemyCruiser)
+		// FELIX  Should not be hardcoded.  User loadouts should be in db?
+		private Loadout CreateLoadout()
 		{
-			// Get Building prefabs for all building keys
+			// Factories
+			IList<BuildingKey> factories = new List<BuildingKey>();
+			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
+			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
+			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+
+			// Tactical
+			IList<BuildingKey> tactical = new List<BuildingKey>();
+			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+
+			// Defence
+			IList<BuildingKey> defence = new List<BuildingKey>();
+			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+
+			// Offence
+			IList<BuildingKey> offence = new List<BuildingKey>();
+			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+
+			// Support
+			IList<BuildingKey> support = new List<BuildingKey>();
+
+			// Ultra buildings
+			IList<BuildingKey> ultraBuildings = new List<BuildingKey>();
+
+			// Aircraft
+			IList<UnitKey> aircraft = new List<UnitKey>();
+
+			// Ships
+			IList<UnitKey> ships = new List<UnitKey>();
+
+			// Ultra units
+			IList<UnitKey> ultraUnits = new List<UnitKey>();
+
+			return new Loadout(
+				factories,
+				tactical,
+				defence,
+				offence,
+				support,
+				ultraBuildings,
+				aircraft,
+				ships,
+				ultraUnits);
+		}
+
+		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser)
+		{
 			IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups 
-				= new Dictionary<BuildingCategory, IList<Building>>();
-
-			foreach (BuildingKey buildingKey in buildingKeys)
+			= new Dictionary<BuildingCategory, IList<Building>>();
+			
+			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
-				Building building = buildingFactory.GetBuildingPrefab(buildingKey, parentCruiser, enemyCruiser);
-
-				if (!buildingCategoryToGroups.ContainsKey(buildingKey.Category))
+				IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
+				
+				if (buildingKeys.Count != 0)
 				{
-					buildingCategoryToGroups[buildingKey.Category] = new List<Building>();
+					IList<Building> buildings = new List<Building>();
+					buildingCategoryToGroups[category] = buildings;
+					
+					foreach (BuildingKey buildingKey in buildingKeys)
+					{
+						Building building = buildingFactory.GetBuildingPrefab(buildingKey, parentCruiser, enemyCruiser);
+						buildingCategoryToGroups[buildingKey.Category].Add(building);
+					}
 				}
-
-				buildingCategoryToGroups[buildingKey.Category].Add(building);
 			}
 
-			// Create BuildingGroups
-			_buildingGroupFactory = new BuildingGroupFactory();
-			IList<BuildingGroup> buildingGroups = new List<BuildingGroup>(buildingCategoryToGroups.Count);
+			return buildingCategoryToGroups;
+		}
+
+		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups)
+		{
+			IList<BuildingGroup> buildingGroups = new List<BuildingGroup>();
 
 			foreach (KeyValuePair<BuildingCategory, IList<Building>> categoryToBuildings in buildingCategoryToGroups)
 			{
 				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
 				buildingGroups.Add(group);
 			}
-
+			
 			if (buildingGroups.Count < MIN_NUM_OF_BUILDING_GROUPS
-			    || buildingGroups.Count > MAX_NUM_OF_BUILDING_GROUPS)
+				|| buildingGroups.Count > MAX_NUM_OF_BUILDING_GROUPS)
 			{
 				throw new InvalidProgramException();
 			}
-
+			
 			return buildingGroups;
 		}
 	}

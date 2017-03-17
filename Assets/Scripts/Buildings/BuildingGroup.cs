@@ -8,7 +8,6 @@ namespace BattleCruisers.Buildings
 	// FELIX  Create interface
 	public class BuildingGroup
 	{
-
 		public IList<Building> Buildings { get; private set; }
 		public BuildingCategory BuildingCategory { get; private set; }
 		public string BuildingGroupName { get; private set; }
