@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI;
+using BattleCruisers.Units;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Buildings
 		}
 
 		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
-		public ITurretStats GetStatsForTurret(string turretName)
+		public ITurretStats GetTurretStats(string turretName)
 		{
 			switch (turretName)
 			{
@@ -39,6 +40,21 @@ namespace BattleCruisers.Buildings
 				default:
 					throw new ArgumentException();
 			}
+		}
+
+		public IList<Unit> GetFactoryUnits(string factoryName)
+		{
+			IList<Unit> units = new List<Unit>();
+
+			switch (factoryName)
+			{
+				case "Naval Factory":
+					break;
+				default:
+					throw new ArgumentException();
+			}
+
+			return units;
 		}
 
 		public Building CreateBuilding(Building buildingPrefab)

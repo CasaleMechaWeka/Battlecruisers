@@ -4,9 +4,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Units
 {
-	public enum UnitType
+	public enum Faction
 	{
-		Friend, Enemy
+		Blues, Reds
+	}
+
+	public enum UnitCategory
+	{
+		Naval, Aircraft, Ultra
 	}
 
 	public enum Direction
@@ -14,21 +19,18 @@ namespace BattleCruisers.Units
 		Left, Right, Up, Down
 	}
 
-	public interface IUnit
+	public class Unit : MonoBehaviour
 	{
-		UnitType Type { get; }
-		Direction FacingDirection { get; }
-		float Health { get; }
-		bool IsDestroyed { get; }
-		GameObject GameObject { get; }
-	}
+		public string unitName;
+		public string description;
+		public int numOfDronesRequired;
+		public int buildTimeInS;
+		public UnitCategory category;
+		public float health;
+		public Faction faction;
+		// FELIX  Remove?
+		public Direction facingDirection;
 
-	public class Unit : MonoBehaviour, IUnit
-	{
-		public UnitType Type { get; protected set; }
-		public Direction FacingDirection { get; protected set; }
-		public float Health { get; protected set; }
-		public bool IsDestroyed { get { return Health <= 0; } }
-		public GameObject GameObject { get { return gameObject; } }
+		public bool IsDestroyed { get { return health <= 0; } }
 	}
 }

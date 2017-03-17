@@ -91,7 +91,7 @@ namespace BattleCruisers.Buildings.Turrets
 		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
 			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
-			_turretStats = buildingFactory.GetStatsForTurret(buildingName);
+			_turretStats = buildingFactory.GetTurretStats(buildingName);
 		}
 
 		// FELIX  Limit fire rate :P

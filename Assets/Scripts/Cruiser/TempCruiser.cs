@@ -48,7 +48,7 @@ public class TempCruiser : MonoBehaviour
 			factoryPosition.x -= 5;
 		}
 
-		IFactory factory = Instantiate(factoryPrefab, factoryPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
+		Factory factory = Instantiate(factoryPrefab, factoryPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
 		factory.BuildPoints = 1;
 		factory.SpawnDirection = cruiserDirection;
 		factory.Unit = boatPrefab;

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildings;
+using BattleCruisers.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +19,24 @@ namespace BattleCruisers.Utils
 		}
 	}
 
+	public class UnitKey
+	{
+		public UnitCategory Category { get; private set; }
+		public string PrefabFileName { get; private set; }
+
+		public UnitKey(UnitCategory category, string prefabFileName)
+		{
+			Category = category;
+			PrefabFileName = prefabFileName;
+		}
+	}
+
 	public class PrefabFetcher
 	{
-		private const string PREFABS_BASE_PATH = "Prefabs/Buildings/";
+		private const string BUILDINGS_BASE_PATH = "Prefabs/Buildings/";
+		private const string UNITS_BASE_PATH = "Prefabs/Buildings/";
 
-		private static class PrefabFolderNames
+		private static class BuildingFolderNames
 		{
 			public const string FACTORIES = "Factories";
 			public const string TACTICAL = "Tactical";
@@ -30,31 +44,70 @@ namespace BattleCruisers.Utils
 			public const string OFFENCE  = "Offence";
 		}
 
+		private static class UnitFolderNames
+		{
+			public const string NAVAL = "Naval";
+			public const string AIRCRAFT = "Aircraft";
+			public const string ULTRA = "Ultras";
+		}
+
 		public Building GetBuildingPrefab(BuildingKey buildingKey)
 		{
-			string buildingPrefabPath = GetPrefabPath(buildingKey);
+			string buildingPrefabPath = GetBuildingPath(buildingKey);
 
 			// FELIX TEMP
 	//		Debug.Log($"buildingPrefabPath: {buildingPrefabPath}");
 
-			GameObject prefabObject = Resources.Load(buildingPrefabPath) as GameObject;
-			if (prefabObject == null)
-			{
-				throw new ArgumentException($"Invalid prefab path: {buildingPrefabPath}");
-			}
+			Building building = GetPrefab<Building>(buildingPrefabPath);
 
-			Building building = prefabObject.GetComponent<Building>();
-			if (building == null)
-			{
-				throw new ArgumentException($"Prefab does not contain Building script.  Prefab path: {buildingPrefabPath}");
-			}
+//			Building building = prefabObject.GetComponent<Building>();
+//			if (building == null)
+//			{
+//				throw new ArgumentException($"Prefab does not contain Building script.  Prefab path: {buildingPrefabPath}");
+//			}
 
 			return building;
 		}
 
-		private string GetPrefabPath(BuildingKey buildingKey)
+		public Unit GetUnitPrefab(UnitKey unitKey)
 		{
-			return PREFABS_BASE_PATH + GetBuildingFolderName(buildingKey.Category) + "/" + buildingKey.PrefabFileName;
+			string unitPrefabPath = GetUnitPath(unitKey);
+
+			Unit unit = GetPrefab<Unit>(unitPrefabPath);
+
+//			Unit unit = prefabObject.GetComponent<Unit>();
+//			if (unit == null)
+//			{
+//				throw new ArgumentException($"Prefab does not contain Unit script.  Prefab path: {unitPrefabPath}");
+//			}
+
+			return unit;
+		}
+
+		private T GetPrefab<T>(string prefabPath)
+		{
+			GameObject gameObject = Resources.Load(prefabPath) as GameObject;
+			if (gameObject == null)
+			{
+				throw new ArgumentException($"Invalid prefab path: {prefabPath}");
+			}
+
+			T prefabObject = gameObject.GetComponent<T>();
+			if (prefabObject == null)
+			{
+				throw new ArgumentException($"Prefab does not contain a component of type: {typeof(T)}.  Prefab path: {prefabPath}");
+			}
+			return prefabObject;
+		}
+
+		private string GetBuildingPath(BuildingKey buildingKey)
+		{
+			return BUILDINGS_BASE_PATH + GetBuildingFolderName(buildingKey.Category) + "/" + buildingKey.PrefabFileName;
+		}
+
+		private string GetUnitPath(UnitKey unitKey)
+		{
+			return UNITS_BASE_PATH + GetUnitFolderName(unitKey.Category) + "/" + unitKey.PrefabFileName;
 		}
 
 		private string GetBuildingFolderName(BuildingCategory buildingCategory)
@@ -62,13 +115,28 @@ namespace BattleCruisers.Utils
 			switch (buildingCategory)
 			{
 				case BuildingCategory.Factory:
-					return PrefabFolderNames.FACTORIES;
+					return BuildingFolderNames.FACTORIES;
 				case BuildingCategory.Tactical:
-					return PrefabFolderNames.TACTICAL;
+					return BuildingFolderNames.TACTICAL;
 				case BuildingCategory.Defence:
-					return PrefabFolderNames.DEFENCE;
+					return BuildingFolderNames.DEFENCE;
 				case BuildingCategory.Offence:
-					return PrefabFolderNames.OFFENCE;
+					return BuildingFolderNames.OFFENCE;
+				default:
+					throw new ArgumentException();
+			}
+		}
+
+		private static string GetUnitFolderName(UnitCategory unitCategory)
+		{
+			switch (unitCategory)
+			{
+				case UnitCategory.Aircraft:
+					return UnitFolderNames.AIRCRAFT;
+				case UnitCategory.Naval:
+					return UnitFolderNames.NAVAL;
+				case UnitCategory.Ultra:
+					return UnitFolderNames.ULTRA;
 				default:
 					throw new ArgumentException();
 			}

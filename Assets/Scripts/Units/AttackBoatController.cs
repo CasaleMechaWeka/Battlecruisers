@@ -31,8 +31,8 @@ namespace BattleCruisers.Units
 	{
 		private Rigidbody2D _rigidBody;
 		private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
-		private IUnit _enemyUnit;
-		private IUnit _blockingFriendlyUnit;
+		private Unit _enemyUnit;
+		private Unit _blockingFriendlyUnit;
 
 		// FELIX  Allow to vary depending on boat?
 		public Rigidbody2D shellPrefab;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Units
 		// FELIX  TEMP
 		public float startingVelocityX;
 		public float startingHealth;
-		public UnitType type;
+		public Faction type;
 		public Direction direction;
 
 		public float VelocityInMPerS { get; set; }
@@ -53,20 +53,20 @@ namespace BattleCruisers.Units
 
 			// FELIX  Inject, don't hardcode
 			TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
-			Health = startingHealth;
-			Type = type;
-			FacingDirection = direction;
+			health = startingHealth;
+			faction = type;
+			facingDirection = direction;
 			VelocityInMPerS = startingVelocityX;
 
 			// FELIX  Don't hardcode string, add to Constants class?
 			EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
 			enemyDetector.OnEntered = OnEnemyEntered;
-			enemyDetector.OwnType = Type;
+			enemyDetector.OwnFaction = faction;
 
 			FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
 			friendDetector.OnEntered = OnFriendEntered;
 			friendDetector.OnExited = OnFriendExited;
-			friendDetector.OwnType = Type;
+			friendDetector.OwnFaction = faction;
 		}
 
 		void Update()
@@ -101,7 +101,7 @@ namespace BattleCruisers.Units
 		/// <summary>
 		/// Stop and shoot.
 		/// </summary>
-		private void OnEnemyEntered(IUnit enemeyUnit)
+		private void OnEnemyEntered(Unit enemeyUnit)
 		{
 			_enemyUnit = enemeyUnit;
 			StopMoving();
@@ -157,7 +157,7 @@ namespace BattleCruisers.Units
 			shell.velocity = new Vector2(velocityX, 0);
 		}
 
-		private void OnFriendEntered(IUnit friendlyUnit)
+		private void OnFriendEntered(Unit friendlyUnit)
 		{
 			if (IsUnitInFront(friendlyUnit))
 			{
@@ -166,7 +166,7 @@ namespace BattleCruisers.Units
 			}
 		}
 
-		private void OnFriendExited(IUnit friendlyUnit)
+		private void OnFriendExited(Unit friendlyUnit)
 		{
 			if (IsUnitInFront(friendlyUnit))
 			{
@@ -174,12 +174,12 @@ namespace BattleCruisers.Units
 			}
 		}
 
-		private bool IsUnitInFront(IUnit unit)
+		private bool IsUnitInFront(Unit unit)
 		{
-			return (FacingDirection == Direction.Right
-					&& unit.GameObject.transform.position.x > transform.position.x)
-				|| (FacingDirection == Direction.Left
-					&& unit.GameObject.transform.position.x < transform.position.x);
+			return (facingDirection == Direction.Right
+					&& unit.gameObject.transform.position.x > transform.position.x)
+				|| (facingDirection == Direction.Left
+					&& unit.gameObject.transform.position.x < transform.position.x);
 		}
 
 		private void StartMoving()
@@ -196,9 +196,9 @@ namespace BattleCruisers.Units
 		{
 			Debug.Log("AttackBoatController.TakeDamage()");
 
-			Health -= damage;
+			health -= damage;
 
-			if (Health <= 0)
+			if (health <= 0)
 			{
 				Destroy(gameObject);
 			}

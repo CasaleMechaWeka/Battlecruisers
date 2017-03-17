@@ -1,26 +1,21 @@
 ﻿using BattleCruisers.Units;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildings
 {
-	public interface IFactory
-	{
-		// FELIX  Let this be generic
-		// FactoryUnit FactoryUnit { ; }
-		AttackBoatController Unit { set; }
-		int BuildPoints { set; }
-		int NumOfAidingDrones { set; }
-		Direction SpawnDirection { set; }
-	}
-
-	public class Factory : MonoBehaviour, IFactory
+	public class Factory : Building
 	{
 		// FELIX  Use
 		public int BuildPoints { set; private get; }
 		public int NumOfAidingDrones { set; private get; }
 		public Direction SpawnDirection { set; private get; }
 
+		// public so that it will be copied via Instantiate
+		public IList<Unit> units;
+
+		// FELIX  Let the factory build more than one unit :P
 		private AttackBoatController _unit;
 		public AttackBoatController Unit 
 		{ 
@@ -37,6 +32,13 @@ namespace BattleCruisers.Buildings
 				}
 			}
 			private get { return _unit; }
+		}
+
+		public override void Initialise(BattleCruisers.UI.UIManager uiManagerArg, BattleCruisers.Cruisers.Cruiser parentCruiser, BattleCruisers.Cruisers.Cruiser enemyCruiser, BuildingFactory buildingFactory)
+		{
+			base.Initialise(uiManagerArg, parentCruiser, enemyCruiser, buildingFactory);
+
+
 		}
 
 		void Start()

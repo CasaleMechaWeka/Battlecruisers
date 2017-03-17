@@ -5,14 +5,14 @@ namespace BattleCruisers.Units.Detectors
 {
 	public interface IUnitDetector
 	{
-		Action<IUnit> OnEntered { set; }
-		Action<IUnit> OnExited { set; }
+		Action<Unit> OnEntered { set; }
+		Action<Unit> OnExited { set; }
 	}
 
 	public class UnitDetector : MonoBehaviour, IUnitDetector
 	{
-		public Action<IUnit> OnEntered { private get; set; }
-		public Action<IUnit> OnExited { private get; set; }
+		public Action<Unit> OnEntered { private get; set; }
+		public Action<Unit> OnExited { private get; set; }
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
@@ -20,7 +20,7 @@ namespace BattleCruisers.Units.Detectors
 
 			if (OnEntered != null)
 			{
-				IUnit unit = GetUnit(collider);
+				Unit unit = GetUnit(collider);
 				if (ShouldTriggerOnEntered(unit))
 				{
 					OnEntered(unit);
@@ -28,7 +28,7 @@ namespace BattleCruisers.Units.Detectors
 			}
 		}
 
-		protected virtual bool ShouldTriggerOnEntered(IUnit unit)
+		protected virtual bool ShouldTriggerOnEntered(Unit unit)
 		{
 			return true;
 		}
@@ -39,7 +39,7 @@ namespace BattleCruisers.Units.Detectors
 
 			if (OnExited != null)
 			{
-				IUnit unit = GetUnit(collider);
+				Unit unit = GetUnit(collider);
 				if (ShouldTriggerOnExited(unit))
 				{
 					OnExited(unit);
@@ -47,18 +47,18 @@ namespace BattleCruisers.Units.Detectors
 			}
 		}
 
-		protected virtual bool ShouldTriggerOnExited(IUnit unit)
+		protected virtual bool ShouldTriggerOnExited(Unit unit)
 		{
 			return true;
 		}
 
-		private IUnit GetUnit(Collider2D collider)
+		private Unit GetUnit(Collider2D collider)
 		{
-			IUnit unit = collider.gameObject.GetComponent<IUnit>();
+			Unit unit = collider.gameObject.GetComponent<Unit>();
 
 			if (unit == null)
 			{
-				throw new InvalidOperationException("Should only collide with game objects that have a IUnit component.");
+				throw new InvalidOperationException("Should only collide with game objects that have a Unit component.");
 			}
 
 			return unit;
