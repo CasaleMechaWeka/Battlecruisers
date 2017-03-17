@@ -85,6 +85,18 @@ namespace BattleCruisers.UI
 			buildingDetails.ShowBuildingDetails(building, allowDelete: false);
 		}
 
+		public void SelectBuilding(Building building, Cruiser buildingParent)
+		{
+			if (buildingParent == friendlyCruiser)
+			{
+				SelectBuildingFromFriendlyCruiser(building);
+			}
+			else
+			{
+				SelectBuildingFromEnemyCruiser();
+			}
+		}
+
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
 			Debug.Log("UIManager.SelectBuildingFromFriendlyCruiser()");

@@ -17,7 +17,8 @@ namespace BattleCruisers.Buildings
 	public class Building : MonoBehaviour
 	{
 		private Renderer _renderer;
-		private  UIManager _uiManager;
+		private UIManager _uiManager;
+		private Cruiser _parentCruiser;
 
 		public string buildingName;
 		public string description;
@@ -55,12 +56,14 @@ namespace BattleCruisers.Buildings
 		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
 			_uiManager = uiManagerArg;
+			_parentCruiser = parentCruiser;
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
 		public virtual void Initialise(Building building)
 		{
 			_uiManager = building._uiManager;
+			_parentCruiser = building._parentCruiser;
 		}
 
 		void Awake()
@@ -71,8 +74,7 @@ namespace BattleCruisers.Buildings
 
 		void OnMouseDown()
 		{
-			// FELIX  Differentiate between friendly and enemy cruiser
-			_uiManager.SelectBuildingFromFriendlyCruiser(this);
+			_uiManager.SelectBuilding(this, _parentCruiser);
 		}
 
 		void OnDestroy()
