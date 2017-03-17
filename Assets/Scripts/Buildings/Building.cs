@@ -28,10 +28,10 @@ namespace BattleCruisers.Buildings
 		// Proportional to building size
 		public float customOffsetProportion;
 
-		public UIManager UIManager { private get; set; }
-		public Cruiser ParentCruiser { protected get; set; }
-
 		public Action OnDestroyed;
+
+		// public so that it will be copied via Instantiate
+		public UIManager uiManager;
 
 		public virtual Vector3 Size 
 		{ 
@@ -53,6 +53,11 @@ namespace BattleCruisers.Buildings
 				return _buidlingSprite;
 			}
 		}
+		
+		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
+		{
+			uiManager = uiManagerArg;
+		}
 
 		void Awake()
 		{
@@ -63,7 +68,7 @@ namespace BattleCruisers.Buildings
 		void OnMouseDown()
 		{
 			// FELIX  Differentiate between friendly and enemy cruiser
-			UIManager.SelectBuildingFromFriendlyCruiser(this);
+			uiManager.SelectBuildingFromFriendlyCruiser(this);
 		}
 
 		void OnDestroy()

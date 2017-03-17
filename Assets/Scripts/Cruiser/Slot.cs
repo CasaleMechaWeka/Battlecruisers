@@ -68,7 +68,7 @@ namespace BattleCruisers.Cruisers
 					throw new InvalidProgramException();
 				}
 
-				_building = buildingFactory.CreateBuilding(buildingToBuild, parentCruiser);
+				_building = buildingFactory.CreateBuilding(buildingToBuild);
 
 				_building.transform.position = FindSpawnPosition();
 				_building.transform.rotation = transform.rotation;

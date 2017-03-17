@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,46 +11,24 @@ namespace BattleCruisers.Buildings
 {
 	public class BuildingFactory : MonoBehaviour 
 	{
-		public Cruiser cruiser1;
-		public Cruiser cruiser2;
-		public UIManager uiManager;
+		private UIManager _uiManager;
+		private PrefabFetcher _prefabFetcher;
 
-		public Building CreateBuilding(Building buildingPrefab, Cruiser parentCruiser)
+		public void Initialise(UIManager uiManager, PrefabFetcher prefabFetcher)
 		{
-			Building building = Instantiate<Building>(buildingPrefab);
-			building.UIManager = uiManager;
-			building.ParentCruiser = parentCruiser;
+			_uiManager = uiManager;
+			_prefabFetcher = prefabFetcher;
+		}
 
-			Turret turret = building as Turret;
-			if (turret != null)
-			{
-				// FELIX  Don't set cruiser as target for non-offensive buildings
-				turret.TurretStats = GetStatsForTurret(turret.buildingName);
-				turret.Target = GetEnemyCruiser(parentCruiser).gameObject;
-			}
-
+		public Building GetBuildingPrefab(BuildingKey buildingKey, Cruiser parentCruiser, Cruiser enemyCruiser)
+		{
+			Building building = _prefabFetcher.GetBuildingPrefab(buildingKey);
+			building.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
 			return building;
 		}
 
-		private Cruiser GetEnemyCruiser(Cruiser parentCruiser)
-		{
-			if (cruiser1 == parentCruiser)
-			{
-				return cruiser2;
-			}
-			else if (cruiser2 == parentCruiser)
-			{
-				return cruiser1;
-			}
-			else
-			{
-				throw new InvalidProgramException();
-			}
-		}
-
-
 		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
-		private ITurretStats GetStatsForTurret(string turretName)
+		public ITurretStats GetStatsForTurret(string turretName)
 		{
 			switch (turretName)
 			{
@@ -60,6 +39,11 @@ namespace BattleCruisers.Buildings
 				default:
 					throw new ArgumentException();
 			}
+		}
+
+		public Building CreateBuilding(Building buildingPrefab)
+		{
+			return Instantiate<Building>(buildingPrefab);
 		}
 	}
 }

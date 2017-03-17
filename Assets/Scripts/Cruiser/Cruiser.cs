@@ -30,7 +30,6 @@ namespace BattleCruisers.Cruisers
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
 
-		public BuildingLoadout loadout;
 		public HealthBarController healthBarController;
 		public Direction direction;
 
