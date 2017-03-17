@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildings
 	public class Building : MonoBehaviour
 	{
 		private Renderer _renderer;
+		private  UIManager _uiManager;
 
 		public string buildingName;
 		public string description;
@@ -29,9 +30,6 @@ namespace BattleCruisers.Buildings
 		public float customOffsetProportion;
 
 		public Action OnDestroyed;
-
-		// public so that it will be copied via Instantiate
-		public UIManager uiManager;
 
 		public virtual Vector3 Size 
 		{ 
@@ -56,7 +54,13 @@ namespace BattleCruisers.Buildings
 		
 		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
-			uiManager = uiManagerArg;
+			_uiManager = uiManagerArg;
+		}
+
+		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
+		public virtual void Initialise(Building building)
+		{
+			_uiManager = building._uiManager;
 		}
 
 		void Awake()
@@ -68,7 +72,7 @@ namespace BattleCruisers.Buildings
 		void OnMouseDown()
 		{
 			// FELIX  Differentiate between friendly and enemy cruiser
-			uiManager.SelectBuildingFromFriendlyCruiser(this);
+			_uiManager.SelectBuildingFromFriendlyCruiser(this);
 		}
 
 		void OnDestroy()

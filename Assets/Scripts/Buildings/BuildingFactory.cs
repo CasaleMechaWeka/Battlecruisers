@@ -59,7 +59,9 @@ namespace BattleCruisers.Buildings
 
 		public Building CreateBuilding(Building buildingPrefab)
 		{
-			return Instantiate<Building>(buildingPrefab);
+			Building building = Instantiate<Building>(buildingPrefab);
+			building.Initialise(buildingPrefab);
+			return building;
 		}
 	}
 }
