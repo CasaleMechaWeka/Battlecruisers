@@ -11,7 +11,7 @@ namespace BattleCruisers.Units
 
 	public enum Direction
 	{
-		Left, Right
+		Left, Right, Up, Down
 	}
 
 	public interface IUnit

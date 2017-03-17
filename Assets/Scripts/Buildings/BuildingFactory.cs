@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildings
 			Turret turret = building as Turret;
 			if (turret != null)
 			{
-				// FELIX  Don't hardcode all turret stats :P
+				// FELIX  Don't set cruiser as target for non-offensive buildings
 				turret.TurretStats = GetStatsForTurret(turret.buildingName);
 				turret.Target = GetEnemyCruiser(parentCruiser).gameObject;
 			}

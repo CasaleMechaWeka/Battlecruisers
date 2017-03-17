@@ -25,6 +25,8 @@ namespace BattleCruisers.Buildings
 		public BuildingCategory category;
 		public SlotType slotType;
 		public float health;
+		// Proportional to building size
+		public float customOffsetProportion;
 
 		public UIManager UIManager { private get; set; }
 		public Cruiser ParentCruiser { protected get; set; }

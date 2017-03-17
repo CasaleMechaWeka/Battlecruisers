@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildings;
 using BattleCruisers.UI;
+using BattleCruisers.Units;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,7 @@ namespace BattleCruisers.Cruisers
 
 		public BuildingLoadout loadout;
 		public HealthBarController healthBarController;
+		public Direction direction;
 
 		private float _health;
 		private float Health

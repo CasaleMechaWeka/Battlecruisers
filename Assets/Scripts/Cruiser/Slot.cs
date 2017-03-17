@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildings;
+using BattleCruisers.Units;
 using BattleCruisers.UI;
 using System;
 using System.Collections;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Cruisers
 		public UIManager uiManager;
 		public Cruiser parentCruiser;
 		public BuildingFactory buildingFactory;
+		public Direction direction;
 
 		public bool IsFree { get { return _building == null; } }
 
@@ -68,15 +70,29 @@ namespace BattleCruisers.Cruisers
 
 				_building = buildingFactory.CreateBuilding(buildingToBuild, parentCruiser);
 
-				float heightChange = (_renderer.bounds.size.y + _building.Size.y) / 2;
-				Vector3 spawnPosition = transform.position + (transform.up * heightChange);
-
-				_building.transform.position = spawnPosition;
+				_building.transform.position = FindSpawnPosition();
 				_building.transform.rotation = transform.rotation;
 
 				uiManager.ShowBuildingGroups();
 
 				_building.OnDestroyed = OnBuildingDestroyed;
+			}
+		}
+
+		private Vector3 FindSpawnPosition()
+		{
+			switch (direction)
+			{
+				case Direction.Right:
+					float horizontalChange = (_renderer.bounds.size.x + _building.Size.x) / 2 + (_building.customOffsetProportion * _building.Size.x);
+					return transform.position + (transform.right * horizontalChange);
+
+				case Direction.Up:
+					float verticalChange = (_renderer.bounds.size.y + _building.Size.y) / 2 + (_building.customOffsetProportion * _building.Size.y);
+					return transform.position + (transform.up * verticalChange);
+
+				default:
+					throw new InvalidProgramException();
 			}
 		}
 
