@@ -31,6 +31,9 @@ namespace BattleCruisers.Units
 		// FELIX  Remove?
 		public Direction facingDirection;
 
+		// FELIX  Only for ships!
+		public float velocityInMPerS;
+
 		public bool IsDestroyed { get { return health <= 0; } }
 
 		protected Sprite _unitSprite;

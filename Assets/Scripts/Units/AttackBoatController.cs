@@ -43,9 +43,7 @@ namespace BattleCruisers.Units
 		public Faction type;
 		public Direction direction;
 
-		public float VelocityInMPerS { get; set; }
 		public ITurretStats TurretStats { private get; set; }
-		public int BuildTimeInS { get; set;}
 
 		void Start() 
 		{
@@ -56,9 +54,10 @@ namespace BattleCruisers.Units
 			health = startingHealth;
 			faction = type;
 			facingDirection = direction;
-			VelocityInMPerS = startingVelocityX;
+			velocityInMPerS = startingVelocityX;
 
 			// FELIX  Don't hardcode string, add to Constants class?
+			// FELIX  Set from unity via public fields
 			EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
@@ -184,7 +183,7 @@ namespace BattleCruisers.Units
 
 		private void StartMoving()
 		{
-			_rigidBody.velocity = new Vector2(VelocityInMPerS, 0);
+			_rigidBody.velocity = new Vector2(velocityInMPerS, 0);
 		}
 
 		private void StopMoving()

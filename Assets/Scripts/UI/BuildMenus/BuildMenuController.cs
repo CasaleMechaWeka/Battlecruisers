@@ -43,7 +43,8 @@ namespace BattleCruisers.UI.BuildMenus
 				// Create category panel
 				GameObject panel = uiFactory.CreatePanel(isActive: false);
 				_buildingGroupPanels[group.BuildingCategory] = panel;
-				panel.GetComponent<MenuPanelController>().Initialize(uiFactory, group.Buildings);
+				BuildingsMenuController buildingsMenu = panel.AddComponent<BuildingsMenuController>();
+				buildingsMenu.Initialize(uiFactory, group.Buildings);
 			}
 
 			// Create menu UI for units
@@ -53,7 +54,8 @@ namespace BattleCruisers.UI.BuildMenus
 			{
 				GameObject panel = uiFactory.CreatePanel(isActive: false);
 				_unitGroupPanels[unitCategory] = panel;
-				panel.GetComponent<MenuPanelController>().Initialize(uiFactory, units[unitCategory]);
+				UnitsMenuController unitsMenu = panel.AddComponent<UnitsMenuController>();
+				unitsMenu.Initialize(uiManager, uiFactory, units[unitCategory]);
 			}
 		}
 
@@ -84,14 +86,15 @@ namespace BattleCruisers.UI.BuildMenus
 			ChangePanel(panel);
 		}
 
-		public void ShowUnitsMenu(UnitCategory unitCategory)
+		public void ShowUnitsMenu(Factory factory)
 		{
-			if (!_unitGroupPanels.ContainsKey(unitCategory))
+			if (!_unitGroupPanels.ContainsKey(factory.unitCategory))
 			{
 				throw new ArgumentException();
 			}
 
-			GameObject panel = _unitGroupPanels[unitCategory];
+			GameObject panel = _unitGroupPanels[factory.unitCategory];
+			panel.GetComponent<UnitsMenuController>().Factory = factory;
 			ChangePanel(panel);
 		}
 

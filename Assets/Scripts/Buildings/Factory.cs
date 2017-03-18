@@ -10,16 +10,16 @@ namespace BattleCruisers.Buildings
 {
 	public class Factory : Building
 	{
-		public UnitCategory supportedUnitCategory;
+		public UnitCategory unitCategory;
+		public int buildPoints;
 
 		// FELIX  Use
-		public int BuildPoints { set; private get; }
 		public int NumOfAidingDrones { set; private get; }
 		public Direction SpawnDirection { set; private get; }
 
 		// FELIX  Let the factory build more than one unit :P
-		private AttackBoatController _unit;
-		public AttackBoatController Unit 
+		private Unit _unit;
+		public Unit Unit 
 		{ 
 			set
 			{
@@ -40,25 +40,28 @@ namespace BattleCruisers.Buildings
 		{
 			Debug.Log("Factory.Start()");
 
-			BuildPoints = -1;
+			buildPoints = -1;
 			NumOfAidingDrones = 0;
 		}
 
 		protected override void OnClicked()
 		{
 			base.OnClicked();
-			_uiManager.SelectUnitCategory(supportedUnitCategory);
+			_uiManager.ShowFactoryUnits(this);
 		}
 
 		private void StartProducing()
 		{
-			if (BuildPoints < 0)
+			// FELIX  TEMP
+			return;
+
+			if (buildPoints < 0)
 			{
 				throw new InvalidOperationException();
 			}
 
 			// FELIX  Figure out how to speed this up with drones
-			float productionTimeInS = _unit.BuildTimeInS / BuildPoints;
+			float productionTimeInS = _unit.buildTimeInS / buildPoints;
 			InvokeRepeating("ProduceUnit", productionTimeInS, productionTimeInS);
 		}
 
@@ -92,7 +95,7 @@ namespace BattleCruisers.Buildings
 			
 			Rigidbody2D unitAsRigidbody = unit.GetComponent<Rigidbody2D>();
 
-			unitAsRigidbody.velocity = new Vector2(directionMultiplier * _unit.VelocityInMPerS, 0);
+			unitAsRigidbody.velocity = new Vector2(directionMultiplier * _unit.velocityInMPerS, 0);
 		}
 	}
 }

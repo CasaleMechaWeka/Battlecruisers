@@ -110,9 +110,14 @@ namespace BattleCruisers.UI
 			throw new NotImplementedException();
 		}
 
-		public void SelectUnitCategory(UnitCategory unitCategory)
+		public void ShowFactoryUnits(Factory factory)
 		{
-			buildMenuController.ShowUnitsMenu(unitCategory);
+			buildMenuController.ShowUnitsMenu(factory);
+		}
+
+		public void ShowUnitDetails(Unit unit)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

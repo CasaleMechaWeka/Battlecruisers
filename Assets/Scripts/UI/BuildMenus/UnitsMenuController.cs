@@ -3,40 +3,41 @@ using BattleCruisers.Units;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BuildMenus
 {
-	public class MenuPanelController : MonoBehaviour 
+	public class UnitsMenuController : MonoBehaviour 
 	{
-		public void Initialize(
-			IUIFactory uiFactory,
-			IList<Building> buildings)
-		{
-			// Create building buttons
-			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
+		private UIManager _uiManager;
 
-			for (int i = 0; i < buildings.Count; ++i)
-			{
-				uiFactory.CreateBuildingButton(buttonGroup, buildings[i]);
-			}
-
-			uiFactory.CreateBackButton(buttonGroup);
-		}
+		public Factory Factory { private get; set; }
 
 		public void Initialize(
+			UIManager uiManager,
 			IUIFactory uiFactory,
 			IList<Unit> units)
 		{
+			_uiManager = uiManager;
+
 			// Create unit buttons
 			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
 
 			for (int i = 0; i < units.Count; ++i)
 			{
-				uiFactory.CreateUnitButton(buttonGroup, units[i]);
+				uiFactory.CreateUnitButton(buttonGroup, units[i], this);
 			}
 
 			uiFactory.CreateBackButton(buttonGroup);
+		}
+
+		public void SelectUnit(Unit unit)
+		{
+			Assert.IsNotNull(Factory);
+			Factory.Unit = unit;
+
+			// Show building details
 		}
 	}
 }

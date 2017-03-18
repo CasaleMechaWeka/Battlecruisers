@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI;
+using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.Units;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,18 +14,14 @@ namespace BattleCruisers.Buildings.Buttons
 		public Text unitName;
 		public Text droneLevel;
 
-		public void Initialize(Unit unit, UIManager uiManager)
+		public void Initialize(Unit unit, UnitsMenuController unitsMenu)
 		{
 			unitName.text = unit.unitName;
 			droneLevel.text = unit.numOfDronesRequired.ToString();
 			unitImage.sprite = unit.UnitSprite;
 
 			Button button = GetComponent<Button>();
-
-			// FELIX
-			// 1. Show unit details
-			// 2. Start building unit out of factory
-//			button.onClick.AddListener(() => uiManager.SelectunitFromMenu(unit));
+			button.onClick.AddListener(() => unitsMenu.SelectUnit(unit));
 		}
 	}
 }

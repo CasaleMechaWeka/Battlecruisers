@@ -1,5 +1,6 @@
-﻿using BattleCruisers.UI;
-using BattleCruisers.Buildings.Buttons;
+﻿using BattleCruisers.Buildings.Buttons;
+using BattleCruisers.UI;
+using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.Units;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Buildings
 		GameObject CreatePanel(bool isActive);
 		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
 		Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
-		Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit);
+		Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitsMenu);
 		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 	}
 
@@ -64,11 +65,11 @@ namespace BattleCruisers.Buildings
 			return button;
 		}
 
-		public Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit)
+		public Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitMenu)
 		{
 			Button button = (Button)Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<UnitButtonController>().Initialize(unit, uiManager);
+			button.GetComponent<UnitButtonController>().Initialize(unit, unitMenu);
 			return button;	
 		}
 

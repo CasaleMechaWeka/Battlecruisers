@@ -33,8 +33,8 @@ public class TempCruiser : MonoBehaviour
 //		artillery.Target = otherCruiser;
 
 		// Naval factory
-		boatPrefab.BuildTimeInS = 3;
-		boatPrefab.VelocityInMPerS = 4;
+		boatPrefab.buildTimeInS = 3;
+		boatPrefab.velocityInMPerS = 4;
 		// FELIX
 		boatPrefab.TurretStats = null;
 
@@ -49,7 +49,7 @@ public class TempCruiser : MonoBehaviour
 		}
 
 		Factory factory = Instantiate(factoryPrefab, factoryPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
-		factory.BuildPoints = 1;
+		factory.buildPoints = 1;
 		factory.SpawnDirection = cruiserDirection;
 		factory.Unit = boatPrefab;
 	}
