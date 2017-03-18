@@ -44,18 +44,6 @@ namespace BattleCruisers.Buildings
 			}
 		}
 
-		// FELIX  Factory should nto really store these either?
-		public IList<Unit> GetFactoryUnits(string factoryName)
-		{
-			switch (factoryName)
-			{
-				case "Naval Factory":
-					return Units[UnitCategory.Naval];
-				default:
-					throw new ArgumentException();
-			}
-		}
-
 		public Building CreateBuilding(Building buildingPrefab)
 		{
 			Building building = Instantiate<Building>(buildingPrefab);

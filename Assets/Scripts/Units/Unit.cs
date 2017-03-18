@@ -32,5 +32,18 @@ namespace BattleCruisers.Units
 		public Direction facingDirection;
 
 		public bool IsDestroyed { get { return health <= 0; } }
+
+		protected Sprite _unitSprite;
+		public virtual Sprite UnitSprite
+		{
+			get
+			{
+				if (_unitSprite == null)
+				{
+					_unitSprite = GetComponent<SpriteRenderer>().sprite;
+				}
+				return _unitSprite;
+			}
+		}
 	}
 }

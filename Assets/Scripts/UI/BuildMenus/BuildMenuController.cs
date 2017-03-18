@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleCruisers.Units;
 
 namespace BattleCruisers.UI.BuildMenus
 {
@@ -13,13 +14,14 @@ namespace BattleCruisers.UI.BuildMenus
 	{
 		private GameObject _homePanel;
 		private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
+		private IDictionary<UnitCategory, GameObject> _unitGroupPanels;
 		private GameObject _currentPanel;
 		private IList<BuildingGroup> _buildingGroups;
 
 		public UIFactory uiFactory;
 		public UIManager uiManager;
 
-		public void Initialise(IList<BuildingGroup> buildingGroups)
+		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<Unit>> units)
 		{
 			_buildingGroups = buildingGroups;
 
@@ -41,7 +43,17 @@ namespace BattleCruisers.UI.BuildMenus
 				// Create category panel
 				GameObject panel = uiFactory.CreatePanel(isActive: false);
 				_buildingGroupPanels[group.BuildingCategory] = panel;
-				panel.GetComponent<BuildingsMenuController>().Initialize(uiFactory, group.Buildings);
+				panel.GetComponent<MenuPanelController>().Initialize(uiFactory, group.Buildings);
+			}
+
+			// Create menu UI for units
+			_unitGroupPanels = new Dictionary<UnitCategory, GameObject>();
+
+			foreach (UnitCategory unitCategory in units.Keys)
+			{
+				GameObject panel = uiFactory.CreatePanel(isActive: false);
+				_unitGroupPanels[unitCategory] = panel;
+				panel.GetComponent<MenuPanelController>().Initialize(uiFactory, units[unitCategory]);
 			}
 		}
 
@@ -69,6 +81,17 @@ namespace BattleCruisers.UI.BuildMenus
 			}
 
 			GameObject panel = _buildingGroupPanels[buildingCategory];
+			ChangePanel(panel);
+		}
+
+		public void ShowUnitsMenu(UnitCategory unitCategory)
+		{
+			if (!_unitGroupPanels.ContainsKey(unitCategory))
+			{
+				throw new ArgumentException();
+			}
+
+			GameObject panel = _unitGroupPanels[unitCategory];
 			ChangePanel(panel);
 		}
 

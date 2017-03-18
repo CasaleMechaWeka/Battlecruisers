@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI;
 using BattleCruisers.Buildings.Buttons;
+using BattleCruisers.Units;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Buildings
 		GameObject CreatePanel(bool isActive);
 		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
 		Button CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
+		Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit);
 		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 	}
 
@@ -26,6 +28,7 @@ namespace BattleCruisers.Buildings
 		public GameObject panelPrefab;
 		public Button buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
+		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
 		public void Awake()
@@ -59,6 +62,14 @@ namespace BattleCruisers.Buildings
 			Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
 			button.GetComponent<BuildingButtonController>().Initialize(building, uiManager, slotSprite);
 			return button;
+		}
+
+		public Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit)
+		{
+			Button button = (Button)Instantiate(unitButtonPrefab);
+			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			button.GetComponent<UnitButtonController>().Initialize(unit, uiManager);
+			return button;	
 		}
 
 		public Button CreateBackButton(HorizontalLayoutGroup buttonParent)

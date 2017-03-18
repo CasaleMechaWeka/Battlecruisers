@@ -1,12 +1,13 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildings;
 using BattleCruisers.UI;
+using BattleCruisers.UI.BuildingDetails;
 using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BattleCruisers.UI.BuildingDetails;
 
 namespace BattleCruisers.UI
 {
@@ -107,6 +108,11 @@ namespace BattleCruisers.UI
 		public void SelectBuildingFromEnemyCruiser()
 		{
 			throw new NotImplementedException();
+		}
+
+		public void SelectUnitCategory(UnitCategory unitCategory)
+		{
+			buildMenuController.ShowUnitsMenu(unitCategory);
 		}
 	}
 }

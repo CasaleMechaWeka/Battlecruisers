@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildings
 {
 	public class Factory : Building
 	{
-		private IList<Unit> _units;
+		public UnitCategory supportedUnitCategory;
 
 		// FELIX  Use
 		public int BuildPoints { set; private get; }
@@ -36,27 +36,18 @@ namespace BattleCruisers.Buildings
 			private get { return _unit; }
 		}
 
-		public override void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
-		{
-			base.Initialise(uiManagerArg, parentCruiser, enemyCruiser, buildingFactory);
-			_units = buildingFactory.GetFactoryUnits(buildingName);
-		}
-
-		public override void Initialise(Building building)
-		{
-			base.Initialise(building);
-
-			Factory factory = building as Factory;
-			Assert.IsNotNull(factory);
-			_units = factory._units;
-		}
-
 		void Start()
 		{
 			Debug.Log("Factory.Start()");
 
 			BuildPoints = -1;
 			NumOfAidingDrones = 0;
+		}
+
+		protected override void OnClicked()
+		{
+			base.OnClicked();
+			_uiManager.SelectUnitCategory(supportedUnitCategory);
 		}
 
 		private void StartProducing()

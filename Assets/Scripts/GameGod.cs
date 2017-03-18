@@ -46,10 +46,8 @@ namespace BattleCruisers
 
 			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			buildMenuController.Initialise(buildingGroups);
-
 			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout);
-			buildingFactory.Units = units;
+			buildMenuController.Initialise(buildingGroups, units);
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?

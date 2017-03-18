@@ -54,34 +54,13 @@ namespace BattleCruisers.Utils
 		public Building GetBuildingPrefab(BuildingKey buildingKey)
 		{
 			string buildingPrefabPath = GetBuildingPath(buildingKey);
-
-			// FELIX TEMP
-	//		Debug.Log($"buildingPrefabPath: {buildingPrefabPath}");
-
-			Building building = GetPrefab<Building>(buildingPrefabPath);
-
-//			Building building = prefabObject.GetComponent<Building>();
-//			if (building == null)
-//			{
-//				throw new ArgumentException($"Prefab does not contain Building script.  Prefab path: {buildingPrefabPath}");
-//			}
-
-			return building;
+			return GetPrefab<Building>(buildingPrefabPath);
 		}
 
 		public Unit GetUnitPrefab(UnitKey unitKey)
 		{
 			string unitPrefabPath = GetUnitPath(unitKey);
-
-			Unit unit = GetPrefab<Unit>(unitPrefabPath);
-
-//			Unit unit = prefabObject.GetComponent<Unit>();
-//			if (unit == null)
-//			{
-//				throw new ArgumentException($"Prefab does not contain Unit script.  Prefab path: {unitPrefabPath}");
-//			}
-
-			return unit;
+			return GetPrefab<Unit>(unitPrefabPath);
 		}
 
 		private T GetPrefab<T>(string prefabPath)

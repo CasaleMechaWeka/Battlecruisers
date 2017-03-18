@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildings
 	public class Building : MonoBehaviour
 	{
 		private Renderer _renderer;
-		private UIManager _uiManager;
+		protected UIManager _uiManager;
 		private Cruiser _parentCruiser;
 
 		public string buildingName;
@@ -75,7 +75,10 @@ namespace BattleCruisers.Buildings
 		void OnMouseDown()
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
+			OnClicked();
 		}
+
+		protected virtual void OnClicked() { }
 
 		void OnDestroy()
 		{
