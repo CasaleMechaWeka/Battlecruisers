@@ -48,9 +48,7 @@ namespace BattleCruisers
 
 		public Building CreateBuilding(Building buildingPrefab)
 		{
-			Building building = Instantiate<Building>(buildingPrefab);
-			building.Initialise(buildingPrefab);
-			return building;
+			return CreateBuildable(buildingPrefab);
 		}
 
 		public Unit GetUnitPrefab(UnitKey unitKey, Cruiser parentCruiser, Cruiser enemyCruiser)
@@ -74,9 +72,14 @@ namespace BattleCruisers
 
 		public Unit CreateUnit(Unit unitPrefab)
 		{
-			Unit unit = Instantiate<Unit>(unitPrefab);
-			unit.Initialise(unitPrefab);
-			return unit;
+			return CreateBuildable(unitPrefab);
+		}
+
+		private T CreateBuildable<T>(T buildablePrefab) where T : BuildableObject
+		{
+			T buildable = Instantiate<T>(buildablePrefab);
+			buildable.Initialise(buildablePrefab);
+			return buildable;
 		}
 	}
 }
