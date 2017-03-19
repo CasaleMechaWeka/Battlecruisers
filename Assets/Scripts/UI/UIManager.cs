@@ -19,7 +19,7 @@ namespace BattleCruisers.UI
 		public HealthBarController friendlyCruiserHealthBar;
 		public HealthBarController enemyCruiserHealthBar;
 		public Cruiser friendlyCruiser;
-		public BuildableDetailsController buildingDetails;
+		public BuildableDetailsController buildableDetails;
 
 		public Building SelectedBuilding { get; private set; }
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI
 			{
 				case CameraState.FriendlyCruiser:
 					buildMenuController.HideBuildMenu();
-					buildingDetails.Hide();
+					buildableDetails.Hide();
 					friendlyCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI
 			Debug.Log("UIManager.ShowBuildingGroups()");
 			friendlyCruiser.UnhighlightSlots();
 			friendlyCruiser.HideAllSlots();
-			buildingDetails.Hide();
+			buildableDetails.Hide();
 			buildMenuController.ShowBuildingGroupsMenu();
 		}
 
@@ -85,7 +85,7 @@ namespace BattleCruisers.UI
 			Debug.Log("UIManager.SelectBuildingFromMenu()");
 			SelectedBuilding = building;
 			friendlyCruiser.HighlightAvailableSlots(building.slotType);
-			buildingDetails.ShowBuildableDetails(building, allowDelete: false);
+			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, Cruiser buildingParent)
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI
 		{
 			Debug.Log("UIManager.SelectBuildingFromFriendlyCruiser()");
 			friendlyCruiser.UnhighlightSlots();
-			buildingDetails.ShowBuildableDetails(building, allowDelete: true);
+			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 
 		public void SelectBuildingFromEnemyCruiser()
@@ -117,9 +117,10 @@ namespace BattleCruisers.UI
 			buildMenuController.ShowUnitsMenu(factory);
 		}
 
+		// FELIX  Also show details when clicking on real unit (not just unit button in factory panel)
 		public void ShowUnitDetails(Unit unit)
 		{
-			throw new NotImplementedException();
+			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
 		}
 	}
 }

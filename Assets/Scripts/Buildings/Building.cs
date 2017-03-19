@@ -17,29 +17,12 @@ namespace BattleCruisers.Buildings
 
 	public class Building : BuildableObject
 	{
-		protected UIManager _uiManager;
-		protected Cruiser _parentCruiser;
-
 		public BuildingCategory category;
 		// Proportional to building size
 		public float customOffsetProportion;
 
 		// FELIX  Used?  Create event so can have multiple listeners
 		public Action OnDestroyed;
-
-		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
-		{
-			_uiManager = uiManagerArg;
-			_parentCruiser = parentCruiser;
-			faction = _parentCruiser.faction;
-		}
-
-		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
-		public virtual void Initialise(Building building)
-		{
-			_uiManager = building._uiManager;
-			_parentCruiser = building._parentCruiser;
-		}
 
 		void OnMouseDown()
 		{

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,10 @@ namespace BattleCruisers
 	{
 		private Renderer _renderer;
 
+		protected UIManager _uiManager;
+		protected Cruiser _parentCruiser;
+		protected Cruiser _enemyCruiser;
+
 		public string buildableName;
 		public string description;
 		public int numOfDronesRequired;
@@ -70,6 +75,21 @@ namespace BattleCruisers
 		}
 
 		public virtual void InitiateDelete() { }
+
+		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
+		{
+			_uiManager = uiManager;
+			_parentCruiser = parentCruiser;
+			_enemyCruiser = enemyCruiser;
+		}
+
+		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
+		public virtual void Initialise(BuildableObject buildable)
+		{
+			_uiManager = buildable._uiManager;
+			_parentCruiser = buildable._parentCruiser;
+			_enemyCruiser = buildable._enemyCruiser;
+		}
 
 		void Awake()
 		{

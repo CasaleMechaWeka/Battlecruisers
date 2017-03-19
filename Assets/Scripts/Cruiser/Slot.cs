@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers
 		public SlotType type;
 		public UIManager uiManager;
 		public Cruiser parentCruiser;
-		public BuildingFactory buildingFactory;
+		public BuildableFactory buildingFactory;
 		public Direction direction;
 
 		public bool IsFree { get { return _building == null; } }

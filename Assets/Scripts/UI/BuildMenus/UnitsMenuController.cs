@@ -37,9 +37,7 @@ namespace BattleCruisers.UI.BuildMenus
 		{
 			Assert.IsNotNull(Factory);
 			Factory.Unit = unit;
-
-			// FELIX
-			// Show building details
+			_uiManager.ShowUnitDetails(unit);
 		}
 	}
 }

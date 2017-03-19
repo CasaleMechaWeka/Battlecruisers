@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildings.Turrets;
+﻿using BattleCruisers.Buildings;
+using BattleCruisers.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI;
 using BattleCruisers.Units;
@@ -8,9 +9,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildings
+namespace BattleCruisers
 {
-	public class BuildingFactory : MonoBehaviour 
+	// FELIX  Rename to BuildableFactory?  Merge building and unit methods
+	public class BuildableFactory : MonoBehaviour 
 	{
 		private UIManager _uiManager;
 		private PrefabFetcher _prefabFetcher;
@@ -49,6 +51,32 @@ namespace BattleCruisers.Buildings
 			Building building = Instantiate<Building>(buildingPrefab);
 			building.Initialise(buildingPrefab);
 			return building;
+		}
+
+		public Unit GetUnitPrefab(UnitKey unitKey, Cruiser parentCruiser, Cruiser enemyCruiser)
+		{
+			Unit unit = _prefabFetcher.GetUnitPrefab(unitKey);
+			unit.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
+			return unit;
+		}
+
+		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
+		public ITurretStats GetUnitTurretStats(string unitName)
+		{
+			switch (unitName)
+			{
+				case "Attack Boat":
+					return new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
+				default:
+					throw new ArgumentException();
+			}
+		}
+
+		public Unit CreateUnit(Unit unitPrefab)
+		{
+			Unit unit = Instantiate<Unit>(unitPrefab);
+			unit.Initialise(unitPrefab);
+			return unit;
 		}
 	}
 }

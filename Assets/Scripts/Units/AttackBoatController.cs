@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-// FELIX  Create parent boat class
+﻿// FELIX  Create parent boat class
 // FELIX  Create Unit class and interface
 // FELIX  Behaviour
 // 1. Friendly boat => stop
@@ -12,8 +7,14 @@ using UnityEngine;
 // 4. Enemy leaves/gets destroyed => Stop attacking & advance
 // 5. Collision, die?
 using BattleCruisers.Buildings.Turrets;
+using BattleCruisers.Cruisers;
+using BattleCruisers.UI;
 using BattleCruisers.Units.Detectors;
-
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Units
 {
@@ -34,6 +35,8 @@ namespace BattleCruisers.Units
 		private FactionObject _enemyUnit;
 		private FactionObject _blockingFriendlyUnit;
 		private int _directionMultiplier;
+		private ITurretStats _turretStats;
+		private ShellStats _shellStats;
 
 		public EnemyDetector enemyDetector;
 		public FriendDetector friendDetector;
@@ -41,17 +44,31 @@ namespace BattleCruisers.Units
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
 
-		public ITurretStats TurretStats { private get; set; }
-		public override float Damage { get { return TurretStats.DamangePerS; } }
+		public override float Damage { get { return _turretStats.DamangePerS; } }
+
+		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
+		{
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
+			_turretStats = buildingFactory.GetUnitTurretStats(buildableName);
+			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
+			shellSpawner.Initialise(_shellStats);
+		}
+
+		public override void Initialise(BuildableObject buildable)
+		{
+			base.Initialise(buildable);
+
+			AttackBoatController attackBoat = buildable as AttackBoatController;
+			Assert.IsNotNull(attackBoat);
+			_turretStats = attackBoat._turretStats;
+			_shellStats = attackBoat._shellStats;
+			shellSpawner.Initialise(_shellStats);
+		}
 
 		void Start() 
 		{
 			_rigidBody = GetComponent<Rigidbody2D>();
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
-
-			// FELIX  Inject, don't hardcode
-			TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
-			shellSpawner.Initialise(new ShellStats(shellPrefab, TurretStats.Damage, TurretStats.IgnoreGravity, TurretStats.BulletVelocityInMPerS));
 
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
@@ -104,12 +121,12 @@ namespace BattleCruisers.Units
 		// FELIX  Extract firing functionality, common with artillery
 		private void StartAttacking()
 		{
-			if (TurretStats == null)
+			if (_turretStats == null)
 			{
 				throw new InvalidOperationException();
 			}
 
-			float fireIntervalInS = 1 / TurretStats.FireRatePerS;
+			float fireIntervalInS = 1 / _turretStats.FireRatePerS;
 			InvokeRepeating("Attack", _fireDelayInS, fireIntervalInS);
 		}
 

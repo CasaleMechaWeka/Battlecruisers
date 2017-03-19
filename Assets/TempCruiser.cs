@@ -37,7 +37,7 @@ public class TempCruiser : MonoBehaviour
 		boatPrefab.buildTimeInS = 3;
 		boatPrefab.velocityInMPerS = 4;
 		// FELIX
-		boatPrefab.TurretStats = null;
+//		boatPrefab._turretStats = null;
 
 		Vector2 factoryPosition = transform.position;
 		if (cruiserDirection == Direction.Right)

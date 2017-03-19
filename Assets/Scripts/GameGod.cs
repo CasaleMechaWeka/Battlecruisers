@@ -17,10 +17,9 @@ namespace BattleCruisers
 	/// </summary>
 	public class GameGod : MonoBehaviour 
 	{
-		private PrefabFetcher _prefabFetcher;
 		private BuildingGroupFactory _buildingGroupFactory;
 
-		public BuildingFactory buildingFactory;
+		public BuildableFactory buildableFactory;
 		public UIManager uiManager;
 		public BuildMenuController buildMenuController;
 		public Cruiser friendlyCruiser;
@@ -35,18 +34,18 @@ namespace BattleCruisers
 		{
 			Assert.raiseExceptions = true;
 
-			_prefabFetcher = new PrefabFetcher();
+			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			_buildingGroupFactory = new BuildingGroupFactory();
 
-			buildingFactory.Initialise(uiManager, _prefabFetcher);
+			buildableFactory.Initialise(uiManager, prefabFetcher);
 			friendlyCruiser.direction = Direction.Right;
 			enemyCruiser.direction = Direction.Left;
 
 			Loadout loadout = CreateLoadout();
 
-			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser);
+			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout);
+			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
 		}
 
@@ -99,7 +98,7 @@ namespace BattleCruisers
 				ultraUnits);
 		}
 
-		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser)
+		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
 			IDictionary<BuildingCategory, IList<Building>> categoryToBuildings = new Dictionary<BuildingCategory, IList<Building>>();
 			
@@ -114,7 +113,7 @@ namespace BattleCruisers
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						Building building = buildingFactory.GetBuildingPrefab(buildingKey, parentCruiser, enemyCruiser);
+						Building building = buildableFactory.GetBuildingPrefab(buildingKey, parentCruiser, hostileCruiser);
 						categoryToBuildings[buildingKey.Category].Add(building);
 					}
 				}
@@ -142,7 +141,7 @@ namespace BattleCruisers
 			return buildingGroups;
 		}
 	
-		private IDictionary<UnitCategory, IList<Unit>> GetUnitsFromKeys(Loadout loadout)
+		private IDictionary<UnitCategory, IList<Unit>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
 			IDictionary<UnitCategory, IList<Unit>> categoryToUnits = new Dictionary<UnitCategory, IList<Unit>>();
 
@@ -152,21 +151,20 @@ namespace BattleCruisers
 
 				if (unitKeys.Count != 0)
 				{
-					categoryToUnits[unitCategory] = GetUnits(unitKeys);
+					categoryToUnits[unitCategory] = GetUnits(unitKeys, parentCruiser, hostileCruiser);
 				}
 			}
 
 			return categoryToUnits;
 		}
 
-		private IList<Unit> GetUnits(IList<UnitKey> unitKeys)
+		private IList<Unit> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
 			IList<Unit> units = new List<Unit>(unitKeys.Count);
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				// FELIX  Create unit factory?
-				Unit unit = _prefabFetcher.GetUnitPrefab(unitKey);
+				Unit unit = buildableFactory.GetUnitPrefab(unitKey, parentCruiser, hostileCruiser);
 				units.Add(unit);
 			}
 
