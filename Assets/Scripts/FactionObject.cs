@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Cruisers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,6 +44,7 @@ namespace BattleCruisers
 		public string description;
 		public int numOfDronesRequired;
 		public int buildTimeInS;
+		public SlotType slotType;
 
 		public virtual float Damage { get { return 0; } }
 
@@ -66,6 +68,8 @@ namespace BattleCruisers
 				return _sprite;
 			}
 		}
+
+		public virtual void InitiateDelete() { }
 
 		void Awake()
 		{

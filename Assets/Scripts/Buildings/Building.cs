@@ -21,10 +21,10 @@ namespace BattleCruisers.Buildings
 		protected Cruiser _parentCruiser;
 
 		public BuildingCategory category;
-		public SlotType slotType;
 		// Proportional to building size
 		public float customOffsetProportion;
 
+		// FELIX  Used?  Create event so can have multiple listeners
 		public Action OnDestroyed;
 
 		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
@@ -59,7 +59,7 @@ namespace BattleCruisers.Buildings
 			}
 		}
 
-		public void InitiateDelete()
+		public override void InitiateDelete()
 		{
 			Destroy(gameObject);
 		}

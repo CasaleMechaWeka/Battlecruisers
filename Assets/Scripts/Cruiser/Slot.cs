@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers
 {
 	public enum SlotType
 	{
-		SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
+		None, SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
 	}
 
 	public interface ISlot

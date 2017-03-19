@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,7 +43,13 @@ namespace BattleCruisers.UI.BuildingDetails
 			buildingName.text = _building.buildableName;
 			buildingDescription.text = _building.description;
 			buildingImage.sprite = _building.Sprite;
-			slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);
+
+			bool hasSlot = _building.slotType != SlotType.None;
+			if (hasSlot)
+			{
+				slotImage.sprite = _spriteFetcher.GetSlotSprite((SlotType)_building.slotType);
+			}
+			slotImage.gameObject.SetActive(hasSlot);
 
 			deleteBuildingButton.gameObject.SetActive(allowDelete);
 			if (allowDelete)
