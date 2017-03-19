@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildings.Turrets;
 using BattleCruisers.UI;
+using BattleCruisers.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,19 +15,14 @@ namespace BattleCruisers.Buildings
 		Factory, Defence, Offence, Tactical, Support, Ultras
 	}
 
-	public class Building : MonoBehaviour
+	public class Building : BuildableObject
 	{
 		private Renderer _renderer;
 		protected UIManager _uiManager;
-		private Cruiser _parentCruiser;
+		protected Cruiser _parentCruiser;
 
-		public string buildingName;
-		public string description;
-		public int numOfDronesRequired;
-		public int buildTimeInS;
 		public BuildingCategory category;
 		public SlotType slotType;
-		public float health;
 		// Proportional to building size
 		public float customOffsetProportion;
 
@@ -52,6 +48,8 @@ namespace BattleCruisers.Buildings
 				return _buidlingSprite;
 			}
 		}
+
+		public Faction Faction { get { return _parentCruiser.faction; } }
 		
 		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{

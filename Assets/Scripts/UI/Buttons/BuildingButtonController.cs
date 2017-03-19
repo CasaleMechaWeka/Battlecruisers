@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildings.Buttons
 
 		public void Initialize(Building building, UIManager uiManager, Sprite slotSprite)
 		{
-			buildingName.text = building.buildingName;
+			buildingName.text = building.buildableName;
 			droneLevel.text = building.numOfDronesRequired.ToString();
 			buildingImage.sprite = building.BuildingSprite;
 			slotImage.sprite = slotSprite;

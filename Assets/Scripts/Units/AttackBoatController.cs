@@ -26,43 +26,39 @@ namespace BattleCruisers.Units
 	/// 4. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
 	/// 	enemy, in which case this boat will continue moving.
 	/// </summary>
-	public class AttackBoatController : Unit, IDamagable
+	public class AttackBoatController : Unit
 	//public class AttackBoatController : MonoBehaviour, IDetectorControllerListener
 	{
 		private Rigidbody2D _rigidBody;
 		private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
-		private Unit _enemyUnit;
-		private Unit _blockingFriendlyUnit;
+		private FactionObject _enemyUnit;
+		private FactionObject _blockingFriendlyUnit;
+		private int _directionMultiplier;
 
+		public EnemyDetector enemyDetector;
+		public FriendDetector friendDetector;
 		// FELIX  Allow to vary depending on boat?
 		public Rigidbody2D shellPrefab;
-
-		// FELIX  TEMP
-		public float startingVelocityX;
-		public float startingHealth;
-		public Faction type;
-		public Direction direction;
 
 		public ITurretStats TurretStats { private get; set; }
 
 		void Start() 
 		{
 			_rigidBody = GetComponent<Rigidbody2D>();
+			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
 
 			// FELIX  Inject, don't hardcode
 			TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
-			health = startingHealth;
-			faction = type;
-			facingDirection = direction;
-			velocityInMPerS = startingVelocityX;
 
 			// FELIX  Don't hardcode string, add to Constants class?
 			// FELIX  Set from unity via public fields
-			EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
+//			EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
+			enemyDetector.gameObject.SetActive(true);
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
-
-			FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
+//
+//			FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
+			friendDetector.gameObject.SetActive(true);
 			friendDetector.OnEntered = OnFriendEntered;
 			friendDetector.OnExited = OnFriendExited;
 			friendDetector.OwnFaction = faction;
@@ -100,9 +96,9 @@ namespace BattleCruisers.Units
 		/// <summary>
 		/// Stop and shoot.
 		/// </summary>
-		private void OnEnemyEntered(Unit enemeyUnit)
+		private void OnEnemyEntered(FactionObject enemey)
 		{
-			_enemyUnit = enemeyUnit;
+			_enemyUnit = enemey;
 			StopMoving();
 			StartAttacking();
 		}
@@ -156,34 +152,34 @@ namespace BattleCruisers.Units
 			shell.velocity = new Vector2(velocityX, 0);
 		}
 
-		private void OnFriendEntered(Unit friendlyUnit)
+		private void OnFriendEntered(FactionObject friend)
 		{
-			if (IsUnitInFront(friendlyUnit))
+			if (IsObjectInFront(friend))
 			{
-				_blockingFriendlyUnit = friendlyUnit;
+				_blockingFriendlyUnit = friend;
 				StopMoving();
 			}
 		}
 
-		private void OnFriendExited(Unit friendlyUnit)
+		private void OnFriendExited(FactionObject friend)
 		{
-			if (IsUnitInFront(friendlyUnit))
+			if (IsObjectInFront(friend))
 			{
 				StartMoving();
 			}
 		}
 
-		private bool IsUnitInFront(Unit unit)
+		private bool IsObjectInFront(FactionObject factionObject)
 		{
 			return (facingDirection == Direction.Right
-					&& unit.gameObject.transform.position.x > transform.position.x)
+					&& factionObject.gameObject.transform.position.x > transform.position.x)
 				|| (facingDirection == Direction.Left
-					&& unit.gameObject.transform.position.x < transform.position.x);
+					&& factionObject.gameObject.transform.position.x < transform.position.x);
 		}
 
 		private void StartMoving()
 		{
-			_rigidBody.velocity = new Vector2(velocityInMPerS, 0);
+			_rigidBody.velocity = new Vector2(velocityInMPerS * _directionMultiplier, 0);
 		}
 
 		private void StopMoving()

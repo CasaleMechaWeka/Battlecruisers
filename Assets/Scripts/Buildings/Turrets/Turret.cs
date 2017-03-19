@@ -102,7 +102,7 @@ namespace BattleCruisers.Buildings.Turrets
 		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
 			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
-			_turretStats = buildingFactory.GetTurretStats(buildingName);
+			_turretStats = buildingFactory.GetTurretStats(buildableName);
 			this._enemyCruiser = enemyCruiser;
 		}
 		

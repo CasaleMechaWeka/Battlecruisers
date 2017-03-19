@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildings;
+using BattleCruisers.Buildings.Factories;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildingDetails;
 using BattleCruisers.UI.BuildMenus;

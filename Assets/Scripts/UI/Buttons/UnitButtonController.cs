@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildings.Buttons
 
 		public void Initialize(Unit unit, UnitsMenuController unitsMenu)
 		{
-			unitName.text = unit.unitName;
+			unitName.text = unit.buildableName;
 			droneLevel.text = unit.numOfDronesRequired.ToString();
 			unitImage.sprite = unit.UnitSprite;
 

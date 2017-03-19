@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			gameObject.SetActive(true);
 
 			statsController.ShowBuildingStats(_building);
-			buildingName.text = _building.buildingName;
+			buildingName.text = _building.buildableName;
 			buildingDescription.text = _building.description;
 			buildingImage.sprite = _building.BuildingSprite;
 			slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);

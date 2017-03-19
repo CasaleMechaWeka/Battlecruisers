@@ -7,24 +7,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {
-	public class SlotStats
-	{
-		public int NumOfSternSlots { get; private set; }
-		public int NumOfBowSlots { get; private set; }
-		public int NumOfPlatformSlots { get; private set; }
-		public int NumOfDeckSlots { get; private set; }
-		public int NumOfUtilitySlots { get; private set; }
-		public int NumOfMastSlots { get; private set; }
-	}
-
-	public interface ICruiser : IDamagable, IRepairable
+	public interface ICruiser
 	{
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
 	}
 
-	public class Cruiser : MonoBehaviour, ICruiser
+	public class Cruiser : FactionObject, ICruiser
 	{
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
@@ -45,15 +35,14 @@ namespace BattleCruisers.Cruisers
 		}
 		public float startingHealth;
 
+		public Faction Faction { get { return faction; } }
+
 		void Start()
 		{
 			SetupSlots();
 			HideAllSlots();
 			healthBarController.Initialise(startingHealth);
 			Health = startingHealth;
-
-			// FELIX TEMP
-			Health *= 0.8f;
 		}
 
 		private void SetupSlots()

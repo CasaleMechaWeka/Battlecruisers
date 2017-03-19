@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildings;
+using BattleCruisers.Buildings.Factories;
 using BattleCruisers.Units;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace BattleCruisers.UI.BuildMenus
 			Assert.IsNotNull(Factory);
 			Factory.Unit = unit;
 
+			// FELIX
 			// Show building details
 		}
 	}

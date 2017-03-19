@@ -4,11 +4,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Units
 {
-	public enum Faction
-	{
-		Blues, Reds
-	}
-
 	public enum UnitCategory
 	{
 		Naval, Aircraft, Ultra
@@ -19,22 +14,24 @@ namespace BattleCruisers.Units
 		Left, Right, Up, Down
 	}
 
-	public class Unit : MonoBehaviour
+	public class Unit : BuildableObject
 	{
-		public string unitName;
-		public string description;
-		public int numOfDronesRequired;
-		public int buildTimeInS;
+		private Renderer _renderer;
+
 		public UnitCategory category;
-		public float health;
-		public Faction faction;
 		// FELIX  Remove?
 		public Direction facingDirection;
 
 		// FELIX  Only for ships!
 		public float velocityInMPerS;
 
-		public bool IsDestroyed { get { return health <= 0; } }
+		public virtual Vector3 Size 
+		{ 
+			get 
+			{ 
+				return _renderer.bounds.size; 
+			} 
+		}
 
 		protected Sprite _unitSprite;
 		public virtual Sprite UnitSprite
@@ -47,6 +44,14 @@ namespace BattleCruisers.Units
 				}
 				return _unitSprite;
 			}
+		}
+
+		public Faction Faction { get { return faction; } }
+
+		void Awake()
+		{
+			Debug.Log("Unit.Awake()");
+			_renderer = GetComponent<Renderer>();
 		}
 	}
 }
