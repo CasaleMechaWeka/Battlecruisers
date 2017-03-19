@@ -55,6 +55,7 @@ namespace BattleCruisers.Buildings
 		{
 			_uiManager = uiManagerArg;
 			_parentCruiser = parentCruiser;
+			faction = _parentCruiser.faction;
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).

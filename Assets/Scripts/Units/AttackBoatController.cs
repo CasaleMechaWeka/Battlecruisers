@@ -50,14 +50,9 @@ namespace BattleCruisers.Units
 			// FELIX  Inject, don't hardcode
 			TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
 
-			// FELIX  Don't hardcode string, add to Constants class?
-			// FELIX  Set from unity via public fields
-//			EnemyUnitDetector enemyDetector = transform.Find("EnemyDetector").GetComponent<EnemyUnitDetector>();
-			enemyDetector.gameObject.SetActive(true);
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
-//
-//			FriendlyUnitDetector friendDetector = transform.Find("FriendDetector").GetComponent<FriendlyUnitDetector>();
+
 			friendDetector.gameObject.SetActive(true);
 			friendDetector.OnEntered = OnFriendEntered;
 			friendDetector.OnExited = OnFriendExited;

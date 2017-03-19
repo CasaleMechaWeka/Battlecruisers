@@ -46,8 +46,6 @@ namespace BattleCruisers.Units
 			}
 		}
 
-		public Faction Faction { get { return faction; } }
-
 		void Awake()
 		{
 			Debug.Log("Unit.Awake()");
