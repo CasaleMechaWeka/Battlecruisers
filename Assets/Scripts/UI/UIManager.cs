@@ -39,6 +39,7 @@ namespace BattleCruisers.UI
 			{
 				case CameraState.FriendlyCruiser:
 					buildMenuController.HideBuildMenu();
+					buildingDetails.Hide();
 					friendlyCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
