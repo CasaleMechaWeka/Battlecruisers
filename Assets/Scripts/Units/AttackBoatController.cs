@@ -39,6 +39,7 @@ namespace BattleCruisers.Units
 		public FriendDetector friendDetector;
 		// FELIX  Allow to vary depending on boat?
 		public Rigidbody2D shellPrefab;
+		public ShellSpawnerController shellSpawner;
 
 		public ITurretStats TurretStats { private get; set; }
 
@@ -49,6 +50,7 @@ namespace BattleCruisers.Units
 
 			// FELIX  Inject, don't hardcode
 			TurretStats = new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
+			shellSpawner.Initialise(new ShellStats(shellPrefab, TurretStats.Damage, TurretStats.IgnoreGravity, TurretStats.BulletVelocityInMPerS));
 
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
@@ -114,37 +116,9 @@ namespace BattleCruisers.Units
 		{
 			Debug.Log("AttackBoatController.Attack()");
 
-			if (TurretStats == null)
-			{
-				throw new InvalidOperationException();
-			}
-
-			float directionMultiplier;
-			float spawnOffsetX;
-
-			if (transform.rotation.y == 0)
-			{
-				directionMultiplier = 1;
-				spawnOffsetX = 1.5f;
-			}
-			else
-			{
-				directionMultiplier = -1;
-				spawnOffsetX = -1.5f;
-			}
-
-			Vector3 spawnPosition = transform.position;
-			spawnPosition.x += spawnOffsetX;
-
-			Debug.Log($"spawnPosition: {spawnPosition.x}, {spawnPosition.y}");
-
-			Rigidbody2D shell = Instantiate(shellPrefab, spawnPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-
-			shell.GetComponent<IShellController>().Damage = TurretStats.Damage;
-			shell.gravityScale = 0;
-
-			float velocityX = TurretStats.BulletVelocityInMPerS * directionMultiplier;
-			shell.velocity = new Vector2(velocityX, 0);
+			// FELIX Find angle instead of hardcoding
+			float desiredAngle = 0;
+			shellSpawner.SpawnShell(desiredAngle, facingDirection);
 		}
 
 		private void OnFriendEntered(FactionObject friend)
@@ -180,18 +154,6 @@ namespace BattleCruisers.Units
 		private void StopMoving()
 		{
 			_rigidBody.velocity = new Vector2(0, 0);
-		}
-
-		public void TakeDamage(float damage)
-		{
-			Debug.Log("AttackBoatController.TakeDamage()");
-
-			health -= damage;
-
-			if (health <= 0)
-			{
-				Destroy(gameObject);
-			}
 		}
 	}
 }

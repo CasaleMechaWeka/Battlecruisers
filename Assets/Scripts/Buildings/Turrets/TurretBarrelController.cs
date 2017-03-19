@@ -58,6 +58,7 @@ namespace BattleCruisers.Buildings.Turrets
 		/// </summary>
 		protected virtual float FindDesiredAngle()
 		{
+			// FELIX  This is wrong :P
 			return _targetObject.transform.rotation.z;
 		}
 
