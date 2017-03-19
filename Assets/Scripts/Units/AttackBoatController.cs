@@ -42,6 +42,7 @@ namespace BattleCruisers.Units
 		public ShellSpawnerController shellSpawner;
 
 		public ITurretStats TurretStats { private get; set; }
+		public override float Damage { get { return TurretStats.DamangePerS; } }
 
 		void Start() 
 		{

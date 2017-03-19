@@ -33,9 +33,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			droneRow.Initialise(DRONES_LABEL, building.numOfDronesRequired.ToString());
 			buildTimeRow.Initialise(BUILD_TIME_LABEL, building.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);
 			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(building.health));
-			// FELIX
-			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(25));
-	//		damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(building.turretStats.DamangePerS));
+			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(building.Damage));
 		}
 	}
 }

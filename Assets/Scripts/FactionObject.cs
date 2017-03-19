@@ -44,6 +44,8 @@ namespace BattleCruisers
 		public int numOfDronesRequired;
 		public int buildTimeInS;
 
+		public virtual float Damage { get { return 0; } }
+
 		public virtual Vector3 Size 
 		{ 
 			get 

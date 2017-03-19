@@ -78,12 +78,13 @@ namespace BattleCruisers.Buildings.Turrets
 			}
 		}
 
+		public override float Damage { get { return _turretStats.DamangePerS; } }
+
 		void Awake()
 		{
 			Debug.Log("Turret.Awake()");
 			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
 			_timeSinceLastFireInS = float.MaxValue;
-
 		}
 
 		void Start()
