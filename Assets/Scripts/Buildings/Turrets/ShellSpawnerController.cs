@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildings.Turrets
 
 		public void SpawnShell(float angleInRadians, Direction fireDirection)
 		{
-			Rigidbody2D shell = Instantiate<Rigidbody2D>(_shellStats.ShellPrefab);
+			Rigidbody2D shell = Instantiate<Rigidbody2D>(_shellStats.ShellPrefab, transform.position, new Quaternion());
 			if (_shellStats.IgnoreGravity)
 			{
 				shell.gravityScale = 0;
