@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BuildingDetails
 {
-	public class BuildingStatsController : MonoBehaviour 
+	public class BuildableStatsController : MonoBehaviour 
 	{
 		// FELIX  Inject
 		private ValueToStarsConverter _valueToStarsConverter;
@@ -28,12 +28,12 @@ namespace BattleCruisers.UI.BuildingDetails
 			_valueToStarsConverter = new ValueToStarsConverter();
 		}
 
-		public void ShowBuildingStats(Building building)
+		public void ShowBuildableStats(BuildableObject buildable)
 		{
-			droneRow.Initialise(DRONES_LABEL, building.numOfDronesRequired.ToString());
-			buildTimeRow.Initialise(BUILD_TIME_LABEL, building.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(building.health));
-			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(building.Damage));
+			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString());
+			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.health));
+			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(buildable.Damage));
 		}
 	}
 }

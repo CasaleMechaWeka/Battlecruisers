@@ -19,7 +19,7 @@ namespace BattleCruisers.UI
 		public HealthBarController friendlyCruiserHealthBar;
 		public HealthBarController enemyCruiserHealthBar;
 		public Cruiser friendlyCruiser;
-		public BuildingDetailsController buildingDetails;
+		public BuildableDetailsController buildingDetails;
 
 		public Building SelectedBuilding { get; private set; }
 
@@ -85,7 +85,7 @@ namespace BattleCruisers.UI
 			Debug.Log("UIManager.SelectBuildingFromMenu()");
 			SelectedBuilding = building;
 			friendlyCruiser.HighlightAvailableSlots(building.slotType);
-			buildingDetails.ShowBuildingDetails(building, allowDelete: false);
+			buildingDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, Cruiser buildingParent)
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI
 		{
 			Debug.Log("UIManager.SelectBuildingFromFriendlyCruiser()");
 			friendlyCruiser.UnhighlightSlots();
-			buildingDetails.ShowBuildingDetails(building, allowDelete: true);
+			buildingDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 
 		public void SelectBuildingFromEnemyCruiser()
