@@ -18,19 +18,12 @@ namespace BattleCruisers
 //		void Repair(float repairAmount);
 		// FELIX  On fully damaged/repaired?
 	}
-//
-//	public interface IFactionObject : IDamagable
-//	{
-//		Faction Faction { get; }
-//		GameObject GameObject { get; }
-//	}
 
 	public abstract class FactionObject : MonoBehaviour, IDamagable
 	{
 		public Faction faction;
 		public float health;
 		public bool IsDestroyed { get { return health <= 0; } }
-//		public GameObject GameObject { get { return gameObject; } }
 
 		public virtual void TakeDamage(float damageAmount)
 		{
