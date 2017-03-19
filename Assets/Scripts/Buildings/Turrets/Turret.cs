@@ -12,7 +12,6 @@ namespace BattleCruisers.Buildings.Turrets
 	public class Turret : Building
 	{
 		private Renderer _turretBaseRenderer;
-		private float _maxRange;
 		private Vector2 _shellVelocity;
 		private float _timeSinceLastFireInS;
 		private ITurretStats _turretStats;
@@ -47,8 +46,6 @@ namespace BattleCruisers.Buildings.Turrets
 					{
 						throw new InvalidOperationException();
 					}
-
-					_maxRange = FindMaxRange(_turretStats.BulletVelocityInMPerS);
 
 					if (_target != null)
 					{
@@ -123,7 +120,6 @@ namespace BattleCruisers.Buildings.Turrets
 			_enemyCruiser = turret._enemyCruiser;
 		}
 
-		// FELIX  Limit fire rate :P
 		private void OnTarget(object sender, EventArgs e)
 		{
 			if (_timeSinceLastFireInS >= _turretStats.FireIntervalInS)
@@ -135,18 +131,8 @@ namespace BattleCruisers.Buildings.Turrets
 
 		private void Fire(float angleInRadians)
 		{
-			//			Debug.Log("Turret.Fire()");
 			Direction fireDirection = _target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
 			shellSpawner.SpawnShell(angleInRadians, fireDirection);
-		}
-
-		// FELIX  Use!  Maybe in BarrelController?
-		/// <summary>
-		/// Assumes no y axis difference in source and target
-		/// </summary>
-		private float FindMaxRange(float velocityInMPerS)
-		{
-			return (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
 		}
 	}
 }

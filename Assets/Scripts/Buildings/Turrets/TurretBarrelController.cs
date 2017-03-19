@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildings.Turrets
 	{
 		protected GameObject _targetObject;
 		protected float _shellVelocityInMPerS;
+		protected float _maxRange;
 
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
 		private const float ROTATION_EQUALITY_MARGIN_IN_RADIANS = 0.01f;
@@ -64,11 +65,20 @@ namespace BattleCruisers.Buildings.Turrets
 		{
 			_targetObject = target;
 			_shellVelocityInMPerS = shellVelocity;
+			_maxRange = FindMaxRange(_shellVelocityInMPerS);
 		}
 
 		public void StopTrackingTarget()
 		{
 			_targetObject = null;
+		}
+
+		/// <summary>
+		/// Assumes no y axis difference in source and target
+		/// </summary>
+		private float FindMaxRange(float velocityInMPerS)
+		{
+			return (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
 		}
 	}
 }

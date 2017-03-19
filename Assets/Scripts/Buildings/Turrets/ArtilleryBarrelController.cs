@@ -20,6 +20,10 @@ namespace BattleCruisers.Buildings.Turrets
 		protected override float FindDesiredAngle()
 		{
 			float distanceInM = Math.Abs(transform.position.x - _targetObject.transform.position.x);
+			if (distanceInM > _maxRange)
+			{
+				throw new InvalidProgramException();
+			}
 			return (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (_shellVelocityInMPerS * _shellVelocityInMPerS)));
 		}
 	}
