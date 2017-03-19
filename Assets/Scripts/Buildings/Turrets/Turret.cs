@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Units;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,15 +16,16 @@ namespace BattleCruisers.Buildings.Turrets
 		private Vector2 _shellVelocity;
 		private float _timeSinceLastFireInS;
 		private ITurretStats _turretStats;
+		private ShellStats _shellStats;
 		// FELIX  TEMP
 		private Cruiser _enemyCruiser;
 
 		public GameObject turretBase;
 		public TurretBarrelController turretBarrelController;
 		public GameObject turretBarrel;
-		public GameObject projectileSpawner;
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
+		public ShellSpawnerController shellSpawner;
 
 
 		private GameObject _target;
@@ -84,6 +86,7 @@ namespace BattleCruisers.Buildings.Turrets
 			Debug.Log("Turret.Awake()");
 			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
 			_timeSinceLastFireInS = float.MaxValue;
+
 		}
 
 		void Start()
@@ -103,6 +106,8 @@ namespace BattleCruisers.Buildings.Turrets
 		{
 			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
 			_turretStats = buildingFactory.GetTurretStats(buildableName);
+			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
+			shellSpawner.Initialise(_shellStats);
 			this._enemyCruiser = enemyCruiser;
 		}
 		
@@ -113,6 +118,8 @@ namespace BattleCruisers.Buildings.Turrets
 			Turret turret = building as Turret;
 			Assert.IsNotNull(turret);
 			_turretStats = turret._turretStats;
+			_shellStats = turret._shellStats;
+			shellSpawner.Initialise(_shellStats);
 			_enemyCruiser = turret._enemyCruiser;
 		}
 
@@ -128,35 +135,12 @@ namespace BattleCruisers.Buildings.Turrets
 
 		private void Fire(float angleInRadians)
 		{
-//			Debug.Log("Turret.Fire()");
-
-			Rigidbody2D shell = Instantiate(shellPrefab, projectileSpawner.transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-			if (_turretStats.IgnoreGravity)
-			{
-				shell.gravityScale = 0;
-			}
-			shell.GetComponent<IShellController>().Damage = _turretStats.Damage;
-			shell.velocity = FindShellVelocity(turretBarrelController.DesiredAngleInRadians);
+			//			Debug.Log("Turret.Fire()");
+			Direction fireDirection = _target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
+			shellSpawner.SpawnShell(angleInRadians, fireDirection);
 		}
 
-		private Vector2 FindShellVelocity(float angleInRadians)
-		{
-			float distance = Math.Abs(transform.position.x - _target.transform.position.x);
-
-			if (distance > _maxRange)
-			{
-				throw new InvalidOperationException();
-			}
-
-			float xMultipler = distance < 0 ? -1 : 1;
-			float velocityX = (float)(_turretStats.BulletVelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
-			float velocityY = (float)(_turretStats.BulletVelocityInMPerS * Math.Sin(angleInRadians));
-
-//			Debug.Log($"Turret.FindShellVelocity():  angleInRadians: {angleInRadians}  velocityX: {velocityX}  velocityY: {velocityY}");
-
-			return new Vector2(velocityX, velocityY);
-		}
-
+		// FELIX  Use!  Maybe in BarrelController?
 		/// <summary>
 		/// Assumes no y axis difference in source and target
 		/// </summary>
