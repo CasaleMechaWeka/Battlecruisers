@@ -10,6 +10,8 @@ namespace BattleCruisers.Buildings.Factories
 {
 	public abstract class Factory : Building
 	{
+		protected BuildableFactory _buildableFactory;
+
 		public UnitCategory unitCategory;
 		public int buildPoints;
 
@@ -32,6 +34,20 @@ namespace BattleCruisers.Buildings.Factories
 				}
 			}
 			private get { return _unit; }
+		}
+
+		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
+		{
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory);
+			_buildableFactory = buildableFactory;
+		}
+
+		public override void Initialise(BuildableObject buildable)
+		{
+			base.Initialise(buildable);
+			Factory factory = buildable as Factory;
+			Assert.IsNotNull(factory);
+			_buildableFactory = factory._buildableFactory;
 		}
 
 		void Start()
@@ -64,7 +80,7 @@ namespace BattleCruisers.Buildings.Factories
 		{
 			Debug.Log("ProduceUnit()");
 
-			Unit unit = Instantiate<Unit>(_unit);
+			Unit unit = _buildableFactory.CreateUnit(_unit);
 
 			Vector3 spawnPosition = FindUnitSpawnPosition(unit);
 			unit.transform.position = spawnPosition;

@@ -76,7 +76,7 @@ namespace BattleCruisers
 
 		public virtual void InitiateDelete() { }
 
-		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
+		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
