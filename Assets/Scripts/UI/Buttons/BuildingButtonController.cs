@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildings.Buttons
 		{
 			buildingName.text = building.buildableName;
 			droneLevel.text = building.numOfDronesRequired.ToString();
-			buildingImage.sprite = building.BuildingSprite;
+			buildingImage.sprite = building.Sprite;
 			slotImage.sprite = slotSprite;
 			
 			Button button = GetComponent<Button>();

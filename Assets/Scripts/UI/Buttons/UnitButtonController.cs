@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildings.Buttons
 		{
 			unitName.text = unit.buildableName;
 			droneLevel.text = unit.numOfDronesRequired.ToString();
-			unitImage.sprite = unit.UnitSprite;
+			unitImage.sprite = unit.Sprite;
 
 			Button button = GetComponent<Button>();
 			button.onClick.AddListener(() => unitsMenu.SelectUnit(unit));

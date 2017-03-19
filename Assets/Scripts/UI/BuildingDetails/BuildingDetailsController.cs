@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			statsController.ShowBuildingStats(_building);
 			buildingName.text = _building.buildableName;
 			buildingDescription.text = _building.description;
-			buildingImage.sprite = _building.BuildingSprite;
+			buildingImage.sprite = _building.Sprite;
 			slotImage.sprite = _spriteFetcher.GetSlotSprite(_building.slotType);
 
 			deleteBuildingButton.gameObject.SetActive(allowDelete);

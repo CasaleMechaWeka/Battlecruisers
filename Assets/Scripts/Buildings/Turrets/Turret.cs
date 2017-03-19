@@ -67,15 +67,15 @@ namespace BattleCruisers.Buildings.Turrets
 			} 
 		}
 
-		public override Sprite BuildingSprite
+		public override Sprite Sprite
 		{
 			get
 			{
-				if (_buidlingSprite == null)
+				if (_sprite == null)
 				{
-					_buidlingSprite = turretBarrel.GetComponent<SpriteRenderer>().sprite;
+					_sprite = turretBarrel.GetComponent<SpriteRenderer>().sprite;
 				}
-				return _buidlingSprite;
+				return _sprite;
 			}
 		}
 

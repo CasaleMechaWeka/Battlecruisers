@@ -17,7 +17,6 @@ namespace BattleCruisers.Buildings
 
 	public class Building : BuildableObject
 	{
-		private Renderer _renderer;
 		protected UIManager _uiManager;
 		protected Cruiser _parentCruiser;
 
@@ -28,29 +27,6 @@ namespace BattleCruisers.Buildings
 
 		public Action OnDestroyed;
 
-		public virtual Vector3 Size 
-		{ 
-			get 
-			{ 
-				return _renderer.bounds.size; 
-			} 
-		}
-
-		protected Sprite _buidlingSprite;
-		public virtual Sprite BuildingSprite
-		{
-			get
-			{
-				if (_buidlingSprite == null)
-				{
-					_buidlingSprite = GetComponent<SpriteRenderer>().sprite;
-				}
-				return _buidlingSprite;
-			}
-		}
-
-		public Faction Faction { get { return _parentCruiser.faction; } }
-		
 		public virtual void Initialise(UIManager uiManagerArg, Cruiser parentCruiser, Cruiser enemyCruiser, BuildingFactory buildingFactory)
 		{
 			_uiManager = uiManagerArg;
@@ -63,12 +39,6 @@ namespace BattleCruisers.Buildings
 		{
 			_uiManager = building._uiManager;
 			_parentCruiser = building._parentCruiser;
-		}
-
-		void Awake()
-		{
-			Debug.Log("Building.Awake()");
-			_renderer = GetComponent<Renderer>();
 		}
 
 		void OnMouseDown()

@@ -16,40 +16,11 @@ namespace BattleCruisers.Units
 
 	public class Unit : BuildableObject
 	{
-		private Renderer _renderer;
-
 		public UnitCategory category;
 		// FELIX  Remove?
 		public Direction facingDirection;
 
 		// FELIX  Only for ships!
 		public float velocityInMPerS;
-
-		public virtual Vector3 Size 
-		{ 
-			get 
-			{ 
-				return _renderer.bounds.size; 
-			} 
-		}
-
-		protected Sprite _unitSprite;
-		public virtual Sprite UnitSprite
-		{
-			get
-			{
-				if (_unitSprite == null)
-				{
-					_unitSprite = GetComponent<SpriteRenderer>().sprite;
-				}
-				return _unitSprite;
-			}
-		}
-
-		void Awake()
-		{
-			Debug.Log("Unit.Awake()");
-			_renderer = GetComponent<Renderer>();
-		}
 	}
 }

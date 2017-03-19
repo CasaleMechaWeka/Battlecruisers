@@ -37,9 +37,38 @@ namespace BattleCruisers
 
 	public abstract class BuildableObject : FactionObject
 	{
+		private Renderer _renderer;
+
 		public string buildableName;
 		public string description;
 		public int numOfDronesRequired;
 		public int buildTimeInS;
+
+		public virtual Vector3 Size 
+		{ 
+			get 
+			{ 
+				return _renderer.bounds.size; 
+			} 
+		}
+
+		protected Sprite _sprite;
+		public virtual Sprite Sprite
+		{
+			get
+			{
+				if (_sprite == null)
+				{
+					_sprite = GetComponent<SpriteRenderer>().sprite;
+				}
+				return _sprite;
+			}
+		}
+
+		void Awake()
+		{
+			Debug.Log("BuildableObject.Awake()");
+			_renderer = GetComponent<Renderer>();
+		}
 	}
 }
