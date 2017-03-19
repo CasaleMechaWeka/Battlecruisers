@@ -23,26 +23,11 @@ namespace BattleCruisers.Cruisers
 		public HealthBarController healthBarController;
 		public Direction direction;
 
-		private float _health;
-		private float Health
-		{ 
-			get { return _health; }
-			set
-			{
-				_health = value;
-				healthBarController.Health = _health;
-			}
-		}
-		public float startingHealth;
-
-		public Faction Faction { get { return faction; } }
-
 		void Start()
 		{
 			SetupSlots();
 			HideAllSlots();
-			healthBarController.Initialise(startingHealth);
-			Health = startingHealth;
+			healthBarController.Initialise(health);
 		}
 
 		private void SetupSlots()
@@ -114,23 +99,15 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		public void TakeDamage(float damageAmount)
-		{
-			Health -= damageAmount;
-			if (Health <= 0)
-			{
-				Destroy(gameObject);
-			}
-		}
-
-		public void Repair(float repairAmount)
-		{
-
-		}
-
 		void OnMouseDown()
 		{
 			Debug.Log("Cruiesr.OnMouseDown()");
+		}
+
+		public override void TakeDamage(float damageAmount)
+		{
+			base.TakeDamage(damageAmount);
+			healthBarController.Health = health;
 		}
 	}
 }

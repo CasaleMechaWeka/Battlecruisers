@@ -32,7 +32,7 @@ namespace BattleCruisers
 		public bool IsDestroyed { get { return health <= 0; } }
 //		public GameObject GameObject { get { return gameObject; } }
 
-		public void TakeDamage(float damageAmount)
+		public virtual void TakeDamage(float damageAmount)
 		{
 			health -= damageAmount;
 			if (health <= 0)
