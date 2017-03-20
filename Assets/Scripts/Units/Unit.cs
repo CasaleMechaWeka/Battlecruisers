@@ -22,5 +22,10 @@ namespace BattleCruisers.Units
 
 		// FELIX  Only for ships!
 		public float velocityInMPerS;
+
+		void OnMouseDown()
+		{
+			_uiManager.ShowUnitDetails(this);
+		}
 	}
 }
