@@ -15,6 +15,7 @@ namespace BattleCruisers.UI
 	public class UIManager : MonoBehaviour 
 	{
 		public CameraController cameraController;
+		public BackgroundController backgroundController;
 		public BuildMenuController buildMenuController;
 		public HealthBarController friendlyCruiserHealthBar;
 		public HealthBarController enemyCruiserHealthBar;
@@ -31,6 +32,7 @@ namespace BattleCruisers.UI
 
 			cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
+			backgroundController.BackgroundClicked += OnBackgroundClicked;
 		}
 
 		private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
@@ -62,6 +64,12 @@ namespace BattleCruisers.UI
 					enemyCruiserHealthBar.gameObject.SetActive(true);
 					break;
 			}
+		}
+
+		private void OnBackgroundClicked(object sender, EventArgs e)
+		{
+			buildableDetails.Hide();
+			friendlyCruiser.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
@@ -121,6 +129,11 @@ namespace BattleCruisers.UI
 		public void ShowUnitDetails(Unit unit)
 		{
 			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
+		}
+
+		public void HideBuildableDetails()
+		{
+			buildableDetails.Hide();
 		}
 	}
 }
