@@ -28,9 +28,7 @@ namespace BattleCruisers.Buildings.Factories
 				_unit = value;
 				if (_unit != null)
 				{
-//					StartProducing();
-					// FELIX  TEMP  Just produce one unit for now
-					ProduceUnit();
+					StartProducing();
 				}
 			}
 			private get { return _unit; }
