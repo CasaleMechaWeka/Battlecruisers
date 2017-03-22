@@ -16,8 +16,6 @@ namespace BattleCruisers.Buildings.Turrets
 		private float _timeSinceLastFireInS;
 		private ITurretStats _turretStats;
 		private ShellStats _shellStats;
-		// FELIX  TEMP
-		private Cruiser _enemyCruiser;
 
 		public GameObject turretBase;
 		public TurretBarrelController turretBarrelController;
@@ -25,7 +23,6 @@ namespace BattleCruisers.Buildings.Turrets
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
-
 
 		private GameObject _target;
 		public GameObject Target 

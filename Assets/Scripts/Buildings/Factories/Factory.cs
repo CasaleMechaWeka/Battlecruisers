@@ -78,16 +78,32 @@ namespace BattleCruisers.Buildings.Factories
 		{
 			Debug.Log("ProduceUnit()");
 
-			Unit unit = _buildableFactory.CreateUnit(_unit);
+			// FELIX If cannot spawn unit, spawn AS SOON AS there is space.
+			// So don't have to wait full build cycle!
+			if (CanSpawnUnit(_unit))
+			{
+				Unit unit = _buildableFactory.CreateUnit(_unit);
 
-			Vector3 spawnPosition = FindUnitSpawnPosition(unit);
-			unit.transform.position = spawnPosition;
-			unit.transform.rotation = transform.rotation;
+				Vector3 spawnPosition = FindUnitSpawnPosition(unit);
+				unit.transform.position = spawnPosition;
+				unit.transform.rotation = transform.rotation;
 
-			unit.faction = _parentCruiser.faction;
-			unit.facingDirection = _parentCruiser.direction;
+				unit.faction = _parentCruiser.faction;
+				unit.facingDirection = _parentCruiser.direction;
+
+				OnUnitProduced(unit);
+			}
+		}
+		
+		// Check if there is space for the unit to be spawned, or
+		// perhaps if unit maximum has been reached.
+		protected virtual bool CanSpawnUnit(Unit unit)
+		{
+			return false;
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
+
+		protected virtual void OnUnitProduced(Unit unit) { }
 	}
 }

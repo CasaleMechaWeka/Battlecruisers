@@ -11,12 +11,22 @@ namespace BattleCruisers.Units.Detectors
 
 	public class FactionObjectDetector : MonoBehaviour, IFactionObjectDetector
 	{
+		public CircleCollider2D circleCollider;
+
 		public Action<FactionObject> OnEntered { private get; set; }
 		public Action<FactionObject> OnExited { private get; set; }
 
+		public void ChangeTriggerRadius(float newRadius)
+		{
+			if (circleCollider.radius != newRadius)
+			{
+				circleCollider.radius = newRadius;
+			}
+		}
+
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Debug.Log("DetectionController.OnTriggerEnter2D()");
+//			Debug.Log("DetectionController.OnTriggerEnter2D()");
 
 			if (OnEntered != null)
 			{
@@ -35,7 +45,7 @@ namespace BattleCruisers.Units.Detectors
 
 		void OnTriggerExit2D(Collider2D collider)
 		{
-			Debug.Log("DetectionController.OnTriggerExit2D()");
+//			Debug.Log("DetectionController.OnTriggerExit2D()");
 
 			if (OnExited != null)
 			{

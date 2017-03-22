@@ -48,7 +48,7 @@ namespace BattleCruisers
 		public string buildableName;
 		public string description;
 		public int numOfDronesRequired;
-		public int buildTimeInS;
+		public float buildTimeInS;
 		public SlotType slotType;
 
 		public virtual float Damage { get { return 0; } }
