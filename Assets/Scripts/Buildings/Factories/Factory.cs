@@ -8,8 +8,20 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildings.Factories
 {
+	public class BuildProgressEventArgs : EventArgs
+	{
+		public float BuildProgress { get; private set; }
+
+		public BuildProgressEventArgs(float buildProgress)
+		{
+			BuildProgress = buildProgress;
+		}
+	}
+
 	public abstract class Factory : Building
 	{
+		private float _timeUnitHasBeenBuildingInS;
+
 		protected BuildableFactory _buildableFactory;
 
 		public UnitCategory unitCategory;
@@ -34,6 +46,9 @@ namespace BattleCruisers.Buildings.Factories
 			private get { return _unit; }
 		}
 
+		// Fired evey Update() with build progress for the current unit, if a unit is being built.
+		public event EventHandler<BuildProgressEventArgs> BuildProgress;
+
 		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
 			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory);
@@ -56,6 +71,20 @@ namespace BattleCruisers.Buildings.Factories
 			NumOfAidingDrones = 0;
 		}
 
+		void Update()
+		{
+			if (_unit != null)
+			{
+				_timeUnitHasBeenBuildingInS += Time.deltaTime;
+
+				if (BuildProgress != null)
+				{
+					float buildProgress = _timeUnitHasBeenBuildingInS / _unit.buildTimeInS;
+					BuildProgress.Invoke(this, new BuildProgressEventArgs(buildProgress));
+				}
+			}
+		}
+
 		protected override void OnClicked()
 		{
 			base.OnClicked();
@@ -67,11 +96,13 @@ namespace BattleCruisers.Buildings.Factories
 			// FELIX  Figure out how to speed this up with drones
 			float productionTimeInS = _unit.buildTimeInS;
 			InvokeRepeating("ProduceUnit", productionTimeInS, productionTimeInS);
+			_timeUnitHasBeenBuildingInS = 0;
 		}
 
 		private void StopProducing()
 		{
 			CancelInvoke("ProduceUnit");
+			_timeUnitHasBeenBuildingInS = 0;
 		}
 
 		private void ProduceUnit()
@@ -93,6 +124,8 @@ namespace BattleCruisers.Buildings.Factories
 
 				OnUnitProduced(unit);
 			}
+
+			_timeUnitHasBeenBuildingInS = 0;
 		}
 		
 		// Check if there is space for the unit to be spawned, or
