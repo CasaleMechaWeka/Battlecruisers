@@ -147,6 +147,36 @@ namespace BattleCruisers.Tests.Drones
 		}
 
 		[Test]
+		public void AddDroneConsumer_TakeFromExisting_Some3()
+		{
+			_droneManager.NumOfDrones = 6;
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			_droneManager.AddDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
+
+			_droneManager.AddDroneConsumer(_droneConsumer4);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer4.State);
+		}
+
+		[Test]
+		public void AddDroneConsumer_TakeFromExisting_Some4()
+		{
+			_droneManager.NumOfDrones = 7;
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			_droneManager.AddDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
+
+			_droneManager.AddDroneConsumer(_droneConsumer4);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
+		}
+
+		[Test]
 		public void AddDroneConsumer_TakeFromMultipleExisting_All()
 		{
 			_droneManager.NumOfDrones = 4;
@@ -176,5 +206,13 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
 		}
 		#endregion AddDroneConsumer()
+
+		#region RemoveDroneConsumer()
+		// FELIX
+		#endregion RemoveDroneConsumer()
+
+		#region FocusOnDroneConsumer
+		// FELIX
+		#endregion FocusOnDroneConsumer
 	}
 }
