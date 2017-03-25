@@ -39,6 +39,11 @@ namespace BattleCruisers.Drones
 			get { return _numOfDrones; }
 			set
 			{
+				if (value < NumOfDronesRequired)
+				{
+					throw new ArgumentException();
+				}
+
 				if (value != _numOfDrones)
 				{
 					_numOfDrones = value;
@@ -80,7 +85,7 @@ namespace BattleCruisers.Drones
 	{
 		int NumOfDrones { get; set; }
 
-		bool CanAddDroneConsumer(IDroneConsumer droneConsumer);
+		bool CanSupportDroneConsumer(IDroneConsumer droneConsumer);
 		void AddDroneConsumer(IDroneConsumer droneConsumer);
 		void RemoveDroneConsumer(IDroneConsumer droneConsumer);
 
@@ -106,9 +111,30 @@ namespace BattleCruisers.Drones
 			}
 			set
 			{
+				Assert.IsTrue(value >= 0);
+
 				if (_numOfDrones != value)
 				{
-					// FELIX  Update drone allocations (if extra => assign, if less => remove)
+					if (_droneConsumers.Count != 0)
+					{
+						if (value > _numOfDrones)
+						{
+							int newDrones = value - _numOfDrones;
+							AssignSpareDrones(newDrones);
+						}
+						else
+						{
+							int numOfLostDrones = _numOfDrones - value;
+							int numOfFreedDrones = FreeUpDrones(numOfLostDrones);
+							int numOfSpareDrones = numOfFreedDrones - numOfLostDrones;
+
+							if (numOfSpareDrones > 0)
+							{
+								AssignSpareDrones(numOfSpareDrones);
+							}
+						}
+					}
+
 					_numOfDrones = value;
 				}
 			}
@@ -120,23 +146,22 @@ namespace BattleCruisers.Drones
 			_numOfDrones = 0;
 		}
 
-		public bool CanAddDroneConsumer(IDroneConsumer droneConsumer)
+		public bool CanSupportDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			return CanSupportDroneConsumer(droneConsumer, NumOfDrones);
-		}
-
-		private bool CanSupportDroneConsumer(IDroneConsumer droneConsumer, int numOfDrones)
-		{
-			return numOfDrones >= droneConsumer.NumOfDronesRequired;
+			return NumOfDrones >= droneConsumer.NumOfDronesRequired;
 		}
 
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Assert.IsTrue(CanAddDroneConsumer(droneConsumer));
+			if (!CanSupportDroneConsumer(droneConsumer)
+			    || _droneConsumers.Contains(droneConsumer))
+			{
+				throw new ArgumentException();
+			}
+
 			_droneConsumers.Add(droneConsumer);
 
 			int numOfFreeDrones = FreeUpDrones(droneConsumer.NumOfDronesRequired);
-			Assert.IsTrue(numOfFreeDrones >= droneConsumer.NumOfDronesRequired);
 
 			droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
 			int numOfSpareDrones = numOfFreeDrones - droneConsumer.NumOfDrones;
@@ -145,8 +170,6 @@ namespace BattleCruisers.Drones
 			{
 				AssignSpareDrones(numOfSpareDrones);
 			}
-
-			CheckStateIsValid();
 		}
 
 		/// <summary>
@@ -164,29 +187,130 @@ namespace BattleCruisers.Drones
 		/// <param name="numOfDesiredDrones">Number of desired drones.</param>
 		private int FreeUpDrones(int numOfDesiredDrones)
 		{
-			return -1;
+			int freedUpDrones = 0;
+
+			if (_droneConsumers.Count == 0)
+			{
+				freedUpDrones = NumOfDrones;
+			}
+			else
+			{
+				// Consumer priority:  Low => High
+				for (int i = 0; i < _droneConsumers.Count; ++i)
+				{
+					IDroneConsumer droneConsumer = _droneConsumers[i];
+					freedUpDrones += droneConsumer.NumOfDrones;
+					droneConsumer.NumOfDrones = 0;
+
+					if (freedUpDrones >= numOfDesiredDrones)
+					{
+						break;
+					}
+				}
+			}
+
+			Assert.IsTrue(freedUpDrones >= numOfDesiredDrones);
+			return freedUpDrones;
 		}
 
-		// FELIX NEXT Comments :)
+		/// <summary>
+		/// Tries to provide the required number of drones to all consumers, starting
+		/// with the highest prioirty consumers.
+		/// 
+		/// If there are any spare drones after all consumers have their required
+		/// number of drones, all spare drones are assigned to the highest priority
+		/// consumer.
+		/// 
+		/// If there are not enough drones for the consumer with the lowest number
+		/// of required drones, NO drones will be assignd to any consumers.
+		/// 
+		/// Note:  Should never be called if there are no consumers, because then
+		/// there are no consumers to assign them to.
+		/// </summary>
 		private void AssignSpareDrones(int numOfSpareDrones)
 		{
+			Assert.IsTrue(_droneConsumers.Count != 0);
 
+			// Try to ensure all consumers have their required number of drones
+			// Consumer priority:  High => Low
+			for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+			{
+				IDroneConsumer droneConsumer = _droneConsumers[i];
+
+				if (droneConsumer.State == DroneConsumerState.Idle 
+					&& droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
+				{
+					droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
+					numOfSpareDrones -= numOfSpareDrones;
+
+					if (numOfSpareDrones == 0)
+					{
+						break;
+					}
+				}
+			}
+
+			// Assign remaining spares to highest priority consumer
+			if (numOfSpareDrones != 0)
+			{
+				// Consumer priority:  High => Low
+				for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+				{
+					IDroneConsumer droneConsumer = _droneConsumers[i];
+
+					if (droneConsumer.State == DroneConsumerState.Normal
+					    || droneConsumer.State == DroneConsumerState.Focused)
+					{
+						droneConsumer.NumOfDrones += numOfSpareDrones;
+						numOfSpareDrones = 0;
+						break;
+					}
+				}
+			}
 		}
 
-		private void CheckStateIsValid()
-		{
-//			int numOfDronesUsedByConsumers = 
-		}
-
-		// Can have unusable drones!  ONLY if we have no consumers!
+		/// <summary>
+		/// Remove the given consumer and reassign their drones (if they had any).
+		/// </summary>
 		public void RemoveDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			throw new NotImplementedException();
+			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
+
+			if (!wasRemoved)
+			{
+				throw new ArgumentException("Tried to remove consumer that was not first added.");
+			}
+
+			if (droneConsumer.NumOfDrones != 0)
+			{
+				if (_droneConsumers.Count != 0)
+				{
+					AssignSpareDrones(droneConsumer.NumOfDrones);
+				}
+				droneConsumer.NumOfDrones = 0;
+			}
 		}
 
+		/// <summary>
+		/// Remove drones from ALL drone consumers and assign them all to
+		/// this drone consumer.
+		/// 
+		/// Note:  The DroneManager must have at least the number of required
+		/// drones for this drone consumer to be able to focus on them.  Ie,
+		/// if 
+		/// </summary>
 		public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			throw new NotImplementedException();
+			if (NumOfDrones < droneConsumer.NumOfDronesRequired
+				|| NumOfDrones == droneConsumer.NumOfDrones)
+			{
+				return;
+			}
+
+			int freedDrones = FreeUpDrones(NumOfDrones);
+			Assert.AreEqual(freedDrones, NumOfDrones);
+
+			droneConsumer.NumOfDrones = freedDrones;
 		}
 	}
 }
