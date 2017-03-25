@@ -37,7 +37,10 @@ namespace BattleCruisers.Drones
 			}
 			set
 			{
-				Assert.IsTrue(value >= 0);
+				if (value < 0)
+				{
+					throw new ArgumentException();
+				}
 
 				if (_numOfDrones != value)
 				{
@@ -85,9 +88,9 @@ namespace BattleCruisers.Drones
 				throw new ArgumentException();
 			}
 
-			_droneConsumers.Add(droneConsumer);
-
 			int numOfFreeDrones = FreeUpDrones(droneConsumer.NumOfDronesRequired);
+			
+			_droneConsumers.Add(droneConsumer);
 
 			droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
 			int numOfSpareDrones = numOfFreeDrones - droneConsumer.NumOfDrones;
@@ -167,7 +170,7 @@ namespace BattleCruisers.Drones
 					&& droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
 				{
 					droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
-					numOfSpareDrones -= numOfSpareDrones;
+					numOfSpareDrones -= droneConsumer.NumOfDrones;
 
 					if (numOfSpareDrones == 0)
 					{
