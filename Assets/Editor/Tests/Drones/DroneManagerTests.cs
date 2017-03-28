@@ -47,6 +47,8 @@ namespace BattleCruisers.Tests.Drones
 		{
 			_droneManager.NumOfDrones = -1;
 		}
+
+		// FELIX:  Removes form existing!  Adds to existing!
 		#endregion NumOfDrones
 
 		#region CanSupportDroneConsumer()
@@ -206,9 +208,111 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
 		}
 		#endregion AddDroneConsumer()
+		[ExpectedException(typeof(ArgumentException))]
+		[Test]
+		public void RemoveDroneConsumer_WasNotAddedFirst()
+		{
+			_droneManager.RemoveDroneConsumer(_droneConsumer1);
+		}
 
+		[Test]
+		public void RemoveDroneConsumer_LastConsumer()
+		{
+			_droneManager.NumOfDrones = 1;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer1);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+		}
+
+
+		[Test]
+		public void RemoveDroneConsumer_HadNoDrones()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer1);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+		}
+
+		[Test]
+		public void RemoveDroneConsumer_Reassigns_OtherConsumerIdle()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+		}
+
+		[Test]
+		public void RemoveDroneConsumer_Reassigns_OtherConsumersBothIdle()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			_droneManager.AddDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
+		}
+
+		[Test]
+		public void RemoveDroneConsumer_Reassigns_OtherConsumersBothActive()
+		{
+			_droneManager.NumOfDrones = 5;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			_droneManager.AddDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
+		}
+
+		[Test]
+		public void RemoveDroneConsumer_Reassigns_OtherConsumersIdleActive()
+		{
+			_droneManager.NumOfDrones = 3;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			_droneManager.AddDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
+
+			_droneManager.RemoveDroneConsumer(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
+		}
 		#region RemoveDroneConsumer()
-		// FELIX
+
 		#endregion RemoveDroneConsumer()
 
 		#region FocusOnDroneConsumer
