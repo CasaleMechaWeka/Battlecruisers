@@ -48,7 +48,62 @@ namespace BattleCruisers.Tests.Drones
 			_droneManager.NumOfDrones = -1;
 		}
 
-		// FELIX:  Removes form existing!  Adds to existing!
+		[Test]
+		public void NumOfDrones_Set_IncreaseAssigns()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.NumOfDrones = 4;
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+		}
+
+		[Test]
+		public void NumOfDrones_Set_DecreaseFreesUp()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.NumOfDrones = 0;
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+		}
+
+		[Test]
+		public void NumOfDrones_Set_DecreaseFreesUp2()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.NumOfDrones = 1;
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+		}
+
+		[Test]
+		public void NumOfDrones_Set_DecreaseFreesUp_SoNoneActive()
+		{
+			_droneManager.NumOfDrones = 2;
+
+			_droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+
+			_droneManager.NumOfDrones = 1;
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+		}
 		#endregion NumOfDrones
 
 		#region CanSupportDroneConsumer()
@@ -208,6 +263,8 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
 		}
 		#endregion AddDroneConsumer()
+
+		#region RemoveDroneConsumer()
 		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void RemoveDroneConsumer_WasNotAddedFirst()
@@ -311,8 +368,6 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
 		}
-		#region RemoveDroneConsumer()
-
 		#endregion RemoveDroneConsumer()
 
 		#region FocusOnDroneConsumer
