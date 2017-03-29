@@ -199,8 +199,8 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
 
 			_droneManager.AddDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
 		}
 
 		[Test]
@@ -209,13 +209,13 @@ namespace BattleCruisers.Tests.Drones
 			_droneManager.NumOfDrones = 6;
 			_droneManager.AddDroneConsumer(_droneConsumer2);
 			_droneManager.AddDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 4
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 2
 
 			_droneManager.AddDroneConsumer(_droneConsumer4);
-			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer4.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 2
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer4.State);  // 4
 		}
 
 		[Test]
@@ -224,13 +224,13 @@ namespace BattleCruisers.Tests.Drones
 			_droneManager.NumOfDrones = 7;
 			_droneManager.AddDroneConsumer(_droneConsumer2);
 			_droneManager.AddDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 5
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 2
 
 			_droneManager.AddDroneConsumer(_droneConsumer4);
-			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);  // 2
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);  // 5
 		}
 
 		[Test]
@@ -254,8 +254,8 @@ namespace BattleCruisers.Tests.Drones
 			_droneManager.NumOfDrones = 5;
 			_droneManager.AddDroneConsumer(_droneConsumer2);
 			_droneManager.AddDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
 
 			_droneManager.AddDroneConsumer(_droneConsumer4);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
@@ -346,8 +346,8 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);
 
 			_droneManager.RemoveDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer1.State);
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
 		}
 
@@ -510,22 +510,22 @@ namespace BattleCruisers.Tests.Drones
 
 			_droneManager.AddDroneConsumer(_droneConsumer1);
 			_droneManager.AddDroneConsumer(_droneConsumer2);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);  // 1
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 5
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer1.State);  // 4
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);  // 2
 
 			_droneManager.ToggleDroneConsumerFocus(_droneConsumer2);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);  // 1
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 5
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 6
 
 			_droneManager.AddDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State); // 1
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State); 
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 4
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 2
 
 			_droneManager.RemoveDroneConsumer(_droneConsumer3);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
-			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 6
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 0
 		}
 
 		// FELIX:  Show that newly added consumer has highest priority

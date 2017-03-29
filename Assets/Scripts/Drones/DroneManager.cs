@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Drones
@@ -17,6 +18,13 @@ namespace BattleCruisers.Drones
 		void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer);
 	}
 
+	/// <summary>
+	/// Only one drone consumer (DC) can be focused at a time (focused 
+	/// meaning they have more than their required number of drones).
+	/// 
+	/// If a DC is focused they are the highest priority DC, and any 
+	/// newly available drones will go to them.
+	/// </summary>
 	public class DroneManager : IDroneManager
 	{
 		private IList<IDroneConsumer> _droneConsumers;
@@ -73,6 +81,17 @@ namespace BattleCruisers.Drones
 			return NumOfDrones >= droneConsumer.NumOfDronesRequired;
 		}
 
+		/// <summary>
+		/// The newly added consumer will always be provided with at least
+		/// its required number of drones.
+		/// 
+		/// Usually the newly added consumer is the highest priority consumer.
+		/// 
+		/// The exception to this is if there is a focused consumer, which has
+		/// enough drones to spare for the newly added consumer AND still be
+		/// focused.  In this case that focused consumer remains the highest
+		/// priority consumer.
+		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
 			if (!CanSupportDroneConsumer(droneConsumer)
@@ -82,8 +101,18 @@ namespace BattleCruisers.Drones
 			}
 
 			int numOfSpareDrones = ProvideRequiredDrones(droneConsumer);
-			
-			_droneConsumers.Add(droneConsumer);
+
+			IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
+			if (focusedConsumer != null && focusedConsumer.State == DroneConsumerState.Focused)
+			{
+				// Leave focused consumer as the highest priority consumer
+				_droneConsumers.Insert(_droneConsumers.Count - 1, droneConsumer);
+			}
+			else
+			{
+				// Make the new consumer be have the highest priority
+				_droneConsumers.Add(droneConsumer);
+			}
 
 			if (numOfSpareDrones > 0)
 			{
@@ -111,42 +140,62 @@ namespace BattleCruisers.Drones
 		/// <param name="numOfDesiredDrones">Number of desired drones.</param>
 		private int FreeUpDrones(int numOfDesiredDrones)
 		{
-			int freedUpDrones = 0;
+			int numOfFreedDrones = 0;
 
 			if (_droneConsumers.Count == 0)
 			{
-				freedUpDrones = NumOfDrones;
+				numOfFreedDrones = NumOfDrones;
 			}
 			else
 			{
-				// Remove drones from focused consuemrs
-				// Consumer priority:  Low => High
-				// FELIX
+				// Remove drones from focused consuemr
+				IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
 
-
-				// FELIX
-				// Remove drones from active consumers
-				// Consumer priority:  Low => High
-				for (int i = 0; i < _droneConsumers.Count; ++i)
+				if (focusedConsumer.State == DroneConsumerState.Focused)
+					
 				{
-					IDroneConsumer droneConsumer = _droneConsumers[i];
-					freedUpDrones += droneConsumer.NumOfDrones;
-					droneConsumer.NumOfDrones = 0;
-
-					if (freedUpDrones >= numOfDesiredDrones)
+					if (focusedConsumer.NumOfDrones - numOfDesiredDrones > focusedConsumer.NumOfDronesRequired)
 					{
-						break;
+						// Focused consumer will remain focused even after giving up
+						// the numOfDesiredDrones
+						numOfFreedDrones = numOfDesiredDrones;
+						focusedConsumer.NumOfDrones -= numOfDesiredDrones;
+					}
+					else
+					{
+						// Focused consumer will become active
+						numOfFreedDrones = focusedConsumer.NumOfDrones - focusedConsumer.NumOfDronesRequired;
+						focusedConsumer.NumOfDrones = focusedConsumer.NumOfDronesRequired;
+					}
+				}
+
+				if (numOfFreedDrones < numOfDesiredDrones)
+				{
+					// Remove drones from active consumers
+					// Consumer priority:  Low => High
+					for (int i = 0; i < _droneConsumers.Count; ++i)
+					{
+						IDroneConsumer droneConsumer = _droneConsumers[i];
+						numOfFreedDrones += droneConsumer.NumOfDrones;
+						droneConsumer.NumOfDrones = 0;
+
+						if (numOfFreedDrones >= numOfDesiredDrones)
+						{
+							break;
+						}
 					}
 				}
 			}
 
-			Assert.IsTrue(freedUpDrones >= numOfDesiredDrones);
-			return freedUpDrones;
+			Assert.IsTrue(numOfFreedDrones >= numOfDesiredDrones);
+			return numOfFreedDrones;
 		}
 
 		/// <summary>
-		/// Tries to provide the required number of drones to all consumers, starting
-		/// with the highest prioirty consumers.
+		/// If a focused consumer exists, assigns all drones to that consumer.
+		/// 
+		/// Otherwise, tries to provide the required number of drones to all consumers, 
+		/// starting with the highest priority consumers.
 		/// 
 		/// If there are any spare drones after all consumers have their required
 		/// number of drones, all spare drones are assigned to the highest priority
@@ -156,11 +205,18 @@ namespace BattleCruisers.Drones
 		/// of required drones, NO drones will be assignd to any consumers.
 		/// 
 		/// Note:  Should never be called if there are no consumers, because then
-		/// there are no consumers to assign them to.
+		/// there are no consumers to assign the drones to.
 		/// </summary>
 		private void AssignSpareDrones(int numOfSpareDrones)
 		{
 			Assert.IsTrue(_droneConsumers.Count != 0);
+
+			IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
+			if (focusedConsumer.State == DroneConsumerState.Focused)
+			{
+				focusedConsumer.NumOfDrones += numOfSpareDrones;
+				return;
+			}
 
 			// Try to ensure all consumers have their required number of drones
 			// Consumer priority:  High => Low
@@ -301,6 +357,11 @@ namespace BattleCruisers.Drones
 			int numOfFreeDrones = FreeUpDrones(droneConsumer.NumOfDronesRequired);
 			droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
 			return numOfFreeDrones - droneConsumer.NumOfDrones;
+		}
+
+		private IDroneConsumer GetHighestPriorityConsumer()
+		{
+			return _droneConsumers.LastOrDefault();
 		}
 	}
 }
