@@ -14,14 +14,13 @@ namespace BattleCruisers.Utils
 		public Sprite GetSlotSprite(SlotType slotType)
 		{
 			string spritePath = GetSlotFilePath(slotType);
-			// FELIX TEMP
-	//		Debug.Log($"spritePath: {spritePath}");
-
 			Sprite sprite = Resources.Load<Sprite>(spritePath);
+
 			if (sprite == null)
 			{
 				throw new ArgumentException($"Invalid sprite path: {spritePath}");
 			}
+
 			return sprite;
 		}
 

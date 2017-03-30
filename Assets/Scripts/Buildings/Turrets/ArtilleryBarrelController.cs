@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildings.Turrets
 {
-	// FELIX  Move to own file
 	/// <summary>
 	/// Artillery barrel wrapper controller.
 	/// FELIX  Lead moving targets!

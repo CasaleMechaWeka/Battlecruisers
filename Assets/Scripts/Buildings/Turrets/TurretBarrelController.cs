@@ -58,7 +58,7 @@ namespace BattleCruisers.Buildings.Turrets
 		/// </summary>
 		protected virtual float FindDesiredAngle()
 		{
-			// FELIX  This is wrong :P
+			// FELIX  This is wrong :P  Find angle for direct fire from shell spawner to target
 			return _targetObject.transform.rotation.z;
 		}
 

@@ -11,7 +11,6 @@ using UnityEngine;
 
 namespace BattleCruisers
 {
-	// FELIX  Rename to BuildableFactory?  Merge building and unit methods
 	public class BuildableFactory : MonoBehaviour 
 	{
 		private UIManager _uiManager;

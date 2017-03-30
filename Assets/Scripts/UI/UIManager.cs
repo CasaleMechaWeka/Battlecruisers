@@ -125,7 +125,6 @@ namespace BattleCruisers.UI
 			buildMenuController.ShowUnitsMenu(factory);
 		}
 
-		// FELIX  Also show details when clicking on real unit (not just unit button in factory panel)
 		public void ShowUnitDetails(Unit unit)
 		{
 			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);

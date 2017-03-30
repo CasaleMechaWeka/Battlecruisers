@@ -1,12 +1,4 @@
-﻿// FELIX  Create parent boat class
-// FELIX  Create Unit class and interface
-// FELIX  Behaviour
-// 1. Friendly boat => stop
-// 2. Friendly boat leaves/gets destroyed => Advance
-// 3. Enemy => Stop & attack
-// 4. Enemy leaves/gets destroyed => Stop attacking & advance
-// 5. Collision, die?
-using BattleCruisers.Buildings.Turrets;
+﻿using BattleCruisers.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI;
 using BattleCruisers.Units.Detectors;
@@ -16,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// FELIX  Create parent boat class
 namespace BattleCruisers.Units
 {
 	/// <summary>
@@ -118,7 +111,6 @@ namespace BattleCruisers.Units
 			StartAttacking();
 		}
 
-		// FELIX  Extract firing functionality, common with artillery
 		private void StartAttacking()
 		{
 			if (_turretStats == null)
