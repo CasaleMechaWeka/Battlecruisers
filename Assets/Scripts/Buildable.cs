@@ -110,7 +110,12 @@ namespace BattleCruisers
 		void OnDestroy()
 		{
 			Debug.Log("Buildable.OnDestroy()");
-			DroneConsumer.DroneStateChanged -= OnDroneStateChanged;
+
+			// The original prefab will not have called Initalise(), so will not have DroneConsumer set.
+			if (DroneConsumer != null)
+			{
+				DroneConsumer.DroneStateChanged -= OnDroneStateChanged;
+			}
 
 			if (Destroyed != null)
 			{
