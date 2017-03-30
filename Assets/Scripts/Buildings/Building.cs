@@ -21,8 +21,7 @@ namespace BattleCruisers.Buildings
 		// Proportional to building size
 		public float customOffsetProportion;
 
-		// FELIX  Used?  Create event so can have multiple listeners
-		public Action OnDestroyed;
+		public event EventHandler Destroyed;
 
 		void OnMouseDown()
 		{
@@ -35,10 +34,9 @@ namespace BattleCruisers.Buildings
 		void OnDestroy()
 		{
 			Debug.Log("Building.OnDestroy()");
-			if (OnDestroyed != null)
+			if (Destroyed != null)
 			{
-				OnDestroyed.Invoke();
-				OnDestroyed = null;
+				Destroyed.Invoke(this, EventArgs.Empty);
 			}
 		}
 

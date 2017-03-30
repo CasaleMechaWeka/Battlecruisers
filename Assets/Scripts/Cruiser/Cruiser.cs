@@ -109,5 +109,10 @@ namespace BattleCruisers.Cruisers
 			base.TakeDamage(damageAmount);
 			healthBarController.Health = health;
 		}
+
+		public void StartBuilding(BuildableObject buildable)
+		{
+
+		}
 	}
 }

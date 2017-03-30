@@ -75,7 +75,7 @@ namespace BattleCruisers.Cruisers
 
 				uiManager.ShowBuildingGroups();
 
-				_building.OnDestroyed = OnBuildingDestroyed;
+				_building.Destroyed += OnBuildingDestroyed;
 			}
 		}
 
@@ -96,8 +96,9 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		private void OnBuildingDestroyed()
+		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
+			_building.Destroyed -= OnBuildingDestroyed;
 			_building = null;
 		}
 	}
