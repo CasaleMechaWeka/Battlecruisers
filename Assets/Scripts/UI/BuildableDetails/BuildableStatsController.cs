@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			_valueToStarsConverter = new ValueToStarsConverter();
 		}
 
-		public void ShowBuildableStats(BuildableObject buildable)
+		public void ShowBuildableStats(Buildable buildable)
 		{
 			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString());
 			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);

@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildings.Factories
 			_buildableFactory = buildableFactory;
 		}
 
-		public override void Initialise(BuildableObject buildable)
+		public override void Initialise(Buildable buildable)
 		{
 			base.Initialise(buildable);
 			Factory factory = buildable as Factory;

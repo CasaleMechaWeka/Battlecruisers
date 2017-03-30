@@ -15,7 +15,7 @@ namespace BattleCruisers.Units
 		Left, Right, Up, Down
 	}
 
-	public class Unit : BuildableObject, IPointerClickHandler
+	public class Unit : Buildable, IPointerClickHandler
 	{
 		public UnitCategory category;
 		// FELIX  Remove?

@@ -119,7 +119,7 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Health = health;
 		}
 
-		public void AddBuildable(BuildableObject buildable)
+		public void AddBuildable(Buildable buildable)
 		{
 			buildable.StartedBuilding += Buildable_StartedBuilding;
 			buildable.Destroyed += Buildable_Destroyed;
@@ -127,14 +127,14 @@ namespace BattleCruisers.Cruisers
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
 		{
-			BuildableObject buildable = sender as BuildableObject;
+			Buildable buildable = sender as Buildable;
 			Assert.IsNotNull(buildable);
 			_droneManager.AddDroneConsumer(buildable.DroneConsumer);
 		}
 		
 		private void Buildable_Destroyed(object sender, EventArgs e)
 		{
-			BuildableObject buildable = sender as BuildableObject;
+			Buildable buildable = sender as Buildable;
 			Assert.IsNotNull(buildable);
 			_droneManager.RemoveDroneConsumer(buildable.DroneConsumer);
 		}

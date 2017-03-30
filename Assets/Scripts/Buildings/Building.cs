@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildings
 		Factory, Defence, Offence, Tactical, Support, Ultras
 	}
 
-	public class Building : BuildableObject, IPointerClickHandler
+	public class Building : Buildable, IPointerClickHandler
 	{
 		public BuildingCategory category;
 		// Proportional to building size

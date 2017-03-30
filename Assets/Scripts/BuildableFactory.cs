@@ -75,7 +75,7 @@ namespace BattleCruisers
 			return CreateBuildable(unitPrefab);
 		}
 
-		private T CreateBuildable<T>(T buildablePrefab) where T : BuildableObject
+		private T CreateBuildable<T>(T buildablePrefab) where T : Buildable
 		{
 			T buildable = Instantiate<T>(buildablePrefab);
 			buildable.Initialise(buildablePrefab);

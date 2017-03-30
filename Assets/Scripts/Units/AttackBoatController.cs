@@ -54,7 +54,7 @@ namespace BattleCruisers.Units
 			shellSpawner.Initialise(_shellStats);
 		}
 
-		public override void Initialise(BuildableObject buildable)
+		public override void Initialise(Buildable buildable)
 		{
 			base.Initialise(buildable);
 

@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BuildingDetails
 {
 	public class BuildableDetailsController : MonoBehaviour 
 	{
-		private BuildableObject _buildable;
+		private Buildable _buildable;
 		private bool _allowDelete;
 		// FELIX  Inject?
 		private SpriteFetcher _spriteFetcher;
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			Hide();
 		}
 
-		public void ShowBuildableDetails(BuildableObject buildable, bool allowDelete)
+		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)
 		{
 			Assert.IsNotNull(buildable);
 
