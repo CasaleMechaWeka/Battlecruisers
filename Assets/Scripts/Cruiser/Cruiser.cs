@@ -4,6 +4,7 @@ using BattleCruisers.Units;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
@@ -14,7 +15,7 @@ namespace BattleCruisers.Cruisers
 		void UnhighlightSlots();
 	}
 
-	public class Cruiser : FactionObject, ICruiser
+	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
 	{
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
@@ -99,9 +100,9 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		void OnMouseDown()
+		public void OnPointerClick(PointerEventData eventData)
 		{
-			Debug.Log("Cruiesr.OnMouseDown()");
+			Debug.Log("Cruiser.OnPointerClick()");
 		}
 
 		public override void TakeDamage(float damageAmount)

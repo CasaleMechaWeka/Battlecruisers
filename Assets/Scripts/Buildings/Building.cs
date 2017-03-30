@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.Buildings
@@ -15,7 +16,7 @@ namespace BattleCruisers.Buildings
 		Factory, Defence, Offence, Tactical, Support, Ultras
 	}
 
-	public class Building : BuildableObject
+	public class Building : BuildableObject, IPointerClickHandler
 	{
 		public BuildingCategory category;
 		// Proportional to building size
@@ -23,7 +24,7 @@ namespace BattleCruisers.Buildings
 
 		public event EventHandler Destroyed;
 
-		void OnMouseDown()
+		public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
 			OnClicked();

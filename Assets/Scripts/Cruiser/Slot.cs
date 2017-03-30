@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
@@ -19,7 +20,7 @@ namespace BattleCruisers.Cruisers
 		bool IsActive { set; }
 	}
 
-	public class Slot : MonoBehaviour, ISlot
+	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{
 		private SpriteRenderer _renderer;
 		private Building _building;
@@ -55,9 +56,9 @@ namespace BattleCruisers.Cruisers
 			_renderer.color = DEFAULT_COLOUR;
 		}
 
-		void OnMouseDown()
+		public void OnPointerClick(PointerEventData eventData)
 		{
-			Debug.Log($"Slot.OnMouseDown()  _isActive: {_isActive}");
+			Debug.Log($"Slot.OnPointerClick()  _isActive: {_isActive}");
 
 			if (_isActive)
 			{
