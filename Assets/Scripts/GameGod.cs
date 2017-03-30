@@ -1,9 +1,11 @@
 ﻿using BattleCruisers.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Drones;
 using BattleCruisers.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.UI.BuildingDetails;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +24,7 @@ namespace BattleCruisers
 		public BuildableFactory buildableFactory;
 		public UIManager uiManager;
 		public BuildMenuController buildMenuController;
+		public BuildableDetailsController buildableDetailsController;
 		public Cruiser friendlyCruiser;
 		public Cruiser enemyCruiser;
 		
@@ -47,6 +50,10 @@ namespace BattleCruisers
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
+
+			IDroneManager droneManager = new DroneManager();
+			friendlyCruiser.Initialise(droneManager);
+			buildableDetailsController.Initialise(droneManager);
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?

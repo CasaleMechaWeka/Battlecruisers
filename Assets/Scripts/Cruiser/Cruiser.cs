@@ -34,8 +34,13 @@ namespace BattleCruisers.Cruisers
 			SetupSlots();
 			HideAllSlots();
 			healthBarController.Initialise(health);
+		}
 
-			_droneManager = new DroneManager();
+		public void Initialise(IDroneManager droneManager)
+		{
+			Assert.IsNotNull(droneManager);
+
+			_droneManager = droneManager;
 			_droneManager.NumOfDrones = numOfDrones;
 		}
 

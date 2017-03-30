@@ -8,6 +8,7 @@ using System;
 
 namespace BattleCruisers
 {
+	// FELIX  Create interface
 	public abstract class Buildable : FactionObject
 	{
 		private Renderer _renderer;

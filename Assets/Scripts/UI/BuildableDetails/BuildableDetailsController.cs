@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Drones;
 
 namespace BattleCruisers.UI.BuildingDetails
 {
@@ -15,6 +16,7 @@ namespace BattleCruisers.UI.BuildingDetails
 		private bool _allowDelete;
 		// FELIX  Inject?
 		private SpriteFetcher _spriteFetcher;
+		private IDroneManager _droneManager;
 
 		public BuildableStatsController statsController;
 		public Text buildableName;
@@ -22,6 +24,7 @@ namespace BattleCruisers.UI.BuildingDetails
 		public Image buildableImage;
 		public Image slotImage;
 		public Button deleteButton;
+		public Button toggleDroneButton;
 
 		// Use this for initialization
 		void Start () 
@@ -29,6 +32,11 @@ namespace BattleCruisers.UI.BuildingDetails
 			_spriteFetcher = new SpriteFetcher();
 			_allowDelete = false;
 			Hide();
+		}
+
+		public void Initialise(IDroneManager droneManager)
+		{
+			_droneManager = droneManager;
 		}
 
 		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)
@@ -56,6 +64,8 @@ namespace BattleCruisers.UI.BuildingDetails
 			{
 				deleteButton.onClick.AddListener(DeleteBuildable);
 			}
+
+			// FELIX  Toggle drone button
 		}
 
 		public void DeleteBuildable()
@@ -65,6 +75,11 @@ namespace BattleCruisers.UI.BuildingDetails
 
 			_buildable.InitiateDelete();
 			Hide();
+		}
+
+		public void ToggleBuildableDrones()
+		{
+			_droneManager.ToggleDroneConsumerFocus(_buildable.DroneConsumer);
 		}
 
 		public void Hide()
