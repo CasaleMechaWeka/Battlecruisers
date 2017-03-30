@@ -1,16 +1,17 @@
-﻿using System;
+﻿using BattleCruisers.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BattleCruisers.UI;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers
 {
-	public class BackgroundController : MonoBehaviour 
+	public class BackgroundController : MonoBehaviour, IPointerClickHandler
 	{
 		public event EventHandler BackgroundClicked;
 
-		void OnMouseDown()
+		public void OnPointerClick(PointerEventData eventData)
 		{
 			if (BackgroundClicked != null)
 			{
