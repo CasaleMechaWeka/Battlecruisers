@@ -22,8 +22,6 @@ namespace BattleCruisers.Buildings
 		// Proportional to building size
 		public float customOffsetProportion;
 
-		public event EventHandler Destroyed;
-
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
@@ -31,15 +29,6 @@ namespace BattleCruisers.Buildings
 		}
 
 		protected virtual void OnClicked() { }
-
-		void OnDestroy()
-		{
-			Debug.Log("Building.OnDestroy()");
-			if (Destroyed != null)
-			{
-				Destroyed.Invoke(this, EventArgs.Empty);
-			}
-		}
 
 		public override void InitiateDelete()
 		{

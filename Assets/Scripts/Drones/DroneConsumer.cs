@@ -14,9 +14,22 @@ namespace BattleCruisers.Drones
 	public class DroneNumChangedEventArgs : EventArgs
 	{
 		public int NewNumOfDrones { get; private set; }
+
 		public DroneNumChangedEventArgs(int newNumOfDrones)
 		{
 			NewNumOfDrones = newNumOfDrones;
+		}
+	}
+
+	public class DroneStateChangedEventArgs : EventArgs
+	{
+		public DroneConsumerState OldState { get; private set; }
+		public DroneConsumerState NewState { get; private set; }
+
+		public DroneStateChangedEventArgs(DroneConsumerState oldState, DroneConsumerState newState)
+		{
+			OldState = oldState;
+			NewState = newState;
 		}
 	}
 
@@ -28,6 +41,8 @@ namespace BattleCruisers.Drones
 		int NumOfDronesRequired { get; }
 		DroneConsumerState State { get; }
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+		// FELIX  Add tests
+		event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 	}
 
 	public class DroneConsumer : IDroneConsumer
@@ -51,7 +66,15 @@ namespace BattleCruisers.Drones
 					{
 						DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
 					}
-					State = FindDroneState(_numOfDrones, NumOfDronesRequired);
+					DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
+					if (newState != State)
+					{
+						if (DroneStateChanged != null)
+						{
+							DroneStateChanged.Invoke(this, new DroneStateChangedEventArgs(State, newState));
+						}
+						State = newState;
+					}
 				}
 			}
 		}
@@ -60,6 +83,7 @@ namespace BattleCruisers.Drones
 		public DroneConsumerState State { get; private set; }
 
 		public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+		public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
 		public DroneConsumer(int numOfDronesRequired)
 		{

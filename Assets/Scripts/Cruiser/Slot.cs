@@ -77,6 +77,9 @@ namespace BattleCruisers.Cruisers
 				uiManager.ShowBuildingGroups();
 
 				_building.Destroyed += OnBuildingDestroyed;
+
+				parentCruiser.AddBuildable(_building);
+				_building.StartBuilding();
 			}
 		}
 

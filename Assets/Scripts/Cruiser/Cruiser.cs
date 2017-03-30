@@ -1,9 +1,12 @@
 ﻿using BattleCruisers.Buildings;
+using BattleCruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
@@ -17,18 +20,23 @@ namespace BattleCruisers.Cruisers
 
 	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
 	{
+		private IDroneManager _droneManager;
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
 
 		public HealthBarController healthBarController;
 		public Direction direction;
+		public int numOfDrones;
 
 		void Start()
 		{
 			SetupSlots();
 			HideAllSlots();
 			healthBarController.Initialise(health);
+
+			_droneManager = new DroneManager();
+			_droneManager.NumOfDrones = numOfDrones;
 		}
 
 		private void SetupSlots()
@@ -111,9 +119,24 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Health = health;
 		}
 
-		public void StartBuilding(BuildableObject buildable)
+		public void AddBuildable(BuildableObject buildable)
 		{
+			buildable.StartedBuilding += Buildable_StartedBuilding;
+			buildable.Destroyed += Buildable_Destroyed;
+		}
 
+		private void Buildable_StartedBuilding(object sender, EventArgs e)
+		{
+			BuildableObject buildable = sender as BuildableObject;
+			Assert.IsNotNull(buildable);
+			_droneManager.AddDroneConsumer(buildable.DroneConsumer);
+		}
+		
+		private void Buildable_Destroyed(object sender, EventArgs e)
+		{
+			BuildableObject buildable = sender as BuildableObject;
+			Assert.IsNotNull(buildable);
+			_droneManager.RemoveDroneConsumer(buildable.DroneConsumer);
 		}
 	}
 }
