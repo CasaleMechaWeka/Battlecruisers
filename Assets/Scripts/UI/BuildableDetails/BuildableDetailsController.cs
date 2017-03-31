@@ -59,13 +59,20 @@ namespace BattleCruisers.UI.BuildingDetails
 			}
 			slotImage.gameObject.SetActive(hasSlot);
 
+			// Delete buildable button
 			deleteButton.gameObject.SetActive(allowDelete);
 			if (allowDelete)
 			{
 				deleteButton.onClick.AddListener(DeleteBuildable);
 			}
 
-			// FELIX  Toggle drone button
+			// Toggle drone button
+			bool showDroneToggleButton = buildable.DroneConsumer != null;
+			toggleDroneButton.gameObject.SetActive(showDroneToggleButton);
+			if (showDroneToggleButton)
+			{
+				toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
+			}
 		}
 
 		public void DeleteBuildable()

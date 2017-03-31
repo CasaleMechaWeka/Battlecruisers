@@ -183,6 +183,9 @@ namespace BattleCruisers.Drones
 				case DroneConsumerState.Focused:
 					numOfFreedDrones = droneConsumer.NumOfDrones - droneConsumer.NumOfDronesRequired;
 					droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
+
+					// FELIX  Just focused drone still has highest priority, so will most likely become focused again :/
+
 					AssignSpareDrones(numOfFreedDrones);
 					break;
 

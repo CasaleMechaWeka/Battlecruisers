@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers
 {
@@ -63,8 +64,6 @@ namespace BattleCruisers
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
-
-			SetupDroneConsumer(numOfDronesRequired);
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
@@ -73,12 +72,11 @@ namespace BattleCruisers
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
-
-			SetupDroneConsumer(numOfDronesRequired);
 		}
 
 		private void SetupDroneConsumer(int numOfDronesRequired)
 		{
+			Assert.IsNull(DroneConsumer);
 			DroneConsumer = new DroneConsumer(numOfDronesRequired);
 			DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
 			DroneConsumer.DroneStateChanged += OnDroneStateChanged;
@@ -102,6 +100,8 @@ namespace BattleCruisers
 
 		public void StartBuilding()
 		{
+			SetupDroneConsumer(numOfDronesRequired);
+
 			if (StartedBuilding != null)
 			{
 				StartedBuilding.Invoke(this, EventArgs.Empty);
