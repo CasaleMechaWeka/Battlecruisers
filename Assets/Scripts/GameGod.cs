@@ -23,6 +23,7 @@ namespace BattleCruisers
 
 		public BuildableFactory buildableFactory;
 		public UIManager uiManager;
+		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public BuildableDetailsController buildableDetailsController;
 		public Cruiser friendlyCruiser;
@@ -36,6 +37,12 @@ namespace BattleCruisers
 		void Awake()
 		{
 			Assert.raiseExceptions = true;
+			
+			IDroneManager droneManager = new DroneManager();
+			ISpriteFetcher spriteFetcher = new SpriteFetcher();
+			friendlyCruiser.Initialise(droneManager);
+			buildableDetailsController.Initialise(droneManager, spriteFetcher);
+			uiFactory.Initialise(spriteFetcher);
 
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			_buildingGroupFactory = new BuildingGroupFactory();
@@ -50,11 +57,6 @@ namespace BattleCruisers
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
-
-			IDroneManager droneManager = new DroneManager();
-			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-			friendlyCruiser.Initialise(droneManager);
-			buildableDetailsController.Initialise(droneManager, spriteFetcher);
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?

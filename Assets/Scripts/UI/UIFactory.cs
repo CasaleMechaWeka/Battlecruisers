@@ -22,8 +22,7 @@ namespace BattleCruisers.Buildings
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		private Canvas _canvas;
-		// FELIX  Inject?
-		private SpriteFetcher _spriteFetcher;
+		private ISpriteFetcher _spriteFetcher;
 
 		public UIManager uiManager;
 		public GameObject panelPrefab;
@@ -35,7 +34,11 @@ namespace BattleCruisers.Buildings
 		public void Awake()
 		{
 			_canvas = GetComponent<Canvas>();
-			_spriteFetcher = new SpriteFetcher();
+		}
+
+		public void Initialise(ISpriteFetcher spriteFetcher)
+		{
+			_spriteFetcher = spriteFetcher;
 		}
 
 		public GameObject CreatePanel(bool isActive)
