@@ -13,10 +13,10 @@ namespace BattleCruisers.UI.BuildMenus
 {
 	public class BuildMenuController : MonoBehaviour
 	{
-		private GameObject _homePanel;
-		private IDictionary<BuildingCategory, GameObject> _buildingGroupPanels;
-		private IDictionary<UnitCategory, GameObject> _unitGroupPanels;
-		private GameObject _currentPanel;
+		private Presentable _homePanel;
+		private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
+		private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
+		private Presentable _currentPanel;
 		private IList<BuildingGroup> _buildingGroups;
 
 		public UIFactory uiFactory;
@@ -27,13 +27,14 @@ namespace BattleCruisers.UI.BuildMenus
 			_buildingGroups = buildingGroups;
 
 			// Create main menu panel
-			_homePanel = uiFactory.CreatePanel(isActive: true);
+			GameObject homePanelGameObject = uiFactory.CreatePanel(isActive: true);
+			_homePanel = homePanelGameObject.AddComponent<Presentable>();
 			_currentPanel = _homePanel;
 
 			// Create building category buttons
 			HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
 
-			_buildingGroupPanels = new Dictionary<BuildingCategory, GameObject>(_buildingGroups.Count);
+			_buildingGroupPanels = new Dictionary<BuildingCategory, Presentable>(_buildingGroups.Count);
 
 			for (int i = 0; i < _buildingGroups.Count; ++i)
 			{
@@ -42,33 +43,33 @@ namespace BattleCruisers.UI.BuildMenus
 				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
 
 				// Create category panel
-				GameObject panel = uiFactory.CreatePanel(isActive: false);
-				_buildingGroupPanels[group.BuildingCategory] = panel;
-				BuildingsMenuController buildingsMenu = panel.AddComponent<BuildingsMenuController>();
+				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
+				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
 				buildingsMenu.Initialize(uiFactory, group.Buildings);
+				_buildingGroupPanels[group.BuildingCategory] = buildingsMenu;
 			}
 
 			// Create menu UI for units
-			_unitGroupPanels = new Dictionary<UnitCategory, GameObject>();
+			_unitGroupPanels = new Dictionary<UnitCategory, Presentable>();
 
 			foreach (UnitCategory unitCategory in units.Keys)
 			{
-				GameObject panel = uiFactory.CreatePanel(isActive: false);
-				_unitGroupPanels[unitCategory] = panel;
-				UnitsMenuController unitsMenu = panel.AddComponent<UnitsMenuController>();
+				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
+				UnitsMenuController unitsMenu = panelGameObject.AddComponent<UnitsMenuController>();
 				unitsMenu.Initialize(uiManager, uiFactory, units[unitCategory]);
+				_unitGroupPanels[unitCategory] = unitsMenu;
 			}
 		}
 
 		public void HideBuildMenu()
 		{
 			ChangePanel(_homePanel);
-			_currentPanel.SetActive(false);
+			_currentPanel.gameObject.SetActive(false);
 		}
 
 		public void ShowBuildMenu()
 		{
-			_currentPanel.SetActive(true);
+			_currentPanel.gameObject.SetActive(true);
 		}
 
 		public void ShowBuildingGroupsMenu()
@@ -83,7 +84,7 @@ namespace BattleCruisers.UI.BuildMenus
 				throw new ArgumentException();
 			}
 
-			GameObject panel = _buildingGroupPanels[buildingCategory];
+			Presentable panel = _buildingGroupPanels[buildingCategory];
 			ChangePanel(panel);
 		}
 
@@ -94,21 +95,24 @@ namespace BattleCruisers.UI.BuildMenus
 				throw new ArgumentException();
 			}
 
-			GameObject panel = _unitGroupPanels[factory.unitCategory];
+			// FELIX  Activation arg!!!
+			Presentable panel = _unitGroupPanels[factory.unitCategory];
 			panel.GetComponent<UnitsMenuController>().Factory = factory;
 			ChangePanel(panel);
 		}
 
-		private bool ChangePanel(GameObject panel)
+		private bool ChangePanel(Presentable panel)
 		{
 			if (_currentPanel != panel)
 			{
 				if (_currentPanel != null)
 				{
-					_currentPanel.SetActive(false);
+					_currentPanel.OnDismissing();
+					_currentPanel.gameObject.SetActive(false);
 				}
 
-				panel.SetActive(true);
+				panel.OnPresenting();
+				panel.gameObject.SetActive(true);
 				_currentPanel = panel;
 
 				return true;

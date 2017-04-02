@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BuildMenus
 {
-	public class UnitsMenuController : MonoBehaviour 
+	public class UnitsMenuController : Presentable
 	{
 		private UIManager _uiManager;
 
@@ -39,5 +39,15 @@ namespace BattleCruisers.UI.BuildMenus
 			Factory.Unit = unit;
 			_uiManager.ShowUnitDetails(unit);
 		}
+
+//		public void OnPresenting()
+//		{
+//			// FELIX
+//		}
+//
+//		public void OnDismissing()
+//		{
+//			// FELIX
+//		}
 	}
 }

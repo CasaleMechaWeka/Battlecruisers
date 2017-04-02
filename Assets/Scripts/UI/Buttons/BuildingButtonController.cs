@@ -6,8 +6,13 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildings.Buttons
 {
-	public class BuildingButtonController : MonoBehaviour 
+	// FELIX  Create base Presentable class?
+	public class BuildingButtonController : MonoBehaviour, IPresentable
 	{
+		private Building _building;
+		private UIManager _uiManager;
+		private Button _button;
+
 		public Image buildingImage;
 		public Image slotImage;
 		public Text buildingName;
@@ -20,8 +25,24 @@ namespace BattleCruisers.Buildings.Buttons
 			buildingImage.sprite = building.Sprite;
 			slotImage.sprite = slotSprite;
 			
-			Button button = GetComponent<Button>();
-			button.onClick.AddListener(() => uiManager.SelectBuildingFromMenu(building));
+			_button = GetComponent<Button>();
+			_building = building;
+			_uiManager = uiManager;
+		}
+
+		public void OnPresenting()
+		{
+			_button.onClick.AddListener(OnClick);
+		}
+
+		public void OnDismissing()
+		{
+			_button.onClick.RemoveListener(OnClick);
+		}
+
+		private void OnClick()
+		{
+			_uiManager.SelectBuildingFromMenu(_building);
 		}
 	}
 }

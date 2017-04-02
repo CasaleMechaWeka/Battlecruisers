@@ -10,6 +10,8 @@ namespace BattleCruisers.Drones
 	public interface IDroneManager
 	{
 		int NumOfDrones { get; set; }
+		// FELIX  Tests!
+		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
 		bool CanSupportDroneConsumer(IDroneConsumer droneConsumer);
 		void AddDroneConsumer(IDroneConsumer droneConsumer);
@@ -44,6 +46,11 @@ namespace BattleCruisers.Drones
 
 				if (_numOfDrones != value)
 				{
+					if (DroneNumChanged != null)
+					{
+						DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(value));
+					}
+
 					if (_droneConsumers.Count != 0)
 					{
 						if (value > _numOfDrones)
@@ -68,6 +75,8 @@ namespace BattleCruisers.Drones
 				}
 			}
 		}
+
+		public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
 		public DroneManager()
 		{
