@@ -10,13 +10,11 @@ namespace BattleCruisers.UI.BuildMenus
 {
 	public class BuildingsMenuController : Presentable
 	{
-		private IList<BuildingButtonController> _buttons;
-
 		public void Initialize(
 			IUIFactory uiFactory,
 			IList<Building> buildings)
 		{
-			_buttons = new List<BuildingButtonController>();
+			base.Initialize();
 
 			// Create building buttons
 			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
@@ -24,27 +22,10 @@ namespace BattleCruisers.UI.BuildMenus
 			for (int i = 0; i < buildings.Count; ++i)
 			{
 				BuildingButtonController button = uiFactory.CreateBuildingButton(buttonGroup, buildings[i]);
-				_buttons.Add(button);
+				_childPresentables.Add(button);
 			}
 
 			uiFactory.CreateBackButton(buttonGroup);
-		}
-
-		// FELIX  Extract forwarding Present/Dismiss to base class
-		public override void OnPresenting()
-		{
-			foreach (BuildingButtonController button in _buttons)
-			{
-				button.OnPresenting();
-			}
-		}
-
-		public override void OnDismissing()
-		{
-			foreach (BuildingButtonController button in _buttons)
-			{
-				button.OnDismissing();
-			}
 		}
 	}
 }

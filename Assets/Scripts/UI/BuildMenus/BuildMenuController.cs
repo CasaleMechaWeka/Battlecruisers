@@ -30,6 +30,7 @@ namespace BattleCruisers.UI.BuildMenus
 			GameObject homePanelGameObject = uiFactory.CreatePanel(isActive: true);
 			_homePanel = homePanelGameObject.AddComponent<Presentable>();
 			_currentPanel = _homePanel;
+			_homePanel.Initialize();
 
 			// Create building category buttons
 			HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
