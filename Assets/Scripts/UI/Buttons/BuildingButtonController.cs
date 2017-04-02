@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildings.Buttons
 {
-	// FELIX  Create base Presentable class?
-	public class BuildingButtonController : MonoBehaviour, IPresentable
+	public class BuildingButtonController : Presentable
 	{
 		private Building _building;
 		private UIManager _uiManager;
@@ -20,6 +19,8 @@ namespace BattleCruisers.Buildings.Buttons
 
 		public void Initialize(Building building, UIManager uiManager, Sprite slotSprite)
 		{
+			base.Initialize();
+
 			buildingName.text = building.buildableName;
 			droneLevel.text = building.numOfDronesRequired.ToString();
 			buildingImage.sprite = building.Sprite;
@@ -30,13 +31,17 @@ namespace BattleCruisers.Buildings.Buttons
 			_uiManager = uiManager;
 		}
 
-		public void OnPresenting(object activationParameter)
+		public override void OnPresenting(object activationParameter)
 		{
+			base.OnPresenting(activationParameter);
+
 			_button.onClick.AddListener(OnClick);
 		}
 
-		public void OnDismissing()
+		public override void OnDismissing()
 		{
+			base.OnDismissing();
+
 			_button.onClick.RemoveListener(OnClick);
 		}
 

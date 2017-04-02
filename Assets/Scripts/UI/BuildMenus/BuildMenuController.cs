@@ -96,7 +96,6 @@ namespace BattleCruisers.UI.BuildMenus
 				throw new ArgumentException();
 			}
 
-			// FELIX  Activation arg!!!
 			Presentable panel = _unitGroupPanels[factory.unitCategory];
 			ChangePanel(panel, factory);
 		}
