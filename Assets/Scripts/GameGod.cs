@@ -42,7 +42,7 @@ namespace BattleCruisers
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
 			friendlyCruiser.Initialise(droneManager);
 			buildableDetailsController.Initialise(droneManager, spriteFetcher);
-			uiFactory.Initialise(spriteFetcher);
+			uiFactory.Initialise(spriteFetcher, droneManager);
 
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			_buildingGroupFactory = new BuildingGroupFactory();

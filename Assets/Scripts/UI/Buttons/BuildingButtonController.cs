@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.Drones;
+using BattleCruisers.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace BattleCruisers.Buildings.Buttons
 	{
 		private Building _building;
 		private UIManager _uiManager;
+		private IDroneManager _droneManager;
 		private Button _button;
 
 		public Image buildingImage;
@@ -17,25 +19,29 @@ namespace BattleCruisers.Buildings.Buttons
 		public Text buildingName;
 		public Text droneLevel;
 
-		public void Initialize(Building building, UIManager uiManager, Sprite slotSprite)
+		public void Initialize(Building building, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
 		{
 			base.Initialize();
-
-			buildingName.text = building.buildableName;
-			droneLevel.text = building.numOfDronesRequired.ToString();
-			buildingImage.sprite = building.Sprite;
-			slotImage.sprite = slotSprite;
 			
-			_button = GetComponent<Button>();
 			_building = building;
 			_uiManager = uiManager;
+			_droneManager = droneManager;
+			_button = GetComponent<Button>();
+
+			buildingName.text = _building.buildableName;
+			droneLevel.text = _building.numOfDronesRequired.ToString();
+			buildingImage.sprite = _building.Sprite;
+			slotImage.sprite = slotSprite;
 		}
 
 		public override void OnPresenting(object activationParameter)
 		{
 			base.OnPresenting(activationParameter);
 
-			_button.onClick.AddListener(OnClick);
+			if (_droneManager.CanSupportDroneConsumer(_building.DroneConsumer))
+			{
+				_button.onClick.AddListener(OnClick);
+			}
 		}
 
 		public override void OnDismissing()

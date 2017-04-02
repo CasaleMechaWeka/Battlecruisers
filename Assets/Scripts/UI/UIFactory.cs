@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildings.Buttons;
+using BattleCruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.Units;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Buildings
 	{
 		private Canvas _canvas;
 		private ISpriteFetcher _spriteFetcher;
+		private IDroneManager _droneManager;
 
 		public UIManager uiManager;
 		public GameObject panelPrefab;
@@ -36,9 +38,10 @@ namespace BattleCruisers.Buildings
 			_canvas = GetComponent<Canvas>();
 		}
 
-		public void Initialise(ISpriteFetcher spriteFetcher)
+		public void Initialise(ISpriteFetcher spriteFetcher, IDroneManager droneManager)
 		{
 			_spriteFetcher = spriteFetcher;
+			_droneManager = droneManager;
 		}
 
 		public GameObject CreatePanel(bool isActive)
@@ -65,7 +68,7 @@ namespace BattleCruisers.Buildings
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-			controller.Initialize(building, uiManager, slotSprite);
+			controller.Initialize(building, uiManager, _droneManager, slotSprite);
 			return controller;
 		}
 

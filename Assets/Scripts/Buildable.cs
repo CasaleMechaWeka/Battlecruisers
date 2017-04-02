@@ -64,6 +64,8 @@ namespace BattleCruisers
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
+
+			SetupDroneConsumer(numOfDronesRequired);
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
@@ -72,6 +74,8 @@ namespace BattleCruisers
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
+
+			SetupDroneConsumer(numOfDronesRequired);
 		}
 
 		private void SetupDroneConsumer(int numOfDronesRequired)
@@ -100,8 +104,6 @@ namespace BattleCruisers
 
 		public void StartBuilding()
 		{
-			SetupDroneConsumer(numOfDronesRequired);
-
 			if (StartedBuilding != null)
 			{
 				StartedBuilding.Invoke(this, EventArgs.Empty);
@@ -111,12 +113,6 @@ namespace BattleCruisers
 		void OnDestroy()
 		{
 			Debug.Log("Buildable.OnDestroy()");
-
-			// The original prefab will not have called Initalise(), so will not have DroneConsumer set.
-			if (DroneConsumer != null)
-			{
-				DroneConsumer.DroneStateChanged -= OnDroneStateChanged;
-			}
 
 			if (Destroyed != null)
 			{
