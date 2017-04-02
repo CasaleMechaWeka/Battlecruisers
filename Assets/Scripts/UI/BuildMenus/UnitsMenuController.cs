@@ -28,7 +28,8 @@ namespace BattleCruisers.UI.BuildMenus
 
 			for (int i = 0; i < units.Count; ++i)
 			{
-				uiFactory.CreateUnitButton(buttonGroup, units[i], this);
+				IPresentable presentable = uiFactory.CreateUnitButton(buttonGroup, units[i], this);
+				_childPresentables.Add(presentable);
 			}
 
 			uiFactory.CreateBackButton(buttonGroup);

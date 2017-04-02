@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildings
 		GameObject CreatePanel(bool isActive);
 		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
 		BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
-		Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitsMenu);
+		UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitsMenu);
 		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 	}
 
@@ -72,12 +72,13 @@ namespace BattleCruisers.Buildings
 			return controller;
 		}
 
-		public Button CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitMenu)
+		public UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit, UnitsMenuController unitMenu)
 		{
 			Button button = (Button)Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<UnitButtonController>().Initialize(unit, unitMenu);
-			return button;	
+			UnitButtonController controller = button.GetComponent<UnitButtonController>();
+			controller.Initialize(unit, unitMenu, _droneManager);
+			return controller;
 		}
 
 		public Button CreateBackButton(HorizontalLayoutGroup buttonParent)

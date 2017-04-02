@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.Drones;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.Units;
 using System.Collections;
@@ -8,21 +9,30 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildings.Buttons
 {
-	// FELIX  Extend Presentable instead, only have button active if drone level is met
-	public class UnitButtonController : MonoBehaviour 
+	public class UnitButtonController : BuildableButtonController
 	{
+		private Unit _unit;
+		private UnitsMenuController _unitsMenu;
+
 		public Image unitImage;
 		public Text unitName;
 		public Text droneLevel;
 
-		public void Initialize(Unit unit, UnitsMenuController unitsMenu)
+		public void Initialize(Unit unit, UnitsMenuController unitsMenu, IDroneManager droneManager)
 		{
+			base.Initialize(unit, droneManager);
+
+			_unit = unit;
+			_unitsMenu = unitsMenu;
+
 			unitName.text = unit.buildableName;
 			droneLevel.text = unit.numOfDronesRequired.ToString();
 			unitImage.sprite = unit.Sprite;
+		}
 
-			Button button = GetComponent<Button>();
-			button.onClick.AddListener(() => unitsMenu.SelectUnit(unit));
+		protected override void OnClick()
+		{
+			_unitsMenu.SelectUnit(_unit);
 		}
 	}
 }
