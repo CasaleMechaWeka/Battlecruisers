@@ -42,10 +42,12 @@ namespace BattleCruisers.Buildings.Buttons
 
 			if (_droneManager.CanSupportDroneConsumer(_building.DroneConsumer))
 			{
+				_button.enabled = true;
 				_button.onClick.AddListener(OnClick);
 			}
 			else
 			{
+				_button.enabled = false;
 				canvasGroup.alpha = Constants.DISABLED_UI_ALPHA;
 			}
 		}
