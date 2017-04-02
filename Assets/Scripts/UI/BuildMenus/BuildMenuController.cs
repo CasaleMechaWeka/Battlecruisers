@@ -98,11 +98,10 @@ namespace BattleCruisers.UI.BuildMenus
 
 			// FELIX  Activation arg!!!
 			Presentable panel = _unitGroupPanels[factory.unitCategory];
-			panel.GetComponent<UnitsMenuController>().Factory = factory;
-			ChangePanel(panel);
+			ChangePanel(panel, factory);
 		}
 
-		private bool ChangePanel(Presentable panel)
+		private bool ChangePanel(Presentable panel, object activationParameter = null)
 		{
 			if (_currentPanel != panel)
 			{
@@ -112,7 +111,7 @@ namespace BattleCruisers.UI.BuildMenus
 					_currentPanel.gameObject.SetActive(false);
 				}
 
-				panel.OnPresenting();
+				panel.OnPresenting(activationParameter);
 				panel.gameObject.SetActive(true);
 				_currentPanel = panel;
 

@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildings.Buttons
 			_uiManager = uiManager;
 		}
 
-		public void OnPresenting()
+		public void OnPresenting(object activationParameter)
 		{
 			_button.onClick.AddListener(OnClick);
 		}

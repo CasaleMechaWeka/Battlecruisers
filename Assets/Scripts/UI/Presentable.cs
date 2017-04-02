@@ -7,7 +7,7 @@ namespace BattleCruisers.UI
 	public interface IPresentable
 	{
 		// About to be shown
-		void OnPresenting();
+		void OnPresenting(object activationParameter);
 
 		// About to be hidden
 		void OnDismissing();
@@ -22,11 +22,11 @@ namespace BattleCruisers.UI
 			_childPresentables = new List<IPresentable>();
 		}
 
-		public virtual void OnPresenting()
+		public virtual void OnPresenting(object activationParameter)
 		{
 			foreach (IPresentable presentable in _childPresentables)
 			{
-				presentable.OnPresenting();
+				presentable.OnPresenting(activationParameter);
 			}
 		}
 

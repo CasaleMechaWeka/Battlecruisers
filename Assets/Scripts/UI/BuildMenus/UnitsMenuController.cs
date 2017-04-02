@@ -12,14 +12,15 @@ namespace BattleCruisers.UI.BuildMenus
 	public class UnitsMenuController : Presentable
 	{
 		private UIManager _uiManager;
-
-		public Factory Factory { private get; set; }
+		private Factory _factory;
 
 		public void Initialize(
 			UIManager uiManager,
 			IUIFactory uiFactory,
 			IList<Unit> units)
 		{
+			base.Initialize();
+
 			_uiManager = uiManager;
 
 			// Create unit buttons
@@ -35,19 +36,17 @@ namespace BattleCruisers.UI.BuildMenus
 
 		public void SelectUnit(Unit unit)
 		{
-			Assert.IsNotNull(Factory);
-			Factory.Unit = unit;
+			Assert.IsNotNull(_factory);
+			_factory.Unit = unit;
 			_uiManager.ShowUnitDetails(unit);
 		}
 
-//		public void OnPresenting()
-//		{
-//			// FELIX
-//		}
-//
-//		public void OnDismissing()
-//		{
-//			// FELIX
-//		}
+		public override void OnPresenting(object activationParameter)
+		{
+			base.OnPresenting(activationParameter);
+
+			_factory = activationParameter as Factory;
+			Assert.IsNotNull(_factory);
+		}
 	}
 }
