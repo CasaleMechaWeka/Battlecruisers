@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Drones;
 using BattleCruisers.UI;
+using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace BattleCruisers.Buildings.Buttons
 		public Image slotImage;
 		public Text buildingName;
 		public Text droneLevel;
+		public CanvasGroup canvasGroup;
 
 		public void Initialize(Building building, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
 		{
@@ -42,6 +44,10 @@ namespace BattleCruisers.Buildings.Buttons
 			{
 				_button.onClick.AddListener(OnClick);
 			}
+			else
+			{
+				canvasGroup.alpha = Constants.DISABLED_UI_ALPHA;
+			}
 		}
 
 		public override void OnDismissing()
@@ -49,6 +55,7 @@ namespace BattleCruisers.Buildings.Buttons
 			base.OnDismissing();
 
 			_button.onClick.RemoveListener(OnClick);
+			canvasGroup.alpha = Constants.ENABLED_UI_ALPHA;
 		}
 
 		private void OnClick()
