@@ -43,6 +43,11 @@ namespace BattleCruisers.UI.BuildingDetails
 		{
 			Assert.IsNotNull(buildable);
 
+			if (_buildable != null)
+			{
+				CleanUp();
+			}
+
 			_buildable = buildable;
 			_allowDelete = allowDelete;
 			gameObject.SetActive(true);
@@ -91,10 +96,14 @@ namespace BattleCruisers.UI.BuildingDetails
 
 		public void Hide()
 		{
+			CleanUp();
+			gameObject.SetActive(false);
+		}
+
+		private void CleanUp()
+		{
 			deleteButton.onClick.RemoveAllListeners();
 			toggleDroneButton.onClick.RemoveAllListeners();
-
-			gameObject.SetActive(false);
 		}
 	}
 }
