@@ -91,6 +91,9 @@ namespace BattleCruisers.UI.BuildingDetails
 
 		public void Hide()
 		{
+			deleteButton.onClick.RemoveAllListeners();
+			toggleDroneButton.onClick.RemoveAllListeners();
+
 			gameObject.SetActive(false);
 		}
 	}

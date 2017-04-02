@@ -515,9 +515,14 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 0
 
 			_droneManager.ToggleDroneConsumerFocus(_droneConsumer2);
-			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 9
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 7
 			Assert.AreEqual(7, _droneConsumer2.NumOfDrones);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 2
+
+			_droneManager.ToggleDroneConsumerFocus(_droneConsumer3);
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);  // 0
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);  // 9
+			Assert.AreEqual(9, _droneConsumer3.NumOfDrones);
 		}
 
 		[Test]

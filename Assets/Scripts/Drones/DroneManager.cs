@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace BattleCruisers.Drones
 {
@@ -142,18 +143,20 @@ namespace BattleCruisers.Drones
 
 		/// <summary>
 		/// DroneConsumerState
-		/// Idle => Normal (Can remain idle, if there are less drones than required by the drone consumer.)
-		/// Normal => Focused (Can remain Normal, if there are no more drones.)
-		/// Focused => Normal (Can remain Focused if there are no other drone consumers.)
+		/// Idle => Active (Can remain idle, if there are less drones than required by the drone consumer.)
+		/// Active => Focused (Can remain Normal, if there are no more drones.)
+		/// Focused => 
+		/// 	a) => More Focused, if not all drones are working on this consumer
+		/// 	b) => Active (Can remain Focused if there are no other drone consumers.)
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
+			Debug.Log($"DroneManager.ToggleDroneConsumerFocus(): num of DCs: {_droneConsumers.Count}");
+
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{
 				return;
 			}
-
-			int numOfFreedDrones;
 
 			switch (droneConsumer.State)
 			{
@@ -172,26 +175,36 @@ namespace BattleCruisers.Drones
 					SetMaxPriority(droneConsumer);
 					if (droneConsumer.NumOfDronesRequired != NumOfDrones)
 					{
-						numOfFreedDrones = FreeUpDrones(NumOfDrones);
-						Assert.AreEqual(numOfFreedDrones, NumOfDrones);
-						
-						droneConsumer.NumOfDrones = numOfFreedDrones;
+						AssignAllDronesToConsumer(droneConsumer);
 					}
 					break;
 
-				// Focused => Active
 				case DroneConsumerState.Focused:
-					numOfFreedDrones = droneConsumer.NumOfDrones - droneConsumer.NumOfDronesRequired;
-					droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
+					if (droneConsumer.NumOfDrones < NumOfDrones)
+					{
+						// Focused => More Focused
+						AssignAllDronesToConsumer(droneConsumer);
+					}
+					else
+					{
+						// Focused => Active
+						int numOfFreedDrones = droneConsumer.NumOfDrones - droneConsumer.NumOfDronesRequired;
+						droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
 
-					// FELIX  Just focused drone still has highest priority, so will most likely become focused again :/
-
-					AssignSpareDrones(numOfFreedDrones);
+						AssignSpareDrones(numOfFreedDrones);
+					}
 					break;
 
 				default:
 					throw new InvalidProgramException();
 			}
+		}
+
+		private void AssignAllDronesToConsumer(IDroneConsumer droneConsumer)
+		{
+			int numOfFreedDrones = FreeUpDrones(NumOfDrones);
+			Assert.AreEqual(numOfFreedDrones, NumOfDrones);
+			droneConsumer.NumOfDrones = numOfFreedDrones;
 		}
 
 		/// <summary>
