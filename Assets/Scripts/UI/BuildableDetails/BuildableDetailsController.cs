@@ -12,12 +12,11 @@ namespace BattleCruisers.UI.BuildingDetails
 {
 	public class BuildableDetailsController : MonoBehaviour 
 	{
+		private IDroneManager _droneManager;
+		private ISpriteFetcher _spriteFetcher;
 		private Buildable _buildable;
 		private bool _allowDelete;
-		// FELIX  Inject?
-		private SpriteFetcher _spriteFetcher;
-		private IDroneManager _droneManager;
-
+		
 		public BuildableStatsController statsController;
 		public Text buildableName;
 		public Text buildableDescription;
@@ -26,7 +25,6 @@ namespace BattleCruisers.UI.BuildingDetails
 		public Button deleteButton;
 		public Button toggleDroneButton;
 
-		// Use this for initialization
 		void Start () 
 		{
 			_spriteFetcher = new SpriteFetcher();
@@ -34,9 +32,10 @@ namespace BattleCruisers.UI.BuildingDetails
 			Hide();
 		}
 
-		public void Initialise(IDroneManager droneManager)
+		public void Initialise(IDroneManager droneManager, ISpriteFetcher spriteFetcher)
 		{
 			_droneManager = droneManager;
+			_spriteFetcher = spriteFetcher;
 		}
 
 		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)

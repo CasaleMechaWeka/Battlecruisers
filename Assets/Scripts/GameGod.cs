@@ -52,8 +52,9 @@ namespace BattleCruisers
 			buildMenuController.Initialise(buildingGroups, units);
 
 			IDroneManager droneManager = new DroneManager();
+			ISpriteFetcher spriteFetcher = new SpriteFetcher();
 			friendlyCruiser.Initialise(droneManager);
-			buildableDetailsController.Initialise(droneManager);
+			buildableDetailsController.Initialise(droneManager, spriteFetcher);
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?

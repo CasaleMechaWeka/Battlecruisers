@@ -6,7 +6,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
-	public class SpriteFetcher
+	public interface ISpriteFetcher
+	{
+		Sprite GetSlotSprite(SlotType slotType);
+	}
+
+	public class SpriteFetcher : ISpriteFetcher
 	{
 		private const string SLOT_SPRITES_BASE_PATH = "Sprites/Slots/";
 		private const string SLOT_SPRITE_NAME_PREFIX = "slot-";
