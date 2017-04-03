@@ -108,16 +108,31 @@ namespace BattleCruisers
 			{
 				StartedBuilding.Invoke(this, EventArgs.Empty);
 			}
+
+			// FELIX  TEMP
+			OnBuildingCompleted();
+		}
+
+		protected virtual void OnBuildingCompleted()
+		{
+			if (CompletedBuilding != null)
+			{
+				CompletedBuilding.Invoke(this, EventArgs.Empty);
+			}
 		}
 
 		void OnDestroy()
 		{
 			Debug.Log("Buildable.OnDestroy()");
 
+			OnDestroyed();
+
 			if (Destroyed != null)
 			{
 				Destroyed.Invoke(this, EventArgs.Empty);
 			}
 		}
+
+		protected virtual void OnDestroyed() { }
 	}
 }
