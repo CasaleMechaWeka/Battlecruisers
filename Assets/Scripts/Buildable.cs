@@ -59,7 +59,8 @@ namespace BattleCruisers
 
 		public virtual void InitiateDelete() { }
 
-		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
+		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
+		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;

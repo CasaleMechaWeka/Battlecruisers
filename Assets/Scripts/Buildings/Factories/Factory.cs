@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.Units;
 using System;
@@ -49,9 +50,9 @@ namespace BattleCruisers.Buildings.Factories
 		// Fired evey Update() with build progress for the current unit, if a unit is being built.
 		public event EventHandler<BuildProgressEventArgs> BuildProgress;
 
-		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
+		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
 		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory);
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory, droneManager);
 			_buildableFactory = buildableFactory;
 		}
 
