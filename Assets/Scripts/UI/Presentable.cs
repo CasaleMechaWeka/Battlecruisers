@@ -15,6 +15,7 @@ namespace BattleCruisers.UI
 
 	public class Presentable : MonoBehaviour, IPresentable
 	{
+		protected bool _isPresented;
 		protected IList<IPresentable> _childPresentables;
 
 		public virtual void Initialize()
@@ -24,6 +25,8 @@ namespace BattleCruisers.UI
 
 		public virtual void OnPresenting(object activationParameter)
 		{
+			_isPresented = true;
+
 			foreach (IPresentable presentable in _childPresentables)
 			{
 				presentable.OnPresenting(activationParameter);
@@ -32,6 +35,8 @@ namespace BattleCruisers.UI
 
 		public virtual void OnDismissing()
 		{
+			_isPresented = false;
+
 			foreach (IPresentable presentable in _childPresentables)
 			{
 				presentable.OnDismissing();
