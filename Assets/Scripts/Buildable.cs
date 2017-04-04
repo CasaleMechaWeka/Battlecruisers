@@ -9,10 +9,26 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers
 {
+	public enum BuildableState
+	{
+		NotStarted, Building, Completed
+	}
+
+	public class BuildProgressEventArgs : EventArgs
+	{
+		public float BuildProgress { get; private set; }
+
+		public BuildProgressEventArgs(float buildProgress)
+		{
+			BuildProgress = buildProgress;
+		}
+	}
+
 	// FELIX  Create interface
 	public abstract class Buildable : FactionObject
 	{
 		private Renderer _renderer;
+		private BuildableState _buildableState;
 
 		protected UIManager _uiManager;
 		protected Cruiser _parentCruiser;
@@ -25,6 +41,7 @@ namespace BattleCruisers
 		public SlotType slotType;
 
 		public TextMesh textMesh;
+		public BuildableProgressController buildableProgress;
 
 		public virtual float Damage { get { return 0; } }
 
@@ -56,12 +73,14 @@ namespace BattleCruisers
 		public event EventHandler PausedBuilding;
 		public event EventHandler ResumedBuilding;
 		public event EventHandler CompletedBuilding;
+		public event EventHandler<BuildProgressEventArgs> BuildingProgress;
 
 		public virtual void InitiateDelete() { }
 
 		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
 		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
 		{
+			_buildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -72,6 +91,7 @@ namespace BattleCruisers
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
 		public virtual void Initialise(Buildable buildable)
 		{
+			_buildableState = BuildableState.NotStarted;
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
@@ -105,17 +125,28 @@ namespace BattleCruisers
 
 		public void StartBuilding()
 		{
+			_buildableState = BuildableState.Building;
+			buildableProgress.gameObject.SetActive(true);
+
 			if (StartedBuilding != null)
 			{
 				StartedBuilding.Invoke(this, EventArgs.Empty);
 			}
 
 			// FELIX  TEMP
+			Invoke("Temp", 3);
+		}
+
+		private void Temp()
+		{
 			OnBuildingCompleted();
 		}
 
 		protected virtual void OnBuildingCompleted()
 		{
+			_buildableState = BuildableState.Completed;
+			buildableProgress.gameObject.SetActive(false);
+
 			if (CompletedBuilding != null)
 			{
 				CompletedBuilding.Invoke(this, EventArgs.Empty);
