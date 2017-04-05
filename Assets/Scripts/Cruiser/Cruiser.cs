@@ -124,10 +124,19 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Health = health;
 		}
 
+		// FELIX  Move all this to Buildable class
 		public void AddBuildable(Buildable buildable)
 		{
 			buildable.StartedBuilding += Buildable_StartedBuilding;
+			buildable.CompletedBuilding += Buildable_CompletedBuilding;
 			buildable.Destroyed += Buildable_Destroyed;
+		}
+
+		private void Buildable_CompletedBuilding (object sender, EventArgs e)
+		{
+			Buildable buildable = sender as Buildable;
+			Assert.IsNotNull(buildable);
+			_droneManager.RemoveDroneConsumer(buildable.DroneConsumer);
 		}
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)

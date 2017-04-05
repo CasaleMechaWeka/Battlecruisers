@@ -11,7 +11,7 @@ namespace BattleCruisers
 {
 	public enum BuildableState
 	{
-		NotStarted, Building, Completed
+		NotStarted, InProgress, Paused, Completed
 	}
 
 	public class BuildProgressEventArgs : EventArgs
@@ -29,6 +29,8 @@ namespace BattleCruisers
 	{
 		private Renderer _renderer;
 		private BuildableState _buildableState;
+		private float _buildTimeInDroneSeconds;
+		private float _buildProgressInDroneSeconds;
 
 		protected UIManager _uiManager;
 		protected Cruiser _parentCruiser;
@@ -73,7 +75,7 @@ namespace BattleCruisers
 		public event EventHandler PausedBuilding;
 		public event EventHandler ResumedBuilding;
 		public event EventHandler CompletedBuilding;
-		public event EventHandler<BuildProgressEventArgs> BuildingProgress;
+		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
 		void Awake()
 		{
@@ -82,6 +84,9 @@ namespace BattleCruisers
 
 			buildableProgress.image.sprite = Sprite;
 			buildableProgress.image.rectTransform.sizeDelta = new Vector2(_renderer.bounds.size.x, _renderer.bounds.size.y);
+
+			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+			_buildProgressInDroneSeconds = 0;
 		}
 
 		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
@@ -111,7 +116,7 @@ namespace BattleCruisers
 			Assert.IsNull(DroneConsumer);
 			DroneConsumer = new DroneConsumer(numOfDronesRequired);
 			DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
-			DroneConsumer.DroneStateChanged += OnDroneStateChanged;
+			DroneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
 		}
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
@@ -119,43 +124,70 @@ namespace BattleCruisers
 			textMesh.text = e.NewNumOfDrones.ToString();
 		}
 
-		private void OnDroneStateChanged(object sender, DroneStateChangedEventArgs e)
+		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
 		{
-
+			if (e.OldState == DroneConsumerState.Idle)
+			{
+				_buildableState = BuildableState.InProgress;
+			}
+			else if (e.NewState == DroneConsumerState.Idle)
+			{
+				_buildableState = BuildableState.Paused;
+			}
 		}
 
 		public void StartBuilding()
 		{
 			_renderer.enabled = false;
-			_buildableState = BuildableState.Building;
-			buildableProgress.gameObject.SetActive(true);
+			_buildableState = BuildableState.InProgress;
+//			buildableProgress.gameObject.SetActive(true);
 
 			if (StartedBuilding != null)
 			{
 				StartedBuilding.Invoke(this, EventArgs.Empty);
 			}
-
-			// FELIX  TEMP
-			Invoke("Temp", 3);
 		}
 
-		private void Temp()
+		void Update()
 		{
-			OnBuildingCompleted();
+			if (_buildableState == BuildableState.InProgress)
+			{
+				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
+				_buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * Time.deltaTime;
+
+				if (BuildableProgress != null)
+				{
+					float buildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
+					BuildableProgress.Invoke(this, new BuildProgressEventArgs(buildProgress));
+				}
+
+				if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)
+				{
+					OnBuildingCompleted();
+				}
+			}
+
+			OnUpdate();
 		}
+
+		protected virtual void OnUpdate() { }
 
 		protected virtual void OnBuildingCompleted()
 		{
 			_renderer.enabled = true;
 			_buildableState = BuildableState.Completed;
-			buildableProgress.gameObject.SetActive(false);
+//			buildableProgress.gameObject.SetActive(false);
 
+			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
+			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
+			DroneConsumer = null;
+			
 			if (CompletedBuilding != null)
 			{
 				CompletedBuilding.Invoke(this, EventArgs.Empty);
 			}
 		}
-
+		
 		void OnDestroy()
 		{
 			Debug.Log("Buildable.OnDestroy()");

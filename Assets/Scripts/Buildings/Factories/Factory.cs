@@ -72,7 +72,7 @@ namespace BattleCruisers.Buildings.Factories
 			NumOfAidingDrones = 0;
 		}
 
-		void Update()
+		protected override void OnUpdate()
 		{
 			if (_unit != null)
 			{
