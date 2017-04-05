@@ -81,6 +81,7 @@ namespace BattleCruisers
 			_renderer = GetComponent<Renderer>();
 
 			buildableProgress.image.sprite = Sprite;
+			buildableProgress.image.rectTransform.sizeDelta = new Vector2(_renderer.bounds.size.x, _renderer.bounds.size.y);
 		}
 
 		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
