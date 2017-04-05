@@ -35,6 +35,7 @@ namespace BattleCruisers
 		protected UIManager _uiManager;
 		protected Cruiser _parentCruiser;
 		protected Cruiser _enemyCruiser;
+		protected IDroneManager _droneManager;
 
 		public string buildableName;
 		public string description;
@@ -87,15 +88,16 @@ namespace BattleCruisers
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
+			_buildableState = BuildableState.NotStarted;
 		}
 
-		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
 		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
 		{
 			_buildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
+			_droneManager = droneManager;
 
 			SetupDroneConsumer(numOfDronesRequired);
 		}
@@ -107,6 +109,7 @@ namespace BattleCruisers
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
+			_droneManager = buildable._droneManager;
 
 			SetupDroneConsumer(numOfDronesRequired);
 		}
@@ -138,9 +141,10 @@ namespace BattleCruisers
 
 		public void StartBuilding()
 		{
+			_droneManager.AddDroneConsumer(DroneConsumer);
+
 			_renderer.enabled = false;
 			_buildableState = BuildableState.InProgress;
-//			buildableProgress.gameObject.SetActive(true);
 
 			if (StartedBuilding != null)
 			{
@@ -174,9 +178,10 @@ namespace BattleCruisers
 
 		protected virtual void OnBuildingCompleted()
 		{
+			_droneManager.RemoveDroneConsumer(DroneConsumer);
+
 			_renderer.enabled = true;
 			_buildableState = BuildableState.Completed;
-//			buildableProgress.gameObject.SetActive(false);
 
 			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
 			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
@@ -191,6 +196,11 @@ namespace BattleCruisers
 		void OnDestroy()
 		{
 			Debug.Log("Buildable.OnDestroy()");
+
+			if (_buildableState == BuildableState.InProgress || _buildableState == BuildableState.Paused)
+			{
+				_droneManager.RemoveDroneConsumer(DroneConsumer);
+			}
 
 			OnDestroyed();
 

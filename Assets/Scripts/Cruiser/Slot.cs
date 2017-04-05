@@ -78,7 +78,6 @@ namespace BattleCruisers.Cruisers
 
 				_building.Destroyed += OnBuildingDestroyed;
 
-				parentCruiser.AddBuildable(_building);
 				_building.StartBuilding();
 			}
 		}
