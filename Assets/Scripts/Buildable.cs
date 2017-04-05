@@ -75,7 +75,13 @@ namespace BattleCruisers
 		public event EventHandler CompletedBuilding;
 		public event EventHandler<BuildProgressEventArgs> BuildingProgress;
 
-		public virtual void InitiateDelete() { }
+		void Awake()
+		{
+			Debug.Log("BuildableObject.Awake()");
+			_renderer = GetComponent<Renderer>();
+
+			buildableProgress.image.sprite = Sprite;
+		}
 
 		// FELIX  Avoid last 2 parameters?  Only used by some buildings...
 		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
@@ -115,12 +121,6 @@ namespace BattleCruisers
 		private void OnDroneStateChanged(object sender, DroneStateChangedEventArgs e)
 		{
 
-		}
-
-		void Awake()
-		{
-			Debug.Log("BuildableObject.Awake()");
-			_renderer = GetComponent<Renderer>();
 		}
 
 		public void StartBuilding()
@@ -166,5 +166,7 @@ namespace BattleCruisers
 		}
 
 		protected virtual void OnDestroyed() { }
+
+		public virtual void InitiateDelete() { }
 	}
 }
