@@ -12,7 +12,7 @@ namespace BattleCruisers
 		// Use this for initialization
 		void Start () 
 		{
-			image.fillAmount = 0.9f;
+			image.fillAmount = 0.8f;
 		}
 	}
 }

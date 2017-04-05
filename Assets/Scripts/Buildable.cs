@@ -126,6 +126,7 @@ namespace BattleCruisers
 
 		public void StartBuilding()
 		{
+			_renderer.enabled = false;
 			_buildableState = BuildableState.Building;
 			buildableProgress.gameObject.SetActive(true);
 
@@ -145,6 +146,7 @@ namespace BattleCruisers
 
 		protected virtual void OnBuildingCompleted()
 		{
+			_renderer.enabled = true;
 			_buildableState = BuildableState.Completed;
 			buildableProgress.gameObject.SetActive(false);
 
