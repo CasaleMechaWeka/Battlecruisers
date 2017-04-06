@@ -83,7 +83,7 @@ namespace BattleCruisers
 			Debug.Log("BuildableObject.Awake()");
 			_renderer = GetComponent<Renderer>();
 
-			buildableProgress.image.sprite = Sprite;
+//			buildableProgress.image.sprite = Sprite;
 			buildableProgress.image.rectTransform.sizeDelta = new Vector2(_renderer.bounds.size.x, _renderer.bounds.size.y);
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;

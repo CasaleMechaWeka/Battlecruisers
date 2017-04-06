@@ -24,23 +24,17 @@ namespace BattleCruisers
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
 		{
-			Debug.Log("Buildable_StartedBuilding()");
-
 			gameObject.SetActive(true);
 		}
 		
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
-//			Debug.Log("Buildable_BuildableProgress():  buildProgress: " + e.BuildProgress);
-
 			Assert.IsTrue(e.BuildProgress >= 0);
 			image.fillAmount = e.BuildProgress;
 		}
 		
 		private void Buildable_CompletedBuilding(object sender, EventArgs e)
 		{
-			Debug.Log("Buildable_CompletedBuilding()");
-
 			buildable.StartedBuilding -= Buildable_StartedBuilding;
 			buildable.BuildableProgress -= Buildable_BuildableProgress;
 			buildable.CompletedBuilding -= Buildable_CompletedBuilding;
