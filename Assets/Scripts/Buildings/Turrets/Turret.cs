@@ -12,11 +12,13 @@ namespace BattleCruisers.Buildings.Turrets
 {
 	public class Turret : Building
 	{
-		private Renderer _turretBaseRenderer;
 		private Vector2 _shellVelocity;
 		private float _timeSinceLastFireInS;
 		private ITurretStats _turretStats;
 		private ShellStats _shellStats;
+
+		private Renderer _turretBaseRenderer;
+		private Renderer _turretBarrelRenderer;
 
 		public GameObject turretBase;
 		public TurretBarrelController turretBarrelController;
@@ -24,6 +26,18 @@ namespace BattleCruisers.Buildings.Turrets
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
+
+		protected override Renderer Renderer
+		{
+			get
+			{
+				if (_renderer == null)
+				{
+					_renderer = turretBase.GetComponent<Renderer>();
+				}
+				return _renderer;
+			}
+		}
 
 		private GameObject _target;
 		public GameObject Target 
@@ -56,14 +70,6 @@ namespace BattleCruisers.Buildings.Turrets
 			}
 		}
 
-		public override Vector3 Size 
-		{ 
-			get 
-			{ 
-				return _turretBaseRenderer.bounds.size;
-			} 
-		}
-
 		public override Sprite Sprite
 		{
 			get
@@ -78,23 +84,19 @@ namespace BattleCruisers.Buildings.Turrets
 
 		public override float Damage { get { return _turretStats.DamangePerS; } }
 
-		void Awake()
+		protected override void OnAwake()
 		{
-			Debug.Log("Turret.Awake()");
+			base.OnAwake();
+		
 			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
+			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
+
 			_timeSinceLastFireInS = float.MaxValue;
 		}
 
-		void Start()
+		protected override void OnUpdate()
 		{
-			if (category == BuildingCategory.Offence)
-			{
-				Target = _enemyCruiser.gameObject;
-			}
-		}
-
-		void Update()
-		{
+			base.OnUpdate();
 			_timeSinceLastFireInS += Time.deltaTime;
 		}
 
@@ -130,6 +132,22 @@ namespace BattleCruisers.Buildings.Turrets
 		{
 			Direction fireDirection = _target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
 			shellSpawner.SpawnShell(angleInRadians, fireDirection);
+		}
+
+		protected override void OnBuildingCompleted()
+		{
+			base.OnBuildingCompleted();
+
+			if (category == BuildingCategory.Offence)
+			{
+				Target = _enemyCruiser.gameObject;
+			}
+		}
+
+		protected override void EnableRenderers(bool enabled)
+		{
+			_turretBaseRenderer.enabled = enabled;
+			_turretBarrelRenderer.enabled = enabled;
 		}
 	}
 }

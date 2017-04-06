@@ -27,7 +27,6 @@ namespace BattleCruisers
 	// FELIX  Create interface
 	public abstract class Buildable : FactionObject
 	{
-		private Renderer _renderer;
 		private BuildableState _buildableState;
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
@@ -52,8 +51,21 @@ namespace BattleCruisers
 		{ 
 			get 
 			{ 
-				return _renderer.bounds.size; 
+				return Renderer.bounds.size; 
 			} 
+		}
+
+		protected Renderer _renderer;
+		protected virtual Renderer Renderer
+		{
+			get
+			{
+				if (_renderer == null)
+				{
+					_renderer = GetComponent<Renderer>();
+				}
+				return _renderer;
+			}
 		}
 
 		protected Sprite _sprite;
@@ -81,15 +93,17 @@ namespace BattleCruisers
 		void Awake()
 		{
 			Debug.Log("BuildableObject.Awake()");
-			_renderer = GetComponent<Renderer>();
 
-//			buildableProgress.image.sprite = Sprite;
-			buildableProgress.image.rectTransform.sizeDelta = new Vector2(_renderer.bounds.size.x, _renderer.bounds.size.y);
+			buildableProgress.image.rectTransform.sizeDelta = new Vector2(Size.x, Size.y);
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			_buildableState = BuildableState.NotStarted;
+
+			OnAwake();
 		}
+
+		protected virtual void OnAwake() { }
 
 		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
 		{
@@ -143,7 +157,7 @@ namespace BattleCruisers
 		{
 			_droneManager.AddDroneConsumer(DroneConsumer);
 
-			_renderer.enabled = false;
+			EnableRenderers(false);
 			_buildableState = BuildableState.InProgress;
 
 			if (StartedBuilding != null)
@@ -180,7 +194,7 @@ namespace BattleCruisers
 		{
 			_droneManager.RemoveDroneConsumer(DroneConsumer);
 
-			_renderer.enabled = true;
+			EnableRenderers(true);
 			_buildableState = BuildableState.Completed;
 
 			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
@@ -191,6 +205,11 @@ namespace BattleCruisers
 			{
 				CompletedBuilding.Invoke(this, EventArgs.Empty);
 			}
+		}
+
+		protected virtual void EnableRenderers(bool enabled)
+		{
+			Renderer.enabled = enabled;
 		}
 		
 		void OnDestroy()
