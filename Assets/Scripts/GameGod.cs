@@ -46,8 +46,9 @@ namespace BattleCruisers
 
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			_buildingGroupFactory = new BuildingGroupFactory();
+			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
 
-			buildableFactory.Initialise(uiManager, prefabFetcher, droneManager);
+			buildableFactory.Initialise(uiManager, prefabFetcher, droneManager, droneConsumerProvider);
 			friendlyCruiser.direction = Direction.Right;
 			enemyCruiser.direction = Direction.Left;
 

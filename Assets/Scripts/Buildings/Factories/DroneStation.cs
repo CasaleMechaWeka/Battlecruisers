@@ -17,9 +17,9 @@ namespace BattleCruisers.Buildings.Factories
 	{
 		public int numOfDronesProvided;
 
-		protected override void OnBuildingCompleted()
+		protected override void OnBuildableCompleted()
 		{
-			base.OnBuildingCompleted();
+			base.OnBuildableCompleted();
 
 			_droneManager.NumOfDrones += numOfDronesProvided;
 		}

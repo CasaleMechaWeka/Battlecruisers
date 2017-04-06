@@ -17,9 +17,9 @@ namespace BattleCruisers
 			image.fillAmount = 0;
 			gameObject.SetActive(false);
 
-			buildable.StartedBuilding += Buildable_StartedBuilding;
+			buildable.StartedConstruction += Buildable_StartedBuilding;
 			buildable.BuildableProgress += Buildable_BuildableProgress;
-			buildable.CompletedBuilding += Buildable_CompletedBuilding;
+			buildable.CompletedBuildable += Buildable_CompletedBuilding;
 		}
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
@@ -35,9 +35,9 @@ namespace BattleCruisers
 		
 		private void Buildable_CompletedBuilding(object sender, EventArgs e)
 		{
-			buildable.StartedBuilding -= Buildable_StartedBuilding;
+			buildable.StartedConstruction -= Buildable_StartedBuilding;
 			buildable.BuildableProgress -= Buildable_BuildableProgress;
-			buildable.CompletedBuilding -= Buildable_CompletedBuilding;
+			buildable.CompletedBuildable -= Buildable_CompletedBuilding;
 
 			Destroy(gameObject);
 		}

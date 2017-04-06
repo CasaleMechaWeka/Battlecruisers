@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Drones;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,11 @@ namespace BattleCruisers.Units
 
 		// FELIX  Only for ships!
 		public float velocityInMPerS;
+
+		public void SpecificInitialisation(IDroneConsumerProvider droneConsumerProvider)
+		{
+			_droneConsumerProvider = droneConsumerProvider;
+		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{

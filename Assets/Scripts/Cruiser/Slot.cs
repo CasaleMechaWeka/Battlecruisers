@@ -78,7 +78,7 @@ namespace BattleCruisers.Cruisers
 
 				_building.Destroyed += OnBuildingDestroyed;
 
-				_building.StartBuilding();
+				_building.StartConstruction();
 			}
 		}
 

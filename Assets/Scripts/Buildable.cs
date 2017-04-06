@@ -34,7 +34,9 @@ namespace BattleCruisers
 		protected UIManager _uiManager;
 		protected Cruiser _parentCruiser;
 		protected Cruiser _enemyCruiser;
+		protected BuildableFactory _buildableFactory;
 		protected IDroneManager _droneManager;
+		protected IDroneConsumerProvider _droneConsumerProvider;
 
 		public string buildableName;
 		public string description;
@@ -84,10 +86,10 @@ namespace BattleCruisers
 		public IDroneConsumer DroneConsumer { get; private set; }
 
 		public event EventHandler Destroyed;
-		public event EventHandler StartedBuilding;
+		public event EventHandler StartedConstruction;
 		public event EventHandler PausedBuilding;
 		public event EventHandler ResumedBuilding;
-		public event EventHandler CompletedBuilding;
+		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
 		void Awake()
@@ -105,13 +107,16 @@ namespace BattleCruisers
 
 		protected virtual void OnAwake() { }
 
-		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
+		// FELIX  DroneManager & BuildableFactory not used by most buildings, find different way of injecting?
+		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
 		{
 			_buildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
+			_buildableFactory = buildableFactory;
 			_droneManager = droneManager;
+			_droneConsumerProvider = droneConsumerProvider;
 
 			SetupDroneConsumer(numOfDronesRequired);
 		}
@@ -123,7 +128,9 @@ namespace BattleCruisers
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
+			_buildableFactory = buildable._buildableFactory;
 			_droneManager = buildable._droneManager;
+			_droneConsumerProvider = buildable._droneConsumerProvider;
 
 			SetupDroneConsumer(numOfDronesRequired);
 		}
@@ -153,16 +160,16 @@ namespace BattleCruisers
 			}
 		}
 
-		public void StartBuilding()
+		public void StartConstruction()
 		{
 			_droneManager.AddDroneConsumer(DroneConsumer);
 
 			EnableRenderers(false);
 			_buildableState = BuildableState.InProgress;
 
-			if (StartedBuilding != null)
+			if (StartedConstruction != null)
 			{
-				StartedBuilding.Invoke(this, EventArgs.Empty);
+				StartedConstruction.Invoke(this, EventArgs.Empty);
 			}
 		}
 
@@ -181,7 +188,7 @@ namespace BattleCruisers
 
 				if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)
 				{
-					OnBuildingCompleted();
+					OnBuildableCompleted();
 				}
 			}
 
@@ -190,7 +197,7 @@ namespace BattleCruisers
 
 		protected virtual void OnUpdate() { }
 
-		protected virtual void OnBuildingCompleted()
+		protected virtual void OnBuildableCompleted()
 		{
 			_droneManager.RemoveDroneConsumer(DroneConsumer);
 
@@ -201,9 +208,9 @@ namespace BattleCruisers
 			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
 			DroneConsumer = null;
 			
-			if (CompletedBuilding != null)
+			if (CompletedBuildable != null)
 			{
-				CompletedBuilding.Invoke(this, EventArgs.Empty);
+				CompletedBuildable.Invoke(this, EventArgs.Empty);
 			}
 		}
 

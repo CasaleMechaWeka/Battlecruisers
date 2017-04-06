@@ -100,9 +100,10 @@ namespace BattleCruisers.Buildings.Turrets
 			_timeSinceLastFireInS += Time.deltaTime;
 		}
 
-		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
+		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, 
+			BuildableFactory buildableFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
 		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory, droneManager);
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory, droneManager, droneConsumerProvider);
 			_turretStats = buildableFactory.GetTurretStats(buildableName);
 			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
@@ -134,9 +135,9 @@ namespace BattleCruisers.Buildings.Turrets
 			shellSpawner.SpawnShell(angleInRadians, fireDirection);
 		}
 
-		protected override void OnBuildingCompleted()
+		protected override void OnBuildableCompleted()
 		{
-			base.OnBuildingCompleted();
+			base.OnBuildableCompleted();
 
 			if (category == BuildingCategory.Offence)
 			{

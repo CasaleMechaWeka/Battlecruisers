@@ -19,11 +19,9 @@ namespace BattleCruisers.Buildings.Factories
 		}
 	}
 
-	public abstract class Factory : Building
+	public abstract class Factory : Building, IDroneConsumerProvider
 	{
 		private float _timeUnitHasBeenBuildingInS;
-
-		protected BuildableFactory _buildableFactory;
 
 		public UnitCategory unitCategory;
 		public int buildPoints;
@@ -49,20 +47,6 @@ namespace BattleCruisers.Buildings.Factories
 
 		// Fired evey Update() with build progress for the current unit, if a unit is being built.
 		public event EventHandler<BuildProgressEventArgs> BuildProgress;
-
-		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager)
-		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory, droneManager);
-			_buildableFactory = buildableFactory;
-		}
-
-		public override void Initialise(Buildable buildable)
-		{
-			base.Initialise(buildable);
-			Factory factory = buildable as Factory;
-			Assert.IsNotNull(factory);
-			_buildableFactory = factory._buildableFactory;
-		}
 
 		void Start()
 		{
@@ -114,7 +98,7 @@ namespace BattleCruisers.Buildings.Factories
 			// So don't have to wait full build cycle!
 			if (CanSpawnUnit(_unit))
 			{
-				Unit unit = _buildableFactory.CreateUnit(_unit);
+				Unit unit = _buildableFactory.CreateUnit(_unit, this);
 
 				Vector3 spawnPosition = FindUnitSpawnPosition(unit);
 				unit.transform.position = spawnPosition;
@@ -139,5 +123,15 @@ namespace BattleCruisers.Buildings.Factories
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
 
 		protected virtual void OnUnitProduced(Unit unit) { }
+
+		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
