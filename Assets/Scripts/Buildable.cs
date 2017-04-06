@@ -117,8 +117,6 @@ namespace BattleCruisers
 			_buildableFactory = buildableFactory;
 			_droneManager = droneManager;
 			_droneConsumerProvider = droneConsumerProvider;
-
-			SetupDroneConsumer(numOfDronesRequired);
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
@@ -131,16 +129,6 @@ namespace BattleCruisers
 			_buildableFactory = buildable._buildableFactory;
 			_droneManager = buildable._droneManager;
 			_droneConsumerProvider = buildable._droneConsumerProvider;
-
-			SetupDroneConsumer(numOfDronesRequired);
-		}
-
-		private void SetupDroneConsumer(int numOfDronesRequired)
-		{
-			Assert.IsNull(DroneConsumer);
-			DroneConsumer = new DroneConsumer(numOfDronesRequired);
-			DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
-			DroneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
 		}
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
@@ -162,7 +150,7 @@ namespace BattleCruisers
 
 		public void StartConstruction()
 		{
-			_droneManager.AddDroneConsumer(DroneConsumer);
+			SetupDroneConsumer();
 
 			EnableRenderers(false);
 			_buildableState = BuildableState.InProgress;
@@ -171,6 +159,15 @@ namespace BattleCruisers
 			{
 				StartedConstruction.Invoke(this, EventArgs.Empty);
 			}
+		}
+
+		private void SetupDroneConsumer()
+		{
+			Assert.IsNull(DroneConsumer);
+			DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired);
+			DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
+			DroneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
+			_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 		}
 
 		void Update()
@@ -199,15 +196,11 @@ namespace BattleCruisers
 
 		protected virtual void OnBuildableCompleted()
 		{
-			_droneManager.RemoveDroneConsumer(DroneConsumer);
+			CleanUpDroneConsumer();
 
 			EnableRenderers(true);
 			_buildableState = BuildableState.Completed;
 
-			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
-			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
-			DroneConsumer = null;
-			
 			if (CompletedBuildable != null)
 			{
 				CompletedBuildable.Invoke(this, EventArgs.Empty);
@@ -225,7 +218,7 @@ namespace BattleCruisers
 
 			if (_buildableState == BuildableState.InProgress || _buildableState == BuildableState.Paused)
 			{
-				_droneManager.RemoveDroneConsumer(DroneConsumer);
+				CleanUpDroneConsumer();
 			}
 
 			OnDestroyed();
@@ -234,6 +227,14 @@ namespace BattleCruisers
 			{
 				Destroyed.Invoke(this, EventArgs.Empty);
 			}
+		}
+
+		private void CleanUpDroneConsumer()
+		{
+			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
+			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
+			DroneConsumer = null;
 		}
 
 		protected virtual void OnDestroyed() { }

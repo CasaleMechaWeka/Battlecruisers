@@ -129,6 +129,11 @@ namespace BattleCruisers.Buildings.Factories
 			throw new NotImplementedException();
 		}
 
+		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
 		{
 			throw new NotImplementedException();

@@ -13,7 +13,7 @@ namespace BattleCruisers.Drones
 		// FELIX  Tests!
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-		bool CanSupportDroneConsumer(IDroneConsumer droneConsumer);
+		bool CanSupportDroneConsumer(int numOfDronesRequired);
 		void AddDroneConsumer(IDroneConsumer droneConsumer);
 		void RemoveDroneConsumer(IDroneConsumer droneConsumer);
 		void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer);
@@ -84,9 +84,9 @@ namespace BattleCruisers.Drones
 			_numOfDrones = 0;
 		}
 
-		public bool CanSupportDroneConsumer(IDroneConsumer droneConsumer)
+		public bool CanSupportDroneConsumer(int numOfDronesRequired)
 		{
-			return NumOfDrones >= droneConsumer.NumOfDronesRequired;
+			return NumOfDrones >= numOfDronesRequired;
 		}
 
 		/// <summary>
@@ -102,7 +102,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			if (!CanSupportDroneConsumer(droneConsumer)
+			if (!CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired)
 			    || _droneConsumers.Contains(droneConsumer))
 			{
 				throw new ArgumentException();

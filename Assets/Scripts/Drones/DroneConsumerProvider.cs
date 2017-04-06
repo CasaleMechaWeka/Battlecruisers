@@ -8,6 +8,7 @@ namespace BattleCruisers.Drones
 	public interface IDroneConsumerProvider
 	{
 		IDroneConsumer RequestDroneConsumer(int numOfDronesRequired);
+		void ActivateDroneConsumer(IDroneConsumer droneConsumer);
 		void ReleaseDroneConsumer(IDroneConsumer droneConsumer);
 	}
 
@@ -22,10 +23,13 @@ namespace BattleCruisers.Drones
 
 		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
 		{
-			IDroneConsumer droneConsumer = new DroneConsumer(numOfDronesRequired);
-			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(droneConsumer));
+			return new DroneConsumer(numOfDronesRequired);
+		}
+
+		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
+		{
+			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired));
 			_droneManager.AddDroneConsumer(droneConsumer);
-			return droneConsumer;
 		}
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)

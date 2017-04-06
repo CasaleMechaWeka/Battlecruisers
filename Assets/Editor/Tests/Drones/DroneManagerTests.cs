@@ -111,14 +111,14 @@ namespace BattleCruisers.Tests.Drones
 		public void CanSupportDroneConsumer_True()
 		{
 			_droneManager.NumOfDrones = 1;
-			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(_droneConsumer1));
+			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(_droneConsumer1.NumOfDronesRequired));
 		}
 
 		[Test]
 		public void CanSupportDroneConsumer_False()
 		{
 			_droneManager.NumOfDrones = 1;
-			Assert.IsFalse(_droneManager.CanSupportDroneConsumer(_droneConsumer2));
+			Assert.IsFalse(_droneManager.CanSupportDroneConsumer(_droneConsumer2.NumOfDronesRequired));
 		}
 		#endregion CanSupportDroneConsumer()
 

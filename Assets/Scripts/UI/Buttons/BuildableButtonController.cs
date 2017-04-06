@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildings.Buttons
 {
 	public abstract class BuildableButtonController : Presentable
 	{
-		private IDroneConsumer _droneConsumer;
+		private Buildable _buildable;
 		private IDroneManager _droneManager;
 		private Button _button;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildings.Buttons
 		{
 			base.Initialize();
 
-			_droneConsumer = buildable.DroneConsumer;
+			_buildable = buildable;
 			_droneManager = droneManager;
 			_button = GetComponent<Button>();
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildings.Buttons
 
 		private void UpdateActiveness()
 		{
-			if (_droneManager.CanSupportDroneConsumer(_droneConsumer))
+			if (_droneManager.CanSupportDroneConsumer(_buildable.numOfDronesRequired))
 			{
 				_button.enabled = true;
 				canvasGroup.alpha = Constants.ENABLED_UI_ALPHA;
