@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Units;
 using BattleCruisers.Units.Detectors;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildings.Factories
 {
@@ -27,8 +29,10 @@ namespace BattleCruisers.Buildings.Factories
 			return transform.position + (direction * horizontalChange);
 		}
 
-		protected override void OnUnitProduced(Unit unit) 
+		protected virtual void Unit_CompletedBuildable(object sender, EventArgs e)
 		{
+			Unit unit = sender as Unit;
+			Assert.IsNotNull(unit);
 			_lastUnitProduced = unit;
 		}
 
