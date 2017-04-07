@@ -11,43 +11,22 @@ namespace BattleCruisers.UI.BuildMenus
 {
 	public class UnitsMenuController : Presentable
 	{
-		private UIManager _uiManager;
-		private Factory _factory;
-
 		public void Initialize(
-			UIManager uiManager,
 			IUIFactory uiFactory,
 			IList<Unit> units)
 		{
 			base.Initialize();
-
-			_uiManager = uiManager;
 
 			// Create unit buttons
 			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
 
 			for (int i = 0; i < units.Count; ++i)
 			{
-				IPresentable presentable = uiFactory.CreateUnitButton(buttonGroup, units[i], this);
+				IPresentable presentable = uiFactory.CreateUnitButton(buttonGroup, units[i]);
 				_childPresentables.Add(presentable);
 			}
 
 			uiFactory.CreateBackButton(buttonGroup);
-		}
-
-		public void SelectUnit(Unit unit)
-		{
-			Assert.IsNotNull(_factory);
-			_factory.Unit = unit;
-			_uiManager.ShowUnitDetails(unit);
-		}
-
-		public override void OnPresenting(object activationParameter)
-		{
-			base.OnPresenting(activationParameter);
-
-			_factory = activationParameter as Factory;
-			Assert.IsNotNull(_factory);
 		}
 	}
 }

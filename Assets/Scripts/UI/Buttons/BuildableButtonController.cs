@@ -30,18 +30,18 @@ namespace BattleCruisers.Buildings.Buttons
 
 		private void DroneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			UpdateActiveness();
+			UpdateButtonActiveness();
 		}
 
 		public override void OnPresenting(object activationParameter)
 		{
 			base.OnPresenting(activationParameter);
-			UpdateActiveness();
+			UpdateButtonActiveness();
 		}
 
-		private void UpdateActiveness()
+		protected void UpdateButtonActiveness()
 		{
-			if (_droneManager.CanSupportDroneConsumer(_buildable.numOfDronesRequired))
+			if (ShouldBeEnabled())
 			{
 				_button.enabled = true;
 				canvasGroup.alpha = Constants.ENABLED_UI_ALPHA;
@@ -51,6 +51,11 @@ namespace BattleCruisers.Buildings.Buttons
 				_button.enabled = false;
 				canvasGroup.alpha = Constants.DISABLED_UI_ALPHA;
 			}
+		}
+
+		protected virtual bool ShouldBeEnabled()
+		{
+			return _droneManager.CanSupportDroneConsumer(_buildable.numOfDronesRequired);
 		}
 
 		protected abstract void OnClick();
