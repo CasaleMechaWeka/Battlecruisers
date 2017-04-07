@@ -27,7 +27,6 @@ namespace BattleCruisers
 	// FELIX  Create interface
 	public abstract class Buildable : FactionObject
 	{
-		private BuildableState _buildableState;
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
 
@@ -47,6 +46,7 @@ namespace BattleCruisers
 		public TextMesh textMesh;
 		public BuildableProgressController buildableProgress;
 
+		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
 
 		public virtual Vector3 Size 
@@ -100,7 +100,7 @@ namespace BattleCruisers
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
-			_buildableState = BuildableState.NotStarted;
+			BuildableState = BuildableState.NotStarted;
 
 			OnAwake();
 		}
@@ -110,7 +110,7 @@ namespace BattleCruisers
 		// FELIX  DroneManager & BuildableFactory not used by most buildings, find different way of injecting?
 		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
 		{
-			_buildableState = BuildableState.NotStarted;
+			BuildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -122,7 +122,7 @@ namespace BattleCruisers
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
 		public virtual void Initialise(Buildable buildable)
 		{
-			_buildableState = BuildableState.NotStarted;
+			BuildableState = BuildableState.NotStarted;
 			_uiManager = buildable._uiManager;
 			_parentCruiser = buildable._parentCruiser;
 			_enemyCruiser = buildable._enemyCruiser;
@@ -140,11 +140,11 @@ namespace BattleCruisers
 		{
 			if (e.OldState == DroneConsumerState.Idle)
 			{
-				_buildableState = BuildableState.InProgress;
+				BuildableState = BuildableState.InProgress;
 			}
 			else if (e.NewState == DroneConsumerState.Idle)
 			{
-				_buildableState = BuildableState.Paused;
+				BuildableState = BuildableState.Paused;
 			}
 		}
 
@@ -153,7 +153,7 @@ namespace BattleCruisers
 			SetupDroneConsumer();
 
 			EnableRenderers(false);
-			_buildableState = BuildableState.InProgress;
+			BuildableState = BuildableState.InProgress;
 
 			if (StartedConstruction != null)
 			{
@@ -172,7 +172,7 @@ namespace BattleCruisers
 
 		void Update()
 		{
-			if (_buildableState == BuildableState.InProgress)
+			if (BuildableState == BuildableState.InProgress)
 			{
 				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
 				_buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * Time.deltaTime;
@@ -199,7 +199,7 @@ namespace BattleCruisers
 			CleanUpDroneConsumer();
 
 			EnableRenderers(true);
-			_buildableState = BuildableState.Completed;
+			BuildableState = BuildableState.Completed;
 
 			if (CompletedBuildable != null)
 			{
@@ -216,7 +216,7 @@ namespace BattleCruisers
 		{
 			Debug.Log("Buildable.OnDestroy()");
 
-			if (_buildableState == BuildableState.InProgress || _buildableState == BuildableState.Paused)
+			if (BuildableState == BuildableState.InProgress || BuildableState == BuildableState.Paused)
 			{
 				CleanUpDroneConsumer();
 			}

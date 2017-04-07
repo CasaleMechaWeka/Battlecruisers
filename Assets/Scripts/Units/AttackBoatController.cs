@@ -69,14 +69,23 @@ namespace BattleCruisers.Units
 			enemyDetector.OwnFaction = faction;
 
 			friendDetector.gameObject.SetActive(true);
-			friendDetector.OnEntered = OnFriendEntered;
-			friendDetector.OnExited = OnFriendExited;
 			friendDetector.OwnFaction = faction;
 		}
 
-		void Update()
+		protected override void OnBuildableCompleted()
 		{
-			if (_rigidBody.velocity.x == 0)
+			base.OnBuildableCompleted();
+
+			friendDetector.OnEntered = OnFriendEntered;
+			friendDetector.OnExited = OnFriendExited;
+		}
+
+		protected override void OnUpdate()
+		{
+			base.OnUpdate();
+
+			if (BuildableState == BuildableState.Completed 
+				&& _rigidBody.velocity.x == 0)
 			{
 				// Check if enemy has been destroyed
 				if (_enemyUnit != null && _enemyUnit.IsDestroyed)

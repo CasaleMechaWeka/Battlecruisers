@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildings.Factories
 
 		public LayerMask unitsLayerMask;
 
-		private const float SPAWN_SPACE_REQUIRED = 6f;
+		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
 		protected override Vector3 FindUnitSpawnPosition(Unit unit)
 		{
@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildings.Factories
 			return transform.position + (direction * horizontalChange);
 		}
 
-		protected virtual void Unit_CompletedBuildable(object sender, EventArgs e)
+		protected override void Unit_StartedConstruction(object sender, EventArgs e)
 		{
 			Unit unit = sender as Unit;
 			Assert.IsNotNull(unit);
@@ -41,8 +41,10 @@ namespace BattleCruisers.Buildings.Factories
 		{
 			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
 			{
-				Vector2 position = new Vector2(transform.position.x, transform.position.y);
-				Collider2D[] colliders = Physics2D.OverlapCircleAll(position, SPAWN_SPACE_REQUIRED, unitsLayerMask);
+				Vector3 spawnPositionV3 = FindUnitSpawnPosition(unit);
+				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
+				float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unit.Size.x;
+				Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, unitsLayerMask);
 
 				foreach (Collider2D collider in colliders)
 				{
