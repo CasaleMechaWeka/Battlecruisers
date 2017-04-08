@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildings;
 using BattleCruisers.Buildings.Factories;
 using BattleCruisers.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,17 @@ namespace BattleCruisers.UI.BuildMenus
 {
 	public class UnitsMenuController : Presentable
 	{
+		private UIManager _uiManager;
+		private Factory _factory;
+
 		public void Initialize(
+			UIManager uiManager,
 			IUIFactory uiFactory,
 			IList<Unit> units)
 		{
 			base.Initialize();
+
+			_uiManager = uiManager;
 
 			// Create unit buttons
 			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
@@ -27,6 +34,28 @@ namespace BattleCruisers.UI.BuildMenus
 			}
 
 			uiFactory.CreateBackButton(buttonGroup);
+		}
+
+		public override void OnPresenting(object activationParameter)
+		{
+			base.OnPresenting(activationParameter);
+
+			_factory = activationParameter as Factory;
+			Assert.IsNotNull(_factory);
+			_factory.Destroyed += _factory_Destroyed;
+		}
+
+		private void _factory_Destroyed(object sender, EventArgs e)
+		{
+			_uiManager.ShowBuildingGroups();
+		}
+
+		public override void OnDismissing()
+		{
+			base.OnDismissing();
+
+			_factory.Destroyed -= _factory_Destroyed;
+			_factory = null;
 		}
 	}
 }

@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.BuildMenus
 		private IList<BuildingGroup> _buildingGroups;
 
 		public UIFactory uiFactory;
+		public UIManager uiManager;
 
 		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<Unit>> units)
 		{
@@ -56,7 +57,7 @@ namespace BattleCruisers.UI.BuildMenus
 			{
 				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
 				UnitsMenuController unitsMenu = panelGameObject.AddComponent<UnitsMenuController>();
-				unitsMenu.Initialize(uiFactory, units[unitCategory]);
+				unitsMenu.Initialize(uiManager, uiFactory, units[unitCategory]);
 				_unitGroupPanels[unitCategory] = unitsMenu;
 			}
 		}
