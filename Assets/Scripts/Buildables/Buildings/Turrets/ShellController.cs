@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public interface IShellController
 	{

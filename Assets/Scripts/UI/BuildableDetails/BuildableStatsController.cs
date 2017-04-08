@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;

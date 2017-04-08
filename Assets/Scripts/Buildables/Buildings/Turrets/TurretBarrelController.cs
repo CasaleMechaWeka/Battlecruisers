@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	/// <summary>
 	/// For turrets whose projectiles are not affected by gravity.  Ie, they fly in a straight line

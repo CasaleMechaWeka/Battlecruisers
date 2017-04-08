@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers
+namespace BattleCruisers.Buildables
 {
 	public enum BuildableState
 	{

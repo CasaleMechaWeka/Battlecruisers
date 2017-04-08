@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BattleCruisers.Units.Detectors
+namespace BattleCruisers.Buildables.Units.Detectors
 {
 	public interface IFactionObjectDetector
 	{

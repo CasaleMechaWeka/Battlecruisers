@@ -1,15 +1,15 @@
-﻿using BattleCruisers.Buildings.Factories;
+﻿using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Buildings.Buttons
+namespace BattleCruisers.Buildables.Buildings.Buttons
 {
 	public class UnitButtonController : BuildableButtonController
 	{

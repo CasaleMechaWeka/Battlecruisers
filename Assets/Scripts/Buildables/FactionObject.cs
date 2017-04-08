@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace BattleCruisers
+namespace BattleCruisers.Buildables
 {
 	public enum Faction
 	{

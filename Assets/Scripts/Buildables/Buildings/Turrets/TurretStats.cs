@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public interface ITurretStats
 	{

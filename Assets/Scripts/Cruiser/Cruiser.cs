@@ -1,7 +1,8 @@
-﻿using BattleCruisers.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;

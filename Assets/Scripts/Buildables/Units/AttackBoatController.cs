@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Units.Detectors;
+using BattleCruisers.Buildables.Units.Detectors;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 // FELIX  Create parent boat class
-namespace BattleCruisers.Units
+namespace BattleCruisers.Buildables.Units
 {
 	/// <summary>
 	/// Assumptions:

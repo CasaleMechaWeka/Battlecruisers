@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Buildings;
-using BattleCruisers.Buildings.Factories;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildingDetails;
 using BattleCruisers.UI.BuildMenus;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;

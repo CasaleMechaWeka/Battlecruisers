@@ -1,10 +1,10 @@
-﻿using BattleCruisers.Units;
+﻿using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildings.Factories
+namespace BattleCruisers.Buildables.Buildings.Factories
 {
 	public class AirFactory : Factory
 	{

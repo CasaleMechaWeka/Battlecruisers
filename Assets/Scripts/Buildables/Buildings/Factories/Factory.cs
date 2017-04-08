@@ -1,14 +1,14 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildings.Factories
+namespace BattleCruisers.Buildables.Buildings.Factories
 {
 	public class BuildProgressEventArgs : EventArgs
 	{

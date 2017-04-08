@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Buildings
+namespace BattleCruisers.Buildables.Buildings
 {
 	// FELIX  Create interface
 	public class BuildingGroup

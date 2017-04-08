@@ -1,16 +1,16 @@
-﻿using BattleCruisers.Buildings;
-using BattleCruisers.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers
+namespace BattleCruisers.Buildables
 {
 	public class BuildableFactory : MonoBehaviour 
 	{

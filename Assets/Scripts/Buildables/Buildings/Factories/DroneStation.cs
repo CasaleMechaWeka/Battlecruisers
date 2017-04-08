@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Buildings.Factories
+namespace BattleCruisers.Buildables.Buildings.Factories
 {
 	public class DroneStation : Building
 	{

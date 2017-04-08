@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.Units
+namespace BattleCruisers.Buildables.Units
 {
 	public enum UnitCategory
 	{

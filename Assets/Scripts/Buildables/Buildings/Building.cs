@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Buildings.Turrets;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.UI;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Buildings
+namespace BattleCruisers.Buildables.Buildings
 {
 	public enum BuildingCategory
 	{

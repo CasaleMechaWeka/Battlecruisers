@@ -1,6 +1,6 @@
-﻿using BattleCruisers.Buildings;
-using BattleCruisers.Buildings.Factories;
-using BattleCruisers.Units;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;

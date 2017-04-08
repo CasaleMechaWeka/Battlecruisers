@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using System;
 
-namespace BattleCruisers.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class Turret : Building
 	{

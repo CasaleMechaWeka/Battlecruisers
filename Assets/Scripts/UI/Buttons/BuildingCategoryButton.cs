@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-namespace BattleCruisers.Buildings.Buttons
+namespace BattleCruisers.Buildables.Buildings.Buttons
 {
 	public class BuildingCategoryButton : MonoBehaviour 
 	{

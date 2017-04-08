@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Units.Detectors
+namespace BattleCruisers.Buildables.Units.Detectors
 {
 	public class EnemyDetector : FactionObjectDetector 
 	{

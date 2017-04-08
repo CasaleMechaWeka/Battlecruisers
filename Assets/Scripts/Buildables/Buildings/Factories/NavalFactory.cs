@@ -1,12 +1,12 @@
-﻿using BattleCruisers.Units;
-using BattleCruisers.Units.Detectors;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Detectors;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildings.Factories
+namespace BattleCruisers.Buildables.Buildings.Factories
 {
 	public class NavalFactory : Factory
 	{

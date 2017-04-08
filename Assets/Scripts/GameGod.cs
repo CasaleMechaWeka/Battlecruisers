@@ -1,7 +1,8 @@
-﻿using BattleCruisers.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;

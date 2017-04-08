@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Buildings;
-using BattleCruisers.Buildings.Factories;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BuildingDetails;
 using System;
@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using BattleCruisers.Units;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.BuildMenus
 {
