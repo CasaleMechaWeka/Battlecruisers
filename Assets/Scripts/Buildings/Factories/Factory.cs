@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildings.Factories
 	// FELIX  Be able to be able to pause factory?
 	public abstract class Factory : Building, IDroneConsumerProvider
 	{
-		protected IDroneConsumer _droneConsumer;
 		protected Unit _unitUnderConstruction;
 
 		public UnitCategory unitCategory;
@@ -37,9 +36,9 @@ namespace BattleCruisers.Buildings.Factories
 
 				if (_unit != null)
 				{
-					Assert.IsNotNull(_droneConsumer);
-					_droneManager.RemoveDroneConsumer(_droneConsumer);
-					_droneConsumer = null;
+					Assert.IsNotNull(DroneConsumer);
+					_droneManager.RemoveDroneConsumer(DroneConsumer);
+					DroneConsumer = null;
 
 					// FELIX  Delete in progress unit!
 				}
@@ -48,8 +47,8 @@ namespace BattleCruisers.Buildings.Factories
 
 				if (_unit != null)
 				{
-					_droneConsumer = new DroneConsumer(_unit.numOfDronesRequired);
-					_droneManager.AddDroneConsumer(_droneConsumer);
+					DroneConsumer = new DroneConsumer(_unit.numOfDronesRequired);
+					_droneManager.AddDroneConsumer(DroneConsumer);
 				}
 			}
 			private get { return _unit; }
@@ -111,9 +110,9 @@ namespace BattleCruisers.Buildings.Factories
 		
 		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
 		{
-			Assert.IsNotNull(_droneConsumer);
-			Assert.AreEqual(_droneConsumer.NumOfDronesRequired, numOfDronesRequired);
-			return _droneConsumer;
+			Assert.IsNotNull(DroneConsumer);
+			Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired);
+			return DroneConsumer;
 		}
 
 		protected override void OnDestroyed()

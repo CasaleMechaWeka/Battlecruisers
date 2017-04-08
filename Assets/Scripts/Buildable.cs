@@ -83,7 +83,27 @@ namespace BattleCruisers
 			}
 		}
 
-		public IDroneConsumer DroneConsumer { get; private set; }
+		private IDroneConsumer _droneConsumer;
+		public IDroneConsumer DroneConsumer 
+		{ 
+			get { return _droneConsumer; }
+			protected set
+			{
+				if (_droneConsumer != null)
+				{
+					_droneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
+					_droneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
+				}
+
+				_droneConsumer = value;
+
+				if (_droneConsumer != null)
+				{
+					_droneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
+					_droneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
+				}
+			}
+		}
 
 		public event EventHandler Destroyed;
 		public event EventHandler StartedConstruction;
@@ -138,13 +158,16 @@ namespace BattleCruisers
 
 		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
 		{
-			if (e.OldState == DroneConsumerState.Idle)
+			if (BuildableState != BuildableState.Completed)
 			{
-				BuildableState = BuildableState.InProgress;
-			}
-			else if (e.NewState == DroneConsumerState.Idle)
-			{
-				BuildableState = BuildableState.Paused;
+				if (e.OldState == DroneConsumerState.Idle)
+				{
+					BuildableState = BuildableState.InProgress;
+				}
+				else if (e.NewState == DroneConsumerState.Idle)
+				{
+					BuildableState = BuildableState.Paused;
+				}
 			}
 		}
 
@@ -165,8 +188,6 @@ namespace BattleCruisers
 		{
 			Assert.IsNull(DroneConsumer);
 			DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired);
-			DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
-			DroneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
 			_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 		}
 
@@ -232,8 +253,6 @@ namespace BattleCruisers
 		private void CleanUpDroneConsumer()
 		{
 			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-			DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
-			DroneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
 			DroneConsumer = null;
 		}
 
