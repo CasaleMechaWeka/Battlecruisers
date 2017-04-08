@@ -129,10 +129,5 @@ namespace BattleCruisers.UI
 		{
 			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
 		}
-
-		public void HideBuildableDetails()
-		{
-			buildableDetails.Hide();
-		}
 	}
 }
