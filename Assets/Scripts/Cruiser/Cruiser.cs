@@ -17,6 +17,7 @@ namespace BattleCruisers.Cruisers
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
+		void ConstructSelectedBuilding(ISlot slot);
 	}
 
 	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
@@ -27,8 +28,12 @@ namespace BattleCruisers.Cruisers
 		private SlotType? _highlightedSlotType;
 
 		public HealthBarController healthBarController;
+		public UIManager uiManager;
+		public BuildableFactory buildingFactory;
 		public Direction direction;
 		public int numOfDrones;
+
+		public Building SelectedBuilding { get; set; }
 
 		void Start()
 		{
@@ -123,6 +128,19 @@ namespace BattleCruisers.Cruisers
 		{
 			base.TakeDamage(damageAmount);
 			healthBarController.Health = health;
+		}
+
+		public void ConstructSelectedBuilding(ISlot slot)
+		{
+			Assert.IsNotNull(SelectedBuilding);
+			Assert.AreEqual(SelectedBuilding.slotType, slot.Type);
+
+			Building building = buildingFactory.CreateBuilding(SelectedBuilding);
+			slot.Building = building;
+
+			uiManager.ShowBuildingGroups();
+
+			building.StartConstruction();
 		}
 	}
 }

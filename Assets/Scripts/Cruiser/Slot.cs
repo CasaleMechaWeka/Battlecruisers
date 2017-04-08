@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
@@ -18,21 +19,37 @@ namespace BattleCruisers.Cruisers
 	public interface ISlot
 	{
 		bool IsFree { get; }
+		SlotType Type { get; }
 		bool IsActive { set; }
+		Building Building { set; }
 	}
 
 	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{
 		private SpriteRenderer _renderer;
-		private Building _building;
 
 		public SlotType type;
-		public UIManager uiManager;
 		public Cruiser parentCruiser;
-		public BuildableFactory buildingFactory;
 		public Direction direction;
 
 		public bool IsFree { get { return _building == null; } }
+		public SlotType Type { get { return type; } }
+
+		private Building _building;
+		public Building Building
+		{
+			set
+			{
+				Assert.IsNotNull(value);
+				Assert.IsNull(_building);
+
+				_building = value;
+
+				_building.transform.position = FindSpawnPosition(_building);
+				_building.transform.rotation = transform.rotation;
+				_building.Destroyed += OnBuildingDestroyed;
+			}
+		}
 
 		private bool _isActive;
 		public bool IsActive
@@ -63,36 +80,20 @@ namespace BattleCruisers.Cruisers
 
 			if (_isActive)
 			{
-				Building buildingToBuild = uiManager.SelectedBuilding;
-
-				if (buildingToBuild == null || buildingToBuild.slotType != type)
-				{
-					throw new InvalidProgramException();
-				}
-
-				_building = buildingFactory.CreateBuilding(buildingToBuild);
-
-				_building.transform.position = FindSpawnPosition();
-				_building.transform.rotation = transform.rotation;
-
-				uiManager.ShowBuildingGroups();
-
-				_building.Destroyed += OnBuildingDestroyed;
-
-				_building.StartConstruction();
+				parentCruiser.ConstructSelectedBuilding(this);
 			}
 		}
 
-		private Vector3 FindSpawnPosition()
+		private Vector3 FindSpawnPosition(Building building)
 		{
 			switch (direction)
 			{
 				case Direction.Right:
-					float horizontalChange = (_renderer.bounds.size.x + _building.Size.x) / 2 + (_building.customOffsetProportion * _building.Size.x);
+					float horizontalChange = (_renderer.bounds.size.x + building.Size.x) / 2 + (building.customOffsetProportion * building.Size.x);
 					return transform.position + (transform.right * horizontalChange);
 
 				case Direction.Up:
-					float verticalChange = (_renderer.bounds.size.y + _building.Size.y) / 2 + (_building.customOffsetProportion * _building.Size.y);
+					float verticalChange = (_renderer.bounds.size.y + building.Size.y) / 2 + (building.customOffsetProportion * building.Size.y);
 					return transform.position + (transform.up * verticalChange);
 
 				default:

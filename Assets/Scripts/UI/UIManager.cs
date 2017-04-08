@@ -23,8 +23,6 @@ namespace BattleCruisers.UI
 		public Cruiser enemyCruiser;
 		public BuildableDetailsController buildableDetails;
 
-		public Building SelectedBuilding { get; private set; }
-
 		// Use this for initialization
 		void Start () 
 		{
@@ -92,7 +90,7 @@ namespace BattleCruisers.UI
 		public void SelectBuildingFromMenu(Building building)
 		{
 			Debug.Log("UIManager.SelectBuildingFromMenu()");
-			SelectedBuilding = building;
+			friendlyCruiser.SelectedBuilding = building;
 			friendlyCruiser.HighlightAvailableSlots(building.slotType);
 			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
