@@ -237,7 +237,7 @@ namespace BattleCruisers
 		{
 			Debug.Log("Buildable.OnDestroy()");
 
-			if (BuildableState == BuildableState.InProgress || BuildableState == BuildableState.Paused)
+			if (DroneConsumer != null)
 			{
 				CleanUpDroneConsumer();
 			}
