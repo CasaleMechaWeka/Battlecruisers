@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildings.Factories
 					_droneManager.RemoveDroneConsumer(DroneConsumer);
 					DroneConsumer = null;
 
-					// FELIX  Delete in progress unit!
+					DestroyUnitUnderConstruction();
 				}
 
 				_unit = value;
@@ -123,8 +123,11 @@ namespace BattleCruisers.Buildings.Factories
 			Logging.Log(Tags.FACTORY, "OnDestroyed()");
 
 			base.OnDestroyed();
+			DestroyUnitUnderConstruction();
+		}
 
-			// Destroy unit currently under production
+		private void DestroyUnitUnderConstruction()
+		{
 			if (_unitUnderConstruction != null)
 			{
 				Destroy(_unitUnderConstruction.gameObject);

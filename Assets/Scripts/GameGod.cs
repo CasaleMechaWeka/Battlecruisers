@@ -95,6 +95,7 @@ namespace BattleCruisers
 			// Ships
 			IList<UnitKey> ships = new List<UnitKey>();
 			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
+			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			// Ultra units
 			IList<UnitKey> ultraUnits = new List<UnitKey>();

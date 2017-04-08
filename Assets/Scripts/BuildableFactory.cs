@@ -68,6 +68,7 @@ namespace BattleCruisers
 			switch (unitName)
 			{
 				case "Attack Boat":
+				case "Attack Boat 2":
 					return new TurretStats(0.5f, 1f, 10f, 3f, ignoreGravity: true);
 				default:
 					throw new ArgumentException();
