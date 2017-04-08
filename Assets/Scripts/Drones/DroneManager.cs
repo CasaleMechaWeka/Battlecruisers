@@ -138,7 +138,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void RemoveDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, "RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, $"RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
 
 			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
 
@@ -167,7 +167,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, $"ToggleDroneConsumerFocus()  NumOfDroneConsumers: {_droneConsumers.Count}");
 
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{
