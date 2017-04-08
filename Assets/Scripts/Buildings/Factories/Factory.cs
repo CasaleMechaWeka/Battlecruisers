@@ -50,7 +50,6 @@ namespace BattleCruisers.Buildings.Factories
 				{
 					_droneConsumer = new DroneConsumer(_unit.numOfDronesRequired);
 					_droneManager.AddDroneConsumer(_droneConsumer);
-					// FELIX  Grey out units until factory has completed building
 				}
 			}
 			private get { return _unit; }
@@ -93,19 +92,46 @@ namespace BattleCruisers.Buildings.Factories
 			_unitUnderConstruction.facingDirection = _parentCruiser.direction;
 
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
+			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
 
 			_unitUnderConstruction.StartConstruction();
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
 		
-		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) { }
+		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
+		{ 
+			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;
+		}
+
+		private void Unit_CompletedBuildable(object sender, EventArgs e)
+		{
+			CleanUpUnitUnderConstruction();
+		}
 		
 		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
 		{
 			Assert.IsNotNull(_droneConsumer);
 			Assert.AreEqual(_droneConsumer.NumOfDronesRequired, numOfDronesRequired);
 			return _droneConsumer;
+		}
+
+		protected override void OnDestroyed()
+		{
+			base.OnDestroyed();
+
+			// Destroy unit currently under production
+			if (_unitUnderConstruction != null)
+			{
+				Destroy(_unitUnderConstruction);
+				CleanUpUnitUnderConstruction();
+			}
+		}
+
+		private void CleanUpUnitUnderConstruction()
+		{
+			_unitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
+			_unitUnderConstruction = null;
 		}
 
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }

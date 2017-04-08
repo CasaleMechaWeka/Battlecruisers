@@ -31,6 +31,8 @@ namespace BattleCruisers.Buildings.Factories
 
 		protected override void Unit_StartedConstruction(object sender, EventArgs e)
 		{
+			base.Unit_StartedConstruction(sender, e);
+
 			Unit unit = sender as Unit;
 			Assert.IsNotNull(unit);
 			_lastUnitProduced = unit;
