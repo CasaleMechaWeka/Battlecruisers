@@ -20,6 +20,7 @@ namespace BattleCruisers.UI
 		public HealthBarController friendlyCruiserHealthBar;
 		public HealthBarController enemyCruiserHealthBar;
 		public Cruiser friendlyCruiser;
+		public Cruiser enemyCruiser;
 		public BuildableDetailsController buildableDetails;
 
 		public Building SelectedBuilding { get; private set; }
@@ -98,11 +99,13 @@ namespace BattleCruisers.UI
 
 		public void SelectBuilding(Building building, Cruiser buildingParent)
 		{
-			if (buildingParent == friendlyCruiser)
+			if (buildingParent == friendlyCruiser
+				&& cameraController.State == CameraState.FriendlyCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else
+			else if (buildingParent == enemyCruiser
+				&& cameraController.State == CameraState.EnemyCruiser)
 			{
 				SelectBuildingFromEnemyCruiser();
 			}

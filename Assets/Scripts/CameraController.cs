@@ -24,6 +24,8 @@ namespace BattleCruisers
 
 	public interface ICameraController 
 	{
+		CameraState State { get; }
+
 		void FocusOnFriendlyCruiser();
 		void FocusOnEnemyCruiser();
 		void ShowFullMapView();
@@ -31,7 +33,6 @@ namespace BattleCruisers
 
 	public class CameraController : MonoBehaviour, ICameraController 
 	{
-		private CameraState _cameraState;
 		private CameraState _cameraStateTarget;
 		private Vector3 _cameraVelocity = Vector3.zero;
 		private Vector3 _cameraPositionTarget;
@@ -52,6 +53,9 @@ namespace BattleCruisers
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
+
+		private CameraState _cameraState;
+		public CameraState State { get { return _cameraState; } }
 
 		void Start() 
 		{
