@@ -37,7 +37,9 @@ namespace BattleCruisers
 		void Awake()
 		{
 			Assert.raiseExceptions = true;
-			
+
+			Logging.Initialise();
+
 			IDroneManager droneManager = new DroneManager();
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
 			friendlyCruiser.Initialise(droneManager);

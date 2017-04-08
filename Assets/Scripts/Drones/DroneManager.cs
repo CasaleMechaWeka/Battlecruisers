@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace BattleCruisers.Drones
 			}
 			set
 			{
+				Logging.Log(Tags.DRONES, $"NumOfDrones: {_numOfDrones} > {value}    NumOfDroneConsumers: {_droneConsumers.Count}");
+
 				if (value < 0)
 				{
 					throw new ArgumentException();
@@ -102,6 +105,8 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
+			Logging.Log(Tags.DRONES, $"AddDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+
 			if (!CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired)
 			    || _droneConsumers.Contains(droneConsumer))
 			{
@@ -133,6 +138,8 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void RemoveDroneConsumer(IDroneConsumer droneConsumer)
 		{
+			Logging.Log(Tags.DRONES, "RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+
 			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
 
 			if (!wasRemoved)
@@ -160,7 +167,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
-			Debug.Log($"DroneManager.ToggleDroneConsumerFocus(): num of DCs: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: {_droneConsumers.Count}");
 
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{
