@@ -90,7 +90,7 @@ namespace BattleCruisers.UI
 		public void SelectBuildingFromMenu(Building building)
 		{
 			Debug.Log("UIManager.SelectBuildingFromMenu()");
-			friendlyCruiser.SelectedBuilding = building;
+			friendlyCruiser.SelectedBuildingPrefab = building;
 			friendlyCruiser.HighlightAvailableSlots(building.slotType);
 			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}

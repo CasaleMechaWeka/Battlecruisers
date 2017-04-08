@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
@@ -21,6 +22,7 @@ namespace BattleCruisers
 	public class GameGod : MonoBehaviour 
 	{
 		private BuildingGroupFactory _buildingGroupFactory;
+		private Bot _bot;
 
 		public BuildableFactory buildableFactory;
 		public UIManager uiManager;
@@ -41,19 +43,25 @@ namespace BattleCruisers
 
 			Logging.Initialise();
 
+
+			// Common setup
+			_buildingGroupFactory = new BuildingGroupFactory();
+			
+			PrefabFetcher prefabFetcher = new PrefabFetcher();
+			buildableFactory.Initialise(uiManager, prefabFetcher);
+
+
+			// Player cruiser
 			IDroneManager droneManager = new DroneManager();
+			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider);
+			friendlyCruiser.direction = Direction.Right;
+
+
+			// UI
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-			friendlyCruiser.Initialise(droneManager);
 			buildableDetailsController.Initialise(droneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, droneManager);
-
-			PrefabFetcher prefabFetcher = new PrefabFetcher();
-			_buildingGroupFactory = new BuildingGroupFactory();
-			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-
-			buildableFactory.Initialise(uiManager, prefabFetcher, droneManager, droneConsumerProvider);
-			friendlyCruiser.direction = Direction.Right;
-			enemyCruiser.direction = Direction.Left;
 
 			Loadout loadout = CreateLoadout();
 
@@ -61,6 +69,24 @@ namespace BattleCruisers
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
+
+
+			// AI cruiser
+			IDroneManager aiDroneManager = new DroneManager();
+			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
+			enemyCruiser.direction = Direction.Left;
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
+
+
+			// AI
+			IList<BuildingKey> buildOrder = GetBuildOrder();
+			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
+			Invoke("StartBot", 2);
+		}
+
+		private void StartBot()
+		{
+			_bot.Start();
 		}
 
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?
@@ -70,8 +96,8 @@ namespace BattleCruisers
 			IList<BuildingKey> factories = new List<BuildingKey>();
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 
+			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			// Tactical
 			IList<BuildingKey> tactical = new List<BuildingKey>();
 			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
@@ -184,6 +210,22 @@ namespace BattleCruisers
 			}
 
 			return units;
+		}
+
+		// FELIX  Don't hardcode.  Database?
+		private IList<BuildingKey> GetBuildOrder()
+		{
+			IList<BuildingKey> buildOrder = new List<BuildingKey>();
+
+			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+
+			return buildOrder;
 		}
 	}
 }

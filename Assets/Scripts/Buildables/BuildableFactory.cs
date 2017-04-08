@@ -16,23 +16,19 @@ namespace BattleCruisers.Buildables
 	{
 		private UIManager _uiManager;
 		private PrefabFetcher _prefabFetcher;
-		private IDroneManager _droneManager;
-		private IDroneConsumerProvider _droneConsumerProvider;
 
 		public IDictionary<UnitCategory, IList<Unit>> Units { private get; set; }
 
-		public void Initialise(UIManager uiManager, PrefabFetcher prefabFetcher, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
+		public void Initialise(UIManager uiManager, PrefabFetcher prefabFetcher)
 		{
 			_uiManager = uiManager;
 			_prefabFetcher = prefabFetcher;
-			_droneManager = droneManager;
-			_droneConsumerProvider = droneConsumerProvider;
 		}
 
 		public Building GetBuildingPrefab(BuildingKey buildingKey, Cruiser parentCruiser, Cruiser enemyCruiser)
 		{
 			Building building = _prefabFetcher.GetBuildingPrefab(buildingKey);
-			building.Initialise(_uiManager, parentCruiser, enemyCruiser, this, _droneManager, _droneConsumerProvider);
+			building.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
 			return building;
 		}
 
@@ -58,7 +54,7 @@ namespace BattleCruisers.Buildables
 		public Unit GetUnitPrefab(UnitKey unitKey, Cruiser parentCruiser, Cruiser enemyCruiser)
 		{
 			Unit unit = _prefabFetcher.GetUnitPrefab(unitKey);
-			unit.Initialise(_uiManager, parentCruiser, enemyCruiser, this, _droneManager, _droneConsumerProvider);
+			unit.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
 			return unit;
 		}
 

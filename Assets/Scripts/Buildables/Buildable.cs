@@ -128,15 +128,15 @@ namespace BattleCruisers.Buildables
 		protected virtual void OnAwake() { }
 
 		// FELIX  DroneManager & BuildableFactory not used by most buildings, find different way of injecting?
-		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
+		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
 			BuildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
 			_buildableFactory = buildableFactory;
-			_droneManager = droneManager;
-			_droneConsumerProvider = droneConsumerProvider;
+			_droneManager = parentCruiser.DroneManager;
+			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 		}
 
 		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).

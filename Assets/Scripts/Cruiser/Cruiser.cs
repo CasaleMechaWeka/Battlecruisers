@@ -6,6 +6,7 @@ using BattleCruisers.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -14,15 +15,19 @@ namespace BattleCruisers.Cruisers
 {
 	public interface ICruiser
 	{
+		Building SelectedBuildingPrefab { get; set; }
+		IDroneManager DroneManager { get; }
+		IDroneConsumerProvider DroneConsumerProvider { get; }
+
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
-		void ConstructSelectedBuilding(ISlot slot);
+		Building ConstructBuilding(Building buildingPrefab, ISlot slot);
+		Building ConstructSelectedBuilding(ISlot slot);
 	}
 
 	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
 	{
-		private IDroneManager _droneManager;
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
@@ -33,7 +38,10 @@ namespace BattleCruisers.Cruisers
 		public Direction direction;
 		public int numOfDrones;
 
-		public Building SelectedBuilding { get; set; }
+		public Building SelectedBuildingPrefab { get; set; }
+		public IDroneManager DroneManager { get; private set; }
+		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
+
 
 		void Start()
 		{
@@ -42,12 +50,14 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Initialise(health);
 		}
 
-		public void Initialise(IDroneManager droneManager)
+		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
 		{
 			Assert.IsNotNull(droneManager);
+			Assert.IsNotNull(droneConsumerProvider);
 
-			_droneManager = droneManager;
-			_droneManager.NumOfDrones = numOfDrones;
+			DroneManager = droneManager;
+			DroneManager.NumOfDrones = numOfDrones;
+			DroneConsumerProvider = droneConsumerProvider;
 		}
 
 		private void SetupSlots()
@@ -130,17 +140,32 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Health = health;
 		}
 
-		public void ConstructSelectedBuilding(ISlot slot)
+		public Building ConstructBuilding(Building buildingPrefab, ISlot slot)
 		{
-			Assert.IsNotNull(SelectedBuilding);
-			Assert.AreEqual(SelectedBuilding.slotType, slot.Type);
+			SelectedBuildingPrefab = buildingPrefab;
+			return ConstructSelectedBuilding(slot);
+		}
 
-			Building building = buildingFactory.CreateBuilding(SelectedBuilding);
+		public Building ConstructSelectedBuilding(ISlot slot)
+		{
+			Assert.IsNotNull(SelectedBuildingPrefab);
+			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
+
+			Building building = buildingFactory.CreateBuilding(SelectedBuildingPrefab);
 			slot.Building = building;
 
-			uiManager.ShowBuildingGroups();
+			if (uiManager != null)
+			{
+				uiManager.ShowBuildingGroups();
+			}
 
 			building.StartConstruction();
+			return building;
+		}
+
+		public ISlot GetFreeSlot(SlotType slotType)
+		{
+			return _slots[slotType].FirstOrDefault(slot => slot.IsFree);
 		}
 	}
 }

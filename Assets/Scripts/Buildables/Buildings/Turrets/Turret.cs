@@ -100,10 +100,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_timeSinceLastFireInS += Time.deltaTime;
 		}
 
-		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, 
-			BuildableFactory buildableFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
+		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory, droneManager, droneConsumerProvider);
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory);
 			_turretStats = buildableFactory.GetTurretStats(buildableName);
 			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);

@@ -60,6 +60,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		protected override void OnClicked()
 		{
 			base.OnClicked();
+
+			// FELIX  Do not show units if AI cruiser factory
 			_uiManager.ShowFactoryUnits(this);
 		}
 

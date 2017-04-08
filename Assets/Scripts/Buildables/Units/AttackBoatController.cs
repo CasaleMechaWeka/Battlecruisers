@@ -40,10 +40,9 @@ namespace BattleCruisers.Buildables.Units
 
 		public override float Damage { get { return _turretStats.DamangePerS; } }
 
-		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, 
-			BuildableFactory buildingFactory, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
+		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
 		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory, droneManager, droneConsumerProvider);
+			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
 			_turretStats = buildingFactory.GetUnitTurretStats(buildableName);
 			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
