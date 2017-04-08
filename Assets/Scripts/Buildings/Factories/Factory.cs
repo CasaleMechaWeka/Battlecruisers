@@ -2,6 +2,7 @@
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.Units;
+using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace BattleCruisers.Buildings.Factories
 		{ 
 			set	
 			{
+				Logging.Log(Tags.FACTORY, $"set_Unit: {_unit} > {value}");
+
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
 				if (_unit != null)
@@ -79,7 +82,7 @@ namespace BattleCruisers.Buildings.Factories
 		
 		private void StartBuildingUnit()
 		{
-			Debug.Log("StartBuildingUnit()");
+			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
 
 			_unitUnderConstruction = _buildableFactory.CreateUnit(_unit, this);
 
@@ -117,12 +120,14 @@ namespace BattleCruisers.Buildings.Factories
 
 		protected override void OnDestroyed()
 		{
+			Logging.Log(Tags.FACTORY, "OnDestroyed()");
+
 			base.OnDestroyed();
 
 			// Destroy unit currently under production
 			if (_unitUnderConstruction != null)
 			{
-				Destroy(_unitUnderConstruction);
+				Destroy(_unitUnderConstruction.gameObject);
 				CleanUpUnitUnderConstruction();
 			}
 		}

@@ -7,6 +7,7 @@ namespace BattleCruisers.Utils
 	public static class Tags
 	{
 		public const string DRONES = "Drones";
+		public const string FACTORY = "Factory";
 	}
 	
 	public static class Logging
@@ -17,6 +18,7 @@ namespace BattleCruisers.Utils
 		{
 			_tagsToActiveness = new Dictionary<string, bool>();
 			_tagsToActiveness.Add(Tags.DRONES, true);
+			_tagsToActiveness.Add(Tags.FACTORY, true);
 		}
 
 		public static void Log(string tag, string message)
