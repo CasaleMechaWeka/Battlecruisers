@@ -92,6 +92,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 
 			_timeSinceLastFireInS = float.MaxValue;
+			_turretStats = new TurretStats(1.5f, 1f, 20f, 30f, ignoreGravity: true);
+			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
+			shellSpawner.Initialise(_shellStats);
 		}
 
 		protected override void OnUpdate()
@@ -100,14 +103,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_timeSinceLastFireInS += Time.deltaTime;
 		}
 
-		public override void Initialise(BattleCruisers.UI.UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
-		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildableFactory);
-			_turretStats = buildableFactory.GetTurretStats(buildableName);
-			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
-			shellSpawner.Initialise(_shellStats);
-		}
-		
 		private void OnTarget(object sender, EventArgs e)
 		{
 			if (_timeSinceLastFireInS >= _turretStats.FireIntervalInS)

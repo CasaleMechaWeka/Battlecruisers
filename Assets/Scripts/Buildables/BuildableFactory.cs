@@ -23,10 +23,18 @@ namespace BattleCruisers.Buildables
 
 		public Building GetBuildingPrefab(BuildingKey buildingKey)
 		{
-			return _prefabFetcher.GetBuildingPrefab(buildingKey);
+			Building buildingPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
+
+			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
+			// Awake is called.  Because this prefab will never be loaded (only copies of it
+			// made, and those copies will be loaded), need to explicitly call Awake().
+			buildingPrefab.Awake();
+
+			return buildingPrefab;
 		}
 
 		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
+		// FELIX  Remove!
 		public ITurretStats GetTurretStats(string turretName)
 		{
 			switch (turretName)

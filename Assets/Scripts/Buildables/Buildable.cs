@@ -112,7 +112,7 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		void Awake()
+		public void Awake()
 		{
 			Debug.Log("BuildableObject.Awake()");
 
