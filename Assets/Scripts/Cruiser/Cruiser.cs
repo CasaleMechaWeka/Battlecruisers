@@ -34,7 +34,8 @@ namespace BattleCruisers.Cruisers
 
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
-		public BuildableFactory buildingFactory;
+		public Cruiser enemyCruiser;
+		public BuildableFactory buildableFactory;
 		public Direction direction;
 		public int numOfDrones;
 
@@ -151,7 +152,8 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(SelectedBuildingPrefab);
 			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
 
-			Building building = buildingFactory.CreateBuilding(SelectedBuildingPrefab);
+			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
+			building.Initialise(uiManager, this, enemyCruiser, buildableFactory);
 			slot.Building = building;
 
 			if (uiManager != null)

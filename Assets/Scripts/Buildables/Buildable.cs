@@ -137,18 +137,8 @@ namespace BattleCruisers.Buildables
 			_buildableFactory = buildableFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
-		}
 
-		// For copying private members, and non-MonoBehaviour or primitive types (eg: ITurretStats).
-		public virtual void Initialise(Buildable buildable)
-		{
-			BuildableState = BuildableState.NotStarted;
-			_uiManager = buildable._uiManager;
-			_parentCruiser = buildable._parentCruiser;
-			_enemyCruiser = buildable._enemyCruiser;
-			_buildableFactory = buildable._buildableFactory;
-			_droneManager = buildable._droneManager;
-			_droneConsumerProvider = buildable._droneConsumerProvider;
+			Debug.Log("Buildable.Initialise() " + ((DroneManager)_droneManager).TempTag);
 		}
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)

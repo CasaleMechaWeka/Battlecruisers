@@ -14,22 +14,16 @@ namespace BattleCruisers.Buildables
 {
 	public class BuildableFactory : MonoBehaviour 
 	{
-		private UIManager _uiManager;
 		private PrefabFetcher _prefabFetcher;
 
-		public IDictionary<UnitCategory, IList<Unit>> Units { private get; set; }
-
-		public void Initialise(UIManager uiManager, PrefabFetcher prefabFetcher)
+		public void Initialise(PrefabFetcher prefabFetcher)
 		{
-			_uiManager = uiManager;
 			_prefabFetcher = prefabFetcher;
 		}
 
-		public Building GetBuildingPrefab(BuildingKey buildingKey, Cruiser parentCruiser, Cruiser enemyCruiser)
+		public Building GetBuildingPrefab(BuildingKey buildingKey)
 		{
-			Building building = _prefabFetcher.GetBuildingPrefab(buildingKey);
-			building.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
-			return building;
+			return _prefabFetcher.GetBuildingPrefab(buildingKey);
 		}
 
 		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
@@ -51,11 +45,9 @@ namespace BattleCruisers.Buildables
 			return CreateBuildable(buildingPrefab);
 		}
 
-		public Unit GetUnitPrefab(UnitKey unitKey, Cruiser parentCruiser, Cruiser enemyCruiser)
+		public Unit GetUnitPrefab(UnitKey unitKey)
 		{
-			Unit unit = _prefabFetcher.GetUnitPrefab(unitKey);
-			unit.Initialise(_uiManager, parentCruiser, enemyCruiser, this);
-			return unit;
+			return _prefabFetcher.GetUnitPrefab(unitKey);
 		}
 
 		// FELIX  Don't hardcode :P  Use database, prefab has TurretStats id?
@@ -73,6 +65,7 @@ namespace BattleCruisers.Buildables
 
 		public Unit CreateUnit(Unit unitPrefab, IDroneConsumerProvider droneConsumerProvider)
 		{
+			// FELIX  Remove unit specific initialisation
 			Unit unit = CreateBuildable(unitPrefab);
 			unit.SpecificInitialisation(droneConsumerProvider);
 			return unit;
@@ -80,9 +73,7 @@ namespace BattleCruisers.Buildables
 
 		private T CreateBuildable<T>(T buildablePrefab) where T : Buildable
 		{
-			T buildable = Instantiate<T>(buildablePrefab);
-			buildable.Initialise(buildablePrefab);
-			return buildable;
+			return Instantiate<T>(buildablePrefab);
 		}
 	}
 }

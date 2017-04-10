@@ -48,11 +48,13 @@ namespace BattleCruisers
 			_buildingGroupFactory = new BuildingGroupFactory();
 			
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
-			buildableFactory.Initialise(uiManager, prefabFetcher);
+			buildableFactory.Initialise(prefabFetcher);
 
 
 			// Player cruiser
-			IDroneManager droneManager = new DroneManager();
+			DroneManager droneManager = new DroneManager();
+//			IDroneManager droneManager = new DroneManager();
+			droneManager.TempTag = "Player";
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
 			friendlyCruiser.Initialise(droneManager, droneConsumerProvider);
 			friendlyCruiser.direction = Direction.Right;
@@ -72,7 +74,9 @@ namespace BattleCruisers
 
 
 			// AI cruiser
-			IDroneManager aiDroneManager = new DroneManager();
+			DroneManager aiDroneManager = new DroneManager();
+//			IDroneManager aiDroneManager = new DroneManager();
+			aiDroneManager.TempTag = "AI";
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			enemyCruiser.direction = Direction.Left;
 			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
@@ -81,7 +85,8 @@ namespace BattleCruisers
 			// AI
 			IList<BuildingKey> buildOrder = GetBuildOrder();
 			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
-			Invoke("StartBot", 2);
+//			Invoke("StartBot", 10);
+//			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()
@@ -154,7 +159,7 @@ namespace BattleCruisers
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						Building building = buildableFactory.GetBuildingPrefab(buildingKey, parentCruiser, hostileCruiser);
+						Building building = buildableFactory.GetBuildingPrefab(buildingKey);
 						categoryToBuildings[buildingKey.Category].Add(building);
 					}
 				}
@@ -205,7 +210,7 @@ namespace BattleCruisers
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				Unit unit = buildableFactory.GetUnitPrefab(unitKey, parentCruiser, hostileCruiser);
+				Unit unit = buildableFactory.GetUnitPrefab(unitKey);
 				units.Add(unit);
 			}
 
@@ -222,7 +227,7 @@ namespace BattleCruisers
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+//			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
 
 			return buildOrder;

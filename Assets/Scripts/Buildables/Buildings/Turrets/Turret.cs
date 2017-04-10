@@ -108,17 +108,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			shellSpawner.Initialise(_shellStats);
 		}
 		
-		public override void Initialise(Buildable buildable)
-		{
-			base.Initialise(buildable);
-
-			Turret turret = buildable as Turret;
-			Assert.IsNotNull(turret);
-			_turretStats = turret._turretStats;
-			_shellStats = turret._shellStats;
-			shellSpawner.Initialise(_shellStats);
-		}
-
 		private void OnTarget(object sender, EventArgs e)
 		{
 			if (_timeSinceLastFireInS >= _turretStats.FireIntervalInS)

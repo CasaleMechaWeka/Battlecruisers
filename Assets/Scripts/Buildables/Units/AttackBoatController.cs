@@ -48,17 +48,6 @@ namespace BattleCruisers.Buildables.Units
 			shellSpawner.Initialise(_shellStats);
 		}
 
-		public override void Initialise(Buildable buildable)
-		{
-			base.Initialise(buildable);
-
-			AttackBoatController attackBoat = buildable as AttackBoatController;
-			Assert.IsNotNull(attackBoat);
-			_turretStats = attackBoat._turretStats;
-			_shellStats = attackBoat._shellStats;
-			shellSpawner.Initialise(_shellStats);
-		}
-
 		void Start() 
 		{
 			_rigidBody = GetComponent<Rigidbody2D>();
