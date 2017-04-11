@@ -29,10 +29,6 @@ namespace BattleCruisers.Drones
 	/// </summary>
 	public class DroneManager : IDroneManager
 	{
-		// FELIX
-		public string TempTag;
-
-
 		private IList<IDroneConsumer> _droneConsumers;
 
 		private int _numOfDrones;
@@ -44,7 +40,7 @@ namespace BattleCruisers.Drones
 			}
 			set
 			{
-				Logging.Log(Tags.DRONES, $"{TempTag}  NumOfDrones: {_numOfDrones} > {value}    NumOfDroneConsumers: {_droneConsumers.Count}");
+				Logging.Log(Tags.DRONES, $"NumOfDrones: {_numOfDrones} > {value}    NumOfDroneConsumers: {_droneConsumers.Count}");
 
 				if (value < 0)
 				{
@@ -109,7 +105,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, $"{TempTag}  AddDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, $"AddDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
 
 			if (!CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired)
 			    || _droneConsumers.Contains(droneConsumer))
@@ -142,7 +138,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void RemoveDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, $"{TempTag}  RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, $"RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
 
 			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
 

@@ -137,8 +137,6 @@ namespace BattleCruisers.Buildables
 			_buildableFactory = buildableFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
-
-			Debug.Log("Buildable.Initialise() " + ((DroneManager)_droneManager).TempTag);
 		}
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)

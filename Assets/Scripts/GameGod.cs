@@ -52,9 +52,7 @@ namespace BattleCruisers
 
 
 			// Player cruiser
-			DroneManager droneManager = new DroneManager();
-//			IDroneManager droneManager = new DroneManager();
-			droneManager.TempTag = "Player";
+			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
 			friendlyCruiser.Initialise(droneManager, droneConsumerProvider);
 			friendlyCruiser.direction = Direction.Right;
@@ -74,9 +72,7 @@ namespace BattleCruisers
 
 
 			// AI cruiser
-			DroneManager aiDroneManager = new DroneManager();
-//			IDroneManager aiDroneManager = new DroneManager();
-			aiDroneManager.TempTag = "AI";
+			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			enemyCruiser.direction = Direction.Left;
 			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
