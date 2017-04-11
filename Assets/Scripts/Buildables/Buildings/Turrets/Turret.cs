@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Detectors;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,16 +55,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				}
 				else
 				{
-					if (turretStats == null)
-					{
-						throw new InvalidOperationException();
-					}
-
-					if (_target != null)
-					{
-						turretBarrelController.OnTarget -= OnTarget;
-					}
-
 					turretBarrelController.StartTrackingTarget(_target, turretStats.bulletVelocityInMPerS);
 					turretBarrelController.OnTarget += OnTarget;
 				}
@@ -115,16 +106,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			Direction fireDirection = _target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
 			shellSpawner.SpawnShell(angleInRadians, fireDirection);
-		}
-
-		protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
-
-			if (category == BuildingCategory.Offence)
-			{
-				Target = _enemyCruiser.gameObject;
-			}
 		}
 
 		protected override void EnableRenderers(bool enabled)

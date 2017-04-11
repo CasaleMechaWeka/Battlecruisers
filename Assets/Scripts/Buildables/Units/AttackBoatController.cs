@@ -49,16 +49,11 @@ namespace BattleCruisers.Buildables.Units
 			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
 
-			enemyDetector.Initialise(GetOppositeFaction(Faction));
+			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
 			enemyDetector.OnEntered = OnEnemyEntered;
 
 			friendDetector.Initialise(Faction);
 			friendDetector.gameObject.SetActive(true);
-		}
-
-		private Faction GetOppositeFaction(Faction faction)
-		{
-			return faction == Faction.Blues ? Faction.Reds : Faction.Blues;
 		}
 
 		protected override void OnBuildableCompleted()
