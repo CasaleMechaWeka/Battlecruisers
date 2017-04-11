@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Units.Detectors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.Buildables.Units.Detectors;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,17 +41,13 @@ namespace BattleCruisers.Buildables.Units
 
 		public override float Damage { get { return turretStats.DamagePerS; } }
 
-		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
-		{
-			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
-			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_shellStats);
-		}
-
 		void Start() 
 		{
 			_rigidBody = GetComponent<Rigidbody2D>();
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
+
+			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
+			shellSpawner.Initialise(_shellStats);
 
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OwnFaction = faction;
@@ -96,14 +93,14 @@ namespace BattleCruisers.Buildables.Units
 
 		private void StopAttacking()
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "StopAttacking()");
 			CancelInvoke("Attack");
 		}
 
-		/// <summary>
-		/// Stop and shoot.
-		/// </summary>
 		private void OnEnemyEntered(FactionObject enemey)
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
+
 			_enemyUnit = enemey;
 			StopMoving();
 			StartAttacking();
@@ -111,19 +108,12 @@ namespace BattleCruisers.Buildables.Units
 
 		private void StartAttacking()
 		{
-			if (turretStats == null)
-			{
-				throw new InvalidOperationException();
-			}
-
-			float fireIntervalInS = 1 / turretStats.fireRatePerS;
-			InvokeRepeating("Attack", _fireDelayInS, fireIntervalInS);
+			Logging.Log(Tags.ATTACK_BOAT, "StartAttacking()");
+			InvokeRepeating("Attack", _fireDelayInS, turretStats.FireIntervalInS);
 		}
 
 		private void Attack()
 		{
-			Debug.Log("AttackBoatController.Attack()");
-
 			// FELIX Find angle instead of hardcoding
 			float desiredAngle = 0;
 			shellSpawner.SpawnShell(desiredAngle, facingDirection);
@@ -131,6 +121,8 @@ namespace BattleCruisers.Buildables.Units
 
 		private void OnFriendEntered(FactionObject friend)
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "OnFriendEntered()");
+
 			if (IsObjectInFront(friend))
 			{
 				_blockingFriendlyUnit = friend;
@@ -140,6 +132,8 @@ namespace BattleCruisers.Buildables.Units
 
 		private void OnFriendExited(FactionObject friend)
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "OnFriendExited()");
+
 			if (IsObjectInFront(friend))
 			{
 				StartMoving();
@@ -156,11 +150,13 @@ namespace BattleCruisers.Buildables.Units
 
 		private void StartMoving()
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
 			_rigidBody.velocity = new Vector2(velocityInMPerS * _directionMultiplier, 0);
 		}
 
 		private void StopMoving()
 		{
+			Logging.Log(Tags.ATTACK_BOAT, "StopMoving()");
 			_rigidBody.velocity = new Vector2(0, 0);
 		}
 	}

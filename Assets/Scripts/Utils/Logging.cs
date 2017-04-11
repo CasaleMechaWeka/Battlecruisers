@@ -9,6 +9,7 @@ namespace BattleCruisers.Utils
 		public const string DRONES = "Drones";
 		public const string FACTORY = "Factory";
 		public const string AI = "AI";
+		public const string ATTACK_BOAT = "AttackBoat";
 	}
 	
 	public static class Logging
@@ -18,9 +19,10 @@ namespace BattleCruisers.Utils
 		public static void Initialise()
 		{
 			_tagsToActiveness = new Dictionary<string, bool>();
-			_tagsToActiveness.Add(Tags.DRONES, true);
+			_tagsToActiveness.Add(Tags.DRONES, false);
 			_tagsToActiveness.Add(Tags.FACTORY, false);
-			_tagsToActiveness.Add(Tags.AI, true);
+			_tagsToActiveness.Add(Tags.AI, false);
+			_tagsToActiveness.Add(Tags.ATTACK_BOAT, true);
 		}
 
 		public static void Log(string tag, string message)
