@@ -128,8 +128,9 @@ namespace BattleCruisers.Buildables
 		protected virtual void OnAwake() { }
 
 		// FELIX  DroneManager & BuildableFactory not used by most buildings, find different way of injecting?
-		public virtual void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
+		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
+			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;

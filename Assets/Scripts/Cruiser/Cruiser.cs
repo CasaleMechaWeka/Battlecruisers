@@ -38,14 +38,15 @@ namespace BattleCruisers.Cruisers
 		public BuildableFactory buildableFactory;
 		public Direction direction;
 		public int numOfDrones;
+		public Faction faction;
 
 		public Building SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 
-
 		void Start()
 		{
+			Faction = faction;
 			SetupSlots();
 			HideAllSlots();
 			healthBarController.Initialise(health);
@@ -153,10 +154,11 @@ namespace BattleCruisers.Cruisers
 			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
 
 			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(uiManager, this, enemyCruiser, buildableFactory);
+			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory);
 			slot.Building = building;
 
-			if (uiManager != null)
+			// Only show build menu for player's cruiser
+			if (Faction == Faction.Blues)
 			{
 				uiManager.ShowBuildingGroups();
 			}

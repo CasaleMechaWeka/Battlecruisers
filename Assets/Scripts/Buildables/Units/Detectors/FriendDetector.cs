@@ -21,7 +21,6 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 		private bool ShouldTrigger(FactionObject factionObject)
 		{
-			return factionObject.faction == OwnFaction;
-		}
+			return factionObject.Faction == OwnFaction;}
 	}
 }

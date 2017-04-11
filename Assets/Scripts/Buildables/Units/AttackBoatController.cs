@@ -50,10 +50,10 @@ namespace BattleCruisers.Buildables.Units
 			shellSpawner.Initialise(_shellStats);
 
 			enemyDetector.OnEntered = OnEnemyEntered;
-			enemyDetector.OwnFaction = faction;
+			enemyDetector.OwnFaction = Faction;
 
 			friendDetector.gameObject.SetActive(true);
-			friendDetector.OwnFaction = faction;
+			friendDetector.OwnFaction = Faction;
 		}
 
 		protected override void OnBuildableCompleted()

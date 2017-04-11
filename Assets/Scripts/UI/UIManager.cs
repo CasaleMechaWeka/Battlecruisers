@@ -105,7 +105,7 @@ namespace BattleCruisers.UI
 			else if (buildingParent == enemyCruiser
 				&& cameraController.State == CameraState.EnemyCruiser)
 			{
-				SelectBuildingFromEnemyCruiser();
+				SelectBuildingFromEnemyCruiser(building);
 			}
 		}
 
@@ -116,9 +116,9 @@ namespace BattleCruisers.UI
 			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 
-		public void SelectBuildingFromEnemyCruiser()
+		public void SelectBuildingFromEnemyCruiser(Building building)
 		{
-			throw new NotImplementedException();
+			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
 
 		public void ShowFactoryUnits(Factory factory)

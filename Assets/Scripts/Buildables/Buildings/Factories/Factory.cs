@@ -61,8 +61,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			base.OnClicked();
 
-			// FELIX  Do not show units if AI cruiser factory
-			_uiManager.ShowFactoryUnits(this);
+			if (Faction == Faction.Blues)
+			{
+				_uiManager.ShowFactoryUnits(this);
+			}
 		}
 
 		protected override void OnUpdate()
@@ -88,13 +90,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 			_unitUnderConstruction = _buildableFactory.CreateUnit(_unit);
 			_unitUnderConstruction.DroneConsumerProvider = this;
-			_unitUnderConstruction.Initialise(_uiManager, _parentCruiser, _enemyCruiser, _buildableFactory);
+			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _buildableFactory);
 
 			Vector3 spawnPosition = FindUnitSpawnPosition(_unitUnderConstruction);
 			_unitUnderConstruction.transform.position = spawnPosition;
 			_unitUnderConstruction.transform.rotation = transform.rotation;
 
-			_unitUnderConstruction.faction = _parentCruiser.faction;
 			_unitUnderConstruction.facingDirection = _parentCruiser.direction;
 
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
