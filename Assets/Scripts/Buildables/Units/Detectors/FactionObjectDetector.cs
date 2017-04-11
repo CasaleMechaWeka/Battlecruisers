@@ -11,10 +11,17 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 	public class FactionObjectDetector : MonoBehaviour, IFactionObjectDetector
 	{
+		private Faction _factionToDetect;
+
 		public CircleCollider2D circleCollider;
 
 		public Action<FactionObject> OnEntered { private get; set; }
 		public Action<FactionObject> OnExited { private get; set; }
+
+		public void Initialise(Faction factionToDetect)
+		{
+			_factionToDetect = factionToDetect;
+		}
 
 		public void ChangeTriggerRadius(float newRadius)
 		{
@@ -26,8 +33,6 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-//			Debug.Log("DetectionController.OnTriggerEnter2D()");
-
 			if (OnEntered != null)
 			{
 				FactionObject factionObject = GetFactionobject(collider);
@@ -40,13 +45,11 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 		protected virtual bool ShouldTriggerOnEntered(FactionObject factionObject)
 		{
-			return true;
+			return factionObject.Faction == _factionToDetect;
 		}
 
 		void OnTriggerExit2D(Collider2D collider)
 		{
-//			Debug.Log("DetectionController.OnTriggerExit2D()");
-
 			if (OnExited != null)
 			{
 				FactionObject factionObject = GetFactionobject(collider);
@@ -59,7 +62,7 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 		protected virtual bool ShouldTriggerOnExited(FactionObject factionObject)
 		{
-			return true;
+			return factionObject.Faction == _factionToDetect;
 		}
 
 		private FactionObject GetFactionobject(Collider2D collider)

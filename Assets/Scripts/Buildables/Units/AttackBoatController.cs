@@ -32,8 +32,8 @@ namespace BattleCruisers.Buildables.Units
 		private int _directionMultiplier;
 		private ShellStats _shellStats;
 
-		public EnemyDetector enemyDetector;
-		public FriendDetector friendDetector;
+		public FactionObjectDetector enemyDetector;
+		public FactionObjectDetector friendDetector;
 		// FELIX  Allow to vary depending on boat?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
@@ -49,11 +49,16 @@ namespace BattleCruisers.Buildables.Units
 			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
 
+			enemyDetector.Initialise(GetOppositeFaction(Faction));
 			enemyDetector.OnEntered = OnEnemyEntered;
-			enemyDetector.OwnFaction = Faction;
 
+			friendDetector.Initialise(Faction);
 			friendDetector.gameObject.SetActive(true);
-			friendDetector.OwnFaction = Faction;
+		}
+
+		private Faction GetOppositeFaction(Faction faction)
+		{
+			return faction == Faction.Blues ? Faction.Reds : Faction.Blues;
 		}
 
 		protected override void OnBuildableCompleted()
