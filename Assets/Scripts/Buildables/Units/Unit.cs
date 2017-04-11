@@ -25,9 +25,12 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Only for ships!
 		public float velocityInMPerS;
 
-		public void SpecificInitialisation(IDroneConsumerProvider droneConsumerProvider)
+		public IDroneConsumerProvider DroneConsumerProvider
 		{
-			_droneConsumerProvider = droneConsumerProvider;
+			set
+			{
+				_droneConsumerProvider = value;
+			}
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

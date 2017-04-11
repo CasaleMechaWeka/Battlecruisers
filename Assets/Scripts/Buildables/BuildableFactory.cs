@@ -40,15 +40,14 @@ namespace BattleCruisers.Buildables
 
 		public Unit GetUnitPrefab(UnitKey unitKey)
 		{
-			return _prefabFetcher.GetUnitPrefab(unitKey);
+			Unit unitPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
+			unitPrefab.Awake();
+			return unitPrefab;
 		}
 
-		public Unit CreateUnit(Unit unitPrefab, IDroneConsumerProvider droneConsumerProvider)
+		public Unit CreateUnit(Unit unitPrefab)
 		{
-			// FELIX  Remove unit specific initialisation
-			Unit unit = CreateBuildable(unitPrefab);
-			unit.SpecificInitialisation(droneConsumerProvider);
-			return unit;
+			return CreateBuildable(unitPrefab);
 		}
 
 		private T CreateBuildable<T>(T buildablePrefab) where T : Buildable
