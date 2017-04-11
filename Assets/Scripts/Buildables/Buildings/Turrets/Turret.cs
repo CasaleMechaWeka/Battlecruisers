@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		private Vector2 _shellVelocity;
 		private float _timeSinceLastFireInS;
-		private ITurretStats _turretStats;
 		private ShellStats _shellStats;
 
 		private Renderer _turretBaseRenderer;
@@ -26,6 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		// FELIX  Allow to vary depending on artillery?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
+		public TurretStats turretStats;
 
 		protected override Renderer Renderer
 		{
@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				}
 				else
 				{
-					if (_turretStats == null)
+					if (turretStats == null)
 					{
 						throw new InvalidOperationException();
 					}
@@ -64,7 +64,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 						turretBarrelController.OnTarget -= OnTarget;
 					}
 
-					turretBarrelController.StartTrackingTarget(_target, _turretStats.BulletVelocityInMPerS);
+					turretBarrelController.StartTrackingTarget(_target, turretStats.bulletVelocityInMPerS);
 					turretBarrelController.OnTarget += OnTarget;
 				}
 			}
@@ -82,7 +82,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return _turretStats.DamangePerS; } }
+		public override float Damage { get { return turretStats.DamagePerS; } }
 
 		protected override void OnAwake()
 		{
@@ -92,8 +92,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 
 			_timeSinceLastFireInS = float.MaxValue;
-			_turretStats = new TurretStats(1.5f, 1f, 20f, 30f, ignoreGravity: true);
-			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
+			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
 		}
 
@@ -105,7 +104,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		private void OnTarget(object sender, EventArgs e)
 		{
-			if (_timeSinceLastFireInS >= _turretStats.FireIntervalInS)
+			if (_timeSinceLastFireInS >= turretStats.FireIntervalInS)
 			{
 				Fire(turretBarrelController.DesiredAngleInRadians);
 				_timeSinceLastFireInS = 0;

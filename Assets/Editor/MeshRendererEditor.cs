@@ -13,7 +13,7 @@ public class MeshRendererSortingLayersEditor : Editor
 		MeshRenderer renderer = target as MeshRenderer;
 
 
-		// Sortin layer name
+		// Sorting layer name
 		EditorGUILayout.BeginHorizontal(); 
 		EditorGUI.BeginChangeCheck(); 
 
@@ -27,7 +27,7 @@ public class MeshRendererSortingLayersEditor : Editor
 		EditorGUILayout.EndHorizontal();
 
 
-		// Sortin layer order
+		// Sorting layer order
 		EditorGUILayout.BeginHorizontal(); 
 		EditorGUI.BeginChangeCheck(); 
 

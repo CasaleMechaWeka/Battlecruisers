@@ -1,48 +1,28 @@
 ﻿using BattleCruisers.Utils;
 using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public interface ITurretStats
+	public class TurretStats : MonoBehaviour
 	{
-		float FireRatePerS { get; }
-		float Accuracy { get; }
-		float Damage { get; }
-		float BulletVelocityInMPerS { get; }
-		bool IgnoreGravity { get; }
-		float DamangePerS { get; }
-		float FireIntervalInS { get; }
-	}
+		public float fireRatePerS;
+		public float accuracy;
+		public float damage;
+		public float bulletVelocityInMPerS;
+		public bool ignoreGravity;
+		public float DamagePerS { get { return damage * fireRatePerS; } }
+		public float FireIntervalInS { get { return 1 / fireRatePerS; } }
 
-	public class TurretStats : ITurretStats
-	{
-		public float FireRatePerS { get; private set; }
-		public float Accuracy { get; private set; }
-		public float Damage { get; private set; }
-		public float BulletVelocityInMPerS { get; private set; }
-		public bool IgnoreGravity { get; private set; }
-		public float DamangePerS { get; private set; }
-		public float FireIntervalInS { get; private set; }
-
-		public TurretStats(float fireRatePerS, float accuracy, float damage, float bulletVelocityInMPerS, bool ignoreGravity)
+		void Awake()
 		{
-			if (fireRatePerS < 0
-				|| accuracy <= 0 
-				|| accuracy > 1
-				|| damage < 0
-				|| bulletVelocityInMPerS < 0)
-			{
-				throw new ArgumentException();
-			}
-
-			FireRatePerS = fireRatePerS;
-			Accuracy = accuracy;
-			Damage = damage;
-			BulletVelocityInMPerS = bulletVelocityInMPerS;
-			IgnoreGravity = ignoreGravity;
-
-			DamangePerS = Damage * FireRatePerS;
-			FireIntervalInS = 1 / FireRatePerS;
+			Assert.IsTrue(
+				fireRatePerS > 0
+				&& accuracy >= 0
+				&& accuracy <= 1
+				&& damage > 0
+				&& bulletVelocityInMPerS > 0);
 		}
 	}
 }

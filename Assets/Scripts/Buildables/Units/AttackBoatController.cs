@@ -29,7 +29,6 @@ namespace BattleCruisers.Buildables.Units
 		private FactionObject _enemyUnit;
 		private FactionObject _blockingFriendlyUnit;
 		private int _directionMultiplier;
-		private ITurretStats _turretStats;
 		private ShellStats _shellStats;
 
 		public EnemyDetector enemyDetector;
@@ -37,14 +36,14 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Allow to vary depending on boat?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
+		public TurretStats turretStats;
 
-		public override float Damage { get { return _turretStats.DamangePerS; } }
+		public override float Damage { get { return turretStats.DamagePerS; } }
 
 		public override void Initialise(UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildingFactory)
 		{
 			base.Initialise(uiManager, parentCruiser, enemyCruiser, buildingFactory);
-			_turretStats = buildingFactory.GetUnitTurretStats(buildableName);
-			_shellStats = new ShellStats(shellPrefab, _turretStats.Damage, _turretStats.IgnoreGravity, _turretStats.BulletVelocityInMPerS);
+			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
 		}
 
@@ -112,12 +111,12 @@ namespace BattleCruisers.Buildables.Units
 
 		private void StartAttacking()
 		{
-			if (_turretStats == null)
+			if (turretStats == null)
 			{
 				throw new InvalidOperationException();
 			}
 
-			float fireIntervalInS = 1 / _turretStats.FireRatePerS;
+			float fireIntervalInS = 1 / turretStats.fireRatePerS;
 			InvokeRepeating("Attack", _fireDelayInS, fireIntervalInS);
 		}
 
