@@ -69,27 +69,11 @@ namespace BattleCruisers.Buildables.Units
 			base.OnUpdate();
 
 			if (BuildableState == BuildableState.Completed 
-				&& _rigidBody.velocity.x == 0)
+				&& _rigidBody.velocity.x == 0
+				&& _enemyUnit == null
+				&& _blockingFriendlyUnit == null)
 			{
-				// FELIX  Use Destroyed event!!
-				// Check if enemy has been destroyed
-				if (_enemyUnit != null && _enemyUnit.IsDestroyed)
-				{
-					StopAttacking();
-					_enemyUnit = null;
-				}
-
-				// FELIX  Use Destroyed event!!
-				// Check if blocking friendly has been destroyed
-				if (_blockingFriendlyUnit != null && _blockingFriendlyUnit.IsDestroyed)
-				{
-					_blockingFriendlyUnit = null;
-				}
-
-				if (_enemyUnit == null && _blockingFriendlyUnit == null)
-				{
-					StartMoving();
-				}
+				StartMoving();
 			}
 		}
 
@@ -99,13 +83,22 @@ namespace BattleCruisers.Buildables.Units
 			CancelInvoke("Attack");
 		}
 
-		private void OnEnemyEntered(FactionObject enemey)
+		private void OnEnemyEntered(FactionObject enemy)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
 
-			_enemyUnit = enemey;
+			_enemyUnit = enemy;
+			_enemyUnit.Destroyed += EnemyUnit_Destroyed;
 			StopMoving();
 			StartAttacking();
+		}
+
+		// FELIX  Attack other in range unit?
+		private void EnemyUnit_Destroyed(object sender, EventArgs e)
+		{
+			_enemyUnit.Destroyed -= EnemyUnit_Destroyed;
+			StopAttacking();
+			_enemyUnit = null;
 		}
 
 		private void StartAttacking()
@@ -128,8 +121,15 @@ namespace BattleCruisers.Buildables.Units
 			if (IsObjectInFront(friend))
 			{
 				_blockingFriendlyUnit = friend;
+				_blockingFriendlyUnit.Destroyed += BlockingFriendlyUnit_Destroyed;
 				StopMoving();
 			}
+		}
+
+		private void BlockingFriendlyUnit_Destroyed(object sender, EventArgs e)
+		{
+			_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
+			_blockingFriendlyUnit = null;
 		}
 
 		private void OnFriendExited(FactionObject friend)

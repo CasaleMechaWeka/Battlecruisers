@@ -23,8 +23,8 @@ namespace BattleCruisers.Utils
 			_tagsToActiveness.Add(Tags.DRONES, false);
 			_tagsToActiveness.Add(Tags.FACTORY, false);
 			_tagsToActiveness.Add(Tags.AI, false);
-			_tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
-			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, true);
+			_tagsToActiveness.Add(Tags.ATTACK_BOAT, true);
+			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
 		}
 
 		public static void Log(string tag, string message)
