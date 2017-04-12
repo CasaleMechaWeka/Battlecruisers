@@ -113,8 +113,6 @@ namespace BattleCruisers.Buildables
 
 		public void Awake()
 		{
-			Debug.Log("BuildableObject.Awake()");
-
 			buildableProgress.image.rectTransform.sizeDelta = new Vector2(Size.x, Size.y);
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
@@ -126,7 +124,6 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnAwake() { }
 
-		// FELIX  DroneManager & BuildableFactory not used by most buildings, find different way of injecting?
 		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
 			Faction = faction;
@@ -137,7 +134,11 @@ namespace BattleCruisers.Buildables
 			_buildableFactory = buildableFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
+
+			OnInitialised();
 		}
+
+		protected virtual void OnInitialised() { }
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{

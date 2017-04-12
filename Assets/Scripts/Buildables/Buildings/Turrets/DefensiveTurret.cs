@@ -14,12 +14,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public FactionObjectDetector enemyDetector;
 
-		protected override void OnAwake()
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
 
 			Assert.AreEqual(BuildingCategory.Defence, category);
-
+			
 			enemyDetector.Radius = turretStats.rangeInM;
 			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
 		}
