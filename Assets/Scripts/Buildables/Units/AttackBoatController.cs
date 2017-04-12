@@ -71,6 +71,7 @@ namespace BattleCruisers.Buildables.Units
 			if (BuildableState == BuildableState.Completed 
 				&& _rigidBody.velocity.x == 0)
 			{
+				// FELIX  Use Destroyed event!!
 				// Check if enemy has been destroyed
 				if (_enemyUnit != null && _enemyUnit.IsDestroyed)
 				{
@@ -78,6 +79,7 @@ namespace BattleCruisers.Buildables.Units
 					_enemyUnit = null;
 				}
 
+				// FELIX  Use Destroyed event!!
 				// Check if blocking friendly has been destroyed
 				if (_blockingFriendlyUnit != null && _blockingFriendlyUnit.IsDestroyed)
 				{

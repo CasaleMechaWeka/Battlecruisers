@@ -105,7 +105,6 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		public event EventHandler Destroyed;
 		public event EventHandler StartedConstruction;
 		public event EventHandler PausedBuilding;
 		public event EventHandler ResumedBuilding;
@@ -221,21 +220,14 @@ namespace BattleCruisers.Buildables
 		{
 			Renderer.enabled = enabled;
 		}
-		
-		void OnDestroy()
+
+		protected override void OnDestroyed()
 		{
-			Debug.Log("Buildable.OnDestroy()");
+			base.OnDestroyed();
 
 			if (DroneConsumer != null)
 			{
 				CleanUpDroneConsumer();
-			}
-
-			OnDestroyed();
-
-			if (Destroyed != null)
-			{
-				Destroyed.Invoke(this, EventArgs.Empty);
 			}
 		}
 
@@ -244,8 +236,6 @@ namespace BattleCruisers.Buildables
 			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
 			DroneConsumer = null;
 		}
-
-		protected virtual void OnDestroyed() { }
 
 		public virtual void InitiateDelete() { }
 	}

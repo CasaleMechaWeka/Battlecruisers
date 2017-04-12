@@ -29,6 +29,8 @@ namespace BattleCruisers.Buildables
 		public bool IsDestroyed { get { return health <= 0; } }
 		public Faction Faction { get; protected set; }
 
+		public event EventHandler Destroyed;
+
 		public virtual void TakeDamage(float damageAmount)
 		{
 			health -= damageAmount;
@@ -37,5 +39,17 @@ namespace BattleCruisers.Buildables
 				Destroy(gameObject);
 			}
 		}
+
+		void OnDestroy()
+		{
+			OnDestroyed();
+
+			if (Destroyed != null)
+			{
+				Destroyed.Invoke(this, EventArgs.Empty);
+			}
+		}
+
+		protected virtual void OnDestroyed() { }
 	}
 }

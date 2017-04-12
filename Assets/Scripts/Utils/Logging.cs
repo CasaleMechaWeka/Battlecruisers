@@ -10,6 +10,7 @@ namespace BattleCruisers.Utils
 		public const string FACTORY = "Factory";
 		public const string AI = "AI";
 		public const string ATTACK_BOAT = "AttackBoat";
+		public const string DEFENSIVE_TURRET = "DefensiveTurret";
 	}
 	
 	public static class Logging
@@ -22,7 +23,8 @@ namespace BattleCruisers.Utils
 			_tagsToActiveness.Add(Tags.DRONES, false);
 			_tagsToActiveness.Add(Tags.FACTORY, false);
 			_tagsToActiveness.Add(Tags.AI, false);
-			_tagsToActiveness.Add(Tags.ATTACK_BOAT, true);
+			_tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
+			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, true);
 		}
 
 		public static void Log(string tag, string message)
