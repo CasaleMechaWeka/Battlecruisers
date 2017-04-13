@@ -48,6 +48,7 @@ namespace BattleCruisers.Buildables
 
 		public TextMesh textMesh;
 		public BuildableProgressController buildableProgress;
+		public HealthBarController healthBar;
 
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
@@ -121,6 +122,12 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
+
+			// FELIX
+			if (healthBar != null)
+			{
+				healthBar.Initialise(health);
+			}
 
 			OnAwake();
 		}
@@ -242,5 +249,16 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void InitiateDelete() { }
+
+		public override void TakeDamage(float damageAmount)
+		{
+			base.TakeDamage(damageAmount);
+
+			// FELIX
+			if (healthBar != null)
+			{
+				healthBar.Health = health;
+			}
+		}
 	}
 }
