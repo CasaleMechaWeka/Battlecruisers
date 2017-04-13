@@ -138,6 +138,7 @@ namespace BattleCruisers.Buildables.Units
 
 			if (IsObjectInFront(friend))
 			{
+				_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
 				StartMoving();
 			}
 		}
