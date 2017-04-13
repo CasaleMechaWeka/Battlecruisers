@@ -122,12 +122,7 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
-
-			// FELIX
-			if (healthBar != null)
-			{
-				healthBar.Initialise(health);
-			}
+			healthBar.Initialise(health);
 
 			OnAwake();
 		}
@@ -253,12 +248,7 @@ namespace BattleCruisers.Buildables
 		public override void TakeDamage(float damageAmount)
 		{
 			base.TakeDamage(damageAmount);
-
-			// FELIX
-			if (healthBar != null)
-			{
-				healthBar.Health = health;
-			}
+			healthBar.Health = health;
 		}
 	}
 }
