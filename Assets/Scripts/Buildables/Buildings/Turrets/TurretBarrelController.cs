@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,44 +15,62 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	/// </summary>
 	public class TurretBarrelController : MonoBehaviour 
 	{
-		protected GameObject _targetObject;
-		protected float _shellVelocityInMPerS;
+		private float _timeSinceLastFireInS;
+		private ShellStats _shellStats;
 		protected float _maxRange;
 
+		// FELIX  Allow to vary depending on artillery?  Perhaps also part of TurretStats?
+		public Rigidbody2D shellPrefab;
+		public ShellSpawnerController shellSpawner;
+		public TurretStats turretStats;
+
+		public GameObject Target { protected get; set; }
+
+		// FELIX  Add this rotate speed to turret stats
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
 		private const float ROTATION_EQUALITY_MARGIN_IN_RADIANS = 0.01f;
 
-		public float DesiredAngleInRadians { get; set; }
-
-		public event EventHandler OnTarget;
-
-		void Update()
+		void Awake()
 		{
-			if (_targetObject != null)
+			_maxRange = FindMaxRange(turretStats.bulletVelocityInMPerS);
+			_timeSinceLastFireInS = float.MaxValue;
+			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
+			shellSpawner.Initialise(_shellStats);
+		}
+		
+		/// <summary>
+		/// Assumes no y axis difference in source and target
+		/// </summary>
+		private float FindMaxRange(float velocityInMPerS)
+		{
+			if (turretStats.ignoreGravity)
 			{
-				DesiredAngleInRadians = FindDesiredAngle();
-				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-				bool isCorrectAngle = Math.Abs(currentAngleInRadians - DesiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
-
-				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {DesiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
-
-				if (!isCorrectAngle)
-				{
-					float directionMultiplier = transform.rotation.z > DesiredAngleInRadians ? -1 : 1;
-					Vector3 rotationIncrement = Vector3.forward * Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S * directionMultiplier;
-					transform.Rotate(rotationIncrement);
-				}
-				else
-				{
-					Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Update():  Have reached desired angle");
-					if (OnTarget != null)
-					{
-						OnTarget.Invoke(this, EventArgs.Empty);
-					}
-				}
+				return float.MaxValue;
+			}
+			else
+			{
+				return (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
 			}
 		}
 
+		void Update()
+		{
+			if (Target != null)
+			{
+				float desiredAngleInRadians = FindDesiredAngle();
+
+				bool isOnTarget = MoveBarrelToAngle(desiredAngleInRadians);
+
+				_timeSinceLastFireInS += Time.deltaTime;
+
+				if (isOnTarget && _timeSinceLastFireInS >= turretStats.FireIntervalInS)
+				{
+					Fire(desiredAngleInRadians);
+					_timeSinceLastFireInS = 0;
+				}
+			}
+		}
+		
 		/// <summary>
 		/// Assumes:
 		/// 1. Shells are not affected by gravity
@@ -60,29 +79,32 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected virtual float FindDesiredAngle()
 		{
 			// FELIX  This is wrong :P  Find angle for direct fire from shell spawner to target
-			float desiredAngle = _targetObject.transform.rotation.z;
+			float desiredAngle = Target.transform.rotation.z;
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"TurretBarrelController.FindDesiredAngle() {desiredAngle}");
 			return desiredAngle;
 		}
 
-		public void StartTrackingTarget(GameObject target, float shellVelocity)
+		private bool MoveBarrelToAngle(float desiredAngleInRadians)
 		{
-			_targetObject = target;
-			_shellVelocityInMPerS = shellVelocity;
-			_maxRange = FindMaxRange(_shellVelocityInMPerS);
-		}
+			float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+			bool isCorrectAngle = Math.Abs(currentAngleInRadians - desiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
+			
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {desiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
+			
+			if (!isCorrectAngle)
+			{
+				float directionMultiplier = transform.rotation.z > desiredAngleInRadians ? -1 : 1;
+				Vector3 rotationIncrement = Vector3.forward * Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S * directionMultiplier;
+				transform.Rotate(rotationIncrement);
+			}
 
-		public void StopTrackingTarget()
-		{
-			_targetObject = null;
+			return isCorrectAngle;
 		}
-
-		/// <summary>
-		/// Assumes no y axis difference in source and target
-		/// </summary>
-		private float FindMaxRange(float velocityInMPerS)
+		
+		private void Fire(float angleInRadians)
 		{
-			return (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
+			Direction fireDirection = Target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
+			shellSpawner.SpawnShell(angleInRadians, fireDirection);
 		}
 	}
 }

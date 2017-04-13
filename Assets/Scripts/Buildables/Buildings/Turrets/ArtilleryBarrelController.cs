@@ -18,12 +18,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// </summary>
 		protected override float FindDesiredAngle()
 		{
-			float distanceInM = Math.Abs(transform.position.x - _targetObject.transform.position.x);
+			float distanceInM = Math.Abs(transform.position.x - Target.transform.position.x);
 			if (distanceInM > _maxRange)
 			{
 				throw new InvalidProgramException();
 			}
-			float desiredAngle = (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (_shellVelocityInMPerS * _shellVelocityInMPerS)));
+			float desiredAngle = (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (turretStats.bulletVelocityInMPerS * turretStats.bulletVelocityInMPerS)));
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"ArtilleryBarrelController.FindDesiredAngle() {desiredAngle}");
 			return desiredAngle;
 		}
