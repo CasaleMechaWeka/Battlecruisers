@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.BuildingDetails
 		public Image slotImage;
 		public Button deleteButton;
 		public Button toggleDroneButton;
+		public HealthBarController healthBar;
 
 		void Start () 
 		{
@@ -72,12 +73,19 @@ namespace BattleCruisers.UI.BuildingDetails
 			}
 
 			// Toggle drone button
-			bool showDroneToggleButton = buildable.DroneConsumer != null && buildable.Faction == Faction.Blues;
-			toggleDroneButton.gameObject.SetActive(showDroneToggleButton);
-			if (showDroneToggleButton)
+			bool showDroneRelatedUI = buildable.DroneConsumer != null && buildable.Faction == Faction.Blues;
+			toggleDroneButton.gameObject.SetActive(showDroneRelatedUI);
+			healthBar.gameObject.SetActive(showDroneRelatedUI);
+			if (showDroneRelatedUI)
 			{
 				toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
+				buildable.BuildableProgress += Buildable_BuildableProgress;
 			}
+		}
+
+		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
+		{
+			healthBar.Progress = e.BuildProgress;
 		}
 
 		public void DeleteBuildable()
@@ -102,8 +110,12 @@ namespace BattleCruisers.UI.BuildingDetails
 
 		private void CleanUp()
 		{
-			deleteButton.onClick.RemoveAllListeners();
-			toggleDroneButton.onClick.RemoveAllListeners();
+			if (_buildable != null)
+			{
+				deleteButton.onClick.RemoveListener(DeleteBuildable);
+				toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
+				_buildable.BuildableProgress -= Buildable_BuildableProgress;
+			}
 		}
 	}
 }
