@@ -32,7 +32,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				DesiredAngleInRadians = FindDesiredAngle();
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
 				bool isCorrectAngle = Math.Abs(currentAngleInRadians - DesiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
-//				Debug.Log($"TurretBarrelController.Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {DesiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
+
+				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {DesiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
 
 				if (!isCorrectAngle)
 				{
@@ -42,7 +43,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				}
 				else
 				{
-//					Debug.Log("TurretBarrelController.Update():  Have reached desired angle");
+					Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Update():  Have reached desired angle");
 					if (OnTarget != null)
 					{
 						OnTarget.Invoke(this, EventArgs.Empty);
@@ -59,7 +60,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected virtual float FindDesiredAngle()
 		{
 			// FELIX  This is wrong :P  Find angle for direct fire from shell spawner to target
-			return _targetObject.transform.rotation.z;
+			float desiredAngle = _targetObject.transform.rotation.z;
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"TurretBarrelController.FindDesiredAngle() {desiredAngle}");
+			return desiredAngle;
 		}
 
 		public void StartTrackingTarget(GameObject target, float shellVelocity)

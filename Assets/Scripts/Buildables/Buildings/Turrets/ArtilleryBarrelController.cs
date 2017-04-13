@@ -23,7 +23,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			{
 				throw new InvalidProgramException();
 			}
-			return (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (_shellVelocityInMPerS * _shellVelocityInMPerS)));
+			float desiredAngle = (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (_shellVelocityInMPerS * _shellVelocityInMPerS)));
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"ArtilleryBarrelController.FindDesiredAngle() {desiredAngle}");
+			return desiredAngle;
 		}
 	}
 }
