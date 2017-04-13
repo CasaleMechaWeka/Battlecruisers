@@ -30,7 +30,10 @@ namespace BattleCruisers.Buildables.Buildings.Buttons
 
 		private void DroneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			UpdateButtonActiveness();
+			if (_isPresented)
+			{
+				UpdateButtonActiveness();
+			}
 		}
 
 		public override void OnPresenting(object activationParameter)
