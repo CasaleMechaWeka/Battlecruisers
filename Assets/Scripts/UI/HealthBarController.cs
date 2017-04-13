@@ -14,25 +14,11 @@ namespace BattleCruisers.UI
 		private float _outlineWidth;
 		private float _maxHealth;
 
-		// FELIX  Remove _health backing field
-		private float _health;
 		public float Health
 		{
 			set
 			{
-				if (value < MIN_HEALTH)
-				{
-					_health = MIN_HEALTH;
-				}
-				else if (value > _maxHealth)
-				{
-					_health = _maxHealth;
-				}
-				else if (_health != value)
-				{
-					_health = value;
-				}
-				UpdateRemainingHealth(_health);
+				Progress = value / _maxHealth;
 			}
 		}
 
@@ -65,11 +51,6 @@ namespace BattleCruisers.UI
 			_maxHealth = maxHealth;
 		}
 
-		private void UpdateRemainingHealth(float health)
-		{
-			UpdateProgress(health / _maxHealth);
-		}
-		
 		private void UpdateProgress(float progress)
 		{
 			RectTransform newHealth = (RectTransform)remainingHealth.transform;
