@@ -40,8 +40,8 @@ namespace BattleCruisers.Buildables
 			buildable.BuildableProgress -= Buildable_BuildableProgress;
 			buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
 			buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
-			
-			Destroy(gameObject);
+
+			image.enabled = false;
 		}
 	}
 }
