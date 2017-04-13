@@ -56,5 +56,21 @@ namespace BattleCruisers.UI
 			RectTransform newHealth = (RectTransform)remainingHealth.transform;
 			newHealth.sizeDelta = new Vector2(progress * _outlineWidth, newHealth.sizeDelta.y);
 		}
+
+		public void Show()
+		{
+			EnableImages(true);
+		}
+
+		public void Hide()
+		{
+			EnableImages(false);
+		}
+		
+		private void EnableImages(bool enabled)
+		{
+			healthBarOutline.enabled = enabled;
+			remainingHealth.enabled = enabled;
+		}
 	}
 }

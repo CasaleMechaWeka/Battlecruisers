@@ -123,6 +123,7 @@ namespace BattleCruisers.Buildables
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
 			healthBar.Initialise(health);
+			healthBar.Hide();
 
 			OnAwake();
 		}
@@ -249,6 +250,7 @@ namespace BattleCruisers.Buildables
 		{
 			base.TakeDamage(damageAmount);
 			healthBar.Health = health;
+			healthBar.Show();
 		}
 	}
 }
