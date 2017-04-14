@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,9 +46,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Vector2 FindShellVelocity(float angleInDegrees, Direction fireDirection)
 		{
 			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-			float xMultipler = fireDirection == Direction.Right ? 1 : -1;
-			float velocityX = (float)(_shellStats.VelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
-			float velocityY = (float)(_shellStats.VelocityInMPerS * Math.Sin(angleInRadians));
+
+			float xComponentMultiplier = Mathf.Cos(angleInRadians);
+			float yComponentMultiplier = Mathf.Sin(angleInRadians);
+
+			float velocityX = _shellStats.VelocityInMPerS * xComponentMultiplier;
+			float velocityY = _shellStats.VelocityInMPerS * yComponentMultiplier;
+
+			Logging.Log(Tags.SHELL_SPAWNER, $"xComponentMultiplier: {xComponentMultiplier}  yComponentMultiplier: {yComponentMultiplier}  velocityX: {velocityX}  velocityY: {velocityY}");
+
 			return new Vector2(velocityX, velocityY);
 		}
 	}

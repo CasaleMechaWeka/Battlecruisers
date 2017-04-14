@@ -8,14 +8,31 @@ namespace BattleCruisers.TestScenes
 {
 	public class TurretBarrelControllerTests : MonoBehaviour 
 	{
-		public TurretBarrelController barrel1;
-		public GameObject target1;
+		public GameObject target;
+
+		public TurretBarrelController barrelBelowToLeft;
+		public TurretBarrelController barrelBelowToRight;
+		public TurretBarrelController barrelAboveToLeft;
+		public TurretBarrelController barrelAboveToRight;
+
+		public TurretBarrelController barrelBelowToLeftMirroed;
+		public TurretBarrelController barrelBelowToRightMirroed;
+		public TurretBarrelController barrelAboveToLeftMirroed;
+		public TurretBarrelController barrelAboveToRightMirroed;
 
 		void Start () 
 		{
 			Logging.Initialise();
 
-			barrel1.Target = target1;
+			barrelBelowToLeft.Target = target;
+			barrelBelowToRight.Target = target;
+			barrelAboveToLeft.Target = target;
+			barrelAboveToRight.Target = target;
+
+			barrelBelowToLeftMirroed.Target = target;
+			barrelBelowToRightMirroed.Target = target;
+			barrelAboveToLeftMirroed.Target = target;
+			barrelAboveToRightMirroed.Target = target;
 		}
 	}
 }

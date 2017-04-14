@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
@@ -27,7 +28,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public GameObject Target { get; set; }
 
 		// FELIX  Add this rotate speed to turret stats
-		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
+		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 90;
+//		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 25;
+//		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
 		void Awake()
@@ -57,20 +60,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			if (Target != null)
 			{
-				float desiredAngleInRadians = FindDesiredAngle();
+				float desiredAngleInDegrees = FindDesiredAngle();
 
-				bool isOnTarget = MoveBarrelToAngle(desiredAngleInRadians);
+				bool isOnTarget = MoveBarrelToAngle(desiredAngleInDegrees);
 
 				_timeSinceLastFireInS += Time.deltaTime;
 
 				if (isOnTarget && _timeSinceLastFireInS >= turretStats.FireIntervalInS)
 				{
-					Fire(desiredAngleInRadians);
+					Fire(desiredAngleInDegrees);
 					_timeSinceLastFireInS = 0;
 				}
 			}
 		}
-		
+
+		// FELIX  Unit test!
 		/// <summary>
 		/// Assumes:
 		/// 1. Shells are not affected by gravity
@@ -78,14 +82,72 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// </summary>
 		protected virtual float FindDesiredAngle()
 		{
-			float xDiff = transform.position.x - Target.transform.position.x;
-			float yDiff = transform.position.y - Target.transform.position.y;
-			float angleInRadians = (float) Math.Atan(yDiff / xDiff);
-			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
+			Vector2 source = new Vector2(transform.position.x, transform.position.y);
+			Vector2 target = new Vector2(Target.transform.position.x, Target.transform.position.y);
 
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"FindDesiredAngle() {angleInRadians} radians  {angleInDegrees}*");
+			bool isSourceMirrored = transform.rotation.eulerAngles.y == 180;
 
-			return angleInDegrees;
+			Assert.AreNotEqual(source, target);
+
+			float desiredAngleInDegrees;
+
+			if (source.x == target.x)
+			{
+				// On same x-axis
+				desiredAngleInDegrees = source.y < target.y ? 90 : -90;
+			}
+			else if (source.y == target.y)
+			{
+				// On same y-axis
+				if (source.x < target.x)
+				{
+					desiredAngleInDegrees = isSourceMirrored ? 180 : 0;
+				}
+				else
+				{
+					desiredAngleInDegrees = isSourceMirrored ? 0 : 180;
+				}
+			}
+			else
+			{
+				float xDiff = Math.Abs(source.x - target.x);
+				float yDiff = Math.Abs(source.y - target.y);
+				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
+
+				// Different x and y axes, so need to calculate the angle
+				if (source.x < target.y)
+				{
+					// Source is to left of target
+					if (source.y < target.y)
+					{
+						// Source is below target
+						desiredAngleInDegrees = isSourceMirrored ? 180 - angleInDegrees : angleInDegrees;
+					}
+					else
+					{
+						// Source is above target
+						desiredAngleInDegrees = isSourceMirrored ? 180 + angleInDegrees : 360 - angleInDegrees;
+					}
+				}
+				else
+				{
+					// Source is to right of target
+					if (source.y < target.y)
+					{
+						// Source is below target
+						desiredAngleInDegrees = isSourceMirrored ? angleInDegrees : 180 - angleInDegrees;
+					}
+					else
+					{
+						// Source is above target
+						desiredAngleInDegrees = isSourceMirrored ? 360 - angleInDegrees : 180 + angleInDegrees;
+					}
+				}
+			}
+
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"FindDesiredAngle() {desiredAngleInDegrees}*");
+
+			return desiredAngleInDegrees;
 		}
 
 		private bool MoveBarrelToAngle(float desiredAngleInDegrees)
@@ -111,6 +173,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		
 		private void Fire(float angleInDegrees)
 		{
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Fire()");
+
 			Direction fireDirection = Target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
 			shellSpawner.SpawnShell(angleInDegrees, fireDirection);
 		}
