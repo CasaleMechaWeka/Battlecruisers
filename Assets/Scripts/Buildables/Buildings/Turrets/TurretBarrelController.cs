@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
 
-		public GameObject Target { protected get; set; }
+		public GameObject Target { get; set; }
 
 		// FELIX  Add this rotate speed to turret stats
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;

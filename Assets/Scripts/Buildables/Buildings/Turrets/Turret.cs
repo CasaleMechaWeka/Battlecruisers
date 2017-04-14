@@ -17,8 +17,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Renderer _turretBarrelRenderer;
 
 		public GameObject turretBase;
-		public TurretBarrelController turretBarrelController;
 		public GameObject turretBarrel;
+		public TurretBarrelController turretBarrelController;
 
 		protected override Renderer Renderer
 		{

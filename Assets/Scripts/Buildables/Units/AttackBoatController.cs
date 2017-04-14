@@ -23,31 +23,32 @@ namespace BattleCruisers.Buildables.Units
 	/// 	enemy, in which case this boat will continue moving.
 	/// </summary>
 	public class AttackBoatController : Unit
-	//public class AttackBoatController : MonoBehaviour, IDetectorControllerListener
 	{
 		private Rigidbody2D _rigidBody;
-		private float _fireDelayInS = 0.25f; // The amount of time before firing starts.
-		private FactionObject _enemyUnit;
-		private FactionObject _blockingFriendlyUnit;
 		private int _directionMultiplier;
-		private ShellStats _shellStats;
-
+		private FactionObject _blockingFriendlyUnit;
+		
 		public FactionObjectDetector enemyDetector;
 		public FactionObjectDetector friendDetector;
-		// FELIX  Allow to vary depending on boat?
-		public Rigidbody2D shellPrefab;
-		public ShellSpawnerController shellSpawner;
-		public TurretStats turretStats;
+		public TurretBarrelController turretBarrelController;
 
-		public override float Damage { get { return turretStats.DamagePerS; } }
+		public override float Damage { get { return turretBarrelController.turretStats.DamagePerS; } }
+
+		private FactionObject _enemyUnit;
+		private FactionObject EnemyUnit
+		{
+			get { return _enemyUnit; }
+			set
+			{
+				_enemyUnit = value;
+				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
+			}
+		}
 
 		void Start() 
 		{
 			_rigidBody = GetComponent<Rigidbody2D>();
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
-
-			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_shellStats);
 
 			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
 			enemyDetector.OnEntered = OnEnemyEntered;
@@ -70,48 +71,27 @@ namespace BattleCruisers.Buildables.Units
 
 			if (BuildableState == BuildableState.Completed 
 				&& _rigidBody.velocity.x == 0
-				&& _enemyUnit == null
+				&& EnemyUnit == null
 				&& _blockingFriendlyUnit == null)
 			{
 				StartMoving();
 			}
 		}
 
-		private void StopAttacking()
-		{
-			Logging.Log(Tags.ATTACK_BOAT, "StopAttacking()");
-			CancelInvoke("Attack");
-		}
-
 		private void OnEnemyEntered(FactionObject enemy)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
 
-			_enemyUnit = enemy;
-			_enemyUnit.Destroyed += EnemyUnit_Destroyed;
+			EnemyUnit = enemy;
+			EnemyUnit.Destroyed += EnemyUnit_Destroyed;
 			StopMoving();
-			StartAttacking();
 		}
 
 		// FELIX  Attack other in range unit?
 		private void EnemyUnit_Destroyed(object sender, EventArgs e)
 		{
-			_enemyUnit.Destroyed -= EnemyUnit_Destroyed;
-			StopAttacking();
-			_enemyUnit = null;
-		}
-
-		private void StartAttacking()
-		{
-			Logging.Log(Tags.ATTACK_BOAT, "StartAttacking()");
-			InvokeRepeating("Attack", _fireDelayInS, turretStats.FireIntervalInS);
-		}
-
-		private void Attack()
-		{
-			// FELIX Find angle instead of hardcoding
-			float desiredAngle = 0;
-			shellSpawner.SpawnShell(desiredAngle, facingDirection);
+			EnemyUnit.Destroyed -= EnemyUnit_Destroyed;
+			EnemyUnit = null;
 		}
 
 		private void OnFriendEntered(FactionObject friend)
