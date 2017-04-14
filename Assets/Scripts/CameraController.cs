@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers
 {
@@ -87,7 +88,7 @@ namespace BattleCruisers
 				_cameraState != CameraState.InTransition
 			    && _cameraState != targetState;
 
-			Debug.Log($"MoveCamera targetState: {targetState}  willMoveCamera: {willMoveCamera}  _cameraState: {_cameraState}");
+			Logging.Log(Tags.CAMERA_CONTROLLER, $"MoveCamera targetState: {targetState}  willMoveCamera: {willMoveCamera}  _cameraState: {_cameraState}");
 
 			if (willMoveCamera)
 			{
@@ -150,7 +151,7 @@ namespace BattleCruisers
 				else if (transform.position != _cameraPositionTarget)
 				{
 					transform.position = _cameraPositionTarget;
-					Debug.Log("CameraController position done");
+					Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController position done");
 				}
 
 				// Camera zoom
@@ -162,7 +163,7 @@ namespace BattleCruisers
 				else if (Camera.main.orthographicSize != _cameraOrthographicSizeTarget)
 				{
 					Camera.main.orthographicSize = _cameraOrthographicSizeTarget;
-					Debug.Log("CameraController zoom done");
+					Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController zoom done");
 				}
 
 				// Camera state
