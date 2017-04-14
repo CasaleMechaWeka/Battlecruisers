@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_shellStats = shellStats;
 		}
 
-		public void SpawnShell(float angleInRadians, Direction fireDirection)
+		public void SpawnShell(float angleInDegrees, Direction fireDirection)
 		{
 			Rigidbody2D shell = Instantiate<Rigidbody2D>(_shellStats.ShellPrefab, transform.position, new Quaternion());
 			if (_shellStats.IgnoreGravity)
@@ -39,11 +39,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				shell.gravityScale = 0;
 			}
 			shell.GetComponent<IShellController>().Damage = _shellStats.Damage;
-			shell.velocity = FindShellVelocity(angleInRadians, fireDirection);
+			shell.velocity = FindShellVelocity(angleInDegrees, fireDirection);
 		}
 
-		private Vector2 FindShellVelocity(float angleInRadians, Direction fireDirection)
+		private Vector2 FindShellVelocity(float angleInDegrees, Direction fireDirection)
 		{
+			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
 			float xMultipler = fireDirection == Direction.Right ? 1 : -1;
 			float velocityX = (float)(_shellStats.VelocityInMPerS * Math.Cos(angleInRadians)) * xMultipler;
 			float velocityY = (float)(_shellStats.VelocityInMPerS * Math.Sin(angleInRadians));

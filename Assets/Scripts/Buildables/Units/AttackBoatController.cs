@@ -32,7 +32,13 @@ namespace BattleCruisers.Buildables.Units
 		public FactionObjectDetector friendDetector;
 		public TurretBarrelController turretBarrelController;
 
-		public override float Damage { get { return turretBarrelController.turretStats.DamagePerS; } }
+		public override float Damage 
+		{ 
+			get 
+			{ 
+				return turretBarrelController.turretStats.DamagePerS; 
+			} 
+		}
 
 		private FactionObject _enemyUnit;
 		private FactionObject EnemyUnit
@@ -41,7 +47,8 @@ namespace BattleCruisers.Buildables.Units
 			set
 			{
 				_enemyUnit = value;
-				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
+				// FELIX
+//				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
 			}
 		}
 

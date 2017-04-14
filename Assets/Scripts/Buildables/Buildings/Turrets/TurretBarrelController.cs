@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		// FELIX  Add this rotate speed to turret stats
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
-		private const float ROTATION_EQUALITY_MARGIN_IN_RADIANS = 0.01f;
+		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
 		void Awake()
 		{
@@ -78,33 +78,41 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// </summary>
 		protected virtual float FindDesiredAngle()
 		{
-			// FELIX  This is wrong :P  Find angle for direct fire from shell spawner to target
-			float desiredAngle = Target.transform.rotation.z;
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"TurretBarrelController.FindDesiredAngle() {desiredAngle}");
-			return desiredAngle;
+			float xDiff = transform.position.x - Target.transform.position.x;
+			float yDiff = transform.position.y - Target.transform.position.y;
+			float angleInRadians = (float) Math.Atan(yDiff / xDiff);
+			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
+
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"FindDesiredAngle() {angleInRadians} radians  {angleInDegrees}*");
+
+			return angleInDegrees;
 		}
 
-		private bool MoveBarrelToAngle(float desiredAngleInRadians)
+		private bool MoveBarrelToAngle(float desiredAngleInDegrees)
 		{
-			float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-			bool isCorrectAngle = Math.Abs(currentAngleInRadians - desiredAngleInRadians) < ROTATION_EQUALITY_MARGIN_IN_RADIANS;
+			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
+			bool isCorrectAngle = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees) < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 			
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"Update():  currentAngleInRadians: {currentAngleInRadians}  DesiredAngleInRadians: {desiredAngleInRadians}  isCorrectAngle: {isCorrectAngle}");
+			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"MoveBarrelToAngle():  currentAngleInDegrees: {currentAngleInDegrees}  desiredAngleInDegrees: {desiredAngleInDegrees}  isCorrectAngle: {isCorrectAngle}");
 			
 			if (!isCorrectAngle)
 			{
-				float directionMultiplier = transform.rotation.z > desiredAngleInRadians ? -1 : 1;
+				float directionMultiplier = transform.rotation.eulerAngles.z > desiredAngleInDegrees ? -1 : 1;
+				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"directionMultiplier: {directionMultiplier}");
+
 				Vector3 rotationIncrement = Vector3.forward * Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S * directionMultiplier;
+				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"rotationIncrement: {rotationIncrement}");
+
 				transform.Rotate(rotationIncrement);
 			}
 
 			return isCorrectAngle;
 		}
 		
-		private void Fire(float angleInRadians)
+		private void Fire(float angleInDegrees)
 		{
 			Direction fireDirection = Target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
-			shellSpawner.SpawnShell(angleInRadians, fireDirection);
+			shellSpawner.SpawnShell(angleInDegrees, fireDirection);
 		}
 	}
 }

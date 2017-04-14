@@ -27,7 +27,7 @@ namespace BattleCruisers.Utils
 			_tagsToActiveness.Add(Tags.AI, false);
 			_tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-			_tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
+			_tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, true);
 			_tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 		}
 
