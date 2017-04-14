@@ -26,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public TurretStats turretStats;
 
 		public GameObject Target { get; set; }
+		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
 		// FELIX  Add this rotate speed to turret stats
 		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 90;
@@ -60,7 +61,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			if (Target != null)
 			{
-				float desiredAngleInDegrees = FindDesiredAngle();
+				Vector2 source = new Vector2(transform.position.x, transform.position.y);
+				Vector2 target = new Vector2(Target.transform.position.x, Target.transform.position.y);
+				
+				float desiredAngleInDegrees = FindDesiredAngle(source, target, IsSourceMirrored);
 
 				bool isOnTarget = MoveBarrelToAngle(desiredAngleInDegrees);
 
@@ -80,13 +84,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// 1. Shells are not affected by gravity
 		/// 2. Targets do not move
 		/// </summary>
-		protected virtual float FindDesiredAngle()
+		protected virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored)
 		{
-			Vector2 source = new Vector2(transform.position.x, transform.position.y);
-			Vector2 target = new Vector2(Target.transform.position.x, Target.transform.position.y);
-
-			bool isSourceMirrored = transform.rotation.eulerAngles.y == 180;
-
 			Assert.AreNotEqual(source, target);
 
 			float desiredAngleInDegrees;
@@ -175,8 +174,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Fire()");
 
-			Direction fireDirection = Target.transform.position.x > transform.position.x ? Direction.Right : Direction.Left;
-			shellSpawner.SpawnShell(angleInDegrees, fireDirection);
+			shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
 		}
 	}
 }

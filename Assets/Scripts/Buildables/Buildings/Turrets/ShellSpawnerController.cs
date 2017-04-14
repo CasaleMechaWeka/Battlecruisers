@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_shellStats = shellStats;
 		}
 
-		public void SpawnShell(float angleInDegrees, Direction fireDirection)
+		public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
 		{
 			Rigidbody2D shell = Instantiate<Rigidbody2D>(_shellStats.ShellPrefab, transform.position, new Quaternion());
 			if (_shellStats.IgnoreGravity)
@@ -40,20 +40,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				shell.gravityScale = 0;
 			}
 			shell.GetComponent<IShellController>().Damage = _shellStats.Damage;
-			shell.velocity = FindShellVelocity(angleInDegrees, fireDirection);
+			shell.velocity = FindShellVelocity(angleInDegrees, isSourceMirrored);
 		}
 
-		private Vector2 FindShellVelocity(float angleInDegrees, Direction fireDirection)
+		private Vector2 FindShellVelocity(float angleInDegrees, bool isSourceMirrored)
 		{
 			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
 
-			float xComponentMultiplier = Mathf.Cos(angleInRadians);
-			float yComponentMultiplier = Mathf.Sin(angleInRadians);
+			int xDirectionMultiplier = isSourceMirrored ? -1 : 1;
 
-			float velocityX = _shellStats.VelocityInMPerS * xComponentMultiplier;
-			float velocityY = _shellStats.VelocityInMPerS * yComponentMultiplier;
+			float velocityX = _shellStats.VelocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
+			float velocityY = _shellStats.VelocityInMPerS * Mathf.Sin(angleInRadians);
 
-			Logging.Log(Tags.SHELL_SPAWNER, $"xComponentMultiplier: {xComponentMultiplier}  yComponentMultiplier: {yComponentMultiplier}  velocityX: {velocityX}  velocityY: {velocityY}");
+			Logging.Log(Tags.SHELL_SPAWNER, $"angleInDegrees: {angleInDegrees}  isSourceMirrored: {isSourceMirrored}  =>  velocityX: {velocityX}  velocityY: {velocityY}");
 
 			return new Vector2(velocityX, velocityY);
 		}

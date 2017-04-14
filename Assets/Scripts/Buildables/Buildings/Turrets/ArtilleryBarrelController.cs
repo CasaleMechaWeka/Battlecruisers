@@ -16,7 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// <summary>
 		/// Assumes no y axis difference in source and target
 		/// </summary>
-		protected override float FindDesiredAngle()
+
+		// FELIX  Update
+		protected override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored)
 		{
 			float distanceInM = Math.Abs(transform.position.x - Target.transform.position.x);
 			if (distanceInM > _maxRange)
