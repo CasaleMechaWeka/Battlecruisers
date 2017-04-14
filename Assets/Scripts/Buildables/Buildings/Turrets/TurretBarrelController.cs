@@ -145,26 +145,31 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"FindDesiredAngle() {desiredAngleInDegrees}*");
-
 			return desiredAngleInDegrees;
 		}
 
 		private bool MoveBarrelToAngle(float desiredAngleInDegrees)
 		{
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
-			bool isCorrectAngle = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees) < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
-			
+			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+			bool isCorrectAngle = differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"MoveBarrelToAngle():  currentAngleInDegrees: {currentAngleInDegrees}  desiredAngleInDegrees: {desiredAngleInDegrees}  isCorrectAngle: {isCorrectAngle}");
 			
 			if (!isCorrectAngle)
 			{
-				float directionMultiplier = transform.rotation.eulerAngles.z > desiredAngleInDegrees ? -1 : 1;
-				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"directionMultiplier: {directionMultiplier}");
+				float remainder = (currentAngleInDegrees + 180) % 360;
+				float directionMultiplier = remainder > desiredAngleInDegrees ? 1 : -1;
+				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"desiredAngleInDegrees: {desiredAngleInDegrees}  remainder: {remainder}  directionMultiplier: {directionMultiplier}");
 
-				Vector3 rotationIncrement = Vector3.forward * Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S * directionMultiplier;
+				float rotationIncrement = Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S;
+				if (rotationIncrement > differenceInDegrees)
+				{
+					rotationIncrement = differenceInDegrees;
+				}
+				Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
 				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"rotationIncrement: {rotationIncrement}");
 
-				transform.Rotate(rotationIncrement);
+				transform.Rotate(rotationIncrementVector);
 			}
 
 			return isCorrectAngle;
@@ -173,7 +178,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private void Fire(float angleInDegrees)
 		{
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Fire()");
-
 			shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
 		}
 	}
