@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
@@ -22,14 +21,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		/// </summary>
 		public virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{
-			Assert.AreNotEqual(source, target);
+			if (source == target)
+			{
+				throw new ArgumentException();
+			}
 
 			float desiredAngleInDegrees;
 
 			if (source.x == target.x)
 			{
 				// On same x-axis
-				desiredAngleInDegrees = source.y < target.y ? 90 : -90;
+				desiredAngleInDegrees = source.y < target.y ? 90 : 270;
 			}
 			else if (source.y == target.y)
 			{
