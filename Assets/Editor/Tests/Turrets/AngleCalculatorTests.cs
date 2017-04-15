@@ -22,9 +22,10 @@ namespace BattleCruisers.Tests.Turrets
 			Logging.Initialise();
 		}
 
+		#region FindDesiredAngle
 		[ExpectedException(typeof(ArgumentException))]
 		[Test]
-		public void SourceIsTarget()
+		public void FindDesiredAngle_SourceIsTarget()
 		{
 			Vector2 point = new Vector2();
 			_angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1);
@@ -32,56 +33,56 @@ namespace BattleCruisers.Tests.Turrets
 
 		#region Same axis
 		[Test]
-		public void SameX_SourceIsBelow()
+		public void FindDesiredAngle_SameX_SourceIsBelow()
 		{
 			Vector2 source = new Vector2(0, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 90);
 		}
 
 		[Test]
-		public void SameX_SourceIsBelow_Mirrored()
+		public void FindDesiredAngle_SameX_SourceIsBelow_Mirrored()
 		{
 			Vector2 source = new Vector2(0, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 90);
 		}
 
 		[Test]
-		public void SameX_SourceIsAbove()
+		public void FindDesiredAngle_SameX_SourceIsAbove()
 		{
 			Vector2 source = new Vector2(0, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 270);
 		}
 
 		[Test]
-		public void SameX_SourceIsAbove_Mirrored()
+		public void FindDesiredAngle_SameX_SourceIsAbove_Mirrored()
 		{
 			Vector2 source = new Vector2(0, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 270);
 		}
 
 		[Test]
-		public void SameY_SourceIsToLeft()
+		public void FindDesiredAngle_SameY_SourceIsToLeft()
 		{
 			Vector2 source = new Vector2(-2, 0);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 0);
 		}
 
 		[Test]
-		public void SameY_SourceIsToLeft_Mirrored()
+		public void FindDesiredAngle_SameY_SourceIsToLeft_Mirrored()
 		{
 			Vector2 source = new Vector2(-2, 0);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 180);
 		}
 
 		[Test]
-		public void SameY_SourceIsToRight()
+		public void FindDesiredAngle_SameY_SourceIsToRight()
 		{
 			Vector2 source = new Vector2(2, 0);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 180);
 		}
 
 		[Test]
-		public void SameY_SourceIsToRight_Mirrored()
+		public void FindDesiredAngle_SameY_SourceIsToRight_Mirrored()
 		{
 			Vector2 source = new Vector2(2, 0);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 0);
@@ -90,42 +91,42 @@ namespace BattleCruisers.Tests.Turrets
 
 		#region Angled
 		[Test]
-		public void Source_TopLeft() 
+		public void FindDesiredAngle_Source_TopLeft() 
 		{
 			Vector2 source = new Vector2(-2, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 315);
 		}
 
 		[Test]
-		public void Source_TopLeft_Mirrored() 
+		public void FindDesiredAngle_Source_TopLeft_Mirrored() 
 		{
 			Vector2 source = new Vector2(-2, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 225);
 		}
 
 		[Test]
-		public void Source_TopRight() 
+		public void FindDesiredAngle_Source_TopRight() 
 		{
 			Vector2 source = new Vector2(2, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 225);
 		}
 
 		[Test]
-		public void Source_TopRight_Mirrored() 
+		public void FindDesiredAngle_Source_TopRight_Mirrored() 
 		{
 			Vector2 source = new Vector2(2, 2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 315);
 		}
 
 		[Test]
-		public void Source_BottomLeft() 
+		public void FindDesiredAngle_Source_BottomLeft() 
 		{
 			Vector2 source = new Vector2(-2, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 45);
 		}
 
 		[Test]
-		public void Source_BottomLeft_Mirrored() 
+		public void FindDesiredAngle_Source_BottomLeft_Mirrored() 
 		{
 			Vector2 source = new Vector2(-2, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 135);
@@ -133,14 +134,14 @@ namespace BattleCruisers.Tests.Turrets
 
 
 		[Test]
-		public void Source_BottomRight() 
+		public void FindDesiredAngle_Source_BottomRight() 
 		{
 			Vector2 source = new Vector2(2, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 135);
 		}
 
 		[Test]
-		public void Source_BottomRight_Mirrored() 
+		public void FindDesiredAngle_Source_BottomRight_Mirrored() 
 		{
 			Vector2 source = new Vector2(2, -2);
 			TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 45);
@@ -152,5 +153,58 @@ namespace BattleCruisers.Tests.Turrets
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1);
 			Assert.AreEqual(expectedAngleInDegrees, angleInDegrees);
 		}
+		#endregion FindDesiredAngle
+	
+		#region FindDirectionMultiplier
+		[Test]
+		public void FindDirectionMultiplier_OnTarget()
+		{
+			float currentAngleInDegrees = 0;
+			float targetAngleInDegrees = 0;
+			 
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, targetAngleInDegrees);
+			Assert.AreEqual(0, directionMultiplier);
+		}
+
+		[Test]
+		public void FindDirectionMultiplier_TtoS_LessThan180()
+		{
+			float currentAngleInDegrees = 0;
+			float targetAngleInDegrees = 170;
+
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, targetAngleInDegrees);
+			Assert.AreEqual(1, directionMultiplier);
+		}
+
+		[Test]
+		public void FindDirectionMultiplier_StoT_LessThan180()
+		{
+			float currentAngleInDegrees = 170;
+			float targetAngleInDegrees = 0;
+
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, targetAngleInDegrees);
+			Assert.AreEqual(-1, directionMultiplier);
+		}
+
+		[Test]
+		public void FindDirectionMultiplier_TtoS_MoreThan180()
+		{
+			float currentAngleInDegrees = 0;
+			float targetAngleInDegrees = 190;
+
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, targetAngleInDegrees);
+			Assert.AreEqual(-1, directionMultiplier);
+		}
+
+		[Test]
+		public void FindDirectionMultiplier_StoT_MoreThan180()
+		{
+			float currentAngleInDegrees = 190;
+			float targetAngleInDegrees = 0;
+
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, targetAngleInDegrees);
+			Assert.AreEqual(1, directionMultiplier);
+		}
+		#endregion FindDirectionMultiplier
 	}
 }
