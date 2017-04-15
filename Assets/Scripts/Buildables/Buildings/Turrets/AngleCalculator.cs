@@ -9,6 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	public interface IAngleCalculator
 	{
 		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS);
+		float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees);
 	}
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
@@ -83,6 +84,29 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"AngleCalculator.FindDesiredAngle() {desiredAngleInDegrees}*");
 			return desiredAngleInDegrees;
+		}
+
+		/// <returns>
+		/// 1 if it is shorter to rotate anti-clockwise, -1 if it is shorter to rotate clockwise, 
+		/// 0 if the desired angle is the same as the current angle.
+		/// </returns>
+		public virtual float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees)
+		{
+			if (currentAngleInDegrees == desiredAngleInDegrees)
+			{
+				return 0;
+			}
+
+			float distance = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+
+			if (desiredAngleInDegrees > currentAngleInDegrees)
+			{
+				return distance < 180 ? 1 : -1;
+			}
+			else
+			{
+				return distance < 180 ? -1 : 1;
+			}
 		}
 	}
 }

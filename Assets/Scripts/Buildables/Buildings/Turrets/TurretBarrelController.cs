@@ -67,9 +67,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			
 			if (!isCorrectAngle)
 			{
-				float remainder = (currentAngleInDegrees + 180) % 360;
-				float directionMultiplier = remainder > desiredAngleInDegrees ? 1 : -1;
-				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"desiredAngleInDegrees: {desiredAngleInDegrees}  remainder: {remainder}  directionMultiplier: {directionMultiplier}");
+				float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
+				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"directionMultiplier: {directionMultiplier}");
 
 				float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
 				if (rotationIncrement > differenceInDegrees)
