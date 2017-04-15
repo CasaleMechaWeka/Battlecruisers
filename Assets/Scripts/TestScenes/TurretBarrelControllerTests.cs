@@ -20,7 +20,7 @@ namespace BattleCruisers.TestScenes
 		public TurretBarrelController barrelAboveToLeftMirroed;
 		public TurretBarrelController barrelAboveToRightMirroed;
 
-		void Start () 
+		void Start()
 		{
 			Logging.Initialise();
 
