@@ -8,12 +8,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public interface IAngleCalculator
 	{
-		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored);
+		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS);
 	}
 
-	public class AngleCalculator : MonoBehaviour 
+	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
-		// FELIX  Unit test!
 		/// <summary>
 		/// Assumes:
 		/// 1. Shells are NOT affected by gravity

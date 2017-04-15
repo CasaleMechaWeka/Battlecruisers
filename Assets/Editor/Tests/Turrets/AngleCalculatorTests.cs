@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Turrets
 {
 	public class AngleCalculatorTests 
 	{
-		private AngleCalculator _angleCalculator;
+		private IAngleCalculator _angleCalculator;
 		private Vector2 _target;
 
 		[SetUp]
