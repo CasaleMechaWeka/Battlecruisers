@@ -18,12 +18,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		private float _timeSinceLastFireInS;
 		private ShellStats _shellStats;
-		protected float _maxRange;
 
 		// FELIX  Allow to vary depending on artillery?  Perhaps also part of TurretStats?
 		public Rigidbody2D shellPrefab;
 		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
+		public AngleCalculator angleCalculator;
 
 		public GameObject Target { get; set; }
 		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
@@ -36,27 +36,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		void Awake()
 		{
-			_maxRange = FindMaxRange(turretStats.bulletVelocityInMPerS);
 			_timeSinceLastFireInS = float.MaxValue;
 			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_shellStats);
 		}
 		
-		/// <summary>
-		/// Assumes no y axis difference in source and target
-		/// </summary>
-		private float FindMaxRange(float velocityInMPerS)
-		{
-			if (turretStats.ignoreGravity)
-			{
-				return float.MaxValue;
-			}
-			else
-			{
-				return (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
-			}
-		}
-
 		void Update()
 		{
 			if (Target != null)
@@ -64,7 +48,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				Vector2 source = new Vector2(transform.position.x, transform.position.y);
 				Vector2 target = new Vector2(Target.transform.position.x, Target.transform.position.y);
 				
-				float desiredAngleInDegrees = FindDesiredAngle(source, target, IsSourceMirrored);
+				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(source, target, IsSourceMirrored, turretStats.bulletVelocityInMPerS);
 
 				bool isOnTarget = MoveBarrelToAngle(desiredAngleInDegrees);
 
@@ -76,76 +60,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 					_timeSinceLastFireInS = 0;
 				}
 			}
-		}
-
-		// FELIX  Unit test!
-		/// <summary>
-		/// Assumes:
-		/// 1. Shells are not affected by gravity
-		/// 2. Targets do not move
-		/// </summary>
-		protected virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored)
-		{
-			Assert.AreNotEqual(source, target);
-
-			float desiredAngleInDegrees;
-
-			if (source.x == target.x)
-			{
-				// On same x-axis
-				desiredAngleInDegrees = source.y < target.y ? 90 : -90;
-			}
-			else if (source.y == target.y)
-			{
-				// On same y-axis
-				if (source.x < target.x)
-				{
-					desiredAngleInDegrees = isSourceMirrored ? 180 : 0;
-				}
-				else
-				{
-					desiredAngleInDegrees = isSourceMirrored ? 0 : 180;
-				}
-			}
-			else
-			{
-				float xDiff = Math.Abs(source.x - target.x);
-				float yDiff = Math.Abs(source.y - target.y);
-				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
-
-				// Different x and y axes, so need to calculate the angle
-				if (source.x < target.y)
-				{
-					// Source is to left of target
-					if (source.y < target.y)
-					{
-						// Source is below target
-						desiredAngleInDegrees = isSourceMirrored ? 180 - angleInDegrees : angleInDegrees;
-					}
-					else
-					{
-						// Source is above target
-						desiredAngleInDegrees = isSourceMirrored ? 180 + angleInDegrees : 360 - angleInDegrees;
-					}
-				}
-				else
-				{
-					// Source is to right of target
-					if (source.y < target.y)
-					{
-						// Source is below target
-						desiredAngleInDegrees = isSourceMirrored ? angleInDegrees : 180 - angleInDegrees;
-					}
-					else
-					{
-						// Source is above target
-						desiredAngleInDegrees = isSourceMirrored ? 360 - angleInDegrees : 180 + angleInDegrees;
-					}
-				}
-			}
-
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"FindDesiredAngle() {desiredAngleInDegrees}*");
-			return desiredAngleInDegrees;
 		}
 
 		private bool MoveBarrelToAngle(float desiredAngleInDegrees)
