@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public float bulletVelocityInMPerS;
 		public bool ignoreGravity;
 		public float rangeInM;
+		public float turretRotateSpeedInDegrees;
 
 		public float DamagePerS { get { return damage * fireRatePerS; } }
 		public float FireIntervalInS { get { return 1 / fireRatePerS; } }
@@ -24,6 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsTrue(damage > 0);
 			Assert.IsTrue(bulletVelocityInMPerS > 0);
 			Assert.IsTrue(rangeInM > 0);
+			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
 		}
 	}
 }

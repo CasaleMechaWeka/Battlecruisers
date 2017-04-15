@@ -28,10 +28,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public GameObject Target { get; set; }
 		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
-		// FELIX  Add this rotate speed to turret stats
-		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 90;
-//		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 25;
-//		private const float ROTATE_SPEED_IN_DEGREES_PER_S = 5;
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
 		void Awake()
@@ -75,7 +71,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				float directionMultiplier = remainder > desiredAngleInDegrees ? 1 : -1;
 				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"desiredAngleInDegrees: {desiredAngleInDegrees}  remainder: {remainder}  directionMultiplier: {directionMultiplier}");
 
-				float rotationIncrement = Time.deltaTime * ROTATE_SPEED_IN_DEGREES_PER_S;
+				float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
 				if (rotationIncrement > differenceInDegrees)
 				{
 					rotationIncrement = differenceInDegrees;
