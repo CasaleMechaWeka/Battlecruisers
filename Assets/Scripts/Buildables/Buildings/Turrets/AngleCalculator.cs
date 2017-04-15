@@ -47,12 +47,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 			else
 			{
+				// Different x and y axes, so need to calculate the angle
 				float xDiff = Math.Abs(source.x - target.x);
 				float yDiff = Math.Abs(source.y - target.y);
 				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
 
-				// Different x and y axes, so need to calculate the angle
-				if (source.x < target.y)
+				if (source.x < target.x)
 				{
 					// Source is to left of target
 					if (source.y < target.y)

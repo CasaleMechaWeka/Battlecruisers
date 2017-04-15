@@ -47,8 +47,7 @@ namespace BattleCruisers.Buildables.Units
 			set
 			{
 				_enemyUnit = value;
-				// FELIX
-//				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
+				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
 			}
 		}
 
