@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class Shield : Building
+	public class ShieldController : MonoBehaviour
 	{
 		public Ring ring;
+
 		public float shieldRadiusInM;
 		public float shieldHealth;
 		public float shieldRechargeDelayInS;

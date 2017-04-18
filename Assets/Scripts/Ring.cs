@@ -16,7 +16,7 @@ namespace BattleCruisers
 
 		void Start()
 		{
-			lineRenderer.SetVertexCount(numOfPoints);
+			lineRenderer.numPositions = numOfPoints;
 			CreatePoints();
 		}
 
@@ -31,7 +31,7 @@ namespace BattleCruisers
 
 				lineRenderer.SetPosition(i, new Vector3(x, y, 0) * radiusInM);
 
-				angle += (360f / numOfPoints);
+				angle += (360f / (numOfPoints - 1));
 			}
 		}
 	}
