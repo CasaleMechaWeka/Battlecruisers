@@ -9,6 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private Ring _ring;
 
 		public LineRenderer lineRenderer;
+		public CircleCollider2D circleCollider;
 
 		public float shieldRadiusInM;
 		public float shieldHealth;
@@ -20,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		void Awake()
 		{
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
+			circleCollider.radius = shieldRadiusInM;
 		}
 
 //		public void TakeDamage(float damageAmount)

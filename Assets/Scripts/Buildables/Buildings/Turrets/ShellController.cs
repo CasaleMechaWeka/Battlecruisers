@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Debug.Log("BulletController.OnTriggerEnter2D()");
+			Logging.Log(Tags.SHELLS, "BulletController.OnTriggerEnter2D()");
 
 			IDamagable damagableObject = collider.gameObject.GetComponent<IDamagable>();
 			if (damagableObject != null)

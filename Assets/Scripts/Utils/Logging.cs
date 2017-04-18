@@ -14,6 +14,7 @@ namespace BattleCruisers.Utils
 		public const string TURRET_BARREL_CONTROLLER = "TurretBarrelController";
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string SHELL_SPAWNER = "ShellSpawner";
+		public const string SHELLS = "Shells";
 	}
 	
 	public static class Logging
@@ -28,9 +29,10 @@ namespace BattleCruisers.Utils
 			_tagsToActiveness.Add(Tags.AI, false);
 			_tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-			_tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, true);
+			_tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
 			_tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			_tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
+			_tagsToActiveness.Add(Tags.SHELLS, true);
 		}
 
 		public static void Log(string tag, string message)
