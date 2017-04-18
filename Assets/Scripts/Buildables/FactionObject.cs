@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables
 	public abstract class FactionObject : MonoBehaviour, IDamagable
 	{
 		public float health;
-		public bool IsDestroyed { get { return health <= 0; } }
+		public bool IsDestroyed { get { return health == 0; } }
 		public Faction Faction { get; protected set; }
 
 		public event EventHandler Destroyed;
