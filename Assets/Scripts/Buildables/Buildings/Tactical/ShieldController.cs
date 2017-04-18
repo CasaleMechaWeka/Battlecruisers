@@ -6,13 +6,25 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
 	public class ShieldController : MonoBehaviour
 	{
-		public Ring ring;
+		private Ring _ring;
+
+		public LineRenderer lineRenderer;
 
 		public float shieldRadiusInM;
 		public float shieldHealth;
 		public float shieldRechargeDelayInS;
 		public float shieldRechargeRatePerS;
 
+		private const int NUM_OF_POINTS_IN_RING = 100;
 
+		void Awake()
+		{
+			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
+		}
+
+//		public void TakeDamage(float damageAmount)
+//		{
+//
+//		}
 	}
 }
