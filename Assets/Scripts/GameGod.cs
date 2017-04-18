@@ -101,7 +101,7 @@ namespace BattleCruisers
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			// Tactical
 			IList<BuildingKey> tactical = new List<BuildingKey>();
-			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 
 			// Defence
 			IList<BuildingKey> defence = new List<BuildingKey>();
@@ -224,7 +224,7 @@ namespace BattleCruisers
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 //			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "Shield"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 
 			return buildOrder;
 		}
