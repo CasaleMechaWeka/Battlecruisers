@@ -26,6 +26,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		protected override void OnDestroyed()
 		{
+			base.OnDestroyed();
+
 			_droneManager.NumOfDrones -= numOfDronesProvided;
 		}
 	}

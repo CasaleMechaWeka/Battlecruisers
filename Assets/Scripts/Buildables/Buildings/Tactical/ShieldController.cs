@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class ShieldController : MonoBehaviour
+	// FELIX  Make sure building faciton is passed on to shield
+	public class ShieldController : FactionObject
 	{
 		private Ring _ring;
 
@@ -12,7 +13,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		public CircleCollider2D circleCollider;
 
 		public float shieldRadiusInM;
-		public float shieldHealth;
 		public float shieldRechargeDelayInS;
 		public float shieldRechargeRatePerS;
 
@@ -24,9 +24,15 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			circleCollider.radius = shieldRadiusInM;
 		}
 
-//		public void TakeDamage(float damageAmount)
-//		{
-//
-//		}
+		public override void TakeDamage(float damageAmount)
+		{
+			health -= damageAmount;
+
+			if (health <= 0)
+			{
+				health = 0;
+				OnDestroyed();
+			}
+		}
 	}
 }

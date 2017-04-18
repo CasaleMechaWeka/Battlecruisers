@@ -36,6 +36,7 @@ namespace BattleCruisers.Buildables
 			health -= damageAmount;
 			if (health <= 0)
 			{
+				health = 0;
 				Destroy(gameObject);
 			}
 		}
@@ -43,13 +44,14 @@ namespace BattleCruisers.Buildables
 		void OnDestroy()
 		{
 			OnDestroyed();
+		}
 
+		protected virtual void OnDestroyed() 
+		{ 
 			if (Destroyed != null)
 			{
 				Destroyed.Invoke(this, EventArgs.Empty);
 			}
 		}
-
-		protected virtual void OnDestroyed() { }
 	}
 }

@@ -10,6 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		float Damage { get; set; }
 	}
 
+	// FELIX  Turn off friendly fire?
 	public class ShellController : MonoBehaviour, IShellController
 	{
 		public float Damage { get; set; }
