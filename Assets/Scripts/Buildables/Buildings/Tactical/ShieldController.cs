@@ -31,6 +31,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			if (health <= 0)
 			{
 				health = 0;
+
+				_ring.Enabled = false;
+				circleCollider.enabled = false;
+
 				OnDestroyed();
 			}
 		}
