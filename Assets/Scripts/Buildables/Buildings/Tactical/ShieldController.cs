@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 	{
 		private Ring _ring;
 		private float _timeSinceDamageInS;
-		private float _maxHealth;
 
 		public LineRenderer lineRenderer;
 		public CircleCollider2D circleCollider;
+		public HealthBarController healthBar;
 
 		public float shieldRadiusInM;
 		public float shieldRechargeDelayInS;
@@ -24,14 +25,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		{
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
-			_maxHealth = health;
 			circleCollider.radius = shieldRadiusInM;
 		}
 
 		void Update()
 		{
 			// Eat into recharge delay
-			if (health < _maxHealth)
+			if (Health < maxHealth)
 			{
 				_timeSinceDamageInS += Time.deltaTime;
 			}
@@ -44,29 +44,19 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 					EnableShield();
 				}
 
-				health += shieldRechargeRatePerS * Time.deltaTime;
-
-				if (health > _maxHealth)
-				{
-					health = _maxHealth;
-				}
+				maxHealth += shieldRechargeRatePerS * Time.deltaTime;
 			}
+		}
+
+		protected override void OnDestroyed()
+		{
+			DisableShield();
 		}
 
 		public override void TakeDamage(float damageAmount)
 		{
-			health -= damageAmount;
-
+			base.TakeDamage(damageAmount);
 			_timeSinceDamageInS = 0;
-
-			if (health <= 0)
-			{
-				health = 0;
-
-				DisableShield();
-
-				OnDestroyed();
-			}
 		}
 
 		private void EnableShield()

@@ -122,7 +122,7 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
-			healthBar.Initialise(health);
+			healthBar.Initialise(maxHealth);
 			healthBar.Hide();
 
 			OnAwake();
@@ -249,7 +249,7 @@ namespace BattleCruisers.Buildables
 		public override void TakeDamage(float damageAmount)
 		{
 			base.TakeDamage(damageAmount);
-			healthBar.Health = health;
+			healthBar.Health = maxHealth;
 			healthBar.Show();
 		}
 	}

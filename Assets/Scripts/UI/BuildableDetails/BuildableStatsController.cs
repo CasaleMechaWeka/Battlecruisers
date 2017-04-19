@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BuildingDetails
 		{
 			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString());
 			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.health));
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.maxHealth));
 			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(buildable.Damage));
 		}
 	}

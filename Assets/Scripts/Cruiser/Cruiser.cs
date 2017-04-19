@@ -49,7 +49,7 @@ namespace BattleCruisers.Cruisers
 			Faction = faction;
 			SetupSlots();
 			HideAllSlots();
-			healthBarController.Initialise(health);
+			healthBarController.Initialise(maxHealth);
 		}
 
 		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
@@ -139,7 +139,7 @@ namespace BattleCruisers.Cruisers
 		public override void TakeDamage(float damageAmount)
 		{
 			base.TakeDamage(damageAmount);
-			healthBarController.Health = health;
+			healthBarController.Health = maxHealth;
 		}
 
 		public Building ConstructBuilding(Building buildingPrefab, ISlot slot)
