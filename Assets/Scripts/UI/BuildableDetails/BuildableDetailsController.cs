@@ -25,6 +25,8 @@ namespace BattleCruisers.UI.BuildingDetails
 		public Image slotImage;
 		public Button deleteButton;
 		public Button toggleDroneButton;
+
+		// FELIX  Replace with progress bar script/prefab?
 		public HealthBarController healthBar;
 
 		void Start () 
@@ -85,7 +87,8 @@ namespace BattleCruisers.UI.BuildingDetails
 
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
-			healthBar.Progress = e.BuildProgress;
+			// FELIX
+//			healthBar.Progress = e.BuildProgress;
 		}
 
 		public void DeleteBuildable()

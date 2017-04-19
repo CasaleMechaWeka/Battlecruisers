@@ -53,9 +53,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			DisableShield();
 		}
 
-		public override void TakeDamage(float damageAmount)
+		protected override void OnTakeDamage()
 		{
-			base.TakeDamage(damageAmount);
 			_timeSinceDamageInS = 0;
 		}
 

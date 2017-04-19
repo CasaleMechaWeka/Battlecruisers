@@ -115,20 +115,15 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		public void Awake()
+		protected override void OnAwake()
 		{
 			buildableProgress.image.rectTransform.sizeDelta = new Vector2(Size.x, Size.y);
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
-			healthBar.Initialise(maxHealth);
-			healthBar.Hide();
-
-			OnAwake();
+			healthBar.Initialise(this);
 		}
-
-		protected virtual void OnAwake() { }
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
 		{
@@ -245,12 +240,5 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void InitiateDelete() { }
-
-		public override void TakeDamage(float damageAmount)
-		{
-			base.TakeDamage(damageAmount);
-			healthBar.Health = maxHealth;
-			healthBar.Show();
-		}
 	}
 }

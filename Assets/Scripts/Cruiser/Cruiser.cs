@@ -47,9 +47,11 @@ namespace BattleCruisers.Cruisers
 		void Start()
 		{
 			Faction = faction;
+
 			SetupSlots();
 			HideAllSlots();
-			healthBarController.Initialise(maxHealth);
+
+			healthBarController.Initialise(this);
 		}
 
 		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider)
@@ -134,12 +136,6 @@ namespace BattleCruisers.Cruisers
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			Debug.Log("Cruiser.OnPointerClick()");
-		}
-
-		public override void TakeDamage(float damageAmount)
-		{
-			base.TakeDamage(damageAmount);
-			healthBarController.Health = maxHealth;
 		}
 
 		public Building ConstructBuilding(Building buildingPrefab, ISlot slot)
