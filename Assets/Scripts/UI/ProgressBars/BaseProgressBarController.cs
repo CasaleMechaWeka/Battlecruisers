@@ -33,12 +33,6 @@ namespace BattleCruisers.UI.ProgressBars
 
 		protected void OnProgressChanged(float newProgress)
 		{
-			// FELIX
-			if (newProgress < 0 || newProgress > 1)
-			{
-				int crapsies = 12;
-			}
-
 			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
 
 			if (newProgress == 0)
@@ -85,6 +79,19 @@ namespace BattleCruisers.UI.ProgressBars
 		{
 			progressBarOutline.enabled = enabled;
 			progressSoFar.enabled = enabled;
+		}
+
+		public void UpdatePosition(Vector2 position)
+		{
+			transform.position = position;
+		}
+
+		public void UpdateSize(float width, float height)
+		{
+			Vector2 size = new Vector2(width, height);
+			progressBarOutline.rectTransform.sizeDelta = size;
+			progressSoFar.rectTransform.sizeDelta = size;
+			_outlineWidth = width;
 		}
 	}
 }

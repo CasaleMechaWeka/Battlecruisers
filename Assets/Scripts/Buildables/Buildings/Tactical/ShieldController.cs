@@ -27,6 +27,15 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
 			circleCollider.radius = shieldRadiusInM;
+
+			healthBar.Initialise(this);
+
+			float yPos = 1.2f * shieldRadiusInM;
+			healthBar.UpdatePosition(new Vector2(transform.position.x, transform.position.y + yPos));
+
+			float width = 1.6f * shieldRadiusInM;
+			float height = width / 40f;
+			healthBar.UpdateSize(width, height);
 		}
 
 		void Update()
