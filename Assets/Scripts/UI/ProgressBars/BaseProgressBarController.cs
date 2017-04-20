@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ProgressBars
 {
-	public class BaseProgressBarController : MonoBehaviour
+	public abstract class BaseProgressBarController : MonoBehaviour
 	{
 		private float _outlineWidth;
 
@@ -33,6 +33,12 @@ namespace BattleCruisers.UI.ProgressBars
 
 		protected void OnProgressChanged(float newProgress)
 		{
+			// FELIX
+			if (newProgress < 0 || newProgress > 1)
+			{
+				int crapsies = 12;
+			}
+
 			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
 
 			if (newProgress == 0)

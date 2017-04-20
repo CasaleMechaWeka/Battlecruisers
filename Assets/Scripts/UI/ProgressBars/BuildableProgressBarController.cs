@@ -10,14 +10,22 @@ namespace BattleCruisers.UI.ProgressBars
 {
 	public class BuildableProgressBarController : BaseProgressBarController
 	{
+		private Buildable _buildable;
+
 		public void Initialise(Buildable buildable)
 		{
-			buildable.BuildableProgress += Buildable_BuildableProgress;
+			_buildable = buildable;
+			_buildable.BuildableProgress += Buildable_BuildableProgress;
 		}
 
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
 			OnProgressChanged(e.BuildProgress);
+		}
+
+		public void Cleanup()
+		{
+			_buildable.BuildableProgress -= Buildable_BuildableProgress;
 		}
 	}
 }

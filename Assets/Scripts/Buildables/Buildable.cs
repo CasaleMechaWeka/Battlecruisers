@@ -192,6 +192,11 @@ namespace BattleCruisers.Buildables
 				if (BuildableProgress != null)
 				{
 					float buildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
+					if (buildProgress > 1)
+					{
+						buildProgress = 1;
+					}
+
 					BuildableProgress.Invoke(this, new BuildProgressEventArgs(buildProgress));
 				}
 
