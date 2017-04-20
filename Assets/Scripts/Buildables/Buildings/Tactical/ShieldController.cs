@@ -21,6 +21,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		public float shieldRechargeRatePerS;
 
 		private const int NUM_OF_POINTS_IN_RING = 100;
+		private const float HEALTH_BAR_Y_POSITION_MULTIPLIER = 1.2f;
+		private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
+		private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
 		protected override void OnAwake()
 		{
@@ -30,11 +33,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 			healthBar.Initialise(this);
 
-			float yPos = 1.2f * shieldRadiusInM;
+			float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * shieldRadiusInM;
 			healthBar.UpdatePosition(new Vector2(transform.position.x, transform.position.y + yPos));
 
-			float width = 1.6f * shieldRadiusInM;
-			float height = width / 40f;
+			float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * shieldRadiusInM;
+			float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
 			healthBar.UpdateSize(width, height);
 		}
 
