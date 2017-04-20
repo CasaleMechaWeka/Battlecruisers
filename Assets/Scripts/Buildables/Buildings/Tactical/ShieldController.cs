@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 		private const int NUM_OF_POINTS_IN_RING = 100;
 
-		void Awake()
+		protected override void OnAwake()
 		{
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
@@ -35,17 +35,17 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			if (Health < maxHealth)
 			{
 				_timeSinceDamageInS += Time.deltaTime;
-			}
 
-			// Heal
-			if (_timeSinceDamageInS >= shieldRechargeDelayInS)
-			{
-				if (IsDestroyed)
+				// Heal
+				if (_timeSinceDamageInS >= shieldRechargeDelayInS)
 				{
-					EnableShield();
-				}
+					if (IsDestroyed)
+					{
+						EnableShield();
+					}
 
-				maxHealth += shieldRechargeRatePerS * Time.deltaTime;
+					Repair(shieldRechargeRatePerS * Time.deltaTime);
+				}
 			}
 		}
 

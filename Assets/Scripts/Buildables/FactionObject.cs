@@ -47,7 +47,7 @@ namespace BattleCruisers.Buildables
 	public abstract class FactionObject : MonoBehaviour, IDamagable
 	{
 		public float maxHealth;
-		public bool IsDestroyed { get { return maxHealth == 0; } }
+		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
 
 		public event EventHandler Destroyed;
@@ -112,11 +112,6 @@ namespace BattleCruisers.Buildables
 
 		public void TakeDamage(float damageAmount)
 		{
-			if (Health <= 0)
-			{
-				int wtf = 12;
-			}
-
 			Assert.IsTrue(Health > 0);
 			Health -= damageAmount;
 			OnTakeDamage();
