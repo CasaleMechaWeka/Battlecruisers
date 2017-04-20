@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI.ProgressBars;
 using BattleCruisers.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,6 +81,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			if (showDroneRelatedUI)
 			{
 				toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
+				_buildable.CompletedBuildable += Buildable_CompletedBuildable;
 			}
 		}
 
@@ -95,6 +97,13 @@ namespace BattleCruisers.UI.BuildingDetails
 		public void ToggleBuildableDrones()
 		{
 			_droneManager.ToggleDroneConsumerFocus(_buildable.DroneConsumer);
+		}
+		
+		private void Buildable_CompletedBuildable(object sender, EventArgs e)
+		{
+			_buildable.CompletedBuildable -= Buildable_CompletedBuildable;
+			toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
+			toggleDroneButton.gameObject.SetActive(false);
 		}
 
 		public void Hide()
