@@ -8,84 +8,93 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI
 {
-	/// <summary>
-	/// Shows an IDamagable's health when:
-	/// 
-	/// 1. They health is not at 100%
-	/// AND
-	/// 2. Their health is not 0
-	/// 
-	/// In either of these cases the health bar is hidden.
-	/// </summary>
-	public class HealthBarController : MonoBehaviour 
+	public class HealthBarController : BaseProgressBarController
 	{
-		public Image healthBarOutline;
-		public Image remainingHealth;
-
-		private float _outlineWidth;
 		private float _maxHealth;
-
-		private bool AreImagesEnabled
-		{
-			get
-			{
-				return healthBarOutline.enabled && remainingHealth.enabled;
-			}
-		}
-
-		private const float MIN_HEALTH = 0;
-
-		void Awake()
-		{
-			_outlineWidth = ((RectTransform)healthBarOutline.transform).rect.width;
-		}
 
 		public void Initialise(IDamagable damagable)
 		{
 			_maxHealth = damagable.Health;
-
-			damagable.FullyRepaired += Damagable_FullyRepaired;
-			damagable.Destroyed += Damagable_Destroyed;
 			damagable.HealthChanged += Damagable_HealthChanged;
-
-			HideHealthBar();
-		}
-
-		private void Damagable_FullyRepaired(object sender, EventArgs e)
-		{
-			HideHealthBar();
-		}
-
-		private void Damagable_Destroyed(object sender, EventArgs e)
-		{
-			HideHealthBar();
 		}
 
 		private void Damagable_HealthChanged(object sender, HealthChangedEventArgs e)
 		{
-			if (!AreImagesEnabled && e.NewHealth != 0)
-			{
-				ShowHealthBar();
-			}
+			OnProgressChanged(e.NewHealth / _maxHealth);
+		}
+	}
 
-			RectTransform newHealth = (RectTransform)remainingHealth.transform;
-			newHealth.sizeDelta = new Vector2(e.NewHealth / _maxHealth * _outlineWidth, newHealth.sizeDelta.y);
+	public class BaseProgressBarController : MonoBehaviour
+	{
+		private float _outlineWidth;
+
+		public Image progressBarOutline;
+		public Image progressSoFar;
+		public bool hideWhenFull;
+		public float originalProgress;
+		
+		private bool AreImagesEnabled
+		{
+			get
+			{
+				return progressBarOutline.enabled && progressSoFar.enabled;
+			}
 		}
 
-		private void ShowHealthBar()
+		void Awake()
+		{
+			_outlineWidth = ((RectTransform)progressBarOutline.transform).rect.width;
+			OnProgressChanged(originalProgress);
+		}
+
+		protected void OnProgressChanged(float newProgress)
+		{
+			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
+
+			if (newProgress == 0)
+			{
+				OnProgressHitsZero();
+			}
+			else if (newProgress == 1)
+			{
+				OnProgressHitsOne();
+			}
+			else if(!AreImagesEnabled)
+			{
+				ShowProgressBar();
+			}
+			
+			RectTransform newProgressRect = (RectTransform)progressSoFar.transform;
+			newProgressRect.sizeDelta = new Vector2(newProgress * _outlineWidth, newProgressRect.sizeDelta.y);
+		}
+
+		protected virtual void OnProgressHitsZero()
+		{
+			HideProgressBar();
+		}
+
+		protected virtual void OnProgressHitsOne()
+		{
+			if (hideWhenFull)
+			{
+				HideProgressBar();
+			}
+		}
+
+		private void ShowProgressBar()
 		{
 			EnableImages(true);
 		}
 
-		private void HideHealthBar()
+		private void HideProgressBar()
 		{
 			EnableImages(false);
 		}
 
 		private void EnableImages(bool enabled)
 		{
-			healthBarOutline.enabled = enabled;
-			remainingHealth.enabled = enabled;
+			progressBarOutline.enabled = enabled;
+			progressSoFar.enabled = enabled;
 		}
 	}
 }

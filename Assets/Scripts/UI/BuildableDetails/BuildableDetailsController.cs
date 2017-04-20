@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.BuildingDetails
 			// Toggle drone button
 			bool showDroneRelatedUI = buildable.DroneConsumer != null && buildable.Faction == Faction.Blues;
 			toggleDroneButton.gameObject.SetActive(showDroneRelatedUI);
-			healthBar.gameObject.SetActive(showDroneRelatedUI);
+//			healthBar.gameObject.SetActive(showDroneRelatedUI);
 			if (showDroneRelatedUI)
 			{
 				toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
