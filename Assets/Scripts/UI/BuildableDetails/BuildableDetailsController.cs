@@ -1,13 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Drones;
+using BattleCruisers.UI.ProgressBars;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using BattleCruisers.Drones;
 
 namespace BattleCruisers.UI.BuildingDetails
 {

@@ -6,24 +6,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.ProgressBars
 {
-	public class HealthBarController : BaseProgressBarController
-	{
-		private float _maxHealth;
-
-		public void Initialise(IDamagable damagable)
-		{
-			_maxHealth = damagable.Health;
-			damagable.HealthChanged += Damagable_HealthChanged;
-		}
-
-		private void Damagable_HealthChanged(object sender, HealthChangedEventArgs e)
-		{
-			OnProgressChanged(e.NewHealth / _maxHealth);
-		}
-	}
-
 	public class BaseProgressBarController : MonoBehaviour
 	{
 		private float _outlineWidth;
@@ -32,7 +16,7 @@ namespace BattleCruisers.UI
 		public Image progressSoFar;
 		public bool hideWhenFull;
 		public float originalProgress;
-		
+
 		private bool AreImagesEnabled
 		{
 			get
@@ -63,7 +47,7 @@ namespace BattleCruisers.UI
 			{
 				ShowProgressBar();
 			}
-			
+
 			RectTransform newProgressRect = (RectTransform)progressSoFar.transform;
 			newProgressRect.sizeDelta = new Vector2(newProgress * _outlineWidth, newProgressRect.sizeDelta.y);
 		}

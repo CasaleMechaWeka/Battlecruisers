@@ -82,7 +82,7 @@ namespace BattleCruisers
 			IList<BuildingKey> buildOrder = GetBuildOrder();
 			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
 //			Invoke("StartBot", 10);
-//			Invoke("StartBot", 2);
+			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()

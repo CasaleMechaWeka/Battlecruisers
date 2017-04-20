@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BuildingDetails;
 using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.UI.ProgressBars;
 using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;

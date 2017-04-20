@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
+using BattleCruisers.UI.ProgressBars;
 using System;
 using System.Collections;
 using System.Collections.Generic;

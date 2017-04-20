@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI;
+using BattleCruisers.UI.ProgressBars;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

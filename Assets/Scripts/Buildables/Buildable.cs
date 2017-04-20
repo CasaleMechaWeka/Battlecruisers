@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
+using BattleCruisers.UI.ProgressBars;
 using System;
 using System.Collections;
 using System.Collections.Generic;
