@@ -96,7 +96,7 @@ namespace BattleCruisers
 			// Factories
 			IList<BuildingKey> factories = new List<BuildingKey>();
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-//			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
+			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			
 			// Tactical
