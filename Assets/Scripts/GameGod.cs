@@ -78,11 +78,11 @@ namespace BattleCruisers
 			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
 
 
-			// AI
-			IList<BuildingKey> buildOrder = GetBuildOrder();
-			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
-//			Invoke("StartBot", 10);
-			Invoke("StartBot", 2);
+//			// AI
+//			IList<BuildingKey> buildOrder = GetBuildOrder();
+//			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
+////			Invoke("StartBot", 10);
+//			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()
@@ -96,20 +96,20 @@ namespace BattleCruisers
 			// Factories
 			IList<BuildingKey> factories = new List<BuildingKey>();
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+//			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
+//
+//			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			// Tactical
 			IList<BuildingKey> tactical = new List<BuildingKey>();
-			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
-
+//			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
+//
 			// Defence
 			IList<BuildingKey> defence = new List<BuildingKey>();
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+//			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 
 			// Offence
 			IList<BuildingKey> offence = new List<BuildingKey>();
-			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+//			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 
 			// Support
 			IList<BuildingKey> support = new List<BuildingKey>();
@@ -122,8 +122,8 @@ namespace BattleCruisers
 
 			// Ships
 			IList<UnitKey> ships = new List<UnitKey>();
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
+//			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
+//			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			// Ultra units
 			IList<UnitKey> ultraUnits = new List<UnitKey>();

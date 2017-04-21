@@ -9,18 +9,25 @@ namespace BattleCruisers.Buildables
 {
 	public class BuildableProgressController : MonoBehaviour 
 	{
-		public Image image;
 		public Buildable buildable;
+		public Image fillableImage;
+		public Image outlineImage;
 
 		void Awake() 
 		{
-			image.fillAmount = 0;
+			fillableImage.fillAmount = 0;
 			gameObject.SetActive(false);
 
 			buildable.StartedConstruction += Buildable_StartedBuilding;
 			buildable.BuildableProgress += Buildable_BuildableProgress;
 			buildable.CompletedBuildable += Buildable_CompletedOrDestroyedBuilding;
 			buildable.Destroyed += Buildable_CompletedOrDestroyedBuilding;
+		}
+
+		public void Initialize(Vector2 size)
+		{
+			fillableImage.rectTransform.sizeDelta = new Vector2(size.x, size.y);
+			outlineImage.rectTransform.sizeDelta = new Vector2(size.x, size.y);
 		}
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
@@ -31,7 +38,7 @@ namespace BattleCruisers.Buildables
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
 			Assert.IsTrue(e.BuildProgress >= 0);
-			image.fillAmount = e.BuildProgress;
+			fillableImage.fillAmount = e.BuildProgress;
 		}
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)
@@ -41,7 +48,8 @@ namespace BattleCruisers.Buildables
 			buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
 			buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
 
-			image.enabled = false;
+			fillableImage.enabled = false;
+			outlineImage.enabled = false;
 		}
 	}
 }

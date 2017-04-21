@@ -118,12 +118,12 @@ namespace BattleCruisers.Buildables
 
 		protected override void OnAwake()
 		{
-			buildableProgress.image.rectTransform.sizeDelta = new Vector2(Size.x, Size.y);
-
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
+
 			healthBar.Initialise(this);
+			buildableProgress.Initialize(Size);
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
