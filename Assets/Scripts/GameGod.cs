@@ -109,7 +109,7 @@ namespace BattleCruisers
 
 			// Offence
 			IList<BuildingKey> offence = new List<BuildingKey>();
-//			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 
 			// Support
 			IList<BuildingKey> support = new List<BuildingKey>();
