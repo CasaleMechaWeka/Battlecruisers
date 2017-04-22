@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	// FELIX  Turn off friendly fire?
 	public class ShellController : MonoBehaviour
 	{
 		private Faction _faction;
@@ -25,10 +24,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			Logging.Log(Tags.SHELLS, "BulletController.OnTriggerEnter2D()");
 
-			IDamagable damagableObject = collider.gameObject.GetComponent<IDamagable>();
-			if (damagableObject != null)
+			FactionObject factionObject = collider.gameObject.GetComponent<FactionObject>();
+			if (factionObject != null && factionObject.Faction != _faction)
 			{
-				damagableObject.TakeDamage(_damage);
+				factionObject.TakeDamage(_damage);
 				Destroy(gameObject);
 			}
 		}
