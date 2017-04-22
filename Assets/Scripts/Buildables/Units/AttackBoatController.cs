@@ -24,7 +24,6 @@ namespace BattleCruisers.Buildables.Units
 	/// </summary>
 	public class AttackBoatController : Unit
 	{
-		private Rigidbody2D _rigidBody;
 		private int _directionMultiplier;
 		private FactionObject _blockingFriendlyUnit;
 		
@@ -53,7 +52,6 @@ namespace BattleCruisers.Buildables.Units
 
 		void Start() 
 		{
-			_rigidBody = GetComponent<Rigidbody2D>();
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
 
 			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
@@ -78,7 +76,7 @@ namespace BattleCruisers.Buildables.Units
 			base.OnUpdate();
 
 			if (BuildableState == BuildableState.Completed 
-				&& _rigidBody.velocity.x == 0
+				&& rigidBody.velocity.x == 0
 				&& EnemyUnit == null
 				&& _blockingFriendlyUnit == null)
 			{
@@ -142,13 +140,13 @@ namespace BattleCruisers.Buildables.Units
 		private void StartMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
-			_rigidBody.velocity = new Vector2(velocityInMPerS * _directionMultiplier, 0);
+			rigidBody.velocity = new Vector2(velocityInMPerS * _directionMultiplier, 0);
 		}
 
 		private void StopMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StopMoving()");
-			_rigidBody.velocity = new Vector2(0, 0);
+			rigidBody.velocity = new Vector2(0, 0);
 		}
 	}
 }

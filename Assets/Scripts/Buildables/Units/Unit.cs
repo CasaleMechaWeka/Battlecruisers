@@ -22,8 +22,10 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Remove?
 		public Direction facingDirection;
 
-		// FELIX  Only for ships!
 		public float velocityInMPerS;
+
+		// FELIX  Only for ships!
+		public Rigidbody2D rigidBody;
 
 		public IDroneConsumerProvider DroneConsumerProvider
 		{
