@@ -101,8 +101,8 @@ namespace BattleCruisers
 			
 			// Tactical
 			IList<BuildingKey> tactical = new List<BuildingKey>();
-//			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
-//
+			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
+
 			// Defence
 			IList<BuildingKey> defence = new List<BuildingKey>();
 //			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
