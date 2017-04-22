@@ -2,6 +2,7 @@
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.TestScenes
@@ -9,13 +10,14 @@ namespace BattleCruisers.TestScenes
 	public class AircraftTestsGod : MonoBehaviour 
 	{
 		public BomberController bomber;
+		public List<GameObject> patrolPoints;
 
 		void Start() 
 		{
 			Logging.Initialise();
 
-			IList<Vector3> patrolPoints = new List<Vector3> { new Vector3(-5, 3, 0), new Vector3(5, 3, 0) };
-			bomber.Initialise(patrolPoints);
+			IList<Vector3> patrolPointsAsVectors = patrolPoints.ConvertAll(gameObject => gameObject.transform.position);
+			bomber.Initialise(patrolPointsAsVectors);
 
 			bomber.TempStartPatrolling();
 		}
