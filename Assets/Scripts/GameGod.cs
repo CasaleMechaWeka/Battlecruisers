@@ -105,7 +105,7 @@ namespace BattleCruisers
 
 			// Defence
 			IList<BuildingKey> defence = new List<BuildingKey>();
-//			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 
 			// Offence
 			IList<BuildingKey> offence = new List<BuildingKey>();
