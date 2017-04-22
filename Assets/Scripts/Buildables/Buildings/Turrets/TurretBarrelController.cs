@@ -16,11 +16,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	/// </summary>
 	public class TurretBarrelController : MonoBehaviour 
 	{
+		private Faction _faction;
 		private float _timeSinceLastFireInS;
 		private ShellStats _shellStats;
 
 		// FELIX  Allow to vary depending on artillery?  Perhaps also part of TurretStats?
-		public Rigidbody2D shellPrefab;
+		public ShellController shellPrefab;
 		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
 		public AngleCalculator angleCalculator;
@@ -34,9 +35,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			_timeSinceLastFireInS = float.MaxValue;
 			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_shellStats);
+			shellSpawner.Initialise(_faction, _shellStats);
 		}
-		
+
+		public void Initialise(Faction faction)
+		{
+			_faction = faction;
+		}
+
 		void Update()
 		{
 			if (Target != null)

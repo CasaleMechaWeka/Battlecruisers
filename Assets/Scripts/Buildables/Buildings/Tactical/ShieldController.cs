@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	// FELIX  Make sure building faciton is passed on to shield
+	// FELIX  Make sure building faction is passed on to shield
 	public class ShieldController : FactionObject
 	{
 		private Ring _ring;

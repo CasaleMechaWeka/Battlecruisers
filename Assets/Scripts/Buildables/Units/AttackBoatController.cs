@@ -61,6 +61,8 @@ namespace BattleCruisers.Buildables.Units
 
 			friendDetector.Initialise(Faction);
 			friendDetector.gameObject.SetActive(true);
+
+			turretBarrelController.Initialise(Faction);
 		}
 
 		protected override void OnBuildableCompleted()

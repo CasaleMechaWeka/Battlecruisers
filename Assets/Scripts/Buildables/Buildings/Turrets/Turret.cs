@@ -58,6 +58,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnAwake();
 		
+			turretBarrelController.Initialise(Faction);
 			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
 			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 		}
