@@ -111,8 +111,6 @@ namespace BattleCruisers.Buildables
 		}
 
 		public event EventHandler StartedConstruction;
-		public event EventHandler PausedBuilding;
-		public event EventHandler ResumedBuilding;
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
