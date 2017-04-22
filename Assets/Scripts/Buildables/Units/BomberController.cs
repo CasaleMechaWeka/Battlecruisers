@@ -9,11 +9,24 @@ namespace BattleCruisers.Buildables.Units
 	public class BomberController : Unit
 	{
 		private IList<Vector3> _patrolPoints;
-		private Vector3 _targetPatrolPoint;
 		private float _smoothTime;
 		private Vector3 _velocity;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
+
+		private Vector3 _targetPatrolPoint;
+		private Vector3 TargetPatrolPoint
+		{
+			get { return _targetPatrolPoint; }
+			set
+			{
+				_targetPatrolPoint = value;
+				float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
+				_smoothTime = distance / velocityInMPerS;
+
+				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
+			}
+		}
 
 		public void Initialise(IList<Vector3> patrolPoints)
 		{
@@ -26,21 +39,17 @@ namespace BattleCruisers.Buildables.Units
 		{
 			base.OnUpdate();
 
-			if (_targetPatrolPoint != default(Vector3))
+			if (TargetPatrolPoint != default(Vector3))
 			{
-				bool isInPosition = (transform.position - _targetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
+				bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
 				if (!isInPosition)
 				{
-					transform.position = Vector3.SmoothDamp(transform.position, _targetPatrolPoint, ref _velocity, _smoothTime, velocityInMPerS);
-				}
-				else if (transform.position != _targetPatrolPoint)
-				{
-					transform.position = _targetPatrolPoint;
-					Logging.Log(Tags.BOMBER, $"Reached patrol point {_targetPatrolPoint}");
+					transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _velocity, _smoothTime, velocityInMPerS);
 				}
 				else
 				{
-					// FELIX  Choose next patrol point
+					Logging.Log(Tags.BOMBER, $"Reached patrol point {_targetPatrolPoint}");
+					TargetPatrolPoint = FindNextPatrolPoint();
 				}
 			}
 		}
@@ -53,9 +62,7 @@ namespace BattleCruisers.Buildables.Units
 
 		private void StartPatrolling()
 		{
-			_targetPatrolPoint = FindNearestPatrolPoint();
-			float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
-			_smoothTime = distance / velocityInMPerS;
+			TargetPatrolPoint = FindNearestPatrolPoint();
 		}
 
 		private Vector3 FindNearestPatrolPoint()
@@ -78,7 +85,10 @@ namespace BattleCruisers.Buildables.Units
 
 		private Vector3 FindNextPatrolPoint()
 		{
-			return new Vector3();
+			int currentIndex = _patrolPoints.IndexOf(TargetPatrolPoint);
+			Assert.IsTrue(currentIndex != -1);
+			int nextIndex = currentIndex == _patrolPoints.Count - 1 ? 0 : currentIndex + 1;
+			return _patrolPoints[nextIndex];
 		}
 	}
 }
