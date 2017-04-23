@@ -17,6 +17,8 @@ namespace BattleCruisers.UI.ProgressBars
 		{
 			Logging.Log(Tags.PROGRESS_BARS, $"Initialise()  {damagable}");
 
+			Assert.IsTrue(damagable.Health > 0);
+
 			_maxHealth = damagable.Health;
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}

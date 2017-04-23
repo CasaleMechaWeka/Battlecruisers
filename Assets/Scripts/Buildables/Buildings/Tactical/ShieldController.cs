@@ -25,17 +25,24 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
 		private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
-		protected override void OnAwake()
+		public void Initialise(Faction faction)
 		{
+			Faction = faction;
+
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
 			circleCollider.radius = shieldRadiusInM;
 
-			healthBar.Initialise(this);
+			SetupHealthBar();
+		}
 
+		private void SetupHealthBar()
+		{
+			healthBar.Initialise(this);
+			
 			float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * shieldRadiusInM;
 			healthBar.UpdatePosition(new Vector2(transform.position.x, transform.position.y + yPos));
-
+			
 			float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * shieldRadiusInM;
 			float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
 			healthBar.UpdateSize(width, height);

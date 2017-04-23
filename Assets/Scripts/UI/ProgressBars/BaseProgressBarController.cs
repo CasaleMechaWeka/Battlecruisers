@@ -33,7 +33,14 @@ namespace BattleCruisers.UI.ProgressBars
 
 		protected void OnProgressChanged(float newProgress)
 		{
-			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
+			try
+			{
+				Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
+			}
+			catch (Exception)
+			{
+				var e = 4;
+			}
 
 			if (newProgress == 0)
 			{

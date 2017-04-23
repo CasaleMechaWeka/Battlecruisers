@@ -8,10 +8,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 	{
 		public ShieldController shieldController;
 
-		protected override void OnAwake()
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
 
+			shieldController.Initialise(Faction);
 			shieldController.gameObject.SetActive(false);
 		}
 
