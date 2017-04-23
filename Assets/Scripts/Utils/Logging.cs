@@ -30,6 +30,7 @@ namespace BattleCruisers.Utils
 		public static void Initialise()
 		{
 			_tagsToActiveness = new Dictionary<string, bool>();
+
 			_tagsToActiveness.Add(Tags.DRONES, false);
 			_tagsToActiveness.Add(Tags.FACTORY, false);
 			_tagsToActiveness.Add(Tags.AI, false);
