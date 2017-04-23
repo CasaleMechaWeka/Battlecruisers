@@ -105,19 +105,23 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		// FELIX  Test?
-		// FELIX  Improve :P
+		/// <summary>
+		/// Assumes target is stationary.
+		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
 			if (!_haveDroppedBombOnRun)
 			{
+				Logging.Log(Tags.BOMBER, $"targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
+
 				float xDifference = planePosition.y - targetPosition.y;
 				Assert.IsTrue(xDifference > 0);
 				float timeBombWillTravel = FindTimeBombWillTravel(xDifference);
 				float leadDistance = planeXVelocityInMPerS * timeBombWillTravel;
+				float xDropPositin = planePosition.x + leadDistance;
 
-				if ((planeXVelocityInMPerS > 0 && planePosition.x + leadDistance >= targetPosition.x)
-					|| (planeXVelocityInMPerS < 0 && planePosition.x - leadDistance <= targetPosition.x))
+				if ((planeXVelocityInMPerS > 0 && xDropPositin >= targetPosition.x)
+					|| (planeXVelocityInMPerS < 0 && xDropPositin <= targetPosition.x))
 				{
 					return true;
 				}

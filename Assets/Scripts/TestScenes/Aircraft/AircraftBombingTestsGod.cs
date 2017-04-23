@@ -9,14 +9,18 @@ namespace BattleCruisers.TestScenes.Aircraft
 {
 	public class AircraftBombingTestsGod : MonoBehaviour 
 	{
-		public BomberController bomber;
-		public GameObject target;
+		public BomberController bomberToLeft;
+		public BomberController bomberToRight;
+
+		public GameObject targetToLeft;
+		public GameObject targetToRight;
 
 		void Start() 
 		{
 			Logging.Initialise();
 
-			bomber.Target = target;
+//			bomberToLeft.Target = targetToRight;
+			bomberToRight.Target = targetToLeft;
 		}
 	}
 }
