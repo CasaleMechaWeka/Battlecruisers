@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Units
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
+		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 
 		private IList<Vector3> _patrolPoints;
 		public IList<Vector3> PatrolPoints
@@ -92,17 +93,57 @@ namespace BattleCruisers.Buildables.Units
 				}
 				else
 				{
-					Logging.Log(Tags.BOMBER, $"Reached patrol point {_targetPatrolPoint}");
+					Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
 					TargetPatrolPoint = FindNextPatrolPoint();
 				}
 			}
 
 			// Bomb target
-			if (Target != null && IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+			if (Target != null)
 			{
-				bombSpawner.SpawnShell(rigidBody.velocity.x);
-				_haveDroppedBombOnRun = true;
+				if (_haveDroppedBombOnRun)
+				{
+					if (IsReadyToTurnAround(transform.position, Target.transform.position, velocityInMPerS, rigidBody.velocity.x))
+					{
+						// FELIX  Gradually turn around :P
+						Vector2 currentVelocity = rigidBody.velocity;
+						rigidBody.velocity = currentVelocity * -1;
+						
+						// FELIX  Only reset this after we have changed velocity direction!
+						_haveDroppedBombOnRun = false;
+					}
+				}
+				else
+				{
+					if (IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+					{
+						bombSpawner.SpawnShell(rigidBody.velocity.x);
+						_haveDroppedBombOnRun = true;
+					}
+				}
 			}
+		}
+
+		/// <returns>
+		/// True if the bomber has overlown the target enough so that it can turn around
+		/// and have enough space for the next bombing run.  False otherwise.
+		/// </returns>
+		private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float currentXVelocity)
+		{
+			if (currentXVelocity == 0)
+			{
+				return false;
+			}
+
+			float absoluteLeadDistance = FindLeadDistance(planePosition, targetPosition, absoluteMaxXVelocity);
+			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
+			float xTurnAroundPosition = currentXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
+
+			Logging.Log(Tags.BOMBER, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
+
+			return 
+				((currentXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
+				|| (currentXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
 		}
 
 		/// <summary>
@@ -110,23 +151,31 @@ namespace BattleCruisers.Buildables.Units
 		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
-			if (!_haveDroppedBombOnRun)
-			{
-				Logging.Log(Tags.BOMBER, $"targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
+			Logging.Log(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
-				float xDifference = planePosition.y - targetPosition.y;
-				Assert.IsTrue(xDifference > 0);
-				float timeBombWillTravel = FindTimeBombWillTravel(xDifference);
-				float leadDistance = planeXVelocityInMPerS * timeBombWillTravel;
-				float xDropPositin = planePosition.x + leadDistance;
+			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
+			float xDropPosition = planePosition.x + leadDistance;
 
-				if ((planeXVelocityInMPerS > 0 && xDropPositin >= targetPosition.x)
-					|| (planeXVelocityInMPerS < 0 && xDropPositin <= targetPosition.x))
-				{
-					return true;
-				}
-			}
-			return false;
+			return
+				((planeXVelocityInMPerS > 0 && xDropPosition >= targetPosition.x)
+				|| (planeXVelocityInMPerS < 0 && xDropPosition <= targetPosition.x));
+		}
+
+		/// <summary>
+		/// Note:
+		/// 1. Will be negative if xVelocityInMPerS is negative!
+		/// 2. Assumes the target is stationary.
+		/// </summary>
+		/// <returns>>
+		/// The y distance before the target where the bomb needs to be dropped
+		/// for it to land on the target.
+		/// </returns>
+		private float FindLeadDistance(Vector2 planePosition, Vector2 targetPosition, float xVelocityInMPerS)
+		{
+			float yDifference = planePosition.y - targetPosition.y;
+			Assert.IsTrue(yDifference > 0);
+			float timeBombWillTravel = FindTimeBombWillTravel(yDifference);
+			return xVelocityInMPerS * timeBombWillTravel;
 		}
 
 		private float FindTimeBombWillTravel(float verticalDistanceInM)

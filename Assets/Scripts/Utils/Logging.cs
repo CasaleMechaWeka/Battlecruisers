@@ -50,10 +50,10 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
-			tagsToActiveness.Add(Tags.SHELLS, true);
-			tagsToActiveness.Add(Tags.BOMBER, false);
+			tagsToActiveness.Add(Tags.SHELLS, false);
+			tagsToActiveness.Add(Tags.BOMBER, true);
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
-			tagsToActiveness.Add(Tags.FACTION_OBJECT, true);
+			tagsToActiveness.Add(Tags.FACTION_OBJECT, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
 
 			return tagsToActiveness;
