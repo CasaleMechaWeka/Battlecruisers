@@ -22,8 +22,6 @@ namespace BattleCruisers.TestScenes
 
 		void Start()
 		{
-			Logging.Initialise();
-
 			barrelBelowToLeft.Target = target;
 			barrelBelowToRight.Target = target;
 			barrelAboveToLeft.Target = target;

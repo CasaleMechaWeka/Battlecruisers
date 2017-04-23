@@ -14,8 +14,6 @@ namespace BattleCruisers.TestScenes
 
 		void Start () 
 		{
-			Logging.Initialise();
-
 			turret.Target = shield.gameObject;
 		}
 	}

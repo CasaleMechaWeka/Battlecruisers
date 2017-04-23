@@ -18,8 +18,6 @@ namespace BattleCruisers.Tests.Turrets
 			GameObject gameObject = new GameObject();
 			_angleCalculator = gameObject.AddComponent<ArtilleryAngleCalculator>();
 			_target = new Vector2();
-
-			Logging.Initialise();
 		}
 
 		[ExpectedException(typeof(ArgumentException))]

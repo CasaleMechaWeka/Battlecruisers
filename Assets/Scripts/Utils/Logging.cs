@@ -23,32 +23,45 @@ namespace BattleCruisers.Utils
 	
 	public static class Logging
 	{
-		private static Dictionary<string, bool> _tagsToActiveness;
-
 		private const bool LOG_ALL = false;
 
-		public static void Initialise()
+		private static Dictionary<string, bool> _tagsToActiveness;
+		private static Dictionary<string, bool> TagsToActiveness
 		{
-			_tagsToActiveness = new Dictionary<string, bool>();
+			get
+			{
+				if (_tagsToActiveness == null)
+				{
+					_tagsToActiveness = CreateDictionary();
+				}
+				return _tagsToActiveness;
+			}
+		}
 
-			_tagsToActiveness.Add(Tags.DRONES, false);
-			_tagsToActiveness.Add(Tags.FACTORY, false);
-			_tagsToActiveness.Add(Tags.AI, false);
-			_tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
-			_tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-			_tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
-			_tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
-			_tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
-			_tagsToActiveness.Add(Tags.SHELLS, true);
-			_tagsToActiveness.Add(Tags.BOMBER, false);
-			_tagsToActiveness.Add(Tags.UI_MANAGER, false);
-			_tagsToActiveness.Add(Tags.FACTION_OBJECT, true);
-			_tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+		private static Dictionary<string, bool> CreateDictionary()
+		{
+			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
+
+			tagsToActiveness.Add(Tags.DRONES, false);
+			tagsToActiveness.Add(Tags.FACTORY, false);
+			tagsToActiveness.Add(Tags.AI, false);
+			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
+			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
+			tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
+			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
+			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
+			tagsToActiveness.Add(Tags.SHELLS, true);
+			tagsToActiveness.Add(Tags.BOMBER, false);
+			tagsToActiveness.Add(Tags.UI_MANAGER, false);
+			tagsToActiveness.Add(Tags.FACTION_OBJECT, true);
+			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+
+			return tagsToActiveness;
 		}
 
 		public static void Log(string tag, string message)
 		{
-			if (_tagsToActiveness[tag] || LOG_ALL)
+			if (TagsToActiveness[tag] || LOG_ALL)
 			{
 				Debug.Log(tag + ":  " + message);
 			}

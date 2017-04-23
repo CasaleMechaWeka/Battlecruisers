@@ -41,8 +41,6 @@ namespace BattleCruisers
 		{
 			Assert.raiseExceptions = true;
 
-			Logging.Initialise();
-
 
 			// Common setup
 			_buildingGroupFactory = new BuildingGroupFactory();

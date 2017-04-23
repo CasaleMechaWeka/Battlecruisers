@@ -17,8 +17,6 @@ namespace BattleCruisers.TestScenes
 
 		void Start()
 		{
-			Logging.Initialise();
-
 			left.Target = target;
 			farLeft.Target = target;
 			right.Target = target;

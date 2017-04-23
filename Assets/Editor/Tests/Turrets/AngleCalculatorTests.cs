@@ -18,8 +18,6 @@ namespace BattleCruisers.Tests.Turrets
 			GameObject gameObject = new GameObject();
 			_angleCalculator = gameObject.AddComponent<AngleCalculator>();
 			_target = new Vector2();
-
-			Logging.Initialise();
 		}
 
 		#region FindDesiredAngle
