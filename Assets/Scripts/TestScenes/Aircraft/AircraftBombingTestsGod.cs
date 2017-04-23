@@ -7,19 +7,16 @@ using UnityEngine;
 
 namespace BattleCruisers.TestScenes.Aircraft
 {
-	public class AircraftPatrollingTestsGod : MonoBehaviour 
+	public class AircraftBombingTestsGod : MonoBehaviour 
 	{
 		public BomberController bomber;
-		public List<GameObject> patrolPoints;
+		public GameObject target;
 
 		void Start() 
 		{
 			Logging.Initialise();
 
-			IList<Vector3> patrolPointsAsVectors = patrolPoints.ConvertAll(gameObject => gameObject.transform.position);
-			bomber.PatrolPoints = patrolPointsAsVectors;
-
-			bomber.StartPatrolling();
+			bomber.Target = target;
 		}
 	}
 }

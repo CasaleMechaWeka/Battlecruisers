@@ -8,12 +8,22 @@ namespace BattleCruisers.Buildables.Units
 {
 	public class BomberController : Unit
 	{
-		private IList<Vector3> _patrolPoints;
 		private float _smoothTime;
 		private Vector3 _velocity;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
+
+		private IList<Vector3> _patrolPoints;
+		public IList<Vector3> PatrolPoints
+		{
+			private get { return _patrolPoints; }
+			set
+			{
+				Assert.IsTrue(value.Count >= 2);
+				_patrolPoints = value;
+			}
+		}
 
 		private Vector3 _targetPatrolPoint;
 		private Vector3 TargetPatrolPoint
@@ -29,17 +39,32 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		public void Initialise(IList<Vector3> patrolPoints)
-		{
-			Assert.IsTrue(patrolPoints.Count >= 2);
+		private GameObject _target;
+		public GameObject Target 
+		{ 
+			private get { return _target; }
+			set
+			{
+				_target = value;
 
-			_patrolPoints = patrolPoints;
+				// FELIX  Get to right height before applying horizontal velocity
+
+				// FELIX  Smoothly accelerate to top speed
+				// FELIX  Also do this for boats :)
+				float xVelocity = velocityInMPerS;
+				if (Target.transform.position.x < transform.position.x)
+				{
+					xVelocity *= -1;
+				}
+				rigidBody.velocity = new Vector2(xVelocity, 0);
+			}
 		}
 
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
 
+			// Patrolling
 			if (TargetPatrolPoint != default(Vector3))
 			{
 				bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
@@ -53,16 +78,18 @@ namespace BattleCruisers.Buildables.Units
 					TargetPatrolPoint = FindNextPatrolPoint();
 				}
 			}
+
+			// FELIX
+//			// Have target
+//			if (Target != null)
+//			{
+//				
+//			}
 		}
 
-		// FELIX TEMP
-		public void TempStartPatrolling()
+		public void StartPatrolling()
 		{
-			StartPatrolling();
-		}
-
-		private void StartPatrolling()
-		{
+			Assert.IsTrue(PatrolPoints != null);
 			TargetPatrolPoint = FindNearestPatrolPoint();
 		}
 
