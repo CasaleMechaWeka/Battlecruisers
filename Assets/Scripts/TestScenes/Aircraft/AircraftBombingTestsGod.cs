@@ -19,7 +19,7 @@ namespace BattleCruisers.TestScenes.Aircraft
 		{
 			Logging.Initialise();
 
-//			bomberToLeft.Target = targetToRight;
+			bomberToLeft.Target = targetToRight;
 			bomberToRight.Target = targetToLeft;
 		}
 	}
