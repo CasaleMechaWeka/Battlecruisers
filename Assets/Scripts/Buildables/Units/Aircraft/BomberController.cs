@@ -65,7 +65,6 @@ namespace BattleCruisers.Units.Aircraft
 			bombSpawner.Initialise(Faction, shellStats);
 		}
 
-		// FELIX  Refactor this monstrosity!
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
@@ -73,7 +72,7 @@ namespace BattleCruisers.Units.Aircraft
 			// Adjust velocity
 			if (rigidBody.velocity != TargetVelocity)
 			{
-//					Logging.Log(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+				Logging.Verbose(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
 
 				if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
 				{
@@ -132,7 +131,7 @@ namespace BattleCruisers.Units.Aircraft
 			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
 			float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
 
-//			Logging.Log(Tags.BOMBER, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
+			Logging.Verbose(Tags.BOMBER, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
 
 			return 
 				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
@@ -144,7 +143,7 @@ namespace BattleCruisers.Units.Aircraft
 		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
-//			Logging.Log(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
+			Logging.Verbose(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
 			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
 			float xDropPosition = targetPosition.x - leadDistance;

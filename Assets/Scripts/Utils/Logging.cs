@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
+	public enum LoggingLevel
+	{
+		Normal, Verbose
+	}
+
 	public static class Tags
 	{
 		public const string DRONES = "Drones";
@@ -24,6 +29,8 @@ namespace BattleCruisers.Utils
 	public static class Logging
 	{
 		private const bool LOG_ALL = false;
+		private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+//		private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
 		private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -64,6 +71,14 @@ namespace BattleCruisers.Utils
 			if (TagsToActiveness[tag] || LOG_ALL)
 			{
 				Debug.Log(tag + ":  " + message);
+			}
+		}
+
+		public static void Verbose(string tag, string message)
+		{
+			if (LOG_LEVEL >= LoggingLevel.Verbose)
+			{
+				Log(tag, message);
 			}
 		}
 	}
