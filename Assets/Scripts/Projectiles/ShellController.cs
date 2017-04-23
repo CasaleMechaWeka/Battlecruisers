@@ -1,9 +1,10 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Projectiles
 {
 	public class ShellController : MonoBehaviour
 	{
@@ -22,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Logging.Log(Tags.SHELLS, "BulletController.OnTriggerEnter2D()");
+			Logging.Log(Tags.SHELLS, "ShellController.OnTriggerEnter2D()");
 
 			FactionObject factionObject = collider.gameObject.GetComponent<FactionObject>();
 			if (factionObject != null && factionObject.Faction != _faction)

@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Units
 			_haveDroppedBombOnRun = false;
 
 			bool ignoreGravity = false;
-			ShellStats shellStats = new ShellStats(bomberStats.shellPrefab, bomberStats.damage, ignoreGravity, velocityInMPerS);
+			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, velocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
 		}
 
