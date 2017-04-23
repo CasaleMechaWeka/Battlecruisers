@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +12,11 @@ namespace BattleCruisers.Buildables.Units
 	{
 		private float _smoothTime;
 		private Vector3 _velocity;
+		// FELIX  Reset to false when we switch xVelocity (start a new bombing run)
+		private bool _haveDroppedBombOnRun;
+
+		public BomberStats bomberStats;
+		public BombSpawnerController bombSpawner;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
@@ -47,7 +54,7 @@ namespace BattleCruisers.Buildables.Units
 			{
 				_target = value;
 
-				// FELIX  Get to right height before applying horizontal velocity
+				// FELIX  Get to right height before applying horizontal velocity 
 
 				// FELIX  Smoothly accelerate to top speed
 				// FELIX  Also do this for boats :)
@@ -58,6 +65,17 @@ namespace BattleCruisers.Buildables.Units
 				}
 				rigidBody.velocity = new Vector2(xVelocity, 0);
 			}
+		}
+
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+
+			_haveDroppedBombOnRun = false;
+
+			bool ignoreGravity = false;
+			ShellStats shellStats = new ShellStats(bomberStats.shellPrefab, bomberStats.damage, ignoreGravity, velocityInMPerS);
+			bombSpawner.Initialise(Faction, shellStats);
 		}
 
 		protected override void OnUpdate()
@@ -79,12 +97,27 @@ namespace BattleCruisers.Buildables.Units
 				}
 			}
 
-			// FELIX
-//			// Have target
-//			if (Target != null)
-//			{
-//				
-//			}
+			// Bomb target
+			if (Target != null && IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+			{
+				bombSpawner.SpawnShell(rigidBody.velocity.x);
+				_haveDroppedBombOnRun = true;
+			}
+		}
+
+		// FELIX  Test?
+		// FELIX  Improve :P
+		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
+		{
+			if (!_haveDroppedBombOnRun)
+			{
+				if ((planeXVelocityInMPerS > 0 && planePosition.x >= targetPosition.x)
+					|| (planeXVelocityInMPerS < 0 && planePosition.x <= targetPosition.x))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public void StartPatrolling()

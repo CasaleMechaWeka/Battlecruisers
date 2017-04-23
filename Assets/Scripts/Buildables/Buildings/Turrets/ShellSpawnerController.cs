@@ -23,10 +23,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		}
 	}
 
+	// FELIX
+//	public abstract 
+
 	public class ShellSpawnerController : MonoBehaviour 
 	{
-		private Faction _faction;
-		private ShellStats _shellStats;
+		// FELIX  private?
+		protected Faction _faction;
+		protected ShellStats _shellStats;
 
 		public void Initialise(Faction faction, ShellStats shellStats)
 		{
