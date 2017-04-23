@@ -111,13 +111,23 @@ namespace BattleCruisers.Buildables.Units
 		{
 			if (!_haveDroppedBombOnRun)
 			{
-				if ((planeXVelocityInMPerS > 0 && planePosition.x >= targetPosition.x)
-					|| (planeXVelocityInMPerS < 0 && planePosition.x <= targetPosition.x))
+				float xDifference = planePosition.y - targetPosition.y;
+				Assert.IsTrue(xDifference > 0);
+				float timeBombWillTravel = FindTimeBombWillTravel(xDifference);
+				float leadDistance = planeXVelocityInMPerS * timeBombWillTravel;
+
+				if ((planeXVelocityInMPerS > 0 && planePosition.x + leadDistance >= targetPosition.x)
+					|| (planeXVelocityInMPerS < 0 && planePosition.x - leadDistance <= targetPosition.x))
 				{
 					return true;
 				}
 			}
 			return false;
+		}
+
+		private float FindTimeBombWillTravel(float verticalDistanceInM)
+		{
+			return Mathf.Sqrt(2 * verticalDistanceInM / Constants.GRAVITY);
 		}
 
 		public void StartPatrolling()
