@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes
+namespace BattleCruisers.TestScenes.Aircraft
 {
-	public class AircraftTestsGod : MonoBehaviour 
+	public class AircraftPatrollingTestsGod : MonoBehaviour 
 	{
 		public BomberController bomber;
 		public List<GameObject> patrolPoints;
