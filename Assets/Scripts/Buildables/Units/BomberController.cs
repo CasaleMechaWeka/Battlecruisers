@@ -10,8 +10,10 @@ namespace BattleCruisers.Buildables.Units
 {
 	public class BomberController : Unit
 	{
-		private float _smoothTime;
-		private Vector3 _velocity;
+		private float _patrollingSmoothTime;
+		private float _velocitySmoothTime;
+		private Vector3 _patrollingVelocity;
+		private Vector2 _velocity;
 		// FELIX  Reset to false when we switch xVelocity (start a new bombing run)
 		private bool _haveDroppedBombOnRun;
 
@@ -19,6 +21,7 @@ namespace BattleCruisers.Buildables.Units
 		public BombSpawnerController bombSpawner;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
+		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 
@@ -41,7 +44,7 @@ namespace BattleCruisers.Buildables.Units
 			{
 				_targetPatrolPoint = value;
 				float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
-				_smoothTime = distance / velocityInMPerS / SMOOTH_TIME_MULTIPLIER;
+				_patrollingSmoothTime = distance / maxVelocityInMPerS / SMOOTH_TIME_MULTIPLIER;
 
 				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
 			}
@@ -59,12 +62,25 @@ namespace BattleCruisers.Buildables.Units
 
 				// FELIX  Smoothly accelerate to top speed
 				// FELIX  Also do this for boats :)
-				float xVelocity = velocityInMPerS;
+				float xVelocity = maxVelocityInMPerS;
 				if (Target.transform.position.x < transform.position.x)
 				{
 					xVelocity *= -1;
 				}
-				rigidBody.velocity = new Vector2(xVelocity, 0);
+				TargetVelocity = new Vector2(xVelocity, 0);
+			}
+		}
+
+		// Not used for patrolling
+		private Vector2 _targetVelocity;
+		private Vector2 TargetVelocity
+		{
+			get { return _targetVelocity; }
+			set
+			{
+				_targetVelocity = value;
+				float velocityChange = (rigidBody.velocity - _targetVelocity).magnitude;
+				_velocitySmoothTime = velocityChange / maxVelocityInMPerS;
 			}
 		}
 
@@ -75,21 +91,23 @@ namespace BattleCruisers.Buildables.Units
 			_haveDroppedBombOnRun = false;
 
 			bool ignoreGravity = false;
-			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, velocityInMPerS);
+			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
 		}
 
+		// FELIX  Refactor this monstrosity!
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
 
+			// FELIX  Remove from bomber, more for gunships/dog fighters
 			// Patrolling
 			if (TargetPatrolPoint != default(Vector3))
 			{
 				bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
 				if (!isInPosition)
 				{
-					transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _velocity, _smoothTime, velocityInMPerS);
+					transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS);
 				}
 				else
 				{
@@ -97,26 +115,47 @@ namespace BattleCruisers.Buildables.Units
 					TargetPatrolPoint = FindNextPatrolPoint();
 				}
 			}
-
-			// Bomb target
-			if (Target != null)
+			else
 			{
-				if (_haveDroppedBombOnRun)
+				// Adjust velocity
+				if (rigidBody.velocity != TargetVelocity)
 				{
-					if (IsReadyToTurnAround(transform.position, Target.transform.position, velocityInMPerS, rigidBody.velocity.x))
+//					Logging.Log(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+
+					if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
 					{
-						// FELIX  Gradually turn around :P
-						Vector2 currentVelocity = rigidBody.velocity;
-						rigidBody.velocity = currentVelocity * -1;
-						
-						// FELIX  Only reset this after we have changed velocity direction!
-						_haveDroppedBombOnRun = false;
+						rigidBody.velocity = TargetVelocity;
+					}
+					else
+					{
+						rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 					}
 				}
-				else
+
+				// Bomb target
+				if (Target != null)
 				{
-					if (IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+					if (_haveDroppedBombOnRun)
 					{
+						if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
+						{
+							Logging.Log(Tags.BOMBER, $"Update():  About to turn around");
+
+							Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
+							if (rigidBody.velocity.x > 0)
+							{
+								newTargetVelocity *= -1;
+							}
+							TargetVelocity = newTargetVelocity;
+
+							_haveDroppedBombOnRun = false;
+						}
+					}
+					else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
+						&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+					{
+						Logging.Log(Tags.BOMBER, $"Update():  About to drop bomb");
+
 						bombSpawner.SpawnShell(rigidBody.velocity.x);
 						_haveDroppedBombOnRun = true;
 					}
@@ -128,22 +167,19 @@ namespace BattleCruisers.Buildables.Units
 		/// True if the bomber has overlown the target enough so that it can turn around
 		/// and have enough space for the next bombing run.  False otherwise.
 		/// </returns>
-		private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float currentXVelocity)
+		private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float targetXVelocity)
 		{
-			if (currentXVelocity == 0)
-			{
-				return false;
-			}
+			Assert.IsTrue(targetXVelocity != 0);
 
 			float absoluteLeadDistance = FindLeadDistance(planePosition, targetPosition, absoluteMaxXVelocity);
 			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
-			float xTurnAroundPosition = currentXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
+			float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
 
-			Logging.Log(Tags.BOMBER, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
+//			Logging.Log(Tags.BOMBER, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
 
 			return 
-				((currentXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
-				|| (currentXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
+				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
+				|| (targetXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
 		}
 
 		/// <summary>
@@ -151,7 +187,7 @@ namespace BattleCruisers.Buildables.Units
 		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
-			Logging.Log(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
+//			Logging.Log(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
 			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
 			float xDropPosition = planePosition.x + leadDistance;
@@ -159,6 +195,11 @@ namespace BattleCruisers.Buildables.Units
 			return
 				((planeXVelocityInMPerS > 0 && xDropPosition >= targetPosition.x)
 				|| (planeXVelocityInMPerS < 0 && xDropPosition <= targetPosition.x));
+		}
+
+		private bool IsDirectionCorrect(float currentXVelocity, float targetXVelocity)
+		{
+			return currentXVelocity * targetXVelocity > 0;
 		}
 
 		/// <summary>

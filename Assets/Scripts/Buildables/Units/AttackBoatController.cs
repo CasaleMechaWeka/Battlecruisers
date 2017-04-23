@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Units
 		private void StartMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
-			rigidBody.velocity = new Vector2(velocityInMPerS * _directionMultiplier, 0);
+			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
 		}
 
 		private void StopMoving()

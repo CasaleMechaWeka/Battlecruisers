@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Units
@@ -22,7 +23,8 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Remove?
 		public Direction facingDirection;
 
-		public float velocityInMPerS;
+		// FELIX  Create UnitStats class?
+		public float maxVelocityInMPerS;
 
 		// FELIX  Only for ships!
 		public Rigidbody2D rigidBody;
@@ -33,6 +35,13 @@ namespace BattleCruisers.Buildables.Units
 			{
 				_droneConsumerProvider = value;
 			}
+		}
+
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+
+			Assert.IsTrue(maxVelocityInMPerS > 0);
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
