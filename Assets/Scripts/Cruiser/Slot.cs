@@ -76,8 +76,6 @@ namespace BattleCruisers.Cruisers
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			Debug.Log($"Slot.OnPointerClick()  _isActive: {_isActive}");
-
 			if (_isActive)
 			{
 				parentCruiser.ConstructSelectedBuilding(this);

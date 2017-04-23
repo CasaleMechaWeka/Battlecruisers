@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BuildingDetails;
 using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.UI.ProgressBars;
-using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace BattleCruisers.UI
 
 		public void ShowBuildingGroups()
 		{
-			Debug.Log("UIManager.ShowBuildingGroups()");
+			Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 			friendlyCruiser.UnhighlightSlots();
 			friendlyCruiser.HideAllSlots();
 			buildableDetails.Hide();
@@ -82,14 +83,14 @@ namespace BattleCruisers.UI
 
 		public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
-			Debug.Log("UIManager.SelectBuildingGroup()");
+			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 			friendlyCruiser.ShowAllSlots();
 			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
 		public void SelectBuildingFromMenu(Building building)
 		{
-			Debug.Log("UIManager.SelectBuildingFromMenu()");
+			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			friendlyCruiser.SelectedBuildingPrefab = building;
 			friendlyCruiser.HighlightAvailableSlots(building.slotType);
 			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
@@ -111,7 +112,7 @@ namespace BattleCruisers.UI
 
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
-			Debug.Log("UIManager.SelectBuildingFromFriendlyCruiser()");
+			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromFriendlyCruiser()");
 			friendlyCruiser.UnhighlightSlots();
 			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
