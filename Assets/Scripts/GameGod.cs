@@ -78,11 +78,11 @@ namespace BattleCruisers
 			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
 
 
-//			// AI
-//			IList<BuildingKey> buildOrder = GetBuildOrder();
-//			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
-////			Invoke("StartBot", 10);
-//			Invoke("StartBot", 2);
+			// AI
+			IList<BuildingKey> buildOrder = GetBuildOrder();
+			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
+//			Invoke("StartBot", 10);
+			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()
