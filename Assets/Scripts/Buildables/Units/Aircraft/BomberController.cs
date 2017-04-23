@@ -94,13 +94,7 @@ namespace BattleCruisers.Units.Aircraft
 					{
 						Logging.Log(Tags.BOMBER, $"Update():  About to turn around");
 
-						Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
-						if (rigidBody.velocity.x > 0)
-						{
-							newTargetVelocity *= -1;
-						}
-						TargetVelocity = newTargetVelocity;
-
+						TurnAround();
 						_haveDroppedBombOnRun = false;
 					}
 				}
@@ -114,6 +108,17 @@ namespace BattleCruisers.Units.Aircraft
 				}
 			}
 		}
+
+		private void TurnAround()
+		{
+			Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
+			if (rigidBody.velocity.x > 0)
+			{
+				newTargetVelocity *= -1;
+			}
+			TargetVelocity = newTargetVelocity;
+		}
+
 
 		/// <returns>
 		/// True if the bomber has overlown the target enough so that it can turn around
@@ -142,11 +147,11 @@ namespace BattleCruisers.Units.Aircraft
 //			Logging.Log(Tags.BOMBER, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
 			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
-			float xDropPosition = planePosition.x + leadDistance;
+			float xDropPosition = targetPosition.x - leadDistance;
 
 			return
-				((planeXVelocityInMPerS > 0 && xDropPosition >= targetPosition.x)
-				|| (planeXVelocityInMPerS < 0 && xDropPosition <= targetPosition.x));
+				((planeXVelocityInMPerS > 0 && planePosition.x >= xDropPosition)
+				|| (planeXVelocityInMPerS < 0 && planePosition.x <= xDropPosition));
 		}
 
 		private bool IsDirectionCorrect(float currentXVelocity, float targetXVelocity)
