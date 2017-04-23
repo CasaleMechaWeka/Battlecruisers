@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Units
 		private Vector3 _velocity;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
+		private const float SMOOTH_TIME_MULTIPLIER = 2;
 
 		private Vector3 _targetPatrolPoint;
 		private Vector3 TargetPatrolPoint
@@ -22,7 +23,7 @@ namespace BattleCruisers.Buildables.Units
 			{
 				_targetPatrolPoint = value;
 				float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
-				_smoothTime = distance / velocityInMPerS;
+				_smoothTime = distance / velocityInMPerS / SMOOTH_TIME_MULTIPLIER;
 
 				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
 			}
