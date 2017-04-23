@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace BattleCruisers.UI.ProgressBars
 
 		public void Initialise(IDamagable damagable)
 		{
+			Logging.Log(Tags.PROGRESS_BARS, $"Initialise()  {damagable}");
+
 			_maxHealth = damagable.Health;
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}

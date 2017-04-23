@@ -222,7 +222,7 @@ namespace BattleCruisers
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+//			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
 //			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 

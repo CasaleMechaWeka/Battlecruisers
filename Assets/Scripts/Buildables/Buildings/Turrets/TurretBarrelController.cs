@@ -32,16 +32,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-		void Awake()
-		{
-			_timeSinceLastFireInS = float.MaxValue;
-			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_faction, _shellStats);
-		}
-
 		public void Initialise(Faction faction)
 		{
 			_faction = faction;
+			_timeSinceLastFireInS = float.MaxValue;
+			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
+			shellSpawner.Initialise(_faction, _shellStats);
 		}
 
 		void Update()

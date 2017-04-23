@@ -26,10 +26,15 @@ namespace BattleCruisers.Projectiles
 			Logging.Log(Tags.SHELLS, "ShellController.OnTriggerEnter2D()");
 
 			FactionObject factionObject = collider.gameObject.GetComponent<FactionObject>();
-			if (factionObject != null && factionObject.Faction != _faction)
+			if (factionObject != null)
 			{
-				factionObject.TakeDamage(_damage);
-				Destroy(gameObject);
+				Logging.Log(Tags.SHELLS, $"Own faction: {_faction}  Collider faction: {factionObject.Faction}");
+				
+				if (factionObject.Faction != _faction)
+				{
+					factionObject.TakeDamage(_damage);
+					Destroy(gameObject);
+				}
 			}
 		}
 	}

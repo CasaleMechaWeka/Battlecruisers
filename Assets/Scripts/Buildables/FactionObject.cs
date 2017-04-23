@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -89,6 +90,7 @@ namespace BattleCruisers.Buildables
 
 				if (HealthChanged != null)
 				{
+					Logging.Log(Tags.FACTION_OBJECT, $"HealthChanged  {this}");
 					HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
 				}
 			}
