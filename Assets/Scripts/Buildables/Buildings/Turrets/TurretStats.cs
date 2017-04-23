@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Projectiles;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public bool ignoreGravity;
 		public float rangeInM;
 		public float turretRotateSpeedInDegrees;
+		public ShellController shellPrefab;
 
 		public float DamagePerS { get { return damage * fireRatePerS; } }
 		public float FireIntervalInS { get { return 1 / fireRatePerS; } }
@@ -26,6 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsTrue(bulletVelocityInMPerS > 0);
 			Assert.IsTrue(rangeInM > 0);
 			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
+			Assert.IsNotNull(shellPrefab);
 		}
 	}
 }

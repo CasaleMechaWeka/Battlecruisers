@@ -21,8 +21,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private float _timeSinceLastFireInS;
 		private ShellStats _shellStats;
 
-		// FELIX  Allow to vary depending on artillery?  Perhaps also part of TurretStats?
-		public ShellController shellPrefab;
 		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
 		public AngleCalculator angleCalculator;
@@ -36,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			_faction = faction;
 			_timeSinceLastFireInS = float.MaxValue;
-			_shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
+			_shellStats = new ShellStats(turretStats.shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_faction, _shellStats);
 		}
 
