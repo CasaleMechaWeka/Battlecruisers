@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Units
+namespace BattleCruisers.Units.Aircraft
 {
-	public class BomberController : Unit
+	public class BomberController : AircraftController
 	{
-		private float _patrollingSmoothTime;
 		private float _velocitySmoothTime;
-		private Vector3 _patrollingVelocity;
 		private Vector2 _velocity;
 		// FELIX  Reset to false when we switch xVelocity (start a new bombing run)
 		private bool _haveDroppedBombOnRun;
@@ -20,35 +18,9 @@ namespace BattleCruisers.Buildables.Units
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;
 
-		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
-
-		private IList<Vector3> _patrolPoints;
-		public IList<Vector3> PatrolPoints
-		{
-			private get { return _patrolPoints; }
-			set
-			{
-				Assert.IsTrue(value.Count >= 2);
-				_patrolPoints = value;
-			}
-		}
-
-		private Vector3 _targetPatrolPoint;
-		private Vector3 TargetPatrolPoint
-		{
-			get { return _targetPatrolPoint; }
-			set
-			{
-				_targetPatrolPoint = value;
-				float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
-				_patrollingSmoothTime = distance / maxVelocityInMPerS / SMOOTH_TIME_MULTIPLIER;
-
-				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
-			}
-		}
 
 		private GameObject _target;
 		public GameObject Target 
@@ -60,8 +32,7 @@ namespace BattleCruisers.Buildables.Units
 
 				// FELIX  Get to right height before applying horizontal velocity 
 
-				// FELIX  Smoothly accelerate to top speed
-				// FELIX  Also do this for boats :)
+				// FELIX  Also do gradual accelleration for boats :)
 				float xVelocity = maxVelocityInMPerS;
 				if (Target.transform.position.x < transform.position.x)
 				{
@@ -71,7 +42,6 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		// Not used for patrolling
 		private Vector2 _targetVelocity;
 		private Vector2 TargetVelocity
 		{
@@ -100,65 +70,47 @@ namespace BattleCruisers.Buildables.Units
 		{
 			base.OnUpdate();
 
-			// FELIX  Remove from bomber, more for gunships/dog fighters
-			// Patrolling
-			if (TargetPatrolPoint != default(Vector3))
+			// Adjust velocity
+			if (rigidBody.velocity != TargetVelocity)
 			{
-				bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
-				if (!isInPosition)
+//					Logging.Log(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+
+				if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
 				{
-					transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS);
+					rigidBody.velocity = TargetVelocity;
 				}
 				else
 				{
-					Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
-					TargetPatrolPoint = FindNextPatrolPoint();
+					rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 				}
 			}
-			else
-			{
-				// Adjust velocity
-				if (rigidBody.velocity != TargetVelocity)
-				{
-//					Logging.Log(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
 
-					if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
+			// Bomb target
+			if (Target != null)
+			{
+				if (_haveDroppedBombOnRun)
+				{
+					if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
 					{
-						rigidBody.velocity = TargetVelocity;
-					}
-					else
-					{
-						rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
+						Logging.Log(Tags.BOMBER, $"Update():  About to turn around");
+
+						Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
+						if (rigidBody.velocity.x > 0)
+						{
+							newTargetVelocity *= -1;
+						}
+						TargetVelocity = newTargetVelocity;
+
+						_haveDroppedBombOnRun = false;
 					}
 				}
-
-				// Bomb target
-				if (Target != null)
+				else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
+					&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
 				{
-					if (_haveDroppedBombOnRun)
-					{
-						if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
-						{
-							Logging.Log(Tags.BOMBER, $"Update():  About to turn around");
+					Logging.Log(Tags.BOMBER, $"Update():  About to drop bomb");
 
-							Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
-							if (rigidBody.velocity.x > 0)
-							{
-								newTargetVelocity *= -1;
-							}
-							TargetVelocity = newTargetVelocity;
-
-							_haveDroppedBombOnRun = false;
-						}
-					}
-					else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
-						&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
-					{
-						Logging.Log(Tags.BOMBER, $"Update():  About to drop bomb");
-
-						bombSpawner.SpawnShell(rigidBody.velocity.x);
-						_haveDroppedBombOnRun = true;
-					}
+					bombSpawner.SpawnShell(rigidBody.velocity.x);
+					_haveDroppedBombOnRun = true;
 				}
 			}
 		}
@@ -222,38 +174,6 @@ namespace BattleCruisers.Buildables.Units
 		private float FindTimeBombWillTravel(float verticalDistanceInM)
 		{
 			return Mathf.Sqrt(2 * verticalDistanceInM / Constants.GRAVITY);
-		}
-
-		public void StartPatrolling()
-		{
-			Assert.IsTrue(PatrolPoints != null);
-			TargetPatrolPoint = FindNearestPatrolPoint();
-		}
-
-		private Vector3 FindNearestPatrolPoint()
-		{
-			float minDistance = float.MaxValue;
-			Vector3 closestPatrolPoint = default(Vector3);
-
-			foreach (Vector3 patrolPoint in _patrolPoints)
-			{
-				float distance = Vector3.Distance(transform.position, patrolPoint);
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					closestPatrolPoint = patrolPoint;
-				}
-			}
-
-			return closestPatrolPoint;
-		}
-
-		private Vector3 FindNextPatrolPoint()
-		{
-			int currentIndex = _patrolPoints.IndexOf(TargetPatrolPoint);
-			Assert.IsTrue(currentIndex != -1);
-			int nextIndex = currentIndex == _patrolPoints.Count - 1 ? 0 : currentIndex + 1;
-			return _patrolPoints[nextIndex];
 		}
 	}
 }
