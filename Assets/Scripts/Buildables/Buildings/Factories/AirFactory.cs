@@ -20,7 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		protected override Vector3 FindUnitSpawnPosition(Unit unit)
 		{
-			throw new NotImplementedException();
+			float verticalChange = (Size.y * 0.6f) + (unit.Size.y * 0.5f);
+			return transform.position + (transform.up * verticalChange);
 		}
 	}
 }
