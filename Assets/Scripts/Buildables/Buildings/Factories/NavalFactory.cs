@@ -10,11 +10,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 {
 	public class NavalFactory : Factory
 	{
-		private Unit _lastUnitProduced;
-
 		public LayerMask unitsLayerMask;
 
-		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
+		protected override LayerMask UnitLayerMask
+		{
+			get
+			{
+				return unitsLayerMask;
+			}
+		}
 
 		protected override Vector3 FindUnitSpawnPosition(Unit unit)
 		{
@@ -27,37 +31,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 
 			return transform.position + (direction * horizontalChange);
-		}
-
-		protected override void Unit_StartedConstruction(object sender, EventArgs e)
-		{
-			base.Unit_StartedConstruction(sender, e);
-
-			Unit unit = sender as Unit;
-			Assert.IsNotNull(unit);
-			_lastUnitProduced = unit;
-		}
-
-		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
-		protected override bool CanSpawnUnit(Unit unit)
-		{
-			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
-			{
-				Vector3 spawnPositionV3 = FindUnitSpawnPosition(unit);
-				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
-				float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unit.Size.x;
-				Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, unitsLayerMask);
-
-				foreach (Collider2D collider in colliders)
-				{
-					if (collider.gameObject == _lastUnitProduced.gameObject)
-					{
-						return false;
-					}
-				}
-			}
-
-			return true;
 		}
 	}
 }

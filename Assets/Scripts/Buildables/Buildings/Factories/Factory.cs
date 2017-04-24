@@ -23,10 +23,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	// FELIX  Be able to be able to pause factory?
 	public abstract class Factory : Building, IDroneConsumerProvider
 	{
+		private Unit _lastUnitProduced;
 		protected Unit _unitUnderConstruction;
 
 		public UnitCategory unitCategory;
-		public Direction SpawnDirection { set; private get; }
+
+		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
 		private Unit _unit;
 		public Unit Unit 
@@ -57,6 +59,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			private get { return _unit; }
 		}
 
+		protected abstract LayerMask UnitLayerMask { get; }
+
 		protected override void OnClicked()
 		{
 			base.OnClicked();
@@ -77,13 +81,28 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 		}
 		
-		// Check if there is space for the unit to be spawned, or
-		// perhaps if unit maximum has been reached.
+		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
 		protected virtual bool CanSpawnUnit(Unit unit)
 		{
-			return false;
+			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
+			{
+				Vector3 spawnPositionV3 = FindUnitSpawnPosition(unit);
+				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
+				float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unit.Size.x;
+				Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, UnitLayerMask);
+
+				foreach (Collider2D collider in colliders)
+				{
+					if (collider.gameObject == _lastUnitProduced.gameObject)
+					{
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
-		
+
 		private void StartBuildingUnit()
 		{
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
@@ -109,6 +128,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
 		{ 
 			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;
+
+			Unit unit = sender as Unit;
+			Assert.IsNotNull(unit);
+			_lastUnitProduced = unit;
 		}
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
