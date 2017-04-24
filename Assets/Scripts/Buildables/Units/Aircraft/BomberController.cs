@@ -35,9 +35,6 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				_target = value;
 
-				// FELIX  Get to right height before applying horizontal velocity 
-
-				// FELIX  Also do gradual accelleration for boats :)
 				float xVelocity = maxVelocityInMPerS;
 				if (Target.transform.position.x < transform.position.x)
 				{
@@ -76,9 +73,9 @@ namespace BattleCruisers.Units.Aircraft
 		}
 		#endregion Properties
 
-		protected override void OnAwake()
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
 
 			Assert.IsNotNull(bomberStats);
 			Assert.IsNotNull(bombSpawner);
@@ -90,8 +87,14 @@ namespace BattleCruisers.Units.Aircraft
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
-
+		}
+		
+		protected override void OnBuildableCompleted()
+		{
+			base.OnBuildableCompleted();
+			
 			PatrolPoints = FindPatrolPoints();
+			StartPatrolling();
 		}
 
 		/// <returns>
@@ -107,12 +110,6 @@ namespace BattleCruisers.Units.Aircraft
 			patrolPoints.Add(new Vector3(0, cruisingAltitude));
 
 			return patrolPoints;
-		}
-
-		protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
-			StartPatrolling();
 		}
 
 		protected override void OnUpdate()
