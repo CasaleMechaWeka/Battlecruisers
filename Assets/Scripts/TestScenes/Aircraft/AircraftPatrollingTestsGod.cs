@@ -9,15 +9,15 @@ namespace BattleCruisers.TestScenes.Aircraft
 {
 	public class AircraftPatrollingTestsGod : MonoBehaviour 
 	{
-		public BomberController bomber;
+		public AircraftController aircraft;
 		public List<GameObject> patrolPoints;
 
 		void Start() 
 		{
 			IList<Vector3> patrolPointsAsVectors = patrolPoints.ConvertAll(gameObject => gameObject.transform.position);
-			bomber.PatrolPoints = patrolPointsAsVectors;
+			aircraft.PatrolPoints = patrolPointsAsVectors;
 
-			bomber.StartPatrolling();
+			aircraft.StartPatrolling();
 		}
 	}
 }
