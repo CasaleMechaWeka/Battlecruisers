@@ -12,20 +12,23 @@ namespace BattleCruisers.Units.Aircraft
 	{
 		private float _velocitySmoothTime;
 		private Vector2 _velocity;
-		// FELIX  Reset to false when we switch xVelocity (start a new bombing run)
 		private bool _haveDroppedBombOnRun;
+		private Vector3 _targetCruisingHeight;
 
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;
+		public BomberTargetFinder targetFinder;
+		public float cruisingAltitude;
 
+		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 
 		private GameObject _target;
-		public GameObject Target 
+		private GameObject Target
 		{ 
-			private get { return _target; }
+			get { return _target; }
 			set
 			{
 				_target = value;
@@ -54,57 +57,81 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
+		private bool IsAtCruisingHeight
+		{
+			get
+			{
+				return Mathf.Abs(transform.position.y - cruisingAltitude) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
+			}
+		}
+
 		protected override void OnAwake()
 		{
 			base.OnAwake();
+
+			Assert.IsNotNull(bomberStats);
+			Assert.IsNotNull(bombSpawner);
+			Assert.IsNotNull(targetFinder);
+			Assert.IsTrue(cruisingAltitude > transform.position.y);
 
 			_haveDroppedBombOnRun = false;
 
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
+
+			PatrolPoints = FindPatrolPoints();
+			StartPatrolling();
+		}
+
+		/// <returns>
+		/// Two patrol points:
+		/// 1. Directly above the spawn location, at the cruising altitude.
+		/// 2. Halfway between both cruisers, at the cruisikng altitude.
+		/// </returns>
+		private IList<Vector3> FindPatrolPoints()
+		{
+			IList<Vector3> patrolPoints = new List<Vector3>();
+
+			patrolPoints.Add(new Vector3(transform.position.x, cruisingAltitude));
+			patrolPoints.Add(new Vector3(0, cruisingAltitude));
+
+			return patrolPoints;
 		}
 
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
 
-			// Adjust velocity
-			if (rigidBody.velocity != TargetVelocity)
+			if (IsAtCruisingHeight)
 			{
-				Logging.Verbose(Tags.BOMBER, $"OnUpdate():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+				StopPatrolling();
 
-				if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
+				if (Target == null)
 				{
-					rigidBody.velocity = TargetVelocity;
+					Target = targetFinder.FindTarget();
 				}
-				else
+
+				if (rigidBody.velocity != TargetVelocity)
 				{
-					rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
+					AdjustVelocity();
 				}
+
+				TryBombTarget();
 			}
+		}
 
-			// Bomb target
-			if (Target != null)
+		private void AdjustVelocity()
+		{
+			Logging.Verbose(Tags.BOMBER, $"AdjustVelocity():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+
+			if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
 			{
-				if (_haveDroppedBombOnRun)
-				{
-					if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
-					{
-						Logging.Log(Tags.BOMBER, $"Update():  About to turn around");
-
-						TurnAround();
-						_haveDroppedBombOnRun = false;
-					}
-				}
-				else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
-					&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
-				{
-					Logging.Log(Tags.BOMBER, $"Update():  About to drop bomb");
-
-					bombSpawner.SpawnShell(rigidBody.velocity.x);
-					_haveDroppedBombOnRun = true;
-				}
+				rigidBody.velocity = TargetVelocity;
+			}
+			else
+			{
+				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
 		}
 
@@ -118,7 +145,28 @@ namespace BattleCruisers.Units.Aircraft
 			TargetVelocity = newTargetVelocity;
 		}
 
+		private void TryBombTarget()
+		{
+			if (_haveDroppedBombOnRun)
+			{
+				if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
+				{
+					Logging.Log(Tags.BOMBER, $"TryBombTarget():  About to turn around");
 
+					TurnAround();
+					_haveDroppedBombOnRun = false;
+				}
+			}
+			else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
+				&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+			{
+				Logging.Log(Tags.BOMBER, $"TryBombTarget():  About to drop bomb");
+
+				bombSpawner.SpawnShell(rigidBody.velocity.x);
+				_haveDroppedBombOnRun = true;
+			}
+		}
+		
 		/// <returns>
 		/// True if the bomber has overlown the target enough so that it can turn around
 		/// and have enough space for the next bombing run.  False otherwise.

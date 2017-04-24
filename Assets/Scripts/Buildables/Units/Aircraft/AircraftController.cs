@@ -67,6 +67,11 @@ namespace BattleCruisers.Units.Aircraft
 			TargetPatrolPoint = FindNearestPatrolPoint();
 		}
 
+		public void StopPatrolling()
+		{
+			TargetPatrolPoint = default(Vector3);
+		}
+
 		private Vector3 FindNearestPatrolPoint()
 		{
 			float minDistance = float.MaxValue;

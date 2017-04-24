@@ -17,8 +17,8 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		void Start() 
 		{
-			bomberToLeft.Target = targetToRight;
-			bomberToRight.Target = targetToLeft;
+//			bomberToLeft.Target = targetToRight;
+//			bomberToRight.Target = targetToLeft;
 		}
 	}
 }
