@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 // FELIX  Create parent boat class
+// FELIX  Create Naval folde & namespace
 namespace BattleCruisers.Buildables.Units
 {
 	/// <summary>

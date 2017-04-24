@@ -92,7 +92,6 @@ namespace BattleCruisers.Units.Aircraft
 			bombSpawner.Initialise(Faction, shellStats);
 
 			PatrolPoints = FindPatrolPoints();
-			StartPatrolling();
 		}
 
 		/// <returns>
@@ -108,6 +107,12 @@ namespace BattleCruisers.Units.Aircraft
 			patrolPoints.Add(new Vector3(0, cruisingAltitude));
 
 			return patrolPoints;
+		}
+
+		protected override void OnBuildableCompleted()
+		{
+			base.OnBuildableCompleted();
+			StartPatrolling();
 		}
 
 		protected override void OnUpdate()
