@@ -12,6 +12,7 @@ namespace BattleCruisers.Units.Aircraft
 	{
 		private float _patrollingSmoothTime;
 		private Vector3 _patrollingVelocity;
+		private bool _isPatrolling;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
@@ -45,19 +46,23 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnUpdate();
 
-			// Patrolling
-			if (TargetPatrolPoint != default(Vector3))
+			if (_isPatrolling)
 			{
-				bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
-				if (!isInPosition)
-				{
-					transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS);
-				}
-				else
-				{
-					Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
-					TargetPatrolPoint = FindNextPatrolPoint();
-				}
+				Patrol();
+			}
+		}
+
+		private void Patrol()
+		{
+			bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
+			if (!isInPosition)
+			{
+				transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS);
+			}
+			else
+			{
+				Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
+				TargetPatrolPoint = FindNextPatrolPoint();
 			}
 		}
 
@@ -65,11 +70,13 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			Assert.IsTrue(PatrolPoints != null);
 			TargetPatrolPoint = FindNearestPatrolPoint();
+			_isPatrolling = true;
 		}
 
 		public void StopPatrolling()
 		{
 			TargetPatrolPoint = default(Vector3);
+			_isPatrolling = false;
 		}
 
 		private Vector3 FindNearestPatrolPoint()
