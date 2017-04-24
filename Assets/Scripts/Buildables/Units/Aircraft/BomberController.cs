@@ -24,7 +24,9 @@ namespace BattleCruisers.Units.Aircraft
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
+		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
+		#region Properties
 		private GameObject _target;
 		private GameObject Target
 		{ 
@@ -64,6 +66,15 @@ namespace BattleCruisers.Units.Aircraft
 				return Mathf.Abs(transform.position.y - cruisingAltitude) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
 			}
 		}
+
+		public override float Damage 
+		{ 
+			get 
+			{ 
+				return bomberStats.damage * AVERAGE_FIRE_RATE_PER_S;
+			} 
+		}
+		#endregion Properties
 
 		protected override void OnAwake()
 		{
