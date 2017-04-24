@@ -117,6 +117,7 @@ namespace BattleCruisers
 
 			// Aircraft
 			IList<UnitKey> aircraft = new List<UnitKey>();
+			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
 
 			// Ships
 			IList<UnitKey> ships = new List<UnitKey>();
