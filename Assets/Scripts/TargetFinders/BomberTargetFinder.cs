@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Cruisers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Units.Aircraft
+namespace BattleCruisers.TargetFinders
 {
 	public interface ITargetFinder
 	{
@@ -12,11 +13,16 @@ namespace BattleCruisers.Units.Aircraft
 	// FELIX  Implement properly :P
 	public class BomberTargetFinder : MonoBehaviour, ITargetFinder
 	{
-		public GameObject tempTarget;
+		private Cruiser _enemyCruiser;
+
+		public BomberTargetFinder(Cruiser enemyCruiser)
+		{
+			_enemyCruiser = enemyCruiser;
+		}
 
 		public GameObject FindTarget()
 		{
-			return tempTarget;
+			return _enemyCruiser.gameObject;
 		}
 	}
 }

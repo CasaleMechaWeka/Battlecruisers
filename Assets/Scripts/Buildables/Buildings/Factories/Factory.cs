@@ -30,6 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
+		#region Properties
 		private Unit _unit;
 		public Unit Unit 
 		{ 
@@ -60,6 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 
 		protected abstract LayerMask UnitLayerMask { get; }
+		#endregion Properties
 
 		protected override void OnClicked()
 		{
@@ -108,7 +110,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
 
 			_unitUnderConstruction = _buildableFactory.CreateUnit(_unit);
-			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _buildableFactory);
+			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _buildableFactory, _targetFinderFactory);
 			_unitUnderConstruction.DroneConsumerProvider = this;
 
 			Vector3 spawnPosition = FindUnitSpawnPosition(_unitUnderConstruction);

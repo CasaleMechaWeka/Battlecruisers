@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
 using System;
@@ -40,6 +41,7 @@ namespace BattleCruisers.Buildables
 		protected BuildableFactory _buildableFactory;
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
+		protected TargetFinderFactory _targetFinderFactory;
 
 		public string buildableName;
 		public string description;
@@ -51,6 +53,7 @@ namespace BattleCruisers.Buildables
 		public BuildableProgressController buildableProgress;
 		public HealthBarController healthBar;
 
+		#region Properties
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
 
@@ -109,6 +112,7 @@ namespace BattleCruisers.Buildables
 				}
 			}
 		}
+		#endregion Properties
 
 		public event EventHandler StartedConstruction;
 		public event EventHandler CompletedBuildable;
@@ -124,7 +128,8 @@ namespace BattleCruisers.Buildables
 			buildableProgress.Initialize(Size);
 		}
 
-		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, Cruiser enemyCruiser, BuildableFactory buildableFactory)
+		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, 
+			Cruiser enemyCruiser, BuildableFactory buildableFactory, TargetFinderFactory targetFinderFactory)
 		{
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
@@ -134,6 +139,7 @@ namespace BattleCruisers.Buildables
 			_buildableFactory = buildableFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
+			_targetFinderFactory = targetFinderFactory;
 
 			OnInitialised();
 		}

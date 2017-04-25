@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace BattleCruisers.Units.Aircraft
 		private Vector2 _velocity;
 		private bool _haveDroppedBombOnRun;
 		private Vector3 _targetCruisingHeight;
+		private BomberTargetFinder _targetFinder;
 
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;
-		public BomberTargetFinder targetFinder;
 		public float cruisingAltitude;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
@@ -36,7 +37,7 @@ namespace BattleCruisers.Units.Aircraft
 				_target = value;
 
 				float xVelocity = maxVelocityInMPerS;
-				if (Target.transform.position.x < transform.position.x)
+				if (_target.transform.position.x < transform.position.x)
 				{
 					xVelocity *= -1;
 				}
@@ -79,7 +80,6 @@ namespace BattleCruisers.Units.Aircraft
 
 			Assert.IsNotNull(bomberStats);
 			Assert.IsNotNull(bombSpawner);
-			Assert.IsNotNull(targetFinder);
 			Assert.IsTrue(cruisingAltitude > transform.position.y);
 
 			_haveDroppedBombOnRun = false;
@@ -87,6 +87,8 @@ namespace BattleCruisers.Units.Aircraft
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
+
+			_targetFinder = _targetFinderFactory.BomberTargetFinder;
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -122,7 +124,7 @@ namespace BattleCruisers.Units.Aircraft
 
 				if (Target == null)
 				{
-					Target = targetFinder.FindTarget();
+					Target = _targetFinder.FindTarget();
 				}
 
 				if (rigidBody.velocity != TargetVelocity)

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.Utils;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
@@ -50,9 +51,10 @@ namespace BattleCruisers
 
 
 			// Player cruiser
+			TargetFinderFactory playerCruiserTargetFinderFactory = new TargetFinderFactory(enemyCruiser);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider);
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetFinderFactory);
 			friendlyCruiser.direction = Direction.Right;
 
 
@@ -70,10 +72,11 @@ namespace BattleCruisers
 
 
 			// AI cruiser
+			TargetFinderFactory aiCruiserTargetFinderFactory = new TargetFinderFactory(friendlyCruiser);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			enemyCruiser.direction = Direction.Left;
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider);
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetFinderFactory);
 
 
 			// AI
