@@ -17,34 +17,31 @@ namespace BattleCruisers.TestScenes.Aircraft
 		public BomberController bomberToLeft;
 		public BomberController bomberToRight;
 
-		public GameObject targetToLeft;
-		public GameObject targetToRight;
+		public GameObject target;
 
 		// Massive, so bombers built instantly
 		private const int NUM_OF_DRONES = 100;
 
 		void Start() 
 		{
-			ITargetFinderFactory targetFinderFactoryForBomberOnRight = new Mock.TargetFinderFactory() 
+			ICruiser parentCruiser = new Mock.Cruiser() 
 			{
-				BomberTargetFinder = new Mock.TargetFinder()
+				DroneConsumerProvider = new Mock.DroneConsumerProvider() 
 				{
-					Target = targetToLeft
+					DroneConsumer = new Mock.DroneConsumer() 
+					{
+						State = DroneConsumerState.Active,
+						NumOfDrones = NUM_OF_DRONES
+					}
 				}
 			};
 
-			IDroneConsumer droneConsumer = new Mock.DroneConsumer() 
+			ITargetFinderFactory targetFinderFactory = new Mock.TargetFinderFactory() 
 			{
-				State = DroneConsumerState.Active,
-				NumOfDrones = NUM_OF_DRONES
-			};
-			IDroneConsumerProvider droneConsumerProvider = new Mock.DroneConsumerProvider() 
-			{
-				DroneConsumer = droneConsumer
-			};
-			ICruiser parentCruiser = new Mock.Cruiser() 
-			{
-				DroneConsumerProvider = droneConsumerProvider
+				BomberTargetFinder = new Mock.TargetFinder()
+				{
+					Target = target
+				}
 			};
 
 			bomberToRight.Initialise(
@@ -53,9 +50,17 @@ namespace BattleCruisers.TestScenes.Aircraft
 				parentCruiser,
 				null,
 				null,
-				targetFinderFactoryForBomberOnRight);
-
+				targetFinderFactory);
 			bomberToRight.StartConstruction();
+
+			bomberToLeft.Initialise(
+				Faction.Blues,
+				null,
+				parentCruiser,
+				null,
+				null,
+				targetFinderFactory);
+			bomberToLeft.StartConstruction();
 		}
 	}
 }
