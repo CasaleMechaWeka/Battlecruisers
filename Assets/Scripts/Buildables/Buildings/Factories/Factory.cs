@@ -117,7 +117,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction.transform.position = spawnPosition;
 			_unitUnderConstruction.transform.rotation = transform.rotation;
 
-			_unitUnderConstruction.facingDirection = _parentCruiser.direction;
+			_unitUnderConstruction.facingDirection = _parentCruiser.Direction;
 
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;

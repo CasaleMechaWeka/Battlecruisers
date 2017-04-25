@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables
 		private float _buildProgressInDroneSeconds;
 
 		protected UIManager _uiManager;
-		protected Cruiser _parentCruiser;
+		protected ICruiser _parentCruiser;
 		protected Cruiser _enemyCruiser;
 		protected BuildableFactory _buildableFactory;
 		protected IDroneManager _droneManager;
@@ -128,7 +128,7 @@ namespace BattleCruisers.Buildables
 			buildableProgress.Initialize(Size);
 		}
 
-		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, 
+		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
 			Cruiser enemyCruiser, BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory)
 		{
 			Faction = faction;

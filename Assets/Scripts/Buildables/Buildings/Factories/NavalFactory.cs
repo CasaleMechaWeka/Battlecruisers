@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			float horizontalChange = (Size.x * 0.6f) + (unit.Size.x * 0.5f);
 
 			Vector3 direction = transform.right;
-			if (_parentCruiser.direction == Direction.Left)
+			if (_parentCruiser.Direction == Direction.Left)
 			{
 				direction *= -1;
 			}

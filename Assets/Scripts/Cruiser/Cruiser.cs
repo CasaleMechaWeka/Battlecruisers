@@ -20,6 +20,7 @@ namespace BattleCruisers.Cruisers
 		Building SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
+		Direction Direction { get; }
 
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
@@ -46,6 +47,7 @@ namespace BattleCruisers.Cruisers
 		public Building SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
+		public Direction Direction { get { return direction; } }
 
 		void Start()
 		{

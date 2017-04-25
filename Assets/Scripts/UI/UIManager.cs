@@ -96,7 +96,7 @@ namespace BattleCruisers.UI
 			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
 
-		public void SelectBuilding(Building building, Cruiser buildingParent)
+		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
 			if (buildingParent == friendlyCruiser
 				&& cameraController.State == CameraState.FriendlyCruiser)
