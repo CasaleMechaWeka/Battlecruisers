@@ -15,7 +15,7 @@ namespace BattleCruisers.Units.Aircraft
 		private Vector2 _velocity;
 		private bool _haveDroppedBombOnRun;
 		private Vector3 _targetCruisingHeight;
-		private BomberTargetFinder _targetFinder;
+		private ITargetFinder _targetFinder;
 
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;

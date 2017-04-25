@@ -1,4 +1,8 @@
-﻿using BattleCruisers.Units.Aircraft;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Drones;
+using BattleCruisers.TargetFinders;
+using BattleCruisers.TestScenes;
+using BattleCruisers.Units.Aircraft;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,8 +21,26 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		void Start() 
 		{
-//			bomberToLeft.Target = targetToRight;
-//			bomberToRight.Target = targetToLeft;
+			ITargetFinderFactory targetFinderFactoryForBomberOnRight = new Mock.TargetFinderFactory() 
+			{
+				BomberTargetFinder = new Mock.TargetFinder()
+				{
+					Target = targetToLeft
+				}
+			};
+
+			IDroneConsumer droneConsumer = new Mock.DroneConsumer();
+			IDroneConsumerProvider droneConsumerProvider = new Mock.DroneConsumerProvider();
+
+			bomberToRight.Initialise(
+				Faction.Blues,
+				null,
+				null,
+				null,
+				null,
+				targetFinderFactoryForBomberOnRight);
+
+
 		}
 	}
 }

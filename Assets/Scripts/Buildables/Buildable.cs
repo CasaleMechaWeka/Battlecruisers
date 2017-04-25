@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables
 		protected BuildableFactory _buildableFactory;
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
-		protected TargetFinderFactory _targetFinderFactory;
+		protected ITargetFinderFactory _targetFinderFactory;
 
 		public string buildableName;
 		public string description;
@@ -129,7 +129,7 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, Cruiser parentCruiser, 
-			Cruiser enemyCruiser, BuildableFactory buildableFactory, TargetFinderFactory targetFinderFactory)
+			Cruiser enemyCruiser, BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory)
 		{
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;

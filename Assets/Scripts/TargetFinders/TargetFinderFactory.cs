@@ -5,12 +5,17 @@ using UnityEngine;
 
 namespace BattleCruisers.TargetFinders
 {
-	public class TargetFinderFactory
+	public interface ITargetFinderFactory
+	{
+		ITargetFinder BomberTargetFinder { get; }
+	}
+
+	public class TargetFinderFactory : ITargetFinderFactory
 	{
 		private Cruiser _enemyCruiser;
 
 		private BomberTargetFinder _bomberTargetFinder;
-		public BomberTargetFinder BomberTargetFinder
+		public ITargetFinder BomberTargetFinder
 		{
 			get
 			{
