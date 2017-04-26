@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,15 +23,25 @@ namespace BattleCruisers.TestScenes
 
 		void Start()
 		{
+			// Turrets facing right
 			barrelBelowToLeft.Target = target;
+			barrelBelowToLeft.Initialise(Faction.Blues);
 			barrelBelowToRight.Target = target;
+			barrelBelowToRight.Initialise(Faction.Blues);
 			barrelAboveToLeft.Target = target;
+			barrelAboveToLeft.Initialise(Faction.Blues);
 			barrelAboveToRight.Target = target;
+			barrelAboveToRight.Initialise(Faction.Blues);
 
+			// Turrets facing left (mirrored)
 			barrelBelowToLeftMirroed.Target = target;
+			barrelBelowToLeftMirroed.Initialise(Faction.Blues);
 			barrelBelowToRightMirroed.Target = target;
+			barrelBelowToRightMirroed.Initialise(Faction.Blues);
 			barrelAboveToLeftMirroed.Target = target;
+			barrelAboveToLeftMirroed.Initialise(Faction.Blues);
 			barrelAboveToRightMirroed.Target = target;
+			barrelAboveToRightMirroed.Initialise(Faction.Blues);
 		}
 	}
 }

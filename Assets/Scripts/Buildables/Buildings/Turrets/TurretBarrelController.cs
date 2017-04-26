@@ -10,8 +10,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	/// <summary>
-	/// For turrets whose projectiles are not affected by gravity.  Ie, they fly in a straight line
-	/// from the barrel tip to the enemy object.  
 	/// FELIX  Lead moving targets!
 	/// FELIX  Take accuracy into consideration
 	/// </summary>

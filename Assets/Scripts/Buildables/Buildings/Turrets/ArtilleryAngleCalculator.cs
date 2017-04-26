@@ -31,7 +31,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				throw new ArgumentException("Source faces left, but target is to the right");
 			}
 
-
 			if (!isSourceMirrored && target.x <= source.x)
 			{
 				throw new ArgumentException("Source faces right, but target is to the left");
