@@ -1,8 +1,9 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.TestScenes
 {
@@ -18,9 +19,16 @@ namespace BattleCruisers.TestScenes
 		void Start()
 		{
 			left.Target = target;
+			left.Initialise(Faction.Blues);
+
 			farLeft.Target = target;
+			farLeft.Initialise(Faction.Blues);
+
 			right.Target = target;
+			right.Initialise(Faction.Blues);
+
 			farRight.Target = target;
+			farRight.Initialise(Faction.Blues);
 		}
 	}
 }
