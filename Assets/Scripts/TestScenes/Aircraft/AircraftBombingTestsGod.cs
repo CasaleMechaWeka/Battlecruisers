@@ -22,7 +22,9 @@ namespace BattleCruisers.TestScenes.Aircraft
 		void Start() 
 		{
 			Helper helper = new Helper();
-			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(target);
+			IFactionable factionObject = helper.CreateFactionObject(target);
+			ITargetFinder targetFinder = helper.CreateTargetFinder(factionObject);
+			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(targetFinder);
 
 			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
 			bomberToRight.StartConstruction();

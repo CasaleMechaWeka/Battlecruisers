@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-			Target = _enemyCruiser.GameObject;
+			Target = _enemyCruiser;
 		}
 	}
 }

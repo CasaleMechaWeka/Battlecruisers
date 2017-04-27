@@ -124,7 +124,7 @@ namespace BattleCruisers.Units.Aircraft
 
 				if (Target == null)
 				{
-					Target = _targetFinder.FindTarget();
+					Target = _targetFinder.FindTarget().GameObject;
 				}
 
 				if (rigidBody.velocity != TargetVelocity)

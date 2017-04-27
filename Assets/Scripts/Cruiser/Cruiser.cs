@@ -15,13 +15,12 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-	public interface ICruiser
+	public interface ICruiser : IFactionable
 	{
 		Building SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
-		GameObject GameObject { get; }
 
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
@@ -49,7 +48,6 @@ namespace BattleCruisers.Cruisers
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 		public Direction Direction { get { return direction; } }
-		public GameObject GameObject { get { return gameObject; } }
 
 		void Start()
 		{

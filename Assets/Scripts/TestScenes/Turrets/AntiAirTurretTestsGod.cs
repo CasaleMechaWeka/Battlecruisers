@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.TargetFinders;
+using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,15 +14,18 @@ namespace BattleCruisers.TestScenes.Turrets
 		public Vector2[] aircraftPatrolPoints;
 		public AircraftController aircraft;
 
-		public TurretBarrelController turretBarrel;
+		public DefensiveTurret turret;
 
 		void Start () 
 		{
+			Helper helper = new Helper();
+
+			helper.InitialiseBuildable(aircraft, faction: Faction.Blues);
 			aircraft.PatrolPoints = aircraftPatrolPoints;
 			aircraft.StartPatrolling();
 
-			turretBarrel.Initialise(Faction.Blues);
-			turretBarrel.Target = aircraft.gameObject;
+			helper.InitialiseBuildable(turret, faction: Faction.Reds);
+			turret.StartConstruction();
 		}
 	}
 }

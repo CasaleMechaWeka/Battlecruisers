@@ -45,11 +45,18 @@ namespace BattleCruisers.Buildables
 		void Repair(float repairAmount);
 	}
 
-	public abstract class FactionObject : MonoBehaviour, IDamagable
+	public interface IFactionable : IDamagable
+	{
+		Faction Faction { get; }
+		GameObject GameObject { get; }
+	}
+
+	public abstract class FactionObject : MonoBehaviour, IFactionable
 	{
 		public float maxHealth;
 		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
+		public GameObject GameObject { get { return gameObject; } }
 
 		public event EventHandler Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;

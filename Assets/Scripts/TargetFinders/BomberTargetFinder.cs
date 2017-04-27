@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace BattleCruisers.TargetFinders
 
 		event EventHandler TargetFound;
 
-		/// <returns>A target game object, or null if no valid targets can be found.</returns>
-		GameObject FindTarget();
+		/// <returns>A target faction object, or null if no valid targets can be found.</returns>
+		IFactionable FindTarget();
 	}
 
 	// FELIX  Implement properly :P
@@ -30,9 +31,9 @@ namespace BattleCruisers.TargetFinders
 			_enemyCruiser = enemyCruiser;
 		}
 
-		public GameObject FindTarget()
+		public IFactionable FindTarget()
 		{
-			return _enemyCruiser.gameObject;
+			return _enemyCruiser;
 		}
 	}
 }

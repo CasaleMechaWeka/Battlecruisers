@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units.Detectors;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -12,61 +13,40 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		private FactionObject _enemy;
 
-		public FactionObjectDetector enemyDetector;
+		public RangedTargetFinder targetFinder;
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
 			Assert.AreEqual(BuildingCategory.Defence, category);
-			
-			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction), turretBarrelController.turretStats.rangeInM);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			enemyDetector.OnEntered = OnEnemyEntered;
-			enemyDetector.OnExited = OnEnemyExited;
+			targetFinder.Initialise(Faction, turretBarrelController.turretStats.rangeInM);
+			targetFinder.TargetFound += TargetFinder_TargetFound;
+
+			Target = targetFinder.FindTarget();
 		}
 
-		private void OnEnemyEntered(FactionObject enemy)
+		private void TargetFinder_TargetFound(object sender, EventArgs e)
 		{
-			Logging.Log(Tags.DEFENSIVE_TURRET, "OnEnemyEntered()");
-
-			if (_enemy == null)
+			if (Target == null)
 			{
-				_enemy = enemy;
-				Target = _enemy.gameObject;
-
-				_enemy.Destroyed += Enemy_Destroyed;
+				Target = targetFinder.FindTarget();
+				Target.Destroyed += Enemy_Destroyed;
 			}
 		}
 
 		private void Enemy_Destroyed(object sender, EventArgs e)
 		{
-			Logging.Log(Tags.DEFENSIVE_TURRET, "Enemy_Destroyed");
-
-			_enemy.Destroyed -= Enemy_Destroyed;
-			CleanUpEnemyTarget();
-		}
-
-		// FELIX  Switch target to any other enemies that have entered
-		private void OnEnemyExited(FactionObject enemy)
-		{
-			Logging.Log(Tags.DEFENSIVE_TURRET, "OnEnemyExited");
-
-			if (_enemy == enemy)
-			{
-				CleanUpEnemyTarget();
-			}
-		}
-
-		private void CleanUpEnemyTarget()
-		{
-			_enemy = null;
-			Target = null;
+			Assert.AreEqual(Target, sender);
+			
+			Target.Destroyed -= Enemy_Destroyed;
+			Target = targetFinder.FindTarget();
 		}
 	}
 }

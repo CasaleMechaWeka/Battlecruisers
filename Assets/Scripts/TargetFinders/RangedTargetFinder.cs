@@ -12,9 +12,10 @@ namespace BattleCruisers.TargetFinders
 	/// <summary>
 	/// Keeps track of all enemies within range.
 	/// </summary>
+	/// FELIX  Create tests :/  Make FactionObjectDetector an interface 
 	public class RangedTargetFinder : MonoBehaviour, ITargetFinder
 	{
-		private IList<FactionObject> _inRangeEnemies;
+		private IList<IFactionable> _inRangeEnemies;
 
 		public FactionObjectDetector enemyDetector;
 
@@ -30,7 +31,7 @@ namespace BattleCruisers.TargetFinders
 
 		public void Initialise(Faction faction, float rangeInM)
 		{
-			_inRangeEnemies = new List<FactionObject>();
+			_inRangeEnemies = new List<IFactionable>();
 
 			enemyDetector.Initialise(Helper.GetOppositeFaction(faction), rangeInM);
 
@@ -69,13 +70,13 @@ namespace BattleCruisers.TargetFinders
 		}
 
 		// FELIX  Choose next target better?  Find target at closest angle to current turret angle?
-		public GameObject FindTarget()
+		public IFactionable FindTarget()
 		{
-			GameObject target = null;
+			IFactionable target = null;
 
 			if (IsTargetAvailable)
 			{
-				target = _inRangeEnemies[0].gameObject;
+				target = _inRangeEnemies[0];
 			}
 
 			return target;
