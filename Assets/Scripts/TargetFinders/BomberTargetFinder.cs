@@ -7,11 +7,26 @@ using UnityEngine;
 
 namespace BattleCruisers.TargetFinders
 {
+	public class TargetEventArgs : EventArgs
+	{
+		public TargetEventArgs(IFactionable target)
+		{
+			Target = target;
+		}
+
+		public IFactionable Target { get; private set; }
+	}
+
 	public interface ITargetFinder
 	{
 		bool IsTargetAvailable { get; }
 
-		event EventHandler TargetFound;
+		// When a new target is found, usually when a target comes within range.
+		event EventHandler<TargetEventArgs> TargetFound;
+
+		// When an existing target is lost, either because it moves out of
+		// range or is destroyed.
+		event EventHandler<TargetEventArgs> TargetLost;
 
 		/// <returns>A target faction object, or null if no valid targets can be found.</returns>
 		IFactionable FindTarget();
@@ -22,7 +37,8 @@ namespace BattleCruisers.TargetFinders
 	{
 		private Cruiser _enemyCruiser;
 
-		public event EventHandler TargetFound;
+		public event EventHandler<TargetEventArgs> TargetFound;
+		public event EventHandler<TargetEventArgs> TargetLost;
 
 		public bool IsTargetAvailable { get { return true; } }
 

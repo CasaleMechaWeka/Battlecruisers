@@ -28,25 +28,25 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 			targetFinder.Initialise(Faction, turretBarrelController.turretStats.rangeInM);
 			targetFinder.TargetFound += TargetFinder_TargetFound;
+			targetFinder.TargetLost += TargetFinder_TargetLost;
 
 			Target = targetFinder.FindTarget();
 		}
 
-		private void TargetFinder_TargetFound(object sender, EventArgs e)
+		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			if (Target == null)
 			{
-				Target = targetFinder.FindTarget();
-				Target.Destroyed += Enemy_Destroyed;
+				Target = e.Target;
 			}
 		}
 
-		private void Enemy_Destroyed(object sender, EventArgs e)
+		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
 		{
-			Assert.AreEqual(Target, sender);
-			
-			Target.Destroyed -= Enemy_Destroyed;
-			Target = targetFinder.FindTarget();
+			if (Target == e.Target)
+			{
+				Target = targetFinder.FindTarget();
+			}
 		}
 	}
 }

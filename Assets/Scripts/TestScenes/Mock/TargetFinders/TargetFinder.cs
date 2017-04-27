@@ -12,7 +12,8 @@ namespace BattleCruisers.TestScenes.Mock
 		public IFactionable Target { get; set; }
 		public bool IsTargetAvailable { get; set; }
 
-		public event EventHandler TargetFound;
+		public event EventHandler<TargetEventArgs> TargetFound;
+		public event EventHandler<TargetEventArgs> TargetLost;
 
 		public IFactionable FindTarget()
 		{

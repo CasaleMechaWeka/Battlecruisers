@@ -19,8 +19,9 @@ namespace BattleCruisers.TargetFinders
 
 		public FactionObjectDetector enemyDetector;
 
-		public event EventHandler TargetFound;
-		
+		public event EventHandler<TargetEventArgs> TargetFound;
+		public event EventHandler<TargetEventArgs> TargetLost;
+
 		public bool IsTargetAvailable
 		{
 			get
@@ -47,7 +48,7 @@ namespace BattleCruisers.TargetFinders
 
 			if (TargetFound != null)
 			{
-				TargetFound.Invoke(this, EventArgs.Empty);
+				TargetFound.Invoke(this, new TargetEventArgs(enemy));
 			}
 		}
 
@@ -67,6 +68,11 @@ namespace BattleCruisers.TargetFinders
 		{
 			bool didRemoveEnemy = _inRangeEnemies.Remove(enemy);
 			Assert.IsTrue(didRemoveEnemy);
+
+			if (TargetLost != null)
+			{
+				TargetLost.Invoke(this, new TargetEventArgs(enemy));
+			}
 
 			enemy.Destroyed -= Enemy_Destroyed;
 		}
