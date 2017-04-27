@@ -22,14 +22,6 @@ namespace BattleCruisers.TargetFinders
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public bool IsTargetAvailable
-		{
-			get
-			{
-				return _inRangeEnemies.Count != 0;
-			}
-		}
-
 		public void Initialise(Faction faction, float rangeInM)
 		{
 			_inRangeEnemies = new List<IFactionable>();
@@ -82,7 +74,7 @@ namespace BattleCruisers.TargetFinders
 		{
 			IFactionable target = null;
 
-			if (IsTargetAvailable)
+			if (_inRangeEnemies.Count != 0)
 			{
 				target = _inRangeEnemies[0];
 			}

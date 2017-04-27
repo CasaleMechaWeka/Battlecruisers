@@ -19,11 +19,8 @@ namespace BattleCruisers.TargetFinders
 
 	public interface ITargetFinder
 	{
-		bool IsTargetAvailable { get; }
-
 		// When a new target is found, usually when a target comes within range.
 		event EventHandler<TargetEventArgs> TargetFound;
-
 		// When an existing target is lost, either because it moves out of
 		// range or is destroyed.
 		event EventHandler<TargetEventArgs> TargetLost;
@@ -39,8 +36,6 @@ namespace BattleCruisers.TargetFinders
 
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
-
-		public bool IsTargetAvailable { get { return true; } }
 
 		public BomberTargetFinder(Cruiser enemyCruiser)
 		{
