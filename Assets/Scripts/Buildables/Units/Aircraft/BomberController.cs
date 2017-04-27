@@ -14,7 +14,7 @@ namespace BattleCruisers.Units.Aircraft
 		private float _velocitySmoothTime;
 		private Vector2 _velocity;
 		private bool _haveDroppedBombOnRun;
-		private Vector3 _targetCruisingHeight;
+		private Vector2 _targetCruisingHeight;
 		private ITargetFinder _targetFinder;
 
 		public BomberStats bomberStats;
@@ -104,12 +104,12 @@ namespace BattleCruisers.Units.Aircraft
 		/// 1. Directly above the spawn location, at the cruising altitude.
 		/// 2. Halfway between both cruisers, at the cruisikng altitude.
 		/// </returns>
-		private IList<Vector3> FindPatrolPoints()
+		private IList<Vector2> FindPatrolPoints()
 		{
-			IList<Vector3> patrolPoints = new List<Vector3>();
+			IList<Vector2> patrolPoints = new List<Vector2>();
 
-			patrolPoints.Add(new Vector3(transform.position.x, cruisingAltitude));
-			patrolPoints.Add(new Vector3(0, cruisingAltitude));
+			patrolPoints.Add(new Vector2(transform.position.x, cruisingAltitude));
+			patrolPoints.Add(new Vector2(0, cruisingAltitude));
 
 			return patrolPoints;
 		}

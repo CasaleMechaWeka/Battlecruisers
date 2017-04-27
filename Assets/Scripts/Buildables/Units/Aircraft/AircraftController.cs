@@ -11,14 +11,14 @@ namespace BattleCruisers.Units.Aircraft
 	public class AircraftController : Unit
 	{
 		private float _patrollingSmoothTime;
-		private Vector3 _patrollingVelocity;
+		private Vector2 _patrollingVelocity;
 		private bool _isPatrolling;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 
-		private IList<Vector3> _patrolPoints;
-		public IList<Vector3> PatrolPoints
+		private IList<Vector2> _patrolPoints;
+		public IList<Vector2> PatrolPoints
 		{
 			private get { return _patrolPoints; }
 			set
@@ -28,14 +28,14 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
-		private Vector3 _targetPatrolPoint;
-		private Vector3 TargetPatrolPoint
+		private Vector2 _targetPatrolPoint;
+		private Vector2 TargetPatrolPoint
 		{
 			get { return _targetPatrolPoint; }
 			set
 			{
 				_targetPatrolPoint = value;
-				float distance = Vector3.Distance(transform.position, _targetPatrolPoint);
+				float distance = Vector2.Distance(transform.position, _targetPatrolPoint);
 				_patrollingSmoothTime = distance / maxVelocityInMPerS / SMOOTH_TIME_MULTIPLIER;
 
 				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
@@ -54,10 +54,11 @@ namespace BattleCruisers.Units.Aircraft
 
 		private void Patrol()
 		{
-			bool isInPosition = (transform.position - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
+			Vector2 positionAsVector2 = new Vector2(transform.position.x, transform.position.y);
+			bool isInPosition = (positionAsVector2 - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
-				transform.position = Vector3.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS);
+				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
 			else
 			{
@@ -75,18 +76,18 @@ namespace BattleCruisers.Units.Aircraft
 
 		public void StopPatrolling()
 		{
-			TargetPatrolPoint = default(Vector3);
+			TargetPatrolPoint = default(Vector2);
 			_isPatrolling = false;
 		}
 
-		private Vector3 FindNearestPatrolPoint()
+		private Vector2 FindNearestPatrolPoint()
 		{
 			float minDistance = float.MaxValue;
-			Vector3 closestPatrolPoint = default(Vector3);
+			Vector2 closestPatrolPoint = default(Vector2);
 
-			foreach (Vector3 patrolPoint in _patrolPoints)
+			foreach (Vector2 patrolPoint in _patrolPoints)
 			{
-				float distance = Vector3.Distance(transform.position, patrolPoint);
+				float distance = Vector2.Distance(transform.position, patrolPoint);
 				if (distance < minDistance)
 				{
 					minDistance = distance;
@@ -97,7 +98,7 @@ namespace BattleCruisers.Units.Aircraft
 			return closestPatrolPoint;
 		}
 
-		private Vector3 FindNextPatrolPoint()
+		private Vector2 FindNextPatrolPoint()
 		{
 			int currentIndex = _patrolPoints.IndexOf(TargetPatrolPoint);
 			Assert.IsTrue(currentIndex != -1);
