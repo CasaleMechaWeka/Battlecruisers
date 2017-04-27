@@ -67,6 +67,8 @@ namespace BattleCruisers.TargetFinders
 		{
 			bool didRemoveEnemy = _inRangeEnemies.Remove(enemy);
 			Assert.IsTrue(didRemoveEnemy);
+
+			enemy.Destroyed -= Enemy_Destroyed;
 		}
 
 		// FELIX  Choose next target better?  Find target at closest angle to current turret angle?
