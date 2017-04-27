@@ -114,8 +114,6 @@ namespace BattleCruisers.Utils
 					return UnitFolderNames.AIRCRAFT;
 				case UnitCategory.Naval:
 					return UnitFolderNames.NAVAL;
-				case UnitCategory.Ultra:
-					return UnitFolderNames.ULTRA;
 				default:
 					throw new ArgumentException();
 			}

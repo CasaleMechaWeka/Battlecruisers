@@ -19,10 +19,8 @@ namespace BattleCruisers
 			IList<BuildingKey> defence,
 			IList<BuildingKey> offence,
 			IList<BuildingKey> support,
-			IList<BuildingKey> ultraBuildings,
 			IList<UnitKey> aircraft,
-			IList<UnitKey> ships,
-			IList<UnitKey> ultraUnits)
+			IList<UnitKey> ships)
 		{
 			_buildings = new Dictionary<BuildingCategory, IList<BuildingKey>>();
 			_buildings[BuildingCategory.Factory] = factories;
@@ -30,12 +28,10 @@ namespace BattleCruisers
 			_buildings[BuildingCategory.Defence] = defence;
 			_buildings[BuildingCategory.Offence] = offence;
 			_buildings[BuildingCategory.Support] = support;
-			_buildings[BuildingCategory.Ultras] = ultraBuildings;
 
 			_units = new Dictionary<UnitCategory, IList<UnitKey>>();
 			_units[UnitCategory.Aircraft] = aircraft;
 			_units[UnitCategory.Naval] = ships;
-			_units[UnitCategory.Ultra] = ultraUnits;
 		}
 
 		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)

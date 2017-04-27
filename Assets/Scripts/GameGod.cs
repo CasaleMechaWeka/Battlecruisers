@@ -115,9 +115,6 @@ namespace BattleCruisers
 			// Support
 			IList<BuildingKey> support = new List<BuildingKey>();
 
-			// Ultra buildings
-			IList<BuildingKey> ultraBuildings = new List<BuildingKey>();
-
 			// Aircraft
 			IList<UnitKey> aircraft = new List<UnitKey>();
 			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
@@ -127,19 +124,14 @@ namespace BattleCruisers
 			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
 			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
-			// Ultra units
-			IList<UnitKey> ultraUnits = new List<UnitKey>();
-
 			return new Loadout(
 				factories,
 				tactical,
 				defence,
 				offence,
 				support,
-				ultraBuildings,
 				aircraft,
-				ships,
-				ultraUnits);
+				ships);
 		}
 
 		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)

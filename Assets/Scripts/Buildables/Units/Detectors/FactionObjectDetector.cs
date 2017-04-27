@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Units.Detectors
 	{
 		private Faction _factionToDetect;
 
+
 		public CircleCollider2D circleCollider;
 
 		public Action<FactionObject> OnEntered { private get; set; }
