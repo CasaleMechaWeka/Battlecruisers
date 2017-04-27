@@ -15,20 +15,16 @@ namespace BattleCruisers.Buildables.Units.Detectors
 
 		public CircleCollider2D circleCollider;
 
-		public float Radius
-		{
-			set
-			{
-				circleCollider.radius = value;
-			}
-		}
-
 		public Action<FactionObject> OnEntered { private get; set; }
 		public Action<FactionObject> OnExited { private get; set; }
 
-		public void Initialise(Faction factionToDetect)
+		public void Initialise(Faction factionToDetect, float radiusInM = -1)
 		{
 			_factionToDetect = factionToDetect;
+			if (radiusInM != -1)
+			{
+				circleCollider.radius = radiusInM;
+			}
 		}
 
 		void OnTriggerEnter2D(Collider2D collider)

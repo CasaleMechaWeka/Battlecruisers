@@ -20,8 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 			Assert.AreEqual(BuildingCategory.Defence, category);
 			
-			enemyDetector.Radius = turretBarrelController.turretStats.rangeInM;
-			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
+			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction), turretBarrelController.turretStats.rangeInM);
 		}
 
 		protected override void OnBuildableCompleted()
