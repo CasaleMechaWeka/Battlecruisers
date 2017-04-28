@@ -9,6 +9,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.TargetFinders
 {
+	public interface IRangedTargetFinder : ITargetFinder
+	{
+		// When a target comes within range.
+		event EventHandler<TargetEventArgs> TargetFound;
+
+		// When an existing target is lost, either because it moves out of
+		// range or is destroyed.
+		event EventHandler<TargetEventArgs> TargetLost;
+	}
+
 	/// <summary>
 	/// Keeps track of all enemies within range.
 	/// </summary>

@@ -12,9 +12,6 @@ namespace BattleCruisers.TargetFinders
 	{
 		private Cruiser _enemyCruiser;
 
-		public event EventHandler<TargetEventArgs> TargetFound;
-		public event EventHandler<TargetEventArgs> TargetLost;
-
 		public BomberTargetFinder(Cruiser enemyCruiser)
 		{
 			_enemyCruiser = enemyCruiser;
