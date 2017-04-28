@@ -98,12 +98,12 @@ namespace BattleCruisers.UI
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
-			if (buildingParent == friendlyCruiser
+			if (System.Object.ReferenceEquals(buildingParent, friendlyCruiser)
 				&& cameraController.State == CameraState.FriendlyCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else if (buildingParent == enemyCruiser
+			else if (System.Object.ReferenceEquals(buildingParent, enemyCruiser)
 				&& cameraController.State == CameraState.EnemyCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);
@@ -112,7 +112,7 @@ namespace BattleCruisers.UI
 
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
-			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromFriendlyCruiser()");
+			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
 			friendlyCruiser.UnhighlightSlots();
 			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
