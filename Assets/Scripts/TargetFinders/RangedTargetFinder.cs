@@ -27,16 +27,12 @@ namespace BattleCruisers.TargetFinders
 	{
 		private IList<IFactionable> _inRangeEnemies;
 
-		public FactionObjectDetector enemyDetector;
-
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public void Initialise(Faction faction, float rangeInM)
+		public void Initialise(FactionObjectDetector enemyDetector)
 		{
 			_inRangeEnemies = new List<IFactionable>();
-
-			enemyDetector.Initialise(Helper.GetOppositeFaction(faction), rangeInM);
 
 			enemyDetector.OnEntered = OnEnemyEntered;
 			enemyDetector.OnExited = OnEnemyExited;

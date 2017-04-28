@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		private FactionObject _enemy;
 
+		public FactionObjectDetector enemyDetector;
 		public RangedTargetFinder targetFinder;
 
 		protected override void OnInitialised()
@@ -26,7 +27,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnBuildableCompleted();
 
-			targetFinder.Initialise(Faction, turretBarrelController.turretStats.rangeInM);
+			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction), turretBarrelController.turretStats.rangeInM);
+
+			targetFinder.Initialise(enemyDetector);
 			targetFinder.TargetFound += TargetFinder_TargetFound;
 			targetFinder.TargetLost += TargetFinder_TargetLost;
 
