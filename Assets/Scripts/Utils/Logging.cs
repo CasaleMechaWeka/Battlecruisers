@@ -76,10 +76,12 @@ namespace BattleCruisers.Utils
 
 		public static void Verbose(string tag, string message)
 		{
+			#pragma warning disable 162
 			if (LOG_LEVEL >= LoggingLevel.Verbose)
 			{
 				Log(tag, message);
 			}
+			#pragma warning restore 162
 		}
 	}
 }
