@@ -124,7 +124,10 @@ namespace BattleCruisers.UI
 
 		public void ShowFactoryUnits(Factory factory)
 		{
-			buildMenuController.ShowUnitsMenu(factory);
+			if (cameraController.State == CameraState.FriendlyCruiser)
+			{
+				buildMenuController.ShowUnitsMenu(factory);
+			}
 		}
 
 		public void ShowUnitDetails(Unit unit)
