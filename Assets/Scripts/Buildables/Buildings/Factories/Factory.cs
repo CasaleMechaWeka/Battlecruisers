@@ -37,7 +37,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			set	
 			{
 				Logging.Log(Tags.FACTORY, $"set_Unit: {_unit} > {value}");
-
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
 				if (_unit != null)
@@ -45,7 +44,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 					Assert.IsNotNull(DroneConsumer);
 					_droneManager.RemoveDroneConsumer(DroneConsumer);
 					DroneConsumer = null;
-
 					DestroyUnitUnderConstruction();
 				}
 
@@ -53,6 +51,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 				if (_unit != null)
 				{
+					Assert.IsNull(DroneConsumer);
 					DroneConsumer = new DroneConsumer(_unit.numOfDronesRequired);
 					_droneManager.AddDroneConsumer(DroneConsumer);
 				}
@@ -160,7 +159,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (_unitUnderConstruction != null)
 			{
-				Destroy(_unitUnderConstruction.gameObject);
+				_unitUnderConstruction.Destroy();
 				CleanUpUnitUnderConstruction();
 			}
 		}

@@ -53,6 +53,8 @@ namespace BattleCruisers.Buildables
 
 	public abstract class FactionObject : MonoBehaviour, IFactionable
 	{
+		private bool _wasDestroyTriggeredInternally;
+
 		public float maxHealth;
 		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
@@ -82,13 +84,7 @@ namespace BattleCruisers.Buildables
 				else if (value <= 0)
 				{
 					_health = 0;
-
-					OnDestroyed();
-
-					if (Destroyed != null)
-					{
-						Destroyed.Invoke(this, EventArgs.Empty);
-					}
+					OnHealthGone();
 				}
 				else
 				{
@@ -105,6 +101,7 @@ namespace BattleCruisers.Buildables
 
 		public void Awake()
 		{
+			_wasDestroyTriggeredInternally = false;
 			_health = maxHealth;
 
 			OnAwake();
@@ -114,9 +111,28 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnFullyRepaired() { }
 
-		protected virtual void OnDestroyed()
+		protected virtual void OnHealthGone()
 		{
+			Destroy();
+		}
+
+		public void Destroy()
+		{
+			_wasDestroyTriggeredInternally = true;
+
 			Destroy(gameObject);
+			OnDestroyed();
+			InvokeDestroyedEvent();
+		}
+
+		protected virtual void OnDestroyed() { }
+
+		protected void InvokeDestroyedEvent()
+		{
+			if (Destroyed != null)
+			{
+				Destroyed.Invoke(this, EventArgs.Empty);
+			}
 		}
 
 		public void TakeDamage(float damageAmount)
@@ -136,5 +152,15 @@ namespace BattleCruisers.Buildables
 		}
 
 		protected virtual void OnRepair() { }
+
+		/// <summary>
+		/// We should only ever be destroyed via our Destroy() method, not via Unity's
+		/// Destroy(gameObject).  This ensures our OnDestroyed callback and Destroyed
+		/// events are always called.
+		/// </summary>
+		void OnDestroy()
+		{
+			Assert.IsTrue(_wasDestroyTriggeredInternally);
+		}
 	}
 }

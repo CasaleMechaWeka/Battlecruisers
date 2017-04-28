@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Buildings
 
 		public override void InitiateDelete()
 		{
-			Destroy(gameObject);
+			Destroy();
 		}
 
 		public void CancelDelete()
