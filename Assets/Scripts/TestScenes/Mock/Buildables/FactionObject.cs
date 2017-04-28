@@ -13,9 +13,11 @@ namespace BattleCruisers.TestScenes.Mock
 		public Faction Faction { get; set; }
 		public GameObject GameObject { get; set; }
 
+		#pragma warning disable 67  // Unused event
 		public event EventHandler Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
 		public event EventHandler FullyRepaired;
+		#pragma warning restore 67  // Unused event
 
 		public void TakeDamage(float damageAmount)
 		{

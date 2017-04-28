@@ -10,9 +10,11 @@ namespace BattleCruisers.TestScenes.Mock
 	public class TargetFinder : ITargetFinder
 	{
 		public IFactionable Target { get; set; }
-
+		
+		#pragma warning disable 67  // Unused event
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
+		#pragma warning restore 67  // Unused event
 
 		public IFactionable FindTarget()
 		{
