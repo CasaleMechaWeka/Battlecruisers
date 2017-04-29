@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using System;
 using UnityEngine;
 
@@ -22,16 +23,17 @@ namespace BattleCruisers.TargetFinders
 
 	public class FactionObjectDetector : MonoBehaviour, IFactionObjectDetector
 	{
-		private Faction _factionToDetect;
+		private IFactionObjectFilter _factionObjectFilter;
 
 		public CircleCollider2D circleCollider;
 
 		public event EventHandler<FactionObjectEventArgs> OnEntered;
 		public event EventHandler<FactionObjectEventArgs> OnExited;
 
-		public void Initialise(Faction factionToDetect, float radiusInM = -1)
+		public void Initialise(IFactionObjectFilter factionObjectFilter, float radiusInM = -1)
 		{
-			_factionToDetect = factionToDetect;
+			_factionObjectFilter = factionObjectFilter;
+
 			if (radiusInM != -1)
 			{
 				circleCollider.radius = radiusInM;
@@ -43,16 +45,11 @@ namespace BattleCruisers.TargetFinders
 			if (OnEntered != null)
 			{
 				IFactionable factionObject = GetFactionobject(collider);
-				if (ShouldTriggerOnEntered(factionObject))
+				if (_factionObjectFilter.IsMatch(factionObject))
 				{
 					OnEntered.Invoke(this, new FactionObjectEventArgs(factionObject));
 				}
 			}
-		}
-
-		protected virtual bool ShouldTriggerOnEntered(IFactionable factionObject)
-		{
-			return factionObject.Faction == _factionToDetect;
 		}
 
 		void OnTriggerExit2D(Collider2D collider)
@@ -60,16 +57,11 @@ namespace BattleCruisers.TargetFinders
 			if (OnExited != null)
 			{
 				IFactionable factionObject = GetFactionobject(collider);
-				if (ShouldTriggerOnExited(factionObject))
+				if (_factionObjectFilter.IsMatch(factionObject))
 				{
 					OnExited.Invoke(this, new FactionObjectEventArgs(factionObject));
 				}
 			}
-		}
-
-		protected virtual bool ShouldTriggerOnExited(IFactionable factionObject)
-		{
-			return factionObject.Faction == _factionToDetect;
 		}
 
 		private IFactionable GetFactionobject(Collider2D collider)

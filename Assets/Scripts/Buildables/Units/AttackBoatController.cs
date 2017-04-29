@@ -55,10 +55,12 @@ namespace BattleCruisers.Buildables.Units
 		{
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
 
-			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
+			IFactionObjectFilter enemyFilter = new FactionFilter(Helper.GetOppositeFaction(Faction));
+			enemyDetector.Initialise(enemyFilter);
 			enemyDetector.OnEntered += OnEnemyEntered;
 
-			friendDetector.Initialise(Faction);
+			IFactionObjectFilter friendFilter = new FactionFilter(Faction);
+			friendDetector.Initialise(friendFilter);
 			friendDetector.gameObject.SetActive(true);
 
 			turretBarrelController.Initialise(Faction);
