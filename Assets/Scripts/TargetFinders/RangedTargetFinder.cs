@@ -23,14 +23,14 @@ namespace BattleCruisers.TargetFinders
 	/// Keeps track of all enemies within range.
 	/// </summary>
 	/// FELIX  Create tests :/  Make FactionObjectDetector an interface 
-	public class RangedTargetFinder : MonoBehaviour, ITargetFinder
+	public class RangedTargetFinder : MonoBehaviour, IRangedTargetFinder
 	{
 		private IList<IFactionable> _inRangeEnemies;
 
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public void Initialise(FactionObjectDetector enemyDetector)
+		public void Initialise(IFactionObjectDetector enemyDetector)
 		{
 			_inRangeEnemies = new List<IFactionable>();
 
