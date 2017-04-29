@@ -51,9 +51,13 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		void Start() 
+		protected override void OnBuildableCompleted()
 		{
+			base.OnBuildableCompleted();
+
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
+			
+			turretBarrelController.Initialise(Faction);
 
 			IFactionObjectFilter enemyFilter = new FactionFilter(Helper.GetOppositeFaction(Faction));
 			enemyDetector.Initialise(enemyFilter);
@@ -61,15 +65,6 @@ namespace BattleCruisers.Buildables.Units
 
 			IFactionObjectFilter friendFilter = new FactionFilter(Faction);
 			friendDetector.Initialise(friendFilter);
-			friendDetector.gameObject.SetActive(true);
-
-			turretBarrelController.Initialise(Faction);
-		}
-
-		protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
-
 			friendDetector.OnEntered += OnFriendEntered;
 			friendDetector.OnExited += OnFriendExited;
 		}
