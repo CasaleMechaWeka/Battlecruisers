@@ -53,7 +53,7 @@ namespace BattleCruisers.TargetFinders
 
 		private void Enemy_Destroyed(object sender, EventArgs e)
 		{
-			FactionObject enemy = sender as FactionObject;
+			IFactionable enemy = sender as IFactionable;
 			Assert.IsNotNull(enemy);
 			RemoveEnemy(enemy);
 		}
