@@ -22,6 +22,7 @@ namespace BattleCruisers.TestScenes.Turrets
 
 			helper.InitialiseBuildable(aircraft, faction: Faction.Blues);
 			aircraft.PatrolPoints = aircraftPatrolPoints;
+			aircraft.StartConstruction();
 			aircraft.StartPatrolling();
 
 			helper.InitialiseBuildable(turret, faction: Faction.Reds);
