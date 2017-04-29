@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.TargetFinders;
+using BattleCruisers.TargetFinders.Filters;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
 using System;
@@ -34,7 +35,8 @@ namespace BattleCruisers.Cruisers
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
-		private TargetFinderFactory _targetFinderFactory;
+		private ITargetFinderFactory _targetFinderFactory;
+		private IFactionObjectFilterFactory _filterFactory;
 
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
@@ -59,16 +61,19 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Initialise(this);
 		}
 
-		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, TargetFinderFactory targetFinderFactory)
+		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
+			TargetFinderFactory targetFinderFactory, IFactionObjectFilterFactory filterFactory)
 		{
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);
 			Assert.IsNotNull(targetFinderFactory);
+			Assert.IsNotNull(filterFactory);
 
 			DroneManager = droneManager;
 			DroneManager.NumOfDrones = numOfDrones;
 			DroneConsumerProvider = droneConsumerProvider;
 			_targetFinderFactory = targetFinderFactory;
+			_filterFactory = filterFactory;
 		}
 
 		private void SetupSlots()
@@ -157,7 +162,7 @@ namespace BattleCruisers.Cruisers
 			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
 
 			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetFinderFactory);
+			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetFinderFactory, _filterFactory);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser

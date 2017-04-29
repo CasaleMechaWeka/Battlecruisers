@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.TargetFinders;
+using BattleCruisers.TargetFinders.Filters;
 using BattleCruisers.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,8 @@ namespace BattleCruisers.TestScenes.Utilities
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
 			BuildableFactory buildableFactory = null,
-			ITargetFinderFactory targetFinderFactory = null)
+			ITargetFinderFactory targetFinderFactory = null,
+			IFactionObjectFilterFactory filterFactory = null)
 		{
 			if (parentCruiser == null)
 			{
@@ -39,7 +41,8 @@ namespace BattleCruisers.TestScenes.Utilities
 				parentCruiser,
 				enemyCruiser,
 				buildableFactory,
-				targetFinderFactory);
+				targetFinderFactory,
+				filterFactory);
 		}
 
 		public ICruiser CreateCruiser(int numOfDrones = NUM_OF_DRONES)

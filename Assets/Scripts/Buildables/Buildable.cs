@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.TargetFinders;
+using BattleCruisers.TargetFinders.Filters;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
 using System;
@@ -42,6 +43,7 @@ namespace BattleCruisers.Buildables
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetFinderFactory _targetFinderFactory;
+		protected IFactionObjectFilterFactory _filterFactory;
 
 		public string buildableName;
 		public string description;
@@ -128,8 +130,8 @@ namespace BattleCruisers.Buildables
 			buildableProgress.Initialize(Size);
 		}
 
-		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory)
+		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, 
+			BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory, IFactionObjectFilterFactory filterFactory)
 		{
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
@@ -140,6 +142,7 @@ namespace BattleCruisers.Buildables
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 			_targetFinderFactory = targetFinderFactory;
+			_filterFactory = filterFactory;
 
 			OnInitialised();
 		}
