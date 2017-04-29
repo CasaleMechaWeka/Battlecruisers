@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Detectors;
+using BattleCruisers.TargetFinders;
 using System;
 using System.Collections;
 using System.Collections.Generic;

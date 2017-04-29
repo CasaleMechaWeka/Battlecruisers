@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Units.Detectors;
-using BattleCruisers.TargetFinders;
+﻿using BattleCruisers.TargetFinders;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;

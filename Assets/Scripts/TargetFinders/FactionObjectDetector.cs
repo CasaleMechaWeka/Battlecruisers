@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BattleCruisers.Buildables;
+using System;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables.Units.Detectors
+namespace BattleCruisers.TargetFinders
 {
 	public class FactionObjectEventArgs : EventArgs
 	{

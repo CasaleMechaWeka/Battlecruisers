@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Detectors;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;

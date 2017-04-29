@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Buildables.Units.Detectors;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.UI;
