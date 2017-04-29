@@ -7,7 +7,6 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Drones
 {
-	[TestFixture]
 	public class DroneManagerTests 
 	{
 		private IDroneManager _droneManager;

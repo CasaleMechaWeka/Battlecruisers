@@ -6,7 +6,6 @@ using BattleCruisers.Drones;
 
 namespace BattleCruisers.Tests.Drones
 {
-	[TestFixture]
 	public class DroneConsumerTests 
 	{
 		private IDroneConsumer _droneConsumer;
