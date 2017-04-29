@@ -34,12 +34,13 @@ namespace BattleCruisers.TargetFinders
 		{
 			_inRangeEnemies = new List<IFactionable>();
 
-			enemyDetector.OnEntered = OnEnemyEntered;
-			enemyDetector.OnExited = OnEnemyExited;
+			enemyDetector.OnEntered += OnEnemyEntered;
+			enemyDetector.OnExited += OnEnemyExited;
 		}
 
-		private void OnEnemyEntered(FactionObject enemy)
+		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
 		{
+			IFactionable enemy = args.FactionObject;
 			_inRangeEnemies.Add(enemy);
 
 			enemy.Destroyed += Enemy_Destroyed;
@@ -57,12 +58,12 @@ namespace BattleCruisers.TargetFinders
 			RemoveEnemy(enemy);
 		}
 
-		private void OnEnemyExited(FactionObject enemy)
+		private void OnEnemyExited(object sender, FactionObjectEventArgs args)
 		{
-			RemoveEnemy(enemy);
+			RemoveEnemy(args.FactionObject);
 		}
 
-		private void RemoveEnemy(FactionObject enemy)
+		private void RemoveEnemy(IFactionable enemy)
 		{
 			bool didRemoveEnemy = _inRangeEnemies.Remove(enemy);
 			Assert.IsTrue(didRemoveEnemy);

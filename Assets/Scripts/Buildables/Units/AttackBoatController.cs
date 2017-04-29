@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units
 	public class AttackBoatController : Unit
 	{
 		private int _directionMultiplier;
-		private FactionObject _blockingFriendlyUnit;
+		private IFactionable _blockingFriendlyUnit;
 		
 		public FactionObjectDetector enemyDetector;
 		public FactionObjectDetector friendDetector;
@@ -40,14 +40,14 @@ namespace BattleCruisers.Buildables.Units
 			} 
 		}
 
-		private FactionObject _enemyUnit;
-		private FactionObject EnemyUnit
+		private IFactionable _enemyUnit;
+		private IFactionable EnemyUnit
 		{
 			get { return _enemyUnit; }
 			set
 			{
 				_enemyUnit = value;
-				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.gameObject : null;
+				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.GameObject : null;
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Units
 			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
 
 			enemyDetector.Initialise(Helper.GetOppositeFaction(Faction));
-			enemyDetector.OnEntered = OnEnemyEntered;
+			enemyDetector.OnEntered += OnEnemyEntered;
 
 			friendDetector.Initialise(Faction);
 			friendDetector.gameObject.SetActive(true);
@@ -68,8 +68,8 @@ namespace BattleCruisers.Buildables.Units
 		{
 			base.OnBuildableCompleted();
 
-			friendDetector.OnEntered = OnFriendEntered;
-			friendDetector.OnExited = OnFriendExited;
+			friendDetector.OnEntered += OnFriendEntered;
+			friendDetector.OnExited += OnFriendExited;
 		}
 
 		protected override void OnUpdate()
@@ -85,11 +85,11 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private void OnEnemyEntered(FactionObject enemy)
+		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
 
-			EnemyUnit = enemy;
+			EnemyUnit = args.FactionObject;
 			EnemyUnit.Destroyed += EnemyUnit_Destroyed;
 			StopMoving();
 		}
@@ -101,13 +101,13 @@ namespace BattleCruisers.Buildables.Units
 			EnemyUnit = null;
 		}
 
-		private void OnFriendEntered(FactionObject friend)
+		private void OnFriendEntered(object sender, FactionObjectEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnFriendEntered()");
 
-			if (IsObjectInFront(friend))
+			if (IsObjectInFront(args.FactionObject))
 			{
-				_blockingFriendlyUnit = friend;
+				_blockingFriendlyUnit = args.FactionObject;
 				_blockingFriendlyUnit.Destroyed += BlockingFriendlyUnit_Destroyed;
 				StopMoving();
 			}
@@ -119,23 +119,23 @@ namespace BattleCruisers.Buildables.Units
 			_blockingFriendlyUnit = null;
 		}
 
-		private void OnFriendExited(FactionObject friend)
+		private void OnFriendExited(object sender, FactionObjectEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnFriendExited()");
 
-			if (IsObjectInFront(friend))
+			if (IsObjectInFront(args.FactionObject))
 			{
 				_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
 				StartMoving();
 			}
 		}
 
-		private bool IsObjectInFront(FactionObject factionObject)
+		private bool IsObjectInFront(IFactionable factionObject)
 		{
 			return (facingDirection == Direction.Right
-					&& factionObject.gameObject.transform.position.x > transform.position.x)
+					&& factionObject.GameObject.transform.position.x > transform.position.x)
 				|| (facingDirection == Direction.Left
-					&& factionObject.gameObject.transform.position.x < transform.position.x);
+					&& factionObject.GameObject.transform.position.x < transform.position.x);
 		}
 
 		private void StartMoving()
