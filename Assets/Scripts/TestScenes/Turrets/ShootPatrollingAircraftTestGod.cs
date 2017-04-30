@@ -12,7 +12,7 @@ namespace BattleCruisers.TestScenes.Turrets
 	public class ShootPatrollingAircraftTestGod : MonoBehaviour 
 	{
 		public Vector2[] aircraftPatrolPoints;
-		public AircraftController aircraft;
+		public List<AircraftController> aircraft;
 
 		public DefensiveTurret turret;
 
@@ -20,13 +20,21 @@ namespace BattleCruisers.TestScenes.Turrets
 		{
 			Helper helper = new Helper();
 
-			helper.InitialiseBuildable(aircraft, faction: Faction.Blues);
-			aircraft.PatrolPoints = aircraftPatrolPoints;
-			aircraft.StartConstruction();
-			aircraft.StartPatrolling();
+			InitialisePlanes(helper, aircraft, Faction.Blues);
 
 			helper.InitialiseBuildable(turret, faction: Faction.Reds);
 			turret.StartConstruction();
+		}
+
+		private void InitialisePlanes(Helper helper, IList<AircraftController> planes, Faction faction)
+		{
+			foreach (AircraftController plane in planes)
+			{
+				helper.InitialiseBuildable(plane, faction);
+				plane.PatrolPoints = aircraftPatrolPoints;
+				plane.StartConstruction();
+				plane.StartPatrolling();
+			}
 		}
 	}
 }
