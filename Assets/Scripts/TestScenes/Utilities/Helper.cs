@@ -35,6 +35,11 @@ namespace BattleCruisers.TestScenes.Utilities
 				enemyCruiser = CreateCruiser();
 			}
 
+			if (filterFactory == null)
+			{
+				filterFactory = new FactionObjectFilterFactory();
+			}
+
 			buildable.Initialise(
 				faction,
 				uiManager,
