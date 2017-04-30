@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Units
 	public abstract class Unit : Buildable, IPointerClickHandler
 	{
 		public UnitCategory category;
-		// FELIX  Remove?
+		// FELIX  Remove?  Just figure out whether are mirrored?  (See turrets I think)
 		public Direction facingDirection;
 
 		// FELIX  Create UnitStats class?
