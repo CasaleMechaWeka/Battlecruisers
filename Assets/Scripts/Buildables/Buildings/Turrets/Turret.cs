@@ -32,7 +32,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public IFactionable Target { get; set; }
+		public IFactionable Target 
+		{ 
+			get { return turretBarrelController.Target; }
+			set { turretBarrelController.Target = value; }
+		}
 
 		public override Sprite Sprite
 		{
