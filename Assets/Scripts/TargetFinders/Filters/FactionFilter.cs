@@ -15,7 +15,7 @@ namespace BattleCruisers.TargetFinders.Filters
 			_factionToDetect = factionToDetect;
 		}
 
-		public bool IsMatch(IFactionable factionObject)
+		public virtual bool IsMatch(IFactionable factionObject)
 		{
 			return factionObject.Faction == _factionToDetect;
 		}

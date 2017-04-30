@@ -17,6 +17,11 @@ namespace BattleCruisers.Buildables.Units
 		Left, Right, Up, Down
 	}
 
+	public interface IUnit : IFactionable
+	{
+		UnitCategory Category { get; }
+	}
+
 	public class Unit : Buildable, IPointerClickHandler
 	{
 		public UnitCategory category;
@@ -29,13 +34,8 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Only for ships!
 		public Rigidbody2D rigidBody;
 
-		public IDroneConsumerProvider DroneConsumerProvider
-		{
-			set
-			{
-				_droneConsumerProvider = value;
-			}
-		}
+		public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
+		public UnitCategory Category { get { return category; } }
 
 		protected override void OnAwake()
 		{
