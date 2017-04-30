@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.TargetFinders.Filters
@@ -14,18 +15,12 @@ namespace BattleCruisers.TargetFinders.Filters
 	public class TargetFilter : ITargetFilter
 	{
 		private readonly Faction _factionToDetect;
-		private readonly IList<TargetType> _targetTypes;
-
-		public TargetFilter(Faction faction, IList<TargetType> targetTypes)
-		{
-			_factionToDetect = faction;
-			_targetTypes = targetTypes;
-		}
+		private readonly TargetType[] _targetTypes;
 
 		public TargetFilter(Faction faction, params TargetType[] targetTypes)
 		{
 			_factionToDetect = faction;
-			_targetTypes = new List<TargetType>(targetTypes);
+			_targetTypes = targetTypes;
 		}
 
 		public virtual bool IsMatch(IFactionable factionObject)

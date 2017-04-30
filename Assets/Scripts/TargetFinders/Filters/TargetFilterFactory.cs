@@ -8,17 +8,11 @@ namespace BattleCruisers.TargetFinders.Filters
 {
 	public interface ITargetFilterFactory
 	{
-		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
 	}
 
 	public class TargetFilterFactory : ITargetFilterFactory
 	{
-		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
-		{
-			return new TargetFilter(faction, targetTypes);
-		}
-
 		public ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes)
 		{
 			return new TargetFilter(faction, targetTypes);
