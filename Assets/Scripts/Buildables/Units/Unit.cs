@@ -31,11 +31,11 @@ namespace BattleCruisers.Buildables.Units
 		// FELIX  Create UnitStats class?
 		public float maxVelocityInMPerS;
 
-		// FELIX  Only for ships!
 		public Rigidbody2D rigidBody;
 
 		public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
 		public UnitCategory Category { get { return category; } }
+		public override Vector2 Velocity { get { return rigidBody.velocity; } }
 
 		protected override void OnAwake()
 		{

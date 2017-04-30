@@ -55,6 +55,7 @@ namespace BattleCruisers.Buildables
 		Faction Faction { get; }
 		TargetType TargetType { get; }
 		GameObject GameObject { get; }
+		Vector2 Velocity { get; }
 	}
 
 	public abstract class FactionObject : MonoBehaviour, IFactionable
@@ -66,6 +67,7 @@ namespace BattleCruisers.Buildables
 		public Faction Faction { get; protected set; }
 		public GameObject GameObject { get { return gameObject; } }
 		public abstract TargetType TargetType { get; }
+		public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
 
 		public event EventHandler Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
