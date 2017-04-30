@@ -108,7 +108,8 @@ namespace BattleCruisers
 
 			// Defence
 			IList<BuildingKey> defence = new List<BuildingKey>();
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
+			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
 
 			// Offence
 			IList<BuildingKey> offence = new List<BuildingKey>();
@@ -215,10 +216,10 @@ namespace BattleCruisers
 			IList<BuildingKey> buildOrder = new List<BuildingKey>();
 
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-//			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "ShootyTurret"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
 //			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 
