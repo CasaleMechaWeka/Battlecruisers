@@ -41,11 +41,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			if (Target != null)
 			{
-				Vector2 source = new Vector2(transform.position.x, transform.position.y);
-				Vector3 targetPosition = Target.GameObject.transform.position;
-				Vector2 target = new Vector2(targetPosition.x, targetPosition.y);
+				Vector2 sourcePosition = new Vector2(transform.position.x, transform.position.y);
+				Vector3 targetPositionV3 = Target.GameObject.transform.position;
+				Vector2 targetPosition = new Vector2(targetPositionV3.x, targetPositionV3.y);
 				
-				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(source, target, IsSourceMirrored, turretStats.bulletVelocityInMPerS);
+				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(sourcePosition, targetPosition, IsSourceMirrored, turretStats.bulletVelocityInMPerS);
 
 				bool isOnTarget = MoveBarrelToAngle(desiredAngleInDegrees);
 
