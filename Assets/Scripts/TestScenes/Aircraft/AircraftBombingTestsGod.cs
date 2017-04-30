@@ -25,13 +25,9 @@ namespace BattleCruisers.TestScenes.Aircraft
 			IFactionable factionObject = Substitute.For<IFactionable>();
 			factionObject.GameObject.Returns(target);
 
-			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-			targetFinder.FindTarget().Returns(factionObject);
-
-			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
-			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
-
 			Helper helper = new Helper();
+
+			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(factionObject);
 
 			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
 			bomberToRight.StartConstruction();
