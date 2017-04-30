@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Utils;
 using System;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public TurretStats turretStats;
 		public AngleCalculator angleCalculator;
 
-		public GameObject Target { get; set; }
+		public IFactionable Target { get; set; }
 		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
@@ -41,7 +42,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			if (Target != null)
 			{
 				Vector2 source = new Vector2(transform.position.x, transform.position.y);
-				Vector2 target = new Vector2(Target.transform.position.x, Target.transform.position.y);
+				Vector3 targetPosition = Target.GameObject.transform.position;
+				Vector2 target = new Vector2(targetPosition.x, targetPosition.y);
 				
 				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(source, target, IsSourceMirrored, turretStats.bulletVelocityInMPerS);
 

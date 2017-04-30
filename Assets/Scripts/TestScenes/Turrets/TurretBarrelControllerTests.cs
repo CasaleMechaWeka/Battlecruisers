@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Utils;
+using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace BattleCruisers.TestScenes
 {
 	public class TurretBarrelControllerTests : MonoBehaviour 
 	{
-		public GameObject target;
+		public GameObject targetGameObject;
 
 		public TurretBarrelController barrelBelowToLeft;
 		public TurretBarrelController barrelBelowToRight;
@@ -23,6 +24,9 @@ namespace BattleCruisers.TestScenes
 
 		void Start()
 		{
+			IFactionable target = Substitute.For<IFactionable>();
+			target.GameObject.Returns(targetGameObject);
+
 			// Turrets facing right
 			barrelBelowToLeft.Target = target;
 			barrelBelowToLeft.Initialise(Faction.Blues);

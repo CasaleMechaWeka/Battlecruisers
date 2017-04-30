@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildables.Units
 			set
 			{
 				_enemyUnit = value;
-				turretBarrelController.Target = _enemyUnit != null ? _enemyUnit.GameObject : null;
+				turretBarrelController.Target = _enemyUnit;
 			}
 		}
 

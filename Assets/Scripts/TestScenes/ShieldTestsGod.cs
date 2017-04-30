@@ -17,7 +17,7 @@ namespace BattleCruisers.TestScenes
 			shield.Initialise(Faction.Reds);
 
 			turret.Initialise(Faction.Blues);
-			turret.Target = shield.gameObject;
+			turret.Target = shield;
 		}
 	}
 }
