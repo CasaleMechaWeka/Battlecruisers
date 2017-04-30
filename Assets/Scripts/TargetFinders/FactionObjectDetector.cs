@@ -24,14 +24,14 @@ namespace BattleCruisers.TargetFinders
 
 	public class FactionObjectDetector : MonoBehaviour, IFactionObjectDetector
 	{
-		private IFactionObjectFilter _factionObjectFilter;
+		private ITargetFilter _factionObjectFilter;
 
 		public CircleCollider2D circleCollider;
 
 		public event EventHandler<FactionObjectEventArgs> OnEntered;
 		public event EventHandler<FactionObjectEventArgs> OnExited;
 
-		public void Initialise(IFactionObjectFilter factionObjectFilter, float radiusInM = -1)
+		public void Initialise(ITargetFilter factionObjectFilter, float radiusInM = -1)
 		{
 			_factionObjectFilter = factionObjectFilter;
 

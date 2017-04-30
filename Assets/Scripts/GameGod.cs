@@ -46,7 +46,7 @@ namespace BattleCruisers
 
 			// Common setup
 			_buildingGroupFactory = new BuildingGroupFactory();
-			IFactionObjectFilterFactory filterFactory = new FactionObjectFilterFactory();
+			ITargetFilterFactory filterFactory = new TargetFilterFactory();
 			
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			buildableFactory.Initialise(prefabFetcher);

@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Units
 		UnitCategory Category { get; }
 	}
 
-	public class Unit : Buildable, IPointerClickHandler
+	public abstract class Unit : Buildable, IPointerClickHandler
 	{
 		public UnitCategory category;
 		// FELIX  Remove?

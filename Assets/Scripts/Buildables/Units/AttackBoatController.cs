@@ -52,6 +52,8 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
+		public override TargetType TargetType { get { return TargetType.Ships; } }
+
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
@@ -60,11 +62,11 @@ namespace BattleCruisers.Buildables.Units
 			
 			turretBarrelController.Initialise(Faction);
 
-			IFactionObjectFilter enemyFilter = _filterFactory.CreateFactionFilter(Helper.GetOppositeFaction(Faction));
+			ITargetFilter enemyFilter = _filterFactory.CreateTargetFilter(Helper.GetOppositeFaction(Faction));
 			enemyDetector.Initialise(enemyFilter);
 			enemyDetector.OnEntered += OnEnemyEntered;
 
-			IFactionObjectFilter friendFilter = _filterFactory.CreateFactionFilter(Faction);
+			ITargetFilter friendFilter = _filterFactory.CreateTargetFilter(Faction);
 			friendDetector.Initialise(friendFilter);
 			friendDetector.OnEntered += OnFriendEntered;
 			friendDetector.OnExited += OnFriendExited;

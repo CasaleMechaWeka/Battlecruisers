@@ -36,7 +36,7 @@ namespace BattleCruisers.Cruisers
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
 		private ITargetFinderFactory _targetFinderFactory;
-		private IFactionObjectFilterFactory _filterFactory;
+		private ITargetFilterFactory _filterFactory;
 
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
@@ -50,6 +50,7 @@ namespace BattleCruisers.Cruisers
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 		public Direction Direction { get { return direction; } }
+		public override TargetType TargetType { get { return TargetType.Cruiser; } }
 
 		void Start()
 		{
@@ -62,7 +63,7 @@ namespace BattleCruisers.Cruisers
 		}
 
 		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-			TargetFinderFactory targetFinderFactory, IFactionObjectFilterFactory filterFactory)
+			TargetFinderFactory targetFinderFactory, ITargetFilterFactory filterFactory)
 		{
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);

@@ -20,6 +20,7 @@ namespace BattleCruisers.TestScenes.Mock
 		public IDroneConsumerProvider DroneConsumerProvider { get; set; }
 		public Direction Direction { get; set; }
 		public GameObject GameObject { get; set; }
+		public TargetType TargetType { get; set; }
 
 		#pragma warning disable 67  // Unused event
 		public event EventHandler Destroyed;

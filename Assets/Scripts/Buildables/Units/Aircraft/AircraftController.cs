@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -16,6 +17,8 @@ namespace BattleCruisers.Units.Aircraft
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
+
+		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
 		private IList<Vector2> _patrolPoints;
 		public IList<Vector2> PatrolPoints

@@ -22,6 +22,8 @@ namespace BattleCruisers.Buildables.Buildings
 		// Proportional to building size
 		public float customOffsetProportion;
 
+		public override TargetType TargetType { get { return TargetType.Buildings; } }
+
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);

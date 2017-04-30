@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetFinderFactory _targetFinderFactory;
-		protected IFactionObjectFilterFactory _filterFactory;
+		protected ITargetFilterFactory _filterFactory;
 
 		public string buildableName;
 		public string description;
@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, 
-			BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory, IFactionObjectFilterFactory filterFactory)
+			BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory, ITargetFilterFactory filterFactory)
 		{
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;

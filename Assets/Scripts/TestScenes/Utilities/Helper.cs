@@ -23,7 +23,7 @@ namespace BattleCruisers.TestScenes.Utilities
 			ICruiser enemyCruiser = null,
 			BuildableFactory buildableFactory = null,
 			ITargetFinderFactory targetFinderFactory = null,
-			IFactionObjectFilterFactory filterFactory = null)
+			ITargetFilterFactory filterFactory = null)
 		{
 			if (parentCruiser == null)
 			{
@@ -37,7 +37,7 @@ namespace BattleCruisers.TestScenes.Utilities
 
 			if (filterFactory == null)
 			{
-				filterFactory = new FactionObjectFilterFactory();
+				filterFactory = new TargetFilterFactory();
 			}
 
 			buildable.Initialise(

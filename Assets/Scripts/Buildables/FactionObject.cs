@@ -15,6 +15,11 @@ namespace BattleCruisers.Buildables
 		Blues, Reds
 	}
 
+	public enum TargetType
+	{
+		Aircraft, Ships, Cruiser, Buildings
+	}
+
 	public class HealthChangedEventArgs : EventArgs
 	{
 		public float NewHealth { get; private set; }
@@ -48,6 +53,7 @@ namespace BattleCruisers.Buildables
 	public interface IFactionable : IDamagable
 	{
 		Faction Faction { get; }
+		TargetType TargetType { get; }
 		GameObject GameObject { get; }
 	}
 
@@ -59,6 +65,7 @@ namespace BattleCruisers.Buildables
 		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
 		public GameObject GameObject { get { return gameObject; } }
+		public abstract TargetType TargetType { get; }
 
 		public event EventHandler Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
