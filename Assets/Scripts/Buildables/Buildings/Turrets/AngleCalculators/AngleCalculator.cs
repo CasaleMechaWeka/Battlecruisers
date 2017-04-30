@@ -8,18 +8,25 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
 	public interface IAngleCalculator
 	{
+		// FELIX  Add Comment and link!
 		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS);
+		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity);
 		float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees);
 	}
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
+		public float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
+		{
+			return FindDesiredAngle(source, target, isSourceMirrored, projectileVelocityInMPerS, new Vector2(0, 0));
+		}
+
 		/// <summary>
 		/// Assumes:
 		/// 1. Shells are NOT affected by gravity
 		/// 2. Targets do not move
 		/// </summary>
-		public virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
+		public virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			if (source == target)
 			{
