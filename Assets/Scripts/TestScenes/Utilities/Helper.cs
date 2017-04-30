@@ -13,9 +13,16 @@ namespace BattleCruisers.TestScenes.Utilities
 {
 	public class Helper
 	{
+		private readonly int _numOfDrones;
+
 		// Massive, so buildables build instantly
 		private const int NUM_OF_DRONES = 100;
-		
+
+		public Helper(int numOfDrones = NUM_OF_DRONES)
+		{
+			_numOfDrones = numOfDrones;
+		}
+
 		public void InitialiseBuildable(
 			Buildable buildable,
 			Faction faction = Faction.Blues,
@@ -28,12 +35,12 @@ namespace BattleCruisers.TestScenes.Utilities
 		{
 			if (parentCruiser == null)
 			{
-				parentCruiser = CreateCruiser();
+				parentCruiser = CreateCruiser(_numOfDrones);
 			}
 
 			if (enemyCruiser == null)
 			{
-				enemyCruiser = CreateCruiser();
+				enemyCruiser = CreateCruiser(_numOfDrones);
 			}
 
 			if (filterFactory == null)
@@ -51,7 +58,7 @@ namespace BattleCruisers.TestScenes.Utilities
 				filterFactory);
 		}
 
-		private ICruiser CreateCruiser(int numOfDrones = NUM_OF_DRONES)
+		private ICruiser CreateCruiser(int numOfDrones)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
 			droneConsumer.NumOfDrones = NUM_OF_DRONES;
