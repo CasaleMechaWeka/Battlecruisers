@@ -4,6 +4,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.TargetFinders;
 using BattleCruisers.TargetFinders.Filters;
 using BattleCruisers.UI;
+using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,19 +51,18 @@ namespace BattleCruisers.TestScenes.Utilities
 				filterFactory);
 		}
 
-		public ICruiser CreateCruiser(int numOfDrones = NUM_OF_DRONES)
+		private ICruiser CreateCruiser(int numOfDrones = NUM_OF_DRONES)
 		{
-			return new Mock.Cruiser() 
-			{
-				DroneConsumerProvider = new Mock.DroneConsumerProvider() 
-				{
-					DroneConsumer = new Mock.DroneConsumer() 
-					{
-						State = DroneConsumerState.Active,
-						NumOfDrones = NUM_OF_DRONES
-					}
-				}
-			};
+			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
+			droneConsumer.NumOfDrones = NUM_OF_DRONES;
+
+			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
+			droneConsumerProvider.RequestDroneConsumer(0).ReturnsForAnyArgs(droneConsumer);
+
+			ICruiser cruiser = Substitute.For<ICruiser>();
+			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
+
+			return cruiser;
 		}
 	}
 }
