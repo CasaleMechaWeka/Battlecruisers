@@ -45,6 +45,14 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
+		public override Vector2 Velocity
+		{
+			get
+			{
+				return _isPatrolling ? _patrollingVelocity : base.Velocity;
+			}
+		}
+
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
@@ -62,6 +70,8 @@ namespace BattleCruisers.Units.Aircraft
 			if (!isInPosition)
 			{
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
+
+				Debug.Log($"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
 			}
 			else
 			{
