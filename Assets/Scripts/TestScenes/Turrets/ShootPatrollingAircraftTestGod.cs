@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.TestScenes.Turrets
 {
-	public class AntiAirTurretTestsGod : MonoBehaviour 
+	public class ShootPatrollingAircraftTestGod : MonoBehaviour 
 	{
 		public Vector2[] aircraftPatrolPoints;
 		public AircraftController aircraft;
