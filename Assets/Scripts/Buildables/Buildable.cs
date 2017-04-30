@@ -127,7 +127,9 @@ namespace BattleCruisers.Buildables
 			BuildableState = BuildableState.NotStarted;
 
 			healthBar.Initialise(this);
-			buildableProgress.Initialize(Size);
+
+			// FELIX  Remove?
+//			buildableProgress.Initialize(Size);
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, 
