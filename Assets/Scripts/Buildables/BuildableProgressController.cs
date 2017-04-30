@@ -24,13 +24,6 @@ namespace BattleCruisers.Buildables
 			buildable.Destroyed += Buildable_CompletedOrDestroyedBuilding;
 		}
 
-		// FELIX  Remove?
-		public void Initialize(Vector2 size)
-		{
-			fillableImage.rectTransform.sizeDelta = new Vector2(size.x, size.y);
-			outlineImage.rectTransform.sizeDelta = new Vector2(size.x, size.y);
-		}
-
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
 		{
 			gameObject.SetActive(true);
