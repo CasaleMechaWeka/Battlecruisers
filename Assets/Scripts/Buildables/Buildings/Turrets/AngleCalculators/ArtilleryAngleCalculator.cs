@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float angleInRadians = (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (projectileVelocityInMPerS * projectileVelocityInMPerS)));
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"ArtilleryAngleCalculator.FindDesiredAngle() {angleInDegrees}*");
+			Logging.Log(Tags.ANGLE_CALCULATORS, $"ArtilleryAngleCalculator.FindDesiredAngle() {angleInDegrees}*");
 
 			return angleInDegrees;
 		}

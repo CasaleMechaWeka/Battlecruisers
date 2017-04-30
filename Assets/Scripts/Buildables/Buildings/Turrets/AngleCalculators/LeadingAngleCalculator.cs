@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +26,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
 			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
-			return new Vector2(projectedX, projectedY);
+
+			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
+			Logging.Log(Tags.ANGLE_CALCULATORS, $"target: {target}  projectedPosition: {projectedPosition}  targetVelocity: {targetVelocity}  timeToTargetEstimate: {timeToTargetEstimate}");
+			return projectedPosition;
 		}
 	}
 }
