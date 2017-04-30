@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Turrets
 		public void FindDesiredAngle_SourceIsTarget()
 		{
 			Vector2 point = new Vector2();
-			_angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1);
+			_angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0));
 		}
 
 		#region Same axis
@@ -148,7 +148,7 @@ namespace BattleCruisers.Tests.Turrets
 
 		private void TestFindDesiredAngle(Vector2 source, bool isSourceMirrored, float expectedAngleInDegrees)
 		{
-			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1);
+			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0));
 			Assert.AreEqual(expectedAngleInDegrees, angleInDegrees);
 		}
 		#endregion FindDesiredAngle

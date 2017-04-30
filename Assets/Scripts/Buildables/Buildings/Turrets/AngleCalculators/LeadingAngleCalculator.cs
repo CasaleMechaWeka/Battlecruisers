@@ -32,10 +32,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			Logging.Log(Tags.ANGLE_CALCULATORS, $"target: {target}  projectedPosition: {projectedPosition}  targetVelocity: {targetVelocity}  timeToTargetEstimate: {timeToTargetEstimate}");
 			return projectedPosition;
 		}
-
-		public override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
-		{
-			throw new NotSupportedException("Should always provide targetVelocity for LeadingAngleCalculator");
-		}
 	}
 }
