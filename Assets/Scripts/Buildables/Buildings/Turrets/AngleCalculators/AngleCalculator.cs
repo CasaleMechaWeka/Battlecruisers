@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
-		public float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
+		public virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{
 			return FindDesiredAngle(source, target, isSourceMirrored, projectileVelocityInMPerS, new Vector2(0, 0));
 		}
