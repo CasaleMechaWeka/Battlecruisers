@@ -16,7 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-			Target = _enemyCruiser;
+
+			// FELIX  Inject target finder, so this stops messing with my tests!!
+//			Target = _enemyCruiser;
 		}
 	}
 }
