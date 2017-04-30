@@ -64,29 +64,5 @@ namespace BattleCruisers.TestScenes.Utilities
 				}
 			};
 		}
-
-		public ITargetFinderFactory CreateTargetFinderFactory(ITargetFinder targetFinder)
-		{
-			return new Mock.TargetFinderFactory() 
-			{
-				BomberTargetFinder = targetFinder
-			};
-		}
-		
-		public ITargetFinder CreateTargetFinder(IFactionable target)
-		{
-			return new Mock.TargetFinder() 
-			{
-				Target = target
-			};
-		}
-
-		public IFactionable CreateFactionObject(GameObject gameObject = null)
-		{
-			return new Mock.FactionObject() 
-			{
-				GameObject = gameObject
-			};
-		}
 	}
 }

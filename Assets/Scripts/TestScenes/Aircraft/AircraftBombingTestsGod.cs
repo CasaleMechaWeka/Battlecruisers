@@ -4,6 +4,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.TargetFinders;
 using BattleCruisers.TestScenes;
 using BattleCruisers.Units.Aircraft;
+using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,16 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		void Start() 
 		{
+			IFactionable factionObject = Substitute.For<IFactionable>();
+			factionObject.GameObject.Returns(target);
+
+			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
+			targetFinder.FindTarget().Returns(factionObject);
+
+			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
+			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
+
 			Helper helper = new Helper();
-			IFactionable factionObject = helper.CreateFactionObject(target);
-			ITargetFinder targetFinder = helper.CreateTargetFinder(factionObject);
-			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(targetFinder);
 
 			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
 			bomberToRight.StartConstruction();
