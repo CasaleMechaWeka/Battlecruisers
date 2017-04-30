@@ -8,7 +8,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
 	public interface IAngleCalculator
 	{
-		// FELIX  Add Comment and link!
+		// Cannot use both namespaces and optional parameters in MonoBehaviour scripts :D
+		// So using method overloading instead.
+		// https://forum.unity3d.com/threads/script-can-use-namespace-or-optional-parameters-but-not-both.164563/
+
 		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS);
 		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity);
 		float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees);
