@@ -80,7 +80,6 @@ namespace BattleCruisers.Units.Aircraft
 
 			Assert.IsNotNull(bomberStats);
 			Assert.IsNotNull(bombSpawner);
-			Assert.IsTrue(cruisingAltitude > transform.position.y);
 
 			_haveDroppedBombOnRun = false;
 
@@ -94,7 +93,9 @@ namespace BattleCruisers.Units.Aircraft
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-			
+
+			Assert.IsTrue(cruisingAltitude > transform.position.y);
+
 			PatrolPoints = FindPatrolPoints();
 			StartPatrolling();
 		}
