@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.TargetFinders
+namespace BattleCruisers.Targets.TargetFinders
 {
 	public class FactionObjectEventArgs : EventArgs
 	{

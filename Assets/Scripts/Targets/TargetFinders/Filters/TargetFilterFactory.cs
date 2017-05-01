@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TargetFinders.Filters
+namespace BattleCruisers.Targets.TargetFinders.Filters
 {
 	public interface ITargetFilterFactory
 	{

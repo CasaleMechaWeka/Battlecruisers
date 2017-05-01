@@ -1,5 +1,5 @@
-﻿using BattleCruisers.TargetFinders;
-using BattleCruisers.TargetFinders.Filters;
+﻿using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;

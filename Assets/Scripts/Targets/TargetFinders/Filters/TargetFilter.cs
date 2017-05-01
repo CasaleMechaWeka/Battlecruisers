@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.TargetFinders.Filters
+namespace BattleCruisers.Targets.TargetFinders.Filters
 {
 	public interface ITargetFilter
 	{

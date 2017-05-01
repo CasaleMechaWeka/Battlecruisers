@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TargetFinders
+namespace BattleCruisers.Targets.TargetFinders
 {
 	public interface ITargetFinderFactory
 	{

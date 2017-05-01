@@ -1,4 +1,4 @@
-﻿using BattleCruisers.TargetFinders;
+﻿using BattleCruisers.Targets.TargetFinders;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

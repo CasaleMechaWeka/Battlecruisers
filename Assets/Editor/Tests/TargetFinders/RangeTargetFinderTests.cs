@@ -1,4 +1,4 @@
-﻿using BattleCruisers.TargetFinders;
+﻿using BattleCruisers.Targets.TargetFinders;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;

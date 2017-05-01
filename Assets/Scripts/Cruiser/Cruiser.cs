@@ -2,8 +2,8 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
-using BattleCruisers.TargetFinders;
-using BattleCruisers.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
 using System;

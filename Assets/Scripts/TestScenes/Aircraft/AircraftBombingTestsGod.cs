@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.TargetFinders;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.TestScenes;
 using BattleCruisers.Units.Aircraft;
 using NSubstitute;

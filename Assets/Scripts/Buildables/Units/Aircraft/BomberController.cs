@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
-using BattleCruisers.TargetFinders;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;

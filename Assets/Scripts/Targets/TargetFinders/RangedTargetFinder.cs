@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.TargetFinders;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.TargetFinders
+namespace BattleCruisers.Targets.TargetFinders
 {
 	public interface IRangedTargetFinder : ITargetFinder
 	{
