@@ -19,8 +19,9 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		public TargetFinderFactory(Cruiser enemyCruiser)
 		{
-			BomberTargetFinder = new BomberTargetFinder(enemyCruiser);
-			OffensiveBuildingTargetFinder = new OffensiveBuildingTargetFinder(enemyCruiser);
+			// FELIX  Use specialised target finders
+			BomberTargetFinder = new GlobalTargetFinder(enemyCruiser);
+			OffensiveBuildingTargetFinder = new GlobalTargetFinder(enemyCruiser);
 		}
 	}
 }

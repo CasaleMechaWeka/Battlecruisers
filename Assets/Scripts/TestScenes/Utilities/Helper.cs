@@ -75,7 +75,8 @@ namespace BattleCruisers.TestScenes.Utilities
 		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable target = null)
 		{
 			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-			targetFinder.FindTarget().Returns(target);
+			// FELIX
+//			targetFinder.FindTarget().Returns(target);
 
 			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
 			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);

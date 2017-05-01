@@ -36,6 +36,8 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				_target = value;
 
+				// FELIX  Avoid duplicate functionality with TurnAround()?
+				// Or check if next alrady traveling in this direction?
 				float xVelocity = maxVelocityInMPerS;
 				if (_target.transform.position.x < transform.position.x)
 				{
@@ -125,7 +127,8 @@ namespace BattleCruisers.Units.Aircraft
 
 				if (Target == null)
 				{
-					Target = _targetFinder.FindTarget().GameObject;
+					// FELIX
+//					Target = _targetFinder.FindTarget().GameObject;
 				}
 
 				if (rigidBody.velocity != TargetVelocity)

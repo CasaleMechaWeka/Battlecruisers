@@ -23,7 +23,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnBuildableCompleted();
 
-			Target = _targetFinder.FindTarget();
+			// FELIX
+//			Target = _targetFinder.FindTarget();
 		}
 	}
 }

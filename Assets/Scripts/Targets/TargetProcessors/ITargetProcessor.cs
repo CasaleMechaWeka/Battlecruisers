@@ -1,0 +1,18 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace BattleCruisers.Targets.TargetProcessors
+{
+	/// <summary>
+	/// Ranks all targets, and assigns the highest ranked target to ITargetConsumers.
+	/// </summary>
+	public interface ITargetProcessor
+	{
+		/// <exception cref="ArgumentException">If the target consumer is already added.</exception>
+		void AddTargeConsumer(ITargetConsumer targetConsumer);
+
+		/// <exception cref="ArgumentException">If the target consumer was not added first.</exception>
+		void RemoveTargeConsumer(ITargetConsumer targetConsumer);
+	}
+}

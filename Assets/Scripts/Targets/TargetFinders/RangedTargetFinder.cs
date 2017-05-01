@@ -9,21 +9,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public interface IRangedTargetFinder : ITargetFinder
-	{
-		// When a target comes within range.
-		event EventHandler<TargetEventArgs> TargetFound;
-
-		// When an existing target is lost, either because it moves out of
-		// range or is destroyed.
-		event EventHandler<TargetEventArgs> TargetLost;
-	}
-
 	/// <summary>
 	/// Keeps track of all enemies within range.
 	/// </summary>
-	/// FELIX  Create tests :/  Make FactionObjectDetector an interface 
-	public class RangedTargetFinder : MonoBehaviour, IRangedTargetFinder
+	public class RangedTargetFinder : MonoBehaviour, ITargetFinder
 	{
 		private IList<IFactionable> _inRangeEnemies;
 
