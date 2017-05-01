@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.TargetFinders;
 using BattleCruisers.TestScenes.Utilities;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace BattleCruisers.TestScenes
 
 			Helper helper = new Helper(numOfDrones: 8);
 
+			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory();
+
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable);
+				helper.InitialiseBuildable(buildable, targetFinderFactory: targetFinderFactory);
 				buildable.StartConstruction();
 			}
 		}

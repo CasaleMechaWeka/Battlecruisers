@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.TargetFinders;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,18 +8,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class OffensiveTurret : Turret
 	{
-		protected override void OnAwake()
+		private ITargetFinder _targetFinder;
+
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
+
 			Assert.AreEqual(BuildingCategory.Offence, category);
+			_targetFinder = _targetFinderFactory.OffensiveBuildingTargetFinder;
 		}
 
+		// FELIX  Handle when target is destroyed (ie, when target is not the enemy cruiser)
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			// FELIX  Inject target finder, so this stops messing with my tests!!
-//			Target = _enemyCruiser;
+			Target = _targetFinder.FindTarget();
 		}
 	}
 }

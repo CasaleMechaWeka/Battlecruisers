@@ -72,13 +72,15 @@ namespace BattleCruisers.TestScenes.Utilities
 			return cruiser;
 		}
 
-		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable bomberTarget)
+		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable target = null)
 		{
 			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-			targetFinder.FindTarget().Returns(bomberTarget);
+			targetFinder.FindTarget().Returns(target);
 
 			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
 			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
+			targetFinderFactory.OffensiveBuildingTargetFinder.Returns(targetFinder);
+
 			return targetFinderFactory;
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,28 +9,18 @@ namespace BattleCruisers.TargetFinders
 	public interface ITargetFinderFactory
 	{
 		ITargetFinder BomberTargetFinder { get; }
+		ITargetFinder OffensiveBuildingTargetFinder { get; }
 	}
 
 	public class TargetFinderFactory : ITargetFinderFactory
 	{
-		private Cruiser _enemyCruiser;
-
-		private BomberTargetFinder _bomberTargetFinder;
-		public ITargetFinder BomberTargetFinder
-		{
-			get
-			{
-				if (_bomberTargetFinder == null)
-				{
-					_bomberTargetFinder = new BomberTargetFinder(_enemyCruiser);
-				}
-				return _bomberTargetFinder;
-			}
-		}
+		public ITargetFinder BomberTargetFinder { get; private set; }
+		public ITargetFinder OffensiveBuildingTargetFinder { get; private set; }
 
 		public TargetFinderFactory(Cruiser enemyCruiser)
 		{
-			_enemyCruiser = enemyCruiser;
+			BomberTargetFinder = new BomberTargetFinder(enemyCruiser);
+			OffensiveBuildingTargetFinder = new OffensiveBuildingTargetFinder(enemyCruiser);
 		}
 	}
 }
