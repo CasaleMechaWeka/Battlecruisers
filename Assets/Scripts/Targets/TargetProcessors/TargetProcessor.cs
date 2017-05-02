@@ -14,6 +14,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		// List of targets, in decreasing priority
 		private readonly IList<IFactionable> _targets;
 		private readonly IList<ITargetConsumer> _targetConsumers;
+		private ITargetFinder _targetFinder;
 
 		private IFactionable HighestPriorityTarget
 		{
@@ -27,9 +28,10 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
 			_targets = new List<IFactionable>();
 			_targetConsumers =  new List<ITargetConsumer>();
+			_targetFinder = targetFinder;
 
-			targetFinder.TargetFound += TargetFinder_TargetFound;
-			targetFinder.TargetLost += TargetFinder_TargetLost;
+			_targetFinder.TargetFound += TargetFinder_TargetFound;
+			_targetFinder.TargetLost += TargetFinder_TargetLost;
 		}
 
 		// FELIX  Insert at right priority
@@ -84,6 +86,13 @@ namespace BattleCruisers.Targets.TargetProcessors
 			{
 				consumer.Target = target;
 			}
+		}
+
+		public void Dispose()
+		{
+			_targetFinder.TargetFound -= TargetFinder_TargetFound;
+			_targetFinder.TargetLost -= TargetFinder_TargetLost;
+			_targetFinder = null;
 		}
 	}
 }

@@ -4,23 +4,22 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	/// <summary>
-	/// Keeps track of all enemies within range.
-	/// </summary>
-	public class RangedTargetFinder : MonoBehaviour, ITargetFinder
+	public class RangedTargetFinder : ITargetFinder
 	{
+		private IFactionObjectDetector _enemyDetector;
+
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public void Initialise(IFactionObjectDetector enemyDetector)
+		public RangedTargetFinder(IFactionObjectDetector enemyDetector)
 		{
-			enemyDetector.OnEntered += OnEnemyEntered;
-			enemyDetector.OnExited += OnEnemyExited;
+			_enemyDetector = enemyDetector;
+
+			_enemyDetector.OnEntered += OnEnemyEntered;
+			_enemyDetector.OnExited += OnEnemyExited;
 		}
 
 		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
@@ -53,6 +52,13 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 
 			enemy.Destroyed -= Enemy_Destroyed;
+		}
+
+		public void Dispose()
+		{
+			_enemyDetector.OnEntered -= OnEnemyEntered;
+			_enemyDetector.OnExited -= OnEnemyExited;
+			_enemyDetector = null;
 		}
 	}
 }

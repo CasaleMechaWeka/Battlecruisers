@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			base.OnInitialised();
 
 			Assert.AreEqual(BuildingCategory.Offence, category);
-			_targetFinder = _targetFinderFactory.OffensiveBuildingTargetFinder;
+//			_targetFinder = _targetFinderFactory.OffensiveBuildingTargetFinder;
 		}
 
 		// FELIX  Handle when target is destroyed (ie, when target is not the enemy cruiser)

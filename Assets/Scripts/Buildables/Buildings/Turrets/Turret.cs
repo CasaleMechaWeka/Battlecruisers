@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -11,7 +12,7 @@ using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class Turret : Building
+	public class Turret : Building, ITargetConsumer
 	{
 		private Renderer _turretBaseRenderer;
 		private Renderer _turretBarrelRenderer;

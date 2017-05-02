@@ -24,5 +24,10 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			return _enemyCruiser;
 		}
+
+		public void Dispose()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

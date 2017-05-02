@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI;
@@ -30,8 +31,7 @@ namespace BattleCruisers.TestScenes.Utilities
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
 			BuildableFactory buildableFactory = null,
-			ITargetFinderFactory targetFinderFactory = null,
-			ITargetFilterFactory filterFactory = null)
+			ITargetsFactory targetsFactory = null)
 		{
 			if (parentCruiser == null)
 			{
@@ -43,19 +43,13 @@ namespace BattleCruisers.TestScenes.Utilities
 				enemyCruiser = CreateCruiser(_numOfDrones);
 			}
 
-			if (filterFactory == null)
-			{
-				filterFactory = new TargetFilterFactory();
-			}
-
 			buildable.Initialise(
 				faction,
 				uiManager,
 				parentCruiser,
 				enemyCruiser,
 				buildableFactory,
-				targetFinderFactory,
-				filterFactory);
+				targetsFactory);
 		}
 
 		private ICruiser CreateCruiser(int numOfDrones)
@@ -72,17 +66,18 @@ namespace BattleCruisers.TestScenes.Utilities
 			return cruiser;
 		}
 
-		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable target = null)
-		{
-			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-			// FELIX
-//			targetFinder.FindTarget().Returns(target);
-
-			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
-			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
-			targetFinderFactory.OffensiveBuildingTargetFinder.Returns(targetFinder);
-
-			return targetFinderFactory;
-		}
+		// FELIX
+//		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable target = null)
+//		{
+//			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
+//			// FELIX
+////			targetFinder.FindTarget().Returns(target);
+//
+//			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
+//			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
+//			targetFinderFactory.OffensiveBuildingTargetFinder.Returns(targetFinder);
+//
+//			return targetFinderFactory;
+//		}
 	}
 }

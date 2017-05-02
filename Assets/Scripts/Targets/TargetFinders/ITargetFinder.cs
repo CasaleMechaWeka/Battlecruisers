@@ -20,7 +20,7 @@ namespace BattleCruisers.Targets.TargetFinders
 	/// <summary>
 	/// Finds targets to feed to a ITargeProcessor.
 	/// </summary>
-	public interface ITargetFinder
+	public interface ITargetFinder : IDisposable
 	{
 		// When a target is found (eg, started being built, or comes within range)
 		event EventHandler<TargetEventArgs> TargetFound;

@@ -27,13 +27,13 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 			Helper helper = new Helper();
 
-			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(factionObject);
-
-			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
-			bomberToRight.StartConstruction();
-
-			helper.InitialiseBuildable(bomberToLeft, targetFinderFactory: targetFinderFactory);
-			bomberToLeft.StartConstruction();
+//			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(factionObject);
+//
+//			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
+//			bomberToRight.StartConstruction();
+//
+//			helper.InitialiseBuildable(bomberToLeft, targetFinderFactory: targetFinderFactory);
+//			bomberToLeft.StartConstruction();
 		}
 	}
 }

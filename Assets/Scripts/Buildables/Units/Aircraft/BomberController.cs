@@ -89,7 +89,8 @@ namespace BattleCruisers.Units.Aircraft
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
 
-			_targetFinder = _targetFinderFactory.BomberTargetFinder;
+			// FELIX
+//			_targetFinder = _targetFinderFactory.BomberTargetFinder;
 		}
 		
 		protected override void OnBuildableCompleted()

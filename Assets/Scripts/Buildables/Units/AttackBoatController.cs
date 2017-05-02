@@ -63,11 +63,11 @@ namespace BattleCruisers.Buildables.Units
 			turretBarrelController.Initialise(Faction);
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter enemyFilter = _filterFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
+			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
 			enemyDetector.Initialise(enemyFilter);
 			enemyDetector.OnEntered += OnEnemyEntered;
 
-			ITargetFilter friendFilter = _filterFactory.CreateTargetFilter(Faction, TargetType.Ships);
+			ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, TargetType.Ships);
 			friendDetector.Initialise(friendFilter);
 			friendDetector.OnEntered += OnFriendEntered;
 			friendDetector.OnExited += OnFriendExited;

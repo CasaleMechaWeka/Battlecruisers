@@ -21,9 +21,9 @@ namespace BattleCruisers.TestScenes.Turrets
 			helper.InitialiseBuildable(turret, faction: Faction.Reds);
 			turret.StartConstruction();
 
-			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(turret);
-			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetFinderFactory: targetFinderFactory);
-			bomber.StartConstruction();
+//			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(turret);
+//			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetFinderFactory: targetFinderFactory);
+//			bomber.StartConstruction();
 		}
 	}
 }

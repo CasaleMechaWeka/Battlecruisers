@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -11,10 +12,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class DefensiveTurret : Turret
 	{
-		private FactionObject _enemy;
+		private ITargetFinder _targetFinder;
+		private ITargetProcessor _targetProcessor;
 
 		public FactionObjectDetector enemyDetector;
-		public RangedTargetFinder targetFinder;
 		public TargetType targetType;
 
 		protected override void OnInitialised()
@@ -29,31 +30,26 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			base.OnBuildableCompleted();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter factionObjectFilter = _filterFactory.CreateTargetFilter(enemyFaction, targetType);
+			ITargetFilter factionObjectFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetType);
 			enemyDetector.Initialise(factionObjectFilter, turretBarrelController.turretStats.rangeInM);
 
-			targetFinder.Initialise(enemyDetector);
-			targetFinder.TargetFound += TargetFinder_TargetFound;
-			targetFinder.TargetLost += TargetFinder_TargetLost;
-
-			// FELIX
-//			Target = targetFinder.FindTarget();
+			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder);
+			_targetProcessor.AddTargetConsumer(this);
 		}
 
-		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
+		protected override void OnDestroyed()
 		{
-			if (Target == null)
-			{
-				Target = e.Target;
-			}
-		}
+			base.OnDestroyed();
 
-		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
-		{
-			if (Target == e.Target)
+			if (BuildableState == BuildableState.Completed)
 			{
-				// FELIX
-//				Target = targetFinder.FindTarget();
+				_targetProcessor.RemoveTargetConsumer(this);
+				_targetProcessor.Dispose();
+				_targetProcessor = null;
+
+				_targetFinder.Dispose();
+				_targetFinder = null;
 			}
 		}
 	}

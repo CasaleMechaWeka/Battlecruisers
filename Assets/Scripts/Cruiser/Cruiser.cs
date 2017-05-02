@@ -13,6 +13,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
@@ -35,8 +36,7 @@ namespace BattleCruisers.Cruisers
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
-		private ITargetFinderFactory _targetFinderFactory;
-		private ITargetFilterFactory _filterFactory;
+		private ITargetsFactory _targetsFactory;
 
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
@@ -62,19 +62,16 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Initialise(this);
 		}
 
-		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-			TargetFinderFactory targetFinderFactory, ITargetFilterFactory filterFactory)
+		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, ITargetsFactory targetsFactory)
 		{
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);
-			Assert.IsNotNull(targetFinderFactory);
-			Assert.IsNotNull(filterFactory);
+			Assert.IsNotNull(targetsFactory);
 
 			DroneManager = droneManager;
 			DroneManager.NumOfDrones = numOfDrones;
 			DroneConsumerProvider = droneConsumerProvider;
-			_targetFinderFactory = targetFinderFactory;
-			_filterFactory = filterFactory;
+			_targetsFactory = targetsFactory;
 		}
 
 		private void SetupSlots()
@@ -163,7 +160,7 @@ namespace BattleCruisers.Cruisers
 			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
 
 			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetFinderFactory, _filterFactory);
+			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetsFactory);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser

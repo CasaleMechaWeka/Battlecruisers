@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
 using System;
@@ -9,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Targets;
 
 namespace BattleCruisers.Buildables
 {
@@ -42,8 +42,7 @@ namespace BattleCruisers.Buildables
 		protected BuildableFactory _buildableFactory;
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
-		protected ITargetFinderFactory _targetFinderFactory;
-		protected ITargetFilterFactory _filterFactory;
+		protected ITargetsFactory _targetsFactory;
 
 		public string buildableName;
 		public string description;
@@ -129,8 +128,8 @@ namespace BattleCruisers.Buildables
 			healthBar.Initialise(this);
 		}
 
-		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, 
-			BuildableFactory buildableFactory, ITargetFinderFactory targetFinderFactory, ITargetFilterFactory filterFactory)
+		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
+			ICruiser enemyCruiser, BuildableFactory buildableFactory, ITargetsFactory targetsFactory)
 		{
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
@@ -140,8 +139,7 @@ namespace BattleCruisers.Buildables
 			_buildableFactory = buildableFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
-			_targetFinderFactory = targetFinderFactory;
-			_filterFactory = filterFactory;
+			_targetsFactory = targetsFactory;
 
 			OnInitialised();
 		}

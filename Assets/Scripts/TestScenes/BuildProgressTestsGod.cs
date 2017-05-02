@@ -15,13 +15,13 @@ namespace BattleCruisers.TestScenes
 
 			Helper helper = new Helper(numOfDrones: 8);
 
-			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory();
-
-			foreach (Buildable buildable in buildables)
-			{
-				helper.InitialiseBuildable(buildable, targetFinderFactory: targetFinderFactory);
-				buildable.StartConstruction();
-			}
+//			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory();
+//
+//			foreach (Buildable buildable in buildables)
+//			{
+//				helper.InitialiseBuildable(buildable, targetFinderFactory: targetFinderFactory);
+//				buildable.StartConstruction();
+//			}
 		}
 	}
 }

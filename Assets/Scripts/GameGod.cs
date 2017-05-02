@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Targets;
 
 namespace BattleCruisers
 {
@@ -46,17 +47,16 @@ namespace BattleCruisers
 
 			// Common setup
 			_buildingGroupFactory = new BuildingGroupFactory();
-			ITargetFilterFactory filterFactory = new TargetFilterFactory();
 			
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			buildableFactory.Initialise(prefabFetcher);
 
 
 			// Player cruiser
-			TargetFinderFactory playerCruiserTargetFinderFactory = new TargetFinderFactory(enemyCruiser);
+			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(enemyCruiser);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetFinderFactory, filterFactory);
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory);
 			friendlyCruiser.direction = Direction.Right;
 
 
@@ -74,11 +74,11 @@ namespace BattleCruisers
 
 
 			// AI cruiser
-			TargetFinderFactory aiCruiserTargetFinderFactory = new TargetFinderFactory(friendlyCruiser);
+			ITargetsFactory aiCruiserTargetsFactory = new TargetsFactory(friendlyCruiser);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			enemyCruiser.direction = Direction.Left;
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetFinderFactory, filterFactory);
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory);
 
 
 			// AI
