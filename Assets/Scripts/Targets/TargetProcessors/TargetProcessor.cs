@@ -19,14 +19,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
 			get
 			{
-				IFactionable target = null;
-
-				if (_targets.Count != 0)
-				{
-					target = _targets[0];
-				}
-
-				return target;
+				return _targets.Count != 0 ? _targets[0] : null;
 			}
 		}
 
