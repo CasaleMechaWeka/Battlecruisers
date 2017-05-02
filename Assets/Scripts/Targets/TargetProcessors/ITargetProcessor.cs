@@ -10,9 +10,9 @@ namespace BattleCruisers.Targets.TargetProcessors
 	public interface ITargetProcessor
 	{
 		/// <exception cref="ArgumentException">If the target consumer is already added.</exception>
-		void AddTargeConsumer(ITargetConsumer targetConsumer);
+		void AddTargetConsumer(ITargetConsumer targetConsumer);
 
 		/// <exception cref="ArgumentException">If the target consumer was not added first.</exception>
-		void RemoveTargeConsumer(ITargetConsumer targetConsumer);
+		void RemoveTargetConsumer(ITargetConsumer targetConsumer);
 	}
 }

@@ -64,18 +64,5 @@ namespace BattleCruisers.Targets.TargetFinders
 
 			enemy.Destroyed -= Enemy_Destroyed;
 		}
-
-		// FELIX  Choose next target better?  Find target at closest angle to current turret angle?
-		public IFactionable FindTarget()
-		{
-			IFactionable target = null;
-
-			if (_inRangeEnemies.Count != 0)
-			{
-				target = _inRangeEnemies[0];
-			}
-
-			return target;
-		}
 	}
 }

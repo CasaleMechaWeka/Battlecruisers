@@ -36,7 +36,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			targetFinder.TargetFound += TargetFinder_TargetFound;
 			targetFinder.TargetLost += TargetFinder_TargetLost;
 
-			Target = targetFinder.FindTarget();
+			// FELIX
+//			Target = targetFinder.FindTarget();
 		}
 
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
@@ -51,7 +52,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			if (Target == e.Target)
 			{
-				Target = targetFinder.FindTarget();
+				// FELIX
+//				Target = targetFinder.FindTarget();
 			}
 		}
 	}
