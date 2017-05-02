@@ -14,15 +14,11 @@ namespace BattleCruisers.Targets.TargetFinders
 	/// </summary>
 	public class RangedTargetFinder : MonoBehaviour, ITargetFinder
 	{
-		private IList<IFactionable> _inRangeEnemies;
-
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
 		public void Initialise(IFactionObjectDetector enemyDetector)
 		{
-			_inRangeEnemies = new List<IFactionable>();
-
 			enemyDetector.OnEntered += OnEnemyEntered;
 			enemyDetector.OnExited += OnEnemyExited;
 		}
@@ -30,7 +26,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
 		{
 			IFactionable enemy = args.FactionObject;
-			_inRangeEnemies.Add(enemy);
 
 			enemy.Destroyed += Enemy_Destroyed;
 
@@ -40,11 +35,9 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-		private void Enemy_Destroyed(object sender, EventArgs e)
+		private void Enemy_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			IFactionable enemy = sender as IFactionable;
-			Assert.IsNotNull(enemy);
-			RemoveEnemy(enemy);
+			RemoveEnemy(e.DestroyedFactionable);
 		}
 
 		private void OnEnemyExited(object sender, FactionObjectEventArgs args)
@@ -54,9 +47,6 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void RemoveEnemy(IFactionable enemy)
 		{
-			bool didRemoveEnemy = _inRangeEnemies.Remove(enemy);
-			Assert.IsTrue(didRemoveEnemy);
-
 			if (TargetLost != null)
 			{
 				TargetLost.Invoke(this, new TargetEventArgs(enemy));

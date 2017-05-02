@@ -20,6 +20,16 @@ namespace BattleCruisers.Buildables
 		Aircraft, Ships, Cruiser, Buildings
 	}
 
+	public class DestroyedEventArgs : EventArgs
+	{
+		public IFactionable DestroyedFactionable { get; private set; }
+
+		public DestroyedEventArgs(IFactionable destroyedFactionable)
+		{
+			DestroyedFactionable = destroyedFactionable;
+		}
+	}
+
 	public class HealthChangedEventArgs : EventArgs
 	{
 		public float NewHealth { get; private set; }
@@ -37,7 +47,7 @@ namespace BattleCruisers.Buildables
 		float Health { get; }
 
 		// When health reaches 0
-		event EventHandler Destroyed;
+		event EventHandler<DestroyedEventArgs> Destroyed;
 
 		// When health changes
 		event EventHandler<HealthChangedEventArgs> HealthChanged;
@@ -69,7 +79,7 @@ namespace BattleCruisers.Buildables
 		public abstract TargetType TargetType { get; }
 		public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
 
-		public event EventHandler Destroyed;
+		public event EventHandler<DestroyedEventArgs> Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
 		public event EventHandler FullyRepaired;
 
@@ -140,7 +150,7 @@ namespace BattleCruisers.Buildables
 		{
 			if (Destroyed != null)
 			{
-				Destroyed.Invoke(this, EventArgs.Empty);
+				Destroyed.Invoke(this, new DestroyedEventArgs(this));
 			}
 		}
 
