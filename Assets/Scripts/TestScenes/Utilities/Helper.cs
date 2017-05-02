@@ -43,6 +43,11 @@ namespace BattleCruisers.TestScenes.Utilities
 				enemyCruiser = CreateCruiser(_numOfDrones);
 			}
 
+			if (targetsFactory == null)
+			{
+				targetsFactory = new TargetsFactory(enemyCruiser);
+			}
+
 			buildable.Initialise(
 				faction,
 				uiManager,
@@ -65,19 +70,5 @@ namespace BattleCruisers.TestScenes.Utilities
 
 			return cruiser;
 		}
-
-		// FELIX
-//		public ITargetFinderFactory CreateTargetFinderFactory(IFactionable target = null)
-//		{
-//			ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-//			// FELIX
-////			targetFinder.FindTarget().Returns(target);
-//
-//			ITargetFinderFactory targetFinderFactory = Substitute.For<ITargetFinderFactory>();
-//			targetFinderFactory.BomberTargetFinder.Returns(targetFinder);
-//			targetFinderFactory.OffensiveBuildingTargetFinder.Returns(targetFinder);
-//
-//			return targetFinderFactory;
-//		}
 	}
 }

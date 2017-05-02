@@ -24,7 +24,7 @@ namespace BattleCruisers.Targets
 
 	public class TargetsFactory : ITargetsFactory
 	{
-		public TargetsFactory(Cruiser enemyCruiser)
+		public TargetsFactory(ICruiser enemyCruiser)
 		{
 			// FELIX  Create global target finder
 		}
