@@ -17,33 +17,6 @@ using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
-	// FELIX  Use event for units?  Ie, in case it's a big experimental unit?
-	public class StartedConstructionEventArgs : EventArgs
-	{
-		public IBuildable Buildable { get; private set; }
-
-		public StartedConstructionEventArgs(IBuildable buildable)
-		{
-			Buildable = buildable;
-		}
-	}
-
-	public interface ICruiser : IFactionable
-	{
-		Building SelectedBuildingPrefab { get; set; }
-		IDroneManager DroneManager { get; }
-		IDroneConsumerProvider DroneConsumerProvider { get; }
-		Direction Direction { get; }
-
-		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
-
-		bool IsSlotAvailable(SlotType slotType);
-		void HighlightAvailableSlots(SlotType slotType);
-		void UnhighlightSlots();
-		Building ConstructBuilding(Building buildingPrefab, ISlot slot);
-		Building ConstructSelectedBuilding(ISlot slot);
-	}
-
 	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
 	{
 		private IDictionary<SlotType, IList<Slot>> _slots;
