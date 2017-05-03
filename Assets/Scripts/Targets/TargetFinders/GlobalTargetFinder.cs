@@ -15,6 +15,8 @@ namespace BattleCruisers.Targets.TargetFinders
 	/// 
 	/// This avoids users fooling the AI by starting lots of buildings, but
 	/// never committing any resources to them and never completing them.
+	/// 
+	/// Also has the enemy cruiser as a target.
 	/// </summary>
 	public class GlobalTargetFinder : ITargetFinder
 	{
@@ -28,7 +30,12 @@ namespace BattleCruisers.Targets.TargetFinders
 		public GlobalTargetFinder(ICruiser enemyCruiser)
 		{
 			_enemyCruiser = enemyCruiser;
+		}
+
+		public void StartFindingTargets()
+		{
 			_enemyCruiser.StartedConstruction += EnemyCruiser_StartedConstruction;
+			InvokeTargetFoundEvent(_enemyCruiser);
 		}
 
 		private void EnemyCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
@@ -44,11 +51,7 @@ namespace BattleCruisers.Targets.TargetFinders
 			if (e.Buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET)
 			{
 				e.Buildable.BuildableProgress -= Buildable_BuildableProgress;
-
-				if (TargetFound != null)
-				{
-					TargetFound.Invoke(this, new TargetEventArgs(e.Buildable));
-				}
+				InvokeTargetFoundEvent(e.Buildable);
 			}
 		}
 
@@ -65,7 +68,15 @@ namespace BattleCruisers.Targets.TargetFinders
 				TargetLost.Invoke(this, new TargetEventArgs(buildable));
 			}
 		}
-		
+
+		private void InvokeTargetFoundEvent(IFactionable target)
+		{
+			if (TargetFound != null)
+			{
+				TargetFound.Invoke(this, new TargetEventArgs(target));
+			}
+		}
+
 		public void Dispose()
 		{
 			_enemyCruiser.StartedConstruction -= EnemyCruiser_StartedConstruction;
