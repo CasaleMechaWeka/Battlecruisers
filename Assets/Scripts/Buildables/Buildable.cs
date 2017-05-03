@@ -30,8 +30,25 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-	// FELIX  Create interface
-	public abstract class Buildable : FactionObject
+	public interface IBuildable
+	{
+		BuildableState BuildableState { get; }
+		float Damage { get; }
+		Vector3 Size { get; }
+		Renderer Renderer { get; }
+		Sprite Sprite { get; }
+		IDroneConsumer DroneConsumer { get; }
+
+		event EventHandler StartedConstruction;
+		event EventHandler CompletedBuildable;
+		event EventHandler<BuildProgressEventArgs> BuildableProgress;
+
+		void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, BuildableFactory buildableFactory, ITargetsFactory targetsFactory);
+		void StartConstruction();
+		void InitiateDelete();
+	}
+
+	public abstract class Buildable : FactionObject, IBuildable
 	{
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;

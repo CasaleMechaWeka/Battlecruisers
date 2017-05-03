@@ -17,12 +17,20 @@ using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
+	// FELIX  Similar event for units?  Ie, in case it's a big experimental unit?
+	public class StartedConstructionEventArgs : EventArgs
+	{
+//		public IBuildable
+	}
+
 	public interface ICruiser : IFactionable
 	{
 		Building SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
+
+
 
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);

@@ -8,14 +8,14 @@ using UnityEngine;
 namespace BattleCruisers.Targets.TargetFinders
 {
 	// FELIX  Implement properly :P
-	public class GlobalTargetFinder : MonoBehaviour, ITargetFinder
+	public class GlobalTargetFinder : ITargetFinder
 	{
-		private Cruiser _enemyCruiser;
+		private ICruiser _enemyCruiser;
 
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public GlobalTargetFinder(Cruiser enemyCruiser)
+		public GlobalTargetFinder(ICruiser enemyCruiser)
 		{
 			_enemyCruiser = enemyCruiser;
 		}
