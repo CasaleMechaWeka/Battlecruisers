@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ProgressBars
 
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
-			OnProgressChanged(e.BuildProgress);
+			OnProgressChanged(e.Buildable.BuildProgress);
 		}
 
 		public void Cleanup()

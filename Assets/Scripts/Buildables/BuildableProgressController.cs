@@ -31,8 +31,8 @@ namespace BattleCruisers.Buildables
 		
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
-			Assert.IsTrue(e.BuildProgress >= 0);
-			fillableImage.fillAmount = e.BuildProgress;
+			Assert.IsTrue(e.Buildable.BuildProgress >= 0);
+			fillableImage.fillAmount = e.Buildable.BuildProgress;
 		}
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)

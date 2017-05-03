@@ -38,6 +38,7 @@ namespace BattleCruisers.Buildables
 		#region Properties
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
+		public float BuildProgress { get; private set; }
 
 		public virtual Vector3 Size 
 		{ 
@@ -176,13 +177,13 @@ namespace BattleCruisers.Buildables
 
 				if (BuildableProgress != null)
 				{
-					float buildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
-					if (buildProgress > 1)
+					BuildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
+					if (BuildProgress > 1)
 					{
-						buildProgress = 1;
+						BuildProgress = 1;
 					}
 
-					BuildableProgress.Invoke(this, new BuildProgressEventArgs(buildProgress));
+					BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
 				}
 
 				if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)

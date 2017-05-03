@@ -19,19 +19,20 @@ namespace BattleCruisers.Buildables
 
 	public class BuildProgressEventArgs : EventArgs
 	{
-		/// <summary>
-		/// 0-1
-		/// </summary>
-		public float BuildProgress { get; private set; }
+		public IBuildable Buildable { get; private set; }
 
-		public BuildProgressEventArgs(float buildProgress)
+		public BuildProgressEventArgs(IBuildable buildable)
 		{
-			BuildProgress = buildProgress;
+			Buildable = buildable;
 		}
 	}
 
-	public interface IBuildable
+	public interface IBuildable : IFactionable
 	{
+		/// <summary>
+		/// 0-1
+		/// </summary>
+		float BuildProgress { get; }
 		BuildableState BuildableState { get; }
 		float Damage { get; }
 		Vector3 Size { get; }
