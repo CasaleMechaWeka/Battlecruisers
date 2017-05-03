@@ -12,6 +12,9 @@ namespace BattleCruisers.Targets
 {
 	public interface ITargetsFactory
 	{
+		// FELIX  Specialize, according to ITargetUser (ie, artillery, bomber, etc)
+		ITargetProcessor GlobalTargetProcessor { get; }
+
 		// Processors
 		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder);
 
@@ -24,9 +27,11 @@ namespace BattleCruisers.Targets
 
 	public class TargetsFactory : ITargetsFactory
 	{
+		public ITargetProcessor GlobalTargetProcessor { get; private set; }
+
 		public TargetsFactory(ICruiser enemyCruiser)
 		{
-			// FELIX  Create global target finder
+			GlobalTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser));
 		}
 
 		#region TargetProcessors

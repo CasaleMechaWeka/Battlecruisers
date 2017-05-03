@@ -32,6 +32,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 			_targetFinder.TargetFound += TargetFinder_TargetFound;
 			_targetFinder.TargetLost += TargetFinder_TargetLost;
+
+			_targetFinder.StartFindingTargets();
 		}
 
 		// FELIX  Insert at right priority
