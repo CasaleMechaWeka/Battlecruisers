@@ -35,7 +35,6 @@ namespace BattleCruisers.Buildables
 		BuildableState BuildableState { get; }
 		float Damage { get; }
 		Vector3 Size { get; }
-		Renderer Renderer { get; }
 		Sprite Sprite { get; }
 		IDroneConsumer DroneConsumer { get; }
 

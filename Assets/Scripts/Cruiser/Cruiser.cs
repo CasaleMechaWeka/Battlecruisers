@@ -17,10 +17,15 @@ using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
-	// FELIX  Similar event for units?  Ie, in case it's a big experimental unit?
+	// FELIX  Use event for units?  Ie, in case it's a big experimental unit?
 	public class StartedConstructionEventArgs : EventArgs
 	{
-//		public IBuildable
+		public IBuildable Buildable { get; private set; }
+
+		public StartedConstructionEventArgs(IBuildable buildable)
+		{
+			Buildable = buildable;
+		}
 	}
 
 	public interface ICruiser : IFactionable
@@ -30,7 +35,7 @@ namespace BattleCruisers.Cruisers
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
 
-
+		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
@@ -59,6 +64,8 @@ namespace BattleCruisers.Cruisers
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 		public Direction Direction { get { return direction; } }
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
+
+		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
 		void Start()
 		{
@@ -178,6 +185,12 @@ namespace BattleCruisers.Cruisers
 			}
 
 			building.StartConstruction();
+
+			if (StartedConstruction != null)
+			{
+				StartedConstruction.Invoke(this, new StartedConstructionEventArgs(building));
+			}
+
 			return building;
 		}
 
