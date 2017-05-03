@@ -1,6 +1,8 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +11,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Units.Aircraft
 {
-	public class BomberController : AircraftController
+	public class BomberController : AircraftController, ITargetConsumer
 	{
 		private float _velocitySmoothTime;
 		private Vector2 _velocity;
 		private bool _haveDroppedBombOnRun;
 		private Vector2 _targetCruisingHeight;
-		private ITargetFinder _targetFinder;
+		private ITargetProcessor _targetProcessor;
 
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;
@@ -28,8 +30,8 @@ namespace BattleCruisers.Units.Aircraft
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
 		#region Properties
-		private GameObject _target;
-		private GameObject Target
+		private IFactionable _target;
+		public IFactionable Target
 		{ 
 			get { return _target; }
 			set
@@ -39,7 +41,7 @@ namespace BattleCruisers.Units.Aircraft
 				// FELIX  Avoid duplicate functionality with TurnAround()?
 				// Or check if next alrady traveling in this direction?
 				float xVelocity = maxVelocityInMPerS;
-				if (_target.transform.position.x < transform.position.x)
+				if (_target.GameObject.transform.position.x < transform.position.x)
 				{
 					xVelocity *= -1;
 				}
@@ -88,9 +90,6 @@ namespace BattleCruisers.Units.Aircraft
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			bombSpawner.Initialise(Faction, shellStats);
-
-			// FELIX
-//			_targetFinder = _targetFinderFactory.BomberTargetFinder;
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -101,12 +100,15 @@ namespace BattleCruisers.Units.Aircraft
 
 			PatrolPoints = FindPatrolPoints();
 			StartPatrolling();
+
+			_targetProcessor = _targetsFactory.GlobalTargetProcessor;
+			_targetProcessor.AddTargetConsumer(this);
 		}
 
 		/// <returns>
 		/// Two patrol points:
 		/// 1. Directly above the spawn location, at the cruising altitude.
-		/// 2. Halfway between both cruisers, at the cruisikng altitude.
+		/// 2. Halfway between both cruisers, at the cruising altitude.
 		/// </returns>
 		private IList<Vector2> FindPatrolPoints()
 		{
@@ -125,12 +127,6 @@ namespace BattleCruisers.Units.Aircraft
 			if (IsAtCruisingHeight)
 			{
 				StopPatrolling();
-
-				if (Target == null)
-				{
-					// FELIX
-//					Target = _targetFinder.FindTarget().GameObject;
-				}
 
 				if (rigidBody.velocity != TargetVelocity)
 				{
@@ -169,7 +165,7 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			if (_haveDroppedBombOnRun)
 			{
-				if (IsReadyToTurnAround(transform.position, Target.transform.position, maxVelocityInMPerS, TargetVelocity.x))
+				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, TargetVelocity.x))
 				{
 					Logging.Log(Tags.BOMBER, $"TryBombTarget():  About to turn around");
 
@@ -178,7 +174,7 @@ namespace BattleCruisers.Units.Aircraft
 				}
 			}
 			else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
-				&& IsOnTarget(transform.position, Target.transform.position, rigidBody.velocity.x))
+				&& IsOnTarget(transform.position, Target.GameObject.transform.position, rigidBody.velocity.x))
 			{
 				Logging.Log(Tags.BOMBER, $"TryBombTarget():  About to drop bomb");
 
@@ -246,6 +242,18 @@ namespace BattleCruisers.Units.Aircraft
 		private float FindTimeBombWillTravel(float verticalDistanceInM)
 		{
 			return Mathf.Sqrt(2 * verticalDistanceInM / Constants.GRAVITY);
+		}
+
+		protected override void OnDestroyed()
+		{
+			base.OnDestroyed();
+
+			if (BuildableState == BuildableState.Completed)
+			{
+				_targetProcessor.RemoveTargetConsumer(this);
+				_targetProcessor.Dispose();
+				_targetProcessor = null;
+			}
 		}
 	}
 }
