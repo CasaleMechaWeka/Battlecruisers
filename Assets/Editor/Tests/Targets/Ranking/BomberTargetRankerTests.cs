@@ -10,6 +10,9 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.Ranking
 {
+	/// <summary>
+	/// Note:  Targets are ranked in ascending priority.
+	/// </summary>
 	public class BomberTargetRankerTests 
 	{
 		private ITargetRanker _targetRanker;
@@ -31,24 +34,67 @@ namespace BattleCruisers.Tests.Targets.Ranking
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
 			_rankedTargets = new List<ITarget>(new ITarget[] { mediumValue, highValue, lowValue });
-			_rankedTargets.Sort((x, y) => _targetRanker.RankTarget(x) - _targetRanker.RankTarget(y));
+			RankTargets();
 
 			_expectedOrder = new List<ITarget>(new ITarget[] { lowValue, mediumValue, highValue });
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
 
-		private ITarget CreateMockTarget(TargetValue targetValue, IList<TargetType> attackCapabilities = null)
+		[Test]
+		public void LowValueAntiAir_TrumpsHighValue()
 		{
-			if (attackCapabilities == null)
-			{
-				attackCapabilities = new List<TargetType>();
-			}
+			ITarget lowValueAnitAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
+			ITarget highValue = CreateMockTarget(TargetValue.High);
 
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitAir, highValue });
+			RankTargets();
+
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAnitAir });
+
+			Assert.AreEqual(_expectedOrder, _rankedTargets);
+		}
+
+
+		[Test]
+		public void LowValueAntiCruiser_TrumpsHighValue()
+		{
+			ITarget lowValueAnitCruiser = CreateMockTarget(TargetValue.Low, TargetType.Cruiser);
+			ITarget highValue = CreateMockTarget(TargetValue.High);
+
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitCruiser, highValue });
+			RankTargets();
+
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAnitCruiser });
+
+			Assert.AreEqual(_expectedOrder, _rankedTargets);
+		}
+
+		[Test]
+		public void LowValueAntiAir_TrumpsHighValueAntiCruiser()
+		{
+			ITarget lowValueAnitAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
+			ITarget highValueAntiCruiser = CreateMockTarget(TargetValue.High, TargetType.Cruiser);
+
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitAir, highValueAntiCruiser });
+			RankTargets();
+
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValueAntiCruiser, lowValueAnitAir });
+
+			Assert.AreEqual(_expectedOrder, _rankedTargets);
+		}
+
+		private ITarget CreateMockTarget(TargetValue targetValue, params TargetType[] attackCapabilities)
+		{
 			ITarget target = Substitute.For<ITarget>();
 			target.TargetValue.Returns(targetValue);
-			target.AttackCapabilities.Returns(attackCapabilities);
+			target.AttackCapabilities.Returns(new List<TargetType>(attackCapabilities));
 			return target;
+		}
+
+		private void RankTargets()
+		{
+			_rankedTargets.Sort((x, y) => _targetRanker.RankTarget(x) - _targetRanker.RankTarget(y));
 		}
 	}
 }
