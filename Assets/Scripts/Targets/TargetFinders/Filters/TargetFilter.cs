@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 {
 	public interface ITargetFilter
 	{
-		bool IsMatch(IFactionable factionObject);
+		bool IsMatch(ITarget factionObject);
 	}
 
 	public class TargetFilter : ITargetFilter
@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 			_targetTypes = targetTypes;
 		}
 
-		public virtual bool IsMatch(IFactionable factionObject)
+		public virtual bool IsMatch(ITarget factionObject)
 		{
 			return factionObject.Faction == _factionToDetect
 				&& _targetTypes.Contains(factionObject.TargetType);

@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-	public interface IBuildable : IFactionable
+	public interface IBuildable : ITarget
 	{
 		/// <summary>
 		/// 0-1

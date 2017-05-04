@@ -69,7 +69,7 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-		private void InvokeTargetFoundEvent(IFactionable target)
+		private void InvokeTargetFoundEvent(ITarget target)
 		{
 			if (TargetFound != null)
 			{

@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units
 	public class AttackBoatController : Unit
 	{
 		private int _directionMultiplier;
-		private IFactionable _blockingFriendlyUnit;
+		private ITarget _blockingFriendlyUnit;
 		
 		public FactionObjectDetector enemyDetector;
 		public FactionObjectDetector friendDetector;
@@ -41,8 +41,8 @@ namespace BattleCruisers.Buildables.Units
 			} 
 		}
 
-		private IFactionable _enemyUnit;
-		private IFactionable EnemyUnit
+		private ITarget _enemyUnit;
+		private ITarget EnemyUnit
 		{
 			get { return _enemyUnit; }
 			set
@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private bool IsObjectInFront(IFactionable factionObject)
+		private bool IsObjectInFront(ITarget factionObject)
 		{
 			return (facingDirection == Direction.Right
 					&& factionObject.GameObject.transform.position.x > transform.position.x)

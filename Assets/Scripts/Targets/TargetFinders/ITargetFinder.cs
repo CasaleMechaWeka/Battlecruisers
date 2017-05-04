@@ -9,12 +9,12 @@ namespace BattleCruisers.Targets.TargetFinders
 {
 	public class TargetEventArgs : EventArgs
 	{
-		public TargetEventArgs(IFactionable target)
+		public TargetEventArgs(ITarget target)
 		{
 			Target = target;
 		}
 
-		public IFactionable Target { get; private set; }
+		public ITarget Target { get; private set; }
 	}
 
 	/// <summary>

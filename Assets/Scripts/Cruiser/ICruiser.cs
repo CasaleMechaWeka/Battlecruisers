@@ -28,7 +28,7 @@ namespace BattleCruisers.Cruisers
 		}
 	}
 
-	public interface ICruiser : IFactionable
+	public interface ICruiser : ITarget
 	{
 		Building SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }

@@ -27,7 +27,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
 		{
-			IFactionable enemy = args.FactionObject;
+			ITarget enemy = args.FactionObject;
 
 			enemy.Destroyed += Enemy_Destroyed;
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Targets.TargetFinders
 			RemoveEnemy(args.FactionObject);
 		}
 
-		private void RemoveEnemy(IFactionable enemy)
+		private void RemoveEnemy(ITarget enemy)
 		{
 			if (TargetLost != null)
 			{

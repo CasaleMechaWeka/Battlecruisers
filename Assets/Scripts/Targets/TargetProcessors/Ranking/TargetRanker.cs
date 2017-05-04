@@ -12,6 +12,6 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 		/// 
 		/// The highest priority is 100, the lowest is 0.
 		/// </returns>
-		int RankTarget(IFactionable target);
+		int RankTarget(ITarget target);
 	}
 }

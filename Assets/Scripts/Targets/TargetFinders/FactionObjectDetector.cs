@@ -8,12 +8,12 @@ namespace BattleCruisers.Targets.TargetFinders
 {
 	public class FactionObjectEventArgs : EventArgs
 	{
-		public FactionObjectEventArgs(IFactionable factionObject)
+		public FactionObjectEventArgs(ITarget factionObject)
 		{
 			FactionObject = factionObject;
 		}
 
-		public IFactionable FactionObject { get; private set; }
+		public ITarget FactionObject { get; private set; }
 	}
 
 	public interface IFactionObjectDetector
@@ -45,7 +45,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			if (OnEntered != null)
 			{
-				IFactionable factionObject = GetFactionobject(collider);
+				ITarget factionObject = GetFactionobject(collider);
 				if (_factionObjectFilter.IsMatch(factionObject))
 				{
 					OnEntered.Invoke(this, new FactionObjectEventArgs(factionObject));
@@ -57,7 +57,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			if (OnExited != null)
 			{
-				IFactionable factionObject = GetFactionobject(collider);
+				ITarget factionObject = GetFactionobject(collider);
 				if (_factionObjectFilter.IsMatch(factionObject))
 				{
 					OnExited.Invoke(this, new FactionObjectEventArgs(factionObject));
@@ -65,9 +65,9 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-		private IFactionable GetFactionobject(Collider2D collider)
+		private ITarget GetFactionobject(Collider2D collider)
 		{
-			IFactionable factionObject = collider.gameObject.GetComponent<IFactionable>();
+			ITarget factionObject = collider.gameObject.GetComponent<ITarget>();
 
 			if (factionObject == null)
 			{

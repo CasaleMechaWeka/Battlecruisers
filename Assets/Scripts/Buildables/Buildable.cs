@@ -12,7 +12,7 @@ using BattleCruisers.Targets;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Buildable : FactionObject, IBuildable
+	public abstract class Buildable : Target, IBuildable
 	{
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;

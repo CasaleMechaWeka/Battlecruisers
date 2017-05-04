@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Units
 		Left, Right, Up, Down
 	}
 
-	public interface IUnit : IFactionable
+	public interface IUnit : ITarget
 	{
 		UnitCategory Category { get; }
 	}

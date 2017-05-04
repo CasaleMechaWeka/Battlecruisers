@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public TurretStats turretStats;
 		public AngleCalculator angleCalculator;
 
-		public IFactionable Target { get; set; }
+		public ITarget Target { get; set; }
 		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;

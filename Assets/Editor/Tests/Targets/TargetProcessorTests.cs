@@ -16,15 +16,15 @@ namespace BattleCruisers.Tests.Targets
 		private ITargetProcessor _targetProcessor;
 		private ITargetFinder _targetFinder;
 		private ITargetConsumer _targetConsumer;
-		private IFactionable _target1, _target2;
+		private ITarget _target1, _target2;
 
 		[SetUp]
 		public void TestSetup()
 		{
 			_targetFinder = Substitute.For<ITargetFinder>();
 			_targetConsumer = Substitute.For<ITargetConsumer>();
-			_target1 = Substitute.For<IFactionable>();
-			_target2 = Substitute.For<IFactionable>();
+			_target1 = Substitute.For<ITarget>();
+			_target2 = Substitute.For<ITarget>();
 
 			_targetProcessor = new TargetProcessor(_targetFinder);
 			_targetFinder.Received(1).StartFindingTargets();
@@ -119,12 +119,12 @@ namespace BattleCruisers.Tests.Targets
 			_targetProcessor.RemoveTargetConsumer(_targetConsumer);
 		}
 
-		private void InvokeTargetFound(IFactionable target)
+		private void InvokeTargetFound(ITarget target)
 		{
 			_targetFinder.TargetFound += Raise.EventWith(_targetFinder, new TargetEventArgs(target));
 		}
 
-		private void InvokeTargetLost(IFactionable target)
+		private void InvokeTargetLost(ITarget target)
 		{
 			_targetFinder.TargetLost += Raise.EventWith(_targetFinder, new TargetEventArgs(target));
 		}

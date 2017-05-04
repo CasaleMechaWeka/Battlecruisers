@@ -4,6 +4,6 @@ namespace BattleCruisers.Targets
 {
 	public interface ITargetConsumer
 	{
-		IFactionable Target { set; }
+		ITarget Target { set; }
 	}
 }

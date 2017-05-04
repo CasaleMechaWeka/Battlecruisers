@@ -17,7 +17,7 @@ using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
-	public class Cruiser : FactionObject, ICruiser, IPointerClickHandler
+	public class Cruiser : Target, ICruiser, IPointerClickHandler
 	{
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;

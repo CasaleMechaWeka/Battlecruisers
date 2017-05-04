@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class FactionObject : MonoBehaviour, IFactionable
+	public abstract class Target : MonoBehaviour, ITarget
 	{
 		private bool _wasDestroyTriggeredInternally;
 

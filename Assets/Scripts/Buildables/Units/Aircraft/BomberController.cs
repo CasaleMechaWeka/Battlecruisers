@@ -30,8 +30,8 @@ namespace BattleCruisers.Units.Aircraft
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
 		#region Properties
-		private IFactionable _target;
-		public IFactionable Target
+		private ITarget _target;
+		public ITarget Target
 		{ 
 			get { return _target; }
 			set

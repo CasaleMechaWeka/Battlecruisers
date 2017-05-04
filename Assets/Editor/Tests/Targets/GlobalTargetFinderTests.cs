@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Targets
 		private ITargetFinder _targetFinder;
 		private ICruiser _enemyCruiser;
 		private IBuildable _target;
-		private IFactionable _expectedTargetFound;
+		private ITarget _expectedTargetFound;
 		private int _targetFoundEmittedCount;
 
 		[SetUp]

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
 	// FELIX  Make sure building faction is passed on to shield
-	public class ShieldController : FactionObject
+	public class ShieldController : Target
 	{
 		private Ring _ring;
 		private float _timeSinceDamageInS;

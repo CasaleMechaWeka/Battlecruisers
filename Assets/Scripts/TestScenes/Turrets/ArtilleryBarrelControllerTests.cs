@@ -19,7 +19,7 @@ namespace BattleCruisers.TestScenes
 
 		void Start()
 		{
-			IFactionable target = Substitute.For<IFactionable>();
+			ITarget target = Substitute.For<ITarget>();
 			target.GameObject.Returns(targetGameObject);
 
 			left.Target = target;

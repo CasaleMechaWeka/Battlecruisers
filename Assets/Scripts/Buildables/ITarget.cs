@@ -23,9 +23,9 @@ namespace BattleCruisers.Buildables
 
 	public class DestroyedEventArgs : EventArgs
 	{
-		public IFactionable DestroyedFactionable { get; private set; }
+		public ITarget DestroyedFactionable { get; private set; }
 
-		public DestroyedEventArgs(IFactionable destroyedFactionable)
+		public DestroyedEventArgs(ITarget destroyedFactionable)
 		{
 			DestroyedFactionable = destroyedFactionable;
 		}
@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables
 		void Repair(float repairAmount);
 	}
 
-	public interface IFactionable : IDamagable
+	public interface ITarget : IDamagable
 	{
 		Faction Faction { get; }
 		TargetType TargetType { get; }

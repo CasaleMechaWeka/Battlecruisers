@@ -12,11 +12,11 @@ namespace BattleCruisers.Targets.TargetProcessors
 	public class TargetProcessor : ITargetProcessor
 	{
 		// List of targets, in decreasing priority
-		private readonly IList<IFactionable> _targets;
+		private readonly IList<ITarget> _targets;
 		private readonly IList<ITargetConsumer> _targetConsumers;
 		private ITargetFinder _targetFinder;
 
-		private IFactionable HighestPriorityTarget
+		private ITarget HighestPriorityTarget
 		{
 			get
 			{
@@ -26,7 +26,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		public TargetProcessor(ITargetFinder targetFinder)
 		{
-			_targets = new List<IFactionable>();
+			_targets = new List<ITarget>();
 			_targetConsumers =  new List<ITargetConsumer>();
 			_targetFinder = targetFinder;
 
@@ -82,7 +82,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetConsumers.Remove(targetConsumer);
 		}
 
-		private void AssignTarget(IFactionable target)
+		private void AssignTarget(ITarget target)
 		{
 			foreach (ITargetConsumer consumer in _targetConsumers)
 			{

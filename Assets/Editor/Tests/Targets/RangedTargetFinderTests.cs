@@ -12,13 +12,13 @@ namespace BattleCruisers.Tests.Targets
 	{
 		private ITargetFinder _targetFinder;
 		private IFactionObjectDetector _enemyDetector;
-		private IFactionable _target;
+		private ITarget _target;
 
 		[SetUp]
 		public void TestSetup()
 		{
 			_enemyDetector = Substitute.For<IFactionObjectDetector>();
-			_target = Substitute.For<IFactionable>();
+			_target = Substitute.For<ITarget>();
 
 			_targetFinder = new RangedTargetFinder(_enemyDetector);
 			_targetFinder.StartFindingTargets();

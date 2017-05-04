@@ -25,7 +25,7 @@ namespace BattleCruisers.Projectiles
 		{
 			Logging.Log(Tags.SHELLS, "ShellController.OnTriggerEnter2D()");
 
-			FactionObject factionObject = collider.gameObject.GetComponent<FactionObject>();
+			Target factionObject = collider.gameObject.GetComponent<Target>();
 
 			if (factionObject != null)
 			{
