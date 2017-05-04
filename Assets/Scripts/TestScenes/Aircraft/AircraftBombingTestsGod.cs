@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Targets;
 
 namespace BattleCruisers.TestScenes.Aircraft
 {
@@ -22,18 +23,14 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		void Start() 
 		{
-			IFactionable factionObject = Substitute.For<IFactionable>();
-			factionObject.GameObject.Returns(target);
-
 			Helper helper = new Helper();
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
 
-//			ITargetFinderFactory targetFinderFactory = helper.CreateTargetFinderFactory(factionObject);
-//
-//			helper.InitialiseBuildable(bomberToRight, targetFinderFactory: targetFinderFactory);
-//			bomberToRight.StartConstruction();
-//
-//			helper.InitialiseBuildable(bomberToLeft, targetFinderFactory: targetFinderFactory);
-//			bomberToLeft.StartConstruction();
+			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory);
+			bomberToRight.StartConstruction();
+
+			helper.InitialiseBuildable(bomberToLeft, targetsFactory: targetsFactory);
+			bomberToLeft.StartConstruction();
 		}
 	}
 }
