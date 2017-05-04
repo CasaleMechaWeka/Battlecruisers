@@ -1,11 +1,12 @@
-﻿using BattleCruisers.Targets;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using System;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEditor;
-using BattleCruisers.Buildables;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets
@@ -27,6 +28,8 @@ namespace BattleCruisers.Tests.Targets
 
 			_targetProcessor = new TargetProcessor(_targetFinder);
 			_targetFinder.Received(1).StartFindingTargets();
+
+			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]
@@ -47,7 +50,6 @@ namespace BattleCruisers.Tests.Targets
 			_targetConsumer.Received().Target = _target1;
 		}
 
-
 		[Test]
 		public void FirstTarget_AssignsToExistingConsumers()
 		{
@@ -66,7 +68,56 @@ namespace BattleCruisers.Tests.Targets
 			_targetConsumer.Received().Target = null;
 		}
 
-		// FELIX  Test exceptions
+		[Test]
+		public void TargetLost_MovesToNextTarget()
+		{
+			ExistingTargets_AssignsHighestPriority();
+
+			InvokeTargetLost(_target1);
+			_targetConsumer.Received().Target = _target2;
+		}
+
+		[Test]
+		public void RemovedConsumer_NoLongerReceivesTargets()
+		{
+			_targetProcessor.AddTargetConsumer(_targetConsumer);
+			_targetProcessor.RemoveTargetConsumer(_targetConsumer);
+
+			InvokeTargetFound(_target1);
+
+			_targetConsumer.Received().Target = null;
+			_targetConsumer.DidNotReceive().Target = _target1;
+		}
+
+		[Test]
+		[ExpectedException(typeof(UnityAsserts.AssertionException))]
+		public void DoubleFindSameTarget_Throws()
+		{
+			InvokeTargetFound(_target1);
+			InvokeTargetFound(_target1);
+		}
+
+		[Test]
+		[ExpectedException(typeof(UnityAsserts.AssertionException))]
+		public void LostNotAddedTarget_Throws()
+		{
+			InvokeTargetLost(_target1);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void DoubleAddSameConsumer_Throws()
+		{
+			_targetProcessor.AddTargetConsumer(_targetConsumer);
+			_targetProcessor.AddTargetConsumer(_targetConsumer);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void RemoveUnaddedConsumer_Throws()
+		{
+			_targetProcessor.RemoveTargetConsumer(_targetConsumer);
+		}
 
 		private void InvokeTargetFound(IFactionable target)
 		{
