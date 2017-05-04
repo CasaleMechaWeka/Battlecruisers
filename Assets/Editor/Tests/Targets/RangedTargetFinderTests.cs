@@ -8,7 +8,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets
 {
-	public class RangeTargetFinderTests 
+	public class RangedTargetFinderTests 
 	{
 		private ITargetFinder _targetFinder;
 		private IFactionObjectDetector _enemyDetector;
