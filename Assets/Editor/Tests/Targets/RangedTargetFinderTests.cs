@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Targets
 		}
 
 		[Test]
-		public void TargetFoundEvent()
+		public void EnemyEntered_EmitsTargetFound()
 		{
 			bool wasCalled = false;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Tests.Targets
 		}
 		
 		[Test]
-		public void TargetLostEvent()
+		public void EnemyExited_EmitsTargetLost()
 		{
 			bool wasCalled = false;
 
@@ -59,9 +59,9 @@ namespace BattleCruisers.Tests.Targets
 		}
 
 		[Test]
-		public void TargetDestroyedEvent()
+		public void TargetDestroyed_EmitsTargetLost()
 		{
-			TargetFoundEvent();
+			EnemyEntered_EmitsTargetFound();
 
 			bool wasCalled = false;
 
