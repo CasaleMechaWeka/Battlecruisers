@@ -17,17 +17,21 @@ namespace BattleCruisers.Tests.Targets
 		private ITargetProcessor _targetProcessor;
 		private ITargetFinder _targetFinder;
 		private ITargetConsumer _targetConsumer;
-		private ITarget _target1, _target2;
+		private ITargetRanker _targetRanker;
+		private ITarget _target1, _target2, _target3;
 
 		[SetUp]
 		public void TestSetup()
 		{
 			_targetFinder = Substitute.For<ITargetFinder>();
 			_targetConsumer = Substitute.For<ITargetConsumer>();
+			_targetRanker = Substitute.For<ITargetRanker>();
+
 			_target1 = Substitute.For<ITarget>();
 			_target2 = Substitute.For<ITarget>();
+			_target3 = Substitute.For<ITarget>();
 
-			_targetProcessor = new TargetProcessor(_targetFinder, new EqualTargetRanker());
+			_targetProcessor = new TargetProcessor(_targetFinder, _targetRanker);
 			_targetFinder.Received(1).StartFindingTargets();
 
 			UnityAsserts.Assert.raiseExceptions = true;
@@ -43,12 +47,17 @@ namespace BattleCruisers.Tests.Targets
 		[Test]
 		public void ExistingTargets_AssignsHighestPriority()
 		{
-			// Highest priority is currently simply the first added target
+			_targetRanker.RankTarget(_target1).Returns(50);
 			InvokeTargetFound(_target1);
+
+			_targetRanker.RankTarget(_target2).Returns(100);
 			InvokeTargetFound(_target2);
 
+			_targetRanker.RankTarget(_target3).Returns(75);
+			InvokeTargetFound(_target3);
+
 			_targetProcessor.AddTargetConsumer(_targetConsumer);
-			_targetConsumer.Received().Target = _target1;
+			_targetConsumer.Received().Target = _target2;
 		}
 
 		[Test]
@@ -56,7 +65,9 @@ namespace BattleCruisers.Tests.Targets
 		{
 			_targetProcessor.AddTargetConsumer(_targetConsumer);
 
+			_targetRanker.RankTarget(_target1).Returns(50);
 			InvokeTargetFound(_target1);
+
 			_targetConsumer.Received().Target = _target1;
 		}
 
@@ -70,12 +81,12 @@ namespace BattleCruisers.Tests.Targets
 		}
 
 		[Test]
-		public void TargetLost_MovesToNextTarget()
+		public void TargetLost_MovesToNextHighestPriorityTarget()
 		{
 			ExistingTargets_AssignsHighestPriority();
 
-			InvokeTargetLost(_target1);
-			_targetConsumer.Received().Target = _target2;
+			InvokeTargetLost(_target2);
+			_targetConsumer.Received().Target = _target3;
 		}
 
 		[Test]
