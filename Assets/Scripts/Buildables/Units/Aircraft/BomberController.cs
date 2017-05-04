@@ -40,8 +40,6 @@ namespace BattleCruisers.Units.Aircraft
 
 				if (_target != null)
 				{
-					// FELIX  Avoid duplicate functionality with TurnAround()?
-					// Or check if next alrady traveling in this direction?
 					float xVelocity = maxVelocityInMPerS;
 					if (_target.GameObject.transform.position.x < transform.position.x)
 					{
@@ -156,16 +154,6 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
-		private void TurnAround()
-		{
-			Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
-			if (rigidBody.velocity.x > 0)
-			{
-				newTargetVelocity *= -1;
-			}
-			TargetVelocity = newTargetVelocity;
-		}
-
 		private void TryBombTarget()
 		{
 			if (_haveDroppedBombOnRun)
@@ -205,6 +193,16 @@ namespace BattleCruisers.Units.Aircraft
 			return 
 				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
 				|| (targetXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
+		}
+
+		private void TurnAround()
+		{
+			Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
+			if (rigidBody.velocity.x > 0)
+			{
+				newTargetVelocity *= -1;
+			}
+			TargetVelocity = newTargetVelocity;
 		}
 
 		/// <summary>
