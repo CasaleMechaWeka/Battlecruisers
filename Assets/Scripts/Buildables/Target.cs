@@ -19,11 +19,15 @@ namespace BattleCruisers.Buildables
 		public Faction Faction { get; protected set; }
 		public GameObject GameObject { get { return gameObject; } }
 		public abstract TargetType TargetType { get; }
+		public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
 		public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
 
 		public event EventHandler<DestroyedEventArgs> Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
 		public event EventHandler FullyRepaired;
+
+		protected IList<TargetType> _attackCapabilities;
+		public virtual IList<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
 
 		private float _health;
 		public float Health
@@ -64,6 +68,7 @@ namespace BattleCruisers.Buildables
 		{
 			_wasDestroyTriggeredInternally = false;
 			_health = maxHealth;
+			_attackCapabilities = new List<TargetType>();
 
 			OnAwake();
 		}

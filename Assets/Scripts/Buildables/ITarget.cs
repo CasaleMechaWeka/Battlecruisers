@@ -20,6 +20,14 @@ namespace BattleCruisers.Buildables
 		Aircraft, Ships, Cruiser, Buildings
 	}
 
+	/// <summary>
+	/// Used for prioritising targets.  Can become a lot more fine graind :)
+	/// </summary>
+	public enum TargetValue
+	{
+		Low, Medium, High
+	}
+
 	public class DestroyedEventArgs : EventArgs
 	{
 		public ITarget DestroyedTarget { get; private set; }
@@ -66,5 +74,7 @@ namespace BattleCruisers.Buildables
 		TargetType TargetType { get; }
 		GameObject GameObject { get; }
 		Vector2 Velocity { get; }
+		IList<TargetType> AttackCapabilities { get; }
+		TargetValue TargetValue { get; }
 	}
 }
