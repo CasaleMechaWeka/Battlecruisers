@@ -254,7 +254,6 @@ namespace BattleCruisers.Units.Aircraft
 			if (BuildableState == BuildableState.Completed)
 			{
 				_targetProcessor.RemoveTargetConsumer(this);
-				_targetProcessor.Dispose();
 				_targetProcessor = null;
 			}
 		}
