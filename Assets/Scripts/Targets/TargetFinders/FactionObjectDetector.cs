@@ -71,7 +71,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 			if (factionObject == null)
 			{
-				throw new InvalidOperationException("Should only collide with game objects that have a IFactionable component.");
+				throw new InvalidOperationException("Should only collide with game objects that have a ITarget component.");
 			}
 
 			return factionObject;

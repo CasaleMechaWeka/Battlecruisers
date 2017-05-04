@@ -39,7 +39,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void Enemy_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			RemoveEnemy(e.DestroyedFactionable);
+			RemoveEnemy(e.DestroyedTarget);
 		}
 
 		private void OnEnemyExited(object sender, FactionObjectEventArgs args)

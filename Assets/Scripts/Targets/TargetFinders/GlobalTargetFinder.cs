@@ -57,9 +57,9 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			e.DestroyedFactionable.Destroyed -= Buildable_Destroyed;
+			e.DestroyedTarget.Destroyed -= Buildable_Destroyed;
 
-			IBuildable buildable = e.DestroyedFactionable as IBuildable;
+			IBuildable buildable = e.DestroyedTarget as IBuildable;
 			Assert.IsNotNull(buildable);
 
 			if (buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET

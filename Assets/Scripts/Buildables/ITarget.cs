@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Change IFactionable to ITarget?
 namespace BattleCruisers.Buildables
 {
 	public enum Faction
