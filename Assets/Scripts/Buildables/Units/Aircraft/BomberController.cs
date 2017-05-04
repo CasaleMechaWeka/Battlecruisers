@@ -38,14 +38,17 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				_target = value;
 
-				// FELIX  Avoid duplicate functionality with TurnAround()?
-				// Or check if next alrady traveling in this direction?
-				float xVelocity = maxVelocityInMPerS;
-				if (_target.GameObject.transform.position.x < transform.position.x)
+				if (_target != null)
 				{
-					xVelocity *= -1;
+					// FELIX  Avoid duplicate functionality with TurnAround()?
+					// Or check if next alrady traveling in this direction?
+					float xVelocity = maxVelocityInMPerS;
+					if (_target.GameObject.transform.position.x < transform.position.x)
+					{
+						xVelocity *= -1;
+					}
+					TargetVelocity = new Vector2(xVelocity, 0);
 				}
-				TargetVelocity = new Vector2(xVelocity, 0);
 			}
 		}
 
@@ -126,6 +129,8 @@ namespace BattleCruisers.Units.Aircraft
 
 			if (IsAtCruisingHeight)
 			{
+				Assert.IsNotNull(Target);
+
 				StopPatrolling();
 
 				if (rigidBody.velocity != TargetVelocity)
