@@ -2,6 +2,7 @@
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using System;
 using NSubstitute;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Tests.Targets
 			_target1 = Substitute.For<ITarget>();
 			_target2 = Substitute.For<ITarget>();
 
-			_targetProcessor = new TargetProcessor(_targetFinder);
+			_targetProcessor = new TargetProcessor(_targetFinder, new EqualTargetRanker());
 			_targetFinder.Received(1).StartFindingTargets();
 
 			UnityAsserts.Assert.raiseExceptions = true;
