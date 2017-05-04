@@ -6,7 +6,7 @@ using UnityEditor;
 using BattleCruisers.Buildables;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.TargetFinders
+namespace BattleCruisers.Tests.Targets
 {
 	public class RangeTargetFinderTests 
 	{
