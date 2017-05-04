@@ -5,6 +5,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI;
 using NSubstitute;
 using System.Collections;
@@ -80,9 +81,9 @@ namespace BattleCruisers.TestScenes.Utilities
 			enemyCruiser.GameObject.Returns(globalTarget);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
-			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder);
+			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-			targetsFactory.GlobalTargetProcessor.Returns(targetProcessor);
+			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
 
 			return targetsFactory;
 		}

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-	// FELIX  Actually prioritise/sort targets instead of FIFO :P
 	public class TargetProcessor : ITargetProcessor
 	{
 		// List of targets, in decreasing priority
 		private readonly IList<ITarget> _targets;
 		private readonly IList<ITargetConsumer> _targetConsumers;
 		private ITargetFinder _targetFinder;
+		private readonly ITargetRanker _targetRanker;
 
 		private ITarget HighestPriorityTarget
 		{
@@ -24,11 +25,12 @@ namespace BattleCruisers.Targets.TargetProcessors
 			}
 		}
 
-		public TargetProcessor(ITargetFinder targetFinder)
+		public TargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker)
 		{
 			_targets = new List<ITarget>();
 			_targetConsumers =  new List<ITargetConsumer>();
 			_targetFinder = targetFinder;
+			_targetRanker = targetRanker;
 
 			_targetFinder.TargetFound += TargetFinder_TargetFound;
 			_targetFinder.TargetLost += TargetFinder_TargetLost;
@@ -36,16 +38,37 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetFinder.StartFindingTargets();
 		}
 
-		// FELIX  Insert at right priority
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			Assert.IsFalse(_targets.Contains(e.Target));
-			_targets.Add(e.Target);
+
+			int insertionIndex = FindInsertionIndex(e.Target);
+
+			_targets.Insert(insertionIndex, e.Target);
 
 			if (System.Object.ReferenceEquals(e.Target, HighestPriorityTarget))
 			{
 				AssignTarget(HighestPriorityTarget);
 			}
+		}
+
+		private int FindInsertionIndex(ITarget target)
+		{
+			int insertionIndex = _targets.Count;
+			int newTargetRank = _targetRanker.RankTarget(target);
+
+			for (int i = 0; i < _targets.Count; ++i)
+			{
+				int existingTargetRank = _targetRanker.RankTarget(_targets[i]);
+
+				if (newTargetRank > existingTargetRank)
+				{
+					insertionIndex = i;
+					break;
+				}
+			}
+
+			return insertionIndex;
 		}
 		
 		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)

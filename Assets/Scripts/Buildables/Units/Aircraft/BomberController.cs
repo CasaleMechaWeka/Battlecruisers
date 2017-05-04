@@ -102,7 +102,7 @@ namespace BattleCruisers.Units.Aircraft
 			PatrolPoints = FindPatrolPoints();
 			StartPatrolling();
 
-			_targetProcessor = _targetsFactory.GlobalTargetProcessor;
+			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
 		}
 

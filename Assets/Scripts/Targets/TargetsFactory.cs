@@ -7,37 +7,43 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 
 namespace BattleCruisers.Targets
 {
 	public interface ITargetsFactory
 	{
-		// FELIX  Specialize, according to ITargetUser (ie, artillery, bomber, etc)
-		ITargetProcessor GlobalTargetProcessor { get; }
+		ITargetProcessor BomberTargetProcessor { get; }
+		ITargetProcessor OffensiveTurretTargetProcessor { get; }
 
 		// Processors
-		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder);
+		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker);
 
 		// Finders
 		ITargetFinder CreateRangedTargetFinder(ITargetDetector enemyDetector);
 
 		// Filters
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
+
+		// Rankers
+		ITargetRanker CreateEqualTargetRanker();
 	}
 
 	public class TargetsFactory : ITargetsFactory
 	{
-		public ITargetProcessor GlobalTargetProcessor { get; private set; }
+		public ITargetProcessor BomberTargetProcessor { get; private set; }
+		public ITargetProcessor OffensiveTurretTargetProcessor { get; private set; }
 
 		public TargetsFactory(ICruiser enemyCruiser)
 		{
-			GlobalTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser));
+			BomberTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new EqualTargetRanker());
+			OffensiveTurretTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new EqualTargetRanker());
 		}
 
 		#region TargetProcessors
-		public ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder)
+		public ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker)
 		{
-			return new TargetProcessor(targetFinder);
+			return new TargetProcessor(targetFinder, targetRanker);
 		}
 		#endregion TargetProcessors
 
@@ -54,5 +60,12 @@ namespace BattleCruisers.Targets
 			return new TargetFilter(faction, targetTypes);
 		}
 		#endregion TargetFilters
+
+		#region TargetRankers
+		public ITargetRanker CreateEqualTargetRanker()
+		{
+			return new EqualTargetRanker();
+		}
+		#endregion TargetRankers
 	}
 }

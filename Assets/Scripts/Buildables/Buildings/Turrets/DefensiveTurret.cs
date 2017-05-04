@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -34,7 +35,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			enemyDetector.Initialise(targetFilter, turretBarrelController.turretStats.rangeInM);
 
 			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder);
+			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
 		}
 

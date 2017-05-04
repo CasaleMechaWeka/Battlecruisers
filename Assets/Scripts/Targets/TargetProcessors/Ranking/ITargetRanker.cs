@@ -14,4 +14,12 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 		/// </returns>
 		int RankTarget(ITarget target);
 	}
+
+	public class EqualTargetRanker : ITargetRanker
+	{
+		public int RankTarget(ITarget target)
+		{
+			return 1;
+		}
+	}
 }
