@@ -22,7 +22,7 @@ namespace BattleCruisers.Utils
 		public const string SHELLS = "Shells";
 		public const string BOMBER = "Bomber";
 		public const string UI_MANAGER = "UIManager";
-		public const string FACTION_OBJECT = "FactionObject";
+		public const string TARGET = "Target";
 		public const string PROGRESS_BARS = "ProgressBars";
 		public const string ANGLE_CALCULATORS = "AngleCalculators";
 	}
@@ -61,7 +61,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.SHELLS, false);
 			tagsToActiveness.Add(Tags.BOMBER, false);
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
-			tagsToActiveness.Add(Tags.FACTION_OBJECT, false);
+			tagsToActiveness.Add(Tags.TARGET, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
 

@@ -14,16 +14,16 @@ namespace BattleCruisers.Targets.TargetFinders
 
 	public class TargetDetector : MonoBehaviour, ITargetDetector
 	{
-		private ITargetFilter _factionObjectFilter;
+		private ITargetFilter _targetFilter;
 
 		public CircleCollider2D circleCollider;
 
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
 
-		public void Initialise(ITargetFilter factionObjectFilter, float radiusInM = -1)
+		public void Initialise(ITargetFilter targetFilter, float radiusInM = -1)
 		{
-			_factionObjectFilter = factionObjectFilter;
+			_targetFilter = targetFilter;
 
 			if (radiusInM != -1)
 			{
@@ -35,10 +35,10 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			if (OnEntered != null)
 			{
-				ITarget factionObject = GetFactionobject(collider);
-				if (_factionObjectFilter.IsMatch(factionObject))
+				ITarget target = GetTarget(collider);
+				if (_targetFilter.IsMatch(target))
 				{
-					OnEntered.Invoke(this, new TargetEventArgs(factionObject));
+					OnEntered.Invoke(this, new TargetEventArgs(target));
 				}
 			}
 		}
@@ -47,24 +47,24 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			if (OnExited != null)
 			{
-				ITarget factionObject = GetFactionobject(collider);
-				if (_factionObjectFilter.IsMatch(factionObject))
+				ITarget target = GetTarget(collider);
+				if (_targetFilter.IsMatch(target))
 				{
-					OnExited.Invoke(this, new TargetEventArgs(factionObject));
+					OnExited.Invoke(this, new TargetEventArgs(target));
 				}
 			}
 		}
 
-		private ITarget GetFactionobject(Collider2D collider)
+		private ITarget GetTarget(Collider2D collider)
 		{
-			ITarget factionObject = collider.gameObject.GetComponent<ITarget>();
+			ITarget target = collider.gameObject.GetComponent<ITarget>();
 
-			if (factionObject == null)
+			if (target == null)
 			{
 				throw new InvalidOperationException("Should only collide with game objects that have a ITarget component.");
 			}
 
-			return factionObject;
+			return target;
 		}
 	}
 }

@@ -131,12 +131,12 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private bool IsObjectInFront(ITarget factionObject)
+		private bool IsObjectInFront(ITarget target)
 		{
 			return (facingDirection == Direction.Right
-					&& factionObject.GameObject.transform.position.x > transform.position.x)
+					&& target.GameObject.transform.position.x > transform.position.x)
 				|| (facingDirection == Direction.Left
-					&& factionObject.GameObject.transform.position.x < transform.position.x);
+					&& target.GameObject.transform.position.x < transform.position.x);
 		}
 
 		private void StartMoving()

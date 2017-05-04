@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables
 
 				if (HealthChanged != null)
 				{
-					Logging.Log(Tags.FACTION_OBJECT, $"HealthChanged  {this}");
+					Logging.Log(Tags.TARGET, $"HealthChanged  {this}");
 					HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
 				}
 			}
