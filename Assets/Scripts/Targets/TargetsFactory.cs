@@ -19,7 +19,7 @@ namespace BattleCruisers.Targets
 		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder);
 
 		// Finders
-		ITargetFinder CreateRangedTargetFinder(IFactionObjectDetector enemyDetector);
+		ITargetFinder CreateRangedTargetFinder(ITargetDetector enemyDetector);
 
 		// Filters
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets
 		#endregion TargetProcessors
 
 		#region TargetFinders
-		public ITargetFinder CreateRangedTargetFinder(IFactionObjectDetector enemyDetector)
+		public ITargetFinder CreateRangedTargetFinder(ITargetDetector enemyDetector)
 		{
 			return new RangedTargetFinder(enemyDetector);
 		}

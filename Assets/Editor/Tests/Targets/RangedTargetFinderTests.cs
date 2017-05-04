@@ -11,13 +11,13 @@ namespace BattleCruisers.Tests.Targets
 	public class RangedTargetFinderTests 
 	{
 		private ITargetFinder _targetFinder;
-		private IFactionObjectDetector _enemyDetector;
+		private ITargetDetector _enemyDetector;
 		private ITarget _target;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			_enemyDetector = Substitute.For<IFactionObjectDetector>();
+			_enemyDetector = Substitute.For<ITargetDetector>();
 			_target = Substitute.For<ITarget>();
 
 			_targetFinder = new RangedTargetFinder(_enemyDetector);
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Targets
 				Assert.AreEqual(_target, e.Target);
 			};
 
-			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new FactionObjectEventArgs(_target));
+			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}
@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.Targets
 				Assert.AreEqual(_target, e.Target);
 			};
 
-			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new FactionObjectEventArgs(_target));
+			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}

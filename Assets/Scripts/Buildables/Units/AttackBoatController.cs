@@ -29,8 +29,8 @@ namespace BattleCruisers.Buildables.Units
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
 		
-		public FactionObjectDetector enemyDetector;
-		public FactionObjectDetector friendDetector;
+		public TargetDetector enemyDetector;
+		public TargetDetector friendDetector;
 		public TurretBarrelController turretBarrelController;
 
 		public override float Damage 
@@ -86,11 +86,11 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
+		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
 
-			EnemyUnit = args.FactionObject;
+			EnemyUnit = args.Target;
 			EnemyUnit.Destroyed += EnemyUnit_Destroyed;
 			StopMoving();
 		}
@@ -102,13 +102,13 @@ namespace BattleCruisers.Buildables.Units
 			EnemyUnit = null;
 		}
 
-		private void OnFriendEntered(object sender, FactionObjectEventArgs args)
+		private void OnFriendEntered(object sender, TargetEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnFriendEntered()");
 
-			if (IsObjectInFront(args.FactionObject))
+			if (IsObjectInFront(args.Target))
 			{
-				_blockingFriendlyUnit = args.FactionObject;
+				_blockingFriendlyUnit = args.Target;
 				_blockingFriendlyUnit.Destroyed += BlockingFriendlyUnit_Destroyed;
 				StopMoving();
 			}
@@ -120,11 +120,11 @@ namespace BattleCruisers.Buildables.Units
 			_blockingFriendlyUnit = null;
 		}
 
-		private void OnFriendExited(object sender, FactionObjectEventArgs args)
+		private void OnFriendExited(object sender, TargetEventArgs args)
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "OnFriendExited()");
 
-			if (IsObjectInFront(args.FactionObject))
+			if (IsObjectInFront(args.Target))
 			{
 				_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
 				StartMoving();

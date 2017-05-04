@@ -6,30 +6,20 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public class FactionObjectEventArgs : EventArgs
+	public interface ITargetDetector
 	{
-		public FactionObjectEventArgs(ITarget factionObject)
-		{
-			FactionObject = factionObject;
-		}
-
-		public ITarget FactionObject { get; private set; }
+		event EventHandler<TargetEventArgs> OnEntered;
+		event EventHandler<TargetEventArgs> OnExited;
 	}
 
-	public interface IFactionObjectDetector
-	{
-		event EventHandler<FactionObjectEventArgs> OnEntered;
-		event EventHandler<FactionObjectEventArgs> OnExited;
-	}
-
-	public class FactionObjectDetector : MonoBehaviour, IFactionObjectDetector
+	public class TargetDetector : MonoBehaviour, ITargetDetector
 	{
 		private ITargetFilter _factionObjectFilter;
 
 		public CircleCollider2D circleCollider;
 
-		public event EventHandler<FactionObjectEventArgs> OnEntered;
-		public event EventHandler<FactionObjectEventArgs> OnExited;
+		public event EventHandler<TargetEventArgs> OnEntered;
+		public event EventHandler<TargetEventArgs> OnExited;
 
 		public void Initialise(ITargetFilter factionObjectFilter, float radiusInM = -1)
 		{
@@ -48,7 +38,7 @@ namespace BattleCruisers.Targets.TargetFinders
 				ITarget factionObject = GetFactionobject(collider);
 				if (_factionObjectFilter.IsMatch(factionObject))
 				{
-					OnEntered.Invoke(this, new FactionObjectEventArgs(factionObject));
+					OnEntered.Invoke(this, new TargetEventArgs(factionObject));
 				}
 			}
 		}
@@ -60,7 +50,7 @@ namespace BattleCruisers.Targets.TargetFinders
 				ITarget factionObject = GetFactionobject(collider);
 				if (_factionObjectFilter.IsMatch(factionObject))
 				{
-					OnExited.Invoke(this, new FactionObjectEventArgs(factionObject));
+					OnExited.Invoke(this, new TargetEventArgs(factionObject));
 				}
 			}
 		}

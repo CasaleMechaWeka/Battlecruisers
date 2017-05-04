@@ -22,11 +22,11 @@ namespace BattleCruisers.Buildables
 
 	public class DestroyedEventArgs : EventArgs
 	{
-		public ITarget DestroyedFactionable { get; private set; }
+		public ITarget DestroyedTarget { get; private set; }
 
-		public DestroyedEventArgs(ITarget destroyedFactionable)
+		public DestroyedEventArgs(ITarget destroyedTarget)
 		{
-			DestroyedFactionable = destroyedFactionable;
+			DestroyedTarget = destroyedTarget;
 		}
 	}
 

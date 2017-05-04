@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
 
-		public FactionObjectDetector enemyDetector;
+		public TargetDetector enemyDetector;
 		public TargetType targetType;
 
 		protected override void OnInitialised()

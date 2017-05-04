@@ -9,12 +9,12 @@ namespace BattleCruisers.Targets.TargetFinders
 {
 	public class RangedTargetFinder : ITargetFinder
 	{
-		private IFactionObjectDetector _enemyDetector;
+		private ITargetDetector _enemyDetector;
 
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
-		public RangedTargetFinder(IFactionObjectDetector enemyDetector)
+		public RangedTargetFinder(ITargetDetector enemyDetector)
 		{
 			_enemyDetector = enemyDetector;
 		}
@@ -25,9 +25,9 @@ namespace BattleCruisers.Targets.TargetFinders
 			_enemyDetector.OnExited += OnEnemyExited;
 		}
 
-		private void OnEnemyEntered(object sender, FactionObjectEventArgs args)
+		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
-			ITarget enemy = args.FactionObject;
+			ITarget enemy = args.Target;
 
 			enemy.Destroyed += Enemy_Destroyed;
 
@@ -42,9 +42,9 @@ namespace BattleCruisers.Targets.TargetFinders
 			RemoveEnemy(e.DestroyedTarget);
 		}
 
-		private void OnEnemyExited(object sender, FactionObjectEventArgs args)
+		private void OnEnemyExited(object sender, TargetEventArgs args)
 		{
-			RemoveEnemy(args.FactionObject);
+			RemoveEnemy(args.Target);
 		}
 
 		private void RemoveEnemy(ITarget enemy)
