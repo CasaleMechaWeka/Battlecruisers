@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-	// FELIX  Actually prioritise/sort targets :P
+	// FELIX  Actually prioritise/sort targets instead of FIFO :P
 	public class TargetProcessor : ITargetProcessor
 	{
 		// List of targets, in decreasing priority

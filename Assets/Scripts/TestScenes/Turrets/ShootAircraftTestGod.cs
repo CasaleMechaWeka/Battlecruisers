@@ -27,16 +27,8 @@ namespace BattleCruisers.TestScenes.Turrets
 			helper.InitialiseBuildable(turret, faction: Faction.Reds);
 			turret.StartConstruction();
 
-			// The enemy cruiser is added as a target by the global target finder.
-			// So pretend the cruiser game object is the turret.
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			enemyCruiser.GameObject.Returns(turret.GameObject);
-			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
-			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder);
-			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-			targetsFactory.GlobalTargetProcessor.Returns(targetProcessor);
-
 			// Set up bomber
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(turret.GameObject);
 			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetsFactory: targetsFactory);
 			bomber.StartConstruction();
 		}

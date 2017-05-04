@@ -4,6 +4,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI;
 using NSubstitute;
 using System.Collections;
@@ -69,6 +70,21 @@ namespace BattleCruisers.TestScenes.Utilities
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
 
 			return cruiser;
+		}
+
+		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget)
+		{
+			// The enemy cruiser is added as a target by the global target finder.
+			// So pretend the cruiser game object is the specified target.
+			ICruiser enemyCruiser = Substitute.For<ICruiser>();
+			enemyCruiser.GameObject.Returns(globalTarget);
+
+			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
+			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder);
+			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+			targetsFactory.GlobalTargetProcessor.Returns(targetProcessor);
+
+			return targetsFactory;
 		}
 	}
 }
