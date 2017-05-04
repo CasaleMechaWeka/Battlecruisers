@@ -17,7 +17,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		public RangedTargetFinder(IFactionObjectDetector enemyDetector)
 		{
 			_enemyDetector = enemyDetector;
-
 		}
 
 		public void StartFindingTargets()
