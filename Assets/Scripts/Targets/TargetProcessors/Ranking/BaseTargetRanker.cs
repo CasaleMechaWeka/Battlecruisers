@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,31 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 	/// </summary>
 	public class BaseTargetRanker : ITargetRanker
 	{
-		private const int TARGET_VALUE_MULTIPLIER = 10;
+		protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 
-		public virtual int RankTarget(ITarget target)
+		private const int TARGET_VALUE_MULTIPLIER = 10;
+		private const int DEFAULT_ATTACK_CAPABILITY_BONUS = 0;
+
+		public BaseTargetRanker()
 		{
-			return (int)target.TargetValue * TARGET_VALUE_MULTIPLIER;
+			_attackCapabilityToBonus = new Dictionary<TargetType, int>();
+
+			foreach (TargetType attackCapability in Enum.GetValues(typeof(TargetType)))
+			{
+				_attackCapabilityToBonus.Add(attackCapability, DEFAULT_ATTACK_CAPABILITY_BONUS);
+			}
+		}
+
+		public int RankTarget(ITarget target)
+		{
+			int rank = (int)target.TargetValue * TARGET_VALUE_MULTIPLIER;
+
+			foreach (TargetType attackCapability in target.AttackCapabilities)
+			{
+				rank += _attackCapabilityToBonus[attackCapability];
+			}
+
+			return rank;
 		}
 	}
 }
