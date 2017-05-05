@@ -12,11 +12,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		private ITargetProcessor _targetProcessor;
 
+		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
 			Assert.AreEqual(BuildingCategory.Offence, category);
+			_attackCapabilities.Add(TargetType.Buildings);
+			_attackCapabilities.Add(TargetType.Cruiser);
 		}
 
 		protected override void OnBuildableCompleted()

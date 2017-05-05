@@ -86,9 +86,9 @@ namespace BattleCruisers.Buildables
 		{
 			_wasDestroyTriggeredInternally = true;
 
-			Destroy(gameObject);
 			OnDestroyed();
 			InvokeDestroyedEvent();
+			Destroy(gameObject);
 		}
 
 		protected virtual void OnDestroyed() { }

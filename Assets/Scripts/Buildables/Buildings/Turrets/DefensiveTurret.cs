@@ -24,6 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			base.OnInitialised();
 
 			Assert.AreEqual(BuildingCategory.Defence, category);
+			_attackCapabilities.Add(targetType);
 		}
 
 		protected override void OnBuildableCompleted()

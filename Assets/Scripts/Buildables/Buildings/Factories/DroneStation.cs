@@ -17,6 +17,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public int numOfDronesProvided;
 
+		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();

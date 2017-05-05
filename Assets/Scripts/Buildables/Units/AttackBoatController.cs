@@ -54,6 +54,14 @@ namespace BattleCruisers.Buildables.Units
 
 		public override TargetType TargetType { get { return TargetType.Ships; } }
 
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			_attackCapabilities.Add(TargetType.Ships);
+			_attackCapabilities.Add(TargetType.Cruiser);
+		}
+
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();

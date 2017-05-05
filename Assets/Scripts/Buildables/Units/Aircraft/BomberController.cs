@@ -87,6 +87,8 @@ namespace BattleCruisers.Units.Aircraft
 			Assert.IsNotNull(bombSpawner);
 
 			_haveDroppedBombOnRun = false;
+			_attackCapabilities.Add(TargetType.Cruiser);
+			_attackCapabilities.Add(TargetType.Buildings);
 
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);

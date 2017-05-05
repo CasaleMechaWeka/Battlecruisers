@@ -8,6 +8,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 	{
 		public ShieldController shieldController;
 
+		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
@@ -21,6 +23,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			base.OnBuildableCompleted();
 
 			shieldController.gameObject.SetActive(true);
+		}
+
+		protected override void OnDestroyed()
+		{
+			base.OnDestroyed();
+			shieldController.Destroy();
 		}
 	}
 }
