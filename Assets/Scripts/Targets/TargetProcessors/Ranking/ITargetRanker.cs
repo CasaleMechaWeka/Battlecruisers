@@ -10,7 +10,9 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 		/// <returns>
 		/// Ranks the target according to priority.
 		/// 
-		/// The highest priority is 100, the lowest is 0.
+		/// Bigger numbers indicate higher priority.
+		/// 
+		/// The lowest priority is 0.  There is no upper limit.
 		/// </returns>
 		int RankTarget(ITarget target);
 	}
