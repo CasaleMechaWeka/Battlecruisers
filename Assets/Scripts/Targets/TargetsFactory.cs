@@ -37,7 +37,7 @@ namespace BattleCruisers.Targets
 		public TargetsFactory(ICruiser enemyCruiser)
 		{
 			BomberTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new BomberTargetRanker());
-			OffensiveTurretTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new EqualTargetRanker());
+			OffensiveTurretTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new OffensiveBuildableTargetRanker());
 		}
 
 		#region TargetProcessors
