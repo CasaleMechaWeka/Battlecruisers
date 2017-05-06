@@ -60,10 +60,6 @@ namespace BattleCruisers.Buildables
 		// When health changes
 		event EventHandler<HealthChangedEventArgs> HealthChanged;
 
-		// FELIX  Unused?  Remove?
-		// When health reaches its maximum value
-		event EventHandler FullyRepaired;
-
 		void TakeDamage(float damageAmount);
 		void Repair(float repairAmount);
 	}

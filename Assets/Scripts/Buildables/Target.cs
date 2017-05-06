@@ -38,13 +38,7 @@ namespace BattleCruisers.Buildables
 				if (value >= maxHealth)
 				{
 					_health = maxHealth;
-
 					OnFullyRepaired();
-
-					if (FullyRepaired != null)
-					{
-						FullyRepaired.Invoke(this, EventArgs.Empty);
-					}
 				}
 				else if (value <= 0)
 				{

@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	/// <summary>
-	/// FELIX  Lead moving targets!
 	/// FELIX  Take accuracy into consideration
 	/// </summary>
 	public class TurretBarrelController : MonoBehaviour 
