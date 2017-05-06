@@ -18,6 +18,7 @@ namespace BattleCruisers.Units.Aircraft
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 
+		#region Properties
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
 		private IList<Vector2> _patrolPoints;
@@ -52,6 +53,7 @@ namespace BattleCruisers.Units.Aircraft
 				return _isPatrolling ? _patrollingVelocity : base.Velocity;
 			}
 		}
+		#endregion Properties
 
 		protected override void OnUpdate()
 		{
@@ -69,15 +71,27 @@ namespace BattleCruisers.Units.Aircraft
 			bool isInPosition = (positionAsVector2 - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
+				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
-
 				Debug.Log($"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
+
+				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0
+				    || oldPatrollingVelocity.x < 0 && _patrollingVelocity.x > 0)
+				{
+					UpdateSpriteDirection();
+				}
 			}
 			else
 			{
 				Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
 				TargetPatrolPoint = FindNextPatrolPoint();
 			}
+		}
+
+		private void UpdateSpriteDirection()
+		{
+			var s = Sprite;
+//			if (Velocity > 0 && Sprite.
 		}
 
 		public void StartPatrolling()
