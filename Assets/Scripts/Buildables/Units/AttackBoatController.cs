@@ -1,8 +1,11 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI;
 using BattleCruisers.Utils;
 using System;
@@ -12,7 +15,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 // FELIX  Create parent boat class
-// FELIX  Create Naval folde & namespace
+// FELIX  Create Naval folder & namespace
 namespace BattleCruisers.Buildables.Units
 {
 	/// <summary>
@@ -24,11 +27,13 @@ namespace BattleCruisers.Buildables.Units
 	/// 4. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
 	/// 	enemy, in which case this boat will continue moving.
 	/// </summary>
-	public class AttackBoatController : Unit
+	public class AttackBoatController : Unit, ITargetConsumer
 	{
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
-		
+		private ITargetFinder _targetFinder;
+		private ITargetProcessor _targetProcessor;
+
 		public TargetDetector enemyDetector;
 		public TargetDetector friendDetector;
 		public TurretBarrelController turretBarrelController;
@@ -41,14 +46,17 @@ namespace BattleCruisers.Buildables.Units
 			} 
 		}
 
-		private ITarget _enemyUnit;
-		private ITarget EnemyUnit
+		public ITarget Target
 		{
-			get { return _enemyUnit; }
-			set
-			{
-				_enemyUnit = value;
-				turretBarrelController.Target = _enemyUnit;
+			private get { return turretBarrelController.Target; }
+			set 
+			{ 
+				if (value != null)
+				{
+					Assert.IsTrue(IsObjectInFront(value));
+				}
+
+				turretBarrelController.Target = value; 
 			}
 		}
 
@@ -72,8 +80,12 @@ namespace BattleCruisers.Buildables.Units
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
-			enemyDetector.Initialise(enemyFilter);
-			enemyDetector.OnEntered += OnEnemyEntered;
+			enemyDetector.Initialise(enemyFilter, turretBarrelController.turretStats.rangeInM);
+
+			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
+			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+			_targetProcessor.AddTargetConsumer(this);
 
 			ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, TargetType.Ships);
 			friendDetector.Initialise(friendFilter);
@@ -85,29 +97,22 @@ namespace BattleCruisers.Buildables.Units
 		{
 			base.OnUpdate();
 
-			if (BuildableState == BuildableState.Completed 
-				&& rigidBody.velocity.x == 0
-				&& EnemyUnit == null
-				&& _blockingFriendlyUnit == null)
+			if (BuildableState == BuildableState.Completed)
 			{
-				StartMoving();
+				if (rigidBody.velocity.x == 0)
+				{
+					if (Target == null
+					    && _blockingFriendlyUnit == null)
+					{
+						StartMoving();
+					}
+				}
+				else if (Target != null
+			         || _blockingFriendlyUnit != null)
+				{
+					StopMoving();
+				}
 			}
-		}
-
-		private void OnEnemyEntered(object sender, TargetEventArgs args)
-		{
-			Logging.Log(Tags.ATTACK_BOAT, "OnEnemyEntered()");
-
-			EnemyUnit = args.Target;
-			EnemyUnit.Destroyed += EnemyUnit_Destroyed;
-			StopMoving();
-		}
-
-		// FELIX  Attack other in range unit?
-		private void EnemyUnit_Destroyed(object sender, EventArgs e)
-		{
-			EnemyUnit.Destroyed -= EnemyUnit_Destroyed;
-			EnemyUnit = null;
 		}
 
 		private void OnFriendEntered(object sender, TargetEventArgs args)
@@ -118,7 +123,6 @@ namespace BattleCruisers.Buildables.Units
 			{
 				_blockingFriendlyUnit = args.Target;
 				_blockingFriendlyUnit.Destroyed += BlockingFriendlyUnit_Destroyed;
-				StopMoving();
 			}
 		}
 
@@ -135,7 +139,6 @@ namespace BattleCruisers.Buildables.Units
 			if (IsObjectInFront(args.Target))
 			{
 				_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
-				StartMoving();
 			}
 		}
 
