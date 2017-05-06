@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	// FELIX  Create interface
 	public class BuildingGroup
 	{
 		public IList<Building> Buildings { get; private set; }
