@@ -14,6 +14,7 @@ namespace BattleCruisers.Units.Aircraft
 		private float _patrollingSmoothTime;
 		private Vector2 _patrollingVelocity;
 		private bool _isPatrolling;
+		private SpriteRenderer _spriteRenderer;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
@@ -55,6 +56,13 @@ namespace BattleCruisers.Units.Aircraft
 		}
 		#endregion Properties
 
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+
+			_spriteRenderer = GetComponent<SpriteRenderer>();
+		}
+
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
@@ -78,7 +86,8 @@ namespace BattleCruisers.Units.Aircraft
 				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0
 				    || oldPatrollingVelocity.x < 0 && _patrollingVelocity.x > 0)
 				{
-					UpdateSpriteDirection();
+					// FELIX
+//					UpdateSpriteDirection();
 				}
 			}
 			else
@@ -90,8 +99,17 @@ namespace BattleCruisers.Units.Aircraft
 
 		private void UpdateSpriteDirection()
 		{
-			var s = Sprite;
-//			if (Velocity > 0 && Sprite.
+			Quaternion rotation = _spriteRenderer.transform.rotation;
+
+			if (_patrollingVelocity.x > 0 && rotation.eulerAngles.y != 0)
+			{
+				Vector3 newEulerAngles = new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z);
+				rotation.eulerAngles = newEulerAngles;
+			}
+			else if (_patrollingVelocity.x < 0 && rotation.eulerAngles.y != 180)
+			{
+//				Ve
+			}
 		}
 
 		public void StartPatrolling()

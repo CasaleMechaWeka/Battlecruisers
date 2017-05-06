@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Units
 		{
 			base.OnBuildableCompleted();
 
-			_directionMultiplier = facingDirection == Direction.Right ? 1 : -1;
+			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 			
 			turretBarrelController.Initialise(Faction);
 
@@ -144,9 +144,9 @@ namespace BattleCruisers.Buildables.Units
 
 		private bool IsObjectInFront(ITarget target)
 		{
-			return (facingDirection == Direction.Right
+			return (FacingDirection == Direction.Right
 					&& target.GameObject.transform.position.x > transform.position.x)
-				|| (facingDirection == Direction.Left
+				|| (FacingDirection == Direction.Left
 					&& target.GameObject.transform.position.x < transform.position.x);
 		}
 

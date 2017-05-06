@@ -25,8 +25,10 @@ namespace BattleCruisers.Buildables.Units
 	public abstract class Unit : Buildable, IPointerClickHandler
 	{
 		public UnitCategory category;
+
 		// FELIX  Remove?  Just figure out whether are mirrored?  (See turrets I think)
-		public Direction facingDirection;
+		// FELIX  Nah, deprecating mirroring the entir gameObject, only mirror sprites
+//		public Direction facingDirection;
 
 		// FELIX  Create UnitStats class?
 		public float maxVelocityInMPerS;

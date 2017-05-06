@@ -28,7 +28,12 @@ namespace BattleCruisers.Cruisers
 		public UIManager uiManager;
 		public Cruiser enemyCruiser;
 		public BuildableFactory buildableFactory;
+
+		// FELIX  Remove.  Instead pass in Initialise().  
+		// FELIX  Perhaps move IBuildable.FacingDirection up to ITarget to avoid duplication here?
+		// FELIX  Expose for child buildables!
 		public Direction direction;
+
 		public int numOfDrones;
 		public Faction faction;
 

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.UI;
@@ -95,6 +96,20 @@ namespace BattleCruisers.Buildables
 				}
 			}
 		}
+
+		private Direction _facingDirection;
+		protected Direction FacingDirection
+		{
+			get { return _facingDirection; }
+			set
+			{
+				if (_facingDirection != value)
+				{
+					_facingDirection = value;
+					OnDirectionChange();
+				}
+			}
+		}
 		#endregion Properties
 
 		public event EventHandler StartedConstruction;
@@ -113,8 +128,6 @@ namespace BattleCruisers.Buildables
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
 			ICruiser enemyCruiser, BuildableFactory buildableFactory, ITargetsFactory targetsFactory)
 		{
-			Faction = faction;
-			BuildableState = BuildableState.NotStarted;
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -122,6 +135,10 @@ namespace BattleCruisers.Buildables
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 			_targetsFactory = targetsFactory;
+
+			Faction = faction;
+			BuildableState = BuildableState.NotStarted;
+			FacingDirection = _parentCruiser.Direction;
 
 			OnInitialised();
 		}
@@ -232,5 +249,10 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void InitiateDelete() { }
+
+		protected virtual void OnDirectionChange()
+		{
+			// FELIX
+		}
 	}
 }
