@@ -41,7 +41,6 @@ namespace BattleCruisers.Drones
 		int NumOfDronesRequired { get; }
 		DroneConsumerState State { get; }
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
-		// FELIX  Add tests (FIRST, use event :P)
 		event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 	}
 

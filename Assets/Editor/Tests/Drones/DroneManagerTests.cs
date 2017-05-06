@@ -105,6 +105,26 @@ namespace BattleCruisers.Tests.Drones
 		}
 		#endregion NumOfDrones
 
+		#region DroneNumChanged
+		[Test]
+		public void DroneNumChanged()
+		{
+			bool wasEventCalled = false;
+			int newNumOfDrones = 7;
+
+			_droneManager.DroneNumChanged += (object sender, DroneNumChangedEventArgs e) => 
+			{
+				wasEventCalled = true;
+				Assert.AreEqual(_droneManager, sender);
+				Assert.AreEqual(newNumOfDrones, e.NewNumOfDrones);
+			};
+
+			_droneManager.NumOfDrones = newNumOfDrones;
+
+			Assert.IsTrue(wasEventCalled);
+		}
+		#endregion DroneNumChanged
+
 		#region CanSupportDroneConsumer()
 		[Test]
 		public void CanSupportDroneConsumer_True()
@@ -369,7 +389,7 @@ namespace BattleCruisers.Tests.Drones
 		}
 		#endregion RemoveDroneConsumer()
 
-		#region ToggleDroneConsumerFocus
+		#region ToggleDroneConsumerFocus()
 		#region Initial state idle
 		[Test]
 		public void ToggleDroneConsumerFocus_IdleToActive()
@@ -581,7 +601,7 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 5
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 0
 		}
-		#endregion ToggleDroneConsumerFocus
+		#endregion ToggleDroneConsumerFocus()
 	
 		#region Everything
 		[Test]

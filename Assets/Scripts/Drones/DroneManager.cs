@@ -11,7 +11,7 @@ namespace BattleCruisers.Drones
 	public interface IDroneManager
 	{
 		int NumOfDrones { get; set; }
-		// FELIX  Tests!
+
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
 		bool CanSupportDroneConsumer(int numOfDronesRequired);
