@@ -27,10 +27,6 @@ namespace BattleCruisers.Buildables.Units
 	{
 		public UnitCategory category;
 
-		// FELIX  Remove?  Just figure out whether are mirrored?  (See turrets I think)
-		// FELIX  Nah, deprecating mirroring the entir gameObject, only mirror sprites
-//		public Direction facingDirection;
-
 		// FELIX  Create UnitStats class?
 		public float maxVelocityInMPerS;
 
@@ -50,19 +46,6 @@ namespace BattleCruisers.Buildables.Units
 				Debug.Log("FacingDirection: " + value);
 				_facingDirection = value;
 				OnDirectionChange();
-			}
-		}
-
-		private IList<SpriteRenderer> _spriteRenderers;
-		private IList<SpriteRenderer> SpriteRenderers
-		{
-			get
-			{
-				if (_spriteRenderers == null)
-				{
-					_spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-				}
-				return _spriteRenderers;
 			}
 		}
 		#endregion Properties
@@ -88,24 +71,22 @@ namespace BattleCruisers.Buildables.Units
 
 		protected virtual void OnDirectionChange()
 		{
-			// FELIX
-			// Make sprites face the right direction
-//			foreach (SpriteRenderer spriteRenderer in SpriteRenderers)
-//			{
-//				spriteRenderer.flipX = ShouldFlipXAxis(FacingDirection);
-//			}
+			int yRotation = FindYRotation(FacingDirection);
+			Quaternion rotation = gameObject.transform.rotation;
+			rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);
+			gameObject.transform.rotation = rotation;
 		}
 
-		private bool ShouldFlipXAxis(Direction facingDirection)
+		private int FindYRotation(Direction facingDirection)
 		{
 			switch (facingDirection)
 			{
 				case Direction.Right:
-					// Sprites by default are facing right, no flipping needed
-					return false;
+					// Sprites by default are facing right, so DO NOT mirror
+					return 0;
 				case Direction.Left:
-					// Need to flip x axis
-					return true;
+					// Sprites by default are facing right, so DO mirror
+					return 180;
 				default:
 					throw new ArgumentException();
 			}
