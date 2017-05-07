@@ -2,10 +2,12 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +15,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
@@ -138,7 +139,7 @@ namespace BattleCruisers.Cruisers
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			Debug.Log("Cruiser.OnPointerClick()");
+			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
 		}
 
 		public Building ConstructBuilding(Building buildingPrefab, ISlot slot)

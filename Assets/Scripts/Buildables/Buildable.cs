@@ -62,6 +62,7 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
+		// FELIX  Can this not be private?
 		protected Sprite _sprite;
 		public virtual Sprite Sprite
 		{
@@ -72,6 +73,19 @@ namespace BattleCruisers.Buildables
 					_sprite = GetComponent<SpriteRenderer>().sprite;
 				}
 				return _sprite;
+			}
+		}
+
+		private IList<SpriteRenderer> _spriteRenderers;
+		private IList<SpriteRenderer> SpriteRenderers
+		{
+			get
+			{
+				if (_spriteRenderers == null)
+				{
+					_spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+				}
+				return _spriteRenderers;
 			}
 		}
 
@@ -103,11 +117,9 @@ namespace BattleCruisers.Buildables
 			get { return _facingDirection; }
 			set
 			{
-				if (_facingDirection != value)
-				{
-					_facingDirection = value;
-					OnDirectionChange();
-				}
+				Debug.Log("FacingDirection: " + value);
+				_facingDirection = value;
+				OnDirectionChange();
 			}
 		}
 		#endregion Properties
@@ -252,7 +264,26 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnDirectionChange()
 		{
-			// FELIX
+			// Make sprites face the right direction
+			foreach (SpriteRenderer spriteRenderer in SpriteRenderers)
+			{
+				spriteRenderer.flipX = ShouldFlipXAxis(FacingDirection);
+			}
+		}
+
+		private bool ShouldFlipXAxis(Direction facingDirection)
+		{
+			switch (facingDirection)
+			{
+				case Direction.Right:
+					// Sprites by default are facing right, no flipping needed
+					return false;
+				case Direction.Left:
+					// Need to flip x axis
+					return true;
+				default:
+					throw new ArgumentException();
+			}
 		}
 	}
 }

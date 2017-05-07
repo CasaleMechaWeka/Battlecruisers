@@ -14,8 +14,6 @@ namespace BattleCruisers.Units.Aircraft
 		private float _patrollingSmoothTime;
 		private Vector2 _patrollingVelocity;
 		private bool _isPatrolling;
-		private SpriteRenderer _spriteRenderer;
-
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 
@@ -56,13 +54,6 @@ namespace BattleCruisers.Units.Aircraft
 		}
 		#endregion Properties
 
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			_spriteRenderer = GetComponent<SpriteRenderer>();
-		}
-
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
@@ -81,34 +72,21 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
-				Debug.Log($"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
+				Logging.Log(Tags.BOMBER, $"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
 
-				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0
-				    || oldPatrollingVelocity.x < 0 && _patrollingVelocity.x > 0)
+				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0)
 				{
-					// FELIX
-//					UpdateSpriteDirection();
+					FacingDirection = Direction.Left;
+				}
+				else if (oldPatrollingVelocity.x < 0 && _patrollingVelocity.x > 0)
+				{
+					FacingDirection = Direction.Right;
 				}
 			}
 			else
 			{
 				Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
 				TargetPatrolPoint = FindNextPatrolPoint();
-			}
-		}
-
-		private void UpdateSpriteDirection()
-		{
-			Quaternion rotation = _spriteRenderer.transform.rotation;
-
-			if (_patrollingVelocity.x > 0 && rotation.eulerAngles.y != 0)
-			{
-				Vector3 newEulerAngles = new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z);
-				rotation.eulerAngles = newEulerAngles;
-			}
-			else if (_patrollingVelocity.x < 0 && rotation.eulerAngles.y != 180)
-			{
-//				Ve
 			}
 		}
 

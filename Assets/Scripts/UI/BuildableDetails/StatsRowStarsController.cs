@@ -23,8 +23,6 @@ namespace BattleCruisers.UI.BuildingDetails
 
 		public void Initialise(string statName, int statRating)
 		{
-	//		Debug.Log($"StatsRowStarsController.Initialise() statName: {statName}  statRating: {statRating}");
-
 			_rowLabel.text = statName;
 
 			for (int i = 0; i < _stars.Length; ++i)

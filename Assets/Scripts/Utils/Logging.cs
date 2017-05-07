@@ -25,6 +25,7 @@ namespace BattleCruisers.Utils
 		public const string TARGET = "Target";
 		public const string PROGRESS_BARS = "ProgressBars";
 		public const string ANGLE_CALCULATORS = "AngleCalculators";
+		public const string CRUISER = "Cruiser";
 	}
 	
 	public static class Logging
@@ -59,11 +60,12 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);
-			tagsToActiveness.Add(Tags.BOMBER, false);
+			tagsToActiveness.Add(Tags.BOMBER, true);
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 			tagsToActiveness.Add(Tags.TARGET, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
+			tagsToActiveness.Add(Tags.CRUISER, false);
 
 			return tagsToActiveness;
 		}
