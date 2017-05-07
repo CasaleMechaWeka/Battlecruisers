@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets;
@@ -32,17 +33,18 @@ namespace BattleCruisers.TestScenes.Utilities
 			UIManager uiManager = null,
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
-			BuildableFactory buildableFactory = null,
-			ITargetsFactory targetsFactory = null)
+			IBuildableFactory buildableFactory = null,
+			ITargetsFactory targetsFactory = null,
+			Direction parentCruiserDirection = Direction.Right)
 		{
 			if (parentCruiser == null)
 			{
-				parentCruiser = CreateCruiser(_numOfDrones);
+				parentCruiser = CreateCruiser(_numOfDrones, parentCruiserDirection);
 			}
 
 			if (enemyCruiser == null)
 			{
-				enemyCruiser = CreateCruiser(_numOfDrones);
+				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left);
 			}
 
 			if (targetsFactory == null)
@@ -59,13 +61,18 @@ namespace BattleCruisers.TestScenes.Utilities
 				targetsFactory);
 		}
 
-		private ICruiser CreateCruiser(int numOfDrones)
+		private ICruiser CreateCruiser(int numOfDrones, Direction facingDirection)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
 			droneConsumer.NumOfDrones = NUM_OF_DRONES;
+			droneConsumer.State.Returns(DroneConsumerState.Active);
 
 			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-			droneConsumerProvider.RequestDroneConsumer(0).ReturnsForAnyArgs(droneConsumer);
+			droneConsumerProvider.RequestDroneConsumer(0).ReturnsForAnyArgs(callInfo =>
+			{
+				droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
+				return droneConsumer;
+			});
 
 			ICruiser cruiser = Substitute.For<ICruiser>();
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);

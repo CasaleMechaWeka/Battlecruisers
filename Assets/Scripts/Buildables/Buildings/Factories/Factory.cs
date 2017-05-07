@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 				if (_unit != null)
 				{
 					Assert.IsNotNull(DroneConsumer);
-					_droneManager.RemoveDroneConsumer(DroneConsumer);
+					_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
 					DroneConsumer = null;
 					DestroyUnitUnderConstruction();
 				}
@@ -52,8 +52,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 				if (_unit != null)
 				{
 					Assert.IsNull(DroneConsumer);
-					DroneConsumer = new DroneConsumer(_unit.numOfDronesRequired);
-					_droneManager.AddDroneConsumer(DroneConsumer);
+					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unit.numOfDronesRequired);
+					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 				}
 			}
 			private get { return _unit; }
@@ -123,7 +123,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
-		
+
+		// FELIX  Move sender to event args to avoid casting here
 		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
 		{ 
 			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;

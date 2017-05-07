@@ -12,7 +12,15 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables
 {
-	public class BuildableFactory : MonoBehaviour 
+	public interface IBuildableFactory
+	{
+		Building GetBuildingPrefab(BuildingKey buildingKey);
+		Building CreateBuilding(Building buildingPrefab);
+		Unit GetUnitPrefab(UnitKey unitKey);
+		Unit CreateUnit(Unit unitPrefab);
+	}
+
+	public class BuildableFactory : MonoBehaviour, IBuildableFactory
 	{
 		private PrefabFetcher _prefabFetcher;
 
