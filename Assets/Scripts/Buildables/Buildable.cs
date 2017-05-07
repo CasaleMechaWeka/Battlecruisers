@@ -76,19 +76,6 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		private IList<SpriteRenderer> _spriteRenderers;
-		private IList<SpriteRenderer> SpriteRenderers
-		{
-			get
-			{
-				if (_spriteRenderers == null)
-				{
-					_spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-				}
-				return _spriteRenderers;
-			}
-		}
-
 		private IDroneConsumer _droneConsumer;
 		public IDroneConsumer DroneConsumer 
 		{ 
@@ -108,18 +95,6 @@ namespace BattleCruisers.Buildables
 					_droneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
 					_droneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
 				}
-			}
-		}
-
-		private Direction _facingDirection;
-		protected Direction FacingDirection
-		{
-			get { return _facingDirection; }
-			set
-			{
-				Debug.Log("FacingDirection: " + value);
-				_facingDirection = value;
-				OnDirectionChange();
 			}
 		}
 		#endregion Properties
@@ -150,7 +125,6 @@ namespace BattleCruisers.Buildables
 
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
-			FacingDirection = _parentCruiser.Direction;
 
 			OnInitialised();
 		}
@@ -261,29 +235,5 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void InitiateDelete() { }
-
-		protected virtual void OnDirectionChange()
-		{
-			// Make sprites face the right direction
-			foreach (SpriteRenderer spriteRenderer in SpriteRenderers)
-			{
-				spriteRenderer.flipX = ShouldFlipXAxis(FacingDirection);
-			}
-		}
-
-		private bool ShouldFlipXAxis(Direction facingDirection)
-		{
-			switch (facingDirection)
-			{
-				case Direction.Right:
-					// Sprites by default are facing right, no flipping needed
-					return false;
-				case Direction.Left:
-					// Need to flip x axis
-					return true;
-				default:
-					throw new ArgumentException();
-			}
-		}
 	}
 }
