@@ -88,11 +88,12 @@ namespace BattleCruisers.Buildables.Units
 
 		protected virtual void OnDirectionChange()
 		{
+			// FELIX
 			// Make sprites face the right direction
-			foreach (SpriteRenderer spriteRenderer in SpriteRenderers)
-			{
-				spriteRenderer.flipX = ShouldFlipXAxis(FacingDirection);
-			}
+//			foreach (SpriteRenderer spriteRenderer in SpriteRenderers)
+//			{
+//				spriteRenderer.flipX = ShouldFlipXAxis(FacingDirection);
+//			}
 		}
 
 		private bool ShouldFlipXAxis(Direction facingDirection)

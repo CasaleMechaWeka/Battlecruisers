@@ -12,7 +12,7 @@ namespace BattleCruisers.TestScenes.Factories
 {
 	public class NavalFactoryTestsGod : MonoBehaviour 
 	{
-		public NavalFactory navalFactory;
+		public NavalFactory navalFactoryFacingRight, navalFactoryFacingLeft;
 		public AttackBoatController attackBoatPrefab;
 
 		void Start () 
@@ -20,17 +20,21 @@ namespace BattleCruisers.TestScenes.Factories
 			Helper helper = new Helper();
 
 			IBuildableFactory buildableFactory = Substitute.For<IBuildableFactory>();
-			buildableFactory.CreateUnit(attackBoatPrefab).Returns(Instantiate(attackBoatPrefab));
+			buildableFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab));
 
-			helper.InitialiseBuildable(navalFactory, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(navalFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(navalFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
 
-			navalFactory.CompletedBuildable += NavalFactory_CompletedBuildable;
-			navalFactory.StartConstruction();
+			navalFactoryFacingRight.CompletedBuildable += NavalFactory_CompletedBuildable;
+			navalFactoryFacingLeft.CompletedBuildable += NavalFactory_CompletedBuildable;
+
+			navalFactoryFacingRight.StartConstruction();
+			navalFactoryFacingLeft.StartConstruction();
 		}
 
 		private void NavalFactory_CompletedBuildable(object sender, EventArgs e)
 		{
-			navalFactory.Unit = attackBoatPrefab;
+			((NavalFactory)sender).Unit = attackBoatPrefab;
 		}
 	}
 }

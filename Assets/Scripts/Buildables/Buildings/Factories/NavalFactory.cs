@@ -24,11 +24,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			float horizontalChange = (Size.x * 0.6f) + (unit.Size.x * 0.5f);
 
+			// If the factory is facing left it has been mirrored (rotated
+			// around the y-axis by 180*).  So it's right is an unmirrored
+			// factory's left :/
 			Vector3 direction = transform.right;
-			if (_parentCruiser.Direction == Direction.Left)
-			{
-				direction *= -1;
-			}
 
 			return transform.position + (direction * horizontalChange);
 		}
