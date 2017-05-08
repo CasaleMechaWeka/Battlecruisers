@@ -25,16 +25,16 @@ namespace BattleCruisers.TestScenes.Factories
 			helper.InitialiseBuildable(navalFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
 			helper.InitialiseBuildable(navalFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
 
-			navalFactoryFacingRight.CompletedBuildable += NavalFactory_CompletedBuildable;
-			navalFactoryFacingLeft.CompletedBuildable += NavalFactory_CompletedBuildable;
+			navalFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
+			navalFactoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;
 
 			navalFactoryFacingRight.StartConstruction();
 			navalFactoryFacingLeft.StartConstruction();
 		}
 
-		private void NavalFactory_CompletedBuildable(object sender, EventArgs e)
+		private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
-			((NavalFactory)sender).Unit = attackBoatPrefab;
+			((Factory)sender).Unit = attackBoatPrefab;
 		}
 	}
 }

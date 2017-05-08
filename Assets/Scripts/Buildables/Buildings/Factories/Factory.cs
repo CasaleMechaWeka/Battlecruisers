@@ -10,16 +10,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-	public class BuildProgressEventArgs : EventArgs
-	{
-		public float BuildProgress { get; private set; }
-
-		public BuildProgressEventArgs(float buildProgress)
-		{
-			BuildProgress = buildProgress;
-		}
-	}
-
 	// FELIX  Be able to be able to pause factory?
 	public abstract class Factory : Building, IDroneConsumerProvider
 	{
@@ -29,6 +19,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public UnitCategory unitCategory;
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
+
+		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
 
 		#region Properties
 		private Unit _unit;
@@ -120,6 +112,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
 
 			_unitUnderConstruction.StartConstruction();
+
+			if (StartedBuildingUnit != null)
+			{
+				StartedBuildingUnit.Invoke(this, new StartedConstructionEventArgs(_unitUnderConstruction));
+			}
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);

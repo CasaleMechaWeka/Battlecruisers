@@ -1,0 +1,59 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Targets;
+using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Units.Aircraft;
+using NSubstitute;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace BattleCruisers.TestScenes.Factories
+{
+	public class AirFactoryTestsGod : MonoBehaviour 
+	{
+		public AirFactory airFactoryFacingRight, airFactoryFacingLeft;
+		public AircraftController aircraftPrefab;
+		public List<Vector2> patrolPoints;
+
+		void Start () 
+		{
+			Helper helper = new Helper();
+
+			IBuildableFactory buildableFactory = Substitute.For<IBuildableFactory>();
+			buildableFactory.CreateUnit(aircraftPrefab).Returns(callInfo => Instantiate(aircraftPrefab));
+
+			helper.InitialiseBuildable(airFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(airFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
+
+			airFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
+			airFactoryFacingRight.StartedBuildingUnit += Factory_StartedBuildingUnit;
+
+			airFactoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;
+			airFactoryFacingLeft.StartedBuildingUnit += Factory_StartedBuildingUnit;
+
+			airFactoryFacingRight.StartConstruction();
+			airFactoryFacingLeft.StartConstruction();
+		}
+
+		private void Factory_CompletedBuildable(object sender, EventArgs e)
+		{
+			((Factory)sender).Unit = aircraftPrefab;
+		}
+
+		private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
+		{
+			e.Buildable.CompletedBuildable += Aircraft_CompletedBuildable;
+		}
+
+		private void Aircraft_CompletedBuildable (object sender, EventArgs e)
+		{
+			AircraftController aircraft = (AircraftController)sender;
+			aircraft.PatrolPoints = patrolPoints;
+			aircraft.StartPatrolling();
+		}
+	}
+}

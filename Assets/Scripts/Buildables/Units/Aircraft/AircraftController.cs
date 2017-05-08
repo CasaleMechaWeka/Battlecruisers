@@ -72,7 +72,7 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
-				Logging.Log(Tags.BOMBER, $"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
+				Logging.Log(Tags.BOMBER, $"Patrol():  _patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
 
 				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0)
 				{
@@ -85,7 +85,7 @@ namespace BattleCruisers.Units.Aircraft
 			}
 			else
 			{
-				Logging.Log(Tags.BOMBER, $"OnUpdate():  Reached patrol point {_targetPatrolPoint}");
+				Logging.Log(Tags.BOMBER, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
 				TargetPatrolPoint = FindNextPatrolPoint();
 			}
 		}
