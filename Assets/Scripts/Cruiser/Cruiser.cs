@@ -30,18 +30,13 @@ namespace BattleCruisers.Cruisers
 		public Cruiser enemyCruiser;
 		public BuildableFactory buildableFactory;
 
-		// FELIX  Remove.  Instead pass in Initialise().  
-		// FELIX  Perhaps move IBuildable.FacingDirection up to ITarget to avoid duplication here?
-		// FELIX  Expose for child buildables!
-		public Direction direction;
-
 		public int numOfDrones;
 		public Faction faction;
 
 		public Building SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-		public Direction Direction { get { return direction; } }
+		public Direction Direction { get; private set; }
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
@@ -56,7 +51,7 @@ namespace BattleCruisers.Cruisers
 			healthBarController.Initialise(this);
 		}
 
-		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, ITargetsFactory targetsFactory)
+		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, ITargetsFactory targetsFactory, Direction facingDirection)
 		{
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);
@@ -66,6 +61,7 @@ namespace BattleCruisers.Cruisers
 			DroneManager.NumOfDrones = numOfDrones;
 			DroneConsumerProvider = droneConsumerProvider;
 			_targetsFactory = targetsFactory;
+			Direction = facingDirection;
 		}
 
 		private void SetupSlots()

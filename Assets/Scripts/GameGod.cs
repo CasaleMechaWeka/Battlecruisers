@@ -56,8 +56,7 @@ namespace BattleCruisers
 			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(enemyCruiser);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory);
-			friendlyCruiser.direction = Direction.Right;
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, Direction.Right);
 
 
 			// UI
@@ -77,15 +76,14 @@ namespace BattleCruisers
 			ITargetsFactory aiCruiserTargetsFactory = new TargetsFactory(friendlyCruiser);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			enemyCruiser.direction = Direction.Left;
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory);
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, Direction.Left);
 
 
 			// AI
 			IList<BuildingKey> buildOrder = GetBuildOrder();
 			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
 //			Invoke("StartBot", 10);
-//			Invoke("StartBot", 2);
+			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()
