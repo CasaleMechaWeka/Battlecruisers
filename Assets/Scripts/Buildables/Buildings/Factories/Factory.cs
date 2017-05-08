@@ -121,7 +121,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
 
-		// FELIX  Move sender to event args to avoid casting here
 		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
 		{ 
 			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;

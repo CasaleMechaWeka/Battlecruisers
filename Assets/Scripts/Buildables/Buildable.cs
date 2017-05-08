@@ -62,7 +62,6 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		// FELIX  Can this not be private?
 		protected Sprite _sprite;
 		public virtual Sprite Sprite
 		{
