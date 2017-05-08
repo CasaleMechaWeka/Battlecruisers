@@ -74,19 +74,24 @@ namespace BattleCruisers.Units.Aircraft
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
 				Logging.Log(Tags.BOMBER, $"Patrol():  _patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
 
-				if (oldPatrollingVelocity.x > 0 && _patrollingVelocity.x < 0)
-				{
-					FacingDirection = Direction.Left;
-				}
-				else if (oldPatrollingVelocity.x < 0 && _patrollingVelocity.x > 0)
-				{
-					FacingDirection = Direction.Right;
-				}
+				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
 				Logging.Log(Tags.BOMBER, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
 				TargetPatrolPoint = FindNextPatrolPoint();
+			}
+		}
+
+		protected void UpdateFacingDirection(Vector2 oldVelocity, Vector2 currentVelocity)
+		{
+			if (oldVelocity.x > 0 && currentVelocity.x < 0)
+			{
+				FacingDirection = Direction.Left;
+			}
+			else if (oldVelocity.x < 0 && currentVelocity.x > 0)
+			{
+				FacingDirection = Direction.Right;
 			}
 		}
 

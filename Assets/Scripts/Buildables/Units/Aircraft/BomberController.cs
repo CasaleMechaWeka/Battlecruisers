@@ -146,6 +146,8 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			Logging.Verbose(Tags.BOMBER, $"AdjustVelocity():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
 
+			Vector2 oldVelocity = rigidBody.velocity;
+
 			if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
 			{
 				rigidBody.velocity = TargetVelocity;
@@ -154,6 +156,8 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
+
+			UpdateFacingDirection(oldVelocity, rigidBody.velocity);
 		}
 
 		private void TryBombTarget()
