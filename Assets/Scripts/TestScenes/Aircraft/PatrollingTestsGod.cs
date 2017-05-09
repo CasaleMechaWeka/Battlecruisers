@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.TestScenes.Aircraft
 {
-	public class AircraftPatrollingTestsGod : MonoBehaviour 
+	public class PatrollingTestsGod : MonoBehaviour 
 	{
 		public AircraftController aircraft;
 		public List<GameObject> patrolPoints;

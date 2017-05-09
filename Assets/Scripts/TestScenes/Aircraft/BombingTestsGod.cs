@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace BattleCruisers.TestScenes.Aircraft
 {
-	public class AircraftBombingTestsGod : MonoBehaviour 
+	public class BombingTestsGod : MonoBehaviour 
 	{
 		public BomberController bomberToLeft;
 		public BomberController bomberToRight;
