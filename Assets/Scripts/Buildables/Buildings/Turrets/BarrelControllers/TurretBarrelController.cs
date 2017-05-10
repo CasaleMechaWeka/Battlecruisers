@@ -23,7 +23,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected override void AdjustBarrel(float desiredAngleInDegrees)
 		{
-
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);

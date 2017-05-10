@@ -1,7 +1,10 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
 using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;
+using NSubstitute;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,13 +20,15 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		void Start() 
 		{
-			Helper helper = new Helper();
-//			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
+			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 
-			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right);
-//			helper.InitialiseBuildable(fighter, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
-			fighter.CompletedBuildable += Fighter_CompletedBuildable;
-			fighter.StartConstruction();
+			Helper helper = new Helper();
+			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
+
+//			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Blues);
+////			helper.InitialiseBuildable(fighter, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+//			fighter.CompletedBuildable += Fighter_CompletedBuildable;
+//			fighter.StartConstruction();
 		}
 
 		private void Fighter_CompletedBuildable(object sender, EventArgs e)
