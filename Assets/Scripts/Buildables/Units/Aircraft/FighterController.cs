@@ -51,6 +51,8 @@ namespace BattleCruisers.Units.Aircraft
 
 			_attackCapabilities.Add(TargetType.Aircraft);
 
+			barrelController.Initialise(Faction);
+
 			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);

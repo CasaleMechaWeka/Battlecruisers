@@ -25,10 +25,10 @@ namespace BattleCruisers.TestScenes.Aircraft
 			Helper helper = new Helper();
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
-//			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Blues);
-////			helper.InitialiseBuildable(fighter, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
-//			fighter.CompletedBuildable += Fighter_CompletedBuildable;
-//			fighter.StartConstruction();
+			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory);
+//			helper.InitialiseBuildable(fighter, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+			fighter.CompletedBuildable += Fighter_CompletedBuildable;
+			fighter.StartConstruction();
 		}
 
 		private void Fighter_CompletedBuildable(object sender, EventArgs e)
