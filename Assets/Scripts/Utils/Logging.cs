@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils
 		public const string AI = "AI";
 		public const string ATTACK_BOAT = "AttackBoat";
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
-		public const string TURRET_BARREL_CONTROLLER = "TurretBarrelController";
+		public const string BARREL_CONTROLLER = "BarrelController";
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string SHELL_SPAWNER = "ShellSpawner";
 		public const string SHELLS = "Shells";
@@ -56,7 +56,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.AI, false);
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-			tagsToActiveness.Add(Tags.TURRET_BARREL_CONTROLLER, false);
+			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);

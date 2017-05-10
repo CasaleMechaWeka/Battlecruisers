@@ -10,84 +10,34 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	/// <summary>
-	/// FELIX  Take accuracy into consideration
-	/// </summary>
-	public class TurretBarrelController : MonoBehaviour 
+	public class TurretBarrelController : BarrelController 
 	{
-		private Faction _faction;
-		private float _timeSinceLastFireInS;
-		private ShellStats _shellStats;
-
-		public ShellSpawnerController shellSpawner;
-		public TurretStats turretStats;
-		public AngleCalculator angleCalculator;
-
-		public ITarget Target { get; set; }
-		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
-
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-		public void Initialise(Faction faction)
-		{
-			_faction = faction;
-			_timeSinceLastFireInS = float.MaxValue;
-			_shellStats = new ShellStats(turretStats.shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_faction, _shellStats);
-		}
-
-		void Update()
-		{
-			if (Target != null)
-			{
-				Vector2 sourcePosition = new Vector2(transform.position.x, transform.position.y);
-				Vector3 targetPositionV3 = Target.GameObject.transform.position;
-				Vector2 targetPosition = new Vector2(targetPositionV3.x, targetPositionV3.y);
-				
-				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(sourcePosition, targetPosition, IsSourceMirrored, turretStats.bulletVelocityInMPerS, Target.Velocity);
-
-				bool isOnTarget = MoveBarrelToAngle(desiredAngleInDegrees);
-
-				_timeSinceLastFireInS += Time.deltaTime;
-
-				if (isOnTarget && _timeSinceLastFireInS >= turretStats.FireIntervalInS)
-				{
-					Fire(desiredAngleInDegrees);
-					_timeSinceLastFireInS = 0;
-				}
-			}
-		}
-
-		private bool MoveBarrelToAngle(float desiredAngleInDegrees)
+		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			bool isCorrectAngle = differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"MoveBarrelToAngle():  currentAngleInDegrees: {currentAngleInDegrees}  desiredAngleInDegrees: {desiredAngleInDegrees}  isCorrectAngle: {isCorrectAngle}");
-			
-			if (!isCorrectAngle)
-			{
-				float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
-				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"directionMultiplier: {directionMultiplier}");
-
-				float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
-				if (rotationIncrement > differenceInDegrees)
-				{
-					rotationIncrement = differenceInDegrees;
-				}
-				Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
-				Logging.Log(Tags.TURRET_BARREL_CONTROLLER, $"rotationIncrement: {rotationIncrement}");
-
-				transform.Rotate(rotationIncrementVector);
-			}
-
-			return isCorrectAngle;
+			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 		}
-		
-		private void Fire(float angleInDegrees)
+
+		protected override void AdjustBarrel(float desiredAngleInDegrees)
 		{
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Fire()");
-			shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
+
+			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
+			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+			float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
+			Logging.Log(Tags.BARREL_CONTROLLER, $"MoveBarrelToAngle():  currentAngleInDegrees: {currentAngleInDegrees}  desiredAngleInDegrees: {desiredAngleInDegrees}  directionMultiplier: {directionMultiplier}");
+
+			float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
+			if (rotationIncrement > differenceInDegrees)
+			{
+				rotationIncrement = differenceInDegrees;
+			}
+			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
+			Logging.Log(Tags.BARREL_CONTROLLER, $"rotationIncrement: {rotationIncrement}");
+
+			transform.Rotate(rotationIncrementVector);
 		}
 	}
 }

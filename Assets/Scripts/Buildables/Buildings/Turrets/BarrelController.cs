@@ -69,7 +69,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		private void Fire(float angleInDegrees)
 		{
-			Logging.Log(Tags.TURRET_BARREL_CONTROLLER, "Fire()");
+			Logging.Log(Tags.BARREL_CONTROLLER, "Fire()");
 			shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
 		}
 	}
