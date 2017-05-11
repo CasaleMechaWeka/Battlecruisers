@@ -14,24 +14,38 @@ namespace BattleCruisers.TestScenes.Aircraft
 {
 	public class FighterTestsGod : MonoBehaviour 
 	{
-		public FighterController fighter;
-		public AircraftController targetAircraft;
+		public FighterController fighter1, fighter2, fighter3;
+		public AircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 		public List<Vector2> patrolPoints;
 
 		void Start() 
 		{
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-
 			Helper helper = new Helper();
-//			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(targetAircraft.GameObject);
 
-			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory);
-			fighter.CompletedBuildable += Fighter_CompletedBuildable;
-			fighter.StartConstruction();
 
-			helper.InitialiseBuildable(targetAircraft);
-			targetAircraft.StartConstruction();
+			// Stationary target
+			ITargetsFactory targetsFactory1 = helper.CreateTargetsFactory(targetAircraft1.GameObject);
+
+			helper.InitialiseBuildable(fighter1, faction: Faction.Reds, targetsFactory: targetsFactory1);
+			fighter1.CompletedBuildable += Fighter_CompletedBuildable;
+			fighter1.StartConstruction();
+
+			helper.InitialiseBuildable(targetAircraft1, faction: Faction.Blues);
+			targetAircraft1.StartConstruction();
+
+
+//			// Patrolling target
+//			ITargetsFactory targetsFactory2 = helper.CreateTargetsFactory(targetAircraft1.GameObject);
+//
+//			helper.InitialiseBuildable(fighter2, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory1);
+//			fighter1.CompletedBuildable += Fighter_CompletedBuildable;
+//			fighter1.StartConstruction();
+//
+//			helper.InitialiseBuildable(targetAircraft1);
+//			targetAircraft1.StartConstruction();
+
+
+			// Dogfight
 		}
 
 		private void Fighter_CompletedBuildable(object sender, EventArgs e)
