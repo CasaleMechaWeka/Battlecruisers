@@ -64,7 +64,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 			tagsToActiveness.Add(Tags.TARGET, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
-			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
+			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, true);
 			tagsToActiveness.Add(Tags.CRUISER, false);
 
 			return tagsToActiveness;

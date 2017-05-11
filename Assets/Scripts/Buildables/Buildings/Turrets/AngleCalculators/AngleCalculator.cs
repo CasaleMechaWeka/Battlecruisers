@@ -17,6 +17,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
+		// FELIX  Use FacingDirection instead of isSourceMirrored param?
+
 		/// <summary>
 		/// Assumes:
 		/// 1. Shells are NOT affected by gravity
@@ -54,6 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 				float xDiff = Math.Abs(source.x - target.x);
 				float yDiff = Math.Abs(source.y - target.y);
 				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
+				Logging.Log(Tags.ANGLE_CALCULATORS, $"angleInDegrees: {angleInDegrees}");
 
 				if (source.x < target.x)
 				{
