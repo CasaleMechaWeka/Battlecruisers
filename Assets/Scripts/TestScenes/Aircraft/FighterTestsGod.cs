@@ -15,7 +15,7 @@ namespace BattleCruisers.TestScenes.Aircraft
 	public class FighterTestsGod : MonoBehaviour 
 	{
 		public FighterController fighter;
-		public GameObject target;
+		public AircraftController targetAircraft;
 		public List<Vector2> patrolPoints;
 
 		void Start() 
@@ -26,9 +26,11 @@ namespace BattleCruisers.TestScenes.Aircraft
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
 			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory);
-//			helper.InitialiseBuildable(fighter, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
 			fighter.CompletedBuildable += Fighter_CompletedBuildable;
 			fighter.StartConstruction();
+
+			helper.InitialiseBuildable(targetAircraft);
+			targetAircraft.StartConstruction();
 		}
 
 		private void Fighter_CompletedBuildable(object sender, EventArgs e)
