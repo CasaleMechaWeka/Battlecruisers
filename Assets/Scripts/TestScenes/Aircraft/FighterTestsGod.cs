@@ -23,7 +23,8 @@ namespace BattleCruisers.TestScenes.Aircraft
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 
 			Helper helper = new Helper();
-			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
+//			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(targetAircraft.GameObject);
 
 			helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory);
 			fighter.CompletedBuildable += Fighter_CompletedBuildable;
@@ -35,11 +36,11 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 		private void Fighter_CompletedBuildable(object sender, EventArgs e)
 		{
-			FighterController fighter = sender as FighterController;
-			fighter.PatrolPoints = patrolPoints;
-			fighter.StartPatrolling();
+//			FighterController fighter = sender as FighterController;
+//			fighter.PatrolPoints = patrolPoints;
+//			fighter.StartPatrolling();
 
-			fighter.Target = targetAircraft;
+//			fighter.Target = targetAircraft;
 		}			
 	}
 }

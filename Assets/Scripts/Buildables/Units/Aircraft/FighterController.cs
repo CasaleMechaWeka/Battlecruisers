@@ -70,16 +70,15 @@ namespace BattleCruisers.Units.Aircraft
 
 			barrelController.Initialise(Faction);
 
-			// FELIX  Uncomment!
-//			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
-//			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-//			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
-//			enemyDetector.Initialise(targetFilter, barrelController.turretStats.rangeInM);
-//
-//			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
-//			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-//			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
-//			_targetProcessor.AddTargetConsumer(this);
+			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
+			enemyDetector.Initialise(targetFilter, barrelController.turretStats.rangeInM);
+
+			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
+			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+			_targetProcessor.AddTargetConsumer(this);
 		}
 
 		protected override void OnUpdate()
