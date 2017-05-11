@@ -51,20 +51,29 @@ namespace BattleCruisers.Utils
 		{
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
-			tagsToActiveness.Add(Tags.DRONES, false);
-			tagsToActiveness.Add(Tags.FACTORY, false);
-			tagsToActiveness.Add(Tags.AI, false);
+			// Units
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
+			tagsToActiveness.Add(Tags.BOMBER, true);
+			
+			// Buildings
+			tagsToActiveness.Add(Tags.FACTORY, false);
 			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
+
+			// Projectiles
 			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
-			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);
-			tagsToActiveness.Add(Tags.BOMBER, false);
-			tagsToActiveness.Add(Tags.UI_MANAGER, false);
+			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
 			tagsToActiveness.Add(Tags.TARGET, false);
+
+			// UI
+			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
-			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, true);
+
+			// Other
+			tagsToActiveness.Add(Tags.DRONES, false);
+			tagsToActiveness.Add(Tags.AI, false);
+			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.CRUISER, false);
 
 			return tagsToActiveness;

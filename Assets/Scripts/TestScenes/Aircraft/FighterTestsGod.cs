@@ -38,6 +38,8 @@ namespace BattleCruisers.TestScenes.Aircraft
 			FighterController fighter = sender as FighterController;
 			fighter.PatrolPoints = patrolPoints;
 			fighter.StartPatrolling();
+
+			fighter.Target = targetAircraft;
 		}			
 	}
 }

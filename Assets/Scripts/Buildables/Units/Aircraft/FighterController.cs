@@ -23,6 +23,7 @@ namespace BattleCruisers.Units.Aircraft
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
 		private Vector2 _velocity;
+		private float _velocitySmoothTime;
 
 		// FELIX Inject!
 //		private AngleCalculator _angleCalculator;
@@ -32,12 +33,16 @@ namespace BattleCruisers.Units.Aircraft
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
+		// FELIX
+		ITarget _tempTarget;
 		public ITarget Target 
 		{ 
-			get { return barrelController.Target; }
+			get { return _tempTarget; }
+//			get { return barrelController.Target; }
 			set 
 			{ 
-				barrelController.Target = value;
+				_tempTarget = value;
+//				barrelController.Target = value;
 
 				if (value == null)
 				{
@@ -46,6 +51,10 @@ namespace BattleCruisers.Units.Aircraft
 				else
 				{
 					StopPatrolling();
+
+					Vector2 sourcePosition = transform.position;
+					Vector2 targetPosition = Target.GameObject.transform.position;
+					_velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
 				}
 			}
 		}
@@ -61,19 +70,16 @@ namespace BattleCruisers.Units.Aircraft
 
 			barrelController.Initialise(Faction);
 
-			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
-			enemyDetector.Initialise(targetFilter, barrelController.turretStats.rangeInM);
-
-			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
-			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
-			_targetProcessor.AddTargetConsumer(this);
-
-
-			// FELIX  Inject!
-//			_angleCalculator = new LeadingAngleCalculator();
+			// FELIX  Uncomment!
+//			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
+//			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+//			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
+//			enemyDetector.Initialise(targetFilter, barrelController.turretStats.rangeInM);
+//
+//			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
+//			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
+//			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+//			_targetProcessor.AddTargetConsumer(this);
 		}
 
 		protected override void OnUpdate()
@@ -108,11 +114,13 @@ namespace BattleCruisers.Units.Aircraft
 			}
 			else
 			{
-				float velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
-				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
+//				float velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
+
+				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
 		}
 
+		// FELIX  Can perhaps replace bomber velocity adjustment functionality with this?
 		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
 		{
 			Vector2 desiredVelocity = new Vector2(0, 0);
@@ -140,9 +148,9 @@ namespace BattleCruisers.Units.Aircraft
 				float angleInRadians = Mathf.Atan(yDiff / xDiff);
 				float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-				float velocityX = Mathf.Cos(angleInRadians);
-				float velocityY = Mathf.Sin(angleInDegrees);
-				Logging.Log(Tags.ANGLE_CALCULATORS, $"angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
+				float velocityX = Mathf.Cos(angleInRadians) * maxVelocityInMPerS;
+				float velocityY = Mathf.Sin(angleInRadians) * maxVelocityInMPerS;
+				Logging.Log(Tags.BOMBER, $"angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
 
 				if (sourcePosition.x > targetPosition.x)
 				{
