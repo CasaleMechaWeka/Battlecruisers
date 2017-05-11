@@ -14,44 +14,38 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 {
 	public class PatrollingTargetTestGod : MonoBehaviour 
 	{
+		private Helper _helper;
+
 		public FighterController fighter1, fighter2, fighter3;
 		public AircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 		public List<Vector2> patrolPoints1, patrolPoints2, patrolPoints3;
 
 		void Start() 
 		{
-			Helper helper = new Helper();
+			_helper = new Helper();
 
-
-			// Stationary target
-			ITargetsFactory targetsFactory1 = helper.CreateTargetsFactory(targetAircraft1.GameObject);
-
-			helper.InitialiseBuildable(fighter1, faction: Faction.Reds, targetsFactory: targetsFactory1);
-			fighter1.StartConstruction();
-
-			helper.InitialiseBuildable(targetAircraft1, faction: Faction.Blues);
-			targetAircraft1.StartConstruction();
-
-
-			// Patrolling target
-			ITargetsFactory targetsFactory2 = helper.CreateTargetsFactory(targetAircraft2.GameObject);
-
-			helper.InitialiseBuildable(fighter2, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory2);
-			fighter2.StartConstruction();
-
-			helper.InitialiseBuildable(targetAircraft2, faction: Faction.Reds);
-			targetAircraft2.CompletedBuildable += Target2_CompletedBuildable;
-			targetAircraft2.StartConstruction();
-
-
-			// Dogfight
+			SetupPair(fighter1, targetAircraft1, patrolPoints1);
+//			SetupPair(fighter2, targetAircraft2);
+//			SetupPair(fighter3, targetAircraft3);
 		}
 
-		private void Target2_CompletedBuildable(object sender, EventArgs e)
+		private void SetupPair(FighterController fighter, AircraftController target, IList<Vector2> patrolPoints)
 		{
-//			AircraftController aircraft = sender as AircraftController;
-//			aircraft.PatrolPoints = patrolPoints;
-//			aircraft.StartPatrolling();
+			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject);
+			
+			_helper.InitialiseBuildable(fighter, parentCruiserDirection: Direction.Right, faction: Faction.Reds, targetsFactory: targetsFactory);
+			fighter.StartConstruction();
+			
+			_helper.InitialiseBuildable(target, faction: Faction.Reds);
+			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, patrolPoints);
+			target.StartConstruction();
+		}
+
+		private void SetPatrolPoints(object target, IList<Vector2> patrolPoints)
+		{
+			AircraftController aircraft = target as AircraftController;
+			aircraft.PatrolPoints = patrolPoints;
+			aircraft.StartPatrolling();
 		}			
 	}
 }
