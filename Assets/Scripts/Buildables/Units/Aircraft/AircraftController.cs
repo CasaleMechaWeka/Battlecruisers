@@ -14,6 +14,8 @@ namespace BattleCruisers.Units.Aircraft
 		private float _patrollingSmoothTime;
 		private Vector2 _patrollingVelocity;
 		private bool _isPatrolling;
+		private Vector2 _lastPatrolPoint;
+
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
 
@@ -98,12 +100,23 @@ namespace BattleCruisers.Units.Aircraft
 		public void StartPatrolling()
 		{
 			Assert.IsTrue(PatrolPoints != null);
-			TargetPatrolPoint = FindNearestPatrolPoint();
+
+			if (PatrolPoints.Contains(_lastPatrolPoint))
+			{
+				// Resume patrolling
+				TargetPatrolPoint = _lastPatrolPoint;
+			}
+			else
+			{
+				TargetPatrolPoint = FindNearestPatrolPoint();
+			}
+
 			_isPatrolling = true;
 		}
 
 		public void StopPatrolling()
 		{
+			_lastPatrolPoint = TargetPatrolPoint;
 			TargetPatrolPoint = default(Vector2);
 			_isPatrolling = false;
 		}
