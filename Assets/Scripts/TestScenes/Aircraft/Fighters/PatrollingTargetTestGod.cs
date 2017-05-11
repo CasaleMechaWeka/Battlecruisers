@@ -25,8 +25,8 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			_helper = new Helper();
 
 			SetupPair(fighter1, targetAircraft1, patrolPoints1);
-//			SetupPair(fighter2, targetAircraft2);
-//			SetupPair(fighter3, targetAircraft3);
+			SetupPair(fighter2, targetAircraft2, patrolPoints2);
+			SetupPair(fighter3, targetAircraft3, patrolPoints3);
 		}
 
 		private void SetupPair(FighterController fighter, AircraftController target, IList<Vector2> patrolPoints)
