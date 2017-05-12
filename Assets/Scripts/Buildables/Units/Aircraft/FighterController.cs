@@ -34,15 +34,15 @@ namespace BattleCruisers.Units.Aircraft
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
 		// FELIX
-		ITarget _tempTarget;
+//		ITarget _tempTarget;
 		public ITarget Target 
 		{ 
-			get { return _tempTarget; }
-//			get { return barrelController.Target; }
+//			get { return _tempTarget; }
+			get { return barrelController.Target; }
 			set 
 			{ 
-				_tempTarget = value;
-//				barrelController.Target = value;
+//				_tempTarget = value;
+				barrelController.Target = value;
 
 				if (value == null)
 				{
