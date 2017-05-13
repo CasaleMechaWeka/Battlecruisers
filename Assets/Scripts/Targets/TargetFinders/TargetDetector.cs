@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 
@@ -33,6 +34,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
+			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerEnter2D()");
+
 			if (OnEntered != null)
 			{
 				ITarget target = GetTarget(collider);
@@ -45,6 +48,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		void OnTriggerExit2D(Collider2D collider)
 		{
+			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerExit2D()");
+
 			if (OnExited != null)
 			{
 				ITarget target = GetTarget(collider);

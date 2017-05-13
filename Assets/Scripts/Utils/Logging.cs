@@ -12,30 +12,31 @@ namespace BattleCruisers.Utils
 	public static class Tags
 	{
 		// Units
-		public const string ATTACK_BOAT = "AttackBoat";
 		public const string AIRCRAFT = "Aircraft";
+		public const string ATTACK_BOAT = "AttackBoat";
 
 		// Buildings
-		public const string FACTORY = "Factory";
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
+		public const string FACTORY = "Factory";
 
 		// Projectiles
+		public const string ANGLE_CALCULATORS = "AngleCalculators";
 		public const string BARREL_CONTROLLER = "BarrelController";
 		public const string SHELL_SPAWNER = "ShellSpawner";
 		public const string SHELLS = "Shells";
-		public const string ANGLE_CALCULATORS = "AngleCalculators";
 		public const string TARGET = "Target";
+		public const string TARGET_DETECTOR = "TargetDetector";
 		public const string TARGET_PROCESSORS = "TargetProcessors";
 
 		// UI
-		public const string UI_MANAGER = "UIManager";
 		public const string PROGRESS_BARS = "ProgressBars";
+		public const string UI_MANAGER = "UIManager";
 
 		// Other
-		public const string DRONES = "Drones";
 		public const string AI = "AI";
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string CRUISER = "Cruiser";
+		public const string DRONES = "Drones";
 	}
 	
 	public static class Logging
@@ -62,12 +63,12 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
 			// Units
+			tagsToActiveness.Add(Tags.AIRCRAFT, false);
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
-			tagsToActiveness.Add(Tags.AIRCRAFT, true);
-			
+
 			// Buildings
-			tagsToActiveness.Add(Tags.FACTORY, false);
 			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
+			tagsToActiveness.Add(Tags.FACTORY, false);
 
 			// Projectiles
 			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
@@ -75,17 +76,18 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.SHELLS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
 			tagsToActiveness.Add(Tags.TARGET, false);
+			tagsToActiveness.Add(Tags.TARGET_DETECTOR, true);
 			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, true);
 
 			// UI
-			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 
 			// Other
-			tagsToActiveness.Add(Tags.DRONES, false);
 			tagsToActiveness.Add(Tags.AI, false);
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.CRUISER, false);
+			tagsToActiveness.Add(Tags.DRONES, false);
 
 			return tagsToActiveness;
 		}
@@ -94,8 +96,22 @@ namespace BattleCruisers.Utils
 		{
 			if (TagsToActiveness[tag] || LOG_ALL)
 			{
-				Debug.Log(tag + ":  " + message);
+				Debug.Log($"{tag}:  {message}");
 			}
+		}
+
+		public static void Log(string tag, object obj, string message)
+		{
+			if (TagsToActiveness[tag] || LOG_ALL)
+			{
+				Debug.Log($"{tag}:  {GetClassName(obj)}.{message}");
+			}
+		}
+
+		private static string GetClassName(object obj)
+		{
+			string[] fullyQualifiedName = obj.GetType().ToString().Split('.');
+			return fullyQualifiedName[fullyQualifiedName.Length - 1];
 		}
 
 		public static void Verbose(string tag, string message)

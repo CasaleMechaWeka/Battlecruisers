@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables
 {
@@ -31,7 +32,7 @@ namespace BattleCruisers.Buildables
 		
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
 		{
-			Debug.Log("e.Buildable.BuildProgress: " + e.Buildable.BuildProgress);
+			Logging.Log(Tags.PROGRESS_BARS, $"e.Buildable.BuildProgress: {e.Buildable.BuildProgress}");
 
 			Assert.IsTrue(e.Buildable.BuildProgress >= 0);
 			fillableImage.fillAmount = e.Buildable.BuildProgress;
