@@ -19,5 +19,16 @@ namespace BattleCruisers.TestScenes.Aircraft
 
 			aircraft.StartPatrolling();
 		}
+
+		private void StopPatrolling()
+		{
+			Debug.Log("StopPatrolling");
+			aircraft.StopPatrolling();
+		}
+
+		private void StartPatrolling()
+		{
+			aircraft.StartPatrolling();
+		}
 	}
 }
