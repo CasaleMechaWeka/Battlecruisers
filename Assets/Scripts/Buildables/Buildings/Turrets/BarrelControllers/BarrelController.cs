@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// <summary>
 	/// FELIX  Take accuracy into consideration.  Perhaps in AngleCalculator?
 	/// </summary>
-	public abstract class BarrelController : MonoBehaviour 
+	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
 		private Faction _faction;
 		private float _timeSinceLastFireInS;

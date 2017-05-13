@@ -24,6 +24,7 @@ namespace BattleCruisers.Targets
 
 		// Filters
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
+		IExactMatchTargetFilter CreateExactMatchTargetFiler();
 
 		// Rankers
 		ITargetRanker CreateEqualTargetRanker();
@@ -58,6 +59,11 @@ namespace BattleCruisers.Targets
 		public ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes)
 		{
 			return new TargetFilter(faction, targetTypes);
+		}
+
+		public IExactMatchTargetFilter CreateExactMatchTargetFiler()
+		{
+			return new ExactMatchTargetFilter();
 		}
 		#endregion TargetFilters
 

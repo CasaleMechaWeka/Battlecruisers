@@ -20,26 +20,32 @@ namespace BattleCruisers.Units.Aircraft
 	// FELIX  Extract anything common with BomberController to AircraftController?  Eg, shellSpawner?
 	public class FighterController : AircraftController, ITargetConsumer
 	{
-		private ITargetFinder _targetFinder;
-		private ITargetProcessor _targetProcessor;
+		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
+		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
 		private Vector2 _velocity;
 		private float _velocitySmoothTime;
 
-		public TargetDetector enemyDetector;
+		// Detects enemies that come within following range
+		public TargetDetector followableEnemyDetector;
+		// Detects when the enemy being followed comes within shooting range
+		public TargetDetector shootableEnemyDetector;
+
 		public BarrelController barrelController;
+		public float enemyFollowDetectionRangeInM;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
+		private ITarget _target;
 		public ITarget Target 
 		{ 
-			get { return barrelController.Target; }
+			get { return _target; }
 			set 
 			{ 
 				Logging.Log(Tags.AIRCRAFT, $"FighterController.set_Target:  {value}");
 
-				barrelController.Target = value;
+				_target = value;
 
-				if (value == null)
+				if (_target == null)
 				{
 					_patrollingVelocity = rigidBody.velocity;
 					rigidBody.velocity = new Vector2(0, 0);
@@ -66,22 +72,49 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
 
-			Assert.IsNotNull(enemyDetector);
+			Assert.IsNotNull(followableEnemyDetector);
 			Assert.IsNotNull(barrelController);
 
 			_attackCapabilities.Add(TargetType.Aircraft);
 
 			barrelController.Initialise(Faction);
 
-			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
+			SetupTargetDetection();
+		}
+
+		/// <summary>
+		/// Enemies first come within following range, and then shootable range as the figher closes
+		/// in on the enemy.
+		/// 
+		/// enemyDetectionRangeInM: 
+		///		The range at which enemies are detected
+		/// barrelController.turretStats.rangeInM:  
+		///		The range at which the turret can shoot enemies
+		/// enemyDetectionRangeInM > barrelController.turretStats.rangeInM
+		/// </summary>
+		private void SetupTargetDetection()
+		{
+			// Detect followable enemies
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
-			enemyDetector.Initialise(targetFilter, barrelController.turretStats.rangeInM);
+			followableEnemyDetector.Initialise(targetFilter, enemyFollowDetectionRangeInM);
+			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector);
+			
+			ITargetRanker followableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
+			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(_followableTargetFinder, followableTargetRanker);
+			_followableTargetProcessor.AddTargetConsumer(this);
 
-			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
-			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
-			_targetProcessor.AddTargetConsumer(this);
+
+			// Detect shootable enemies
+			IExactMatchTargetFilter exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
+			_followableTargetProcessor.AddTargetConsumer(exactMatchTargetFilter);
+			
+			shootableEnemyDetector.Initialise(exactMatchTargetFilter, barrelController.turretStats.rangeInM);
+			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector);
+			
+			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
+			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(_shootableTargetFinder, shootableTargetRanker);
+			_shootableTargetProcessor.AddTargetConsumer(barrelController);
 		}
 
 		protected override void OnFixedUpdate()
@@ -176,15 +209,16 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnDestroyed();
 
+			// FELIX  Update
 			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
 			if (BuildableState == BuildableState.Completed)
 			{
-				_targetProcessor.RemoveTargetConsumer(this);
-				_targetProcessor.Dispose();
-				_targetProcessor = null;
+				_followableTargetProcessor.RemoveTargetConsumer(this);
+				_followableTargetProcessor.Dispose();
+				_followableTargetProcessor = null;
 
-				_targetFinder.Dispose();
-				_targetFinder = null;
+				_followableTargetFinder.Dispose();
+				_followableTargetFinder = null;
 			}
 		}
 	}
