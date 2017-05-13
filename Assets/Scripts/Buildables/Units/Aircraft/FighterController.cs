@@ -41,15 +41,26 @@ namespace BattleCruisers.Units.Aircraft
 			get { return barrelController.Target; }
 			set 
 			{ 
+				Logging.Log(Tags.AIRCRAFT, $"FighterController.set_Target:  {value}");
+
 //				_tempTarget = value;
 				barrelController.Target = value;
 
 				if (value == null)
 				{
+					// FELIX  Uncomment for smooth transition from attacking to patrolling?
+//					_patrollingVelocity = rigidBody.velocity;
+
+					rigidBody.velocity = new Vector2(0, 0);
 					StartPatrolling();
 				}
 				else
 				{
+					if (_isPatrolling)
+					{
+						rigidBody.velocity = _patrollingVelocity;
+					}
+
 					StopPatrolling();
 
 					Vector2 sourcePosition = transform.position;
@@ -85,7 +96,6 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnUpdate();
 
-			// FELIX  Handle flying at target & turning around :D
 			if (Target != null)
 			{
 
@@ -149,7 +159,7 @@ namespace BattleCruisers.Units.Aircraft
 
 				float velocityX = Mathf.Cos(angleInRadians) * maxVelocityInMPerS;
 				float velocityY = Mathf.Sin(angleInRadians) * maxVelocityInMPerS;
-				Logging.Log(Tags.BOMBER, $"angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
+				Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity()  angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
 
 				if (sourcePosition.x > targetPosition.x)
 				{
@@ -168,7 +178,7 @@ namespace BattleCruisers.Units.Aircraft
 			}
 
 			// FELIX  Update tag
-			Logging.Log(Tags.BOMBER, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
+			Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
 			return desiredVelocity;
 		}
 

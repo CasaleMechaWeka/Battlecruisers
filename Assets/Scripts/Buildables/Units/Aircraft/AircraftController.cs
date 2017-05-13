@@ -12,8 +12,8 @@ namespace BattleCruisers.Units.Aircraft
 	public class AircraftController : Unit
 	{
 		private float _patrollingSmoothTime;
-		private Vector2 _patrollingVelocity;
-		private bool _isPatrolling;
+		protected Vector2 _patrollingVelocity;
+		protected bool _isPatrolling;
 		private Vector2 _lastPatrolPoint;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
@@ -43,7 +43,7 @@ namespace BattleCruisers.Units.Aircraft
 				float distance = Vector2.Distance(transform.position, _targetPatrolPoint);
 				_patrollingSmoothTime = distance / maxVelocityInMPerS / SMOOTH_TIME_MULTIPLIER;
 
-				Logging.Log(Tags.BOMBER, $"Setting new patrol point {_targetPatrolPoint}");
+				Logging.Log(Tags.AIRCRAFT, $"set_TargetPatrolPoint: {_targetPatrolPoint}  _patrollingSmoothTime: {_patrollingSmoothTime}");
 			}
 		}
 
@@ -68,19 +68,20 @@ namespace BattleCruisers.Units.Aircraft
 
 		private void Patrol()
 		{
-			Vector2 positionAsVector2 = new Vector2(transform.position.x, transform.position.y);
-			bool isInPosition = (positionAsVector2 - TargetPatrolPoint).magnitude < POSITION_EQUALITY_MARGIN;
+			bool isInPosition = Vector2.Distance(transform.position, TargetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
-				Logging.Log(Tags.BOMBER, $"Patrol():  _patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}");
+
+				Logging.Log(Tags.AIRCRAFT, $"Patrol():  currentPosition: {transform.position}  targetPosition: {TargetPatrolPoint}  "
+					+ $"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
 
 				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
-				Logging.Log(Tags.BOMBER, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
+				Logging.Log(Tags.AIRCRAFT, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
 				TargetPatrolPoint = FindNextPatrolPoint();
 			}
 		}
@@ -100,6 +101,7 @@ namespace BattleCruisers.Units.Aircraft
 		public void StartPatrolling()
 		{
 			Assert.IsTrue(PatrolPoints != null);
+			Assert.AreEqual(new Vector2(0, 0), rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
 
 			if (PatrolPoints.Contains(_lastPatrolPoint))
 			{

@@ -11,20 +11,30 @@ namespace BattleCruisers.Utils
 
 	public static class Tags
 	{
-		public const string DRONES = "Drones";
-		public const string FACTORY = "Factory";
-		public const string AI = "AI";
+		// Units
 		public const string ATTACK_BOAT = "AttackBoat";
+		public const string AIRCRAFT = "Aircraft";
+
+		// Buildings
+		public const string FACTORY = "Factory";
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
+
+		// Projectiles
 		public const string BARREL_CONTROLLER = "BarrelController";
-		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string SHELL_SPAWNER = "ShellSpawner";
 		public const string SHELLS = "Shells";
-		public const string BOMBER = "Bomber";
-		public const string UI_MANAGER = "UIManager";
-		public const string TARGET = "Target";
-		public const string PROGRESS_BARS = "ProgressBars";
 		public const string ANGLE_CALCULATORS = "AngleCalculators";
+		public const string TARGET = "Target";
+		public const string TARGET_PROCESSORS = "TargetProcessors";
+
+		// UI
+		public const string UI_MANAGER = "UIManager";
+		public const string PROGRESS_BARS = "ProgressBars";
+
+		// Other
+		public const string DRONES = "Drones";
+		public const string AI = "AI";
+		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string CRUISER = "Cruiser";
 	}
 	
@@ -53,7 +63,7 @@ namespace BattleCruisers.Utils
 
 			// Units
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
-			tagsToActiveness.Add(Tags.BOMBER, true);
+			tagsToActiveness.Add(Tags.AIRCRAFT, true);
 			
 			// Buildings
 			tagsToActiveness.Add(Tags.FACTORY, false);
@@ -65,6 +75,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.SHELLS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
 			tagsToActiveness.Add(Tags.TARGET, false);
+			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, true);
 
 			// UI
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);

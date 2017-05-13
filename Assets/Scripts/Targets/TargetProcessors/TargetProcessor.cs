@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
+			Logging.Log(Tags.TARGET_PROCESSORS, "TargetFinder_TargetFound");
 			Assert.IsFalse(_targets.Contains(e.Target));
 
 			int insertionIndex = FindInsertionIndex(e.Target);
@@ -73,7 +75,9 @@ namespace BattleCruisers.Targets.TargetProcessors
 		
 		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
 		{
+			Logging.Log(Tags.TARGET_PROCESSORS, "TargetFinder_TargetLost");
 			Assert.IsTrue(_targets.Contains(e.Target));
+
 			bool wasHighestPriorityTarget = System.Object.ReferenceEquals(e.Target, HighestPriorityTarget);
 			_targets.Remove(e.Target);
 
