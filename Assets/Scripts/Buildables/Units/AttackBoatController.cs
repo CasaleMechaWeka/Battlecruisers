@@ -93,9 +93,9 @@ namespace BattleCruisers.Buildables.Units
 			friendDetector.OnExited += OnFriendExited;
 		}
 
-		protected override void OnUpdate()
+		protected override void OnFixedUpdate()
 		{
-			base.OnUpdate();
+			base.OnFixedUpdate();
 
 			if (BuildableState == BuildableState.Completed)
 			{
