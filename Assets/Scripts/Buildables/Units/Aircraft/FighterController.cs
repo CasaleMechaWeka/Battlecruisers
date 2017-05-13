@@ -25,33 +25,25 @@ namespace BattleCruisers.Units.Aircraft
 		private Vector2 _velocity;
 		private float _velocitySmoothTime;
 
-		// FELIX Inject!
-//		private AngleCalculator _angleCalculator;
-		
 		public TargetDetector enemyDetector;
 		public BarrelController barrelController;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
-		// FELIX
-//		ITarget _tempTarget;
 		public ITarget Target 
 		{ 
-//			get { return _tempTarget; }
 			get { return barrelController.Target; }
 			set 
 			{ 
 				Logging.Log(Tags.AIRCRAFT, $"FighterController.set_Target:  {value}");
 
-//				_tempTarget = value;
 				barrelController.Target = value;
 
 				if (value == null)
 				{
-					// FELIX  Uncomment for smooth transition from attacking to patrolling?
-//					_patrollingVelocity = rigidBody.velocity;
-
+					_patrollingVelocity = rigidBody.velocity;
 					rigidBody.velocity = new Vector2(0, 0);
+
 					StartPatrolling();
 				}
 				else
@@ -176,7 +168,6 @@ namespace BattleCruisers.Units.Aircraft
 				desiredVelocity.y = velocityY;
 			}
 
-			// FELIX  Update tag
 			Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
 			return desiredVelocity;
 		}
