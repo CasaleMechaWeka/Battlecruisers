@@ -17,11 +17,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Units.Aircraft
 {
-	// FELIX  Extract anything common with BomberController to AircraftController?  Eg, shellSpawner?
 	public class FighterController : AircraftController, ITargetConsumer
 	{
 		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
+		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private Vector2 _velocity;
 		private float _velocitySmoothTime;
 
@@ -109,10 +109,10 @@ namespace BattleCruisers.Units.Aircraft
 
 
 			// Detect shootable enemies
-			IExactMatchTargetFilter exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
-			_followableTargetProcessor.AddTargetConsumer(exactMatchTargetFilter);
+			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
+			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
-			shootableEnemyDetector.Initialise(exactMatchTargetFilter, barrelController.turretStats.rangeInM);
+			shootableEnemyDetector.Initialise(_exactMatchTargetFilter, barrelController.turretStats.rangeInM);
 			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector);
 			
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
@@ -132,7 +132,6 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
-		// FELIX  Lead target?  Copy LeadAngleCalculator :P
 		private void AdjustVelocity()
 		{
 			Vector2 sourcePosition = transform.position;
@@ -156,7 +155,6 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
-		// FELIX  Can perhaps replace bomber velocity adjustment functionality with this?
 		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
 		{
 			Vector2 desiredVelocity = new Vector2(0, 0);
@@ -212,16 +210,22 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnDestroyed();
 
-			// FELIX  Update
-			// FELIX  Avoid duplicate code with DefensiveTurret.  New class and use composition?
 			if (BuildableState == BuildableState.Completed)
 			{
 				_followableTargetProcessor.RemoveTargetConsumer(this);
+				_followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
 				_followableTargetProcessor.Dispose();
 				_followableTargetProcessor = null;
 
 				_followableTargetFinder.Dispose();
 				_followableTargetFinder = null;
+
+				_shootableTargetProcessor.RemoveTargetConsumer(barrelController);
+				_shootableTargetProcessor.Dispose();
+				_shootableTargetProcessor = null;
+
+				_shootableTargetFinder.Dispose();
+				_shootableTargetFinder = null;
 			}
 		}
 	}
