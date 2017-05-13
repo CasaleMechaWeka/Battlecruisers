@@ -123,9 +123,9 @@ namespace BattleCruisers.Units.Aircraft
 			return patrolPoints;
 		}
 
-		protected override void OnUpdate()
+		protected override void OnFixedUpdate()
 		{
-			base.OnUpdate();
+			base.OnFixedUpdate();
 
 			if (IsAtCruisingHeight)
 			{
