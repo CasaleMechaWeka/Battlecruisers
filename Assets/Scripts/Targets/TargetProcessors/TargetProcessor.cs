@@ -42,15 +42,21 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, $"TargetFinder_TargetFound");
-			Assert.IsFalse(_targets.Contains(e.Target));
 
-			int insertionIndex = FindInsertionIndex(e.Target);
-
-			_targets.Insert(insertionIndex, e.Target);
-
-			if (System.Object.ReferenceEquals(e.Target, HighestPriorityTarget))
+			if (_targets.Contains(e.Target))
 			{
-				AssignTarget(HighestPriorityTarget);
+				Logging.Warn(Tags.TARGET_PROCESSORS, "Double TargetFinder_TargetFound for same target, wihtout interleaving TargetLost :(");
+			}
+			else
+			{
+				int insertionIndex = FindInsertionIndex(e.Target);
+
+				_targets.Insert(insertionIndex, e.Target);
+
+				if (System.Object.ReferenceEquals(e.Target, HighestPriorityTarget))
+				{
+					AssignTarget(HighestPriorityTarget);
+				}
 			}
 		}
 

@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
+	// Do not change enum value order, as int values are used for comparison!
 	public enum LoggingLevel
 	{
-		Normal, Verbose
+		Warning, Normal, Verbose
 	}
 
 	public static class Tags
@@ -95,11 +96,7 @@ namespace BattleCruisers.Utils
 
 		public static void Log(string tag, string message)
 		{
-			if (TagsToActiveness[tag] || LOG_ALL)
-			{
-				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
-				Debug.Log($"{timestamp}-{tag}:  {message}");
-			}
+			Log(LoggingLevel.Normal, tag, message);
 		}
 
 		public static void Log(string tag, object obj, string message)
@@ -115,12 +112,31 @@ namespace BattleCruisers.Utils
 
 		public static void Verbose(string tag, string message)
 		{
-			#pragma warning disable 162
-			if (LOG_LEVEL >= LoggingLevel.Verbose)
+			Log(LoggingLevel.Verbose, tag, message);
+		}
+
+		public static void Warn(string tag, string message)
+		{
+			Log(LoggingLevel.Warning, tag, message);
+		}
+
+		private static void Log(LoggingLevel logLevel, string tag, string message)
+		{
+			if (LOG_LEVEL >= logLevel
+				&& (TagsToActiveness[tag] || LOG_ALL))
 			{
-				Log(tag, message);
+				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
+				string fullMsg = $"{timestamp}-{tag}:  {message}";
+
+				if (logLevel == LoggingLevel.Warning)
+				{
+					Debug.LogWarning(fullMsg);
+				}
+				else
+				{
+					Debug.Log(fullMsg);
+				}
 			}
-			#pragma warning restore 162
 		}
 	}
 }
