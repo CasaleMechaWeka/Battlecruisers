@@ -34,6 +34,7 @@ namespace BattleCruisers.Units.Aircraft
 		public float enemyFollowDetectionRangeInM;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
+		private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
 		// Even setting the rigidBody.velocity in FixedUpdate() instead of in
 		// this setter did not fix my double OnTriggerEnter2D() problem.  This
@@ -70,6 +71,8 @@ namespace BattleCruisers.Units.Aircraft
 				}
 			}
 		}
+
+		protected override float PatrollingVelocity	{ get {	return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
 		protected override void OnBuildableCompleted()
 		{
@@ -149,6 +152,7 @@ namespace BattleCruisers.Units.Aircraft
 			}
 			else
 			{
+				// FELIX  Remove?
 //				float velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
 
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);

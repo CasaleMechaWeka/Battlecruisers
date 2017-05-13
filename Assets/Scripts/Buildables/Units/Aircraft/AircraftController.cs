@@ -41,7 +41,7 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				_targetPatrolPoint = value;
 				float distance = Vector2.Distance(transform.position, _targetPatrolPoint);
-				_patrollingSmoothTime = distance / maxVelocityInMPerS / SMOOTH_TIME_MULTIPLIER;
+				_patrollingSmoothTime = distance / PatrollingVelocity / SMOOTH_TIME_MULTIPLIER;
 
 				Logging.Log(Tags.AIRCRAFT, $"set_TargetPatrolPoint: {_targetPatrolPoint}  _patrollingSmoothTime: {_patrollingSmoothTime}");
 			}
@@ -54,6 +54,8 @@ namespace BattleCruisers.Units.Aircraft
 				return _isPatrolling ? _patrollingVelocity : base.Velocity;
 			}
 		}
+
+		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
 		#endregion Properties
 
 		protected override void OnFixedUpdate()
@@ -72,10 +74,10 @@ namespace BattleCruisers.Units.Aircraft
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
-				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, maxVelocityInMPerS, Time.deltaTime);
+				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
 
 				Logging.Log(Tags.AIRCRAFT, $"Patrol():  currentPosition: {transform.position}  targetPosition: {TargetPatrolPoint}  "
-					+ $"_patrollingVelocity: {_patrollingVelocity}  maxVelocityInMPerS: {maxVelocityInMPerS}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
+					+ $"_patrollingVelocity: {_patrollingVelocity}  PatrollingVelocity: {PatrollingVelocity}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
 
 				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
