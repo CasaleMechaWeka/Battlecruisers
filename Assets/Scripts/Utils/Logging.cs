@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -96,16 +97,14 @@ namespace BattleCruisers.Utils
 		{
 			if (TagsToActiveness[tag] || LOG_ALL)
 			{
-				Debug.Log($"{tag}:  {message}");
+				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
+				Debug.Log($"{timestamp}-{tag}:  {message}");
 			}
 		}
 
 		public static void Log(string tag, object obj, string message)
 		{
-			if (TagsToActiveness[tag] || LOG_ALL)
-			{
-				Debug.Log($"{tag}:  {GetClassName(obj)}.{message}");
-			}
+			Log(tag, $"{GetClassName(obj)}.{message}");
 		}
 
 		private static string GetClassName(object obj)

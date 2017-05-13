@@ -35,6 +35,9 @@ namespace BattleCruisers.Units.Aircraft
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
+		// Even setting the rigidBody.velocity in FixedUpdate() instead of in
+		// this setter did not fix my double OnTriggerEnter2D() problem.  This
+		// would happen when both aircraft are patrolling.
 		private ITarget _target;
 		public ITarget Target 
 		{ 
