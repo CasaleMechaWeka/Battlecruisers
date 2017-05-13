@@ -92,13 +92,12 @@ namespace BattleCruisers.Units.Aircraft
 			_targetProcessor.AddTargetConsumer(this);
 		}
 
-		protected override void OnUpdate()
+		protected override void OnFixedUpdate()
 		{
-			base.OnUpdate();
+			base.OnFixedUpdate();
 
 			if (Target != null)
 			{
-
 				AdjustVelocity();
 
 				// FELIX  Adjust sprite to point in direction travelling :)

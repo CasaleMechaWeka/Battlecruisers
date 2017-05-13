@@ -64,6 +64,13 @@ namespace BattleCruisers.Buildables.Units
 			FacingDirection = _parentCruiser.Direction;
 		}
 
+		void FixedUpdate()
+		{
+			OnFixedUpdate();
+		}
+
+		protected virtual void OnFixedUpdate() { }
+
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.ShowUnitDetails(this);

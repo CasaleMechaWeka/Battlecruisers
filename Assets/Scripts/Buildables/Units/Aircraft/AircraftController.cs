@@ -56,9 +56,9 @@ namespace BattleCruisers.Units.Aircraft
 		}
 		#endregion Properties
 
-		protected override void OnUpdate()
+		protected override void OnFixedUpdate()
 		{
-			base.OnUpdate();
+			base.OnFixedUpdate();
 
 			if (_isPatrolling)
 			{
