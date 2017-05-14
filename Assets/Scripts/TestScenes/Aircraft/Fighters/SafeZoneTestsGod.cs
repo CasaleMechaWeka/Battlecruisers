@@ -44,7 +44,8 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
-			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
+			SafeZone safeZone = new SafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
+			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
