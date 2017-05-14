@@ -41,6 +41,7 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
+			_helper.SetUnlimitedSafeZone(fighter);
 			fighter.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, fighterPatrolPoints);
 			fighter.StartConstruction();
 

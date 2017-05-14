@@ -2,14 +2,15 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ProgressBars;
+using BattleCruisers.Units.Aircraft.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Targets;
 
 namespace BattleCruisers.Buildables
 {
@@ -25,6 +26,7 @@ namespace BattleCruisers.Buildables
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetsFactory _targetsFactory;
+		protected IAircraftProvider _aircraftProvider;
 
 		public string buildableName;
 		public string description;
@@ -112,7 +114,7 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, IBuildableFactory buildableFactory, ITargetsFactory targetsFactory)
+			ICruiser enemyCruiser, IBuildableFactory buildableFactory, ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
@@ -121,6 +123,7 @@ namespace BattleCruisers.Buildables
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 			_targetsFactory = targetsFactory;
+			_aircraftProvider = aircraftProvider;
 
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;

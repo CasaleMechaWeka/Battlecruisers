@@ -4,18 +4,19 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.UI.BuildingDetails;
+using BattleCruisers.Utils;
+using BattleCruisers.Units.Aircraft.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Targets;
 
 namespace BattleCruisers
 {
@@ -54,9 +55,10 @@ namespace BattleCruisers
 
 			// Player cruiser
 			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(enemyCruiser);
+			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(friendlyCruiser.transform.position, enemyCruiser.transform.position);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, Direction.Right);
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, Direction.Right);
 
 
 			// UI
@@ -74,9 +76,10 @@ namespace BattleCruisers
 
 			// AI cruiser
 			ITargetsFactory aiCruiserTargetsFactory = new TargetsFactory(friendlyCruiser);
+			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(enemyCruiser.transform.position, friendlyCruiser.transform.position);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, Direction.Left);
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, Direction.Left);
 
 
 			// AI

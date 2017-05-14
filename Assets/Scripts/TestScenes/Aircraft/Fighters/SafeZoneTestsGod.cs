@@ -28,6 +28,7 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 		public FighterController fighter;
 		public AircraftController targetAircraft;
 		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
+		public float safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
 
 		void Start() 
 		{
@@ -42,6 +43,7 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
+			fighter.SetSafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
 			fighter.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, fighterPatrolPoints);
 			fighter.StartConstruction();

@@ -25,6 +25,10 @@ namespace BattleCruisers.Units.Aircraft
 		private Vector2 _velocity;
 		private float _velocitySmoothTime;
 
+		// Zone in which fighter will pursue enemies.  If those enemies move outside this
+		// safe zone the fighter will abandon pursuit.
+		private float _safeZoneMinX, _safeZoneMaxX, _safeZoneMinY, _safeZoneMaxY;
+
 		// Detects enemies that come within following range
 		public TargetDetector followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
@@ -32,10 +36,6 @@ namespace BattleCruisers.Units.Aircraft
 
 		public BarrelController barrelController;
 		public float enemyFollowDetectionRangeInM;
-
-		// Zone in which fighter will pursue enemies.  If those enemies move outside this
-		// safe zone the fighter will abandon pursuit.
-		public int safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;
@@ -168,21 +168,21 @@ namespace BattleCruisers.Units.Aircraft
 
 		private Vector2 CapTargetPositionInSafeZone(Vector2 targetPosition)
 		{
-			if (targetPosition.x < safeZoneMinX)
+			if (targetPosition.x < _safeZoneMinX)
 			{
-				targetPosition.x = safeZoneMinX;
+				targetPosition.x = _safeZoneMinX;
 			}
-			if (targetPosition.x > safeZoneMaxX)
+			if (targetPosition.x > _safeZoneMaxX)
 			{
-				targetPosition.x = safeZoneMaxX;
+				targetPosition.x = _safeZoneMaxX;
 			}
-			if (targetPosition.y < safeZoneMinY)
+			if (targetPosition.y < _safeZoneMinY)
 			{
-				targetPosition.y = safeZoneMinY;
+				targetPosition.y = _safeZoneMinY;
 			}
-			if (targetPosition.y > safeZoneMaxY)
+			if (targetPosition.y > _safeZoneMaxY)
 			{
-				targetPosition.y = safeZoneMaxY;
+				targetPosition.y = _safeZoneMaxY;
 			}
 
 			return targetPosition;
@@ -237,6 +237,17 @@ namespace BattleCruisers.Units.Aircraft
 
 			Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
 			return desiredVelocity;
+		}
+
+		public void SetSafeZone(float minX, float maxX, float minY, float maxY)
+		{
+			Assert.IsTrue(maxX > minX);
+			Assert.IsTrue(maxY > minY);
+
+			_safeZoneMinX = minX;
+			_safeZoneMaxX = maxX;
+			_safeZoneMinY = minY;
+			_safeZoneMaxY = maxY;
 		}
 
 		protected override void OnDestroyed()

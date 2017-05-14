@@ -8,6 +8,8 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI;
+using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +37,7 @@ namespace BattleCruisers.TestScenes.Utilities
 			ICruiser enemyCruiser = null,
 			IBuildableFactory buildableFactory = null,
 			ITargetsFactory targetsFactory = null,
+			IAircraftProvider aircraftProvider = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
 			if (parentCruiser == null)
@@ -58,7 +61,8 @@ namespace BattleCruisers.TestScenes.Utilities
 				parentCruiser,
 				enemyCruiser,
 				buildableFactory,
-				targetsFactory);
+				targetsFactory,
+				aircraftProvider);
 		}
 
 		private ICruiser CreateCruiser(int numOfDrones, Direction facingDirection)
@@ -109,6 +113,15 @@ namespace BattleCruisers.TestScenes.Utilities
 		public ITargetsFactory CreateTargetsFactory()
 		{
 			return Substitute.For<ITargetsFactory>();
+		}
+
+		public void SetUnlimitedSafeZone(FighterController fighter)
+		{
+			fighter.SetSafeZone(
+				minX: float.MinValue,
+				maxX: float.MaxValue,
+				minY: float.MinValue,
+				maxY: float.MaxValue);
 		}
 	}
 }
