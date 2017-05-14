@@ -7,6 +7,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.TestScenes;
 using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace BattleCruisers.TestScenes.Aircraft
 {
 	public class BombingTestsGod : MonoBehaviour 
 	{
-		public BomberController bomberToLeft;
-		public BomberController bomberToRight;
+		public BomberController bomberToLeft, bomberToRight;
+		public List<Vector2> patrolPoints;
 
 		public GameObject target;
 
@@ -26,11 +27,12 @@ namespace BattleCruisers.TestScenes.Aircraft
 		{
 			Helper helper = new Helper();
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
+			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
 
-			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
 
-			helper.InitialiseBuildable(bomberToLeft, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(bomberToLeft, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();
 		}
 	}
