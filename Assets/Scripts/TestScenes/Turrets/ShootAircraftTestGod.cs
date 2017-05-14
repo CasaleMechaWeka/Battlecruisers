@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
 using System;
 using System.Collections;
@@ -17,6 +18,7 @@ namespace BattleCruisers.TestScenes.Turrets
 	public class ShootAircraftTestGod : MonoBehaviour 
 	{
 		public BomberController bomber;
+		public List<Vector2> bomberPatrolPoints;
 		public DefensiveTurret turret;
 
 		void Start() 
@@ -29,7 +31,8 @@ namespace BattleCruisers.TestScenes.Turrets
 
 			// Set up bomber
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(turret.GameObject);
-			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetsFactory: targetsFactory);
+			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
+			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
 			bomber.StartConstruction();
 		}
 	}
