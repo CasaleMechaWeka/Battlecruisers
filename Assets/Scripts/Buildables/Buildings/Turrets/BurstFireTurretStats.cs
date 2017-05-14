@@ -30,6 +30,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			get
 			{
 				float nextFireIntervalInS;
+				
+				if (++_intervalCounter == burstSize)
+				{
+					_intervalCounter = 0;
+				}
 
 				if (IsInBurst)
 				{
@@ -38,11 +43,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				else
 				{
 					nextFireIntervalInS = 1 / fireRatePerS;
-				}
-
-				if (++_intervalCounter == burstSize)
-				{
-					_intervalCounter = 0;
 				}
 
 				return nextFireIntervalInS;
@@ -57,14 +57,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		protected override void OnAwake()
+		public override void Initialise()
 		{
-			base.OnAwake();
+			base.Initialise();
 
 			Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
 			Assert.IsTrue(burstFireRatePerS > 0);
 
-			_intervalCounter = 0;
+			_intervalCounter = -1;
 		}
 	}
 }

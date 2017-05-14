@@ -31,6 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public void Initialise(Faction faction)
 		{
 			_faction = faction;
+			turretStats.Initialise();
 			_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 			_timeSinceLastFireInS = float.MaxValue;
 			_shellStats = new ShellStats(turretStats.shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
@@ -51,6 +52,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 
+				if (!isOnTarget)
+				{
+					AdjustBarrel(desiredAngleInDegrees);
+				}
+
 				if (isOnTarget || turretStats.IsInBurst)
 				{
 					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
@@ -60,10 +66,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 						_timeSinceLastFireInS = 0;
 						_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 					}
-				}
-				else
-				{
-					AdjustBarrel(desiredAngleInDegrees);
 				}
 			}
 		}
