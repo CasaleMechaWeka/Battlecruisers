@@ -15,6 +15,7 @@ namespace BattleCruisers.Units.Aircraft
 		protected Vector2 _patrollingVelocity;
 		protected bool _isPatrolling;
 		private Vector2 _lastPatrolPoint;
+		private Vector2 _targetPatrolPoint;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float SMOOTH_TIME_MULTIPLIER = 2;
@@ -33,20 +34,6 @@ namespace BattleCruisers.Units.Aircraft
 			}
 		}
 
-		private Vector2 _targetPatrolPoint;
-		private Vector2 TargetPatrolPoint
-		{
-			get { return _targetPatrolPoint; }
-			set
-			{
-				_targetPatrolPoint = value;
-				float distance = Vector2.Distance(transform.position, _targetPatrolPoint);
-				_patrollingSmoothTime = distance / PatrollingVelocity / SMOOTH_TIME_MULTIPLIER;
-
-				Logging.Log(Tags.AIRCRAFT, $"set_TargetPatrolPoint: {_targetPatrolPoint}  _patrollingSmoothTime: {_patrollingSmoothTime}");
-			}
-		}
-
 		public override Vector2 Velocity
 		{
 			get
@@ -57,6 +44,13 @@ namespace BattleCruisers.Units.Aircraft
 
 		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
 		#endregion Properties
+
+		// FELIX
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+			_patrollingSmoothTime = FindSmoothTime(PatrollingVelocity);
+		}
 
 		protected override void OnFixedUpdate()
 		{
@@ -70,21 +64,21 @@ namespace BattleCruisers.Units.Aircraft
 
 		private void Patrol()
 		{
-			bool isInPosition = Vector2.Distance(transform.position, TargetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
+			bool isInPosition = Vector2.Distance(transform.position, _targetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
-				transform.position = Vector2.SmoothDamp(transform.position, TargetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
+				transform.position = Vector2.SmoothDamp(transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
 
-				Logging.Log(Tags.AIRCRAFT, $"Patrol():  currentPosition: {transform.position}  targetPosition: {TargetPatrolPoint}  "
-					+ $"_patrollingVelocity: {_patrollingVelocity}  PatrollingVelocity: {PatrollingVelocity}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
+				Logging.Log(Tags.AIRCRAFT, $"Patrol():  currentPosition: {transform.position}  targetPosition: {_targetPatrolPoint}  _patrollingVelocity: {_patrollingVelocity}  "
+					+ $"_patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  PatrollingVelocity: {PatrollingVelocity}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
 
 				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
 				Logging.Log(Tags.AIRCRAFT, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
-				TargetPatrolPoint = FindNextPatrolPoint();
+				_targetPatrolPoint = FindNextPatrolPoint();
 			}
 		}
 
@@ -108,11 +102,11 @@ namespace BattleCruisers.Units.Aircraft
 			if (PatrolPoints.Contains(_lastPatrolPoint))
 			{
 				// Resume patrolling
-				TargetPatrolPoint = _lastPatrolPoint;
+				_targetPatrolPoint = _lastPatrolPoint;
 			}
 			else
 			{
-				TargetPatrolPoint = FindNearestPatrolPoint();
+				_targetPatrolPoint = FindNearestPatrolPoint();
 			}
 
 			_isPatrolling = true;
@@ -120,8 +114,8 @@ namespace BattleCruisers.Units.Aircraft
 
 		public void StopPatrolling()
 		{
-			_lastPatrolPoint = TargetPatrolPoint;
-			TargetPatrolPoint = default(Vector2);
+			_lastPatrolPoint = _targetPatrolPoint;
+			_targetPatrolPoint = default(Vector2);
 			_isPatrolling = false;
 		}
 
@@ -145,10 +139,15 @@ namespace BattleCruisers.Units.Aircraft
 
 		private Vector2 FindNextPatrolPoint()
 		{
-			int currentIndex = _patrolPoints.IndexOf(TargetPatrolPoint);
+			int currentIndex = _patrolPoints.IndexOf(_targetPatrolPoint);
 			Assert.IsTrue(currentIndex != -1);
 			int nextIndex = currentIndex == _patrolPoints.Count - 1 ? 0 : currentIndex + 1;
 			return _patrolPoints[nextIndex];
+		}
+
+		protected float FindSmoothTime(float maxVelocity)
+		{
+			return 1;
 		}
 	}
 }

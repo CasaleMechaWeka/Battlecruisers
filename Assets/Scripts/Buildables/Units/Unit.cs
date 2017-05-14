@@ -43,7 +43,6 @@ namespace BattleCruisers.Buildables.Units
 			get { return _facingDirection; }
 			set
 			{
-				Debug.Log("FacingDirection: " + value);
 				_facingDirection = value;
 				OnDirectionChange();
 			}

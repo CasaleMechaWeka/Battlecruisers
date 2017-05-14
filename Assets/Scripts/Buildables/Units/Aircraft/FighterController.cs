@@ -64,15 +64,17 @@ namespace BattleCruisers.Units.Aircraft
 					}
 
 					StopPatrolling();
-
-					Vector2 sourcePosition = transform.position;
-					Vector2 targetPosition = Target.GameObject.transform.position;
-					_velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
 				}
 			}
 		}
 
 		protected override float PatrollingVelocity	{ get {	return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+			_velocitySmoothTime = FindSmoothTime(maxVelocityInMPerS);
+		}
 
 		protected override void OnBuildableCompleted()
 		{
@@ -152,8 +154,7 @@ namespace BattleCruisers.Units.Aircraft
 			}
 			else
 			{
-				// FELIX  Remove?
-//				float velocitySmoothTime = Vector2.Distance(sourcePosition, targetPosition) / maxVelocityInMPerS;
+				Logging.Log(Tags.AIRCRAFT, $"AdjustVelocity():  rigidBody.velocity: {rigidBody.velocity}  desiredVelocity: {desiredVelocity}  _velocitySmoothTime: {_velocitySmoothTime}  maxVelocityInMPerS: {maxVelocityInMPerS}");
 
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
