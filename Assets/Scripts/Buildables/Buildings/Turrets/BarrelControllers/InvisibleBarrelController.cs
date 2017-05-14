@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// 
 	/// Decide if we are on target by checking if the target is within the firing zone.
 	/// 
-	/// FELIX  Implement firing zone :P
+	/// FELIX  Implement firing zone :P  Maybe?  Hm.
 	/// </summary>
 	public class InvisibleBarrelController : BarrelController 
 	{
@@ -25,5 +25,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 
 		protected override void AdjustBarrel(float desiredAngleInDegrees) { }
+
+		protected override float FireAngle(float desiredAngleInDegrees)
+		{
+			return desiredAngleInDegrees;
+		}
 	}
 }

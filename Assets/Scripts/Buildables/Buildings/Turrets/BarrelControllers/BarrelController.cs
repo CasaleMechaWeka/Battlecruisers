@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				{
 					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
 					{
-						Fire(transform.rotation.eulerAngles.z);
+						Fire(FireAngle(desiredAngleInDegrees));
 
 						_timeSinceLastFireInS = 0;
 						_currentFireIntervalInS = turretStats.NextFireIntervalInS;
@@ -73,6 +73,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		protected abstract bool IsOnTarget(float desiredAngleInDegrees);
 
 		protected abstract void AdjustBarrel(float desiredAngleInDegrees);
+
+		protected abstract float FireAngle(float desiredAngleInDegrees);
 
 		private void Fire(float angleInDegrees)
 		{

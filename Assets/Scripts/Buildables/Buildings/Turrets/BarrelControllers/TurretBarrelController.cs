@@ -38,5 +38,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			transform.Rotate(rotationIncrementVector);
 		}
+
+		protected override float FireAngle(float desiredAngleInDegrees)
+		{
+			return transform.rotation.eulerAngles.z;
+		}
 	}
 }
