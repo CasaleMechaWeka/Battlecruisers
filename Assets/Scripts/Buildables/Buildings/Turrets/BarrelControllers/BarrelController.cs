@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
 		private Faction _faction;
+		private float _currentFireIntervalInS;
 		private float _timeSinceLastFireInS;
 		private ShellStats _shellStats;
 
@@ -30,6 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public void Initialise(Faction faction)
 		{
 			_faction = faction;
+			_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 			_timeSinceLastFireInS = float.MaxValue;
 			_shellStats = new ShellStats(turretStats.shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
 			shellSpawner.Initialise(_faction, _shellStats);
@@ -49,12 +51,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 
-				if (isOnTarget)
+				if (isOnTarget || turretStats.IsInBurst)
 				{
-					if (_timeSinceLastFireInS >= turretStats.FireIntervalInS)
+					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
 					{
-						Fire(desiredAngleInDegrees);
+						Fire(transform.rotation.eulerAngles.z);
+
 						_timeSinceLastFireInS = 0;
+						_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 					}
 				}
 				else

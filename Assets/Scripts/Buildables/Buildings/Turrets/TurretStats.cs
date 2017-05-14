@@ -17,8 +17,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		public float turretRotateSpeedInDegrees;
 		public ShellController shellPrefab;
 
-		public float DamagePerS { get { return damage * fireRatePerS; } }
-		public float FireIntervalInS { get { return 1 / fireRatePerS; } }
+		public virtual float DamagePerS { get { return damage * fireRatePerS; } }
+		public virtual float NextFireIntervalInS { get { return 1 / fireRatePerS; } }
+		public virtual bool IsInBurst { get { return false; } }
 
 		void Awake()
 		{
@@ -29,6 +30,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsTrue(rangeInM > 0);
 			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
 			Assert.IsNotNull(shellPrefab);
+
+			OnAwake();
 		}
+
+		protected virtual void OnAwake() { }
 	}
 }
