@@ -101,26 +101,11 @@ namespace BattleCruisers.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitude > transform.position.y);
 
-			PatrolPoints = FindPatrolPoints();
+			PatrolPoints = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitude);
 			StartPatrolling();
 
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
-		}
-
-		/// <returns>
-		/// Two patrol points:
-		/// 1. Directly above the spawn location, at the cruising altitude.
-		/// 2. Halfway between both cruisers, at the cruising altitude.
-		/// </returns>
-		private IList<Vector2> FindPatrolPoints()
-		{
-			IList<Vector2> patrolPoints = new List<Vector2>();
-
-			patrolPoints.Add(new Vector2(transform.position.x, cruisingAltitude));
-			patrolPoints.Add(new Vector2(0, cruisingAltitude));
-
-			return patrolPoints;
 		}
 
 		protected override void OnFixedUpdate()
