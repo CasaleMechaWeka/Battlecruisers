@@ -52,11 +52,18 @@ namespace BattleCruisers.Units.Aircraft.Providers
 			_parentCruiserPosition = parentCruiserPosition;
 			_enemyCruiserPosition = enemyCruiserPosition;
 
-			float minXAdjustment = parentCruiserPosition.x < 0 ? -SAFE_ZONE_PARENT_CRUISER_OVERLAP : SAFE_ZONE_PARENT_CRUISER_OVERLAP;
-			float minX = parentCruiserPosition.x + minXAdjustment;
+			float minX, maxX;
 
-			float maxXAdjustment = enemyCruiserPosition.x < 0 ? SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE : -SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
-			float maxX = enemyCruiserPosition.x + maxXAdjustment;
+			if (parentCruiserPosition.x < 0)
+			{
+				minX = parentCruiserPosition.x - SAFE_ZONE_PARENT_CRUISER_OVERLAP;
+				maxX = enemyCruiserPosition.x - SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
+			}
+			else
+			{
+				minX = enemyCruiserPosition.x + SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
+				maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
+			}
 
 			FighterSafeZone = new SafeZone(
 				minX: minX,

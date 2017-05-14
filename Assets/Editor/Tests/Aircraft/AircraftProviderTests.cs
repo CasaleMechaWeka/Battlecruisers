@@ -10,54 +10,91 @@ namespace BattleCruisers.Tests.Aircraft
 {
 	public class AircraftProviderTests
 	{
-		private IAircraftProvider _aircraftProvider;
-		private Vector2 _parentCruiserPosition, _enemyCruiserPosition;
+		private IAircraftProvider _playerAircraftProvider, _aiAircraftProvider;
+		private Vector2 _playerCruiserPosition, _aiCruiserPosition;
 		private float _bomberAltitude, _fighterAltitude;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			_parentCruiserPosition = new Vector2(-30, 0);
-			_enemyCruiserPosition = new Vector2(30, 0);
+			_playerCruiserPosition = new Vector2(-30, 0);
+			_aiCruiserPosition = new Vector2(30, 0);
 
-			_aircraftProvider = new AircraftProvider(_parentCruiserPosition, _enemyCruiserPosition);
+			_playerAircraftProvider = new AircraftProvider(_playerCruiserPosition, _aiCruiserPosition);
+			_aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition);
 
 			_bomberAltitude = 15;
 			_fighterAltitude = 20;
 		}
 
 		[Test]
-		public void SafeZone()
+		public void PlayerAircraftProvider_SafeZone()
 		{
-			SafeZone expectedSafeZone 
+			SafeZone expected 
 				= new SafeZone(
                     minX: -40, 	// -30 - 10
                     maxX: 5, 	// 30 - 25
                     minY: 10,
                     maxY: 25);
-			
-			Assert.AreEqual(expectedSafeZone.MinX, _aircraftProvider.FighterSafeZone.MinX);
-			Assert.AreEqual(expectedSafeZone.MaxX, _aircraftProvider.FighterSafeZone.MaxX);
-			Assert.AreEqual(expectedSafeZone.MinY, _aircraftProvider.FighterSafeZone.MinY);
-			Assert.AreEqual(expectedSafeZone.MaxY, _aircraftProvider.FighterSafeZone.MaxY);
+
+			AssertAreSafeZonesEqual(expected, _playerAircraftProvider.FighterSafeZone);
 		}
 
 		[Test]
-		public void FindBomberPatrolPoints()
+		public void AiAircraftProvider_SafeZone()
 		{
-			IList<Vector2> patrolPoints = _aircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
+			SafeZone expected 
+				= new SafeZone(
+					minX: -5, 	// -30 + 25
+					maxX: 40, 	// 30 + 10
+					minY: 10,
+					maxY: 25);
+
+			AssertAreSafeZonesEqual(expected, _aiAircraftProvider.FighterSafeZone);
+		}
+
+		[Test]
+		public void PlayerAircraftProvider_FindBomberPatrolPoints()
+		{
+			IList<Vector2> patrolPoints = _playerAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude)));  	// -30 + 10
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude)));		// 30 - 10
 		}
 
 		[Test]
-		public void FindFighterPatrolPoints()
+		public void AiAircraftProvider_FindBomberPatrolPoints()
 		{
-			IList<Vector2> patrolPoints = _aircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
+
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude)));  	// -30 + 10
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude)));		// 30 - 10
+		}
+
+		[Test]
+		public void PlayerAircraftProvider_FindFighterPatrolPoints()
+		{
+			IList<Vector2> patrolPoints = _playerAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-35, _fighterAltitude)));	// -40 + 5
-			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));	// 5 - 5
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));		// 5 - 5
+		}
+
+		[Test]
+		public void AiAircraftProvider_FindFighterPatrolPoints()
+		{
+			IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));		// -5 + 5
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude)));	// 40 - 5
+		}
+
+		private void AssertAreSafeZonesEqual(SafeZone expected, SafeZone actual)
+		{
+			Assert.AreEqual(expected.MinX, actual.MinX);
+			Assert.AreEqual(expected.MaxX, actual.MaxX);
+			Assert.AreEqual(expected.MinY, actual.MinY);
+			Assert.AreEqual(expected.MaxY, actual.MaxY);
 		}
 	}
 }
