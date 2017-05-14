@@ -45,7 +45,6 @@ namespace BattleCruisers.Units.Aircraft
 		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
 		#endregion Properties
 
-		// FELIX
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
@@ -68,9 +67,11 @@ namespace BattleCruisers.Units.Aircraft
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
-				transform.position = Vector2.SmoothDamp(transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
 
-				Logging.Log(Tags.AIRCRAFT, $"Patrol():  currentPosition: {transform.position}  targetPosition: {_targetPatrolPoint}  _patrollingVelocity: {_patrollingVelocity}  "
+				Vector2 moveToPosition = Vector2.SmoothDamp(transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
+				rigidBody.MovePosition(moveToPosition);
+
+				Logging.Log(Tags.AIRCRAFT, $"Patrol():  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint}  _patrollingVelocity: {_patrollingVelocity}  "
 					+ $"_patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  PatrollingVelocity: {PatrollingVelocity}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
 
 				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);

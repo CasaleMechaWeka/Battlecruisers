@@ -101,13 +101,9 @@ namespace BattleCruisers.Tests.Targets
 			_targetConsumer.DidNotReceive().Target = _target1;
 		}
 
-		/// <summary>
-		/// Can sometimes get double TargetDetector.OnTriggerEnter2D(), meaning a 
-		/// double find of the same target can occur.  Logging warning instead of
-		/// throwing assert failure to work around this problem.
-		/// </summary>
 		[Test]
-		public void DoubleFindSameTarget_DoesNotThrows()
+		[ExpectedException(typeof(UnityAsserts.AssertionException))]
+		public void DoubleFindSameTarget_Throws()
 		{
 			InvokeTargetFound(_target1);
 			InvokeTargetFound(_target1);
