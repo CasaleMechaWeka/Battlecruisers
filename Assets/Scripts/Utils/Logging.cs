@@ -65,7 +65,7 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
 			// Units
-			tagsToActiveness.Add(Tags.AIRCRAFT, true);
+			tagsToActiveness.Add(Tags.AIRCRAFT, false);
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 
 			// Buildings

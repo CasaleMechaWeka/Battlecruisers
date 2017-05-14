@@ -33,6 +33,10 @@ namespace BattleCruisers.Units.Aircraft
 		public BarrelController barrelController;
 		public float enemyFollowDetectionRangeInM;
 
+		// Zone in which fighter will pursue enemies.  If those enemies move outside this
+		// safe zone the fighter will abandon pursuit.
+		public int safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
+
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
@@ -142,6 +146,8 @@ namespace BattleCruisers.Units.Aircraft
 			Vector2 sourcePosition = transform.position;
 			Vector2 targetPosition = Target.GameObject.transform.position;
 
+			targetPosition = CapTargetPositionInSafeZone(targetPosition);
+
 			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, maxVelocityInMPerS);
 
 			// FELIX  Use, for updating sprite direction :)
@@ -158,6 +164,28 @@ namespace BattleCruisers.Units.Aircraft
 
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
+		}
+
+		private Vector2 CapTargetPositionInSafeZone(Vector2 targetPosition)
+		{
+			if (targetPosition.x < safeZoneMinX)
+			{
+				targetPosition.x = safeZoneMinX;
+			}
+			if (targetPosition.x > safeZoneMaxX)
+			{
+				targetPosition.x = safeZoneMaxX;
+			}
+			if (targetPosition.y < safeZoneMinY)
+			{
+				targetPosition.y = safeZoneMinY;
+			}
+			if (targetPosition.y > safeZoneMaxY)
+			{
+				targetPosition.y = safeZoneMaxY;
+			}
+
+			return targetPosition;
 		}
 
 		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
