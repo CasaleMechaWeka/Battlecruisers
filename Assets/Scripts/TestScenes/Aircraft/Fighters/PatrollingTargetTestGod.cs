@@ -32,9 +32,8 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 		private void SetupPair(FighterController fighter, AircraftController target, IList<Vector2> patrolPoints)
 		{
 			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject);
-			
+
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
-			_helper.SetUnlimitedSafeZone(fighter);
 			fighter.StartConstruction();
 			
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);

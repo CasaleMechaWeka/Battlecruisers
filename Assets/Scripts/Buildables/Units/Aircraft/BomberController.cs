@@ -21,7 +21,7 @@ namespace BattleCruisers.Units.Aircraft
 
 		public BomberStats bomberStats;
 		public BombSpawnerController bombSpawner;
-		public float cruisingAltitude;
+		public float cruisingAltitudeInM;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
@@ -66,7 +66,7 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			get
 			{
-				return Mathf.Abs(transform.position.y - cruisingAltitude) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
+				return Mathf.Abs(transform.position.y - cruisingAltitudeInM) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
 			}
 		}
 
@@ -99,9 +99,9 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
 
-			Assert.IsTrue(cruisingAltitude > transform.position.y);
+			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			PatrolPoints = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitude);
+			PatrolPoints = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
 			StartPatrolling();
 
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;

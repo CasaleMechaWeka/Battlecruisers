@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
 using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
 using System;
 using System.Collections;
@@ -43,9 +44,8 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
 
-			fighter.SetSafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
-			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
-			fighter.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, fighterPatrolPoints);
+			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
+			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);

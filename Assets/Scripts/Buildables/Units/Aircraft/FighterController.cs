@@ -8,6 +8,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Units.Aircraft
 
 		// Zone in which fighter will pursue enemies.  If those enemies move outside this
 		// safe zone the fighter will abandon pursuit.
-		private float _safeZoneMinX, _safeZoneMaxX, _safeZoneMinY, _safeZoneMaxY;
+		private SafeZone _safeZone;
 
 		// Detects enemies that come within following range
 		public TargetDetector followableEnemyDetector;
@@ -36,6 +37,7 @@ namespace BattleCruisers.Units.Aircraft
 
 		public BarrelController barrelController;
 		public float enemyFollowDetectionRangeInM;
+		public float cruisingAltitudeInM;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;
@@ -90,6 +92,10 @@ namespace BattleCruisers.Units.Aircraft
 			_attackCapabilities.Add(TargetType.Aircraft);
 
 			barrelController.Initialise(Faction);
+
+			
+			_safeZone = _aircraftProvider.FighterSafeZone;			
+			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 
 			SetupTargetDetection();
 		}
@@ -168,21 +174,21 @@ namespace BattleCruisers.Units.Aircraft
 
 		private Vector2 CapTargetPositionInSafeZone(Vector2 targetPosition)
 		{
-			if (targetPosition.x < _safeZoneMinX)
+			if (targetPosition.x < _safeZone.MinX)
 			{
-				targetPosition.x = _safeZoneMinX;
+				targetPosition.x = _safeZone.MinX;
 			}
-			if (targetPosition.x > _safeZoneMaxX)
+			if (targetPosition.x > _safeZone.MaxX)
 			{
-				targetPosition.x = _safeZoneMaxX;
+				targetPosition.x = _safeZone.MaxX;
 			}
-			if (targetPosition.y < _safeZoneMinY)
+			if (targetPosition.y < _safeZone.MinY)
 			{
-				targetPosition.y = _safeZoneMinY;
+				targetPosition.y = _safeZone.MinY;
 			}
-			if (targetPosition.y > _safeZoneMaxY)
+			if (targetPosition.y > _safeZone.MaxY)
 			{
-				targetPosition.y = _safeZoneMaxY;
+				targetPosition.y = _safeZone.MaxY;
 			}
 
 			return targetPosition;
@@ -237,17 +243,6 @@ namespace BattleCruisers.Units.Aircraft
 
 			Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
 			return desiredVelocity;
-		}
-
-		public void SetSafeZone(float minX, float maxX, float minY, float maxY)
-		{
-			Assert.IsTrue(maxX > minX);
-			Assert.IsTrue(maxY > minY);
-
-			_safeZoneMinX = minX;
-			_safeZoneMaxX = maxX;
-			_safeZoneMinY = minY;
-			_safeZoneMaxY = maxY;
 		}
 
 		protected override void OnDestroyed()

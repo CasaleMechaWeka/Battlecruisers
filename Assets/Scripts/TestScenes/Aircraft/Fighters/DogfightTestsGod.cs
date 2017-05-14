@@ -31,11 +31,9 @@ namespace BattleCruisers.TestScenes.Aircraft.Fighters
 			ITargetsFactory targetsFactory2 = _helper.CreateTargetsFactory(fighter1.GameObject);
 
 			_helper.InitialiseBuildable(fighter1, faction: Faction.Reds, targetsFactory: targetsFactory1);
-			_helper.SetUnlimitedSafeZone(fighter1);
 			fighter1.StartConstruction();
 
 			_helper.InitialiseBuildable(fighter2, faction: Faction.Blues, targetsFactory: targetsFactory2);
-			_helper.SetUnlimitedSafeZone(fighter2);
 			fighter2.StartConstruction();
 		}
 	}

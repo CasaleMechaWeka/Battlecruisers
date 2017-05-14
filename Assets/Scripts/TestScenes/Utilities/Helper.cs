@@ -55,6 +55,11 @@ namespace BattleCruisers.TestScenes.Utilities
 				targetsFactory = new TargetsFactory(enemyCruiser);
 			}
 
+			if (aircraftProvider == null)
+			{
+				aircraftProvider = CreateAircraftProvider();
+			}
+
 			buildable.Initialise(
 				faction,
 				uiManager,
@@ -115,13 +120,44 @@ namespace BattleCruisers.TestScenes.Utilities
 			return Substitute.For<ITargetsFactory>();
 		}
 
-		public void SetUnlimitedSafeZone(FighterController fighter)
+		public IAircraftProvider CreateAircraftProvider(
+			IList<Vector2> bomberPatrolPoints = null,
+			IList<Vector2> fighterPatrolPoints = null,
+			SafeZone fighterSafeZone = null)
 		{
-			fighter.SetSafeZone(
-				minX: float.MinValue,
-				maxX: float.MaxValue,
-				minY: float.MinValue,
-				maxY: float.MaxValue);
+			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+
+			if (bomberPatrolPoints == null)
+			{
+				bomberPatrolPoints = new List<Vector2>() 
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+
+			if (fighterPatrolPoints == null)
+			{
+				fighterPatrolPoints = new List<Vector2>() 
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+
+			if (fighterSafeZone == null)
+			{
+				fighterSafeZone = new SafeZone(
+					minX: float.MinValue,
+					maxX: float.MaxValue,
+					minY: float.MinValue,
+					maxY: float.MaxValue);
+			}
+			provider.FighterSafeZone.Returns(fighterSafeZone);
+			
+			return provider;
 		}
 	}
 }
