@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	// FELIX  Test this class!  (NextFireIntervalInS :P)
 	public class BurstFireTurretStats : TurretStats
 	{
 		private int _intervalCounter;
