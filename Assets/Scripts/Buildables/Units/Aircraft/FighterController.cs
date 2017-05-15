@@ -142,9 +142,10 @@ namespace BattleCruisers.Units.Aircraft
 			if (Target != null)
 			{
 				AdjustVelocity();
-
-				// FELIX  Adjust sprite to point in direction travelling :)
 			}
+
+			// Adjust game object to point in direction it's travelling
+			transform.right = Velocity;
 		}
 
 		private void AdjustVelocity()
@@ -155,9 +156,6 @@ namespace BattleCruisers.Units.Aircraft
 			targetPosition = CapTargetPositionInSafeZone(targetPosition);
 
 			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, maxVelocityInMPerS);
-
-			// FELIX  Use, for updating sprite direction :)
-			Vector2 oldVelocity = rigidBody.velocity;
 
 			if (Math.Abs(rigidBody.velocity.x - desiredVelocity.x) <= VELOCITY_EQUALITY_MARGIN
 				&& Math.Abs(rigidBody.velocity.y - desiredVelocity.y) <= VELOCITY_EQUALITY_MARGIN)
@@ -170,6 +168,11 @@ namespace BattleCruisers.Units.Aircraft
 
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
+		}
+
+		protected override void OnDirectionChange()
+		{
+			// Turn off parent class behaviour of mirroring accross y-axis
 		}
 
 		private Vector2 CapTargetPositionInSafeZone(Vector2 targetPosition)
