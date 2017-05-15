@@ -53,6 +53,7 @@ namespace BattleCruisers.Buildables
 		/// <value><c>true</c> if healht is 0; otherwise, <c>false</c>.</value>
 		bool IsDestroyed { get; }
 		float Health { get; }
+		GameObject GameObject { get; }
 
 		// When health reaches 0
 		event EventHandler<DestroyedEventArgs> Destroyed;
@@ -68,7 +69,6 @@ namespace BattleCruisers.Buildables
 	{
 		Faction Faction { get; }
 		TargetType TargetType { get; }
-		GameObject GameObject { get; }
 		Vector2 Velocity { get; }
 		IList<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }

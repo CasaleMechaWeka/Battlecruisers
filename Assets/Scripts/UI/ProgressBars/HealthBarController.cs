@@ -11,21 +11,32 @@ namespace BattleCruisers.UI.ProgressBars
 {
 	public class HealthBarController : BaseProgressBarController
 	{
+		private IDamagable _damagable;
 		private float _maxHealth;
+		private Vector3 _offset;
 
 		public void Initialise(IDamagable damagable)
 		{
 			Logging.Log(Tags.PROGRESS_BARS, $"Initialise()  {damagable}");
 
+			Assert.IsNotNull(damagable);
 			Assert.IsTrue(damagable.Health > 0);
 
-			_maxHealth = damagable.Health;
+			_damagable = damagable;
+			_maxHealth = _damagable.Health;
+			_offset = transform.position;
+
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}
 
 		private void Damagable_HealthChanged(object sender, HealthChangedEventArgs e)
 		{
 			OnProgressChanged(e.NewHealth / _maxHealth);
+		}
+
+		void LateUpdate()
+		{
+			transform.position = _damagable.GameObject.transform.position + _offset;
 		}
 	}
 }
