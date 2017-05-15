@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BuildMenus
 		public UIFactory uiFactory;
 		public UIManager uiManager;
 
-		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<Unit>> units)
+		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<UnitWrapper>> units)
 		{
 			_buildingGroups = buildingGroups;
 

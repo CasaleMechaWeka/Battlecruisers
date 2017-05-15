@@ -51,16 +51,16 @@ namespace BattleCruisers.Utils
 			public const string ULTRA = "Ultras";
 		}
 
-		public Building GetBuildingPrefab(BuildingKey buildingKey)
+		public BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey)
 		{
 			string buildingPrefabPath = GetBuildingPath(buildingKey);
-			return GetPrefab<Building>(buildingPrefabPath);
+			return GetPrefab<BuildingWrapper>(buildingPrefabPath);
 		}
 
-		public Unit GetUnitPrefab(UnitKey unitKey)
+		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
 		{
 			string unitPrefabPath = GetUnitPath(unitKey);
-			return GetPrefab<Unit>(unitPrefabPath);
+			return GetPrefab<UnitWrapper>(unitPrefabPath);
 		}
 
 		private T GetPrefab<T>(string prefabPath)

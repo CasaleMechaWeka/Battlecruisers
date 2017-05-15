@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Buttons
 {
 	public class BuildingButtonController : BuildableButtonController
 	{
-		private Building _building;
+		private BuildingWrapper _buildingWrapper;
 		private UIManager _uiManager;
 
 		public Image buildingImage;
@@ -18,22 +18,23 @@ namespace BattleCruisers.Buildables.Buildings.Buttons
 		public Text buildingName;
 		public Text droneLevel;
 
-		public void Initialize(Building building, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
+		// FELIX  Reduce duplication with UnitButtonController
+		public void Initialize(BuildingWrapper buildingWrapper, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
 		{
-			base.Initialize(building, droneManager);
+			base.Initialize(buildingWrapper.building, droneManager);
 			
-			_building = building;
+			_buildingWrapper = buildingWrapper;
 			_uiManager = uiManager;
 
-			buildingName.text = _building.buildableName;
-			droneLevel.text = _building.numOfDronesRequired.ToString();
-			buildingImage.sprite = _building.Sprite;
+			buildingName.text = _buildingWrapper.building.buildableName;
+			droneLevel.text = _buildingWrapper.building.numOfDronesRequired.ToString();
+			buildingImage.sprite = _buildingWrapper.building.Sprite;
 			slotImage.sprite = slotSprite;
 		}
 
 		protected override void OnClick()
 		{
-			_uiManager.SelectBuildingFromMenu(_building);
+			_uiManager.SelectBuildingFromMenu(_buildingWrapper);
 		}
 	}
 }

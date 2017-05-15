@@ -14,10 +14,10 @@ namespace BattleCruisers.Buildables
 {
 	public interface IBuildableFactory
 	{
-		Building GetBuildingPrefab(BuildingKey buildingKey);
-		Building CreateBuilding(Building buildingPrefab);
-		Unit GetUnitPrefab(UnitKey unitKey);
-		Unit CreateUnit(Unit unitPrefab);
+		BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey);
+		Building CreateBuilding(BuildingWrapper buildingPrefab);
+		UnitWrapper GetUnitPrefab(UnitKey unitKey);
+		Unit CreateUnit(UnitWrapper unitPrefab);
 	}
 
 	public class BuildableFactory : MonoBehaviour, IBuildableFactory
@@ -29,38 +29,38 @@ namespace BattleCruisers.Buildables
 			_prefabFetcher = prefabFetcher;
 		}
 
-		public Building GetBuildingPrefab(BuildingKey buildingKey)
+		public BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey)
 		{
-			Building buildingPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
+			BuildingWrapper buildingPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
 
 			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
 			// Awake is called.  Because this prefab will never be loaded (only copies of it
 			// made, and those copies will be loaded), need to explicitly call Awake().
-			buildingPrefab.Awake();
+			buildingPrefab.building.Awake();
 
 			return buildingPrefab;
 		}
 
-		public Building CreateBuilding(Building buildingPrefab)
+		public Building CreateBuilding(BuildingWrapper buildingPrefab)
 		{
-			return CreateBuildable(buildingPrefab);
+			return Instantiate(buildingPrefab).building;
 		}
 
-		public Unit GetUnitPrefab(UnitKey unitKey)
+		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
 		{
-			Unit unitPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
-			unitPrefab.Awake();
+			UnitWrapper unitPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
+
+			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
+			// Awake is called.  Because this prefab will never be loaded (only copies of it
+			// made, and those copies will be loaded), need to explicitly call Awake().
+			unitPrefab.unit.Awake();
+
 			return unitPrefab;
 		}
 
-		public Unit CreateUnit(Unit unitPrefab)
+		public Unit CreateUnit(UnitWrapper unitPrefab)
 		{
-			return CreateBuildable(unitPrefab);
-		}
-
-		private T CreateBuildable<T>(T buildablePrefab) where T : Buildable
-		{
-			return Instantiate<T>(buildablePrefab);
+			return Instantiate(unitPrefab).unit;
 		}
 	}
 }

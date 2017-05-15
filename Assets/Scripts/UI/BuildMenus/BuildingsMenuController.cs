@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BuildMenus
 	{
 		public void Initialize(
 			IUIFactory uiFactory,
-			IList<Building> buildings)
+			IList<BuildingWrapper> buildings)
 		{
 			base.Initialize();
 

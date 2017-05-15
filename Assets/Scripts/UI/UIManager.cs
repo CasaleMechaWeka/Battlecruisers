@@ -88,12 +88,12 @@ namespace BattleCruisers.UI
 			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
-		public void SelectBuildingFromMenu(Building building)
+		public void SelectBuildingFromMenu(BuildingWrapper buildingWrapper)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
-			friendlyCruiser.SelectedBuildingPrefab = building;
-			friendlyCruiser.HighlightAvailableSlots(building.slotType);
-			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
+			friendlyCruiser.SelectedBuildingPrefab = buildingWrapper;
+			friendlyCruiser.HighlightAvailableSlots(buildingWrapper.building.slotType);
+			buildableDetails.ShowBuildableDetails(buildingWrapper.building, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)

@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers
 
 	public interface ICruiser : ITarget
 	{
-		Building SelectedBuildingPrefab { get; set; }
+		BuildingWrapper SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
@@ -40,7 +40,7 @@ namespace BattleCruisers.Cruisers
 		bool IsSlotAvailable(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
-		Building ConstructBuilding(Building buildingPrefab, ISlot slot);
+		Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot);
 		Building ConstructSelectedBuilding(ISlot slot);
 	}
 }

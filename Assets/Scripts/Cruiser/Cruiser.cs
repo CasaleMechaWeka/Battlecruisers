@@ -35,7 +35,7 @@ namespace BattleCruisers.Cruisers
 		public int numOfDrones;
 		public Faction faction;
 
-		public Building SelectedBuildingPrefab { get; set; }
+		public BuildingWrapper SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 		public Direction Direction { get; private set; }
@@ -143,7 +143,7 @@ namespace BattleCruisers.Cruisers
 			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
 		}
 
-		public Building ConstructBuilding(Building buildingPrefab, ISlot slot)
+		public Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot)
 		{
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);
@@ -152,7 +152,7 @@ namespace BattleCruisers.Cruisers
 		public Building ConstructSelectedBuilding(ISlot slot)
 		{
 			Assert.IsNotNull(SelectedBuildingPrefab);
-			Assert.AreEqual(SelectedBuildingPrefab.slotType, slot.Type);
+			Assert.AreEqual(SelectedBuildingPrefab.building.slotType, slot.Type);
 
 			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
 			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetsFactory, _aircraftProvider);

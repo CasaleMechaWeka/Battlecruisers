@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BuildMenus
 		public void Initialize(
 			UIManager uiManager,
 			IUIFactory uiFactory,
-			IList<Unit> units)
+			IList<UnitWrapper> units)
 		{
 			base.Initialize();
 

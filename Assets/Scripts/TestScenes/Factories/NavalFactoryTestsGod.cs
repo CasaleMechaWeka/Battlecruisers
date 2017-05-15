@@ -13,14 +13,14 @@ namespace BattleCruisers.TestScenes.Factories
 	public class NavalFactoryTestsGod : MonoBehaviour 
 	{
 		public NavalFactory navalFactoryFacingRight, navalFactoryFacingLeft;
-		public AttackBoatController attackBoatPrefab;
+		public UnitWrapper attackBoatPrefab;
 
 		void Start () 
 		{
 			Helper helper = new Helper();
 
 			IBuildableFactory buildableFactory = Substitute.For<IBuildableFactory>();
-			buildableFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab));
+			buildableFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab.unit));
 
 			helper.InitialiseBuildable(navalFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
 			helper.InitialiseBuildable(navalFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
@@ -34,7 +34,7 @@ namespace BattleCruisers.TestScenes.Factories
 
 		private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
-			((Factory)sender).Unit = attackBoatPrefab;
+			((Factory)sender).UnitWrapper = attackBoatPrefab;
 		}
 	}
 }

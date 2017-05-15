@@ -23,15 +23,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
 
 		#region Properties
-		private Unit _unit;
-		public Unit Unit 
+		private UnitWrapper _unitWrapper;
+		public UnitWrapper UnitWrapper 
 		{ 
 			set	
 			{
-				Logging.Log(Tags.FACTORY, $"set_Unit: {_unit} > {value}");
+				Logging.Log(Tags.FACTORY, $"set_UnitWrapper: {_unitWrapper} > {value}");
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
-				if (_unit != null)
+				if (_unitWrapper != null)
 				{
 					Assert.IsNotNull(DroneConsumer);
 					_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
@@ -39,16 +39,16 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 					DestroyUnitUnderConstruction();
 				}
 
-				_unit = value;
+				_unitWrapper = value;
 
-				if (_unit != null)
+				if (_unitWrapper != null)
 				{
 					Assert.IsNull(DroneConsumer);
-					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unit.numOfDronesRequired);
+					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.unit.numOfDronesRequired);
 					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 				}
 			}
-			private get { return _unit; }
+			private get { return _unitWrapper; }
 		}
 
 		protected abstract LayerMask UnitLayerMask { get; }
@@ -66,9 +66,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		protected override void OnUpdate()
 		{
-			if (_unit != null 
+			if (_unitWrapper != null 
 				&& (_unitUnderConstruction == null || _unitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& CanSpawnUnit(_unit))
+				&& CanSpawnUnit(_unitWrapper.unit))
 			{
 				StartBuildingUnit();
 			}
@@ -100,7 +100,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
 
-			_unitUnderConstruction = _buildableFactory.CreateUnit(_unit);
+			_unitUnderConstruction = _buildableFactory.CreateUnit(_unitWrapper);
 			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _buildableFactory, _targetsFactory, _aircraftProvider);
 			_unitUnderConstruction.DroneConsumerProvider = this;
 

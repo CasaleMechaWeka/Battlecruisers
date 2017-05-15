@@ -16,7 +16,7 @@ namespace BattleCruisers.TestScenes.Factories
 	public class AirFactoryTestsGod : MonoBehaviour 
 	{
 		public AirFactory airFactoryFacingRight, airFactoryFacingLeft;
-		public AircraftController aircraftPrefab;
+		public UnitWrapper aircraftPrefab;
 		public List<Vector2> patrolPoints;
 
 		void Start () 
@@ -24,7 +24,7 @@ namespace BattleCruisers.TestScenes.Factories
 			Helper helper = new Helper();
 
 			IBuildableFactory buildableFactory = Substitute.For<IBuildableFactory>();
-			buildableFactory.CreateUnit(aircraftPrefab).Returns(callInfo => Instantiate(aircraftPrefab));
+			buildableFactory.CreateUnit(aircraftPrefab).Returns(callInfo => Instantiate(aircraftPrefab.unit));
 
 			helper.InitialiseBuildable(airFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
 			helper.InitialiseBuildable(airFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
@@ -41,7 +41,7 @@ namespace BattleCruisers.TestScenes.Factories
 
 		private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
-			((Factory)sender).Unit = aircraftPrefab;
+			((Factory)sender).UnitWrapper = aircraftPrefab;
 		}
 
 		private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)

@@ -68,9 +68,9 @@ namespace BattleCruisers
 
 			Loadout loadout = CreateLoadout();
 
-			IDictionary<BuildingCategory, IList<Building>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser, enemyCruiser);
+			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<Unit>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
+			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
 
 
@@ -139,9 +139,9 @@ namespace BattleCruisers
 				ships);
 		}
 
-		private IDictionary<BuildingCategory, IList<Building>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
+		private IDictionary<BuildingCategory, IList<BuildingWrapper>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
-			IDictionary<BuildingCategory, IList<Building>> categoryToBuildings = new Dictionary<BuildingCategory, IList<Building>>();
+			IDictionary<BuildingCategory, IList<BuildingWrapper>> categoryToBuildings = new Dictionary<BuildingCategory, IList<BuildingWrapper>>();
 			
 			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
@@ -149,13 +149,13 @@ namespace BattleCruisers
 				
 				if (buildingKeys.Count != 0)
 				{
-					IList<Building> buildings = new List<Building>();
+					IList<BuildingWrapper> buildings = new List<BuildingWrapper>();
 					categoryToBuildings[category] = buildings;
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						Building building = buildableFactory.GetBuildingPrefab(buildingKey);
-						categoryToBuildings[buildingKey.Category].Add(building);
+						BuildingWrapper buildingWrapper = buildableFactory.GetBuildingPrefab(buildingKey);
+						categoryToBuildings[buildingKey.Category].Add(buildingWrapper);
 					}
 				}
 			}
@@ -163,11 +163,11 @@ namespace BattleCruisers
 			return categoryToBuildings;
 		}
 
-		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<Building>> buildingCategoryToGroups)
+		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<BuildingWrapper>> buildingCategoryToGroups)
 		{
 			IList<BuildingGroup> buildingGroups = new List<BuildingGroup>();
 
-			foreach (KeyValuePair<BuildingCategory, IList<Building>> categoryToBuildings in buildingCategoryToGroups)
+			foreach (KeyValuePair<BuildingCategory, IList<BuildingWrapper>> categoryToBuildings in buildingCategoryToGroups)
 			{
 				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
 				buildingGroups.Add(group);
@@ -182,9 +182,9 @@ namespace BattleCruisers
 			return buildingGroups;
 		}
 	
-		private IDictionary<UnitCategory, IList<Unit>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
+		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
-			IDictionary<UnitCategory, IList<Unit>> categoryToUnits = new Dictionary<UnitCategory, IList<Unit>>();
+			IDictionary<UnitCategory, IList<UnitWrapper>> categoryToUnits = new Dictionary<UnitCategory, IList<UnitWrapper>>();
 
 			foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
 			{
@@ -199,13 +199,13 @@ namespace BattleCruisers
 			return categoryToUnits;
 		}
 
-		private IList<Unit> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser)
+		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
-			IList<Unit> units = new List<Unit>(unitKeys.Count);
+			IList<UnitWrapper> units = new List<UnitWrapper>(unitKeys.Count);
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				Unit unit = buildableFactory.GetUnitPrefab(unitKey);
+				UnitWrapper unit = buildableFactory.GetUnitPrefab(unitKey);
 				units.Add(unit);
 			}
 

@@ -15,8 +15,8 @@ namespace BattleCruisers.Buildables.Buildings
 	{
 		GameObject CreatePanel(bool isActive);
 		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
-		BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building);
-		UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit);
+		BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, BuildingWrapper buildingWrapper);
+		UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, UnitWrapper unitWrapper);
 		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
 	}
 
@@ -62,22 +62,22 @@ namespace BattleCruisers.Buildables.Buildings
 			return button;
 		}
 
-		public BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, Building building)
+		public BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, BuildingWrapper buildingWrapper)
 		{
 			Button button = (Button)Instantiate(buildingButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			Sprite slotSprite = _spriteFetcher.GetSlotSprite(building.slotType);
+			Sprite slotSprite = _spriteFetcher.GetSlotSprite(buildingWrapper.building.slotType);
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-			controller.Initialize(building, uiManager, _droneManager, slotSprite);
+			controller.Initialize(buildingWrapper, uiManager, _droneManager, slotSprite);
 			return controller;
 		}
 
-		public UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, Unit unit)
+		public UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, UnitWrapper unitWrapper)
 		{
 			Button button = (Button)Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-			controller.Initialize(unit, _droneManager, uiManager);
+			controller.Initialize(unitWrapper, _droneManager, uiManager);
 			return controller;
 		}
 

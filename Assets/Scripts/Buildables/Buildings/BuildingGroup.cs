@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public class BuildingGroup
 	{
-		public IList<Building> Buildings { get; private set; }
+		public IList<BuildingWrapper> Buildings { get; private set; }
 		public BuildingCategory BuildingCategory { get; private set; }
 		public string BuildingGroupName { get; private set; }
 		public string Description { get; private set; }
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings
 		private int MAX_NUM_OF_BUILDINGS = 5;
 
 		public BuildingGroup(
-			IList<Building> buildings,
+			IList<BuildingWrapper> buildings,
 			string groupName,
 			string description)
 		{
@@ -28,11 +28,11 @@ namespace BattleCruisers.Buildables.Buildings
 			// Check building category matches this group's category
 			if (buildings.Count > 0)
 			{
-				BuildingCategory = buildings[0].category;
+				BuildingCategory = buildings[0].building.category;
 
 				for (int i = 1; i < buildings.Count; ++i)
 				{
-					if (buildings[i].category != BuildingCategory)
+					if (buildings[i].building.category != BuildingCategory)
 					{
 						throw new ArgumentException();
 					}
