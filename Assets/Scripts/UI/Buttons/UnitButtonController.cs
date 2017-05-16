@@ -14,23 +14,12 @@ namespace BattleCruisers.Buildables.Buildings.Buttons
 	public class UnitButtonController : BuildableButtonController
 	{
 		private UnitWrapper _unitWrapper;
-		private UIManager _uiManager;
 		private Factory _factory;
-
-		public Image unitImage;
-		public Text unitName;
-		public Text droneLevel;
-
 		public void Initialize(UnitWrapper unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
-			base.Initialize(unitWrapper.unit, droneManager);
+			base.Initialize(unitWrapper.unit, droneManager, uiManager);
 
 			_unitWrapper = unitWrapper;
-			_uiManager = uiManager;
-
-			unitName.text = unitWrapper.unit.buildableName;
-			droneLevel.text = unitWrapper.unit.numOfDronesRequired.ToString();
-			unitImage.sprite = unitWrapper.unit.Sprite;
 		}
 
 		public override void OnPresenting(object activationParameter)

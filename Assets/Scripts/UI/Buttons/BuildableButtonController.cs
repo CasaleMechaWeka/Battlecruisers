@@ -12,17 +12,26 @@ namespace BattleCruisers.Buildables.Buildings.Buttons
 	{
 		private Buildable _buildable;
 		private IDroneManager _droneManager;
+		protected UIManager _uiManager;
 		private Button _button;
 
 		public CanvasGroup canvasGroup;
+		public Image buildableImage;
+		public Text buildableName;
+		public Text droneLevel;
 
-		public void Initialize(Buildable buildable, IDroneManager droneManager)
+		public void Initialize(Buildable buildable, IDroneManager droneManager, UIManager uiManager)
 		{
 			base.Initialize();
 
 			_buildable = buildable;
 			_droneManager = droneManager;
+			_uiManager = uiManager;
 			_button = GetComponent<Button>();
+
+			buildableName.text = _buildable.buildableName;
+			droneLevel.text = _buildable.numOfDronesRequired.ToString();
+			buildableImage.sprite = _buildable.Sprite;
 
 			_button.onClick.AddListener(OnClick);
 			_droneManager.DroneNumChanged += DroneManager_DroneNumChanged;
