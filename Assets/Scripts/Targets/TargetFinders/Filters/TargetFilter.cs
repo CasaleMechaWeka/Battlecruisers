@@ -7,12 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-	// FELIX  Move to own file
-	public interface ITargetFilter
-	{
-		bool IsMatch(ITarget target);
-	}
-
 	public class TargetFilter : ITargetFilter
 	{
 		private readonly Faction _factionToDetect;
