@@ -81,11 +81,6 @@ namespace BattleCruisers.UI.ProgressBars
 			progressSoFar.enabled = enabled;
 		}
 
-		public void UpdatePosition(Vector2 position)
-		{
-			transform.position = position;
-		}
-
 		public void UpdateSize(float width, float height)
 		{
 			Vector2 size = new Vector2(width, height);

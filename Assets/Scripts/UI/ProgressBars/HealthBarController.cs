@@ -38,5 +38,10 @@ namespace BattleCruisers.UI.ProgressBars
 		{
 			transform.position = _damagable.GameObject.transform.position + _offset;
 		}
+
+		public void UpdateOffset(Vector2 offset)
+		{
+			_offset = offset;
+		}
 	}
 }
