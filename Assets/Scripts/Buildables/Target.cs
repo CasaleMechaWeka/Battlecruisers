@@ -81,7 +81,11 @@ namespace BattleCruisers.Buildables
 
 			OnDestroyed();
 			InvokeDestroyedEvent();
-			Destroy(gameObject);
+
+			// All targets are wrapped by a UnitWrapper or BuildingWrapper, which contains
+			// both the target and the health bar.  Hence destroy wrapper, so health bar
+			// gets destroyed at the same time as the target.
+			Destroy(transform.parent.gameObject);
 		}
 
 		protected virtual void OnDestroyed() { }
