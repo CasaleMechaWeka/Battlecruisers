@@ -154,7 +154,7 @@ namespace BattleCruisers
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						BuildingWrapper buildingWrapper = buildableFactory.GetBuildingPrefab(buildingKey);
+						BuildingWrapper buildingWrapper = buildableFactory.GetBuildingWrapperPrefab(buildingKey);
 						categoryToBuildings[buildingKey.Category].Add(buildingWrapper);
 					}
 				}
@@ -201,15 +201,15 @@ namespace BattleCruisers
 
 		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser)
 		{
-			IList<UnitWrapper> units = new List<UnitWrapper>(unitKeys.Count);
+			IList<UnitWrapper> unitWrappers = new List<UnitWrapper>(unitKeys.Count);
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				UnitWrapper unit = buildableFactory.GetUnitPrefab(unitKey);
-				units.Add(unit);
+				UnitWrapper unitWrapper = buildableFactory.GetUnitWrapperPrefab(unitKey);
+				unitWrappers.Add(unitWrapper);
 			}
 
-			return units;
+			return unitWrappers;
 		}
 
 		// FELIX  Don't hardcode.  Database?

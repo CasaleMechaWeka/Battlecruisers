@@ -14,10 +14,10 @@ namespace BattleCruisers.Buildables
 {
 	public interface IBuildableFactory
 	{
-		BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey);
-		Building CreateBuilding(BuildingWrapper buildingPrefab);
-		UnitWrapper GetUnitPrefab(UnitKey unitKey);
-		Unit CreateUnit(UnitWrapper unitPrefab);
+		BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey);
+		Building CreateBuilding(BuildingWrapper buildingWrapperPrefab);
+		UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey);
+		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
 	}
 
 	public class BuildableFactory : MonoBehaviour, IBuildableFactory
@@ -29,38 +29,38 @@ namespace BattleCruisers.Buildables
 			_prefabFetcher = prefabFetcher;
 		}
 
-		public BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey)
+		public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
 		{
-			BuildingWrapper buildingPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
+			BuildingWrapper buildingWrapperPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
 
 			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
 			// Awake is called.  Because this prefab will never be loaded (only copies of it
 			// made, and those copies will be loaded), need to explicitly call Awake().
-			buildingPrefab.building.Awake();
+			buildingWrapperPrefab.building.Awake();
 
-			return buildingPrefab;
+			return buildingWrapperPrefab;
 		}
 
-		public Building CreateBuilding(BuildingWrapper buildingPrefab)
+		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			return Instantiate(buildingPrefab).building;
+			return Instantiate(buildingWrapperPrefab).building;
 		}
 
-		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
+		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
 		{
-			UnitWrapper unitPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
+			UnitWrapper unitWrapperPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
 
 			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
 			// Awake is called.  Because this prefab will never be loaded (only copies of it
 			// made, and those copies will be loaded), need to explicitly call Awake().
-			unitPrefab.unit.Awake();
+			unitWrapperPrefab.unit.Awake();
 
-			return unitPrefab;
+			return unitWrapperPrefab;
 		}
 
-		public Unit CreateUnit(UnitWrapper unitPrefab)
+		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
-			return Instantiate(unitPrefab).unit;
+			return Instantiate(unitWrapperPrefab).unit;
 		}
 	}
 }
