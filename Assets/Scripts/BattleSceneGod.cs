@@ -23,7 +23,7 @@ namespace BattleCruisers
 	/// <summary>
 	/// Initialises everything :D
 	/// </summary>
-	public class GameGod : MonoBehaviour 
+	public class BattleSceneGod : MonoBehaviour 
 	{
 		private BuildingGroupFactory _buildingGroupFactory;
 		private Bot _bot;
@@ -35,6 +35,7 @@ namespace BattleCruisers
 		public BuildableDetailsController buildableDetailsController;
 		public Cruiser friendlyCruiser;
 		public Cruiser enemyCruiser;
+		public ModalMenuController modalMenuController;
 		
 		// User needs to be able to build at least one building
 		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
@@ -226,6 +227,40 @@ namespace BattleCruisers
 			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 
 			return buildOrder;
+		}
+
+		void Update()
+		{
+			// FELIX  Adapt for IPad :P
+			if (Input.GetKeyUp(KeyCode.Escape))
+			{
+				modalMenuController.ShowMenu(OnModalMenuDismissed);
+				PauseGame();
+			}
+		}
+
+		private void OnModalMenuDismissed(UserAction userAction)
+		{
+			switch (userAction)
+			{
+				case UserAction.Dismissed:
+					ResumeGame();
+					break;
+				case UserAction.Quit:
+					throw new NotImplementedException();
+				default:
+					throw new ArgumentException();
+			}
+		}
+
+		private void PauseGame()
+		{
+			Time.timeScale = 0;
+		}
+
+		private void ResumeGame()
+		{
+			Time.timeScale = 1;
 		}
 	}
 }
