@@ -39,6 +39,17 @@ namespace BattleCruisers.UI
 			}
 		}
 
+
+		public void Cancel()
+		{
+			DismissMenu(UserAction.Dismissed);
+		}
+
+		public void Quit()
+		{
+			DismissMenu(UserAction.Quit);
+		}
+
 		private void DismissMenu(UserAction userAction)
 		{
 			Assert.IsNotNull(_onMenuDismissed);
