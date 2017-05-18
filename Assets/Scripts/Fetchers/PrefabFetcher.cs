@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-	public class BuildingKey
-	{
-		public BuildingCategory Category { get; private set; }
-		public string PrefabFileName { get; private set; }
-
-		public BuildingKey(BuildingCategory category, string prefabFileName)
-		{
-			Category = category;
-			PrefabFileName = prefabFileName;
-		}
-	}
+//	public class BuildingKey
+//	{
+//		public BuildingCategory Category { get; private set; }
+//		public string PrefabFileName { get; private set; }
+//
+//		public BuildingKey(BuildingCategory category, string prefabFileName)
+//		{
+//			Category = category;
+//			PrefabFileName = prefabFileName;
+//		}
+//	}
 
 	public class UnitKey
 	{
@@ -79,9 +79,11 @@ namespace BattleCruisers.Fetchers
 			return prefabObject;
 		}
 
+		// FELIX
 		private string GetBuildingPath(BuildingKey buildingKey)
 		{
-			return BUILDINGS_BASE_PATH + GetBuildingFolderName(buildingKey.Category) + "/" + buildingKey.PrefabFileName;
+			return "";
+//			return BUILDINGS_BASE_PATH + GetBuildingFolderName(buildingKey.Category) + "/" + buildingKey.PrefabFileName;
 		}
 
 		private string GetUnitPath(UnitKey unitKey)

@@ -38,7 +38,7 @@ namespace BattleCruisers.AI
 			{
 				BuildingKey buildingKey = _buildOrder[_buildOrderIndex++];
 
-				Logging.Log(Tags.AI, $"BuildNextBuilding: {buildingKey.PrefabFileName}");
+				Logging.Log(Tags.AI, $"BuildNextBuilding: {buildingKey.PrefabPath}");
 
 				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.building.slotType);

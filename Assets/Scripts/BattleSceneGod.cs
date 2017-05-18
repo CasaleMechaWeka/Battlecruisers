@@ -158,7 +158,7 @@ namespace BattleCruisers
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
 						BuildingWrapper buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
-						categoryToBuildings[buildingKey.Category].Add(buildingWrapper);
+						categoryToBuildings[buildingWrapper.building.category].Add(buildingWrapper);
 					}
 				}
 			}
