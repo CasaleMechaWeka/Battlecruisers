@@ -12,44 +12,28 @@ namespace BattleCruisers.Fetchers
 	{
 		public BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey)
 		{
-			string buildingPrefabPath = GetBuildingPath(buildingKey);
-			return GetPrefab<BuildingWrapper>(buildingPrefabPath);
+			return GetPrefab<BuildingWrapper>(buildingKey);
 		}
 
 		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
 		{
-			string unitPrefabPath = GetUnitPath(unitKey);
-			return GetPrefab<UnitWrapper>(unitPrefabPath);
+			return GetPrefab<UnitWrapper>(unitKey);
 		}
 
-		private T GetPrefab<T>(string prefabPath)
+		private T GetPrefab<T>(PrefabKey prefabKey)
 		{
-			GameObject gameObject = Resources.Load(prefabPath) as GameObject;
+			GameObject gameObject = Resources.Load(prefabKey.PrefabPath) as GameObject;
 			if (gameObject == null)
 			{
-				throw new ArgumentException($"Invalid prefab path: {prefabPath}");
+				throw new ArgumentException($"Invalid prefab path: {prefabKey.PrefabPath}");
 			}
 
 			T prefabObject = gameObject.GetComponent<T>();
 			if (prefabObject == null)
 			{
-				throw new ArgumentException($"Prefab does not contain a component of type: {typeof(T)}.  Prefab path: {prefabPath}");
+				throw new ArgumentException($"Prefab does not contain a component of type: {typeof(T)}.  Prefab path: {prefabKey.PrefabPath}");
 			}
 			return prefabObject;
-		}
-
-		// FELIX
-		private string GetBuildingPath(BuildingKey buildingKey)
-		{
-			return "";
-//			return BUILDINGS_BASE_PATH + GetBuildingFolderName(buildingKey.Category) + "/" + buildingKey.PrefabFileName;
-		}
-
-		// FELIX
-		private string GetUnitPath(UnitKey unitKey)
-		{
-			return "";
-//			return UNITS_BASE_PATH + GetUnitFolderName(unitKey.Category) + "/" + unitKey.PrefabFileName;
 		}
 	}
 }
