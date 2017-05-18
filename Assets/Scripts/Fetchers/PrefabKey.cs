@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,8 +47,8 @@ namespace BattleCruisers.Fetchers
 			}
 		}
 
-		protected abstract PrefabType PrefabType { get; set; }
-		protected virtual string PrefabTypeCategory { get; set; }
+		protected PrefabType PrefabType { private get; set; }
+		protected string PrefabTypeCategory { private get; set; }
 
 		public PrefabKey(string prefabName)
 		{
@@ -70,7 +71,8 @@ namespace BattleCruisers.Fetchers
 			}
 		}
 	}
-
+	
+	// FELIX  Move to own file
 	public class BuildingKey : PrefabKey
 	{
 		private static class BuildingFolderNames
@@ -80,9 +82,6 @@ namespace BattleCruisers.Fetchers
 			public const string DEFENCE  = "Defence";
 			public const string OFFENCE  = "Offence";
 		}
-
-		protected override PrefabType PrefabType { get; set; }
-		protected override string PrefabTypeCategory { get; set; }
 
 		public BuildingKey(BuildingCategory category, string prefabFileName)
 			: base(prefabFileName)
@@ -103,6 +102,37 @@ namespace BattleCruisers.Fetchers
 					return BuildingFolderNames.DEFENCE;
 				case BuildingCategory.Offence:
 					return BuildingFolderNames.OFFENCE;
+				default:
+					throw new ArgumentException();
+			}
+		}
+	}
+
+	// FELIX  Move to own file
+	public class UnitKey : PrefabKey
+	{
+		private static class UnitFolderNames
+		{
+			public const string NAVAL = "Naval";
+			public const string AIRCRAFT = "Aircraft";
+			public const string ULTRA = "Ultras";
+		}
+
+		public UnitKey(UnitCategory category, string prefabFileName)
+			: base(prefabFileName)
+		{
+			PrefabType = PrefabType.Unit;
+			PrefabTypeCategory = GetUnitFolderName(category);
+		}
+
+		private string GetUnitFolderName(UnitCategory unitCategory)
+		{
+			switch (unitCategory)
+			{
+				case UnitCategory.Aircraft:
+					return UnitFolderNames.AIRCRAFT;
+				case UnitCategory.Naval:
+					return UnitFolderNames.NAVAL;
 				default:
 					throw new ArgumentException();
 			}
