@@ -27,11 +27,11 @@ namespace BattleCruisers.Cruisers
 		private SlotType? _highlightedSlotType;
 		private ITargetsFactory _targetsFactory;
 		private IAircraftProvider _aircraftProvider;
+		private PrefabFactory _prefabFactory;
 
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
 		public Cruiser enemyCruiser;
-		public PrefabFactory prefabFactory;
 
 		public int numOfDrones;
 		public Faction faction;
@@ -55,18 +55,20 @@ namespace BattleCruisers.Cruisers
 		}
 
 		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-			ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider, Direction facingDirection)
+			ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider, PrefabFactory prefabFactory, Direction facingDirection)
 		{
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);
 			Assert.IsNotNull(targetsFactory);
 			Assert.IsNotNull(aircraftProvider);
+			Assert.IsNotNull(prefabFactory);
 
 			DroneManager = droneManager;
 			DroneManager.NumOfDrones = numOfDrones;
 			DroneConsumerProvider = droneConsumerProvider;
 			_targetsFactory = targetsFactory;
 			_aircraftProvider = aircraftProvider;
+			_prefabFactory = prefabFactory;
 			Direction = facingDirection;
 		}
 
@@ -155,8 +157,8 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(SelectedBuildingPrefab);
 			Assert.AreEqual(SelectedBuildingPrefab.building.slotType, slot.Type);
 
-			Building building = prefabFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(Faction, uiManager, this, enemyCruiser, prefabFactory, _targetsFactory, _aircraftProvider);
+			Building building = _prefabFactory.CreateBuilding(SelectedBuildingPrefab);
+			building.Initialise(Faction, uiManager, this, enemyCruiser, _prefabFactory, _targetsFactory, _aircraftProvider);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser

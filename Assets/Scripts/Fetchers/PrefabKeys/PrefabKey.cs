@@ -35,7 +35,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		{
 			get
 			{
-				string prefabPath = PREFABS_BASE_PATH + PrefabType + PATH_SEPARATOR;
+				string prefabPath = PREFABS_BASE_PATH + GetPrefabTypeFolderName(PrefabType) + PATH_SEPARATOR;
 				
 				if (PrefabTypeCategory != null)
 				{

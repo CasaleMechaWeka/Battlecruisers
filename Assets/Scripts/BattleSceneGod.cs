@@ -62,7 +62,7 @@ namespace BattleCruisers
 			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(friendlyCruiser.transform.position, enemyCruiser.transform.position);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, Direction.Right);
+			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
 
 
 			// UI
@@ -83,7 +83,7 @@ namespace BattleCruisers
 			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(enemyCruiser.transform.position, friendlyCruiser.transform.position);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, Direction.Left);
+			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
 
 
 			// AI
