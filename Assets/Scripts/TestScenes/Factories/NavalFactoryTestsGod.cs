@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Fetchers;
 using BattleCruisers.TestScenes.Utilities;
 using NSubstitute;
 using System;

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Utils
+namespace BattleCruisers.Fetchers
 {
 	public interface ISpriteFetcher
 	{

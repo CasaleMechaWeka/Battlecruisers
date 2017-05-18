@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers
+namespace BattleCruisers.Cruisers
 {
 	public class Loadout
 	{

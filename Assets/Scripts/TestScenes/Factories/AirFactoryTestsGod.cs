@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
 using BattleCruisers.TestScenes.Utilities;
 using BattleCruisers.Units.Aircraft;

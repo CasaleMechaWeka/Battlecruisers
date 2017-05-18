@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ProgressBars;
 using BattleCruisers.Utils;
 using System;

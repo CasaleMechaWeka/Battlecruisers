@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables
+namespace BattleCruisers.Fetchers
 {
 	public interface IBuildableFactory
 	{
