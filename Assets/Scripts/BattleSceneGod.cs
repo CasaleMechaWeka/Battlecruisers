@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 namespace BattleCruisers
 {
@@ -247,7 +248,8 @@ namespace BattleCruisers
 					ResumeGame();
 					break;
 				case UserAction.Quit:
-					throw new NotImplementedException();
+					Quit();
+					break;
 				default:
 					throw new ArgumentException();
 			}
@@ -261,6 +263,11 @@ namespace BattleCruisers
 		private void ResumeGame()
 		{
 			Time.timeScale = 1;
+		}
+
+		private void Quit()
+		{
+			SceneManager.LoadScene(SceneNames.CHOOSE_LEVEL_SCENE);
 		}
 	}
 }

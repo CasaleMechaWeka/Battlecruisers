@@ -9,4 +9,10 @@
 		public const float DISABLED_UI_ALPHA = 0.5f;
 		public const float ENABLED_UI_ALPHA = 1.0f;
 	}
+
+	public static class SceneNames
+	{
+		public const string BATTLE_SCENE = "BattleScene";
+		public const string CHOOSE_LEVEL_SCENE = "ChooseLevelScene";
+	}
 }
