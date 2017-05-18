@@ -12,8 +12,6 @@ namespace BattleCruisers.Buildables
 {
 	public abstract class Target : MonoBehaviour, ITarget
 	{
-		private bool _wasDestroyTriggeredInternally;
-
 		public float maxHealth;
 		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
@@ -59,7 +57,6 @@ namespace BattleCruisers.Buildables
 
 		public void Awake()
 		{
-			_wasDestroyTriggeredInternally = false;
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
 
@@ -77,8 +74,6 @@ namespace BattleCruisers.Buildables
 
 		public void Destroy()
 		{
-			_wasDestroyTriggeredInternally = true;
-
 			OnDestroyed();
 			InvokeDestroyedEvent();
 
@@ -115,15 +110,5 @@ namespace BattleCruisers.Buildables
 		}
 
 		protected virtual void OnRepair() { }
-
-		/// <summary>
-		/// We should only ever be destroyed via our Destroy() method, not via Unity's
-		/// Destroy(gameObject).  This ensures our OnDestroyed callback and Destroyed
-		/// events are always called.
-		/// </summary>
-		void OnDestroy()
-		{
-			Assert.IsTrue(_wasDestroyTriggeredInternally);
-		}
 	}
 }
