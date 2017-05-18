@@ -20,7 +20,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			: base(prefabFileName)
 		{
 			PrefabType = PrefabType.Unit;
-			PrefabTypeCategory = GetUnitFolderName(category);
+			PrefabTypeCategoryFolderName = GetUnitFolderName(category);
 		}
 
 		private string GetUnitFolderName(UnitCategory unitCategory)

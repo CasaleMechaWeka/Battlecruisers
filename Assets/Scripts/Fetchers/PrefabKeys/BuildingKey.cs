@@ -21,7 +21,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			: base(prefabFileName)
 		{
 			PrefabType = PrefabType.Building;
-			PrefabTypeCategory = GetBuildingFolderName(category);
+			PrefabTypeCategoryFolderName = GetBuildingFolderName(category);
 		}
 
 		private string GetBuildingFolderName(BuildingCategory buildingCategory)

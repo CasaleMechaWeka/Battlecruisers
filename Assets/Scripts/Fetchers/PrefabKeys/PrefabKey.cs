@@ -37,9 +37,9 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			{
 				string prefabPath = PREFABS_BASE_PATH + GetPrefabTypeFolderName(PrefabType) + PATH_SEPARATOR;
 				
-				if (PrefabTypeCategory != null)
+				if (PrefabTypeCategoryFolderName != null)
 				{
-					prefabPath += PrefabTypeCategory + PATH_SEPARATOR;
+					prefabPath += PrefabTypeCategoryFolderName + PATH_SEPARATOR;
 				}
 				prefabPath += _prefabName;
 				
@@ -48,12 +48,12 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		}
 
 		protected PrefabType PrefabType { private get; set; }
-		protected string PrefabTypeCategory { private get; set; }
+		protected string PrefabTypeCategoryFolderName { private get; set; }
 
 		public PrefabKey(string prefabName)
 		{
 			_prefabName = prefabName;
-			PrefabTypeCategory = null;
+			PrefabTypeCategoryFolderName = null;
 		}
 
 		private string GetPrefabTypeFolderName(PrefabType prefabType)
