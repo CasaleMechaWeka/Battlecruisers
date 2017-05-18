@@ -15,15 +15,15 @@ namespace BattleCruisers.AI
 	{
 		private Cruiser _friendlyCruiser, _enemyCruiser;
 		private IList<BuildingKey> _buildOrder;
-		private BuildableFactory _buildableFactory;
+		private PrefabFactory _prefabFactory;
 		private int _buildOrderIndex;
 
-		public Bot(Cruiser friendlyCruiser, Cruiser enemyCruiser, IList<BuildingKey> buildOrder, BuildableFactory buildableFactory)
+		public Bot(Cruiser friendlyCruiser, Cruiser enemyCruiser, IList<BuildingKey> buildOrder, PrefabFactory prefabFactory)
 		{
 			_friendlyCruiser = friendlyCruiser;
 			_enemyCruiser = enemyCruiser;
 			_buildOrder = buildOrder;
-			_buildableFactory = buildableFactory;
+			_prefabFactory = prefabFactory;
 			_buildOrderIndex = 0;
 		}
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.AI
 
 				Logging.Log(Tags.AI, $"BuildNextBuilding: {buildingKey.PrefabFileName}");
 
-				BuildingWrapper buildingWrapperPrefab = _buildableFactory.GetBuildingWrapperPrefab(buildingKey);
+				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.building.slotType);
 				Assert.IsNotNull(slot);
 

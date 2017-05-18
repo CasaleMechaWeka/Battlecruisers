@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables
 		protected UIManager _uiManager;
 		protected ICruiser _parentCruiser;
 		protected ICruiser _enemyCruiser;
-		protected IBuildableFactory _buildableFactory;
+		protected IPrefabFactory _prefabFactory;
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetsFactory _targetsFactory;
@@ -115,12 +115,12 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, IBuildableFactory buildableFactory, ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider)
+			ICruiser enemyCruiser, IPrefabFactory prefabFactory, ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
-			_buildableFactory = buildableFactory;
+			_prefabFactory = prefabFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 			_targetsFactory = targetsFactory;

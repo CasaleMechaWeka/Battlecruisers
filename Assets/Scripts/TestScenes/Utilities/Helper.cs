@@ -36,7 +36,7 @@ namespace BattleCruisers.TestScenes.Utilities
 			UIManager uiManager = null,
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
-			IBuildableFactory buildableFactory = null,
+			IPrefabFactory prefabFactory = null,
 			ITargetsFactory targetsFactory = null,
 			IAircraftProvider aircraftProvider = null,
 			Direction parentCruiserDirection = Direction.Right)
@@ -66,7 +66,7 @@ namespace BattleCruisers.TestScenes.Utilities
 				uiManager,
 				parentCruiser,
 				enemyCruiser,
-				buildableFactory,
+				prefabFactory,
 				targetsFactory,
 				aircraftProvider);
 		}

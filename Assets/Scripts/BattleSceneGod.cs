@@ -30,7 +30,7 @@ namespace BattleCruisers
 		private BuildingGroupFactory _buildingGroupFactory;
 		private Bot _bot;
 
-		public BuildableFactory buildableFactory;
+		public PrefabFactory prefabFactory;
 		public UIManager uiManager;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
@@ -53,7 +53,7 @@ namespace BattleCruisers
 			_buildingGroupFactory = new BuildingGroupFactory();
 			
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
-			buildableFactory.Initialise(prefabFetcher);
+			prefabFactory.Initialise(prefabFetcher);
 
 
 			// Player cruiser
@@ -87,7 +87,7 @@ namespace BattleCruisers
 
 			// AI
 			IList<BuildingKey> buildOrder = GetBuildOrder();
-			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, buildableFactory);
+			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, prefabFactory);
 //			Invoke("StartBot", 10);
 			Invoke("StartBot", 2);
 		}
@@ -157,7 +157,7 @@ namespace BattleCruisers
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						BuildingWrapper buildingWrapper = buildableFactory.GetBuildingWrapperPrefab(buildingKey);
+						BuildingWrapper buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 						categoryToBuildings[buildingKey.Category].Add(buildingWrapper);
 					}
 				}
@@ -208,7 +208,7 @@ namespace BattleCruisers
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				UnitWrapper unitWrapper = buildableFactory.GetUnitWrapperPrefab(unitKey);
+				UnitWrapper unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
 				unitWrappers.Add(unitWrapper);
 			}
 

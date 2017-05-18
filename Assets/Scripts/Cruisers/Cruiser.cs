@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers
 		public HealthBarController healthBarController;
 		public UIManager uiManager;
 		public Cruiser enemyCruiser;
-		public BuildableFactory buildableFactory;
+		public PrefabFactory prefabFactory;
 
 		public int numOfDrones;
 		public Faction faction;
@@ -155,8 +155,8 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(SelectedBuildingPrefab);
 			Assert.AreEqual(SelectedBuildingPrefab.building.slotType, slot.Type);
 
-			Building building = buildableFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(Faction, uiManager, this, enemyCruiser, buildableFactory, _targetsFactory, _aircraftProvider);
+			Building building = prefabFactory.CreateBuilding(SelectedBuildingPrefab);
+			building.Initialise(Faction, uiManager, this, enemyCruiser, prefabFactory, _targetsFactory, _aircraftProvider);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser

@@ -20,11 +20,11 @@ namespace BattleCruisers.TestScenes.Factories
 		{
 			Helper helper = new Helper();
 
-			IBuildableFactory buildableFactory = Substitute.For<IBuildableFactory>();
-			buildableFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab.unit));
+			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
+			prefabFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab.unit));
 
-			helper.InitialiseBuildable(navalFactoryFacingRight, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(navalFactoryFacingLeft, buildableFactory: buildableFactory, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(navalFactoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(navalFactoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
 
 			navalFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			navalFactoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;

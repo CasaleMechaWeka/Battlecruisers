@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-	public interface IBuildableFactory
+	public interface IPrefabFactory
 	{
 		BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey);
 		Building CreateBuilding(BuildingWrapper buildingWrapperPrefab);
@@ -20,7 +20,7 @@ namespace BattleCruisers.Fetchers
 		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
 	}
 
-	public class BuildableFactory : MonoBehaviour, IBuildableFactory
+	public class PrefabFactory : MonoBehaviour, IPrefabFactory
 	{
 		private PrefabFetcher _prefabFetcher;
 
