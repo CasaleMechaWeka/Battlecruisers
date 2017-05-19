@@ -131,7 +131,7 @@ namespace BattleCruisers
 				_cameraState != CameraState.InTransition
 			    && _cameraState != targetState;
 
-			Logging.Log(Tags.CAMERA_CONTROLLER, $"MoveCamera targetState: {targetState}  willMoveCamera: {willMoveCamera}  _cameraState: {_cameraState}");
+			Logging.Log(Tags.CAMERA_CONTROLLER, "MoveCamera targetState: " + targetState + "  willMoveCamera: " + willMoveCamera + "  _cameraState: " + _cameraState);
 
 			if (willMoveCamera)
 			{

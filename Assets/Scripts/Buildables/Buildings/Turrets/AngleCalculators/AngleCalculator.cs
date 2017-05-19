@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 				float xDiff = Math.Abs(source.x - target.x);
 				float yDiff = Math.Abs(source.y - target.y);
 				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
-				Logging.Log(Tags.ANGLE_CALCULATORS, $"angleInDegrees: {angleInDegrees}");
+				Logging.Log(Tags.ANGLE_CALCULATORS, "angleInDegrees: " + angleInDegrees);
 
 				if (source.x < target.x)
 				{
@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 				}
 			}
 
-			Logging.Log(Tags.ANGLE_CALCULATORS, $"AngleCalculator.FindDesiredAngle() {desiredAngleInDegrees}*");
+			Logging.Log(Tags.ANGLE_CALCULATORS, "AngleCalculator.FindDesiredAngle() " + desiredAngleInDegrees + "*");
 			return desiredAngleInDegrees;
 		}
 

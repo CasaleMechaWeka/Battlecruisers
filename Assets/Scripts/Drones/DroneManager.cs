@@ -40,7 +40,7 @@ namespace BattleCruisers.Drones
 			}
 			set
 			{
-				Logging.Log(Tags.DRONES, $"NumOfDrones: {_numOfDrones} > {value}    NumOfDroneConsumers: {_droneConsumers.Count}");
+				Logging.Log(Tags.DRONES, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
 
 				if (value < 0)
 				{
@@ -105,7 +105,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, $"AddDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			if (!CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired)
 			    || _droneConsumers.Contains(droneConsumer))
@@ -138,7 +138,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void RemoveDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, $"RemoveDroneConsumer()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, "RemoveDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
 
@@ -167,7 +167,7 @@ namespace BattleCruisers.Drones
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONES, $"ToggleDroneConsumerFocus()  NumOfDroneConsumers: {_droneConsumers.Count}");
+			Logging.Log(Tags.DRONES, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{

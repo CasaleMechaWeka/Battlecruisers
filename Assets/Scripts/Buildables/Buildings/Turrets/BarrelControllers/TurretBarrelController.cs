@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
-			Logging.Log(Tags.BARREL_CONTROLLER, $"MoveBarrelToAngle():  currentAngleInDegrees: {currentAngleInDegrees}  desiredAngleInDegrees: {desiredAngleInDegrees}  directionMultiplier: {directionMultiplier}");
+			Logging.Log(Tags.BARREL_CONTROLLER, string.Format("MoveBarrelToAngle():  currentAngleInDegrees: {0}  desiredAngleInDegrees: {1}  directionMultiplier: {2}", currentAngleInDegrees, desiredAngleInDegrees, directionMultiplier));
 
 			float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
 			if (rotationIncrement > differenceInDegrees)
@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				rotationIncrement = differenceInDegrees;
 			}
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
-			Logging.Log(Tags.BARREL_CONTROLLER, $"rotationIncrement: {rotationIncrement}");
+			Logging.Log(Tags.BARREL_CONTROLLER, "rotationIncrement: " + rotationIncrement);
 
 			transform.Rotate(rotationIncrementVector);
 		}

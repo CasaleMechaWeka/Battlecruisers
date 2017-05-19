@@ -41,7 +41,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
-			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, $"TargetFinder_TargetFound");
+			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound");
 			Assert.IsFalse(_targets.Contains(e.Target));
 
 			int insertionIndex = FindInsertionIndex(e.Target);
@@ -75,7 +75,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		
 		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
 		{
-			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, $"TargetFinder_TargetLost");
+			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost");
 			Assert.IsTrue(_targets.Contains(e.Target));
 
 			bool wasHighestPriorityTarget = System.Object.ReferenceEquals(e.Target, HighestPriorityTarget);

@@ -51,7 +51,7 @@ namespace BattleCruisers.Units.Aircraft
 			get { return _target; }
 			set 
 			{ 
-				Logging.Log(Tags.AIRCRAFT, $"FighterController.set_Target:  {value}");
+				Logging.Log(Tags.AIRCRAFT, "FighterController.set_Target:  " + value);
 
 				_target = value;
 
@@ -164,7 +164,8 @@ namespace BattleCruisers.Units.Aircraft
 			}
 			else
 			{
-				Logging.Log(Tags.AIRCRAFT, $"AdjustVelocity():  rigidBody.velocity: {rigidBody.velocity}  desiredVelocity: {desiredVelocity}  _velocitySmoothTime: {_velocitySmoothTime}  maxVelocityInMPerS: {maxVelocityInMPerS}");
+				Logging.Log(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
+					rigidBody.velocity, desiredVelocity, _velocitySmoothTime, maxVelocityInMPerS));
 
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
@@ -226,7 +227,8 @@ namespace BattleCruisers.Units.Aircraft
 
 				float velocityX = Mathf.Cos(angleInRadians) * maxVelocityInMPerS;
 				float velocityY = Mathf.Sin(angleInRadians) * maxVelocityInMPerS;
-				Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity()  angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
+				Logging.Log(Tags.AIRCRAFT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
+					angleInDegrees, velocityX, velocityY));
 
 				if (sourcePosition.x > targetPosition.x)
 				{
@@ -244,7 +246,7 @@ namespace BattleCruisers.Units.Aircraft
 				desiredVelocity.y = velocityY;
 			}
 
-			Logging.Log(Tags.AIRCRAFT, $"FighterController.FindDesiredVelocity() {desiredVelocity}");
+			Logging.Log(Tags.AIRCRAFT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
 			return desiredVelocity;
 		}
 

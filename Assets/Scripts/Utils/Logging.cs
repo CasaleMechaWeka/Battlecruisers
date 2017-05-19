@@ -101,7 +101,7 @@ namespace BattleCruisers.Utils
 
 		public static void Log(string tag, object obj, string message)
 		{
-			Log(tag, $"{GetClassName(obj)}.{message}");
+			Log(tag, GetClassName(obj) + "." + message);
 		}
 
 		private static string GetClassName(object obj)
@@ -126,7 +126,7 @@ namespace BattleCruisers.Utils
 				&& (TagsToActiveness[tag] || LOG_ALL))
 			{
 				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
-				string fullMsg = $"{timestamp}-{tag}:  {message}";
+				string fullMsg = timestamp + "-" + tag + ":  " + message;
 
 				if (logLevel == LoggingLevel.Warning)
 				{

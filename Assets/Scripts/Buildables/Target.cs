@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables
 
 				if (HealthChanged != null)
 				{
-					Logging.Log(Tags.TARGET, $"HealthChanged  {this}");
+					Logging.Log(Tags.TARGET, "HealthChanged  " + this);
 					HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
 				}
 			}

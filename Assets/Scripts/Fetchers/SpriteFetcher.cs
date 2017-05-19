@@ -23,7 +23,7 @@ namespace BattleCruisers.Fetchers
 
 			if (sprite == null)
 			{
-				throw new ArgumentException($"Invalid sprite path: {spritePath}");
+				throw new ArgumentException("Invalid sprite path: " + spritePath);
 			}
 
 			return sprite;

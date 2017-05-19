@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
 
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			Logging.Log(Tags.ANGLE_CALCULATORS, $"target: {target}  projectedPosition: {projectedPosition}  targetVelocity: {targetVelocity}  timeToTargetEstimate: {timeToTargetEstimate}");
+			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
 			return projectedPosition;
 		}
 	}

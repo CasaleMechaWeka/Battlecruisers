@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{ 
 			set	
 			{
-				Logging.Log(Tags.FACTORY, $"set_UnitWrapper: {_unitWrapper} > {value}");
+				Logging.Log(Tags.FACTORY, "set_UnitWrapper: " + _unitWrapper + " > " + value);
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
 				if (_unitWrapper != null)

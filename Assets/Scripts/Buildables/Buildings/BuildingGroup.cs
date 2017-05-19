@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			if (buildings.Count < MIN_NUM_OF_BUILDINGS || buildings.Count > MAX_NUM_OF_BUILDINGS)
 			{
-				throw new ArgumentException($"Invalid building count: {buildings.Count}");
+				throw new ArgumentException("Invalid building count: " + buildings.Count);
 			}
 
 			// Check building category matches this group's category

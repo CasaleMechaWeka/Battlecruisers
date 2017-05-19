@@ -71,14 +71,14 @@ namespace BattleCruisers.Units.Aircraft
 				Vector2 moveToPosition = Vector2.SmoothDamp(transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
 				rigidBody.MovePosition(moveToPosition);
 
-				Logging.Log(Tags.AIRCRAFT, $"Patrol():  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint}  _patrollingVelocity: {_patrollingVelocity}  "
-					+ $"_patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  PatrollingVelocity: {PatrollingVelocity}  _patrollingSmoothTime: {_patrollingSmoothTime}  Time.deltaTime: {Time.deltaTime}");
+				Logging.Log(Tags.AIRCRAFT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
+					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, PatrollingVelocity, _patrollingSmoothTime, Time.deltaTime));
 
 				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
-				Logging.Log(Tags.AIRCRAFT, $"Patrol():  Reached patrol point {_targetPatrolPoint}");
+				Logging.Log(Tags.AIRCRAFT, "Patrol():  Reached patrol point " + _targetPatrolPoint);
 				_targetPatrolPoint = FindNextPatrolPoint();
 			}
 		}

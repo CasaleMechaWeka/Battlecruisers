@@ -39,7 +39,7 @@ namespace BattleCruisers.AI
 			{
 				BuildingKey buildingKey = _buildOrder[_buildOrderIndex++];
 
-				Logging.Log(Tags.AI, $"BuildNextBuilding: {buildingKey.PrefabPath}");
+				Logging.Log(Tags.AI, "BuildNextBuilding: " + buildingKey.PrefabPath);
 
 				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.building.slotType);
@@ -56,7 +56,7 @@ namespace BattleCruisers.AI
 			Assert.IsNotNull(building);
 			building.CompletedBuildable -= Building_CompletedBuildable;
 
-			Logging.Log(Tags.AI, $"Building_CompletedBuildable: {building}");
+			Logging.Log(Tags.AI, "Building_CompletedBuildable: " + building);
 
 			BuildNextBuilding();
 		}

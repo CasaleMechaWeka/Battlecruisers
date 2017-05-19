@@ -29,7 +29,7 @@ namespace BattleCruisers.Projectiles
 
 			if (target != null)
 			{
-				Logging.Log(Tags.SHELLS, $"Own faction: {_faction}  Collider faction: {target.Faction}");
+				Logging.Log(Tags.SHELLS, string.Format("Own faction: {0}  Collider faction: {1}", _faction, target.Faction));
 				
 				if (target.Faction != _faction)
 				{

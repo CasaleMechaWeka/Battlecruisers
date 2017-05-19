@@ -129,7 +129,7 @@ namespace BattleCruisers.Units.Aircraft
 
 		private void AdjustVelocity()
 		{
-			Logging.Verbose(Tags.AIRCRAFT, $"AdjustVelocity():  rigidBody.velocity: {rigidBody.velocity}  TargetVelocity: {TargetVelocity}");
+			Logging.Verbose(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  TargetVelocity: {1}", rigidBody.velocity, TargetVelocity));
 
 			Vector2 oldVelocity = rigidBody.velocity;
 
@@ -151,7 +151,7 @@ namespace BattleCruisers.Units.Aircraft
 			{
 				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, TargetVelocity.x))
 				{
-					Logging.Log(Tags.AIRCRAFT, $"TryBombTarget():  About to turn around");
+					Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to turn around");
 
 					TurnAround();
 					_haveDroppedBombOnRun = false;
@@ -160,7 +160,7 @@ namespace BattleCruisers.Units.Aircraft
 			else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
 				&& IsOnTarget(transform.position, Target.GameObject.transform.position, rigidBody.velocity.x))
 			{
-				Logging.Log(Tags.AIRCRAFT, $"TryBombTarget():  About to drop bomb");
+				Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to drop bomb");
 
 				bombSpawner.SpawnShell(rigidBody.velocity.x);
 				_haveDroppedBombOnRun = true;
@@ -179,7 +179,7 @@ namespace BattleCruisers.Units.Aircraft
 			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
 			float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
 
-			Logging.Verbose(Tags.AIRCRAFT, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
+			Logging.Verbose(Tags.AIRCRAFT, string.Format("IsReadyToTurnAround():  planePosition.x: {0}  xTurnAroundPosition: {1}", planePosition.x, xTurnAroundPosition));
 
 			return 
 				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
@@ -201,7 +201,7 @@ namespace BattleCruisers.Units.Aircraft
 		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
-			Logging.Verbose(Tags.AIRCRAFT, $"IsOnTarget():  targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
+			Logging.Verbose(Tags.AIRCRAFT, string.Format("IsOnTarget():  targetPosition: {0}  planePosition: {1}  planeXVelocityInMPerS: {2}", targetPosition, planePosition, planeXVelocityInMPerS));
 
 			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
 			float xDropPosition = targetPosition.x - leadDistance;
