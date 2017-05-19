@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers.PrefabKeys;
 using System;
 using System.Collections;
@@ -18,6 +19,11 @@ namespace BattleCruisers.Fetchers
 		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
 		{
 			return GetPrefab<UnitWrapper>(unitKey);
+		}
+
+		public Cruiser GetCruiserPrefab(HullKey hullKey)
+		{
+			return GetPrefab<Cruiser>(hullKey);
 		}
 
 		private T GetPrefab<T>(PrefabKey prefabKey)

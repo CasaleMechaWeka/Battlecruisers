@@ -17,10 +17,15 @@ namespace BattleCruisers.Fetchers
 	{
 		BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey);
 		Building CreateBuilding(BuildingWrapper buildingWrapperPrefab);
+
 		UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey);
 		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
+
+		Cruiser GetCruiserPrefab(HullKey hullKey);
+		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 	}
 
+	// FELIX  Surely I can use polymorphism for this...
 	public class PrefabFactory : MonoBehaviour, IPrefabFactory
 	{
 		private PrefabFetcher _prefabFetcher;
@@ -62,6 +67,16 @@ namespace BattleCruisers.Fetchers
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
 			return Instantiate(unitWrapperPrefab).unit;
+		}
+
+		public Cruiser GetCruiserPrefab(HullKey hullKey)
+		{
+			return _prefabFetcher.GetCruiserPrefab(hullKey);
+		}
+
+		public Cruiser CreateCruiser(Cruiser cruiserPrefab)
+		{
+			return Instantiate(cruiserPrefab);
 		}
 	}
 }
