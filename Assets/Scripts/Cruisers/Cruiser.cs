@@ -76,7 +76,7 @@ namespace BattleCruisers.Cruisers
 		private void SetupSlots()
 		{
 			_slots = new Dictionary<SlotType, IList<Slot>>();
-			_slotsWrapper = transform.FindChild("SlotsWrapper").gameObject;
+			_slotsWrapper = transform.Find("SlotsWrapper").gameObject;
 			
 			Slot[] slots = GetComponentsInChildren<Slot>();
 			

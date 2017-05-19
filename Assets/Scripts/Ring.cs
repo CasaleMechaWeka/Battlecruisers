@@ -19,7 +19,7 @@ namespace BattleCruisers
 			_radiusInM = radiusInM;
 			_numOfPoints = numOfPoints;
 			_lineRenderer = lineRenderer;
-			_lineRenderer.numPositions = _numOfPoints;
+			_lineRenderer.positionCount = _numOfPoints;
 
 			CreatePoints();
 		}
