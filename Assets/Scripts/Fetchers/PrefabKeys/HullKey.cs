@@ -9,10 +9,17 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 {
 	public class HullKey : PrefabKey
 	{
-		public HullKey(string prefabFileName)
-			: base(prefabFileName)
+		private const string HULLS_FOLDER_NAME = "Hulls";
+
+		protected override string PrefabPathPrefix
 		{
-			PrefabType = PrefabType.Hull;
+			get
+			{
+				return base.PrefabPathPrefix + HULLS_FOLDER_NAME + PATH_SEPARATOR;
+			}
 		}
+
+		public HullKey(string prefabFileName)
+			: base(prefabFileName) { }
 	}
 }

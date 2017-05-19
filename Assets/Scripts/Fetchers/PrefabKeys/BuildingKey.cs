@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers.PrefabKeys
 {
-	public class BuildingKey : PrefabKey
+	public class BuildingKey : BuildableKey
 	{
 		private static class BuildingFolderNames
 		{
@@ -17,14 +17,23 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			public const string OFFENCE  = "Offence";
 		}
 
-		public BuildingKey(BuildingCategory category, string prefabFileName)
-			: base(prefabFileName)
+		private BuildingCategory _buildingCategory;
+
+		protected override string PrefabPathPrefix
 		{
-			PrefabType = PrefabType.Building;
-			PrefabTypeCategoryFolderName = GetBuildingFolderName(category);
+			get
+			{
+				return base.PrefabPathPrefix + BuildingCategoryToFolderName(_buildingCategory) + PATH_SEPARATOR;
+			}
 		}
 
-		private string GetBuildingFolderName(BuildingCategory buildingCategory)
+		public BuildingKey(BuildingCategory category, string prefabFileName)
+			: base(prefabFileName, BuildableType.Building)
+		{
+			_buildingCategory = category;
+		}
+
+		private string BuildingCategoryToFolderName(BuildingCategory buildingCategory)
 		{
 			switch (buildingCategory)
 			{

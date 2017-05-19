@@ -7,11 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers.PrefabKeys
 {
-	public enum PrefabType
-	{
-		Hull, Building, Unit
-	}
-
 	public interface IPrefabKey
 	{
 		string PrefabPath { get; }
@@ -19,56 +14,30 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 
 	public abstract class PrefabKey : IPrefabKey
 	{
-		private static class PrefabTypeFolderNames
-		{
-			public const string HULLS = "Hulls";
-			public const string UNITS = "Units";
-			public const string BUILDINGS = "Buildings";
-		}
-
 		private string _prefabName;
 
-		private const string PREFABS_BASE_PATH = "Prefabs/Buildables/";
-		private const char PATH_SEPARATOR = '/';
+		private const string PREFABS_BASE_PATH = "Prefabs/";
+		protected const char PATH_SEPARATOR = '/';
+
+		protected virtual string PrefabPathPrefix
+		{
+			get
+			{
+				return PREFABS_BASE_PATH;
+			}
+		}
 
 		public string PrefabPath
 		{
 			get
 			{
-				string prefabPath = PREFABS_BASE_PATH + GetPrefabTypeFolderName(PrefabType) + PATH_SEPARATOR;
-				
-				if (PrefabTypeCategoryFolderName != null)
-				{
-					prefabPath += PrefabTypeCategoryFolderName + PATH_SEPARATOR;
-				}
-				prefabPath += _prefabName;
-				
-				return prefabPath;
+				return PrefabPathPrefix + _prefabName;
 			}
 		}
-
-		protected PrefabType PrefabType { private get; set; }
-		protected string PrefabTypeCategoryFolderName { private get; set; }
 
 		public PrefabKey(string prefabName)
 		{
 			_prefabName = prefabName;
-			PrefabTypeCategoryFolderName = null;
-		}
-
-		private string GetPrefabTypeFolderName(PrefabType prefabType)
-		{
-			switch (prefabType)
-			{
-				case PrefabType.Hull:
-					return PrefabTypeFolderNames.HULLS;
-				case PrefabType.Unit:
-					return PrefabTypeFolderNames.UNITS;
-				case PrefabType.Building:
-					return PrefabTypeFolderNames.BUILDINGS;
-				default:
-					throw new ArgumentException();
-			}
 		}
 	}
 }
