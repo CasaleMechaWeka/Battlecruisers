@@ -22,6 +22,9 @@ namespace BattleCruisers.Cruisers
 {
 	public class Cruiser : Target, ICruiser, IPointerClickHandler
 	{
+		private HealthBarController _healthBarController;
+		private UIManager _uiManager;
+		private Cruiser _enemyCruiser;
 		private IDictionary<SlotType, IList<Slot>> _slots;
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
@@ -29,12 +32,7 @@ namespace BattleCruisers.Cruisers
 		private IAircraftProvider _aircraftProvider;
 		private PrefabFactory _prefabFactory;
 
-		public HealthBarController healthBarController;
-		public UIManager uiManager;
-		public Cruiser enemyCruiser;
-
 		public int numOfDrones;
-		public Faction faction;
 
 		public BuildingWrapper SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
@@ -44,25 +42,23 @@ namespace BattleCruisers.Cruisers
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
-		void Start()
-		{
-			Faction = faction;
-
-			SetupSlots();
-			HideAllSlots();
-
-			healthBarController.Initialise(this);
-		}
-
-		public void Initialise(IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
+		public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
+			UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
 			ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider, PrefabFactory prefabFactory, Direction facingDirection)
 		{
+			Assert.IsNotNull(enemyCruiser);
+			Assert.IsNotNull(healthBarController);
+			Assert.IsNotNull(uiManager);
 			Assert.IsNotNull(droneManager);
 			Assert.IsNotNull(droneConsumerProvider);
 			Assert.IsNotNull(targetsFactory);
 			Assert.IsNotNull(aircraftProvider);
 			Assert.IsNotNull(prefabFactory);
 
+			Faction = faction;
+			_enemyCruiser = enemyCruiser;
+			_healthBarController = healthBarController;
+			_uiManager = uiManager;
 			DroneManager = droneManager;
 			DroneManager.NumOfDrones = numOfDrones;
 			DroneConsumerProvider = droneConsumerProvider;
@@ -70,6 +66,11 @@ namespace BattleCruisers.Cruisers
 			_aircraftProvider = aircraftProvider;
 			_prefabFactory = prefabFactory;
 			Direction = facingDirection;
+
+			SetupSlots();
+			HideAllSlots();
+
+			_healthBarController.Initialise(this);
 		}
 
 		private void SetupSlots()
@@ -158,13 +159,13 @@ namespace BattleCruisers.Cruisers
 			Assert.AreEqual(SelectedBuildingPrefab.building.slotType, slot.Type);
 
 			Building building = _prefabFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(Faction, uiManager, this, enemyCruiser, _prefabFactory, _targetsFactory, _aircraftProvider);
+			building.Initialise(Faction, _uiManager, this, _enemyCruiser, _prefabFactory, _targetsFactory, _aircraftProvider);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser
 			if (Faction == Faction.Blues)
 			{
-				uiManager.ShowBuildingGroups();
+				_uiManager.ShowBuildingGroups();
 			}
 
 			building.StartConstruction();
