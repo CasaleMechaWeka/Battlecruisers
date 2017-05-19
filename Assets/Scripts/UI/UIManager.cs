@@ -39,13 +39,13 @@ namespace BattleCruisers.UI
 		{
 			switch (e.Origin)
 			{
-				case CameraState.FriendlyCruiser:
+				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
 					buildableDetails.Hide();
 					friendlyCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
-				case CameraState.EnemyCruiser:
+				case CameraState.AiCruiser:
 					enemyCruiserHealthBar.gameObject.SetActive(false);
 					break;
 			}
@@ -55,12 +55,12 @@ namespace BattleCruisers.UI
 		{
 			switch (e.Destination)
 			{
-				case CameraState.FriendlyCruiser:
+				case CameraState.PlayerCruiser:
 					buildMenuController.ShowBuildMenu();
 					friendlyCruiserHealthBar.gameObject.SetActive(true);
 					break;
 
-				case CameraState.EnemyCruiser:
+				case CameraState.AiCruiser:
 					enemyCruiserHealthBar.gameObject.SetActive(true);
 					break;
 			}
@@ -99,12 +99,12 @@ namespace BattleCruisers.UI
 		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
 			if (System.Object.ReferenceEquals(buildingParent, friendlyCruiser)
-				&& cameraController.State == CameraState.FriendlyCruiser)
+				&& cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
 			else if (System.Object.ReferenceEquals(buildingParent, enemyCruiser)
-				&& cameraController.State == CameraState.EnemyCruiser)
+				&& cameraController.State == CameraState.AiCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);
 			}
@@ -124,7 +124,7 @@ namespace BattleCruisers.UI
 
 		public void ShowFactoryUnits(Factory factory)
 		{
-			if (cameraController.State == CameraState.FriendlyCruiser)
+			if (cameraController.State == CameraState.PlayerCruiser)
 			{
 				buildMenuController.ShowUnitsMenu(factory);
 			}

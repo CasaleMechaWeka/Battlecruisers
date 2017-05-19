@@ -28,6 +28,7 @@ namespace BattleCruisers
 	/// </summary>
 	public class BattleSceneGod : MonoBehaviour 
 	{
+		private Cruiser _playerCruiser, _aiCruiser;
 		private BuildingGroupFactory _buildingGroupFactory;
 		private Bot _bot;
 
@@ -36,18 +37,27 @@ namespace BattleCruisers
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public BuildableDetailsController buildableDetailsController;
-		public Cruiser friendlyCruiser;
-		public Cruiser enemyCruiser;
 		public ModalMenuController modalMenuController;
+		public CameraController cameraController;
 		
 		// User needs to be able to build at least one building
 		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
 		// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
 		private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
+		private const int CRUISER_OFFSET_IN_M = 35;
+
 		void Awake()
 		{
 			Assert.raiseExceptions = true;
+
+
+			// FELIX  Also inject and use ai loadout  (ie, allows AI and player to have different buildables, hulls)
+			// FELIX  Inject
+			Loadout playerLoadout = CreateLoadout();
+			// FELIX  Get hull key from loadout
+			HullKey playerHullKey = new HullKey("Trident");
+			HullKey aiHullKey = new HullKey("Trident");
 
 
 			// Common setup
@@ -58,11 +68,15 @@ namespace BattleCruisers
 
 
 			// Player cruiser
-			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(enemyCruiser);
-			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(friendlyCruiser.transform.position, enemyCruiser.transform.position);
+			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerHullKey);
+			_playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
+			_playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, 0, 0);
+
+			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(_aiCruiser);
+			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(_playerCruiser.transform.position, _aiCruiser.transform.position);
 			IDroneManager droneManager = new DroneManager();
 			IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-			friendlyCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
+			_playerCruiser.Initialise(droneManager, droneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
 
 
 			// UI
@@ -70,25 +84,36 @@ namespace BattleCruisers
 			buildableDetailsController.Initialise(droneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, droneManager);
 
-			Loadout loadout = CreateLoadout();
 
-			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(loadout, friendlyCruiser, enemyCruiser);
+			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(playerLoadout, _playerCruiser, _aiCruiser);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(loadout, friendlyCruiser, enemyCruiser);
+			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, _playerCruiser, _aiCruiser);
 			buildMenuController.Initialise(buildingGroups, units);
 
 
 			// AI cruiser
-			ITargetsFactory aiCruiserTargetsFactory = new TargetsFactory(friendlyCruiser);
-			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(enemyCruiser.transform.position, friendlyCruiser.transform.position);
+			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(aiHullKey);
+			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
+
+			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, 0, 0);
+			Quaternion rotation = _aiCruiser.transform.rotation;
+			rotation.eulerAngles = new Vector3(0, 180, 0);
+			_aiCruiser.transform.rotation = rotation;
+
+			ITargetsFactory aiCruiserTargetsFactory = new TargetsFactory(_playerCruiser);
+			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(_aiCruiser.transform.position, _playerCruiser.transform.position);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			enemyCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
+			_aiCruiser.Initialise(aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
+
+
+			// Camera controller
+			cameraController.Initialise(_playerCruiser.GameObject, _aiCruiser.GameObject);
 
 
 			// AI
 			IList<BuildingKey> buildOrder = GetBuildOrder();
-			_bot = new Bot(enemyCruiser, friendlyCruiser, buildOrder, prefabFactory);
+			_bot = new Bot(_aiCruiser, _playerCruiser, buildOrder, prefabFactory);
 //			Invoke("StartBot", 10);
 			Invoke("StartBot", 2);
 		}
