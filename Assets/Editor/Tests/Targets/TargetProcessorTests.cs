@@ -102,33 +102,29 @@ namespace BattleCruisers.Tests.Targets
 		}
 
 		[Test]
-		[ExpectedException(typeof(UnityAsserts.AssertionException))]
 		public void DoubleFindSameTarget_Throws()
 		{
 			InvokeTargetFound(_target1);
-			InvokeTargetFound(_target1);
+			Assert.Throws<UnityAsserts.AssertionException>(() => InvokeTargetFound(_target1));
 		}
 
 		[Test]
-		[ExpectedException(typeof(UnityAsserts.AssertionException))]
 		public void LostNotAddedTarget_Throws()
 		{
-			InvokeTargetLost(_target1);
+			Assert.Throws<UnityAsserts.AssertionException>(() => InvokeTargetLost(_target1));
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
 		public void DoubleAddSameConsumer_Throws()
 		{
 			_targetProcessor.AddTargetConsumer(_targetConsumer);
-			_targetProcessor.AddTargetConsumer(_targetConsumer);
+			Assert.Throws<ArgumentException>(() => _targetProcessor.AddTargetConsumer(_targetConsumer));
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
 		public void RemoveUnaddedConsumer_Throws()
 		{
-			_targetProcessor.RemoveTargetConsumer(_targetConsumer);
+			Assert.Throws<ArgumentException>(() => _targetProcessor.RemoveTargetConsumer(_targetConsumer));
 		}
 
 		private void InvokeTargetFound(ITarget target)

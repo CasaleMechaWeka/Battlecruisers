@@ -21,12 +21,11 @@ namespace BattleCruisers.Tests.Turrets
 		}
 
 		#region FindDesiredAngle
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void FindDesiredAngle_SourceIsTarget()
 		{
 			Vector2 point = new Vector2();
-			_angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0)));
 		}
 
 		#region Same axis

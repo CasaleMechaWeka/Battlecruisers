@@ -40,11 +40,10 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(12, _droneManager.NumOfDrones);
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void NumOfDrones_Set_Invalid()
 		{
-			_droneManager.NumOfDrones = -1;
+			Assert.Throws<ArgumentException>(() => _droneManager.NumOfDrones = -1);
 		}
 
 		[Test]
@@ -142,20 +141,18 @@ namespace BattleCruisers.Tests.Drones
 		#endregion CanSupportDroneConsumer()
 
 		#region AddDroneConsumer()
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void AddDroneConsumer_CannotSupport()
 		{
-			_droneManager.AddDroneConsumer(_droneConsumer1);
+			Assert.Throws<ArgumentException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void AddDroneConsumer_DoubleAdd()
 		{
 			_droneManager.NumOfDrones = 1;
 			_droneManager.AddDroneConsumer(_droneConsumer1);
-			_droneManager.AddDroneConsumer(_droneConsumer1);
+			Assert.Throws<ArgumentException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]
@@ -284,11 +281,10 @@ namespace BattleCruisers.Tests.Drones
 		#endregion AddDroneConsumer()
 
 		#region RemoveDroneConsumer()
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void RemoveDroneConsumer_WasNotAddedFirst()
 		{
-			_droneManager.RemoveDroneConsumer(_droneConsumer1);
+			Assert.Throws<ArgumentException>(() => _droneManager.RemoveDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]

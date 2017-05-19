@@ -26,11 +26,10 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(0, _droneConsumer.NumOfDrones);
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void InvalidConstructorArg() 
 		{
-			new DroneConsumer(-1);
+			Assert.Throws<ArgumentException>(() => new DroneConsumer(-1));
 		}
 
 		[Test]
@@ -45,18 +44,16 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer.State);
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void NegativeNumOfDrones()
 		{
-			_droneConsumer.NumOfDrones = -1;
+			Assert.Throws<ArgumentException>(() => _droneConsumer.NumOfDrones = -1);
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void InvalidNumOfDrones()
 		{
-			_droneConsumer.NumOfDrones = _droneConsumer.NumOfDronesRequired - 1;
+			Assert.Throws<ArgumentException>(() => _droneConsumer.NumOfDrones = _droneConsumer.NumOfDronesRequired - 1);
 		}
 
 		[Test]

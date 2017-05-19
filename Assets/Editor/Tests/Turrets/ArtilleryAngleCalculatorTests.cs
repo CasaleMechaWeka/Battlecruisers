@@ -20,28 +20,25 @@ namespace BattleCruisers.Tests.Turrets
 			_target = new Vector2();
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void OutOfRange()
 		{
 			Vector2 source = new Vector2(-20, 0);
-			_angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 2, targetVelocity: new Vector2(0, 0));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 2, targetVelocity: new Vector2(0, 0)));
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void SourceNotMirrored_ButTargetToLeft()
 		{
 			Vector2 source = new Vector2(2, 0);
-			_angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0)));
 		}
 
-		[ExpectedException(typeof(ArgumentException))]
 		[Test]
 		public void SourceMirrored_ButTargetToRight()
 		{
 			Vector2 source = new Vector2(-2, 0);
-			_angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0)));
 		}
 
 		[Test]
