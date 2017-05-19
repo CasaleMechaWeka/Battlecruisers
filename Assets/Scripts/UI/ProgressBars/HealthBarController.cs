@@ -14,8 +14,9 @@ namespace BattleCruisers.UI.ProgressBars
 		private IDamagable _damagable;
 		private float _maxHealth;
 		private Vector3 _offset;
+		private bool _followDamagable;
 
-		public void Initialise(IDamagable damagable)
+		public void Initialise(IDamagable damagable, bool followDamagable = false)
 		{
 			Logging.Log(Tags.PROGRESS_BARS, $"Initialise()  {damagable}");
 
@@ -25,6 +26,7 @@ namespace BattleCruisers.UI.ProgressBars
 			_damagable = damagable;
 			_maxHealth = _damagable.Health;
 			_offset = transform.position;
+			_followDamagable = followDamagable;
 
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}
@@ -36,7 +38,10 @@ namespace BattleCruisers.UI.ProgressBars
 
 		void LateUpdate()
 		{
-			transform.position = _damagable.GameObject.transform.position + _offset;
+			if (_followDamagable)
+			{
+				transform.position = _damagable.GameObject.transform.position + _offset;
+			}
 		}
 
 		public void UpdateOffset(Vector2 offset)
