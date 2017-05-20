@@ -5,49 +5,41 @@ using BattleCruisers.Fetchers.PrefabKeys;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.DataModel
 {
 	public class Loadout
 	{
-		private IDictionary<BuildingCategory, IList<BuildingKey>> _buildings;
-		private IDictionary<UnitCategory, IList<UnitKey>> _units;
+		private HullKey _hull;
+		private List<BuildingKey> _buildings;
+		private List<UnitKey> _units;
 
-		public HullKey Hull { get; private set; }
+		public HullKey Hull
+		{
+			get { return _hull; }
+			private set { _hull = value; }
+		}
 
 		public Loadout(
 			HullKey hull,
-			IList<BuildingKey> factories,
-			IList<BuildingKey> tacticals,
-			IList<BuildingKey> defence,
-			IList<BuildingKey> offence,
-			IList<BuildingKey> support,
-			IList<UnitKey> aircraft,
-			IList<UnitKey> ships)
+			List<BuildingKey> buildings,
+			List<UnitKey> units)
 		{
 			Hull = hull;
-
-			_buildings = new Dictionary<BuildingCategory, IList<BuildingKey>>();
-			_buildings[BuildingCategory.Factory] = factories;
-			_buildings[BuildingCategory.Tactical] = tacticals;
-			_buildings[BuildingCategory.Defence] = defence;
-			_buildings[BuildingCategory.Offence] = offence;
-			_buildings[BuildingCategory.Support] = support;
-
-			_units = new Dictionary<UnitCategory, IList<UnitKey>>();
-			_units[UnitCategory.Aircraft] = aircraft;
-			_units[UnitCategory.Naval] = ships;
+			_buildings = buildings;
+			_units = units;
 		}
 
 		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
 		{
-			return _buildings[buildingCategory];
+			return _buildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
 		}
 
 		public IList<UnitKey> GetUnits(UnitCategory unitCategory)
 		{
-			return _units[unitCategory];
+			return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
 		}
 	}
 }

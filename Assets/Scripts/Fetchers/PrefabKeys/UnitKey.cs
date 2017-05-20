@@ -16,20 +16,20 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			public const string ULTRA = "Ultras";
 		}
 
-		private UnitCategory _unitCategory;
+		public UnitCategory UnitCategory { get; private set; }
 
 		protected override string PrefabPathPrefix
 		{
 			get
 			{
-				return base.PrefabPathPrefix + UnitCategoryToFolderName(_unitCategory) + PATH_SEPARATOR;
+				return base.PrefabPathPrefix + UnitCategoryToFolderName(UnitCategory) + PATH_SEPARATOR;
 			}
 		}
 
 		public UnitKey(UnitCategory category, string prefabFileName)
 			: base(prefabFileName, BuildableType.Unit)
 		{
-			_unitCategory = category;
+			UnitCategory = category;
 		}
 
 		private string UnitCategoryToFolderName(UnitCategory unitCategory)

@@ -33,46 +33,34 @@ namespace BattleCruisers.DataModel
 			HullKey hull = new HullKey("Trident");
 
 			// Factories
-			IList<BuildingKey> factories = new List<BuildingKey>();
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+			List<BuildingKey> buildings = new List<BuildingKey>();
+			buildings.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
+			buildings.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
+			buildings.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 
 			// Tactical
-			IList<BuildingKey> tactical = new List<BuildingKey>();
-			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
+			buildings.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
 
 			// Defence
-			IList<BuildingKey> defence = new List<BuildingKey>();
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
+			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
+			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
 
 			// Offence
-			IList<BuildingKey> offence = new List<BuildingKey>();
-			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-
-			// Support
-			IList<BuildingKey> support = new List<BuildingKey>();
+			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 
 			// Aircraft
-			IList<UnitKey> aircraft = new List<UnitKey>();
-			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
-			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Fighter"));
+			List<UnitKey> units = new List<UnitKey>();
+			units.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
+			units.Add(new UnitKey(UnitCategory.Aircraft, "Fighter"));
 
 			// Ships
-			IList<UnitKey> ships = new List<UnitKey>();
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
+			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
+			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			return new Loadout(
 				hull,
-				factories,
-				tactical,
-				defence,
-				offence,
-				support,
-				aircraft,
-				ships);
+				buildings,
+				units);
 		}
 	}
 }

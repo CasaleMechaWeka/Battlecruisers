@@ -17,20 +17,20 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			public const string OFFENCE  = "Offence";
 		}
 
-		private BuildingCategory _buildingCategory;
+		public BuildingCategory BuildingCategory { get; private set; }
 
 		protected override string PrefabPathPrefix
 		{
 			get
 			{
-				return base.PrefabPathPrefix + BuildingCategoryToFolderName(_buildingCategory) + PATH_SEPARATOR;
+				return base.PrefabPathPrefix + BuildingCategoryToFolderName(BuildingCategory) + PATH_SEPARATOR;
 			}
 		}
 
 		public BuildingKey(BuildingCategory category, string prefabFileName)
 			: base(prefabFileName, BuildableType.Building)
 		{
-			_buildingCategory = category;
+			BuildingCategory = category;
 		}
 
 		private string BuildingCategoryToFolderName(BuildingCategory buildingCategory)
