@@ -39,5 +39,17 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		{
 			_prefabName = prefabName;
 		}
+
+		public override bool Equals(object obj)
+		{
+			PrefabKey other = obj as PrefabKey;
+			return other != null
+				&& other.PrefabPath == PrefabPath;
+		}
+
+		public override int GetHashCode()
+		{
+			return PrefabPath.GetHashCode();
+		}
 	}
 }
