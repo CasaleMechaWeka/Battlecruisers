@@ -12,6 +12,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		Building, Unit
 	}
 
+	[Serializable]
 	public abstract class BuildableKey : PrefabKey
 	{
 		private static class BuildableTypeFolderNames
@@ -20,6 +21,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			public const string BUILDINGS = "Buildings";
 		}
 
+		[SerializeField]
 		private BuildableType _buildableType;
 
 		private const string BUILDABLES_FOLDER_NAME = "Buildables";

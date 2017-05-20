@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers.PrefabKeys
 {
+	[Serializable]
 	public class UnitKey : BuildableKey
 	{
 		private static class UnitFolderNames
@@ -16,7 +17,14 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 			public const string ULTRA = "Ultras";
 		}
 
-		public UnitCategory UnitCategory { get; private set; }
+		[SerializeField]
+		private UnitCategory _unitCategory;
+
+		public UnitCategory UnitCategory
+		{ 
+			get { return _unitCategory; }
+			private set { _unitCategory = value; }
+		}
 
 		protected override string PrefabPathPrefix
 		{

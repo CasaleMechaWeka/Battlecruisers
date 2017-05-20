@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers.PrefabKeys
 {
+	[Serializable]
 	public class HullKey : PrefabKey
 	{
 		private const string HULLS_FOLDER_NAME = "Hulls";

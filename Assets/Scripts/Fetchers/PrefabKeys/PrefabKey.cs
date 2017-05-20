@@ -12,8 +12,10 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		string PrefabPath { get; }
 	}
 
+	[Serializable]
 	public abstract class PrefabKey : IPrefabKey
 	{
+		[SerializeField]
 		private string _prefabName;
 
 		private const string PREFABS_BASE_PATH = "Prefabs/";

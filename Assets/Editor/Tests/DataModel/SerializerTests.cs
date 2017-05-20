@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.DataModel;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Fetchers.PrefabKeys;
 using System.IO;
 using System.Collections.Generic;
 using NSubstitute;
@@ -34,8 +36,29 @@ namespace BattleCruisers.Tests.DataModel
 
 			_originalGameModel = new GameModel() 
 			{
-				numOfLevelsUnlocked = 7
+				numOfLevelsUnlocked = 7,
+				playerLoadout = CreateLoadout()
 			};
+		}
+
+		private Loadout CreateLoadout()
+		{
+			HullKey hull = new HullKey("sweetHullName");
+
+			List<BuildingKey> buildings = new List<BuildingKey>() 
+			{
+				new BuildingKey(BuildingCategory.Defence, "Ritter"),
+				new BuildingKey(BuildingCategory.Factory, "Medizin"),
+				new BuildingKey(BuildingCategory.Tactical, "Prinzessin")
+			};
+
+			List<UnitKey> units = new List<UnitKey>() 
+			{
+				new UnitKey(UnitCategory.Aircraft, "Messerschmitt"),
+				new UnitKey(UnitCategory.Naval, "Herzog")
+			};
+
+			return new Loadout(hull, buildings, units);
 		}
 
 		[TearDown]
