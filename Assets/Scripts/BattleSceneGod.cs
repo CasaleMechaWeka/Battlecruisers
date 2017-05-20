@@ -84,6 +84,10 @@ namespace BattleCruisers
 			_aiCruiser.transform.rotation = rotation;
 
 
+			// UIManager
+			uiManager.Initialise(_playerCruiser, _aiCruiser);
+
+
 			// Initialise layer cruiser
 			ITargetsFactory playerCruiserTargetsFactory = new TargetsFactory(_aiCruiser);
 			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(_playerCruiser.transform.position, _aiCruiser.transform.position);

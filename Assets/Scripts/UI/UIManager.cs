@@ -15,21 +15,22 @@ namespace BattleCruisers.UI
 {
 	public class UIManager : MonoBehaviour 
 	{
+		private Cruiser _playerCruiser, _aiCruiser;
+
 		public CameraController cameraController;
 		public BackgroundController backgroundController;
 		public BuildMenuController buildMenuController;
-		public HealthBarController friendlyCruiserHealthBar;
-		public HealthBarController enemyCruiserHealthBar;
-		public Cruiser friendlyCruiser;
-		public Cruiser enemyCruiser;
+		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
 		public BuildableDetailsController buildableDetails;
 
-		// Use this for initialization
-		void Start () 
+		public void Initialise(Cruiser playerCruiser, Cruiser aiCruiser)
 		{
-			friendlyCruiserHealthBar.gameObject.SetActive(true);
-			enemyCruiserHealthBar.gameObject.SetActive(false);
+			_playerCruiser = playerCruiser;
+			_aiCruiser = aiCruiser;
 
+			playerCruiserHealthBar.gameObject.SetActive(true);
+			aiCruiserHealthBar.gameObject.SetActive(false);
+			
 			cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
 			backgroundController.BackgroundClicked += OnBackgroundClicked;
@@ -42,11 +43,11 @@ namespace BattleCruisers.UI
 				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
 					buildableDetails.Hide();
-					friendlyCruiserHealthBar.gameObject.SetActive(false);
+					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
 				case CameraState.AiCruiser:
-					enemyCruiserHealthBar.gameObject.SetActive(false);
+					aiCruiserHealthBar.gameObject.SetActive(false);
 					break;
 			}
 		}
@@ -57,11 +58,11 @@ namespace BattleCruisers.UI
 			{
 				case CameraState.PlayerCruiser:
 					buildMenuController.ShowBuildMenu();
-					friendlyCruiserHealthBar.gameObject.SetActive(true);
+					playerCruiserHealthBar.gameObject.SetActive(true);
 					break;
 
 				case CameraState.AiCruiser:
-					enemyCruiserHealthBar.gameObject.SetActive(true);
+					aiCruiserHealthBar.gameObject.SetActive(true);
 					break;
 			}
 		}
@@ -69,14 +70,14 @@ namespace BattleCruisers.UI
 		private void OnBackgroundClicked(object sender, EventArgs e)
 		{
 			buildableDetails.Hide();
-			friendlyCruiser.UnhighlightSlots();
+			_playerCruiser.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
 		{
 			Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
-			friendlyCruiser.UnhighlightSlots();
-			friendlyCruiser.HideAllSlots();
+			_playerCruiser.UnhighlightSlots();
+			_playerCruiser.HideAllSlots();
 			buildableDetails.Hide();
 			buildMenuController.ShowBuildingGroupsMenu();
 		}
@@ -84,26 +85,26 @@ namespace BattleCruisers.UI
 		public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
-			friendlyCruiser.ShowAllSlots();
+			_playerCruiser.ShowAllSlots();
 			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
 		public void SelectBuildingFromMenu(BuildingWrapper buildingWrapper)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
-			friendlyCruiser.SelectedBuildingPrefab = buildingWrapper;
-			friendlyCruiser.HighlightAvailableSlots(buildingWrapper.building.slotType);
+			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
+			_playerCruiser.HighlightAvailableSlots(buildingWrapper.building.slotType);
 			buildableDetails.ShowBuildableDetails(buildingWrapper.building, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
-			if (System.Object.ReferenceEquals(buildingParent, friendlyCruiser)
+			if (System.Object.ReferenceEquals(buildingParent, _playerCruiser)
 				&& cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else if (System.Object.ReferenceEquals(buildingParent, enemyCruiser)
+			else if (System.Object.ReferenceEquals(buildingParent, _aiCruiser)
 				&& cameraController.State == CameraState.AiCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);
@@ -113,7 +114,7 @@ namespace BattleCruisers.UI
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
-			friendlyCruiser.UnhighlightSlots();
+			_playerCruiser.UnhighlightSlots();
 			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 
