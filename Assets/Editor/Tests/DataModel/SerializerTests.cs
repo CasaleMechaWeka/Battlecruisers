@@ -36,8 +36,8 @@ namespace BattleCruisers.Tests.DataModel
 
 			_originalGameModel = new GameModel() 
 			{
-				numOfLevelsUnlocked = 7,
-				playerLoadout = CreateLoadout()
+				NumOfLevelsUnlocked = 7,
+				PlayerLoadout = CreateLoadout()
 			};
 		}
 

@@ -6,25 +6,46 @@ using UnityEngine;
 
 namespace BattleCruisers.DataModel
 {
-	[Serializable]
-	public class GameModel
+	public interface IGameModel
 	{
-		public int numOfLevelsUnlocked;
-		public Loadout playerLoadout;
+		int NumOfLevelsUnlocked { get; set; }
+		Loadout PlayerLoadout { get; set; }
+	}
+
+	[Serializable]
+	public class GameModel : IGameModel
+	{
+		[SerializeField]
+		private int _numOfLevelsUnlocked;
+
+		[SerializeField]
+		private Loadout _playerLoadout;
+
+		public int NumOfLevelsUnlocked 
+		{ 
+			get { return _numOfLevelsUnlocked; }
+			set { _numOfLevelsUnlocked = value; }
+		}
+
+		public Loadout PlayerLoadout
+		{
+			get { return _playerLoadout; }
+			set { _playerLoadout = value; }
+		}
 
 		public override bool Equals(object obj)
 		{
 			GameModel other = obj as GameModel;
 
 			return other != null
-				&& other.numOfLevelsUnlocked == numOfLevelsUnlocked
-				&& object.ReferenceEquals(playerLoadout, other.playerLoadout) ||
-					(playerLoadout != null && playerLoadout.Equals(other.playerLoadout));
+				&& other.NumOfLevelsUnlocked == NumOfLevelsUnlocked
+				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout) ||
+					(PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout));
 		}
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(numOfLevelsUnlocked, playerLoadout);
+			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout);
 		}
 	}
 }
