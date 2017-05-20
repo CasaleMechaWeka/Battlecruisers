@@ -7,28 +7,32 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.DataModel
 {
-	public class Serializer
+	public interface ISerializer
 	{
+		bool DoesSavedGameExist();
+		void SaveGame(GameModel game);
+		GameModel LoadGame();
+	}
+
+	public class Serializer : ISerializer
+	{
+		private readonly IModelFilePathProvider _modelFilePathProvider;
 		private readonly BinaryFormatter _binaryFormatter;
-		private readonly string _gameModelFilePath;
 
-		private const string GAME_MODEL_FILE_NAME = "GameModel";
-		private const string GAME_MODEL_FILE_EXTENSION = "bcms";
-
-		public Serializer()
+		public Serializer(IModelFilePathProvider modelFilePathProvider)
 		{
+			_modelFilePathProvider = modelFilePathProvider;
 			_binaryFormatter = new BinaryFormatter();
-			_gameModelFilePath = Application.persistentDataPath + "/" + GAME_MODEL_FILE_NAME + "." + GAME_MODEL_FILE_EXTENSION;
 		}
 		
 		public bool DoesSavedGameExist()
 		{
-			return File.Exists(_gameModelFilePath);
+			return File.Exists(_modelFilePathProvider.GameModelFilePath);
 		}
 
 		public void SaveGame(GameModel game)
 		{
-			FileStream file = File.Create(_gameModelFilePath);
+			FileStream file = File.Create(_modelFilePathProvider.GameModelFilePath);
 			_binaryFormatter.Serialize(file, game);
 			file.Close();
 		}
@@ -37,10 +41,29 @@ namespace BattleCruisers.DataModel
 		{
 			Assert.IsTrue(DoesSavedGameExist());
 
-			FileStream file = File.Open(_gameModelFilePath, FileMode.Open);
+			FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open);
 			GameModel game = (GameModel)_binaryFormatter.Deserialize(file);
 			file.Close();
 			return game;
 		}
+	}
+
+	// FELIX  Move to own file
+	public interface IModelFilePathProvider
+	{
+		string GameModelFilePath { get; }
+	}
+
+	public class ModelFilePathProvider : IModelFilePathProvider
+	{
+		private const string GAME_MODEL_FILE_NAME = "GameModel";
+		private const string GAME_MODEL_FILE_EXTENSION = "bcms";
+
+		public ModelFilePathProvider()
+		{
+			GameModelFilePath = Application.persistentDataPath + "/" + GAME_MODEL_FILE_NAME + "." + GAME_MODEL_FILE_EXTENSION;
+		}
+
+		public string GameModelFilePath { get; private set; }
 	}
 }
