@@ -55,10 +55,9 @@ namespace BattleCruisers
 			Assert.raiseExceptions = true;
 
 
-			// FELIX  Also inject and use ai loadout  (ie, allows AI and player to have different buildables, hulls)
-			// FELIX  Inject
-			Loadout playerLoadout = CreateLoadout();
-			Loadout aiLoadout = playerLoadout;
+			ILoadoutManager loadoutManager = ApplicationModel.LoadoutManager;
+			Loadout playerLoadout = loadoutManager.GetPlayerLoadout();
+			Loadout aiLoadout = loadoutManager.GetAiLoadout(ApplicationModel.SelectedLevel);
 
 
 			// Common setup
@@ -128,55 +127,6 @@ namespace BattleCruisers
 		private void StartBot()
 		{
 			_bot.Start();
-		}
-
-		// FELIX  Should not be hardcoded.  User loadouts should be in db?
-		private Loadout CreateLoadout()
-		{
-			// Hull
-			HullKey hull = new HullKey("Trident");
-
-			// Factories
-			IList<BuildingKey> factories = new List<BuildingKey>();
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			factories.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
-			
-			// Tactical
-			IList<BuildingKey> tactical = new List<BuildingKey>();
-			tactical.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
-
-			// Defence
-			IList<BuildingKey> defence = new List<BuildingKey>();
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
-			defence.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
-
-			// Offence
-			IList<BuildingKey> offence = new List<BuildingKey>();
-			offence.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-
-			// Support
-			IList<BuildingKey> support = new List<BuildingKey>();
-
-			// Aircraft
-			IList<UnitKey> aircraft = new List<UnitKey>();
-			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
-			aircraft.Add(new UnitKey(UnitCategory.Aircraft, "Fighter"));
-
-			// Ships
-			IList<UnitKey> ships = new List<UnitKey>();
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
-			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
-
-			return new Loadout(
-				hull,
-				factories,
-				tactical,
-				defence,
-				offence,
-				support,
-				aircraft,
-				ships);
 		}
 
 		private IDictionary<BuildingCategory, IList<BuildingWrapper>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser)
