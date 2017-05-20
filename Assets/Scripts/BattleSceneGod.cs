@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.DataModel;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Fetchers.PrefabKeys;

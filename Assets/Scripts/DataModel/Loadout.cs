@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.DataModel
 {
 	public class Loadout
 	{
