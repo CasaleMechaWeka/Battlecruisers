@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.DataModel
 {
-	public interface IDataProvider
+	public interface IDataAdapter
 	{
 		IList<UnitKey> GetAllUnits();
 		IList<UnitKey> GetAllUnlockedUnits();
@@ -18,7 +18,7 @@ namespace BattleCruisers.DataModel
 		IList<HullKey> GetAllUnlockedHulls();
 	}
 
-	public class DataProvider : IDataProvider
+	public class DataAdapter : IDataAdapter
 	{
 		public IList<UnitKey> GetAllUnits()
 		{
