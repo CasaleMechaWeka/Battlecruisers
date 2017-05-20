@@ -11,11 +11,13 @@ namespace BattleCruisers.Cruisers
 {
 	public class Loadout
 	{
-		// FELIX  Cruiser hull
-		IDictionary<BuildingCategory, IList<BuildingKey>> _buildings;
-		IDictionary<UnitCategory, IList<UnitKey>> _units;
+		private IDictionary<BuildingCategory, IList<BuildingKey>> _buildings;
+		private IDictionary<UnitCategory, IList<UnitKey>> _units;
+
+		public HullKey Hull { get; private set; }
 
 		public Loadout(
+			HullKey hull,
 			IList<BuildingKey> factories,
 			IList<BuildingKey> tacticals,
 			IList<BuildingKey> defence,
@@ -24,6 +26,8 @@ namespace BattleCruisers.Cruisers
 			IList<UnitKey> aircraft,
 			IList<UnitKey> ships)
 		{
+			Hull = hull;
+
 			_buildings = new Dictionary<BuildingCategory, IList<BuildingKey>>();
 			_buildings[BuildingCategory.Factory] = factories;
 			_buildings[BuildingCategory.Tactical] = tacticals;

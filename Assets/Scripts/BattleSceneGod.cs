@@ -57,9 +57,7 @@ namespace BattleCruisers
 			// FELIX  Also inject and use ai loadout  (ie, allows AI and player to have different buildables, hulls)
 			// FELIX  Inject
 			Loadout playerLoadout = CreateLoadout();
-			// FELIX  Get hull key from loadout
-			HullKey playerHullKey = new HullKey("Trident");
-			HullKey aiHullKey = new HullKey("Trident");
+			Loadout aiLoadout = playerLoadout;
 
 
 			// Common setup
@@ -69,13 +67,13 @@ namespace BattleCruisers
 
 
 			// Instantiate player cruiser
-			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerHullKey);
+			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
 			_playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
 			_playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, 0, 0);
 
 
 			// Instantiate AI cruiser
-			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(aiHullKey);
+			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(aiLoadout.Hull);
 			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 			
 			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, 0, 0);
@@ -134,6 +132,9 @@ namespace BattleCruisers
 		// FELIX  Should not be hardcoded.  User loadouts should be in db?
 		private Loadout CreateLoadout()
 		{
+			// Hull
+			HullKey hull = new HullKey("Trident");
+
 			// Factories
 			IList<BuildingKey> factories = new List<BuildingKey>();
 			factories.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
@@ -167,6 +168,7 @@ namespace BattleCruisers
 			ships.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			return new Loadout(
+				hull,
 				factories,
 				tactical,
 				defence,
