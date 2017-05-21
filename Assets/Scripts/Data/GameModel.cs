@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.DataModel
+namespace BattleCruisers.Data
 {
 	public interface IGameModel
 	{

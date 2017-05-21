@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.DataModel
+namespace BattleCruisers.Data
 {
 	[Serializable]
 	public class Loadout

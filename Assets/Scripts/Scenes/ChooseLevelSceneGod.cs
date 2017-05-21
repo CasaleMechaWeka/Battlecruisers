@@ -1,4 +1,4 @@
-﻿using BattleCruisers.DataModel;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;

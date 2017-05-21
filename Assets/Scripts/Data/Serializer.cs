@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.DataModel
+namespace BattleCruisers.Data
 {
 	public interface ISerializer
 	{

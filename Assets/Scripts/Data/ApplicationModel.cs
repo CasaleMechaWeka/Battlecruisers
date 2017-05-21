@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.DataModel
+namespace BattleCruisers.Data
 {
 	public static class ApplicationModel
 	{
