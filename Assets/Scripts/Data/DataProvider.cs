@@ -10,6 +10,7 @@ namespace BattleCruisers.Data
 		IList<Level> Levels { get; }
 		GameModel GameModel { get; }
 
+		Level GetLevel(int levelNum);
 		void SaveGame();
 	}
 
@@ -37,6 +38,12 @@ namespace BattleCruisers.Data
 			{
 				GameModel = _staticData.InitialGameModel;
 			}
+		}
+
+		public Level GetLevel(int levelNum)
+		{
+			Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
+			return Levels[levelNum - 1];
 		}
 
 		public void SaveGame()

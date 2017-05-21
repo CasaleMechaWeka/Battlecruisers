@@ -55,9 +55,18 @@ namespace BattleCruisers.Scenes
 			Assert.raiseExceptions = true;
 
 
-			ILoadoutManager loadoutManager = ApplicationModel.LoadoutManager;
-			Loadout playerLoadout = loadoutManager.GetPlayerLoadout();
-			Loadout aiLoadout = loadoutManager.GetAiLoadout(ApplicationModel.SelectedLevel);
+			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
+			if (ApplicationModel.SelectedLevel == 0)
+			{
+				ApplicationModel.SelectedLevel = 1;
+			}
+
+
+
+			IDataProvider dataProvider = ApplicationModel.DataProvider;
+			Loadout playerLoadout = dataProvider.GameModel.PlayerLoadout;
+			Level currentLevel = dataProvider.GetLevel(ApplicationModel.SelectedLevel);
+			Loadout aiLoadout = currentLevel.AiLoadout;
 
 
 			// Common setup

@@ -26,7 +26,7 @@ namespace BattleCruisers.Data
 
 	// FELIX  Could scrape Assets folder and auto generate keys :P  Would make
 	// updating assets easier, but might not be worth the implementation effort.
-	public class StaticData
+	public class StaticData : IStaticData
 	{
 		public List<HullKey> HullKeys { get; private set; }
 		public List<BuildingKey> BuildingKeys { get; private set; }

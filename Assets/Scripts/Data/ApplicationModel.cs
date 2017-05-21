@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Data.Serialization;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,16 +9,18 @@ namespace BattleCruisers.Data
 	{
 		public static int SelectedLevel { get; set; }
 
-		private static ILoadoutManager _loadoutManager;
-		public static ILoadoutManager LoadoutManager
+		private static IDataProvider _dataProvider;
+		public static IDataProvider DataProvider
 		{
 			get
 			{
-				if (_loadoutManager == null)
+				if (_dataProvider == null)
 				{
-					_loadoutManager = new LoadoutManager();
+					_dataProvider = new DataProvider(
+						new StaticData(),
+						new Serializer(new ModelFilePathProvider()));
 				}
-				return _loadoutManager;
+				return _dataProvider;
 			}
 		}
 	}
