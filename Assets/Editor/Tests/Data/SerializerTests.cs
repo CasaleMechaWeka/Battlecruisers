@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.DataModel
+namespace BattleCruisers.Tests.Data
 {
 	public class SeriliazerTests 
 	{
@@ -34,29 +34,12 @@ namespace BattleCruisers.Tests.DataModel
 
 			_serializer = new Serializer(_filePathProvider);
 
-			_originalGameModel = new GameModel() 
-			{
-				NumOfLevelsUnlocked = 7,
-				PlayerLoadout = CreateLoadout()
-			};
-
-			List<HullKey> unlockedHulls = CreateUnlockedHulls();
-			foreach (HullKey hull in unlockedHulls)
-			{
-				_originalGameModel.AddUnlockedHull(hull);
-			}
-
-			List<BuildingKey> unlockedBuildings = CreateUnlockedBuildings();
-			foreach (BuildingKey building in unlockedBuildings)
-			{
-				_originalGameModel.AddUnlockedBuilding(building);
-			}
-
-			List<UnitKey> unlockedUnits = CreateUnlockedUnits();
-			foreach (UnitKey unit in unlockedUnits)
-			{
-				_originalGameModel.AddUnlockedUnit(unit);
-			}
+			_originalGameModel = new GameModel(
+				numOfLevelsUnlocked: 7,
+				playerLoadout: CreateLoadout(),
+				unlockedHulls: CreateUnlockedHulls(),
+				unlockedBuildings: CreateUnlockedBuildings(),
+				unlockedUnits: CreateUnlockedUnits());
 		}
 
 		private Loadout CreateLoadout()

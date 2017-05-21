@@ -65,6 +65,20 @@ namespace BattleCruisers.Data
 			_unlockedUnits = new List<UnitKey>();
 		}
 
+		public GameModel(
+			int numOfLevelsUnlocked,
+			Loadout playerLoadout,
+			List<HullKey> unlockedHulls,
+			List<BuildingKey> unlockedBuildings,
+			List<UnitKey> unlockedUnits)
+		{
+			NumOfLevelsUnlocked = numOfLevelsUnlocked;
+			PlayerLoadout = playerLoadout;
+			_unlockedHulls = unlockedHulls;
+			_unlockedBuildings = unlockedBuildings;
+			_unlockedUnits = unlockedUnits;
+		}
+
 		public void AddUnlockedHull(HullKey hull)
 		{
 			Assert.IsFalse(_unlockedHulls.Contains(hull));

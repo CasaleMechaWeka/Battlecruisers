@@ -18,6 +18,8 @@ namespace BattleCruisers.Data
 		IList<HullKey> HullKeys { get; }
 		IList<BuildingKey> BuildingKeys { get; }
 		IList<UnitKey> UnitKeys { get; }
+
+		GameModel InitialGameModel { get; }
 	}
 
 	// FELIX  Could scrape Assets folder and auto generate keys :P  Would make
@@ -27,6 +29,8 @@ namespace BattleCruisers.Data
 		public IList<HullKey> HullKeys { get; private set; }
 		public IList<BuildingKey> BuildingKeys { get; private set; }
 		public IList<UnitKey> UnitKeys { get; private set; }
+
+		public GameModel InitialGameModel { get; }
 
 		public StaticData()
 		{
@@ -78,6 +82,13 @@ namespace BattleCruisers.Data
 			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			return units;
+		}
+
+		// FELIX  For final game, don't add ALL the prefabs :D
+		private GameModel CreateInitialGameModel()
+		{
+			// FELIX  NEXT
+			return null;
 		}
 	}
 }
