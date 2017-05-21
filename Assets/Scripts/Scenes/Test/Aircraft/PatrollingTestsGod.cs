@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Units.Aircraft;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft
 {
 	public class PatrollingTestsGod : MonoBehaviour 
 	{

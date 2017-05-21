@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes
+namespace BattleCruisers.Scenes.Test
 {
 	public class ShieldTestsGod : MonoBehaviour 
 	{

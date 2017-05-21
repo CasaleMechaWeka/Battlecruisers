@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using NSubstitute;
 using System;
@@ -12,7 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Factories
+namespace BattleCruisers.Scenes.Test.Factories
 {
 	public class AirFactoryTestsGod : MonoBehaviour 
 	{

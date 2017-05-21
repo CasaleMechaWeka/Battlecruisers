@@ -2,14 +2,14 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Fetchers;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Factories
+namespace BattleCruisers.Scenes.Test.Factories
 {
 	public class NavalFactoryTestsGod : MonoBehaviour 
 	{

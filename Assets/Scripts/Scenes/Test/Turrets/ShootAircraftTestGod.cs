@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
@@ -13,7 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Turrets
+namespace BattleCruisers.Scenes.Test.Turrets
 {
 	public class ShootAircraftTestGod : MonoBehaviour 
 	{

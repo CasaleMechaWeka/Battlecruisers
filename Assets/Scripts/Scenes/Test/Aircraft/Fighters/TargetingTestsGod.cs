@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
@@ -11,7 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Aircraft.Fighters
+namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
 	/// <summary>
 	/// 1. Fighter is patrolling

@@ -1,13 +1,13 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Turrets
+namespace BattleCruisers.Scenes.Test.Turrets
 {
 	public class ShootPatrollingAircraftTestGod : MonoBehaviour 
 	{

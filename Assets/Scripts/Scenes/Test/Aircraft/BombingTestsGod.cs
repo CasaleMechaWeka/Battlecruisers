@@ -4,8 +4,8 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.TestScenes;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using BattleCruisers.Units.Aircraft.Providers;
 using NSubstitute;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft
 {
 	public class BombingTestsGod : MonoBehaviour 
 	{

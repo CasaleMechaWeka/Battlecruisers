@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
-using BattleCruisers.TestScenes.Utilities;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using NSubstitute;
 using System;
@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.TestScenes.Aircraft.Fighters
+namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
 	public class StationaryTargetTestGod : MonoBehaviour 
 	{
