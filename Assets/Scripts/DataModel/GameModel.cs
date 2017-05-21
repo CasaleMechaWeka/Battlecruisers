@@ -14,7 +14,8 @@ namespace BattleCruisers.DataModel
 	{
 		int NumOfLevelsUnlocked { get; set; }
 		Loadout PlayerLoadout { get; set; }
-		// FELIX  Add same for buildings and hulls
+		ReadOnlyCollection<HullKey> UnlockedHulls { get; }
+		ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
 		ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
 
 		void AddUnlockedUnit(UnitKey unit);
@@ -28,6 +29,12 @@ namespace BattleCruisers.DataModel
 
 		[SerializeField]
 		private Loadout _playerLoadout;
+
+		[SerializeField]
+		private List<HullKey> _unlockedHulls;
+
+		[SerializeField]
+		private List<BuildingKey> _unlockedBuildings;
 
 		[SerializeField]
 		private List<UnitKey> _unlockedUnits;
@@ -44,16 +51,14 @@ namespace BattleCruisers.DataModel
 			set { _playerLoadout = value; }
 		}
 
-		public ReadOnlyCollection<UnitKey> UnlockedUnits
-		{
-			get
-			{
-				return _unlockedUnits.AsReadOnly();
-			}
-		}
+		public ReadOnlyCollection<HullKey> UnlockedHulls { get { return _unlockedHulls.AsReadOnly(); } }
+		public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get { return _unlockedBuildings.AsReadOnly(); } }
+		public ReadOnlyCollection<UnitKey> UnlockedUnits { get { return _unlockedUnits.AsReadOnly(); } }
 
 		public GameModel()
 		{
+			_unlockedHulls = new List<HullKey>();
+			_unlockedBuildings = new List<BuildingKey>();
 			_unlockedUnits = new List<UnitKey>();
 		}
 
@@ -71,12 +76,14 @@ namespace BattleCruisers.DataModel
 				&& other.NumOfLevelsUnlocked == NumOfLevelsUnlocked
 				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
 					|| (PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout))
+				&& Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
+				&& Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)
 				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits);
 		}
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout);
+			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
 		}
 	}
 }
