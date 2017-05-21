@@ -43,6 +43,8 @@ namespace BattleCruisers.Data
 			UnitKeys = AllUnitKeys();
 
 			InitialGameModel = CreateInitialGameModel();
+
+			Levels = CreateLevels();
 		}
 
 		private List<HullKey> AllHullKeys()
