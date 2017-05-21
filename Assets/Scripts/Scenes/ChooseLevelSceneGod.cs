@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BattleCruisers
+namespace BattleCruisers.Scenes
 {
 	public class ChooseLevelSceneGod : MonoBehaviour 
 	{

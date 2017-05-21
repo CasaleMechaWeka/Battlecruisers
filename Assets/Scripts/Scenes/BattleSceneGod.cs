@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
-namespace BattleCruisers
+namespace BattleCruisers.Scenes
 {
 	/// <summary>
 	/// Initialises everything :D
