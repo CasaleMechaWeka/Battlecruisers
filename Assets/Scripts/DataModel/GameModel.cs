@@ -1,8 +1,12 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Fetchers.PrefabKeys;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.DataModel
 {
@@ -10,6 +14,10 @@ namespace BattleCruisers.DataModel
 	{
 		int NumOfLevelsUnlocked { get; set; }
 		Loadout PlayerLoadout { get; set; }
+		// FELIX  Add same for buildings and hulls
+		ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
+
+		void AddUnlockedUnit(UnitKey unit);
 	}
 
 	[Serializable]
@@ -20,6 +28,9 @@ namespace BattleCruisers.DataModel
 
 		[SerializeField]
 		private Loadout _playerLoadout;
+
+		[SerializeField]
+		private List<UnitKey> _unlockedUnits;
 
 		public int NumOfLevelsUnlocked 
 		{ 
@@ -33,14 +44,34 @@ namespace BattleCruisers.DataModel
 			set { _playerLoadout = value; }
 		}
 
+		public ReadOnlyCollection<UnitKey> UnlockedUnits
+		{
+			get
+			{
+				return _unlockedUnits.AsReadOnly();
+			}
+		}
+
+		public GameModel()
+		{
+			_unlockedUnits = new List<UnitKey>();
+		}
+
+		public void AddUnlockedUnit(UnitKey unit)
+		{
+			Assert.IsFalse(_unlockedUnits.Contains(unit));
+			_unlockedUnits.Add(unit);
+		}
+
 		public override bool Equals(object obj)
 		{
 			GameModel other = obj as GameModel;
 
 			return other != null
 				&& other.NumOfLevelsUnlocked == NumOfLevelsUnlocked
-				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout) ||
-					(PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout));
+				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
+					|| (PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout))
+				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits);
 		}
 
 		public override int GetHashCode()

@@ -39,6 +39,12 @@ namespace BattleCruisers.Tests.DataModel
 				NumOfLevelsUnlocked = 7,
 				PlayerLoadout = CreateLoadout()
 			};
+
+			List<UnitKey> unlockedUnits = CreateUnlockedUnits();
+			foreach (UnitKey unit in unlockedUnits)
+			{
+				_originalGameModel.AddUnlockedUnit(unit);
+			}
 		}
 
 		private Loadout CreateLoadout()
@@ -59,6 +65,15 @@ namespace BattleCruisers.Tests.DataModel
 			};
 
 			return new Loadout(hull, buildings, units);
+		}
+
+		private List<UnitKey> CreateUnlockedUnits()
+		{
+			return new List<UnitKey>() 
+			{
+				new UnitKey(UnitCategory.Aircraft, "Messerschmitt"),
+				new UnitKey(UnitCategory.Naval, "Herzog")
+			};
 		}
 
 		[TearDown]
