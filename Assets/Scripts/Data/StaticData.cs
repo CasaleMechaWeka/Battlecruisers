@@ -20,6 +20,8 @@ namespace BattleCruisers.Data
 		List<UnitKey> UnitKeys { get; }
 
 		GameModel InitialGameModel { get; }
+
+		List<Level> Levels { get; }
 	}
 
 	// FELIX  Could scrape Assets folder and auto generate keys :P  Would make
@@ -30,7 +32,9 @@ namespace BattleCruisers.Data
 		public List<BuildingKey> BuildingKeys { get; private set; }
 		public List<UnitKey> UnitKeys { get; private set; }
 
-		public GameModel InitialGameModel { get; }
+		public GameModel InitialGameModel { get; private set; }
+
+		public List<Level> Levels { get; private set; }
 
 		public StaticData()
 		{
@@ -99,6 +103,18 @@ namespace BattleCruisers.Data
 				HullKeys,
 				BuildingKeys,
 				UnitKeys);
+		}
+
+		// FELIX  > 1 level maybe?
+		// FELIX  Don't give all loadouts to all levels :P
+		private List<Level> CreateLevels()
+		{
+			Loadout aiLoadout = new Loadout(HullKeys[0], BuildingKeys, UnitKeys);
+
+			return new List<Level>() 
+			{
+				new Level(aiLoadout)
+			};
 		}
 	}
 }
