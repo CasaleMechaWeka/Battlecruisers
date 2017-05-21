@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Serialization
 {
 	public interface IModelFilePathProvider
 	{
