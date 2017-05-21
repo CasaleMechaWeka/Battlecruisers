@@ -15,9 +15,9 @@ namespace BattleCruisers.Data
 	/// </summary>
 	public interface IStaticData
 	{
-		IList<HullKey> HullKeys { get; }
-		IList<BuildingKey> BuildingKeys { get; }
-		IList<UnitKey> UnitKeys { get; }
+		List<HullKey> HullKeys { get; }
+		List<BuildingKey> BuildingKeys { get; }
+		List<UnitKey> UnitKeys { get; }
 
 		GameModel InitialGameModel { get; }
 	}
@@ -26,9 +26,9 @@ namespace BattleCruisers.Data
 	// updating assets easier, but might not be worth the implementation effort.
 	public class StaticData
 	{
-		public IList<HullKey> HullKeys { get; private set; }
-		public IList<BuildingKey> BuildingKeys { get; private set; }
-		public IList<UnitKey> UnitKeys { get; private set; }
+		public List<HullKey> HullKeys { get; private set; }
+		public List<BuildingKey> BuildingKeys { get; private set; }
+		public List<UnitKey> UnitKeys { get; private set; }
 
 		public GameModel InitialGameModel { get; }
 
@@ -37,9 +37,11 @@ namespace BattleCruisers.Data
 			HullKeys = AllHullKeys();
 			BuildingKeys = AllBuildingKeys();
 			UnitKeys = AllUnitKeys();
+
+			InitialGameModel = CreateInitialGameModel();
 		}
 
-		private IList<HullKey> AllHullKeys()
+		private List<HullKey> AllHullKeys()
 		{
 			return new List<HullKey>() 
 			{
@@ -47,7 +49,7 @@ namespace BattleCruisers.Data
 			};
 		}
 
-		private IList<BuildingKey> AllBuildingKeys()
+		private List<BuildingKey> AllBuildingKeys()
 		{
 			List<BuildingKey> buildings = new List<BuildingKey>();
 
@@ -69,7 +71,7 @@ namespace BattleCruisers.Data
 			return buildings;
 		}
 
-		private IList<UnitKey> AllUnitKeys()
+		private List<UnitKey> AllUnitKeys()
 		{
 			List<UnitKey> units = new List<UnitKey>();
 
@@ -87,8 +89,16 @@ namespace BattleCruisers.Data
 		// FELIX  For final game, don't add ALL the prefabs :D
 		private GameModel CreateInitialGameModel()
 		{
-			// FELIX  NEXT
-			return null;
+			Loadout playerLoadout = new Loadout(HullKeys[0], BuildingKeys, UnitKeys);
+
+			int numOfLevelsUnlocked = 1;
+
+			return new GameModel(
+				numOfLevelsUnlocked,
+				playerLoadout,
+				HullKeys,
+				BuildingKeys,
+				UnitKeys);
 		}
 	}
 }
