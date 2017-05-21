@@ -14,10 +14,13 @@ namespace BattleCruisers.DataModel
 	{
 		int NumOfLevelsUnlocked { get; set; }
 		Loadout PlayerLoadout { get; set; }
+
 		ReadOnlyCollection<HullKey> UnlockedHulls { get; }
 		ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
 		ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
 
+		void AddUnlockedHull(HullKey hull);
+		void AddUnlockedBuilding(BuildingKey building);
 		void AddUnlockedUnit(UnitKey unit);
 	}
 
@@ -60,6 +63,18 @@ namespace BattleCruisers.DataModel
 			_unlockedHulls = new List<HullKey>();
 			_unlockedBuildings = new List<BuildingKey>();
 			_unlockedUnits = new List<UnitKey>();
+		}
+
+		public void AddUnlockedHull(HullKey hull)
+		{
+			Assert.IsFalse(_unlockedHulls.Contains(hull));
+			_unlockedHulls.Add(hull);
+		}
+
+		public void AddUnlockedBuilding(BuildingKey building)
+		{
+			Assert.IsFalse(_unlockedBuildings.Contains(building));
+			_unlockedBuildings.Add(building);
 		}
 
 		public void AddUnlockedUnit(UnitKey unit)

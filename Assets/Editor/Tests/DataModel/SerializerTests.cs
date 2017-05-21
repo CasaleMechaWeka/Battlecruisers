@@ -40,6 +40,18 @@ namespace BattleCruisers.Tests.DataModel
 				PlayerLoadout = CreateLoadout()
 			};
 
+			List<HullKey> unlockedHulls = CreateUnlockedHulls();
+			foreach (HullKey hull in unlockedHulls)
+			{
+				_originalGameModel.AddUnlockedHull(hull);
+			}
+
+			List<BuildingKey> unlockedBuildings = CreateUnlockedBuildings();
+			foreach (BuildingKey building in unlockedBuildings)
+			{
+				_originalGameModel.AddUnlockedBuilding(building);
+			}
+
 			List<UnitKey> unlockedUnits = CreateUnlockedUnits();
 			foreach (UnitKey unit in unlockedUnits)
 			{
@@ -49,22 +61,29 @@ namespace BattleCruisers.Tests.DataModel
 
 		private Loadout CreateLoadout()
 		{
-			HullKey hull = new HullKey("sweetHullName");
+			return new Loadout(
+				hull: new HullKey("Schule"),
+				buildings: CreateUnlockedBuildings(),
+				units: CreateUnlockedUnits());
+		}
+		
+		private List<HullKey> CreateUnlockedHulls()
+		{
+			return new List<HullKey>() 
+			{
+				new HullKey("Bergsteiger"),
+				new HullKey("Abstieg")
+			};
+		}
 
-			List<BuildingKey> buildings = new List<BuildingKey>() 
+		private List<BuildingKey> CreateUnlockedBuildings()
+		{
+			return new List<BuildingKey>() 
 			{
 				new BuildingKey(BuildingCategory.Defence, "Ritter"),
 				new BuildingKey(BuildingCategory.Factory, "Medizin"),
 				new BuildingKey(BuildingCategory.Tactical, "Prinzessin")
 			};
-
-			List<UnitKey> units = new List<UnitKey>() 
-			{
-				new UnitKey(UnitCategory.Aircraft, "Messerschmitt"),
-				new UnitKey(UnitCategory.Naval, "Herzog")
-			};
-
-			return new Loadout(hull, buildings, units);
 		}
 
 		private List<UnitKey> CreateUnlockedUnits()
