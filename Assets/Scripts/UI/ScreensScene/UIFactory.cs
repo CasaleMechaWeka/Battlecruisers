@@ -11,13 +11,13 @@ namespace BattleCruisers.UI.ScreensScene
 	public interface IUIFactory
 	{
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, IScreensSceneGod screensSceneGod);
-		void CreateBackButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
+		void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		public Button levelButtonPrefab;
-		public Button backButtonPrefab;
+		public Button homeButtonPrefab;
 
 		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, IScreensSceneGod screensSceneGod)
 		{
@@ -26,11 +26,11 @@ namespace BattleCruisers.UI.ScreensScene
 			levelButton.GetComponent<LevelButtonController>().Initialise(levelNum, level, screensSceneGod);
 		}
 
-		public void CreateBackButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod)
+		public void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod)
 		{
-			Button backButton = (Button)Instantiate(backButtonPrefab);
-			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			backButton.GetComponent<BackButtonController>().Initialise(screensSceneGod);
+			Button homeButton = (Button)Instantiate(homeButtonPrefab);
+			homeButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			homeButton.GetComponent<HomeButtonController>().Initialise(screensSceneGod);
 		}
 	}
 }

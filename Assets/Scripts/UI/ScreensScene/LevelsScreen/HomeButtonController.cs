@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-	public class BackButtonController : MonoBehaviour 
+	public class HomeButtonController : MonoBehaviour 
 	{
 		public Button button;
 

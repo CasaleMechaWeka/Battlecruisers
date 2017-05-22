@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], screensSceneGod); 
 			}
 
-			uiFactory.CreateBackButton(buttonsWrapper, screensSceneGod);
+			uiFactory.CreateHomeButton(buttonsWrapper, screensSceneGod);
 		}
 	}
 }
