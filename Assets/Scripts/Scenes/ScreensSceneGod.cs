@@ -13,70 +13,72 @@ namespace BattleCruisers.Scenes
 {
 	public interface IScreensSceneGod
 	{
-		// Home Menu
-		void Continue();
 		void GoToLevelsScreen();
-		void Quit();
-
-		// levels Menu
-		void LoadLevel(int levelNum);
 		void GoToHomeScreen();
+		void GoToLoadoutScreen();
+
+		void LoadLevel(int levelNum);
 	}
 
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
-		public ScreenController _currentScreen;
+		private ScreenController _currentScreen;
 
 		public UIFactory uiFactory;
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
-
+		public PostBattleScreenController postBattleScreen;
 
 		void Start()
 		{
+			// FELIX  TEMP  Force PostBattleScreen
+			ApplicationModel.BattleResult = new BattleResult(1, true);
+
+
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
 			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels);
+			homeScreen.Initialise(this);
 
-			_currentScreen = homeScreen;
+			if (ApplicationModel.BattleResult != null)
+			{
+				postBattleScreen.Initialize(ApplicationModel.BattleResult, this);
+				GoToScreen(postBattleScreen);
+			}
+			else
+			{
+				GoToHomeScreen();
+			}
 		}
 		
-		#region HomeMenu
-		// FELIX  Hide if first time
-		// FELIX  Start last level played OR next level if user won last level and then quit.
-		public void Continue()
-		{
-			Debug.Log("Continue()");
-		}
-
 		public void GoToLevelsScreen()
 		{
 			GoToScreen(levelsScreen);
-		}
-
-		public void Quit()
-		{
-			Application.Quit();
-		}
-		#endregion HomeMenu
-
-		#region LevelsMenu
-		public void LoadLevel(int levelNum)
-		{
-			ApplicationModel.SelectedLevel = levelNum;
-			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
 		}
 
 		public void GoToHomeScreen()
 		{
 			GoToScreen(homeScreen);
 		}
-		#endregion LevelsMenu
+
+		public void GoToLoadoutScreen()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void LoadLevel(int levelNum)
+		{
+			ApplicationModel.SelectedLevel = levelNum;
+			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
+		}
 
 		private void GoToScreen(ScreenController destinationScreen)
 		{
 			Assert.AreNotEqual(_currentScreen, destinationScreen);
 
-			_currentScreen.gameObject.SetActive(false);
+			if (_currentScreen != null)
+			{
+				_currentScreen.gameObject.SetActive(false);
+			}
 
 			_currentScreen = destinationScreen;
 			_currentScreen.gameObject.SetActive(true);

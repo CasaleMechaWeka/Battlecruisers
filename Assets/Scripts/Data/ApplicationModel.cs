@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Serialization;
+using BattleCruisers.UI.ScreensScene;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace BattleCruisers.Data
 	public static class ApplicationModel
 	{
 		public static int SelectedLevel { get; set; }
+		public static BattleResult BattleResult { get; set; }
 
 		private static IDataProvider _dataProvider;
 		public static IDataProvider DataProvider
