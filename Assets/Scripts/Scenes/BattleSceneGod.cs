@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes
 
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
 			Loadout playerLoadout = dataProvider.GameModel.PlayerLoadout;
-			Level currentLevel = dataProvider.GetLevel(ApplicationModel.SelectedLevel);
+			ILevel currentLevel = dataProvider.GetLevel(ApplicationModel.SelectedLevel);
 			Loadout aiLoadout = currentLevel.AiLoadout;
 
 

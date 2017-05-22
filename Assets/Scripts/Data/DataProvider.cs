@@ -7,10 +7,10 @@ namespace BattleCruisers.Data
 {
 	public interface IDataProvider
 	{
-		IList<Level> Levels { get; }
+		IList<ILevel> Levels { get; }
 		GameModel GameModel { get; }
 
-		Level GetLevel(int levelNum);
+		ILevel GetLevel(int levelNum);
 		void SaveGame();
 	}
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Data
 		private readonly IStaticData _staticData;
 		private readonly ISerializer _serializer;
 
-		public IList<Level> Levels { get { return _staticData.Levels; } }
+		public IList<ILevel> Levels { get { return _staticData.Levels; } }
 		public GameModel GameModel { get; private set; }
 
 		public DataProvider(IStaticData staticData, ISerializer serializer)
@@ -40,7 +40,7 @@ namespace BattleCruisers.Data
 			}
 		}
 
-		public Level GetLevel(int levelNum)
+		public ILevel GetLevel(int levelNum)
 		{
 			Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
 			return Levels[levelNum - 1];

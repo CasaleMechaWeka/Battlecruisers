@@ -21,7 +21,7 @@ namespace BattleCruisers.Data
 
 		GameModel InitialGameModel { get; }
 
-		List<Level> Levels { get; }
+		IList<ILevel> Levels { get; }
 	}
 
 	// FELIX  Could scrape Assets folder and auto generate keys :P  Would make
@@ -34,7 +34,7 @@ namespace BattleCruisers.Data
 
 		public GameModel InitialGameModel { get; private set; }
 
-		public List<Level> Levels { get; private set; }
+		public IList<ILevel> Levels { get; private set; }
 
 		public StaticData()
 		{
@@ -109,11 +109,11 @@ namespace BattleCruisers.Data
 
 		// FELIX  > 1 level maybe?
 		// FELIX  Don't give all loadouts to all levels :P
-		private List<Level> CreateLevels()
+		private IList<ILevel> CreateLevels()
 		{
 			Loadout aiLoadout = new Loadout(HullKeys[0], BuildingKeys, UnitKeys);
 
-			return new List<Level>() 
+			return new List<ILevel>() 
 			{
 				new Level("Battle Cruisers", aiLoadout),
 				new Level("Aircraft", aiLoadout)

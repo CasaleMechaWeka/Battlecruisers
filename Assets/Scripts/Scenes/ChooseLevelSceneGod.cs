@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.UI.ChooseLevelScene;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -16,6 +17,15 @@ namespace BattleCruisers.Scenes
 
 	public class ChooseLevelSceneGod : MonoBehaviour, IChooseLevelSceneGod
 	{
+		public UIFactory uiFactory;
+		public LevelsPanelController levelsPanelController;
+
+		void Start()
+		{
+			IDataProvider dataProvider = ApplicationModel.DataProvider;
+			levelsPanelController.Initialise(uiFactory, this, dataProvider.Levels);
+		}
+
 		public void LoadLevel(int levelNum)
 		{
 			ApplicationModel.SelectedLevel = levelNum;
