@@ -23,6 +23,7 @@ namespace BattleCruisers.Scenes
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		private ScreenController _currentScreen;
+		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
 
 		public UIFactory uiFactory;
@@ -34,8 +35,8 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
-			IDataProvider dataProvider = ApplicationModel.DataProvider;
-			_gameModel = dataProvider.GameModel;
+			_dataProvider = ApplicationModel.DataProvider;
+			_gameModel = _dataProvider.GameModel;
 
 
 			// FELIX  TEMP
@@ -45,8 +46,8 @@ namespace BattleCruisers.Scenes
 			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels, _gameModel.NumOfLevelsUnlocked);
-			homeScreen.Initialise(this, _gameModel.LastBattleResult, dataProvider.Levels.Count);
+			levelsScreen.Initialise(uiFactory, this, _dataProvider.Levels, _gameModel.NumOfLevelsCompleted);
+			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this);
 
 			if (ApplicationModel.ShowPostBattleScreen)
@@ -77,7 +78,7 @@ namespace BattleCruisers.Scenes
 
 		public void LoadLevel(int levelNum)
 		{
-			Assert.IsTrue(levelNum <= _gameModel.NumOfLevelsUnlocked);
+			Assert.IsTrue(levelNum <= _dataProvider.NumOfLevelsUnlocked);
 
 			ApplicationModel.SelectedLevel = levelNum;
 			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);

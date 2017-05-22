@@ -9,6 +9,7 @@ namespace BattleCruisers.Data
 	{
 		IList<ILevel> Levels { get; }
 		GameModel GameModel { get; }
+		int NumOfLevelsUnlocked { get; }
 
 		ILevel GetLevel(int levelNum);
 		void SaveGame();
@@ -21,6 +22,19 @@ namespace BattleCruisers.Data
 
 		public IList<ILevel> Levels { get { return _staticData.Levels; } }
 		public GameModel GameModel { get; private set; }
+
+		public int NumOfLevelsUnlocked
+		{
+			get
+			{
+				int numOfLevelsUnlocked = GameModel.NumOfLevelsCompleted + 1;
+				if (numOfLevelsUnlocked > Levels.Count)
+				{
+					numOfLevelsUnlocked = Levels.Count;
+				}
+				return numOfLevelsUnlocked;
+			}
+		}
 
 		public DataProvider(IStaticData staticData, ISerializer serializer)
 		{

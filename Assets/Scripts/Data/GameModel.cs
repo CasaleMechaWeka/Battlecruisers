@@ -12,7 +12,7 @@ namespace BattleCruisers.Data
 {
 	public interface IGameModel
 	{
-		int NumOfLevelsUnlocked { get; set; }
+		int NumOfLevelsCompleted { get; set; }
 		Loadout PlayerLoadout { get; set; }
 		BattleResult LastBattleResult { get; set; }
 
@@ -25,11 +25,12 @@ namespace BattleCruisers.Data
 		void AddUnlockedUnit(UnitKey unit);
 	}
 
+	// FELIX  Test!
 	[Serializable]
 	public class GameModel : IGameModel
 	{
 		[SerializeField]
-		private int _numOfLevelsUnlocked;
+		private int _numOfLevelsCompleted;
 
 		[SerializeField]
 		private Loadout _playerLoadout;
@@ -46,10 +47,10 @@ namespace BattleCruisers.Data
 		[SerializeField]
 		private List<UnitKey> _unlockedUnits;
 
-		public int NumOfLevelsUnlocked 
+		public int NumOfLevelsCompleted 
 		{ 
-			get { return _numOfLevelsUnlocked; }
-			set { _numOfLevelsUnlocked = value; }
+			get { return _numOfLevelsCompleted; }
+			set { _numOfLevelsCompleted = value; }
 		}
 
 		public Loadout PlayerLoadout
@@ -61,7 +62,16 @@ namespace BattleCruisers.Data
 		public BattleResult LastBattleResult
 		{
 			get { return _lastBattleResult; }
-			set { _lastBattleResult = value; }
+			set 
+			{ 
+				_lastBattleResult = value; 
+
+				if (_lastBattleResult.WasVictory && _lastBattleResult.LevelNum > NumOfLevelsCompleted)
+				{
+					Assert.AreEqual(_lastBattleResult.LevelNum - 1, NumOfLevelsCompleted);
+					NumOfLevelsCompleted = _lastBattleResult.LevelNum;
+				}
+			}
 		}
 
 		public ReadOnlyCollection<HullKey> UnlockedHulls { get { return _unlockedHulls.AsReadOnly(); } }
@@ -76,14 +86,14 @@ namespace BattleCruisers.Data
 		}
 
 		public GameModel(
-			int numOfLevelsUnlocked,
+			int numOfLevelsCompleted,
 			Loadout playerLoadout,
 			BattleResult lastBattleResult,
 			List<HullKey> unlockedHulls,
 			List<BuildingKey> unlockedBuildings,
 			List<UnitKey> unlockedUnits)
 		{
-			NumOfLevelsUnlocked = numOfLevelsUnlocked;
+			NumOfLevelsCompleted = numOfLevelsCompleted;
 			PlayerLoadout = playerLoadout;
 			LastBattleResult = lastBattleResult;
 			_unlockedHulls = unlockedHulls;
@@ -114,7 +124,7 @@ namespace BattleCruisers.Data
 			GameModel other = obj as GameModel;
 
 			return other != null
-				&& other.NumOfLevelsUnlocked == NumOfLevelsUnlocked
+				&& other.NumOfLevelsCompleted == NumOfLevelsCompleted
 				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
 					|| (PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout))
 				&& object.ReferenceEquals(LastBattleResult, other.LastBattleResult)
@@ -126,7 +136,7 @@ namespace BattleCruisers.Data
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
+			return this.GetHashCode(NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
 		}
 	}
 }

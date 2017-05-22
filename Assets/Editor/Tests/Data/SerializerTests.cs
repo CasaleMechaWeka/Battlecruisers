@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Data
 			_serializer = new Serializer(_filePathProvider);
 
 			_originalGameModel = new GameModel(
-				numOfLevelsUnlocked: 7,
+				numOfLevelsCompleted: 7,
 				playerLoadout: CreateLoadout(),
 				lastBattleResult: CreateBattleResult(),
 				unlockedHulls: CreateUnlockedHulls(),
