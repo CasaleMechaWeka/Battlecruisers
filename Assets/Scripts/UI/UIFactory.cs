@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings.Buttons;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Buttons;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BuildMenus;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Buildables.Buildings
+namespace BattleCruisers.UI
 {
 	public interface IUIFactory
 	{
