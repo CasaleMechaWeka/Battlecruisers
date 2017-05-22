@@ -26,6 +26,11 @@ namespace BattleCruisers.UI.ScreensScene
 			_screensSceneGod.GoToLevelsScreen();
 		}
 
+		public void GoToLoadoutScreen()
+		{
+			_screensSceneGod.GoToLoadoutScreen();
+		}
+
 		public void Quit()
 		{
 			Application.Quit();
