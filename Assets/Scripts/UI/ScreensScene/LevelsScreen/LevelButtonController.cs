@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene
+namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
 	public class LevelButtonController : MonoBehaviour 
 	{
