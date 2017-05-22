@@ -115,8 +115,8 @@ namespace BattleCruisers.Data
 
 			return new List<Level>() 
 			{
-				new Level(aiLoadout),
-				new Level(aiLoadout)
+				new Level("Battle Cruisers", aiLoadout),
+				new Level("Aircraft", aiLoadout)
 			};
 		}
 	}

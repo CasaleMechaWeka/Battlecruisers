@@ -4,7 +4,8 @@ namespace BattleCruisers.Data
 {
 	public interface ILevel
 	{
-		 Loadout AiLoadout { get; }
+		Loadout AiLoadout { get; }
+		string Name { get; }
 	}
 
 	// FELIX  Eventuall add:
@@ -13,9 +14,10 @@ namespace BattleCruisers.Data
 	// + AI playing style (once an AI exists :P)
 	public class Level : ILevel
 	{
+		public string Name { get; private set; }
 		public Loadout AiLoadout { get; private set; }
 
-		public Level(Loadout aiLoadout)
+		public Level(string name, Loadout aiLoadout)
 		{
 			AiLoadout = aiLoadout;
 		}
