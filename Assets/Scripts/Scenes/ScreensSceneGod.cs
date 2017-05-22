@@ -34,6 +34,7 @@ namespace BattleCruisers.Scenes
 		void Start()
 		{
 			// FELIX  TEMP  Force PostBattleScreen
+//			ApplicationModel.BattleResult = new BattleResult(1, false);
 			ApplicationModel.BattleResult = new BattleResult(1, true);
 
 
