@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Buttons;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.Buttons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
