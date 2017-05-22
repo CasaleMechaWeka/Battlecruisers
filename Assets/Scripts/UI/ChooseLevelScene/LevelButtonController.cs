@@ -9,24 +9,13 @@ namespace BattleCruisers.UI.ChooseLevelScene
 {
 	public class LevelButtonController : MonoBehaviour 
 	{
-		private int _levelNum;
-		private IChooseLevelSceneGod _chooseLevelGod;
-
 		public Button button;
 		public Text levelName;
 
 		public void Initialise(int levelNum, ILevel level, IChooseLevelSceneGod chooseLevelGod)
 		{
-			_levelNum = levelNum;
-			_chooseLevelGod = chooseLevelGod;			
-
-			levelName.text = _levelNum + ". " + level.Name;
-			button.onClick.AddListener(ChooseLevel);
-		}
-
-		private void ChooseLevel()
-		{
-			_chooseLevelGod.LoadLevel(_levelNum);
+			levelName.text = levelNum + ". " + level.Name;
+			button.onClick.AddListener(() => chooseLevelGod.LoadLevel(levelNum));
 		}
 	}
 }

@@ -16,11 +16,14 @@ namespace BattleCruisers.UI.ChooseLevelScene
 
 		public void Initialise(IUIFactory uiFactory, IChooseLevelSceneGod chooseLevelGod, IList<ILevel> levels)
 		{
+			// Create level buttons
 			for (int i = 0; i < levels.Count; ++i)
 			{
 				int levelNum = i + 1;
 				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], chooseLevelGod); 
 			}
+
+			uiFactory.CreateQuitButton(buttonsWrapper, chooseLevelGod);
 		}
 	}
 }

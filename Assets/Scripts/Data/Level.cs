@@ -19,6 +19,7 @@ namespace BattleCruisers.Data
 
 		public Level(string name, Loadout aiLoadout)
 		{
+			Name = name;
 			AiLoadout = aiLoadout;
 		}
 	}
