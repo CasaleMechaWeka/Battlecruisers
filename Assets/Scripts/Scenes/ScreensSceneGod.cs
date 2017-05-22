@@ -42,8 +42,8 @@ namespace BattleCruisers.Scenes
 			// FELIX  TEMP
 //			ApplicationModel.BattleResult = new BattleResult(1, false);
 //			ApplicationModel.BattleResult = new BattleResult(1, true);
-			_gameModel.LastBattleResult = null;
-			ApplicationModel.ShowPostBattleScreen = false;
+//			_gameModel.LastBattleResult = null;
+//			ApplicationModel.ShowPostBattleScreen = false;
 
 
 			levelsScreen.Initialise(uiFactory, this, _dataProvider.Levels, _gameModel.NumOfLevelsCompleted);
@@ -52,6 +52,7 @@ namespace BattleCruisers.Scenes
 
 			if (ApplicationModel.ShowPostBattleScreen)
 			{
+				ApplicationModel.ShowPostBattleScreen = false;
 				postBattleScreen.Initialise(_gameModel.LastBattleResult, this);
 				GoToScreen(postBattleScreen);
 			}

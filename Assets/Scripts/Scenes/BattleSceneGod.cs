@@ -30,6 +30,8 @@ namespace BattleCruisers.Scenes
 	/// </summary>
 	public class BattleSceneGod : MonoBehaviour 
 	{
+		private IDataProvider _dataProvider;
+		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
 		private BuildingGroupFactory _buildingGroupFactory;
 		private Bot _bot;
@@ -56,16 +58,18 @@ namespace BattleCruisers.Scenes
 
 
 			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
-			if (ApplicationModel.SelectedLevel == 0)
+			if (ApplicationModel.SelectedLevel == -1)
 			{
 				ApplicationModel.SelectedLevel = 1;
 			}
 
 
 
-			IDataProvider dataProvider = ApplicationModel.DataProvider;
-			Loadout playerLoadout = dataProvider.GameModel.PlayerLoadout;
-			ILevel currentLevel = dataProvider.GetLevel(ApplicationModel.SelectedLevel);
+			_dataProvider = ApplicationModel.DataProvider;
+			_currentLevelNum = ApplicationModel.SelectedLevel;
+
+			Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+			ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
 			Loadout aiLoadout = currentLevel.AiLoadout;
 
 
@@ -245,7 +249,8 @@ namespace BattleCruisers.Scenes
 					ResumeGame();
 					break;
 				case UserAction.Quit:
-					Quit();
+					BattleResult result = new BattleResult(_currentLevelNum, wasVictory: false);
+					CompleteBattle(result);
 					break;
 				default:
 					throw new ArgumentException();
@@ -262,8 +267,13 @@ namespace BattleCruisers.Scenes
 			Time.timeScale = 1;
 		}
 
-		private void Quit()
+		private void CompleteBattle(BattleResult battleResult)
 		{
+			_dataProvider.GameModel.LastBattleResult = battleResult;
+			_dataProvider.SaveGame();
+
+			ApplicationModel.ShowPostBattleScreen = true;
+
 			SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
 		}
 	}

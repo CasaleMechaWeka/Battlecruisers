@@ -25,5 +25,11 @@ namespace BattleCruisers.Data
 				return _dataProvider;
 			}
 		}
+
+		static ApplicationModel()
+		{
+			ShowPostBattleScreen = false;
+			SelectedLevel = -1;
+		}
 	}
 }

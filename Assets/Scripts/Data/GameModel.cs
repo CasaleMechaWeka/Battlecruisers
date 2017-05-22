@@ -66,7 +66,9 @@ namespace BattleCruisers.Data
 			{ 
 				_lastBattleResult = value; 
 
-				if (_lastBattleResult.WasVictory && _lastBattleResult.LevelNum > NumOfLevelsCompleted)
+				if (_lastBattleResult != null &&
+					_lastBattleResult.WasVictory && 
+					_lastBattleResult.LevelNum > NumOfLevelsCompleted)
 				{
 					Assert.AreEqual(_lastBattleResult.LevelNum - 1, NumOfLevelsCompleted);
 					NumOfLevelsCompleted = _lastBattleResult.LevelNum;
