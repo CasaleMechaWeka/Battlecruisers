@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,22 +8,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-	// FELIX  Add:
-	// + Level name
-	// + Item (loot) unlocked => Constant for each level?
-	// + Stats?  Time?  Medals earned?
-	public class BattleResult
-	{
-		public int LevelNum { get; private set; }
-		public bool WasVictory { get; private set; }
-
-		public BattleResult(int levelNum, bool wasVictory)
-		{
-			LevelNum = levelNum;
-			WasVictory = wasVictory;
-		}
-	}
-
 	public class PostBattleScreenController : ScreenController
 	{
 		private BattleResult _battleResult;
