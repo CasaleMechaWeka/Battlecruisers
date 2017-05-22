@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Fetchers.PrefabKeys
+namespace BattleCruisers.Data.PrefabKeys
 {
 	[Serializable]
 	public class BuildingKey : BuildableKey

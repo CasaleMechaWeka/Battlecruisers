@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Fetchers.PrefabKeys;
+using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;

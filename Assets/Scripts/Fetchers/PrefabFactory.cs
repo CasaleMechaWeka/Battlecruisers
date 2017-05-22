@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.Fetchers.PrefabKeys;
+using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;

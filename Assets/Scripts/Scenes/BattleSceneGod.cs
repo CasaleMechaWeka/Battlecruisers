@@ -6,7 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Fetchers.PrefabKeys;
+using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
