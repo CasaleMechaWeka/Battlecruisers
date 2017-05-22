@@ -1,24 +1,46 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
 	public class HomeScreenController : ScreenController
 	{
-		public new void Initialise(IScreensSceneGod screensSceneGod)
+		private BattleResult _lastBattleResult;
+		private int _totalNumOfLevels;
+
+		public Button continueButton;
+
+		public void Initialise(IScreensSceneGod screensSceneGod, BattleResult lastBattleResult, int totalNumOfLevels)
 		{
 			base.Initialise(screensSceneGod);
 
-			// FELIX  Hide continue button if first time
+			_lastBattleResult = lastBattleResult;
+			_totalNumOfLevels = totalNumOfLevels;
+
+			// Player has never played a battle!
+			if (_lastBattleResult == null)
+			{
+				continueButton.gameObject.SetActive(false);
+			}
 		}
 
-		// FELIX  Start last level played OR next level if user won last level and then quit.
 		public void Continue()
 		{
-			Debug.Log("Continue()");
+			Assert.IsNotNull(_lastBattleResult);
+
+			int nextLevelToPlay = _lastBattleResult.LevelNum;
+
+			if (_lastBattleResult.WasVictory && nextLevelToPlay < _totalNumOfLevels)
+			{
+				nextLevelToPlay++;
+			}
+
+			_screensSceneGod.LoadLevel(nextLevelToPlay);
 		}
 
 		public void GoToLevelsScreen()

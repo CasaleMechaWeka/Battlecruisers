@@ -23,6 +23,7 @@ namespace BattleCruisers.Scenes
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		private ScreenController _currentScreen;
+		private IGameModel _gameModel;
 
 		public UIFactory uiFactory;
 
@@ -33,19 +34,24 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
-			// FELIX  TEMP  Force PostBattleScreen
-//			ApplicationModel.BattleResult = new BattleResult(1, false);
-			ApplicationModel.BattleResult = new BattleResult(1, true);
-
-
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
+			_gameModel = dataProvider.GameModel;
+
+
+			// FELIX  TEMP
+//			ApplicationModel.BattleResult = new BattleResult(1, false);
+//			ApplicationModel.BattleResult = new BattleResult(1, true);
+			_gameModel.LastBattleResult = null;
+			ApplicationModel.ShowPostBattleScreen = false;
+
+
 			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels);
-			homeScreen.Initialise(this);
+			homeScreen.Initialise(this, _gameModel.LastBattleResult, dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this);
 
-			if (ApplicationModel.BattleResult != null)
+			if (ApplicationModel.ShowPostBattleScreen)
 			{
-				postBattleScreen.Initialise(ApplicationModel.BattleResult, this);
+				postBattleScreen.Initialise(_gameModel.LastBattleResult, this);
 				GoToScreen(postBattleScreen);
 			}
 			else
@@ -68,9 +74,11 @@ namespace BattleCruisers.Scenes
 		{
 			GoToScreen(loadoutScreen);
 		}
-		
+
 		public void LoadLevel(int levelNum)
 		{
+			Assert.IsTrue(levelNum <= _gameModel.NumOfLevelsUnlocked);
+
 			ApplicationModel.SelectedLevel = levelNum;
 			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
 		}
