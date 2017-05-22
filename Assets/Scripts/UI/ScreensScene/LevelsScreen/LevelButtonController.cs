@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 	{
 		public Button button;
 		public Text levelName;
+		public CanvasGroup canvasGroup;
 
-		public void Initialise(int levelNum, ILevel level, IScreensSceneGod screensSceneGod)
+		public void Initialise(int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
 		{
 			levelName.text = levelNum + ". " + level.Name;
-			button.onClick.AddListener(() => screensSceneGod.LoadLevel(levelNum));
+
+			if (isLevelUnlocked)
+			{
+				button.onClick.AddListener(() => screensSceneGod.LoadLevel(levelNum));
+			}
+			else
+			{
+				canvasGroup.alpha = Constants.DISABLED_UI_ALPHA;
+			}
 		}
 	}
 }

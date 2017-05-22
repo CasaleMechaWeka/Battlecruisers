@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
 		public HorizontalOrVerticalLayoutGroup buttonsWrapper;
 
-		public void Initialise(IUIFactory uiFactory, IScreensSceneGod screensSceneGod, IList<ILevel> levels)
+		public void Initialise(IUIFactory uiFactory, IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
 		{
 			base.Initialise(screensSceneGod);
 
@@ -21,7 +21,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 			for (int i = 0; i < levels.Count; ++i)
 			{
 				int levelNum = i + 1;
-				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], screensSceneGod); 
+				bool isLevelUnlocked = levelNum <= numOfLevelsUnlocked;
+
+				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], isLevelUnlocked, screensSceneGod); 
 			}
 
 			uiFactory.CreateHomeButton(buttonsWrapper, screensSceneGod);

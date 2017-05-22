@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes
 			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels);
+			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels, _gameModel.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this);
 
