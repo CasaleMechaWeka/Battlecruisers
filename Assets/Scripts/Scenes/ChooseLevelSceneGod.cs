@@ -8,7 +8,13 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	public class ChooseLevelSceneGod : MonoBehaviour 
+	public interface IChooseLevelSceneGod
+	{
+		void LoadLevel(int levelNum);
+		void Quit();
+	}
+
+	public class ChooseLevelSceneGod : MonoBehaviour, IChooseLevelSceneGod
 	{
 		public void LoadLevel(int levelNum)
 		{

@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.Buttons
 	{
 		private UnitWrapper _unitWrapper;
 		private Factory _factory;
+
 		public void Initialize(UnitWrapper unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
 			base.Initialize(unitWrapper.unit, droneManager, uiManager);
