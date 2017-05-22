@@ -35,6 +35,7 @@ namespace BattleCruisers.Scenes
 		
 		#region HomeMenu
 		// FELIX  Hide if first time
+		// FELIX  Start last level played OR next level if user won last level and then quit.
 		public void Continue()
 		{
 			Debug.Log("Continue()");
