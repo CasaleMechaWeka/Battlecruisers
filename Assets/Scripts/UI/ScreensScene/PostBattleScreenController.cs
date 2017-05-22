@@ -51,5 +51,10 @@ namespace BattleCruisers.UI.ScreensScene
 		{
 			Debug.Log("Next()");
 		}
+
+		public void GoToHomeScreen()
+		{
+			_screensSceneGod.GoToHomeScreen();
+		}
 	}
 }
