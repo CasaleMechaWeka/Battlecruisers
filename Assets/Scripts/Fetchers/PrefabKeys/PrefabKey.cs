@@ -18,7 +18,7 @@ namespace BattleCruisers.Fetchers.PrefabKeys
 		[SerializeField]
 		private string _prefabName;
 
-		private const string PREFABS_BASE_PATH = "Prefabs/";
+		private const string PREFABS_BASE_PATH = "Prefabs/BattleScene/";
 		protected const char PATH_SEPARATOR = '/';
 
 		protected virtual string PrefabPathPrefix
