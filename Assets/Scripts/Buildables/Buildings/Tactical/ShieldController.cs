@@ -1,5 +1,5 @@
-﻿using BattleCruisers.UI;
-using BattleCruisers.UI.ProgressBars;
+﻿using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.UI.ProgressBars;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BuildingDetails
+namespace BattleCruisers.UI.BattleScene.BuildingDetails
 {
 	public class BuildableDetailsController : MonoBehaviour 
 	{

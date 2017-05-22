@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.BattleScene
 {
 	public interface IPresentable
 	{

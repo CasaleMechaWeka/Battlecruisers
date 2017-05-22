@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons
 {
 	public class BackButtonController : MonoBehaviour 
 	{

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BuildMenus
+namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
 	public class UnitsMenuController : Presentable
 	{

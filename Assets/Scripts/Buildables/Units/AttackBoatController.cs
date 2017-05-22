@@ -6,7 +6,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;

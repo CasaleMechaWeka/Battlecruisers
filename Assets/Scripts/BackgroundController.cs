@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.UI.BattleScene;
 using System;
 using System.Collections;
 using System.Collections.Generic;

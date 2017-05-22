@@ -2,15 +2,15 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.UI.BuildMenus;
-using BattleCruisers.UI.Buttons;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.BattleScene
 {
 	public interface IUIFactory
 	{

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections;

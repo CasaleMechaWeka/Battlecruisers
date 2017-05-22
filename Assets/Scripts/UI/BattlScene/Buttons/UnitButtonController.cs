@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Drones;
-using BattleCruisers.UI.BuildMenus;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.Buildables.Units;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons
 {
 	public class UnitButtonController : BuildableButtonController
 	{

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
 using System;
 using System.Collections;
 using System.Collections.Generic;

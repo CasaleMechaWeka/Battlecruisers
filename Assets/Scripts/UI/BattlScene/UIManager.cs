@@ -2,16 +2,16 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.BuildingDetails;
-using BattleCruisers.UI.BuildMenus;
-using BattleCruisers.UI.ProgressBars;
+using BattleCruisers.UI.BattleScene.BuildingDetails;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.BattleScene
 {
 	public class UIManager : MonoBehaviour 
 	{

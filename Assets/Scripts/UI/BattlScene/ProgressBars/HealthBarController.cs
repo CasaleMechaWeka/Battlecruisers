@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ProgressBars
+namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
 	public class HealthBarController : BaseProgressBarController
 	{

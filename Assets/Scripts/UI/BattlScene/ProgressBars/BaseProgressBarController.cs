@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ProgressBars
+namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
 	public abstract class BaseProgressBarController : MonoBehaviour
 	{

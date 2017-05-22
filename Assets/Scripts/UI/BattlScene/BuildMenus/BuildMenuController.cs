@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.BuildingDetails;
+using BattleCruisers.UI.BattleScene.BuildingDetails;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Buildables.Units;
 
-namespace BattleCruisers.UI.BuildMenus
+namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
 	public class BuildMenuController : MonoBehaviour
 	{

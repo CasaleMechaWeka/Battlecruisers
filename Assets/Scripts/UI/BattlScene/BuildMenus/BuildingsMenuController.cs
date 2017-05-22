@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BuildMenus
+namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
 	public class BuildingsMenuController : Presentable
 	{

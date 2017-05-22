@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.BattleScene
 {
 	public enum UserAction
 	{
