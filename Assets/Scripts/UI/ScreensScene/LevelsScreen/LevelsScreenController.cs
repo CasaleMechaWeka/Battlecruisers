@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-	public class LevelsPanelController : MonoBehaviour 
+	public class LevelsScreenController : ScreenController
 	{
 		private int _levelNum;
 		private IScreensSceneGod _screensSceneGod;

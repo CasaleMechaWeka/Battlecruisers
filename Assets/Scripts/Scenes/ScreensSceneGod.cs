@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
@@ -14,24 +15,29 @@ namespace BattleCruisers.Scenes
 	{
 		// Home Menu
 		void Continue();
-		void GoToLevelsMenu();
+		void GoToLevelsScreen();
 		void Quit();
 
 		// levels Menu
 		void LoadLevel(int levelNum);
-		void GoToHomeMenu();
+		void GoToHomeScreen();
 	}
 
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
+		public ScreenController _currentScreen;
+
 		public UIFactory uiFactory;
-		public GameObject homePanel;
-		public LevelsPanelController levelsPanelController;
+		public HomeScreenController homeScreen;
+		public LevelsScreenController levelsScreen;
+
 
 		void Start()
 		{
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
-			levelsPanelController.Initialise(uiFactory, this, dataProvider.Levels);
+			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels);
+
+			_currentScreen = homeScreen;
 		}
 		
 		#region HomeMenu
@@ -42,10 +48,9 @@ namespace BattleCruisers.Scenes
 			Debug.Log("Continue()");
 		}
 
-		public void GoToLevelsMenu()
+		public void GoToLevelsScreen()
 		{
-			homePanel.SetActive(false);
-			levelsPanelController.gameObject.SetActive(true);
+			GoToScreen(levelsScreen);
 		}
 
 		public void Quit()
@@ -61,11 +66,20 @@ namespace BattleCruisers.Scenes
 			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
 		}
 
-		public void GoToHomeMenu()
+		public void GoToHomeScreen()
 		{
-			levelsPanelController.gameObject.SetActive(false);
-			homePanel.SetActive(true);
+			GoToScreen(homeScreen);
 		}
 		#endregion LevelsMenu
+
+		private void GoToScreen(ScreenController destinationScreen)
+		{
+			Assert.AreNotEqual(_currentScreen, destinationScreen);
+
+			_currentScreen.gameObject.SetActive(false);
+
+			_currentScreen = destinationScreen;
+			_currentScreen.gameObject.SetActive(true);
+		}
 	}
 }

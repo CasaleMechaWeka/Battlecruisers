@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
 		public void Initialise(IScreensSceneGod screensSceneGod)
 		{
-			button.onClick.AddListener(() => screensSceneGod.GoToHomeMenu());
+			button.onClick.AddListener(() => screensSceneGod.GoToHomeScreen());
 		}
 	}
 }
