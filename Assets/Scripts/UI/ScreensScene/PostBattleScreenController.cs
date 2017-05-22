@@ -25,15 +25,13 @@ namespace BattleCruisers.UI.ScreensScene
 	public class PostBattleScreenController : ScreenController
 	{
 		private BattleResult _battleResult;
-		private ScreensSceneGod _screensSceneGod;
 
-		public void Initialize(BattleResult battleResult, ScreensSceneGod screensSceneGod)
+		public void Initialise(BattleResult battleResult, ScreensSceneGod screensSceneGod)
 		{
-			Assert.IsNotNull(battleResult);
-			Assert.IsNotNull(screensSceneGod);
+			base.Initialise(screensSceneGod);
 
+			Assert.IsNotNull(battleResult);
 			_battleResult = battleResult;
-			_screensSceneGod = screensSceneGod;
 
 			// FELIX  Determine title based on result
 			// FELIX  Display loot

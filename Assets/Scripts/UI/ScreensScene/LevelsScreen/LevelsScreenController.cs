@@ -10,12 +10,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 	public class LevelsScreenController : ScreenController
 	{
 		private int _levelNum;
-		private IScreensSceneGod _screensSceneGod;
 
 		public HorizontalOrVerticalLayoutGroup buttonsWrapper;
 
 		public void Initialise(IUIFactory uiFactory, IScreensSceneGod screensSceneGod, IList<ILevel> levels)
 		{
+			base.Initialise(screensSceneGod);
+
 			// Create level buttons
 			for (int i = 0; i < levels.Count; ++i)
 			{

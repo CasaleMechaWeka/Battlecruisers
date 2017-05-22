@@ -25,9 +25,11 @@ namespace BattleCruisers.Scenes
 		private ScreenController _currentScreen;
 
 		public UIFactory uiFactory;
+
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
+		public LoadoutScreenController loadoutScreen;
 
 		void Start()
 		{
@@ -38,10 +40,11 @@ namespace BattleCruisers.Scenes
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
 			levelsScreen.Initialise(uiFactory, this, dataProvider.Levels);
 			homeScreen.Initialise(this);
+			loadoutScreen.Initialise(this);
 
 			if (ApplicationModel.BattleResult != null)
 			{
-				postBattleScreen.Initialize(ApplicationModel.BattleResult, this);
+				postBattleScreen.Initialise(ApplicationModel.BattleResult, this);
 				GoToScreen(postBattleScreen);
 			}
 			else
@@ -62,7 +65,7 @@ namespace BattleCruisers.Scenes
 
 		public void GoToLoadoutScreen()
 		{
-			throw new NotImplementedException();
+			GoToScreen(loadoutScreen);
 		}
 		
 		public void LoadLevel(int levelNum)

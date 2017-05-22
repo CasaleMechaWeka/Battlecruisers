@@ -6,29 +6,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-	public class HomeScreenController : ScreenController
+	public class LoadoutScreenController : ScreenController
 	{
 		public new void Initialise(IScreensSceneGod screensSceneGod)
 		{
 			base.Initialise(screensSceneGod);
-
-			// FELIX  Hide continue button if first time
 		}
 
-		// FELIX  Start last level played OR next level if user won last level and then quit.
-		public void Continue()
+		public void GoToHomeScreen()
 		{
-			Debug.Log("Continue()");
+			_screensSceneGod.GoToHomeScreen();
 		}
 
 		public void GoToLevelsScreen()
 		{
 			_screensSceneGod.GoToLevelsScreen();
-		}
-
-		public void Quit()
-		{
-			Application.Quit();
 		}
 	}
 }
