@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ChooseLevelScene
+namespace BattleCruisers.UI.ScreensScene
 {
 	public class BackButtonController : MonoBehaviour 
 	{
 		public Button button;
 
-		public void Initialise(IChooseLevelSceneGod chooseLevelGod)
+		public void Initialise(IScreensSceneGod screensSceneGod)
 		{
-			button.onClick.AddListener(() => chooseLevelGod.GoToHomeMenu());
+			button.onClick.AddListener(() => screensSceneGod.GoToHomeMenu());
 		}
 	}
 }

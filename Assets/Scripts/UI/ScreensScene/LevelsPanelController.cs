@@ -5,25 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ChooseLevelScene
+namespace BattleCruisers.UI.ScreensScene
 {
 	public class LevelsPanelController : MonoBehaviour 
 	{
 		private int _levelNum;
-		private IChooseLevelSceneGod _chooseLevelGod;
+		private IScreensSceneGod _screensSceneGod;
 
 		public HorizontalOrVerticalLayoutGroup buttonsWrapper;
 
-		public void Initialise(IUIFactory uiFactory, IChooseLevelSceneGod chooseLevelGod, IList<ILevel> levels)
+		public void Initialise(IUIFactory uiFactory, IScreensSceneGod screensSceneGod, IList<ILevel> levels)
 		{
 			// Create level buttons
 			for (int i = 0; i < levels.Count; ++i)
 			{
 				int levelNum = i + 1;
-				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], chooseLevelGod); 
+				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], screensSceneGod); 
 			}
 
-			uiFactory.CreateBackButton(buttonsWrapper, chooseLevelGod);
+			uiFactory.CreateBackButton(buttonsWrapper, screensSceneGod);
 		}
 	}
 }

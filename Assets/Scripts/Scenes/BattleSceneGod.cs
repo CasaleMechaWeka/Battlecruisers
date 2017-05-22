@@ -264,7 +264,7 @@ namespace BattleCruisers.Scenes
 
 		private void Quit()
 		{
-			SceneManager.LoadScene(SceneNames.CHOOSE_LEVEL_SCENE);
+			SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
 		}
 	}
 }

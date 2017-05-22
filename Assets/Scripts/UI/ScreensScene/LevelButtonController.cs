@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ChooseLevelScene
+namespace BattleCruisers.UI.ScreensScene
 {
 	public class LevelButtonController : MonoBehaviour 
 	{
 		public Button button;
 		public Text levelName;
 
-		public void Initialise(int levelNum, ILevel level, IChooseLevelSceneGod chooseLevelGod)
+		public void Initialise(int levelNum, ILevel level, IScreensSceneGod screensSceneGod)
 		{
 			levelName.text = levelNum + ". " + level.Name;
-			button.onClick.AddListener(() => chooseLevelGod.LoadLevel(levelNum));
+			button.onClick.AddListener(() => screensSceneGod.LoadLevel(levelNum));
 		}
 	}
 }

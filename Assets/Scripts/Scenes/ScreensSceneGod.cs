@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.UI.ChooseLevelScene;
+using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	public interface IChooseLevelSceneGod
+	public interface IScreensSceneGod
 	{
 		// Home Menu
 		void Continue();
@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes
 		void GoToHomeMenu();
 	}
 
-	public class ChooseLevelSceneGod : MonoBehaviour, IChooseLevelSceneGod
+	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		public UIFactory uiFactory;
 		public GameObject homePanel;

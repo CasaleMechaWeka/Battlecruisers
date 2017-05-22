@@ -13,6 +13,6 @@
 	public static class SceneNames
 	{
 		public const string BATTLE_SCENE = "BattleScene";
-		public const string CHOOSE_LEVEL_SCENE = "ChooseLevelScene";
+		public const string SCREENS_SCENE = "ScreensScene";
 	}
 }
