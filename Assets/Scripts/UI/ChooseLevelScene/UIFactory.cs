@@ -10,13 +10,13 @@ namespace BattleCruisers.UI.ChooseLevelScene
 	public interface IUIFactory
 	{
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, IChooseLevelSceneGod chooseLevelGod);
-		void CreateQuitButton(HorizontalOrVerticalLayoutGroup buttonParent, IChooseLevelSceneGod chooseLevelGod);
+		void CreateBackButton(HorizontalOrVerticalLayoutGroup buttonParent, IChooseLevelSceneGod chooseLevelGod);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		public Button levelButtonPrefab;
-		public Button quitButtonPrefab;
+		public Button backButtonPrefab;
 
 		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, IChooseLevelSceneGod chooseLevelGod)
 		{
@@ -25,11 +25,11 @@ namespace BattleCruisers.UI.ChooseLevelScene
 			levelButton.GetComponent<LevelButtonController>().Initialise(levelNum, level, chooseLevelGod);
 		}
 
-		public void CreateQuitButton(HorizontalOrVerticalLayoutGroup buttonParent, IChooseLevelSceneGod chooseLevelGod)
+		public void CreateBackButton(HorizontalOrVerticalLayoutGroup buttonParent, IChooseLevelSceneGod chooseLevelGod)
 		{
-			Button quitButton = (Button)Instantiate(quitButtonPrefab);
-			quitButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			quitButton.GetComponent<QuitButtonController>().Initialise(chooseLevelGod);
+			Button backButton = (Button)Instantiate(backButtonPrefab);
+			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+			backButton.GetComponent<BackButtonController>().Initialise(chooseLevelGod);
 		}
 	}
 }

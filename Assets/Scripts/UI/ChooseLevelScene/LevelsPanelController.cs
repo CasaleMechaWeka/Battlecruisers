@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ChooseLevelScene
 				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], chooseLevelGod); 
 			}
 
-			uiFactory.CreateQuitButton(buttonsWrapper, chooseLevelGod);
+			uiFactory.CreateBackButton(buttonsWrapper, chooseLevelGod);
 		}
 	}
 }

@@ -11,13 +11,20 @@ namespace BattleCruisers.Scenes
 {
 	public interface IChooseLevelSceneGod
 	{
-		void LoadLevel(int levelNum);
+		// Home Menu
+		void Continue();
+		void GoToLevelsMenu();
 		void Quit();
+
+		// levels Menu
+		void LoadLevel(int levelNum);
+		void GoToHomeMenu();
 	}
 
 	public class ChooseLevelSceneGod : MonoBehaviour, IChooseLevelSceneGod
 	{
 		public UIFactory uiFactory;
+		public GameObject homePanel;
 		public LevelsPanelController levelsPanelController;
 
 		void Start()
@@ -25,16 +32,38 @@ namespace BattleCruisers.Scenes
 			IDataProvider dataProvider = ApplicationModel.DataProvider;
 			levelsPanelController.Initialise(uiFactory, this, dataProvider.Levels);
 		}
+		
+		#region HomeMenu
+		// FELIX  Hide if first time
+		public void Continue()
+		{
+			Debug.Log("Continue()");
+		}
 
+		public void GoToLevelsMenu()
+		{
+			homePanel.SetActive(false);
+			levelsPanelController.gameObject.SetActive(true);
+		}
+
+		public void Quit()
+		{
+			Debug.Log("Quit");
+		}
+		#endregion HomeMenu
+
+		#region LevelsMenu
 		public void LoadLevel(int levelNum)
 		{
 			ApplicationModel.SelectedLevel = levelNum;
 			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
 		}
 
-		public void Quit()
+		public void GoToHomeMenu()
 		{
-			throw new NotImplementedException();
+			levelsPanelController.gameObject.SetActive(false);
+			homePanel.SetActive(true);
 		}
+		#endregion LevelsMenu
 	}
 }

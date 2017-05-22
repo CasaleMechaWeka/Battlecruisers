@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ChooseLevelScene
 {
-	public class QuitButtonController : MonoBehaviour 
+	public class BackButtonController : MonoBehaviour 
 	{
 		public Button button;
 
 		public void Initialise(IChooseLevelSceneGod chooseLevelGod)
 		{
-			button.onClick.AddListener(() => chooseLevelGod.Quit());
+			button.onClick.AddListener(() => chooseLevelGod.GoToHomeMenu());
 		}
 	}
 }
