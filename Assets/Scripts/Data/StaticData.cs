@@ -102,6 +102,7 @@ namespace BattleCruisers.Data
 			return new GameModel(
 				numOfLevelsUnlocked,
 				playerLoadout,
+				null,
 				HullKeys,
 				BuildingKeys,
 				UnitKeys);

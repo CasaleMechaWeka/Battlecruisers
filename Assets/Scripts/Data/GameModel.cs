@@ -14,6 +14,7 @@ namespace BattleCruisers.Data
 	{
 		int NumOfLevelsUnlocked { get; set; }
 		Loadout PlayerLoadout { get; set; }
+		BattleResult LastBattleResult { get; set; }
 
 		ReadOnlyCollection<HullKey> UnlockedHulls { get; }
 		ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
@@ -32,6 +33,9 @@ namespace BattleCruisers.Data
 
 		[SerializeField]
 		private Loadout _playerLoadout;
+
+		[SerializeField]
+		private BattleResult _lastBattleResult;
 
 		[SerializeField]
 		private List<HullKey> _unlockedHulls;
@@ -54,6 +58,12 @@ namespace BattleCruisers.Data
 			set { _playerLoadout = value; }
 		}
 
+		public BattleResult LastBattleResult
+		{
+			get { return _lastBattleResult; }
+			set { _lastBattleResult = value; }
+		}
+
 		public ReadOnlyCollection<HullKey> UnlockedHulls { get { return _unlockedHulls.AsReadOnly(); } }
 		public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get { return _unlockedBuildings.AsReadOnly(); } }
 		public ReadOnlyCollection<UnitKey> UnlockedUnits { get { return _unlockedUnits.AsReadOnly(); } }
@@ -68,12 +78,14 @@ namespace BattleCruisers.Data
 		public GameModel(
 			int numOfLevelsUnlocked,
 			Loadout playerLoadout,
+			BattleResult lastBattleResult,
 			List<HullKey> unlockedHulls,
 			List<BuildingKey> unlockedBuildings,
 			List<UnitKey> unlockedUnits)
 		{
 			NumOfLevelsUnlocked = numOfLevelsUnlocked;
 			PlayerLoadout = playerLoadout;
+			LastBattleResult = lastBattleResult;
 			_unlockedHulls = unlockedHulls;
 			_unlockedBuildings = unlockedBuildings;
 			_unlockedUnits = unlockedUnits;
@@ -105,6 +117,8 @@ namespace BattleCruisers.Data
 				&& other.NumOfLevelsUnlocked == NumOfLevelsUnlocked
 				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
 					|| (PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout))
+				&& object.ReferenceEquals(LastBattleResult, other.LastBattleResult)
+					|| (LastBattleResult != null && LastBattleResult.Equals(other.LastBattleResult))
 				&& Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
 				&& Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)
 				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits);
@@ -112,7 +126,7 @@ namespace BattleCruisers.Data
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
+			return this.GetHashCode(NumOfLevelsUnlocked, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
 		}
 	}
 }

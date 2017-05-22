@@ -38,6 +38,7 @@ namespace BattleCruisers.Tests.Data
 			_originalGameModel = new GameModel(
 				numOfLevelsUnlocked: 7,
 				playerLoadout: CreateLoadout(),
+				lastBattleResult: CreateBattleResult(),
 				unlockedHulls: CreateUnlockedHulls(),
 				unlockedBuildings: CreateUnlockedBuildings(),
 				unlockedUnits: CreateUnlockedUnits());
@@ -50,7 +51,14 @@ namespace BattleCruisers.Tests.Data
 				buildings: CreateUnlockedBuildings(),
 				units: CreateUnlockedUnits());
 		}
-		
+
+		private BattleResult CreateBattleResult()
+		{
+			return new BattleResult(
+				levelNum: 2,
+				wasVictory: true);
+		}
+
 		private List<HullKey> CreateUnlockedHulls()
 		{
 			return new List<HullKey>() 

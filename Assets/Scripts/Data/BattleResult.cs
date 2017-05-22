@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 
 namespace BattleCruisers.Data
@@ -28,6 +29,19 @@ namespace BattleCruisers.Data
 		{
 			LevelNum = levelNum;
 			WasVictory = wasVictory;
+		}
+
+		public override bool Equals(object obj)
+		{
+			BattleResult other = obj as BattleResult;
+			return other != null
+				&& other.LevelNum == LevelNum
+				&& other.WasVictory == WasVictory;
+		}
+
+		public override int GetHashCode()
+		{
+			return this.GetHashCode(LevelNum, WasVictory);
 		}
 	}
 }
