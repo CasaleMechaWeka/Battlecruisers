@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes
 
 		public void Quit()
 		{
-			Debug.Log("Quit");
+			Application.Quit();
 		}
 		#endregion HomeMenu
 
