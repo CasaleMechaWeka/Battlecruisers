@@ -12,7 +12,7 @@ namespace BattleCruisers.Data
 {
 	public interface IGameModel
 	{
-		int NumOfLevelsCompleted { get; set; }
+		int NumOfLevelsCompleted { get; }
 		Loadout PlayerLoadout { get; set; }
 		BattleResult LastBattleResult { get; set; }
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Data
 		public int NumOfLevelsCompleted 
 		{ 
 			get { return _numOfLevelsCompleted; }
-			set { _numOfLevelsCompleted = value; }
+			private set { _numOfLevelsCompleted = value; }
 		}
 
 		public Loadout PlayerLoadout
