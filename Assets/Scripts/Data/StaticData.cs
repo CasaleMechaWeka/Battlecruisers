@@ -117,7 +117,9 @@ namespace BattleCruisers.Data
 			return new List<ILevel>() 
 			{
 				new Level("Battle Cruisers", aiLoadout),
-				new Level("Aircraft", aiLoadout)
+				new Level("Aircraft", aiLoadout),
+				new Level("Ambush at Dire Straits", aiLoadout),
+				new Level("Battle of Watercress", aiLoadout)
 			};
 		}
 	}
