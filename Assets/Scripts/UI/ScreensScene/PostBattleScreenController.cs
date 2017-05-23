@@ -11,27 +11,44 @@ namespace BattleCruisers.UI.ScreensScene
 	public class PostBattleScreenController : ScreenController
 	{
 		private BattleResult _battleResult;
+		private int _numOfLevelsUnlocked;
 
 		public Text title;
 		public GameObject unlockedItemSection;
+		public Button nextButton;
 
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
 
-		public void Initialise(BattleResult battleResult, ScreensSceneGod screensSceneGod)
+		public void Initialise(BattleResult battleResult, ScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
 		{
 			base.Initialise(screensSceneGod);
 
 			Assert.IsNotNull(battleResult);
-			_battleResult = battleResult;
 
-			title.text = _battleResult.WasVictory ? VICTORY_TITLE : LOSS_TITLE;
-			unlockedItemSection.SetActive(_battleResult.WasVictory);
+			_battleResult = battleResult;
+			_numOfLevelsUnlocked = numOfLevelsUnlocked;
+
+			if (_battleResult.WasVictory)
+			{
+				title.text = VICTORY_TITLE;
+			}
+			else
+			{
+				title.text = LOSS_TITLE;
+
+				unlockedItemSection.SetActive(false);
+
+				if (battleResult.LevelNum + 1 > numOfLevelsUnlocked)
+				{
+					nextButton.gameObject.SetActive(false);
+				}
+			}
 		}
 
 		public void Retry()
 		{
-			Debug.Log("Retry()");
+			_screensSceneGod.LoadLevel(_battleResult.LevelNum);
 		}
 
 		public void GoToLoadoutScreen()
@@ -41,7 +58,9 @@ namespace BattleCruisers.UI.ScreensScene
 
 		public void Next()
 		{
-			Debug.Log("Next()");
+			int nextLevelNum = _battleResult.LevelNum + 1;
+			Assert.IsTrue(nextLevelNum <= _numOfLevelsUnlocked);
+			_screensSceneGod.LoadLevel(nextLevelNum);
 		}
 
 		public void GoToHomeScreen()

@@ -46,14 +46,14 @@ namespace BattleCruisers.Scenes
 //			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(uiFactory, this, _dataProvider.Levels, _gameModel.NumOfLevelsCompleted);
+			levelsScreen.Initialise(uiFactory, this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this);
 
 			if (ApplicationModel.ShowPostBattleScreen)
 			{
 				ApplicationModel.ShowPostBattleScreen = false;
-				postBattleScreen.Initialise(_gameModel.LastBattleResult, this);
+				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
 				GoToScreen(postBattleScreen);
 			}
 			else
