@@ -14,7 +14,8 @@ namespace BattleCruisers.AI
 {
 	public class Bot
 	{
-		private Cruiser _friendlyCruiser, _enemyCruiser;
+		private Cruiser _friendlyCruiser;
+//		private Cruiser _enemyCruiser;
 		private IList<BuildingKey> _buildOrder;
 		private PrefabFactory _prefabFactory;
 		private int _buildOrderIndex;
@@ -22,7 +23,7 @@ namespace BattleCruisers.AI
 		public Bot(Cruiser friendlyCruiser, Cruiser enemyCruiser, IList<BuildingKey> buildOrder, PrefabFactory prefabFactory)
 		{
 			_friendlyCruiser = friendlyCruiser;
-			_enemyCruiser = enemyCruiser;
+//			_enemyCruiser = enemyCruiser;
 			_buildOrder = buildOrder;
 			_prefabFactory = prefabFactory;
 			_buildOrderIndex = 0;
