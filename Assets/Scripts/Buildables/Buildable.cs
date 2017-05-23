@@ -221,6 +221,15 @@ namespace BattleCruisers.Buildables
 			Renderer.enabled = enabled;
 		}
 
+		// All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
+		// both the target and the health bar.  Hence destroy wrapper, so health bar
+		// gets destroyed at the same time as the target.
+		protected override void InternalDestroy()
+		{
+			Assert.IsNotNull(transform.parent);
+			Destroy(transform.parent.gameObject);
+		}
+
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();

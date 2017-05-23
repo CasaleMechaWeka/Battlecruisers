@@ -105,6 +105,7 @@ namespace BattleCruisers.Scenes
 			IDroneManager playerDroneManager = new DroneManager();
 			IDroneConsumerProvider playerDroneConsumerProvider = new DroneConsumerProvider(playerDroneManager);
 			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager, playerDroneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
+			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
 			// Initialise AI cruiser
@@ -113,6 +114,7 @@ namespace BattleCruisers.Scenes
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
+			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
 			// UI
@@ -231,6 +233,19 @@ namespace BattleCruisers.Scenes
 			return buildOrder;
 		}
 
+		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
+		{
+			PauseGame();
+			CompleteBattleAsLoss();
+		}
+
+		private void AiCruiser_Destroyed(object sender, DestroyedEventArgs e)
+		{
+			PauseGame();
+			BattleResult victoryResult = new BattleResult(_currentLevelNum, wasVictory: true);
+			CompleteBattle(victoryResult);
+		}
+
 		void Update()
 		{
 			// FELIX  Adapt for IPad :P
@@ -238,6 +253,11 @@ namespace BattleCruisers.Scenes
 			{
 				modalMenuController.ShowMenu(OnModalMenuDismissed);
 				PauseGame();
+			}
+			// FELIX  Temp :P
+			else if (Input.GetKeyUp(KeyCode.W))
+			{
+				_aiCruiser.TakeDamage(_aiCruiser.Health);
 			}
 		}
 
@@ -249,8 +269,7 @@ namespace BattleCruisers.Scenes
 					ResumeGame();
 					break;
 				case UserAction.Quit:
-					BattleResult result = new BattleResult(_currentLevelNum, wasVictory: false);
-					CompleteBattle(result);
+					CompleteBattleAsLoss();
 					break;
 				default:
 					throw new ArgumentException();
@@ -267,14 +286,28 @@ namespace BattleCruisers.Scenes
 			Time.timeScale = 1;
 		}
 
+		private void CompleteBattleAsLoss()
+		{
+			BattleResult lossResult = new BattleResult(_currentLevelNum, wasVictory: false);
+			CompleteBattle(lossResult);
+		}
+
 		private void CompleteBattle(BattleResult battleResult)
 		{
+			CleanUp();
+
 			_dataProvider.GameModel.LastBattleResult = battleResult;
 			_dataProvider.SaveGame();
 
 			ApplicationModel.ShowPostBattleScreen = true;
 
 			SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+		}
+
+		private void CleanUp()
+		{
+			_playerCruiser.Destroyed -= PlayerCruiser_Destroyed;
+			_aiCruiser.Destroyed -= AiCruiser_Destroyed;
 		}
 	}
 }
