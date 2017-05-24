@@ -111,7 +111,7 @@ namespace BattleCruisers.Buildables
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
 
-			healthBar.Initialise(this);
+			healthBar.Initialise(this, followDamagable: true);
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 

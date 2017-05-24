@@ -93,7 +93,6 @@ namespace BattleCruisers.Units.Aircraft
 
 			barrelController.Initialise(Faction);
 
-			
 			_safeZone = _aircraftProvider.FighterSafeZone;			
 			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 
