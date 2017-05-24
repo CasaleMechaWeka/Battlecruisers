@@ -25,7 +25,6 @@ namespace BattleCruisers.Data
 		void AddUnlockedUnit(UnitKey unit);
 	}
 
-	// FELIX  Test!
 	[Serializable]
 	public class GameModel : IGameModel
 	{
