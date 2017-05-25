@@ -12,15 +12,25 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
 	public class MortarStationaryTargetTestsGod : MonoBehaviour 
 	{
+		private Helper _helper;
+
 		public GameObject target;
-		public DefensiveTurret mortar;
+		public DefensiveTurret mortarLeftLow, mortarLeftMiddle, mortarLeftHigh;
 
 		void Start () 
 		{
-			Helper helper = new Helper();
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
+			_helper = new Helper();
 
-			helper.InitialiseBuildable(mortar, faction: Faction.Reds, targetsFactory: targetsFactory);
+			SetupPair(mortarLeftLow, target);
+			SetupPair(mortarLeftMiddle, target);
+			SetupPair(mortarLeftHigh, target);
+		}
+
+		private void SetupPair(DefensiveTurret mortar, GameObject target)
+		{
+			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target);
+			
+			_helper.InitialiseBuildable(mortar, targetsFactory: targetsFactory);
 			mortar.StartConstruction();
 		}
 	}
