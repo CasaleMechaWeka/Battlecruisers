@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float sourceAltidue = source.y - target.y;
 
 			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
-			float squareRootArg = velocitySquared - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * sourceAltidue * velocitySquared));
+			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * sourceAltidue * velocitySquared));
 
 			if (squareRootArg < 0)
 			{

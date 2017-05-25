@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
 using System.Collections;
@@ -12,18 +12,16 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
 	public class MortarStationaryTargetTestsGod : MonoBehaviour 
 	{
-		public AttackBoatController boat;
-		public DefensiveTurret rightTurret;
+		public GameObject target;
+		public DefensiveTurret mortar;
 
 		void Start () 
 		{
 			Helper helper = new Helper();
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
 
-			helper.InitialiseBuildable(boat, faction: Faction.Blues);
-			boat.StartConstruction();
-
-			helper.InitialiseBuildable(rightTurret, faction: Faction.Reds);
-			rightTurret.StartConstruction();
+			helper.InitialiseBuildable(mortar, faction: Faction.Reds, targetsFactory: targetsFactory);
+			mortar.StartConstruction();
 		}
 	}
 }

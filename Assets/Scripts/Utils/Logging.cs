@@ -76,7 +76,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);
-			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
+			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, true);
 			tagsToActiveness.Add(Tags.TARGET, false);
 			tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
 			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
