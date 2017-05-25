@@ -22,9 +22,9 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 		{
 			_helper = new Helper();
 
-//			SetupPair(mortarLeftLow, target);
-//			SetupPair(mortarLeftMiddle, target);
-//			SetupPair(mortarLeftHigh, target);
+			SetupPair(mortarLeftLow, target);
+			SetupPair(mortarLeftMiddle, target);
+			SetupPair(mortarLeftHigh, target);
 
 			SetupPair(mortarRightLow, target);
 			SetupPair(mortarRightMiddle, target);
