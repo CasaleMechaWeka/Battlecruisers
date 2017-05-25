@@ -16,14 +16,19 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
 		public GameObject target;
 		public DefensiveTurret mortarLeftLow, mortarLeftMiddle, mortarLeftHigh;
+		public DefensiveTurret mortarRightLow, mortarRightMiddle, mortarRightHigh;
 
 		void Start () 
 		{
 			_helper = new Helper();
 
-			SetupPair(mortarLeftLow, target);
-			SetupPair(mortarLeftMiddle, target);
-			SetupPair(mortarLeftHigh, target);
+//			SetupPair(mortarLeftLow, target);
+//			SetupPair(mortarLeftMiddle, target);
+//			SetupPair(mortarLeftHigh, target);
+
+			SetupPair(mortarRightLow, target);
+			SetupPair(mortarRightMiddle, target);
+			SetupPair(mortarRightHigh, target);
 		}
 
 		private void SetupPair(DefensiveTurret mortar, GameObject target)
