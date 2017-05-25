@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 				throw new ArgumentException("Source faces right, but target is to the left");
 			}
 
-			float angleInRadians = (float) (0.5 * Math.Asin(Constants.GRAVITY * distanceInM / (projectileVelocityInMPerS * projectileVelocityInMPerS)));
+			float angleInRadians = 0.5f * Mathf.Asin(Constants.GRAVITY * distanceInM / (projectileVelocityInMPerS * projectileVelocityInMPerS));
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
 			Logging.Log(Tags.ANGLE_CALCULATORS, "ArtilleryAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");

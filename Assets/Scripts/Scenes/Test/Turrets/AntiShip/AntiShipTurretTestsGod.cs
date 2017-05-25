@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Turrets
+namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
 	public class AntiShipTurretTestsGod : MonoBehaviour 
 	{

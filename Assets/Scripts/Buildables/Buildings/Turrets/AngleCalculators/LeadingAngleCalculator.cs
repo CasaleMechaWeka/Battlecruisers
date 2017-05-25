@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			return base.FindDesiredAngle(source, projectedTargetPosition, isSourceMirrored, projectileVelocityInMPerS, targetVelocity);
 		}
 
+		// FELIX  Extract this method, override in child classes
 		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			float distance = Vector2.Distance(source, target);
