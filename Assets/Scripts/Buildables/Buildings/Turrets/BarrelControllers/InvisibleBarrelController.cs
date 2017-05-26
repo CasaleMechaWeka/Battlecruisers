@@ -25,10 +25,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 
 		protected override void AdjustBarrel(float desiredAngleInDegrees) { }
-
-		protected override float FireAngle(float desiredAngleInDegrees)
-		{
-			return desiredAngleInDegrees;
-		}
 	}
 }

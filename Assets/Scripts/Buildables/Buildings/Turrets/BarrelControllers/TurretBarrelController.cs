@@ -12,10 +12,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class TurretBarrelController : BarrelController 
 	{
-		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
+		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 0.1f;
 
 		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{
+//			return transform.rotation.eulerAngles.z == desiredAngleInDegrees;
+
+			// FELIX
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
@@ -26,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
-			Logging.Log(Tags.BARREL_CONTROLLER, string.Format("MoveBarrelToAngle():  currentAngleInDegrees: {0}  desiredAngleInDegrees: {1}  directionMultiplier: {2}", currentAngleInDegrees, desiredAngleInDegrees, directionMultiplier));
+			Logging.Log(Tags.BARREL_CONTROLLER, string.Format("AdjustBarrel():  currentAngleInDegrees: {0}  desiredAngleInDegrees: {1}  directionMultiplier: {2}", currentAngleInDegrees, desiredAngleInDegrees, directionMultiplier));
 
 			float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
 			if (rotationIncrement > differenceInDegrees)
@@ -37,11 +40,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Logging.Log(Tags.BARREL_CONTROLLER, "rotationIncrement: " + rotationIncrement);
 
 			transform.Rotate(rotationIncrementVector);
-		}
-
-		protected override float FireAngle(float desiredAngleInDegrees)
-		{
-			return transform.rotation.eulerAngles.z;
 		}
 	}
 }

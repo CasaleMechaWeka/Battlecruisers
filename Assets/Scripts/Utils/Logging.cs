@@ -73,7 +73,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.FACTORY, false);
 
 			// Projectiles
-			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, true);

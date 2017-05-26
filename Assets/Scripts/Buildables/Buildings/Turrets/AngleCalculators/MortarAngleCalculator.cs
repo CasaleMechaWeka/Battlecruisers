@@ -30,10 +30,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			// FELIX  Lead target
 
 			float distanceInM = Math.Abs(source.x - target.x);
-			float sourceAltitude = source.y - target.y;
+			float targetAltitude = target.y - source.y;
 
 			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
-			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * sourceAltitude * velocitySquared));
+			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)
 			{
