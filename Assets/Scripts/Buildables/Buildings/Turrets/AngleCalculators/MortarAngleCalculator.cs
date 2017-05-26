@@ -27,10 +27,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 				throw new ArgumentException("Source faces right, but target is to the left");
 			}
 
-			// FELIX  Lead target
 
-			float distanceInM = Math.Abs(source.x - target.x);
-			float targetAltitude = target.y - source.y;
+			// FELIX  Lead target
+			Debug.Log("transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
+			float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+			Vector2 projectedTargetPosition = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
+
+
+			float distanceInM = Math.Abs(source.x - projectedTargetPosition.x);
+			float targetAltitude = projectedTargetPosition.y - source.y;
 
 			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
@@ -51,6 +56,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			Logging.Log(Tags.ANGLE_CALCULATORS, "MortarAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");
 
 			return angleInDegrees;
+		}
+
+		// FELIX  Extract this method, override in child classes
+		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		{
+			float distance = Mathf.Abs(source.x - target.x);
+			float timeToTargetEstimate = distance / (projectileVelocityInMPerS * Mathf.Cos(currentAngleInRadians));
+//			float timeToTargetEstimate = Mathf.Sqrt(2) * projectileVelocityInMPerS / Constants.GRAVITY;
+
+			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
+			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
+
+			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
+			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
+			return projectedPosition;
 		}
 	}
 }

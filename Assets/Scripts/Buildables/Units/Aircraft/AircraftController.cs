@@ -38,6 +38,8 @@ namespace BattleCruisers.Units.Aircraft
 		{
 			get
 			{
+				Logging.Log(Tags.AIRCRAFT, string.Format("_isPatrolling: {0}  _patrollingVelocity: {1}  base.Velocity: {2}", _isPatrolling, _patrollingVelocity, base.Velocity));
+
 				return _isPatrolling ? _patrollingVelocity : base.Velocity;
 			}
 		}
