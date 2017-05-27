@@ -31,6 +31,19 @@ namespace BattleCruisers.Movement
 		{
 			return Vector2.Distance(source, target) / projectileVelocityInMPerS;
 		}
+
+		protected override float FindVelocitySmoothTime(Vector2 targetPosition)
+		{
+			float distance = Vector2.Distance(_rigidBody.transform.position, targetPosition);
+			float smoothTimeInS = distance / _maxVelocityInMPerS;
+			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
+			{
+				smoothTimeInS = MAX_VELOCITY_SMOOTH_TIME;
+			}
+
+			Debug.Log("smoothTimeInS: " + smoothTimeInS);
+			return smoothTimeInS;
+		}
 	}
 }
 

@@ -21,7 +21,7 @@ namespace BattleCruisers.Movement
 		public ITarget Target { protected get; set; }
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		private const float MAX_VELOCITY_SMOOTH_TIME = 1;
+		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
 		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{
@@ -47,7 +47,7 @@ namespace BattleCruisers.Movement
 			}
 			else
 			{
-				float velocitySmoothTime = FindVelocitySmoothTime();
+				float velocitySmoothTime = FindVelocitySmoothTime(targetPosition);
 
 				Logging.Log(Tags.MOVEMENT, string.Format("AdjustVelocity():  _rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
 					_rigidBody.velocity, desiredVelocity, velocitySmoothTime, _maxVelocityInMPerS));
@@ -113,7 +113,7 @@ namespace BattleCruisers.Movement
 			return desiredVelocity;
 		}
 	
-		protected virtual float FindVelocitySmoothTime()
+		protected virtual float FindVelocitySmoothTime(Vector2 targetPosition)
 		{
 			return MAX_VELOCITY_SMOOTH_TIME;
 		}

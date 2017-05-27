@@ -1,5 +1,6 @@
-﻿using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -26,138 +27,33 @@ namespace BattleCruisers.Projectiles
 		private ITarget _target;
 		private ITargetFilter _targetFilter;
 		private MissileStats _missileStats;
+		private IHomingMovementController _movementController;
 		private Vector2 _velocity;
 
 		public Rigidbody2D rigidBody;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		private const float MAX_VELOCITY_SMOOTH_TIME = 1;
+		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
-		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS)
+		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS, IMovementControllerFactory movementControllerFactory)
 		{
 			_target = target;
 			_targetFilter = targetFilter;
 			_missileStats = missileStats;
 			rigidBody.velocity = initialVelocityInMPerS;
 
+			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, missileStats.MaxVelocityInMPerS);
+			_movementController.Target = _target;
+
 			_target.Destroyed += Target_Destroyed;
 		}
 
 		void FixedUpdate()
 		{
-			AdjustVelocity();
+			_movementController.AdjustVelocity();
 
 			// Adjust game object to point in direction it's travelling
 			transform.right = rigidBody.velocity;
-		}
-
-		// FELIX  Avoid massive duplicate functionality with FighterController
-		private void AdjustVelocity()
-		{
-			Vector2 sourcePosition = transform.position;
-			Vector2 targetPosition = _target.GameObject.transform.position;
-
-			// Lead target
-			targetPosition = PredictTargetPosition(sourcePosition, targetPosition, _missileStats.MaxVelocityInMPerS, _target.Velocity, -1);
-
-			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, _missileStats.MaxVelocityInMPerS);
-
-			if (Math.Abs(rigidBody.velocity.x - desiredVelocity.x) <= VELOCITY_EQUALITY_MARGIN
-				&& Math.Abs(rigidBody.velocity.y - desiredVelocity.y) <= VELOCITY_EQUALITY_MARGIN)
-			{
-				rigidBody.velocity = desiredVelocity;
-			}
-			else
-			{
-				Logging.Log(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
-					rigidBody.velocity, desiredVelocity, MAX_VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS));
-
-				float velocitySmoothTime = FindVelocitySmoothTime(sourcePosition, targetPosition);
-				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _missileStats.MaxVelocityInMPerS, Time.deltaTime);
-			}
-		}
-
-		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
-		{
-			float timeToTargetEstimate = EstimateTimeToTarget(source, target, projectileVelocityInMPerS, currentAngleInRadians);
-
-			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
-			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
-
-			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			Debug.Log(string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
-			return projectedPosition;
-		}
-
-		private float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
-		{
-			return Vector2.Distance(source, target) / projectileVelocityInMPerS;
-		}
-
-		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
-		{
-			Vector2 desiredVelocity = new Vector2(0, 0);
-
-			if (sourcePosition == targetPosition)
-			{
-				return desiredVelocity;
-			}
-
-			if (sourcePosition.x == targetPosition.x)
-			{
-				// On same x-axis
-				desiredVelocity.y = sourcePosition.y < targetPosition.y ? maxVelocityInMPerS : -maxVelocityInMPerS;
-			}
-			else if (sourcePosition.y == targetPosition.y)
-			{
-				// On same y-axis
-				desiredVelocity.x = sourcePosition.x < targetPosition.x ? maxVelocityInMPerS : -maxVelocityInMPerS;
-			}
-			else
-			{
-				// Different x and y axes, so need to calculate the angle
-				float xDiff = Math.Abs(sourcePosition.x - targetPosition.x);
-				float yDiff = Math.Abs(sourcePosition.y - targetPosition.y);
-				float angleInRadians = Mathf.Atan(yDiff / xDiff);
-				float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
-
-				float velocityX = Mathf.Cos(angleInRadians) * maxVelocityInMPerS;
-				float velocityY = Mathf.Sin(angleInRadians) * maxVelocityInMPerS;
-				Logging.Log(Tags.AIRCRAFT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
-					angleInDegrees, velocityX, velocityY));
-
-				if (sourcePosition.x > targetPosition.x)
-				{
-					// Source is to right of target
-					velocityX *= -1;
-				}
-
-				if (sourcePosition.y > targetPosition.y)
-				{
-					// Source is above target
-					velocityY *= -1;
-				}
-
-				desiredVelocity.x = velocityX;
-				desiredVelocity.y = velocityY;
-			}
-
-			Logging.Log(Tags.AIRCRAFT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
-			return desiredVelocity;
-		}
-
-		// Reduce smooth time the closer we get to the target
-		private float FindVelocitySmoothTime(Vector2 sourcePosition, Vector2 targetPosition)
-		{
-			float distance = Vector2.Distance(sourcePosition, targetPosition);
-			float smoothTimeInS = distance / _missileStats.MaxVelocityInMPerS;
-			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
-			{
-				smoothTimeInS = MAX_VELOCITY_SMOOTH_TIME;
-			}
-
-			Debug.Log("smoothTimeInS: " + smoothTimeInS);
-			return smoothTimeInS;
 		}
 
 		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time
@@ -181,6 +77,7 @@ namespace BattleCruisers.Projectiles
 
 		private void CleanUp()
 		{
+			_movementController.Target = null;
 			_target.Destroyed -= Target_Destroyed;
 			Destroy(gameObject);
 		}
