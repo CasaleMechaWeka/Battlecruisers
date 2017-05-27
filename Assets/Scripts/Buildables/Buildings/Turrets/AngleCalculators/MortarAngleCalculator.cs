@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 
 			// FELIX  Lead target
+			// FELIX  Inject this angle, this class should not know about transform :/
 			Debug.Log("transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
 			float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
 			Vector2 projectedTargetPosition = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
