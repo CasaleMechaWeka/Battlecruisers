@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Tests.Targets
 		private ITargetFinder _targetFinder;
 		private ITargetDetector _enemyDetector;
 		private ITarget _target;
+		private ITargetFilter _targetFilter;
 
 		[SetUp]
 		public void TestSetup()
@@ -20,7 +22,10 @@ namespace BattleCruisers.Tests.Targets
 			_enemyDetector = Substitute.For<ITargetDetector>();
 			_target = Substitute.For<ITarget>();
 
-			_targetFinder = new RangedTargetFinder(_enemyDetector);
+			_targetFilter = Substitute.For<ITargetFilter>();
+			_targetFilter.IsMatch(null).ReturnsForAnyArgs(true);
+
+			_targetFinder = new RangedTargetFinder(_enemyDetector, _targetFilter);
 			_targetFinder.StartFindingTargets();
 		}
 
@@ -54,25 +59,6 @@ namespace BattleCruisers.Tests.Targets
 			};
 
 			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
-
-			Assert.IsTrue(wasCalled);
-		}
-
-		[Test]
-		public void TargetDestroyed_EmitsTargetLost()
-		{
-			EnemyEntered_EmitsTargetFound();
-
-			bool wasCalled = false;
-
-			_targetFinder.TargetLost += (object sender, TargetEventArgs e) => 
-			{
-				wasCalled = true;
-				Assert.AreEqual(_targetFinder, sender);
-				Assert.AreEqual(_target, e.Target);
-			};
-
-			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}
