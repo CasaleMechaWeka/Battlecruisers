@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class MissileMovingTargetTestsGod : MonoBehaviour 
+	public class MissileMovingTargetTestsGod : MissileTestsGod 
 	{
 		public AircraftController target;
 		public List<Vector2> targetPatrolPoints;
@@ -17,8 +17,6 @@ namespace BattleCruisers.Scenes.Test
 		{
 			Helper helper = new Helper();
 
-
-			// Setup target
 			helper.InitialiseBuildable(target);
 			target.CompletedBuildable += (sender, e) => 
 			{
@@ -27,20 +25,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 			target.StartConstruction();
 
-
-			// Setup missiles
-			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = target
-			};
-			MissileStats missileStats = new MissileStats(damage: 50, maxVelocityInMPerS: 20);
-			Vector2 initialVelocity = new Vector2(5, 5);
-
-			MissileController[] missiles = GameObject.FindObjectsOfType<MissileController>() as MissileController[];
-			foreach (MissileController missile in missiles)
-			{
-				missile.Initialise(target, targetFilter, missileStats, initialVelocity);
-			}
+			SetupMissiles(target);
 		}
 	}
 }
