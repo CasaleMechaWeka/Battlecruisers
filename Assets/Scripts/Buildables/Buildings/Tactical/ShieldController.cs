@@ -25,7 +25,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
 		private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
-		public override TargetType TargetType { get { return TargetType.Buildings; } }
+		// TargetType.None so that this will never be recognized as a target.
+		// Instead enemy units should target the actual ShieldGenerator that
+		// generates this shield.  Enemy projectiles will still damage this.
+		public override TargetType TargetType { get { return TargetType.None; } }
 
 		public void Initialise(Faction faction)
 		{
