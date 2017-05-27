@@ -24,21 +24,21 @@ namespace BattleCruisers.Tests.Turrets
 		public void OutOfRange()
 		{
 			Vector2 source = new Vector2(-20, 0);
-			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 2, targetVelocity: new Vector2(0, 0)));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 2, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0));
 		}
 
 		[Test]
 		public void SourceNotMirrored_ButTargetToLeft()
 		{
 			Vector2 source = new Vector2(2, 0);
-			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0)));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: false, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0));
 		}
 
 		[Test]
 		public void SourceMirrored_ButTargetToRight()
 		{
 			Vector2 source = new Vector2(-2, 0);
-			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0)));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: 45, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0));
 		}
 
 		[Test]
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.Turrets
 			float maxRange = (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
 			
 			Vector2 source = new Vector2(maxRange, 0);
-			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: velocityInMPerS, targetVelocity: new Vector2(0, 0));
+			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: velocityInMPerS, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0);
 
 			Assert.AreEqual(45, Mathf.Round(angleInDegrees));
 		}
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.Turrets
 			float maxRange = (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
 
 			Vector2 source = new Vector2(maxRange, 0);
-			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: velocityInMPerS + 1, targetVelocity: new Vector2(0, 0));
+			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: true, projectileVelocityInMPerS: velocityInMPerS + 1, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0);
 
 			Assert.IsTrue(angleInDegrees < 45);
 		}
