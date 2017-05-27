@@ -14,6 +14,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	/// </summary>
 	public class MortarAngleCalculator : AngleCalculator
 	{
+		private const float MAX_ANGLE_IN_DEGREES = 85;
+
 		public override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			// FELIX  Extract these two checks, common with ArtilleryAngleCalculator
@@ -54,6 +56,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float angleInRadians = Mathf.Max(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
+			if (angleInDegrees > MAX_ANGLE_IN_DEGREES)
+			{
+				angleInDegrees = MAX_ANGLE_IN_DEGREES;
+			}
+
 			Logging.Log(Tags.ANGLE_CALCULATORS, "MortarAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");
 
 			return angleInDegrees;
@@ -63,8 +70,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
 		{
 			float distance = Mathf.Abs(source.x - target.x);
-			float timeToTargetEstimate = distance / (projectileVelocityInMPerS * Mathf.Cos(currentAngleInRadians));
-//			float timeToTargetEstimate = Mathf.Sqrt(2) * projectileVelocityInMPerS / Constants.GRAVITY;
+
+
+			float sourceElevationInM = source.y - target.y;
+			float timeToTargetEstimate = TimeToTarget2(projectileVelocityInMPerS, currentAngleInRadians, sourceElevationInM);
+//			float timeToTargetEstimate = TimeToTarget1(distance, projectileVelocityInMPerS, currentAngleInRadians);  // Assumes distance and angle are at trajectory end
+//			float timeToTargetEstimate = Mathf.Sqrt(2) * projectileVelocityInMPerS / Constants.GRAVITY;  // Assumes angle = 45*
+
 
 			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
 			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
@@ -72,6 +84,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
 			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
 			return projectedPosition;
+		}
+
+		private float TimeToTarget1(float horizontalDistance, float projectileVelocityInMPerS, float currentAngleInRadians)
+		{
+			return horizontalDistance / (projectileVelocityInMPerS * Mathf.Cos(currentAngleInRadians));
+		}
+
+		private float TimeToTarget2(float projectileVelocityInMPerS, float currentAngleInRadians, float sourceElevationInM)
+		{
+			float vSin = projectileVelocityInMPerS * Mathf.Sin(currentAngleInRadians);
+			float squareRootArg = (vSin * vSin) + 2 * Constants.GRAVITY * sourceElevationInM;
+			return (vSin + Mathf.Sqrt(squareRootArg)) / Constants.GRAVITY;
 		}
 	}
 }
