@@ -31,11 +31,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnBuildableCompleted();
 
+			enemyDetector.Initialise(turretBarrelController.turretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetType);
-			enemyDetector.Initialise(targetFilter, turretBarrelController.turretStats.rangeInM);
+			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, targetFilter);
 
-			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);

@@ -31,11 +31,10 @@ namespace BattleCruisers.Buildables.Units
 	{
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
-		private ITargetFinder _targetFinder;
+		private ITargetFinder _enemyFinder, _friendFinder;
 		private ITargetProcessor _targetProcessor;
 
-		public TargetDetector enemyDetector;
-		public TargetDetector friendDetector;
+		public TargetDetector enemyDetector, friendDetector;
 		public TurretBarrelController turretBarrelController;
 
 		public override float Damage 
@@ -78,19 +77,21 @@ namespace BattleCruisers.Buildables.Units
 			
 			turretBarrelController.Initialise(Faction);
 
+			// Enemy detection
+			enemyDetector.Initialise(turretBarrelController.turretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
-			enemyDetector.Initialise(enemyFilter, turretBarrelController.turretStats.rangeInM);
+			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter);
 
-			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector);
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
 
+			// Friend detection
 			ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, TargetType.Ships);
-			friendDetector.Initialise(friendFilter);
-			friendDetector.OnEntered += OnFriendEntered;
-			friendDetector.OnExited += OnFriendExited;
+			_friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+			_friendFinder.TargetFound += OnFriendFound;
+			_friendFinder.TargetLost += OnFriendLost;
 		}
 
 		protected override void OnFixedUpdate()
@@ -115,9 +116,9 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private void OnFriendEntered(object sender, TargetEventArgs args)
+		private void OnFriendFound(object sender, TargetEventArgs args)
 		{
-			Logging.Log(Tags.ATTACK_BOAT, "OnFriendEntered()");
+			Logging.Log(Tags.ATTACK_BOAT, "OnFriendFound()");
 
 			if (IsObjectInFront(args.Target))
 			{
@@ -125,9 +126,9 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-		private void OnFriendExited(object sender, TargetEventArgs args)
+		private void OnFriendLost(object sender, TargetEventArgs args)
 		{
-			Logging.Log(Tags.ATTACK_BOAT, "OnFriendExited()");
+			Logging.Log(Tags.ATTACK_BOAT, "OnFriendLost()");
 
 			if (IsObjectInFront(args.Target))
 			{

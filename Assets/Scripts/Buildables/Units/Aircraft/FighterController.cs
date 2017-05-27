@@ -112,10 +112,10 @@ namespace BattleCruisers.Units.Aircraft
 		private void SetupTargetDetection()
 		{
 			// Detect followable enemies
+			followableEnemyDetector.Initialise(enemyFollowDetectionRangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
-			followableEnemyDetector.Initialise(targetFilter, enemyFollowDetectionRangeInM);
-			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector);
+			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
 			
 			ITargetRanker followableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(_followableTargetFinder, followableTargetRanker);
@@ -126,8 +126,8 @@ namespace BattleCruisers.Units.Aircraft
 			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
-			shootableEnemyDetector.Initialise(_exactMatchTargetFilter, barrelController.turretStats.rangeInM);
-			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector);
+			shootableEnemyDetector.Initialise(barrelController.turretStats.rangeInM);
+			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(_shootableTargetFinder, shootableTargetRanker);

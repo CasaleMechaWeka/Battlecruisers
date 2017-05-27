@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
 			targetsFactory.OffensiveTurretTargetProcessor.Returns(targetProcessor);
-			targetsFactory.CreateRangedTargetFinder(null).ReturnsForAnyArgs(targetFinder);
+			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
 
 			return targetsFactory;
