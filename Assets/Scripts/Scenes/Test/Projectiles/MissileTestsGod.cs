@@ -10,24 +10,31 @@ namespace BattleCruisers.Scenes.Test
 {
 	public class MissileTestsGod : MonoBehaviour 
 	{
-		public MissileController missile;
 		public AircraftController target;
 
 		void Start () 
 		{
 			Helper helper = new Helper();
 
+
+			// Setup target
 			helper.InitialiseBuildable(target);
 			target.StartConstruction();
 
+
+			// Setup missiles
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
 			};
-			MissileStats missileStats = new MissileStats(damage: 50, maxVelocityInMPerS: 30);
+			MissileStats missileStats = new MissileStats(damage: 50, maxVelocityInMPerS: 20);
 			Vector2 initialVelocity = new Vector2(5, 5);
 
-			missile.Initialise(target, targetFilter, missileStats, initialVelocity);
+			MissileController[] missiles = GameObject.FindObjectsOfType<MissileController>() as MissileController[];
+			foreach (MissileController missile in missiles)
+			{
+				missile.Initialise(target, targetFilter, missileStats, initialVelocity);
+			}
 		}
 	}
 }
