@@ -9,29 +9,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	public class LeadingAngleCalculator : AngleCalculator
 	{
 		/// <summary>
-		/// Assumes:
-		/// 1. Shells are NOT affected by gravity
-		/// 
-		/// Does try to compensate for target movement.
+		/// Assumes shells are NOT affected by gravity
 		/// </summary>
-		public override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
-		{
-			Vector2 projectedTargetPosition = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity);
-			return base.FindDesiredAngle(source, projectedTargetPosition, isSourceMirrored, projectileVelocityInMPerS, targetVelocity);
-		}
-
-		// FELIX  Extract this method, override in child classes
-		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		protected override float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInDegrees)
 		{
 			float distance = Vector2.Distance(source, target);
-			float timeToTargetEstimate = distance / projectileVelocityInMPerS;
-
-			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
-			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
-
-			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
-			return projectedPosition;
+			return distance / projectileVelocityInMPerS;
 		}
 	}
 }

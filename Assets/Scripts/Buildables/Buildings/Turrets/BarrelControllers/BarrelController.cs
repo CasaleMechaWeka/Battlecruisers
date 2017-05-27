@@ -50,7 +50,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 				Logging.Log(Tags.AIRCRAFT, "Target.Velocity: " + Target.Velocity);
 
-				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(sourcePosition, targetPosition, IsSourceMirrored, turretStats.bulletVelocityInMPerS, Target.Velocity);
+				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(sourcePosition, targetPosition, IsSourceMirrored, turretStats.bulletVelocityInMPerS, Target.Velocity, currentAngleInRadians);
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 

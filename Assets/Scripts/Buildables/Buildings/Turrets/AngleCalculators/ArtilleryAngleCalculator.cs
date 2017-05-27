@@ -10,15 +10,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	/// Assumes:
 	/// 1. Shells ARE affected by gravity
 	/// 2. Targets do not move
+	/// 3. No y axis difference in source and target
+	/// 4. Target is in facing direction of source
 	/// </summary>
 	public class ArtilleryAngleCalculator : AngleCalculator
 	{
-		/// <summary>
-		/// Assumes:
-		/// 1. No y axis difference in source and target
-		/// 2. Target is in facing direction of source
-		/// </summary>
-		public override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			float distanceInM = Math.Abs(source.x - target.x);
 			if (distanceInM > FindMaxRange(projectileVelocityInMPerS))

@@ -9,14 +9,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	/// <summary>
 	/// Assumes:
 	/// 1. Shells ARE affected by gravity
-	/// FELIX  Handle moving targets!
-	/// 2. Targets do not move
+	/// 2. Target is in facing direction of source
 	/// </summary>
 	public class MortarAngleCalculator : AngleCalculator
 	{
 		private const float MAX_ANGLE_IN_DEGREES = 85;
 
-		public override float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		public override bool LeadsTarget { get { return true; } }
+
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			// FELIX  Extract these two checks, common with ArtilleryAngleCalculator
 			if (isSourceMirrored && target.x >= source.x)
@@ -28,17 +29,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			{
 				throw new ArgumentException("Source faces right, but target is to the left");
 			}
-
-
-			// FELIX  Lead target
-			// FELIX  Inject this angle, this class should not know about transform :/
-			Debug.Log("transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
-			float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-			Vector2 projectedTargetPosition = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
-
-
-			float distanceInM = Math.Abs(source.x - projectedTargetPosition.x);
-			float targetAltitude = projectedTargetPosition.y - source.y;
+				
+			float distanceInM = Math.Abs(source.x - target.x);
+			float targetAltitude = target.y - source.y;
 
 			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
@@ -66,22 +59,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			return angleInDegrees;
 		}
 
-		// FELIX  Extract this method, override in child classes
-		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		protected override float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
 			float sourceElevationInM = source.y - target.y;
-			float timeToTargetEstimate = TimeToTarget(projectileVelocityInMPerS, currentAngleInRadians, sourceElevationInM);
-
-			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
-			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
-
-			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
-			return projectedPosition;
-		}
-
-		private float TimeToTarget(float projectileVelocityInMPerS, float currentAngleInRadians, float sourceElevationInM)
-		{
 			float vSin = projectileVelocityInMPerS * Mathf.Sin(currentAngleInRadians);
 			float squareRootArg = (vSin * vSin) + 2 * Constants.GRAVITY * sourceElevationInM;
 			return (vSin + Mathf.Sqrt(squareRootArg)) / Constants.GRAVITY;

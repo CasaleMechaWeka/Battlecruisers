@@ -11,20 +11,47 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		// Cannot use both namespaces and optional parameters in MonoBehaviour scripts :D
 		// Otherwise I would use optional parameters for the last two parameters.
 		// https://forum.unity3d.com/threads/script-can-use-namespace-or-optional-parameters-but-not-both.164563/
-		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity);
-		float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees);
+		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians);
+		float FindDirectionMultiplier(float currentAngleInRadians, float desiredAngleInDegrees);
 	}
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
+		public virtual bool LeadsTarget { get { return false; } }
+
 		// FELIX  Use FacingDirection instead of isSourceMirrored param?
+		public float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		{
+			if (LeadsTarget)
+			{
+				target = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
+			}
+
+			return CalculateDesiredAngle(source, target, isSourceMirrored, projectileVelocityInMPerS, targetVelocity);
+		}
+
+		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		{
+			float distance = Vector2.Distance(source, target);
+			float timeToTargetEstimate = EstimateTimeToTarget(source, target, projectileVelocityInMPerS, currentAngleInRadians);
+
+			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
+			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
+
+			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
+			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
+			return projectedPosition;
+		}
+
+		protected virtual float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
+		{
+			return 0;
+		}
 
 		/// <summary>
-		/// Assumes:
-		/// 1. Shells are NOT affected by gravity
-		/// 2. Targets do not move
+		/// Assumes shells are NOT affected by gravity
 		/// </summary>
-		public virtual float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		protected virtual float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			if (source == target)
 			{
@@ -96,16 +123,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		/// 1 if it is shorter to rotate anti-clockwise, -1 if it is shorter to rotate clockwise, 
 		/// 0 if the desired angle is the same as the current angle.
 		/// </returns>
-		public virtual float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees)
+		public virtual float FindDirectionMultiplier(float currentAngleInRadians, float desiredAngleInDegrees)
 		{
-			if (currentAngleInDegrees == desiredAngleInDegrees)
+			if (currentAngleInRadians == desiredAngleInDegrees)
 			{
 				return 0;
 			}
 
-			float distance = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+			float distance = Math.Abs(currentAngleInRadians - desiredAngleInDegrees);
 
-			if (desiredAngleInDegrees > currentAngleInDegrees)
+			if (desiredAngleInDegrees > currentAngleInRadians)
 			{
 				return distance < 180 ? 1 : -1;
 			}
