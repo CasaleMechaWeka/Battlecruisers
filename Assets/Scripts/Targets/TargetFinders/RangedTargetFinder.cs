@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+// FELIX  Remove class.  Is dumb wrapper of TargetDetector :P
 namespace BattleCruisers.Targets.TargetFinders
 {
 	public class RangedTargetFinder : ITargetFinder
@@ -27,34 +28,18 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
-			ITarget enemy = args.Target;
-
-			enemy.Destroyed += Enemy_Destroyed;
-
 			if (TargetFound != null)
 			{
-				TargetFound.Invoke(this, new TargetEventArgs(enemy));
+				TargetFound.Invoke(this, args);
 			}
-		}
-
-		private void Enemy_Destroyed(object sender, DestroyedEventArgs e)
-		{
-			RemoveEnemy(e.DestroyedTarget);
 		}
 
 		private void OnEnemyExited(object sender, TargetEventArgs args)
 		{
-			RemoveEnemy(args.Target);
-		}
-
-		private void RemoveEnemy(ITarget enemy)
-		{
 			if (TargetLost != null)
 			{
-				TargetLost.Invoke(this, new TargetEventArgs(enemy));
+				TargetLost.Invoke(this, args);
 			}
-
-			enemy.Destroyed -= Enemy_Destroyed;
 		}
 
 		public void Dispose()
