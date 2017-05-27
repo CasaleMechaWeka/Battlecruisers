@@ -21,6 +21,7 @@ namespace BattleCruisers.Projectiles
 			rigidBody.gravityScale = gravityScale;
 		}
 
+		// FELIX  Inject and use target filter
 		void OnTriggerEnter2D(Collider2D collider)
 		{
 			Logging.Log(Tags.SHELLS, "ShellController.OnTriggerEnter2D()");
