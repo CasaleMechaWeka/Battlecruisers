@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class TurretBarrelController : BarrelController 
 	{
-		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 0.1f;
+		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
 		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{

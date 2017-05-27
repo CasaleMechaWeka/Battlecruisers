@@ -8,6 +8,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
 	public class LeadingAngleCalculator : AngleCalculator
 	{
+		protected override bool LeadsTarget { get { return true; } }
+
 		/// <summary>
 		/// Assumes shells are NOT affected by gravity
 		/// </summary>

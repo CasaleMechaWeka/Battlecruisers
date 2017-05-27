@@ -15,22 +15,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	/// </summary>
 	public class ArtilleryAngleCalculator : AngleCalculator
 	{
+		protected override bool MustFaceTarget { get { return true; } }
+
 		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
 			float distanceInM = Math.Abs(source.x - target.x);
 			if (distanceInM > FindMaxRange(projectileVelocityInMPerS))
 			{
 				throw new ArgumentException("Out of range");
-			}
-
-			if (isSourceMirrored && target.x >= source.x)
-			{
-				throw new ArgumentException("Source faces left, but target is to the right");
-			}
-
-			if (!isSourceMirrored && target.x <= source.x)
-			{
-				throw new ArgumentException("Source faces right, but target is to the left");
 			}
 
 			float angleInRadians = 0.5f * Mathf.Asin(Constants.GRAVITY * distanceInM / (projectileVelocityInMPerS * projectileVelocityInMPerS));

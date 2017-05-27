@@ -15,21 +15,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		private const float MAX_ANGLE_IN_DEGREES = 85;
 
-		public override bool LeadsTarget { get { return true; } }
+		protected override bool LeadsTarget { get { return true; } }
+		protected override bool MustFaceTarget { get { return true; } }
 
 		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
 		{
-			// FELIX  Extract these two checks, common with ArtilleryAngleCalculator
-			if (isSourceMirrored && target.x >= source.x)
-			{
-				throw new ArgumentException("Source faces left, but target is to the right");
-			}
-
-			if (!isSourceMirrored && target.x <= source.x)
-			{
-				throw new ArgumentException("Source faces right, but target is to the left");
-			}
-				
 			float distanceInM = Math.Abs(source.x - target.x);
 			float targetAltitude = target.y - source.y;
 

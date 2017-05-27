@@ -17,11 +17,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 	public class AngleCalculator : MonoBehaviour, IAngleCalculator
 	{
-		public virtual bool LeadsTarget { get { return false; } }
+		protected virtual bool LeadsTarget { get { return false; } }
+		protected virtual bool MustFaceTarget { get { return false; } }
 
 		// FELIX  Use FacingDirection instead of isSourceMirrored param?
 		public float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
 		{
+			if (MustFaceTarget)
+			{
+				CheckSourceIsFacingTarget(source, target, isSourceMirrored);
+			}
+
 			if (LeadsTarget)
 			{
 				target = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
@@ -30,9 +36,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			return CalculateDesiredAngle(source, target, isSourceMirrored, projectileVelocityInMPerS, targetVelocity);
 		}
 
+		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target, bool isSourceMirrored)
+		{
+			if (isSourceMirrored && target.x >= source.x)
+			{
+				throw new ArgumentException("Source faces left, but target is to the right");
+			}
+
+			if (!isSourceMirrored && target.x <= source.x)
+			{
+				throw new ArgumentException("Source faces right, but target is to the left");
+			}
+		}
+
 		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
 		{
-			float distance = Vector2.Distance(source, target);
 			float timeToTargetEstimate = EstimateTimeToTarget(source, target, projectileVelocityInMPerS, currentAngleInRadians);
 
 			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
