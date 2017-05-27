@@ -22,7 +22,7 @@ namespace BattleCruisers.Movement
 			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
 
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			// FELIX  Horror
+			// FELIX  Horror, remove once logic only in one place :P
 			Debug.Log(string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
 			return projectedPosition;
 		}

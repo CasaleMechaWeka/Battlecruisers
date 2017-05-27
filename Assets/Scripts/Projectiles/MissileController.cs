@@ -28,12 +28,8 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
 		private MissileStats _missileStats;
 		private IHomingMovementController _movementController;
-		private Vector2 _velocity;
 
 		public Rigidbody2D rigidBody;
-
-		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
 		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS, IMovementControllerFactory movementControllerFactory)
 		{
