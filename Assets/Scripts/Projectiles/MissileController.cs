@@ -8,13 +8,24 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
+	public class MissileStats
+	{
+		public float Damage { get; private set; }
+		public float MaxVelocityInMPerS { get; private set; }
+
+		public MissileStats(float damage, float maxVelocityInMPerS)
+		{
+			Damage = damage;
+			MaxVelocityInMPerS = maxVelocityInMPerS;
+		}
+	}
+
 	// FELIX:  Extract common functionality with ShellController
 	public class MissileController : MonoBehaviour
 	{
 		private ITarget _target;
 		private ITargetFilter _targetFilter;
-		private float _damage;
-		private float _maxVelocityInMPerS;
+		private MissileStats _missileStats;
 		private Vector2 _velocity;
 
 		public Rigidbody2D rigidBody;
@@ -22,10 +33,11 @@ namespace BattleCruisers.Projectiles
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float VELOCITY_SMOOTH_TIME = 1;
 
-		public void Initialise(ITarget target, ITargetFilter targetFilter, float damage, Vector2 initialVelocityInMPerS, Vector2 maxVelocityInMPerS)
+		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS)
 		{
 			_target = target;
-			_damage = damage;
+			_targetFilter = targetFilter;
+			_missileStats = missileStats;
 			rigidBody.velocity = initialVelocityInMPerS;
 
 			_target.Destroyed += Target_Destroyed;
@@ -45,7 +57,7 @@ namespace BattleCruisers.Projectiles
 			Vector2 sourcePosition = transform.position;
 			Vector2 targetPosition = _target.GameObject.transform.position;
 
-			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, _maxVelocityInMPerS);
+			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, _missileStats.MaxVelocityInMPerS);
 
 			if (Math.Abs(rigidBody.velocity.x - desiredVelocity.x) <= VELOCITY_EQUALITY_MARGIN
 				&& Math.Abs(rigidBody.velocity.y - desiredVelocity.y) <= VELOCITY_EQUALITY_MARGIN)
@@ -55,9 +67,9 @@ namespace BattleCruisers.Projectiles
 			else
 			{
 				Logging.Log(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
-					rigidBody.velocity, desiredVelocity, VELOCITY_SMOOTH_TIME, _maxVelocityInMPerS));
+					rigidBody.velocity, desiredVelocity, VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS));
 
-				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, VELOCITY_SMOOTH_TIME, _maxVelocityInMPerS, Time.deltaTime);
+				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS, Time.deltaTime);
 			}
 		}
 
@@ -127,7 +139,7 @@ namespace BattleCruisers.Projectiles
 
 			if (target != null && _targetFilter.IsMatch(target))
 			{
-				target.TakeDamage(_damage);
+				target.TakeDamage(_missileStats.Damage);
 				CleanUp();
 			}
 		}
