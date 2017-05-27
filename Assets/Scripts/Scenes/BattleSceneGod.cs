@@ -225,6 +225,8 @@ namespace BattleCruisers.Scenes
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
+			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "Mortar"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
 			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
