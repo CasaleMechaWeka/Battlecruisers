@@ -14,11 +14,11 @@ namespace BattleCruisers.Movement
 
 	public class HomingMovementController : IHomingMovementController
 	{
-		private readonly Rigidbody2D _rigidBody;
-		private readonly float _maxVelocityInMPerS;
+		protected readonly Rigidbody2D _rigidBody;
+		protected readonly float _maxVelocityInMPerS;
 		private Vector2 _velocity;
 
-		public ITarget Target { private get; set; }
+		public ITarget Target { protected get; set; }
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		private const float MAX_VELOCITY_SMOOTH_TIME = 1;
@@ -119,4 +119,3 @@ namespace BattleCruisers.Movement
 		}
 	}
 }
-
