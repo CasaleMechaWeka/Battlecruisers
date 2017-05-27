@@ -57,6 +57,9 @@ namespace BattleCruisers.Projectiles
 			Vector2 sourcePosition = transform.position;
 			Vector2 targetPosition = _target.GameObject.transform.position;
 
+			// Lead target
+			targetPosition = PredictTargetPosition(sourcePosition, targetPosition, _missileStats.MaxVelocityInMPerS, _target.Velocity, -1);
+
 			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, _missileStats.MaxVelocityInMPerS);
 
 			if (Math.Abs(rigidBody.velocity.x - desiredVelocity.x) <= VELOCITY_EQUALITY_MARGIN
@@ -72,6 +75,23 @@ namespace BattleCruisers.Projectiles
 				float velocitySmoothTime = FindVelocitySmoothTime(sourcePosition, targetPosition);
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _missileStats.MaxVelocityInMPerS, Time.deltaTime);
 			}
+		}
+
+		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		{
+			float timeToTargetEstimate = EstimateTimeToTarget(source, target, projectileVelocityInMPerS, currentAngleInRadians);
+
+			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
+			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
+
+			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
+			Debug.Log(string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
+			return projectedPosition;
+		}
+
+		private float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
+		{
+			return Vector2.Distance(source, target) / projectileVelocityInMPerS;
 		}
 
 		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class MissileTestsGod : MonoBehaviour 
+	public class MissileStationaryTargetTestsGod : MonoBehaviour 
 	{
 		public AircraftController target;
 
