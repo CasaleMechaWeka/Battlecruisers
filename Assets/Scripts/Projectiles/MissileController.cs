@@ -31,7 +31,7 @@ namespace BattleCruisers.Projectiles
 		public Rigidbody2D rigidBody;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		private const float VELOCITY_SMOOTH_TIME = 1;
+		private const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
 		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS)
 		{
@@ -43,7 +43,7 @@ namespace BattleCruisers.Projectiles
 			_target.Destroyed += Target_Destroyed;
 		}
 
-		void FixedUpdated()
+		void FixedUpdate()
 		{
 			AdjustVelocity();
 
@@ -67,9 +67,10 @@ namespace BattleCruisers.Projectiles
 			else
 			{
 				Logging.Log(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
-					rigidBody.velocity, desiredVelocity, VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS));
+					rigidBody.velocity, desiredVelocity, MAX_VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS));
 
-				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, VELOCITY_SMOOTH_TIME, _missileStats.MaxVelocityInMPerS, Time.deltaTime);
+				float velocitySmoothTime = FindVelocitySmoothTime(sourcePosition, targetPosition);
+				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _missileStats.MaxVelocityInMPerS, Time.deltaTime);
 			}
 		}
 
@@ -123,6 +124,20 @@ namespace BattleCruisers.Projectiles
 
 			Logging.Log(Tags.AIRCRAFT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
 			return desiredVelocity;
+		}
+
+		// Reduce smooth time the closer we get to the target
+		private float FindVelocitySmoothTime(Vector2 sourcePosition, Vector2 targetPosition)
+		{
+			float distance = Vector2.Distance(sourcePosition, targetPosition);
+			float smoothTimeInS = distance / _missileStats.MaxVelocityInMPerS;
+			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
+			{
+				smoothTimeInS = MAX_VELOCITY_SMOOTH_TIME;
+			}
+
+			Debug.Log("smoothTimeInS: " + smoothTimeInS);
+			return smoothTimeInS;
 		}
 
 		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time
