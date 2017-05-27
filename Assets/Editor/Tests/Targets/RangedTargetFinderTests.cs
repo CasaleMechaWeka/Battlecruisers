@@ -23,14 +23,13 @@ namespace BattleCruisers.Tests.Targets
 			_target = Substitute.For<ITarget>();
 
 			_targetFilter = Substitute.For<ITargetFilter>();
-			_targetFilter.IsMatch(null).ReturnsForAnyArgs(true);
 
 			_targetFinder = new RangedTargetFinder(_enemyDetector, _targetFilter);
 			_targetFinder.StartFindingTargets();
 		}
 
 		[Test]
-		public void EnemyEntered_EmitsTargetFound()
+		public void EnemyEntered_IsMatch_EmitsTargetFound()
 		{
 			bool wasCalled = false;
 
@@ -41,13 +40,26 @@ namespace BattleCruisers.Tests.Targets
 				Assert.AreEqual(_target, e.Target);
 			};
 
+			_targetFilter.IsMatch(_target).Returns(true);
 			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}
+
+		[Test]
+		public void EnemyEntered_IsNotMatch_EmitsNothing()
+		{
+			_targetFinder.TargetFound += (object sender, TargetEventArgs e) => 
+			{
+				Assert.Fail();
+			};
+
+			_targetFilter.IsMatch(_target).Returns(false);
+			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+		}
 		
 		[Test]
-		public void EnemyExited_EmitsTargetLost()
+		public void EnemyExited_IsMatch_EmitsTargetLost()
 		{
 			bool wasCalled = false;
 
@@ -58,9 +70,22 @@ namespace BattleCruisers.Tests.Targets
 				Assert.AreEqual(_target, e.Target);
 			};
 
+			_targetFilter.IsMatch(_target).Returns(true);
 			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
+		}
+
+		[Test]
+		public void EnemyExited_IsNotMatch_EmitsNothing()
+		{
+			_targetFinder.TargetLost += (object sender, TargetEventArgs e) => 
+			{
+				Assert.Fail();
+			};
+
+			_targetFilter.IsMatch(_target).Returns(false);
+			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 		}
 	}
 }
