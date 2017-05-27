@@ -69,14 +69,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		// FELIX  Extract this method, override in child classes
 		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
 		{
-			float distance = Mathf.Abs(source.x - target.x);
-
-
 			float sourceElevationInM = source.y - target.y;
-			float timeToTargetEstimate = TimeToTarget2(projectileVelocityInMPerS, currentAngleInRadians, sourceElevationInM);
-//			float timeToTargetEstimate = TimeToTarget1(distance, projectileVelocityInMPerS, currentAngleInRadians);  // Assumes distance and angle are at trajectory end
-//			float timeToTargetEstimate = Mathf.Sqrt(2) * projectileVelocityInMPerS / Constants.GRAVITY;  // Assumes angle = 45*
-
+			float timeToTargetEstimate = TimeToTarget(projectileVelocityInMPerS, currentAngleInRadians, sourceElevationInM);
 
 			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
 			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
@@ -86,12 +80,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			return projectedPosition;
 		}
 
-		private float TimeToTarget1(float horizontalDistance, float projectileVelocityInMPerS, float currentAngleInRadians)
-		{
-			return horizontalDistance / (projectileVelocityInMPerS * Mathf.Cos(currentAngleInRadians));
-		}
-
-		private float TimeToTarget2(float projectileVelocityInMPerS, float currentAngleInRadians, float sourceElevationInM)
+		private float TimeToTarget(float projectileVelocityInMPerS, float currentAngleInRadians, float sourceElevationInM)
 		{
 			float vSin = projectileVelocityInMPerS * Mathf.Sin(currentAngleInRadians);
 			float squareRootArg = (vSin * vSin) + 2 * Constants.GRAVITY * sourceElevationInM;
