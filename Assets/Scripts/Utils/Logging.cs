@@ -41,6 +41,7 @@ namespace BattleCruisers.Utils
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string CRUISER = "Cruiser";
 		public const string DRONES = "Drones";
+		public const string MOVEMENT = "Movement";
 	}
 	
 	public static class Logging
@@ -94,6 +95,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.DRONES, false);
+			tagsToActiveness.Add(Tags.MOVEMENT, false);
 
 			return tagsToActiveness;
 		}
