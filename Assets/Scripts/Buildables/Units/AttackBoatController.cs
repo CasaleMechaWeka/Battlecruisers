@@ -92,6 +92,7 @@ namespace BattleCruisers.Buildables.Units
 			_friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
 			_friendFinder.TargetFound += OnFriendFound;
 			_friendFinder.TargetLost += OnFriendLost;
+			_friendFinder.StartFindingTargets();
 		}
 
 		protected override void OnFixedUpdate()
