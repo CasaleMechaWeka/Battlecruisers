@@ -70,6 +70,7 @@ namespace BattleCruisers.Data
 			// Defence
 			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
 			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
+			buildings.Add(new BuildingKey(BuildingCategory.Defence, "Mortar"));
 
 			// Offence
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
@@ -116,8 +117,8 @@ namespace BattleCruisers.Data
 
 			return new List<ILevel>() 
 			{
-				new Level("Battle Cruisers", aiLoadout),
-				new Level("Aircraft", aiLoadout),
+				new Level("Sprawl Brawl", aiLoadout),
+				new Level("Fisticuffs", aiLoadout),
 				new Level("Ambush at Dire Straits", aiLoadout),
 				new Level("Battle of Watercress", aiLoadout)
 			};
