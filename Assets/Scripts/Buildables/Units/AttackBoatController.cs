@@ -122,14 +122,7 @@ namespace BattleCruisers.Buildables.Units
 			if (IsObjectInFront(args.Target))
 			{
 				_blockingFriendlyUnit = args.Target;
-				_blockingFriendlyUnit.Destroyed += BlockingFriendlyUnit_Destroyed;
 			}
-		}
-
-		private void BlockingFriendlyUnit_Destroyed(object sender, EventArgs e)
-		{
-			_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
-			_blockingFriendlyUnit = null;
 		}
 
 		private void OnFriendExited(object sender, TargetEventArgs args)
@@ -138,7 +131,12 @@ namespace BattleCruisers.Buildables.Units
 
 			if (IsObjectInFront(args.Target))
 			{
-				_blockingFriendlyUnit.Destroyed -= BlockingFriendlyUnit_Destroyed;
+				Assert.IsTrue(_blockingFriendlyUnit != null);
+
+				if (object.ReferenceEquals(_blockingFriendlyUnit, args.Target))
+				{
+					_blockingFriendlyUnit = null;
+				}
 			}
 		}
 
