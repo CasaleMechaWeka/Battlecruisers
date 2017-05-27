@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Movement;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
@@ -45,8 +46,8 @@ namespace BattleCruisers.Buildables
 		event EventHandler CompletedBuildable;
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, 
-			IPrefabFactory prefabFactory, ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider);
+		void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, IPrefabFactory prefabFactory, 
+			ITargetsFactory targetsFactory, IMovementControllerFactory movementControllerFactory, IAircraftProvider aircraftProvider);
 		void StartConstruction();
 		void InitiateDelete();
 	}

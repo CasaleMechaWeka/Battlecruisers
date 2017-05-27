@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -38,6 +39,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ICruiser enemyCruiser = null,
 			IPrefabFactory prefabFactory = null,
 			ITargetsFactory targetsFactory = null,
+			IMovementControllerFactory movementControllerFactory = null,
 			IAircraftProvider aircraftProvider = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
@@ -68,6 +70,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				enemyCruiser,
 				prefabFactory,
 				targetsFactory,
+				movementControllerFactory,
 				aircraftProvider);
 		}
 

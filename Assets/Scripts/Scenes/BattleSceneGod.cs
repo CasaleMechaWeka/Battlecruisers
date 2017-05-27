@@ -7,6 +7,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -64,7 +65,6 @@ namespace BattleCruisers.Scenes
 			}
 
 
-
 			_dataProvider = ApplicationModel.DataProvider;
 			_currentLevelNum = ApplicationModel.SelectedLevel;
 
@@ -77,6 +77,7 @@ namespace BattleCruisers.Scenes
 			_buildingGroupFactory = new BuildingGroupFactory();
 			PrefabFetcher prefabFetcher = new PrefabFetcher();
 			prefabFactory.Initialise(prefabFetcher);
+			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
 
 
 			// Instantiate player cruiser
@@ -104,7 +105,8 @@ namespace BattleCruisers.Scenes
 			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(_playerCruiser.transform.position, _aiCruiser.transform.position);
 			IDroneManager playerDroneManager = new DroneManager();
 			IDroneConsumerProvider playerDroneConsumerProvider = new DroneConsumerProvider(playerDroneManager);
-			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager, playerDroneConsumerProvider, playerCruiserTargetsFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
+			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager, playerDroneConsumerProvider, 
+				playerCruiserTargetsFactory, movementControllerFactory, playerCruiserAircraftProvider, prefabFactory, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
@@ -113,7 +115,8 @@ namespace BattleCruisers.Scenes
 			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(_aiCruiser.transform.position, _playerCruiser.transform.position);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager, aiDroneConsumerProvider, aiCruiserTargetsFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
+			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager, aiDroneConsumerProvider, 
+				aiCruiserTargetsFactory, movementControllerFactory, aiCruiserAircraftProvider, prefabFactory, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

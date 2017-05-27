@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Movement;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Buildables
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetsFactory _targetsFactory;
+		protected IMovementControllerFactory _movementControllerFactory;
 		protected IAircraftProvider _aircraftProvider;
 
 		public string buildableName;
@@ -115,7 +117,8 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, IPrefabFactory prefabFactory, ITargetsFactory targetsFactory, IAircraftProvider aircraftProvider)
+			ICruiser enemyCruiser, IPrefabFactory prefabFactory, ITargetsFactory targetsFactory, 
+			IMovementControllerFactory movementControllerFactory, IAircraftProvider aircraftProvider)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
@@ -124,6 +127,7 @@ namespace BattleCruisers.Buildables
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
 			_targetsFactory = targetsFactory;
+			_movementControllerFactory = movementControllerFactory;
 			_aircraftProvider = aircraftProvider;
 
 			Faction = faction;

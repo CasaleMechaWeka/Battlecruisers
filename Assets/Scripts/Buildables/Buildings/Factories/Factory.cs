@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
 
 			_unitUnderConstruction = _prefabFactory.CreateUnit(_unitWrapper);
-			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _prefabFactory, _targetsFactory, _aircraftProvider);
+			_unitUnderConstruction.Initialise(Faction, _uiManager, _parentCruiser, _enemyCruiser, _prefabFactory, _targetsFactory, _movementControllerFactory, _aircraftProvider);
 			_unitUnderConstruction.DroneConsumerProvider = this;
 
 			Vector3 spawnPosition = FindUnitSpawnPosition(_unitUnderConstruction);

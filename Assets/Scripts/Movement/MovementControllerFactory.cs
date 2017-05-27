@@ -9,7 +9,7 @@ namespace BattleCruisers.Movement
 		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS);
 	}
 
-	public class MovementControllerFactory
+	public class MovementControllerFactory : IMovementControllerFactory
 	{
 		public IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{
