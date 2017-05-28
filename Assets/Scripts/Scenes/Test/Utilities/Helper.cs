@@ -63,6 +63,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				aircraftProvider = CreateAircraftProvider();
 			}
 
+			if (movementControllerFactory == null)
+			{
+				movementControllerFactory = new MovementControllerFactory();
+			}
+
 			buildable.Initialise(
 				faction,
 				uiManager,

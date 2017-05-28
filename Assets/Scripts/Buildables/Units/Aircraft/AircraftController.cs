@@ -148,6 +148,7 @@ namespace BattleCruisers.Units.Aircraft
 			return _patrolPoints[nextIndex];
 		}
 
+		// FELIX  Where is this used?
 		protected float FindSmoothTime(float maxVelocity)
 		{
 			return 1;
