@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,15 +18,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		protected override bool MustFaceTarget { get { return true; } }
 
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		public ArtilleryAngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory) { }
+
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition)
 		{
-			float distanceInM = Math.Abs(source.x - target.x);
-			if (distanceInM > FindMaxRange(projectileVelocityInMPerS))
+			float distanceInM = Math.Abs(source.x - targetPosition.x);
+			if (distanceInM > FindMaxRange(_projectileVelocityInMPerS))
 			{
 				throw new ArgumentException("Out of range");
 			}
 
-			float angleInRadians = 0.5f * Mathf.Asin(Constants.GRAVITY * distanceInM / (projectileVelocityInMPerS * projectileVelocityInMPerS));
+			float angleInRadians = 0.5f * Mathf.Asin(Constants.GRAVITY * distanceInM / (_projectileVelocityInMPerS * _projectileVelocityInMPerS));
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
 			Logging.Log(Tags.ANGLE_CALCULATORS, "ArtilleryAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");

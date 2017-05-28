@@ -19,47 +19,48 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 	public class AngleCalculator : IAngleCalculator
 	{
-		private readonly float _projectileVelocityInMPerS;
+		protected readonly float _projectileVelocityInMPerS;
 		private readonly bool _isSourceMirrored;
-		private readonly ITargetPositionPredictor _targetPositionPredictor;
+		protected readonly ITargetPositionPredictorFactory _targetPositionPredictorFactory;
+		protected ITargetPositionPredictor _targetPositionPredictor;
 
 		protected virtual bool LeadsTarget { get { return false; } }
 		protected virtual bool MustFaceTarget { get { return false; } }
 
-		public AngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictor targetPositionPredictor)
+		public AngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			_projectileVelocityInMPerS = projectileVelocityInMPerS;
 			_isSourceMirrored = isSourceMirrored;
-			_targetPositionPredictor = targetPositionPredictor;
+			_targetPositionPredictorFactory = targetPositionPredictorFactory;
 		}
 
 		// FELIX  Use FacingDirection instead of isSourceMirrored param?
 		public float FindDesiredAngle(Vector2 source, ITarget target, float currentAngleInRadians)
 		{
-			Vector2 targetPosition = target.GameObject.transform.position;
+			Vector2 targetPosition = target.Position;
 
 			if (MustFaceTarget)
 			{
-				CheckSourceIsFacingTarget(source, targetPosition, _isSourceMirrored);
+				CheckSourceIsFacingTarget(source, targetPosition);
 			}
 
 			if (LeadsTarget)
 			{
 				Assert.IsNotNull(_targetPositionPredictor);
-				target = _targetPositionPredictor.PredictTargetPosition(source, target, _projectileVelocityInMPerS, currentAngleInRadians);
+				targetPosition = _targetPositionPredictor.PredictTargetPosition(source, target, _projectileVelocityInMPerS, currentAngleInRadians);
 			}
 
-			return CalculateDesiredAngle(source, targetPosition, _isSourceMirrored, _projectileVelocityInMPerS, target.Velocity);
+			return CalculateDesiredAngle(source, targetPosition);
 		}
 
-		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target, bool isSourceMirrored)
+		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target)
 		{
-			if (isSourceMirrored && target.x >= source.x)
+			if (_isSourceMirrored && target.x >= source.x)
 			{
 				throw new ArgumentException("Source faces left, but target is to the right");
 			}
 
-			if (!isSourceMirrored && target.x <= source.x)
+			if (!_isSourceMirrored && target.x <= source.x)
 			{
 				throw new ArgumentException("Source faces right, but target is to the left");
 			}
@@ -68,66 +69,66 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		/// <summary>
 		/// Assumes shells are NOT affected by gravity
 		/// </summary>
-		protected virtual float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
+		protected virtual float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition)
 		{
-			if (source == target)
+			if (source == targetPosition)
 			{
 				throw new ArgumentException();
 			}
 
 			float desiredAngleInDegrees;
 
-			if (source.x == target.x)
+			if (source.x == targetPosition.x)
 			{
 				// On same x-axis
-				desiredAngleInDegrees = source.y < target.y ? 90 : 270;
+				desiredAngleInDegrees = source.y < targetPosition.y ? 90 : 270;
 			}
-			else if (source.y == target.y)
+			else if (source.y == targetPosition.y)
 			{
 				// On same y-axis
-				if (source.x < target.x)
+				if (source.x < targetPosition.x)
 				{
-					desiredAngleInDegrees = isSourceMirrored ? 180 : 0;
+					desiredAngleInDegrees = _isSourceMirrored ? 180 : 0;
 				}
 				else
 				{
-					desiredAngleInDegrees = isSourceMirrored ? 0 : 180;
+					desiredAngleInDegrees = _isSourceMirrored ? 0 : 180;
 				}
 			}
 			else
 			{
 				// Different x and y axes, so need to calculate the angle
-				float xDiff = Math.Abs(source.x - target.x);
-				float yDiff = Math.Abs(source.y - target.y);
+				float xDiff = Math.Abs(source.x - targetPosition.x);
+				float yDiff = Math.Abs(source.y - targetPosition.y);
 				float angleInDegrees = Mathf.Atan(yDiff / xDiff) * Mathf.Rad2Deg;
 				Logging.Log(Tags.ANGLE_CALCULATORS, "angleInDegrees: " + angleInDegrees);
 
-				if (source.x < target.x)
+				if (source.x < targetPosition.x)
 				{
 					// Source is to left of target
-					if (source.y < target.y)
+					if (source.y < targetPosition.y)
 					{
 						// Source is below target
-						desiredAngleInDegrees = isSourceMirrored ? 180 - angleInDegrees : angleInDegrees;
+						desiredAngleInDegrees = _isSourceMirrored ? 180 - angleInDegrees : angleInDegrees;
 					}
 					else
 					{
 						// Source is above target
-						desiredAngleInDegrees = isSourceMirrored ? 180 + angleInDegrees : 360 - angleInDegrees;
+						desiredAngleInDegrees = _isSourceMirrored ? 180 + angleInDegrees : 360 - angleInDegrees;
 					}
 				}
 				else
 				{
 					// Source is to right of target
-					if (source.y < target.y)
+					if (source.y < targetPosition.y)
 					{
 						// Source is below target
-						desiredAngleInDegrees = isSourceMirrored ? angleInDegrees : 180 - angleInDegrees;
+						desiredAngleInDegrees = _isSourceMirrored ? angleInDegrees : 180 - angleInDegrees;
 					}
 					else
 					{
 						// Source is above target
-						desiredAngleInDegrees = isSourceMirrored ? 360 - angleInDegrees : 180 + angleInDegrees;
+						desiredAngleInDegrees = _isSourceMirrored ? 360 - angleInDegrees : 180 + angleInDegrees;
 					}
 				}
 			}

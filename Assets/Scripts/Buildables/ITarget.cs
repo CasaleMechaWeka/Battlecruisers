@@ -72,5 +72,6 @@ namespace BattleCruisers.Buildables
 		Vector2 Velocity { get; }
 		IList<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
+		Vector2 Position { get; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,13 +11,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		protected override bool LeadsTarget { get { return true; } }
 
-		/// <summary>
-		/// Assumes shells are NOT affected by gravity
-		/// </summary>
-		protected override float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInDegrees)
-		{
-			float distance = Vector2.Distance(source, target);
-			return distance / projectileVelocityInMPerS;
+		public LeadingAngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory) 
+		{ 
+			_targetPositionPredictor = _targetPositionPredictorFactory.CreateLinearPredictor();
 		}
 	}
 }

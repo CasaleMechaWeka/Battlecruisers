@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,12 +19,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
 
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity)
-		{
-			float distanceInM = Math.Abs(source.x - target.x);
-			float targetAltitude = target.y - source.y;
+		public MortarAngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory) 
+		{ 
+			_targetPositionPredictor = _targetPositionPredictorFactory.CreateMortarPredictor();
+		}
 
-			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition)
+		{
+			float distanceInM = Math.Abs(source.x - targetPosition.x);
+			float targetAltitude = targetPosition.y - source.y;
+
+			float velocitySquared = _projectileVelocityInMPerS * _projectileVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)
@@ -47,14 +54,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			Logging.Log(Tags.ANGLE_CALCULATORS, "MortarAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");
 
 			return angleInDegrees;
-		}
-
-		protected override float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
-		{
-			float sourceElevationInM = source.y - target.y;
-			float vSin = projectileVelocityInMPerS * Mathf.Sin(currentAngleInRadians);
-			float squareRootArg = (vSin * vSin) + 2 * Constants.GRAVITY * sourceElevationInM;
-			return (vSin + Mathf.Sqrt(squareRootArg)) / Constants.GRAVITY;
 		}
 	}
 }

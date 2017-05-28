@@ -10,16 +10,14 @@ namespace BattleCruisers.Movement.Predictors
 		Vector2 PredictTargetPosition(Vector2 sourcePosition, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians);
 	}
 
-	public abstract class TargetPositionPredictor
+	public abstract class TargetPositionPredictor : ITargetPositionPredictor
 	{
 		public Vector2 PredictTargetPosition(Vector2 sourcePosition, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
-			Vector2 targetPosition = target.GameObject.transform.position;
+			float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, target.Position, projectileVelocityInMPerS, currentAngleInRadians);
 
-			float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, targetPosition, projectileVelocityInMPerS, currentAngleInRadians);
-
-			float projectedX = targetPosition.x + target.Velocity.x * timeToTargetEstimate;
-			float projectedY = targetPosition.y + target.Velocity.y * timeToTargetEstimate;
+			float projectedX = target.Position.x + target.Velocity.x * timeToTargetEstimate;
+			float projectedY = target.Position.y + target.Velocity.y * timeToTargetEstimate;
 
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
 			Logging.Log(Tags.PREDICTORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, target.Velocity, timeToTargetEstimate));

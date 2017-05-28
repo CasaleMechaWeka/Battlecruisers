@@ -41,7 +41,7 @@ namespace BattleCruisers.Units.Aircraft
 				if (_target != null)
 				{
 					float xVelocity = maxVelocityInMPerS;
-					if (_target.GameObject.transform.position.x < transform.position.x)
+					if (_target.Position.x < transform.position.x)
 					{
 						xVelocity *= -1;
 					}

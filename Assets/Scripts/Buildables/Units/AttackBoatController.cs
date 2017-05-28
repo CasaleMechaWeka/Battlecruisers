@@ -145,9 +145,9 @@ namespace BattleCruisers.Buildables.Units
 		private bool IsObjectInFront(ITarget target)
 		{
 			return (FacingDirection == Direction.Right
-					&& target.GameObject.transform.position.x > transform.position.x)
+					&& target.Position.x > transform.position.x)
 				|| (FacingDirection == Direction.Left
-					&& target.GameObject.transform.position.x < transform.position.x);
+					&& target.Position.x < transform.position.x);
 		}
 
 		private void StartMoving()
