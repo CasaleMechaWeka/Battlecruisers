@@ -1,8 +1,10 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
@@ -11,29 +13,43 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		// Cannot use both namespaces and optional parameters in MonoBehaviour scripts :D
 		// Otherwise I would use optional parameters for the last two parameters.
 		// https://forum.unity3d.com/threads/script-can-use-namespace-or-optional-parameters-but-not-both.164563/
-		float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians);
+		float FindDesiredAngle(Vector2 source, ITarget target, float currentAngleInRadians);
 		float FindDirectionMultiplier(float currentAngleInRadians, float desiredAngleInDegrees);
 	}
 
-	public class AngleCalculator : MonoBehaviour, IAngleCalculator
+	public class AngleCalculator : IAngleCalculator
 	{
+		private readonly float _projectileVelocityInMPerS;
+		private readonly bool _isSourceMirrored;
+		private readonly ITargetPositionPredictor _targetPositionPredictor;
+
 		protected virtual bool LeadsTarget { get { return false; } }
 		protected virtual bool MustFaceTarget { get { return false; } }
 
-		// FELIX  Use FacingDirection instead of isSourceMirrored param?
-		public float FindDesiredAngle(Vector2 source, Vector2 target, bool isSourceMirrored, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
+		public AngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictor targetPositionPredictor)
 		{
+			_projectileVelocityInMPerS = projectileVelocityInMPerS;
+			_isSourceMirrored = isSourceMirrored;
+			_targetPositionPredictor = targetPositionPredictor;
+		}
+
+		// FELIX  Use FacingDirection instead of isSourceMirrored param?
+		public float FindDesiredAngle(Vector2 source, ITarget target, float currentAngleInRadians)
+		{
+			Vector2 targetPosition = target.GameObject.transform.position;
+
 			if (MustFaceTarget)
 			{
-				CheckSourceIsFacingTarget(source, target, isSourceMirrored);
+				CheckSourceIsFacingTarget(source, targetPosition, _isSourceMirrored);
 			}
 
 			if (LeadsTarget)
 			{
-				target = PredictTargetPosition(source, target, projectileVelocityInMPerS, targetVelocity, currentAngleInRadians);
+				Assert.IsNotNull(_targetPositionPredictor);
+				target = _targetPositionPredictor.PredictTargetPosition(source, target, _projectileVelocityInMPerS, currentAngleInRadians);
 			}
 
-			return CalculateDesiredAngle(source, target, isSourceMirrored, projectileVelocityInMPerS, targetVelocity);
+			return CalculateDesiredAngle(source, targetPosition, _isSourceMirrored, _projectileVelocityInMPerS, target.Velocity);
 		}
 
 		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target, bool isSourceMirrored)
@@ -47,23 +63,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			{
 				throw new ArgumentException("Source faces right, but target is to the left");
 			}
-		}
-
-		private Vector2 PredictTargetPosition(Vector2 source, Vector2 target, float projectileVelocityInMPerS, Vector2 targetVelocity, float currentAngleInRadians)
-		{
-			float timeToTargetEstimate = EstimateTimeToTarget(source, target, projectileVelocityInMPerS, currentAngleInRadians);
-
-			float projectedX = target.x + targetVelocity.x * timeToTargetEstimate;
-			float projectedY = target.y + targetVelocity.y * timeToTargetEstimate;
-
-			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-			Logging.Log(Tags.ANGLE_CALCULATORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, targetVelocity, timeToTargetEstimate));
-			return projectedPosition;
-		}
-
-		protected virtual float EstimateTimeToTarget(Vector2 source, Vector2 target, float projectileVelocityInMPerS, float currentAngleInRadians)
-		{
-			return 0;
 		}
 
 		/// <summary>
