@@ -42,6 +42,7 @@ namespace BattleCruisers.Utils
 		public const string CRUISER = "Cruiser";
 		public const string DRONES = "Drones";
 		public const string MOVEMENT = "Movement";
+		public const string PREDICTORS = "TargetPositionPredictors";
 	}
 	
 	public static class Logging
@@ -96,6 +97,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.DRONES, false);
 			tagsToActiveness.Add(Tags.MOVEMENT, false);
+			tagsToActiveness.Add(Tags.PREDICTORS, false);
 
 			return tagsToActiveness;
 		}
