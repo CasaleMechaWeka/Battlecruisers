@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets;
@@ -74,8 +75,9 @@ namespace BattleCruisers.Buildables.Units
 			base.OnBuildableCompleted();
 
 			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
-			
-			turretBarrelController.Initialise(Faction);
+
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+			turretBarrelController.Initialise(Faction, angleCalculator);
 
 			// Enemy detection
 			enemyDetector.Initialise(turretBarrelController.turretStats.rangeInM);

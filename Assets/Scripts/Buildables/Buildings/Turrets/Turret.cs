@@ -62,13 +62,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 		}
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
-
-			turretBarrelController.Initialise(Faction);
-		}
-
 		protected override void EnableRenderers(bool enabled)
 		{
 			_turretBaseRenderer.enabled = enabled;

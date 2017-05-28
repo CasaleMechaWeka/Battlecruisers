@@ -7,6 +7,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,8 +47,7 @@ namespace BattleCruisers.Buildables
 		event EventHandler CompletedBuildable;
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, IPrefabFactory prefabFactory, 
-			ITargetsFactory targetsFactory, IMovementControllerFactory movementControllerFactory, IAircraftProvider aircraftProvider);
+		void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, IFactoryProvider factoryProvider, IAircraftProvider aircraftProvider);
 		void StartConstruction();
 		void InitiateDelete();
 	}

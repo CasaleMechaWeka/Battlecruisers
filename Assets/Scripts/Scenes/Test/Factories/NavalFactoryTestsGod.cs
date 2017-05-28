@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
@@ -22,9 +23,10 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
 			prefabFactory.CreateUnit(attackBoatPrefab).Returns(callInfo => Instantiate(attackBoatPrefab.unit));
+			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider(prefabFactory);
 
-			helper.InitialiseBuildable(navalFactoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(navalFactoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(navalFactoryFacingRight, factoryProvider: factoryProvider, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(navalFactoryFacingLeft, factoryProvider: factoryProvider, parentCruiserDirection: Direction.Left);
 
 			navalFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			navalFactoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;

@@ -12,10 +12,12 @@ using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Units.Aircraft;
 using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -37,9 +39,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			UIManager uiManager = null,
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
-			IPrefabFactory prefabFactory = null,
-			ITargetsFactory targetsFactory = null,
-			IMovementControllerFactory movementControllerFactory = null,
+			IFactoryProvider factoryProvider = null,
 			IAircraftProvider aircraftProvider = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
@@ -52,10 +52,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			{
 				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left);
 			}
-
-			if (targetsFactory == null)
+			
+			if (factoryProvider == null)
 			{
-				targetsFactory = new TargetsFactory(enemyCruiser);
+				factoryProvider = new FactoryProvider(prefabFactory: null, enemyCruiser: enemyCruiser);
 			}
 
 			if (aircraftProvider == null)
@@ -63,19 +63,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				aircraftProvider = CreateAircraftProvider();
 			}
 
-			if (movementControllerFactory == null)
-			{
-				movementControllerFactory = new MovementControllerFactory();
-			}
-
 			buildable.Initialise(
 				faction,
 				uiManager,
 				parentCruiser,
 				enemyCruiser,
-				prefabFactory,
-				targetsFactory,
-				movementControllerFactory,
+				factoryProvider,
 				aircraftProvider);
 		}
 
@@ -99,6 +92,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return cruiser;
 		}
 
+		public IFactoryProvider CreateFactoryProvider(GameObject globalTarget)
+		{
+			BcUtils.IFactoryProvider factoryProvider = Substitute.For<BcUtils.IFactoryProvider>();
+			factoryProvider.TargetsFactory.Returns(CreateTargetsFactory(globalTarget));
+			return factoryProvider;
+		}
+
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
@@ -119,6 +119,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
 
 			return targetsFactory;
+		}
+
+		public IFactoryProvider CreateFactoryProvider(IPrefabFactory prefabFactory = null)
+		{
+			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
+
+			factoryProvider.PrefabFactory.Returns(prefabFactory);
+			factoryProvider.TargetsFactory.Returns(CreateTargetsFactory());
+
+			return factoryProvider;
 		}
 
 		/// <summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
@@ -27,13 +28,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 		private void SetupPair(FighterController fighter1, FighterController fighter2)
 		{
-			ITargetsFactory targetsFactory1 = _helper.CreateTargetsFactory(fighter2.GameObject);
-			ITargetsFactory targetsFactory2 = _helper.CreateTargetsFactory(fighter1.GameObject);
-
-			_helper.InitialiseBuildable(fighter1, faction: Faction.Reds, targetsFactory: targetsFactory1);
+			BcUtils.IFactoryProvider factoryProvider1 = _helper.CreateFactoryProvider(fighter2.GameObject);
+			_helper.InitialiseBuildable(fighter1, faction: Faction.Reds, factoryProvider: factoryProvider1);
 			fighter1.StartConstruction();
 
-			_helper.InitialiseBuildable(fighter2, faction: Faction.Blues, targetsFactory: targetsFactory2);
+			BcUtils.IFactoryProvider factoryProvider2 = _helper.CreateFactoryProvider(fighter1.GameObject);
+			_helper.InitialiseBuildable(fighter2, faction: Faction.Blues, factoryProvider: factoryProvider2);
 			fighter2.StartConstruction();
 		}
 	}

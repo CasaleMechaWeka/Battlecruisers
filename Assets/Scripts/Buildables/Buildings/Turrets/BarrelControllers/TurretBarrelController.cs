@@ -16,9 +16,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{
-//			return transform.rotation.eulerAngles.z == desiredAngleInDegrees;
-
-			// FELIX
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
@@ -28,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
 			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Math.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			float directionMultiplier = angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
+			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 			Logging.Log(Tags.BARREL_CONTROLLER, string.Format("AdjustBarrel():  currentAngleInDegrees: {0}  desiredAngleInDegrees: {1}  directionMultiplier: {2}", currentAngleInDegrees, desiredAngleInDegrees, directionMultiplier));
 
 			float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;

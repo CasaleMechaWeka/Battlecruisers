@@ -17,20 +17,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
 		private Faction _faction;
+		protected IAngleCalculator _angleCalculator;
 		private float _currentFireIntervalInS;
 		private float _timeSinceLastFireInS;
 		private ShellStats _shellStats;
 
 		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
-		public AngleCalculator angleCalculator;
 
 		public ITarget Target { get; set; }
 		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
-		public void Initialise(Faction faction)
+		public void Initialise(Faction faction, IAngleCalculator angleCalculator)
 		{
 			_faction = faction;
+			_angleCalculator = angleCalculator;
+
 			turretStats.Initialise();
 			_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 			_timeSinceLastFireInS = float.MaxValue;
@@ -38,20 +40,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			shellSpawner.Initialise(_faction, _shellStats);
 		}
 
+		// FELIX  Should be FixedUpdate, as it is adjusing the barrle :/
 		void Update()
 		{
 			if (Target != null)
 			{
 				_timeSinceLastFireInS += Time.deltaTime;
 
-				Vector2 sourcePosition = new Vector2(transform.position.x, transform.position.y);
-				Vector3 targetPositionV3 = Target.GameObject.transform.position;
-				Vector2 targetPosition = new Vector2(targetPositionV3.x, targetPositionV3.y);
-
 				Logging.Log(Tags.AIRCRAFT, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-				float desiredAngleInDegrees = angleCalculator.FindDesiredAngle(sourcePosition, targetPosition, IsSourceMirrored, turretStats.bulletVelocityInMPerS, Target.Velocity, currentAngleInRadians);
+				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, turretStats.bulletVelocityInMPerS, currentAngleInRadians);
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 

@@ -19,18 +19,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
 
-		public MortarAngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory) 
+		public MortarAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(targetPositionPredictorFactory) 
 		{ 
 			_targetPositionPredictor = _targetPositionPredictorFactory.CreateMortarPredictor();
 		}
 
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition)
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed, float projectileVelocityInMPerS)
 		{
 			float distanceInM = Math.Abs(source.x - targetPosition.x);
 			float targetAltitude = targetPosition.y - source.y;
 
-			float velocitySquared = _projectileVelocityInMPerS * _projectileVelocityInMPerS;
+			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)

@@ -1,13 +1,16 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +33,9 @@ namespace BattleCruisers.Buildables
 		protected ITargetsFactory _targetsFactory;
 		protected IMovementControllerFactory _movementControllerFactory;
 		protected IAircraftProvider _aircraftProvider;
+		protected IAngleCalculatorFactory _angleCalculatorFactory;
+		protected ITargetPositionPredictorFactory _targetPositionPredictorFactory;
+		protected IFactoryProvider _factoryProvider;
 
 		public string buildableName;
 		public string description;
@@ -117,18 +123,20 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, IPrefabFactory prefabFactory, ITargetsFactory targetsFactory, 
-			IMovementControllerFactory movementControllerFactory, IAircraftProvider aircraftProvider)
+			ICruiser enemyCruiser, IFactoryProvider factoryProvider, IAircraftProvider aircraftProvider)
 		{
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
-			_prefabFactory = prefabFactory;
 			_droneManager = parentCruiser.DroneManager;
 			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
-			_targetsFactory = targetsFactory;
-			_movementControllerFactory = movementControllerFactory;
 			_aircraftProvider = aircraftProvider;
+
+			_factoryProvider = factoryProvider;
+			_prefabFactory = _factoryProvider.PrefabFactory;
+			_targetsFactory = _factoryProvider.TargetsFactory;
+			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
+			_targetPositionPredictorFactory = _factoryProvider.TargetPositionPredictorFactory;
 
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;

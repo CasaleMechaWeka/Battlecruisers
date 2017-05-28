@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
@@ -30,9 +31,9 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			turret.StartConstruction();
 
 			// Set up bomber
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(turret.GameObject);
+			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider(turret.GameObject);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
-			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
+			helper.InitialiseBuildable(bomber, faction: Faction.Blues, factoryProvider: factoryProvider, aircraftProvider: aircraftProvider);
 			bomber.StartConstruction();
 		}
 	}

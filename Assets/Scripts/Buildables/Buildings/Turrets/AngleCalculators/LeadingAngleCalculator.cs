@@ -11,8 +11,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		protected override bool LeadsTarget { get { return true; } }
 
-		public LeadingAngleCalculator(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory) 
+		public LeadingAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(targetPositionPredictorFactory) 
 		{ 
 			_targetPositionPredictor = _targetPositionPredictorFactory.CreateLinearPredictor();
 		}

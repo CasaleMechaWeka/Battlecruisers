@@ -5,32 +5,32 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
 	public interface IAngleCalculatorFactory
 	{
-		IAngleCalculator CreateAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateArtilleryAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateMortarAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateLeadingAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory);
+		IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
+		IAngleCalculator CreateArtilleryAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
+		IAngleCalculator CreateMortarAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
+		IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
 	}
 
-	public class AngleCalculatorFactory
+	public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
-		public IAngleCalculator CreateAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new AngleCalculator(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory);
+			return new AngleCalculator(targetPositionPredictorFactory);
 		}
 
-		public IAngleCalculator CreateArtilleryAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateArtilleryAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new ArtilleryAngleCalculator(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory);
+			return new ArtilleryAngleCalculator(targetPositionPredictorFactory);
 		}
 
-		public IAngleCalculator CreateMortarAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateMortarAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new MortarAngleCalculator(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory);
+			return new MortarAngleCalculator(targetPositionPredictorFactory);
 		}
 
-		public IAngleCalculator CreateLeadingAngleCalcultor(float projectileVelocityInMPerS, bool isSourceMirrored, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new LeadingAngleCalculator(projectileVelocityInMPerS, isSourceMirrored, targetPositionPredictorFactory);
+			return new LeadingAngleCalculator(targetPositionPredictorFactory);
 		}
 	}
 }

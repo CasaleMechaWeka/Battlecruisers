@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
@@ -12,27 +14,19 @@ namespace BattleCruisers.Scenes.Test
 	{
 		public GameObject targetGameObject;
 
-		public TurretBarrelController left;
-		public TurretBarrelController farLeft;
-		public TurretBarrelController right;
-		public TurretBarrelController farRight;
-
 		void Start()
 		{
 			ITarget target = Substitute.For<ITarget>();
 			target.GameObject.Returns(targetGameObject);
 
-			left.Target = target;
-			left.Initialise(Faction.Blues);
+			IAngleCalculator angleCalculator = new ArtilleryAngleCalculator(new TargetPositionPredictorFactory());
 
-			farLeft.Target = target;
-			farLeft.Initialise(Faction.Blues);
-
-			right.Target = target;
-			right.Initialise(Faction.Blues);
-
-			farRight.Target = target;
-			farRight.Initialise(Faction.Blues);
+			TurretBarrelController[] artilleryBarrels = GameObject.FindObjectsOfType<TurretBarrelController>() as TurretBarrelController[];
+			foreach (TurretBarrelController barrel in artilleryBarrels)
+			{
+				barrel.Target = target;
+				barrel.Initialise(Faction.Blues, angleCalculator);
+			}
 		}
 	}
 }

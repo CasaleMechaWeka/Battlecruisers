@@ -37,12 +37,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 		private void SetupPair(FighterController fighter, IList<Vector2> fighterPatrolPoints, AircraftController target, IList<Vector2> targetPatrolPoints)
 		{
-			// Use real targetting logic
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			ITargetsFactory targetsFactory = new TargetsFactory(enemyCruiser);
-
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
-			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
+			_helper.InitialiseBuildable(fighter, Faction.Reds, enemyCruiser: enemyCruiser, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);

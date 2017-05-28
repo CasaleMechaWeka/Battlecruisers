@@ -4,6 +4,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -15,11 +16,11 @@ namespace BattleCruisers.Scenes.Test
 
 			Helper helper = new Helper(numOfDrones: 8);
 
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory();
+			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider();
 
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory);
+				helper.InitialiseBuildable(buildable, factoryProvider: factoryProvider);
 				buildable.StartConstruction();
 			}
 		}
