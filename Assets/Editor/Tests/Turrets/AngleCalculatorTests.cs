@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Utils;
+using NSubstitute;
 using System;
 using UnityEngine;
 using UnityEditor;
@@ -10,22 +12,23 @@ namespace BattleCruisers.Tests.Turrets
 	public class AngleCalculatorTests 
 	{
 		private IAngleCalculator _angleCalculator;
-		private Vector2 _target;
+		private ITarget _target;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			GameObject gameObject = new GameObject();
-			_angleCalculator = gameObject.AddComponent<AngleCalculator>();
-			_target = new Vector2();
+			_angleCalculator = new AngleCalculator(targetPositionPredictorFactory: null);
+			
+			_target = Substitute.For<ITarget>();
+			_target.Position.Returns(new Vector2());
+			_target.Velocity.Returns(new Vector2());
 		}
 
 		#region FindDesiredAngle
 		[Test]
 		public void FindDesiredAngle_SourceIsTarget_Throws()
 		{
-			Vector2 point = new Vector2();
-			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(point, point, isSourceMirrored: false, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0));
+			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(_target.Position, _target, isSourceMirrored: false, projectileVelocityInMPerS: -1, currentAngleInRadians: 0));
 		}
 
 		#region Same axis
@@ -147,7 +150,7 @@ namespace BattleCruisers.Tests.Turrets
 
 		private void TestFindDesiredAngle(Vector2 source, bool isSourceMirrored, float expectedAngleInDegrees)
 		{
-			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1, targetVelocity: new Vector2(0, 0), currentAngleInRadians: 0);
+			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1, currentAngleInRadians: 0);
 			Assert.AreEqual(expectedAngleInDegrees, angleInDegrees);
 		}
 		#endregion FindDesiredAngle
