@@ -17,7 +17,8 @@ namespace BattleCruisers.Scenes.Test
 		void Start()
 		{
 			ITarget target = Substitute.For<ITarget>();
-			target.GameObject.Returns(targetGameObject);
+			Vector2 targetPosition = targetGameObject.transform.position;
+			target.Position.Returns(targetPosition);
 
 			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
 
