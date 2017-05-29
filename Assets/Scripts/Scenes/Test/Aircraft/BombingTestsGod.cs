@@ -30,11 +30,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
 
+			helper.InitialiseBuildable(bomberToLeft, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
+			bomberToLeft.StartConstruction();
+
 			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
-
-			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
-			bomberToLeft.StartConstruction();
 		}
 	}
 }
