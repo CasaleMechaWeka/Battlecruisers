@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 	{
 		public BomberController bomber;
 		public List<Vector2> bomberPatrolPoints;
-		public DefensiveTurret turret;
+		public AntiAirTurretController turret;
 
 		void Start() 
 		{
