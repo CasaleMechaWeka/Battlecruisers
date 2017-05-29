@@ -95,7 +95,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		public IFactoryProvider CreateFactoryProvider(GameObject globalTarget)
 		{
 			BcUtils.IFactoryProvider factoryProvider = Substitute.For<BcUtils.IFactoryProvider>();
-			factoryProvider.TargetsFactory.Returns(CreateTargetsFactory(globalTarget));
+			ITargetsFactory targetsFactory = CreateTargetsFactory(globalTarget);
+			factoryProvider.TargetsFactory.Returns(targetsFactory);
 			return factoryProvider;
 		}
 
