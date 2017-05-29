@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class ArillteryController : OffensiveTurret
+	public class ArtilleryController : OffensiveTurret
 	{
 		private ITargetProcessor _targetProcessor;
 
@@ -17,8 +17,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnInitialised();
 
-//			IAngleCalculator angleCalculator = 
-//			turretBarrelController.Initialise(Faction);
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateArtilleryAngleCalcultor(_targetPositionPredictorFactory);
+			turretBarrelController.Initialise(Faction, angleCalculator);
 		}
 	}
 }
