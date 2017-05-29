@@ -27,7 +27,8 @@ namespace BattleCruisers.Scenes.Test
 		private void InitialisePair(TurretBarrelController barrel, GameObject targetGameObject, IAngleCalculator angleCalculator)
 		{
 			ITarget target = Substitute.For<ITarget>();
-			target.GameObject.Returns(targetGameObject);
+			Vector2 targetPosition = targetGameObject.transform.position;
+			target.Position.Returns(targetPosition);
 			barrel.Target = target;
 			barrel.Initialise(Faction.Blues, angleCalculator);
 		}
