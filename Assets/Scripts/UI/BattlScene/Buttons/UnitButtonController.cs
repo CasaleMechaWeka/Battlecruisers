@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public void Initialize(UnitWrapper unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
-			base.Initialize(unitWrapper.unit, droneManager, uiManager);
+			base.Initialize(unitWrapper.Unit, droneManager, uiManager);
 
 			_unitWrapper = unitWrapper;
 		}
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		protected override void OnClick()
 		{
 			_factory.UnitWrapper = _unitWrapper;
-			_uiManager.ShowUnitDetails(_unitWrapper.unit);
+			_uiManager.ShowUnitDetails(_unitWrapper.Unit);
 		}
 	}
 }

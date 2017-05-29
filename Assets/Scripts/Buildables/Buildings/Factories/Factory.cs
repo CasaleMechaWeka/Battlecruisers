@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 				if (_unitWrapper != null)
 				{
 					Assert.IsNull(DroneConsumer);
-					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.unit.numOfDronesRequired);
+					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Unit.numOfDronesRequired);
 					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 				}
 			}
@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (_unitWrapper != null 
 				&& (_unitUnderConstruction == null || _unitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& CanSpawnUnit(_unitWrapper.unit))
+				&& CanSpawnUnit(_unitWrapper.Unit))
 			{
 				StartBuildingUnit();
 			}

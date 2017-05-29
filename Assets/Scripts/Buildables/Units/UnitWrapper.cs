@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
 	public class UnitWrapper : MonoBehaviour 
 	{
-		public Unit unit;
+		public Unit Unit { get; private set; }
+
+		public void Awake()
+		{
+			Unit = gameObject.GetComponentInChildren<Unit>();
+			Assert.IsNotNull(Unit);
+		}
 	}
 }
