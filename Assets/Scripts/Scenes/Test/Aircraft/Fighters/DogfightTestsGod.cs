@@ -15,25 +15,16 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
 	public class DogfightTestsGod : MonoBehaviour 
 	{
-		private Helper _helper;
-
 		public FighterController fighter1, fighter2;
 
 		void Start() 
 		{
-			_helper = new Helper();
+			Helper helper = new Helper();
 
-			SetupPair(fighter1, fighter2);
-		}
-
-		private void SetupPair(FighterController fighter1, FighterController fighter2)
-		{
-			ITargetsFactory targetsFactory1 = _helper.CreateTargetsFactory(fighter2.GameObject);
-			_helper.InitialiseBuildable(fighter1, faction: Faction.Reds, targetsFactory: targetsFactory1);
+			helper.InitialiseBuildable(fighter1, faction: Faction.Reds);
 			fighter1.StartConstruction();
 
-			ITargetsFactory targetsFactory2 = _helper.CreateTargetsFactory(fighter1.GameObject);
-			_helper.InitialiseBuildable(fighter2, faction: Faction.Blues, targetsFactory: targetsFactory2);
+			helper.InitialiseBuildable(fighter2, faction: Faction.Blues);
 			fighter2.StartConstruction();
 		}
 	}

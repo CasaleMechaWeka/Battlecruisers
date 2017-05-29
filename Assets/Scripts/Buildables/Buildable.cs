@@ -135,6 +135,7 @@ namespace BattleCruisers.Buildables
 			_factoryProvider = factoryProvider;
 			_prefabFactory = _factoryProvider.PrefabFactory;
 			_targetsFactory = _factoryProvider.TargetsFactory;
+			_angleCalculatorFactory = _factoryProvider.AngleCalculatorFactory;
 			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
 			_targetPositionPredictorFactory = _factoryProvider.TargetPositionPredictorFactory;
 
