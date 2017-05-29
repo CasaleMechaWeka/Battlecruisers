@@ -11,8 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class ArtilleryController : OffensiveTurret
 	{
-		private ITargetProcessor _targetProcessor;
-
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
