@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
@@ -27,10 +26,9 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
 			prefabFactory.CreateUnit(aircraftPrefab).Returns(callInfo => Instantiate(aircraftPrefab.unit));
-			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider(prefabFactory);
 
-			helper.InitialiseBuildable(airFactoryFacingRight, factoryProvider: factoryProvider, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(airFactoryFacingLeft, factoryProvider: factoryProvider, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(airFactoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(airFactoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
 
 			airFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			airFactoryFacingRight.StartedBuildingUnit += Factory_StartedBuildingUnit;

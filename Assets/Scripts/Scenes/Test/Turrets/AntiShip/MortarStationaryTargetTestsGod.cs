@@ -7,7 +7,6 @@ using BattleCruisers.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
@@ -34,8 +33,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
 		private void SetupPair(DefensiveTurret mortar, GameObject target)
 		{
-			BcUtils.IFactoryProvider factoryProvider = _helper.CreateFactoryProvider(target);
-			_helper.InitialiseBuildable(mortar, factoryProvider: factoryProvider);
+			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target);
+			_helper.InitialiseBuildable(mortar, targetsFactory: targetsFactory);
 			mortar.StartConstruction();
 		}
 	}

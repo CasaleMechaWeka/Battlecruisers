@@ -13,7 +13,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
@@ -27,13 +26,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 		void Start() 
 		{
 			Helper helper = new Helper();
-			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider(target);
+
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
 
-			helper.InitialiseBuildable(bomberToRight, factoryProvider: factoryProvider, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
 
-			helper.InitialiseBuildable(bomberToLeft, factoryProvider: factoryProvider, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();
 		}
 	}

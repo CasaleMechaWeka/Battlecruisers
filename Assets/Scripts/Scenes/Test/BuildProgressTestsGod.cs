@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
+using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -12,15 +12,14 @@ namespace BattleCruisers.Scenes.Test
 	{
 		void Start() 
 		{
-			Buildable[] buildables = GameObject.FindObjectsOfType(typeof(Buildable)) as Buildable[];
-
 			Helper helper = new Helper(numOfDrones: 8);
-
-			BcUtils.IFactoryProvider factoryProvider = helper.CreateFactoryProvider();
+			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+			
+			Buildable[] buildables = GameObject.FindObjectsOfType(typeof(Buildable)) as Buildable[];
 
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable, factoryProvider: factoryProvider);
+				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory);
 				buildable.StartConstruction();
 			}
 		}

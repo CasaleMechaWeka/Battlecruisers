@@ -1,9 +1,11 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -39,8 +41,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			UIManager uiManager = null,
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
-			IFactoryProvider factoryProvider = null,
 			IAircraftProvider aircraftProvider = null,
+			IPrefabFactory prefabFactory = null,
+			ITargetsFactory targetsFactory = null,
+			IMovementControllerFactory movementControllerFactory = null,
+			IAngleCalculatorFactory angleCalculatorFactory = null,
+			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
 			if (parentCruiser == null)
@@ -53,15 +59,33 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left);
 			}
 			
-			if (factoryProvider == null)
-			{
-				factoryProvider = new FactoryProvider(prefabFactory: null, enemyCruiser: enemyCruiser);
-			}
-
 			if (aircraftProvider == null)
 			{
 				aircraftProvider = CreateAircraftProvider();
 			}
+
+			if (targetsFactory == null)
+			{
+				targetsFactory = new TargetsFactory(enemyCruiser);
+			}
+
+			if (movementControllerFactory == null)
+			{
+				movementControllerFactory = new MovementControllerFactory();
+			}
+
+			if (angleCalculatorFactory == null)
+			{
+				angleCalculatorFactory = new AngleCalculatorFactory();
+			}
+
+			if (targetPositionPredictorFactory == null)
+			{
+				targetPositionPredictorFactory = new TargetPositionPredictorFactory();
+			}
+
+			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 
+				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory);
 
 			buildable.Initialise(
 				faction,
@@ -92,14 +116,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return cruiser;
 		}
 
-		public IFactoryProvider CreateFactoryProvider(GameObject globalTarget)
-		{
-			BcUtils.IFactoryProvider factoryProvider = Substitute.For<BcUtils.IFactoryProvider>();
-			ITargetsFactory targetsFactory = CreateTargetsFactory(globalTarget);
-			factoryProvider.TargetsFactory.Returns(targetsFactory);
-			return factoryProvider;
-		}
-
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
@@ -122,22 +138,22 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return targetsFactory;
 		}
 
-		public IFactoryProvider CreateFactoryProvider(IPrefabFactory prefabFactory = null)
+		public IFactoryProvider CreateFactoryProvider(
+			IPrefabFactory prefabFactory, 
+			ITargetsFactory targetsFactory, 
+			IMovementControllerFactory movementControllerFactory,
+			IAngleCalculatorFactory angleCalculatorFactory,
+			ITargetPositionPredictorFactory targetPositionControllerFactory)
 		{
 			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
 			factoryProvider.PrefabFactory.Returns(prefabFactory);
-			factoryProvider.TargetsFactory.Returns(CreateTargetsFactory());
+			factoryProvider.TargetsFactory.Returns(targetsFactory);
+			factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
+			factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
+			factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
 
 			return factoryProvider;
-		}
-
-		/// <summary>
-		/// Target processors never assign any targets to any target consumers.
-		/// </summary>
-		public ITargetsFactory CreateTargetsFactory()
-		{
-			return Substitute.For<ITargetsFactory>();
 		}
 
 		public IAircraftProvider CreateAircraftProvider(
