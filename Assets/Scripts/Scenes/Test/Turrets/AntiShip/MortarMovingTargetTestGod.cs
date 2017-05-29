@@ -28,8 +28,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 			target.StartConstruction();
 
 			// Setup mortars
-			DefensiveTurret[] mortars = GameObject.FindObjectsOfType(typeof(DefensiveTurret)) as DefensiveTurret[];
-			foreach (DefensiveTurret mortar in mortars)
+			MortarController[] mortars = GameObject.FindObjectsOfType(typeof(MortarController)) as MortarController[];
+			foreach (MortarController mortar in mortars)
 			{
 				_helper.InitialiseBuildable(mortar, Faction.Reds);
 				mortar.StartConstruction();
