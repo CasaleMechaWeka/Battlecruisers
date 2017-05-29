@@ -43,7 +43,7 @@ namespace BattleCruisers.AI
 				Logging.Log(Tags.AI, "BuildNextBuilding: " + buildingKey.PrefabPath);
 
 				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
-				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.building.slotType);
+				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.Building.slotType);
 				Assert.IsNotNull(slot);
 
 				Building building = _friendlyCruiser.ConstructBuilding(buildingWrapperPrefab, slot);

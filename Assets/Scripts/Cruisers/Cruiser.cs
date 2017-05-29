@@ -154,7 +154,7 @@ namespace BattleCruisers.Cruisers
 		public Building ConstructSelectedBuilding(ISlot slot)
 		{
 			Assert.IsNotNull(SelectedBuildingPrefab);
-			Assert.AreEqual(SelectedBuildingPrefab.building.slotType, slot.Type);
+			Assert.AreEqual(SelectedBuildingPrefab.Building.slotType, slot.Type);
 
 			Building building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
 			building.Initialise(Faction, _uiManager, this, _enemyCruiser, _factoryProvider, _aircraftProvider);

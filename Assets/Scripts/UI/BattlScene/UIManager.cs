@@ -93,8 +93,8 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			_playerCruiser.HighlightAvailableSlots(buildingWrapper.building.slotType);
-			buildableDetails.ShowBuildableDetails(buildingWrapper.building, allowDelete: false);
+			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Building.slotType);
+			buildableDetails.ShowBuildableDetails(buildingWrapper.Building, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)

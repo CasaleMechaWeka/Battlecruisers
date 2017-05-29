@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button button = (Button)Instantiate(buildingButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			Sprite slotSprite = _spriteFetcher.GetSlotSprite(buildingWrapper.building.slotType);
+			Sprite slotSprite = _spriteFetcher.GetSlotSprite(buildingWrapper.Building.slotType);
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
 			controller.Initialize(buildingWrapper, uiManager, _droneManager, slotSprite);
 			return controller;

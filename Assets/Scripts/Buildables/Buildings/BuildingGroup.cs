@@ -28,11 +28,11 @@ namespace BattleCruisers.Buildables.Buildings
 			// Check building category matches this group's category
 			if (buildings.Count > 0)
 			{
-				BuildingCategory = buildings[0].building.category;
+				BuildingCategory = buildings[0].Building.category;
 
 				for (int i = 1; i < buildings.Count; ++i)
 				{
-					if (buildings[i].building.category != BuildingCategory)
+					if (buildings[i].Building.category != BuildingCategory)
 					{
 						throw new ArgumentException();
 					}

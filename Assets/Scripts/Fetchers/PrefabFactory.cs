@@ -42,14 +42,15 @@ namespace BattleCruisers.Fetchers
 			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
 			// Awake is called.  Because this prefab will never be loaded (only copies of it
 			// made, and those copies will be loaded), need to explicitly call Awake().
-			buildingWrapperPrefab.building.Awake();
+			buildingWrapperPrefab.Awake();
+			buildingWrapperPrefab.Building.Awake();
 
 			return buildingWrapperPrefab;
 		}
 
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			return Instantiate(buildingWrapperPrefab).building;
+			return Instantiate(buildingWrapperPrefab).Building;
 		}
 
 		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
