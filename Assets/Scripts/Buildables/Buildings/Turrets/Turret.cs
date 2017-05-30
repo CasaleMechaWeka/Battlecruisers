@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			{
 				if (_sprite == null)
 				{
-					_sprite = buildableProgress.fillableImage.sprite;
+					_sprite = _buildableProgress.fillableImage.sprite;
 				}
 				return _sprite;
 			}

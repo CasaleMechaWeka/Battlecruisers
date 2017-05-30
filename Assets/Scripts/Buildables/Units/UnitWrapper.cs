@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-	public class UnitWrapper : MonoBehaviour 
+	public class UnitWrapper : BuildableWrapper 
 	{
 		public Unit Unit { get; private set; }
 

@@ -43,9 +43,9 @@ namespace BattleCruisers.Buildables
 		public float buildTimeInS;
 		public SlotType slotType;
 
-		public TextMesh textMesh;
-		public BuildableProgressController buildableProgress;
-		public HealthBarController healthBar;
+		private TextMesh _textMesh;
+		protected BuildableProgressController _buildableProgress;
+		private HealthBarController _healthBar;
 
 		#region Properties
 		public BuildableState BuildableState { get; private set; }
@@ -115,11 +115,23 @@ namespace BattleCruisers.Buildables
 
 		protected override void OnAwake()
 		{
+			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+			Assert.IsNotNull(_textMesh);
+
+			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
+			Assert.IsNotNull(_buildableProgress);
+
+			BuildableWrapper buildableWrapper = gameObject.GetComponentInParent<BuildableWrapper>();
+			Assert.IsNotNull(buildableWrapper);
+
+			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+			Assert.IsNotNull(_healthBar);
+
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			BuildableState = BuildableState.NotStarted;
 
-			healthBar.Initialise(this, followDamagable: true);
+			_healthBar.Initialise(this, followDamagable: true);
 		}
 
 		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
@@ -149,7 +161,7 @@ namespace BattleCruisers.Buildables
 
 		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			textMesh.text = e.NewNumOfDrones.ToString();
+			_textMesh.text = e.NewNumOfDrones.ToString();
 		}
 
 		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
