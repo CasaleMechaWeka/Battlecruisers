@@ -63,7 +63,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				{
 					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
 					{
-						Fire(desiredAngleInDegrees);
+						// Burst fires happen even if we are no longer on target, so we may miss
+						// the target in this case.  Hence use the actual angle our turret barrel
+						// is at, intead of the perfect desired angle.
+						float fireAngle = turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+
+						Fire(fireAngle);
 
 						_timeSinceLastFireInS = 0;
 						_currentFireIntervalInS = turretStats.NextFireIntervalInS;
