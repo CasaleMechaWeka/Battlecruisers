@@ -15,12 +15,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class Turret : Building, ITargetConsumer
 	{
+		private GameObject _turretBase;
 		private Renderer _turretBaseRenderer;
+		private GameObject _turretBarrel;
 		private Renderer _turretBarrelRenderer;
-
-		public GameObject turretBase;
-		public GameObject turretBarrel;
-		public TurretBarrelController turretBarrelController;
+		protected TurretBarrelController _turretBarrelController;
 
 		protected override Renderer Renderer
 		{
@@ -28,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			{
 				if (_renderer == null)
 				{
-					_renderer = turretBase.GetComponent<Renderer>();
+					_renderer = _turretBase.GetComponent<Renderer>();
 				}
 				return _renderer;
 			}
@@ -36,8 +35,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public ITarget Target 
 		{ 
-			get { return turretBarrelController.Target; }
-			set { turretBarrelController.Target = value; }
+			get { return _turretBarrelController.Target; }
+			set { _turretBarrelController.Target = value; }
 		}
 
 		public override Sprite Sprite
@@ -52,14 +51,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return turretBarrelController.turretStats.DamagePerS; } }
+		public override float Damage { get { return _turretBarrelController.turretStats.DamagePerS; } }
 
 		protected override void OnAwake()
 		{
 			base.OnAwake();
 		
-			_turretBaseRenderer = turretBase.GetComponent<Renderer>();
-			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
+			_turretBase = transform.Find("Base").gameObject;
+			_turretBaseRenderer = _turretBase.GetComponent<Renderer>();
+			Assert.IsNotNull(_turretBaseRenderer);
+
+			_turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
+			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
+			Assert.IsNotNull(_turretBarrelRenderer);
+
+			_turretBarrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
+			Assert.IsNotNull(_turretBarrelController);
 		}
 
 		protected override void EnableRenderers(bool enabled)

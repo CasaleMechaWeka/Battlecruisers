@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			base.OnInitialised();
 
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateArtilleryAngleCalcultor(_targetPositionPredictorFactory);
-			turretBarrelController.Initialise(Faction, angleCalculator);
+			_turretBarrelController.Initialise(Faction, angleCalculator);
 		}
 	}
 }
