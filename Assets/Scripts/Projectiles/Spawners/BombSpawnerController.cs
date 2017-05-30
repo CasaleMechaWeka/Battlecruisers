@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Projectiles
+namespace BattleCruisers.Projectiles.Spawners
 {
 	public class BombSpawnerController : ProjectileSpawner
 	{

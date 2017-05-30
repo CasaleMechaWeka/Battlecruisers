@@ -2,6 +2,7 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Units.Aircraft;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Scenes.Test
 			{
 				Target = target
 			};
-			MissileStats missileStats = new MissileStats(damage: 50, maxVelocityInMPerS: 20);
+			MissileStats missileStats = new MissileStats(missilePrefab: null, damage: 50, maxVelocityInMPerS: 20);
 			Vector2 initialVelocity = new Vector2(5, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();

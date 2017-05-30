@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
@@ -10,18 +11,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-	public class MissileStats
-	{
-		public float Damage { get; private set; }
-		public float MaxVelocityInMPerS { get; private set; }
-
-		public MissileStats(float damage, float maxVelocityInMPerS)
-		{
-			Damage = damage;
-			MaxVelocityInMPerS = maxVelocityInMPerS;
-		}
-	}
-
 	// FELIX:  Extract common functionality with ShellController
 	public class MissileController : MonoBehaviour
 	{
@@ -40,7 +29,7 @@ namespace BattleCruisers.Projectiles
 			_missileStats = missileStats;
 			rigidBody.velocity = initialVelocityInMPerS;
 
-			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
+			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, _missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
 			_movementController.Target = _target;
 
 			_target.Destroyed += Target_Destroyed;
