@@ -118,7 +118,7 @@ namespace BattleCruisers.Units.Aircraft
 			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
-			shootableEnemyDetector.Initialise(barrelController.turretStats.rangeInM);
+			shootableEnemyDetector.Initialise(barrelController.TurretStats.rangeInM);
 			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();

@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnBuildableCompleted();
 
-			enemyDetector.Initialise(BarrelController.turretStats.rangeInM);
+			enemyDetector.Initialise(BarrelController.TurretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetType);
 			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, targetFilter);

@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 			Logging.Log(Tags.BARREL_CONTROLLER, string.Format("AdjustBarrel():  currentAngleInDegrees: {0}  desiredAngleInDegrees: {1}  directionMultiplier: {2}", currentAngleInDegrees, desiredAngleInDegrees, directionMultiplier));
 
-			float rotationIncrement = Time.deltaTime * turretStats.turretRotateSpeedInDegrees;
+			float rotationIncrement = Time.deltaTime * TurretStats.turretRotateSpeedInDegrees;
 			if (rotationIncrement > differenceInDegrees)
 			{
 				rotationIncrement = differenceInDegrees;

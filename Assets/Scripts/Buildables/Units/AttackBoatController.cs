@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Units
 		{ 
 			get 
 			{ 
-				return _turretBarrelController.turretStats.DamagePerS; 
+				return _turretBarrelController.TurretStats.DamagePerS; 
 			} 
 		}
 
@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.Units
 			_turretBarrelController.Initialise(Faction, angleCalculator);
 
 			// Enemy detection
-			enemyDetector.Initialise(_turretBarrelController.turretStats.rangeInM);
+			enemyDetector.Initialise(_turretBarrelController.TurretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter);

@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawnerController>();
 			Assert.IsNotNull(_shellSpawner);
 
-			ShellStats _shellStats = new ShellStats(shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
+			ShellStats _shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
 			_shellSpawner.Initialise(_faction, _shellStats);
 		}
 

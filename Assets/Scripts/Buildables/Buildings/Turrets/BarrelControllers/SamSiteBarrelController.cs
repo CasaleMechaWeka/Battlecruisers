@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_missileSpawner = gameObject.GetComponentInChildren<MissileSpawnerController>();
 			Assert.IsNotNull(_missileSpawner);
 
-			MissileStats missileStats = new MissileStats(missilePrefab, turretStats.damage, turretStats.bulletVelocityInMPerS);
+			MissileStats missileStats = new MissileStats(missilePrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS);
 			_missileSpawner.Initialise(missileStats, movementControllerFactory, targetPositionPredictorFactory);
 		}
 

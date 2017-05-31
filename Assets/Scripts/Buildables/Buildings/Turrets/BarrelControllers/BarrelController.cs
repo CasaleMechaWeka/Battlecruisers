@@ -25,18 +25,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		protected Faction _faction;
 		protected IAngleCalculator _angleCalculator;
 
-		public TurretStats turretStats;
-
 		public ITarget Target { get; set; }
 		protected bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
+
+		private TurretStats _turretStats;
+		public TurretStats TurretStats { get { return _turretStats; } }
 
 		public virtual void Initialise(Faction faction, IAngleCalculator angleCalculator)
 		{
 			_faction = faction;
 			_angleCalculator = angleCalculator;
 
-			turretStats.Initialise();
-			_currentFireIntervalInS = turretStats.NextFireIntervalInS;
+			_turretStats = gameObject.GetComponent<TurretStats>();
+			Assert.IsNotNull(_turretStats);
+			_turretStats.Initialise();
+
+			_currentFireIntervalInS = _turretStats.NextFireIntervalInS;
 			_timeSinceLastFireInS = float.MaxValue;
 		}
 
@@ -50,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				Logging.Log(Tags.AIRCRAFT, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, turretStats.bulletVelocityInMPerS, currentAngleInRadians);
+				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _turretStats.bulletVelocityInMPerS, currentAngleInRadians);
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 
@@ -59,19 +63,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					AdjustBarrel(desiredAngleInDegrees);
 				}
 
-				if (isOnTarget || turretStats.IsInBurst)
+				if (isOnTarget || _turretStats.IsInBurst)
 				{
 					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
 					{
 						// Burst fires happen even if we are no longer on target, so we may miss
 						// the target in this case.  Hence use the actual angle our turret barrel
 						// is at, intead of the perfect desired angle.
-						float fireAngle = turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+						float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 						Fire(fireAngle);
 
 						_timeSinceLastFireInS = 0;
-						_currentFireIntervalInS = turretStats.NextFireIntervalInS;
+						_currentFireIntervalInS = _turretStats.NextFireIntervalInS;
 					}
 				}
 			}

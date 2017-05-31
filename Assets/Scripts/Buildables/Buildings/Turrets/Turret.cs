@@ -52,7 +52,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return BarrelController.turretStats.DamagePerS; } }
+		public override float Damage { get { return BarrelController.TurretStats.DamagePerS; } }
 
 		protected override void OnAwake()
 		{
