@@ -1,13 +1,29 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using System;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class SamSiteController : DefensiveTurret
 	{
-		protected override IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory)
+		private SamSiteBarrelController _barrelController;
+
+		protected override TurretBarrelController BarrelController { get { return _barrelController; } }
+
+		protected override void OnAwake()
 		{
-			return angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+			base.OnAwake();
+
+			_barrelController = gameObject.GetComponentInChildren<SamSiteBarrelController>();
+			Assert.IsNotNull(_barrelController);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+			_barrelController.Initialise(Faction, angleCalculator);
 		}
 	}
 }

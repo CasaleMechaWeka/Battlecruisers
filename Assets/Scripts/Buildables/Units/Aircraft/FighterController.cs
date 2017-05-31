@@ -82,7 +82,7 @@ namespace BattleCruisers.Units.Aircraft
 			_attackCapabilities.Add(TargetType.Aircraft);
 
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
-			barrelController.Initialise(Faction, angleCalculator, _movementControllerFactory, _targetPositionPredictorFactory, _targetsFactory);
+			barrelController.Initialise(Faction, angleCalculator);
 
 			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 

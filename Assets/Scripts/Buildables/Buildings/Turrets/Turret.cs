@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Renderer _turretBaseRenderer;
 		private GameObject _turretBarrel;
 		private Renderer _turretBarrelRenderer;
-		protected TurretBarrelController _turretBarrelController;
+		protected abstract TurretBarrelController BarrelController { get; }
 
 		protected override Renderer Renderer
 		{
@@ -36,8 +36,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public ITarget Target 
 		{ 
-			get { return _turretBarrelController.Target; }
-			set { _turretBarrelController.Target = value; }
+			get { return BarrelController.Target; }
+			set { BarrelController.Target = value; }
 		}
 
 		public override Sprite Sprite
@@ -52,7 +52,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return _turretBarrelController.turretStats.DamagePerS; } }
+		public override float Damage { get { return BarrelController.turretStats.DamagePerS; } }
 
 		protected override void OnAwake()
 		{
@@ -65,20 +65,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
 			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
-
-			_turretBarrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
-			Assert.IsNotNull(_turretBarrelController);
 		}
-
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
-
-			IAngleCalculator angleCalculator = CreateAngleCalculator(_angleCalculatorFactory);
-			_turretBarrelController.Initialise(Faction, angleCalculator, _movementControllerFactory, _targetPositionPredictorFactory, _targetsFactory);
-		}
-
-		protected abstract IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory);
 
 		protected override void EnableRenderers(bool enabled)
 		{

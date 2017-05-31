@@ -16,10 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public ShellController shellPrefab;
 
-		public override void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
-			ITargetPositionPredictorFactory targetPositionPredictorFactory, ITargetsFactory targetsFactory)
+		public override void Initialise(Faction faction, IAngleCalculator angleCalculator)
 		{
-			base.Initialise(faction, angleCalculator, movementControllerFactory, targetPositionPredictorFactory, targetsFactory);
+			base.Initialise(faction, angleCalculator);
 
 			Assert.IsNotNull(shellPrefab);
 

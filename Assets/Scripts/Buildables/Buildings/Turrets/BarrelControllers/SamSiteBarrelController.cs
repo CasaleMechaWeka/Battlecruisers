@@ -14,13 +14,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public class SamSiteBarrelController : TurretBarrelController
 	{
 		private MissileSpawnerController _missileSpawner;
+		private IMovementControllerFactory _movementControllerFactory;
+		private ITargetPositionPredictorFactory _targetPositionPredictorFactory;
+		private ITargetsFactory _targetsFactory;
 
 		public MissileController missilePrefab;
 
-		public override void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
+		public void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
 			ITargetPositionPredictorFactory targetPositionPredictorFactory, ITargetsFactory targetsFactory)
 		{
-			base.Initialise(faction, angleCalculator, movementControllerFactory, targetPositionPredictorFactory, targetsFactory);
+			base.Initialise(faction, angleCalculator);
 
 			Assert.IsNotNull(missilePrefab);
 

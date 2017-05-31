@@ -24,23 +24,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		
 		protected Faction _faction;
 		protected IAngleCalculator _angleCalculator;
-		protected IMovementControllerFactory _movementControllerFactory;
-		protected ITargetPositionPredictorFactory _targetPositionPredictorFactory;
-		protected ITargetsFactory _targetsFactory;
 
 		public TurretStats turretStats;
 
 		public ITarget Target { get; set; }
 		protected bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
-		public virtual void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
-			ITargetPositionPredictorFactory targetPositionPredictorFactory, ITargetsFactory targetsFactory)
+		public virtual void Initialise(Faction faction, IAngleCalculator angleCalculator)
 		{
 			_faction = faction;
 			_angleCalculator = angleCalculator;
-			_movementControllerFactory = movementControllerFactory;
-			_targetPositionPredictorFactory = targetPositionPredictorFactory;
-			_targetsFactory = targetsFactory;
 
 			turretStats.Initialise();
 			_currentFireIntervalInS = turretStats.NextFireIntervalInS;

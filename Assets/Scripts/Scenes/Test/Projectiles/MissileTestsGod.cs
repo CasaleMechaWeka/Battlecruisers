@@ -3,6 +3,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Units.Aircraft;
