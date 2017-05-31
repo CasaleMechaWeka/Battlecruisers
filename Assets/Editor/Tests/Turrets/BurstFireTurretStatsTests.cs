@@ -5,6 +5,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
+using BattleCruisers.Buildables.Buildings.Turrets;
 
 namespace BattleCruisers.Tests.Turrets
 {
@@ -33,9 +34,6 @@ namespace BattleCruisers.Tests.Turrets
 			_turretStats.ignoreGravity = true;
 			_turretStats.rangeInM = 20;
 			_turretStats.turretRotateSpeedInDegrees = 45;
-
-			GameObject shellPrefabGameObject = new GameObject();
-			_turretStats.shellPrefab = shellPrefabGameObject.AddComponent<ShellController>();
 
 			_expectedLongInterval = 1 / _turretStats.fireRatePerS;
 			_expectedBurstInterval = 1 / _turretStats.burstFireRatePerS;

@@ -14,8 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public class SamSiteBarrelController : TurretBarrelController
 	{
 		private MissileSpawnerController _missileSpawner;
-		private IMovementControllerFactory _movementControllerFactory;
-		private ITargetPositionPredictorFactory _targetPositionPredictorFactory;
 		private ITargetsFactory _targetsFactory;
 
 		public MissileController missilePrefab;
@@ -27,11 +25,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			Assert.IsNotNull(missilePrefab);
 
+			_targetsFactory = targetsFactory;
+
 			_missileSpawner = gameObject.GetComponentInChildren<MissileSpawnerController>();
 			Assert.IsNotNull(_missileSpawner);
 
 			MissileStats missileStats = new MissileStats(missilePrefab, turretStats.damage, turretStats.bulletVelocityInMPerS);
-			_missileSpawner.Initialise(missileStats, _movementControllerFactory, _targetPositionPredictorFactory);
+			_missileSpawner.Initialise(missileStats, movementControllerFactory, targetPositionPredictorFactory);
 		}
 
 		protected override void Fire(float angleInDegrees)
