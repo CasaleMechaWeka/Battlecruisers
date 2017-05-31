@@ -30,25 +30,25 @@ namespace BattleCruisers.Buildables.Units
 	/// </summary>
 	public class AttackBoatController : Unit, ITargetConsumer
 	{
+		private ShellTurretBarrelController _turretBarrelController;
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
 		private ITargetFinder _enemyFinder, _friendFinder;
 		private ITargetProcessor _targetProcessor;
 
 		public TargetDetector enemyDetector, friendDetector;
-		public TurretBarrelController turretBarrelController;
 
 		public override float Damage 
 		{ 
 			get 
 			{ 
-				return turretBarrelController.turretStats.DamagePerS; 
+				return _turretBarrelController.turretStats.DamagePerS; 
 			} 
 		}
 
 		public ITarget Target
 		{
-			private get { return turretBarrelController.Target; }
+			private get { return _turretBarrelController.Target; }
 			set 
 			{ 
 				if (value != null)
@@ -56,11 +56,19 @@ namespace BattleCruisers.Buildables.Units
 					Assert.IsTrue(IsObjectInFront(value));
 				}
 
-				turretBarrelController.Target = value; 
+				_turretBarrelController.Target = value; 
 			}
 		}
 
 		public override TargetType TargetType { get { return TargetType.Ships; } }
+
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+
+			_turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
+			Assert.IsNotNull(_turretBarrelController);
+		}
 
 		protected override void OnInitialised()
 		{
@@ -77,10 +85,10 @@ namespace BattleCruisers.Buildables.Units
 			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
-			turretBarrelController.Initialise(Faction, angleCalculator);
+			_turretBarrelController.Initialise(Faction, angleCalculator);
 
 			// Enemy detection
-			enemyDetector.Initialise(turretBarrelController.turretStats.rangeInM);
+			enemyDetector.Initialise(_turretBarrelController.turretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter);
