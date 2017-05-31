@@ -125,8 +125,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			// So pretend the cruiser game object is the specified target.
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			enemyCruiser.GameObject.Returns(globalTarget);
-			Vector2 targetPosition = globalTarget.transform.position;
-			enemyCruiser.Position.Returns(targetPosition);
+			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
 			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
