@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets;
@@ -13,7 +14,7 @@ using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class Turret : Building, ITargetConsumer
+	public abstract class Turret : Building, ITargetConsumer
 	{
 		private GameObject _turretBase;
 		private Renderer _turretBaseRenderer;
@@ -68,6 +69,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
 			Assert.IsNotNull(_turretBarrelController);
 		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			IAngleCalculator angleCalculator = CreateAngleCalculator(_angleCalculatorFactory);
+			_turretBarrelController.Initialise(Faction, angleCalculator, _movementControllerFactory, _targetPositionPredictorFactory, _targetsFactory);
+		}
+
+		protected abstract IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory);
 
 		protected override void EnableRenderers(bool enabled)
 		{

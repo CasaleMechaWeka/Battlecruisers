@@ -5,13 +5,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class AntiShipTurretController : DefensiveTurret
 	{
-		protected override void OnInitialised()
+		protected override IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory)
 		{
-			base.OnInitialised();
-
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
-			_turretBarrelController.Initialise(Faction, angleCalculator);
+			return angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }
-

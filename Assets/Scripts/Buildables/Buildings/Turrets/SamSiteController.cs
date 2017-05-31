@@ -1,12 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class ArtilleryController : OffensiveTurret
+	public class SamSiteController : DefensiveTurret
 	{
 		protected override IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory)
 		{
-			return angleCalculatorFactory.CreateArtilleryAngleCalcultor(_targetPositionPredictorFactory);
+			return angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }

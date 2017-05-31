@@ -2,6 +2,7 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-	// FELIX:  Extract common functionality with ShellController
+	// FELIX:  Extract common functionality with ShellController (OnTriggerEnter2D)
 	public class MissileController : MonoBehaviour
 	{
 		private ITarget _target;

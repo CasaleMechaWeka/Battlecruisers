@@ -7,31 +7,21 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class ShellStats
-	{
-		public ShellController ShellPrefab { get; private set; }
-		public float Damage { get; private set; }
-		public bool IgnoreGravity { get; private set; }
-		public float VelocityInMPerS { get; private set; }
-
-		public ShellStats(ShellController shellPrefab, float damage, bool ignoreGravity, float velocityInMPerS)
-		{
-			ShellPrefab = shellPrefab;
-			Damage = damage;
-			IgnoreGravity = ignoreGravity;
-			VelocityInMPerS = velocityInMPerS;
-		}
-	}
-
 	public abstract class ProjectileSpawner : MonoBehaviour
 	{
-		protected Faction _faction;
-		protected ShellStats _shellStats;
-
-		public void Initialise(Faction faction, ShellStats shellStats)
+		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
 		{
-			_faction = faction;
-			_shellStats = shellStats;
+			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
+
+			int xDirectionMultiplier = isSourceMirrored ? -1 : 1;
+
+			float velocityX = velocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
+			float velocityY = velocityInMPerS * Mathf.Sin(angleInRadians);
+
+			Logging.Log(Tags.SHELL_SPAWNER, string.Format("angleInDegrees: {0}  isSourceMirrored: {1}  =>  velocityX: {2}  velocityY: {3}",
+				angleInDegrees, isSourceMirrored, velocityX, velocityY));
+
+			return new Vector2(velocityX, velocityY);
 		}
 	}
 }

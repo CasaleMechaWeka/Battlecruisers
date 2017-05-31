@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// 
 	/// FELIX  Implement firing zone :P  Maybe?  Hm.
 	/// </summary>
-	public class InvisibleBarrelController : BarrelController 
+	public class InvisibleBarrelController : ShellTurretBarrelController 
 	{
 		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{

@@ -1,16 +1,12 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class AntiAirTurretController : DefensiveTurret
 	{
-		protected override void OnInitialised()
+		protected override IAngleCalculator CreateAngleCalculator(IAngleCalculatorFactory angleCalculatorFactory)
 		{
-			base.OnInitialised();
-
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
-			_turretBarrelController.Initialise(Faction, angleCalculator);
+			return angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }

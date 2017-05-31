@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Movement;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets;
@@ -17,28 +19,32 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// </summary>
 	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
-		private Faction _faction;
-		protected IAngleCalculator _angleCalculator;
 		private float _currentFireIntervalInS;
 		private float _timeSinceLastFireInS;
-		private ShellStats _shellStats;
+		
+		protected Faction _faction;
+		protected IAngleCalculator _angleCalculator;
+		protected IMovementControllerFactory _movementControllerFactory;
+		protected ITargetPositionPredictorFactory _targetPositionPredictorFactory;
+		protected ITargetsFactory _targetsFactory;
 
-		public ShellSpawnerController shellSpawner;
 		public TurretStats turretStats;
 
 		public ITarget Target { get; set; }
-		private bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
+		protected bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
 
-		public void Initialise(Faction faction, IAngleCalculator angleCalculator)
+		public virtual void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
+			ITargetPositionPredictorFactory targetPositionPredictorFactory, ITargetsFactory targetsFactory)
 		{
 			_faction = faction;
 			_angleCalculator = angleCalculator;
+			_movementControllerFactory = movementControllerFactory;
+			_targetPositionPredictorFactory = targetPositionPredictorFactory;
+			_targetsFactory = targetsFactory;
 
 			turretStats.Initialise();
 			_currentFireIntervalInS = turretStats.NextFireIntervalInS;
 			_timeSinceLastFireInS = float.MaxValue;
-			_shellStats = new ShellStats(turretStats.shellPrefab, turretStats.damage, turretStats.ignoreGravity, turretStats.bulletVelocityInMPerS);
-			shellSpawner.Initialise(_faction, _shellStats);
 		}
 
 		// FELIX  Should be FixedUpdate, as it is adjusing the barrle :/
@@ -82,10 +88,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected abstract void AdjustBarrel(float desiredAngleInDegrees);
 
-		private void Fire(float angleInDegrees)
-		{
-			Logging.Log(Tags.BARREL_CONTROLLER, "Fire()  angleInDegrees: " + angleInDegrees);
-			shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
-		}
+		protected abstract void Fire(float angleInDegrees);
 	}
 }

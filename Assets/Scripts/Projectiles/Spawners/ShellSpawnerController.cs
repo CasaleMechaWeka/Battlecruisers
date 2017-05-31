@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Projectiles;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -7,29 +9,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class ShellSpawnerController : ProjectileSpawner
+	public class ShellSpawnerController : BaseShellSpawner
 	{
 		public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
 		{
 			ShellController shell = Instantiate<ShellController>(_shellStats.ShellPrefab, transform.position, new Quaternion());
-			Vector2 shellVelocity = FindShellVelocity(angleInDegrees, isSourceMirrored);
+			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _shellStats.VelocityInMPerS);
 			float shellGravityScale = _shellStats.IgnoreGravity ? 0 : 1;
 			shell.Initialise(_faction, _shellStats.Damage, shellVelocity, shellGravityScale);
-		}
-
-		private Vector2 FindShellVelocity(float angleInDegrees, bool isSourceMirrored)
-		{
-			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-
-			int xDirectionMultiplier = isSourceMirrored ? -1 : 1;
-
-			float velocityX = _shellStats.VelocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
-			float velocityY = _shellStats.VelocityInMPerS * Mathf.Sin(angleInRadians);
-
-			Logging.Log(Tags.SHELL_SPAWNER, string.Format("angleInDegrees: {0}  isSourceMirrored: {1}  =>  velocityX: {2}  velocityY: {3}",
-				angleInDegrees, isSourceMirrored, velocityX, velocityY));
-
-			return new Vector2(velocityX, velocityY);
 		}
 	}
 }

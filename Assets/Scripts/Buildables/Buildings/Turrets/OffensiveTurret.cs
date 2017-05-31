@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class OffensiveTurret : Turret, ITargetConsumer
+	public abstract class OffensiveTurret : Turret, ITargetConsumer
 	{
 		private ITargetProcessor _targetProcessor;
 

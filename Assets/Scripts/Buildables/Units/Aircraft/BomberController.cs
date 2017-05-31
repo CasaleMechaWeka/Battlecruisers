@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;

@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class DefensiveTurret : Turret
+	public abstract class DefensiveTurret : Turret
 	{
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
