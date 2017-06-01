@@ -5,7 +5,7 @@ namespace BattleCruisers.Projectiles
 {
 	public class BomberStats : MonoBehaviour
 	{
-		public ShellController bombPrefab;
+		public ProjectileController bombPrefab;
 		public float damage;
 
 		void Awake()

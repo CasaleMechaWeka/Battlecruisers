@@ -4,6 +4,7 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
 using System.Collections;
@@ -94,7 +95,9 @@ namespace BattleCruisers.Units.Aircraft
 
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
-			bombSpawner.Initialise(Faction, shellStats);
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+			bombSpawner.Initialise(shellStats, targetFilter);
 		}
 		
 		protected override void OnBuildableCompleted()

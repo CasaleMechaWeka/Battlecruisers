@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables
 		Faction Faction { get; }
 		TargetType TargetType { get; }
 		Vector2 Velocity { get; }
-		IList<TargetType> AttackCapabilities { get; }
+		List<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
 		Vector2 Position { get; }
 	}

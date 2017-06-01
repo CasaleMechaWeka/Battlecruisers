@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -10,13 +11,13 @@ namespace BattleCruisers.Projectiles.Spawners
 {
 	public abstract class BaseShellSpawner : ProjectileSpawner
 	{
-		protected Faction _faction;
 		protected ShellStats _shellStats;
+		protected ITargetFilter _targetFilter;
 
-		public void Initialise(Faction faction, ShellStats shellStats)
+		public void Initialise(ShellStats shellStats, ITargetFilter targetFilter)
 		{
-			_faction = faction;
 			_shellStats = shellStats;
+			_targetFilter = targetFilter;
 		}
 	}
 }

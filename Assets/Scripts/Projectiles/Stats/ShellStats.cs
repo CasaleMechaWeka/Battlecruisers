@@ -2,19 +2,14 @@
 
 namespace BattleCruisers.Projectiles.Stats
 {
-	public class ShellStats
+	public class ShellStats : ProjectileStats
 	{
-		public ShellController ShellPrefab { get; private set; }
-		public float Damage { get; private set; }
-		public bool IgnoreGravity { get; private set; }
-		public float VelocityInMPerS { get; private set; }
+		public ProjectileController ShellPrefab { get; private set; }
 
-		public ShellStats(ShellController shellPrefab, float damage, bool ignoreGravity, float velocityInMPerS)
+		public ShellStats(ProjectileController shellPrefab, float damage, bool ignoreGravity, float velocityInMPerS)
+			: base(damage, velocityInMPerS, ignoreGravity)
 		{
 			ShellPrefab = shellPrefab;
-			Damage = damage;
-			IgnoreGravity = ignoreGravity;
-			VelocityInMPerS = velocityInMPerS;
 		}
 	}
 }

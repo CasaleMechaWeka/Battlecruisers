@@ -23,6 +23,7 @@ namespace BattleCruisers.Targets
 		ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
 
 		// Filters
+		ITargetFilter CreateTargetFilter(Faction faction, List<TargetType> targetTypes);
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
 		IExactMatchTargetFilter CreateExactMatchTargetFiler();
 
@@ -56,6 +57,11 @@ namespace BattleCruisers.Targets
 		#endregion TargetFinders
 
 		#region TargetFilters
+		public ITargetFilter CreateTargetFilter(Faction faction, List<TargetType> targetTypes)
+		{
+			return CreateTargetFilter(faction, targetTypes.ToArray());
+		}
+
 		public ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes)
 		{
 			return new TargetFilter(faction, targetTypes);

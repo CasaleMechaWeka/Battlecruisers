@@ -13,10 +13,9 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
 		public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
 		{
-			ShellController shell = Instantiate<ShellController>(_shellStats.ShellPrefab, transform.position, new Quaternion());
-			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _shellStats.VelocityInMPerS);
-			float shellGravityScale = _shellStats.IgnoreGravity ? 0 : 1;
-			shell.Initialise(_faction, _shellStats.Damage, shellVelocity, shellGravityScale);
+			ProjectileController shell = Instantiate<ProjectileController>(_shellStats.ShellPrefab, transform.position, new Quaternion());
+			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _shellStats.MaxVelocityInMPerS);
+			shell.Initialise(_shellStats, shellVelocity, _targetFilter);
 		}
 	}
 }

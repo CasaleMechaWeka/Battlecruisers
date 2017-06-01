@@ -85,12 +85,12 @@ namespace BattleCruisers.Buildables.Units
 			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
-			_turretBarrelController.Initialise(Faction, angleCalculator);
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+			_turretBarrelController.Initialise(enemyFilter, angleCalculator);
 
 			// Enemy detection
 			enemyDetector.Initialise(_turretBarrelController.TurretStats.rangeInM);
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter enemyFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Ships, TargetType.Buildings, TargetType.Cruiser);
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter);
 
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();

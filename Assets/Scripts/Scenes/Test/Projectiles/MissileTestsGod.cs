@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.Test
 			MissileController[] missiles = GameObject.FindObjectsOfType<MissileController>() as MissileController[];
 			foreach (MissileController missile in missiles)
 			{
-				missile.Initialise(target, targetFilter, missileStats, initialVelocity, movementControllerFactory, targetPositionPredictorFactory);
+				missile.Initialise(missileStats, initialVelocity, targetFilter, target, movementControllerFactory, targetPositionPredictorFactory);
 			}
 		}
 	}

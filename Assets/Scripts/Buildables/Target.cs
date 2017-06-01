@@ -24,8 +24,8 @@ namespace BattleCruisers.Buildables
 		public event EventHandler<DestroyedEventArgs> Destroyed;
 		public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
-		protected IList<TargetType> _attackCapabilities;
-		public virtual IList<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
+		protected List<TargetType> _attackCapabilities;
+		public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
 
 		private float _health;
 		public float Health

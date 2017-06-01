@@ -112,6 +112,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ICruiser cruiser = Substitute.For<ICruiser>();
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
 			cruiser.Direction.Returns(facingDirection);
+			cruiser.AttackCapabilities.Returns(new List<TargetType>());
 
 			return cruiser;
 		}

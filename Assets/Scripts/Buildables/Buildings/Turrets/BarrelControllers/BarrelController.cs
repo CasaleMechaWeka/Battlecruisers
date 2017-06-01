@@ -5,6 +5,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private float _currentFireIntervalInS;
 		private float _timeSinceLastFireInS;
 		
-		protected Faction _faction;
+		protected ITargetFilter _targetFilter;
 		protected IAngleCalculator _angleCalculator;
 
 		public ITarget Target { get; set; }
@@ -31,9 +32,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private TurretStats _turretStats;
 		public TurretStats TurretStats { get { return _turretStats; } }
 
-		public virtual void Initialise(Faction faction, IAngleCalculator angleCalculator)
+		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
 		{
-			_faction = faction;
+			_targetFilter = targetFilter;
 			_angleCalculator = angleCalculator;
 
 			_turretStats = gameObject.GetComponent<TurretStats>();

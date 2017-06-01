@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
 			Vector2 targetPosition = targetGameObject.transform.position;
 			target.Position.Returns(targetPosition);
 			barrel.Target = target;
-			barrel.Initialise(Faction.Blues, angleCalculator);
+			barrel.Initialise(null, angleCalculator);
 		}
 	}
 }

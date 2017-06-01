@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 using UnityEngine.Assertions;
 
@@ -14,19 +15,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
 		private ShellSpawnerController _shellSpawner;
 
-		public ShellController shellPrefab;
+		public ProjectileController shellPrefab;
 
-		public override void Initialise(Faction faction, IAngleCalculator angleCalculator)
+		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
 		{
-			base.Initialise(faction, angleCalculator);
+			base.Initialise(targetFilter, angleCalculator);
 
 			Assert.IsNotNull(shellPrefab);
 
 			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawnerController>();
 			Assert.IsNotNull(_shellSpawner);
 
-			ShellStats _shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
-			_shellSpawner.Initialise(_faction, _shellStats);
+			ShellStats shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
+			_shellSpawner.Initialise(shellStats, targetFilter);
 		}
 
 		protected override void Fire(float angleInDegrees)

@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
 			foreach (TurretBarrelController barrel in turretBarrels)
 			{
 				barrel.Target = target;
-				barrel.Initialise(Faction.Blues, angleCalculator);
+				barrel.Initialise(null, angleCalculator);
 			}
 		}
 	}

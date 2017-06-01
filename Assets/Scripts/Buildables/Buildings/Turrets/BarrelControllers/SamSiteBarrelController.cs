@@ -13,19 +13,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class SamSiteBarrelController : TurretBarrelController
 	{
+		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawnerController _missileSpawner;
 		private ITargetsFactory _targetsFactory;
 
 		public MissileController missilePrefab;
 
-		public void Initialise(Faction faction, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory, 
-			ITargetPositionPredictorFactory targetPositionPredictorFactory, ITargetsFactory targetsFactory)
+		public void Initialise(IExactMatchTargetFilter targetFilter, IAngleCalculator angleCalculator, 
+			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			base.Initialise(faction, angleCalculator);
+			base.Initialise(targetFilter, angleCalculator);
 
 			Assert.IsNotNull(missilePrefab);
 
-			_targetsFactory = targetsFactory;
+			_exactMatchTargetFilter = targetFilter;
 
 			_missileSpawner = gameObject.GetComponentInChildren<MissileSpawnerController>();
 			Assert.IsNotNull(_missileSpawner);
@@ -36,9 +37,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected override void Fire(float angleInDegrees)
 		{
-			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFiler();
-			targetFilter.Target = Target;
-			_missileSpawner.SpawnMissile(angleInDegrees, IsSourceMirrored, Target, targetFilter);
+			_exactMatchTargetFilter.Target = Target;
+			_missileSpawner.SpawnMissile(angleInDegrees, IsSourceMirrored, Target, _exactMatchTargetFilter);
 		}
 	}
 }

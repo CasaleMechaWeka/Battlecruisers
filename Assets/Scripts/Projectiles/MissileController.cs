@@ -12,25 +12,19 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-	// FELIX:  Extract common functionality with ShellController (OnTriggerEnter2D)
-	public class MissileController : MonoBehaviour
+	public class MissileController : ProjectileController
 	{
-		private ITarget _target;
-		private ITargetFilter _targetFilter;
-		private MissileStats _missileStats;
+		private  ITarget _target;
 		private IHomingMovementController _movementController;
 
-		public Rigidbody2D rigidBody;
-
-		public void Initialise(ITarget target, ITargetFilter targetFilter, MissileStats missileStats, Vector2 initialVelocityInMPerS, 
+		public void Initialise(MissileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			_target = target;
-			_targetFilter = targetFilter;
-			_missileStats = missileStats;
-			rigidBody.velocity = initialVelocityInMPerS;
+			base.Initialise(missileStats, initialVelocityInMPerS, targetFilter);
 
-			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, _missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
+			_target = target;
+
+			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
 			_movementController.Target = _target;
 
 			_target.Destroyed += Target_Destroyed;
@@ -50,24 +44,12 @@ namespace BattleCruisers.Projectiles
 			CleanUp();
 		}
 
-		void OnTriggerEnter2D(Collider2D collider)
-		{
-			Logging.Log(Tags.SHELLS, "MissileController.OnTriggerEnter2D()");
-
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
-
-			if (target != null && _targetFilter.IsMatch(target))
-			{
-				target.TakeDamage(_missileStats.Damage);
-				CleanUp();
-			}
-		}
-
-		private void CleanUp()
+		protected override void CleanUp()
 		{
 			_movementController.Target = null;
 			_target.Destroyed -= Target_Destroyed;
-			Destroy(gameObject);
+
+			base.CleanUp();
 		}
 	}
 }
