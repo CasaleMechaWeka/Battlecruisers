@@ -10,19 +10,34 @@ namespace BattleCruisers.Buildables
 {
 	public class BuildableProgressController : MonoBehaviour 
 	{
-		public Buildable buildable;
-		public Image fillableImage;
-		public Image outlineImage;
+		private Buildable _buildable;
+		private Image _fillableImage;
+		private Image _outlineImage;
+
+		public Sprite FillableImageSprite { get { return _fillableImage.sprite; } }
 
 		void Awake() 
 		{
-			fillableImage.fillAmount = 0;
+			_buildable = gameObject.GetComponentInParent<Buildable>();
+			Assert.IsNotNull(_buildable);
+
+			GameObject fillableImageGameObject = transform.Find("Canvas/FillableImage").gameObject;
+			Assert.IsNotNull(fillableImageGameObject);
+			_fillableImage = fillableImageGameObject.GetComponent<Image>();
+			Assert.IsNotNull(_fillableImage);
+
+			GameObject outlineImageGameObject = transform.Find("Canvas/OutlineImage").gameObject;
+			Assert.IsNotNull(outlineImageGameObject);
+			_outlineImage = outlineImageGameObject.GetComponent<Image>();
+			Assert.IsNotNull(_outlineImage);
+
+			_fillableImage.fillAmount = 0;
 			gameObject.SetActive(false);
 
-			buildable.StartedConstruction += Buildable_StartedBuilding;
-			buildable.BuildableProgress += Buildable_BuildableProgress;
-			buildable.CompletedBuildable += Buildable_CompletedOrDestroyedBuilding;
-			buildable.Destroyed += Buildable_CompletedOrDestroyedBuilding;
+			_buildable.StartedConstruction += Buildable_StartedBuilding;
+			_buildable.BuildableProgress += Buildable_BuildableProgress;
+			_buildable.CompletedBuildable += Buildable_CompletedOrDestroyedBuilding;
+			_buildable.Destroyed += Buildable_CompletedOrDestroyedBuilding;
 		}
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
@@ -35,18 +50,18 @@ namespace BattleCruisers.Buildables
 			Logging.Log(Tags.PROGRESS_BARS, "e.Buildable.BuildProgress: " + e.Buildable.BuildProgress);
 
 			Assert.IsTrue(e.Buildable.BuildProgress >= 0);
-			fillableImage.fillAmount = e.Buildable.BuildProgress;
+			_fillableImage.fillAmount = e.Buildable.BuildProgress;
 		}
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)
 		{
-			buildable.StartedConstruction -= Buildable_StartedBuilding;
-			buildable.BuildableProgress -= Buildable_BuildableProgress;
-			buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
-			buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
+			_buildable.StartedConstruction -= Buildable_StartedBuilding;
+			_buildable.BuildableProgress -= Buildable_BuildableProgress;
+			_buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
+			_buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
 
-			fillableImage.enabled = false;
-			outlineImage.enabled = false;
+			_fillableImage.enabled = false;
+			_outlineImage.enabled = false;
 		}
 	}
 }
