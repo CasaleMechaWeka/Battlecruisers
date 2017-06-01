@@ -12,29 +12,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-	// FELIX  Avoid duplicaet code with ShootAircraftTestGod
-	public class SamSiteShootBomberTestGod : MonoBehaviour 
+	public class AntiAirVsBomberTestGod : MonoBehaviour 
 	{
-		public BomberController bomber;
+		private BomberController _bomber;
+		private DefensiveTurret _antiAirTurret;
+
 		public List<Vector2> bomberPatrolPoints;
-		public SamSiteController samSite;
 
 		void Start() 
 		{
 			Helper helper = new Helper();
 
+
 			// Set up turret
-			helper.InitialiseBuildable(samSite, faction: Faction.Reds);
-			samSite.StartConstruction();
+			_antiAirTurret = GameObject.FindObjectOfType<DefensiveTurret>();
+			Assert.IsNotNull(_antiAirTurret);
+
+			helper.InitialiseBuildable(_antiAirTurret, faction: Faction.Reds);
+			_antiAirTurret.StartConstruction();
+
 
 			// Set up bomber
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(samSite.GameObject);
+			_bomber = GameObject.FindObjectOfType<BomberController>();
+			Assert.IsNotNull(_bomber);
+
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(_antiAirTurret.GameObject);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
-			helper.InitialiseBuildable(bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
-			bomber.StartConstruction();
+			helper.InitialiseBuildable(_bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
+			_bomber.StartConstruction();
 		}
 	}
 }
