@@ -6,24 +6,30 @@ using BattleCruisers.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-	public class ShootPatrollingAircraftTestGod : MonoBehaviour 
+	public class AntiAirVsPatrollingAircraftTestGod : MonoBehaviour 
 	{
-		public Vector2[] aircraftPatrolPoints;
-		public List<AircraftController> aircraft;
+		private DefensiveTurret _turret;
+		private AircraftController[] _aircraft;
 
-		public DefensiveTurret turret;
+		public Vector2[] aircraftPatrolPoints;
 
 		void Start () 
 		{
 			Helper helper = new Helper();
 
-			InitialisePlanes(helper, aircraft, Faction.Blues);
+			// Setup turret
+			_turret = GameObject.FindObjectOfType<DefensiveTurret>();
+			Assert.IsNotNull(_turret);
+			helper.InitialiseBuildable(_turret, faction: Faction.Reds);
+			_turret.StartConstruction();
 
-			helper.InitialiseBuildable(turret, faction: Faction.Reds);
-			turret.StartConstruction();
+			_aircraft = GameObject.FindObjectsOfType<AircraftController>();
+			Assert.IsTrue(_aircraft.Length > 0);
+			InitialisePlanes(helper, _aircraft, Faction.Blues);
 		}
 
 		private void InitialisePlanes(Helper helper, IList<AircraftController> planes, Faction faction)
