@@ -88,7 +88,6 @@ namespace BattleCruisers.Data
 
 			// Ships
 			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
-			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat2"));
 
 			return units;
 		}
