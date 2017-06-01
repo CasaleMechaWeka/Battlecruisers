@@ -5,7 +5,6 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
-using BattleCruisers.Buildables.Buildings.Turrets;
 
 namespace BattleCruisers.Tests.Turrets
 {
