@@ -11,24 +11,31 @@ namespace BattleCruisers.Scenes.Test.Shields
 {
 	public class ShieldDetectionTestGod : MonoBehaviour 
 	{
-		private ShieldGenerator _shield;
-		private AttackBoatController _attackBoat;
-
 		void Start () 
 		{
 			Helper helper = new Helper();
 
-			// Setup shield
-			_shield = GameObject.FindObjectOfType<ShieldGenerator>();
-			Assert.IsNotNull(_shield);
-			helper.InitialiseBuildable(_shield, Faction.Blues);
-			_shield.StartConstruction();
 
-			// Setup turret
-			_attackBoat = GameObject.FindObjectOfType<AttackBoatController>();
-			Assert.IsNotNull(_attackBoat);
-			helper.InitialiseBuildable(_attackBoat, Faction.Reds, parentCruiserDirection: Direction.Left);
-			_attackBoat.StartConstruction();
+			// Setup shields
+			ShieldGenerator[] shields = GameObject.FindObjectsOfType<ShieldGenerator>();
+			Assert.IsTrue(shields.Length > 0);
+
+			foreach (ShieldGenerator shield in shields)
+			{
+				helper.InitialiseBuildable(shield, Faction.Blues);
+				shield.StartConstruction();
+			}
+
+
+			// Setup attack boats
+			AttackBoatController[] attackBoats = GameObject.FindObjectsOfType<AttackBoatController>();
+			Assert.IsTrue(attackBoats.Length > 0);
+
+			foreach (AttackBoatController attackBoat in attackBoats)
+			{
+				helper.InitialiseBuildable(attackBoat, Faction.Reds, parentCruiserDirection: Direction.Left);
+				attackBoat.StartConstruction();
+			}
 		}
 	}
 }
