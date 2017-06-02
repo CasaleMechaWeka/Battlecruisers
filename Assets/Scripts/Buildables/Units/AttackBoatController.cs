@@ -76,6 +76,7 @@ namespace BattleCruisers.Buildables.Units
 
 			_attackCapabilities.Add(TargetType.Ships);
 			_attackCapabilities.Add(TargetType.Cruiser);
+			_attackCapabilities.Add(TargetType.Buildings);
 		}
 
 		protected override void OnBuildableCompleted()
