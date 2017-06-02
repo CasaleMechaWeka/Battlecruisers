@@ -27,7 +27,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{
 			MissileController missile = Instantiate<MissileController>(_missileStats.MissilePrefab, transform.position, new Quaternion());
-			Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _missileStats.MaxVelocityInMPerS);
+			Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _missileStats.InitialVelocityInMPerS);
 			missile.Initialise(_missileStats, missileVelocity, targetFilter, target, _movementControllerFactory, _targetPositionPredictorFactory);
 		}
 	}
