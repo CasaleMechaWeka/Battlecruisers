@@ -30,6 +30,7 @@ namespace BattleCruisers.Utils
 		// Targets
 		public const string TARGET = "Target";
 		public const string TARGET_DETECTOR = "TargetDetector";
+		public const string TARGET_FILTER = "TargetFilter";
 		public const string TARGET_PROCESSORS = "TargetProcessors";
 
 		// UI
@@ -85,6 +86,7 @@ namespace BattleCruisers.Utils
 			// Targets
 			tagsToActiveness.Add(Tags.TARGET, false);
 			tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
+			tagsToActiveness.Add(Tags.TARGET_FILTER, false);
 			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
 
 			// UI

@@ -120,7 +120,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
-		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget)
+		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget, ITargetFilter targetFilter = null)
 		{
 			// The enemy cruiser is added as a target by the global target finder.
 			// So pretend the cruiser game object is the specified target.
@@ -136,6 +136,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.OffensiveTurretTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
+			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.None).ReturnsForAnyArgs(targetFilter);
+			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
 
 			return targetsFactory;
 		}

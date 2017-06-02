@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Units.Aircraft;
 using NSubstitute;
 using System;
@@ -31,13 +32,16 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 		private void SetupPair(FighterController fighter, AircraftController target, IList<Vector2> patrolPoints)
 		{
-			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject);
-			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
-			fighter.StartConstruction();
-			
+			// Target
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, patrolPoints);
 			target.StartConstruction();
+
+			// Fighter
+			ITargetFilter targetFilter = new TargetFilter(target.Faction, target.TargetType);
+			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject, targetFilter);
+			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
+			fighter.StartConstruction();
 		}
 
 		private void SetPatrolPoints(object target, IList<Vector2> patrolPoints)
