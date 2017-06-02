@@ -40,12 +40,13 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 		private void SetupPair(FighterController fighter, IList<Vector2> fighterPatrolPoints, AircraftController target, IList<Vector2> targetPatrolPoints)
 		{
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
+			// Fighter
 			SafeZone safeZone = new SafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
-			_helper.InitialiseBuildable(fighter, Faction.Reds, enemyCruiser: enemyCruiser, aircraftProvider: aircraftProvider);
+			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
+			// Target aircraft
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, targetPatrolPoints);
 			target.StartConstruction();
