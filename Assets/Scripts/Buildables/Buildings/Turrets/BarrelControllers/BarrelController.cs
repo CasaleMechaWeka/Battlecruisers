@@ -45,14 +45,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_timeSinceLastFireInS = float.MaxValue;
 		}
 
-		// FELIX  Should be FixedUpdate, as it is adjusing the barrle :/
-		void Update()
+		void FixedUpdate()
 		{
 			if (Target != null)
 			{
 				_timeSinceLastFireInS += Time.deltaTime;
 
-				Logging.Log(Tags.AIRCRAFT, "Target.Velocity: " + Target.Velocity);
+				Logging.Log(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
 				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _turretStats.bulletVelocityInMPerS, currentAngleInRadians);
