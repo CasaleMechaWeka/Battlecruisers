@@ -24,23 +24,18 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 	{
 		private Helper _helper;
 
-		public FighterController fighter;
-		public AircraftController targetAircraft;
 		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 
 		void Start() 
 		{
 			_helper = new Helper();
 
-			SetupPair(fighter, fighterPatrolPoints, targetAircraft, targetPatrolPoints);
-		}
-
-		private void SetupPair(FighterController fighter, IList<Vector2> fighterPatrolPoints, AircraftController target, IList<Vector2> targetPatrolPoints)
-		{
+			FighterController fighter = GameObject.FindObjectOfType<FighterController>();
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
 			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
+			TestAircraftController target = GameObject.FindObjectOfType<TestAircraftController>();
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, targetPatrolPoints);
 			target.StartConstruction();
@@ -48,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 		private void SetPatrolPoints(object aircraftAsObj, IList<Vector2> patrolPoints)
 		{
-			AircraftController aircraft = aircraftAsObj as AircraftController;
+			TestAircraftController aircraft = aircraftAsObj as TestAircraftController;
 			aircraft.PatrolPoints = patrolPoints;
 			aircraft.StartPatrolling();
 		}			
