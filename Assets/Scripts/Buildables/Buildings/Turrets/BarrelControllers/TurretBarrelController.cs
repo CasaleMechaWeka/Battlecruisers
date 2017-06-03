@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public abstract class TurretBarrelController : BarrelController 
+	public abstract class TurretBarrelController : BarrelController
 	{
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
