@@ -10,13 +10,13 @@ namespace BattleCruisers.Scenes.Test
 {
 	public class MissileMovingTargetTestsGod : MissileTestsGod 
 	{
-		public AircraftController target;
 		public List<Vector2> targetPatrolPoints;
 
 		void Start () 
 		{
 			Helper helper = new Helper();
 
+			AircraftController target = GameObject.FindObjectOfType<AircraftController>();
 			helper.InitialiseBuildable(target);
 			target.CompletedBuildable += (sender, e) => 
 			{
