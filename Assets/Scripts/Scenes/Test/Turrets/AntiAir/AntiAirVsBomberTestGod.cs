@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Units.Aircraft;
@@ -40,7 +41,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			_bomber = GameObject.FindObjectOfType<BomberController>();
 			Assert.IsNotNull(_bomber);
 
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(_antiAirTurret.GameObject);
+			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, _antiAirTurret.TargetType);
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(_antiAirTurret.GameObject, targetFilter);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
 			helper.InitialiseBuildable(_bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);
 			_bomber.StartConstruction();
