@@ -1,13 +1,15 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Scenes.Test;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Buildables.Units.Aircraft;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,19 +23,21 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 		public BomberController bomberToLeft, bomberToRight;
 		public List<Vector2> patrolPoints;
 
-		public GameObject target;
-
 		void Start() 
 		{
 			Helper helper = new Helper();
 
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target);
+			AirFactory factory = GameObject.FindObjectOfType<AirFactory>();
+			helper.InitialiseBuildable(factory, Faction.Blues);
+
+			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, factory.TargetType);
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
 
-			helper.InitialiseBuildable(bomberToLeft, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(bomberToLeft, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();
 
-			helper.InitialiseBuildable(bomberToRight, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(bomberToRight, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
 		}
 	}
