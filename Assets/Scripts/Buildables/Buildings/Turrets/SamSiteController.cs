@@ -8,6 +8,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class SamSiteController : DefensiveTurret
 	{
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+			_attackCapabilities.Add(TargetType.Aircraft);
+		}
+
 		protected override void InitialiseTurretBarrel()
 		{
 			SamSiteBarrelController barrelController = _barrelController as SamSiteBarrelController;

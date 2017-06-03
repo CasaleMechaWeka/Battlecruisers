@@ -17,14 +17,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private ITargetProcessor _targetProcessor;
 
 		public TargetDetector enemyDetector;
-		public TargetType attackTargetType;
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
-
 			Assert.AreEqual(BuildingCategory.Defence, category);
-			_attackCapabilities.Add(attackTargetType);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -33,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 			enemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, attackTargetType);
+			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, targetFilter);
 
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();

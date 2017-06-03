@@ -8,6 +8,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class MortarController : DefensiveTurret
 	{
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+			_attackCapabilities.Add(TargetType.Ships);
+		}
+
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
 			return _angleCalculatorFactory.CreateMortarAngleCalcultor(_targetPositionPredictorFactory);

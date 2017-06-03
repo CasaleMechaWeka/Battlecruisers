@@ -8,6 +8,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class AntiAirTurretController : DefensiveTurret
 	{
+		protected override void OnAwake()
+		{
+			base.OnAwake();
+			_attackCapabilities.Add(TargetType.Aircraft);
+		}
+
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
 			return _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
