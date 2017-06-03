@@ -85,7 +85,7 @@ namespace BattleCruisers.Utils
 
 			// Targets
 			tagsToActiveness.Add(Tags.TARGET, false);
-			tagsToActiveness.Add(Tags.TARGET_DETECTOR, true);
+			tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
 			tagsToActiveness.Add(Tags.TARGET_FILTER, false);
 			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
 

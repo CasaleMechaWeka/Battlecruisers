@@ -64,7 +64,7 @@ namespace BattleCruisers.Targets
 
 		public ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes)
 		{
-			return new TargetFilter(faction, targetTypes);
+			return new FactionAndTargetTypeFilter(faction, targetTypes);
 		}
 
 		public IExactMatchTargetFilter CreateExactMatchTargetFiler()

@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-	public class TargetFilter : ITargetFilter
+	public class FactionAndTargetTypeFilter : ITargetFilter
 	{
 		private readonly Faction _factionToDetect;
 		private readonly TargetType[] _targetTypes;
 
-		public TargetFilter(Faction faction, params TargetType[] targetTypes)
+		public FactionAndTargetTypeFilter(Faction faction, params TargetType[] targetTypes)
 		{
 			_factionToDetect = faction;
 			_targetTypes = targetTypes;
