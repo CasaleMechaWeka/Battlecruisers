@@ -18,7 +18,16 @@ namespace BattleCruisers.Movement
 		protected readonly float _maxVelocityInMPerS;
 		private Vector2 _velocity;
 
-		public ITarget Target { protected get; set; }
+		private ITarget _target;
+		public ITarget Target 
+		{ 
+			protected get { return _target; }
+			set
+			{
+				_target = value;
+				OnTargetSet();
+			}
+		}
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
@@ -117,5 +126,7 @@ namespace BattleCruisers.Movement
 		{
 			return MAX_VELOCITY_SMOOTH_TIME;
 		}
+
+		protected virtual void OnTargetSet() { }
 	}
 }
