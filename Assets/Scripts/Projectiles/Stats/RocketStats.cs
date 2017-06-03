@@ -16,12 +16,14 @@ namespace BattleCruisers.Projectiles.Stats
 		private const float INITIAL_VELOCITY_MULTIPLIER = 0.25f;
 
 		public RocketController RocketPrefab { get; private set; }
+		public float CruisingAltitudeInM { get; private set; }
 		public float InitialVelocityInMPerS { get { return MaxVelocityInMPerS * INITIAL_VELOCITY_MULTIPLIER; } }
 
-		public RocketStats(RocketController rocketPrefab, float damage, float maxVelocityInMPerS)
+		public RocketStats(RocketController rocketPrefab, float damage, float maxVelocityInMPerS, float cruisingAltitudeInM)
 			: base(damage, maxVelocityInMPerS, ignoreGravity: true)
 		{
 			RocketPrefab = rocketPrefab;
+			CruisingAltitudeInM = cruisingAltitudeInM;
 		}
 	}
 }

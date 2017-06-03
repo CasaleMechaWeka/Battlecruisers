@@ -10,6 +10,7 @@ namespace BattleCruisers.Movement
 	{
 		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory);
 		IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone);
+		IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM);
 	}
 
 	public class MovementControllerFactory : IMovementControllerFactory
@@ -22,6 +23,11 @@ namespace BattleCruisers.Movement
 		public IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone)
 		{
 			return new FighterMovementController(rigidBody, maxVelocityInMPerS, safeZone);
+		}
+
+		public IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM)
+		{
+			return new RocketMovementController(rigidBody, maxVelocityInMPerS, cruisingAltitudeInM);
 		}
 	}
 }
