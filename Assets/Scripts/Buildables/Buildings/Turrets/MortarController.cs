@@ -8,18 +8,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class MortarController : DefensiveTurret
 	{
-		private ShellTurretBarrelController _barrelController;
-
-		protected override TurretBarrelController BarrelController { get { return _barrelController; } }
-
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			_barrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
-			Assert.IsNotNull(_barrelController);
-		}
-
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
 			return _angleCalculatorFactory.CreateMortarAngleCalcultor(_targetPositionPredictorFactory);

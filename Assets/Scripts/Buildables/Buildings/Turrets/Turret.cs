@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Renderer _turretBaseRenderer;
 		private GameObject _turretBarrel;
 		private Renderer _turretBarrelRenderer;
-		protected abstract TurretBarrelController BarrelController { get; }
+		protected TurretBarrelController _barrelController;
 
 		protected override Renderer Renderer
 		{
@@ -37,8 +37,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public ITarget Target 
 		{ 
-			get { return BarrelController.Target; }
-			set { BarrelController.Target = value; }
+			get { return _barrelController.Target; }
+			set { _barrelController.Target = value; }
 		}
 
 		public override Sprite Sprite
@@ -53,7 +53,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return BarrelController.TurretStats.DamagePerS; } }
+		public override float Damage { get { return _barrelController.TurretStats.DamagePerS; } }
 
 		protected override void OnAwake()
 		{
@@ -67,12 +67,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
 
+			_barrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
+			Assert.IsNotNull(_barrelController);
+
 			InitialiseTurretBarrel();
 		}
 
 		protected virtual void InitialiseTurretBarrel()
 		{
-			BarrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator());
+			_barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator());
 		}
 
 		protected virtual ITargetFilter CreateTargetFilter()

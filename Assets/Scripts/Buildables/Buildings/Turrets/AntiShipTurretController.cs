@@ -6,21 +6,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	// FELIX  Avoid duplication with AntiAirTurretController
 	public class AntiShipTurretController : DefensiveTurret
 	{
-		private ShellTurretBarrelController _barrelController;
-
-		protected override TurretBarrelController BarrelController { get { return _barrelController; } }
-
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			_barrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
-			Assert.IsNotNull(_barrelController);
-		}
-
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
 			return _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);

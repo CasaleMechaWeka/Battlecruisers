@@ -8,22 +8,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class SamSiteController : DefensiveTurret
 	{
-		private SamSiteBarrelController _barrelController;
-
-		protected override TurretBarrelController BarrelController { get { return _barrelController; } }
-
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			_barrelController = gameObject.GetComponentInChildren<SamSiteBarrelController>();
-			Assert.IsNotNull(_barrelController);
-		}
-
 		protected override void InitialiseTurretBarrel()
 		{
+			SamSiteBarrelController barrelController = _barrelController as SamSiteBarrelController;
+			Assert.IsNotNull(barrelController);
+
 			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFiler();
-			_barrelController.Initialise(targetFilter, CreateAngleCalculator(), _movementControllerFactory, _targetPositionPredictorFactory);
+			barrelController.Initialise(targetFilter, CreateAngleCalculator(), _movementControllerFactory, _targetPositionPredictorFactory);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()
