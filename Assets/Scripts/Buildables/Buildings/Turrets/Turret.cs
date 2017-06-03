@@ -69,7 +69,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 			_barrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
 			Assert.IsNotNull(_barrelController);
+		}
 
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
 			InitialiseTurretBarrel();
 		}
 
