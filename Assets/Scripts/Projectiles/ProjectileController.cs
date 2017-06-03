@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
@@ -16,16 +17,20 @@ namespace BattleCruisers.Projectiles
 	{
 		private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
+		protected Rigidbody2D _rigidBody;
 
-		// FELIX  Find programmatically
-		public Rigidbody2D rigidBody;
+		void Awake()
+		{
+			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
+			Assert.IsNotNull(_rigidBody);
+		}
 
 		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
 		{
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
-			rigidBody.velocity = velocityInMPerS;
-			rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
+			_rigidBody.velocity = velocityInMPerS;
+			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
 		}
 
 		void OnTriggerEnter2D(Collider2D collider)

@@ -24,7 +24,7 @@ namespace BattleCruisers.Projectiles
 
 			_target = target;
 
-			_movementController = movementControllerFactory.CreateMissileMovementController(rigidBody, missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
+			_movementController = movementControllerFactory.CreateMissileMovementController(_rigidBody, missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
 			_movementController.Target = _target;
 
 			_target.Destroyed += Target_Destroyed;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Projectiles
 			_movementController.AdjustVelocity();
 
 			// Adjust game object to point in direction it's travelling
-			transform.right = rigidBody.velocity;
+			transform.right = _rigidBody.velocity;
 		}
 
 		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time
