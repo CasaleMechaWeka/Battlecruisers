@@ -6,7 +6,7 @@ using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;

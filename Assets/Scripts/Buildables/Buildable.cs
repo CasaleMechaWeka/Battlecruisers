@@ -9,7 +9,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;

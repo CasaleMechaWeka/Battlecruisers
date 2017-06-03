@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

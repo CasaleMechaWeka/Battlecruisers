@@ -9,7 +9,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Units.Aircraft
+namespace BattleCruisers.Buildables.Units.Aircraft
 {
 	public class FighterController : AircraftController, ITargetConsumer
 	{

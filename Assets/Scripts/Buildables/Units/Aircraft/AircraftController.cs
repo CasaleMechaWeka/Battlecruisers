@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Units.Aircraft
+namespace BattleCruisers.Buildables.Units.Aircraft
 {
 	public class AircraftController : Unit
 	{

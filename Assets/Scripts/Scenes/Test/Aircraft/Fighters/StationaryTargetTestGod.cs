@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft;
 using NSubstitute;
 using System;
 using System.Collections;

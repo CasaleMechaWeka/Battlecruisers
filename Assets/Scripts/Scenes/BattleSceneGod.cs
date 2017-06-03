@@ -16,7 +16,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.BuildingDetails;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;

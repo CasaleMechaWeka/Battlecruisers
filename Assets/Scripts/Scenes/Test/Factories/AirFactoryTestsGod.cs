@@ -5,7 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft;
 using NSubstitute;
 using System;
 using System.Collections;

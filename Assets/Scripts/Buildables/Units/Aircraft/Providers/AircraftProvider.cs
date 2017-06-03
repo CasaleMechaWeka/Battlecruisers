@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Units.Aircraft.Providers
+namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
 	public class SafeZone
 	{

@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,26 +12,25 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
 	public class MortarMovingTargetTestGod : MonoBehaviour 
 	{
-		private Helper _helper;
-
-		public AircraftController target;
 		public List<Vector2> targetPatrolPoints;
 
 		void Start () 
 		{
-			_helper = new Helper();
+			Helper helper = new Helper();
 
 			// Setup target
+			TestAircraftController target = GameObject.FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
+			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
 			target.CompletedBuildable += (sender, e) => target.StartPatrolling();
-			_helper.InitialiseBuildable(target, Faction.Blues);
+			helper.InitialiseBuildable(target, Faction.Blues);
 			target.StartConstruction();
 
 			// Setup mortars
 			MortarController[] mortars = GameObject.FindObjectsOfType(typeof(MortarController)) as MortarController[];
 			foreach (MortarController mortar in mortars)
 			{
-				_helper.InitialiseBuildable(mortar, Faction.Reds);
+				helper.InitialiseBuildable(mortar, Faction.Reds);
 				mortar.StartConstruction();
 			}
 		}
