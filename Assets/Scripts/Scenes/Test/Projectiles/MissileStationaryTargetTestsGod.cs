@@ -10,12 +10,11 @@ namespace BattleCruisers.Scenes.Test
 {
 	public class MissileStationaryTargetTestsGod : MissileTestsGod 
 	{
-		public AircraftController target;
-
 		void Start () 
 		{
 			Helper helper = new Helper();
 
+			AircraftController target = GameObject.FindObjectOfType<AircraftController>();
 			helper.InitialiseBuildable(target);
 			target.StartConstruction();
 
