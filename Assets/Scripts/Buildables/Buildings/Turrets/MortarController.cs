@@ -20,14 +20,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsNotNull(_barrelController);
 		}
 
-		protected override void OnInitialised()
+		protected override IAngleCalculator CreateAngleCalculator()
 		{
-			base.OnInitialised();
-
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateMortarAngleCalcultor(_targetPositionPredictorFactory);
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			_barrelController.Initialise(targetFilter, angleCalculator);
+			return _angleCalculatorFactory.CreateMortarAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }

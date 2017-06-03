@@ -24,9 +24,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnInitialised();
 
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFiler();
-			_barrelController.Initialise(targetFilter, angleCalculator, _movementControllerFactory, _targetPositionPredictorFactory);
+			_barrelController.Initialise(targetFilter, CreateAngleCalculator(), _movementControllerFactory, _targetPositionPredictorFactory);
+		}
+		
+		protected override IAngleCalculator CreateAngleCalculator()
+		{
+			return _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }

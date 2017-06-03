@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,7 +66,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
 			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
+
+			InitialiseTurretBarrel();
 		}
+
+		protected virtual void InitialiseTurretBarrel()
+		{
+			BarrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator());
+		}
+
+		protected virtual ITargetFilter CreateTargetFilter()
+		{
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+		}
+
+		protected abstract IAngleCalculator CreateAngleCalculator();
 
 		protected override void EnableRenderers(bool enabled)
 		{
