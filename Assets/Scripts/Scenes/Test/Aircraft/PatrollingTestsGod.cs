@@ -10,26 +10,28 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
 	public class PatrollingTestsGod : MonoBehaviour 
 	{
-		public AircraftController aircraft;
+		private AircraftController _aircraft;
+
 		public List<GameObject> patrolPoints;
 
 		void Start() 
 		{
 			Helper helper = new Helper();
 
-			helper.InitialiseBuildable(aircraft);
-			aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
-			aircraft.StartConstruction();
+			_aircraft = GameObject.FindObjectOfType<AircraftController>();
+			helper.InitialiseBuildable(_aircraft);
+			_aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
+			_aircraft.StartConstruction();
 		}
 
 		private void Aircraft_CompletedBuildable(object sender, EventArgs e)
 		{
-			aircraft.CompletedBuildable -= Aircraft_CompletedBuildable;
+			_aircraft.CompletedBuildable -= Aircraft_CompletedBuildable;
 
 			IList<Vector2> patrolPointsAsVectors = patrolPoints.ConvertAll(gameObject => new Vector2(gameObject.transform.position.x, gameObject.transform.position.y));
-			aircraft.PatrolPoints = patrolPointsAsVectors;
+			_aircraft.PatrolPoints = patrolPointsAsVectors;
 			
-			aircraft.StartPatrolling();
+			_aircraft.StartPatrolling();
 		}
 	}
 }
