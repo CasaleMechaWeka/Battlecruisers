@@ -26,8 +26,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 	{
 		private Helper _helper;
 
-		public FighterController fighter;
-		public AircraftController targetAircraft;
 		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 		public float safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
 
@@ -35,18 +33,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		{
 			_helper = new Helper();
 
-			SetupPair(fighter, fighterPatrolPoints, targetAircraft, targetPatrolPoints);
-		}
-
-		private void SetupPair(FighterController fighter, IList<Vector2> fighterPatrolPoints, AircraftController target, IList<Vector2> targetPatrolPoints)
-		{
-			// Fighter
+			FighterController fighter = GameObject.FindObjectOfType<FighterController>();
 			SafeZone safeZone = new SafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
 			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
 			// Target aircraft
+			AircraftController target = GameObject.FindObjectOfType<AircraftController>();
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, targetPatrolPoints);
 			target.StartConstruction();
