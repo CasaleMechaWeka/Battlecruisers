@@ -24,20 +24,18 @@ namespace BattleCruisers.Scenes.Test
 			AirFactory target = GameObject.FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(target);
 
-			// Setup rockets
+			// Setup rocket
+			RocketController rocket = GameObject.FindObjectOfType<RocketController>();
+
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
 			};
-			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 20, cruisingAltitudeInM: 15);
-			Vector2 initialVelocity = new Vector2(5, 5);
+			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 25);
+			Vector2 initialVelocity = new Vector2(0, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
 
-			RocketController[] rockets = GameObject.FindObjectsOfType<RocketController>() as RocketController[];
-			foreach (RocketController rocket in rockets)
-			{
-				rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory);
-			}
+			rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory);
 		}
 	}
 }

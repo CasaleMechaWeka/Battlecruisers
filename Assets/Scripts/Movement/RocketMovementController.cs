@@ -21,8 +21,8 @@ namespace BattleCruisers.Movement
 		private Queue<Vector2> _targetPoints;
 		private Vector2 _currentTargetPoint;
 
-		private const float CRUISING_POINTS_OFFSET_PROPORTION = 0.1f;
-		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.2f;
+		private const float CRUISING_POINTS_OFFSET_PROPORTION = 0.25f;
+		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.25f;
 		private const float MIN_HORIZONTAL_DISTANCE_IN_M = 10;
 
 		public RocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM)
