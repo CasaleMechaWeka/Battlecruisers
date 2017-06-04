@@ -136,7 +136,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.OffensiveTurretTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
-			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.None).ReturnsForAnyArgs(targetFilter);
+			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.Aircraft).ReturnsForAnyArgs(targetFilter);
 			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
 
 			return targetsFactory;

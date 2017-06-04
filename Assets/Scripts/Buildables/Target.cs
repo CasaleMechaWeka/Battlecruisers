@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables
 	public abstract class Target : MonoBehaviour, ITarget
 	{
 		public float maxHealth;
+
 		public bool IsDestroyed { get { return Health == 0; } }
 		public Faction Faction { get; protected set; }
 		public GameObject GameObject { get { return gameObject; } }
