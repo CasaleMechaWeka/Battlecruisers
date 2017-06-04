@@ -6,8 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement
 {
-	// FELIX  Create test case!
-
 	/// <summary>
 	/// 1. Moves above source to cruising altitude
 	/// 2. Moved horizontally towards target
