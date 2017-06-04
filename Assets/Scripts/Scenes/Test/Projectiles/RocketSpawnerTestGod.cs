@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes.Test
 
 		private void FireRocket()
 		{
-			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter);
+			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter, faction: Faction.Blues);
 		}
 	}
 }

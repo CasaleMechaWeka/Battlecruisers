@@ -22,11 +22,11 @@ namespace BattleCruisers.Projectiles.Spawners
 			_movementControllerFactory = movementControllerFactory;
 		}
 
-		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
+		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter, Faction faction)
 		{
 			RocketController rocket = Instantiate<RocketController>(_rocketStats.RocketPrefab, transform.position, new Quaternion());
 			Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-			rocket.Initialise(_rocketStats, missileVelocity, targetFilter, target, _movementControllerFactory);
+			rocket.Initialise(_rocketStats, missileVelocity, targetFilter, target, _movementControllerFactory, faction);
 		}
 	}
 }

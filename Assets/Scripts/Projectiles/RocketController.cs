@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
@@ -16,7 +17,8 @@ namespace BattleCruisers.Projectiles
 	{
 		private ITarget _target;
 
-		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, IMovementControllerFactory movementControllerFactory)
+		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
+			IMovementControllerFactory movementControllerFactory, Faction faction)
 		{
 			base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter);
 
@@ -24,6 +26,10 @@ namespace BattleCruisers.Projectiles
 
 			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, rocketStats.CruisingAltitudeInM);
 			_movementController.Target = _target;
+
+			RocketTarget rocketTarget = gameObject.GetComponent<RocketTarget>();
+			Assert.IsNotNull(rocketTarget);
+			rocketTarget.Initialise(faction, _rigidBody);
 		}
 	}
 }

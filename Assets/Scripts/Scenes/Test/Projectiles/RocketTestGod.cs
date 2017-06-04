@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.Test
 			Vector2 initialVelocity = new Vector2(0, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
 
-			rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory);
+			rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory, Faction.Blues);
 		}
 	}
 }
