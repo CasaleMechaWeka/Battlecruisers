@@ -20,8 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// </summary>
 	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
-		private float _currentFireIntervalInS;
-		private float _timeSinceLastFireInS;
+		private FireIntervalManager _fireIntervalManager;
 		
 		protected ITargetFilter _targetFilter;
 		protected IAngleCalculator _angleCalculator;
@@ -41,16 +40,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsNotNull(_turretStats);
 			_turretStats.Initialise();
 
-			_currentFireIntervalInS = _turretStats.NextFireIntervalInS;
-			_timeSinceLastFireInS = float.MaxValue;
+			_fireIntervalManager = gameObject.AddComponent<FireIntervalManager>();
+			_fireIntervalManager.Initialise(_turretStats);
 		}
 
 		void FixedUpdate()
 		{
 			if (Target != null)
 			{
-				_timeSinceLastFireInS += Time.deltaTime;
-
 				Logging.Log(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
@@ -65,7 +62,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 				if (isOnTarget || _turretStats.IsInBurst)
 				{
-					if (_timeSinceLastFireInS >= _currentFireIntervalInS)
+					if (_fireIntervalManager.IsIntervalUp())
 					{
 						// Burst fires happen even if we are no longer on target, so we may miss
 						// the target in this case.  Hence use the actual angle our turret barrel
@@ -73,9 +70,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 						float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 						Fire(fireAngle);
-
-						_timeSinceLastFireInS = 0;
-						_currentFireIntervalInS = _turretStats.NextFireIntervalInS;
 					}
 				}
 			}
