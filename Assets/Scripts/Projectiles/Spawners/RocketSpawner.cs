@@ -1,12 +1,32 @@
-﻿using System;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement;
+using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace AssemblyCSharp
+namespace BattleCruisers.Projectiles.Spawners
 {
-	public class RocketSpawner
+	public class RocketSpawner : ProjectileSpawner
 	{
-		public RocketSpawner()
+		private RocketStats _rocketStats;
+		private IMovementControllerFactory _movementControllerFactory;
+
+		public void Initialise(RocketStats rocketStats, IMovementControllerFactory movementControllerFactory)
 		{
+			_rocketStats = rocketStats;
+			_movementControllerFactory = movementControllerFactory;
+		}
+
+		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
+		{
+			RocketController rocket = Instantiate<RocketController>(_rocketStats.RocketPrefab, transform.position, new Quaternion());
+			Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
+			rocket.Initialise(_rocketStats, missileVelocity, targetFilter, target, _movementControllerFactory);
 		}
 	}
 }
-
