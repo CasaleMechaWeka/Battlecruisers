@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Targets;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
 	public class TeslaCoil : Building, ITargetConsumer
 	{
-		private TeslaCoilStats _teslaCoilStats;
+		private BasicTurretStats _teslaCoilStats;
 		private TargetDetector _rocketDetector;
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		{
 			base.OnAwake();
 
-			_teslaCoilStats = gameObject.GetComponent<TeslaCoilStats>();
+			_teslaCoilStats = gameObject.GetComponent<BasicTurretStats>();
 			Assert.IsNotNull(_teslaCoilStats);
 
 			_rocketDetector = gameObject.GetComponentInChildren<TargetDetector>();
