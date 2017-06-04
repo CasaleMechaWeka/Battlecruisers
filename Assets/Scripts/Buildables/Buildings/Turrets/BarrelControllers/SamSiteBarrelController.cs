@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public class SamSiteBarrelController : TurretBarrelController
 	{
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
-		private MissileSpawnerController _missileSpawner;
+		private MissileSpawner _missileSpawner;
 		private ITargetsFactory _targetsFactory;
 
 		public MissileController missilePrefab;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			_exactMatchTargetFilter = targetFilter;
 
-			_missileSpawner = gameObject.GetComponentInChildren<MissileSpawnerController>();
+			_missileSpawner = gameObject.GetComponentInChildren<MissileSpawner>();
 			Assert.IsNotNull(_missileSpawner);
 
 			MissileStats missileStats = new MissileStats(missilePrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS);

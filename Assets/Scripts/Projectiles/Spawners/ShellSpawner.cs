@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class ShellSpawnerController : BaseShellSpawner
+	public class ShellSpawner : BaseShellSpawner
 	{
 		public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
 		{

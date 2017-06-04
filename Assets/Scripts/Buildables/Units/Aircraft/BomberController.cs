@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetProcessor _targetProcessor;
 
 		public BomberStats bomberStats;
-		public BombSpawnerController bombSpawner;
+		public BombSpawner bombSpawner;
 		public float cruisingAltitudeInM;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;

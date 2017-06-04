@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class BombSpawnerController : BaseShellSpawner
+	public class BombSpawner : BaseShellSpawner
 	{
 		public void SpawnShell(float currentXVelocityInMPers)
 		{

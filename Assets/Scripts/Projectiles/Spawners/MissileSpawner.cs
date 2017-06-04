@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class MissileSpawnerController : ProjectileSpawner
+	public class MissileSpawner : ProjectileSpawner
 	{
 		private MissileStats _missileStats;
 		private IMovementControllerFactory _movementControllerFactory;

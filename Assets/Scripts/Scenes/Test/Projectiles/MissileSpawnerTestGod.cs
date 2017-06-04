@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test
 {
 	public class MissileSpawnerTestGod : MonoBehaviour 
 	{
-		private MissileSpawnerController _missileSpawner;
+		private MissileSpawner _missileSpawner;
 		private AircraftController _target;
 		private IExactMatchTargetFilter _targetFilter;
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.Test
 
 
 			// Setup missile spawner
-			_missileSpawner = GameObject.FindObjectOfType<MissileSpawnerController>();
+			_missileSpawner = GameObject.FindObjectOfType<MissileSpawner>();
 			_targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = _target
