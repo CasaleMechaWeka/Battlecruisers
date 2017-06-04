@@ -4,6 +4,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -15,16 +16,19 @@ namespace BattleCruisers.Targets.TargetFinders
 
 	public class TargetDetector : MonoBehaviour, ITargetDetector
 	{
-		public CircleCollider2D circleCollider;
+		private CircleCollider2D _circleCollider;
 
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
 
 		public void Initialise(float radiusInM = -1)
 		{
+			_circleCollider = gameObject.GetComponent<CircleCollider2D>();
+			Assert.IsNotNull(_circleCollider);
+
 			if (radiusInM != -1)
 			{
-				circleCollider.radius = radiusInM;
+				_circleCollider.radius = radiusInM;
 			}
 		}
 
