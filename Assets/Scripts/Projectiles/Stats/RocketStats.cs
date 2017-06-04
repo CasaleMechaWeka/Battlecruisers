@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Stats
 	// FELIX  Extract common property with MissileController?
 	public class RocketStats : ProjectileStats
 	{
-		private const float INITIAL_VELOCITY_MULTIPLIER = 0.25f;
+		private const float INITIAL_VELOCITY_MULTIPLIER = 0.15f;
 
 		public RocketController RocketPrefab { get; private set; }
 		public float CruisingAltitudeInM { get; private set; }
