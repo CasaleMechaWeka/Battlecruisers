@@ -17,7 +17,9 @@ namespace BattleCruisers.Projectiles
 	{
 		private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
+
 		protected Rigidbody2D _rigidBody;
+		protected IHomingMovementController _movementController;
 
 		void Awake()
 		{
@@ -31,6 +33,17 @@ namespace BattleCruisers.Projectiles
 			_targetFilter = targetFilter;
 			_rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
+		}
+
+		void FixedUpdate()
+		{
+			if (_movementController != null)
+			{
+				_movementController.AdjustVelocity();
+				
+				// Adjust game object to point in direction it's travelling
+				transform.right = _rigidBody.velocity;
+			}
 		}
 
 		void OnTriggerEnter2D(Collider2D collider)

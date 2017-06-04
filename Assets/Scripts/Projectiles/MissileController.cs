@@ -15,7 +15,6 @@ namespace BattleCruisers.Projectiles
 	public class MissileController : ProjectileController
 	{
 		private  ITarget _target;
-		private IHomingMovementController _movementController;
 
 		public void Initialise(MissileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
@@ -28,14 +27,6 @@ namespace BattleCruisers.Projectiles
 			_movementController.Target = _target;
 
 			_target.Destroyed += Target_Destroyed;
-		}
-
-		void FixedUpdate()
-		{
-			_movementController.AdjustVelocity();
-
-			// Adjust game object to point in direction it's travelling
-			transform.right = _rigidBody.velocity;
 		}
 
 		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time

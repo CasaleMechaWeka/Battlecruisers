@@ -15,7 +15,6 @@ namespace BattleCruisers.Projectiles
 	public class RocketController : ProjectileController
 	{
 		private ITarget _target;
-		private IHomingMovementController _movementController;
 
 		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, IMovementControllerFactory movementControllerFactory)
 		{
@@ -25,15 +24,6 @@ namespace BattleCruisers.Projectiles
 
 			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, rocketStats.CruisingAltitudeInM);
 			_movementController.Target = _target;
-		}
-
-		// FELIX  Common with MissileController?  Worth extracting?
-		void FixedUpdate()
-		{
-			_movementController.AdjustVelocity();
-
-			// Adjust game object to point in direction it's travelling
-			transform.right = _rigidBody.velocity;
 		}
 	}
 }
