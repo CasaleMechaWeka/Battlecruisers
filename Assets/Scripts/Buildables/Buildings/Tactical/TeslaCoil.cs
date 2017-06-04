@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -18,6 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private TargetDetector _rocketDetector;
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
+		private FireIntervalManager _fireIntervalManager;
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 		public ITarget Target { get; set; }
@@ -47,13 +49,20 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
+
+			_fireIntervalManager = gameObject.AddComponent<FireIntervalManager>();
+			_fireIntervalManager.Initialise(_teslaCoilStats);
 		}
 
 		protected override void OnUpdate()
 		{
 			base.OnUpdate();
 
-			// FELIX NEXT
+			// FELIX  Don't insta-destroy rockets with no feedback, draw some cool lighting (somehow) ?
+			if (Target != null && _fireIntervalManager.IsIntervalUp())
+			{
+				Target.TakeDamage(_teslaCoilStats.damage);
+			}
 		}
 
 		protected override void OnDestroyed()
