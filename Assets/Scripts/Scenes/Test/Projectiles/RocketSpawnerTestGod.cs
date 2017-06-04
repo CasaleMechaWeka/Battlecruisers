@@ -29,6 +29,7 @@ namespace BattleCruisers.Scenes.Test
 			Helper helper = new Helper();
 			_target = GameObject.FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(_target);
+			_target.Destroyed += (sender, e) => CancelInvoke("FireRocket");
 
 
 			// Setup rocket spawner
