@@ -21,9 +21,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _haveDroppedBombOnRun;
 		private Vector2 _targetCruisingHeight;
 		private ITargetProcessor _targetProcessor;
+		private BombSpawner _bombSpawner;
 
 		public BomberStats bomberStats;
-		public BombSpawner bombSpawner;
 		public float cruisingAltitudeInM;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
@@ -87,17 +87,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnInitialised();
 
 			Assert.IsNotNull(bomberStats);
-			Assert.IsNotNull(bombSpawner);
 
 			_haveDroppedBombOnRun = false;
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 
+			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
+			Assert.IsNotNull(_bombSpawner);
+
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			bombSpawner.Initialise(shellStats, targetFilter);
+
+			_bombSpawner.Initialise(shellStats, targetFilter);
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -167,7 +170,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
 				Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to drop bomb");
 
-				bombSpawner.SpawnShell(rigidBody.velocity.x);
+				_bombSpawner.SpawnShell(rigidBody.velocity.x);
 				_haveDroppedBombOnRun = true;
 			}
 		}
