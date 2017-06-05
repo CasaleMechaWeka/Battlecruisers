@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test
 	public class RocketSpawnerTestGod : MonoBehaviour 
 	{
 		private RocketSpawner _rocketSpawner;
-		private AirFactory _target;
+		private Buildable _target;
 		private IExactMatchTargetFilter _targetFilter;
 
 		public RocketController rocketPrefab;
@@ -27,8 +27,9 @@ namespace BattleCruisers.Scenes.Test
 		{
 			// Setup target
 			Helper helper = new Helper();
-			_target = GameObject.FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(_target);
+			_target = GameObject.FindObjectOfType<Buildable>();
+			helper.InitialiseBuildable(_target, Faction.Blues);
+			_target.StartConstruction();
 			_target.Destroyed += (sender, e) => CancelInvoke("FireRocket");
 
 
@@ -47,7 +48,7 @@ namespace BattleCruisers.Scenes.Test
 
 		private void FireRocket()
 		{
-			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter, faction: Faction.Blues);
+			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter, faction: Faction.Reds);
 		}
 	}
 }

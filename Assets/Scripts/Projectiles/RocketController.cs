@@ -27,7 +27,7 @@ namespace BattleCruisers.Projectiles
 			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, rocketStats.CruisingAltitudeInM);
 			_movementController.Target = _target;
 
-			RocketTarget rocketTarget = gameObject.GetComponent<RocketTarget>();
+			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
 			Assert.IsNotNull(rocketTarget);
 			rocketTarget.Initialise(faction, _rigidBody);
 		}

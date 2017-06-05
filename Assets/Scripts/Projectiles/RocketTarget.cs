@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
@@ -30,6 +31,14 @@ namespace BattleCruisers.Projectiles
 		{
 			Faction = faction;
 			_rigidBody = rigidBody;
+		}
+
+		// All RocketTarget gameObjects are wrapped by a RocketController gameObject.
+		// Hence, we need to desstory the parent gameObject.
+		protected override void InternalDestroy()
+		{
+			Assert.IsNotNull(transform.parent);
+			Destroy(transform.parent.gameObject);
 		}
 	}
 }
