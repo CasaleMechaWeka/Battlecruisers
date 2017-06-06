@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Fetchers;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables
 {
-	public class BuildableWrapper : MonoBehaviour { }
+	public abstract class BuildableWrapper : MonoBehaviour, IAwakable 
+	{ 
+		public abstract void Awake();
+	}
 }
 

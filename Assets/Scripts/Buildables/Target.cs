@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 using System;
@@ -10,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Target : MonoBehaviour, ITarget
+	public abstract class Target : MonoBehaviour, ITarget, IAwakable
 	{
 		public float maxHealth;
 

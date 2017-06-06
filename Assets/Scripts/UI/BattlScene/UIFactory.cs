@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
-		public void Awake()
+		void Awake()
 		{
 			_canvas = GetComponent<Canvas>();
 		}

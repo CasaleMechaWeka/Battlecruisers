@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Units
 	{
 		public Unit Unit { get; private set; }
 
-		public void Awake()
+		public override void Awake()
 		{
 			Unit = gameObject.GetComponentInChildren<Unit>();
 			Assert.IsNotNull(Unit);

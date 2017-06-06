@@ -1,14 +1,15 @@
-﻿using System;
+﻿using BattleCruisers.Fetchers;
+using BattleCruisers.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables
 {
-	public class BuildableProgressController : MonoBehaviour 
+	public class BuildableProgressController : MonoBehaviour, IAwakable
 	{
 		private Buildable _buildable;
 		private Image _fillableImage;
@@ -16,9 +17,9 @@ namespace BattleCruisers.Buildables
 
 		public Sprite FillableImageSprite { get { return _fillableImage.sprite; } }
 
-		void Awake() 
+		public void Awake() 
 		{
-			_buildable = gameObject.GetComponentInParent<Buildable>();
+			_buildable = gameObject.GetComponentInInactiveParent<Buildable>();
 			Assert.IsNotNull(_buildable);
 
 			GameObject fillableImageGameObject = transform.Find("Canvas/FillableImage").gameObject;

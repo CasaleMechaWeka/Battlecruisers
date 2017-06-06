@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
 {
@@ -23,6 +24,14 @@ namespace BattleCruisers.Utils
 		public static bool IsMirrored(this Transform transform)
 		{
 			return transform.rotation.eulerAngles.y == 180;
+		}
+
+		// FELIX  Use in Buildable?
+		public static T GetComponentInInactiveParent<T>(this GameObject gameObject)
+		{
+			T[] componentAsList = gameObject.GetComponentsInParent<T>(includeInactive: true);
+			Assert.IsTrue(componentAsList.Length == 1);
+			return componentAsList[0];
 		}
 	}
 }

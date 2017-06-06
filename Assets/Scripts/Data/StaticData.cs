@@ -71,9 +71,11 @@ namespace BattleCruisers.Data
 			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
 			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
 			buildings.Add(new BuildingKey(BuildingCategory.Defence, "Mortar"));
+			buildings.Add(new BuildingKey(BuildingCategory.Defence, "TeslaCoil"));
 
 			// Offence
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
+			buildings.Add(new BuildingKey(BuildingCategory.Offence, "RocketLauncher"));
 
 			return buildings;
 		}

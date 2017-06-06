@@ -121,10 +121,19 @@ namespace BattleCruisers.Buildables
 			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
 			Assert.IsNotNull(_buildableProgress);
 
-			BuildableWrapper buildableWrapper = gameObject.GetComponentInParent<BuildableWrapper>();
-			Assert.IsNotNull(buildableWrapper);
 
-			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+			BuildableWrapper[] buildableWrappers = gameObject.GetComponentsInParent<BuildableWrapper>(includeInactive: true);
+			Assert.IsTrue(buildableWrappers.Length == 1);
+//			// FELIX
+//			if (buildableWrapper == null)
+//			{
+//				int i = 0;
+//			}
+
+//			BuildableWrapper buildableWrapper = gameObject.GetComponentInParent<BuildableWrapper>();
+//			Assert.IsNotNull(buildableWrapper);
+
+			_healthBar = buildableWrappers[0].GetComponentInChildren<HealthBarController>(includeInactive: true);
 			Assert.IsNotNull(_healthBar);
 
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
