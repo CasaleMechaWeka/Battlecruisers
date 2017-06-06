@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnBuildableCompleted();
 
-			_targetProcessor = _targetsFactory.OffensiveTurretTargetProcessor;
+			_targetProcessor = _targetsFactory.OffensiveBuildableTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
 		}
 

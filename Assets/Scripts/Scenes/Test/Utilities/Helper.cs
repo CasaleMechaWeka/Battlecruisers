@@ -133,7 +133,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
 
 			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
-			targetsFactory.OffensiveTurretTargetProcessor.Returns(targetProcessor);
+			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
 			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.Aircraft).ReturnsForAnyArgs(targetFilter);
