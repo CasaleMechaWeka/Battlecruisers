@@ -26,7 +26,6 @@ namespace BattleCruisers.Utils
 			return transform.rotation.eulerAngles.y == 180;
 		}
 
-		// FELIX  Use in Buildable?
 		public static T GetComponentInInactiveParent<T>(this GameObject gameObject)
 		{
 			T[] componentAsList = gameObject.GetComponentsInParent<T>(includeInactive: true);

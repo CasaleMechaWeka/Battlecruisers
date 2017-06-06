@@ -39,20 +39,7 @@ namespace BattleCruisers.Fetchers
 		public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
 		{
 			BuildingWrapper buildingWrapperPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
-
-			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
-			// Awake is called.  Because this prefab will never be loaded (only copies of it
-			// made, and those copies will be loaded), need to explicitly call Awake().
-//			buildingWrapperPrefab.Awake();
-//			buildingWrapperPrefab.Building.Awake();
-
-//			buildingWrapperPrefab.gameObject.SetActive(true);
-//			buildingWrapperPrefab = Instantiate(buildingWrapperPrefab);
-//			buildingWrapperPrefab.gameObject.transform.position = new Vector3(1000, 1000);
-//			buildingWrapperPrefab.gameObject.SetActive(false);
-
-			FakeAwake(buildingWrapperPrefab);
-
+			buildingWrapperPrefab.FakeAwake();
 			return buildingWrapperPrefab;
 		}
 
@@ -64,21 +51,7 @@ namespace BattleCruisers.Fetchers
 		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
 		{
 			UnitWrapper unitWrapperPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
-
-			// Awake() is synonymous to the prefabs constructor.  When the prefab is loaded,
-			// Awake is called.  Because this prefab will never be loaded (only copies of it
-			// made, and those copies will be loaded), need to explicitly call Awake().
-
-//			unitWrapperPrefab.Awake();
-//			unitWrapperPrefab.Unit.Awake();
-
-//			unitWrapperPrefab.gameObject.SetActive(true);
-//			unitWrapperPrefab = Instantiate(unitWrapperPrefab);
-//			unitWrapperPrefab.gameObject.transform.position = new Vector3(1000, 1000);
-//			unitWrapperPrefab.gameObject.SetActive(false);
-
-			FakeAwake(unitWrapperPrefab);
-
+			unitWrapperPrefab.FakeAwake();
 			return unitWrapperPrefab;
 		}
 
@@ -96,20 +69,5 @@ namespace BattleCruisers.Fetchers
 		{
 			return Instantiate(cruiserPrefab);
 		}
-
-		private void FakeAwake(BuildableWrapper buildableWrapper)
-		{
-			IAwakable[] awakables = buildableWrapper.GetComponentsInChildren<IAwakable>();
-			foreach (IAwakable awakable in awakables)
-			{
-				awakable.Awake();
-			}
-		}
-	}
-
-	// FELIX  own file
-	public interface IAwakable
-	{
-		void Awake();
 	}
 }
