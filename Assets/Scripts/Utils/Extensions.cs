@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
@@ -17,6 +18,11 @@ namespace BattleCruisers.Utils
 			}
 
 			return hash;
+		}
+
+		public static bool IsMirrored(this Transform transform)
+		{
+			return transform.rotation.eulerAngles.y == 180;
 		}
 	}
 }

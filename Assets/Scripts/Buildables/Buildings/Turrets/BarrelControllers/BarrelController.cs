@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		protected IAngleCalculator _angleCalculator;
 
 		public ITarget Target { get; set; }
-		protected bool IsSourceMirrored { get { return transform.rotation.eulerAngles.y == 180; } }
+		protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
 		private TurretStats _turretStats;
 		public TurretStats TurretStats { get { return _turretStats; } }
