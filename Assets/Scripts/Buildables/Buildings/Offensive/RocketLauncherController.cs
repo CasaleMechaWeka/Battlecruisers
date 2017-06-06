@@ -38,6 +38,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 			_rocketLauncherStats = gameObject.GetComponent<BurstFireTurretStats>();
 			Assert.IsNotNull(_rocketLauncherStats);
+			_rocketLauncherStats.Initialise();
 
 			_rocketSpawner = gameObject.GetComponentInChildren<RocketSpawner>();
 			Assert.IsNotNull(_rocketSpawner);
@@ -69,6 +70,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 			if (Target != null && _fireIntervalManager.IsIntervalUp())
 			{
+				Debug.Log("SpawnRocket!");
+
 				_rocketSpawner.SpawnRocket(
 					ROCKET_LAUNCH_ANGLE_IN_DEGREES,
 					transform.IsMirrored(),
