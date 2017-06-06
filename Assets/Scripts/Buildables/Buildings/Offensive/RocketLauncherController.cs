@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -22,10 +24,13 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		private ITargetFilter _targetFilter;
 		private ITargetProcessor _targetProcessor;
 
+		public RocketController rocketPrefab;
+
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 		public ITarget Target { get; set; }
 
 		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 90;
+		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
 		protected override void OnAwake()
 		{
@@ -44,6 +49,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
+
+			RocketStats rocketStats = new RocketStats(rocketPrefab, _rocketLauncherStats.damage, _rocketLauncherStats.bulletVelocityInMPerS, ROCKET_CRUISING_ALTITUDE_IN_M);
+			_rocketSpawner.Initialise(rocketStats, _movementControllerFactory);
 
 			_fireIntervalManager = gameObject.AddComponent<FireIntervalManager>();
 			_fireIntervalManager.Initialise(_rocketLauncherStats);
