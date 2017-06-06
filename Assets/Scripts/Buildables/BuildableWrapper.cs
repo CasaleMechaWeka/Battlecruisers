@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables
 		// made, and those copies will be instantiated), need to explicitly call Awake().
 		public void FakeAwake()
 		{
-			IAwakable[] awakables = GetComponentsInChildren<IAwakable>();
+			IAwakable[] awakables = GetComponentsInChildren<IAwakable>(includeInactive: true);
 			foreach (IAwakable awakable in awakables)
 			{
 				awakable.Awake();

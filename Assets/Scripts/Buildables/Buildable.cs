@@ -132,7 +132,7 @@ namespace BattleCruisers.Buildables
 			_healthBar.Initialise(this, followDamagable: true);
 		}
 
-		public virtual void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
+		public void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
 			ICruiser enemyCruiser, IFactoryProvider factoryProvider, IAircraftProvider aircraftProvider)
 		{
 			_uiManager = uiManager;
