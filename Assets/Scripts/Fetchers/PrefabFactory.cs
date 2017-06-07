@@ -46,6 +46,7 @@ namespace BattleCruisers.Fetchers
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
 			BuildingWrapper buildingWrapper = Instantiate(buildingWrapperPrefab);
+			buildingWrapper.gameObject.SetActive(true);
 			buildingWrapper.Initialise();
 			return buildingWrapper.Building;
 		}
@@ -60,6 +61,7 @@ namespace BattleCruisers.Fetchers
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
 			UnitWrapper unitWrapper = Instantiate(unitWrapperPrefab);
+			unitWrapper.gameObject.SetActive(true);
 			unitWrapper.Initialise();
 			return unitWrapper.Unit;
 		}
