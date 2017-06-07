@@ -136,7 +136,7 @@ namespace BattleCruisers.Scenes
 			IList<BuildingKey> buildOrder = GetBuildOrder();
 			_bot = new Bot(_aiCruiser, _playerCruiser, buildOrder, prefabFactory);
 //			Invoke("StartBot", 10);
-//			Invoke("StartBot", 2);
+			Invoke("StartBot", 2);
 		}
 
 		private void StartBot()
