@@ -88,9 +88,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider);
 
 			buildable.Initialise(
-				uiManager,
 				parentCruiser,
 				enemyCruiser,
+				uiManager,
 				factoryProvider);
 		}
 

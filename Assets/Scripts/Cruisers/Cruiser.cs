@@ -154,7 +154,7 @@ namespace BattleCruisers.Cruisers
 			Assert.AreEqual(SelectedBuildingPrefab.Building.slotType, slot.Type);
 
 			Building building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(_uiManager, this, _enemyCruiser, _factoryProvider);
+			building.Initialise(this, _enemyCruiser, _uiManager, _factoryProvider);
 			slot.Building = building;
 
 			// Only show build menu for player's cruiser

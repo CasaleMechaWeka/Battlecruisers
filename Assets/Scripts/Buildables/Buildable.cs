@@ -113,15 +113,15 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		public void Initialise(UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, IFactoryProvider factoryProvider)
+		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
 		{
 			base.Initialise();
 
-			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
 			_droneManager = _parentCruiser.DroneManager;
 			_droneConsumerProvider = _parentCruiser.DroneConsumerProvider;
+			_uiManager = uiManager;
 			_aircraftProvider = factoryProvider.AircraftProvider;
 
 			_factoryProvider = factoryProvider;
