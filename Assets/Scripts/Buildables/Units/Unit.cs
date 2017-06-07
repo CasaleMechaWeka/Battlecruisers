@@ -49,17 +49,11 @@ namespace BattleCruisers.Buildables.Units
 		}
 		#endregion Properties
 
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			Assert.IsTrue(maxVelocityInMPerS > 0);
-		}
-
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
+			Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = _parentCruiser.Direction;
 		}
 

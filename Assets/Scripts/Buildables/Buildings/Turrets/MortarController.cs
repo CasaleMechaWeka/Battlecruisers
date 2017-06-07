@@ -8,9 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class MortarController : DefensiveTurret
 	{
-		protected override void OnAwake()
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
 			_attackCapabilities.Add(TargetType.Ships);
 		}
 

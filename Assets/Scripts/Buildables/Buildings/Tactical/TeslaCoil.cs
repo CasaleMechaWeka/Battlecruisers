@@ -24,9 +24,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 		public ITarget Target { get; set; }
 
-		protected override void OnAwake()
+		protected override void OnInitialised()
 		{
-			base.OnAwake();
+			base.OnInitialised();
 
 			_teslaCoilStats = gameObject.GetComponent<BasicTurretStats>();
 			Assert.IsNotNull(_teslaCoilStats);

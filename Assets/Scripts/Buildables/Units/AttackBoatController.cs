@@ -62,14 +62,6 @@ namespace BattleCruisers.Buildables.Units
 
 		public override TargetType TargetType { get { return TargetType.Ships; } }
 
-		protected override void OnAwake()
-		{
-			base.OnAwake();
-
-			_turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
-			Assert.IsNotNull(_turretBarrelController);
-		}
-
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
@@ -77,6 +69,9 @@ namespace BattleCruisers.Buildables.Units
 			_attackCapabilities.Add(TargetType.Ships);
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
+
+			_turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
+			Assert.IsNotNull(_turretBarrelController);
 		}
 
 		protected override void OnBuildableCompleted()

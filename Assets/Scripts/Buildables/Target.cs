@@ -59,15 +59,11 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		public void Awake()
+		protected void Initialise()
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
-
-			OnAwake();
 		}
-
-		protected virtual void OnAwake() { }
 
 		protected virtual void OnFullyRepaired() { }
 

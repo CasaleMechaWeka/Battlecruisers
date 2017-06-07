@@ -113,28 +113,11 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		protected override void OnAwake()
-		{
-			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-			Assert.IsNotNull(_textMesh);
-
-			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
-			Assert.IsNotNull(_buildableProgress);
-
-			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
-			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-			Assert.IsNotNull(_healthBar);
-
-			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-			_buildProgressInDroneSeconds = 0;
-			BuildableState = BuildableState.NotStarted;
-
-			_healthBar.Initialise(this, followDamagable: true);
-		}
-
 		public void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
 			ICruiser enemyCruiser, IFactoryProvider factoryProvider, IAircraftProvider aircraftProvider)
 		{
+			base.Initialise();
+
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -151,6 +134,20 @@ namespace BattleCruisers.Buildables
 
 			Faction = faction;
 			BuildableState = BuildableState.NotStarted;
+			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+			_buildProgressInDroneSeconds = 0;
+			
+			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+			Assert.IsNotNull(_textMesh);
+			
+			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
+			Assert.IsNotNull(_buildableProgress);
+			
+			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
+			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+			Assert.IsNotNull(_healthBar);
+			
+			_healthBar.Initialise(this, followDamagable: true);
 
 			OnInitialised();
 		}
