@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Target : MonoBehaviour, ITarget, IAwakable
+	public abstract class Target : MonoBehaviour, ITarget
 	{
 		public float maxHealth;
 

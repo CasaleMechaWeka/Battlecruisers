@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Buildings
 	{
 		public Building Building { get; private set; }
 
-		public override void Awake()
+		public override void Initialise()
 		{
 			Building = gameObject.GetComponentInChildren<Building>();
 			Assert.IsNotNull(Building);

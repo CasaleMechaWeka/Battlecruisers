@@ -142,6 +142,7 @@ namespace BattleCruisers.Buildables
 			
 			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
 			Assert.IsNotNull(_buildableProgress);
+			_buildableProgress.Initialise();
 			
 			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
 			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);

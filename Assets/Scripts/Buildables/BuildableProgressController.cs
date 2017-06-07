@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables
 {
-	public class BuildableProgressController : MonoBehaviour, IAwakable
+	public class BuildableProgressController : MonoBehaviour
 	{
 		private Buildable _buildable;
 		private Image _fillableImage;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables
 
 		public Sprite FillableImageSprite { get { return _fillableImage.sprite; } }
 
-		public void Awake() 
+		public void Initialise() 
 		{
 			_buildable = gameObject.GetComponentInInactiveParent<Buildable>();
 			Assert.IsNotNull(_buildable);
