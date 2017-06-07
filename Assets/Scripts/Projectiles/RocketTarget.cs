@@ -29,6 +29,8 @@ namespace BattleCruisers.Projectiles
 
 		public void Initialise(Faction faction, Rigidbody2D rigidBody)
 		{
+			base.Initialise();
+
 			Faction = faction;
 			_rigidBody = rigidBody;
 		}

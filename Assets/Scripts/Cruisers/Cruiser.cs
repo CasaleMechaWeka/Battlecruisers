@@ -41,10 +41,19 @@ namespace BattleCruisers.Cruisers
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
+		public void BasicInitialise()
+		{
+			base.Initialise();
+
+			SetupSlots();
+			HideAllSlots();
+		}
+
 		public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
 			UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
 			IFactoryProvider factoryProvider, Direction facingDirection)
 		{
+
 			Assert.IsNotNull(enemyCruiser);
 			Assert.IsNotNull(healthBarController);
 			Assert.IsNotNull(uiManager);
@@ -61,9 +70,6 @@ namespace BattleCruisers.Cruisers
 			DroneConsumerProvider = droneConsumerProvider;
 			_factoryProvider = factoryProvider;
 			Direction = facingDirection;
-
-			SetupSlots();
-			HideAllSlots();
 
 			_healthBarController.Initialise(this);
 		}

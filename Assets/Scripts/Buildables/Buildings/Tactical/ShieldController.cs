@@ -30,6 +30,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 		public void Initialise(Faction faction)
 		{
+			base.Initialise();
+
 			Faction = faction;
 
 			_ring = new Ring(shieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
