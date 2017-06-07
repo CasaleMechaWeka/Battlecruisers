@@ -97,23 +97,21 @@ namespace BattleCruisers.Scenes
 			uiManager.Initialise(_playerCruiser, _aiCruiser);
 
 
-			// Initialise layer cruiser
-			IFactoryProvider playerFactoryProvider = new FactoryProvider(prefabFactory, _aiCruiser);
-			IAircraftProvider playerCruiserAircraftProvider = new AircraftProvider(_playerCruiser.transform.position, _aiCruiser.transform.position);
+			// Initialise player cruiser
+			IFactoryProvider playerFactoryProvider = new FactoryProvider(prefabFactory, _playerCruiser, _aiCruiser);
 			IDroneManager playerDroneManager = new DroneManager();
 			IDroneConsumerProvider playerDroneConsumerProvider = new DroneConsumerProvider(playerDroneManager);
 			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager, 
-				playerDroneConsumerProvider, playerFactoryProvider, playerCruiserAircraftProvider, Direction.Right);
+				playerDroneConsumerProvider, playerFactoryProvider, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
 			// Initialise AI cruiser
-			IFactoryProvider aiFactoryProvider = new FactoryProvider(prefabFactory, _playerCruiser);
-			IAircraftProvider aiCruiserAircraftProvider = new AircraftProvider(_aiCruiser.transform.position, _playerCruiser.transform.position);
+			IFactoryProvider aiFactoryProvider = new FactoryProvider(prefabFactory, _aiCruiser, _playerCruiser);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
 			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager, 
-				aiDroneConsumerProvider, aiFactoryProvider, aiCruiserAircraftProvider, Direction.Left);
+				aiDroneConsumerProvider, aiFactoryProvider, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
@@ -211,6 +209,9 @@ namespace BattleCruisers.Scenes
 			foreach (UnitKey unitKey in unitKeys)
 			{
 				UnitWrapper unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
+
+//				unitWrapper.Unit.Initialise(
+
 				unitWrappers.Add(unitWrapper);
 			}
 

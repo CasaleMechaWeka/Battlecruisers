@@ -51,12 +51,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
 			if (parentCruiser == null)
 			{
-				parentCruiser = CreateCruiser(_numOfDrones, parentCruiserDirection);
+				parentCruiser = CreateCruiser(_numOfDrones, parentCruiserDirection, faction);
 			}
 
 			if (enemyCruiser == null)
 			{
-				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left);
+				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
 			}
 			
 			if (aircraftProvider == null)
@@ -85,18 +85,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			}
 
 			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 
-				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory);
+				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider);
 
 			buildable.Initialise(
-				faction,
 				uiManager,
 				parentCruiser,
 				enemyCruiser,
-				factoryProvider,
-				aircraftProvider);
+				factoryProvider);
 		}
 
-		private ICruiser CreateCruiser(int numOfDrones, Direction facingDirection)
+		private ICruiser CreateCruiser(int numOfDrones, Direction facingDirection, Faction faction)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
 			droneConsumer.NumOfDrones = NUM_OF_DRONES;
@@ -113,6 +111,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
 			cruiser.Direction.Returns(facingDirection);
 			cruiser.AttackCapabilities.Returns(new List<TargetType>());
+			cruiser.Faction.Returns(faction);
 
 			return cruiser;
 		}
@@ -147,7 +146,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ITargetsFactory targetsFactory, 
 			IMovementControllerFactory movementControllerFactory,
 			IAngleCalculatorFactory angleCalculatorFactory,
-			ITargetPositionPredictorFactory targetPositionControllerFactory)
+			ITargetPositionPredictorFactory targetPositionControllerFactory,
+			IAircraftProvider aircraftProvider)
 		{
 			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -156,6 +156,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
 			factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
 			factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
+			factoryProvider.AircraftProvider.Returns(aircraftProvider);
 
 			return factoryProvider;
 		}

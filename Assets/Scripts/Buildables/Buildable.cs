@@ -113,17 +113,16 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
-		public void Initialise(Faction faction, UIManager uiManager, ICruiser parentCruiser, 
-			ICruiser enemyCruiser, IFactoryProvider factoryProvider, IAircraftProvider aircraftProvider)
+		public void Initialise(UIManager uiManager, ICruiser parentCruiser, ICruiser enemyCruiser, IFactoryProvider factoryProvider)
 		{
 			base.Initialise();
 
 			_uiManager = uiManager;
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
-			_droneManager = parentCruiser.DroneManager;
-			_droneConsumerProvider = parentCruiser.DroneConsumerProvider;
-			_aircraftProvider = aircraftProvider;
+			_droneManager = _parentCruiser.DroneManager;
+			_droneConsumerProvider = _parentCruiser.DroneConsumerProvider;
+			_aircraftProvider = factoryProvider.AircraftProvider;
 
 			_factoryProvider = factoryProvider;
 			_prefabFactory = _factoryProvider.PrefabFactory;
@@ -132,7 +131,7 @@ namespace BattleCruisers.Buildables
 			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
 			_targetPositionPredictorFactory = _factoryProvider.TargetPositionPredictorFactory;
 
-			Faction = faction;
+			Faction = _parentCruiser.Faction;
 			BuildableState = BuildableState.NotStarted;
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;

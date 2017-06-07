@@ -39,25 +39,29 @@ namespace BattleCruisers.Fetchers
 		public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
 		{
 			BuildingWrapper buildingWrapperPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
-			buildingWrapperPrefab.FakeAwake();
+			buildingWrapperPrefab.Initialise();
 			return buildingWrapperPrefab;
 		}
 
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			return Instantiate(buildingWrapperPrefab).Building;
+			BuildingWrapper buildingWrapper = Instantiate(buildingWrapperPrefab);
+			buildingWrapper.Initialise();
+			return buildingWrapper.Building;
 		}
 
 		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
 		{
 			UnitWrapper unitWrapperPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
-			unitWrapperPrefab.FakeAwake();
+			unitWrapperPrefab.Initialise();
 			return unitWrapperPrefab;
 		}
 
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
-			return Instantiate(unitWrapperPrefab).Unit;
+			UnitWrapper unitWrapper = Instantiate(unitWrapperPrefab);
+			unitWrapper.Initialise();
+			return unitWrapper.Unit;
 		}
 
 		public Cruiser GetCruiserPrefab(HullKey hullKey)

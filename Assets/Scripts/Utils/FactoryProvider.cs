@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Utils
 		IMovementControllerFactory MovementControllerFactory { get; }
 		IAngleCalculatorFactory AngleCalculatorFactory { get; }
 		ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+		IAircraftProvider AircraftProvider { get; }
 	}
 
 	public class FactoryProvider : IFactoryProvider
@@ -24,14 +26,16 @@ namespace BattleCruisers.Utils
 		public IMovementControllerFactory MovementControllerFactory { get; private set; }
 		public IAngleCalculatorFactory AngleCalculatorFactory { get; private set; }
 		public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
+		public IAircraftProvider AircraftProvider { get; private set; }
 
-		public FactoryProvider(PrefabFactory prefabFactory, ICruiser enemyCruiser)
+		public FactoryProvider(PrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);
 			MovementControllerFactory = new MovementControllerFactory();
 			AngleCalculatorFactory = new AngleCalculatorFactory();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
+			AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position);
 		}
 	}
 }
