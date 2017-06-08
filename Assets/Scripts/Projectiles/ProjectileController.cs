@@ -21,14 +21,11 @@ namespace BattleCruisers.Projectiles
 		protected Rigidbody2D _rigidBody;
 		protected IHomingMovementController _movementController;
 
-		void Awake()
+		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
 		{
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
-		}
 
-		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
-		{
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
 			_rigidBody.velocity = velocityInMPerS;
