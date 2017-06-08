@@ -27,9 +27,9 @@ namespace BattleCruisers.Cruisers
 	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{
 		private SpriteRenderer _renderer;
+		private ICruiser _parentCruiser;
 
 		public SlotType type;
-		public Cruiser parentCruiser;
 		public Direction direction;
 
 		public bool IsFree { get { return _building == null; } }
@@ -70,15 +70,20 @@ namespace BattleCruisers.Cruisers
 		void Awake()
 		{
 			_isActive = false;
+
 			_renderer = GetComponent<SpriteRenderer>();
+			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
+
+			_parentCruiser = GetComponentInParent<ICruiser>();
+			Assert.IsNotNull(_parentCruiser);
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			if (_isActive)
 			{
-				parentCruiser.ConstructSelectedBuilding(this);
+				_parentCruiser.ConstructSelectedBuilding(this);
 			}
 		}
 
