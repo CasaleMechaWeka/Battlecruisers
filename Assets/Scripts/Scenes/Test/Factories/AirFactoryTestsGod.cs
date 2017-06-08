@@ -14,45 +14,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
-	public class AirFactoryTestsGod : MonoBehaviour 
+	public class AirFactoryTestsGod : FactoryTestGod
 	{
-		public AirFactory airFactoryFacingRight, airFactoryFacingLeft;
-		public UnitWrapper aircraftPrefab;
 		public List<Vector2> patrolPoints;
 
-		void Start () 
-		{
-			aircraftPrefab.Initialise();
-
-			Helper helper = new Helper();
-
-			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
-			prefabFactory.CreateUnit(aircraftPrefab).Returns(callInfo => 
-			{
-				UnitWrapper unitWraper = Instantiate(aircraftPrefab);
-				unitWraper.Initialise();
-				return unitWraper.Unit;
-			});
-
-			helper.InitialiseBuildable(airFactoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(airFactoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
-
-			airFactoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
-			airFactoryFacingRight.StartedBuildingUnit += Factory_StartedBuildingUnit;
-
-			airFactoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;
-			airFactoryFacingLeft.StartedBuildingUnit += Factory_StartedBuildingUnit;
-
-			airFactoryFacingRight.StartConstruction();
-			airFactoryFacingLeft.StartConstruction();
-		}
-
-		private void Factory_CompletedBuildable(object sender, EventArgs e)
-		{
-			((Factory)sender).UnitWrapper = aircraftPrefab;
-		}
-
-		private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
+		protected override void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
 		{
 			e.Buildable.CompletedBuildable += Aircraft_CompletedBuildable;
 		}
