@@ -52,8 +52,12 @@ namespace BattleCruisers.Data
 			return new List<HullKey>() 
 			{
 				new HullKey("Bullshark"),
+				new HullKey("Eagle"),
 				new HullKey("Hammerhead"),
 				new HullKey("Longbow"),
+				new HullKey("Megalodon"),
+				new HullKey("Raptor"),
+				new HullKey("Rockjaw"),
 				new HullKey("Trident")
 			};
 		}
@@ -100,7 +104,7 @@ namespace BattleCruisers.Data
 		// FELIX  For final game, don't add ALL the prefabs :D
 		private GameModel CreateInitialGameModel()
 		{
-			Loadout playerLoadout = new Loadout(HullKeys[2], BuildingKeys, UnitKeys);
+			Loadout playerLoadout = new Loadout(HullKeys[5], BuildingKeys, UnitKeys);
 
 			int numOfLevelsUnlocked = 1;
 
