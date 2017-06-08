@@ -22,10 +22,17 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 		void Start () 
 		{
+			aircraftPrefab.Initialise();
+
 			Helper helper = new Helper();
 
 			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
-			prefabFactory.CreateUnit(aircraftPrefab).Returns(callInfo => Instantiate(aircraftPrefab).Unit);
+			prefabFactory.CreateUnit(aircraftPrefab).Returns(callInfo => 
+			{
+				UnitWrapper unitWraper = Instantiate(aircraftPrefab);
+				unitWraper.Initialise();
+				return unitWraper.Unit;
+			});
 
 			helper.InitialiseBuildable(airFactoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
 			helper.InitialiseBuildable(airFactoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
