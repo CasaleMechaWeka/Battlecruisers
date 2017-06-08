@@ -51,6 +51,7 @@ namespace BattleCruisers.Data
 		{
 			return new List<HullKey>() 
 			{
+				new HullKey("Bullshark"),
 				new HullKey("Trident")
 			};
 		}
