@@ -19,6 +19,9 @@ namespace BattleCruisers.Scenes.Test.Factories
 		public Factory factoryFacingRight, factoryFacingLeft;
 		public UnitWrapper unitPrefab;
 
+		protected virtual Faction FactoryFacingLeftFaction { get { return Faction.Blues; } }
+		protected virtual Faction FactoryFacingRightFaction { get { return Faction.Blues; } }
+
 		void Start () 
 		{
 			unitPrefab.Initialise();
@@ -33,8 +36,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 				return unitWraper.Unit;
 			});
 
-			helper.InitialiseBuildable(factoryFacingRight, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(factoryFacingLeft, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
+			helper.InitialiseBuildable(factoryFacingRight, FactoryFacingRightFaction, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);
+			helper.InitialiseBuildable(factoryFacingLeft, FactoryFacingLeftFaction, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Left);
 
 			factoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			factoryFacingRight.StartedBuildingUnit += Factory_StartedBuildingUnit;
