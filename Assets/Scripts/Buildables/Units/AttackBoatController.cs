@@ -70,8 +70,14 @@ namespace BattleCruisers.Buildables.Units
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 
+			// Turret barrel
 			_turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
 			Assert.IsNotNull(_turretBarrelController);
+			
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -80,14 +86,9 @@ namespace BattleCruisers.Buildables.Units
 
 			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 
-			// Turret barrel
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			bool isDetectable = true;
-			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator);
-
 			// Enemy detection
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			bool isDetectable = true;
 			enemyDetector.Initialise(_turretBarrelController.TurretStats.rangeInM);
 			ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, _attackCapabilities);
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
