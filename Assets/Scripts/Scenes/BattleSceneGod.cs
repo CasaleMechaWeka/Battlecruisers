@@ -129,7 +129,7 @@ namespace BattleCruisers.Scenes
 			
 			
 			// Camera controller
-			cameraController.Initialise(_playerCruiser.GameObject, _aiCruiser.GameObject);
+			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
 			// AI

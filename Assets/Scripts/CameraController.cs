@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers
 {
@@ -34,8 +36,12 @@ namespace BattleCruisers
 
 	public class CameraController : MonoBehaviour, ICameraController 
 	{
-		private GameObject _playerCruiser;
-		private GameObject _aiCruiser;
+		private ICruiser _playerCruiser;
+		private ICruiser _aiCruiser;
+		private Camera _camera;
+		private ICameraSizeCalculator _cameraSizeCalculator;
+		private float _playerCruiserOrthographicSize;
+		private float _aiCruiserOrthographicSize;
 
 		private CameraState _cameraStateTarget;
 		private Vector3 _cameraVelocity = Vector3.zero;
@@ -45,7 +51,6 @@ namespace BattleCruisers
 		private float _cameraOrthographicSizeTarget;
 
 		public float smoothTime;
-		public float cruiserOrthographicSize;
 		public float overviewOrthographicSize;
 		public float centerPositionY;
 
@@ -58,12 +63,21 @@ namespace BattleCruisers
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
-		public void Initialise(GameObject playerCruiser, GameObject aiCruiser)
+		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser)
 		{
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
-			_cameraState = CameraState.PlayerCruiser;
-			_cameraStateTarget = _cameraState;
+			_cameraState = CameraState.Center;
+			_cameraStateTarget = CameraState.PlayerCruiser;
+
+			_camera = GetComponent<Camera>();
+			Assert.IsNotNull(_camera);
+
+			_cameraSizeCalculator = new CameraSizeCalculator(_camera);
+			_playerCruiserOrthographicSize = _cameraSizeCalculator.FindCameraOrthographicSize(_playerCruiser);
+			_aiCruiserOrthographicSize = _cameraSizeCalculator.FindCameraOrthographicSize(_aiCruiser);
+
+			FocusOnPlayerCruiser();
 		}
 
 		void Update()
@@ -146,19 +160,19 @@ namespace BattleCruisers
 				switch (targetState)
 				{
 					case CameraState.AiCruiser:
-						_cameraPositionTarget.x = _aiCruiser.transform.position.x;
-						_cameraPositionTarget.y = _aiCruiser.transform.position.y;
-						_cameraOrthographicSizeTarget = cruiserOrthographicSize;
+						_cameraPositionTarget.x = _aiCruiser.Position.x;
+						_cameraPositionTarget.y = _aiCruiser.Position.y;
+						_cameraOrthographicSizeTarget = _aiCruiserOrthographicSize;
 						break;
 
 					case CameraState.PlayerCruiser:
-						_cameraPositionTarget.x = _playerCruiser.transform.position.x;
-						_cameraPositionTarget.y = _playerCruiser.transform.position.y;
-						_cameraOrthographicSizeTarget = cruiserOrthographicSize;
+						_cameraPositionTarget.x = _playerCruiser.Position.x;
+						_cameraPositionTarget.y = _playerCruiser.Position.y;
+						_cameraOrthographicSizeTarget = _playerCruiserOrthographicSize;
 						break;
 
 					case CameraState.Center:
-						_cameraPositionTarget.x = (_playerCruiser.transform.position.x + _aiCruiser.transform.position.x) / 2;
+						_cameraPositionTarget.x = (_playerCruiser.Position.x + _aiCruiser.Position.x) / 2;
 						_cameraPositionTarget.y = centerPositionY;
 						_cameraOrthographicSizeTarget = overviewOrthographicSize;
 						break;

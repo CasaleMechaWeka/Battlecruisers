@@ -30,6 +30,7 @@ namespace BattleCruisers.Cruisers
 		private GameObject _slotsWrapper;
 		private SlotType? _highlightedSlotType;
 		private IFactoryProvider _factoryProvider;
+		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
 
@@ -38,6 +39,7 @@ namespace BattleCruisers.Cruisers
 		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
 		public Direction Direction { get; private set; }
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
+		public Vector2 Size { get { return _renderer.bounds.size; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
@@ -53,7 +55,6 @@ namespace BattleCruisers.Cruisers
 			UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
 			IFactoryProvider factoryProvider, Direction facingDirection)
 		{
-
 			Assert.IsNotNull(enemyCruiser);
 			Assert.IsNotNull(healthBarController);
 			Assert.IsNotNull(uiManager);
@@ -72,6 +73,9 @@ namespace BattleCruisers.Cruisers
 			Direction = facingDirection;
 
 			_healthBarController.Initialise(this);
+
+			_renderer = GetComponent<SpriteRenderer>();
+			Assert.IsNotNull(_renderer);
 		}
 
 		private void SetupSlots()
