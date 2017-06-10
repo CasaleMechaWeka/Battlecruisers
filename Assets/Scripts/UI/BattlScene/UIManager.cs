@@ -43,6 +43,7 @@ namespace BattleCruisers.UI.BattleScene
 			{
 				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
+					_playerCruiser.HideAllSlots();
 					buildableDetails.Hide();
 					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
