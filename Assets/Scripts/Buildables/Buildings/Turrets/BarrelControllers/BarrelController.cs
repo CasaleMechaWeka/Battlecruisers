@@ -40,11 +40,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsNotNull(_turretStats);
 			_turretStats.Initialise();
 
-//			foreach (FireIntervalManager m in GetComponents<FireIntervalManager>())
-//			{
-//				DestroyImmediate(m, true);
-//			}
-
 			_fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
 			Assert.IsNotNull(_fireIntervalManager);
 			_fireIntervalManager.Initialise(_turretStats);

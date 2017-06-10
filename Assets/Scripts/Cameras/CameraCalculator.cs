@@ -43,12 +43,7 @@ namespace BattleCruisers.Cameras
 		public float FindCameraYPosition(float desiredOrthographicSize)
 		{
 			float desiredHeight = 2 * desiredOrthographicSize;
-
-			float y = desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
-			Debug.Log("desiredOrthographicSize: " + desiredOrthographicSize + "  y: " + y);
-			return y;
-
-//			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
+			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
 		}
 	}
 }
