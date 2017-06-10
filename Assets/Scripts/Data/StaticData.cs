@@ -104,7 +104,7 @@ namespace BattleCruisers.Data
 		// FELIX  For final game, don't add ALL the prefabs :D
 		private GameModel CreateInitialGameModel()
 		{
-			Loadout playerLoadout = new Loadout(HullKeys[0], BuildingKeys, UnitKeys);
+			Loadout playerLoadout = new Loadout(HullKeys[4], BuildingKeys, UnitKeys);
 
 			int numOfLevelsUnlocked = 1;
 
