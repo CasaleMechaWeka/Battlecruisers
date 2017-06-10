@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Utils
+namespace BattleCruisers.Cameras
 {
 	public interface ICameraCalculator
 	{

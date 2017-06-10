@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Drones;

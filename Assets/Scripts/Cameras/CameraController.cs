@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers
+namespace BattleCruisers.Cameras
 {
 	public enum CameraState
 	{
