@@ -35,6 +35,7 @@ namespace BattleCruisers.Cruisers
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
 		Vector2 Size { get; }
+		float YAdjustmentInM { get; }
 
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 

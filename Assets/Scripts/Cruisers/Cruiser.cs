@@ -33,6 +33,7 @@ namespace BattleCruisers.Cruisers
 		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
+		public float yAdjustmentInM;
 
 		public BuildingWrapper SelectedBuildingPrefab { get; set; }
 		public IDroneManager DroneManager { get; private set; }
@@ -40,6 +41,7 @@ namespace BattleCruisers.Cruisers
 		public Direction Direction { get; private set; }
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
 		public Vector2 Size { get { return _renderer.bounds.size; } }
+		public float YAdjustmentInM { get { return yAdjustmentInM; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 

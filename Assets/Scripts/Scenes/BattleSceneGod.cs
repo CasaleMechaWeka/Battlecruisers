@@ -82,7 +82,7 @@ namespace BattleCruisers.Scenes
 			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
 			_playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
 			_playerCruiser.BasicInitialise();
-			_playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, 0, 0);
+			_playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, _playerCruiser.YAdjustmentInM, 0);
 
 
 			// Instantiate AI cruiser
@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes
 			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 			_aiCruiser.BasicInitialise();
 			
-			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, 0, 0);
+			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
 			Quaternion rotation = _aiCruiser.transform.rotation;
 			rotation.eulerAngles = new Vector3(0, 180, 0);
 			_aiCruiser.transform.rotation = rotation;
