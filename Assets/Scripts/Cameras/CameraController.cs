@@ -37,13 +37,11 @@ namespace BattleCruisers.Cameras
 	public class CameraController : MonoBehaviour, ICameraController 
 	{
 		private Camera _camera;
-		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget;
+		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _leftTarget, _rightTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity = 0;
 
 		public float smoothTime;
-		public float overviewOrthographicSize;
-		public float centerPositionY;
 
 		public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
 		public event EventHandler<CameraTransitionArgs> CameraTransitionCompleted;
@@ -61,6 +59,10 @@ namespace BattleCruisers.Cameras
 			_camera = GetComponent<Camera>();
 			Assert.IsNotNull(_camera);
 
+			// Camera starts in overiview
+			Vector3 overviewTargetPosition = transform.position;
+			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview);
+
 			ICameraCalculator cameraCalculator = new CameraCalculator(_camera);
 
 			float playerCruiserOrthographicSize = cameraCalculator.FindCameraOrthographicSize(playerCruiser);
@@ -71,8 +73,6 @@ namespace BattleCruisers.Cameras
 			Vector3 aiCruiserTargetPosition = new Vector3(aiCruiser.Position.x, cameraCalculator.FindCameraYPosition(aiCruiserOrthographicSize), transform.position.z);
 			_aiCruiserTarget = new CameraTarget(aiCruiserTargetPosition, aiCruiserOrthographicSize, CameraState.AiCruiser);
 
-			Vector3 overviewTargetPosition = new Vector3(0, centerPositionY, transform.position.z);
-			_overviewTarget = new CameraTarget(overviewTargetPosition, overviewOrthographicSize, CameraState.Overview);
 
 			FocusOnPlayerCruiser();
 		}
