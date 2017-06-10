@@ -10,7 +10,7 @@ namespace BattleCruisers.Cameras
 {
 	public enum CameraState
 	{
-		PlayerCruiser, AiCruiser, Overview, InTransition
+		PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid
 	}
 
 	public class CameraTransitionArgs : EventArgs
@@ -32,12 +32,14 @@ namespace BattleCruisers.Cameras
 		void FocusOnPlayerCruiser();
 		void FocusOnAiCruiser();
 		void ShowFullMapView();
+		void ShowMidLeft();
+		void ShowMidRight();
 	}
 
 	public class CameraController : MonoBehaviour, ICameraController 
 	{
 		private Camera _camera;
-		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _leftTarget, _rightTarget;
+		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity = 0;
 
@@ -48,31 +50,54 @@ namespace BattleCruisers.Cameras
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
+		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
+		private const float MID_VIEWS_POSITION_X = 20;
 
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
 		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser)
 		{
-			_cameraState = CameraState.Overview;
-
 			_camera = GetComponent<Camera>();
 			Assert.IsNotNull(_camera);
 
-			// Camera starts in overiview
-			Vector3 overviewTargetPosition = transform.position;
-			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview);
-
 			ICameraCalculator cameraCalculator = new CameraCalculator(_camera);
 
+			// Camera starts in overiview
+			_cameraState = CameraState.Overview;
+			Vector3 overviewTargetPosition = transform.position;
+			IList<CameraState> overviewInstants = new List<CameraState>();
+			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview, overviewInstants);
+
+			// Player cruiser view
 			float playerCruiserOrthographicSize = cameraCalculator.FindCameraOrthographicSize(playerCruiser);
 			Vector3 playerCruiserTargetPosition = new Vector3(playerCruiser.Position.x, cameraCalculator.FindCameraYPosition(playerCruiserOrthographicSize), transform.position.z);
-			_playerCruiserTarget = new CameraTarget(playerCruiserTargetPosition, playerCruiserOrthographicSize, CameraState.PlayerCruiser);
+			IList<CameraState> leftSideInstants = new List<CameraState> 
+			{
+				CameraState.RightMid,
+				CameraState.AiCruiser
+			};
+			_playerCruiserTarget = new CameraTarget(playerCruiserTargetPosition, playerCruiserOrthographicSize, CameraState.PlayerCruiser, leftSideInstants);
 
+			// Ai cruiser overview
 			float aiCruiserOrthographicSize = cameraCalculator.FindCameraOrthographicSize(aiCruiser);
 			Vector3 aiCruiserTargetPosition = new Vector3(aiCruiser.Position.x, cameraCalculator.FindCameraYPosition(aiCruiserOrthographicSize), transform.position.z);
-			_aiCruiserTarget = new CameraTarget(aiCruiserTargetPosition, aiCruiserOrthographicSize, CameraState.AiCruiser);
+			IList<CameraState> rightSideInstants = new List<CameraState> 
+			{
+				CameraState.LeftMid,
+				CameraState.PlayerCruiser
+			};
+			_aiCruiserTarget = new CameraTarget(aiCruiserTargetPosition, aiCruiserOrthographicSize, CameraState.AiCruiser, rightSideInstants);
 
+			float midViewsPositionY = cameraCalculator.FindCameraYPosition(MID_VIEWS_ORTHOGRAPHIC_SIZE);
+
+			// Left mid view
+			Vector3 leftMidViewPosition = new Vector3(-MID_VIEWS_POSITION_X, midViewsPositionY, transform.position.z);
+			_midLeftTarget = new CameraTarget(leftMidViewPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.LeftMid, leftSideInstants);
+
+			// Right mid view
+			Vector3 rightMidPosition = new Vector3(MID_VIEWS_POSITION_X, midViewsPositionY, transform.position.z);
+			_midRightTarget = new CameraTarget(rightMidPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.RightMid, rightSideInstants);
 
 			FocusOnPlayerCruiser();
 		}
@@ -120,41 +145,48 @@ namespace BattleCruisers.Cameras
 
 		public void FocusOnPlayerCruiser()
 		{
-			bool isInstant = _cameraState != CameraState.Overview;
-			_currentTarget = _playerCruiserTarget;
-			MoveCamera(isInstant);
+			MoveCamera(_playerCruiserTarget);
 		}
 
 		public void FocusOnAiCruiser()
 		{
-			bool isInstant = _cameraState != CameraState.Overview;
-			_currentTarget = _aiCruiserTarget;
-			MoveCamera(isInstant);
+			MoveCamera(_aiCruiserTarget);
 		}
 
 		public void ShowFullMapView()
 		{
-			_currentTarget = _overviewTarget;
-			MoveCamera(isInstant: false);
+			MoveCamera(_overviewTarget);
+		}
+
+		public void ShowMidLeft()
+		{
+			MoveCamera(_midLeftTarget);
+		}
+
+		public void ShowMidRight()
+		{
+			MoveCamera(_midRightTarget);
 		}
 
 		/// <returns><c>true</c>, if camera was or will be moved, <c>false</c> otherwise.</returns>
-		private bool MoveCamera(bool isInstant)
+		private bool MoveCamera(ICameraTarget newTarget)
 		{
 			bool willMoveCamera = 
 				_cameraState != CameraState.InTransition
-			    && _cameraState != _currentTarget.State;
+				&& _cameraState != newTarget.State;
 
-			Logging.Log(Tags.CAMERA_CONTROLLER, "MoveCamera _currentTarget.State: " + _currentTarget.State + "  willMoveCamera: " + willMoveCamera + "  _cameraState: " + _cameraState);
+			Logging.Log(Tags.CAMERA_CONTROLLER, "MoveCamera newTarget.State: " + newTarget.State + "  willMoveCamera: " + willMoveCamera + "  _cameraState: " + _cameraState);
 
 			if (willMoveCamera)
 			{
+				_currentTarget = newTarget;
+
 				if (CameraTransitionStarted != null)
 				{
 					CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _currentTarget.State));
 				}
 
-				if (isInstant)
+				if (_currentTarget.IsInstantTransition(_cameraState))
 				{
 					transform.position = _currentTarget.Position;
 					_camera.orthographicSize = _currentTarget.OrthographicSize;
