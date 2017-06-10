@@ -61,11 +61,13 @@ namespace BattleCruisers.Cameras
 			_camera = GetComponent<Camera>();
 			Assert.IsNotNull(_camera);
 
+			_cameraState = CameraState.Overview;
+
 			ICameraCalculator cameraCalculator = new CameraCalculator(_camera);
 
-			// Camera starts in overiview
-			_cameraState = CameraState.Overview;
+			// Camera starts in overiview (ish, y-position is only roughly right :P)
 			Vector3 overviewTargetPosition = transform.position;
+			overviewTargetPosition.y = cameraCalculator.FindCameraYPosition(_camera.orthographicSize);
 			IList<CameraState> overviewInstants = new List<CameraState>();
 			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview, overviewInstants);
 
