@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -50,16 +51,22 @@ namespace BattleCruisers.Scenes
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this);
 
-			if (ApplicationModel.ShowPostBattleScreen)
-			{
-				ApplicationModel.ShowPostBattleScreen = false;
-				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
-				GoToScreen(postBattleScreen);
-			}
-			else
-			{
-				GoToHomeScreen();
-			}
+			
+			// FELIX  TEMP
+			GoToLoadoutScreen();
+
+
+			// FELIX  Uncomment
+//			if (ApplicationModel.ShowPostBattleScreen)
+//			{
+//				ApplicationModel.ShowPostBattleScreen = false;
+//				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
+//				GoToScreen(postBattleScreen);
+//			}
+//			else
+//			{
+//				GoToHomeScreen();
+//			}
 		}
 		
 		public void GoToLevelsScreen()
