@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.ScreensScene
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class LoadoutScreenController : ScreenController
 	{
