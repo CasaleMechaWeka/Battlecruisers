@@ -32,9 +32,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 90;
 		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 
 			_rocketLauncherStats = gameObject.GetComponent<BurstFireTurretStats>();
 			Assert.IsNotNull(_rocketLauncherStats);

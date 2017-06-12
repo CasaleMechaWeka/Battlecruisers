@@ -18,9 +18,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public TargetDetector enemyDetector;
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 			Assert.AreEqual(BuildingCategory.Defence, category);
 		}
 

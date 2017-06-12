@@ -62,17 +62,21 @@ namespace BattleCruisers.Buildables.Units
 
 		public override TargetType TargetType { get { return TargetType.Ships; } }
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 
 			_attackCapabilities.Add(TargetType.Ships);
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
-
-			// Turret barrel
+			
 			_turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
 			Assert.IsNotNull(_turretBarrelController);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
 			
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);

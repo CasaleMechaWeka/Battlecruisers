@@ -14,9 +14,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 
 			Assert.AreEqual(BuildingCategory.Offence, category);
 			_attackCapabilities.Add(TargetType.Buildings);

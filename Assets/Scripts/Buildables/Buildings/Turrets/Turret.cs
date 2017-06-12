@@ -55,20 +55,25 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public override float Damage { get { return _barrelController.TurretStats.DamagePerS; } }
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
-		
+			base.StaticInitialise();
+
 			_turretBase = transform.Find("Base").gameObject;
 			_turretBaseRenderer = _turretBase.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBaseRenderer);
-
+			
 			_turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
 			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
-
+			
 			_barrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
 			Assert.IsNotNull(_barrelController);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
 			InitialiseTurretBarrel();
 		}
 

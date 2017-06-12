@@ -113,9 +113,27 @@ namespace BattleCruisers.Buildables
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
+		public override void StaticInitialise()
+		{
+			base.StaticInitialise();
+
+			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+			Assert.IsNotNull(_textMesh);
+
+			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
+			Assert.IsNotNull(_buildableProgress);
+			_buildableProgress.Initialise();
+
+			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
+			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+			Assert.IsNotNull(_healthBar);
+
+			_healthBar.Initialise(this, followDamagable: true);
+		}
+
 		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
 		{
-			base.Initialise();
+			Assert.IsTrue(IsStaticallyInitialised, "Must call StaticInitialise() before Initialise(...)");
 
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -136,19 +154,6 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
 			
-			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-			Assert.IsNotNull(_textMesh);
-			
-			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
-			Assert.IsNotNull(_buildableProgress);
-			_buildableProgress.Initialise();
-			
-			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
-			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-			Assert.IsNotNull(_healthBar);
-			
-			_healthBar.Initialise(this, followDamagable: true);
-
 			OnInitialised();
 		}
 

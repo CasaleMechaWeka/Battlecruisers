@@ -45,9 +45,12 @@ namespace BattleCruisers.Cruisers
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
-		public void BasicInitialise()
+		public override void StaticInitialise()
 		{
-			base.Initialise();
+			base.StaticInitialise();
+
+			_renderer = GetComponent<SpriteRenderer>();
+			Assert.IsNotNull(_renderer);
 
 			SetupSlots();
 			HideAllSlots();
@@ -75,9 +78,6 @@ namespace BattleCruisers.Cruisers
 			Direction = facingDirection;
 
 			_healthBarController.Initialise(this);
-
-			_renderer = GetComponent<SpriteRenderer>();
-			Assert.IsNotNull(_renderer);
 		}
 
 		private void SetupSlots()

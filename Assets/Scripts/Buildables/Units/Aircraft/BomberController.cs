@@ -82,18 +82,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 		#endregion Properties
 
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 
 			Assert.IsNotNull(bomberStats);
-
+			
 			_haveDroppedBombOnRun = false;
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
-
+			
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
 
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);

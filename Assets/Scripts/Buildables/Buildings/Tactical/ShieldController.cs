@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 		public void Initialise(Faction faction)
 		{
-			base.Initialise();
+			StaticInitialise();
 
 			Faction = faction;
 

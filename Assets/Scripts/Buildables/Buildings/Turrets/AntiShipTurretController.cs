@@ -8,9 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
 	public class AntiShipTurretController : DefensiveTurret
 	{
-		protected override void OnInitialised()
+		public override void StaticInitialise()
 		{
-			base.OnInitialised();
+			base.StaticInitialise();
 			_attackCapabilities.Add(TargetType.Ships);
 		}
 

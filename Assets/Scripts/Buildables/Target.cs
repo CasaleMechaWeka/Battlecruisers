@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables
 
 		protected List<TargetType> _attackCapabilities;
 		public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
+		protected bool IsStaticallyInitialised { get { return _attackCapabilities != null; } }
 
 		private float _health;
 		public float Health
@@ -59,7 +60,7 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		protected void Initialise()
+		public virtual void StaticInitialise()
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
