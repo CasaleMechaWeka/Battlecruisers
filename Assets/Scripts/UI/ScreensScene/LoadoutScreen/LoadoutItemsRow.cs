@@ -15,7 +15,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void Initialise(IUIFactory uiFactory, IList<Building> buildings)
 		{
-			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
+			// FELIX  Different limit for unlocked items :/
+//			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
 
 			foreach (Building building in buildings)
 			{

@@ -77,7 +77,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		// FELIX  Exclude buildings already in loadout
 		private IList<Building> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
 		{
-			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
+			// FELIX TEMP  Want to practise with scroll bars :)
+			IList<Building> buildings = GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
+			IList<Building> duplicates = new List<Building>();
+			foreach (Building building in buildings)
+			{
+				duplicates.Add(building);
+				duplicates.Add(building);
+			}
+			return duplicates;
+//			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
 		}
 
 		private IList<Building> GetBuildingPrefabs(IList<BuildingKey> buildingKeys)
