@@ -18,9 +18,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
 
+		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
+		public LoadoutItemsRow unlockedFactoriesRow, unlockedDefensivesRow;
 
-		public new void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory)
+		public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{
 			base.Initialise(screensSceneGod);
 
@@ -33,6 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_uiFactory = uiFactory;
 
 			ShowLoadout();
+			ShowUnlockedItems();
 		}
 
 		private void ShowLoadout()
@@ -40,16 +43,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			// FELIX  Do hull row last, as different to building rows
 //			Cruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
 
-			IList<Building> factories = GetBuildingPrefabs(BuildingCategory.Factory);
+			IList<Building> factories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
 			factoriesRow.Initialise(_uiFactory, factories);
 
-			IList<Building> defensives = GetBuildingPrefabs(BuildingCategory.Defence);
+			IList<Building> defensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
 			defensivesRow.Initialise(_uiFactory, defensives);
 
-			IList<Building> offensives = GetBuildingPrefabs(BuildingCategory.Offence);
+			IList<Building> offensives = GetLoadoutBuildingPrefabs(BuildingCategory.Offence);
 			offensivesRow.Initialise(_uiFactory, offensives);
 
-			IList<Building> tacticals = GetBuildingPrefabs(BuildingCategory.Tactical);
+			IList<Building> tacticals = GetLoadoutBuildingPrefabs(BuildingCategory.Tactical);
 			tacticalsRow.Initialise(_uiFactory, tacticals);
 
 			// FELIX  NEXT  Ohter building types :)
@@ -57,12 +60,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			// FELIX  Ultras?
 		}
 
-		private IList<Building> GetBuildingPrefabs(BuildingCategory buildingCategory)
+		private void ShowUnlockedItems()
 		{
-			IList<BuildingKey> keys = _gameModel.PlayerLoadout.GetBuildings(buildingCategory);
+			IList<Building> factories = GetUnlockedBuildingPrefabs(BuildingCategory.Factory);
+			unlockedFactoriesRow.Initialise(_uiFactory, factories);
+
+			IList<Building> defensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
+			unlockedDefensivesRow.Initialise(_uiFactory, defensives);
+		}
+
+		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
+		{
+			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory));
+		}
+
+		// FELIX  Exclude buildings already in loadout
+		private IList<Building> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
+		{
+			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
+		}
+
+		private IList<Building> GetBuildingPrefabs(IList<BuildingKey> buildingKeys)
+		{
 			IList<Building> prefabs = new List<Building>();
 			
-			foreach (BuildingKey key in keys)
+			foreach (BuildingKey key in buildingKeys)
 			{
 				prefabs.Add(_prefabFactory.GetBuildingWrapperPrefab(key).Building);
 			}

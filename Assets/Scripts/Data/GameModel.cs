@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.PrefabKeys;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -23,6 +24,8 @@ namespace BattleCruisers.Data
 		void AddUnlockedHull(HullKey hull);
 		void AddUnlockedBuilding(BuildingKey building);
 		void AddUnlockedUnit(UnitKey unit);
+
+		IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
 	}
 
 	[Serializable]
@@ -118,6 +121,11 @@ namespace BattleCruisers.Data
 		{
 			Assert.IsFalse(_unlockedUnits.Contains(unit));
 			_unlockedUnits.Add(unit);
+		}
+
+		public IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)
+		{
+			return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
 		}
 
 		public override bool Equals(object obj)
