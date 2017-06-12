@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public enum BuildingCategory
 	{
-		Factory, Defence, Offence, Tactical, Support
+		Factory, Defence, Offence, Tactical
 	}
 
 	public class Building : Buildable, IPointerClickHandler

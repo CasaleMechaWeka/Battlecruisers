@@ -1,6 +1,8 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene
 	{
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
 		void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
+		void CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
@@ -19,18 +22,28 @@ namespace BattleCruisers.UI.ScreensScene
 		public Button levelButtonPrefab;
 		public Button homeButtonPrefab;
 
+		// Loadout screen
+		public LoadoutItem loadoutItemPrefab;
+
 		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
 		{
-			Button levelButton = (Button)Instantiate(levelButtonPrefab);
+			Button levelButton = Instantiate<Button>(levelButtonPrefab);
 			levelButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			levelButton.GetComponent<LevelButtonController>().Initialise(levelNum, level, isLevelUnlocked, screensSceneGod);
 		}
 
 		public void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod)
 		{
-			Button homeButton = (Button)Instantiate(homeButtonPrefab);
+			Button homeButton = Instantiate<Button>(homeButtonPrefab);
 			homeButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			homeButton.GetComponent<HomeButtonController>().Initialise(screensSceneGod);
+		}
+
+		public void CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
+		{
+			LoadoutItem loadoutItem = Instantiate<LoadoutItem>(loadoutItemPrefab);
+			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
+			loadoutItem.Initialise(itemBuilding);
 		}
 	}
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using BattleCruisers.Fetchers;
 
 namespace BattleCruisers.Scenes
 {
@@ -23,11 +24,11 @@ namespace BattleCruisers.Scenes
 
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
+		private IUIFactory _uiFactory;
+		private PrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
-
-		public UIFactory uiFactory;
 
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
@@ -36,6 +37,13 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
+			_uiFactory = GetComponent<IUIFactory>();
+			Assert.IsNotNull(_uiFactory);
+
+			_prefabFactory = GetComponent<PrefabFactory>();
+			Assert.IsNotNull(_prefabFactory);
+			_prefabFactory.Initialise(new PrefabFetcher());
+
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
 
@@ -47,9 +55,9 @@ namespace BattleCruisers.Scenes
 //			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(uiFactory, this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
+			levelsScreen.Initialise(_uiFactory, this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
-			loadoutScreen.Initialise(this);
+			loadoutScreen.Initialise(this, _gameModel, _prefabFactory, _uiFactory);
 
 			
 			// FELIX  TEMP
