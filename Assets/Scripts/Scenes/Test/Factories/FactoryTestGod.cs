@@ -31,9 +31,10 @@ namespace BattleCruisers.Scenes.Test.Factories
 			IPrefabFactory prefabFactory = Substitute.For<IPrefabFactory>();
 			prefabFactory.CreateUnit(unitPrefab).Returns(callInfo => 
 			{
-				UnitWrapper unitWraper = Instantiate(unitPrefab);
-				unitWraper.Initialise();
-				return unitWraper.Unit;
+				UnitWrapper unitWrapper = Instantiate(unitPrefab);
+				unitWrapper.Initialise();
+				unitWrapper.Unit.StaticInitialise();
+				return unitWrapper.Unit;
 			});
 
 			helper.InitialiseBuildable(factoryFacingRight, FactoryFacingRightFaction, prefabFactory: prefabFactory, parentCruiserDirection: Direction.Right);

@@ -49,6 +49,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
+			buildable.StaticInitialise();
+
 			if (parentCruiser == null)
 			{
 				parentCruiser = CreateCruiser(_numOfDrones, parentCruiserDirection, faction);
