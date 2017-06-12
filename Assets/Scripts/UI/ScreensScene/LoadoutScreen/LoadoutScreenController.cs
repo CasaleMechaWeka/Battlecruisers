@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
 
-		public LoadoutItemsRow factoriesRow;
+		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 
 		public new void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{
@@ -42,6 +42,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			IList<Building> factories = GetBuildingPrefabs(BuildingCategory.Factory);
 			factoriesRow.Initialise(_uiFactory, factories);
+
+			IList<Building> defensives = GetBuildingPrefabs(BuildingCategory.Defence);
+			defensivesRow.Initialise(_uiFactory, defensives);
+
+			IList<Building> offensives = GetBuildingPrefabs(BuildingCategory.Offence);
+			offensivesRow.Initialise(_uiFactory, offensives);
+
+			IList<Building> tacticals = GetBuildingPrefabs(BuildingCategory.Tactical);
+			tacticalsRow.Initialise(_uiFactory, tacticals);
+
+			// FELIX  NEXT  Ohter building types :)
+
 			// FELIX  Ultras?
 		}
 
