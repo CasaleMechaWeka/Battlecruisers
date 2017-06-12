@@ -40,6 +40,7 @@ namespace BattleCruisers.Fetchers
 		{
 			BuildingWrapper buildingWrapperPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
 			buildingWrapperPrefab.Initialise();
+			buildingWrapperPrefab.Building.StaticInitialise();
 			return buildingWrapperPrefab;
 		}
 
@@ -48,6 +49,7 @@ namespace BattleCruisers.Fetchers
 			BuildingWrapper buildingWrapper = Instantiate(buildingWrapperPrefab);
 			buildingWrapper.gameObject.SetActive(true);
 			buildingWrapper.Initialise();
+			buildingWrapper.Building.StaticInitialise();
 			return buildingWrapper.Building;
 		}
 
@@ -55,6 +57,7 @@ namespace BattleCruisers.Fetchers
 		{
 			UnitWrapper unitWrapperPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
 			unitWrapperPrefab.Initialise();
+			unitWrapperPrefab.Unit.StaticInitialise();
 			return unitWrapperPrefab;
 		}
 
@@ -63,6 +66,7 @@ namespace BattleCruisers.Fetchers
 			UnitWrapper unitWrapper = Instantiate(unitWrapperPrefab);
 			unitWrapper.gameObject.SetActive(true);
 			unitWrapper.Initialise();
+			unitWrapper.Unit.StaticInitialise();
 			return unitWrapper.Unit;
 		}
 
