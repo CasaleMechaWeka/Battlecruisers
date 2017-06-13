@@ -55,8 +55,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			IList<Building> tacticals = GetLoadoutBuildingPrefabs(BuildingCategory.Tactical);
 			tacticalsRow.Initialise(_uiFactory, tacticals);
 
-			// FELIX  NEXT  Ohter building types :)
-
 			// FELIX  Ultras?
 		}
 
@@ -67,6 +65,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			IList<Building> defensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
 			unlockedDefensivesRow.Initialise(_uiFactory, defensives);
+			
+			// FELIX  NEXT  Ohter building types :)
 		}
 
 		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
