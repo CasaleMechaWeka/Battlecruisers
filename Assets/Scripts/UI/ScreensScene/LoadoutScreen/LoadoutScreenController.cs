@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
-		public LoadoutItemsRow unlockedFactoriesRow, unlockedDefensivesRow;
+		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{
@@ -60,8 +60,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		private void ShowUnlockedItems()
 		{
-			IList<Building> factories = GetUnlockedBuildingPrefabs(BuildingCategory.Factory);
-			unlockedFactoriesRow.Initialise(_uiFactory, factories);
+//			IList<Building> factories = GetUnlockedBuildingPrefabs(BuildingCategory.Factory);
+//			unlockedFactoriesRow.Initialise(_uiFactory, factories);
 
 			IList<Building> defensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
 			unlockedDefensivesRow.Initialise(_uiFactory, defensives);

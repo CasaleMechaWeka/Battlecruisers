@@ -7,21 +7,30 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class LoadoutItemsRow : MonoBehaviour 
+	public class UnlockedItemsRow : MonoBehaviour 
 	{
-		private const int MAX_NUM_OF_ITEMS = 5;
-
 		public HorizontalLayoutGroup layoutGroup;
+		public RectTransform scrollViewContent;
 
 		public void Initialise(IUIFactory uiFactory, IList<Building> buildings)
 		{
 			Assert.IsNotNull(layoutGroup);
-			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
+			Assert.IsNotNull(scrollViewContent);
+
+			float totalWidth = 0;
 
 			foreach (Building building in buildings)
 			{
-				uiFactory.CreateLoadoutItem(layoutGroup, building);
+				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, building);
+				totalWidth += item.Size.x;
 			}
+
+			if (buildings.Count > 0)
+			{
+				totalWidth += (buildings.Count - 1) * layoutGroup.spacing;
+			}
+
+			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);
 		}
 	}
 }

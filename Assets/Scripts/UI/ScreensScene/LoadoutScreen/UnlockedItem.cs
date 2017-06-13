@@ -7,13 +7,21 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class LoadoutItem : MonoBehaviour 
+	// FELIX  Avoid duplicate code with LoadoutItem
+	public class UnlockedItem : MonoBehaviour 
 	{
+		private RectTransform _rectTransform;
+
 		public Image itemImage;
+
+		public Vector2 Size { get { return _rectTransform.sizeDelta; } }
 
 		public void Initialise(Building building)
 		{
 			itemImage.sprite = building.Sprite;
+
+			_rectTransform = transform as RectTransform;
+			Assert.IsNotNull(_rectTransform);
 		}
 	}
 }
