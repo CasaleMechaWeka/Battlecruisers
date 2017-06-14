@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
+		private IDictionary<BuildingCategory, LoadoutItemsRow> _buildingCategoryToLoadoutRow;
 
 		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
@@ -33,6 +34,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;
 			_uiFactory = uiFactory;
+
+			_buildingCategoryToLoadoutRow = new Dictionary<BuildingCategory, LoadoutItemsRow>();
+
+			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Factory, factoriesRow);
+			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Defence, defensivesRow);
+			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Offence, offensivesRow);
+			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Tactical, tacticalsRow);		
 
 			ShowItems();
 		}
@@ -84,12 +92,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void AddBuildingToLoadout(Building building)
 		{
+			// FELIX  Update loadout object
 
+			LoadoutItemsRow loadoutRow = _buildingCategoryToLoadoutRow[building.category];
+			loadoutRow.AddBuilding(building);
 		}
 
 		public void RemoveBuildingFromLoadout(Building building)
 		{
+			// FELIX  Update loadout object
 
+			LoadoutItemsRow loadoutRow = _buildingCategoryToLoadoutRow[building.category];
+			loadoutRow.RemoveBuilding(building);
 		}
 
 		public void GoToHomeScreen()
