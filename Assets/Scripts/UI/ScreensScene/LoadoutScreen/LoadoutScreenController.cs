@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			IList<Building> loadoutDefensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
 			defensivesRow.Initialise(_uiFactory, loadoutDefensives);
 			IList<Building> unlockedDefensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
-			unlockedDefensivesRow.Initialise(_uiFactory, unlockedDefensives, loadoutDefensives);
+			unlockedDefensivesRow.Initialise(this, _uiFactory, unlockedDefensives, loadoutDefensives);
 
 			IList<Building> loadoutOffensives = GetLoadoutBuildingPrefabs(BuildingCategory.Offence);
 			offensivesRow.Initialise(_uiFactory, loadoutOffensives);
@@ -80,6 +80,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			}
 
 			return prefabs;
+		}
+
+		public void AddBuildingToLoadout(Building building)
+		{
+
+		}
+
+		public void RemoveBuildingFromLoadout(Building building)
+		{
+
 		}
 
 		public void GoToHomeScreen()

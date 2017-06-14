@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class UnlockedItemsRow : MonoBehaviour 
+	public class UnlockedItemsRow : MonoBehaviour
 	{
 		private IList<UnlockedItem> _items;
 
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-		public void Initialise(IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
+		public void Initialise(LoadoutScreenController loadoutScreen, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsNotNull(scrollViewContent);
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			foreach (Building unlockedBuilding in unlockedBuildings)
 			{
 				bool isBuildingInLoadout = loadoutBuildings.Contains(unlockedBuilding);
-				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, unlockedBuilding, isBuildingInLoadout);
+				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, loadoutScreen, unlockedBuilding, isBuildingInLoadout);
 				_items.Add(item);
 				totalWidth += item.Size.x;
 			}
