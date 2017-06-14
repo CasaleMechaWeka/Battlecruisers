@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene
 	{
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
 		void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
-		void CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
+		LoadoutItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
 		UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, LoadoutScreenController loadoutScreen, Building itemBuilding, bool isBuildingInLoadout);
 	}
 
@@ -42,11 +42,12 @@ namespace BattleCruisers.UI.ScreensScene
 		}
 
 		// FELIX  Avoid duplicate code?
-		public void CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
+		public LoadoutItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
 		{
 			LoadoutItem loadoutItem = Instantiate<LoadoutItem>(loadoutItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			loadoutItem.Initialise(itemBuilding);
+			return loadoutItem;
 		}
 
 		public UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, LoadoutScreenController loadoutScreen, Building itemBuilding, bool isBuildingInLoadout)

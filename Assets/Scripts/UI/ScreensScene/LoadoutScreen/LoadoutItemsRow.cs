@@ -9,7 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class LoadoutItemsRow : MonoBehaviour 
 	{
-		private IList<Building> _buildings;
+		private IUIFactory _uiFactory;
+		// FELIX  Might need to implement Building/Target Equals & HashCode?
+		private IDictionary<Building, LoadoutItem> _buildingToLoadoutItem;
 
 		private const int MAX_NUM_OF_ITEMS = 5;
 
@@ -22,23 +24,41 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			Assert.IsNotNull(uiFactory);
 			Assert.IsNotNull(buildings);
 
-			_buildings = buildings;
+			_uiFactory = uiFactory;
+			_buildingToLoadoutItem = new Dictionary<Building, LoadoutItem>();
 
-			foreach (Building building in _buildings)
+			foreach (Building building in buildings)
 			{
-				uiFactory.CreateLoadoutItem(layoutGroup, building);
+				CreateLoadoutItem(building);
 			}
 		}
 
 		public void AddBuilding(Building buildingToAdd)
 		{
-			Assert.IsFalse(_buildings.Contains(buildingToAdd));
+			// FELIX  Handle if already filled all slots :P
+			// FELIX  Perhaps expose CanAdd property?
+
+			CreateLoadoutItem(buildingToAdd);
 		}
 
 		public void RemoveBuilding(Building buildingToRemove)
 		{
-			Assert.IsTrue(_buildings.Contains(buildingToRemove));
-
+			RemoveLoadoutItem(buildingToRemove);
+		}
+		
+		private void CreateLoadoutItem(Building buildingToAdd)
+		{
+			Assert.IsFalse(_buildingToLoadoutItem.ContainsKey(buildingToAdd));
+			LoadoutItem item = _uiFactory.CreateLoadoutItem(layoutGroup, buildingToAdd);
+			_buildingToLoadoutItem.Add(buildingToAdd, item);
+		}
+		
+		private void RemoveLoadoutItem(Building buildingToRemove)
+		{
+			Assert.IsTrue(_buildingToLoadoutItem.ContainsKey(buildingToRemove));
+			LoadoutItem item = _buildingToLoadoutItem[buildingToRemove];
+			_buildingToLoadoutItem.Remove(buildingToRemove);
+			Destroy(item.gameObject);
 		}
 	}
 }
