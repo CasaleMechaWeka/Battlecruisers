@@ -9,25 +9,30 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class UnlockedItemsRow : MonoBehaviour 
 	{
+		private IList<UnlockedItem> _items;
+
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-		public void Initialise(IUIFactory uiFactory, IList<Building> buildings)
+		public void Initialise(IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsNotNull(scrollViewContent);
 
+			_items = new List<UnlockedItem>();
 			float totalWidth = 0;
 
-			foreach (Building building in buildings)
+			foreach (Building unlockedBuilding in unlockedBuildings)
 			{
-				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, building);
+				bool isBuildingInLoadout = loadoutBuildings.Contains(unlockedBuilding);
+				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, unlockedBuilding, isBuildingInLoadout);
+				_items.Add(item);
 				totalWidth += item.Size.x;
 			}
 
-			if (buildings.Count > 0)
+			if (unlockedBuildings.Count > 0)
 			{
-				totalWidth += (buildings.Count - 1) * layoutGroup.spacing;
+				totalWidth += (unlockedBuildings.Count - 1) * layoutGroup.spacing;
 			}
 
 			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);

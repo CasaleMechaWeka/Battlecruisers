@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
 		void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
 		void CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
-		UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
+		UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding, bool isBuildingInLoadout);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
@@ -49,11 +49,11 @@ namespace BattleCruisers.UI.ScreensScene
 			loadoutItem.Initialise(itemBuilding);
 		}
 
-		public UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
+		public UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding, bool isBuildingInLoadout)
 		{
 			UnlockedItem unlockedItem = Instantiate<UnlockedItem>(unlockedItemPrefab);
 			unlockedItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
-			unlockedItem.Initialise(itemBuilding);
+			unlockedItem.Initialise(itemBuilding, isBuildingInLoadout);
 			return unlockedItem;
 		}
 	}

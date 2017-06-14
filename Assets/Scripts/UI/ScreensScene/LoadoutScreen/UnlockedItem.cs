@@ -15,8 +15,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public Image itemImage;
 
 		public Vector2 Size { get { return _rectTransform.sizeDelta; } }
+		public Building Building { get; private set; }
 
-		public void Initialise(Building building)
+		public void Initialise(Building building, bool isBuildingInLoadout)
 		{
 			itemImage.sprite = building.Sprite;
 

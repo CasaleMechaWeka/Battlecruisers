@@ -34,39 +34,29 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_prefabFactory = prefabFactory;
 			_uiFactory = uiFactory;
 
-			ShowLoadout();
-			ShowUnlockedItems();
+			ShowItems();
 		}
 
-		private void ShowLoadout()
+		private void ShowItems()
 		{
 			// FELIX  Do hull row last, as different to building rows
 //			Cruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
 
-			IList<Building> factories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
-			factoriesRow.Initialise(_uiFactory, factories);
+			IList<Building> loadoutFactories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
+			factoriesRow.Initialise(_uiFactory, loadoutFactories);
 
-			IList<Building> defensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
-			defensivesRow.Initialise(_uiFactory, defensives);
+			IList<Building> loadoutDefensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
+			defensivesRow.Initialise(_uiFactory, loadoutDefensives);
+			IList<Building> unlockedDefensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
+			unlockedDefensivesRow.Initialise(_uiFactory, unlockedDefensives, loadoutDefensives);
 
-			IList<Building> offensives = GetLoadoutBuildingPrefabs(BuildingCategory.Offence);
-			offensivesRow.Initialise(_uiFactory, offensives);
+			IList<Building> loadoutOffensives = GetLoadoutBuildingPrefabs(BuildingCategory.Offence);
+			offensivesRow.Initialise(_uiFactory, loadoutOffensives);
 
-			IList<Building> tacticals = GetLoadoutBuildingPrefabs(BuildingCategory.Tactical);
-			tacticalsRow.Initialise(_uiFactory, tacticals);
+			IList<Building> loadoutTacticals = GetLoadoutBuildingPrefabs(BuildingCategory.Tactical);
+			tacticalsRow.Initialise(_uiFactory, loadoutTacticals);
 
 			// FELIX  Ultras?
-		}
-
-		private void ShowUnlockedItems()
-		{
-//			IList<Building> factories = GetUnlockedBuildingPrefabs(BuildingCategory.Factory);
-//			unlockedFactoriesRow.Initialise(_uiFactory, factories);
-
-			IList<Building> defensives = GetUnlockedBuildingPrefabs(BuildingCategory.Defence);
-			unlockedDefensivesRow.Initialise(_uiFactory, defensives);
-			
-			// FELIX  NEXT  Ohter building types :)
 		}
 
 		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
