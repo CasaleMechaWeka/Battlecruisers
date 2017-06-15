@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
 
-		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
+		public LoadoutHull loadoutHull;
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
 
@@ -35,6 +35,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_prefabFactory = prefabFactory;
 			_uiFactory = uiFactory;
 
+			// Initialise hull row
+			new HullsRow(_gameModel, _prefabFactory, _uiFactory, loadoutHull);
+
+			// Initialise building rows
 			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow);
 			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Defence, defensivesRow, unlockedDefensivesRow);
 			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Offence, offensivesRow, unlockedOffensivesRow);

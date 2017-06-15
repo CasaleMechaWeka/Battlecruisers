@@ -27,7 +27,11 @@ namespace BattleCruisers.Data
 		public HullKey Hull
 		{
 			get { return _hull; }
-			private set { _hull = value; }
+			set 
+			{ 
+				Assert.IsNotNull(value);
+				_hull = value; 
+			}
 		}
 
 		public Loadout(

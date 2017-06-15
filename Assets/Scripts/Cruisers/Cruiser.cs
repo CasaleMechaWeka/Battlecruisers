@@ -42,6 +42,7 @@ namespace BattleCruisers.Cruisers
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
 		public Vector2 Size { get { return _renderer.bounds.size; } }
 		public float YAdjustmentInM { get { return yAdjustmentInM; } }
+		public Sprite Sprite { get { return _renderer.sprite; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 

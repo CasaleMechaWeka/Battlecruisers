@@ -36,6 +36,7 @@ namespace BattleCruisers.Cruisers
 		Direction Direction { get; }
 		Vector2 Size { get; }
 		float YAdjustmentInM { get; }
+		Sprite Sprite { get; }
 
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
