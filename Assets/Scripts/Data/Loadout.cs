@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
@@ -47,6 +48,18 @@ namespace BattleCruisers.Data
 		public IList<UnitKey> GetUnits(UnitCategory unitCategory)
 		{
 			return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
+		}
+
+		public void AddBuilding(BuildingKey buildingToAdd)
+		{
+			Assert.IsFalse(_buildings.Contains(buildingToAdd));
+			_buildings.Add(buildingToAdd);
+		}
+
+		public void RemoveBuilding(BuildingKey buildingToRemove)
+		{
+			Assert.IsTrue(_buildings.Contains(buildingToRemove));
+			_buildings.Remove(buildingToRemove);
 		}
 
 		public override bool Equals(object obj)
