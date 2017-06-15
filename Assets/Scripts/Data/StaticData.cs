@@ -15,12 +15,7 @@ namespace BattleCruisers.Data
 	/// </summary>
 	public interface IStaticData
 	{
-		List<HullKey> HullKeys { get; }
-		List<BuildingKey> BuildingKeys { get; }
-		List<UnitKey> UnitKeys { get; }
-
 		GameModel InitialGameModel { get; }
-
 		IList<ILevel> Levels { get; }
 	}
 
@@ -28,22 +23,13 @@ namespace BattleCruisers.Data
 	// updating assets easier, but might not be worth the implementation effort.
 	public class StaticData : IStaticData
 	{
-		public List<HullKey> HullKeys { get; private set; }
-		public List<BuildingKey> BuildingKeys { get; private set; }
-		public List<UnitKey> UnitKeys { get; private set; }
-
 		public GameModel InitialGameModel { get; private set; }
-
 		public IList<ILevel> Levels { get; private set; }
 
+		// FELIX  Initliase lazily!
 		public StaticData()
 		{
-			HullKeys = AllHullKeys();
-			BuildingKeys = AllBuildingKeys();
-			UnitKeys = AllUnitKeys();
-
 			InitialGameModel = CreateInitialGameModel();
-
 			Levels = CreateLevels();
 		}
 
@@ -102,9 +88,12 @@ namespace BattleCruisers.Data
 		}
 
 		// FELIX  For final game, don't add ALL the prefabs :D
+		// NOTE:  Do NOT share key objects between Loadout and GameModel, otherwise
+		// both will share the same object.  In that case if the Loadout deletes one of its
+		// buildings the building will also be deleted from the GameModel.
 		private GameModel CreateInitialGameModel()
 		{
-			Loadout playerLoadout = new Loadout(HullKeys[4], BuildingKeys, UnitKeys);
+			Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
 			int numOfLevelsUnlocked = 1;
 
@@ -112,16 +101,16 @@ namespace BattleCruisers.Data
 				numOfLevelsUnlocked,
 				playerLoadout,
 				null,
-				HullKeys,
-				BuildingKeys,
-				UnitKeys);
+				AllHullKeys(),
+				AllBuildingKeys(),
+				AllUnitKeys());
 		}
 
 		// FELIX  > 1 level maybe?
 		// FELIX  Don't give all loadouts to all levels :P
 		private IList<ILevel> CreateLevels()
 		{
-			Loadout aiLoadout = new Loadout(HullKeys[0], BuildingKeys, UnitKeys);
+			Loadout aiLoadout = new Loadout(AllHullKeys()[0], AllBuildingKeys(), AllUnitKeys());
 
 			return new List<ILevel>() 
 			{

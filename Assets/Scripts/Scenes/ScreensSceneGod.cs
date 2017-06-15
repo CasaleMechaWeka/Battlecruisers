@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
@@ -9,7 +11,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
-using BattleCruisers.Fetchers;
 
 namespace BattleCruisers.Scenes
 {
@@ -46,6 +47,13 @@ namespace BattleCruisers.Scenes
 
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
+
+
+			// FELIX  TEMP
+			foreach (BuildingKey key in _gameModel.UnlockedBuildings)
+			{
+				Debug.Log("Unlocked building: " + key.PrefabPath);
+			}
 
 
 			// FELIX  TEMP

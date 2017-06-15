@@ -127,10 +127,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void RemoveBuildingFromLoadout(Building building)
 		{
+			Temp(building.category);
+
 			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
+
+			Temp(building.category);
 
 			LoadoutItemsRow loadoutRow = _buildingCategoryToLoadoutRow[building.category];
 			loadoutRow.RemoveBuilding(building);
+
+			Temp(building.category);
+		}
+
+		public void Temp(BuildingCategory category)
+		{
+			Debug.Log("Unlocked " + category + " count: " + _gameModel.GetUnlockedBuildings(category).Count);
 		}
 
 		public void GoToHomeScreen()
