@@ -57,7 +57,7 @@ namespace BattleCruisers.Scenes
 
 			levelsScreen.Initialise(_uiFactory, this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
-			loadoutScreen.Initialise(this, _gameModel, _prefabFactory, _uiFactory);
+			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _uiFactory);
 
 			
 			// FELIX  TEMP

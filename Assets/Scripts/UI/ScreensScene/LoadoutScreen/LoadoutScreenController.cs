@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	// FELIX  Avoid potential duplicate code with BattleSceneGod?
 	public class LoadoutScreenController : ScreenController
 	{
+		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
@@ -24,15 +25,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory)
+		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{
 			base.Initialise(screensSceneGod);
 
-			Assert.IsNotNull(gameModel);
+			Assert.IsNotNull(dataProvider);
 			Assert.IsNotNull(prefabFactory);
 			Assert.IsNotNull(uiFactory);
 
-			_gameModel = gameModel;
+			_dataProvider = dataProvider;
+			_gameModel = _dataProvider.GameModel;
 			_prefabFactory = prefabFactory;
 			_uiFactory = uiFactory;
 
@@ -71,15 +73,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
 		{
-			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
+			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory), addToDictionary: false);
 		}
 
 		private IList<Building> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
 		{
-			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory));
+			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory), addToDictionary: true);
 		}
 
-		private IList<Building> GetBuildingPrefabs(IList<BuildingKey> buildingKeys)
+		private IList<Building> GetBuildingPrefabs(IList<BuildingKey> buildingKeys, bool addToDictionary)
 		{
 			IList<Building> prefabs = new List<Building>();
 			
@@ -87,7 +89,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			{
 				Building building = _prefabFactory.GetBuildingWrapperPrefab(key).Building;
 				prefabs.Add(building);
-				_buildingToKey.Add(building, key);
+
+				if (addToDictionary)
+				{
+					_buildingToKey.Add(building, key);
+				}
 			}
 
 			return prefabs;
@@ -114,9 +120,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_screensSceneGod.GoToHomeScreen();
 		}
 
-		public void GoToLevelsScreen()
+		public void Save()
 		{
-			_screensSceneGod.GoToLevelsScreen();
+			_dataProvider.SaveGame();
 		}
 	}
 }
