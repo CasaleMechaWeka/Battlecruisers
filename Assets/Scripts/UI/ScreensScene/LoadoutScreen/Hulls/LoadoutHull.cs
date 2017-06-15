@@ -11,9 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 	{
 		public Image hullImage;
 
-		public void Initialise(ICruiser cruiser)
-		{
-			hullImage.sprite = cruiser.Sprite;
-		}
+		public Sprite Sprite { set { hullImage.sprite = value; } }
 	}
 }

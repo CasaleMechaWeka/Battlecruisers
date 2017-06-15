@@ -8,6 +8,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	// FELIX  Avoid duplicate code with LoadoutItem
+	// FELIX  Avoid duplicate code with UnlockedHull
 	public class UnlockedItem : MonoBehaviour 
 	{
 		private ItemsRow _itemsRow;
@@ -36,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_rectTransform = transform as RectTransform;
 			Assert.IsNotNull(_rectTransform);
 
+			// FELIX  Create property for _isBuildingInLoadout, move this line there too :)
 			isInLoadoutFeedback.gameObject.SetActive(isBuildingInLoadout);
 		}
 
