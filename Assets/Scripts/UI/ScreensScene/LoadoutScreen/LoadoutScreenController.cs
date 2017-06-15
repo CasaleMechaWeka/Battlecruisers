@@ -18,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
 		private IDictionary<BuildingCategory, LoadoutItemsRow> _buildingCategoryToLoadoutRow;
+		private IDictionary<Building, BuildingKey> _buildingToKey;
 
 		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
@@ -36,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_uiFactory = uiFactory;
 
 			_buildingCategoryToLoadoutRow = new Dictionary<BuildingCategory, LoadoutItemsRow>();
+			_buildingToKey = new Dictionary<Building, BuildingKey>();
 
 			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Factory, factoriesRow);
 			_buildingCategoryToLoadoutRow.Add(BuildingCategory.Defence, defensivesRow);
@@ -72,7 +74,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory));
 		}
 
-		// FELIX  Give feedback for buildings already in loadout
 		private IList<Building> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
 		{
 			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory));
@@ -84,7 +85,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			
 			foreach (BuildingKey key in buildingKeys)
 			{
-				prefabs.Add(_prefabFactory.GetBuildingWrapperPrefab(key).Building);
+				Building building = _prefabFactory.GetBuildingWrapperPrefab(key).Building;
+				prefabs.Add(building);
+				_buildingToKey.Add(building, key);
 			}
 
 			return prefabs;
@@ -92,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void AddBuildingToLoadout(Building building)
 		{
-			// FELIX  Update loadout object
+			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);
 
 			LoadoutItemsRow loadoutRow = _buildingCategoryToLoadoutRow[building.category];
 			loadoutRow.AddBuilding(building);
@@ -100,7 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void RemoveBuildingFromLoadout(Building building)
 		{
-			// FELIX  Update loadout object
+			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
 
 			LoadoutItemsRow loadoutRow = _buildingCategoryToLoadoutRow[building.category];
 			loadoutRow.RemoveBuilding(building);
