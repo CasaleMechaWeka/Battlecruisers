@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
 	public class LoadoutHull : MonoBehaviour 
 	{

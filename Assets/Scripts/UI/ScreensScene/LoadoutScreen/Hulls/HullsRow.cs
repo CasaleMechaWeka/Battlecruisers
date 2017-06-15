@@ -6,7 +6,7 @@ using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
 	public class HullsRow
 	{

@@ -4,6 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
