@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			IList<Building> loadoutFactories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
 			factoriesRow.Initialise(_uiFactory, loadoutFactories);
-			IList<Building> unlockedFactories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
+			IList<Building> unlockedFactories = GetUnlockedBuildingPrefabs(BuildingCategory.Factory);
 			unlockedFactoriesRow.Initialise(this, _uiFactory, unlockedFactories, loadoutFactories);
 
 			IList<Building> loadoutDefensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
