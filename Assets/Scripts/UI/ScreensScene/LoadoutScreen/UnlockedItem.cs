@@ -47,7 +47,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			}
 			else
 			{
-				_loadoutScreen.AddBuildingToLoadout(_building);
+				if (_loadoutScreen.CanAddBuilding(_building.category))
+				{
+					_loadoutScreen.AddBuildingToLoadout(_building);
+				}
+				else
+				{
+					// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
+				}
 			}
 
 			_isBuildingInLoadout = !_isBuildingInLoadout;

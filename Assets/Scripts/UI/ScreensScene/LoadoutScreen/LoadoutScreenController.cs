@@ -99,6 +99,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
+		public bool CanAddBuilding(BuildingCategory buildingCategory)
+		{
+			return _buildingCategoryToLoadoutRow[buildingCategory].CanAddBuilding();
+		}
+
 		public void AddBuildingToLoadout(Building building)
 		{
 			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);

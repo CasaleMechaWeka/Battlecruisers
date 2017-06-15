@@ -33,6 +33,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			}
 		}
 
+		public bool CanAddBuilding()
+		{
+			return _buildingToLoadoutItem.Count < MAX_NUM_OF_ITEMS;
+		}
+
 		public void AddBuilding(Building buildingToAdd)
 		{
 			// FELIX  Handle if already filled all slots :P
