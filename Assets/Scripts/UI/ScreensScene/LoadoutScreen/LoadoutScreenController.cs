@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		// FELIX  Avoid duplication between Loadout items and Unlocked items :)
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
-		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow;
+		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{
@@ -54,8 +54,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			// FELIX  Do hull row last, as different to building rows
 //			Cruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
 
+			// FELIX  There has to be a better way :P  LoadoutScreenRow?
+//			foreach (KeyValuePair<BuildingCategory, LoadoutItemsRow> pair in _buildingCategoryToLoadoutRow)
+//			{
+//				IList<Building> loadoutBuildings = GetLoadoutBuildingPrefabs(pair.Key);
+//				
+//			}
+
 			IList<Building> loadoutFactories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
 			factoriesRow.Initialise(_uiFactory, loadoutFactories);
+			IList<Building> unlockedFactories = GetLoadoutBuildingPrefabs(BuildingCategory.Factory);
+			unlockedFactoriesRow.Initialise(this, _uiFactory, unlockedFactories, loadoutFactories);
 
 			IList<Building> loadoutDefensives = GetLoadoutBuildingPrefabs(BuildingCategory.Defence);
 			defensivesRow.Initialise(_uiFactory, loadoutDefensives);
@@ -64,9 +73,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			IList<Building> loadoutOffensives = GetLoadoutBuildingPrefabs(BuildingCategory.Offence);
 			offensivesRow.Initialise(_uiFactory, loadoutOffensives);
+			IList<Building> unlockedOffensives = GetUnlockedBuildingPrefabs(BuildingCategory.Offence);
+			unlockedOffensivesRow.Initialise(this, _uiFactory, unlockedOffensives, loadoutOffensives);
 
 			IList<Building> loadoutTacticals = GetLoadoutBuildingPrefabs(BuildingCategory.Tactical);
 			tacticalsRow.Initialise(_uiFactory, loadoutTacticals);
+			IList<Building> unlockedTacticals = GetUnlockedBuildingPrefabs(BuildingCategory.Tactical);
+			unlockedTacticalsRow.Initialise(this, _uiFactory, unlockedTacticals, loadoutTacticals);
 
 			// FELIX  Ultras?
 		}
