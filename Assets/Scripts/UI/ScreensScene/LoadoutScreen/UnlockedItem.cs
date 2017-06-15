@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	// FELIX  Avoid duplicate code with LoadoutItem
 	public class UnlockedItem : MonoBehaviour 
 	{
-		private LoadoutScreenController _loadoutScreen;
+		private ItemsRow _itemsRow;
 		private Building _building;
 		private bool _isBuildingInLoadout;
 		private RectTransform _rectTransform;
@@ -21,13 +21,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public Vector2 Size { get { return _rectTransform.sizeDelta; } }
 		public Building Building { get; private set; }
 
-		public void Initialise(LoadoutScreenController loadoutScreen, Building building, bool isBuildingInLoadout)
+		public void Initialise(ItemsRow itemsRow, Building building, bool isBuildingInLoadout)
 		{
-			Assert.IsNotNull(loadoutScreen);
+			Assert.IsNotNull(itemsRow);
 			Assert.IsNotNull(itemImage);
 			Assert.IsNotNull(isInLoadoutFeedback);
 
-			_loadoutScreen = loadoutScreen;
+			_itemsRow = itemsRow;
 			_building = building;
 			_isBuildingInLoadout = isBuildingInLoadout;
 
@@ -43,13 +43,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		{
 			if (_isBuildingInLoadout)
 			{
-				_loadoutScreen.RemoveBuildingFromLoadout(_building);
+				_itemsRow.RemoveBuildingFromLoadout(_building);
 			}
 			else
 			{
-				if (_loadoutScreen.CanAddBuilding(_building.category))
+				if (_itemsRow.CanAddBuilding())
 				{
-					_loadoutScreen.AddBuildingToLoadout(_building);
+					_itemsRow.AddBuildingToLoadout(_building);
 				}
 				else
 				{

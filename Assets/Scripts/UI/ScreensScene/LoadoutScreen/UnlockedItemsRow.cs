@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-		public void Initialise(LoadoutScreenController loadoutScreen, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
+		public void Initialise(ItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsNotNull(scrollViewContent);
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			foreach (Building unlockedBuilding in unlockedBuildings)
 			{
 				bool isBuildingInLoadout = loadoutBuildings.Contains(unlockedBuilding);
-				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, loadoutScreen, unlockedBuilding, isBuildingInLoadout);
+				UnlockedItem item = uiFactory.CreateUnlockedItem(layoutGroup, itemsRow, unlockedBuilding, isBuildingInLoadout);
 				_items.Add(item);
 				totalWidth += item.Size.x;
 			}
