@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 		private IUIFactory _uiFactory;
 
-		public LoadoutHullItem loadoutHull;
+		public LoadoutHullItem loadoutHullItem;
 		public UnlockedHullsRow unlockedHullsRow;
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_uiFactory = uiFactory;
 
 			// Initialise hull row
-			new HullsRow(_gameModel, _prefabFactory, _uiFactory, loadoutHull, unlockedHullsRow);
+			new HullsRow(_gameModel, _prefabFactory, _uiFactory, loadoutHullItem, unlockedHullsRow);
 
 			// Initialise building rows
 			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow);

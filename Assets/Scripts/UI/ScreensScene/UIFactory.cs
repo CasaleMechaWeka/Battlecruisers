@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene
 
 		// Loadout screen
 		LoadoutItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
-		UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, ItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
+		UnlockedBuildableItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, ItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
 		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullsRow hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
@@ -29,9 +29,9 @@ namespace BattleCruisers.UI.ScreensScene
 		public Button homeButtonPrefab;
 
 		// Loadout screen
-		public LoadoutItem loadoutItemPrefab;
-		public UnlockedItem unlockedItemPrefab;
-		public UnlockedHullItem unlockedHullPrefab;
+		public LoadoutItem loadoutBuildableItemPrefab;
+		public UnlockedBuildableItem unlockedBuildableItemPrefab;
+		public UnlockedHullItem unlockedHullItemPrefab;
 
 		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
 		{
@@ -50,15 +50,15 @@ namespace BattleCruisers.UI.ScreensScene
 		// FELIX  Avoid duplicate code?
 		public LoadoutItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
 		{
-			LoadoutItem loadoutItem = Instantiate<LoadoutItem>(loadoutItemPrefab);
+			LoadoutItem loadoutItem = Instantiate<LoadoutItem>(loadoutBuildableItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			loadoutItem.Initialise(itemBuilding);
 			return loadoutItem;
 		}
 
-		public UnlockedItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, ItemsRow itemsRow, Building itemBuilding, bool isInLoadout)
+		public UnlockedBuildableItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, ItemsRow itemsRow, Building itemBuilding, bool isInLoadout)
 		{
-			UnlockedItem unlockedItem = Instantiate<UnlockedItem>(unlockedItemPrefab);
+			UnlockedBuildableItem unlockedItem = Instantiate<UnlockedBuildableItem>(unlockedBuildableItemPrefab);
 			unlockedItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			unlockedItem.Initialise(itemsRow, itemBuilding, isInLoadout);
 			return unlockedItem;
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene
 
 		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullsRow hullsRow, Cruiser cruiser, bool isInLoadout)
 		{
-			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullPrefab);
+			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
 			unlockedHull.Initialise(hullsRow, cruiser, isInLoadout);
 			return unlockedHull;
