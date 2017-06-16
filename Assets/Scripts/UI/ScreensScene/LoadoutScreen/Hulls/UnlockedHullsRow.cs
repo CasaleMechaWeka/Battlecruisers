@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 	// FELIX  Avoid duplciate code with UnlockedItemsRow
 	public class UnlockedHullsRow : MonoBehaviour
 	{
-		private IList<UnlockedHull> _unlockedHullButtons;
+		private IList<UnlockedHullItem> _unlockedHullButtons;
 
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
@@ -22,13 +22,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 			Assert.IsNotNull(scrollViewContent);
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
-			_unlockedHullButtons = new List<UnlockedHull>();
+			_unlockedHullButtons = new List<UnlockedHullItem>();
 			float totalWidth = 0;
 
 			foreach (Cruiser unlockedCruiser in unlockedCruisers)
 			{
 				bool isInLoadout = object.ReferenceEquals(loadoutCruiser, unlockedCruiser);
-				UnlockedHull hullButton = uiFactory.CreateUnlockedHull(layoutGroup, hullsRow, unlockedCruiser, isInLoadout);
+				UnlockedHullItem hullButton = uiFactory.CreateUnlockedHull(layoutGroup, hullsRow, unlockedCruiser, isInLoadout);
 				_unlockedHullButtons.Add(hullButton);
 				totalWidth += hullButton.Size.x;
 			}
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 
 		public void UpdateSelectedHull(Cruiser selectedCruiser)
 		{
-			foreach (UnlockedHull unlockedHullButton in _unlockedHullButtons)
+			foreach (UnlockedHullItem unlockedHullButton in _unlockedHullButtons)
 			{
 				unlockedHullButton.OnNewHullSelected(selectedCruiser);
 			}

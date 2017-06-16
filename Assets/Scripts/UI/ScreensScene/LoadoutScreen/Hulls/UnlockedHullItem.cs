@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
-	// FELIX  Rename!  Append -Button?  -Item?
-	public class UnlockedHull : MonoBehaviour 
+	public class UnlockedHullItem : MonoBehaviour 
 	{
 		private HullsRow _hullsRow;
 		private Cruiser _cruiser;

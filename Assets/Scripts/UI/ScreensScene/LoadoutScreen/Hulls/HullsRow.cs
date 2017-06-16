@@ -12,11 +12,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 	{
 		private readonly IGameModel _gameModel;
 		private readonly IPrefabFactory _prefabFactory;
-		private readonly LoadoutHull _loadoutHull;
+		private readonly LoadoutHullItem _loadoutHull;
 		private readonly UnlockedHullsRow _unlockedHullsRow;
 		private readonly IDictionary<Cruiser, HullKey> _hullToKey;
 
-		public HullsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHull loadoutHull, UnlockedHullsRow unlockedHullsRow)
+		public HullsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, UnlockedHullsRow unlockedHullsRow)
 		{
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;

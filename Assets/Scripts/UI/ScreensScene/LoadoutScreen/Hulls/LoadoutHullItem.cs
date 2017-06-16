@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
-	public class LoadoutHull : MonoBehaviour 
+	public class LoadoutHullItem : MonoBehaviour 
 	{
 		public Image hullImage;
 
