@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public class LoadoutItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
-		// FELIX  Might need to implement Building/Target Equals & HashCode?
 		private IDictionary<Building, LoadoutItem> _buildingToLoadoutItem;
 
 		private const int MAX_NUM_OF_ITEMS = 5;
