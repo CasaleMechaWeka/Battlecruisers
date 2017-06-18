@@ -14,60 +14,27 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class BuildableDetailsController : MonoBehaviour 
+	public class BuildableDetailsController : BaseBuildableDetails 
 	{
 		private IDroneManager _droneManager;
-		private ISpriteFetcher _spriteFetcher;
-		private Buildable _buildable;
 		private bool _allowDelete;
 		
-		public BuildableStatsController statsController;
-		public Text buildableName;
-		public Text buildableDescription;
-		public Image buildableImage;
-		public Image slotImage;
 		public Button deleteButton;
 		public Button toggleDroneButton;
 		public BuildableProgressBarController buildProgressController;
 
-		void Awake() 
-		{
-			_spriteFetcher = new SpriteFetcher();
-			_allowDelete = false;
-			Hide();
-		}
-
 		public void Initialise(IDroneManager droneManager, ISpriteFetcher spriteFetcher)
 		{
+			base.Initialise(spriteFetcher);
 			_droneManager = droneManager;
-			_spriteFetcher = spriteFetcher;
 		}
 
 		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)
 		{
-			Assert.IsNotNull(buildable);
+			base.ShowBuildableDetails(buildable);
 
-			if (_buildable != null)
-			{
-				CleanUp();
-			}
-
-			_buildable = buildable;
 			_allowDelete = allowDelete;
-			gameObject.SetActive(true);
 			buildProgressController.Initialise(_buildable);
-
-			statsController.ShowBuildableStats(_buildable);
-			buildableName.text = _buildable.buildableName;
-			buildableDescription.text = _buildable.description;
-			buildableImage.sprite = _buildable.Sprite;
-
-			bool hasSlot = _buildable.slotType != SlotType.None;
-			if (hasSlot)
-			{
-				slotImage.sprite = _spriteFetcher.GetSlotSprite((SlotType)_buildable.slotType);
-			}
-			slotImage.gameObject.SetActive(hasSlot);
 
 			// Delete buildable button
 			deleteButton.gameObject.SetActive(allowDelete);
@@ -107,13 +74,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			toggleDroneButton.gameObject.SetActive(false);
 		}
 
-		public void Hide()
-		{
-			CleanUp();
-			gameObject.SetActive(false);
-		}
-
-		private void CleanUp()
+		protected override void CleanUp()
 		{
 			if (_buildable != null)
 			{
