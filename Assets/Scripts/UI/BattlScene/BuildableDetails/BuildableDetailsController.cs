@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.BattleScene.BuildingDetails
 		public Button toggleDroneButton;
 		public BuildableProgressBarController buildProgressController;
 
-		void Start () 
+		void Awake() 
 		{
 			_spriteFetcher = new SpriteFetcher();
 			_allowDelete = false;
