@@ -50,13 +50,6 @@ namespace BattleCruisers.Scenes
 
 
 			// FELIX  TEMP
-			foreach (BuildingKey key in _gameModel.UnlockedBuildings)
-			{
-				Debug.Log("Unlocked building: " + key.PrefabPath);
-			}
-
-
-			// FELIX  TEMP
 //			ApplicationModel.BattleResult = new BattleResult(1, false);
 //			ApplicationModel.BattleResult = new BattleResult(1, true);
 //			_gameModel.LastBattleResult = null;
