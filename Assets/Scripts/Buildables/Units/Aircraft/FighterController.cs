@@ -72,15 +72,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override float PatrollingVelocity	{ get {	return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
-		protected override void OnBuildableCompleted()
+		public override void StaticInitialise()
 		{
-			base.OnBuildableCompleted();
+			base.StaticInitialise();
 
 			Assert.IsNotNull(followableEnemyDetector);
 			Assert.IsNotNull(barrelController);
-
+			
 			_attackCapabilities.Add(TargetType.Aircraft);
+			
+			barrelController.StaticInitialise();
+		}
 
+		protected override void OnBuildableCompleted()
+		{
+			base.OnBuildableCompleted();
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);

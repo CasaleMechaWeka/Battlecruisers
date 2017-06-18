@@ -31,18 +31,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private TurretStats _turretStats;
 		public TurretStats TurretStats { get { return _turretStats; } }
 
+		public virtual void StaticInitialise()
+		{
+			_turretStats = gameObject.GetComponent<TurretStats>();
+			Assert.IsNotNull(_turretStats);
+			_turretStats.Initialise();
+			
+			_fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
+			Assert.IsNotNull(_fireIntervalManager);
+			_fireIntervalManager.Initialise(_turretStats);
+		}
+
 		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
 		{
 			_targetFilter = targetFilter;
 			_angleCalculator = angleCalculator;
-
-			_turretStats = gameObject.GetComponent<TurretStats>();
-			Assert.IsNotNull(_turretStats);
-			_turretStats.Initialise();
-
-			_fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
-			Assert.IsNotNull(_fireIntervalManager);
-			_fireIntervalManager.Initialise(_turretStats);
 		}
 
 		void FixedUpdate()

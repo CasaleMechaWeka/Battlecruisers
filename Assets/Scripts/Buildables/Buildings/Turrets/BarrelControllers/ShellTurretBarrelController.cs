@@ -17,14 +17,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public ProjectileController shellPrefab;
 
+		public override void StaticInitialise()
+		{
+			base.StaticInitialise();
+
+
+			Assert.IsNotNull(shellPrefab);
+			
+			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawner>();
+			Assert.IsNotNull(_shellSpawner);
+		}
+
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
 		{
 			base.Initialise(targetFilter, angleCalculator);
-
-			Assert.IsNotNull(shellPrefab);
-
-			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawner>();
-			Assert.IsNotNull(_shellSpawner);
 
 			ShellStats shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
 			_shellSpawner.Initialise(shellStats, targetFilter);
