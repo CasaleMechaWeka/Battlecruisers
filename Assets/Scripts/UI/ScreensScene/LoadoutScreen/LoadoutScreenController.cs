@@ -36,6 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_gameModel = _dataProvider.GameModel;
 			_prefabFactory = prefabFactory;
 
+			uiFactory.Initialise(buildableDetailsManager);
+
 			// Initialise hull row
 			new HullsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow);
 

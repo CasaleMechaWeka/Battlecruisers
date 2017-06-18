@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		void Hide();
 	}
 
-	public class BuildableDetailsManager : MonoBehaviour
+	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
 	{
 		public ComparableBuildableDetailsController singleBuildableDetails;
 		public ComparableBuildableDetailsController leftComparableBuildableDetails, rightComparableBuildableDetails;
 
 		void Start()
 		{
+			SpriteFetcher spriteFetcher = new SpriteFetcher();
+
+			singleBuildableDetails.Initialise(spriteFetcher);
+
 			Hide();
 		}
 

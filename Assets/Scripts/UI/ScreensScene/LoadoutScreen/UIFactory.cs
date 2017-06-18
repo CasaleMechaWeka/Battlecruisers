@@ -21,17 +21,23 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
+		private IBuildableDetailsManager _buildableDetailsManager;
+
 		public LoadoutItem loadoutBuildableItemPrefab;
 		public UnlockedBuildableItem unlockedBuildableItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
+
+		public void Initialise(IBuildableDetailsManager buildableDetailsManager)
+		{
+			_buildableDetailsManager = buildableDetailsManager;
+		}
 
 		// FELIX  Avoid duplicate code?
 		public LoadoutItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
 		{
 			LoadoutItem loadoutItem = Instantiate<LoadoutItem>(loadoutBuildableItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
-			// FELIX
-			loadoutItem.Initialise(itemBuilding, null);
+			loadoutItem.Initialise(itemBuilding, _buildableDetailsManager);
 			return loadoutItem;
 		}
 
