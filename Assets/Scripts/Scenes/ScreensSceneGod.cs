@@ -25,7 +25,6 @@ namespace BattleCruisers.Scenes
 
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
-		private IUIFactory _uiFactory;
 		private PrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;
 		private IDataProvider _dataProvider;
@@ -38,9 +37,6 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
-			_uiFactory = GetComponent<IUIFactory>();
-			Assert.IsNotNull(_uiFactory);
-
 			_prefabFactory = GetComponent<PrefabFactory>();
 			Assert.IsNotNull(_prefabFactory);
 			_prefabFactory.Initialise(new PrefabFetcher());
@@ -56,9 +52,9 @@ namespace BattleCruisers.Scenes
 //			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(_uiFactory, this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
+			levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
-			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _uiFactory);
+			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
 
 			
 			// FELIX  TEMP

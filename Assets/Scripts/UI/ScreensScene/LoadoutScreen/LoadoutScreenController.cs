@@ -17,35 +17,33 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
-		private IUIFactory _uiFactory;
 
+		public UIFactory uiFactory;
 		public LoadoutHullItem loadoutHullItem;
 		public UnlockedHullsRow unlockedHullsRow;
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 		public UnlockedBuildableItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
 		public BuildableDetailsManager buildableDetailsManager;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory, IUIFactory uiFactory)
+		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory)
 		{
 			base.Initialise(screensSceneGod);
 
 			Assert.IsNotNull(dataProvider);
 			Assert.IsNotNull(prefabFactory);
-			Assert.IsNotNull(uiFactory);
 
 			_dataProvider = dataProvider;
 			_gameModel = _dataProvider.GameModel;
 			_prefabFactory = prefabFactory;
-			_uiFactory = uiFactory;
 
 			// Initialise hull row
-			new HullsRow(_gameModel, _prefabFactory, _uiFactory, loadoutHullItem, unlockedHullsRow);
+			new HullsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow);
 
 			// Initialise building rows
-			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow);
-			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Defence, defensivesRow, unlockedDefensivesRow);
-			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Offence, offensivesRow, unlockedOffensivesRow);
-			new ItemsRow(_gameModel, _prefabFactory, _uiFactory, BuildingCategory.Tactical, tacticalsRow, unlockedTacticalsRow);
+			new ItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow);
+			new ItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Defence, defensivesRow, unlockedDefensivesRow);
+			new ItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Offence, offensivesRow, unlockedOffensivesRow);
+			new ItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Tactical, tacticalsRow, unlockedTacticalsRow);
 		}
 
 		public void GoToHomeScreen()
