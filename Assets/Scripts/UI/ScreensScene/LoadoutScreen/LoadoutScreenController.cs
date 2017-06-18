@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public LoadoutHullItem loadoutHullItem;
 		public UnlockedHullsRow unlockedHullsRow;
 		public LoadoutItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
-		public UnlockedItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
+		public UnlockedBuildableItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory, IUIFactory uiFactory)
 		{

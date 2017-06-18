@@ -8,34 +8,31 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
-	// FELIX  Avoid duplciate code with UnlockedItemsRow
-	public class UnlockedHullsRow : MonoBehaviour
+	public class UnlockedHullsRow : UnlockedItemsRow<Cruiser>
 	{
+		private HullsRow _hullsRow;
+		private IUIFactory _uiFactory;
+		private Cruiser _loadoutCruiser;
 		private IList<UnlockedHullItem> _unlockedHullButtons;
-
-		public HorizontalLayoutGroup layoutGroup;
-		public RectTransform scrollViewContent;
 
 		public void Initialise(HullsRow hullsRow, IUIFactory uiFactory, IList<Cruiser> unlockedCruisers, Cruiser loadoutCruiser)
 		{
-			Assert.IsNotNull(layoutGroup);
-			Assert.IsNotNull(scrollViewContent);
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
+			_hullsRow = hullsRow;
+			_uiFactory = uiFactory;
+			_loadoutCruiser = loadoutCruiser;
 			_unlockedHullButtons = new List<UnlockedHullItem>();
-			float totalWidth = 0;
 
-			foreach (Cruiser unlockedCruiser in unlockedCruisers)
-			{
-				bool isInLoadout = object.ReferenceEquals(loadoutCruiser, unlockedCruiser);
-				UnlockedHullItem hullButton = uiFactory.CreateUnlockedHull(layoutGroup, hullsRow, unlockedCruiser, isInLoadout);
-				_unlockedHullButtons.Add(hullButton);
-				totalWidth += hullButton.Size.x;
-			}
+			base.Initialise(unlockedCruisers);
+		}
 
-			totalWidth += (unlockedCruisers.Count - 1) * layoutGroup.spacing;
-
-			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);
+		protected override UnlockedItem CreateUnlockedItem(Cruiser item, HorizontalOrVerticalLayoutGroup itemParent)
+		{
+			bool isInLoadout = object.ReferenceEquals(_loadoutCruiser, item);
+			UnlockedHullItem unlockedHullItem = _uiFactory.CreateUnlockedHull(layoutGroup, _hullsRow, item, isInLoadout);
+			_unlockedHullButtons.Add(unlockedHullItem);
+			return unlockedHullItem;
 		}
 
 		public void UpdateSelectedHull(Cruiser selectedCruiser)

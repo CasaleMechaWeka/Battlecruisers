@@ -13,11 +13,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private readonly IPrefabFactory _prefabFactory;
 		private readonly BuildingCategory _buildingCategory;
 		private readonly LoadoutItemsRow _loadoutRow;
-		private readonly UnlockedItemsRow _unlockedRow;
+		private readonly UnlockedBuildableItemsRow _unlockedRow;
 		private readonly IDictionary<Building, BuildingKey> _buildingToKey;
 
 		public ItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, 
-			BuildingCategory buildingCategory, LoadoutItemsRow loadoutRow, UnlockedItemsRow unlockedRow)
+			BuildingCategory buildingCategory, LoadoutItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow)
 		{
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;
