@@ -11,13 +11,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : ITarget
 	{
+		protected IUIFactory _uiFactory;
+
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-		public void Initialise(IList<TItem> unlockedItems)
+		public void Initialise(IUIFactory uiFactory, IList<TItem> unlockedItems)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsNotNull(scrollViewContent);
+
+			_uiFactory = uiFactory;
 
 			float totalWidth = 0;
 

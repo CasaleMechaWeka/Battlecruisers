@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public class UnlockedBuildableItemsRow : UnlockedItemsRow<Building>
 	{
 		private ItemsRow _itemsRow;
-		private IUIFactory _uiFactory;
 		private IList<Building> _loadoutBuildings;
 
 		public void Initialise(ItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
@@ -19,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_uiFactory = uiFactory;
 			_loadoutBuildings = loadoutBuildings;
 
-			base.Initialise(unlockedBuildings);
+			base.Initialise(uiFactory, unlockedBuildings);
 		}
 
 		protected override UnlockedItem CreateUnlockedItem(Building item, HorizontalOrVerticalLayoutGroup itemParent)

@@ -11,7 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 	public class UnlockedHullsRow : UnlockedItemsRow<Cruiser>
 	{
 		private HullsRow _hullsRow;
-		private IUIFactory _uiFactory;
 		private Cruiser _loadoutCruiser;
 		private IList<UnlockedHullItem> _unlockedHullButtons;
 
@@ -20,11 +19,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
 			_hullsRow = hullsRow;
-			_uiFactory = uiFactory;
 			_loadoutCruiser = loadoutCruiser;
 			_unlockedHullButtons = new List<UnlockedHullItem>();
 
-			base.Initialise(unlockedCruisers);
+			base.Initialise(uiFactory, unlockedCruisers);
 		}
 
 		protected override UnlockedItem CreateUnlockedItem(Cruiser item, HorizontalOrVerticalLayoutGroup itemParent)
