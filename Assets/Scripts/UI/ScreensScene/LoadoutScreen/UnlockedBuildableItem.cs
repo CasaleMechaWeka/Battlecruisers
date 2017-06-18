@@ -27,12 +27,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			if (IsItemInLoadout)
 			{
 				_itemsRow.RemoveBuildingFromLoadout(_building);
+				IsItemInLoadout = !IsItemInLoadout;
 			}
 			else
 			{
 				if (_itemsRow.CanAddBuilding())
 				{
 					_itemsRow.AddBuildingToLoadout(_building);
+					IsItemInLoadout = !IsItemInLoadout;
 				}
 				else
 				{
@@ -40,7 +42,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 				}
 			}
 
-			IsItemInLoadout = !IsItemInLoadout;
 		}
 	}
 }
