@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.BattleScene.BuildingDetails;
+using BattleCruisers.UI.Common.BuildingDetails;
 using System;
 using System.Collections;
 using System.Collections.Generic;

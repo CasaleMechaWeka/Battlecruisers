@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.UI.BattleScene.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	public class BuildableStatsController : MonoBehaviour 
 	{

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BattleScene.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	public class StatsRowStarsController : MonoBehaviour 
 	{

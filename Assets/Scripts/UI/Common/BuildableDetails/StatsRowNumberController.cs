@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BattleScene.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	public class StatsRowNumberController : MonoBehaviour 
 	{

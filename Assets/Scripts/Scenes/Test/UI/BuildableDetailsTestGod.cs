@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.UI.BattleScene.BuildingDetails;
+using BattleCruisers.UI.Common.BuildingDetails;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;

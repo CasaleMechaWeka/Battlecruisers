@@ -3,7 +3,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.BattleScene.BuildingDetails;
+using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
