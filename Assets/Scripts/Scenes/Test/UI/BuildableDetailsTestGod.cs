@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.UI
 {
 	public class BuildableDetailsTestGod : MonoBehaviour 
 	{
-		public BuildableDetailsController buildableDetails;
+		public ComparableBuildableDetailsController buildableDetails;
 		public Buildable buildableToShow;
 
 		void Start () 
@@ -19,9 +19,8 @@ namespace BattleCruisers.Scenes.Test.UI
 			buildableToShow.StaticInitialise();
 
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-			IDroneManager droneManager = Substitute.For<IDroneManager>();
-			buildableDetails.Initialise(droneManager, spriteFetcher);
-			buildableDetails.ShowBuildableDetails(buildableToShow, allowDelete: true);
+			buildableDetails.Initialise(spriteFetcher);
+			buildableDetails.ShowBuildableDetails(buildableToShow);
 		}
 	}
 }

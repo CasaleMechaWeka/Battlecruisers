@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			Hide();
 		}
 
-		protected void ShowBuildableDetails(Buildable buildable)
+		public virtual void ShowBuildableDetails(Buildable buildable)
 		{
 			Assert.IsNotNull(buildable);
 
