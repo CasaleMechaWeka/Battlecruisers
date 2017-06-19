@@ -8,13 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public interface IBuildableDetailsState
-	{
-		IBuildableDetailsState SelectBuildable(Buildable selectedBuildable);
-		IBuildableDetailsState CompareSelectedBuildable();
-		IBuildableDetailsState Dismiss();
-	}
-
 	public interface IBuildableDetailsManager
 	{
 		void SelectBuildable(Buildable buildable);

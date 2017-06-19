@@ -3,14 +3,13 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public class ReadyToCompareState : IBuildableDetailsState
+	public class ReadyToCompareState : BaseState
 	{
-		private BuildableDetailsManager _buildableDetailsManager;
 		private Buildable _buildableToCompare;
 
 		public ReadyToCompareState(BuildableDetailsManager buildableDetailsManager, Buildable buildableToCompare)
+			: base(buildableDetailsManager)
 		{
-			_buildableDetailsManager = buildableDetailsManager;
 			_buildableToCompare = buildableToCompare;
 		}
 
@@ -18,17 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		{
 			_buildableDetailsManager.CompareBuildableDetails(_buildableToCompare, selectedBuildable);
 			return new ComparingState(_buildableDetailsManager);
-		}
-
-		public IBuildableDetailsState CompareSelectedBuildable()
-		{
-			throw new InvalidProgramException();
-		}
-
-		public IBuildableDetailsState Dismiss()
-		{
-			_buildableDetailsManager.HideBuildableDetails();
-			return new DismissedState(_buildableDetailsManager);
 		}
 	}
 }
