@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 
 	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
 	{
-		private Buildable _selectedBuildable;
+		private IBuildableDetailsState _state;
 
 		public ComparableBuildableDetailsController singleBuildableDetails;
 		public ComparableBuildableDetailsController leftComparableBuildableDetails, rightComparableBuildableDetails;
@@ -37,43 +37,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			leftComparableBuildableDetails.Initialise(spriteFetcher);
 			rightComparableBuildableDetails.Initialise(spriteFetcher);
 
-			InternalDismiss();
+			_state = new DismissedState(this);
 		}
 
 		public void SelectBuildable(Buildable buildable)
 		{
-			if (_selectedBuildable == null)
-			{
-				_selectedBuildable = buildable;
-				singleBuildableDetails.ShowBuildableDetails(_selectedBuildable);
-			}
-			else
-			{
-				leftComparableBuildableDetails.ShowBuildableDetails(_selectedBuildable);
-				rightComparableBuildableDetails.ShowBuildableDetails(buildable);
-			}
+			_state = _state.SelectBuildable(buildable);
 		}
 
 		public void CompareSelectedBuildable()
 		{
-			InternalDismiss();
+			_state = _state.CompareSelectedBuildable();
 		}
 
 		public void Dismiss()
 		{
-			Assert.IsNotNull(_selectedBuildable);
-			_selectedBuildable = null;
-			InternalDismiss();
+			_state = _state.Dismiss();
 		}
 
-		private void InternalDismiss()
-		{
-			singleBuildableDetails.Hide();
-			leftComparableBuildableDetails.Hide();
-			rightComparableBuildableDetails.Hide();
-		}
-
-		// FELIX
 		public void ShowBuildableDetails(Buildable buildable)
 		{
 			singleBuildableDetails.ShowBuildableDetails(buildable);
