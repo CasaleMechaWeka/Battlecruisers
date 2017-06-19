@@ -21,9 +21,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public void ShowBuildableDetails()
+		public void SelectBuildable()
 		{
-			_buildableDetailsManager.ShowSingleBuildable(_buildable);
+			_buildableDetailsManager.SelectBuildable(_buildable);
 		}
 	}
 }

@@ -4,17 +4,21 @@ using BattleCruisers.UI.Common.BuildingDetails;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public interface IBuildableDetailsManager
 	{
-		void ShowSingleBuildable(Buildable buildable);
-		void Hide();
+		void SelectBuildable(Buildable buildable);
+		void CompareSelectedBuildable();
+		void Dismiss();
 	}
 
 	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
 	{
+		private Buildable _selectedBuildable;
+
 		public ComparableBuildableDetailsController singleBuildableDetails;
 		public ComparableBuildableDetailsController leftComparableBuildableDetails, rightComparableBuildableDetails;
 
@@ -23,21 +27,43 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			SpriteFetcher spriteFetcher = new SpriteFetcher();
 
 			singleBuildableDetails.Initialise(spriteFetcher);
+			leftComparableBuildableDetails.Initialise(spriteFetcher);
+			rightComparableBuildableDetails.Initialise(spriteFetcher);
 
-			Hide();
+			InternalDismiss();
 		}
 
-		public void ShowSingleBuildable(Buildable buildable)
+		public void SelectBuildable(Buildable buildable)
 		{
-			singleBuildableDetails.ShowBuildableDetails(buildable);
+			if (_selectedBuildable == null)
+			{
+				_selectedBuildable = buildable;
+				singleBuildableDetails.ShowBuildableDetails(_selectedBuildable);
+			}
+			else
+			{
+				leftComparableBuildableDetails.ShowBuildableDetails(_selectedBuildable);
+				rightComparableBuildableDetails.ShowBuildableDetails(buildable);
+			}
 		}
 
-		public void Hide()
+		public void CompareSelectedBuildable()
+		{
+			InternalDismiss();
+		}
+
+		public void Dismiss()
+		{
+			Assert.IsNotNull(_selectedBuildable);
+			_selectedBuildable = null;
+			InternalDismiss();
+		}
+
+		private void InternalDismiss()
 		{
 			singleBuildableDetails.Hide();
-			// FELIX
-//			leftComparableBuildableDetails.Hide();
-//			rightComparableBuildableDetails.Hide();
+			leftComparableBuildableDetails.Hide();
+			rightComparableBuildableDetails.Hide();
 		}
 	}
 }
