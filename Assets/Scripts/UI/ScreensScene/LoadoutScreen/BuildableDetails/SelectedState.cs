@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 
 		public override IBuildableDetailsState CompareSelectedBuildable()
 		{
+			_buildableDetailsManager.HideBuildableDetails();
 			return new ReadyToCompareState(_buildableDetailsManager, _selectedBuildable);
 		}
 	}

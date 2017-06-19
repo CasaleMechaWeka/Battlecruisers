@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			_buildableToCompare = buildableToCompare;
 		}
 
-		public IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
+		public override IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
 		{
 			_buildableDetailsManager.CompareBuildableDetails(_buildableToCompare, selectedBuildable);
 			return new ComparingState(_buildableDetailsManager);
