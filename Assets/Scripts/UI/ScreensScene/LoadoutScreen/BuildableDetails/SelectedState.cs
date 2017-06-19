@@ -13,12 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			_selectedBuildable = selectedBuildable;
 		}
 
-		public override IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
-		{
-			_buildableDetailsManager.ShowBuildableDetails(selectedBuildable);
-			return new SelectedState(_buildableDetailsManager, selectedBuildable);
-		}
-
 		public override IBuildableDetailsState CompareSelectedBuildable()
 		{
 			_buildableDetailsManager.HideBuildableDetails();

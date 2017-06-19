@@ -72,15 +72,5 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			leftComparableBuildableDetails.Hide();
 			rightComparableBuildableDetails.Hide();
 		}
-
-		void OnClick()
-		{
-			Dismiss();
-		}
-
-		void OnMouseDown()
-		{
-			Dismiss();
-		}
 	}
 }
