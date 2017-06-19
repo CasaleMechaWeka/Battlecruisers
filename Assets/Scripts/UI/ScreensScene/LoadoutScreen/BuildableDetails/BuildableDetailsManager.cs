@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
@@ -13,10 +14,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 	{
 		void SelectBuildable(Buildable buildable);
 		void CompareSelectedBuildable();
-		void Dismiss();
 	}
 
-	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
+	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager, IPointerClickHandler
 	{
 		private IBuildableDetailsState _state;
 
@@ -47,11 +47,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			_state = _state.CompareSelectedBuildable();
 		}
 
-		public void Dismiss()
-		{
-			_state = _state.Dismiss();
-		}
-
 		public void ShowBuildableDetails(Buildable buildable)
 		{
 			modalBackground.gameObject.SetActive(true);
@@ -71,6 +66,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			singleBuildableDetails.Hide();
 			leftComparableBuildableDetails.Hide();
 			rightComparableBuildableDetails.Hide();
+		}
+
+		void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+		{
+			_state = _state.Dismiss();
 		}
 	}
 }
