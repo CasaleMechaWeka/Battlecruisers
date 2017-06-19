@@ -8,6 +8,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
+	public interface IBuildableDetailsState
+	{
+		IBuildableDetailsState SelectBuildable(Buildable buildable);
+		IBuildableDetailsState CompareSelectedBuildable();
+		IBuildableDetailsState Dismiss();
+	}
+
 	public interface IBuildableDetailsManager
 	{
 		void SelectBuildable(Buildable buildable);
@@ -15,6 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		void Dismiss();
 	}
 
+	// FELIX  Create new interface
 	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
 	{
 		private Buildable _selectedBuildable;
@@ -60,6 +68,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		}
 
 		private void InternalDismiss()
+		{
+			singleBuildableDetails.Hide();
+			leftComparableBuildableDetails.Hide();
+			rightComparableBuildableDetails.Hide();
+		}
+
+		// FELIX
+		public void ShowBuildableDetails(Buildable buildable)
+		{
+			singleBuildableDetails.ShowBuildableDetails(buildable);
+		}
+
+		public void CompareBuildableDetails(Buildable buildable1, Buildable buildable2)
+		{
+			leftComparableBuildableDetails.ShowBuildableDetails(buildable1);
+			rightComparableBuildableDetails.ShowBuildableDetails(buildable2);
+		}
+
+		public void HideBuildableDetails()
 		{
 			singleBuildableDetails.Hide();
 			leftComparableBuildableDetails.Hide();
