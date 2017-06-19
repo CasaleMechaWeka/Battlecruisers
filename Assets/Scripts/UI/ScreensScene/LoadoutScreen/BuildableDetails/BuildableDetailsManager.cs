@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 	{
 		private IBuildableDetailsState _state;
 
-		public Image modelBackground;
+		public Image modalBackground;
 		public ComparableBuildableDetailsController singleBuildableDetails;
 		public ComparableBuildableDetailsController leftComparableBuildableDetails, rightComparableBuildableDetails;
 
@@ -54,23 +54,33 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 
 		public void ShowBuildableDetails(Buildable buildable)
 		{
-			modelBackground.gameObject.SetActive(true);
+			modalBackground.gameObject.SetActive(true);
 			singleBuildableDetails.ShowBuildableDetails(buildable);
 		}
 
 		public void CompareBuildableDetails(Buildable buildable1, Buildable buildable2)
 		{
-			modelBackground.gameObject.SetActive(true);
+			modalBackground.gameObject.SetActive(true);
 			leftComparableBuildableDetails.ShowBuildableDetails(buildable1);
 			rightComparableBuildableDetails.ShowBuildableDetails(buildable2);
 		}
 
 		public void HideBuildableDetails()
 		{
-			modelBackground.gameObject.SetActive(false);
+			modalBackground.gameObject.SetActive(false);
 			singleBuildableDetails.Hide();
 			leftComparableBuildableDetails.Hide();
 			rightComparableBuildableDetails.Hide();
+		}
+
+		void OnClick()
+		{
+			Dismiss();
+		}
+
+		void OnMouseDown()
+		{
+			Dismiss();
 		}
 	}
 }
