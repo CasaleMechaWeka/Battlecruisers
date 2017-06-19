@@ -3,21 +3,18 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public class DismissedBuildableDetailsState : IBuildableDetailsState
+	public class ComparingState : IBuildableDetailsState
 	{
 		private BuildableDetailsManager _buildableDetailsManager;
 
-		public DismissedBuildableDetailsState(BuildableDetailsManager buildableDetailsManager)
+		public ComparingState(BuildableDetailsManager buildableDetailsManager)
 		{
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public IBuildableDetailsState SelectBuildable(Buildable buildable)
+		public IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
 		{
-			_buildableDetailsManager.ShowBuildableDetails(buildable);
-			// FELIX  Return SelectedState :)
-
-			return null;
+			throw new InvalidProgramException();
 		}
 
 		public IBuildableDetailsState CompareSelectedBuildable()
@@ -27,7 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 
 		public IBuildableDetailsState Dismiss()
 		{
-			throw new InvalidProgramException();
+			_buildableDetailsManager.HideBuildableDetails();
+			return new DismissedState(_buildableDetailsManager);
 		}
 	}
 }

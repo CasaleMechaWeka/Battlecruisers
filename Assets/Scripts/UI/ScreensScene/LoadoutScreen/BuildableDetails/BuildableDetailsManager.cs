@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public interface IBuildableDetailsState
 	{
-		IBuildableDetailsState SelectBuildable(Buildable buildable);
+		IBuildableDetailsState SelectBuildable(Buildable selectedBuildable);
 		IBuildableDetailsState CompareSelectedBuildable();
 		IBuildableDetailsState Dismiss();
 	}
@@ -22,7 +22,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		void Dismiss();
 	}
 
-	// FELIX  Create new interface
 	public class BuildableDetailsManager : MonoBehaviour, IBuildableDetailsManager
 	{
 		private Buildable _selectedBuildable;
