@@ -6,28 +6,22 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class StatsRowStarsController : MonoBehaviour 
+	public class StatsRowStarsController : StatsRow
 	{
-		private Text _rowLabel;
-		private Image[] _stars;
+		public Image[] stars;
 
 		private const int MIN_RATING = 0;
 		private const int MAX_RATING = 5;
 
-		void Awake() 
-		{
-			_rowLabel = GetComponentInChildren<Text>();
-			_stars = GetComponentsInChildren<Image>();
-			Assert.IsTrue(_stars.Length == MAX_RATING);
-		}
-
 		public void Initialise(string statName, int statRating)
 		{
-			_rowLabel.text = statName;
+			base.Iniitalise(statName);
 
-			for (int i = 0; i < _stars.Length; ++i)
+			Assert.IsTrue(stars.Length == MAX_RATING);
+
+			for (int i = 0; i < stars.Length; ++i)
 			{
-				Image star = _stars[i];
+				Image star = stars[i];
 				star.gameObject.SetActive(i < statRating);
 			}
 		}

@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class StatsRowNumberController : MonoBehaviour 
+	public class StatsRowNumberController : StatsRow
 	{
-		public Text rowLabel;
 		public Text rowValue;
 
 		public void Initialise(string label, string value)
 		{
-			rowLabel.text = label;
+			base.Iniitalise(label);
 			rowValue.text = value;
 		}
 	}
