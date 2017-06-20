@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public interface IBuildableDetailsState
 	{
-		IBuildableDetailsState SelectBuildable(Buildable selectedBuildable);
+		IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable);
 		IBuildableDetailsState CompareSelectedBuildable();
 		IBuildableDetailsState Dismiss();
 	}
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public virtual IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
+		public virtual IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
 		{
 			throw new InvalidProgramException();
 		}

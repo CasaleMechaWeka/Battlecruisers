@@ -5,17 +5,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public class ReadyToCompareState : BaseState
 	{
-		private Buildable _buildableToCompare;
+		private BuildableLoadoutItem _buildableToCompare;
 
-		public ReadyToCompareState(BuildableDetailsManager buildableDetailsManager, Buildable buildableToCompare)
+		public ReadyToCompareState(BuildableDetailsManager buildableDetailsManager, BuildableLoadoutItem buildableToCompare)
 			: base(buildableDetailsManager)
 		{
 			_buildableToCompare = buildableToCompare;
 		}
 
-		public override IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
+		public override IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
 		{
-			_buildableDetailsManager.CompareBuildableDetails(_buildableToCompare, selectedBuildable);
+			_buildableToCompare.ShowSelectedFeedback = false;
+			_buildableDetailsManager.CompareBuildableDetails(_buildableToCompare.Buildable, selectedBuildable.Buildable);
 			return new ComparingState(_buildableDetailsManager);
 		}
 	}

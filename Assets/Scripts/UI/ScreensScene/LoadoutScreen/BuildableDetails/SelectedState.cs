@@ -5,9 +5,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public class SelectedState : BaseState
 	{
-		private Buildable _selectedBuildable;
+		private BuildableLoadoutItem _selectedBuildable;
 
-		public SelectedState(BuildableDetailsManager buildableDetailsManager, Buildable selectedBuildable)
+		public SelectedState(BuildableDetailsManager buildableDetailsManager, BuildableLoadoutItem selectedBuildable)
 			: base(buildableDetailsManager)
 		{
 			_selectedBuildable = selectedBuildable;
@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		public override IBuildableDetailsState CompareSelectedBuildable()
 		{
 			_buildableDetailsManager.HideBuildableDetails();
+			_selectedBuildable.ShowSelectedFeedback = true;	
 			return new ReadyToCompareState(_buildableDetailsManager, _selectedBuildable);
 		}
 	}

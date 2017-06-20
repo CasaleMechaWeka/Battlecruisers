@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public interface IBuildableDetailsManager
 	{
-		void SelectBuildable(Buildable buildable);
+		void SelectBuildable(BuildableLoadoutItem buildable);
 		void CompareSelectedBuildable();
 	}
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			HideBuildableDetails();
 		}
 
-		public void SelectBuildable(Buildable buildable)
+		public void SelectBuildable(BuildableLoadoutItem buildable)
 		{
 			_state = _state.SelectBuildable(buildable);
 		}

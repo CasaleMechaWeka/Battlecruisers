@@ -8,9 +8,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		public DismissedState(BuildableDetailsManager buildbleDetailsManager)
 			: base(buildbleDetailsManager) { }
 
-		public override IBuildableDetailsState SelectBuildable(Buildable selectedBuildable)
+		public override IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
 		{
-			_buildableDetailsManager.ShowBuildableDetails(selectedBuildable);
+			_buildableDetailsManager.ShowBuildableDetails(selectedBuildable.Buildable);
 			return new SelectedState(_buildableDetailsManager, selectedBuildable);
 		}
 
