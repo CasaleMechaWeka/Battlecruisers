@@ -13,9 +13,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		private const int MIN_RATING = 0;
 		private const int MAX_RATING = 5;
 
-		public void Initialise(string statName, int statRating)
+		public void Initialise(string statName, int statRating, ComparisonResult comparisonResult)
 		{
-			base.Iniitalise(statName);
+			base.Iniitalise(statName, comparisonResult);
 
 			Assert.IsTrue(stars.Length == MAX_RATING);
 

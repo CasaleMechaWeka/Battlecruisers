@@ -31,10 +31,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
 		public void ShowBuildableStats(Buildable buildable)
 		{
-			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString());
-			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX);
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.maxHealth));
-			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(buildable.Damage));
+			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString(), new BetterResult());
+			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX, new WorseResult());
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.maxHealth), new NeutralResult());
+			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(buildable.Damage), new BetterResult());
 		}
 	}
 }

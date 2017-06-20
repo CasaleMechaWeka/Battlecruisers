@@ -9,9 +9,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 	{
 		public Text rowValue;
 
-		public void Initialise(string label, string value)
+		public void Initialise(string label, string value, ComparisonResult comparisonResult)
 		{
-			base.Iniitalise(label);
+			base.Iniitalise(label, comparisonResult);
 			rowValue.text = value;
 		}
 	}
