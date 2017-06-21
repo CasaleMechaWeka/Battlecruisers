@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;

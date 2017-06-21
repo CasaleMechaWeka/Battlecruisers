@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
 	public abstract class StatsRow : MonoBehaviour
 	{

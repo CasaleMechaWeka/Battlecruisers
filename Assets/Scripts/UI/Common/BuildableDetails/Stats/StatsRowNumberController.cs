@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
 	public class StatsRowNumberController : StatsRow
 	{
