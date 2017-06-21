@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	public class BuildableStatsController : MonoBehaviour 
 	{
-		// FELIX  Inject
 		private ValueToStarsConverter _valueToStarsConverter;
 		private IStatsComparer _higherIsBetterComparer, _lowerIsBetterComparer;
 
