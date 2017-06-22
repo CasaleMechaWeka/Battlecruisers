@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 				itemToCompareTo = item;
 			}
 
-			ShowStats(item, itemToCompareTo);
+			InternalShowStats(item, itemToCompareTo);
 		}
 
 		protected abstract void InternalShowStats(T item, T itemToCompareTo);
