@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class UnlockedHullsRow : UnlockedItemsRow<Cruiser>
+	public class UnlockedHullItemsRow : UnlockedItemsRow<Cruiser>
 	{
 		private HullItemsRow _hullsRow;
 		private Cruiser _loadoutCruiser;

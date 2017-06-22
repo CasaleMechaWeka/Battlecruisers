@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public UIFactory uiFactory;
 		public LoadoutHullItem loadoutHullItem;
-		public UnlockedHullsRow unlockedHullsRow;
+		public UnlockedHullItemsRow unlockedHullsRow;
 		public LoadoutBuildableItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
 		public UnlockedBuildableItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
 		public BuildableDetailsManager buildableDetailsManager;
