@@ -16,7 +16,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	// FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
-	public abstract class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
+	public class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
 	{
 		public CruiserStatsController statsController;
 		public Text cruiserName;

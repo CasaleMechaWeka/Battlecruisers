@@ -8,14 +8,8 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
-	// FELIX  Move to own classes
-	public interface IComparableItem
-	{
-		Sprite Sprite { get; }
-	}
-
 	public abstract class LoadoutItem<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IItemDetailsManager<TItem> _itemDetailsManager;
@@ -49,28 +43,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public void SelectItem()
 		{
 			_itemDetailsManager.SelectItem(this);
-		}
-	}
-
-	// FELIX  Move to own classes
-	public class LoadoutBuildableItem : LoadoutItem<Buildable>
-	{
-		public void Initialise(Buildable buildable, BuildableDetailsManager buildableDetailsManager)
-		{
-			InternalInitialise(buildable, buildableDetailsManager);
-		}
-	}
-
-	public class LoadoutHullItem : LoadoutItem<Cruiser>
-	{
-		public void Initialise(Cruiser hull, CruiserDetailsManager cruiserDetailsManager)
-		{
-			InternalInitialise(hull, cruiserDetailsManager);
-		}
-
-		public void UpdateHull(Cruiser newHull)
-		{
-			Item = newHull;
 		}
 	}
 }

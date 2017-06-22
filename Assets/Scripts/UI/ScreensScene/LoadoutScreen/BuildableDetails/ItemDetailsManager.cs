@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

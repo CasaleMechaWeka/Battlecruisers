@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public class BuildableDetailsManager : ItemDetailsManager<Buildable>
 	{
-		public BuildableDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
+		public ComparableBuildableDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 
 		void Start()
 		{
