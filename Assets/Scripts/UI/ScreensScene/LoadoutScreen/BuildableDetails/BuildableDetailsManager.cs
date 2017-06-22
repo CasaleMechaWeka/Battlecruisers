@@ -50,14 +50,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 		public void ShowBuildableDetails(Buildable buildable)
 		{
 			modalBackground.gameObject.SetActive(true);
-			singleBuildableDetails.ShowBuildableDetails(buildable);
+			singleBuildableDetails.ShowItemDetails(buildable);
 		}
 
 		public void CompareBuildableDetails(Buildable buildable1, Buildable buildable2)
 		{
 			modalBackground.gameObject.SetActive(true);
-			leftComparableBuildableDetails.ShowBuildableDetails(buildable1, buildable2);
-			rightComparableBuildableDetails.ShowBuildableDetails(buildable2, buildable1);
+			leftComparableBuildableDetails.ShowItemDetails(buildable1, buildable2);
+			rightComparableBuildableDetails.ShowItemDetails(buildable2, buildable1);
 		}
 
 		public void HideBuildableDetails()

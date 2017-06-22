@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
 		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)
 		{
-			base.ShowBuildableDetails(buildable);
+			base.ShowItemDetails(buildable);
 
 			_allowDelete = allowDelete;
 			buildProgressController.Initialise(_buildable);

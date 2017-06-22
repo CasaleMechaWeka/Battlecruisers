@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			Hide();
 		}
 
-		public virtual void ShowBuildableDetails(Buildable buildable, Buildable buildableToCompareTo = null)
+		public void ShowItemDetails(Buildable buildable, Buildable buildableToCompareTo = null)
 		{
 			Assert.IsNotNull(buildable);
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			_buildable = buildable;
 			gameObject.SetActive(true);
 
-			statsController.ShowBuildableStats(_buildable, buildableToCompareTo);
+			statsController.ShowStats(_buildable, buildableToCompareTo);
 			buildableName.text = _buildable.buildableName;
 			buildableDescription.text = _buildable.description;
 			buildableImage.sprite = _buildable.Sprite;

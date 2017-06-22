@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.UI
 
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
 			buildableDetails.Initialise(spriteFetcher);
-			buildableDetails.ShowBuildableDetails(buildableToShow);
+			buildableDetails.ShowItemDetails(buildableToShow);
 		}
 	}
 }
