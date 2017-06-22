@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
 	public class CruiserDetailsManager : ItemDetailsManager<Cruiser>
 	{

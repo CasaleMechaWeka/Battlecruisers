@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

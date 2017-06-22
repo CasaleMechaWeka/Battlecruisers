@@ -4,7 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System.Collections;
 using System.Collections.Generic;

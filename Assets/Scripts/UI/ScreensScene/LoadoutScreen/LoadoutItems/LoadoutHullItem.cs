@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
