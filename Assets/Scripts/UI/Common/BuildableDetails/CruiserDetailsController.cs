@@ -16,17 +16,14 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
 	// FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
-	// FELIX  NEXT
 	public abstract class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
 	{
 		private ISpriteFetcher _spriteFetcher;
-		protected Buildable _buildable;
 
-		public BuildableStatsController statsController;
-		public Text buildableName;
-		public Text buildableDescription;
-		public Image buildableImage;
-		public Image slotImage;
+		public CruiserStatsController statsController;
+		public Text cruiserName;
+		public Text cruiserDescription;
+		public Image cruiserImage;
 
 		public void Initialise(ISpriteFetcher spriteFetcher)
 		{
@@ -34,37 +31,21 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			Hide();
 		}
 
-		public virtual void ShowBuildableDetails(Buildable buildable, Buildable buildableToCompareTo = null)
+		public void ShowItemDetails(Cruiser cruiser, Cruiser cruiserToCompareTo = null)
 		{
-			Assert.IsNotNull(buildable);
+			Assert.IsNotNull(cruiser);
 
-			if (_buildable != null)
-			{
-				CleanUp();
-			}
+			statsController.ShowStats(cruiser, cruiserToCompareTo);
+			cruiserName.text = cruiser.name;
+			cruiserDescription.text = cruiser.description;
+			cruiserImage.sprite = cruiser.Sprite;
 
-			_buildable = buildable;
 			gameObject.SetActive(true);
-
-			statsController.ShowBuildableStats(_buildable, buildableToCompareTo);
-			buildableName.text = _buildable.buildableName;
-			buildableDescription.text = _buildable.description;
-			buildableImage.sprite = _buildable.Sprite;
-
-			bool hasSlot = _buildable.slotType != SlotType.None;
-			if (hasSlot)
-			{
-				slotImage.sprite = _spriteFetcher.GetSlotSprite((SlotType)_buildable.slotType);
-			}
-			slotImage.gameObject.SetActive(hasSlot);
 		}
 
 		public void Hide()
 		{
-			CleanUp();
 			gameObject.SetActive(false);
 		}
-
-		protected virtual void CleanUp() { }
 	}
 }

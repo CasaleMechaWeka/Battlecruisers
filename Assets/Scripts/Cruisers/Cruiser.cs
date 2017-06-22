@@ -33,6 +33,7 @@ namespace BattleCruisers.Cruisers
 		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
+		public string description;
 		public float yAdjustmentInM;
 
 		public BuildingWrapper SelectedBuildingPrefab { get; set; }

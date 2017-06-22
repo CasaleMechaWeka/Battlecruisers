@@ -8,6 +8,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 	public class StatsRowNumberController : StatsRow
 	{
 		public Text rowValue;
+		
+		public void Initialise(string label, int value, ComparisonResult comparisonResult)
+		{
+			Initialise(label, value.ToString(), comparisonResult);
+		}
 
 		public void Initialise(string label, string value, ComparisonResult comparisonResult)
 		{

@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
+	// FELIX  Generic way of applying stats?
 	public class CruiserStatsController : StatsController<Cruiser>
 	{
 		public StatsRowNumberController healthRow, droneRow, platformSlotsRow, deckSlotsRow, utilitySlotsRow, mastSlotsRow;
