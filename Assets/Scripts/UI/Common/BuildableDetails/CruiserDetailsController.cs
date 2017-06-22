@@ -23,11 +23,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		public Text cruiserDescription;
 		public Image cruiserImage;
 
-		void Start()
-		{
-			Hide();
-		}
-
 		public void ShowItemDetails(Cruiser cruiser, Cruiser cruiserToCompareTo = null)
 		{
 			Assert.IsNotNull(cruiser);

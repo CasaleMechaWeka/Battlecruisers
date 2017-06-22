@@ -4,7 +4,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

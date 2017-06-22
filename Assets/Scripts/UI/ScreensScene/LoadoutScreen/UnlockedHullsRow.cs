@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class UnlockedHullsRow : UnlockedItemsRow<Cruiser>
 	{

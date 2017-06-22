@@ -8,7 +8,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System;
 using System.Collections.Generic;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	// FELIX  Avoid duplicate code with ItemsRow?
 	public class HullsRow
