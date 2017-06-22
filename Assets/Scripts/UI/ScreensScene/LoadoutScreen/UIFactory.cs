@@ -6,6 +6,7 @@ using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
