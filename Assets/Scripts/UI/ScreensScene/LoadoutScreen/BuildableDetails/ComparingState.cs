@@ -3,10 +3,10 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public class ComparingState : BaseState
+	public class ComparingState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		public ComparingState(BuildableDetailsManager buildableDetailsManager)
-			: base(buildableDetailsManager) { }
+		public ComparingState(ItemDetailsManager<TItem> itemDetailsManager)
+			: base(itemDetailsManager) { }
 	}
 }
 

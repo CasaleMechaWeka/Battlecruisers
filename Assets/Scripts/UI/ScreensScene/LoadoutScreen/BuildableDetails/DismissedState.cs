@@ -3,18 +3,18 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public class DismissedState : BaseState
+	public class DismissedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		public DismissedState(BuildableDetailsManager buildbleDetailsManager)
-			: base(buildbleDetailsManager) { }
+		public DismissedState(ItemDetailsManager<TItem> itemsDetailsManager)
+			: base(itemsDetailsManager) { }
 
-		public override IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
+		public override IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
 		{
-			_buildableDetailsManager.ShowBuildableDetails(selectedBuildable.Buildable);
-			return new SelectedState(_buildableDetailsManager, selectedBuildable);
+			_itemDetailsManager.ShowItemDetails(selectedItem.Item);
+			return new SelectedState(_itemDetailsManager, selectedItem);
 		}
 
-		public override IBuildableDetailsState Dismiss()
+		public override IItemDetailsState<TItem> Dismiss()
 		{
 			throw new InvalidProgramException();
 		}

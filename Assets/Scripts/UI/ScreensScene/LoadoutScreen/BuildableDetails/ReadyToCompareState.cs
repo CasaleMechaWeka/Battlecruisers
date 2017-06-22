@@ -3,21 +3,21 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public class ReadyToCompareState : BaseState
+	public class ReadyToCompareState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		private BuildableLoadoutItem _buildableToCompare;
+		private LoadoutItem<TItem> _itemToCompare;
 
-		public ReadyToCompareState(BuildableDetailsManager buildableDetailsManager, BuildableLoadoutItem buildableToCompare)
-			: base(buildableDetailsManager)
+		public ReadyToCompareState(ItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> itemToCompare)
+			: base(itemDetailsManager)
 		{
-			_buildableToCompare = buildableToCompare;
+			_itemToCompare = itemToCompare;
 		}
 
-		public override IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
+		public override IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
 		{
-			_buildableToCompare.ShowSelectedFeedback = false;
-			_buildableDetailsManager.CompareBuildableDetails(_buildableToCompare.Buildable, selectedBuildable.Buildable);
-			return new ComparingState(_buildableDetailsManager);
+			_itemToCompare.ShowSelectedFeedback = false;
+			_itemDetailsManager.CompareItemDetails(_itemToCompare.Item, selectedItem.Item);
+			return new ComparingState<TItem>(_itemDetailsManager);
 		}
 	}
 }

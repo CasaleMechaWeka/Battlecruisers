@@ -22,13 +22,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
-		private IBuildableDetailsManager _buildableDetailsManager;
+		private IItemDetailsManager _buildableDetailsManager;
 
 		public BuildableLoadoutItem loadoutBuildableItemPrefab;
 		public UnlockedBuildableItem unlockedBuildableItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
 
-		public void Initialise(IBuildableDetailsManager buildableDetailsManager)
+		public void Initialise(IItemDetailsManager buildableDetailsManager)
 		{
 			_buildableDetailsManager = buildableDetailsManager;
 		}

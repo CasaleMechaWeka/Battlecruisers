@@ -6,5 +6,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 	public interface IComparableItemDetails<T> where T : Target
 	{
 		void ShowItemDetails(T item, T itemToCompareTo = null);
+		void Hide();
 	}
 }

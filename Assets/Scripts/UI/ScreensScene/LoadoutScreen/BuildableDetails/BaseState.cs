@@ -3,36 +3,36 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
-	public interface IBuildableDetailsState
+	public interface IItemDetailsState<TItem> where TItem : IComparableItem
 	{
-		IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable);
-		IBuildableDetailsState CompareSelectedBuildable();
-		IBuildableDetailsState Dismiss();
+		IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem);
+		IItemDetailsState<TItem> CompareSelectedItem();
+		IItemDetailsState<TItem> Dismiss();
 	}
 
-	public abstract class BaseState : IBuildableDetailsState
+	public abstract class BaseState<TItem> : IItemDetailsState<TItem> where TItem : IComparableItem
 	{
-		protected BuildableDetailsManager _buildableDetailsManager;
+		protected IItemDetailsManager<TItem> _itemDetailsManager;
 
-		public BaseState(BuildableDetailsManager buildableDetailsManager)
+		public BaseState(IItemDetailsManager<TItem> itemDetailsManager)
 		{
-			_buildableDetailsManager = buildableDetailsManager;
+			_itemDetailsManager = itemDetailsManager;
 		}
 
-		public virtual IBuildableDetailsState SelectBuildable(BuildableLoadoutItem selectedBuildable)
+		public virtual IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
 		{
 			throw new InvalidProgramException();
 		}
 
-		public virtual IBuildableDetailsState CompareSelectedBuildable()
+		public virtual IItemDetailsState<TItem> CompareSelectedBuildable()
 		{
 			throw new InvalidProgramException();
 		}
 
-		public virtual IBuildableDetailsState Dismiss()
+		public virtual IItemDetailsState<TItem> Dismiss()
 		{
-			_buildableDetailsManager.HideBuildableDetails();
-			return new DismissedState(_buildableDetailsManager);
+			_itemDetailsManager.HideItemDetails();
+			return new DismissedState<TItem>(_itemDetailsManager);
 		}
 	}
 }
