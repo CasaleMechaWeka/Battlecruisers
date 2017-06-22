@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	{
 		LoadoutBuildableItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
 		UnlockedBuildableItem CreateUnlockedItem(HorizontalOrVerticalLayoutGroup itemRow, BuildableItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
-		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullsRow hullsRow, Cruiser cruiser, bool isInLoadout);
+		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return unlockedItem;
 		}
 
-		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullsRow hullsRow, Cruiser cruiser, bool isInLoadout)
+		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout)
 		{
 			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	// FELIX  Avoid duplicate code with ItemsRow?
-	public class HullsRow
+	// FELIX  Avoid duplicate code with BuildableItemsRow?
+	public class HullItemsRow
 	{
 		private readonly IGameModel _gameModel;
 		private readonly IPrefabFactory _prefabFactory;
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private readonly UnlockedHullsRow _unlockedHullsRow;
 		private readonly IDictionary<Cruiser, HullKey> _hullToKey;
 
-		public HullsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, 
+		public HullItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, 
 			UnlockedHullsRow unlockedHullsRow, CruiserDetailsManager cruiserDetailsManager)
 		{
 			_gameModel = gameModel;

@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			uiFactory.Initialise(buildableDetailsManager);
 
 			// Initialise hull row
-			new HullsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+			new HullItemsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
 
 			// Initialise building rows
 			new BuildableItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow);

@@ -10,10 +10,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	public class UnlockedHullItem : UnlockedItem 
 	{
-		private HullsRow _hullsRow;
+		private HullItemsRow _hullsRow;
 		private Cruiser _cruiser;
 
-		public void Initialise(HullsRow hullsRow, Cruiser cruiser, bool isInLoadout)
+		public void Initialise(HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout)
 		{
 			base.Initialise(isInLoadout);
 

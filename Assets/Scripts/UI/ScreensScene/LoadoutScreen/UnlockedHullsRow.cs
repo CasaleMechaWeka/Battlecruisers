@@ -11,11 +11,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class UnlockedHullsRow : UnlockedItemsRow<Cruiser>
 	{
-		private HullsRow _hullsRow;
+		private HullItemsRow _hullsRow;
 		private Cruiser _loadoutCruiser;
 		private IList<UnlockedHullItem> _unlockedHullButtons;
 
-		public void Initialise(HullsRow hullsRow, IUIFactory uiFactory, IList<Cruiser> unlockedCruisers, Cruiser loadoutCruiser)
+		public void Initialise(HullItemsRow hullsRow, IUIFactory uiFactory, IList<Cruiser> unlockedCruisers, Cruiser loadoutCruiser)
 		{
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
