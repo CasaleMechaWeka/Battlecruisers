@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 using BattleCruisers.Buildables;
 using System;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : ITarget
 	{

@@ -5,6 +5,7 @@ using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using System;
 using System.Collections.Generic;
 

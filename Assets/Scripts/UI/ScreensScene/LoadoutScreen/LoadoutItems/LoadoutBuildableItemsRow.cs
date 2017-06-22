@@ -1,12 +1,11 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
 	public class LoadoutBuildableItemsRow : MonoBehaviour 
 	{
