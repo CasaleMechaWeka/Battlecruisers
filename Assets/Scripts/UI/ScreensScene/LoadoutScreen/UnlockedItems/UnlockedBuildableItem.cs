@@ -9,10 +9,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	public class UnlockedBuildableItem : UnlockedItem
 	{
-		private ItemsRow _itemsRow;
+		private BuildableItemsRow _itemsRow;
 		private Building _building;
 
-		public void Initialise(ItemsRow itemsRow, Building building, bool isBuildingInLoadout)
+		public void Initialise(BuildableItemsRow itemsRow, Building building, bool isBuildingInLoadout)
 		{
 			base.Initialise(isBuildingInLoadout);
 
@@ -41,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 					// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
 				}
 			}
-
 		}
 	}
 }

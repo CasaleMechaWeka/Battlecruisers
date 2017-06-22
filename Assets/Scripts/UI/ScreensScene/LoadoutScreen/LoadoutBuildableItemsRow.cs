@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class LoadoutItemsRow : MonoBehaviour 
+	public class LoadoutBuildableItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
 		private IDictionary<Building, LoadoutBuildableItem> _buildingToLoadoutItem;

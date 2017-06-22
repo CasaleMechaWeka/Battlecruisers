@@ -7,17 +7,17 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class ItemsRow
+	public class BuildableItemsRow
 	{
 		private readonly IGameModel _gameModel;
 		private readonly IPrefabFactory _prefabFactory;
 		private readonly BuildingCategory _buildingCategory;
-		private readonly LoadoutItemsRow _loadoutRow;
+		private readonly LoadoutBuildableItemsRow _loadoutRow;
 		private readonly UnlockedBuildableItemsRow _unlockedRow;
 		private readonly IDictionary<Building, BuildingKey> _buildingToKey;
 
-		public ItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, 
-			BuildingCategory buildingCategory, LoadoutItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow)
+		public BuildableItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, 
+			BuildingCategory buildingCategory, LoadoutBuildableItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow)
 		{
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;

@@ -10,10 +10,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public class UnlockedBuildableItemsRow : UnlockedItemsRow<Building>
 	{
-		private ItemsRow _itemsRow;
+		private BuildableItemsRow _itemsRow;
 		private IList<Building> _loadoutBuildings;
 
-		public void Initialise(ItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
+		public void Initialise(BuildableItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, IList<Building> loadoutBuildings)
 		{
 			_itemsRow = itemsRow;
 			_uiFactory = uiFactory;
