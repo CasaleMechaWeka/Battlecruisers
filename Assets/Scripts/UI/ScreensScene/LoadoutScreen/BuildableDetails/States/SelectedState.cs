@@ -2,7 +2,7 @@
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails.States
 {
 	public class SelectedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{

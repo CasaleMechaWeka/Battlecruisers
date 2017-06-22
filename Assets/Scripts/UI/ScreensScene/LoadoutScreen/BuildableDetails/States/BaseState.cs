@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails.States
 {
 	public interface IItemDetailsState<TItem> where TItem : IComparableItem
 	{
