@@ -8,4 +8,3 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		void ShowItemDetails(T item, T itemToCompareTo = null);
 	}
 }
-

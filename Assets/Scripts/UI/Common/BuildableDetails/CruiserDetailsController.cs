@@ -15,7 +15,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public abstract class BaseBuildableDetails : MonoBehaviour, IComparableItemDetails<Buildable>
+	// FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
+	// FELIX  NEXT
+	public abstract class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
 	{
 		private ISpriteFetcher _spriteFetcher;
 		protected Buildable _buildable;

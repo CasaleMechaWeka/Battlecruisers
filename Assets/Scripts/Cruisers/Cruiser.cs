@@ -190,5 +190,10 @@ namespace BattleCruisers.Cruisers
 		{
 			return _slots[slotType].FirstOrDefault(slot => slot.IsFree);
 		}
+
+		public int GetSlotCount(SlotType slotType)
+		{
+			return _slots[slotType].Count;
+		}
 	}
 }
