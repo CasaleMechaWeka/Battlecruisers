@@ -16,6 +16,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 
 		void Start()
 		{
+			ISpriteFetcher spriteFetcher = new SpriteFetcher();
+			
+			singleItemDetails.Initialise(spriteFetcher);
+			leftComparableItemDetails.Initialise(spriteFetcher);
+			rightComparableItemDetails.Initialise(spriteFetcher);
+
 			Initialise(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails);
 		}
 	}

@@ -18,16 +18,13 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 	// FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
 	public abstract class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
 	{
-		private ISpriteFetcher _spriteFetcher;
-
 		public CruiserStatsController statsController;
 		public Text cruiserName;
 		public Text cruiserDescription;
 		public Image cruiserImage;
 
-		public void Initialise(ISpriteFetcher spriteFetcher)
+		void Start()
 		{
-			_spriteFetcher = spriteFetcher;
 			Hide();
 		}
 
