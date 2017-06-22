@@ -7,13 +7,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 	{
 		private LoadoutItem<TItem> _itemToCompare;
 
-		public ReadyToCompareState(ItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> itemToCompare)
+		public ReadyToCompareState(IItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> itemToCompare)
 			: base(itemDetailsManager)
 		{
 			_itemToCompare = itemToCompare;
 		}
 
-		public override IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
+		public override IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem)
 		{
 			_itemToCompare.ShowSelectedFeedback = false;
 			_itemDetailsManager.CompareItemDetails(_itemToCompare.Item, selectedItem.Item);

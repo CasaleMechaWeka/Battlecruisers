@@ -7,13 +7,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 	{
 		private LoadoutItem<TItem> _selectedItem;
 
-		public SelectedState(ItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> selectedItem)
+		public SelectedState(IItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> selectedItem)
 			: base(itemDetailsManager)
 		{
 			_selectedItem = selectedItem;
 		}
 
-		public override IItemDetailsState<TItem> CompareSelectedBuildable()
+		public override IItemDetailsState<TItem> CompareSelectedItem()
 		{
 			_itemDetailsManager.HideItemDetails();
 			_selectedItem.ShowSelectedFeedback = true;	

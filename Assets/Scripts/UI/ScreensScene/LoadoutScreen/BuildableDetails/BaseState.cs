@@ -19,12 +19,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 			_itemDetailsManager = itemDetailsManager;
 		}
 
-		public virtual IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
+		public virtual IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem)
 		{
 			throw new InvalidProgramException();
 		}
 
-		public virtual IItemDetailsState<TItem> CompareSelectedBuildable()
+		public virtual IItemDetailsState<TItem> CompareSelectedItem()
 		{
 			throw new InvalidProgramException();
 		}

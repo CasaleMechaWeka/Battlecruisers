@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
@@ -9,7 +10,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -19,7 +20,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Buildable : Target, IBuildable
+	public abstract class Buildable : Target, IBuildable, IComparableItem
 	{
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;

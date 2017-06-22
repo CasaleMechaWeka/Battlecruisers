@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Cruisers;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails;
+using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 {
+	// FELIX  Avoid duplicate code with ItemsRow?
 	public class HullsRow
 	{
 		private readonly IGameModel _gameModel;
@@ -16,7 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 		private readonly UnlockedHullsRow _unlockedHullsRow;
 		private readonly IDictionary<Cruiser, HullKey> _hullToKey;
 
-		public HullsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, UnlockedHullsRow unlockedHullsRow)
+		public HullsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, 
+			UnlockedHullsRow unlockedHullsRow, CruiserDetailsManager cruiserDetailsManager)
 		{
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;
@@ -26,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 			_hullToKey = new Dictionary<Cruiser, HullKey>();
 
 			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
-			_loadoutHull.Sprite = loadoutCruiser.Sprite;
+			_loadoutHull.Initialise(loadoutCruiser, cruiserDetailsManager);
 			_unlockedHullsRow.Initialise(this, uiFactory, GetUnlockedHullPrefabs(), loadoutCruiser);
 		}
 
@@ -50,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Hulls
 			_gameModel.PlayerLoadout.Hull = _hullToKey[hull];
 
 			// Update UI
-			_loadoutHull.Sprite = hull.Sprite;
+			_loadoutHull.UpdateHull(hull);
 			_unlockedHullsRow.UpdateSelectedHull(hull);
 		}
 	}

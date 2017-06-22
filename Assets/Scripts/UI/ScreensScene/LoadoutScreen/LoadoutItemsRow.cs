@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public class LoadoutItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
-		private IDictionary<Building, BuildableLoadoutItem> _buildingToLoadoutItem;
+		private IDictionary<Building, LoadoutBuildableItem> _buildingToLoadoutItem;
 
 		private const int MAX_NUM_OF_ITEMS = 3;
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			Assert.IsNotNull(buildings);
 
 			_uiFactory = uiFactory;
-			_buildingToLoadoutItem = new Dictionary<Building, BuildableLoadoutItem>();
+			_buildingToLoadoutItem = new Dictionary<Building, LoadoutBuildableItem>();
 
 			foreach (Building building in buildings)
 			{
@@ -53,14 +53,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private void CreateLoadoutItem(Building buildingToAdd)
 		{
 			Assert.IsFalse(_buildingToLoadoutItem.ContainsKey(buildingToAdd));
-			BuildableLoadoutItem item = _uiFactory.CreateLoadoutItem(layoutGroup, buildingToAdd);
+			LoadoutBuildableItem item = _uiFactory.CreateLoadoutItem(layoutGroup, buildingToAdd);
 			_buildingToLoadoutItem.Add(buildingToAdd, item);
 		}
 		
 		private void RemoveLoadoutItem(Building buildingToRemove)
 		{
 			Assert.IsTrue(_buildingToLoadoutItem.ContainsKey(buildingToRemove));
-			BuildableLoadoutItem item = _buildingToLoadoutItem[buildingToRemove];
+			LoadoutBuildableItem item = _buildingToLoadoutItem[buildingToRemove];
 			_buildingToLoadoutItem.Remove(buildingToRemove);
 			Destroy(item.gameObject);
 		}

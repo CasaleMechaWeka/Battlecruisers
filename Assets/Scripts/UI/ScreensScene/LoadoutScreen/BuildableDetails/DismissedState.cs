@@ -5,13 +5,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.BuildableDetails
 {
 	public class DismissedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		public DismissedState(ItemDetailsManager<TItem> itemsDetailsManager)
+		public DismissedState(IItemDetailsManager<TItem> itemsDetailsManager)
 			: base(itemsDetailsManager) { }
 
-		public override IItemDetailsState<TItem> SelectBuildable(LoadoutItem<TItem> selectedItem)
+		public override IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem)
 		{
 			_itemDetailsManager.ShowItemDetails(selectedItem.Item);
-			return new SelectedState(_itemDetailsManager, selectedItem);
+			return new SelectedState<TItem>(_itemDetailsManager, selectedItem);
 		}
 
 		public override IItemDetailsState<TItem> Dismiss()

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -9,7 +10,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -21,7 +22,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-	public class Cruiser : Target, ICruiser, IPointerClickHandler
+	public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
 	{
 		private HealthBarController _healthBarController;
 		private UIManager _uiManager;
