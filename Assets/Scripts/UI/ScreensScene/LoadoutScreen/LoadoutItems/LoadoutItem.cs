@@ -10,7 +10,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
-	public abstract class LoadoutItem<TItem> : MonoBehaviour where TItem : IComparableItem
+	public abstract class LoadoutItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
 	{
 		protected IItemDetailsManager<TItem> _itemDetailsManager;
 

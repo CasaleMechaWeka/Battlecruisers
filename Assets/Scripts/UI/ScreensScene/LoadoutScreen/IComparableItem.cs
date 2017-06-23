@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public interface IComparableItem
 	{
