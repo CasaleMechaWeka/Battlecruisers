@@ -34,7 +34,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		// FELIX  Avoid duplicate code?
 		public LoadoutBuildableItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
 		{
 			LoadoutBuildableItem loadoutItem = Instantiate<LoadoutBuildableItem>(loadoutBuildableItemPrefab);
