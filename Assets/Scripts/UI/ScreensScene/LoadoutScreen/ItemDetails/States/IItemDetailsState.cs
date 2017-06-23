@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
 	public interface IItemDetailsState<TItem> where TItem : IComparableItem
 	{
-		IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem);
+		IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem);
 		IItemDetailsState<TItem> CompareSelectedItem();
 		IItemDetailsState<TItem> Dismiss();
 	}

@@ -26,14 +26,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 		{
 			if (IsItemInLoadout)
 			{
-				_itemsRow.RemoveBuildingFromLoadout(_item);
+				_itemsRow.RemoveBuildingFromLoadout(Item);
 				IsItemInLoadout = !IsItemInLoadout;
 			}
 			else
 			{
 				if (_itemsRow.CanAddBuilding())
 				{
-					_itemsRow.AddBuildingToLoadout(_item);
+					_itemsRow.AddBuildingToLoadout(Item);
 					IsItemInLoadout = !IsItemInLoadout;
 				}
 				else

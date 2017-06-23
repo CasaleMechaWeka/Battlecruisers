@@ -1,14 +1,13 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
 	public class SelectedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		private LoadoutItem<TItem> _selectedItem;
+		private IItem<TItem> _selectedItem;
 
-		public SelectedState(IItemDetailsManager<TItem> itemDetailsManager, LoadoutItem<TItem> selectedItem)
+		public SelectedState(IItemDetailsManager<TItem> itemDetailsManager, IItem<TItem> selectedItem)
 			: base(itemDetailsManager)
 		{
 			_selectedItem = selectedItem;

@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 	{
 		// FELIX  Item background colour!
 
-		void HandleSelection(TItem item);
+		void HandleSelection(IItem<TItem> item);
 	}
 
 	// FELIX  Make generic class for Buildables/Hulls?
@@ -27,9 +27,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 			_hullItemsRow = hullItemsRow;
 		}
 
-		public void HandleSelection(Cruiser hull)
+		public void HandleSelection(IItem<Cruiser> hullItem)
 		{
-			_hullItemsRow.SelectHull(hull);
+			_hullItemsRow.SelectHull(hullItem.Item);
 		}
 	}
 

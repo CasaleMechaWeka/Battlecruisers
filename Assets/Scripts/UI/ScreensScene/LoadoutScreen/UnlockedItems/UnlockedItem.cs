@@ -10,13 +10,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	public abstract class UnlockedItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
 	{
-		protected TItem _item;
 		private RectTransform _rectTransform;
 
 		public Image itemImage;
 		public Image isInLoadoutFeedback;
+		public Image selectedFeedbackImage;
 
 		public Vector2 Size { get { return _rectTransform.sizeDelta; } }
+		public TItem Item { get; protected set; }
+
+		public bool ShowSelectedFeedback
+		{
+			set { selectedFeedbackImage.gameObject.SetActive(value); }
+		}
 
 		private bool _isItemInLoadout;
 		protected bool IsItemInLoadout
@@ -31,11 +37,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		protected void Initialise(TItem item, bool isInLoadout)
 		{
-			Assert.IsNotNull(item);
 			Assert.IsNotNull(itemImage);
 			Assert.IsNotNull(isInLoadoutFeedback);
 
-			_item = item;
+			Item = item;
 			IsItemInLoadout = isInLoadout;
 
 			_rectTransform = transform as RectTransform;

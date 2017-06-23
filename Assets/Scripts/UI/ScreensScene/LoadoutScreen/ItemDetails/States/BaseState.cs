@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
@@ -13,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 			_itemDetailsManager = itemDetailsManager;
 		}
 
-		public virtual IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem)
+		public virtual IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem)
 		{
 			throw new InvalidProgramException();
 		}

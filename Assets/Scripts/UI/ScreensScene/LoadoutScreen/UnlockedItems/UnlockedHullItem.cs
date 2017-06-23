@@ -17,20 +17,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			base.Initialise(cruiser, isInLoadout);
 
 			_hullsRow = hullsRow;
-			itemImage.sprite = _item.Sprite;
+			itemImage.sprite = Item.Sprite;
 		}
 
 		public void SelectHull()
 		{
 			if (!IsItemInLoadout)
 			{
-				_hullsRow.SelectHull(_item);
+				_hullsRow.SelectHull(Item);
 			}
 		}
 
 		public void OnNewHullSelected(Cruiser selectedCruiser)
 		{
-			IsItemInLoadout = object.ReferenceEquals(selectedCruiser, _item);
+			IsItemInLoadout = object.ReferenceEquals(selectedCruiser, Item);
 		}
 	}
 }

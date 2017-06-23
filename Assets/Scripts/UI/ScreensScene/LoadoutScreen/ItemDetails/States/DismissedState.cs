@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
@@ -9,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		public DismissedState(IItemDetailsManager<TItem> itemsDetailsManager)
 			: base(itemsDetailsManager) { }
 
-		public override IItemDetailsState<TItem> SelectItem(LoadoutItem<TItem> selectedItem)
+		public override IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem)
 		{
 			_itemDetailsManager.ShowItemDetails(selectedItem.Item);
 			return new SelectedState<TItem>(_itemDetailsManager, selectedItem);

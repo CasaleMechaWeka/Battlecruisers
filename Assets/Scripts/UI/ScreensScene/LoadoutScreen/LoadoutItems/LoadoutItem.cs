@@ -23,7 +23,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			get { return _item; }
 			protected set
 			{
-				Assert.IsFalse(value.Equals(default(TItem)));
 				_item = value;
 				itemImage.sprite = _item.Sprite;
 			}
