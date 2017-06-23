@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	// FELIX  Avoid duplicate code with BuildableItemsRow?
 	public class HullItemsRow
 	{
 		private readonly IGameModel _gameModel;
