@@ -7,6 +7,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +55,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		{
 			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-			unlockedHull.Initialise(hullsRow, cruiser, isInLoadout);
+			IUnlockedItemState<Cruiser> initialState = new DefaultCruiserState(hullsRow);
+			unlockedHull.Initialise(initialState, cruiser, isInLoadout);
 			return unlockedHull;
 		}
 	}

@@ -13,10 +13,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
 	public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
 	{
-		private IItemDetailsState<TItem> _state;
 		private IComparableItemDetails<TItem> _singleItemDetails, _leftComparableItemDetails, _rightComparableItemDetails;
 
 		public Image modalBackground;
+
+		public event EventHandler<StateChangedEventArgs<TItem>> StateChanged;
+		private IItemDetailsState<TItem> _state;
+		
+		private IItemDetailsState<TItem> State
+		{
+			get { return _state; }
+			set
+			{
+				_state = value;
+				if (StateChanged != null)
+				{
+					StateChanged.Invoke(this, new StateChangedEventArgs<TItem>(_state));
+				}
+			}
+		}
 
 		protected void Initialise(
 			IComparableItemDetails<TItem> singleItemDetails,
@@ -27,19 +42,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 			_leftComparableItemDetails = leftComparableItemDetails;
 			_rightComparableItemDetails = rightComparableItemDetails;
 
-			_state = new DismissedState<TItem>(this);
+			State = new DismissedState<TItem>(this);
 			
 			HideItemDetails();
 		}
 
 		public void SelectItem(IItem<TItem> item)
 		{
-			_state = _state.SelectItem(item);
+			State = State.SelectItem(item);
 		}
 
 		public void CompareSelectedItem()
 		{
-			_state = _state.CompareSelectedItem();
+			State = State.CompareSelectedItem();
 		}
 
 		public void ShowItemDetails(TItem item)
@@ -65,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 
 		void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
 		{
-			_state = _state.Dismiss();
+			State = State.Dismiss();
 		}
 	}
 }
