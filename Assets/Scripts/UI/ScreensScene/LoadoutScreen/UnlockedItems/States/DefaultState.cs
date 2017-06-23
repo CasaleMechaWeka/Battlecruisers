@@ -10,18 +10,19 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 {
 	// FELIX   Move to own class
-	public interface IUnlockedItemState
+	public interface IUnlockedItemState<TItem> where TItem : IComparableItem
 	{
 		// FELIX  Item background colour!
 
-		void HandleSelection();
+		void HandleSelection(TItem item);
 	}
 
-	public class DefaultState : IUnlockedItemState
+	// FELIX  Make generic class for Buildables/Hulls?
+	public class DefaultCruiserState : IUnlockedItemState<Cruiser>
 	{
 		private readonly HullItemsRow _hullItemsRow;
 
-		public DefaultState(HullItemsRow hullItemsRow)
+		public DefaultCruiserState(HullItemsRow hullItemsRow)
 		{
 			_hullItemsRow = hullItemsRow;
 		}
@@ -33,18 +34,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 	}
 
 	// FELIX   Move to own class
-	public class ComparisonState
+	public class ComparisonState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
 	{
-		private readonly CruiserDetailsManager _cruiserDetailsManager;
+		private readonly IItemDetailsManager<TItem> _itemDetailsManager;
 
-		public ComparisonState(CruiserDetailsManager cruiserDetailsManager)
+		public ComparisonState(IItemDetailsManager<TItem> cruiserDetailsManager)
 		{
-			_cruiserDetailsManager = cruiserDetailsManager;
+			_itemDetailsManager = cruiserDetailsManager;
 		}
 
-		public void HandleSelection(Cruiser hull)
+		public void HandleSelection(IItem<TItem> item)
 		{
-//			_cruiserDetailsManager.SelectItem(
+			_itemDetailsManager.SelectItem(item);
 		}
 	}
 }

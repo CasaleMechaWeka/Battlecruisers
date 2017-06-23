@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			base.Initialise(uiFactory, unlockedBuildings);
 		}
 
-		protected override UnlockedItem CreateUnlockedItem(Building item, HorizontalOrVerticalLayoutGroup itemParent)
+		protected override UnlockedItem<Building> CreateUnlockedItem(Building item, HorizontalOrVerticalLayoutGroup itemParent)
 		{
 			bool isBuildingInLoadout = _loadoutBuildings.Contains(item);
 			return _uiFactory.CreateUnlockedItem(layoutGroup, _itemsRow, item, isBuildingInLoadout);

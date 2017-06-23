@@ -9,7 +9,7 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : ITarget
+	public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 			foreach (TItem unlockedItem in unlockedItems)
 			{
-				UnlockedItem item = CreateUnlockedItem(unlockedItem, layoutGroup);
+				UnlockedItem<TItem> item = CreateUnlockedItem(unlockedItem, layoutGroup);
 				totalWidth += item.Size.x;
 			}
 
@@ -39,6 +39,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);
 		}
 
-		protected abstract UnlockedItem CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
+		protected abstract UnlockedItem<TItem> CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
 	}
 }

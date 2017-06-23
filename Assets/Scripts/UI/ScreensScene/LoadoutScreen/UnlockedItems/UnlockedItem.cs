@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public abstract class UnlockedItem : MonoBehaviour 
+	public abstract class UnlockedItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
 	{
+		protected TItem _item;
 		private RectTransform _rectTransform;
 
 		public Image itemImage;
@@ -28,11 +29,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			}
 		}
 
-		protected void Initialise(bool isInLoadout)
+		protected void Initialise(TItem item, bool isInLoadout)
 		{
+			Assert.IsNotNull(item);
 			Assert.IsNotNull(itemImage);
 			Assert.IsNotNull(isInLoadoutFeedback);
 
+			_item = item;
 			IsItemInLoadout = isInLoadout;
 
 			_rectTransform = transform as RectTransform;

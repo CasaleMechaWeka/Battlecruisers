@@ -4,36 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public class UnlockedBuildableItem : UnlockedItem
+	// FELIX  Avoid duplicate code with UnlockedHulLitem
+	public class UnlockedBuildableItem : UnlockedItem<Building>
 	{
 		private BuildableItemsRow _itemsRow;
-		private Building _building;
 
 		public void Initialise(BuildableItemsRow itemsRow, Building building, bool isBuildingInLoadout)
 		{
-			base.Initialise(isBuildingInLoadout);
+			base.Initialise(building, isBuildingInLoadout);
 
 			_itemsRow = itemsRow;
-			_building = building;
-
 			itemImage.sprite = building.Sprite;
 		}
 
+		// FELIX  Do not updat IsInItemLoadout here, instead have update method and follow UnlockedHullItem class
 		public void ToggleItem()
 		{
 			if (IsItemInLoadout)
 			{
-				_itemsRow.RemoveBuildingFromLoadout(_building);
+				_itemsRow.RemoveBuildingFromLoadout(_item);
 				IsItemInLoadout = !IsItemInLoadout;
 			}
 			else
 			{
 				if (_itemsRow.CanAddBuilding())
 				{
-					_itemsRow.AddBuildingToLoadout(_building);
+					_itemsRow.AddBuildingToLoadout(_item);
 					IsItemInLoadout = !IsItemInLoadout;
 				}
 				else

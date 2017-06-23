@@ -8,32 +8,29 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public class UnlockedHullItem : UnlockedItem 
+	public class UnlockedHullItem : UnlockedItem<Cruiser>
 	{
 		private HullItemsRow _hullsRow;
-		private Cruiser _cruiser;
 
 		public void Initialise(HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout)
 		{
-			base.Initialise(isInLoadout);
+			base.Initialise(cruiser, isInLoadout);
 
 			_hullsRow = hullsRow;
-			_cruiser = cruiser;
-
-			itemImage.sprite = _cruiser.Sprite;
+			itemImage.sprite = _item.Sprite;
 		}
 
 		public void SelectHull()
 		{
 			if (!IsItemInLoadout)
 			{
-				_hullsRow.SelectHull(_cruiser);
+				_hullsRow.SelectHull(_item);
 			}
 		}
 
 		public void OnNewHullSelected(Cruiser selectedCruiser)
 		{
-			IsItemInLoadout = object.ReferenceEquals(selectedCruiser, _cruiser);
+			IsItemInLoadout = object.ReferenceEquals(selectedCruiser, _item);
 		}
 	}
 }

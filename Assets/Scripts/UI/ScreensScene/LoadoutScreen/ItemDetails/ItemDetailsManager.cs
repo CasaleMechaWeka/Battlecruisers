@@ -11,15 +11,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-	public interface IItemDetailsManager<TItem> where TItem : IComparableItem
-	{
-		void SelectItem(LoadoutItem<TItem> item);
-		void ShowItemDetails(TItem item);
-		void CompareSelectedItem();
-		void CompareItemDetails(TItem item1, TItem item2);
-		void HideItemDetails();
-	}
-
 	public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
 	{
 		private IItemDetailsState<TItem> _state;
@@ -41,9 +32,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 			HideItemDetails();
 		}
 
-		public void SelectItem(LoadoutItem<TItem> loadoutItem)
+		public void SelectItem(IItem<TItem> item)
 		{
-			_state = _state.SelectItem(loadoutItem);
+			_state = _state.SelectItem(item);
 		}
 
 		public void CompareSelectedItem()

@@ -10,7 +10,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
