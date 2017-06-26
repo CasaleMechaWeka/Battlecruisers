@@ -9,11 +9,6 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public interface IItemsRow<TItem> where TItem : IComparableItem
-	{
-		void SelectUnlockedItem(UnlockedItem<TItem> item);
-	}
-
 	public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : IComparableItem
 	{
 		protected readonly IGameModel _gameModel;
