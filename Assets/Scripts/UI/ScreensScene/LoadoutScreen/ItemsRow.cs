@@ -20,6 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_prefabFactory = prefabFactory;
 		}
 
-		public abstract void SelectUnlockedItem(UnlockedItem<TItem> item);
+		public abstract bool SelectUnlockedItem(UnlockedItem<TItem> item);
 	}
 }

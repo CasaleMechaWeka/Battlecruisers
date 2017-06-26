@@ -60,8 +60,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public override void SelectUnlockedItem(UnlockedItem<Building> buildableItem)
+		public override bool SelectUnlockedItem(UnlockedItem<Building> buildableItem)
 		{
+			bool isItemInLoadout = false;
+
 			if (buildableItem.IsItemInLoadout)
 			{
 				RemoveBuildingFromLoadout(buildableItem.Item);
@@ -69,6 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			else if (CanAddBuilding())
 			{
 				AddBuildingToLoadout(buildableItem.Item);
+				isItemInLoadout = true;
 			}
 			else
 			{
@@ -76,6 +79,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 				// => Create Unaddable UnlockedItem state :)
 				throw new NotImplementedException();
 			}
+
+			return isItemInLoadout;
 		}
 
 		private bool CanAddBuilding()

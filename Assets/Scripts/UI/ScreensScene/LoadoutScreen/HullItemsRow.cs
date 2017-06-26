@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public override void SelectUnlockedItem(UnlockedItem<Cruiser> hullItem)
+		public override bool SelectUnlockedItem(UnlockedItem<Cruiser> hullItem)
 		{
 			Cruiser hull = hullItem.Item;
 			_gameModel.PlayerLoadout.Hull = _hullToKey[hull];
@@ -54,6 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			// Update UI
 			_loadoutHull.UpdateHull(hull);
 			_unlockedHullsRow.UpdateSelectedHull(hull);
+
+			return true;
 		}
 	}
 }
