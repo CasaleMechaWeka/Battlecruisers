@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		public Vector2 Size { get { return _rectTransform.sizeDelta; } }
 		public TItem Item { get; protected set; }
+		public IUnlockedItemState<TItem> State { private get; set; }
 
 		public bool ShowSelectedFeedback
 		{
@@ -35,16 +37,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			}
 		}
 
-		protected void Initialise(TItem item, bool isInLoadout)
+		public void Initialise(IUnlockedItemState<TItem> initialState, TItem item, bool isInLoadout)
 		{
 			Assert.IsNotNull(itemImage);
 			Assert.IsNotNull(isInLoadoutFeedback);
 
+			State = initialState;
 			Item = item;
 			IsItemInLoadout = isInLoadout;
 
+			itemImage.sprite = item.Sprite;
+
 			_rectTransform = transform as RectTransform;
 			Assert.IsNotNull(_rectTransform);
+		}
+
+		public void SelectItem()
+		{
+			State.HandleSelection(this);
 		}
 	}
 }
