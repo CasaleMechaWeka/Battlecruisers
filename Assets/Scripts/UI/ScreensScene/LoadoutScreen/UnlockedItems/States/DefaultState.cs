@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 
 		public void HandleSelection(UnlockedItem<TItem> unlockedItem)
 		{
-			_itemsRow.SelectUnlockedItem(unlockedItem);
+			unlockedItem.IsItemInLoadout = _itemsRow.SelectUnlockedItem(unlockedItem);
 		}
 	}
 }
