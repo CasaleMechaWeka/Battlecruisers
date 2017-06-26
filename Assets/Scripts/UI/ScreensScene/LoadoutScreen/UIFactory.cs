@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		{
 			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-			IUnlockedItemState<Cruiser> initialState = new DefaultCruiserState(hullsRow);
+			IUnlockedItemState<Cruiser> initialState = new DefaultState<Cruiser>(hullsRow);
 			unlockedHull.Initialise(initialState, cruiser, isInLoadout);
 			return unlockedHull;
 		}

@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			{
 				if (e.NewState.GetType() == typeof(DismissedState<Cruiser>))
 				{
-					unlockedHullButton.State = new DefaultCruiserState(_hullsRow);
+					unlockedHullButton.State = new DefaultState<Cruiser>(_hullsRow);
 				}
 				else if (e.NewState.GetType() == typeof(ReadyToCompareState<Cruiser>))
 				{

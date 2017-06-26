@@ -18,18 +18,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 	}
 
 	// FELIX  Make generic class for Buildables/Hulls?
-	public class DefaultCruiserState : IUnlockedItemState<Cruiser>
+	public class DefaultState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
 	{
-		private readonly HullItemsRow _hullItemsRow;
+		private readonly IItemsRow<TItem> _itemsRow;
 
-		public DefaultCruiserState(HullItemsRow hullItemsRow)
+		public DefaultState(IItemsRow<TItem> itemsRow)
 		{
-			_hullItemsRow = hullItemsRow;
+			_itemsRow = itemsRow;
 		}
 
-		public void HandleSelection(UnlockedItem<Cruiser> hullItem)
+		public void HandleSelection(UnlockedItem<TItem> unlockedItem)
 		{
-			_hullItemsRow.SelectUnlockedItem(hullItem);
+			_itemsRow.SelectUnlockedItem(unlockedItem);
 		}
 	}
 

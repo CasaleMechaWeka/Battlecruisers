@@ -24,6 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 		public void SelectBuildable()
 		{
 			_itemsRow.SelectUnlockedItem(this);
+
+			// FELIX  Bug prone, in case SelectUnlockedItem(...) above does not toggle whether buildable is in loadout ;(
 			IsItemInLoadout = !IsItemInLoadout;
 		}
 	}
