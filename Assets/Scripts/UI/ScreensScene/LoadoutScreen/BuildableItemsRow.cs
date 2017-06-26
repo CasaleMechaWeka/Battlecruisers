@@ -63,18 +63,36 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public bool CanAddBuilding()
+		public void SelectBuildable(UnlockedBuildableItem buildableItem)
+		{
+			if (buildableItem.IsItemInLoadout)
+			{
+				RemoveBuildingFromLoadout(buildableItem.Item);
+			}
+			else if (CanAddBuilding())
+			{
+				AddBuildingToLoadout(buildableItem.Item);
+			}
+			else
+			{
+				// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
+				throw new NotImplementedException();
+			}
+		}
+
+		// FELIX  Don't expose these methods
+		private bool CanAddBuilding()
 		{
 			return _loadoutRow.CanAddBuilding();
 		}
 
-		public void AddBuildingToLoadout(Building building)
+		private void AddBuildingToLoadout(Building building)
 		{
 			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);
 			_loadoutRow.AddBuilding(building);
 		}
 
-		public void RemoveBuildingFromLoadout(Building building)
+		private void RemoveBuildingFromLoadout(Building building)
 		{
 			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
 			_loadoutRow.RemoveBuilding(building);

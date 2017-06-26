@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 		}
 
 		private bool _isItemInLoadout;
-		protected bool IsItemInLoadout
+		public bool IsItemInLoadout
 		{
 			get { return _isItemInLoadout; }
 			set

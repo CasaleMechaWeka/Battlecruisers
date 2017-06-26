@@ -21,26 +21,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			itemImage.sprite = building.Sprite;
 		}
 
-		// FELIX  Do not updat IsInItemLoadout here, instead have update method and follow UnlockedHullItem class
-		public void ToggleItem()
+		public void SelectBuildable()
 		{
-			if (IsItemInLoadout)
-			{
-				_itemsRow.RemoveBuildingFromLoadout(Item);
-				IsItemInLoadout = !IsItemInLoadout;
-			}
-			else
-			{
-				if (_itemsRow.CanAddBuilding())
-				{
-					_itemsRow.AddBuildingToLoadout(Item);
-					IsItemInLoadout = !IsItemInLoadout;
-				}
-				else
-				{
-					// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
-				}
-			}
+			_itemsRow.SelectBuildable(this);
+			IsItemInLoadout = !IsItemInLoadout;
 		}
 	}
 }
