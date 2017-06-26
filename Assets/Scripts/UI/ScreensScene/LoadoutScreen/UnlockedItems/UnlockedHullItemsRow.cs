@@ -36,16 +36,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Cruiser> e)
 		{
-			// FELIX  Move to ItemDetails.States to avoid if/else if
 			foreach (UnlockedHullItem unlockedHullButton in _unlockedHullButtons)
 			{
-				if (e.NewState.GetType() == typeof(DismissedState<Cruiser>))
-				{
-					unlockedHullButton.State = new DefaultState<Cruiser>(_hullsRow);
-				}
-				else if (e.NewState.GetType() == typeof(ReadyToCompareState<Cruiser>))
+				if (e.NewState.IsInReadyToCompareState)
 				{
 					unlockedHullButton.State = new ComparisonState<Cruiser>(_detailsManager);
+				}
+				else
+				{
+					unlockedHullButton.State = new DefaultState<Cruiser>(_hullsRow);
 				}
 			}
 		}
