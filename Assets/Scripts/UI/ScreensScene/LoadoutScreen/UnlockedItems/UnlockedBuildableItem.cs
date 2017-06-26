@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		public void SelectBuildable()
 		{
-			_itemsRow.SelectBuildable(this);
+			_itemsRow.SelectUnlockedItem(this);
 			IsItemInLoadout = !IsItemInLoadout;
 		}
 	}

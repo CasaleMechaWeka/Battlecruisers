@@ -9,10 +9,8 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class BuildableItemsRow
+	public class BuildableItemsRow : ItemsRow<Building>
 	{
-		private readonly IGameModel _gameModel;
-		private readonly IPrefabFactory _prefabFactory;
 		private readonly BuildingCategory _buildingCategory;
 		private readonly LoadoutBuildableItemsRow _loadoutRow;
 		private readonly UnlockedBuildableItemsRow _unlockedRow;
@@ -20,9 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public BuildableItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, 
 			BuildingCategory buildingCategory, LoadoutBuildableItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow)
+			: base(gameModel, prefabFactory)
 		{
-			_gameModel = gameModel;
-			_prefabFactory = prefabFactory;
 			_buildingCategory = buildingCategory;
 			_loadoutRow = loadoutRow;
 			_unlockedRow = unlockedRow;
@@ -63,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public void SelectBuildable(UnlockedBuildableItem buildableItem)
+		public override void SelectUnlockedItem(UnlockedItem<Building> buildableItem)
 		{
 			if (buildableItem.IsItemInLoadout)
 			{
@@ -76,11 +73,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			else
 			{
 				// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
+				// => Create Unaddable UnlockedItem state :)
 				throw new NotImplementedException();
 			}
 		}
 
-		// FELIX  Don't expose these methods
 		private bool CanAddBuilding()
 		{
 			return _loadoutRow.CanAddBuilding();

@@ -11,19 +11,16 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class HullItemsRow
+	public class HullItemsRow : ItemsRow<Cruiser>
 	{
-		private readonly IGameModel _gameModel;
-		private readonly IPrefabFactory _prefabFactory;
 		private readonly LoadoutHullItem _loadoutHull;
 		private readonly UnlockedHullItemsRow _unlockedHullsRow;
 		private readonly IDictionary<Cruiser, HullKey> _hullToKey;
 
 		public HullItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, 
 			UnlockedHullItemsRow unlockedHullsRow, CruiserDetailsManager cruiserDetailsManager)
+			: base(gameModel, prefabFactory)
 		{
-			_gameModel = gameModel;
-			_prefabFactory = prefabFactory;
 			_loadoutHull = loadoutHull;
 			_unlockedHullsRow = unlockedHullsRow;
 
@@ -49,10 +46,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public void SelectHull(Cruiser hull)
+		public override void SelectUnlockedItem(UnlockedItem<Cruiser> hullItem)
 		{
+			Cruiser hull = hullItem.Item;
 			_gameModel.PlayerLoadout.Hull = _hullToKey[hull];
-
+			
 			// Update UI
 			_loadoutHull.UpdateHull(hull);
 			_unlockedHullsRow.UpdateSelectedHull(hull);
