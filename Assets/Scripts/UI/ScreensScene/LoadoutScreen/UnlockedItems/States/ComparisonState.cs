@@ -13,9 +13,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 	{
 		private readonly IItemDetailsManager<TItem> _itemDetailsManager;
 
-		public ComparisonState(IItemDetailsManager<TItem> cruiserDetailsManager)
+		public ComparisonState(IItemDetailsManager<TItem> itemDetailsManager)
 		{
-			_itemDetailsManager = cruiserDetailsManager;
+			_itemDetailsManager = itemDetailsManager;
 		}
 
 		public void HandleSelection(UnlockedItem<TItem> item)
