@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
+	// FELIX  Avoid duplciate code with sister class
 	public class UnlockedHullItemsRow : UnlockedItemsRow<Cruiser>
 	{
 		private HullItemsRow _hullsRow;

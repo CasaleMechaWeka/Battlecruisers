@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using BattleCruisers.Data;
@@ -16,8 +17,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private readonly UnlockedBuildableItemsRow _unlockedRow;
 		private readonly IDictionary<Building, BuildingKey> _buildingToKey;
 
-		public BuildableItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, 
-			BuildingCategory buildingCategory, LoadoutBuildableItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow)
+		public BuildableItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, BuildingCategory buildingCategory, 
+			LoadoutBuildableItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow, BuildableDetailsManager detailsManager)
 			: base(gameModel, prefabFactory)
 		{
 			_buildingCategory = buildingCategory;
@@ -29,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			IList<Building> loadoutBuildings = GetLoadoutBuildingPrefabs(_buildingCategory);
 			_loadoutRow.Initialise(uiFactory, loadoutBuildings);
 			IList<Building> unlockedBuildings = GetUnlockedBuildingPrefabs(_buildingCategory);
-			_unlockedRow.Initialise(this, uiFactory, unlockedBuildings, loadoutBuildings);
+			_unlockedRow.Initialise(this, uiFactory, unlockedBuildings, loadoutBuildings, detailsManager);
 		}
 
 		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
