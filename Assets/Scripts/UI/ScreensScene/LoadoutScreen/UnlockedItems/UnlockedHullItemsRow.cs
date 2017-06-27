@@ -12,55 +12,29 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	// FELIX  Avoid duplciate code with sister class
 	public class UnlockedHullItemsRow : UnlockedItemsRow<Cruiser>
 	{
-		private HullItemsRow _hullsRow;
 		private Cruiser _loadoutCruiser;
-		private CruiserDetailsManager _detailsManager;
-		private IList<UnlockedHullItem> _unlockedHullButtons;
 
 		public void Initialise(HullItemsRow hullsRow, IUIFactory uiFactory, IList<Cruiser> unlockedCruisers, 
 			Cruiser loadoutCruiser, CruiserDetailsManager detailsManager)
 		{
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
-			_hullsRow = hullsRow;
 			_loadoutCruiser = loadoutCruiser;
-			_detailsManager = detailsManager;
-			_unlockedHullButtons = new List<UnlockedHullItem>();
 
-			_detailsManager.StateChanged += _detailsManager_StateChanged;
-
-			base.Initialise(uiFactory, unlockedCruisers);
-		}
-
-		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Cruiser> e)
-		{
-			foreach (UnlockedHullItem unlockedHullButton in _unlockedHullButtons)
-			{
-				if (e.NewState.IsInReadyToCompareState)
-				{
-					unlockedHullButton.State = new ComparisonState<Cruiser>(_detailsManager);
-				}
-				else
-				{
-					unlockedHullButton.State = new DefaultState<Cruiser>(_hullsRow);
-				}
-			}
+			base.Initialise(uiFactory, unlockedCruisers, hullsRow, detailsManager);
 		}
 
 		protected override UnlockedItem<Cruiser> CreateUnlockedItem(Cruiser item, HorizontalOrVerticalLayoutGroup itemParent)
 		{
 			bool isInLoadout = object.ReferenceEquals(_loadoutCruiser, item);
-			UnlockedHullItem unlockedHullItem = _uiFactory.CreateUnlockedHull(layoutGroup, _hullsRow, item, isInLoadout);
-			_unlockedHullButtons.Add(unlockedHullItem);
-			return unlockedHullItem;
+			return _uiFactory.CreateUnlockedHull(layoutGroup, _itemsRow, item, isInLoadout);
 		}
 
 		public void UpdateSelectedHull(Cruiser selectedCruiser)
 		{
-			foreach (UnlockedHullItem unlockedHullButton in _unlockedHullButtons)
+			foreach (UnlockedHullItem unlockedHullButton in _unlockedItemButtons)
 			{
 				unlockedHullButton.OnNewHullSelected(selectedCruiser);
 			}

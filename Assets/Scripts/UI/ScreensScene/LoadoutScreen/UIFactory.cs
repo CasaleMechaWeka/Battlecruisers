@@ -18,8 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public interface IUIFactory
 	{
 		LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
-		UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildingItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
-		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout);
+		UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<Building> itemsRow, Building itemBuilding, bool isBuildingInLoadout);
+		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<Cruiser> hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return loadoutItem;
 		}
 
-		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildingItemsRow itemsRow, Building itemBuilding, bool isInLoadout)
+		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<Building> itemsRow, Building itemBuilding, bool isInLoadout)
 		{
 			UnlockedBuildingItem unlockedBuilding = Instantiate<UnlockedBuildingItem>(unlockedBuildableItemPrefab);
 			unlockedBuilding.transform.SetParent(itemRow.transform, worldPositionStays: false);
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return unlockedBuilding;
 		}
 
-		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout)
+		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<Cruiser> hullsRow, Cruiser cruiser, bool isInLoadout)
 		{
 			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
