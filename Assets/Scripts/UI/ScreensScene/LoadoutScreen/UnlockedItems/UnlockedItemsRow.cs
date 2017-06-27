@@ -1,13 +1,13 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using BattleCruisers.Buildables;
-using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
@@ -32,8 +32,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
 
+			CreateUnockedItemButtons(unlockedItems);
+		}
 
-			// FELIX  Move to method
+		private void CreateUnockedItemButtons(IList<TItem> unlockedItems)
+		{
 			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
 			float totalWidth = 0;
 
