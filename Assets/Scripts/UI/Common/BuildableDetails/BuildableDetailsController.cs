@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class BuildableDetailsController : BaseBuildableDetails 
+	public class BuildableDetailsController : BaseBuildableDetails<Buildable>
 	{
 		private IDroneManager _droneManager;
 		private bool _allowDelete;

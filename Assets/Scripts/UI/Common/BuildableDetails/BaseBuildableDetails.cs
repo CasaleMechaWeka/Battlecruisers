@@ -15,10 +15,10 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public abstract class BaseBuildableDetails : MonoBehaviour, IComparableItemDetails<Buildable>
+	public abstract class BaseBuildableDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : Buildable
 	{
 		private ISpriteFetcher _spriteFetcher;
-		protected Buildable _buildable;
+		protected TItem _buildable;
 
 		public BuildableStatsController statsController;
 		public Text buildableName;
@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			Hide();
 		}
 
-		public void ShowItemDetails(Buildable buildable, Buildable buildableToCompareTo = null)
+		public void ShowItemDetails(TItem buildable, TItem buildableToCompareTo = null)
 		{
 			Assert.IsNotNull(buildable);
 
