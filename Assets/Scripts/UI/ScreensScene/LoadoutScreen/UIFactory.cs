@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public interface IUIFactory
 	{
 		LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
-		UnlockedBuildableItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildableItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
+		UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildingItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
 		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private BuildingDetailsManager _buildableDetailsManager;
 
 		public LoadoutBuildingItem loadoutBuildingItemPrefab;
-		public UnlockedBuildableItem unlockedBuildableItemPrefab;
+		public UnlockedBuildingItem unlockedBuildableItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
 
 		public void Initialise(BuildingDetailsManager buildableDetailsManager)
@@ -43,9 +43,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return loadoutItem;
 		}
 
-		public UnlockedBuildableItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildableItemsRow itemsRow, Building itemBuilding, bool isInLoadout)
+		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildingItemsRow itemsRow, Building itemBuilding, bool isInLoadout)
 		{
-			UnlockedBuildableItem unlockedBuilding = Instantiate<UnlockedBuildableItem>(unlockedBuildableItemPrefab);
+			UnlockedBuildingItem unlockedBuilding = Instantiate<UnlockedBuildingItem>(unlockedBuildableItemPrefab);
 			unlockedBuilding.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			IUnlockedItemState<Building> initialState = new DefaultState<Building>(itemsRow);
 			unlockedBuilding.Initialise(initialState, itemBuilding, isInLoadout);

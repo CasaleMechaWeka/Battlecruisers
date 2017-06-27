@@ -11,21 +11,21 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	// FELIX  Avoid duplciate code with sister class
-	public class UnlockedBuildableItemsRow : UnlockedItemsRow<Building>
+	public class UnlockedBuildingItemsRow : UnlockedItemsRow<Building>
 	{
-		private BuildableItemsRow _itemsRow;
+		private BuildingItemsRow _itemsRow;
 		private IList<Building> _loadoutBuildings;
 		private BuildingDetailsManager _detailsManager;
-		private IList<UnlockedBuildableItem> _unlockedBuildableButtons;
+		private IList<UnlockedBuildingItem> _unlockedBuildingButtons;
 
-		public void Initialise(BuildableItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, 
+		public void Initialise(BuildingItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, 
 			IList<Building> loadoutBuildings, BuildingDetailsManager detailsManager)
 		{
 			_itemsRow = itemsRow;
 			_uiFactory = uiFactory;
 			_loadoutBuildings = loadoutBuildings;
 			_detailsManager = detailsManager;
-			_unlockedBuildableButtons = new List<UnlockedBuildableItem>();
+			_unlockedBuildingButtons = new List<UnlockedBuildingItem>();
 
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
 
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Building> e)
 		{
-			foreach (UnlockedBuildableItem unlockedBuildableButton in _unlockedBuildableButtons)
+			foreach (UnlockedBuildingItem unlockedBuildableButton in _unlockedBuildingButtons)
 			{
 				if (e.NewState.IsInReadyToCompareState)
 				{
@@ -50,8 +50,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 		protected override UnlockedItem<Building> CreateUnlockedItem(Building item, HorizontalOrVerticalLayoutGroup itemParent)
 		{
 			bool isBuildingInLoadout = _loadoutBuildings.Contains(item);
-			UnlockedBuildableItem unlockedBuildableItem = _uiFactory.CreateUnlockedBuildableItem(layoutGroup, _itemsRow, item, isBuildingInLoadout);
-			_unlockedBuildableButtons.Add(unlockedBuildableItem);
+			UnlockedBuildingItem unlockedBuildableItem = _uiFactory.CreateUnlockedBuildableItem(layoutGroup, _itemsRow, item, isBuildingInLoadout);
+			_unlockedBuildingButtons.Add(unlockedBuildableItem);
 			return unlockedBuildableItem;
 		}
 	}

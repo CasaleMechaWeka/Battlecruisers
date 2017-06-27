@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class BuildableItemsRow : ItemsRow<Building>
+	public class BuildingItemsRow : ItemsRow<Building>
 	{
 		private readonly BuildingCategory _buildingCategory;
-		private readonly LoadoutBuildableItemsRow _loadoutRow;
-		private readonly UnlockedBuildableItemsRow _unlockedRow;
+		private readonly LoadoutBuildingItemsRow _loadoutRow;
+		private readonly UnlockedBuildingItemsRow _unlockedRow;
 		private readonly IDictionary<Building, BuildingKey> _buildingToKey;
 
-		public BuildableItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, BuildingCategory buildingCategory, 
-			LoadoutBuildableItemsRow loadoutRow, UnlockedBuildableItemsRow unlockedRow, BuildingDetailsManager detailsManager)
+		public BuildingItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, BuildingCategory buildingCategory, 
+			LoadoutBuildingItemsRow loadoutRow, UnlockedBuildingItemsRow unlockedRow, BuildingDetailsManager detailsManager)
 			: base(gameModel, prefabFactory)
 		{
 			_buildingCategory = buildingCategory;
