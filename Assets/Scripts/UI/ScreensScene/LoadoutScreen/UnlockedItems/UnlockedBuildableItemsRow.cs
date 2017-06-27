@@ -15,11 +15,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 	{
 		private BuildableItemsRow _itemsRow;
 		private IList<Building> _loadoutBuildings;
-		private BuildableDetailsManager _detailsManager;
+		private BuildingDetailsManager _detailsManager;
 		private IList<UnlockedBuildableItem> _unlockedBuildableButtons;
 
 		public void Initialise(BuildableItemsRow itemsRow, IUIFactory uiFactory, IList<Building> unlockedBuildings, 
-			IList<Building> loadoutBuildings, BuildableDetailsManager detailsManager)
+			IList<Building> loadoutBuildings, BuildingDetailsManager detailsManager)
 		{
 			_itemsRow = itemsRow;
 			_uiFactory = uiFactory;
@@ -32,17 +32,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			base.Initialise(uiFactory, unlockedBuildings);
 		}
 
-		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Buildable> e)
+		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Building> e)
 		{
 			foreach (UnlockedBuildableItem unlockedBuildableButton in _unlockedBuildableButtons)
 			{
 				if (e.NewState.IsInReadyToCompareState)
 				{
-					unlockedBuildableButton.State = new ComparisonState<Buildable>(_detailsManager);
+					unlockedBuildableButton.State = new ComparisonState<Building>(_detailsManager);
 				}
 				else
 				{
-					unlockedBuildableButton.State = new DefaultState<Buildable>(_itemsRow);
+					unlockedBuildableButton.State = new DefaultState<Building>(_itemsRow);
 				}
 			}	
 		}

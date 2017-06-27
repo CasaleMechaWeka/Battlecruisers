@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
 using System;
@@ -10,9 +11,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-	public class BuildableDetailsManager : ItemDetailsManager<Buildable>
+	public class BuildingDetailsManager : ItemDetailsManager<Building>
 	{
-		public ComparableBuildableDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
+		public ComparableBuildingDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 
 		void Start()
 		{

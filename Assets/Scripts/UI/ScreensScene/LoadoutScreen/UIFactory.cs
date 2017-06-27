@@ -17,27 +17,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public interface IUIFactory
 	{
-		LoadoutBuildableItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
+		LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
 		UnlockedBuildableItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, BuildableItemsRow itemsRow, Building itemBuilding, bool isBuildingInLoadout);
 		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, HullItemsRow hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
-		private BuildableDetailsManager _buildableDetailsManager;
+		private BuildingDetailsManager _buildableDetailsManager;
 
-		public LoadoutBuildableItem loadoutBuildableItemPrefab;
+		public LoadoutBuildingItem loadoutBuildingItemPrefab;
 		public UnlockedBuildableItem unlockedBuildableItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
 
-		public void Initialise(BuildableDetailsManager buildableDetailsManager)
+		public void Initialise(BuildingDetailsManager buildableDetailsManager)
 		{
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public LoadoutBuildableItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
+		public LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
 		{
-			LoadoutBuildableItem loadoutItem = Instantiate<LoadoutBuildableItem>(loadoutBuildableItemPrefab);
+			LoadoutBuildingItem loadoutItem = Instantiate<LoadoutBuildingItem>(loadoutBuildingItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			loadoutItem.Initialise(itemBuilding, _buildableDetailsManager);
 			return loadoutItem;

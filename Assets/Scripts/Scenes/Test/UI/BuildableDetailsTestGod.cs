@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
@@ -11,8 +11,8 @@ namespace BattleCruisers.Scenes.Test.UI
 {
 	public class BuildableDetailsTestGod : MonoBehaviour 
 	{
-		public ComparableBuildableDetailsController buildableDetails;
-		public Buildable buildableToShow;
+		public ComparableBuildingDetailsController buildableDetails;
+		public Building buildableToShow;
 
 		void Start () 
 		{
