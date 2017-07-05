@@ -61,11 +61,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			{
 				if (e.NewState.IsInReadyToCompareState)
 				{
-					unlockedItemButton.State = new ComparisonState<TItem>(_detailsManager);
+					unlockedItemButton.State = new ComparisonState<TItem>(_detailsManager, unlockedItemButton);
 				}
 				else
 				{
-					unlockedItemButton.State = new DefaultState<TItem>(_itemsRow);
+					unlockedItemButton.State = new DefaultState<TItem>(_itemsRow, unlockedItemButton);
 				}
 			}
 		}

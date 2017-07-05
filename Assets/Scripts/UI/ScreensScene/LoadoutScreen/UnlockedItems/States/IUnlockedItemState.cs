@@ -4,6 +4,6 @@
 	{
 		// FELIX  Item background colour!
 
-		void HandleSelection(UnlockedItem<TItem> item);
+		void HandleSelection();
 	}
 }

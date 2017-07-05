@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		public void SelectItem()
 		{
-			State.HandleSelection(this);
+			State.HandleSelection();
 		}
 	}
 }
