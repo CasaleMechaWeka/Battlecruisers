@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_buildingToKey = new Dictionary<Building, BuildingKey>();
 
 			IList<Building> loadoutBuildings = GetLoadoutBuildingPrefabs(_buildingCategory);
-			_loadoutRow.Initialise(uiFactory, loadoutBuildings);
+			_loadoutRow.Initialise(uiFactory, loadoutBuildings, detailsManager);
 			IList<Building> unlockedBuildings = GetUnlockedBuildingPrefabs(_buildingCategory);
 			_unlockedRow.Initialise(this, uiFactory, unlockedBuildings, loadoutBuildings, detailsManager);
 		}

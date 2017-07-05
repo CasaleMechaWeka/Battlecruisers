@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,25 +11,40 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 	public class LoadoutBuildingItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
+		private IItemDetailsManager<Building> _detailsManager;
 		private IDictionary<Building, LoadoutBuildingItem> _buildingToLoadoutItem;
 
 		private const int MAX_NUM_OF_ITEMS = 3;
 
 		public HorizontalLayoutGroup layoutGroup;
 
-		public void Initialise(IUIFactory uiFactory, IList<Building> buildings)
+		public void Initialise(IUIFactory uiFactory, IList<Building> buildings, IItemDetailsManager<Building> detailsManager)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
 			Assert.IsNotNull(uiFactory);
+			Assert.IsNotNull(detailsManager);
 			Assert.IsNotNull(buildings);
 
 			_uiFactory = uiFactory;
+			_detailsManager = detailsManager;
 			_buildingToLoadoutItem = new Dictionary<Building, LoadoutBuildingItem>();
 
 			foreach (Building building in buildings)
 			{
 				CreateLoadoutItem(building);
+			}
+
+			_detailsManager.StateChanged += _detailsManager_StateChanged;
+		}
+
+		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Building> e)
+		{
+			foreach (LoadoutBuildingItem item in _buildingToLoadoutItem.Values)
+			{
+				// FELIX  Avoid duplicte code with UnlockedItemStates :/  Sigh...  at least reuse color constants, 
+				// so a colour change only requires a change in one place!
+				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? Color.green : Color.clear;
 			}
 		}
 
