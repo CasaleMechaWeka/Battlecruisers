@@ -10,19 +10,19 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 {
-	public class DefaultState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
+	public class DefaultState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
 	{
 		private readonly IItemsRow<TItem> _itemsRow;
-		private readonly UnlockedItem<TItem> _item;
+
+		protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.DEFAULT; } }
 
 		public DefaultState(IItemsRow<TItem> itemsRow, UnlockedItem<TItem> item)
+			: base(item)
 		{
 			_itemsRow = itemsRow;
-			_item = item;
-			_item.backgroundImage.color = BaseItem<TItem>.Colors.DEFAULT;
 		}
 
-		public void HandleSelection()
+		public override void HandleSelection()
 		{
 			_item.IsItemInLoadout = _itemsRow.SelectUnlockedItem(_item);
 		}

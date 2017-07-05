@@ -10,20 +10,19 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 {
-	// FELIX  Base state class?
-	public class ComparisonState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
+	public class ComparisonState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
 	{
 		private readonly IItemDetailsManager<TItem> _itemDetailsManager;
-		private readonly UnlockedItem<TItem> _item;
+
+		protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.ENABLED; } }
 
 		public ComparisonState(IItemDetailsManager<TItem> itemDetailsManager, UnlockedItem<TItem> item)
+			: base(item)
 		{
 			_itemDetailsManager = itemDetailsManager;
-			_item = item;
-			_item.backgroundImage.color = BaseItem<TItem>.Colors.ENABLED;
 		}
 
-		public void HandleSelection()
+		public override void HandleSelection()
 		{
 			_itemDetailsManager.SelectItem(_item);
 		}
