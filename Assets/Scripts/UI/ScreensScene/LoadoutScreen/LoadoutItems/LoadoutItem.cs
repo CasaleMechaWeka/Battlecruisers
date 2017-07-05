@@ -10,15 +10,12 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
-	public abstract class LoadoutItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
+	public abstract class LoadoutItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
 	{
 		protected IItemDetailsManager<TItem> _itemDetailsManager;
 
-		public Image itemImage;
-		public Image selectedFeedbackImage;
-
 		private TItem _item;
-		public TItem Item 
+		public override TItem Item 
 		{
 			get { return _item; }
 			protected set
@@ -26,11 +23,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 				_item = value;
 				itemImage.sprite = _item.Sprite;
 			}
-		}
-
-		public bool ShowSelectedFeedback
-		{
-			set { selectedFeedbackImage.gameObject.SetActive(value); }
 		}
 
 		protected void InternalInitialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager)
