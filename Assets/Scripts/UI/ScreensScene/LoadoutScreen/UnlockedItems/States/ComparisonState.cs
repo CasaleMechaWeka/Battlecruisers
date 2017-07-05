@@ -16,13 +16,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 		private readonly IItemDetailsManager<TItem> _itemDetailsManager;
 		private readonly UnlockedItem<TItem> _item;
 
-		private readonly static Color BACKGROUND_COLOR = Color.green;
-
 		public ComparisonState(IItemDetailsManager<TItem> itemDetailsManager, UnlockedItem<TItem> item)
 		{
 			_itemDetailsManager = itemDetailsManager;
 			_item = item;
-			_item.backgroundImage.color = BACKGROUND_COLOR;
+			_item.backgroundImage.color = BaseItem<TItem>.Colors.ENABLED;
 		}
 
 		public void HandleSelection()

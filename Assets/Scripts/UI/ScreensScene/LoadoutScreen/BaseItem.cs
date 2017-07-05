@@ -11,6 +11,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
 	public abstract class BaseItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
 	{
+		public class Colors
+		{
+			public readonly static Color ENABLED = Color.green;
+			public readonly static Color DEFAULT = Color.clear;
+		}
+
 		public Image itemImage;
 		public Image backgroundImage;
 		public Image selectedFeedbackImage;

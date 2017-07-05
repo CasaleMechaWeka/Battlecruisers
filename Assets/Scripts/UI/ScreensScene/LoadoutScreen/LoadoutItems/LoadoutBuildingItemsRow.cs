@@ -42,9 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 		{
 			foreach (LoadoutBuildingItem item in _buildingToLoadoutItem.Values)
 			{
-				// FELIX  Avoid duplicte code with UnlockedItemStates :/  Sigh...  at least reuse color constants, 
-				// so a colour change only requires a change in one place!
-				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? Color.green : Color.clear;
+				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? BaseItem<Building>.Colors.ENABLED : BaseItem<Building>.Colors.DEFAULT;
 			}
 		}
 
