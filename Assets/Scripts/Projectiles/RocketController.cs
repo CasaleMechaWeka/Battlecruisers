@@ -13,6 +13,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
+	/// <summary>
+	/// The RocketController wants the behaviour of both:
+	/// 1. ProjectileController
+	/// 2. Target
+	/// But it can only subclass one of these.  Hence subclass ProjectileController, and
+	/// have a child game object deriving of Target, to get both behaviours.
+	/// </summary>
 	public class RocketController : ProjectileController
 	{
 		private ITarget _target;

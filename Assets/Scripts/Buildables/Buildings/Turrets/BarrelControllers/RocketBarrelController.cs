@@ -15,18 +15,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	public class RocketBarrelController : TurretBarrelController
 	{
 		private RocketSpawner _rocketSpawner;
+		private Faction _faction;
 
 		public RocketController rocketPrefab;
 
-		// FELIX  Use!
-		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 90;
 		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
-		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IMovementControllerFactory movementControllerFactory)
+		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, 
+			IMovementControllerFactory movementControllerFactory, Faction faction)
 		{
 			base.Initialise(targetFilter, angleCalculator);
 
 			Assert.IsNotNull(rocketPrefab);
+			_faction = faction;
 
 			_rocketSpawner = gameObject.GetComponentInChildren<RocketSpawner>();
 			Assert.IsNotNull(_rocketSpawner);
@@ -42,7 +43,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				transform.IsMirrored(),
 				Target,
 				_targetFilter,
-				Faction);
+				_faction);
 		}
 	}
 }
