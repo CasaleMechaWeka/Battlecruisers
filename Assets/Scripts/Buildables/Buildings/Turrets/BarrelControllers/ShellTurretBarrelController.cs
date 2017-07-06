@@ -21,7 +21,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
 			base.StaticInitialise();
 
-
 			Assert.IsNotNull(shellPrefab);
 			
 			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawner>();

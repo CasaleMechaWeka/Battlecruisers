@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Offensive
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class RocketLauncherController : Building, ITargetConsumer
+	public class RocketLauncherController : OffensiveTurret, ITargetConsumer
 	{
 		private BurstFireTurretStats _rocketLauncherStats;
 		private RocketSpawner _rocketSpawner;
@@ -28,9 +28,6 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 		public ITarget Target { get; set; }
-
-		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 90;
-		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
 		public override void StaticInitialise()
 		{

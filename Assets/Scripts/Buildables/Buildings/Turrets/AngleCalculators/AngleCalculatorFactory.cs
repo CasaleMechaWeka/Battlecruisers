@@ -3,14 +3,6 @@ using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public interface IAngleCalculatorFactory
-	{
-		IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateArtilleryAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateMortarAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-	}
-
 	public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
 		public IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
@@ -31,6 +23,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		public IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			return new LeadingAngleCalculator(targetPositionPredictorFactory);
+		}
+
+		public IAngleCalculator CreateStaticAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory, float desiredAngleInDegrees)
+		{
+			return new StaticAngleCalculator(targetPositionPredictorFactory, desiredAngleInDegrees);
 		}
 	}
 }
