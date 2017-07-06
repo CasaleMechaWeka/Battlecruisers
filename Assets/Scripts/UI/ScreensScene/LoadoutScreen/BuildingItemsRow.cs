@@ -74,12 +74,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 				AddBuildingToLoadout(buildableItem.Item);
 				isItemInLoadout = true;
 			}
-			else
-			{
-				// FELIX  Show error to user?  BETTER => disable all buttons that would add an item :D
-				// => Create Unaddable UnlockedItem state :)
-				throw new NotImplementedException();
-			}
 
 			return isItemInLoadout;
 		}
