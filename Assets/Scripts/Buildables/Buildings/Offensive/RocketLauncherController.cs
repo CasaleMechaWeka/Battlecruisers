@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.StaticInitialise();
 
-			_rocketLauncherStats = gameObject.GetComponent<BurstFireTurretStats>();
+			_rocketLauncherStats = gameObject.GetComponentInChildren<BurstFireTurretStats>();
 			Assert.IsNotNull(_rocketLauncherStats);
 			_rocketLauncherStats.Initialise();
 
