@@ -9,12 +9,13 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class RocketBarrelController : TurretBarrelController
 	{
-		private RocketSpawner _rocketSpawner;
+		private ICircularList<RocketSpawner> _rocketSpawners;
 		private Faction _faction;
 
 		public RocketController rocketPrefab;
@@ -29,16 +30,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsNotNull(rocketPrefab);
 			_faction = faction;
 
-			_rocketSpawner = gameObject.GetComponentInChildren<RocketSpawner>();
-			Assert.IsNotNull(_rocketSpawner);
+			RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
+			Assert.IsTrue(rocketSpawners.Length != 0);
+			_rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
 
 			RocketStats rocketStats = new RocketStats(rocketPrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS, ROCKET_CRUISING_ALTITUDE_IN_M);
-			_rocketSpawner.Initialise(rocketStats, movementControllerFactory);
+			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
+			{
+				rocketSpawner.Initialise(rocketStats, movementControllerFactory);
+			}
 		}
 
 		protected override void Fire(float angleInDegrees)
 		{
-			_rocketSpawner.SpawnRocket(
+			_rocketSpawners.Next().SpawnRocket(
 				angleInDegrees,
 				transform.IsMirrored(),
 				Target,
