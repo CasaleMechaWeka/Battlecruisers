@@ -57,21 +57,16 @@ namespace BattleCruisers.Scenes
 			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
 
 			
-			// FELIX  TEMP
-			GoToLoadoutScreen();
-
-
-			// FELIX  Uncomment
-//			if (ApplicationModel.ShowPostBattleScreen)
-//			{
-//				ApplicationModel.ShowPostBattleScreen = false;
-//				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
-//				GoToScreen(postBattleScreen);
-//			}
-//			else
-//			{
-//				GoToHomeScreen();
-//			}
+			if (ApplicationModel.ShowPostBattleScreen)
+			{
+				ApplicationModel.ShowPostBattleScreen = false;
+				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
+				GoToScreen(postBattleScreen);
+			}
+			else
+			{
+				GoToHomeScreen();
+			}
 		}
 		
 		public void GoToLevelsScreen()
