@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace BattleCruisers.Scenes.Test
 	public class LaserTestGod : MonoBehaviour 
 	{
 		private Buildable _target;
+		private LaserEmitter _laserEmitter;
 
 		void Start () 
 		{
@@ -16,7 +18,13 @@ namespace BattleCruisers.Scenes.Test
 			Helper helper = new Helper();
 			_target = GameObject.FindObjectOfType<Buildable>();
 			helper.InitialiseBuildable(_target, Faction.Blues);
-			_target.StartConstruction();			
+			_target.StartConstruction();
+
+			// Setup laser
+			_laserEmitter = GameObject.FindObjectOfType<LaserEmitter>();
+//			_laserEmitter.Initialise(isMirrored: true);
+			_laserEmitter.Initialise(isMirrored: false);
+			_laserEmitter.StartLaser();
 		}
 	}
 }
