@@ -4,19 +4,19 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-	public class MortarController : DefensiveTurret
+	public class AntiAirTurretController : DefensiveTurret
 	{
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
-			_attackCapabilities.Add(TargetType.Ships);
+			_attackCapabilities.Add(TargetType.Aircraft);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
-			return _angleCalculatorFactory.CreateMortarAngleCalcultor(_targetPositionPredictorFactory);
+			return _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }

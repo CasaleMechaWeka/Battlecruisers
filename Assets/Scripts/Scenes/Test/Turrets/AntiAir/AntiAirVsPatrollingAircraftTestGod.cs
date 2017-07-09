@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Buildables.Units.Aircraft;
