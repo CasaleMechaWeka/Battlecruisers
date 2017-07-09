@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;

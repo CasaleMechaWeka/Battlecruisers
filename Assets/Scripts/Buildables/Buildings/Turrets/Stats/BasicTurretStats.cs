@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
