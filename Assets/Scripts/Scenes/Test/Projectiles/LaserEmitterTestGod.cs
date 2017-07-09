@@ -8,37 +8,67 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
+	public class LaserTest
+	{
+		public LaserEmitter Laser { get; private set; }
+		public Buildable Target { get; private set; }
+		public bool IsSourceMirrored { get; private set; }
+
+		public LaserTest(LaserEmitter laser, Buildable target, bool isSourceMirrored)
+		{
+			Laser = laser;
+			Target = target;
+			IsSourceMirrored = isSourceMirrored;
+		}
+	}
+
 	public class LaserEmitterTestGod : MonoBehaviour 
 	{
-		private Buildable _target;
-		private LaserEmitter _laserEmitter;
+		private Helper _helper;
+		private Faction _enemyFaction;
+		private IList<LaserTest> _laserTests;
+
+		public Buildable targetRightLevel, targetLeftLevel;
+		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel;
 
 		void Start () 
 		{
-			Faction enemyFaction = Faction.Blues;
+			_helper = new Helper();
+			_enemyFaction = Faction.Blues;
+			_laserTests = new List<LaserTest>();
 
+			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, isSourceMirrored: false));
+			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, isSourceMirrored: true));
+
+			foreach (LaserTest test in _laserTests)
+			{
+				SetupPair(test.Laser, test.Target);
+			}
+		}
+
+		private void SetupPair(LaserEmitter laserEmitter, Buildable target)
+		{
 			// Setup target
-			Helper helper = new Helper();
-			_target = GameObject.FindObjectOfType<Buildable>();
-			helper.InitialiseBuildable(_target, enemyFaction);
-			_target.StartConstruction();
-
+			_helper.InitialiseBuildable(target, _enemyFaction);
+			target.StartConstruction();
+			
 			// Setup laser
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, TargetType.Buildings, TargetType.Cruiser);
-
-			_laserEmitter = GameObject.FindObjectOfType<LaserEmitter>();
-			_laserEmitter.Initialise(targetFilter, damagePerS: 100);
+			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, TargetType.Buildings, TargetType.Cruiser);
+			laserEmitter.Initialise(targetFilter, damagePerS: 100);
 		}
 
 		void Update()
 		{
-			if (!_target.IsDestroyed)
+			foreach (LaserTest test in _laserTests)
 			{
-				_laserEmitter.FireLaser(angleInDegrees: 0, isSourceMirrored: false);
-			}
-			else
-			{
-				_laserEmitter.StopLaser();
+				if (!test.Target.IsDestroyed)
+				{
+					test.Laser.FireLaser(angleInDegrees: 0, isSourceMirrored: test.IsSourceMirrored);
+				}
+				else
+				{
+					test.Laser.StopLaser();
+				}
 			}
 		}
 	}

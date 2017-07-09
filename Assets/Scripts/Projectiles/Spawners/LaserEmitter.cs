@@ -39,10 +39,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void FireLaser(float angleInDegrees, bool isSourceMirrored)
 		{
-			// FELIX  Test when isSourceMirrored is true
-			float xComponent = Mathf.Cos(Mathf.Deg2Rad * angleInDegrees);
-			float yComponent = Mathf.Sin(Mathf.Deg2Rad * angleInDegrees);
-			Vector2 laserDirection = new Vector2(xComponent, yComponent);
+			Vector2 laserDirection = FindLaserDirection(angleInDegrees, isSourceMirrored);
 
 			// FELIX  Magic number
 			RaycastHit2D[] results = new RaycastHit2D[25];
@@ -59,6 +56,14 @@ namespace BattleCruisers.Projectiles.Spawners
 				float damage = Time.deltaTime * _damagePerS;
 				target.TakeDamage(damage);
 			}
+		}
+
+		static Vector2 FindLaserDirection(float angleInDegrees, bool isSourceMirrored)
+		{
+			float directionMultiplier = isSourceMirrored ? -1 : 1;
+			float xComponent = Mathf.Cos(Mathf.Deg2Rad * angleInDegrees) * directionMultiplier;
+			float yComponent = Mathf.Sin(Mathf.Deg2Rad * angleInDegrees);
+			return new Vector2(xComponent, yComponent);
 		}
 
 		public void StopLaser()
