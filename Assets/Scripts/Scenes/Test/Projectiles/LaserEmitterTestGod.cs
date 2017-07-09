@@ -40,10 +40,10 @@ namespace BattleCruisers.Scenes.Test
 			_enemyFaction = Faction.Blues;
 			_laserTests = new List<LaserTest>();
 
-//			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
-//			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
-//			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
-//			_laserTests.Add(new LaserTest(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
+			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
+			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
+			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
+			_laserTests.Add(new LaserTest(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
 
 			_laserTests.Add(new LaserTest(laserEmitterLeftMoving, targetRightMoving, angleInDegrees: 0, isSourceMirrored: false));
 			SetupMovingTarget(targetRightMoving, isSourceMirrored: false);
