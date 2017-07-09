@@ -67,18 +67,24 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					AdjustBarrel(desiredAngleInDegrees);
 				}
 
-				if (isOnTarget || TurretStats.IsInBurst)
+				if ((isOnTarget || TurretStats.IsInBurst)
+				    && _fireIntervalManager.IsIntervalUp())
 				{
-					if (_fireIntervalManager.IsIntervalUp())
-					{
-						// Burst fires happen even if we are no longer on target, so we may miss
-						// the target in this case.  Hence use the actual angle our turret barrel
-						// is at, intead of the perfect desired angle.
-						float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+					// Burst fires happen even if we are no longer on target, so we may miss
+					// the target in this case.  Hence use the actual angle our turret barrel
+					// is at, intead of the perfect desired angle.
+					float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
-						Fire(fireAngle);
-					}
+					Fire(fireAngle);
 				}
+				else
+				{
+					CeaseFire();
+				}
+			}
+			else
+			{
+				CeaseFire();
 			}
 		}
 
@@ -87,5 +93,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		protected abstract void AdjustBarrel(float desiredAngleInDegrees);
 
 		protected abstract void Fire(float angleInDegrees);
+
+		protected virtual void CeaseFire() { }
 	}
 }

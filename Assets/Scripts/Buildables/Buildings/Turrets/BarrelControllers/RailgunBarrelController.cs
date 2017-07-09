@@ -16,32 +16,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class RailgunBarrelController : TurretBarrelController
 	{
-//		private ICircularList<RocketSpawner> _rocketSpawners;
-//		private Faction _faction;
-//
-//		public RocketController rocketPrefab;
-//
-//		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
-//
-//		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, 
-//			IMovementControllerFactory movementControllerFactory, Faction faction)
-//		{
-//			base.Initialise(targetFilter, angleCalculator);
-//
-//			Assert.IsNotNull(rocketPrefab);
-//			_faction = faction;
-//
-//			RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
-//			Assert.IsTrue(rocketSpawners.Length != 0);
-//			_rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
-//
-//			RocketStats rocketStats = new RocketStats(rocketPrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS, ROCKET_CRUISING_ALTITUDE_IN_M);
-//			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
-//			{
-//				rocketSpawner.Initialise(rocketStats, movementControllerFactory);
-//			}
-//		}
-//
+		private LaserEmitter _laserEmitter;
+
+		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+		{
+			base.Initialise(targetFilter, angleCalculator);
+
+			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
+			Assert.IsNotNull(_laserEmitter);
+			_laserEmitter.Initialise(targetFilter, TurretStats.DamagePerS);
+		}
+
 		public override void StaticInitialise()
 		{
 			// Turret stats
@@ -59,12 +44,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected override void Fire(float angleInDegrees)
 		{
-//			_rocketSpawners.Next().SpawnRocket(
-//				angleInDegrees,
-//				transform.IsMirrored(),
-//				Target,
-//				_targetFilter,
-//				_faction);
+			_laserEmitter.FireLaser(angleInDegrees, transform.IsMirrored());
+		}
+
+		protected override void CeaseFire()
+		{
+			_laserEmitter.StopLaser();
 		}
 	}
 }
