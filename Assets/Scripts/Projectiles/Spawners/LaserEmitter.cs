@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	// FELIX  Separate racast logic?  Make this a dumber class that just draws a laser between 2 points?
 	public class LaserEmitter : MonoBehaviour 
 	{
 		private LineRenderer _lineRenderer;
@@ -17,6 +16,8 @@ namespace BattleCruisers.Projectiles.Spawners
 		private float _damagePerS;
 
 		public LayerMask unitsLayerMask;
+
+		private const int NUM_OF_COLLIDERS_TO_RAYCAST = 25;
 
 		void Awake() 
 		{
@@ -41,8 +42,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
 			Vector2 laserDirection = FindLaserDirection(angleInDegrees, isSourceMirrored);
 
-			// FELIX  Magic number
-			RaycastHit2D[] results = new RaycastHit2D[25];
+			RaycastHit2D[] results = new RaycastHit2D[NUM_OF_COLLIDERS_TO_RAYCAST];
 			int numOfResults = Physics2D.Raycast(transform.position, laserDirection, _contactFilter, results);
 			
 			ITarget target = GetTarget(results, numOfResults);
@@ -71,7 +71,7 @@ namespace BattleCruisers.Projectiles.Spawners
 			_lineRenderer.enabled = false;
 		}
 
-		// FELIX  Also return RaycastHit2D, so can draw laser to contact point :)
+		// FELIX  Also return RaycastHit2D, so can make laser impact effect on impact point?
 		private ITarget GetTarget(RaycastHit2D[] results, int numOfResults)
 		{
 			for (int i = 0; i < numOfResults; i++)
