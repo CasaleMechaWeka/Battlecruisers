@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
 		private Faction _enemyFaction;
 		private IList<LaserTest> _laserTests;
 
-		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled, targetRightAngled;
+		public Buildable targetRightLevel, targetRightLevelBlockingEnemy, targetRightLevelBlockingFriendly, targetLeftLevel, targetLeftAngled, targetRightAngled;
 		public TestAircraftController targetRightMoving, targetMovingLeft;
 		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
 
@@ -38,6 +38,7 @@ namespace BattleCruisers.Scenes.Test
 		{
 			_helper = new Helper();
 			_enemyFaction = Faction.Blues;
+			Faction friendlyFaction = Faction.Reds;
 			_laserTests = new List<LaserTest>();
 
 			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
@@ -50,6 +51,12 @@ namespace BattleCruisers.Scenes.Test
 
 			_laserTests.Add(new LaserTest(laserEmitterRightMoving, targetMovingLeft, angleInDegrees: 0, isSourceMirrored: true));
 			SetupMovingTarget(targetMovingLeft, isSourceMirrored: true);
+
+			_helper.InitialiseBuildable(targetRightLevelBlockingEnemy, _enemyFaction);
+			targetRightLevelBlockingEnemy.StartConstruction();
+			
+			_helper.InitialiseBuildable(targetRightLevelBlockingFriendly, friendlyFaction);
+			targetRightLevelBlockingFriendly.StartConstruction();
 
 			foreach (LaserTest test in _laserTests)
 			{
