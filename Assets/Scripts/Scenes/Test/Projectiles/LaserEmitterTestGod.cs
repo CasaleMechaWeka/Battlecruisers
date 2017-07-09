@@ -12,12 +12,14 @@ namespace BattleCruisers.Scenes.Test
 	{
 		public LaserEmitter Laser { get; private set; }
 		public Buildable Target { get; private set; }
+		public float AngleInDegrees { get; private set; }
 		public bool IsSourceMirrored { get; private set; }
 
-		public LaserTest(LaserEmitter laser, Buildable target, bool isSourceMirrored)
+		public LaserTest(LaserEmitter laser, Buildable target, float angleInDegrees, bool isSourceMirrored)
 		{
 			Laser = laser;
 			Target = target;
+			AngleInDegrees = angleInDegrees;
 			IsSourceMirrored = isSourceMirrored;
 		}
 	}
@@ -28,8 +30,8 @@ namespace BattleCruisers.Scenes.Test
 		private Faction _enemyFaction;
 		private IList<LaserTest> _laserTests;
 
-		public Buildable targetRightLevel, targetLeftLevel;
-		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel;
+		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled;
+		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled;
 
 		void Start () 
 		{
@@ -37,8 +39,9 @@ namespace BattleCruisers.Scenes.Test
 			_enemyFaction = Faction.Blues;
 			_laserTests = new List<LaserTest>();
 
-			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, isSourceMirrored: false));
-			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, isSourceMirrored: true));
+			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
+			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
+			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
 
 			foreach (LaserTest test in _laserTests)
 			{
@@ -63,7 +66,7 @@ namespace BattleCruisers.Scenes.Test
 			{
 				if (!test.Target.IsDestroyed)
 				{
-					test.Laser.FireLaser(angleInDegrees: 0, isSourceMirrored: test.IsSourceMirrored);
+					test.Laser.FireLaser(test.AngleInDegrees, test.IsSourceMirrored);
 				}
 				else
 				{
