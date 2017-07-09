@@ -31,7 +31,8 @@ namespace BattleCruisers.Scenes.Test
 		private IList<LaserTest> _laserTests;
 
 		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled, targetRightAngled;
-		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled;
+		public TestAircraftController targetRightMoving;
+		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving;
 
 		void Start () 
 		{
@@ -39,10 +40,19 @@ namespace BattleCruisers.Scenes.Test
 			_enemyFaction = Faction.Blues;
 			_laserTests = new List<LaserTest>();
 
-			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
-			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
-			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
-			_laserTests.Add(new LaserTest(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
+//			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
+//			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
+//			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
+//			_laserTests.Add(new LaserTest(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
+
+			_laserTests.Add(new LaserTest(laserEmitterLeftMoving, targetRightMoving, angleInDegrees: 0, isSourceMirrored: false));
+			targetRightMoving.SetTargetType(TargetType.Cruiser);
+			targetRightMoving.PatrolPoints = new List<Vector2>() 
+			{
+				targetRightMoving.Position,
+				new Vector2(targetRightMoving.Position.x + 2, targetRightMoving.Position.y)
+			};
+			targetRightMoving.CompletedBuildable += (sender, e) => targetRightMoving.StartPatrolling();
 
 			foreach (LaserTest test in _laserTests)
 			{
