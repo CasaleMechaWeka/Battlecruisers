@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class LaserTestGod : MonoBehaviour 
+	public class LaserEmitterTestGod : MonoBehaviour 
 	{
 		private Buildable _target;
 		private LaserEmitter _laserEmitter;
