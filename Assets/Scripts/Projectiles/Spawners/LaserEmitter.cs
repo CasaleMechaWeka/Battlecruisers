@@ -68,6 +68,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void StopLaser()
 		{
+//			if (_lineRenderer != null)
 			_lineRenderer.enabled = false;
 		}
 

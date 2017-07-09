@@ -18,15 +18,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
 		private LaserEmitter _laserEmitter;
 
-		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
-		{
-			base.Initialise(targetFilter, angleCalculator);
-
-			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
-			Assert.IsNotNull(_laserEmitter);
-			_laserEmitter.Initialise(targetFilter, TurretStats.DamagePerS);
-		}
-
 		public override void StaticInitialise()
 		{
 			// Turret stats
@@ -40,6 +31,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsNotNull(laserFireIntervalManager);
 			laserFireIntervalManager.Initialise(laserTurretStats);
 			_fireIntervalManager = laserFireIntervalManager;
+
+			// Laser emitter
+			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
+			Assert.IsNotNull(_laserEmitter);
+		}
+		
+		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+		{
+			base.Initialise(targetFilter, angleCalculator);
+			_laserEmitter.Initialise(targetFilter, TurretStats.DamagePerS);
 		}
 
 		protected override void Fire(float angleInDegrees)
