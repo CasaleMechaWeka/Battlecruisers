@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
-	public class RocketLauncherController : OffensiveTurret, ITargetConsumer
+	public class RocketLauncherController : OffensiveTurret
 	{
 		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 60;
 
