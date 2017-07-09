@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	/// </summary>
 	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
-		private FireIntervalManager _fireIntervalManager;
+		protected IFireIntervalManager _fireIntervalManager;
 		
 		protected ITargetFilter _targetFilter;
 		protected IAngleCalculator _angleCalculator;
@@ -29,18 +29,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public ITarget Target { get; set; }
 		protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
-		private TurretStats _turretStats;
-		public TurretStats TurretStats { get { return _turretStats; } }
+		public virtual TurretStats TurretStats { get; protected set; }
 
 		public virtual void StaticInitialise()
 		{
-			_turretStats = gameObject.GetComponent<TurretStats>();
-			Assert.IsNotNull(_turretStats);
-			_turretStats.Initialise();
-			
-			_fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
+			TurretStats = gameObject.GetComponent<TurretStats>();
+			Assert.IsNotNull(TurretStats);
+			TurretStats.Initialise();
+
+			FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
 			Assert.IsNotNull(_fireIntervalManager);
-			_fireIntervalManager.Initialise(_turretStats);
+			fireIntervalManager.Initialise(TurretStats);
+			_fireIntervalManager = fireIntervalManager;
 		}
 
 		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				Logging.Log(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _turretStats.bulletVelocityInMPerS, currentAngleInRadians);
+				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, TurretStats.bulletVelocityInMPerS, currentAngleInRadians);
 
 				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
 
@@ -65,14 +65,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					AdjustBarrel(desiredAngleInDegrees);
 				}
 
-				if (isOnTarget || _turretStats.IsInBurst)
+				if (isOnTarget || TurretStats.IsInBurst)
 				{
 					if (_fireIntervalManager.IsIntervalUp())
 					{
 						// Burst fires happen even if we are no longer on target, so we may miss
 						// the target in this case.  Hence use the actual angle our turret barrel
 						// is at, intead of the perfect desired angle.
-						float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+						float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 						Fire(fireAngle);
 					}
