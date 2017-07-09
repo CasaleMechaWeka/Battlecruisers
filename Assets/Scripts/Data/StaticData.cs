@@ -69,6 +69,7 @@ namespace BattleCruisers.Data
 			// Offence
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "RocketLauncher"));
+			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Railgun"));
 
 			return buildings;
 		}
