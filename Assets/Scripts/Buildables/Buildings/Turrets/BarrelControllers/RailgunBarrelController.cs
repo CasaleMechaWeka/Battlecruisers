@@ -16,21 +16,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
 	public class RailgunBarrelController : TurretBarrelController
 	{
-		public override void StaticInitialise()
-		{
-			// Turret stats
-			LaserTurretStats laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
-			Assert.IsNotNull(laserTurretStats);
-			laserTurretStats.Initialise();
-			TurretStats = laserTurretStats;
-
-			// Fire interval manager
-			LaserFireIntervalManager laserFireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
-			Assert.IsNotNull(laserFireIntervalManager);
-			laserFireIntervalManager.Initialise(laserTurretStats);
-			_fireIntervalManager = laserFireIntervalManager;
-		}
-
 //		private ICircularList<RocketSpawner> _rocketSpawners;
 //		private Faction _faction;
 //
@@ -57,6 +42,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 //			}
 //		}
 //
+		public override void StaticInitialise()
+		{
+			// Turret stats
+			LaserTurretStats laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
+			Assert.IsNotNull(laserTurretStats);
+			laserTurretStats.Initialise();
+			TurretStats = laserTurretStats;
+
+			// Fire interval manager
+			LaserFireIntervalManager laserFireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
+			Assert.IsNotNull(laserFireIntervalManager);
+			laserFireIntervalManager.Initialise(laserTurretStats);
+			_fireIntervalManager = laserFireIntervalManager;
+		}
+
 		protected override void Fire(float angleInDegrees)
 		{
 //			_rocketSpawners.Next().SpawnRocket(

@@ -24,13 +24,18 @@ namespace BattleCruisers.Scenes.Test
 			_target.StartConstruction();
 
 			// Setup laser
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, TargetType.Buildings, TargetType.Cruiser, TargetType.Ships);
+			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, TargetType.Buildings, TargetType.Cruiser);
 
 			_laserEmitter = GameObject.FindObjectOfType<LaserEmitter>();
-			// FELIX
-//			_laserEmitter.Initialise(isMirrored: true);
-			_laserEmitter.Initialise(targetFilter, isMirrored: false);
-			_laserEmitter.StartLaser();
+			_laserEmitter.Initialise(targetFilter, damagePerS: 40);
+		}
+
+		void Update()
+		{
+			if (!_target.IsDestroyed)
+			{
+				_laserEmitter.FireLaser(angleInDegrees: 0, isSourceMirrored: false);
+			}
 		}
 	}
 }
