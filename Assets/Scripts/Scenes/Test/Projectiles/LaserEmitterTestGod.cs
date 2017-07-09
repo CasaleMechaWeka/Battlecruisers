@@ -31,8 +31,8 @@ namespace BattleCruisers.Scenes.Test
 		private IList<LaserTest> _laserTests;
 
 		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled, targetRightAngled;
-		public TestAircraftController targetRightMoving;
-		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving;
+		public TestAircraftController targetRightMoving, targetMovingLeft;
+		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
 
 		void Start () 
 		{
@@ -47,6 +47,9 @@ namespace BattleCruisers.Scenes.Test
 
 			_laserTests.Add(new LaserTest(laserEmitterLeftMoving, targetRightMoving, angleInDegrees: 0, isSourceMirrored: false));
 			SetupMovingTarget(targetRightMoving, isSourceMirrored: false);
+
+			_laserTests.Add(new LaserTest(laserEmitterRightMoving, targetMovingLeft, angleInDegrees: 0, isSourceMirrored: true));
+			SetupMovingTarget(targetMovingLeft, isSourceMirrored: true);
 
 			foreach (LaserTest test in _laserTests)
 			{
@@ -70,10 +73,10 @@ namespace BattleCruisers.Scenes.Test
 			movingTarget.SetTargetType(TargetType.Cruiser);
 			movingTarget.PatrolPoints = new List<Vector2>() 
 			{
-				targetRightMoving.Position,
-				new Vector2(targetRightMoving.Position.x + (isSourceMirrored ? -2 : 2), targetRightMoving.Position.y)
+				movingTarget.Position,
+				new Vector2(movingTarget.Position.x + (isSourceMirrored ? -2 : 2), movingTarget.Position.y)
 			};
-			movingTarget.CompletedBuildable += (sender, e) => targetRightMoving.StartPatrolling();
+			movingTarget.CompletedBuildable += (sender, e) => movingTarget.StartPatrolling();
 		}
 
 		void Update()
