@@ -33,10 +33,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public virtual void StaticInitialise()
 		{
+			// Turret stats
 			TurretStats = gameObject.GetComponent<TurretStats>();
 			Assert.IsNotNull(TurretStats);
 			TurretStats.Initialise();
 
+			// Fire interval manager
 			FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
 			Assert.IsNotNull(_fireIntervalManager);
 			fireIntervalManager.Initialise(TurretStats);
