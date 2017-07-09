@@ -14,7 +14,7 @@ using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class RailgunBarrelController : TurretBarrelController
+	public class LaserBarrelController : TurretBarrelController
 	{
 		private LaserEmitter _laserEmitter;
 
