@@ -52,12 +52,18 @@ namespace BattleCruisers.Projectiles.Spawners
 			
 			if (target != null)
 			{
+				_lineRenderer.enabled = true;
 				_lineRenderer.SetPosition(0, transform.position);
 				_lineRenderer.SetPosition(1, target.Position);
 
 				float damage = Time.deltaTime * _damagePerS;
 				target.TakeDamage(damage);
 			}
+		}
+
+		public void StopLaser()
+		{
+			_lineRenderer.enabled = false;
 		}
 
 		// FELIX  Also return RaycastHit2D, so can draw laser to contact point :)

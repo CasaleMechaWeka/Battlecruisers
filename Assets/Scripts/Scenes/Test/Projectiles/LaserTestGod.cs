@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test
 			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, TargetType.Buildings, TargetType.Cruiser);
 
 			_laserEmitter = GameObject.FindObjectOfType<LaserEmitter>();
-			_laserEmitter.Initialise(targetFilter, damagePerS: 40);
+			_laserEmitter.Initialise(targetFilter, damagePerS: 100);
 		}
 
 		void Update()
@@ -35,6 +35,10 @@ namespace BattleCruisers.Scenes.Test
 			if (!_target.IsDestroyed)
 			{
 				_laserEmitter.FireLaser(angleInDegrees: 0, isSourceMirrored: false);
+			}
+			else
+			{
+				_laserEmitter.StopLaser();
 			}
 		}
 	}
