@@ -3,21 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-	public interface IFireIntervalProvider
-	{
-		float NextFireIntervalInS { get; }
-	}
-
-	public interface IFireIntervalManager
-	{
-		/// <summary>
-		/// Automatically starts the next interval if the current interval is up.
-		/// So two consecutive calls to could return "true" and "false" respectively.
-		/// </summary>
-		/// <returns><c>true</c> if the fire interval is up; otherwise, <c>false</c>.</returns>
-		bool IsIntervalUp();
-	}
-
 	public class FireIntervalManager : MonoBehaviour, IFireIntervalManager
 	{
 		private IFireIntervalProvider _fireIntervalProvider;
@@ -48,4 +33,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 		}
 	}
 }
-
