@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
 	public abstract class OffensiveTurret : Turret, ITargetConsumer
 	{

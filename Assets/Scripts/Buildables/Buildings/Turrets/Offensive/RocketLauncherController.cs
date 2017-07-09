@@ -4,7 +4,7 @@ using BattleCruisers.Targets;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
 	public class RocketLauncherController : OffensiveTurret, ITargetConsumer
 	{

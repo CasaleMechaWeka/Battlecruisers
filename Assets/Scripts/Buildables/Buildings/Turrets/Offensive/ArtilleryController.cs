@@ -4,7 +4,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
 	public class ArtilleryController : OffensiveTurret
 	{
