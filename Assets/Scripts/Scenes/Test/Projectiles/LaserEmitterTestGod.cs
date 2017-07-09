@@ -30,8 +30,8 @@ namespace BattleCruisers.Scenes.Test
 		private Faction _enemyFaction;
 		private IList<LaserTest> _laserTests;
 
-		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled;
-		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled;
+		public Buildable targetRightLevel, targetLeftLevel, targetLeftAngled, targetRightAngled;
+		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled;
 
 		void Start () 
 		{
@@ -42,6 +42,7 @@ namespace BattleCruisers.Scenes.Test
 			_laserTests.Add(new LaserTest(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
 			_laserTests.Add(new LaserTest(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
 			_laserTests.Add(new LaserTest(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
+			_laserTests.Add(new LaserTest(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
 
 			foreach (LaserTest test in _laserTests)
 			{
