@@ -5,7 +5,7 @@
 	/// 
 	/// Decide if we are on target by checking if the target is within the firing zone.
 	/// </summary>
-	public class InvisibleLaserBarrelController : ShellTurretBarrelController 
+	public class InvisibleLaserBarrelController : LaserBarrelController 
 	{
 		protected override bool IsOnTarget(float desiredAngleInDegrees)
 		{
