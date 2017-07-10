@@ -5,34 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
-	public class SafeZone
-	{
-		public float MinX { get; private set; }
-		public float MaxX { get; private set; }
-		public float MinY { get; private set; }
-		public float MaxY { get; private set; }
-
-		public SafeZone(float minX, float maxX, float minY, float maxY)
-		{
-			Assert.IsTrue(minX < maxX);
-			Assert.IsTrue(minY < maxY);
-
-			MinX = minX;
-			MaxX = maxX;
-			MinY = minY;
-			MaxY = maxY;
-		}
-	}
-
 	// FELIX  Also set cruising altitude from provider instead of aircraft knowing about it?
-	public interface IAircraftProvider
-	{
-		SafeZone FighterSafeZone { get; }
-
-		IList<Vector2> FindBomberPatrolPoints(float cruisingAltitude);
-		IList<Vector2> FindFighterPatrolPoints(float cruisingAltitude);
-	}
-
 	public class AircraftProvider : IAircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
