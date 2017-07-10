@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	public class DeathstarController : AircraftController, ITargetConsumer
 	{
 		private ITargetProcessor _targetProcessor;
+		private int _originalPatrolPointsCount;
 
 		public float cruisingAltitudeInM;
 
@@ -60,6 +61,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
 			PatrolPoints = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
+			_originalPatrolPointsCount = PatrolPoints.Count;
 			StartPatrolling();
 
 			_targetProcessor = _targetsFactory.OffensiveBuildableTargetProcessor;
@@ -70,7 +72,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-			// FELIX  Shoot target if within range :)
+			if (IsAtCruisingHeight)
+			{
+				// FELIX  Shoot target if within range :)
+			}
+		}
+
+		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
+		{
+			if (PatrolPoints.Count == _originalPatrolPointsCount)
+			{
+				PatrolPoints.RemoveAt(0);
+				Assert.IsTrue(PatrolPoints.Count >= 2);
+			}
 		}
 
 		protected override void OnDestroyed()

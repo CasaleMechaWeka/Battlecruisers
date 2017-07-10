@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private IList<Vector2> _patrolPoints;
 		public IList<Vector2> PatrolPoints
 		{
-			private get { return _patrolPoints; }
+			protected get { return _patrolPoints; }
 			set
 			{
 				Assert.IsTrue(value.Count >= 2);
@@ -81,7 +81,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			else
 			{
 				Logging.Log(Tags.AIRCRAFT, "Patrol():  Reached patrol point " + _targetPatrolPoint);
+
+				Vector2 patrolPointReached = _targetPatrolPoint;
 				_targetPatrolPoint = FindNextPatrolPoint();
+				OnPatrolPointReached(patrolPointReached);
 			}
 		}
 
@@ -96,6 +99,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				FacingDirection = Direction.Right;
 			}
 		}
+
+		protected virtual void OnPatrolPointReached(Vector2 patrolPointReached) { }
 
 		public void StartPatrolling()
 		{
@@ -140,6 +145,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			return closestPatrolPoint;
 		}
 
+		/// <summary>
+		/// NOTE:  Assumes there are no duplicate patrol points.
+		/// </summary>
 		private Vector2 FindNextPatrolPoint()
 		{
 			int currentIndex = _patrolPoints.IndexOf(_targetPatrolPoint);
