@@ -11,29 +11,6 @@ using BattleCruisers.Targets.TargetProcessors.Ranking;
 
 namespace BattleCruisers.Targets
 {
-	// FELIX  Move to own file
-	public interface ITargetsFactory
-	{
-		ITargetProcessor BomberTargetProcessor { get; }
-		ITargetProcessor OffensiveBuildableTargetProcessor { get; }
-
-		// Processors
-		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker);
-
-		// Finders
-		ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
-
-		// Filters
-		ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, List<TargetType> targetTypes);
-		ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, params TargetType[] targetTypes);
-		ITargetFilter CreateTargetFilter(Faction faction, List<TargetType> targetTypes);
-		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
-		IExactMatchTargetFilter CreateExactMatchTargetFiler();
-
-		// Rankers
-		ITargetRanker CreateEqualTargetRanker();
-	}
-
 	public class TargetsFactory : ITargetsFactory
 	{
 		public ITargetProcessor BomberTargetProcessor { get; private set; }
