@@ -11,6 +11,7 @@ using BattleCruisers.Targets.TargetProcessors.Ranking;
 
 namespace BattleCruisers.Targets
 {
+	// FELIX  Move to own file
 	public interface ITargetsFactory
 	{
 		ITargetProcessor BomberTargetProcessor { get; }

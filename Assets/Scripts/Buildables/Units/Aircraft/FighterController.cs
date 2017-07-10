@@ -87,6 +87,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
+
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);

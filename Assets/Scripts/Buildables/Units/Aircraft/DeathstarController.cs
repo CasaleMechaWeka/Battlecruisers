@@ -1,22 +1,27 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Avoid duplicate code with BomberController
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public class DeathstarController : AircraftController, ITargetConsumer
+	public class DeathstarController : AircraftController
 	{
+		private LaserBarrelController _barrelController;
+		private ITargetDetector _targetDetector;
 		private ITargetProcessor _targetProcessor;
 		private int _originalPatrolPointsCount;
 
@@ -24,10 +29,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 1;
 
-		#region Properties
-		public ITarget Target { get; set; }
-
-		// FELIX  Common with bomber
 		private bool IsAtCruisingHeight
 		{
 			get
@@ -35,7 +36,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				return Mathf.Abs(transform.position.y - cruisingAltitudeInM) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
 			}
 		}
-		#endregion Properties
 
 		public override void StaticInitialise()
 		{
@@ -44,14 +44,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 
-			// FELIX  Get LaserEmitter and LaserTurretStats
-		}
+			_barrelController = gameObject.GetComponentInChildren<LaserBarrelController>();
+			Assert.IsNotNull(_barrelController);
+			_barrelController.StaticInitialise();
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
-
-			// FELIX  Initialise LaserEmitter
+			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
+			Assert.IsNotNull(_targetDetector);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -60,22 +58,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
+			// Patrolling
 			PatrolPoints = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 			_originalPatrolPointsCount = PatrolPoints.Count;
 			StartPatrolling();
 
-			_targetProcessor = _targetsFactory.OffensiveBuildableTargetProcessor;
-			_targetProcessor.AddTargetConsumer(this);
-		}
-
-		protected override void OnFixedUpdate()
-		{
-			base.OnFixedUpdate();
-
-			if (IsAtCruisingHeight)
-			{
-				// FELIX  Shoot target if within range :)
-			}
+			// Barrel controller
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+			_barrelController.Initialise(targetFilter, angleCalculator);
+			
+			// Target detection
+			ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
+			_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
+			_targetProcessor.AddTargetConsumer(_barrelController);
 		}
 
 		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
@@ -93,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			if (BuildableState == BuildableState.Completed)
 			{
-				_targetProcessor.RemoveTargetConsumer(this);
+				_targetProcessor.RemoveTargetConsumer(_barrelController);
 				_targetProcessor = null;
 			}
 		}
