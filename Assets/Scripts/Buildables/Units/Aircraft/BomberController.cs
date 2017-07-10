@@ -181,7 +181,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 		
 		/// <returns>
-		/// True if the bomber has overlown the target enough so that it can turn around
+		/// True if the bomber has overflown the target enough so that it can turn around
 		/// and have enough space for the next bombing run.  False otherwise.
 		/// </returns>
 		private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float targetXVelocity)
