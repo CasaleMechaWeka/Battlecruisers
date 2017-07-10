@@ -14,7 +14,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		event EventHandler<TargetEventArgs> OnExited;
 	}
 
-	public class TargetDetector : MonoBehaviour, ITargetDetector
+	public class CircleTargetDetector : MonoBehaviour, ITargetDetector
 	{
 		private CircleCollider2D _circleCollider;
 

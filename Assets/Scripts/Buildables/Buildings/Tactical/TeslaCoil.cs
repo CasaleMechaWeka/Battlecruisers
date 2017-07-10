@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 	public class TeslaCoil : Building, ITargetConsumer
 	{
 		private BasicTurretStats _teslaCoilStats;
-		private TargetDetector _rocketDetector;
+		private CircleTargetDetector _rocketDetector;
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
 		private FireIntervalManager _fireIntervalManager;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			_teslaCoilStats = gameObject.GetComponent<BasicTurretStats>();
 			Assert.IsNotNull(_teslaCoilStats);
 
-			_rocketDetector = gameObject.GetComponentInChildren<TargetDetector>();
+			_rocketDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(_rocketDetector);
 
 			_attackCapabilities.Add(TargetType.Rocket);

@@ -27,9 +27,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private IHomingMovementController _movementController;
 
 		// Detects enemies that come within following range
-		public TargetDetector followableEnemyDetector;
+		public CircleTargetDetector followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
-		public TargetDetector shootableEnemyDetector;
+		public CircleTargetDetector shootableEnemyDetector;
 
 		public BarrelController barrelController;
 		public float enemyFollowDetectionRangeInM;

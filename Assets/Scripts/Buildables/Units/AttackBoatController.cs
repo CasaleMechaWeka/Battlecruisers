@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Units
 		private ITargetFinder _enemyFinder, _friendFinder;
 		private ITargetProcessor _targetProcessor;
 
-		public TargetDetector enemyDetector, friendDetector;
+		public CircleTargetDetector enemyDetector, friendDetector;
 
 		public override float Damage 
 		{ 

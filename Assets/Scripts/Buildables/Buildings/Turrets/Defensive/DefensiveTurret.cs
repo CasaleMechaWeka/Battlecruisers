@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
 
-		public TargetDetector enemyDetector;
+		public CircleTargetDetector enemyDetector;
 
 		public override void StaticInitialise()
 		{
