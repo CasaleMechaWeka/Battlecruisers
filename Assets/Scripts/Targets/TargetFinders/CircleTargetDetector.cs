@@ -8,12 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public interface ITargetDetector
-	{
-		event EventHandler<TargetEventArgs> OnEntered;
-		event EventHandler<TargetEventArgs> OnExited;
-	}
-
 	public class CircleTargetDetector : MonoBehaviour, ITargetDetector
 	{
 		private CircleCollider2D _circleCollider;
