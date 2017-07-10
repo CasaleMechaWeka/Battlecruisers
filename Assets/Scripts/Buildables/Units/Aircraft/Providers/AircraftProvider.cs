@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		private const float FIGHTER_PATROL_MARGIN = 5;
 		private const float BOMBER_PATROL_MARGIN = 10;
+		private const float DEATHSTAR_PATROL_MARGIN = 5;
 
 		public SafeZone FighterSafeZone { get; private set; }
 
@@ -45,7 +46,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				maxY: SAFE_ZONE_MAX_Y);
 		}
 
-		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitude)
+		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
 		{
 			float parentCruiserPatrolPointAdjustmentX = _parentCruiserPosition.x < 0 ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
@@ -55,17 +56,26 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 			return new List<Vector2>() 
 			{
-				new Vector2(parentCruiserPatrolPointX, cruisingAltitude),
-				new Vector2(enemyCruiserpatrolPointX, cruisingAltitude)
+				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
+				new Vector2(enemyCruiserpatrolPointX, cruisingAltitudeInM)
 			};
 		}
 
-		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitude)
+		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
 			return new List<Vector2>() 
 			{
-				new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitude),
-				new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitude),
+				new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitudeInM),
+				new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitudeInM),
+			};
+		}
+		
+		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
+		{
+			return new List<Vector2>() {
+				new Vector2(deathstarPosition.x, cruisingAltitudeInM),
+				new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
+				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)
 			};
 		}
 	}

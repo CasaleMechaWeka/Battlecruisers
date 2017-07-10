@@ -9,7 +9,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 	{
 		SafeZone FighterSafeZone { get; }
 
-		IList<Vector2> FindBomberPatrolPoints(float cruisingAltitude);
-		IList<Vector2> FindFighterPatrolPoints(float cruisingAltitude);
+		IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM);
+		IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM);
+		IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM);
 	}
 }
