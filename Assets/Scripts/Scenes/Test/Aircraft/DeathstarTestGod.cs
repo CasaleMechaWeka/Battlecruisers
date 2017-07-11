@@ -33,10 +33,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
 
 			// Setup deathstar
-			// FELIX
-//			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, target.TargetType);
-//			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
-			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(deathstarPatrolPoints: patrolPoints);
+			Vector2 parentCruiserPosition = new Vector2(-10, 0);
+			Vector2 enemyCruiserPosition = new Vector2(10, 0);
+			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+//			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(deathstarPatrolPoints: patrolPoints);
 
 			DeathstarController deathstar = GameObject.FindObjectOfType<DeathstarController>();
 			helper.InitialiseBuildable(deathstar, Faction.Reds, aircraftProvider: aircraftProvider);

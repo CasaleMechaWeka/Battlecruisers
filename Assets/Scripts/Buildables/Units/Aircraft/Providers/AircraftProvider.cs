@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float FIGHTER_PATROL_MARGIN = 5;
 		private const float BOMBER_PATROL_MARGIN = 10;
 		private const float DEATHSTAR_PATROL_MARGIN = 5;
+		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1;
 
 		public SafeZone FighterSafeZone { get; private set; }
 
@@ -73,6 +74,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
 		{
 			return new List<Vector2>() {
+				new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN),
 				new Vector2(deathstarPosition.x, cruisingAltitudeInM),
 				new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
 				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)
