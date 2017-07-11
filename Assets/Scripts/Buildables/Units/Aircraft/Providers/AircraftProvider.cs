@@ -76,8 +76,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 			return new List<Vector2>() {
 				new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN),
 				new Vector2(deathstarPosition.x, cruisingAltitudeInM),
-				new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
-				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)
+				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
+				new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)
 			};
 		}
 	}
