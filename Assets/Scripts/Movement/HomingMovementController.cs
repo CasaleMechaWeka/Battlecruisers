@@ -6,12 +6,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Movement
 {
-	public interface IHomingMovementController
-	{
-		ITarget Target { set; }
-		void AdjustVelocity();
-	}
-
 	public class HomingMovementController : IHomingMovementController
 	{
 		protected readonly Rigidbody2D _rigidBody;
