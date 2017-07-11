@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Velocity
 {
 	public class MissileMovementController : HomingMovementController
 	{

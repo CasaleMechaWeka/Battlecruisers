@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Velocity
 {
 	/// <summary>
 	/// 1. Moves above source to cruising altitude

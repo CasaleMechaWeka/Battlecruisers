@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Movement;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using System;

@@ -1,10 +1,10 @@
-﻿using BattleCruisers.Movement;
+﻿using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Velocity
 {
 	public interface IMovementControllerFactory
 	{

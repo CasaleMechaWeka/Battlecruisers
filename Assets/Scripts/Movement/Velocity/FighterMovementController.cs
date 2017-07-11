@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Velocity
 {
 	public class FighterMovementController : HomingMovementController
 	{

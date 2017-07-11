@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Velocity
 {
 	public class HomingMovementController : IHomingMovementController
 	{
