@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -16,6 +17,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		public void Initialise(IAngleCalculator angleCalculator, float rotateSpeedInDegreesPerS)
 		{
+			Assert.IsNotNull(angleCalculator);
+			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
+
 			_angleCalculator = angleCalculator;
 			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
 			_desiredAngleInDegrees = transform.rotation.eulerAngles.z;
@@ -53,6 +57,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				rotationIncrement = differenceInDegrees;
 			}
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
+
+			Debug.Log("rotationIncrementVector: " + rotationIncrementVector);
 
 			transform.Rotate(rotationIncrementVector);
 		}

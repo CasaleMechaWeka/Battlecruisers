@@ -26,8 +26,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private int _originalPatrolPointsCount;
 
 		public float cruisingAltitudeInM;
+		public DeathstarWingController leftWing, rightWing;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 1;
+		private const float LEFT_WING_TARGET_ANGLE_IN_DEGREES = 270;
+		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
+		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
 
 		private bool IsAtCruisingHeight
 		{
@@ -41,6 +45,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.StaticInitialise();
 
+			Assert.IsNotNull(leftWing);
+			Assert.IsNotNull(rightWing);
+
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 
@@ -50,6 +57,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
 			Assert.IsNotNull(_targetDetector);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+			leftWing.Initialise(angleCalculator, WING_ROTATE_SPEED_IN_M_DEGREES_S);
+			rightWing.Initialise(angleCalculator, WING_ROTATE_SPEED_IN_M_DEGREES_S);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -73,6 +89,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
 			_targetProcessor.AddTargetConsumer(_barrelController);
+
+			// FELIX  TEMP
+			UnfoldWings();
+		}
+
+		private void UnfoldWings()
+		{
+			leftWing.StartRotatingWing(LEFT_WING_TARGET_ANGLE_IN_DEGREES);
+			rightWing.StartRotatingWing(RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
 		}
 
 		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
