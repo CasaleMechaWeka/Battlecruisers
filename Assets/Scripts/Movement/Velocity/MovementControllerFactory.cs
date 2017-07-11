@@ -6,13 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public interface IMovementControllerFactory
-	{
-		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone);
-		IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM);
-	}
-
 	public class MovementControllerFactory : IMovementControllerFactory
 	{
 		public IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory)
@@ -31,4 +24,3 @@ namespace BattleCruisers.Movement.Velocity
 		}
 	}
 }
-
