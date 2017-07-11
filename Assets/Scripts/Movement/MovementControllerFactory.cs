@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Movement.Velocity
+namespace BattleCruisers.Movement
 {
 	public class MovementControllerFactory : IMovementControllerFactory
 	{

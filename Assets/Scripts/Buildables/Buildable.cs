@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets;
