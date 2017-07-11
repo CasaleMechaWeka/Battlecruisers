@@ -36,7 +36,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			Vector2 parentCruiserPosition = new Vector2(-10, 0);
 			Vector2 enemyCruiserPosition = new Vector2(10, 0);
 			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
-//			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(deathstarPatrolPoints: patrolPoints);
 
 			DeathstarController deathstar = GameObject.FindObjectOfType<DeathstarController>();
 			helper.InitialiseBuildable(deathstar, Faction.Reds, aircraftProvider: aircraftProvider);

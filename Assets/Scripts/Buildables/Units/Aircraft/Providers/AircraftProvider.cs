@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
-	// FELIX  Also set cruising altitude from provider instead of aircraft knowing about it?
 	public class AircraftProvider : IAircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
