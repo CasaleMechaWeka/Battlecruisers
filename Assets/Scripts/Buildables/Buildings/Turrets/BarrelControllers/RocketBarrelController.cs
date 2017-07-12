@@ -14,7 +14,7 @@ using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class RocketBarrelController : TurretBarrelController
+	public class RocketBarrelController : BarrelController
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
 		private Faction _faction;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, 
 			IMovementControllerFactory movementControllerFactory, Faction faction)
 		{
-			base.Initialise(targetFilter, angleCalculator);
+			base.Initialise(targetFilter, angleCalculator, movementControllerFactory);
 
 			Assert.IsNotNull(rocketPrefab);
 			_faction = faction;
@@ -53,4 +53,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 	}
 }
-

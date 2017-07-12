@@ -3,6 +3,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -80,7 +81,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		protected virtual void InitialiseTurretBarrel()
 		{
-			_barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator());
+			_barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController());
 		}
 
 		protected virtual ITargetFilter CreateTargetFilter()
@@ -90,6 +91,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		}
 
 		protected abstract IAngleCalculator CreateAngleCalculator();
+
+		protected virtual IRotationMovementController CreateRotationMovementController()
+		{
+			return _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
+		}
 
 		protected override void EnableRenderers(bool enabled)
 		{

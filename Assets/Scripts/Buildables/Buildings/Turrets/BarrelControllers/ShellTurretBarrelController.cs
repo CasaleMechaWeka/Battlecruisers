@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -11,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class ShellTurretBarrelController : TurretBarrelController
+	public class ShellTurretBarrelController : BarrelController
 	{
 		private ShellSpawner _shellSpawner;
 
@@ -27,9 +28,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsNotNull(_shellSpawner);
 		}
 
-		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
-			base.Initialise(targetFilter, angleCalculator);
+			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			ShellStats shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
 			_shellSpawner.Initialise(shellStats, targetFilter);

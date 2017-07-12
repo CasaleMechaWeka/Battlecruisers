@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class SamSiteBarrelController : TurretBarrelController
+	public class SamSiteBarrelController : BarrelController
 	{
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawner _missileSpawner;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public void Initialise(IExactMatchTargetFilter targetFilter, IAngleCalculator angleCalculator, 
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			base.Initialise(targetFilter, angleCalculator);
+			base.Initialise(targetFilter, angleCalculator, movementControllerFactory);
 
 			Assert.IsNotNull(missilePrefab);
 
@@ -43,4 +43,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 	}
 }
-
