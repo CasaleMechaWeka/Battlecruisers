@@ -19,6 +19,7 @@ namespace BattleCruisers.Scenes.Test.Shields
 		void Start () 
 		{
 			shield.Initialise(Faction.Reds);
+			turret.StaticInitialise();
 
 			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, TargetType.Buildings);
 			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
