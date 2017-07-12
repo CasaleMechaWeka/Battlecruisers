@@ -6,13 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement
 {
-	// FELIX   Move to own class
-	public interface IRotationMovementController
-	{
-		bool IsOnTarget(float desiredAngleInDegrees);
-		void AdjustRotation(float desiredAngleInDegrees);
-	}
-
 	// FELIX  Try RigidBody.MoveRotation
 	public class RotationMovementController : IRotationMovementController
 	{
