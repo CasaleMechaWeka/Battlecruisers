@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
-	// FELIX  Try RigidBody.MoveRotation
 	public class RotationMovementController : IRotationMovementController
 	{
 		private readonly float _rotateSpeedInDegreesPerS;
