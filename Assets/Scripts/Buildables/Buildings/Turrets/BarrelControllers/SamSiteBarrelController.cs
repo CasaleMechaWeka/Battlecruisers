@@ -1,7 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -20,10 +21,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public MissileController missilePrefab;
 
-		public void Initialise(IExactMatchTargetFilter targetFilter, IAngleCalculator angleCalculator, 
+		public void Initialise(IExactMatchTargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController,
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			base.Initialise(targetFilter, angleCalculator, movementControllerFactory);
+			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			Assert.IsNotNull(missilePrefab);
 

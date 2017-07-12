@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 		{
 			RocketBarrelController barrelController = _barrelController as RocketBarrelController;
 			Assert.IsNotNull(barrelController);
-			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), _movementControllerFactory, Faction);
+			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, Faction);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()

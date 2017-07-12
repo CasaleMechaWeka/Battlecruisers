@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Renderer _turretBaseRenderer;
 		private GameObject _turretBarrel;
 		private Renderer _turretBarrelRenderer;
-		protected TurretBarrelController _barrelController;
+		protected BarrelController _barrelController;
 
 		protected override Renderer Renderer
 		{
@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
 			
-			_barrelController = gameObject.GetComponentInChildren<TurretBarrelController>();
+			_barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
 		}

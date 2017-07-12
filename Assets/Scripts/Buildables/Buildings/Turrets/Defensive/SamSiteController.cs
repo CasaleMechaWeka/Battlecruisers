@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 			Assert.IsNotNull(barrelController);
 
 			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFiler();
-			barrelController.Initialise(targetFilter, CreateAngleCalculator(), _movementControllerFactory, _targetPositionPredictorFactory);
+			barrelController.Initialise(targetFilter, CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, _targetPositionPredictorFactory);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()

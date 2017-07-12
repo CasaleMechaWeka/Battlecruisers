@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
@@ -23,10 +24,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
-		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, 
+		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController,
 			IMovementControllerFactory movementControllerFactory, Faction faction)
 		{
-			base.Initialise(targetFilter, angleCalculator, movementControllerFactory);
+			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			Assert.IsNotNull(rocketPrefab);
 			_faction = faction;
