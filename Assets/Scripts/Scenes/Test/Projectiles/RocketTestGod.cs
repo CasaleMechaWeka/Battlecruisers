@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 25);
 			Vector2 initialVelocity = new Vector2(0, 5);
-			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
+			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 
 			rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory, Faction.Blues);
 		}

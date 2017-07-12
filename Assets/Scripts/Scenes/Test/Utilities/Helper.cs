@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			if (movementControllerFactory == null)
 			{
-				movementControllerFactory = new MovementControllerFactory();
+				movementControllerFactory = new MovementControllerFactory(null, null);
 			}
 
 			if (angleCalculatorFactory == null)

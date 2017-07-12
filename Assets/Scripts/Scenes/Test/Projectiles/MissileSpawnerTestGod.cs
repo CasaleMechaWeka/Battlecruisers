@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 
 			MissileStats missileStats = new MissileStats(missilePrefab, damage: 50, maxVelocityInMPerS: 20);
-			_missileSpawner.Initialise(missileStats, new MovementControllerFactory(), new TargetPositionPredictorFactory());
+			_missileSpawner.Initialise(missileStats, new MovementControllerFactory(null, null), new TargetPositionPredictorFactory());
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

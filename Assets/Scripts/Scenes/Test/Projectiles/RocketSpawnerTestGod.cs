@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 
 			RocketStats rocketStats = new RocketStats(rocketPrefab: rocketPrefab, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 25);
-			_rocketSpawner.Initialise(rocketStats, new MovementControllerFactory());
+			_rocketSpawner.Initialise(rocketStats, new MovementControllerFactory(null, null));
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
 		}

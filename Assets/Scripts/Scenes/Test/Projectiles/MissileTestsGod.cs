@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 			MissileStats missileStats = new MissileStats(missilePrefab: null, damage: 50, maxVelocityInMPerS: 20);
 			Vector2 initialVelocity = new Vector2(5, 5);
-			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory();
+			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
 
 			MissileController[] missiles = GameObject.FindObjectsOfType<MissileController>() as MissileController[];

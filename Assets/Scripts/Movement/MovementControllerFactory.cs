@@ -1,6 +1,7 @@
-﻿using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Predictors;
 using System;
 using UnityEngine;
 
@@ -8,6 +9,15 @@ namespace BattleCruisers.Movement
 {
 	public class MovementControllerFactory : IMovementControllerFactory
 	{
+		private readonly IAngleCalculatorFactory _angleCalculatorFactory;
+		private readonly ITargetPositionPredictorFactory _targetPositionPredictionFactory;
+
+		public MovementControllerFactory(IAngleCalculatorFactory angleCalculatorFactory, ITargetPositionPredictorFactory targetPositionPredictionFactory)
+		{
+			_angleCalculatorFactory = angleCalculatorFactory;
+			_targetPositionPredictionFactory = targetPositionPredictionFactory;
+		}
+
 		public IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			return new MissileMovementController(rigidBody, maxVelocityInMPerS, targetPositionPredictorFactory);
@@ -21,6 +31,12 @@ namespace BattleCruisers.Movement
 		public IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM)
 		{
 			return new RocketMovementController(rigidBody, maxVelocityInMPerS, cruisingAltitudeInM);
+		}
+
+		public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
+		{
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictionFactory);
+			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
 		}
 	}
 }

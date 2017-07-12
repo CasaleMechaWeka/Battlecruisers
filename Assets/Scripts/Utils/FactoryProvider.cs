@@ -33,9 +33,9 @@ namespace BattleCruisers.Utils
 		{
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);
-			MovementControllerFactory = new MovementControllerFactory();
 			AngleCalculatorFactory = new AngleCalculatorFactory();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
+			MovementControllerFactory = new MovementControllerFactory(AngleCalculatorFactory, TargetPositionPredictorFactory);
 			AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position);
 		}
 	}

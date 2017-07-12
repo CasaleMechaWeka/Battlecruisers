@@ -11,5 +11,7 @@ namespace BattleCruisers.Movement
 		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory);
 		IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone);
 		IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM);
+
+		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
 	}
 }
