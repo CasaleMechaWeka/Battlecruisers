@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		
 		protected ITargetFilter _targetFilter;
 		protected IAngleCalculator _angleCalculator;
+		protected IRotationMovementController _rotationMovementController;
 
 		public ITarget Target { get; set; }
 		protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
@@ -45,10 +47,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_fireIntervalManager = fireIntervalManager;
 		}
 
-		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
 			_targetFilter = targetFilter;
 			_angleCalculator = angleCalculator;
+			_rotationMovementController = rotationMovementController;
 		}
 
 		void FixedUpdate()
@@ -60,11 +63,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
 				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, TurretStats.bulletVelocityInMPerS, currentAngleInRadians);
 
-				bool isOnTarget = IsOnTarget(desiredAngleInDegrees);
+				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
 				if (!isOnTarget)
 				{
-					AdjustBarrel(desiredAngleInDegrees);
+					_rotationMovementController.AdjustRotation(desiredAngleInDegrees);
 				}
 
 				if ((isOnTarget || TurretStats.IsInBurst)
@@ -87,10 +90,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				CeaseFire();
 			}
 		}
-
-		protected abstract bool IsOnTarget(float desiredAngleInDegrees);
-
-		protected abstract void AdjustBarrel(float desiredAngleInDegrees);
 
 		protected abstract void Fire(float angleInDegrees);
 
