@@ -39,5 +39,10 @@ namespace BattleCruisers.Movement
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictionFactory);
 			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
 		}
+
+		public IRotationMovementController CreateDummyRotationMovementController()
+		{
+			return new DummyRotationMovementController();
+		}
 	}
 }

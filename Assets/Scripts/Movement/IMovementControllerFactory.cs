@@ -14,5 +14,6 @@ namespace BattleCruisers.Movement
 		IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM);
 
 		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
+		IRotationMovementController CreateDummyRotationMovementController();
 	}
 }
