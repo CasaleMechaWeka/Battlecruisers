@@ -4,50 +4,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Units.Aircraft
+namespace BattleCruisers.Movement
 {
-	// FELIX  Avoid duplicate code with TurretBarrelController
-	public class DeathstarWingController : MonoBehaviour 
+	// FELIX   Move to own class
+	public interface IRotationMovementController
 	{
-		private IAngleCalculator _angleCalculator;
-		private float _desiredAngleInDegrees;
-		private float _rotateSpeedInDegreesPerS;
+		bool IsOnTarget(float desiredAngleInDegrees);
+		void AdjustRotation(float desiredAngleInDegrees);
+	}
+
+	// FELIX  Try RigidBody.MoveRotation
+	public class RotationMovementController : IRotationMovementController
+	{
+		private readonly float _rotateSpeedInDegreesPerS;
+		private readonly IAngleCalculator _angleCalculator;
+		private readonly Transform _transform;
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-		public void Initialise(IAngleCalculator angleCalculator, float rotateSpeedInDegreesPerS)
+		public RotationMovementController(IAngleCalculator angleCalculator, float rotateSpeedInDegreesPerS, Transform transform)
 		{
 			Assert.IsNotNull(angleCalculator);
 			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
 
 			_angleCalculator = angleCalculator;
 			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
-			_desiredAngleInDegrees = transform.rotation.eulerAngles.z;
 		}
 
-		public void StartRotatingWing(float desiredAngleInDegrees)
+		public bool IsOnTarget(float desiredAngleInDegrees)
 		{
-			_desiredAngleInDegrees = desiredAngleInDegrees;
-		}
-
-		void FixedUpdate()
-		{
-			if (!IsOnTarget(_desiredAngleInDegrees))
-			{
-				AdjustRotation(_desiredAngleInDegrees);
-			}
-		}
-
-		private bool IsOnTarget(float desiredAngleInDegrees)
-		{
-			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
+			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 		}
 
-		private void AdjustRotation(float desiredAngleInDegrees)
+		public void AdjustRotation(float desiredAngleInDegrees)
 		{
-			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
+			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 
@@ -58,7 +51,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
 
-			transform.Rotate(rotationIncrementVector);
+			_transform.Rotate(rotationIncrementVector);
 		}
 	}
 }
