@@ -72,11 +72,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				targetsFactory = new TargetsFactory(enemyCruiser);
 			}
 
-			if (movementControllerFactory == null)
-			{
-				movementControllerFactory = new MovementControllerFactory(null, null);
-			}
-
 			if (angleCalculatorFactory == null)
 			{
 				angleCalculatorFactory = new AngleCalculatorFactory();
@@ -85,6 +80,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			if (targetPositionPredictorFactory == null)
 			{
 				targetPositionPredictorFactory = new TargetPositionPredictorFactory();
+			}
+			
+			if (movementControllerFactory == null)
+			{
+				movementControllerFactory = new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory);
 			}
 
 			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 

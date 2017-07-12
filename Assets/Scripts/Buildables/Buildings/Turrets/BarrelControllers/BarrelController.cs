@@ -32,6 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
 		public virtual TurretStats TurretStats { get; protected set; }
+		private bool IsInitialised { get { return _targetFilter != null; } }
 
 		public virtual void StaticInitialise()
 		{
@@ -56,6 +57,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		void FixedUpdate()
 		{
+			if (!IsInitialised)
+			{
+				return;
+			}
+
 			if (Target != null)
 			{
 				Logging.Log(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
