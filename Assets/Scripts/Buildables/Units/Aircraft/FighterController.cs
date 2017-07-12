@@ -26,13 +26,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private IHomingMovementController _movementController;
+		private BarrelController _barrelController;
 
 		// Detects enemies that come within following range
 		public CircleTargetDetector followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
 		public CircleTargetDetector shootableEnemyDetector;
 
-		public BarrelController barrelController;
 		public float enemyFollowDetectionRangeInM;
 		public float cruisingAltitudeInM;
 
@@ -78,11 +78,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.StaticInitialise();
 
 			Assert.IsNotNull(followableEnemyDetector);
-			Assert.IsNotNull(barrelController);
 			
 			_attackCapabilities.Add(TargetType.Aircraft);
-			
-			barrelController.StaticInitialise();
+
+			_barrelController = gameObject.GetComponentInChildren<BarrelController>();
+			Assert.IsNotNull(_barrelController);
+			_barrelController.StaticInitialise();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -93,7 +94,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
-			barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
+			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 
@@ -129,12 +130,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
-			shootableEnemyDetector.Initialise(barrelController.TurretStats.rangeInM);
+			shootableEnemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
 			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(_shootableTargetFinder, shootableTargetRanker);
-			_shootableTargetProcessor.AddTargetConsumer(barrelController);
+			_shootableTargetProcessor.AddTargetConsumer(_barrelController);
 		}
 
 		protected override void OnFixedUpdate()
@@ -169,7 +170,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				_followableTargetFinder.Dispose();
 				_followableTargetFinder = null;
 
-				_shootableTargetProcessor.RemoveTargetConsumer(barrelController);
+				_shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
 				_shootableTargetProcessor.Dispose();
 				_shootableTargetProcessor = null;
 
