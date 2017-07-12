@@ -19,9 +19,11 @@ namespace BattleCruisers.Movement
 		{
 			Assert.IsNotNull(angleCalculator);
 			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
+			Assert.IsNotNull(transform);
 
 			_angleCalculator = angleCalculator;
 			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
+			_transform = transform;
 		}
 
 		public bool IsOnTarget(float desiredAngleInDegrees)

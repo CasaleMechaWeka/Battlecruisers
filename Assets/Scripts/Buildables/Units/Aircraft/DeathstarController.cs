@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -64,9 +65,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
-			leftWing.Initialise(angleCalculator, WING_ROTATE_SPEED_IN_M_DEGREES_S);
-			rightWing.Initialise(angleCalculator, WING_ROTATE_SPEED_IN_M_DEGREES_S);
+			IRotationMovementController leftWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, leftWing.transform);
+			leftWing.Initialise(leftWingRotationMovementController);
+
+			IRotationMovementController rightWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, rightWing.transform);
+			rightWing.Initialise(rightWingRotationMovementController);
 		}
 
 		protected override void OnBuildableCompleted()

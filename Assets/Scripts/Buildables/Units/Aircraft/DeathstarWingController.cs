@@ -3,25 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Movement;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	// FELIX  Avoid duplicate code with TurretBarrelController
 	public class DeathstarWingController : MonoBehaviour 
 	{
-		private IAngleCalculator _angleCalculator;
+		private IRotationMovementController _rotationMovementController;
 		private float _desiredAngleInDegrees;
-		private float _rotateSpeedInDegreesPerS;
 
-		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
-
-		public void Initialise(IAngleCalculator angleCalculator, float rotateSpeedInDegreesPerS)
+		public void Initialise(IRotationMovementController rotationMovementController)
 		{
-			Assert.IsNotNull(angleCalculator);
-			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
-
-			_angleCalculator = angleCalculator;
-			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
+			_rotationMovementController = rotationMovementController;
 			_desiredAngleInDegrees = transform.rotation.eulerAngles.z;
 		}
 
@@ -32,33 +25,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		void FixedUpdate()
 		{
-			if (!IsOnTarget(_desiredAngleInDegrees))
+			if (_rotationMovementController != null
+				&& !_rotationMovementController.IsOnTarget(_desiredAngleInDegrees))
 			{
-				AdjustRotation(_desiredAngleInDegrees);
+				_rotationMovementController.AdjustRotation(_desiredAngleInDegrees);
 			}
-		}
-
-		private bool IsOnTarget(float desiredAngleInDegrees)
-		{
-			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
-			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
-		}
-
-		private void AdjustRotation(float desiredAngleInDegrees)
-		{
-			float currentAngleInDegrees = transform.rotation.eulerAngles.z;
-			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
-
-			float rotationIncrement = Time.deltaTime * _rotateSpeedInDegreesPerS;
-			if (rotationIncrement > differenceInDegrees)
-			{
-				rotationIncrement = differenceInDegrees;
-			}
-			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
-
-			transform.Rotate(rotationIncrementVector);
 		}
 	}
 }

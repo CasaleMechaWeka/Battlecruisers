@@ -1,10 +1,13 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Movement;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -37,8 +40,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			Vector2 enemyCruiserPosition = new Vector2(10, 0);
 			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
+			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(new AngleCalculatorFactory(), new TargetPositionPredictorFactory());
+
 			DeathstarController deathstar = GameObject.FindObjectOfType<DeathstarController>();
-			helper.InitialiseBuildable(deathstar, Faction.Reds, aircraftProvider: aircraftProvider);
+			helper.InitialiseBuildable(deathstar, Faction.Reds, aircraftProvider: aircraftProvider, movementControllerFactory: movementControllerFactory);
 			deathstar.StartConstruction();
 		}
 	}
