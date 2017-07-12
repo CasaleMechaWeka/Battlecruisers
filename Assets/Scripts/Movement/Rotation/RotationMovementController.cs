@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Movement
+namespace BattleCruisers.Movement.Rotation
 {
 	// FELIX  Try RigidBody.MoveRotation
 	public class RotationMovementController : IRotationMovementController

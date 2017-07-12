@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Movement;
+using BattleCruisers.Movement.Rotation;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {

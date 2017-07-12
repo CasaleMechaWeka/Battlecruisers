@@ -1,6 +1,5 @@
-﻿namespace BattleCruisers.Movement
+﻿namespace BattleCruisers.Movement.Rotation
 {
-	// FELIX Fix namespace
 	public interface IRotationMovementController
 	{
 		bool IsOnTarget(float desiredAngleInDegrees);
