@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
@@ -22,11 +23,12 @@ namespace BattleCruisers.Scenes.Test
 
 			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
 
-			TurretBarrelController[] turretBarrels = GameObject.FindObjectsOfType<TurretBarrelController>() as TurretBarrelController[];
-			foreach (TurretBarrelController barrel in turretBarrels)
+			BarrelController[] turretBarrels = GameObject.FindObjectsOfType<BarrelController>() as BarrelController[];
+			foreach (BarrelController barrel in turretBarrels)
 			{
+				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-				barrel.Initialise(null, angleCalculator);
+				barrel.Initialise(null, angleCalculator, rotationMovementController);
 			}
 		}
 	}

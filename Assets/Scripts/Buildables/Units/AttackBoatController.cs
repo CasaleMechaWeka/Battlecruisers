@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -15,10 +16,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Create parent boat class
-// FELIX  Create Naval folder & namespace
 namespace BattleCruisers.Buildables.Units
 {
+	// FELIX  Create parent boat class
+	// FELIX  Create Naval folder & namespace
 	/// <summary>
 	/// Assumptions:
 	/// 1. Boats only move horizontally, and are all at the same height
@@ -82,7 +83,8 @@ namespace BattleCruisers.Buildables.Units
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator);
+			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_turretBarrelController.TurretStats.turretRotateSpeedInDegrees, _turretBarrelController.transform);
+			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator, rotationMovementController);
 		}
 
 		protected override void OnBuildableCompleted()

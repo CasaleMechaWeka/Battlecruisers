@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -88,10 +89,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
 
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			barrelController.Initialise(targetFilter, angleCalculator);
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
+			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
+			barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 
