@@ -32,9 +32,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			set { _rigidBody.velocity = value; }
 		}
 
-		#pragma warning disable 67  // Unused event
-		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
-		#pragma warning restore 67
+		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged { add {} remove {} }
 
 		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{

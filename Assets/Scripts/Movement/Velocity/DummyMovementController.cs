@@ -7,9 +7,7 @@ namespace BattleCruisers.Movement.Velocity
 	{
 		public Vector2 Velocity { get; set; } 
 
-		#pragma warning disable 67  // Unused event
-		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
-		#pragma warning restore 67 
+		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged { add {} remove {} }
 
 		public void AdjustVelocity() { }
 	}
