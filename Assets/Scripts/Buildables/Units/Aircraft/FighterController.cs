@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
-		private IHomingMovementController _movementController;
+		private IMovementController _movementController, _patrollingMovementController, _figherMovementController;
 		private BarrelController _barrelController;
 
 		// Detects enemies that come within following range
@@ -50,7 +50,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				Logging.Log(Tags.AIRCRAFT, "FighterController.set_Target:  " + value);
 
 				_target = value;
-				_movementController.Target = _target;
+				// FELIX
+//				_movementController.Target = _target;
 
 				if (_target == null)
 				{
@@ -75,7 +76,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		protected override float PatrollingVelocity	{ get {	return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
 		public override void StaticInitialise()
 		{
@@ -100,9 +100,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
 			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
-			PatrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
 
-			_movementController = _movementControllerFactory.CreateFighterMovementController(rigidBody, maxVelocityInMPerS, _aircraftProvider.FighterSafeZone);
+			IList<Vector2> patrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
+			float maxPatrollingVelocity = maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
+			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxPatrollingVelocity, patrolPoints);
+			_figherMovementController = _movementControllerFactory.CreateFighterMovementController(rigidBody, maxVelocityInMPerS, _aircraftProvider.FighterSafeZone);
 
 			SetupTargetDetection();
 		}

@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
+		// FELIX  Remove this?  Only have for TestAircraftController?
 		public IList<Vector2> PatrolPoints { protected get; set; }
 
 		public override Vector2 Velocity { get { return _movementController.Velocity; } }
