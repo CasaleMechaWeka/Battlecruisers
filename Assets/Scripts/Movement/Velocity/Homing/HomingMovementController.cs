@@ -11,6 +11,9 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		protected readonly Rigidbody2D _rigidBody;
 		protected readonly float _maxVelocityInMPerS;
 		private Vector2 _velocity;
+		
+		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
+		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
 		private ITarget _target;
 		public ITarget Target 
@@ -23,8 +26,15 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			}
 		}
 
-		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
+		public Vector2 Velocity
+		{
+			get { return _rigidBody.velocity; }
+			set { _rigidBody.velocity = value; }
+		}
+
+		#pragma warning disable 67  // Unused event
+		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
+		#pragma warning restore 67
 
 		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{

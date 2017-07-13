@@ -2,9 +2,8 @@
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public interface IHomingMovementController
+	public interface IHomingMovementController : IMovementController
 	{
 		ITarget Target { set; }
-		void AdjustVelocity();
 	}
 }

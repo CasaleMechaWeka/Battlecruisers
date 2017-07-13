@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_movementController.DirectionChanged += _movementController_DirectionChanged;
 		}
 
-		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+		protected virtual void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
 		{
 			FacingDirection = e.NewDirection;
 		}

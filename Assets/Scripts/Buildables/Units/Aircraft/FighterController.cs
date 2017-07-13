@@ -160,6 +160,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			// Turn off parent class behaviour of mirroring accross y-axis
 		}
 
+		protected override void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+		{
+			// Do nothing.  Do not want base class to update our sprite direction, as we handle this in house :)
+		}
+
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
