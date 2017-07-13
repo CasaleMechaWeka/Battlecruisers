@@ -23,13 +23,13 @@ namespace BattleCruisers.Movement.Velocity
 		{
 			Assert.IsNotNull(rigidBody);
 			Assert.IsTrue(maxPatrollilngVelocityInMPerS > 0);
-			Assert.IsTrue(_patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
+			Assert.IsTrue(patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
 
 			_rigidBody = rigidBody;
 			_maxPatrollilngVelocityInMPerS = maxPatrollilngVelocityInMPerS;
 			_patrolPoints = patrolPoints;
 
-			_targetPatrolPoint = FindNextPatrolPoint();
+			_targetPatrolPoint = FindNearestPatrolPoint();
 		}
 
 		public void AdjustVelocity()
