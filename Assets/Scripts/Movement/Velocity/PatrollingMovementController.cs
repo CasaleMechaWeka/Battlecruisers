@@ -19,6 +19,8 @@ namespace BattleCruisers.Movement.Velocity
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 		private const float MIN_NUM_OF_PATROL_POINTS = 2;
 
+		public Vector2 Velocity { get { return _patrollingVelocity; } }
+
 		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
 		{
 			Assert.IsNotNull(rigidBody);

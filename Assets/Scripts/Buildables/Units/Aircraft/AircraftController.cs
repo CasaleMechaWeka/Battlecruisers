@@ -14,34 +14,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
 		private IMovementController _movementController;
 
-		// FELIX  Remove unused
-		private float _patrollingSmoothTime;
-		protected Vector2 _patrollingVelocity;
-		protected bool _isPatrolling;
-		private Vector2 _lastPatrolPoint;
-		private Vector2 _targetPatrolPoint;
-
-		private const float POSITION_EQUALITY_MARGIN = 0.1f;
-		private const float SMOOTH_TIME_MULTIPLIER = 2;
-		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
-
-		#region Properties
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
 		public IList<Vector2> PatrolPoints { protected get; set; }
 
-		public override Vector2 Velocity
-		{
-			get
-			{
-				Logging.Log(Tags.AIRCRAFT, string.Format("_isPatrolling: {0}  _patrollingVelocity: {1}  base.Velocity: {2}", _isPatrolling, _patrollingVelocity, base.Velocity));
-
-				return _isPatrolling ? _patrollingVelocity : base.Velocity;
-			}
-		}
+		public Vector2 Velocity { get { return _movementController.Velocity; } }
 
 		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
-		#endregion Properties
 
 		protected override void OnInitialised()
 		{
