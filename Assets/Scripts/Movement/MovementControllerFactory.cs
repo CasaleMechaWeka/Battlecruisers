@@ -5,6 +5,7 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -33,6 +34,11 @@ namespace BattleCruisers.Movement
 		public IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM)
 		{
 			return new RocketMovementController(rigidBody, maxVelocityInMPerS, cruisingAltitudeInM);
+		}
+
+		public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
+		{
+			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
 		}
 
 		public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)

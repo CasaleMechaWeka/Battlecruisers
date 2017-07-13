@@ -3,12 +3,16 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
 {
 	public interface IMovementControllerFactory
 	{
+		IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints);
+
+		// FELIX  Return IMovementController instead?
 		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory);
 		IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone);
 		IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM);
