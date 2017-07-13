@@ -81,7 +81,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			// Patrolling
 			PatrolPoints = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 			_originalPatrolPointsCount = PatrolPoints.Count;
-			StartPatrolling();
+			// FELIX
+//			StartPatrolling();
 
 			// Barrel controller
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
@@ -96,21 +97,22 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetProcessor.AddTargetConsumer(_barrelController);
 		}
 
-		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
- 		{
-			// FELIX  Refactor!  PatrolPoint class :)
-			if (PatrolPoints.Count == _originalPatrolPointsCount)
-			{
-				PatrolPoints.Remove(patrolPointReached);
-				UnfoldWings();
-			}
-			else if (PatrolPoints.Count == _originalPatrolPointsCount - 1)
-			{
-				PatrolPoints.Remove(patrolPointReached);
-			}
-
-			Assert.IsTrue(PatrolPoints.Count >= 2);
-		}
+//		// FELIX
+//		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
+// 		{
+//			// FELIX  Refactor!  PatrolPoint class :)
+//			if (PatrolPoints.Count == _originalPatrolPointsCount)
+//			{
+//				PatrolPoints.Remove(patrolPointReached);
+//				UnfoldWings();
+//			}
+//			else if (PatrolPoints.Count == _originalPatrolPointsCount - 1)
+//			{
+//				PatrolPoints.Remove(patrolPointReached);
+//			}
+//
+//			Assert.IsTrue(PatrolPoints.Count >= 2);
+//		}
 		
 		private void UnfoldWings()
 		{

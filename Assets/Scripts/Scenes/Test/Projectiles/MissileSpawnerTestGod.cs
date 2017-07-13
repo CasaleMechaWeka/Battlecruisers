@@ -29,14 +29,8 @@ namespace BattleCruisers.Scenes.Test
 			// Setup target
 			Helper helper = new Helper();
 			_target = GameObject.FindObjectOfType<AircraftController>();
+			_target.PatrolPoints = targetPatrolPoints;
 			helper.InitialiseBuildable(_target);
-
-			_target.CompletedBuildable += (sender, e) => 
-			{
-				_target.PatrolPoints = targetPatrolPoints;
-				_target.StartPatrolling();
-			};
-			_target.StartConstruction();
 
 
 			// Setup missile spawner

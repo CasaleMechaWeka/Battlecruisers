@@ -57,7 +57,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 					_patrollingVelocity = rigidBody.velocity;
 					rigidBody.velocity = new Vector2(0, 0);
 
-					StartPatrolling();
+					// FELIX
+//					StartPatrolling();
 				}
 				else
 				{
@@ -66,7 +67,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 						rigidBody.velocity = _patrollingVelocity;
 					}
 
-					StopPatrolling();
+					// FELIX
+//					StopPatrolling();
 				}
 			}
 		}

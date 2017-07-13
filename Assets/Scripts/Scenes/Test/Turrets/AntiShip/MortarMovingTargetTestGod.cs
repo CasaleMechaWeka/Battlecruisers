@@ -22,7 +22,6 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 			TestAircraftController target = GameObject.FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
 			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
-			target.CompletedBuildable += (sender, e) => target.StartPatrolling();
 			helper.InitialiseBuildable(target, Faction.Blues);
 			target.StartConstruction();
 

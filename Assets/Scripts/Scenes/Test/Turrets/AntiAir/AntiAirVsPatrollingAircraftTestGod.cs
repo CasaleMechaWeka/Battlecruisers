@@ -39,7 +39,6 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 				helper.InitialiseBuildable(plane, faction);
 				plane.PatrolPoints = aircraftPatrolPoints;
 				plane.StartConstruction();
-				plane.StartPatrolling();
 			}
 		}
 	}

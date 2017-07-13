@@ -27,7 +27,6 @@ namespace BattleCruisers.Scenes.Test.Factories
 		{
 			AircraftController aircraft = (AircraftController)sender;
 			aircraft.PatrolPoints = patrolPoints;
-			aircraft.StartPatrolling();
 		}
 	}
 }

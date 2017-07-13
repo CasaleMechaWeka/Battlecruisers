@@ -83,7 +83,6 @@ namespace BattleCruisers.Scenes.Test
 				movingTarget.Position,
 				new Vector2(movingTarget.Position.x + (isSourceMirrored ? -2 : 2), movingTarget.Position.y)
 			};
-			movingTarget.CompletedBuildable += (sender, e) => movingTarget.StartPatrolling();
 		}
 
 		void Update()

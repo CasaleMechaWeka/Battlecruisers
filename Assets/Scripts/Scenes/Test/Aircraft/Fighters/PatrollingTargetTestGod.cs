@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		{
 			// Target
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
-			target.CompletedBuildable += (sender, e) => SetPatrolPoints(sender, patrolPoints);
+			target.PatrolPoints = patrolPoints;
 			target.StartConstruction();
 
 			// Fighter
@@ -43,12 +43,5 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
 			fighter.StartConstruction();
 		}
-
-		private void SetPatrolPoints(object target, IList<Vector2> patrolPoints)
-		{
-			AircraftController aircraft = target as AircraftController;
-			aircraft.PatrolPoints = patrolPoints;
-			aircraft.StartPatrolling();
-		}			
 	}
 }

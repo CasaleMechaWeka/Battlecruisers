@@ -115,7 +115,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
 			PatrolPoints = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
-			StartPatrolling();
+			// FELIX
+//			StartPatrolling();
 
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
@@ -129,7 +130,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
 				Assert.IsNotNull(Target);
 
-				StopPatrolling();
+				// FELIX
+//				StopPatrolling();
 
 				if (rigidBody.velocity != TargetVelocity)
 				{

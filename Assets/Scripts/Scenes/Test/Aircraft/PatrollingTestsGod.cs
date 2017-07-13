@@ -29,8 +29,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
 			IList<Vector2> patrolPointsAsVectors = patrolPoints.ConvertAll(gameObject => new Vector2(gameObject.transform.position.x, gameObject.transform.position.y));
 			aircraft.PatrolPoints = patrolPointsAsVectors;
-			
-			aircraft.StartPatrolling();
 		}
 	}
 }
