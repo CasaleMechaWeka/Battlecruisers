@@ -1,16 +1,16 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Utils;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Units.Aircraft
+namespace BattleCruisers.Movement.Velocity
 {
-	public class AircraftController : Unit
+	public class PatrollingMovementController : IMovementController
 	{
+		private readonly Rigidbody2D _rigidBody;
+
+		// FELIX   Remove unused
 		private float _patrollingSmoothTime;
 		protected Vector2 _patrollingVelocity;
 		protected bool _isPatrolling;
@@ -22,8 +22,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 
 		#region Properties
-		public override TargetType TargetType { get { return TargetType.Aircraft; } }
-
 		private IList<Vector2> _patrolPoints;
 		public IList<Vector2> PatrolPoints
 		{
@@ -35,44 +33,22 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		public override Vector2 Velocity
-		{
-			get
-			{
-				Logging.Log(Tags.AIRCRAFT, string.Format("_isPatrolling: {0}  _patrollingVelocity: {1}  base.Velocity: {2}", _isPatrolling, _patrollingVelocity, base.Velocity));
-
-				return _isPatrolling ? _patrollingVelocity : base.Velocity;
-			}
-		}
-
-		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
 		#endregion Properties
 
-		protected override void OnInitialised()
+		public PatrollingMovementController(Rigidbody2D rigidBody)
 		{
-			base.OnInitialised();
-			_patrollingSmoothTime = DEFAULT_SMOOTH_TIME_IN_S;
+			_rigidBody = rigidBody;
 		}
 
-		protected override void OnFixedUpdate()
+		public void AdjustVelocity()
 		{
-			base.OnFixedUpdate();
-
-			if (_isPatrolling)
-			{
-				Patrol();
-			}
-		}
-
-		private void Patrol()
-		{
-			bool isInPosition = Vector2.Distance(rigidBody.transform.position, _targetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
+			bool isInPosition = Vector2.Distance(_rigidBody.transform.position, _targetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 
-				Vector2 moveToPosition = Vector2.SmoothDamp(rigidBody.transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
-				rigidBody.MovePosition(moveToPosition);
+				Vector2 moveToPosition = Vector2.SmoothDamp(_rigidBody.transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
+				_rigidBody.MovePosition(moveToPosition);
 
 				Logging.Log(Tags.AIRCRAFT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
 					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, PatrollingVelocity, _patrollingSmoothTime, Time.deltaTime));
@@ -106,7 +82,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		public void StartPatrolling()
 		{
 			Assert.IsTrue(PatrolPoints != null);
-			Assert.AreEqual(new Vector2(0, 0), rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
+			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
 
 			if (PatrolPoints.Contains(_lastPatrolPoint))
 			{
@@ -135,7 +111,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			foreach (Vector2 patrolPoint in _patrolPoints)
 			{
-				float distance = Vector2.Distance(rigidBody.transform.position, patrolPoint);
+				float distance = Vector2.Distance(_rigidBody.transform.position, patrolPoint);
 				if (distance < minDistance)
 				{
 					minDistance = distance;
