@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Homing;
 using System;
 using UnityEngine;
 
