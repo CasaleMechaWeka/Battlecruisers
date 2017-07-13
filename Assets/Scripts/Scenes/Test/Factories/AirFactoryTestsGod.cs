@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 		private void Aircraft_CompletedBuildable (object sender, EventArgs e)
 		{
-			AircraftController aircraft = (AircraftController)sender;
+			TestAircraftController aircraft = (TestAircraftController)sender;
 			aircraft.PatrolPoints = patrolPoints;
 		}
 	}

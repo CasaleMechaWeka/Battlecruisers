@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 	public class AntiAirVsPatrollingAircraftTestGod : MonoBehaviour 
 	{
 		private DefensiveTurret _turret;
-		private AircraftController[] _aircraft;
+		private TestAircraftController[] _aircraft;
 
 		public Vector2[] aircraftPatrolPoints;
 
@@ -27,14 +27,14 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			helper.InitialiseBuildable(_turret, faction: Faction.Reds);
 			_turret.StartConstruction();
 
-			_aircraft = GameObject.FindObjectsOfType<AircraftController>();
+			_aircraft = GameObject.FindObjectsOfType<TestAircraftController>();
 			Assert.IsTrue(_aircraft.Length > 0);
 			InitialisePlanes(helper, _aircraft, Faction.Blues);
 		}
 
-		private void InitialisePlanes(Helper helper, IList<AircraftController> planes, Faction faction)
+		private void InitialisePlanes(Helper helper, IList<TestAircraftController> planes, Faction faction)
 		{
-			foreach (AircraftController plane in planes)
+			foreach (TestAircraftController plane in planes)
 			{
 				helper.InitialiseBuildable(plane, faction);
 				plane.PatrolPoints = aircraftPatrolPoints;

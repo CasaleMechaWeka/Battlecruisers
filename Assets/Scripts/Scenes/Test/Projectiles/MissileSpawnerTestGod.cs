@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test
 	public class MissileSpawnerTestGod : MonoBehaviour 
 	{
 		private MissileSpawner _missileSpawner;
-		private AircraftController _target;
+		private TestAircraftController _target;
 		private IExactMatchTargetFilter _targetFilter;
 
 		public MissileController missilePrefab;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
 		{
 			// Setup target
 			Helper helper = new Helper();
-			_target = GameObject.FindObjectOfType<AircraftController>();
+			_target = GameObject.FindObjectOfType<TestAircraftController>();
 			_target.PatrolPoints = targetPatrolPoints;
 			helper.InitialiseBuildable(_target);
 

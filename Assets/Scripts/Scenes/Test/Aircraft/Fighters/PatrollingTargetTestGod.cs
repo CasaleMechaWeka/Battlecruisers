@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		private Helper _helper;
 
 		public FighterController fighter1, fighter2, fighter3;
-		public AircraftController targetAircraft1, targetAircraft2, targetAircraft3;
+		public TestAircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 		public List<Vector2> patrolPoints1, patrolPoints2, patrolPoints3;
 
 		void Start() 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			SetupPair(fighter3, targetAircraft3, patrolPoints3);
 		}
 
-		private void SetupPair(FighterController fighter, AircraftController target, IList<Vector2> patrolPoints)
+		private void SetupPair(FighterController fighter, TestAircraftController target, IList<Vector2> patrolPoints)
 		{
 			// Target
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);

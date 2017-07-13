@@ -79,8 +79,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
 			// Patrolling
-			PatrolPoints = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
-			_originalPatrolPointsCount = PatrolPoints.Count;
+//			_originalPatrolPointsCount = PatrolPoints.Count;
 			// FELIX
 //			StartPatrolling();
 
@@ -113,7 +112,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 //
 //			Assert.IsTrue(PatrolPoints.Count >= 2);
 //		}
-		
+
+		protected override IList<Vector2> GetPatrolPoints()
+		{
+			return _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
+		}
+
 		private void UnfoldWings()
 		{
 			leftWing.StartRotatingWing(LEFT_WING_TARGET_ANGLE_IN_DEGREES);

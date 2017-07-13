@@ -10,26 +10,25 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public class AircraftController : Unit
+	public abstract class AircraftController : Unit
 	{
-		private IMovementController _movementController;
+		protected IMovementController _activeMovementController;
+		protected IMovementController _patrollingMovementController;
 
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
-		// FELIX  Remove this?  Only have for TestAircraftController?
-		public IList<Vector2> PatrolPoints { protected get; set; }
-
-		public override Vector2 Velocity { get { return _movementController.Velocity; } }
-
-		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
+		public override Vector2 Velocity { get { return _activeMovementController.Velocity; } }
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
-			_movementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxVelocityInMPerS, PatrolPoints);
-			_movementController.DirectionChanged += _movementController_DirectionChanged;
+			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxVelocityInMPerS, GetPatrolPoints());
+			_patrollingMovementController.DirectionChanged += _movementController_DirectionChanged;
+			_activeMovementController = _patrollingMovementController;
 		}
+
+		protected abstract IList<Vector2> GetPatrolPoints();
 
 		protected virtual void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
 		{
@@ -40,9 +39,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-			if (_movementController != null)
+			if (_activeMovementController != null)
 			{
-				_movementController.AdjustVelocity();
+				_activeMovementController.AdjustVelocity();
 			}
 		}
 	}

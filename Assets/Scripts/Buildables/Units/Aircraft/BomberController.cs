@@ -114,12 +114,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			PatrolPoints = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
-			// FELIX
-//			StartPatrolling();
-
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
+		}
+
+		protected override IList<Vector2> GetPatrolPoints()
+		{
+			return _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
 		}
 
 		protected override void OnFixedUpdate()
