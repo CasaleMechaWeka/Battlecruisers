@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Targets;
 using System;
 using UnityEngine;
 
@@ -10,15 +11,15 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		// safe zone the fighter will abandon pursuit.
 		private SafeZone _safeZone;
 
-		public FighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone)
-			: base(rigidBody, maxVelocityInMPerS) 
+		public FighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone)
+			: base(rigidBody, maxVelocityInMPerS, targetProvider) 
 		{ 
 			_safeZone = safeZone;
 		}
 
 		protected override Vector2 FindTargetPosition()
 		{
-			return CapTargetPositionInSafeZone(Target.GameObject.transform.position);
+			return CapTargetPositionInSafeZone(_targetProvider.Target.GameObject.transform.position);
 		}
 
 		private Vector2 CapTargetPositionInSafeZone(Vector2 targetPosition)

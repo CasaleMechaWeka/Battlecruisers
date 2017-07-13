@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Targets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,19 +22,20 @@ namespace BattleCruisers.Movement
 			_targetPositionPredictionFactory = targetPositionPredictionFactory;
 		}
 
-		public IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, 
+			ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new MissileMovementController(rigidBody, maxVelocityInMPerS, targetPositionPredictorFactory);
+			return new MissileMovementController(rigidBody, maxVelocityInMPerS, targetProvider, targetPositionPredictorFactory);
 		}
 
-		public IHomingMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, SafeZone safeZone)
+		public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone)
 		{
-			return new FighterMovementController(rigidBody, maxVelocityInMPerS, safeZone);
+			return new FighterMovementController(rigidBody, maxVelocityInMPerS, targetProvider, safeZone);
 		}
 
-		public IHomingMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, float cruisingAltitudeInM)
+		public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM)
 		{
-			return new RocketMovementController(rigidBody, maxVelocityInMPerS, cruisingAltitudeInM);
+			return new RocketMovementController(rigidBody, maxVelocityInMPerS, targetProvider, cruisingAltitudeInM);
 		}
 
 		public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)

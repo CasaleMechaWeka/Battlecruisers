@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
 
 		protected Rigidbody2D _rigidBody;
-		protected IHomingMovementController _movementController;
+		protected IMovementController _movementController;
 
 		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
 		{

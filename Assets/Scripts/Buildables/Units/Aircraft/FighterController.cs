@@ -20,7 +20,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public class FighterController : AircraftController, ITargetConsumer
+	public class FighterController : AircraftController, ITargetConsumer, ITargetProvider
 	{
 		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
@@ -76,6 +76,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
+		protected override float MaxPatrollingVelocity { get { return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
 		public override void StaticInitialise()
 		{
@@ -90,6 +91,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_barrelController.StaticInitialise();
 		}
 
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			_figherMovementController = _movementControllerFactory.CreateFighterMovementController(rigidBody, maxVelocityInMPerS, this, _aircraftProvider.FighterSafeZone);
+		}
+
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
@@ -99,12 +107,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
 			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
-
-
-			IList<Vector2> patrolPoints = _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);
-			float maxPatrollingVelocity = maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
-			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxPatrollingVelocity, patrolPoints);
-			_figherMovementController = _movementControllerFactory.CreateFighterMovementController(rigidBody, maxVelocityInMPerS, _aircraftProvider.FighterSafeZone);
 
 			SetupTargetDetection();
 		}

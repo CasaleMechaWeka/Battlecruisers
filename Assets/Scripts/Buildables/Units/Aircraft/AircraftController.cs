@@ -19,11 +19,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		public override Vector2 Velocity { get { return _activeMovementController.Velocity; } }
 
+		protected virtual float MaxPatrollingVelocity { get { return maxVelocityInMPerS; } }
+
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
-			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxVelocityInMPerS, GetPatrolPoints());
+			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
 			_patrollingMovementController.DirectionChanged += _movementController_DirectionChanged;
 			_activeMovementController = _patrollingMovementController;
 		}

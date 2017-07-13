@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -6,25 +7,16 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-	public class HomingMovementController : IHomingMovementController
+	public class HomingMovementController : IMovementController
 	{
 		protected readonly Rigidbody2D _rigidBody;
 		protected readonly float _maxVelocityInMPerS;
+		protected readonly ITargetProvider _targetProvider;
+
 		private Vector2 _velocity;
 		
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
-
-		private ITarget _target;
-		public ITarget Target 
-		{ 
-			protected get { return _target; }
-			set
-			{
-				_target = value;
-				OnTargetSet();
-			}
-		}
 
 		public Vector2 Velocity
 		{
@@ -34,18 +26,20 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged { add {} remove {} }
 
-		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
 		{
 			Assert.IsNotNull(rigidBody);
 			Assert.IsTrue(maxVelocityInMPerS > 0);
+			Assert.IsNotNull(targetProvider);
 
 			_rigidBody = rigidBody;
 			_maxVelocityInMPerS = maxVelocityInMPerS;
+			_targetProvider = targetProvider;
 		}
 
 		public void AdjustVelocity()
 		{
-			Assert.IsTrue(Target != null);
+			Assert.IsTrue(_targetProvider.Target != null);
 
 			Vector2 sourcePosition = _rigidBody.transform.position;
 			Vector2 targetPosition = FindTargetPosition();
@@ -69,7 +63,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 		protected virtual Vector2 FindTargetPosition()
 		{
-			return Target.GameObject.transform.position;
+			return _targetProvider.Target.GameObject.transform.position;
 		}
 
 		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
@@ -128,7 +122,5 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		{
 			return MAX_VELOCITY_SMOOTH_TIME;
 		}
-
-		protected virtual void OnTargetSet() { }
 	}
 }

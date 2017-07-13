@@ -5,6 +5,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -13,21 +14,20 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-	public class MissileController : ProjectileController
+	public class MissileController : ProjectileController, ITargetProvider
 	{
-		private  ITarget _target;
+		public  ITarget Target { get; private set; }
 
 		public void Initialise(MissileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			base.Initialise(missileStats, initialVelocityInMPerS, targetFilter);
 
-			_target = target;
+			Target = target;
 
-			_movementController = movementControllerFactory.CreateMissileMovementController(_rigidBody, missileStats.MaxVelocityInMPerS, targetPositionPredictorFactory);
-			_movementController.Target = _target;
+			_movementController = movementControllerFactory.CreateMissileMovementController(_rigidBody, missileStats.MaxVelocityInMPerS, this, targetPositionPredictorFactory);
 
-			_target.Destroyed += Target_Destroyed;
+			target.Destroyed += Target_Destroyed;
 		}
 
 		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time
@@ -38,9 +38,7 @@ namespace BattleCruisers.Projectiles
 
 		protected override void CleanUp()
 		{
-			_movementController.Target = null;
-			_target.Destroyed -= Target_Destroyed;
-
+			Target.Destroyed -= Target_Destroyed;
 			base.CleanUp();
 		}
 	}

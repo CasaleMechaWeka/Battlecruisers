@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -9,15 +10,15 @@ namespace BattleCruisers.Movement.Velocity.Homing
 	{
 		private ITargetPositionPredictor _targetPositionPredictor;
 
-		public MissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(rigidBody, maxVelocityInMPerS) 
+		public MissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+			: base(rigidBody, maxVelocityInMPerS, targetProvider) 
 		{ 
 			_targetPositionPredictor = targetPositionPredictorFactory.CreateLinearPredictor();
 		}
 
 		protected override Vector2 FindTargetPosition()
 		{
-			return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, Target, _maxVelocityInMPerS, currentAngleInRadians: -1);
+			return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target, _maxVelocityInMPerS, currentAngleInRadians: -1);
 		}
 
 		protected override float FindVelocitySmoothTime(Vector2 targetPosition)

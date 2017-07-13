@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
@@ -21,19 +22,18 @@ namespace BattleCruisers.Projectiles
 	/// But it can only subclass one of these.  Hence subclass ProjectileController, and
 	/// have a child game object deriving of Target, to get both behaviours.
 	/// </summary>
-	public class RocketController : ProjectileController
+	public class RocketController : ProjectileController, ITargetProvider
 	{
-		private ITarget _target;
+		public ITarget Target { get; private set; }
 
 		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, Faction faction)
 		{
 			base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter);
 
-			_target = target;
+			Target = target;
 
-			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, rocketStats.CruisingAltitudeInM);
-			_movementController.Target = _target;
+			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, this, rocketStats.CruisingAltitudeInM);
 
 			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
 			Assert.IsNotNull(rocketTarget);
