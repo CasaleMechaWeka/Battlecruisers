@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		public IList<Vector2> PatrolPoints { protected get; set; }
 
-		public Vector2 Velocity { get { return _movementController.Velocity; } }
+		public override Vector2 Velocity { get { return _movementController.Velocity; } }
 
 		protected virtual float PatrollingVelocity { get { return maxVelocityInMPerS; } }
 
