@@ -11,6 +11,7 @@ namespace BattleCruisers.Movement
 	public interface IMovementControllerFactory
 	{
 		IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints);
+		IMovementController CreateDummyMovementController();
 
 		// FELIX  Return IMovementController instead?
 		IHomingMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetPositionPredictorFactory targetPositionPredictorFactory);

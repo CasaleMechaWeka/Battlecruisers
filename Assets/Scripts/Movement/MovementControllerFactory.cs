@@ -41,6 +41,11 @@ namespace BattleCruisers.Movement
 			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
 		}
 
+		public IMovementController CreateDummyMovementController()
+		{
+			return new DummyMovementController();
+		}
+
 		public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictionFactory);
