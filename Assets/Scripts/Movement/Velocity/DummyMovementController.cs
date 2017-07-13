@@ -4,7 +4,8 @@ namespace BattleCruisers.Movement.Velocity
 {
 	public class DummyMovementController : IMovementController
 	{
-		public Vector2 Velocity { get { return default(Vector2); } }
+		public Vector2 Velocity { get; set; } 
+
 		public void AdjustVelocity() { }
 	}
 }
