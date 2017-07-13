@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
-		private IMovementController _movementController, _patrollingMovementController, _figherMovementController;
+		private IMovementController _figherMovementController;
 		private BarrelController _barrelController;
 
 		// Detects enemies that come within following range
@@ -50,33 +50,27 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				Logging.Log(Tags.AIRCRAFT, "FighterController.set_Target:  " + value);
 
 				_target = value;
-				// FELIX
-//				_movementController.Target = _target;
 
 				if (_target == null)
 				{
-					// FELIX
-//					_patrollingVelocity = rigidBody.velocity;
-					rigidBody.velocity = new Vector2(0, 0);
-
-					// FELIX
-//					StartPatrolling();
+					SwitchMovementControllers(_patrollingMovementController);
 				}
 				else
 				{
-					// FELIX
-//					if (_isPatrolling)
-//					{
-//						rigidBody.velocity = _patrollingVelocity;
-//					}
-
-					// FELIX
-//					StopPatrolling();
+					SwitchMovementControllers(_figherMovementController);
 				}
 			}
 		}
 
 		protected override float MaxPatrollingVelocity { get { return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
+
+		// FELIX  Move to base class if used elsewhere?  Should end up being used in Bomber- and Deathstar- controllers :)
+		private void SwitchMovementControllers(IMovementController newMovementController)
+		{
+			newMovementController.Velocity = _activeMovementController.Velocity;
+			_activeMovementController.Velocity = new Vector2(0, 0);
+			_activeMovementController = newMovementController;
+		}
 
 		public override void StaticInitialise()
 		{
@@ -155,11 +149,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-			if (Target != null)
-			{
-				_movementController.AdjustVelocity();
-			}
-
 			// Adjust game object to point in direction it's travelling
 			transform.right = Velocity;
 		}
@@ -167,11 +156,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnDirectionChange()
 		{
 			// Turn off parent class behaviour of mirroring accross y-axis
-		}
-
-		protected override void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
-		{
-			// Do nothing.  Do not want base class to update our sprite direction, as we handle this in house :)
 		}
 
 		protected override void OnDestroyed()

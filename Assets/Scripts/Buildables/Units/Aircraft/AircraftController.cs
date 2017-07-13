@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected abstract IList<Vector2> GetPatrolPoints();
 
-		protected virtual void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
 		{
 			FacingDirection = e.NewDirection;
 		}
