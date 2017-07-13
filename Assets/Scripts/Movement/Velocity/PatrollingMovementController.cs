@@ -9,51 +9,46 @@ namespace BattleCruisers.Movement.Velocity
 	public class PatrollingMovementController : IMovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
+		private readonly float _maxPatrollilngVelocityInMPerS;
+		private readonly IList<Vector2> _patrolPoints;
 
-		// FELIX   Remove unused
-		private float _patrollingSmoothTime;
-		protected Vector2 _patrollingVelocity;
-		protected bool _isPatrolling;
-		private Vector2 _lastPatrolPoint;
+		private Vector2 _patrollingVelocity;
 		private Vector2 _targetPatrolPoint;
 
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
-		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
+		private const float MIN_NUM_OF_PATROL_POINTS = 2;
 
-		#region Properties
-		private IList<Vector2> _patrolPoints;
-		public IList<Vector2> PatrolPoints
+		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
 		{
-			protected get { return _patrolPoints; }
-			set
-			{
-				Assert.IsTrue(value.Count >= 2);
-				_patrolPoints = value;
-			}
-		}
+			Assert.IsNotNull(rigidBody);
+			Assert.IsTrue(maxPatrollilngVelocityInMPerS > 0);
+			Assert.IsTrue(_patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
 
-		#endregion Properties
-
-		public PatrollingMovementController(Rigidbody2D rigidBody)
-		{
 			_rigidBody = rigidBody;
+			_maxPatrollilngVelocityInMPerS = maxPatrollilngVelocityInMPerS;
+			_patrolPoints = patrolPoints;
+
+			_targetPatrolPoint = FindNextPatrolPoint();
 		}
 
 		public void AdjustVelocity()
 		{
+			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
+
 			bool isInPosition = Vector2.Distance(_rigidBody.transform.position, _targetPatrolPoint) <= POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 
-				Vector2 moveToPosition = Vector2.SmoothDamp(_rigidBody.transform.position, _targetPatrolPoint, ref _patrollingVelocity, _patrollingSmoothTime, PatrollingVelocity, Time.deltaTime);
+				Vector2 moveToPosition = Vector2.SmoothDamp(_rigidBody.transform.position, _targetPatrolPoint, ref _patrollingVelocity, DEFAULT_SMOOTH_TIME_IN_S, _maxPatrollilngVelocityInMPerS, Time.deltaTime);
 				_rigidBody.MovePosition(moveToPosition);
 
 				Logging.Log(Tags.AIRCRAFT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
-					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, PatrollingVelocity, _patrollingSmoothTime, Time.deltaTime));
+					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, _maxPatrollilngVelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
 
-				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
+				// FELIX
+//				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
@@ -61,48 +56,24 @@ namespace BattleCruisers.Movement.Velocity
 
 				Vector2 patrolPointReached = _targetPatrolPoint;
 				_targetPatrolPoint = FindNextPatrolPoint();
-				OnPatrolPointReached(patrolPointReached);
 			}
 		}
 
-		protected void UpdateFacingDirection(Vector2 oldVelocity, Vector2 currentVelocity)
-		{
-			if (oldVelocity.x > 0 && currentVelocity.x < 0)
-			{
-				FacingDirection = Direction.Left;
-			}
-			else if (oldVelocity.x < 0 && currentVelocity.x > 0)
-			{
-				FacingDirection = Direction.Right;
-			}
-		}
+		// FELIX  Somehow handle facing direction :P  => Event?
+//		protected void UpdateFacingDirection(Vector2 oldVelocity, Vector2 currentVelocity)
+//		{
+//			if (oldVelocity.x > 0 && currentVelocity.x < 0)
+//			{
+//				FacingDirection = Direction.Left;
+//			}
+//			else if (oldVelocity.x < 0 && currentVelocity.x > 0)
+//			{
+//				FacingDirection = Direction.Right;
+//			}
+//		}
 
-		protected virtual void OnPatrolPointReached(Vector2 patrolPointReached) { }
-
-		public void StartPatrolling()
-		{
-			Assert.IsTrue(PatrolPoints != null);
-			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
-
-			if (PatrolPoints.Contains(_lastPatrolPoint))
-			{
-				// Resume patrolling
-				_targetPatrolPoint = _lastPatrolPoint;
-			}
-			else
-			{
-				_targetPatrolPoint = FindNearestPatrolPoint();
-			}
-
-			_isPatrolling = true;
-		}
-
-		public void StopPatrolling()
-		{
-			_lastPatrolPoint = _targetPatrolPoint;
-			_targetPatrolPoint = default(Vector2);
-			_isPatrolling = false;
-		}
+		// FELIX  Replace with PatorlPoints class, that has removeable bool & Action on reaching that point
+//		protected virtual void OnPatrolPointReached(Vector2 patrolPointReached) { }
 
 		private Vector2 FindNearestPatrolPoint()
 		{
