@@ -25,9 +25,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
-			_movementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxVelocityInMPerS, PatrolPoints);
 
-			// FELIX  Facing direction!
+			_movementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, maxVelocityInMPerS, PatrolPoints);
+			_movementController.DirectionChanged += _movementController_DirectionChanged;
+		}
+
+		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+		{
+			FacingDirection = e.NewDirection;
 		}
 
 		protected override void OnFixedUpdate()
@@ -37,19 +42,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			if (_movementController != null)
 			{
 				_movementController.AdjustVelocity();
-			}
-		}
-
-		// FELIX call :P
-		protected void UpdateFacingDirection(Vector2 oldVelocity, Vector2 currentVelocity)
-		{
-			if (oldVelocity.x > 0 && currentVelocity.x < 0)
-			{
-				FacingDirection = Direction.Left;
-			}
-			else if (oldVelocity.x < 0 && currentVelocity.x > 0)
-			{
-				FacingDirection = Direction.Right;
 			}
 		}
 	}

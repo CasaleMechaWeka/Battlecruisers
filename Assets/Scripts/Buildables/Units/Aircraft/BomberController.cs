@@ -157,7 +157,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
 			}
 
-			UpdateFacingDirection(oldVelocity, rigidBody.velocity);
+			// FELIX
+//			UpdateFacingDirection(oldVelocity, rigidBody.velocity);
 		}
 
 		private void TryBombTarget()
