@@ -23,7 +23,5 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
 			return PatrolPoints;
 		}
-
 	}
 }
-
