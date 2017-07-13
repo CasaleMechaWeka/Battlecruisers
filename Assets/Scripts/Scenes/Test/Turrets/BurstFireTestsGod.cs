@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
@@ -13,26 +14,31 @@ namespace BattleCruisers.Scenes.Test
 {
 	public class BurstFireTestsGod : MonoBehaviour 
 	{
+		private ITargetFilter _targetFilter;
+		private IAngleCalculator _angleCalculator;
+
 		public BarrelController barrel1, barrel2, barrel3;
 		public GameObject target1, target2, target3;
 
 		void Start()
 		{
-			IAngleCalculator angleCalculator = new LeadingAngleCalculator(new TargetPositionPredictorFactory());
+			_angleCalculator = new LeadingAngleCalculator(new TargetPositionPredictorFactory());
+			_targetFilter = Substitute.For<ITargetFilter>();
 
-			InitialisePair(barrel1, target1, angleCalculator);
-			InitialisePair(barrel2, target2, angleCalculator);
-			InitialisePair(barrel3, target3, angleCalculator);
+			InitialisePair(barrel1, target1);
+			InitialisePair(barrel2, target2);
+			InitialisePair(barrel3, target3);
 		}
 
-		private void InitialisePair(BarrelController barrel, GameObject targetGameObject, IAngleCalculator angleCalculator)
+		private void InitialisePair(BarrelController barrel, GameObject targetGameObject)
 		{
+			barrel.StaticInitialise();
 			ITarget target = Substitute.For<ITarget>();
 			Vector2 targetPosition = targetGameObject.transform.position;
 			target.Position.Returns(targetPosition);
 			barrel.Target = target;
-			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
-			barrel.Initialise(null, angleCalculator, rotationMovementController);
+			IRotationMovementController rotationMovementController = new RotationMovementController(_angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
+			barrel.Initialise(_targetFilter, _angleCalculator, rotationMovementController);
 		}
 	}
 }

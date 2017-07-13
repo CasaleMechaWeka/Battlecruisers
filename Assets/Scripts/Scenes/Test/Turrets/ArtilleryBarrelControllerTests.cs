@@ -3,12 +3,12 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BattleCruisers.Targets.TargetFinders.Filters;
 
 namespace BattleCruisers.Scenes.Test
 {
