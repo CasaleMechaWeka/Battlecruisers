@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -24,6 +26,8 @@ namespace BattleCruisers.Movement.Velocity
 			get { return _patrollingVelocity; }
 			set { _patrollingVelocity = value; }
 		}
+
+		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
 		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
 		{
@@ -53,33 +57,35 @@ namespace BattleCruisers.Movement.Velocity
 				Logging.Log(Tags.AIRCRAFT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
 					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, _maxPatrollilngVelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
 
-				// FELIX
-//				UpdateFacingDirection(oldPatrollingVelocity, _patrollingVelocity);
+				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}
 			else
 			{
-				Logging.Log(Tags.AIRCRAFT, "Patrol():  Reached patrol point " + _targetPatrolPoint);
-
-				Vector2 patrolPointReached = _targetPatrolPoint;
 				_targetPatrolPoint = FindNextPatrolPoint();
 			}
 		}
 
-		// FELIX  Somehow handle facing direction :P  => Event?
-//		protected void UpdateFacingDirection(Vector2 oldVelocity, Vector2 currentVelocity)
-//		{
-//			if (oldVelocity.x > 0 && currentVelocity.x < 0)
-//			{
-//				FacingDirection = Direction.Left;
-//			}
-//			else if (oldVelocity.x < 0 && currentVelocity.x > 0)
-//			{
-//				FacingDirection = Direction.Right;
-//			}
-//		}
+		protected void HandleDirectionChange(Vector2 oldVelocity, Vector2 currentVelocity)
+		{
+			if (DirectionChanged != null)
+			{
+				Direction? newDirection = null;
 
-		// FELIX  Replace with PatorlPoints class, that has removeable bool & Action on reaching that point
-//		protected virtual void OnPatrolPointReached(Vector2 patrolPointReached) { }
+				if (oldVelocity.x > 0 && currentVelocity.x < 0)
+				{
+					newDirection = Direction.Left;
+				}
+				else if (oldVelocity.x < 0 && currentVelocity.x > 0)
+				{
+					newDirection = Direction.Right;
+				}
+
+				if (newDirection != null)
+				{
+					DirectionChanged.Invoke(this, new XDirectionChangeEventArgs((Direction)newDirection));
+				}
+			}
+		}
 
 		private Vector2 FindNearestPatrolPoint()
 		{
