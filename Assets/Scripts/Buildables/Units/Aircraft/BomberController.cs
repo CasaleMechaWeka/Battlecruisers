@@ -93,7 +93,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			_bombSpawner.Initialise(shellStats, targetFilter);
 
-			// FELIX  Create bomber movement controller
+			_bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityInMPerS);
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -117,6 +117,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			// FELIX  Should be able to replace this once PatrolPoint class is created, and
 			// can automatically trigger action when patrol point is reached :)
+			// FELIX  Actually assign BomberMovementController at some stage :P
 			if (IsAtCruisingHeight)
 			{
 				Assert.IsNotNull(Target);
