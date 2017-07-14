@@ -41,6 +41,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
+			// FELIX  Shouldn't need null check, should only ever be reached after OnInitialised()?
 			if (_activeMovementController != null)
 			{
 				_activeMovementController.AdjustVelocity();

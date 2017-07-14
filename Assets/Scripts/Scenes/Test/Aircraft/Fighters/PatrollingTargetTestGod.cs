@@ -33,8 +33,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		private void SetupPair(FighterController fighter, TestAircraftController target, IList<Vector2> patrolPoints)
 		{
 			// Target
-			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.PatrolPoints = patrolPoints;
+			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.StartConstruction();
 
 			// Fighter
