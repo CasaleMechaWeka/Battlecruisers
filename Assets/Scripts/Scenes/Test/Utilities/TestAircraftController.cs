@@ -35,7 +35,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
 			base.OnInitialised();
 
-			_activeMovementController = _movementControllerFactory.CreateDummyMovementController();
+			if (UseDummyMovementController)
+			{
+				_activeMovementController = _movementControllerFactory.CreateDummyMovementController();
+			}
 		}
 
 		public void SetTargetType(TargetType targetType)
