@@ -43,6 +43,11 @@ namespace BattleCruisers.Movement
 			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
 		}
 
+		public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		{
+			return new BomberMovementController(rigidBody, maxVelocityInMPerS);
+		}
+
 		public IMovementController CreateDummyMovementController()
 		{
 			return new DummyMovementController();
