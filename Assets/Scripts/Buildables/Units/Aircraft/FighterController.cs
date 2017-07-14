@@ -64,14 +64,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override float MaxPatrollingVelocity { get { return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
-		// FELIX  Move to base class if used elsewhere?  Should end up being used in Bomber- and Deathstar- controllers :)
-		private void SwitchMovementControllers(IMovementController newMovementController)
-		{
-			newMovementController.Velocity = _activeMovementController.Velocity;
-			_activeMovementController.Velocity = new Vector2(0, 0);
-			_activeMovementController = newMovementController;
-		}
-
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();

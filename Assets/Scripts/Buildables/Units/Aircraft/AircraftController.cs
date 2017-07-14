@@ -44,5 +44,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_activeMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			_activeMovementController.AdjustVelocity();
 		}
+
+		protected void SwitchMovementControllers(IMovementController newMovementController)
+		{
+			newMovementController.Velocity = _activeMovementController.Velocity;
+			_activeMovementController.Velocity = new Vector2(0, 0);
+			_activeMovementController = newMovementController;
+		}
 	}
 }
