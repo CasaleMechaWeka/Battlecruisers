@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public class BomberMovementController : IBomberMovementController
+	public class BomberMovementController : MovementController, IBomberMovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly float _maxVelocityInMPerS;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Movement.Velocity
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
-		public Vector2 Velocity
+		public override Vector2 Velocity
 		{
 			get { return _rigidBody.velocity; }
 			set { _rigidBody.velocity = value; }
@@ -32,8 +32,6 @@ namespace BattleCruisers.Movement.Velocity
 			}
 		}
 
-		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
-
 		public BomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{
 			Assert.IsNotNull(rigidBody);
@@ -43,7 +41,7 @@ namespace BattleCruisers.Movement.Velocity
 			_maxVelocityInMPerS = maxVelocityInMPerS;
 		}
 
-		public void AdjustVelocity()
+		public override void AdjustVelocity()
 		{ 
 			if (_rigidBody.velocity != TargetVelocity)
 			{
@@ -58,8 +56,7 @@ namespace BattleCruisers.Movement.Velocity
 					_rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, _maxVelocityInMPerS, Time.deltaTime);
 				}
 
-				// FELIX
-				//			UpdateFacingDirection(oldVelocity, rigidBody.velocity);
+				HandleDirectionChange(oldVelocity, _rigidBody.velocity);
 			}
 		}
 	}

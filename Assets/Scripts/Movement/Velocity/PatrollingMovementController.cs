@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public class PatrollingMovementController : IMovementController
+	public class PatrollingMovementController : MovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly float _maxPatrollilngVelocityInMPerS;
@@ -21,13 +21,11 @@ namespace BattleCruisers.Movement.Velocity
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 		private const float MIN_NUM_OF_PATROL_POINTS = 2;
 
-		public Vector2 Velocity
+		public override Vector2 Velocity
 		{
 			get { return _patrollingVelocity; }
 			set { _patrollingVelocity = value; }
 		}
-
-		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
 		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
 		{
@@ -42,7 +40,7 @@ namespace BattleCruisers.Movement.Velocity
 			_targetPatrolPoint = FindNearestPatrolPoint();
 		}
 
-		public void AdjustVelocity()
+		public override void AdjustVelocity()
 		{
 			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
 
@@ -62,28 +60,6 @@ namespace BattleCruisers.Movement.Velocity
 			else
 			{
 				_targetPatrolPoint = FindNextPatrolPoint();
-			}
-		}
-
-		protected void HandleDirectionChange(Vector2 oldVelocity, Vector2 currentVelocity)
-		{
-			if (DirectionChanged != null)
-			{
-				Direction? newDirection = null;
-
-				if (oldVelocity.x > 0 && currentVelocity.x < 0)
-				{
-					newDirection = Direction.Left;
-				}
-				else if (oldVelocity.x < 0 && currentVelocity.x > 0)
-				{
-					newDirection = Direction.Right;
-				}
-
-				if (newDirection != null)
-				{
-					DirectionChanged.Invoke(this, new XDirectionChangeEventArgs((Direction)newDirection));
-				}
 			}
 		}
 
