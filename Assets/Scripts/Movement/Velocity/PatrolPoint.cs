@@ -20,5 +20,17 @@ namespace BattleCruisers.Movement.Velocity
 				ActionOnReached = () => { };
 			}
 		}
+
+		public override bool Equals(object obj)
+		{
+			PatrolPoint other = obj as PatrolPoint;
+			return other != null
+				&& Position == other.Position;
+		}
+
+		public override int GetHashCode()
+		{
+			return Position.GetHashCode();
+		}
 	}
 }
