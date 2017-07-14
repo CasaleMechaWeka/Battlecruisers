@@ -21,7 +21,7 @@ namespace BattleCruisers.Movement.Velocity
 		}
 
 		private Vector2 _targetVelocity;
-		private Vector2 TargetVelocity
+		public Vector2 TargetVelocity
 		{
 			get { return _targetVelocity; }
 			set
