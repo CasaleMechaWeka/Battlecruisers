@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -16,19 +17,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
 	public class BomberController : AircraftController, ITargetConsumer
 	{
-		private float _velocitySmoothTime;
-		private Vector2 _velocity;
 		private bool _haveDroppedBombOnRun;
 		private Vector2 _targetCruisingHeight;
 		private ITargetProcessor _targetProcessor;
 		private BombSpawner _bombSpawner;
+		private IBomberMovementController _bomberMovementControler;
 
 		public BomberStats bomberStats;
 		public float cruisingAltitudeInM;
 
 		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
-		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
-		private const float SMOOTH_TIME_MULTIPLIER = 2;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
@@ -48,20 +46,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 					{
 						xVelocity *= -1;
 					}
-					TargetVelocity = new Vector2(xVelocity, 0);
+					_bomberMovementControler.TargetVelocity = new Vector2(xVelocity, 0);
 				}
-			}
-		}
-
-		private Vector2 _targetVelocity;
-		private Vector2 TargetVelocity
-		{
-			get { return _targetVelocity; }
-			set
-			{
-				_targetVelocity = value;
-				float velocityChange = (rigidBody.velocity - _targetVelocity).magnitude;
-				_velocitySmoothTime = velocityChange / maxVelocityInMPerS;
 			}
 		}
 
@@ -106,6 +92,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 
 			_bombSpawner.Initialise(shellStats, targetFilter);
+
+			// FELIX  Create bomber movement controller
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -127,46 +115,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
+			// FELIX  Should be able to replace this once PatrolPoint class is created, and
+			// can automatically trigger action when patrol point is reached :)
 			if (IsAtCruisingHeight)
 			{
 				Assert.IsNotNull(Target);
 
-				// FELIX
-//				StopPatrolling();
-
-				if (rigidBody.velocity != TargetVelocity)
-				{
-					AdjustVelocity();
-				}
-
 				TryBombTarget();
 			}
-		}
-
-		private void AdjustVelocity()
-		{
-			Logging.Verbose(Tags.AIRCRAFT, string.Format("AdjustVelocity():  rigidBody.velocity: {0}  TargetVelocity: {1}", rigidBody.velocity, TargetVelocity));
-
-			Vector2 oldVelocity = rigidBody.velocity;
-
-			if ((rigidBody.velocity - TargetVelocity).magnitude <= VELOCITY_EQUALITY_MARGIN)
-			{
-				rigidBody.velocity = TargetVelocity;
-			}
-			else
-			{
-				rigidBody.velocity = Vector2.SmoothDamp(rigidBody.velocity, TargetVelocity, ref _velocity, _velocitySmoothTime, maxVelocityInMPerS, Time.deltaTime);
-			}
-
-			// FELIX
-//			UpdateFacingDirection(oldVelocity, rigidBody.velocity);
 		}
 
 		private void TryBombTarget()
 		{
 			if (_haveDroppedBombOnRun)
 			{
-				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, TargetVelocity.x))
+				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
 				{
 					Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to turn around");
 
@@ -174,7 +137,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 					_haveDroppedBombOnRun = false;
 				}
 			}
-			else if (IsDirectionCorrect(rigidBody.velocity.x, TargetVelocity.x)
+			else if (IsDirectionCorrect(rigidBody.velocity.x, _bomberMovementControler.TargetVelocity.x)
 				&& IsOnTarget(transform.position, Target.GameObject.transform.position, rigidBody.velocity.x))
 			{
 				Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to drop bomb");
@@ -210,7 +173,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
 				newTargetVelocity *= -1;
 			}
-			TargetVelocity = newTargetVelocity;
+			_bomberMovementControler.TargetVelocity = newTargetVelocity;
 		}
 
 		/// <summary>
