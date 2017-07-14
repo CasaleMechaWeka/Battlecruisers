@@ -12,7 +12,7 @@ namespace BattleCruisers.Movement.Velocity
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly float _maxPatrollilngVelocityInMPerS;
-		private readonly IList<Vector2> _patrolPoints;
+		private readonly IList<IPatrolPoint> _patrolPoints;
 
 		private Vector2 _patrollingVelocity;
 		private Vector2 _targetPatrolPoint;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Movement.Velocity
 			set { _patrollingVelocity = value; }
 		}
 
-		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<Vector2> patrolPoints)
+		public PatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)
 		{
 			Assert.IsNotNull(rigidBody);
 			Assert.IsTrue(maxPatrollilngVelocityInMPerS > 0);
@@ -59,8 +59,21 @@ namespace BattleCruisers.Movement.Velocity
 			}
 			else
 			{
-				_targetPatrolPoint = FindNextPatrolPoint();
+				OnPatrolPointReached();
 			}
+		}
+
+		private void OnPatrolPointReached()
+		{
+			IPatrolPoint reachedPatrolPoint = _targetPatrolPoint;
+			_targetPatrolPoint = FindNextPatrolPoint();
+
+			if (reachedPatrolPoint.RemoveOnceReached)
+			{
+				_patrolPoints.Remove(reachedPatrolPoint);
+			}
+
+			reachedPatrolPoint.ActionOnReached.Invoke();
 		}
 
 		private Vector2 FindNearestPatrolPoint()
