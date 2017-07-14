@@ -2,7 +2,9 @@
 using BattleCruisers.Buildables.Units.Aircraft;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using BattleCruisers.Movement.Velocity;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -12,7 +14,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 		public override TargetType TargetType { get { return _targetType; } }
 
-		public IList<Vector2> PatrolPoints { private get; set; }
+		private IList<IPatrolPoint> _patrolPoints;
+		public List<Vector2> PatrolPoints
+		{ 
+			private get { throw new NotImplementedException(); }
+			set
+			{
+				_patrolPoints = value.ConvertAll(position => new PatrolPoint(position));
+			}
+		}
 
 		private bool _useDummyMovementController = false; 
 		public bool UseDummyMovementController
@@ -46,9 +56,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			_targetType = targetType;
 		}
 
-		protected override IList<Vector2> GetPatrolPoints()
+		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			return PatrolPoints;
+			return _patrolPoints;
 		}
 	}
 }

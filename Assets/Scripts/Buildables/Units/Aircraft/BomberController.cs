@@ -15,6 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
+	// FELIX  Switch back to PatrollingMovementController once we run out of targets?
 	public class BomberController : AircraftController, ITargetConsumer
 	{
 		private bool _haveDroppedBombOnRun;
@@ -22,11 +23,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetProcessor _targetProcessor;
 		private BombSpawner _bombSpawner;
 		private IBomberMovementController _bomberMovementControler;
+		private bool _isAtCruisingHeight;
 
 		public BomberStats bomberStats;
 		public float cruisingAltitudeInM;
 
-		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 0.2f;
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
@@ -51,14 +52,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		private bool IsAtCruisingHeight
-		{
-			get
-			{
-				return Mathf.Abs(transform.position.y - cruisingAltitudeInM) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
-			}
-		}
-
 		public override float Damage 
 		{ 
 			get 
@@ -75,6 +68,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(bomberStats);
 			
 			_haveDroppedBombOnRun = false;
+			_isAtCruisingHeight = false;
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 			
@@ -108,26 +102,29 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			return _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
+			return _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM, OnFirstPatrolPointReached);
+		}
+
+		private void OnFirstPatrolPointReached()
+		{
+			_isAtCruisingHeight = true;
+			SwitchMovementControllers(_bomberMovementControler);
 		}
 
 		protected override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
 
-			// FELIX  Should be able to replace this once PatrolPoint class is created, and
-			// can automatically trigger action when patrol point is reached :)
-			// FELIX  Actually assign BomberMovementController at some stage :P
-			if (IsAtCruisingHeight)
+			if (_isAtCruisingHeight)
 			{
-				Assert.IsNotNull(Target);
-
 				TryBombTarget();
 			}
 		}
 
 		private void TryBombTarget()
 		{
+			Assert.IsNotNull(Target);
+
 			if (_haveDroppedBombOnRun)
 			{
 				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))

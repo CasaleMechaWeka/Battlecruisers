@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -113,7 +114,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 //			Assert.IsTrue(PatrolPoints.Count >= 2);
 //		}
 
-		protected override IList<Vector2> GetPatrolPoints()
+		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			return _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 		}

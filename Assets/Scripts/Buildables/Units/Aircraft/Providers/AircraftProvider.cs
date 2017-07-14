@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<IPatrolPoint> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
-			return new List<Vector2>() 
+			return new List<IPatrolPoint>() 
 			{
 				new PatrolPoint(new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitudeInM)),
 				new PatrolPoint(new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitudeInM))
@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		
 		public IList<IPatrolPoint> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM, Action onFirstPatrolPointReached)
 		{
-			return new List<Vector2>() {
+			return new List<IPatrolPoint>() {
 				new PatrolPoint(new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN), removeOnceReached: true, actionOnReached: onFirstPatrolPointReached),
 				new PatrolPoint(new Vector2(deathstarPosition.x, cruisingAltitudeInM), removeOnceReached: true),
 				new PatrolPoint(new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)),

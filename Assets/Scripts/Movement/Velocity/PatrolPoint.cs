@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
 {	
-	public class PatrolPoint
+	public class PatrolPoint : IPatrolPoint
 	{
 		public Vector2 Position { get; private set; }
 		public bool RemoveOnceReached { get; private set; }
