@@ -19,6 +19,7 @@ using BattleCruisers.Utils;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
 
@@ -180,7 +181,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					new Vector2(0, 2)
 				};
 			}
-			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+			provider.FindBomberPatrolPoints(0, null).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(bomberPatrolPoints));
 
 			if (fighterPatrolPoints == null)
 			{
@@ -190,7 +191,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					new Vector2(0, 2)
 				};
 			}
-			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(fighterPatrolPoints));
 
 			if (deathstarPatrolPoints == null)
 			{
@@ -200,7 +201,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					new Vector2(0, 2)
 				};
 			}
-			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+			provider.FindDeathstarPatrolPoints(default(Vector2), 0, null).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(deathstarPatrolPoints));
 
 			if (fighterSafeZone == null)
 			{
@@ -213,6 +214,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			provider.FighterSafeZone.Returns(fighterSafeZone);
 			
 			return provider;
+		}
+
+		public static IList<IPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)
+		{
+			return (IList<IPatrolPoint>) positions
+				.Select(position => new PatrolPoint(position))
+				.ToList();
 		}
 	}
 }
