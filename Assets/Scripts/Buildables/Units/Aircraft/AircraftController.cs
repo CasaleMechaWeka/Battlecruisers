@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController = _patrollingMovementController;
 		}
 
-		protected abstract IList<Vector2> GetPatrolPoints();
+		protected abstract IList<IPatrolPoint> GetPatrolPoints();
 
 		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
 		{

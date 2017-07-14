@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Movement.Velocity;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -46,7 +48,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				maxY: SAFE_ZONE_MAX_Y);
 		}
 
-		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
+		public IList<IPatrolPoint> FindBomberPatrolPoints(float cruisingAltitudeInM, Action onFirstPatrolPointReached)
 		{
 			float parentCruiserPatrolPointAdjustmentX = _parentCruiserPosition.x < 0 ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
@@ -54,29 +56,29 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 			float enemyCruiserPatrolPointAdjustmentX = _enemyCruiserPosition.x < 0 ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float enemyCruiserpatrolPointX = _enemyCruiserPosition.x + enemyCruiserPatrolPointAdjustmentX;
 
-			return new List<Vector2>() 
+			return new List<IPatrolPoint>() 
 			{
-				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
-				new Vector2(enemyCruiserpatrolPointX, cruisingAltitudeInM)
+				new PatrolPoint(new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM), removeOnceReached: false, actionOnReached: onFirstPatrolPointReached),
+				new PatrolPoint(new Vector2(enemyCruiserpatrolPointX, cruisingAltitudeInM))
 			};
 		}
 
-		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
+		public IList<IPatrolPoint> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
 			return new List<Vector2>() 
 			{
-				new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitudeInM),
-				new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitudeInM),
+				new PatrolPoint(new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitudeInM)),
+				new PatrolPoint(new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitudeInM))
 			};
 		}
 		
-		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
+		public IList<IPatrolPoint> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM, Action onFirstPatrolPointReached)
 		{
 			return new List<Vector2>() {
-				new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN),
-				new Vector2(deathstarPosition.x, cruisingAltitudeInM),
-				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
-				new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)
+				new PatrolPoint(new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN), removeOnceReached: true, actionOnReached: onFirstPatrolPointReached),
+				new PatrolPoint(new Vector2(deathstarPosition.x, cruisingAltitudeInM), removeOnceReached: true),
+				new PatrolPoint(new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM)),
+				new PatrolPoint(new Vector2(_enemyCruiserPosition.x - DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM))
 			};
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BattleCruisers.Movement.Velocity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,8 +10,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 	{
 		SafeZone FighterSafeZone { get; }
 
-		IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM);
-		IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM);
-		IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM);
+		IList<IPatrolPoint> FindBomberPatrolPoints(float cruisingAltitudeInM);
+		IList<IPatrolPoint> FindFighterPatrolPoints(float cruisingAltitudeInM);
+		IList<IPatrolPoint> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM);
 	}
 }

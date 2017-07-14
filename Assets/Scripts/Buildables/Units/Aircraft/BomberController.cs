@@ -106,7 +106,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetProcessor.AddTargetConsumer(this);
 		}
 
-		protected override IList<Vector2> GetPatrolPoints()
+		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			return _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
 		}
