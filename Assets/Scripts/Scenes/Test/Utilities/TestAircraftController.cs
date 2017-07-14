@@ -14,6 +14,30 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 		public IList<Vector2> PatrolPoints { private get; set; }
 
+		private bool _useDummyMovementController = false; 
+		public bool UseDummyMovementController
+		{
+			private get { return _useDummyMovementController; }
+			set
+			{
+				_useDummyMovementController = value;
+
+				if (_useDummyMovementController)
+				{
+					// Create bogus patorl points so PatrollingMovementController is 
+					// creted correctly in AircraftController base class
+					PatrolPoints = new List<Vector2> { new Vector2(0, 0), new Vector2(1, 1) };
+				}
+			}
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			_activeMovementController = _movementControllerFactory.CreateDummyMovementController();
+		}
+
 		public void SetTargetType(TargetType targetType)
 		{
 			_targetType = targetType;

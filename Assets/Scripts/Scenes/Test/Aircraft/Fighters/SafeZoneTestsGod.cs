@@ -41,8 +41,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 			// Target aircraft
 			TestAircraftController target = GameObject.FindObjectOfType<TestAircraftController>();
-			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.PatrolPoints = targetPatrolPoints;
+			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.StartConstruction();
 		}
 	}

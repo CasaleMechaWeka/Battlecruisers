@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		private Helper _helper;
 
 		public FighterController fighter1, fighter2, fighter3;
-		public AircraftController targetAircraft1, targetAircraft2, targetAircraft3;
+		public TestAircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 
 		void Start() 
 		{
@@ -29,9 +29,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			SetupPair(fighter3, targetAircraft3);
 		}
 
-		private void SetupPair(FighterController fighter, AircraftController target)
+		private void SetupPair(FighterController fighter, TestAircraftController target)
 		{
 			// Target
+			target.UseDummyMovementController = true;
 			_helper.InitialiseBuildable(target, faction: Faction.Blues);
 			target.StartConstruction();
 
