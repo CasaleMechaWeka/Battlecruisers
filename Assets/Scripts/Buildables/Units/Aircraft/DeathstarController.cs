@@ -26,6 +26,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetDetector _targetDetector;
 		private ITargetProcessor _targetProcessor;
 		private int _originalPatrolPointsCount;
+		private IMovementController _dummyMovementController;
 
 		public float cruisingAltitudeInM;
 		public DeathstarWingController leftWing, rightWing;
@@ -71,6 +72,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			IRotationMovementController rightWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, rightWing.transform);
 			rightWing.Initialise(rightWingRotationMovementController);
+
+			_dummyMovementController = _movementControllerFactory.CreateDummyMovementController();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -78,11 +81,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-
-			// Patrolling
-//			_originalPatrolPointsCount = PatrolPoints.Count;
-			// FELIX
-//			StartPatrolling();
 
 			// Barrel controller
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
@@ -97,26 +95,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetProcessor.AddTargetConsumer(_barrelController);
 		}
 
-//		// FELIX
-//		protected override void OnPatrolPointReached(Vector2 patrolPointReached)
-// 		{
-//			// FELIX  Refactor!  PatrolPoint class :)
-//			if (PatrolPoints.Count == _originalPatrolPointsCount)
-//			{
-//				PatrolPoints.Remove(patrolPointReached);
-//				UnfoldWings();
-//			}
-//			else if (PatrolPoints.Count == _originalPatrolPointsCount - 1)
-//			{
-//				PatrolPoints.Remove(patrolPointReached);
-//			}
-//
-//			Assert.IsTrue(PatrolPoints.Count >= 2);
-//		}
-
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			return _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
+			return _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM, OnClearingLaunchStation);
+		}
+
+		private void OnClearingLaunchStation()
+		{
+			// Stop moving
+			SwitchMovementControllers(_dummyMovementController);
+
+			UnfoldWings();
 		}
 
 		private void UnfoldWings()
