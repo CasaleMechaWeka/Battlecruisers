@@ -26,25 +26,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private LaserBarrelController _barrelController;
 		private ITargetDetector _targetDetector;
 		private ITargetProcessor _targetProcessor;
-		private int _originalPatrolPointsCount;
-		private IMovementController _dummyMovementController;
 
 		public float cruisingAltitudeInM;
 		public DeathstarWingController leftWing, rightWing;
 
-		private const float CRUISING_HEIGHT_EQUALITY_MARGIN = 1;
 		private const float LEFT_WING_TARGET_ANGLE_IN_DEGREES = 270;
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
-		private const float NUM_OF_PATROL_POINTS_TO_REMOVE = 2;
-
-		private bool IsAtCruisingHeight
-		{
-			get
-			{
-				return Mathf.Abs(transform.position.y - cruisingAltitudeInM) <= CRUISING_HEIGHT_EQUALITY_MARGIN;
-			}
-		}
 
 		public override void StaticInitialise()
 		{
@@ -73,8 +61,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			IRotationMovementController rightWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, rightWing.transform);
 			rightWing.Initialise(rightWingRotationMovementController);
-
-			_dummyMovementController = _movementControllerFactory.CreateDummyMovementController();
 		}
 
 		protected override void OnBuildableCompleted()

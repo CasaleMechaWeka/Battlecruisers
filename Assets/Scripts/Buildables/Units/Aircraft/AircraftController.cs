@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	public abstract class AircraftController : Unit
 	{
 		protected IMovementController _activeMovementController;
+		protected IMovementController _dummyMovementController;
 		protected IMovementController _patrollingMovementController;
 
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
@@ -25,8 +26,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
+			_dummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+			_activeMovementController = _dummyMovementController;
+
 			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
 			_patrollingMovementController.DirectionChanged += _movementController_DirectionChanged;
+		}
+
+		protected override void OnBuildableCompleted()
+		{
+			base.OnBuildableCompleted();
+
 			_activeMovementController = _patrollingMovementController;
 		}
 
