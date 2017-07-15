@@ -14,18 +14,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-	public interface IPrefabFactory
-	{
-		BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey);
-		Building CreateBuilding(BuildingWrapper buildingWrapperPrefab);
-
-		UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey);
-		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
-
-		Cruiser GetCruiserPrefab(HullKey hullKey);
-		Cruiser CreateCruiser(Cruiser cruiserPrefab);
-	}
-
 	// FELIX  Surely I can use polymorphism for this...
 	public class PrefabFactory : MonoBehaviour, IPrefabFactory
 	{
