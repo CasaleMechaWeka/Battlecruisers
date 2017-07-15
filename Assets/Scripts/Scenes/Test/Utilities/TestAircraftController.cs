@@ -12,17 +12,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
 	{
 		private TargetType _targetType;
 
-		public override TargetType TargetType { get { return _targetType; } }
+		// IList is not picked up by the Unit inspector
+		public List<Vector2> patrolPoints;
 
-		private IList<IPatrolPoint> _patrolPoints;
 		public IList<Vector2> PatrolPoints
-		{ 
-			private get { throw new NotImplementedException(); }
+		{
+			get { throw new NotImplementedException(); }
 			set
 			{
-				_patrolPoints = BCUtils.Helper.ConvertVectorsToPatrolPoints(value);
+				patrolPoints = new List<Vector2>(value);
 			}
 		}
+
+		public override TargetType TargetType { get { return _targetType; } }
 
 		private bool _useDummyMovementController = false; 
 		public bool UseDummyMovementController
@@ -58,7 +60,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			return _patrolPoints;
+			return BCUtils.Helper.ConvertVectorsToPatrolPoints(patrolPoints);
 		}
 	}
 }

@@ -18,15 +18,10 @@ namespace BattleCruisers.Scenes.Test.Factories
 	{
 		public List<Vector2> patrolPoints;
 
-		protected override void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
+		protected override void OnStart()
 		{
-			e.Buildable.CompletedBuildable += Aircraft_CompletedBuildable;
-		}
-
-		private void Aircraft_CompletedBuildable (object sender, EventArgs e)
-		{
-			TestAircraftController aircraft = (TestAircraftController)sender;
-			aircraft.PatrolPoints = patrolPoints;
+			TestAircraftController aircraft = (TestAircraftController)unitPrefab.Unit;
+			aircraft.patrolPoints = patrolPoints;
 		}
 	}
 }
