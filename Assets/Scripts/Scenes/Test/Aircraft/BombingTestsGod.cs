@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 	public class BombingTestsGod : MonoBehaviour 
 	{
 		public BomberController bomberToLeft, bomberToRight;
-		public List<Vector2> patrolPoints;
+		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
 
 		void Start() 
 		{
@@ -32,14 +32,13 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
 			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, factory.TargetType);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
-			// FELIX
-			//			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
-			IAircraftProvider aircraftProvider = null;
 
-			helper.InitialiseBuildable(bomberToLeft, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+			IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
+			helper.InitialiseBuildable(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();
-
-			helper.InitialiseBuildable(bomberToRight, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
+			
+			IAircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
+			helper.InitialiseBuildable(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
 		}
 	}
