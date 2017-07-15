@@ -64,6 +64,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
 			}
 
+			if (aircraftProvider == null)
+			{
+				aircraftProvider = CreateAircraftProvider();
+			}
+
 			if (targetsFactory == null)
 			{
 				targetsFactory = new TargetsFactory(enemyCruiser);
@@ -159,6 +164,57 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			factoryProvider.AircraftProvider.Returns(aircraftProvider);
 
 			return factoryProvider;
+		}
+
+		public IAircraftProvider CreateAircraftProvider(
+			IList<Vector2> bomberPatrolPoints = null,
+			IList<Vector2> fighterPatrolPoints = null,
+			IList<Vector2> deathstarPatrolPoints = null,
+			SafeZone fighterSafeZone = null)
+		{
+			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+
+			if (bomberPatrolPoints == null)
+			{
+				bomberPatrolPoints = new List<Vector2>() 
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+
+			if (fighterPatrolPoints == null)
+			{
+				fighterPatrolPoints = new List<Vector2>() 
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+
+			if (deathstarPatrolPoints == null)
+			{
+				deathstarPatrolPoints = new List<Vector2>() 
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+
+			if (fighterSafeZone == null)
+			{
+				fighterSafeZone = new SafeZone(
+					minX: float.MinValue,
+					maxX: float.MaxValue,
+					minY: float.MinValue,
+					maxY: float.MaxValue);
+			}
+			provider.FighterSafeZone.Returns(fighterSafeZone);
+
+			return provider;
 		}
 	}
 }
