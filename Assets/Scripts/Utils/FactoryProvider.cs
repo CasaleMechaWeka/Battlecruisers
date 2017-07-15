@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils
 		public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
 		public IAircraftProvider AircraftProvider { get; private set; }
 
-		public FactoryProvider(PrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
+		public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);

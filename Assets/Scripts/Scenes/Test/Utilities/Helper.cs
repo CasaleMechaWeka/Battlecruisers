@@ -91,7 +91,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			if (prefabFactory == null)
 			{
-				prefabFactory = new PrefabFactory();
+				prefabFactory = new PrefabFactory(new PrefabFetcher());
 			}
 
 			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 

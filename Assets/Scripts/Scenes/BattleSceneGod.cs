@@ -38,7 +38,6 @@ namespace BattleCruisers.Scenes
 		private BuildingGroupFactory _buildingGroupFactory;
 		private Bot _bot;
 
-		public PrefabFactory prefabFactory;
 		public UIManager uiManager;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
@@ -76,7 +75,8 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			_buildingGroupFactory = new BuildingGroupFactory();
-			prefabFactory.Initialise(new PrefabFetcher());
+			IPrefabFactory prefabFactory  = new PrefabFactory(new PrefabFetcher());
+
 
 			// Instantiate player cruiser
 			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
@@ -158,7 +158,7 @@ namespace BattleCruisers.Scenes
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						BuildingWrapper buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+						BuildingWrapper buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 						buildingWrapper.Building.Initialise(parentCruiser, hostileCruiser, uiManager, factoryProvider);
 						categoryToBuildings[buildingWrapper.Building.category].Add(buildingWrapper);
 					}
@@ -210,7 +210,7 @@ namespace BattleCruisers.Scenes
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				UnitWrapper unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
+				UnitWrapper unitWrapper = factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
 				unitWrapper.Unit.Initialise(parentCruiser, hostileCruiser, uiManager, factoryProvider);
 				unitWrappers.Add(unitWrapper);
 			}

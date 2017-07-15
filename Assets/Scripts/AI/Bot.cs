@@ -17,10 +17,10 @@ namespace BattleCruisers.AI
 		private Cruiser _friendlyCruiser;
 //		private Cruiser _enemyCruiser;
 		private IList<BuildingKey> _buildOrder;
-		private PrefabFactory _prefabFactory;
+		private IPrefabFactory _prefabFactory;
 		private int _buildOrderIndex;
 
-		public Bot(Cruiser friendlyCruiser, Cruiser enemyCruiser, IList<BuildingKey> buildOrder, PrefabFactory prefabFactory)
+		public Bot(Cruiser friendlyCruiser, Cruiser enemyCruiser, IList<BuildingKey> buildOrder, IPrefabFactory prefabFactory)
 		{
 			_friendlyCruiser = friendlyCruiser;
 //			_enemyCruiser = enemyCruiser;

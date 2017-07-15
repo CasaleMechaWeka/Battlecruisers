@@ -37,10 +37,7 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
-			_prefabFactory = GetComponent<PrefabFactory>();
-			Assert.IsNotNull(_prefabFactory);
-			_prefabFactory.Initialise(new PrefabFetcher());
-
+			_prefabFactory = new PrefabFactory(new PrefabFetcher());
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
 

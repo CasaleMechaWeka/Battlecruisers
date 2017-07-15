@@ -15,11 +15,12 @@ using UnityEngine;
 namespace BattleCruisers.Fetchers
 {
 	// FELIX  Surely I can use polymorphism for this...
-	public class PrefabFactory : MonoBehaviour, IPrefabFactory
+	public class PrefabFactory : IPrefabFactory
+//	public class PrefabFactory : MonoBehaviour, IPrefabFactory
 	{
-		private PrefabFetcher _prefabFetcher;
+		private readonly PrefabFetcher _prefabFetcher;
 
-		public void Initialise(PrefabFetcher prefabFetcher)
+		public PrefabFactory(PrefabFetcher prefabFetcher)
 		{
 			_prefabFetcher = prefabFetcher;
 		}
@@ -34,7 +35,7 @@ namespace BattleCruisers.Fetchers
 
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			BuildingWrapper buildingWrapper = Instantiate(buildingWrapperPrefab);
+			BuildingWrapper buildingWrapper = GameObject.Instantiate(buildingWrapperPrefab);
 			buildingWrapper.gameObject.SetActive(true);
 			buildingWrapper.Initialise();
 			buildingWrapper.Building.StaticInitialise();
@@ -51,7 +52,7 @@ namespace BattleCruisers.Fetchers
 
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
-			UnitWrapper unitWrapper = Instantiate(unitWrapperPrefab);
+			UnitWrapper unitWrapper = GameObject.Instantiate(unitWrapperPrefab);
 			unitWrapper.gameObject.SetActive(true);
 			unitWrapper.Initialise();
 			unitWrapper.Unit.StaticInitialise();
@@ -67,7 +68,7 @@ namespace BattleCruisers.Fetchers
 
 		public Cruiser CreateCruiser(Cruiser cruiserPrefab)
 		{
-			Cruiser cruiser = Instantiate(cruiserPrefab);
+			Cruiser cruiser = GameObject.Instantiate(cruiserPrefab);
 			cruiser.StaticInitialise();
 			return cruiser;
 		}
