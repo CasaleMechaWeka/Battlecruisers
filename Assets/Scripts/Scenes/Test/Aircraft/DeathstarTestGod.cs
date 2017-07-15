@@ -18,30 +18,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
 	public class DeathstarTestGod : MonoBehaviour 
 	{
-		void Start() 
+		private Helper _helper;
+
+		public Buildable leftTarget, rightTarget;
+		public DeathstarController leftDeathstar, rightDeathstar;
+
+		void Start()
 		{
-			Helper helper = new Helper();
+			_helper = new Helper();
 
+			SetupPair(leftTarget, rightDeathstar, Faction.Blues);
+			SetupPair(rightTarget, leftDeathstar, Faction.Reds);
+		}
 
+		private void SetupPair(Buildable target, DeathstarController deathstar, Faction targetFaction)
+		{
 			// Setup target
-			Buildable target = GameObject.FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(target, Faction.Blues);
-
-
+			_helper.InitialiseBuildable(target, targetFaction);
+			
+			
 			// Setup deathstar
-			Vector2 parentCruiserPosition = new Vector2(-10, 0);
-			Vector2 enemyCruiserPosition = new Vector2(10, 0);
+			Faction deathstarFaction = BcUtils.Helper.GetOppositeFaction(targetFaction);
+
+			Vector2 parentCruiserPosition = deathstar.transform.position;
+			Vector2 enemyCruiserPosition = target.transform.position;
 			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
-
+			
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(new AngleCalculatorFactory(), new TargetPositionPredictorFactory());
-
-			DeathstarController deathstar = GameObject.FindObjectOfType<DeathstarController>();
-			helper.InitialiseBuildable(deathstar, Faction.Reds, aircraftProvider: aircraftProvider, movementControllerFactory: movementControllerFactory);
+			
+			_helper.InitialiseBuildable(deathstar, deathstarFaction, aircraftProvider: aircraftProvider, movementControllerFactory: movementControllerFactory);
 			deathstar.StartConstruction();
 		}
 	}
