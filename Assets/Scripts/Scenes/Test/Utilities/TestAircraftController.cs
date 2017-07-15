@@ -1,9 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Movement.Velocity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using BattleCruisers.Movement.Velocity;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -19,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			private get { throw new NotImplementedException(); }
 			set
 			{
-				_patrolPoints = Helper.ConvertVectorsToPatrolPoints(value);
+				_patrolPoints = BCUtils.Helper.ConvertVectorsToPatrolPoints(value);
 			}
 		}
 

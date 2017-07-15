@@ -134,7 +134,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			return _aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM);;
+			return Helper.ConvertVectorsToPatrolPoints(_aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM));
 		}
 
 		protected override void OnFixedUpdate()

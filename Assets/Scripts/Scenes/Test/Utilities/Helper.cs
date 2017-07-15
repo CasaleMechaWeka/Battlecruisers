@@ -160,12 +160,5 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			return factoryProvider;
 		}
-
-		public static List<IPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)
-		{
-			return positions
-				.Select(position => new PatrolPoint(position) as IPatrolPoint)
-				.ToList();
-		}
 	}
 }
