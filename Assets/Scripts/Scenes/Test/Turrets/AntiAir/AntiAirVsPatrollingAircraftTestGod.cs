@@ -36,8 +36,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 		{
 			foreach (TestAircraftController plane in planes)
 			{
-				helper.InitialiseBuildable(plane, faction);
 				plane.PatrolPoints = aircraftPatrolPoints;
+				helper.InitialiseBuildable(plane, faction);
 				plane.StartConstruction();
 			}
 		}
