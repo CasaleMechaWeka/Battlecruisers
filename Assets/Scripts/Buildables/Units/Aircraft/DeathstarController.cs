@@ -13,6 +13,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -110,8 +111,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void UnfoldWings()
 		{
+			leftWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
+			rightWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
+
 			leftWing.StartRotatingWing(LEFT_WING_TARGET_ANGLE_IN_DEGREES);
 			rightWing.StartRotatingWing(RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
+		}
+
+		private void Wing_ReachedDesiredAngle(object sender, EventArgs e)
+		{
+			leftWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
+			rightWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
+
+			SwitchMovementControllers(_patrollingMovementController);
 		}
 
 		protected override void OnDestroyed()
