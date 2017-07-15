@@ -32,7 +32,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
 			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, factory.TargetType);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
-			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
+			// FELIX
+			//			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
+			IAircraftProvider aircraftProvider = null;
 
 			helper.InitialiseBuildable(bomberToLeft, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();

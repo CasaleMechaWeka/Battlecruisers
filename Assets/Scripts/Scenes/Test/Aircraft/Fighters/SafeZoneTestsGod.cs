@@ -35,7 +35,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 			FighterController fighter = GameObject.FindObjectOfType<FighterController>();
 			SafeZone safeZone = new SafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
-			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
+			// FELIX
+			//			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
+			IAircraftProvider aircraftProvider = null;
 			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 

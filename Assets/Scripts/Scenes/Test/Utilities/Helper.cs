@@ -17,6 +17,7 @@ using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using NSubstitute;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,11 +62,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			if (enemyCruiser == null)
 			{
 				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
-			}
-			
-			if (aircraftProvider == null)
-			{
-				aircraftProvider = CreateAircraftProvider();
 			}
 
 			if (targetsFactory == null)
@@ -163,57 +159,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			factoryProvider.AircraftProvider.Returns(aircraftProvider);
 
 			return factoryProvider;
-		}
-
-		public IAircraftProvider CreateAircraftProvider(
-			IList<Vector2> bomberPatrolPoints = null,
-			IList<Vector2> fighterPatrolPoints = null,
-			IList<Vector2> deathstarPatrolPoints = null,
-			SafeZone fighterSafeZone = null)
-		{
-			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
-
-			if (bomberPatrolPoints == null)
-			{
-				bomberPatrolPoints = new List<Vector2>() 
-				{
-					new Vector2(0, 1),
-					new Vector2(0, 2)
-				};
-			}
-			provider.FindBomberPatrolPoints(0, null).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(bomberPatrolPoints));
-
-			if (fighterPatrolPoints == null)
-			{
-				fighterPatrolPoints = new List<Vector2>() 
-				{
-					new Vector2(0, 1),
-					new Vector2(0, 2)
-				};
-			}
-			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(fighterPatrolPoints));
-
-			if (deathstarPatrolPoints == null)
-			{
-				deathstarPatrolPoints = new List<Vector2>() 
-				{
-					new Vector2(0, 1),
-					new Vector2(0, 2)
-				};
-			}
-			provider.FindDeathstarPatrolPoints(default(Vector2), 0, null).ReturnsForAnyArgs(ConvertVectorsToPatrolPoints(deathstarPatrolPoints));
-
-			if (fighterSafeZone == null)
-			{
-				fighterSafeZone = new SafeZone(
-					minX: float.MinValue,
-					maxX: float.MaxValue,
-					minY: float.MinValue,
-					maxY: float.MaxValue);
-			}
-			provider.FighterSafeZone.Returns(fighterSafeZone);
-			
-			return provider;
 		}
 
 		public static List<IPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)

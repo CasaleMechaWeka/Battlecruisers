@@ -31,7 +31,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			_helper = new Helper();
 
 			FighterController fighter = GameObject.FindObjectOfType<FighterController>();
-			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
+			// FELIX
+			IAircraftProvider aircraftProvider = null;
+//			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
 			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
