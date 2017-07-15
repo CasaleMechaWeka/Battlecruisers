@@ -89,6 +89,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				movementControllerFactory = new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory);
 			}
 
+			if (prefabFactory == null)
+			{
+				prefabFactory = new PrefabFactory();
+			}
+
 			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 
 				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider);
 

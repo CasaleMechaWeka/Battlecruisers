@@ -50,9 +50,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			Vector2 enemyCruiserPosition = target.transform.position;
 			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 			
-			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(new AngleCalculatorFactory(), new TargetPositionPredictorFactory());
-			
-			_helper.InitialiseBuildable(deathstar, deathstarFaction, aircraftProvider: aircraftProvider, movementControllerFactory: movementControllerFactory);
+			_helper.InitialiseBuildable(deathstar, deathstarFaction, aircraftProvider: aircraftProvider);
 			deathstar.StartConstruction();
 		}
 	}

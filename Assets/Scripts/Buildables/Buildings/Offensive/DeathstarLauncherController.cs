@@ -1,34 +1,49 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
 	public class DeathstarLauncherController : Building
 	{
+		private Unit _deathstar;
+
+		public UnitWrapper deathstarPrefab;
+
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
+
+		public override void StaticInitialise()
+		{
+			base.StaticInitialise();
+
+			Assert.IsNotNull(deathstarPrefab);
+		}
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+
+			_deathstar = _factoryProvider.PrefabFactory.CreateUnit(deathstarPrefab);
+
+			// FELIX  Set spawn position and rotation
+
+			_deathstar.Initialise(_parentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
+		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			// FELIX  Launch deathstar :D
+			_deathstar.StartConstruction();
 		}
 
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
 
-			// FELIX  Destroy deathstar :(
+			_deathstar.Destroy();
 		}
 	}
 }
