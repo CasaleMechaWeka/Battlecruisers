@@ -34,20 +34,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 				if (_useDummyMovementController)
 				{
-					// Create bogus patorl points so PatrollingMovementController is 
-					// creted correctly in AircraftController base class
+					// Create bogus patrol points so PatrollingMovementController is 
+					// created correctly in AircraftController base class
 					PatrolPoints = new List<Vector2> { new Vector2(0, 0), new Vector2(1, 1) };
 				}
 			}
 		}
 
-		protected override void OnInitialised()
+		protected override void OnBuildableCompleted()
 		{
-			base.OnInitialised();
+			base.OnBuildableCompleted();
 
 			if (UseDummyMovementController)
 			{
-				_activeMovementController = _movementControllerFactory.CreateDummyMovementController();
+				SwitchMovementControllers(_dummyMovementController);
 			}
 		}
 
