@@ -30,7 +30,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController = _dummyMovementController;
 
 			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
-			_patrollingMovementController.DirectionChanged += _movementController_DirectionChanged;
 		}
 
 		protected override void OnBuildableCompleted()
@@ -59,7 +58,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			newMovementController.Velocity = _activeMovementController.Velocity;
 			_activeMovementController.Velocity = new Vector2(0, 0);
+			_activeMovementController.DirectionChanged -= _movementController_DirectionChanged;
+
 			_activeMovementController = newMovementController;
+			_activeMovementController.DirectionChanged += _movementController_DirectionChanged;
 		}
 	}
 }
