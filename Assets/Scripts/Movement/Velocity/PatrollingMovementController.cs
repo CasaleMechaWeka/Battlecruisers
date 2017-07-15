@@ -37,7 +37,7 @@ namespace BattleCruisers.Movement.Velocity
 			_maxPatrollilngVelocityInMPerS = maxPatrollilngVelocityInMPerS;
 			_patrolPoints = patrolPoints;
 
-			_targetPatrolPoint = FindNearestPatrolPoint();
+			_targetPatrolPoint = patrolPoints[0];
 		}
 
 		public override void AdjustVelocity()
@@ -74,25 +74,6 @@ namespace BattleCruisers.Movement.Velocity
 			}
 
 			reachedPatrolPoint.ActionOnReached.Invoke();
-		}
-
-		// FELIX  Use LINQ!
-		private IPatrolPoint FindNearestPatrolPoint()
-		{
-			float minDistance = float.MaxValue;
-			IPatrolPoint closestPatrolPoint = null;
-
-			foreach (IPatrolPoint patrolPoint in _patrolPoints)
-			{
-				float distance = Vector2.Distance(_rigidBody.transform.position, patrolPoint.Position);
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					closestPatrolPoint = patrolPoint;
-				}
-			}
-
-			return closestPatrolPoint;
 		}
 
 		/// <summary>
