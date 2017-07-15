@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Aircraft
 	{
 		private IAircraftProvider _playerAircraftProvider, _aiAircraftProvider;
 		private Vector2 _playerCruiserPosition, _aiCruiserPosition;
-		private float _bomberAltitude, _fighterAltitude;
+		private float _bomberAltitude, _fighterAltitude, _deathstarAltitude;
 
 		[SetUp]
 		public void TestSetup()
@@ -25,6 +25,7 @@ namespace BattleCruisers.Tests.Aircraft
 
 			_bomberAltitude = 15;
 			_fighterAltitude = 20;
+			_deathstarAltitude = 25;
 		}
 
 		[Test]
@@ -87,6 +88,32 @@ namespace BattleCruisers.Tests.Aircraft
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));		// -5 + 5
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude)));	// 40 - 5
+		}
+
+		[Test]
+		public void PlayerAircraftProvider_DeathstarPatrolPoints()
+		{
+			Vector2 deathstarPosition = _playerCruiserPosition;
+
+			IList<Vector2> patrolPoints = _playerAircraftProvider.FindDeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
+
+			Assert.IsTrue(patrolPoints.Count == 4);
+			Assert.IsTrue(patrolPoints[1] == new Vector2(-30, _deathstarAltitude));
+			Assert.IsTrue(patrolPoints[2] == new Vector2(35, _deathstarAltitude));	// 30 + 5
+			Assert.IsTrue(patrolPoints[3] == new Vector2(25, _deathstarAltitude));	// 30 - 5
+		}
+
+		[Test]
+		public void AiAircraftProvider_DeathstarPatrolPoints()
+		{
+			Vector2 deathstarPosition = _aiCruiserPosition;
+
+			IList<Vector2> patrolPoints = _aiAircraftProvider.FindDeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
+
+			Assert.IsTrue(patrolPoints.Count == 4);
+			Assert.IsTrue(patrolPoints[1] == new Vector2(30, _deathstarAltitude));
+			Assert.IsTrue(patrolPoints[2] == new Vector2(-35, _deathstarAltitude));	// -30 - 5
+			Assert.IsTrue(patrolPoints[3] == new Vector2(-25, _deathstarAltitude));	// -30 + 5
 		}
 
 		private void AssertAreSafeZonesEqual(SafeZone expected, SafeZone actual)

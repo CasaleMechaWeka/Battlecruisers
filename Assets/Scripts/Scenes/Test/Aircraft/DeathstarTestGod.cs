@@ -23,8 +23,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
 	public class DeathstarTestGod : MonoBehaviour 
 	{
-		public List<Vector2> patrolPoints;
-
 		void Start() 
 		{
 			Helper helper = new Helper();

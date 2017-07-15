@@ -75,7 +75,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
 		{
 			// FELIX  Assumes enemy cruiser is to the right :/
-			return new List<Vector2>() {
+
+
+			return new List<Vector2>() 
+			{
 				new Vector2(deathstarPosition.x, deathstarPosition.y + DEATHSTAR_LAUNCH_HOVER_MARGIN),
 				new Vector2(deathstarPosition.x, cruisingAltitudeInM),
 				new Vector2(_enemyCruiserPosition.x + DEATHSTAR_PATROL_MARGIN, cruisingAltitudeInM),
