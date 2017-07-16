@@ -23,21 +23,13 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(deathstarPrefab);
 		}
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
-
-			_deathstar = _factoryProvider.PrefabFactory.CreateUnit(deathstarPrefab);
-
-			_deathstar.transform.position = transform.position + DEATHSTAR_SPAWN_POSITION_ADJUSTMENT;
-
-			_deathstar.Initialise(_parentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
-		}
-
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
+			_deathstar = _factoryProvider.PrefabFactory.CreateUnit(deathstarPrefab);
+			_deathstar.transform.position = transform.position + DEATHSTAR_SPAWN_POSITION_ADJUSTMENT;
+			_deathstar.Initialise(_parentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
 			_deathstar.StartConstruction();
 		}
 

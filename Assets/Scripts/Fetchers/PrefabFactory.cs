@@ -16,7 +16,6 @@ namespace BattleCruisers.Fetchers
 {
 	// FELIX  Surely I can use polymorphism for this...
 	public class PrefabFactory : IPrefabFactory
-//	public class PrefabFactory : MonoBehaviour, IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
 
