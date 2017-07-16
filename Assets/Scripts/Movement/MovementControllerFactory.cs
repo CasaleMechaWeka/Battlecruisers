@@ -63,5 +63,10 @@ namespace BattleCruisers.Movement
 		{
 			return new DummyRotationMovementController();
 		}
+
+		public IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
+		{
+			return new ConstantRotationController(rotateSpeedInDegreesPerS, transform);
+		}
 	}
 }

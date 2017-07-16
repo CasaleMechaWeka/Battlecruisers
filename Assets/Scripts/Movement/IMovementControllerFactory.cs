@@ -15,12 +15,13 @@ namespace BattleCruisers.Movement
 		IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS);
 		IMovementController CreateDummyMovementController();
 
-		// FELIX  Return IMovementController instead?
 		IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory);
 		IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone);
 		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM);
 
 		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
 		IRotationMovementController CreateDummyRotationMovementController();
+
+		IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
 	}
 }
