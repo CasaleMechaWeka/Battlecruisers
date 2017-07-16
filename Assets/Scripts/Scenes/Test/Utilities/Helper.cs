@@ -5,8 +5,9 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -229,6 +230,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IMovementControllerFactory movementControllerFactory = Substitute.For<IMovementControllerFactory>();
 
 			movementControllerFactory.CreatePatrollingMovementController(null, 0, null).ReturnsForAnyArgs(new DummyMovementController());
+			movementControllerFactory.CreateConstantRotationController(0, null).ReturnsForAnyArgs(paramInfo 
+				=> new ConstantRotationController((float)(paramInfo.Args()[0]), (Transform)(paramInfo.Args()[1])));
 
 			return movementControllerFactory;
 		}
