@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Movement;
 using BattleCruisers.Movement.Rotation;
 using System;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 {
 	public class NukeSpinner : MonoBehaviour
 	{
-		private IConstantRotationController _rotationController;
+		private IConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
+
+		public float rotateSpeedInDegreesPerS;
 
 		public SpriteRenderer Renderer { get; private set; }
 
@@ -17,18 +20,30 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			Renderer = gameObject.GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(Renderer);
+
+			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
 		}
 
-		public void Initialise(IConstantRotationController rotationController)
+		public void Initialise(IMovementControllerFactory movementControllerFactory)
 		{
-			_rotationController = rotationController;
+			_constantRotationController = movementControllerFactory.CreateConstantRotationController(rotateSpeedInDegreesPerS, transform);
+			_dummyRotationController = movementControllerFactory.CreateDummyConstantRotationController();
+			_activeRotationController = _dummyRotationController;
 		}
 
 		void FixedUpdate()
 		{
-			Debug.Log("FixedUpdate()  _rotationController: " + _rotationController);
+			_activeRotationController.Rotate();
+		}
 
-			_rotationController.Rotate();
+		public void StartRotating()
+		{
+			_activeRotationController = _constantRotationController;
+		}
+
+		public void StopRotating()
+		{
+			_activeRotationController = _dummyRotationController;
 		}
 	}
 }

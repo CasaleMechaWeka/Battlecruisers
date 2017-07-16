@@ -15,8 +15,6 @@ namespace BattleCruisers.Movement.Rotation
 
 		public void Rotate()
 		{
-			Debug.Log("Rotate()");
-
 			float rotationIncrement = Time.deltaTime * _rotateSpeedInDegreesPerS;
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement;
 			_transform.Rotate(rotationIncrementVector);

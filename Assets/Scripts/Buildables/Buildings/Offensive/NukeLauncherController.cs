@@ -10,8 +10,6 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 	{
 		private NukeSpinner _spinner;
 
-		private const float SPINNER_ROTATE_SPEED_IN_M_DEGREES_S = 45;
-
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
 		public override void StaticInitialise()
@@ -27,12 +25,14 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.OnInitialised();
 
-			_spinner.Initialise(_movementControllerFactory.CreateConstantRotationController(SPINNER_ROTATE_SPEED_IN_M_DEGREES_S, _spinner.transform));
+			_spinner.Initialise(_movementControllerFactory);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
+
+			_spinner.StartRotating();
 
 			// FELIX  Open & launch nuke :D
 		}

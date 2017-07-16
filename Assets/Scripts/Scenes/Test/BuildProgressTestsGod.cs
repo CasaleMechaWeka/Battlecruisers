@@ -15,13 +15,12 @@ namespace BattleCruisers.Scenes.Test
 		{
 			Helper helper = new Helper(numOfDrones: 8);
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-			IMovementControllerFactory movementControllerFactory = helper.CreateDummyMovementControllerFactory();
 
 			Buildable[] buildables = GameObject.FindObjectsOfType(typeof(Buildable)) as Buildable[];
 
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory, movementControllerFactory: movementControllerFactory);
+				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory);
 				buildable.StartConstruction();
 			}
 		}
