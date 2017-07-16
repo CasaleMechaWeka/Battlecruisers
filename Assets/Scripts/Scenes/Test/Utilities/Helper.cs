@@ -204,7 +204,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				deathstarPatrolPoints = new List<Vector2>() 
 				{
 					new Vector2(0, 1),
-					new Vector2(0, 2)
+					new Vector2(0, 2),
+					new Vector2(0, 3),
+					new Vector2(0, 4)
 				};
 			}
 			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
