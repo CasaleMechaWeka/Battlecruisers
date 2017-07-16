@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class DeathstarLauncherTestGod : MonoBehaviour 
+	public class DeathstarLauncherTestGod : CameraToggleTestGod
 	{
-		void Start() 
+		protected override void OnStart()
 		{
 			DeathstarLauncherController launcher = GameObject.FindObjectOfType<DeathstarLauncherController>();
 

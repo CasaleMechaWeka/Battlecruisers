@@ -17,16 +17,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class RocketLauncherTestGod : MonoBehaviour 
+	public class RocketLauncherTestGod : CameraToggleTestGod
 	{
-		public Camera overviewCamera, closeUpCamera;
-
-		void Start()
+		protected override void OnStart()
 		{
-			closeUpCamera.enabled = true;
-			overviewCamera.enabled = false;
-
-
 			Helper helper = new Helper();
 
 
@@ -45,12 +39,6 @@ namespace BattleCruisers.Scenes.Test
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
 			helper.InitialiseBuildable(rocketLauncher, Faction.Reds, targetsFactory: targetsFactory);
 			rocketLauncher.StartConstruction();
-		}
-
-		public void ToggleCamera()
-		{
-			overviewCamera.enabled = !overviewCamera.enabled;
-			closeUpCamera.enabled = !closeUpCamera.enabled;
 		}
 	}
 }
