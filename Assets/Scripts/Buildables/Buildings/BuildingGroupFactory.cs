@@ -25,6 +25,8 @@ namespace BattleCruisers.Buildables.Buildings
 					return "Defence";
 				case BuildingCategory.Offence:
 					return "Offence";
+				case BuildingCategory.Ultra:
+					return "Ultras";
 				default:
 					throw new ArgumentException();
 			}
@@ -42,6 +44,8 @@ namespace BattleCruisers.Buildables.Buildings
 					return "Defensive buildings to protect your cruiser";
 				case BuildingCategory.Offence:
 					return "Offensive buildings to destroy the enemy cruiser";
+				case BuildingCategory.Ultra:
+					return "Ridiculously awesome creations meant to end to game";
 				default:
 					throw new ArgumentException();
 			}
