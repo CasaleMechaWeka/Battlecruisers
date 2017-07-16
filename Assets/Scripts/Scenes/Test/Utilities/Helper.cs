@@ -223,5 +223,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			return provider;
 		}
+
+		public IMovementControllerFactory CreateDummyMovementControllerFactory()
+		{
+			IMovementControllerFactory movementControllerFactory = Substitute.For<IMovementControllerFactory>();
+
+			movementControllerFactory.CreatePatrollingMovementController(null, 0, null).ReturnsForAnyArgs(new DummyMovementController());
+
+			return movementControllerFactory;
+		}
 	}
 }

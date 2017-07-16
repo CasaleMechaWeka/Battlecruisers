@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
@@ -14,12 +15,13 @@ namespace BattleCruisers.Scenes.Test
 		{
 			Helper helper = new Helper(numOfDrones: 8);
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-			
+			IMovementControllerFactory movementControllerFactory = helper.CreateDummyMovementControllerFactory();
+
 			Buildable[] buildables = GameObject.FindObjectsOfType(typeof(Buildable)) as Buildable[];
 
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory);
+				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory, movementControllerFactory: movementControllerFactory);
 				buildable.StartConstruction();
 			}
 		}
