@@ -26,7 +26,6 @@ namespace BattleCruisers.Data
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
 
-		// FELIX  Initliase lazily!
 		public StaticData()
 		{
 			InitialGameModel = CreateInitialGameModel();
@@ -70,6 +69,9 @@ namespace BattleCruisers.Data
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "RocketLauncher"));
 			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Railgun"));
+
+			// Ultras
+			buildings.Add(new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"));
 
 			return buildings;
 		}

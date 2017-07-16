@@ -23,8 +23,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public UIFactory uiFactory;
 		public LoadoutHullItem loadoutHullItem;
 		public UnlockedHullItemsRow unlockedHullsRow;
-		public LoadoutBuildingItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow;
-		public UnlockedBuildingItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow;
+		public LoadoutBuildingItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
+		public UnlockedBuildingItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow, unlockedUltrasRow;
 		public BuildingDetailsManager buildingDetailsManager;
 		public CruiserDetailsManager cruiserDetailsManager;
 
@@ -49,6 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Defence, defensivesRow, unlockedDefensivesRow, buildingDetailsManager);
 			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Offence, offensivesRow, unlockedOffensivesRow, buildingDetailsManager);
 			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Tactical, tacticalsRow, unlockedTacticalsRow, buildingDetailsManager);
+			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Ultra, ultrasRow, unlockedUltrasRow, buildingDetailsManager);
 		}
 
 		public void GoToHomeScreen()

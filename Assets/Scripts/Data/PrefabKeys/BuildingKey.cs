@@ -16,6 +16,7 @@ namespace BattleCruisers.Data.PrefabKeys
 			public const string TACTICAL = "Tactical";
 			public const string DEFENCE  = "Defence";
 			public const string OFFENCE  = "Offence";
+			public const string ULTRAS  = "Ultras";
 		}
 
 		[SerializeField]
@@ -53,6 +54,8 @@ namespace BattleCruisers.Data.PrefabKeys
 					return BuildingFolderNames.DEFENCE;
 				case BuildingCategory.Offence:
 					return BuildingFolderNames.OFFENCE;
+				case BuildingCategory.Ultra:
+					return BuildingFolderNames.ULTRAS;
 				default:
 					throw new ArgumentException();
 			}
