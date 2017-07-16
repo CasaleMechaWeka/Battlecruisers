@@ -12,6 +12,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		public UnitWrapper deathstarPrefab;
 
+		private static Vector3 DEATHSTAR_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, 0.015f, 0);
+
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
 		public override void StaticInitialise()
@@ -27,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 			_deathstar = _factoryProvider.PrefabFactory.CreateUnit(deathstarPrefab);
 
-			// FELIX  Set spawn position and rotation
+			_deathstar.transform.position = transform.position + DEATHSTAR_SPAWN_POSITION_ADJUSTMENT;
 
 			_deathstar.Initialise(_parentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
 		}
