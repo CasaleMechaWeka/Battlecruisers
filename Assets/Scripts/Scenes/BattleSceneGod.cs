@@ -159,7 +159,6 @@ namespace BattleCruisers.Scenes
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
 						BuildingWrapper buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
-						buildingWrapper.Building.Initialise(parentCruiser, hostileCruiser, uiManager, factoryProvider);
 						categoryToBuildings[buildingWrapper.Building.category].Add(buildingWrapper);
 					}
 				}
@@ -211,7 +210,6 @@ namespace BattleCruisers.Scenes
 			foreach (UnitKey unitKey in unitKeys)
 			{
 				UnitWrapper unitWrapper = factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
-				unitWrapper.Unit.Initialise(parentCruiser, hostileCruiser, uiManager, factoryProvider);
 				unitWrappers.Add(unitWrapper);
 			}
 
