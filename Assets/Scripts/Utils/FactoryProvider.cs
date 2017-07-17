@@ -11,17 +11,6 @@ using System;
 
 namespace BattleCruisers.Utils
 {
-	public interface IFactoryProvider
-	{
-		IPrefabFactory PrefabFactory { get; }
-		ITargetsFactory TargetsFactory { get; }
-		IMovementControllerFactory MovementControllerFactory { get; }
-		IAngleCalculatorFactory AngleCalculatorFactory { get; }
-		ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
-		IAircraftProvider AircraftProvider { get; }
-		IFlightPointsProviderFactory FlightPointsProviderFactory { get; } 
-	}
-
 	public class FactoryProvider : IFactoryProvider
 	{
 		public IPrefabFactory PrefabFactory { get; private set; }
@@ -44,4 +33,3 @@ namespace BattleCruisers.Utils
 		}
 	}
 }
-
