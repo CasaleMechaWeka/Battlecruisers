@@ -13,13 +13,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 
 		protected override void InitialiseTurretBarrel()
 		{
-			// FELIX TEMP  Create factory :)
-			IFlightPointsProvider flightPointsProvider = new RocketFlightPointsProvider();
-
-
 			RocketBarrelController barrelController = _barrelController as RocketBarrelController;
 			Assert.IsNotNull(barrelController);
-			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, Faction, flightPointsProvider);
+
+			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController(), 
+				_movementControllerFactory, Faction, _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()
