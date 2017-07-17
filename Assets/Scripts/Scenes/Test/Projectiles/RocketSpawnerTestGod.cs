@@ -4,6 +4,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -42,7 +43,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 
 			RocketStats rocketStats = new RocketStats(rocketPrefab: rocketPrefab, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 25);
-			_rocketSpawner.Initialise(rocketStats, new MovementControllerFactory(null, null));
+			_rocketSpawner.Initialise(rocketStats, new MovementControllerFactory(null, null), new RocketFlightPointsProvider());
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
 		}

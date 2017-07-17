@@ -2,6 +2,7 @@
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Movement
 
 		IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory);
 		IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone);
-		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM);
+		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider);
 
 		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
 		IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);

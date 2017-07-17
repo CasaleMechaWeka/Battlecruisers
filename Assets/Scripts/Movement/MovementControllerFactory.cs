@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace BattleCruisers.Movement
 			return new FighterMovementController(rigidBody, maxVelocityInMPerS, targetProvider, safeZone);
 		}
 
-		public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM)
+		public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
 		{
-			return new RocketMovementController(rigidBody, maxVelocityInMPerS, targetProvider, cruisingAltitudeInM);
+			return new RocketMovementController(rigidBody, maxVelocityInMPerS, targetProvider, cruisingAltitudeInM, flightPointsProvider);
 		}
 
 		public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)

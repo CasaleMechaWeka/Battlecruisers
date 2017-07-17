@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,9 +13,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 
 		protected override void InitialiseTurretBarrel()
 		{
+			// FELIX TEMP  Create factory :)
+			IFlightPointsProvider flightPointsProvider = new RocketFlightPointsProvider();
+
+
 			RocketBarrelController barrelController = _barrelController as RocketBarrelController;
 			Assert.IsNotNull(barrelController);
-			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, Faction);
+			barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, Faction, flightPointsProvider);
 		}
 
 		protected override IAngleCalculator CreateAngleCalculator()

@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils;
 using System;
 using System.Collections;
@@ -27,13 +28,13 @@ namespace BattleCruisers.Projectiles
 		public ITarget Target { get; private set; }
 
 		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
-			IMovementControllerFactory movementControllerFactory, Faction faction)
+			IMovementControllerFactory movementControllerFactory, Faction faction, IFlightPointsProvider flightPointsProvider)
 		{
 			base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter);
 
 			Target = target;
 
-			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, this, rocketStats.CruisingAltitudeInM);
+			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, this, rocketStats.CruisingAltitudeInM, flightPointsProvider);
 
 			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
 			Assert.IsNotNull(rocketTarget);

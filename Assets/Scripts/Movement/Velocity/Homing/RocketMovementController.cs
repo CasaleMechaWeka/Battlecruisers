@@ -1,10 +1,12 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Projectiles.FlightPoints;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
@@ -21,11 +23,9 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		private Queue<Vector2> _flightPoints;
 		private Vector2 _currentTargetPoint;
 
-		private const float CRUISING_POINTS_OFFSET_PROPORTION = 0.25f;
 		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.25f;
-		private const float MIN_HORIZONTAL_DISTANCE_IN_M = 10;
 
-		public RocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM)
+		public RocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
 			: base(rigidBody, maxVelocityInMPerS, targetProvider) 
 		{ 
 			Assert.IsTrue(cruisingAltitudeInM > rigidBody.position.y);
@@ -33,39 +33,11 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			_cruisingAltitudeInM = cruisingAltitudeInM;
 			_cruisingAltitidueMarginInM = _cruisingAltitudeInM * CRUISING_ALTITUDE_MARGIN_PROPORTION;
 
-			CreateFlightPoints();
-		}
-
-		/// <summary>
-		/// Determine ascent and descent points, and set current target point as the ascent point.
-		/// </summary>
-		private void CreateFlightPoints()
-		{
-			Assert.IsNull(_flightPoints, "OnTargetSet() called more than once :(");
-
 			ITarget target = _targetProvider.Target;
 			Assert.IsNotNull(target);
-
-			_flightPoints = new Queue<Vector2>();
-
-			float horizontalDistanceToTarget = Mathf.Abs(_rigidBody.position.x - target.Position.x);
-			Assert.IsTrue(horizontalDistanceToTarget >= MIN_HORIZONTAL_DISTANCE_IN_M);
-
-			float cruisingPointsXOffset = CRUISING_POINTS_OFFSET_PROPORTION * horizontalDistanceToTarget;
-
-			if (_rigidBody.position.x < target.Position.x)
-			{
-				_flightPoints.Enqueue(new Vector2(_rigidBody.position.x + cruisingPointsXOffset, _cruisingAltitudeInM));
-				_flightPoints.Enqueue(new Vector2(target.Position.x - cruisingPointsXOffset, _cruisingAltitudeInM));
-			}
-			else
-			{
-				_flightPoints.Enqueue(new Vector2(_rigidBody.position.x - cruisingPointsXOffset, _cruisingAltitudeInM));
-				_flightPoints.Enqueue(new Vector2(target.Position.x + cruisingPointsXOffset, _cruisingAltitudeInM));
-			}
-
-			_flightPoints.Enqueue(target.Position);
-
+			
+			_flightPoints = flightPointsProvider.FindFlightPoints(_rigidBody.position, target.Position, cruisingAltitudeInM);
+			
 			_currentTargetPoint = _flightPoints.Dequeue();
 		}
 

@@ -4,14 +4,15 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -25,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
 
 		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController,
-			IMovementControllerFactory movementControllerFactory, Faction faction)
+			IMovementControllerFactory movementControllerFactory, Faction faction, IFlightPointsProvider flightPointsProvider)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
@@ -39,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			RocketStats rocketStats = new RocketStats(rocketPrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS, ROCKET_CRUISING_ALTITUDE_IN_M);
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-				rocketSpawner.Initialise(rocketStats, movementControllerFactory);
+				rocketSpawner.Initialise(rocketStats, movementControllerFactory, flightPointsProvider);
 			}
 		}
 
