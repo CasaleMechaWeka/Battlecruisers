@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class RocketTestGod : MonoBehaviour 
+	public class RocketMovementTestGod : MonoBehaviour 
 	{
 		void Start()
 		{

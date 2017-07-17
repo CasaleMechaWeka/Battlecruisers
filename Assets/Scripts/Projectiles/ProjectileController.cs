@@ -43,6 +43,7 @@ namespace BattleCruisers.Projectiles
 			}
 		}
 
+		// FELIX  Area of effect damage?
 		void OnTriggerEnter2D(Collider2D collider)
 		{
 			Logging.Log(Tags.SHELLS, "ProjectileController.OnTriggerEnter2D()");
