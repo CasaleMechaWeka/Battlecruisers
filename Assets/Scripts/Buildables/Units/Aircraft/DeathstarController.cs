@@ -105,7 +105,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private void UnfoldWings()
 		{
 			leftWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
-			rightWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
 
 			leftWing.StartRotating();
 			rightWing.StartRotating();
@@ -114,7 +113,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private void Wing_ReachedDesiredAngle(object sender, EventArgs e)
 		{
 			leftWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
-			rightWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
 
 			SwitchMovementControllers(_patrollingMovementController);
 		}

@@ -10,11 +10,10 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 	{
 		private NukeSpinner _spinner;
 
-		public RotatingController leftSiloHalf, rightSiloHalf;
+		public SiloHalfController leftSiloHalf, rightSiloHalf;
 
 		private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
-		private const float LEFT_SILO_TARGET_ANGLE_IN_DEGREES = 45;
-		private const float RIGHT_SILO_TARGET_ANGLE_IN_DEGREES = 315;
+		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
 
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
@@ -22,9 +21,11 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.StaticInitialise();
 
-			// FELIX
 			Assert.IsNotNull(leftSiloHalf);
-//			Assert.IsNotNull(rightSiloHalf);
+			Assert.IsNotNull(rightSiloHalf);
+
+			leftSiloHalf.StaticInitialise();
+			rightSiloHalf.StaticInitialise();
 
 			_spinner = gameObject.GetComponentInChildren<NukeSpinner>();
 			Assert.IsNotNull(_spinner);
@@ -35,7 +36,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.OnInitialised();
 
-			leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, LEFT_SILO_TARGET_ANGLE_IN_DEGREES);
+			leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+			rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 
 			_spinner.Initialise(_movementControllerFactory);
 		}
@@ -52,6 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			leftSiloHalf.ReachedDesiredAngle += SiloHalf_ReachedDesiredAngle;
 
 			leftSiloHalf.StartRotating();
+			rightSiloHalf.StartRotating();
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
@@ -66,6 +69,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			base.EnableRenderers(enabled);
 
 			_spinner.Renderer.enabled = enabled;
+			leftSiloHalf.Renderer.enabled = enabled;
+			rightSiloHalf.Renderer.enabled = enabled;
 		}
 	}
 }
