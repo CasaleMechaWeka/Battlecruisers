@@ -17,9 +17,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float SAFE_ZONE_MAX_Y = 25;
 
 		private const float FIGHTER_PATROL_MARGIN = 5;
+
 		private const float BOMBER_PATROL_MARGIN = 10;
+
 		private const float DEATHSTAR_PATROL_MARGIN = 5;
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
+
+		private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f;
+		private const float ROCKET_MIN_HORIZONTAL_DISTANCE_IN_M = 10;
 
 		public SafeZone FighterSafeZone { get; private set; }
 
@@ -84,6 +89,34 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				new Vector2(_enemyCruiserPosition.x + furtherEnemyCruiserPatrolPointAdjustemntX, cruisingAltitudeInM),
 				new Vector2(_enemyCruiserPosition.x + closerEnemyCruiserPatrolPointAdjustemntX, cruisingAltitudeInM)
 			};
+		}
+
+		/// <summary>
+		/// Assumes the target does not move :)
+		/// </summary>
+		public Queue<Vector2> FindRocketFlightPoints(Vector2 sourcePosition, Vector2 targetPosition, float cruisingAltitudeInM)
+		{
+			Queue<Vector2> flightPoints = new Queue<Vector2>();
+
+			float horizontalDistanceToTarget = Mathf.Abs(sourcePosition.x - targetPosition.x);
+			Assert.IsTrue(horizontalDistanceToTarget >= ROCKET_MIN_HORIZONTAL_DISTANCE_IN_M);
+
+			float cruisingPointsXOffset = ROCKET_CRUISING_POINTS_OFFSET_PROPORTION * horizontalDistanceToTarget;
+
+			if (sourcePosition.x < targetPosition.x)
+			{
+				flightPoints.Enqueue(new Vector2(sourcePosition.x + cruisingPointsXOffset, cruisingAltitudeInM));
+				flightPoints.Enqueue(new Vector2(targetPosition.x - cruisingPointsXOffset, cruisingAltitudeInM));
+			}
+			else
+			{
+				flightPoints.Enqueue(new Vector2(sourcePosition.x - cruisingPointsXOffset, cruisingAltitudeInM));
+				flightPoints.Enqueue(new Vector2(targetPosition.x + cruisingPointsXOffset, cruisingAltitudeInM));
+			}
+
+			flightPoints.Enqueue(targetPosition);
+
+			return flightPoints;
 		}
 	}
 }
