@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Units.Aircraft
+namespace BattleCruisers.Movement.Rotation
 {
 	public class RotatingController : MonoBehaviour 
 	{
