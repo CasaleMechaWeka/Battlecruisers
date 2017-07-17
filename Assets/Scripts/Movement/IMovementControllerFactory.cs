@@ -20,7 +20,7 @@ namespace BattleCruisers.Movement
 		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM);
 
 		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
-		IRotationMovementController CreateDummyRotationMovementController();
+		IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);
 
 		IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
 		IConstantRotationController CreateDummyConstantRotationController();

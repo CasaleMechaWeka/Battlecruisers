@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetProcessor _targetProcessor;
 
 		public float cruisingAltitudeInM;
-		public DeathstarWingController leftWing, rightWing;
+		public RotatingController leftWing, rightWing;
 
 		private const float LEFT_WING_TARGET_ANGLE_IN_DEGREES = 270;
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
@@ -57,11 +57,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-			IRotationMovementController leftWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, leftWing.transform);
-			leftWing.Initialise(leftWingRotationMovementController);
-
-			IRotationMovementController rightWingRotationMovementController = _movementControllerFactory.CreateRotationMovementController(WING_ROTATE_SPEED_IN_M_DEGREES_S, rightWing.transform);
-			rightWing.Initialise(rightWingRotationMovementController);
+			leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
+			rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -110,8 +107,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			leftWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
 			rightWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
 
-			leftWing.StartRotatingWing(LEFT_WING_TARGET_ANGLE_IN_DEGREES);
-			rightWing.StartRotatingWing(RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
+			leftWing.StartRotating();
+			rightWing.StartRotating();
 		}
 
 		private void Wing_ReachedDesiredAngle(object sender, EventArgs e)

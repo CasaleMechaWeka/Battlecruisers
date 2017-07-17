@@ -59,9 +59,9 @@ namespace BattleCruisers.Movement
 			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
 		}
 
-		public IRotationMovementController CreateDummyRotationMovementController()
+		public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)
 		{
-			return new DummyRotationMovementController();
+			return new DummyRotationMovementController(isOnTarget);
 		}
 
 		public IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
