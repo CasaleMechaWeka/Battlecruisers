@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Offensive
 {
 	public class DeathstarLauncherTestGod : CameraToggleTestGod
 	{

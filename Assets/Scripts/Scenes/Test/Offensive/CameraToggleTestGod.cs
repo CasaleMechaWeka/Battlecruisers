@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Offensive
 {
 	public class CameraToggleTestGod : MonoBehaviour 
 	{

@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Offensive
 {
 	public class RocketLauncherTestGod : CameraToggleTestGod
 	{
