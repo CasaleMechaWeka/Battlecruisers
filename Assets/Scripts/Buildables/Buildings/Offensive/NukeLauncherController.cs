@@ -10,11 +10,21 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 	{
 		private NukeSpinner _spinner;
 
+		public RotatingController leftSiloHalf, rightSiloHalf;
+
+		private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
+		private const float LEFT_SILO_TARGET_ANGLE_IN_DEGREES = 45;
+		private const float RIGHT_SILO_TARGET_ANGLE_IN_DEGREES = 315;
+
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
+
+			// FELIX
+			Assert.IsNotNull(leftSiloHalf);
+//			Assert.IsNotNull(rightSiloHalf);
 
 			_spinner = gameObject.GetComponentInChildren<NukeSpinner>();
 			Assert.IsNotNull(_spinner);
@@ -25,6 +35,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.OnInitialised();
 
+			leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, LEFT_SILO_TARGET_ANGLE_IN_DEGREES);
+
 			_spinner.Initialise(_movementControllerFactory);
 		}
 
@@ -32,9 +44,21 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.OnBuildableCompleted();
 
+			// FELIX  Spinner is never visible :(
 			_spinner.StartRotating();
+			_spinner.StopRotating();
+			_spinner.Renderer.enabled = false;
 
-			// FELIX  Open & launch nuke :D
+			leftSiloHalf.ReachedDesiredAngle += SiloHalf_ReachedDesiredAngle;
+
+			leftSiloHalf.StartRotating();
+		}
+
+		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
+		{
+			leftSiloHalf.ReachedDesiredAngle -= SiloHalf_ReachedDesiredAngle;
+
+			// FELIX  Launch rocket!
 		}
 
 		protected override void EnableRenderers(bool enabled)
