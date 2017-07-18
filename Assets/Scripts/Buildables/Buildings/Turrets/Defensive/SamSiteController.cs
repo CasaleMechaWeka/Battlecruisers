@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 			SamSiteBarrelController barrelController = _barrelController as SamSiteBarrelController;
 			Assert.IsNotNull(barrelController);
 
-			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFiler();
+			IExactMatchTargetFilter targetFilter = _targetsFactory.CreateExactMatchTargetFilter();
 			barrelController.Initialise(targetFilter, CreateAngleCalculator(), CreateRotationMovementController(), _movementControllerFactory, _targetPositionPredictorFactory);
 		}
 

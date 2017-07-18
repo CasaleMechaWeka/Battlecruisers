@@ -121,7 +121,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 
 			// Detect shootable enemies
-			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFiler();
+			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFilter();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
 			shootableEnemyDetector.Initialise(_barrelController.TurretStats.rangeInM);

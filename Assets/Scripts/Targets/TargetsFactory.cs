@@ -57,12 +57,12 @@ namespace BattleCruisers.Targets
 			return new FactionAndTargetTypeFilter(faction, targetTypes);
 		}
 
-		public IExactMatchTargetFilter CreateExactMatchTargetFiler()
+		public IExactMatchTargetFilter CreateExactMatchTargetFilter()
 		{
 			return new ExactMatchTargetFilter();
 		}
 
-		public IExactMatchTargetFilter CreateExactMatchTargetFiler(ITarget targetToMatch)
+		public IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch)
 		{
 			return new ExactMatchTargetFilter() 
 			{

@@ -145,11 +145,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
-		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget, ITargetFilter targetFilter = null)
+		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget, ITargetFilter targetFilter = null, IExactMatchTargetFilter exactMatchTargetFilter = null)
 		{
 			// The enemy cruiser is added as a target by the global target finder.
 			// So pretend the cruiser game object is the specified target.
-			ICruiser enemyCruiser = CreateCruiser(globalTarget);
+			ICruiser enemyCruiser = Substitute.For<ICruiser>();
+			enemyCruiser.GameObject.Returns(globalTarget);
+			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
 			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
@@ -161,6 +163,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
 			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.Aircraft).ReturnsForAnyArgs(targetFilter);
 			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
+			targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+			targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
 
 			return targetsFactory;
 		}

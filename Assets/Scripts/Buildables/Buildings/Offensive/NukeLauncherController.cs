@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		private void LaunchNuke()
 		{
-			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFiler(_enemyCruiser);
+			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
 			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}

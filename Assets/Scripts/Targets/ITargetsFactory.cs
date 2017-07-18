@@ -27,8 +27,8 @@ namespace BattleCruisers.Targets
 		ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, params TargetType[] targetTypes);
 		ITargetFilter CreateTargetFilter(Faction faction, List<TargetType> targetTypes);
 		ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes);
-		IExactMatchTargetFilter CreateExactMatchTargetFiler();
-		IExactMatchTargetFilter CreateExactMatchTargetFiler(ITarget targetToMatch);
+		IExactMatchTargetFilter CreateExactMatchTargetFilter();
+		IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
 
 		// Rankers
 		ITargetRanker CreateEqualTargetRanker();
