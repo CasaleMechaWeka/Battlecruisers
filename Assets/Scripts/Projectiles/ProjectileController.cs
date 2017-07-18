@@ -21,6 +21,8 @@ namespace BattleCruisers.Projectiles
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
 
+		private bool IsInitialised { get { return _rigidBody != null; } }
+
 		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
 		{
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -48,12 +50,15 @@ namespace BattleCruisers.Projectiles
 		{
 			Logging.Log(Tags.SHELLS, "ProjectileController.OnTriggerEnter2D()");
 
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
-
-			if (target != null && _targetFilter.IsMatch(target))
+			if (IsInitialised)
 			{
-				target.TakeDamage(_projectileStats.Damage);
-				CleanUp();
+				ITarget target = collider.gameObject.GetComponent<ITarget>();
+
+				if (target != null && _targetFilter.IsMatch(target))
+				{
+					target.TakeDamage(_projectileStats.Damage);
+					CleanUp();
+				}
 			}
 		}
 

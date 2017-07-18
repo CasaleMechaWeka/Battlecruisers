@@ -1,5 +1,9 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,11 +13,16 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 	public class NukeLauncherController : Building
 	{
 		private NukeSpinner _spinner;
+		private NukeController _nukeMissile;
+		private NukeStats _nukeMissileStats;
 
 		public SiloHalfController leftSiloHalf, rightSiloHalf;
+		public NukeController nukeMissilePrefab;
 
 		private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
 		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
+		// FELIX
+		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, 0, 0);
 
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
@@ -23,6 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 			Assert.IsNotNull(leftSiloHalf);
 			Assert.IsNotNull(rightSiloHalf);
+			Assert.IsNotNull(nukeMissilePrefab);
 
 			leftSiloHalf.StaticInitialise();
 			rightSiloHalf.StaticInitialise();
@@ -30,6 +40,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_spinner = gameObject.GetComponentInChildren<NukeSpinner>();
 			Assert.IsNotNull(_spinner);
 			_spinner.StaticInitialise();
+
+			_nukeMissileStats = new NukeStats(nukePrefab: nukeMissilePrefab, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30);
 		}
 
 		protected override void OnInitialised()
@@ -51,17 +63,32 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_spinner.StopRotating();
 			_spinner.Renderer.enabled = false;
 
+			CreateNuke();
+
 			leftSiloHalf.ReachedDesiredAngle += SiloHalf_ReachedDesiredAngle;
 
 			leftSiloHalf.StartRotating();
 			rightSiloHalf.StartRotating();
 		}
 
+		private void CreateNuke()
+		{
+			_nukeMissile = Instantiate<NukeController>(nukeMissilePrefab);
+			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
+		}
+
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
 		{
 			leftSiloHalf.ReachedDesiredAngle -= SiloHalf_ReachedDesiredAngle;
 
-			// FELIX  Launch rocket!
+			LaunchNuke();
+		}
+
+		private void LaunchNuke()
+		{
+			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFiler(_enemyCruiser);
+			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
+			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		protected override void EnableRenderers(bool enabled)

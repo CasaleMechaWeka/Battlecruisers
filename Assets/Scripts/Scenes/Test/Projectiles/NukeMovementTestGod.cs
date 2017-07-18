@@ -33,12 +33,12 @@ namespace BattleCruisers.Scenes.Test
 			{
 				Target = target
 			};
-			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30);
+			NukeStats nukeStats = new NukeStats(nukePrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30);
 			Vector2 initialVelocity = new Vector2(0, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 			IFlightPointsProvider nukeFlightPointsProvider = new NukeFlightPointsProvider();
 
-			nuke.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory, nukeFlightPointsProvider);
+			nuke.Initialise(nukeStats, initialVelocity, targetFilter, target, movementControllerFactory, nukeFlightPointsProvider);
 		}
 	}
 }

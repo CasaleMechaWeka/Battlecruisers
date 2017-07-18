@@ -61,6 +61,14 @@ namespace BattleCruisers.Targets
 		{
 			return new ExactMatchTargetFilter();
 		}
+
+		public IExactMatchTargetFilter CreateExactMatchTargetFiler(ITarget targetToMatch)
+		{
+			return new ExactMatchTargetFilter() 
+			{
+				Target = targetToMatch
+			};
+		}
 		#endregion TargetFilters
 
 		#region TargetRankers

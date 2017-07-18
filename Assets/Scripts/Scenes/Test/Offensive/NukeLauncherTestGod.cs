@@ -1,6 +1,9 @@
-﻿using BattleCruisers.Buildables.Buildings.Offensive;
+﻿using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Offensive
@@ -10,13 +13,14 @@ namespace BattleCruisers.Scenes.Test.Offensive
 		protected override void OnStart()
 		{
 			NukeLauncherController launcher = GameObject.FindObjectOfType<NukeLauncherController>();
-
-//			Vector2 parentCruiserPosition = launcher.transform.position;
-//			Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
-//			IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+			AirFactory target = GameObject.FindObjectOfType<AirFactory>();
 
 			Helper helper = new Helper();
-			helper.InitialiseBuildable(launcher);
+
+			ICruiser enemyCruiser = helper.CreateCruiser(target.GameObject);
+			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject);
+
+			helper.InitialiseBuildable(launcher, enemyCruiser: enemyCruiser, targetsFactory: targetsFactory);
 			launcher.StartConstruction();
 		}
 	}

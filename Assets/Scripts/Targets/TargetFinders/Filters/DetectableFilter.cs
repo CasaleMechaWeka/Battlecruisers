@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
+	/// <summary>
+	/// Only detects targets that have their IsDetectable property set to true.
+	/// </summary>
 	public class DetectableFilter : FactionAndTargetTypeFilter
 	{
 		private readonly bool _isDetectable;

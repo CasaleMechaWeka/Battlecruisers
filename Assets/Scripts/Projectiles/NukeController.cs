@@ -21,14 +21,14 @@ namespace BattleCruisers.Projectiles
 	{
 		public ITarget Target { get; private set; }
 
-		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
+		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, IFlightPointsProvider flightPointsProvider)
 		{
-			base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter);
+			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter);
 
 			Target = target;
 
-			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, this, rocketStats.CruisingAltitudeInM, flightPointsProvider);
+			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, nukeStats.MaxVelocityInMPerS, this, nukeStats.CruisingAltitudeInM, flightPointsProvider);
 		}
 	}
 }

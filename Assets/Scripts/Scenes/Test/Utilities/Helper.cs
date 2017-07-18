@@ -8,6 +8,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -51,6 +52,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IMovementControllerFactory movementControllerFactory = null,
 			IAngleCalculatorFactory angleCalculatorFactory = null,
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
+			IFlightPointsProviderFactory flightPointsProviderFactory = null,
 			Direction parentCruiserDirection = Direction.Right)
 		{
 			buildable.StaticInitialise();
@@ -95,8 +97,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				prefabFactory = new PrefabFactory(new PrefabFetcher());
 			}
 
-			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, 
-				movementControllerFactory, angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider);
+			if (flightPointsProviderFactory == null)
+			{
+				flightPointsProviderFactory = new FlightPointsProviderFactory();
+			}
+
+			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, movementControllerFactory, 
+				angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider, flightPointsProviderFactory);
 
 			buildable.Initialise(
 				parentCruiser,
@@ -127,6 +134,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return cruiser;
 		}
 
+		public ICruiser CreateCruiser(GameObject target)
+		{
+			ICruiser enemyCruiser = Substitute.For<ICruiser>();
+			enemyCruiser.GameObject.Returns(target);
+			enemyCruiser.Position.Returns(x => (Vector2)target.transform.position);
+			return enemyCruiser;
+		}
+
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
@@ -134,9 +149,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
 			// The enemy cruiser is added as a target by the global target finder.
 			// So pretend the cruiser game object is the specified target.
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			enemyCruiser.GameObject.Returns(globalTarget);
-			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
+			ICruiser enemyCruiser = CreateCruiser(globalTarget);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
 			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
@@ -158,7 +171,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IMovementControllerFactory movementControllerFactory,
 			IAngleCalculatorFactory angleCalculatorFactory,
 			ITargetPositionPredictorFactory targetPositionControllerFactory,
-			IAircraftProvider aircraftProvider)
+			IAircraftProvider aircraftProvider,
+			IFlightPointsProviderFactory flightPointsProviderFactory)
 		{
 			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -168,6 +182,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
 			factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
 			factoryProvider.AircraftProvider.Returns(aircraftProvider);
+			factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
 
 			return factoryProvider;
 		}
