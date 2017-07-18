@@ -21,8 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
 		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
-		// FELIX
-		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, 0, 0);
+		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 
