@@ -42,9 +42,11 @@ namespace BattleCruisers.Scenes.Test
 			Queue<Vector2> flightPoints = new Queue<Vector2>();
 
 			flightPoints.Enqueue(new Vector2(-35, 20));
-			flightPoints.Enqueue(new Vector2(-25, 25));
+			flightPoints.Enqueue(new Vector2(-30, 25));
+			flightPoints.Enqueue(new Vector2(-25, 30));
+			flightPoints.Enqueue(new Vector2(20, 30));
 			flightPoints.Enqueue(new Vector2(25, 25));
-			flightPoints.Enqueue(new Vector2(35, 20));
+			flightPoints.Enqueue(new Vector2(30, 20));
 			flightPoints.Enqueue(new Vector2(35, 0));
 
 			IFlightPointsProvider nukeFlightPointsProvider = Substitute.For<IFlightPointsProvider>();
