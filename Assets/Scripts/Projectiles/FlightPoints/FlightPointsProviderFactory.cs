@@ -8,9 +8,7 @@
 		public FlightPointsProviderFactory()
 		{
 			RocketFlightPointsProvider = new RocketFlightPointsProvider();
-
-			// FELIX
-			NukeFlightPointsProvider = null;
+			NukeFlightPointsProvider = new NukeFlightPointsProvider();
 		}
 	}
 }

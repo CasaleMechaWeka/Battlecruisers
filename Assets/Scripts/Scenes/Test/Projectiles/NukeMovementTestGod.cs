@@ -33,25 +33,10 @@ namespace BattleCruisers.Scenes.Test
 			{
 				Target = target
 			};
-			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 25);
+			RocketStats rocketStats = new RocketStats(rocketPrefab: null, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30);
 			Vector2 initialVelocity = new Vector2(0, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
-
-
-			// FELIX  Use RocketFlightPointsProvider once that has been implemented :D
-			Queue<Vector2> flightPoints = new Queue<Vector2>();
-
-			flightPoints.Enqueue(new Vector2(-35, 20));
-			flightPoints.Enqueue(new Vector2(-30, 25));
-			flightPoints.Enqueue(new Vector2(-25, 30));
-			flightPoints.Enqueue(new Vector2(20, 30));
-			flightPoints.Enqueue(new Vector2(25, 25));
-			flightPoints.Enqueue(new Vector2(30, 20));
-			flightPoints.Enqueue(new Vector2(35, 0));
-
-			IFlightPointsProvider nukeFlightPointsProvider = Substitute.For<IFlightPointsProvider>();
-			nukeFlightPointsProvider.FindFlightPoints(default(Vector2), default(Vector2), 0).ReturnsForAnyArgs(flightPoints);
-
+			IFlightPointsProvider nukeFlightPointsProvider = new NukeFlightPointsProvider();
 
 			nuke.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory, nukeFlightPointsProvider);
 		}
