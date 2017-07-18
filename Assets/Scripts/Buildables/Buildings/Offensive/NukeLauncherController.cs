@@ -74,20 +74,15 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			_nukeMissile = Instantiate<NukeController>(nukeMissilePrefab);
 			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
+			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
+			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
+			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
 		{
 			leftSiloHalf.ReachedDesiredAngle -= SiloHalf_ReachedDesiredAngle;
-
-			LaunchNuke();
-		}
-
-		private void LaunchNuke()
-		{
-			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
-			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+			_nukeMissile.Launch();
 		}
 
 		protected override void EnableRenderers(bool enabled)

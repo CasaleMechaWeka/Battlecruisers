@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 			// Setup nuke launcher
 			ICruiser enemyCruiser = helper.CreateCruiser(target.GameObject);
 			IExactMatchTargetFilter targetFilter = Substitute.For<IExactMatchTargetFilter>();
-			targetFilter.IsMatch(null).ReturnsForAnyArgs(true);
+			targetFilter.IsMatch(target).Returns(true);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, exactMatchTargetFilter: targetFilter);
 
 			NukeLauncherController launcher = GameObject.FindObjectOfType<NukeLauncherController>();

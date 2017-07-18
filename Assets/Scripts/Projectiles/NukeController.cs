@@ -19,6 +19,10 @@ namespace BattleCruisers.Projectiles
 	// FELIX  Avoid duplciate code with RocketController?
 	public class NukeController : ProjectileController, ITargetProvider
 	{
+		private IMovementControllerFactory _movementControllerFactory;
+		private NukeStats _nukeStats;
+		private IFlightPointsProvider _flightPointsProvider;
+
 		public ITarget Target { get; private set; }
 
 		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
@@ -26,9 +30,17 @@ namespace BattleCruisers.Projectiles
 		{
 			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter);
 
-			Target = target;
+			_movementControllerFactory = movementControllerFactory;
+			_nukeStats = nukeStats;
+			_flightPointsProvider = flightPointsProvider;
 
-			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, nukeStats.MaxVelocityInMPerS, this, nukeStats.CruisingAltitudeInM, flightPointsProvider);
+			Target = target;
+		}
+
+		public void Launch()
+		{
+			_movementController = _movementControllerFactory.CreateRocketMovementController(
+				_rigidBody, _nukeStats.MaxVelocityInMPerS, this, _nukeStats.CruisingAltitudeInM, _flightPointsProvider);
 		}
 	}
 }

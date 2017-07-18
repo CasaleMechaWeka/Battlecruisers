@@ -39,6 +39,7 @@ namespace BattleCruisers.Scenes.Test
 			IFlightPointsProvider nukeFlightPointsProvider = new NukeFlightPointsProvider();
 
 			nuke.Initialise(nukeStats, initialVelocity, targetFilter, target, movementControllerFactory, nukeFlightPointsProvider);
+			nuke.Launch();
 		}
 	}
 }
