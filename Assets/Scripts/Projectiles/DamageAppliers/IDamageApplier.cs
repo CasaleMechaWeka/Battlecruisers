@@ -4,6 +4,6 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 {
 	public interface IDamageApplier
 	{
-		void DealDamage(ITarget target);
+		void ApplyDamage(ITarget target);
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -74,9 +75,13 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			_nukeMissile = Instantiate<NukeController>(nukeMissilePrefab);
 			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
+
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
 			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
-			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+			// FELIX  Use AreaOfEffectDamageApplier
+			IDamageApplier damageApplier = new SingleDamageApplier(_nukeMissileStats.Damage);
+
+			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)

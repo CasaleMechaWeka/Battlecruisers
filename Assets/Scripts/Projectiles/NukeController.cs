@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils;
 using System;
@@ -25,10 +26,10 @@ namespace BattleCruisers.Projectiles
 
 		public ITarget Target { get; private set; }
 
-		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
+		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, IFlightPointsProvider flightPointsProvider)
 		{
-			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter);
+			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter, damageApplier);
 
 			_movementControllerFactory = movementControllerFactory;
 			_nukeStats = nukeStats;

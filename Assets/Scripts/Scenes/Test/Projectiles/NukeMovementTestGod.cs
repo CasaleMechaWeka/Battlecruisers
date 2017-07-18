@@ -5,6 +5,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -37,8 +38,9 @@ namespace BattleCruisers.Scenes.Test
 			Vector2 initialVelocity = new Vector2(0, 5);
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 			IFlightPointsProvider nukeFlightPointsProvider = new NukeFlightPointsProvider();
+			IDamageApplier damageApplier = new SingleDamageApplier(nukeStats.Damage);
 
-			nuke.Initialise(nukeStats, initialVelocity, targetFilter, target, movementControllerFactory, nukeFlightPointsProvider);
+			nuke.Initialise(nukeStats, initialVelocity, targetFilter, damageApplier, target, movementControllerFactory, nukeFlightPointsProvider);
 			nuke.Launch();
 		}
 	}

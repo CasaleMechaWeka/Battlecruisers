@@ -11,7 +11,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 			_damage = damage;
 		}
 
-		public void DealDamage(ITarget target)
+		public void ApplyDamage(ITarget target)
 		{
 			target.TakeDamage(_damage);
 		}
