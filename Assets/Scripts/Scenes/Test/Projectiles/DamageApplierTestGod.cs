@@ -19,10 +19,12 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 
             // Setup targets
             Buildable baseTarget = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuildable(baseTarget, factionToTarget);
+			
+			TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
+			aircraft.UseDummyMovementController = true;
 
-            DroneStation[] targets = FindObjectsOfType<DroneStation>();
-            foreach (DroneStation target in targets)
+            Buildable[] targets = FindObjectsOfType<Buildable>();
+            foreach (Buildable target in targets)
             {
                 helper.InitialiseBuildable(target, factionToTarget);
             }

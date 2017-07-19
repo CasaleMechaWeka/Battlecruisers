@@ -1,14 +1,11 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
+﻿using System.Collections.Generic;
 using BattleCruisers.Utils;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public class PatrollingMovementController : MovementController
+    public class PatrollingMovementController : MovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly float _maxPatrollilngVelocityInMPerS;
