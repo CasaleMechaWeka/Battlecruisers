@@ -69,6 +69,12 @@ namespace BattleCruisers.Targets
 				Target = targetToMatch
 			};
 		}
+
+        public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
+        {
+            return new DummyTargetFilter(isMatchResult);
+        }
+
 		#endregion TargetFilters
 
 		#region TargetRankers

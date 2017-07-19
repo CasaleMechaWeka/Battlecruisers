@@ -9,8 +9,6 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class DamageApplierTestGod : MonoBehaviour 
     {
-        public LayerMask targetLayerMask;
-
 	    void Start() 
         {
             Helper helper = new Helper();

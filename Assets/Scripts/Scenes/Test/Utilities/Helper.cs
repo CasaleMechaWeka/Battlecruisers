@@ -165,6 +165,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
 			targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
 			targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
 			return targetsFactory;
 		}

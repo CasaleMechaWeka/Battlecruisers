@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(_spinner);
 			_spinner.StaticInitialise();
 
-			_nukeMissileStats = new NukeStats(nukePrefab: nukeMissilePrefab, damage: 50, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30);
+            _nukeMissileStats = new NukeStats(nukePrefab: nukeMissilePrefab, damage: 20000, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30, damageRadiusInM: 10);
 		}
 
 		protected override void OnInitialised()
@@ -77,9 +77,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-			IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
-			// FELIX  Use AreaOfEffectDamageApplier
-			IDamageApplier damageApplier = new SingleDamageApplier(_nukeMissileStats.Damage);
+            ITargetFilter damageTargetFilter = _factoryProvider.TargetsFactory.CreateDummyTargetFilter(isMatchResult: true);
+			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeMissileStats.Damage, _nukeMissileStats.DamageRadiusInM, damageTargetFilter);
+            IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
 			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
