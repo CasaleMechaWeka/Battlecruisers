@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         private readonly LayerMask _targetLayerMask;
 
 
-		public AreaOfEffectDamageApplier(float damage, float radiusInM, ITargetFilter targetFilter, LayerMask targetLayerMask)
+        public AreaOfEffectDamageApplier(float damage, float radiusInM, ITargetFilter targetFilter, LayerMask targetLayerMask = default(LayerMask))
         {
             _damage = damage;
             _radiusInM = radiusInM;
@@ -22,9 +22,17 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
         public void ApplyDamage(ITarget baseTarget)
         {
-            baseTarget.TakeDamage(_damage);
+            Collider2D[] colliders;
 
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(baseTarget.Position, _radiusInM, _targetLayerMask);
+            if (_targetLayerMask == default(LayerMask))
+            {
+				colliders = Physics2D.OverlapCircleAll(baseTarget.Position, _radiusInM);
+            }
+            else
+            {
+                colliders = Physics2D.OverlapCircleAll(baseTarget.Position, _radiusInM, _targetLayerMask);
+			}
+
             foreach (Collider2D collider in colliders)
             {
 				ITarget target = collider.gameObject.GetComponent<ITarget>();

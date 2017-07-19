@@ -1,14 +1,10 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Linq;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-	public class FactionAndTargetTypeFilter : ITargetFilter
+    public class FactionAndTargetTypeFilter : ITargetFilter
 	{
 		private readonly Faction _factionToDetect;
 		private readonly TargetType[] _targetTypes;

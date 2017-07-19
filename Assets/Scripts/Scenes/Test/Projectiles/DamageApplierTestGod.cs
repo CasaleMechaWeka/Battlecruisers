@@ -33,9 +33,10 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             // Setup damage applier
             float damage = 50;
             float radiusInM = 5;
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factionToTarget, TargetType.Buildings);
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
-            IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter, targetLayerMask);
+			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter);
+			//IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter, targetLayerMask);
             damageApplier.ApplyDamage(baseTarget);
 	    }
     }

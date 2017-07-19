@@ -16,6 +16,8 @@ namespace BattleCruisers.Projectiles
 		private NukeStats _nukeStats;
 		private IFlightPointsProvider _flightPointsProvider;
 
+
+
 		public ITarget Target { get; private set; }
 
 		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier, ITarget target, 
