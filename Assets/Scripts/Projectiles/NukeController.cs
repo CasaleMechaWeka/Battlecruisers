@@ -1,24 +1,16 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-	// FELIX  Avoid duplciate code with RocketController?
-	public class NukeController : ProjectileController, ITargetProvider
+    // FELIX  Avoid duplciate code with RocketController?
+    public class NukeController : ProjectileController, ITargetProvider
 	{
 		private IMovementControllerFactory _movementControllerFactory;
 		private NukeStats _nukeStats;

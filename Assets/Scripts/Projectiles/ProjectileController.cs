@@ -1,27 +1,24 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-	public class ProjectileController : MonoBehaviour
+    public class ProjectileController : MonoBehaviour
 	{
 		private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
+        private IDamageApplier _damageApplier;
 
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
 
-		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter)
+		public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier = null)
 		{
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
@@ -30,6 +27,12 @@ namespace BattleCruisers.Projectiles
 			_targetFilter = targetFilter;
 			_rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
+
+            _damageApplier = damageApplier;
+            if (_damageApplier == null)
+            {
+                _damageApplier = new SingleDamageApplier(projectileStats.Damage);
+            }
 		}
 
 		void FixedUpdate()
@@ -52,14 +55,9 @@ namespace BattleCruisers.Projectiles
 
 			if (target != null && _targetFilter.IsMatch(target))
 			{
-				DealDamage(target);
+                _damageApplier.ApplyDamage(target);
 				CleanUp();
 			}
-		}
-
-		protected virtual void DealDamage(ITarget target)
-		{
-			target.TakeDamage(_projectileStats.Damage);
 		}
 
 		protected virtual void CleanUp()
