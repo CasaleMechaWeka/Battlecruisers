@@ -1,14 +1,9 @@
 ﻿using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public class StaticAngleCalculator : AngleCalculator
+    public class StaticAngleCalculator : AngleCalculator
 	{
 		private readonly float _desiredAngleInDegrees;
 
