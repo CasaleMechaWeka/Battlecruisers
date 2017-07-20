@@ -1,20 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-	public class MissileController : ProjectileController, ITargetProvider
+    public class MissileController : ProjectileController, ITargetProvider
 	{
 		public  ITarget Target { get; private set; }
 

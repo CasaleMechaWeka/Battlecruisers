@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-    // FELIX  Avoid duplciate code with RocketController?
     public class NukeController : ProjectileController, ITargetProvider
 	{
 		private IMovementControllerFactory _movementControllerFactory;
