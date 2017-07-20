@@ -1,17 +1,15 @@
-﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft;
+﻿using System;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
-	public class NukeLauncherController : Building
+    public class NukeLauncherController : Building
 	{
 		private NukeSpinner _spinner;
 		private NukeController _nukeMissile;
@@ -73,7 +71,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		private void CreateNuke()
 		{
-			_nukeMissile = Instantiate<NukeController>(nukeMissilePrefab);
+			_nukeMissile = Instantiate(nukeMissilePrefab);
 			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
@@ -81,7 +79,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeMissileStats.Damage, _nukeMissileStats.DamageRadiusInM, damageTargetFilter);
             IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
-			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocityInMPerS, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocity, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)

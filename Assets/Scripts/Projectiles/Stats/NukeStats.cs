@@ -2,20 +2,15 @@
 
 namespace BattleCruisers.Projectiles.Stats
 {
-    public class NukeStats : ProjectileStats
+    public class NukeStats : CruisingProjectileStats<NukeController>
 	{
-		public NukeController NukePrefab { get; private set; }
-		public float CruisingAltitudeInM { get; private set; }
-		public Vector2 InitialVelocityInMPerS { get; private set; }
-        public float DamageRadiusInM { get; private set; }
+		protected override float InitialVelocityMultiplier { get { return 0; } }
+
+        public Vector2 InitialVelocity { get { return new Vector2(0, 0); } }
 
 		public NukeStats(NukeController nukePrefab, float damage, float maxVelocityInMPerS, float cruisingAltitudeInM, float damageRadiusInM)
-			: base(damage, maxVelocityInMPerS, ignoreGravity: true)
+            : base(nukePrefab, damage, maxVelocityInMPerS, cruisingAltitudeInM, damageRadiusInM)
 		{
-			NukePrefab = nukePrefab;
-			CruisingAltitudeInM = cruisingAltitudeInM;
-			InitialVelocityInMPerS = new Vector2(0, 0);
-            DamageRadiusInM = damageRadiusInM;
 		}
 	}
 }

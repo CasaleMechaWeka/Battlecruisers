@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-	// FELIX  Avoid duplicate code with FireIntervalmManager
-	public class LaserFireIntervalManager : MonoBehaviour, IFireIntervalManager
+    // FELIX  Avoid duplicate code with FireIntervalmManager
+    public class LaserFireIntervalManager : MonoBehaviour, IFireIntervalManager
 	{
 		private LaserTurretStats _laserTurretStats;
 		private float _currentFireIntervalInS;
