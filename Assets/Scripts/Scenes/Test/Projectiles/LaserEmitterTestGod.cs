@@ -1,14 +1,13 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class LaserTest
+    public class LaserTest
 	{
 		public LaserEmitter Laser { get; private set; }
 		public Buildable Target { get; private set; }
