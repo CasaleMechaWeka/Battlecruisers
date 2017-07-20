@@ -1,16 +1,12 @@
-﻿using BattleCruisers.Data;
+﻿using System.Collections.Generic;
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-	public class LevelsScreenController : ScreenController
+    public class LevelsScreenController : ScreenController
 	{
-		private int _levelNum;
-
 		public UIFactory uiFactory;
 		public HorizontalOrVerticalLayoutGroup buttonsWrapper;
 

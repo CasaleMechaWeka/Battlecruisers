@@ -2,22 +2,18 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class SamSiteBarrelController : BarrelController
+    public class SamSiteBarrelController : BarrelController
 	{
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawner _missileSpawner;
-		private ITargetsFactory _targetsFactory;
 
 		public MissileController missilePrefab;
 

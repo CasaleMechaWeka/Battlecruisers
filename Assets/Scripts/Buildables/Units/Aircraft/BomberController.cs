@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
+﻿using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
@@ -8,18 +7,15 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	// FELIX  Switch back to PatrollingMovementController once we run out of targets?
-	public class BomberController : AircraftController, ITargetConsumer
+    // FELIX  Switch back to PatrollingMovementController once we run out of targets?
+    public class BomberController : AircraftController, ITargetConsumer
 	{
 		private bool _haveDroppedBombOnRun;
-		private Vector2 _targetCruisingHeight;
 		private ITargetProcessor _targetProcessor;
 		private BombSpawner _bombSpawner;
 		private IBomberMovementController _bomberMovementControler;
