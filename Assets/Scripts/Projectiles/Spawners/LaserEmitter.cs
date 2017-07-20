@@ -1,14 +1,11 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public class LaserEmitter : MonoBehaviour 
+    public class LaserEmitter : MonoBehaviour 
 	{
 		private LineRenderer _lineRenderer;
 		private ContactFilter2D _contactFilter;
@@ -68,7 +65,6 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void StopLaser()
 		{
-//			if (_lineRenderer != null)
 			_lineRenderer.enabled = false;
 		}
 
