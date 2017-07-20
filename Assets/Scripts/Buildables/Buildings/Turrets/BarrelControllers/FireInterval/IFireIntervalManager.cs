@@ -1,9 +1,6 @@
-﻿using System;
-using UnityEngine;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-	public interface IFireIntervalManager
+    public interface IFireIntervalManager
 	{
 		/// <summary>
 		/// Automatically starts the next interval if the current interval is up.
