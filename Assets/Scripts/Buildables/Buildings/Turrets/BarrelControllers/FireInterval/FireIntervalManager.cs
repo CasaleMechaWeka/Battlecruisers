@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 			_timeSinceLastFireInS = float.MaxValue;
 		}
 
-		public bool IsIntervalUp()
+		public bool ShouldFire()
 		{
 			if (_timeSinceLastFireInS >= _currentFireIntervalInS)
 			{

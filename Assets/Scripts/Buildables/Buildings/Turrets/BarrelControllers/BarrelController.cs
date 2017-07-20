@@ -77,7 +77,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				}
 
 				if ((isOnTarget || TurretStats.IsInBurst)
-				    && _fireIntervalManager.IsIntervalUp())
+				    && _fireIntervalManager.ShouldFire())
 				{
 					// Burst fires happen even if we are no longer on target, so we may miss
 					// the target in this case.  Hence use the actual angle our turret barrel

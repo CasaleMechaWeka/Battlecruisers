@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 		/// Always returns true while in the laser burst length.  Ie, if the laser burst length
 		/// is 2 seconds, this method will return true during those two seconds.
 		/// </returns>
-		public bool IsIntervalUp()
+		public bool ShouldFire()
 		{
 			bool isIntervalUp = false;
 
