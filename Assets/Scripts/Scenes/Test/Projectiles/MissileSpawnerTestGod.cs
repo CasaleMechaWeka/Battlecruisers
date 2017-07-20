@@ -1,21 +1,16 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Buildables.Units.Aircraft;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class MissileSpawnerTestGod : MonoBehaviour 
+    public class MissileSpawnerTestGod : MonoBehaviour 
 	{
 		private MissileSpawner _missileSpawner;
 		private TestAircraftController _target;
@@ -28,13 +23,14 @@ namespace BattleCruisers.Scenes.Test
 		{
 			// Setup target
 			Helper helper = new Helper();
-			_target = GameObject.FindObjectOfType<TestAircraftController>();
+			_target = FindObjectOfType<TestAircraftController>();
 			_target.PatrolPoints = targetPatrolPoints;
 			helper.InitialiseBuildable(_target);
+            _target.StartConstruction();
 
 
 			// Setup missile spawner
-			_missileSpawner = GameObject.FindObjectOfType<MissileSpawner>();
+			_missileSpawner = FindObjectOfType<MissileSpawner>();
 			_targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = _target
