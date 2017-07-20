@@ -1,22 +1,5 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace BattleCruisers.Projectiles.Stats
+﻿namespace BattleCruisers.Projectiles.Stats
 {
-	public interface IProjectileStats
-	{
-		float Damage { get; }
-		float MaxVelocityInMPerS { get; }
-		bool IgnoreGravity { get; }
-	}
-
 	public abstract class ProjectileStats : IProjectileStats
 	{
 		public float Damage { get; private set; }
