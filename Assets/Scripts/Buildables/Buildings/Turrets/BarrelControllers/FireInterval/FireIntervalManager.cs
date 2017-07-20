@@ -1,35 +1,38 @@
-﻿using System;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-	public class FireIntervalManager : MonoBehaviour, IFireIntervalManager
+    public class FireIntervalManager : MonoBehaviour, IFireIntervalManager
 	{
-		private IFireIntervalProvider _fireIntervalProvider;
-		private float _currentFireIntervalInS;
-		private float _timeSinceLastFireInS;
+        private IState _currentState;
 
-		public void Initialise(IFireIntervalProvider fireIntervalProvider)
+        public void Initialise(IFireIntervalProvider waitingDurationProvider, IFireIntervalProvider firingDurationProvider = null)
 		{
-			_fireIntervalProvider = fireIntervalProvider;
-			_currentFireIntervalInS = _fireIntervalProvider.NextFireIntervalInS;
-			_timeSinceLastFireInS = float.MaxValue;
+            if (firingDurationProvider == null)
+            {
+                firingDurationProvider = new DummyDurationProvider(durationInS: 0);
+            }
+
+            FiringState firingState = new FiringState();
+            WaitingState waitingState = new WaitingState();
+
+            firingState.Initialise(waitingState, firingDurationProvider);
+            waitingState.Initialise(firingState, waitingDurationProvider);
+
+            _currentState = firingState;
 		}
 
 		public bool ShouldFire()
 		{
-			if (_timeSinceLastFireInS >= _currentFireIntervalInS)
-			{
-				_timeSinceLastFireInS = 0;
-				_currentFireIntervalInS = _fireIntervalProvider.NextFireIntervalInS;
-				return true;
-			}
-			return false;
+            Debug.Log("_currentState: " + _currentState + "  shouldFire: " + _currentState.ShouldFire);
+
+            return _currentState.ShouldFire;
 		}
 
 		void Update()
 		{
-			_timeSinceLastFireInS += Time.deltaTime;
+            _currentState = _currentState.ProcessTimeInterval(Time.deltaTime);
 		}
 	}
 }

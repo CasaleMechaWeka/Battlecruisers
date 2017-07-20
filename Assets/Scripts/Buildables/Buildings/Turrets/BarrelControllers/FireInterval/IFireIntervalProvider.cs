@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEngine;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-	public interface IFireIntervalProvider
+    // FELIX  Rename!  IDurationProvider
+    public interface IFireIntervalProvider
 	{
 		float NextFireIntervalInS { get; }
 	}

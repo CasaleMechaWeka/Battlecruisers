@@ -4,31 +4,41 @@
 	{
         private IState _otherState;
 		private IFireIntervalProvider _fireIntervalProvider;
-		private float _timeElapsedInS;
-		private float _timeSinceLastStateChangeInS;
+		private float _timeToWaitInS;
+		private float _elapsedTimeInS;
 
         public abstract bool ShouldFire { get; }
 
         // No constructor due to circular dependency :)
-        public void Initialise(IState otherState, IFireIntervalProvider fireIntervalProvider, float initialTimeSinceLastStateChange)
+        public void Initialise(IState otherState, IFireIntervalProvider fireIntervalProvider)
 		{
 			_otherState = otherState;
 			_fireIntervalProvider = fireIntervalProvider;
-            _timeSinceLastStateChangeInS = initialTimeSinceLastStateChange;
+
+			_elapsedTimeInS = 0;
+            _timeToWaitInS = _fireIntervalProvider.NextFireIntervalInS;
 		}
 
 		public IState ProcessTimeInterval(float timePassedInS)
 		{
 			IState nextState = this;
 
-			if (_timeSinceLastStateChangeInS >= _timeElapsedInS)
-			{
-				_timeSinceLastStateChangeInS = 0;
-				_timeElapsedInS = _fireIntervalProvider.NextFireIntervalInS;
-				nextState = _otherState;
-			}
+            _elapsedTimeInS += timePassedInS;
 
-			return nextState;
-		}
+			if (_elapsedTimeInS >= _timeToWaitInS)
+			{
+                ResetTime();
+
+                nextState = _otherState;
+            }
+
+            return nextState;
+        }
+
+        private void ResetTime()
+        {
+			_elapsedTimeInS = 0;
+			_timeToWaitInS = _fireIntervalProvider.NextFireIntervalInS;
+        }
 	}
 }

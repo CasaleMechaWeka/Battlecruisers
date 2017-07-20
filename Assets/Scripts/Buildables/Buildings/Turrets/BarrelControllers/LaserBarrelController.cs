@@ -21,10 +21,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			TurretStats = laserTurretStats;
 
 			// Fire interval manager
-			LaserFireIntervalManager laserFireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
-			Assert.IsNotNull(laserFireIntervalManager);
-			laserFireIntervalManager.Initialise(laserTurretStats);
-			_fireIntervalManager = laserFireIntervalManager;
+			FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
+            Assert.IsNotNull(fireIntervalManager);
+            IFireIntervalProvider waitingDurationProvider = laserTurretStats;
+            IFireIntervalProvider firingDurationProvider = new DummyDurationProvider(laserTurretStats.laserDurationInS);
+            fireIntervalManager.Initialise(waitingDurationProvider, firingDurationProvider);
+			_fireIntervalManager = fireIntervalManager;
 
 			// Laser emitter
 			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
