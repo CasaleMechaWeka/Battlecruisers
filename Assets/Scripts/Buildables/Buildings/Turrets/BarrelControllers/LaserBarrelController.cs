@@ -1,21 +1,14 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using System;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class LaserBarrelController : BarrelController
+    public class LaserBarrelController : BarrelController
 	{
 		private LaserEmitter _laserEmitter;
 
