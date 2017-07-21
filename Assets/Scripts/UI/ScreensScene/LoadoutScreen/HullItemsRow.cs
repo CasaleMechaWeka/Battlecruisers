@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.PrefabKeys;
@@ -6,12 +6,10 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
-using System;
-using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class HullItemsRow : ItemsRow<Cruiser>
+    public class HullItemsRow : ItemsRow<Cruiser>
 	{
 		private readonly LoadoutHullItem _loadoutHull;
 		private readonly UnlockedHullItemsRow _unlockedHullsRow;

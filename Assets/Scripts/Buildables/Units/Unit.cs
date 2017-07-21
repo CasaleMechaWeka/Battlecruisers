@@ -1,14 +1,12 @@
-﻿using BattleCruisers.Drones;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using BattleCruisers.Drones;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Units
 {
-	public enum UnitCategory
+    public enum UnitCategory
 	{
 		Naval, Aircraft, Untouchable
 	}
@@ -27,7 +25,6 @@ namespace BattleCruisers.Buildables.Units
 	{
 		public UnitCategory category;
 
-		// FELIX  Create UnitStats class?
 		public float maxVelocityInMPerS;
 
 		public Rigidbody2D rigidBody;
