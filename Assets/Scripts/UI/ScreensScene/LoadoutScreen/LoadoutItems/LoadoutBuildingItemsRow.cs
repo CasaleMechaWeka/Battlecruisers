@@ -1,14 +1,13 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
-	public class LoadoutBuildingItemsRow : MonoBehaviour 
+    public class LoadoutBuildingItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
 		private IItemDetailsManager<Building> _detailsManager;

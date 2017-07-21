@@ -1,20 +1,15 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class LoadoutScreenController : ScreenController
+    public class LoadoutScreenController : ScreenController
 	{
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;

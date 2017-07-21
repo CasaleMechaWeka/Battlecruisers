@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-    public class BaseBuildableStatsController<TItem> : StatsController<TItem> where TItem : Buildable
+    public abstract class BaseBuildableStatsController<TItem> : StatsController<TItem> where TItem : Buildable
 	{
 		public StatsRowNumberController droneRow;
 		public StatsRowNumberController buildTimeRow;
