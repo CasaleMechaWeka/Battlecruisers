@@ -1,22 +1,13 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.BattleScene.ProgressBars;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	// FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
-	public class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
+    // FELIX  Avoid duplicate code with BaseBuildableDetails, create ItemDetails class?
+    public class CruiserDetailsController : MonoBehaviour, IComparableItemDetails<Cruiser>
 	{
 		public CruiserStatsController statsController;
 		public Text cruiserName;

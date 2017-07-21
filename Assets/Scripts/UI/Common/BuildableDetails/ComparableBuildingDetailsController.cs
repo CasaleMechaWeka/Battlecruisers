@@ -1,10 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using System;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class ComparableBuildingDetailsController : BaseBuildableDetails<Building>, IPointerClickHandler
+    public class ComparableBuildingDetailsController : BaseBuildableDetails<Building>, IPointerClickHandler
 	{
 		void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
 		{

@@ -1,20 +1,14 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public class BuildableDetailsController : BaseBuildableDetails<Buildable>
+    public class BuildableDetailsController : BaseBuildableDetails<Buildable>
 	{
 		private IDroneManager _droneManager;
 		private bool _allowDelete;

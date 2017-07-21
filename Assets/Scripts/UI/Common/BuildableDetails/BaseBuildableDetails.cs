@@ -1,21 +1,14 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-	public abstract class BaseBuildableDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : Buildable
+    public abstract class BaseBuildableDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : Buildable
 	{
 		private ISpriteFetcher _spriteFetcher;
 		protected TItem _buildable;
