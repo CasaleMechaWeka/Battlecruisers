@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		protected const string HEALTH_LABEL = "Health";
 		protected const string DRONES_LABEL = "Drones";
 
-		void Awake()
+		public void Initialise()
 		{
 			_valueToStarsConverter = new ValueToStarsConverter();
 			_higherIsBetterComparer = new HigherIsBetterComparer();

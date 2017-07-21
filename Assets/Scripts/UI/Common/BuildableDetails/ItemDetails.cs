@@ -17,6 +17,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         public Text itemDescription;
         public Image itemImage;
 
+        public void Initialise()
+        {
+            StatsController.Initialise();
+        }
+
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default(TItem))
         {
 			Assert.IsNotNull(item);

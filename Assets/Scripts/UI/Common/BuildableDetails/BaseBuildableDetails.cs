@@ -13,6 +13,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		
 		public void Initialise(ISpriteFetcher spriteFetcher)
 		{
+            base.Initialise();
+
 			_spriteFetcher = spriteFetcher;
 			Hide();
 		}

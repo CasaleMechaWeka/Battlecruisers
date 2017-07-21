@@ -34,6 +34,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_gameModel = _dataProvider.GameModel;
 			_prefabFactory = prefabFactory;
 
+            buildingDetailsManager.Initialise();
+            cruiserDetailsManager.Initialise();
+
 			uiFactory.Initialise(buildingDetailsManager);
 
 			// Initialise hull row
