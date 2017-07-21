@@ -1,16 +1,11 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
+﻿using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public abstract class AircraftController : Unit
+    public abstract class AircraftController : Unit
 	{
 		protected IMovementController _activeMovementController;
 		protected IMovementController _dummyMovementController;
