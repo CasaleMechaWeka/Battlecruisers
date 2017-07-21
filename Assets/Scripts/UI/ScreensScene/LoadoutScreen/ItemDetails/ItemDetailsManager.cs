@@ -1,17 +1,13 @@
-﻿using BattleCruisers.Fetchers;
+﻿using System;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-	public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
+    public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
 	{
 		private IComparableItemDetails<TItem> _singleItemDetails, _leftComparableItemDetails, _rightComparableItemDetails;
 

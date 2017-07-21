@@ -1,17 +1,10 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-	public class BuildingDetailsManager : ItemDetailsManager<Building>
+    public class BuildingDetailsManager : ItemDetailsManager<Building>
 	{
 		public ComparableBuildingDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 

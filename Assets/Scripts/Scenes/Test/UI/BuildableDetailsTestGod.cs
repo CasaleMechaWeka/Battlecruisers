@@ -1,15 +1,11 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.Common.BuildingDetails;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.UI
 {
-	public class BuildableDetailsTestGod : MonoBehaviour 
+    public class BuildableDetailsTestGod : MonoBehaviour 
 	{
 		public ComparableBuildingDetailsController buildableDetails;
 		public Building buildableToShow;

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -12,7 +13,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 	{
 		private IDroneManager _droneManager;
 		private bool _allowDelete;
+
+        protected override StatsController<Buildable> StatsController { get { return buildableStatsController; } }
 		
+        public BuildableStatsController buildableStatsController;
 		public Button deleteButton;
 		public Button toggleDroneButton;
 		public BuildableProgressBarController buildProgressController;

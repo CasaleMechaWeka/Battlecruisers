@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		private ISpriteFetcher _spriteFetcher;
 
         public Image slotImage;
-
+		
 		public void Initialise(ISpriteFetcher spriteFetcher)
 		{
 			_spriteFetcher = spriteFetcher;
