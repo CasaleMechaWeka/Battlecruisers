@@ -1,12 +1,8 @@
-﻿using BattleCruisers.Projectiles;
-using BattleCruisers.Utils;
-using System;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class BurstFireTurretStats : TurretStats
+    public class BurstFireTurretStats : TurretStats
 	{
 		private int _intervalCounter;
 
@@ -25,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float NextFireIntervalInS
+		public override float NextDurationInS
 		{
 			get
 			{

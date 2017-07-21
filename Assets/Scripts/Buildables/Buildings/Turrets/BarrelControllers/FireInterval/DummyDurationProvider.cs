@@ -1,12 +1,12 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class DummyDurationProvider : IFireIntervalProvider
+    public class DummyDurationProvider : IDurationProvider
 	{
-        public float NextFireIntervalInS { get; private set; }
+        public float NextDurationInS { get; private set; }
 
         public DummyDurationProvider(float durationInS)
         {
-            NextFireIntervalInS = durationInS;
+            NextDurationInS = durationInS;
         }
     }
 }

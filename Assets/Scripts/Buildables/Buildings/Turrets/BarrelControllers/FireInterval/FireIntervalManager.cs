@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 	{
         private IState _currentState;
 
-        public void Initialise(IFireIntervalProvider waitingDurationProvider, IFireIntervalProvider firingDurationProvider = null)
+        public void Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider = null)
 		{
             if (firingDurationProvider == null)
             {
@@ -25,8 +25,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 
 		public bool ShouldFire()
 		{
-            Debug.Log("_currentState: " + _currentState + "  shouldFire: " + _currentState.ShouldFire);
-
             return _currentState.ShouldFire;
 		}
 

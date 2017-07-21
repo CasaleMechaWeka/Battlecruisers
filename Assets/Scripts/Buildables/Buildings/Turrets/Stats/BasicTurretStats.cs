@@ -1,18 +1,17 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class BasicTurretStats : MonoBehaviour, IFireIntervalProvider
+    public class BasicTurretStats : MonoBehaviour, IDurationProvider
 	{
 		public float fireRatePerS;
 		public float damage;
 		public float rangeInM;
 
 		public virtual float DamagePerS { get { return damage * fireRatePerS; } }
-		public virtual float NextFireIntervalInS { get { return 1 / fireRatePerS; } }
+		public virtual float NextDurationInS { get { return 1 / fireRatePerS; } }
 
 		public virtual void Initialise()
 		{

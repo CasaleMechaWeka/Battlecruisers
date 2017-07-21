@@ -1,13 +1,8 @@
-﻿using BattleCruisers.Projectiles;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Utils;
-using System;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public class TurretStats : BasicTurretStats
+    public class TurretStats : BasicTurretStats
 	{
 		public float accuracy;
 		public float bulletVelocityInMPerS;

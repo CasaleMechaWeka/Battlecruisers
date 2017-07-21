@@ -1,14 +1,10 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Utils;
-using System;
-using UnityEngine;
-using UnityEditor;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace BattleCruisers.Tests.Turrets
 {
-	public class BurstFireTurretStatsTests 
+    public class BurstFireTurretStatsTests 
 	{
 		private BurstFireTurretStats _turretStats;
 
@@ -45,12 +41,12 @@ namespace BattleCruisers.Tests.Turrets
 
 			for (int j = 0; j < 2; ++j)
 			{
-				Assert.AreEqual(_expectedLongInterval, _turretStats.NextFireIntervalInS);
+                Assert.AreEqual(_expectedLongInterval, _turretStats.NextDurationInS);
 				Assert.IsFalse(_turretStats.IsInBurst);
 
 				for (int i = 0; i < _turretStats.burstSize - 1; ++i)
 				{
-					Assert.AreEqual(_expectedBurstInterval, _turretStats.NextFireIntervalInS);
+                    Assert.AreEqual(_expectedBurstInterval, _turretStats.NextDurationInS);
 					Assert.IsTrue(_turretStats.IsInBurst);
 				}
 			}
