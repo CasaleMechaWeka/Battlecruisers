@@ -1,17 +1,12 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Target : MonoBehaviour, ITarget
+    public abstract class Target : MonoBehaviour, ITarget
 	{
 		public float maxHealth;
 

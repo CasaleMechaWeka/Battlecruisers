@@ -1,15 +1,10 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	public abstract class StatsController<T> : MonoBehaviour where T : Target
+    public abstract class StatsController<T> : MonoBehaviour where T : Target
 	{
 		protected ValueToStarsConverter _valueToStarsConverter;
 		protected IStatsComparer _higherIsBetterComparer, _lowerIsBetterComparer;

@@ -5,5 +5,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	public interface IComparableItem
 	{
 		Sprite Sprite { get; }
+        string Description { get; }
 	}
 }

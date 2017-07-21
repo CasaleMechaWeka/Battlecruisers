@@ -1,16 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
-using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	// FELIX  Generic way of applying stats?
-	public class CruiserStatsController : StatsController<Cruiser>
+    public class CruiserStatsController : StatsController<Cruiser>
 	{
 		public StatsRowNumberController healthRow, droneRow, platformSlotsRow, deckSlotsRow, utilitySlotsRow, mastSlotsRow;
 

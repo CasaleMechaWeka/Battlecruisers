@@ -1,28 +1,21 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-	public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
+    public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
 	{
 		private HealthBarController _healthBarController;
 		private UIManager _uiManager;
@@ -45,6 +38,8 @@ namespace BattleCruisers.Cruisers
 		public Vector2 Size { get { return _renderer.bounds.size; } }
 		public float YAdjustmentInM { get { return yAdjustmentInM; } }
 		public Sprite Sprite { get { return _renderer.sprite; } }
+
+		public string Description { get { return description; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 

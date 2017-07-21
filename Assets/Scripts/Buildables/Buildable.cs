@@ -1,27 +1,22 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Units;
+﻿using System;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public abstract class Buildable : Target, IBuildable, IComparableItem
+    public abstract class Buildable : Target, IBuildable, IComparableItem
 	{
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
@@ -109,6 +104,8 @@ namespace BattleCruisers.Buildables
 				}
 			}
 		}
+
+        public string Description { get { return description; } }
 		#endregion Properties
 
 		public event EventHandler StartedConstruction;

@@ -1,14 +1,8 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
-using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	public class BuildableStatsController : StatsController<Buildable>
+    public class BuildableStatsController : StatsController<Buildable>
 	{
 		public StatsRowNumberController droneRow;
 		public StatsRowNumberController buildTimeRow;
@@ -19,12 +13,12 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		private const string BUILD_TIME_LABEL = "BuildTime";
 		private const string BUILD_TIME_SUFFIX = "s";
 
-		protected override void InternalShowStats(Buildable buildable, Buildable buildableToCompareTo)
+		protected override void InternalShowStats(Buildable item, Buildable itemToCompareTo)
 		{
-			droneRow.Initialise(DRONES_LABEL, buildable.numOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(buildable.numOfDronesRequired, buildableToCompareTo.numOfDronesRequired));
-			buildTimeRow.Initialise(BUILD_TIME_LABEL, buildable.buildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(buildable.buildTimeInS, buildableToCompareTo.buildTimeInS));
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(buildable.maxHealth), _higherIsBetterComparer.CompareStats(buildable.Health, buildableToCompareTo.Health));
-			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(buildable.Damage), _higherIsBetterComparer.CompareStats(buildable.Damage, buildableToCompareTo.Damage));
+			droneRow.Initialise(DRONES_LABEL, item.numOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.numOfDronesRequired, itemToCompareTo.numOfDronesRequired));
+			buildTimeRow.Initialise(BUILD_TIME_LABEL, item.buildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.buildTimeInS, itemToCompareTo.buildTimeInS));
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.maxHealth), _higherIsBetterComparer.CompareStats(item.Health, itemToCompareTo.Health));
+			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(item.Damage), _higherIsBetterComparer.CompareStats(item.Damage, itemToCompareTo.Damage));
 		}
 	}
 }

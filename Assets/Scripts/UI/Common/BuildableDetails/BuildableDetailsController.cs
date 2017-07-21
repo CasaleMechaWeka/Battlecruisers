@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			base.ShowItemDetails(buildable);
 
 			_allowDelete = allowDelete;
-			buildProgressController.Initialise(_buildable);
+			buildProgressController.Initialise(_item);
 
 			// Delete buildable button
 			deleteButton.gameObject.SetActive(allowDelete);
@@ -43,34 +43,34 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			if (showDroneRelatedUI)
 			{
 				toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
-				_buildable.CompletedBuildable += Buildable_CompletedBuildable;
+				_item.CompletedBuildable += Buildable_CompletedBuildable;
 			}
 		}
 
 		public void DeleteBuildable()
 		{
 			Assert.IsTrue(_allowDelete);
-			Assert.IsNotNull(_buildable);
+			Assert.IsNotNull(_item);
 
-			_buildable.InitiateDelete();
+			_item.InitiateDelete();
 			Hide();
 		}
 
 		public void ToggleBuildableDrones()
 		{
-			_droneManager.ToggleDroneConsumerFocus(_buildable.DroneConsumer);
+			_droneManager.ToggleDroneConsumerFocus(_item.DroneConsumer);
 		}
 		
 		private void Buildable_CompletedBuildable(object sender, EventArgs e)
 		{
-			_buildable.CompletedBuildable -= Buildable_CompletedBuildable;
+			_item.CompletedBuildable -= Buildable_CompletedBuildable;
 			toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
 			toggleDroneButton.gameObject.SetActive(false);
 		}
 
 		protected override void CleanUp()
 		{
-			if (_buildable != null)
+			if (_item != null)
 			{
 				deleteButton.onClick.RemoveListener(DeleteBuildable);
 				toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
