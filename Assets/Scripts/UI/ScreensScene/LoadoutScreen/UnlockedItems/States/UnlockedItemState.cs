@@ -1,16 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States
 {
-	public abstract class UnlockedItemState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
+    public abstract class UnlockedItemState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
 	{
 		protected readonly UnlockedItem<TItem> _item;
 

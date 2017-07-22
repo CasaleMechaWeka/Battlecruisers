@@ -2,8 +2,6 @@
 {
 	public interface IUnlockedItemState<TItem> where TItem : IComparableItem
 	{
-		// FELIX  Item background colour!
-
 		void HandleSelection();
 	}
 }
