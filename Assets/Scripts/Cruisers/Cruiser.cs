@@ -111,7 +111,6 @@ namespace BattleCruisers.Cruisers
 			_slotsWrapper.SetActive(false);
 		}
 
-		// FELIX  Disable clicking on other slots?
 		// Only highlight one slot type at a time
 		public void HighlightAvailableSlots(SlotType slotType)
 		{

@@ -1,17 +1,13 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.BattleScene;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-	public enum SlotType
+    public enum SlotType
 	{
 		None, SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
 	}
