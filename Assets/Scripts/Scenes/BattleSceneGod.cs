@@ -210,7 +210,6 @@ namespace BattleCruisers.Scenes
 			return unitWrappers;
 		}
 
-		// FELIX  Don't hardcode.  Database?
 		private IList<BuildingKey> GetBuildOrder()
 		{
 			IList<BuildingKey> buildOrder = new List<BuildingKey>();
@@ -251,7 +250,7 @@ namespace BattleCruisers.Scenes
 				modalMenuController.ShowMenu(OnModalMenuDismissed);
 				PauseGame();
 			}
-			// FELIX  Temp :P
+			// FELIX  TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W))
 			{
 				_aiCruiser.TakeDamage(_aiCruiser.Health);

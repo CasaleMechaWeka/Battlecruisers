@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace BattleCruisers.Data
+﻿namespace BattleCruisers.Data
 {
-	public interface ILevel
+    public interface ILevel
 	{
 		Loadout AiLoadout { get; }
 		string Name { get; }
