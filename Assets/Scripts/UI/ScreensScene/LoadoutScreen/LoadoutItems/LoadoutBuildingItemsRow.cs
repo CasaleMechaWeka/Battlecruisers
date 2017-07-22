@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 		public void AddBuilding(Building buildingToAdd)
 		{
 			// FELIX  Handle if already filled all slots :P
-			// FELIX  Perhaps expose CanAdd property?
+			// Perhaps expose CanAdd property?
 
 			CreateLoadoutItem(buildingToAdd);
 		}

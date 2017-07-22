@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
 
 
-			// FELIX  TEMP
+            // FELIX  TEMP  For showing PostBattleScreen :)
 //			ApplicationModel.BattleResult = new BattleResult(1, false);
 //			ApplicationModel.BattleResult = new BattleResult(1, true);
 //			_gameModel.LastBattleResult = null;

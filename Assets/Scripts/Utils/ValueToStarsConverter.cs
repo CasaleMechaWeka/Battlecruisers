@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace BattleCruisers.Utils
+﻿namespace BattleCruisers.Utils
 {
-	public class ValueToStarsConverter
+    public class ValueToStarsConverter
 	{
-		// FELIX  Read from file?
 		private readonly int[] HEALTH_STAR_THRESHOLDS = { 0, 50, 150, 300, 1000 };
 		private readonly int[] DAMAGE_STAR_THRESHOLDS = { 0, 10, 30, 100, 300 };
 

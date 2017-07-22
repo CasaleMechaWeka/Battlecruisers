@@ -1,26 +1,22 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.PrefabKeys;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.Data
 {
-	/// <summary>
-	/// Provides data that does not change throughout the game.
-	/// 
-	/// This is in contrast to the GameModel, which changes as the player
-	/// progresses and unlocks new prefabs.
-	/// </summary>
-	public interface IStaticData
+    /// <summary>
+    /// Provides data that does not change throughout the game.
+    /// 
+    /// This is in contrast to the GameModel, which changes as the player
+    /// progresses and unlocks new prefabs.
+    /// </summary>
+    public interface IStaticData
 	{
 		GameModel InitialGameModel { get; }
 		IList<ILevel> Levels { get; }
 	}
 
-	// FELIX  Could scrape Assets folder and auto generate keys :P  Would make
-	// updating assets easier, but might not be worth the implementation effort.
 	public class StaticData : IStaticData
 	{
 		public GameModel InitialGameModel { get; private set; }
@@ -109,7 +105,7 @@ namespace BattleCruisers.Data
 				AllUnitKeys());
 		}
 
-		// FELIX  > 1 level maybe?
+		// FELIX  more levels maybe?
 		// FELIX  Don't give all loadouts to all levels :P
 		private IList<ILevel> CreateLevels()
 		{
