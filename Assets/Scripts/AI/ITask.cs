@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
-public class ITask : MonoBehaviour {
+namespace BattleCruisers.AI
+{
+    public enum TaskPriority
+	{
+		Normal, High
+	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public interface ITask
+    {
+        TaskPriority Priority { get; }
+
+        event EventHandler<EventArgs> Completed;
+        void Start();
+    }
 }

@@ -2,11 +2,6 @@
 
 namespace BattleCruisers.AI
 {
-    public enum TaskPriority
-    {
-        Normal, High
-    }
-
     public class NewTaskEventArgs : EventArgs
     {
         public TaskPriority Priority { get; private set; }
