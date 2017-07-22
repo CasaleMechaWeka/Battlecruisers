@@ -1,25 +1,11 @@
-﻿using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
-using UnityEngine;
 
 namespace BattleCruisers.Drones
 {
-	public interface IDroneManager
-	{
-		int NumOfDrones { get; set; }
-
-		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
-
-		bool CanSupportDroneConsumer(int numOfDronesRequired);
-		void AddDroneConsumer(IDroneConsumer droneConsumer);
-		void RemoveDroneConsumer(IDroneConsumer droneConsumer);
-		void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer);
-	}
-
 	/// <summary>
 	/// Only one drone consumer (DC) can be focused at a time (focused 
 	/// meaning they have more than their required number of drones).
@@ -160,7 +146,7 @@ namespace BattleCruisers.Drones
 		/// <summary>
 		/// DroneConsumerState
 		/// Idle => Active (Can remain idle, if there are less drones than required by the drone consumer.)
-		/// Active => Focused (Can remain Normal, if there are no more drones.)
+		/// Active => Focused (Can remain Active, if there are no more drones.)
 		/// Focused => 
 		/// 	a) => More Focused, if not all drones are working on this consumer
 		/// 	b) => Active (Can remain Focused if there are no other drone consumers.)
