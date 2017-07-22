@@ -1,19 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.PrefabKeys;
-using System.IO;
-using System.Collections.Generic;
-using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEditor;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data
 {
-	public class GameModelTests 
+    public class GameModelTests 
 	{
 		private IGameModel _gameModel;
 

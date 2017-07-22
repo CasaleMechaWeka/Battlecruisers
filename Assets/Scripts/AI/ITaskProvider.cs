@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.AI
 {
+    // FELIX  Unused?
     public class NewTaskEventArgs : EventArgs
     {
         public TaskPriority Priority { get; private set; }
