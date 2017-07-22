@@ -29,17 +29,21 @@ namespace BattleCruisers.Cruisers
 		public int numOfDrones;
 		public string description;
 		public float yAdjustmentInM;
-
-		public BuildingWrapper SelectedBuildingPrefab { get; set; }
-		public IDroneManager DroneManager { get; private set; }
-		public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-		public Direction Direction { get; private set; }
+		
+		// ITarget
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
-		public Vector2 Size { get { return _renderer.bounds.size; } }
-		public float YAdjustmentInM { get { return yAdjustmentInM; } }
-		public Sprite Sprite { get { return _renderer.sprite; } }
-
+		
+		// IComparableItem
 		public string Description { get { return description; } }
+
+        // ICruiser
+        public BuildingWrapper SelectedBuildingPrefab { get; set; }
+        public IDroneManager DroneManager { get; private set; }
+        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
+        public Direction Direction { get; private set; }
+        public Vector2 Size { get { return _renderer.bounds.size; } }
+        public float YAdjustmentInM { get { return yAdjustmentInM; } }
+        public Sprite Sprite { get { return _renderer.sprite; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 

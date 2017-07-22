@@ -1,0 +1,27 @@
+﻿using System;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+
+namespace BattleCruisers.Cruisers
+{
+	public class StartedConstructionEventArgs : EventArgs
+	{
+		public IBuildable Buildable { get; private set; }
+
+		public StartedConstructionEventArgs(IBuildable buildable)
+		{
+			Buildable = buildable;
+		}
+	}
+
+	public interface ICruiserController
+	{
+		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+
+		bool IsSlotAvailable(SlotType slotType);
+		ISlot GetFreeSlot(SlotType slotType);
+		void HighlightAvailableSlots(SlotType slotType);
+		void UnhighlightSlots();
+		Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot);
+	}
+}

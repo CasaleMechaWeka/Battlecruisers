@@ -1,14 +1,13 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cameras
 {
-	public enum CameraState
+    public enum CameraState
 	{
 		PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid
 	}
