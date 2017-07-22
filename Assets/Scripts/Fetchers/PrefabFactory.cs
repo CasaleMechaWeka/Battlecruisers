@@ -1,21 +1,17 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.Data.PrefabKeys;
-using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.PrefabKeys;
 using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-	// FELIX  Surely I can use polymorphism for this...
-	public class PrefabFactory : IPrefabFactory
+    // FELIX  NEXT
+    // FELIX  Surely I can use polymorphism for this...
+    // Generics?
+    // BuildableWrapper<>
+    // Buildablekey<>
+    public class PrefabFactory : IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
 
@@ -34,7 +30,7 @@ namespace BattleCruisers.Fetchers
 
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			BuildingWrapper buildingWrapper = GameObject.Instantiate(buildingWrapperPrefab);
+			BuildingWrapper buildingWrapper = Object.Instantiate(buildingWrapperPrefab);
 			buildingWrapper.gameObject.SetActive(true);
 			buildingWrapper.Initialise();
 			buildingWrapper.Building.StaticInitialise();
@@ -51,7 +47,7 @@ namespace BattleCruisers.Fetchers
 
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
-			UnitWrapper unitWrapper = GameObject.Instantiate(unitWrapperPrefab);
+			UnitWrapper unitWrapper = Object.Instantiate(unitWrapperPrefab);
 			unitWrapper.gameObject.SetActive(true);
 			unitWrapper.Initialise();
 			unitWrapper.Unit.StaticInitialise();
@@ -67,7 +63,7 @@ namespace BattleCruisers.Fetchers
 
 		public Cruiser CreateCruiser(Cruiser cruiserPrefab)
 		{
-			Cruiser cruiser = GameObject.Instantiate(cruiserPrefab);
+            Cruiser cruiser = Object.Instantiate(cruiserPrefab);
 			cruiser.StaticInitialise();
 			return cruiser;
 		}

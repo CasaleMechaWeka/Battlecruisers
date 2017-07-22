@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-	public class UnitWrapper : BuildableWrapper 
+    public class UnitWrapper : BuildableWrapper 
 	{
 		public Unit Unit { get; private set; }
 

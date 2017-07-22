@@ -1,13 +1,10 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System;
 using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Data.PrefabKeys
 {
-	[Serializable]
+    [Serializable]
 	public class UnitKey : BuildableKey
 	{
 		private static class UnitFolderNames

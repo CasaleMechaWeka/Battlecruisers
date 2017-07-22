@@ -1,13 +1,9 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace BattleCruisers.Data.PrefabKeys
 {
-	public enum BuildableType
+    public enum BuildableType
 	{
 		Building, Unit
 	}
