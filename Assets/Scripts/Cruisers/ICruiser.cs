@@ -1,24 +1,13 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using BattleCruisers.Targets;
 
 namespace BattleCruisers.Cruisers
 {
-	// FELIX  Use event for units?  Ie, in case it's a big experimental unit?
-	public class StartedConstructionEventArgs : EventArgs
+    public class StartedConstructionEventArgs : EventArgs
 	{
 		public IBuildable Buildable { get; private set; }
 
