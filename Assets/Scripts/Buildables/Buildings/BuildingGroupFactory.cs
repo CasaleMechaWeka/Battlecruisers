@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	// FELIX  Have a nicer way of creating these?  (No hardcoded strings?)  Similar to Resources.resw in UWP?
-	public class BuildingGroupFactory
+    public class BuildingGroupFactory
 	{
 		public BuildingGroup CreateBuildingGroup(BuildingCategory category, IList<BuildingWrapper> buildings)
 		{
