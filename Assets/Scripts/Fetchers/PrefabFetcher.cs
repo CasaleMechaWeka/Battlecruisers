@@ -1,7 +1,4 @@
 ﻿using System;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
 using UnityEngine;
 
@@ -9,22 +6,6 @@ namespace BattleCruisers.Fetchers
 {
     public class PrefabFetcher
 	{
-        // FELIX  Remove these 3 methods
-		public BuildingWrapper GetBuildingPrefab(BuildingKey buildingKey)
-		{
-			return GetPrefab<BuildingWrapper>(buildingKey);
-		}
-
-		public UnitWrapper GetUnitPrefab(UnitKey unitKey)
-		{
-			return GetPrefab<UnitWrapper>(unitKey);
-		}
-
-		public Cruiser GetCruiserPrefab(HullKey hullKey)
-		{
-			return GetPrefab<Cruiser>(hullKey);
-		}
-
 		public T GetPrefab<T>(PrefabKey prefabKey) where T : class
 		{
 			GameObject gameObject = Resources.Load(prefabKey.PrefabPath) as GameObject;

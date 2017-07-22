@@ -38,7 +38,7 @@ namespace BattleCruisers.Fetchers
 
 		public Cruiser GetCruiserPrefab(HullKey hullKey)
 		{
-			Cruiser cruiser = _prefabFetcher.GetCruiserPrefab(hullKey);
+            Cruiser cruiser = _prefabFetcher.GetPrefab<Cruiser>(hullKey);
 			cruiser.StaticInitialise();
 			return cruiser;
 		}
