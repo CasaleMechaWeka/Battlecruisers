@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Do NOT need to extend MonoBehaviour?
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		private Canvas _canvas;

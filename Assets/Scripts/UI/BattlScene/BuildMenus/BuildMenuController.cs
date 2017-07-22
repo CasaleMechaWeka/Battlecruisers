@@ -1,17 +1,14 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Common.BuildingDetails;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
 using UnityEngine;
 using UnityEngine.UI;
-using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-	public class BuildMenuController : MonoBehaviour
+    public class BuildMenuController : MonoBehaviour
 	{
 		private Presentable _homePanel;
 		private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
