@@ -8,16 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Move to own file
-    public interface IUIFactory
-	{
-		GameObject CreatePanel(bool isActive);
-		Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
-		BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, BuildingWrapper buildingWrapper);
-		UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, UnitWrapper unitWrapper);
-		Button CreateBackButton(HorizontalLayoutGroup buttonParent);
-	}
-
+    // FELIX  Do NOT need to extend MonoBehaviour?
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
 		private Canvas _canvas;
