@@ -12,6 +12,10 @@ namespace BattleCruisers.AI
         TaskPriority Priority { get; }
 
         event EventHandler<EventArgs> Completed;
+
         void Start();
+        void Pause();
+        void Resume();
+        // FELIX  Cancel?
     }
 }

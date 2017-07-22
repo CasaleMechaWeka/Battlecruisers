@@ -12,10 +12,12 @@ namespace BattleCruisers.AI
         }
     }
 
-    public interface ITaskProducer
+    public interface ITaskProvider
     {
-        bool HasTasks();
-        ITask NextTask();
+        bool HasTasks { get; }
+
         event EventHandler<NewTaskEventArgs> NewTaskProduced;
+		
+        ITask NextTask();
     }
 }
