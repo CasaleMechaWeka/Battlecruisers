@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Drones;
 
 namespace BattleCruisers.Cruisers
 {
@@ -18,10 +19,13 @@ namespace BattleCruisers.Cruisers
 	{
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
+        // FELIX  event SlotFreed ?
+
 		bool IsSlotAvailable(SlotType slotType);
 		ISlot GetFreeSlot(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
 		Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot);
+        void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
 	}
 }

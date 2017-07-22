@@ -195,5 +195,13 @@ namespace BattleCruisers.Cruisers
 		{
 			return _slots[slotType].Count;
 		}
-	}
+
+        public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
+        {
+            if (DroneManager.NumOfDrones > droneConsumer.NumOfDrones)
+            {
+                DroneManager.ToggleDroneConsumerFocus(droneConsumer);
+            }
+        }
+    }
 }
