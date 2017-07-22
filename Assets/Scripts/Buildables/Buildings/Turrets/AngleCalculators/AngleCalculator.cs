@@ -1,14 +1,12 @@
-﻿using BattleCruisers.Movement.Predictors;
+﻿using System;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public class AngleCalculator : IAngleCalculator
+    public class AngleCalculator : IAngleCalculator
 	{
 		protected readonly ITargetPositionPredictorFactory _targetPositionPredictorFactory;
 		protected ITargetPositionPredictor _targetPositionPredictor;
@@ -21,7 +19,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			_targetPositionPredictorFactory = targetPositionPredictorFactory;
 		}
 
-		// FELIX  Use FacingDirection instead of isSourceMirrored param?
 		public float FindDesiredAngle(Vector2 source, ITarget target, bool isSourceMirrored, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
 			Vector2 targetPosition = target.Position;
