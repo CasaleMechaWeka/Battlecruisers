@@ -106,6 +106,8 @@ namespace BattleCruisers.Buildables
 		}
 
         public string Description { get { return description; } }
+
+        protected abstract HealthBarController HealthBarController { get; }
 		#endregion Properties
 
 		public event EventHandler StartedConstruction;
@@ -123,12 +125,8 @@ namespace BattleCruisers.Buildables
 			Assert.IsNotNull(_buildableProgress);
 			_buildableProgress.Initialise();
 
-            // FELIX  I don't think this will work :(
-            // Property in child Unit/Building classes?
-            BuildableWrapper<Buildable> buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper<Buildable>>();
-			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            _healthBar = HealthBarController;
 			Assert.IsNotNull(_healthBar);
-
 			_healthBar.Initialise(this, followDamagable: true);
 		}
 

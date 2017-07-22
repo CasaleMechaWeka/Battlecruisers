@@ -1,5 +1,7 @@
 ﻿using System;
 using BattleCruisers.Drones;
+using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -44,6 +46,15 @@ namespace BattleCruisers.Buildables.Units
 				OnDirectionChange();
 			}
 		}
+
+        protected override HealthBarController HealthBarController
+        {
+            get
+            {
+                UnitWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<UnitWrapper>();
+				return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            }
+        }
 		#endregion Properties
 
 		protected override void OnInitialised()

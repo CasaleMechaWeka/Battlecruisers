@@ -1,17 +1,11 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	public enum BuildingCategory
+    public enum BuildingCategory
 	{
 		Factory, Defence, Offence, Tactical, Ultra
 	}
@@ -23,6 +17,15 @@ namespace BattleCruisers.Buildables.Buildings
 		public float customOffsetProportion;
 
 		public override TargetType TargetType { get { return TargetType.Buildings; } }
+
+		protected override HealthBarController HealthBarController
+		{
+			get
+			{
+                BuildingWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildingWrapper>();
+				return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+			}
+		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
