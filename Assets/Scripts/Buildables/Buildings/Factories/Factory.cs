@@ -1,17 +1,14 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.UI.BattleScene;
+﻿using System;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Drones;
 using BattleCruisers.Utils;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-	// FELIX  Be able to be able to pause factory?
-	public abstract class Factory : Building, IDroneConsumerProvider
+    public abstract class Factory : Building, IDroneConsumerProvider
 	{
 		private Unit _lastUnitProduced;
 		protected Unit _unitUnderConstruction;
@@ -43,8 +40,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 				if (_unitWrapper != null)
 				{
-					Assert.IsNull(DroneConsumer);
-					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Unit.numOfDronesRequired);
+					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Buildable.numOfDronesRequired);
+                    Assert.IsNull(DroneConsumer);
 					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 				}
 			}
@@ -68,7 +65,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (_unitWrapper != null 
 				&& (_unitUnderConstruction == null || _unitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& CanSpawnUnit(_unitWrapper.Unit))
+				&& CanSpawnUnit(_unitWrapper.Buildable))
 			{
 				StartBuildingUnit();
 			}

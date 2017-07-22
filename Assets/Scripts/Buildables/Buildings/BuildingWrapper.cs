@@ -1,15 +1,6 @@
-﻿using UnityEngine.Assertions;
-
-namespace BattleCruisers.Buildables.Buildings
+﻿namespace BattleCruisers.Buildables.Buildings
 {
-    public class BuildingWrapper : BuildableWrapper
+    public class BuildingWrapper : BuildableWrapper<Building>
 	{
-		public Building Building { get; private set; }
-
-		public override void Initialise()
-		{
-			Building = gameObject.GetComponentInChildren<Building>();
-			Assert.IsNotNull(Building);
-		}
 	}
 }

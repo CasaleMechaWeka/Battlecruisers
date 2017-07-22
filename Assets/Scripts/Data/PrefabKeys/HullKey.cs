@@ -1,13 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
 namespace BattleCruisers.Data.PrefabKeys
 {
-	[Serializable]
+    [Serializable]
 	public class HullKey : PrefabKey
 	{
 		private const string HULLS_FOLDER_NAME = "Hulls";

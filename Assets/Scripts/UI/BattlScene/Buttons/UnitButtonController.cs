@@ -1,24 +1,19 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Drones;
-using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.Buildables.Units;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using BattleCruisers.Drones;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-	public class UnitButtonController : BuildableButtonController
+    public class UnitButtonController : BuildableButtonController
 	{
 		private UnitWrapper _unitWrapper;
 		private Factory _factory;
 
 		public void Initialize(UnitWrapper unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
-			base.Initialize(unitWrapper.Unit, droneManager, uiManager);
+			base.Initialize(unitWrapper.Buildable, droneManager, uiManager);
 
 			_unitWrapper = unitWrapper;
 		}
@@ -61,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		protected override void OnClick()
 		{
 			_factory.UnitWrapper = _unitWrapper;
-			_uiManager.ShowUnitDetails(_unitWrapper.Unit);
+			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
 	}
 }

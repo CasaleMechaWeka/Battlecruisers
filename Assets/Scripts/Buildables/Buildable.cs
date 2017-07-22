@@ -123,7 +123,9 @@ namespace BattleCruisers.Buildables
 			Assert.IsNotNull(_buildableProgress);
 			_buildableProgress.Initialise();
 
-			BuildableWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper>();
+            // FELIX  I don't think this will work :(
+            // Property in child Unit/Building classes?
+            BuildableWrapper<Buildable> buildableWrapper = gameObject.GetComponentInInactiveParent<BuildableWrapper<Buildable>>();
 			_healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
 			Assert.IsNotNull(_healthBar);
 

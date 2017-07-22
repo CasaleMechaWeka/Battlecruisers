@@ -1,16 +1,15 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
-using System;
-using System.Collections.Generic;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class BuildingItemsRow : ItemsRow<Building>
+    public class BuildingItemsRow : ItemsRow<Building>
 	{
 		private readonly BuildingCategory _buildingCategory;
 		private readonly LoadoutBuildingItemsRow _loadoutRow;
@@ -49,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			foreach (BuildingKey key in buildingKeys)
 			{
-				Building building = _prefabFactory.GetBuildingWrapperPrefab(key).Building;
+				Building building = _prefabFactory.GetBuildingWrapperPrefab(key).Buildable;
 				prefabs.Add(building);
 
 				if (addToDictionary)

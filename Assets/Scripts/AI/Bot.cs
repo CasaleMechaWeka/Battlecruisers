@@ -1,18 +1,15 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Fetchers;
 using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI
 {
-	public class Bot
+    public class Bot
 	{
 		private Cruiser _friendlyCruiser;
 //		private Cruiser _enemyCruiser;
@@ -43,7 +40,7 @@ namespace BattleCruisers.AI
 				Logging.Log(Tags.AI, "BuildNextBuilding: " + buildingKey.PrefabPath);
 
 				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
-				ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.Building.slotType);
+                ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.slotType);
 				Assert.IsNotNull(slot);
 
 				Building building = _friendlyCruiser.ConstructBuilding(buildingWrapperPrefab, slot);

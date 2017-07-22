@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	public class BuildingGroup
+    public class BuildingGroup
 	{
 		public IList<BuildingWrapper> Buildings { get; private set; }
 		public BuildingCategory BuildingCategory { get; private set; }
@@ -28,11 +26,11 @@ namespace BattleCruisers.Buildables.Buildings
 			// Check building category matches this group's category
 			if (buildings.Count > 0)
 			{
-				BuildingCategory = buildings[0].Building.category;
+				BuildingCategory = buildings[0].Buildable.category;
 
 				for (int i = 1; i < buildings.Count; ++i)
 				{
-					if (buildings[i].Building.category != BuildingCategory)
+					if (buildings[i].Buildable.category != BuildingCategory)
 					{
 						throw new ArgumentException();
 					}

@@ -1,20 +1,18 @@
-﻿using BattleCruisers.Cameras;
-using BattleCruisers.Cruisers;
+﻿using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.Cameras;
+using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public class UIManager : MonoBehaviour 
+    public class UIManager : MonoBehaviour 
 	{
 		private Cruiser _playerCruiser, _aiCruiser;
 
@@ -95,18 +93,18 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Building.slotType);
-			buildableDetails.ShowBuildableDetails(buildingWrapper.Building, allowDelete: false);
+			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Buildable.slotType);
+			buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
-			if (System.Object.ReferenceEquals(buildingParent, _playerCruiser)
+			if (ReferenceEquals(buildingParent, _playerCruiser)
 				&& cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else if (System.Object.ReferenceEquals(buildingParent, _aiCruiser)
+			else if (ReferenceEquals(buildingParent, _aiCruiser)
 				&& cameraController.State == CameraState.AiCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);

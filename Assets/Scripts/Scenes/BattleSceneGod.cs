@@ -1,4 +1,6 @@
-﻿using BattleCruisers.AI;
+﻿using System;
+using System.Collections.Generic;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -8,30 +10,21 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	/// <summary>
-	/// Initialises everything :D
-	/// </summary>
-	public class BattleSceneGod : MonoBehaviour 
+    /// <summary>
+    /// Initialises everything :D
+    /// </summary>
+    public class BattleSceneGod : MonoBehaviour 
 	{
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
@@ -160,7 +153,7 @@ namespace BattleCruisers.Scenes
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
 						BuildingWrapper buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
-						categoryToBuildings[buildingWrapper.Building.category].Add(buildingWrapper);
+						categoryToBuildings[buildingWrapper.Buildable.category].Add(buildingWrapper);
 					}
 				}
 			}

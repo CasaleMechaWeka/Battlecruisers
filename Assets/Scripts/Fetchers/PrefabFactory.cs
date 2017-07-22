@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
@@ -6,11 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-    // FELIX  NEXT
-    // FELIX  Surely I can use polymorphism for this...
-    // Generics?
-    // BuildableWrapper<>
-    // Buildablekey<>
     public class PrefabFactory : IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
@@ -20,38 +16,24 @@ namespace BattleCruisers.Fetchers
 			_prefabFetcher = prefabFetcher;
 		}
 
-		public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
+        public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
 		{
-			BuildingWrapper buildingWrapperPrefab = _prefabFetcher.GetBuildingPrefab(buildingKey);
-			buildingWrapperPrefab.Initialise();
-			buildingWrapperPrefab.Building.StaticInitialise();
-			return buildingWrapperPrefab;
+            return (BuildingWrapper)GetBuildableWrapperPrefab<Building>(buildingKey);
 		}
 
 		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
 		{
-			BuildingWrapper buildingWrapper = Object.Instantiate(buildingWrapperPrefab);
-			buildingWrapper.gameObject.SetActive(true);
-			buildingWrapper.Initialise();
-			buildingWrapper.Building.StaticInitialise();
-			return buildingWrapper.Building;
+            return CreateBuildable(buildingWrapperPrefab);
 		}
 
 		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
 		{
-			UnitWrapper unitWrapperPrefab = _prefabFetcher.GetUnitPrefab(unitKey);
-			unitWrapperPrefab.Initialise();
-			unitWrapperPrefab.Unit.StaticInitialise();
-			return unitWrapperPrefab;
+            return (UnitWrapper)GetBuildableWrapperPrefab<Unit>(unitKey);
 		}
 
 		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
 		{
-			UnitWrapper unitWrapper = Object.Instantiate(unitWrapperPrefab);
-			unitWrapper.gameObject.SetActive(true);
-			unitWrapper.Initialise();
-			unitWrapper.Unit.StaticInitialise();
-			return unitWrapper.Unit;
+            return CreateBuildable(unitWrapperPrefab);
 		}
 
 		public Cruiser GetCruiserPrefab(HullKey hullKey)
@@ -66,6 +48,23 @@ namespace BattleCruisers.Fetchers
             Cruiser cruiser = Object.Instantiate(cruiserPrefab);
 			cruiser.StaticInitialise();
 			return cruiser;
+		}
+
+		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(PrefabKey buildableKey) where TBuildable : Buildable
+		{
+			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
+			buildableWrapperPrefab.Initialise();
+			buildableWrapperPrefab.Buildable.StaticInitialise();
+			return buildableWrapperPrefab;
+		}
+
+		private TBuildable CreateBuildable<TBuildable>(BuildableWrapper<TBuildable> buildableWrapperPrefab) where TBuildable : Buildable
+		{
+			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
+			buildableWrapper.gameObject.SetActive(true);
+			buildableWrapper.Initialise();
+			buildableWrapper.Buildable.StaticInitialise();
+			return buildableWrapper.Buildable;
 		}
 	}
 }
