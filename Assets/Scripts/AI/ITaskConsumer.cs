@@ -1,16 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ITaskConsumer : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+﻿namespace BattleCruisers.AI
+{
+    public interface ITaskConsumer
+    {
+        // FELIX  AI stats?
+        // - build speed bonus?
+        // - delay between tasks?
+    }
 }
