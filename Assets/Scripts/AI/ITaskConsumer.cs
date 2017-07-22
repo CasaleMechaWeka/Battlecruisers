@@ -6,6 +6,6 @@
         // - build speed bonus?
         // - delay between tasks?
 
-        void Start();
+        void ConsumeTask(ITask task);
     }
 }
