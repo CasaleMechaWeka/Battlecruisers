@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.AI;
+using BattleCruisers.AI.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

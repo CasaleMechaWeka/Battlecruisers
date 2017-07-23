@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.AI
+namespace BattleCruisers.AI.Tasks
 {
     public enum TaskPriority
 	{
