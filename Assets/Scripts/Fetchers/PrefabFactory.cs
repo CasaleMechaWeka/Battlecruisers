@@ -16,14 +16,14 @@ namespace BattleCruisers.Fetchers
 			_prefabFetcher = prefabFetcher;
 		}
 
-        public BuildingWrapper GetBuildingWrapperPrefab(IPrefabKey buildingKey)
+        public IBuildableWrapper<Building> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
 		{
             return (BuildingWrapper)GetBuildableWrapperPrefab<Building>(buildingKey);
 		}
 
-		public Building CreateBuilding(BuildingWrapper buildingWrapperPrefab)
+		public Building CreateBuilding(IBuildableWrapper<Building> buildingWrapperPrefab)
 		{
-            return CreateBuildable(buildingWrapperPrefab);
+            return CreateBuildable(buildingWrapperPrefab.UnityObject);
 		}
 
 		public UnitWrapper GetUnitWrapperPrefab(IPrefabKey unitKey)

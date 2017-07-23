@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Buildables
+﻿namespace BattleCruisers.Buildables
 {
     public interface IBuildableWrapper<TBuildable> where TBuildable : Buildable
 	{
         TBuildable Buildable { get; }
-        Object UnityObject { get; }
+        BuildableWrapper<TBuildable> UnityObject { get; }
 	}
 }
 

@@ -152,7 +152,8 @@ namespace BattleCruisers.Scenes
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-						BuildingWrapper buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
+                        // FELIX  Propagete interface use, to avoid cast here :(
+                        BuildingWrapper buildingWrapper = (BuildingWrapper)factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
 						categoryToBuildings[buildingWrapper.Buildable.category].Add(buildingWrapper);
 					}
 				}

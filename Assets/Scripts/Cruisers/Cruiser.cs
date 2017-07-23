@@ -156,7 +156,7 @@ namespace BattleCruisers.Cruisers
 		}
 
 		public Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot)
-		{
+        {
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);
 		}

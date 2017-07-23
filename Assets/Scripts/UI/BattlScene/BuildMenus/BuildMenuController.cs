@@ -37,14 +37,14 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			for (int i = 0; i < _buildingGroups.Count; ++i)
 			{
 				// Create category button
-				BuildingGroup group = _buildingGroups[i];
-				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, group);
+				BuildingGroup buildingGroup = _buildingGroups[i];
+				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
 
 				// Create category panel
 				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
 				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
-				buildingsMenu.Initialize(uiFactory, group.Buildings);
-				_buildingGroupPanels[group.BuildingCategory] = buildingsMenu;
+				buildingsMenu.Initialize(uiFactory, buildingGroup.Buildings);
+				_buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
 			}
 
 			// Create menu UI for units

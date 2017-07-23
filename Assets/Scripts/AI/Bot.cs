@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
@@ -39,11 +40,12 @@ namespace BattleCruisers.AI
 
 				Logging.Log(Tags.AI, "BuildNextBuilding: " + buildingKey.PrefabPath);
 
-				BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+				IBuildableWrapper<Building> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
                 ISlot slot = _friendlyCruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.slotType);
 				Assert.IsNotNull(slot);
 
-				Building building = _friendlyCruiser.ConstructBuilding(buildingWrapperPrefab, slot);
+                // FELIX  Ugly!  Make cruiser use the type of UnityObject, to avoid cast!!
+                Building building = _friendlyCruiser.ConstructBuilding((BuildingWrapper)buildingWrapperPrefab.UnityObject, slot);
 				building.CompletedBuildable += Building_CompletedBuildable;
 			}
 		}
