@@ -1,0 +1,61 @@
+﻿using System;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Fetchers;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.AI.Tasks
+{
+    public class ConstructBuildingTask : Task
+    {
+        private readonly IPrefabKey _key;
+        private readonly IPrefabFactory _prefabFactory;
+        private readonly ICruiserController _cruiser;
+
+        private Building _building;
+
+        public ConstructBuildingTask(TaskPriority priority, IPrefabKey key, IPrefabFactory prefabFactory, ICruiserController cruiser) 
+            : base(priority)
+        {
+            _key = key;
+            _prefabFactory = prefabFactory;
+            _cruiser = cruiser;
+        }
+
+        // FELIX  States to avoid branching?
+        public override void Start()
+        {
+            base.Start();
+
+            if (_isCompleted)
+            {
+                return;
+            }
+
+            BuildingWrapper buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_key);
+
+            if (_cruiser.IsSlotAvailable(buildingWrapperPrefab.Buildable.slotType))
+            {
+                // Cruiser has no available slot for this building.  Task is completed (perhaps with a failure result?).
+                _isCompleted = true;
+                EmitCompletedEvent();
+            }
+            else
+            {
+                ISlot slot = _cruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.slotType);
+				Assert.IsNotNull(slot);
+				
+                _building = _cruiser.ConstructBuilding(buildingWrapperPrefab, slot);
+                _building.CompletedBuildable += Building_CompletedBuildable;
+            }
+        }
+
+        private void Building_CompletedBuildable(object sender, EventArgs e)
+        {
+            _building.CompletedBuildable -= Building_CompletedBuildable;
+            _isCompleted = true;
+            EmitCompletedEvent();
+        }
+    }
+}
