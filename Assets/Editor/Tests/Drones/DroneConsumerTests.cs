@@ -1,12 +1,10 @@
 ﻿using System;
-using UnityEngine;
-using UnityEditor;
-using NUnit.Framework;
 using BattleCruisers.Drones;
+using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Drones
 {
-	public class DroneConsumerTests 
+    public class DroneConsumerTests 
 	{
 		private IDroneConsumer _droneConsumer;
 		private int _droneStateChangedEmittedCount;

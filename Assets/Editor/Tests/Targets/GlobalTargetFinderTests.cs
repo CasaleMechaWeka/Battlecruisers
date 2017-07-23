@@ -3,13 +3,10 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEditor;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets
 {
-	public class GlobalTargetFinderTests 
+    public class GlobalTargetFinderTests 
 	{
 		private ITargetFinder _targetFinder;
 		private ICruiser _enemyCruiser;

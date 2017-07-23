@@ -1,13 +1,11 @@
-﻿using BattleCruisers.Drones;
-using System;
-using UnityEngine;
-using UnityEditor;
+﻿using System;
+using BattleCruisers.Drones;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Drones
 {
-	public class DroneManagerTests 
+    public class DroneManagerTests 
 	{
 		private IDroneManager _droneManager;
 
