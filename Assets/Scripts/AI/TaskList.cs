@@ -7,13 +7,19 @@ namespace BattleCruisers.AI
 {
     /// <summary>
     /// Keeps a list of tasks sorted by task priority.  The last item
-    /// in the list has the highest priority. 
+    /// in the list has the highest priority.
+    /// 
+    /// Not using List.Sort() because I will have many tasks with the
+    /// same priority, and I want to maintain their order when I add
+    /// or remove an task.
     /// </summary>
     public class TaskList : ITaskList
     {
         private readonly IList<ITask> _tasks;
 
         public bool IsEmpty { get { return _tasks.Count == 0; } }
+		
+        public ITask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
 
         public event EventHandler HighestPriorityTaskChanged;
 
@@ -25,38 +31,44 @@ namespace BattleCruisers.AI
         public void Add(ITask taskToAdd)
         {
             int insertionIndex = _tasks.Count;
-            bool isHighestPriorityTask = true;
 
             for (int i = 0; i < _tasks.Count; i++)
             {
                 if (_tasks[i].Priority >= taskToAdd.Priority)
                 {
-                    insertionIndex = i + 1;
-                    isHighestPriorityTask = false;
+                    insertionIndex = i;
                     break;
                 }
             }
 
             _tasks.Insert(insertionIndex, taskToAdd);
 
-            if (isHighestPriorityTask)
+            if (ReferenceEquals(taskToAdd, HighestPriorityTask))
             {
-                if (HighestPriorityTaskChanged != null)
-                {
-                    HighestPriorityTaskChanged.Invoke(this, EventArgs.Empty);
-                }
+                EmitHighestPriorityTaskChangedEvent();
             }
         }
 
         public void Remove(ITask taskToRemove)
         {
+            Assert.IsTrue(_tasks.Contains(taskToRemove));
+
+            bool wasHighestPriorityTask = ReferenceEquals(taskToRemove, HighestPriorityTask);
+
             _tasks.Remove(taskToRemove);
+
+            if (wasHighestPriorityTask)
+            {
+                EmitHighestPriorityTaskChangedEvent();
+            }
         }
-		
-		public ITask GetHighestPriorityTask()
-		{
-            Assert.IsFalse(IsEmpty);
-            return _tasks.Last();
-		}
+
+        private void EmitHighestPriorityTaskChangedEvent()
+        {
+            if (HighestPriorityTaskChanged != null)
+            {
+                HighestPriorityTaskChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
     }
 }

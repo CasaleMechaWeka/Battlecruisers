@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Data
+namespace BattleCruisers.Tests.AI
 {
     public class TaskConsumerTests
     {
