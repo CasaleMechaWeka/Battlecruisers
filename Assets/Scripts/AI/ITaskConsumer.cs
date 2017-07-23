@@ -5,7 +5,5 @@
         // FELIX  AI stats?
         // - build speed bonus?
         // - delay between tasks?
-
-        void ConsumeTask(ITask task);
     }
 }
