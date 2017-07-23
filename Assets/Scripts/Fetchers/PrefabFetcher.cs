@@ -6,7 +6,7 @@ namespace BattleCruisers.Fetchers
 {
     public class PrefabFetcher
 	{
-		public T GetPrefab<T>(PrefabKey prefabKey) where T : class
+		public T GetPrefab<T>(IPrefabKey prefabKey) where T : class
 		{
 			GameObject gameObject = Resources.Load(prefabKey.PrefabPath) as GameObject;
 			if (gameObject == null)

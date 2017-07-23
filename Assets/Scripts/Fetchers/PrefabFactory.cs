@@ -16,7 +16,7 @@ namespace BattleCruisers.Fetchers
 			_prefabFetcher = prefabFetcher;
 		}
 
-        public BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey)
+        public BuildingWrapper GetBuildingWrapperPrefab(IPrefabKey buildingKey)
 		{
             return (BuildingWrapper)GetBuildableWrapperPrefab<Building>(buildingKey);
 		}
@@ -26,7 +26,7 @@ namespace BattleCruisers.Fetchers
             return CreateBuildable(buildingWrapperPrefab);
 		}
 
-		public UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey)
+		public UnitWrapper GetUnitWrapperPrefab(IPrefabKey unitKey)
 		{
             return (UnitWrapper)GetBuildableWrapperPrefab<Unit>(unitKey);
 		}
@@ -36,7 +36,7 @@ namespace BattleCruisers.Fetchers
             return CreateBuildable(unitWrapperPrefab);
 		}
 
-		public Cruiser GetCruiserPrefab(HullKey hullKey)
+		public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
 		{
             Cruiser cruiser = _prefabFetcher.GetPrefab<Cruiser>(hullKey);
 			cruiser.StaticInitialise();
@@ -50,7 +50,7 @@ namespace BattleCruisers.Fetchers
 			return cruiser;
 		}
 
-		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(PrefabKey buildableKey) where TBuildable : Buildable
+		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : Buildable
 		{
 			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
 			buildableWrapperPrefab.Initialise();

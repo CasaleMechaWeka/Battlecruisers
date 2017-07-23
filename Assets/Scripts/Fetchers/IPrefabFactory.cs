@@ -7,13 +7,13 @@ namespace BattleCruisers.Fetchers
 {
 	public interface IPrefabFactory
 	{
-		BuildingWrapper GetBuildingWrapperPrefab(BuildingKey buildingKey);
+        BuildingWrapper GetBuildingWrapperPrefab(IPrefabKey buildingKey);
 		Building CreateBuilding(BuildingWrapper buildingWrapperPrefab);
 
-		UnitWrapper GetUnitWrapperPrefab(UnitKey unitKey);
+		UnitWrapper GetUnitWrapperPrefab(IPrefabKey unitKey);
 		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
 
-		Cruiser GetCruiserPrefab(HullKey hullKey);
+		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 	}
 }
