@@ -72,6 +72,13 @@ namespace BattleCruisers.Tests.AI
         }
 
         [Test]
+        public void Add_Duplicate_Throws()
+        {
+            _taskList.Add(_normalTask1);
+			Assert.Throws<UnityAsserts.AssertionException>(() => _taskList.Add(_normalTask1));
+		}
+
+        [Test]
         public void Remove_SingleTask()
         {
             Add_SingleTask();
@@ -102,6 +109,16 @@ namespace BattleCruisers.Tests.AI
 			_taskList.Remove(_taskList.HighestPriorityTask);  // N2
 	        Assert.AreSame(_normalTask2, _taskList.HighestPriorityTask);
 			Assert.AreEqual(3, _numOfEventCalls);
+
+            _taskList.Remove(_taskList.HighestPriorityTask);  // (empty)
+            Assert.IsNull(_taskList.HighestPriorityTask);
+			Assert.AreEqual(4, _numOfEventCalls);
+		}
+
+		[Test]
+		public void Remove_NonExistentTask_Throws()
+		{
+            Assert.Throws<UnityAsserts.AssertionException>(() => _taskList.Remove(_normalTask1));
 		}
 
         private void _taskList_HighestPriorityTaskChanged(object sender, EventArgs e)

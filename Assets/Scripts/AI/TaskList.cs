@@ -30,6 +30,8 @@ namespace BattleCruisers.AI
 
         public void Add(ITask taskToAdd)
         {
+            Assert.IsFalse(_tasks.Contains(taskToAdd));
+
             int insertionIndex = _tasks.Count;
 
             for (int i = 0; i < _tasks.Count; i++)
