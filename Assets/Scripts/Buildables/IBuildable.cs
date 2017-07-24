@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-    // FELIX Use this instead of concrete type whereever possible?
     public interface IBuildable : ITarget
     {
         /// <summary>
