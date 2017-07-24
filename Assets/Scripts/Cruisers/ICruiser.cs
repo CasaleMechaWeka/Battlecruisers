@@ -8,7 +8,7 @@ namespace BattleCruisers.Cruisers
 {
     public interface ICruiser : ICruiserController, ITarget
 	{
-		BuildingWrapper SelectedBuildingPrefab { get; set; }
+		IBuildableWrapper<Building> SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }

@@ -25,7 +25,7 @@ namespace BattleCruisers.Cruisers
 		ISlot GetFreeSlot(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
-        IBuildable ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot);
+        IBuildable ConstructBuilding(IBuildableWrapper<Building> buildingPrefab, ISlot slot);
         void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
 	}
 }

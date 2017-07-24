@@ -37,7 +37,7 @@ namespace BattleCruisers.Cruisers
 		public string Description { get { return description; } }
 
         // ICruiser
-        public BuildingWrapper SelectedBuildingPrefab { get; set; }
+        public IBuildableWrapper<Building> SelectedBuildingPrefab { get; set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
@@ -155,7 +155,7 @@ namespace BattleCruisers.Cruisers
 			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
 		}
 
-        public IBuildable ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot)
+        public IBuildable ConstructBuilding(IBuildableWrapper<Building> buildingPrefab, ISlot slot)
         {
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);

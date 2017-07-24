@@ -47,8 +47,7 @@ namespace BattleCruisers.AI.Tasks
                 ISlot slot = _cruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.slotType);
 				Assert.IsNotNull(slot);
 				
-                // FELIX  Ugly!  Make cruiser use the type of UnityObject, to avoid cast!!
-				_building = _cruiser.ConstructBuilding((BuildingWrapper)buildingWrapperPrefab.UnityObject, slot);
+				_building = _cruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
                 _building.CompletedBuildable += Building_CompletedBuildable;
             }
         }
