@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables
 
         public string Description { get { return description; } }
 
-        public SlotType SlotType { get { return SlotType; } }
+        public SlotType SlotType { get { return slotType; } }
 
         protected abstract HealthBarController HealthBarController { get; }
 		#endregion Properties
