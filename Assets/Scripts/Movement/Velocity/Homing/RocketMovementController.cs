@@ -1,21 +1,18 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
-using BattleCruisers.Utils;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Projectiles.FlightPoints;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-	/// <summary>
-	/// 1. Moves above source to cruising altitude
-	/// 2. Moved horizontally towards target
-	/// 3. Once above target drops down to hit target
-	/// </summary>
-	public class RocketMovementController : HomingMovementController
+    /// <summary>
+    /// 1. Moves above source to cruising altitude
+    /// 2. Moved horizontally towards target
+    /// 3. Once above target drops down to hit target
+    /// </summary>
+    public class RocketMovementController : HomingMovementController
 	{
 		private readonly float _cruisingAltitudeInM;
 		private readonly float _cruisingAltitidueMarginInM;

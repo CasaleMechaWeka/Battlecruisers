@@ -1,26 +1,28 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Movement;
-using BattleCruisers.Targets;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
 using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class BuildProgressTestsGod : MonoBehaviour 
+    public class BuildProgressTestsGod : MonoBehaviour 
 	{
+        public GameObject dummyEnemyCruiser;
+
 		void Start() 
 		{
-			Helper helper = new Helper(numOfDrones: 8);
-			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+			Helper helper = new Helper();
+			
+            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 
-			Buildable[] buildables = GameObject.FindObjectsOfType(typeof(Buildable)) as Buildable[];
+			Buildable[] buildables = FindObjectsOfType(typeof(Buildable)) as Buildable[];
 
 			foreach (Buildable buildable in buildables)
 			{
-				helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory);
+                helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory, enemyCruiser: enemyCruiser);
 				buildable.StartConstruction();
 			}
 		}

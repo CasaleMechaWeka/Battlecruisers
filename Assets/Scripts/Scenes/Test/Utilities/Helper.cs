@@ -1,13 +1,13 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -15,20 +15,14 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Buildables.Units.Aircraft;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using NSubstitute;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-	public class Helper
+    public class Helper
 	{
 		private readonly int _numOfDrones;
 
@@ -115,7 +109,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		private ICruiser CreateCruiser(int numOfDrones, Direction facingDirection, Faction faction)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
-			droneConsumer.NumOfDrones = NUM_OF_DRONES;
+            droneConsumer.NumOfDrones = numOfDrones;
 			droneConsumer.State.Returns(DroneConsumerState.Active);
 
 			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
