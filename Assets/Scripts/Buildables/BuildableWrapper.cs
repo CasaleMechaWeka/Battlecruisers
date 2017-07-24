@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class BuildableWrapper<TBuildable> : MonoBehaviour, IBuildableWrapper<TBuildable> where TBuildable : Buildable
+    public class BuildableWrapper<TBuildable> : MonoBehaviour, IBuildableWrapper<TBuildable> where TBuildable : class, IBuildable
 	{
         public TBuildable Buildable { get; private set; }
 
@@ -11,9 +11,8 @@ namespace BattleCruisers.Buildables
 
         public void Initialise()
 		{
-			Buildable = gameObject.GetComponentInChildren<TBuildable>();
+            Buildable = gameObject.GetComponentInChildren<TBuildable>();
 			Assert.IsNotNull(Buildable);
 		}
 	}
 }
-

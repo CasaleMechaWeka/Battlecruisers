@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-    public class BuildableStatsController : BaseBuildableStatsController<Buildable>
+    public class BuildableStatsController : BaseBuildableStatsController<IBuildable>
 	{
 	}
 }

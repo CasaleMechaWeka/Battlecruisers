@@ -27,17 +27,18 @@ namespace BattleCruisers.Cruisers
 		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
-		public string description;
 		public float yAdjustmentInM;
+        public string description;
 		
 		// ITarget
 		public override TargetType TargetType { get { return TargetType.Cruiser; } }
 		
 		// IComparableItem
 		public string Description { get { return description; } }
+        public string Name { get { return name; } }
 
         // ICruiser
-        public IBuildableWrapper<Building> SelectedBuildingPrefab { get; set; }
+        public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
@@ -155,18 +156,18 @@ namespace BattleCruisers.Cruisers
 			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
 		}
 
-        public IBuildable ConstructBuilding(IBuildableWrapper<Building> buildingPrefab, ISlot slot)
+        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);
 		}
 
-        public IBuildable ConstructSelectedBuilding(ISlot slot)
+        public IBuilding ConstructSelectedBuilding(ISlot slot)
 		{
 			Assert.IsNotNull(SelectedBuildingPrefab);
-            Assert.AreEqual(SelectedBuildingPrefab.Buildable.slotType, slot.Type);
+            Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotType, slot.Type);
 
-			Building building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+            IBuilding building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
 			building.Initialise(this, _enemyCruiser, _uiManager, _factoryProvider);
 			slot.Building = building;
 

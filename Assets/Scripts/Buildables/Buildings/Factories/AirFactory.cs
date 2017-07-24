@@ -1,12 +1,9 @@
 ﻿using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-	public class AirFactory : Factory
+    public class AirFactory : Factory
 	{
 		public LayerMask aircraftLayerMask;
 
@@ -18,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 		}
 
-		protected override Vector3 FindUnitSpawnPosition(Unit unit)
+		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
 		{
 			float verticalChange = (Size.y * 0.6f) + (unit.Size.y * 0.5f);
 			return transform.position + (transform.up * verticalChange);

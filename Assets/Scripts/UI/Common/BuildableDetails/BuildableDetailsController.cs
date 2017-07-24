@@ -9,12 +9,12 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class BuildableDetailsController : BaseBuildableDetails<Buildable>
+    public class BuildableDetailsController : BaseBuildableDetails<IBuildable>
 	{
 		private IDroneManager _droneManager;
 		private bool _allowDelete;
 
-        protected override StatsController<Buildable> StatsController { get { return buildableStatsController; } }
+        protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }
 		
         public BuildableStatsController buildableStatsController;
 		public Button deleteButton;
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			_droneManager = droneManager;
 		}
 
-		public void ShowBuildableDetails(Buildable buildable, bool allowDelete)
+		public void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
 		{
 			base.ShowItemDetails(buildable);
 

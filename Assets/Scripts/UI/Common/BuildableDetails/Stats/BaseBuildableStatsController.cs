@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-    public abstract class BaseBuildableStatsController<TItem> : StatsController<TItem> where TItem : Buildable
+    public abstract class BaseBuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
 	{
 		public StatsRowNumberController droneRow;
 		public StatsRowNumberController buildTimeRow;
@@ -15,9 +15,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
 		{
-			droneRow.Initialise(DRONES_LABEL, item.numOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.numOfDronesRequired, itemToCompareTo.numOfDronesRequired));
-			buildTimeRow.Initialise(BUILD_TIME_LABEL, item.buildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.buildTimeInS, itemToCompareTo.buildTimeInS));
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.maxHealth), _higherIsBetterComparer.CompareStats(item.Health, itemToCompareTo.Health));
+			droneRow.Initialise(DRONES_LABEL, item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+			buildTimeRow.Initialise(BUILD_TIME_LABEL, item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.Health), _higherIsBetterComparer.CompareStats(item.Health, itemToCompareTo.Health));
 			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(item.Damage), _higherIsBetterComparer.CompareStats(item.Damage, itemToCompareTo.Damage));
 		}
 	}

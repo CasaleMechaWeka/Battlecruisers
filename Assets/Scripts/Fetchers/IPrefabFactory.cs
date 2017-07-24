@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+﻿﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
@@ -8,11 +8,11 @@ namespace BattleCruisers.Fetchers
 {
 	public interface IPrefabFactory
 	{
-        IBuildableWrapper<Building> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
-		Building CreateBuilding(IBuildableWrapper<Building> buildingWrapperPrefab);
+        IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
+		IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab);
 
-		UnitWrapper GetUnitWrapperPrefab(IPrefabKey unitKey);
-		Unit CreateUnit(UnitWrapper unitWrapperPrefab);
+		IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey);
+        IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab);
 
 		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);

@@ -16,24 +16,24 @@ namespace BattleCruisers.Fetchers
 			_prefabFetcher = prefabFetcher;
 		}
 
-        public IBuildableWrapper<Building> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
+        public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
 		{
-            return (BuildingWrapper)GetBuildableWrapperPrefab<Building>(buildingKey);
+            return GetBuildableWrapperPrefab<IBuilding>(buildingKey);
 		}
 
-		public Building CreateBuilding(IBuildableWrapper<Building> buildingWrapperPrefab)
+		public IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab)
 		{
             return CreateBuildable(buildingWrapperPrefab.UnityObject);
 		}
 
-		public UnitWrapper GetUnitWrapperPrefab(IPrefabKey unitKey)
+        public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
 		{
-            return (UnitWrapper)GetBuildableWrapperPrefab<Unit>(unitKey);
+            return GetBuildableWrapperPrefab<IUnit>(unitKey);
 		}
 
-		public Unit CreateUnit(UnitWrapper unitWrapperPrefab)
+        public IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab)
 		{
-            return CreateBuildable(unitWrapperPrefab);
+            return CreateBuildable(unitWrapperPrefab.UnityObject);
 		}
 
 		public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
@@ -50,7 +50,7 @@ namespace BattleCruisers.Fetchers
 			return cruiser;
 		}
 
-		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : Buildable
+		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : class, IBuildable
 		{
 			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
 			buildableWrapperPrefab.Initialise();
@@ -58,7 +58,7 @@ namespace BattleCruisers.Fetchers
 			return buildableWrapperPrefab;
 		}
 
-		private TBuildable CreateBuildable<TBuildable>(BuildableWrapper<TBuildable> buildableWrapperPrefab) where TBuildable : Buildable
+		private TBuildable CreateBuildable<TBuildable>(BuildableWrapper<TBuildable> buildableWrapperPrefab) where TBuildable : class, IBuildable
 		{
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);

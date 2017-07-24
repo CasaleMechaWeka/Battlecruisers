@@ -1,14 +1,10 @@
-﻿using BattleCruisers.Buildables;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-	public abstract class BaseProgressBarController : MonoBehaviour
+    public abstract class BaseProgressBarController : MonoBehaviour
 	{
 		private float _outlineWidth;
 

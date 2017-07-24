@@ -9,12 +9,12 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class BuildingItemsRow : ItemsRow<Building>
+    public class BuildingItemsRow : ItemsRow<IBuilding>
 	{
 		private readonly BuildingCategory _buildingCategory;
 		private readonly LoadoutBuildingItemsRow _loadoutRow;
 		private readonly UnlockedBuildingItemsRow _unlockedRow;
-		private readonly IDictionary<Building, BuildingKey> _buildingToKey;
+		private readonly IDictionary<IBuilding, BuildingKey> _buildingToKey;
 
 		public BuildingItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, BuildingCategory buildingCategory, 
 			LoadoutBuildingItemsRow loadoutRow, UnlockedBuildingItemsRow unlockedRow, BuildingDetailsManager detailsManager)
@@ -24,31 +24,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_loadoutRow = loadoutRow;
 			_unlockedRow = unlockedRow;
 
-			_buildingToKey = new Dictionary<Building, BuildingKey>();
+			_buildingToKey = new Dictionary<IBuilding, BuildingKey>();
 
-			IList<Building> loadoutBuildings = GetLoadoutBuildingPrefabs(_buildingCategory);
+			IList<IBuilding> loadoutBuildings = GetLoadoutBuildingPrefabs(_buildingCategory);
 			_loadoutRow.Initialise(uiFactory, loadoutBuildings, detailsManager);
-			IList<Building> unlockedBuildings = GetUnlockedBuildingPrefabs(_buildingCategory);
+			IList<IBuilding> unlockedBuildings = GetUnlockedBuildingPrefabs(_buildingCategory);
 			_unlockedRow.Initialise(this, uiFactory, unlockedBuildings, loadoutBuildings, detailsManager);
 		}
 
-		private IList<Building> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
+		private IList<IBuilding> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
 		{
 			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory), addToDictionary: false);
 		}
 
-		private IList<Building> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
+		private IList<IBuilding> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
 		{
 			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory), addToDictionary: true);
 		}
 
-		private IList<Building> GetBuildingPrefabs(IList<BuildingKey> buildingKeys, bool addToDictionary)
+		private IList<IBuilding> GetBuildingPrefabs(IList<BuildingKey> buildingKeys, bool addToDictionary)
 		{
-			IList<Building> prefabs = new List<Building>();
+			IList<IBuilding> prefabs = new List<IBuilding>();
 
 			foreach (BuildingKey key in buildingKeys)
 			{
-				Building building = _prefabFactory.GetBuildingWrapperPrefab(key).Buildable;
+                IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(key).Buildable;
 				prefabs.Add(building);
 
 				if (addToDictionary)
@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public override bool SelectUnlockedItem(UnlockedItem<Building> buildableItem)
+		public override bool SelectUnlockedItem(UnlockedItem<IBuilding> buildableItem)
 		{
 			bool isItemInLoadout = false;
 
@@ -82,13 +82,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return _loadoutRow.CanAddBuilding();
 		}
 
-		private void AddBuildingToLoadout(Building building)
+		private void AddBuildingToLoadout(IBuilding building)
 		{
 			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);
 			_loadoutRow.AddBuilding(building);
 		}
 
-		private void RemoveBuildingFromLoadout(Building building)
+		private void RemoveBuildingFromLoadout(IBuilding building)
 		{
 			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
 			_loadoutRow.RemoveBuilding(building);

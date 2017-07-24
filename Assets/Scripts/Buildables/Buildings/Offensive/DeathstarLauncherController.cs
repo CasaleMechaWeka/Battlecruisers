@@ -1,14 +1,12 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft;
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
-	public class DeathstarLauncherController : Building
+    public class DeathstarLauncherController : Building
 	{
-		private Unit _deathstar;
+		private IUnit _deathstar;
 
 		public UnitWrapper deathstarPrefab;
 
@@ -28,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			base.OnBuildableCompleted();
 
 			_deathstar = _factoryProvider.PrefabFactory.CreateUnit(deathstarPrefab);
-			_deathstar.transform.position = transform.position + DEATHSTAR_SPAWN_POSITION_ADJUSTMENT;
+			_deathstar.Position = transform.position + DEATHSTAR_SPAWN_POSITION_ADJUSTMENT;
 			_deathstar.Initialise(_parentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
 			_deathstar.StartConstruction();
 		}

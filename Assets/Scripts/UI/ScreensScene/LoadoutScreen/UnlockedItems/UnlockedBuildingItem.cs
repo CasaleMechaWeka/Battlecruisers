@@ -3,5 +3,5 @@
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
 	// Need this class, because Unity does not allow generic scripts to be referenced in components
-	public class UnlockedBuildingItem : UnlockedItem<Building> { }
+	public class UnlockedBuildingItem : UnlockedItem<IBuilding> { }
 }

@@ -9,14 +9,13 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Buildable : Target, IBuildable, IComparableItem
+    public abstract class Buildable : Target, IBuildable
 	{
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
@@ -48,6 +47,20 @@ namespace BattleCruisers.Buildables
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
 		public float BuildProgress { get; private set; }
+        public string Name { get { return buildableName; } }
+        public int NumOfDronesRequired { get { return numOfDronesRequired; } }
+        public float BuildTimeInS { get { return buildTimeInS; } }
+
+		Vector2 IBuildable.Position
+        {
+            get { return transform.position; }
+            set { transform.position = value; }
+        }
+
+        Quaternion IBuildable.Rotation
+        {
+            set { transform.rotation = value; }
+        }
 
 		public virtual Vector3 Size 
 		{ 

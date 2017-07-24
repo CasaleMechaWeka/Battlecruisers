@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-    public abstract class StatsController<T> : MonoBehaviour where T : Target
+    public abstract class StatsController<T> : MonoBehaviour where T : class, ITarget
 	{
 		protected ValueToStarsConverter _valueToStarsConverter;
 		protected IStatsComparer _higherIsBetterComparer, _lowerIsBetterComparer;

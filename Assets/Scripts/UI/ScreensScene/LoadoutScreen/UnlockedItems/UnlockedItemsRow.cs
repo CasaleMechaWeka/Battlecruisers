@@ -1,17 +1,13 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
+    public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
 		protected IItemsRow<TItem> _itemsRow;

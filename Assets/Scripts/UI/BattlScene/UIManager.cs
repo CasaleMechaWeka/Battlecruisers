@@ -93,7 +93,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Buildable.slotType);
+			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
 			buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.BattleScene
 			}
 		}
 
-		public void ShowUnitDetails(Unit unit)
+		public void ShowUnitDetails(IUnit unit)
 		{
 			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
 		}

@@ -1,16 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
-	public abstract class LoadoutItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
+    public abstract class LoadoutItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
 	{
 		protected IItemDetailsManager<TItem> _itemDetailsManager;
 

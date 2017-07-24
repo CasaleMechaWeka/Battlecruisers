@@ -117,7 +117,7 @@ namespace BattleCruisers.Scenes
 			
 			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(playerLoadout, _playerCruiser, _aiCruiser, uiManager, playerFactoryProvider);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, _playerCruiser, _aiCruiser, uiManager, playerFactoryProvider);
+			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, _playerCruiser, _aiCruiser, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
 			
 			
@@ -154,7 +154,7 @@ namespace BattleCruisers.Scenes
 					{
                         // FELIX  Propagete interface use, to avoid cast here :(
                         BuildingWrapper buildingWrapper = (BuildingWrapper)factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-						categoryToBuildings[buildingWrapper.Buildable.category].Add(buildingWrapper);
+						categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
 					}
 				}
 			}
@@ -181,7 +181,7 @@ namespace BattleCruisers.Scenes
 			return buildingGroups;
 		}
 	
-		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
+		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser, IFactoryProvider factoryProvider)
 		{
 			IDictionary<UnitCategory, IList<UnitWrapper>> categoryToUnits = new Dictionary<UnitCategory, IList<UnitWrapper>>();
 
@@ -191,20 +191,21 @@ namespace BattleCruisers.Scenes
 
 				if (unitKeys.Count != 0)
 				{
-					categoryToUnits[unitCategory] = GetUnits(unitKeys, parentCruiser, hostileCruiser, uiManager, factoryProvider);
+					categoryToUnits[unitCategory] = GetUnits(unitKeys, parentCruiser, hostileCruiser, factoryProvider);
 				}
 			}
 
 			return categoryToUnits;
 		}
 
-		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
+		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser, IFactoryProvider factoryProvider)
 		{
 			IList<UnitWrapper> unitWrappers = new List<UnitWrapper>(unitKeys.Count);
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				UnitWrapper unitWrapper = factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
+				// FELIX  Propagete interface use, to avoid cast here :(
+				UnitWrapper unitWrapper = (UnitWrapper)factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
 				unitWrappers.Add(unitWrapper);
 			}
 

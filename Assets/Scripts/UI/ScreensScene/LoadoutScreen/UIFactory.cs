@@ -1,24 +1,19 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
-using BattleCruisers.Scenes;
-using BattleCruisers.UI.ScreensScene.LevelsScreen;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public interface IUIFactory
+    // FELIX  Move to own file!
+    public interface IUIFactory
 	{
-		LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding);
-		UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<Building> itemsRow, Building itemBuilding, bool isBuildingInLoadout);
+		LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding);
+		UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isBuildingInLoadout);
 		UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<Cruiser> hullsRow, Cruiser cruiser, bool isInLoadout);
 	}
 
@@ -35,19 +30,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, Building itemBuilding)
+		public LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding)
 		{
-			LoadoutBuildingItem loadoutItem = Instantiate<LoadoutBuildingItem>(loadoutBuildingItemPrefab);
+			LoadoutBuildingItem loadoutItem = Instantiate(loadoutBuildingItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
 			loadoutItem.Initialise(itemBuilding, _buildableDetailsManager);
 			return loadoutItem;
 		}
 
-		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<Building> itemsRow, Building itemBuilding, bool isInLoadout)
+		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
 		{
-			UnlockedBuildingItem unlockedBuilding = Instantiate<UnlockedBuildingItem>(unlockedBuildableItemPrefab);
+			UnlockedBuildingItem unlockedBuilding = Instantiate(unlockedBuildableItemPrefab);
 			unlockedBuilding.transform.SetParent(itemRow.transform, worldPositionStays: false);
-			IUnlockedItemState<Building> initialState = new DefaultState<Building>(itemsRow, unlockedBuilding);
+			IUnlockedItemState<IBuilding> initialState = new DefaultState<IBuilding>(itemsRow, unlockedBuilding);
 			unlockedBuilding.Initialise(initialState, itemBuilding, isInLoadout);
 			return unlockedBuilding;
 		}

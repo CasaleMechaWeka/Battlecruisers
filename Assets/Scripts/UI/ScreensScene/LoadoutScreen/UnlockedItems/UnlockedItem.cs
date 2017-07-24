@@ -1,15 +1,11 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
-using System.Collections;
-using System.Collections.Generic;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
+    public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
 	{
 		private RectTransform _rectTransform;
 

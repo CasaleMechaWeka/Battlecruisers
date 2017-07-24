@@ -18,12 +18,7 @@ namespace BattleCruisers.Buildables.Units
 		Left, Right, Up, Down
 	}
 
-	public interface IUnit : ITarget
-	{
-		UnitCategory Category { get; }
-	}
-
-	public abstract class Unit : Buildable, IPointerClickHandler
+    public abstract class Unit : Buildable, IUnit, IPointerClickHandler
 	{
 		public UnitCategory category;
 

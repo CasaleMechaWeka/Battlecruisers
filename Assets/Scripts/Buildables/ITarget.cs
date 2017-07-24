@@ -1,16 +1,10 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public enum Faction
+    public enum Faction
 	{
 		Blues, Reds
 	}
@@ -63,6 +57,7 @@ namespace BattleCruisers.Buildables
 
 		void TakeDamage(float damageAmount);
 		void Repair(float repairAmount);
+        void Destroy();
 	}
 
 	public interface ITarget : IDamagable

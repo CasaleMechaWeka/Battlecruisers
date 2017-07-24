@@ -1,18 +1,12 @@
 ﻿using BattleCruisers.Buildables;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-	public class BuildableProgressBarController : BaseProgressBarController
+    public class BuildableProgressBarController : BaseProgressBarController
 	{
-		private Buildable _buildable;
+		private IBuildable _buildable;
 
-		public void Initialise(Buildable buildable)
+		public void Initialise(IBuildable buildable)
 		{
 			_buildable = buildable;
 			_buildable.BuildableProgress += Buildable_BuildableProgress;

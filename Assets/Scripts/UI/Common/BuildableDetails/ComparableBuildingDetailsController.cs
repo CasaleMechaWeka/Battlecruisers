@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class ComparableBuildingDetailsController : BaseBuildableDetails<Building>, IPointerClickHandler
+    public class ComparableBuildingDetailsController : BaseBuildableDetails<IBuilding>, IPointerClickHandler
 	{
-        protected override StatsController<Building> StatsController { get { return buildingStatsController; } }
+        protected override StatsController<IBuilding> StatsController { get { return buildingStatsController; } }
 
         public BuildingStatsController buildingStatsController;
         

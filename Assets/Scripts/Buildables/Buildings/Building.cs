@@ -10,13 +10,15 @@ namespace BattleCruisers.Buildables.Buildings
 		Factory, Defence, Offence, Tactical, Ultra
 	}
 
-	public class Building : Buildable, IPointerClickHandler
+	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
 		public BuildingCategory category;
 		// Proportional to building size
 		public float customOffsetProportion;
 
 		public override TargetType TargetType { get { return TargetType.Buildings; } }
+        public BuildingCategory Category { get { return category; } }
+		public float CustomOffsetProportion { get { return customOffsetProportion; } }
 
 		protected override HealthBarController HealthBarController
 		{

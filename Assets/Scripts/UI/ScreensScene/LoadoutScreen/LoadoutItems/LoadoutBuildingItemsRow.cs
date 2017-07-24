@@ -10,14 +10,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
     public class LoadoutBuildingItemsRow : MonoBehaviour 
 	{
 		private IUIFactory _uiFactory;
-		private IItemDetailsManager<Building> _detailsManager;
-		private IDictionary<Building, LoadoutBuildingItem> _buildingToLoadoutItem;
+		private IItemDetailsManager<IBuilding> _detailsManager;
+		private IDictionary<IBuilding, LoadoutBuildingItem> _buildingToLoadoutItem;
 
 		private const int MAX_NUM_OF_ITEMS = 4;
 
 		public HorizontalLayoutGroup layoutGroup;
 
-		public void Initialise(IUIFactory uiFactory, IList<Building> buildings, IItemDetailsManager<Building> detailsManager)
+		public void Initialise(IUIFactory uiFactory, IList<IBuilding> buildings, IItemDetailsManager<IBuilding> detailsManager)
 		{
 			Assert.IsNotNull(layoutGroup);
 			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 
 			_uiFactory = uiFactory;
 			_detailsManager = detailsManager;
-			_buildingToLoadoutItem = new Dictionary<Building, LoadoutBuildingItem>();
+			_buildingToLoadoutItem = new Dictionary<IBuilding, LoadoutBuildingItem>();
 
 			foreach (Building building in buildings)
 			{
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
 		}
 
-		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<Building> e)
+		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<IBuilding> e)
 		{
 			foreach (LoadoutBuildingItem item in _buildingToLoadoutItem.Values)
 			{
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			return _buildingToLoadoutItem.Count < MAX_NUM_OF_ITEMS;
 		}
 
-		public void AddBuilding(Building buildingToAdd)
+		public void AddBuilding(IBuilding buildingToAdd)
 		{
 			// FELIX  Handle if already filled all slots :P
 			// Perhaps expose CanAdd property?
@@ -58,19 +58,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			CreateLoadoutItem(buildingToAdd);
 		}
 
-		public void RemoveBuilding(Building buildingToRemove)
+		public void RemoveBuilding(IBuilding buildingToRemove)
 		{
 			RemoveLoadoutItem(buildingToRemove);
 		}
 		
-		private void CreateLoadoutItem(Building buildingToAdd)
+		private void CreateLoadoutItem(IBuilding buildingToAdd)
 		{
 			Assert.IsFalse(_buildingToLoadoutItem.ContainsKey(buildingToAdd));
 			LoadoutBuildingItem item = _uiFactory.CreateLoadoutItem(layoutGroup, buildingToAdd);
 			_buildingToLoadoutItem.Add(buildingToAdd, item);
 		}
 		
-		private void RemoveLoadoutItem(Building buildingToRemove)
+		private void RemoveLoadoutItem(IBuilding buildingToRemove)
 		{
 			Assert.IsTrue(_buildingToLoadoutItem.ContainsKey(buildingToRemove));
 			LoadoutBuildingItem item = _buildingToLoadoutItem[buildingToRemove];

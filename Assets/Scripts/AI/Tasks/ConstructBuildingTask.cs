@@ -34,9 +34,9 @@ namespace BattleCruisers.AI.Tasks
                 return;
             }
 
-            IBuildableWrapper<Building> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_key);
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_key);
 
-            if (_cruiser.IsSlotAvailable(buildingWrapperPrefab.Buildable.slotType))
+            if (_cruiser.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType))
             {
                 // Cruiser has no available slot for this building.  Task is completed (perhaps with a failure result?).
                 _isCompleted = true;
@@ -44,7 +44,7 @@ namespace BattleCruisers.AI.Tasks
             }
             else
             {
-                ISlot slot = _cruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.slotType);
+                ISlot slot = _cruiser.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType);
 				Assert.IsNotNull(slot);
 				
 				_building = _cruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);

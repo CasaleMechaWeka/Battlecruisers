@@ -5,7 +5,7 @@ using BattleCruisers.Drones;
 
 namespace BattleCruisers.Cruisers
 {
-	public class StartedConstructionEventArgs : EventArgs
+    public class StartedConstructionEventArgs : EventArgs
 	{
 		public IBuildable Buildable { get; private set; }
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Cruisers
 		ISlot GetFreeSlot(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);
 		void UnhighlightSlots();
-        IBuildable ConstructBuilding(IBuildableWrapper<Building> buildingPrefab, ISlot slot);
+        IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
         void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
 	}
 }

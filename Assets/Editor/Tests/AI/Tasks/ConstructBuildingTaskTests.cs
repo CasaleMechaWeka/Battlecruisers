@@ -1,6 +1,4 @@
-﻿using System;
-using BattleCruisers.AI;
-using BattleCruisers.AI.Tasks;
+﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
@@ -18,8 +16,8 @@ namespace BattleCruisers.Tests.AI
 		private IPrefabKey _key;
 		private IPrefabFactory _prefabFactory;
 		private ICruiserController _cruiser;
-        private IBuildableWrapper<Building> _prefab;
-        private IBuildable _building;
+        private IBuildableWrapper<IBuilding> _prefab;
+        private IBuilding _building;
         private ISlot _slot;
 
         [SetUp]
@@ -31,8 +29,8 @@ namespace BattleCruisers.Tests.AI
 
             _task = new ConstructBuildingTask(TaskPriority.High, _key, _prefabFactory, _cruiser);
 
-            _prefab = Substitute.For<IBuildableWrapper<Building>>();
-            _building = Substitute.For<IBuildable>();
+            _prefab = Substitute.For<IBuildableWrapper<IBuilding>>();
+            _building = Substitute.For<IBuilding>();
             _slot = Substitute.For<ISlot>();
         }
 

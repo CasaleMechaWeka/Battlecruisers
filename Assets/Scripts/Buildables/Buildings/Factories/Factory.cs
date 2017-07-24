@@ -10,8 +10,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public abstract class Factory : Building, IDroneConsumerProvider
 	{
-		private Unit _lastUnitProduced;
-		protected Unit _unitUnderConstruction;
+		private IUnit _lastUnitProduced;
+		protected IUnit _unitUnderConstruction;
 
 		public UnitCategory unitCategory;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 				if (_unitWrapper != null)
 				{
-					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Buildable.numOfDronesRequired);
+					DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
                     Assert.IsNull(DroneConsumer);
 					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 				}
@@ -72,7 +72,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 		
 		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
-		protected virtual bool CanSpawnUnit(Unit unit)
+		protected virtual bool CanSpawnUnit(IUnit unit)
 		{
 			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
 			{
@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 				foreach (Collider2D collider in colliders)
 				{
-					if (collider.gameObject == _lastUnitProduced.gameObject)
+                    if (collider.gameObject == _lastUnitProduced.GameObject)
 					{
 						return false;
 					}
@@ -102,8 +102,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction.DroneConsumerProvider = this;
 
 			Vector3 spawnPosition = FindUnitSpawnPosition(_unitUnderConstruction);
-			_unitUnderConstruction.transform.position = spawnPosition;
-			_unitUnderConstruction.transform.rotation = transform.rotation;
+            _unitUnderConstruction.Position = spawnPosition;
+            _unitUnderConstruction.Rotation = transform.rotation;
 
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
@@ -116,13 +116,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 		}
 
-		protected abstract Vector3 FindUnitSpawnPosition(Unit unit);
+		protected abstract Vector3 FindUnitSpawnPosition(IUnit unit);
 
 		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
 		{ 
 			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;
 
-			Unit unit = sender as Unit;
+			IUnit unit = sender as IUnit;
 			Assert.IsNotNull(unit);
 			_lastUnitProduced = unit;
 		}

@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings
 {
-    public class BuildingWrapper : BuildableWrapper<Building>
+    public class BuildingWrapper : BuildableWrapper<IBuilding>
 	{
 	}
 }

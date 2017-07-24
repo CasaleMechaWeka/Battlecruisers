@@ -6,5 +6,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	{
 		Sprite Sprite { get; }
         string Description { get; }
+        string Name { get; }
 	}
 }

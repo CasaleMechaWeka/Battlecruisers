@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : Target, IComparableItem
+    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : class, ITarget, IComparableItem
 	{
         protected abstract StatsController<TItem> StatsController { get; }
 		
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _item = item;
 			
             StatsController.ShowStats(item, itemToCompareTo);
-            itemName.text = item.name;
+            itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;
             

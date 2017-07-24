@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 		}
 
-		protected override Vector3 FindUnitSpawnPosition(Unit unit)
+		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
 		{
 			float horizontalChange = (Size.x * 0.6f) + (unit.Size.x * 0.5f);
 

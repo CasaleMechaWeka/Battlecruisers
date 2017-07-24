@@ -1,16 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Drones;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-	public abstract class BuildableButtonController : Presentable
+    public abstract class BuildableButtonController : Presentable
 	{
-		private Buildable _buildable;
+		private IBuildable _buildable;
 		private IDroneManager _droneManager;
 		protected UIManager _uiManager;
 		private Button _button;
@@ -20,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
-		public void Initialize(Buildable buildable, IDroneManager droneManager, UIManager uiManager)
+		public void Initialize(IBuildable buildable, IDroneManager droneManager, UIManager uiManager)
 		{
 			base.Initialize();
 
@@ -29,8 +27,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			_uiManager = uiManager;
 			_button = GetComponent<Button>();
 
-			buildableName.text = _buildable.buildableName;
-			droneLevel.text = _buildable.numOfDronesRequired.ToString();
+            buildableName.text = _buildable.Name;
+			droneLevel.text = _buildable.NumOfDronesRequired.ToString();
 			buildableImage.sprite = _buildable.Sprite;
 
 			_button.onClick.AddListener(OnClick);
@@ -67,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected virtual bool ShouldBeEnabled()
 		{
-			return _droneManager.CanSupportDroneConsumer(_buildable.numOfDronesRequired);
+			return _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
 		}
 
 		protected abstract void OnClick();

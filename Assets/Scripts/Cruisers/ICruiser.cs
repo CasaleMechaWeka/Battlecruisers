@@ -8,7 +8,7 @@ namespace BattleCruisers.Cruisers
 {
     public interface ICruiser : ICruiserController, ITarget
 	{
-		IBuildableWrapper<Building> SelectedBuildingPrefab { get; set; }
+		IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
 		IDroneManager DroneManager { get; }
 		IDroneConsumerProvider DroneConsumerProvider { get; }
 		Direction Direction { get; }
@@ -16,6 +16,6 @@ namespace BattleCruisers.Cruisers
 		float YAdjustmentInM { get; }
 		Sprite Sprite { get; }
 
-        IBuildable ConstructSelectedBuilding(ISlot slot);
+        IBuilding ConstructSelectedBuilding(ISlot slot);
     }
 }

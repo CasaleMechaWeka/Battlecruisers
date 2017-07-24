@@ -1,13 +1,9 @@
-﻿using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using BattleCruisers.UI.BattleScene.ProgressBars;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class ShieldController : Target
+    public class ShieldController : Target
 	{
 		private Ring _ring;
 		private float _timeSinceDamageInS;

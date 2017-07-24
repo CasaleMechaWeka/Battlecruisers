@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers
 		bool IsFree { get; }
 		SlotType Type { get; }
 		bool IsActive { set; }
-		Building Building { set; }
+		IBuilding Building { set; }
 	}
 
 	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
@@ -31,8 +31,8 @@ namespace BattleCruisers.Cruisers
 		public bool IsFree { get { return _building == null; } }
 		public SlotType Type { get { return type; } }
 
-		private Building _building;
-		public Building Building
+		private IBuilding _building;
+		public IBuilding Building
 		{
 			set
 			{
@@ -41,8 +41,8 @@ namespace BattleCruisers.Cruisers
 
 				_building = value;
 
-				_building.transform.position = FindSpawnPosition(_building);
-				_building.transform.rotation = transform.rotation;
+                _building.Position = FindSpawnPosition(_building);
+				_building.Rotation = transform.rotation;
 				_building.Destroyed += OnBuildingDestroyed;
 			}
 		}
@@ -83,16 +83,16 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		private Vector3 FindSpawnPosition(Building building)
+		private Vector3 FindSpawnPosition(IBuilding building)
 		{
 			switch (direction)
 			{
 				case Direction.Right:
-					float horizontalChange = (_renderer.bounds.size.x + building.Size.x) / 2 + (building.customOffsetProportion * building.Size.x);
+					float horizontalChange = (_renderer.bounds.size.x + building.Size.x) / 2 + (building.CustomOffsetProportion * building.Size.x);
 					return transform.position + (transform.right * horizontalChange);
 
 				case Direction.Up:
-					float verticalChange = (_renderer.bounds.size.y + building.Size.y) / 2 + (building.customOffsetProportion * building.Size.y);
+					float verticalChange = (_renderer.bounds.size.y + building.Size.y) / 2 + (building.CustomOffsetProportion * building.Size.y);
 					return transform.position + (transform.up * verticalChange);
 
 				default:

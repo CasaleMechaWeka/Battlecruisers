@@ -4,7 +4,7 @@ using BattleCruisers.UI.Common.BuildingDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public class BuildingDetailsManager : ItemDetailsManager<Building>
+    public class BuildingDetailsManager : ItemDetailsManager<IBuilding>
 	{
 		public ComparableBuildingDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 

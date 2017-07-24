@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class BaseBuildableDetails<TItem> : ItemDetails<TItem> where TItem : Buildable
+    public abstract class BaseBuildableDetails<TItem> : ItemDetails<TItem> where TItem : class, IBuildable
 	{
 		private ISpriteFetcher _spriteFetcher;
 
@@ -23,10 +23,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		{
             base.ShowItemDetails(item, itemToCompareTo);
 
-			bool hasSlot = _item.slotType != SlotType.None;
+			bool hasSlot = _item.SlotType != SlotType.None;
 			if (hasSlot)
 			{
-				slotImage.sprite = _spriteFetcher.GetSlotSprite((SlotType)_item.slotType);
+				slotImage.sprite = _spriteFetcher.GetSlotSprite(_item.SlotType);
 			}
 			slotImage.gameObject.SetActive(hasSlot);
 		}

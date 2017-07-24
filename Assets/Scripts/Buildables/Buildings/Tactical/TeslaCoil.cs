@@ -6,14 +6,11 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class TeslaCoil : Building, ITargetConsumer
+    public class TeslaCoil : Building, ITargetConsumer
 	{
 		private BasicTurretStats _teslaCoilStats;
 		private CircleTargetDetector _rocketDetector;
