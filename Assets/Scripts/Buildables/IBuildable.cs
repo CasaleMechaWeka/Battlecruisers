@@ -1,22 +1,13 @@
-﻿using BattleCruisers.Cruisers;
+﻿using System;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-	public enum BuildableState
+    public enum BuildableState
 	{
 		NotStarted, InProgress, Paused, Completed
 	}
@@ -31,6 +22,7 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
+    // FELIX Use this instead of concrete type whereever possible?
     public interface IBuildable : ITarget
     {
         /// <summary>
