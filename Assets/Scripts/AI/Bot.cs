@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI
 {
+    // FELIX  Delete?  Refactor?  Use new AI classes :)
     public class Bot
 	{
 		private Cruiser _friendlyCruiser;
@@ -45,8 +46,8 @@ namespace BattleCruisers.AI
 				Assert.IsNotNull(slot);
 
                 // FELIX  Ugly!  Make cruiser use the type of UnityObject, to avoid cast!!
-                Building building = _friendlyCruiser.ConstructBuilding((BuildingWrapper)buildingWrapperPrefab.UnityObject, slot);
-				building.CompletedBuildable += Building_CompletedBuildable;
+                //Building building = _friendlyCruiser.ConstructBuilding((BuildingWrapper)buildingWrapperPrefab.UnityObject, slot);
+				//building.CompletedBuildable += Building_CompletedBuildable;
 			}
 		}
 

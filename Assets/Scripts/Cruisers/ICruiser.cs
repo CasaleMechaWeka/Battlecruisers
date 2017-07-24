@@ -16,6 +16,6 @@ namespace BattleCruisers.Cruisers
 		float YAdjustmentInM { get; }
 		Sprite Sprite { get; }
 
-        Building ConstructSelectedBuilding(ISlot slot);
+        IBuildable ConstructSelectedBuilding(ISlot slot);
     }
 }

@@ -155,13 +155,13 @@ namespace BattleCruisers.Cruisers
 			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
 		}
 
-		public Building ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot)
+        public IBuildable ConstructBuilding(BuildingWrapper buildingPrefab, ISlot slot)
         {
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);
 		}
 
-		public Building ConstructSelectedBuilding(ISlot slot)
+        public IBuildable ConstructSelectedBuilding(ISlot slot)
 		{
 			Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.slotType, slot.Type);
