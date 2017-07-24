@@ -14,6 +14,7 @@ namespace BattleCruisers.AI.Tasks
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
 
+        // FELIX  NEXT  Create IBuilding :D
         private Building _building;
 
         public ConstructBuildingTask(TaskPriority priority, IPrefabKey key, IPrefabFactory prefabFactory, ICruiserController cruiser) 

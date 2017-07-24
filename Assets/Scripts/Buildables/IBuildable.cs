@@ -31,17 +31,18 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-	public interface IBuildable : ITarget
-	{
-		/// <summary>
-		/// 0-1
-		/// </summary>
-		float BuildProgress { get; }
-		BuildableState BuildableState { get; }
-		float Damage { get; }
-		Vector3 Size { get; }
-		Sprite Sprite { get; }
-		IDroneConsumer DroneConsumer { get; }
+    public interface IBuildable : ITarget
+    {
+        /// <summary>
+        /// 0-1
+        /// </summary>
+        float BuildProgress { get; }
+        BuildableState BuildableState { get; }
+        float Damage { get; }
+        Vector3 Size { get; }
+        Sprite Sprite { get; }
+        IDroneConsumer DroneConsumer { get; }
+        SlotType SlotType { get; }
 
 		event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;
