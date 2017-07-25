@@ -117,7 +117,7 @@ namespace BattleCruisers.Scenes
 			
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
+			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
 			
 			
@@ -180,9 +180,9 @@ namespace BattleCruisers.Scenes
 			return buildingGroups;
 		}
 	
-		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
+		private IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> GetUnitsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
-			IDictionary<UnitCategory, IList<UnitWrapper>> categoryToUnits = new Dictionary<UnitCategory, IList<UnitWrapper>>();
+			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>>();
 
 			foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
 			{
@@ -197,9 +197,9 @@ namespace BattleCruisers.Scenes
 			return categoryToUnits;
 		}
 
-		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, IFactoryProvider factoryProvider)
+		private IList<IBuildableWrapper<IUnit>> GetUnits(IList<UnitKey> unitKeys, IFactoryProvider factoryProvider)
 		{
-			IList<UnitWrapper> unitWrappers = new List<UnitWrapper>(unitKeys.Count);
+			IList<IBuildableWrapper<IUnit>> unitWrappers = new List<IBuildableWrapper<IUnit>>(unitKeys.Count);
 
 			foreach (UnitKey unitKey in unitKeys)
 			{

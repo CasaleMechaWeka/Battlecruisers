@@ -1,16 +1,14 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System;
+using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-	public class UnitsMenuController : Presentable
+    public class UnitsMenuController : Presentable
 	{
 		private UIManager _uiManager;
 		private Factory _factory;
@@ -18,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		public void Initialize(
 			UIManager uiManager,
 			IUIFactory uiFactory,
-			IList<UnitWrapper> units)
+			IList<IBuildableWrapper<IUnit>> units)
 		{
 			base.Initialize();
 

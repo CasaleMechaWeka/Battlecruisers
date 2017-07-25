@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		public UIFactory uiFactory;
 		public UIManager uiManager;
 
-		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<UnitWrapper>> units)
+		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
 		{
 			_buildingGroups = buildingGroups;
 

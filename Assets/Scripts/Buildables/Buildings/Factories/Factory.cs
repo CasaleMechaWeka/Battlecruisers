@@ -20,8 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
 
 		#region Properties
-		private UnitWrapper _unitWrapper;
-		public UnitWrapper UnitWrapper 
+		private IBuildableWrapper<IUnit> _unitWrapper;
+		public IBuildableWrapper<IUnit> UnitWrapper 
 		{ 
 			set	
 			{

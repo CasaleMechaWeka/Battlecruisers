@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene
         GameObject CreatePanel(bool isActive);
         Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
         BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuildableWrapper<IBuilding> buildingWrapper);
-        UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, UnitWrapper unitWrapper);
+        UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, IBuildableWrapper<IUnit> unitWrapper);
         Button CreateBackButton(HorizontalLayoutGroup buttonParent);
     }
 }

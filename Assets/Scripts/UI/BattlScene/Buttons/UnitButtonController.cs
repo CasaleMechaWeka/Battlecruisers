@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class UnitButtonController : BuildableButtonController
 	{
-		private UnitWrapper _unitWrapper;
+		private IBuildableWrapper<IUnit> _unitWrapper;
 		private Factory _factory;
 
-		public void Initialize(UnitWrapper unitWrapper, IDroneManager droneManager, UIManager uiManager)
+		public void Initialize(IBuildableWrapper<IUnit> unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
 			base.Initialize(unitWrapper.Buildable, droneManager, uiManager);
 
