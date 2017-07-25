@@ -38,7 +38,6 @@ namespace BattleCruisers.AI.Tasks
 
         public virtual void Start()
         {
-
             if (_isCompleted)
             {
                 EmitCompletedEvent();
