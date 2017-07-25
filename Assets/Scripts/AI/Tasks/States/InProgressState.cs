@@ -2,12 +2,22 @@
 {
 	public class InProgressState : BaseState
 	{
-        private readonly IState _stoppedState;
+        private IState _stoppedState;
+        private IState StoppedState
+        {
+            get
+            {
+                if (_stoppedState == null)
+                {
+                    _stoppedState = new StoppedState(_task, this);
+                }
+                return _stoppedState;
+            }
+        }
 
-        public InProgressState(IInternalTask task, IState stoppedState)
+        public InProgressState(IInternalTask task)
 			: base(task)
 		{
-			_stoppedState = stoppedState;
 		}
 
 		public override IState Start()
@@ -18,7 +28,7 @@
 		public override IState Stop()
 		{
             _task.Stop();
-            return _stoppedState;
+            return StoppedState;
 		}
 	}
 }

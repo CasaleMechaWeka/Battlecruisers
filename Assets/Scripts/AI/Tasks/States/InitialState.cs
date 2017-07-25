@@ -2,18 +2,15 @@
 {
     public class InitialState : BaseState
     {
-        private readonly IState _inProgressState;
-
-        public InitialState(IInternalTask task, IState inProgressState)
+        public InitialState(IInternalTask task)
             : base(task)
         {
-            _inProgressState = inProgressState;
         }
 
         public override IState Start()
         {
             _task.Start();
-            return _inProgressState;
+            return new InProgressState(_task);
         }
 
         public override IState Stop()
