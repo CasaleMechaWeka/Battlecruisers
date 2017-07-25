@@ -24,6 +24,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Completed_EmitsCompletedEvent()
         {
+            _taskController.Start();
             _task.Completed += Raise.Event();
             Assert.AreEqual(1, _numOfCompletedEvents);
         }

@@ -4,8 +4,8 @@
     {
         private readonly IState _inProgressState;
 
-        public StoppedState(IInternalTask task, IState inProgressState)
-            : base(task)
+        public StoppedState(IInternalTask task, ICompletedEventEmitter eventEmitter, IState inProgressState)
+            : base(task, eventEmitter)
         {
             _inProgressState = inProgressState;
         }

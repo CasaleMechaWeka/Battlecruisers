@@ -9,14 +9,14 @@
             {
                 if (_stoppedState == null)
                 {
-                    _stoppedState = new StoppedState(_task, this);
+                    _stoppedState = new StoppedState(_task, _eventEmitter, this);
                 }
                 return _stoppedState;
             }
         }
 
-        public InProgressState(IInternalTask task)
-			: base(task)
+        public InProgressState(IInternalTask task, ICompletedEventEmitter eventEmitter)
+            : base(task, eventEmitter)
 		{
 		}
 

@@ -1,9 +1,8 @@
 ﻿using System;
+using BattleCruisers.AI.Tasks.States;
 
 namespace BattleCruisers.AI.Tasks
 {
-	// FELIX  use states instead of branching:  Initial, InProgress, Stopped, Completed
-
 	// Converts:
 	/// <summary>
 	/// Converts:
@@ -15,11 +14,10 @@ namespace BattleCruisers.AI.Tasks
 	/// + IInternalTask.Stop()  => Only called if started or resumed
 	/// + IInternalTask.Resume()=> Only called if stopped
 	/// </summary>
-	public class TaskController : ITask
+    public class TaskController : ITask, ICompletedEventEmitter
     {
         private readonly IInternalTask _task;
-
-        protected bool _isCompleted, _isStopped, _isStarted;
+        private IState _currentState;
 
         public TaskPriority Priority { get; private set; }
 
@@ -29,53 +27,33 @@ namespace BattleCruisers.AI.Tasks
         {
             Priority = priority;
             _task = task;
-            _isCompleted = false;
-            _isStopped = false;
-            _isStarted = false;
+            _currentState = new InitialState(_task, this);
 
             _task.Completed += _task_Completed;
         }
 
         public virtual void Start()
         {
-            if (_isCompleted)
-            {
-                EmitCompletedEvent();
-            }
-            else if (_isStopped)
-            {
-                _task.Resume();
-                _isStopped = false;
-            }
-            else if (!_isStarted)
-            {
-                _task.Start();
-				_isStarted = true;
-            }
+            _currentState = _currentState.Start();
         }
 
         public virtual void Stop()
         {
-            if (_isStarted && !_isStopped && !_isCompleted)
+            _currentState = _currentState.Stop();
+        }
+        
+        public void EmitCompletedEvent()
+        {
+            if (Completed != null)
             {
-                _task.Stop();
-                _isStopped = true;
+                Completed.Invoke(this, EventArgs.Empty);
             }
         }
-
-        private void _task_Completed(object sender, EventArgs e)
-        {
-            _task.Completed -= _task_Completed;
-            _isCompleted = true;
-            EmitCompletedEvent();
-        }
 		
-		private void EmitCompletedEvent()
+		private void _task_Completed(object sender, EventArgs e)
 		{
-			if (Completed != null)
-			{
-				Completed.Invoke(this, EventArgs.Empty);
-			}
+			_task.Completed -= _task_Completed;
+			_currentState = _currentState.OnCompleted();
 		}
     }
 }
