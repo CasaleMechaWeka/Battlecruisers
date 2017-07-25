@@ -203,8 +203,7 @@ namespace BattleCruisers.Scenes
 
 			foreach (UnitKey unitKey in unitKeys)
 			{
-				// FELIX  Propagete interface use, to avoid cast here :(
-				UnitWrapper unitWrapper = (UnitWrapper)factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
+				IBuildableWrapper<IUnit> unitWrapper = factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
 				unitWrappers.Add(unitWrapper);
 			}
 
