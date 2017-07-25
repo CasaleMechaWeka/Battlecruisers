@@ -115,9 +115,9 @@ namespace BattleCruisers.Scenes
 			buildableDetailsController.Initialise(playerDroneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, playerDroneManager);
 			
-			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(playerLoadout, _playerCruiser, _aiCruiser, uiManager, playerFactoryProvider);
+			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, _playerCruiser, _aiCruiser, playerFactoryProvider);
+			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
 			
 			
@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes
 			_bot.Start();
 		}
 
-		private IDictionary<BuildingCategory, IList<BuildingWrapper>> GetBuildingsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
+		private IDictionary<BuildingCategory, IList<BuildingWrapper>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<BuildingCategory, IList<BuildingWrapper>> categoryToBuildings = new Dictionary<BuildingCategory, IList<BuildingWrapper>>();
 			
@@ -181,7 +181,7 @@ namespace BattleCruisers.Scenes
 			return buildingGroups;
 		}
 	
-		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, Cruiser parentCruiser, Cruiser hostileCruiser, IFactoryProvider factoryProvider)
+		private IDictionary<UnitCategory, IList<UnitWrapper>> GetUnitsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<UnitCategory, IList<UnitWrapper>> categoryToUnits = new Dictionary<UnitCategory, IList<UnitWrapper>>();
 
@@ -191,14 +191,14 @@ namespace BattleCruisers.Scenes
 
 				if (unitKeys.Count != 0)
 				{
-					categoryToUnits[unitCategory] = GetUnits(unitKeys, parentCruiser, hostileCruiser, factoryProvider);
+					categoryToUnits[unitCategory] = GetUnits(unitKeys, factoryProvider);
 				}
 			}
 
 			return categoryToUnits;
 		}
 
-		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, Cruiser parentCruiser, Cruiser hostileCruiser, IFactoryProvider factoryProvider)
+		private IList<UnitWrapper> GetUnits(IList<UnitKey> unitKeys, IFactoryProvider factoryProvider)
 		{
 			IList<UnitWrapper> unitWrappers = new List<UnitWrapper>(unitKeys.Count);
 
