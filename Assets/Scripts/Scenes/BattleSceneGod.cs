@@ -115,7 +115,7 @@ namespace BattleCruisers.Scenes
 			buildableDetailsController.Initialise(playerDroneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, playerDroneManager);
 			
-			IDictionary<BuildingCategory, IList<BuildingWrapper>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
+			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<UnitWrapper>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
@@ -137,9 +137,9 @@ namespace BattleCruisers.Scenes
 			_bot.Start();
 		}
 
-		private IDictionary<BuildingCategory, IList<BuildingWrapper>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
+		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
-			IDictionary<BuildingCategory, IList<BuildingWrapper>> categoryToBuildings = new Dictionary<BuildingCategory, IList<BuildingWrapper>>();
+			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
 			
 			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
@@ -147,13 +147,12 @@ namespace BattleCruisers.Scenes
 				
 				if (buildingKeys.Count != 0)
 				{
-					IList<BuildingWrapper> buildings = new List<BuildingWrapper>();
+					IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
 					categoryToBuildings[category] = buildings;
 					
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-                        // FELIX  Propagete interface use, to avoid cast here :(
-                        BuildingWrapper buildingWrapper = (BuildingWrapper)factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                        IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
 						categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
 					}
 				}
@@ -162,11 +161,11 @@ namespace BattleCruisers.Scenes
 			return categoryToBuildings;
 		}
 
-		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<BuildingWrapper>> buildingCategoryToGroups)
+		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups)
 		{
 			IList<BuildingGroup> buildingGroups = new List<BuildingGroup>();
 
-			foreach (KeyValuePair<BuildingCategory, IList<BuildingWrapper>> categoryToBuildings in buildingCategoryToGroups)
+			foreach (KeyValuePair<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings in buildingCategoryToGroups)
 			{
 				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
 				buildingGroups.Add(group);

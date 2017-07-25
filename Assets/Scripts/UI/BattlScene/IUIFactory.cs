@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         GameObject CreatePanel(bool isActive);
         Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup group);
-        BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, BuildingWrapper buildingWrapper);
+        BuildingButtonController CreateBuildingButton(HorizontalLayoutGroup buttonParent, IBuildableWrapper<IBuilding> buildingWrapper);
         UnitButtonController CreateUnitButton(HorizontalLayoutGroup buttonParent, UnitWrapper unitWrapper);
         Button CreateBackButton(HorizontalLayoutGroup buttonParent);
     }

@@ -1,18 +1,16 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-	public class BuildingsMenuController : Presentable
+    public class BuildingsMenuController : Presentable
 	{
 		public void Initialize(
 			IUIFactory uiFactory,
-			IList<BuildingWrapper> buildings)
+			IList<IBuildableWrapper<IBuilding>> buildings)
 		{
 			base.Initialize();
 

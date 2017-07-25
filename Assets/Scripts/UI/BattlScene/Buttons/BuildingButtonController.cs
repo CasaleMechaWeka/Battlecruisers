@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Drones;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,11 +8,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingButtonController : BuildableButtonController
 	{
-		private BuildingWrapper _buildingWrapper;
+		private IBuildableWrapper<IBuilding> _buildingWrapper;
 
 		public Image slotImage;
 
-		public void Initialize(BuildingWrapper buildingWrapper, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
+		public void Initialize(IBuildableWrapper<IBuilding> buildingWrapper, UIManager uiManager, IDroneManager droneManager, Sprite slotSprite)
 		{
 			base.Initialize(buildingWrapper.Buildable, droneManager, uiManager);
 			

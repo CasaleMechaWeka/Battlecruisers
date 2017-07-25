@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
@@ -89,7 +90,7 @@ namespace BattleCruisers.UI.BattleScene
 			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
-		public void SelectBuildingFromMenu(BuildingWrapper buildingWrapper)
+		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
