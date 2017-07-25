@@ -8,8 +8,6 @@ namespace BattleCruisers.Tests.AI
 {
     public class TaskConsumerTests
     {
-        private ITaskConsumer _taskConsumer;
-
         private ITaskList _tasks;
         private ITask _task1, _task2;
 
@@ -21,7 +19,7 @@ namespace BattleCruisers.Tests.AI
 
             _tasks = Substitute.For<ITaskList>();
 
-            _taskConsumer = new TaskConsumer(_tasks);
+            new TaskConsumer(_tasks);
         }
 
         #region ITaskList.HighestPriorityTaskChanged
