@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class BasicTurretStats : MonoBehaviour, IDurationProvider
 	{

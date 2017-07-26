@@ -41,14 +41,16 @@ namespace BattleCruisers.Tests.Turrets
 
 			for (int j = 0; j < 2; ++j)
 			{
-                Assert.AreEqual(_expectedLongInterval, _turretStats.NextDurationInS);
-				Assert.IsFalse(_turretStats.IsInBurst);
-
-				for (int i = 0; i < _turretStats.burstSize - 1; ++i)
-				{
+                // Short interval in burst
+                for (int i = 0; i < _turretStats.burstSize - 1; ++i)
+                {
                     Assert.AreEqual(_expectedBurstInterval, _turretStats.NextDurationInS);
-					Assert.IsTrue(_turretStats.IsInBurst);
-				}
+                    Assert.IsTrue(_turretStats.IsInBurst);
+                }
+				
+                // Long interval in between bursts
+                Assert.AreEqual(_expectedLongInterval, _turretStats.NextDurationInS);
+                Assert.IsFalse(_turretStats.IsInBurst);
 			}
 		}
 	}

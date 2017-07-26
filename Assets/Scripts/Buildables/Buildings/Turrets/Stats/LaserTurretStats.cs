@@ -1,13 +1,6 @@
-﻿using BattleCruisers.Projectiles;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Utils;
-using System;
-using UnityEngine;
-using UnityEngine.Assertions;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-	public class LaserTurretStats : TurretStats
+    public class LaserTurretStats : TurretStats
 	{
 		public float damagePerS;
 		public float laserDurationInS;
