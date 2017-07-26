@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
-	public abstract class State : IState
+    public abstract class DurationState : IState
 	{
         private IState _otherState;
 		private IDurationProvider _durationProvider;
@@ -19,7 +19,13 @@
             _timeToWaitInS = _durationProvider.NextDurationInS;
 		}
 
-		public IState ProcessTimeInterval(float timePassedInS)
+        public IState OnFired()
+        {
+            // Do nothing
+            return this;
+        }
+
+        public IState ProcessTimeInterval(float timePassedInS)
 		{
 			IState nextState = this;
 

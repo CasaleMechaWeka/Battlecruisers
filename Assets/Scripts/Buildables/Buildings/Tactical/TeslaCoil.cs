@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private CircleTargetDetector _rocketDetector;
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
-		private FireIntervalManager _fireIntervalManager;
+		private IFireIntervalManager _fireIntervalManager;
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 		public ITarget Target { get; set; }
@@ -30,6 +30,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 			_rocketDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(_rocketDetector);
+
+            FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
+			Assert.IsNotNull(fireIntervalManager);
+			fireIntervalManager.Initialise(_teslaCoilStats);
+            _fireIntervalManager = fireIntervalManager;
 
 			_attackCapabilities.Add(TargetType.Rocket);
 		}
@@ -46,9 +51,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
-
-			_fireIntervalManager = gameObject.AddComponent<FireIntervalManager>();
-			_fireIntervalManager.Initialise(_teslaCoilStats);
 		}
 
 		protected override void OnUpdate()
@@ -59,6 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			if (Target != null && _fireIntervalManager.ShouldFire())
 			{
 				Target.TakeDamage(_teslaCoilStats.damage);
+                _fireIntervalManager.OnFired();
 			}
 		}
 

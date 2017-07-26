@@ -5,5 +5,6 @@
         bool ShouldFire { get; }
 
         IState ProcessTimeInterval(float timePassedInS);
+        IState OnFired();
     }
 }

@@ -1,26 +1,18 @@
-﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	/// <summary>
-	/// FELIX  Take accuracy into consideration.  Perhaps in AngleCalculator?
-	/// </summary>
-	public abstract class BarrelController : MonoBehaviour, ITargetConsumer
+    /// <summary>
+    /// FELIX  Take accuracy into consideration.  Perhaps in AngleCalculator?
+    /// </summary>
+    public abstract class BarrelController : MonoBehaviour, ITargetConsumer
 	{
 		protected IFireIntervalManager _fireIntervalManager;
 		
@@ -85,6 +77,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 					Fire(fireAngle);
+                    _fireIntervalManager.OnFired();
 				}
 				else
 				{

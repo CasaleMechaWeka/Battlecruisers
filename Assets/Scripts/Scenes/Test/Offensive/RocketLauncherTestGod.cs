@@ -1,23 +1,13 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets.Offensive;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Buildables.Units.Aircraft;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
-	public class RocketLauncherTestGod : CameraToggleTestGod
+    public class RocketLauncherTestGod : CameraToggleTestGod
 	{
 		protected override void OnStart()
 		{
@@ -25,13 +15,13 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
 
 			// Setup target
-			AirFactory target = GameObject.FindObjectOfType<AirFactory>();
+			AirFactory target = FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(target, Faction.Blues);
 			target.StartConstruction();
 
 
 			// Setup rocket launcher
-			RocketLauncherController rocketLauncher = GameObject.FindObjectOfType<RocketLauncherController>();
+			RocketLauncherController rocketLauncher = FindObjectOfType<RocketLauncherController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target

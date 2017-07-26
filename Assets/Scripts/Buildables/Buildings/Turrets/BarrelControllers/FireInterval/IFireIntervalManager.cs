@@ -3,5 +3,6 @@
     public interface IFireIntervalManager
 	{
 		bool ShouldFire();
+        void OnFired();
 	}
 }
