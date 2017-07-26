@@ -2,6 +2,7 @@
 {
     public interface IDurationProvider
 	{
-		float NextDurationInS { get; }
+		float DurationInS { get; }
+        void MoveToNextDuration();
 	}
 }

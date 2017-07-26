@@ -1,57 +1,30 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats.States;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class BurstFireTurretStats : TurretStats
-	{
-		private int _intervalCounter;
+    {
+        private IBurstFireState _currentState;
 
-		public int burstSize;
-		public float burstFireRatePerS;
+        public int burstSize;
+        public float burstFireRatePerS;
 
-		private const int MIN_BURST_SIZE = 3;
+        private const int MIN_BURST_SIZE = 3;
 
-		public override float DamagePerS
-		{
-			get
-			{
-				float cycleDamage = burstSize * damage;
-				float cycleTime = (1 / fireRatePerS) + burstSize * (1 / burstFireRatePerS);
-				return cycleDamage / cycleTime;
-			}
-		}
+        public override float DamagePerS
+        {
+            get
+            {
+                float cycleDamage = burstSize * damage;
+                float cycleTime = (1 / fireRatePerS) + burstSize * (1 / burstFireRatePerS);
+                return cycleDamage / cycleTime;
+            }
+        }
 
-		public override float NextDurationInS
-		{
-			get
-			{
-				float nextFireIntervalInS;
-				
-				if (++_intervalCounter == burstSize)
-				{
-					_intervalCounter = 0;
-				}
+        public override float DurationInS { get { return _currentState.DurationInS; } }
 
-				if (IsInBurst)
-				{
-					nextFireIntervalInS = 1 / burstFireRatePerS;
-				}
-				else
-				{
-					nextFireIntervalInS = 1 / fireRatePerS;
-				}
-
-				return nextFireIntervalInS;
-			}
-		}
-
-		public override bool IsInBurst
-		{
-			get
-			{
-				return _intervalCounter > 0 && _intervalCounter <= burstSize;
-			}
-		}
+        public override bool IsInBurst { get { return _currentState.IsInBurst; } }
 
 		public override void Initialise()
 		{
@@ -60,7 +33,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
 			Assert.IsTrue(burstFireRatePerS > 0);
 
-			_intervalCounter = -1;
+            InBurstState inBurstState = new InBurstState();
+            BetweenBurstsState inBetweenBurstsState = new BetweenBurstsState();
+
+            float inBurstDurationInS = 1 / burstFireRatePerS;
+            inBurstState.Initialise(inBetweenBurstsState, inBurstDurationInS, burstSize);
+
+            float inBetweenBurstDurationInS = 1 / fireRatePerS;
+            inBetweenBurstsState.Initialise(inBurstState, inBetweenBurstDurationInS);
+
+            _currentState = inBurstState;
+		}
+
+        public override void MoveToNextDuration()
+        {
+			_currentState = _currentState.NextState;
 		}
 	}
 }

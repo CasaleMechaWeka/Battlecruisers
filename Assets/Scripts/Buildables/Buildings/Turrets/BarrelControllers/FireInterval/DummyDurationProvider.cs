@@ -2,11 +2,16 @@
 {
     public class DummyDurationProvider : IDurationProvider
 	{
-        public float NextDurationInS { get; private set; }
+        public float DurationInS { get; private set; }
 
         public DummyDurationProvider(float durationInS)
         {
-            NextDurationInS = durationInS;
+            DurationInS = durationInS;
+        }
+
+        public void MoveToNextDuration()
+        {
+            // Empty
         }
     }
 }

@@ -4,7 +4,6 @@
 	{
         private IState _otherState;
 		private IDurationProvider _durationProvider;
-		private float _timeToWaitInS;
 		private float _elapsedTimeInS;
 
         public abstract bool ShouldFire { get; }
@@ -16,7 +15,6 @@
             _durationProvider = durationProvider;
 
 			_elapsedTimeInS = 0;
-            _timeToWaitInS = _durationProvider.NextDurationInS;
 		}
 
         public IState OnFired()
@@ -31,7 +29,7 @@
 
             _elapsedTimeInS += timePassedInS;
 
-			if (_elapsedTimeInS >= _timeToWaitInS)
+			if (_elapsedTimeInS >= _durationProvider.DurationInS)
 			{
                 ResetTime();
 
@@ -44,7 +42,7 @@
         private void ResetTime()
         {
 			_elapsedTimeInS = 0;
-			_timeToWaitInS = _durationProvider.NextDurationInS;
+            _durationProvider.MoveToNextDuration();
         }
 	}
 }

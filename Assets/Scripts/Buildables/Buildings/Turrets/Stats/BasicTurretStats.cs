@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 		public float rangeInM;
 
 		public virtual float DamagePerS { get { return damage * fireRatePerS; } }
-		public virtual float NextDurationInS { get { return 1 / fireRatePerS; } }
+		public virtual float DurationInS { get { return 1 / fireRatePerS; } }
 
 		public virtual void Initialise()
 		{
@@ -19,6 +19,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(damage > 0);
 			Assert.IsTrue(rangeInM > 0);
 		}
-	}
+
+        public virtual void MoveToNextDuration()
+        {
+            // Empty
+        }
+    }
 }
 

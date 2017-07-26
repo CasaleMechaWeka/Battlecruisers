@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				{
 					// Burst fires happen even if we are no longer on target, so we may miss
 					// the target in this case.  Hence use the actual angle our turret barrel
-					// is at, intead of the perfect desired angle.
+					// is at, instead of the perfect desired angle.
 					float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 					Fire(fireAngle);

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -42,15 +42,17 @@ namespace BattleCruisers.Tests.Turrets
 			for (int j = 0; j < 2; ++j)
 			{
                 // Short interval in burst
-                for (int i = 0; i < _turretStats.burstSize - 1; ++i)
+                for (int i = 0; i < _turretStats.burstSize; ++i)
                 {
-                    Assert.AreEqual(_expectedBurstInterval, _turretStats.NextDurationInS);
-                    Assert.IsTrue(_turretStats.IsInBurst);
+                    Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
+					Assert.IsTrue(_turretStats.IsInBurst);
+                    _turretStats.MoveToNextDuration();
                 }
 				
                 // Long interval in between bursts
-                Assert.AreEqual(_expectedLongInterval, _turretStats.NextDurationInS);
-                Assert.IsFalse(_turretStats.IsInBurst);
+                Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
+				Assert.IsFalse(_turretStats.IsInBurst);
+				_turretStats.MoveToNextDuration();
 			}
 		}
 	}
