@@ -17,12 +17,15 @@ namespace BattleCruisers.AI
         private readonly ITaskList _tasks;
         private readonly ICruiserController _cruiser;
         private readonly IPrefabFactory _prefabFactory;
+        private readonly ITaskFactory _taskFactory;
 
-        public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, IList<IPrefabKey> buildOrder)
+        public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, 
+             ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
         {
             _tasks = tasks;
             _cruiser = cruiser;
             _prefabFactory = prefabFactory;
+            _taskFactory = taskFactory;
 
             CreateTasks(buildOrder);
         }
@@ -37,8 +40,7 @@ namespace BattleCruisers.AI
 
                 if (ShouldCreateTask(slotTypeToBuildingCount, buildingWrapper.Buildable.SlotType))
                 {
-                    IInternalTask constructBuildingTask = new ConstructBuildingTask(key, _prefabFactory, _cruiser);
-                    _tasks.Add(new TaskController(TaskPriority.Normal, constructBuildingTask));
+                    _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
                 }
             }
         }
