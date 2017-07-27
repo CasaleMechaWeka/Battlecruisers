@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables;
@@ -45,7 +45,6 @@ namespace BattleCruisers.Cruisers
         public Vector2 Size { get { return _renderer.bounds.size; } }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public Sprite Sprite { get { return _renderer.sprite; } }
-        public ICruiserStats Stats { get; private set; }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
 
@@ -58,7 +57,6 @@ namespace BattleCruisers.Cruisers
 
 			SetupSlots();
 			HideAllSlots();
-            Stats = CreateCruiserStats();
 		}
 
 		public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
@@ -205,17 +203,6 @@ namespace BattleCruisers.Cruisers
             {
                 DroneManager.ToggleDroneConsumerFocus(droneConsumer);
             }
-        }
-
-        private ICruiserStats CreateCruiserStats()
-        {
-            return new CruiserStats(
-                maxHealth,
-                numOfDrones,
-                GetSlotCount(SlotType.Platform),
-                GetSlotCount(SlotType.Deck),
-                GetSlotCount(SlotType.Utility),
-                GetSlotCount(SlotType.Mast));
         }
     }
 }

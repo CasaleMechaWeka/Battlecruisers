@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Drones;
@@ -21,6 +21,7 @@ namespace BattleCruisers.Cruisers
 
         // FELIX  event SlotFreed ?
 
+        int GetSlotCount(SlotType slotType);
 		bool IsSlotAvailable(SlotType slotType);
 		ISlot GetFreeSlot(SlotType slotType);
 		void HighlightAvailableSlots(SlotType slotType);

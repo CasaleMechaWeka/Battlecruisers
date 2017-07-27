@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+﻿﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
@@ -15,7 +15,6 @@ namespace BattleCruisers.Cruisers
         Vector2 Size { get; }
         float YAdjustmentInM { get; }
         Sprite Sprite { get; }
-        ICruiserStats Stats { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
     }
