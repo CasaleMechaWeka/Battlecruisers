@@ -2,7 +2,7 @@
 {
 	public class CruiserStats : ICruiserStats
 	{
-		public int Health { get; private set; }
+		public float Health { get; private set; }
 		public int NumOfDrones { get; private set; }
 		public int NumOfPlatformSlots { get; private set; }
 		public int NumOfDeckSlots { get; private set; }
@@ -10,7 +10,7 @@
 		public int NumOfMastSlots { get; private set; }
 
 		public CruiserStats(
-			int health,
+            float health,
 			int numOfDrones,
 			int numOfPlatformSlots,
 			int numOfDeckSlots,

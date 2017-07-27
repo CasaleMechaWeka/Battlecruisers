@@ -2,7 +2,7 @@
 {
     public interface ICruiserStats
     {
-        int Health { get; }
+        float Health { get; }
         int NumOfDrones { get; }
         int NumOfPlatformSlots { get; }
         int NumOfDeckSlots { get; }
