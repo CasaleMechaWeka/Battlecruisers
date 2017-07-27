@@ -194,11 +194,6 @@ namespace BattleCruisers.Cruisers
 			return _slots[slotType].FirstOrDefault(slot => slot.IsFree);
 		}
 
-		public int GetSlotCount(SlotType slotType)
-		{
-			return _slots[slotType].Count;
-		}
-
         public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
         {
             if (DroneManager.NumOfDrones > droneConsumer.NumOfDrones)
@@ -216,6 +211,11 @@ namespace BattleCruisers.Cruisers
                 GetSlotCount(SlotType.Deck),
                 GetSlotCount(SlotType.Utility),
                 GetSlotCount(SlotType.Mast));
+        }
+		
+        private int GetSlotCount(SlotType slotType)
+        {
+            return _slots[slotType].Count;
         }
     }
 }
