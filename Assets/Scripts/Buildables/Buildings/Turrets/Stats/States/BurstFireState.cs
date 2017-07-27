@@ -26,8 +26,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
                     nextState = _otherState;
                 }
 
-                Debug.Log("nextState: " + nextState);
-
                 return nextState;
             }
         }
