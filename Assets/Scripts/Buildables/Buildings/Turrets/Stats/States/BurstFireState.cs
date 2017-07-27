@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
+﻿using UnityEngine;
+
+namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
 {
     public abstract class BurstFireState : IBurstFireState
     {
@@ -23,6 +25,8 @@
                     _numOfQueries = 0;
                     nextState = _otherState;
                 }
+
+                Debug.Log("nextState: " + nextState);
 
                 return nextState;
             }

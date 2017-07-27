@@ -4,15 +4,12 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
 using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class BurstFireTestsGod : MonoBehaviour 
+    public class BurstFireTestsGod : MonoBehaviour 
 	{
 		private ITargetFilter _targetFilter;
 		private IAngleCalculator _angleCalculator;

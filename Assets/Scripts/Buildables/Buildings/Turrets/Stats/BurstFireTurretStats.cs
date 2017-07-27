@@ -37,7 +37,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             BetweenBurstsState inBetweenBurstsState = new BetweenBurstsState();
 
             float inBurstDurationInS = 1 / burstFireRatePerS;
-            inBurstState.Initialise(inBetweenBurstsState, inBurstDurationInS, burstSize);
+            int numOfQueriesBeforeSwitch = burstSize - 1;
+            inBurstState.Initialise(inBetweenBurstsState, inBurstDurationInS, numOfQueriesBeforeSwitch);
 
             float inBetweenBurstDurationInS = 1 / fireRatePerS;
             inBetweenBurstsState.Initialise(inBurstState, inBetweenBurstDurationInS);

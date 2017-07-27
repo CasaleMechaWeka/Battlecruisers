@@ -25,6 +25,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 
 		public void OnFired()
 		{
+            Debug.Log("BaseFireIntervalManager.OnFired()");
+
 			_currentState = _currentState.OnFired();
 		}
 
