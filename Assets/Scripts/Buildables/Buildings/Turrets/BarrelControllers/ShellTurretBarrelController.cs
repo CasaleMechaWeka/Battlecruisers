@@ -1,18 +1,14 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class ShellTurretBarrelController : BarrelController
+    public class ShellTurretBarrelController : BarrelController
 	{
 		private ShellSpawner _shellSpawner;
 
