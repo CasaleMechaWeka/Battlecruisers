@@ -33,17 +33,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
 			Assert.IsTrue(burstFireRatePerS > 0);
 
-            InBurstState inBurstState = new InBurstState();
-            BetweenBurstsState inBetweenBurstsState = new BetweenBurstsState();
+            BurstFireState shortDurationState = new BurstFireState();
+            BurstFireState longDurationState = new BurstFireState();
 
-            float inBurstDurationInS = 1 / burstFireRatePerS;
-            int numOfQueriesBeforeSwitch = burstSize - 1;
-            inBurstState.Initialise(inBetweenBurstsState, inBurstDurationInS, numOfQueriesBeforeSwitch);
+            shortDurationState.Initialise(
+                otherState: longDurationState,
+                durationInS: 1 / burstFireRatePerS,
+                numOfQueriesBeforeSwitch: burstSize - 1);
 
-            float inBetweenBurstDurationInS = 1 / fireRatePerS;
-            inBetweenBurstsState.Initialise(inBurstState, inBetweenBurstDurationInS);
+            longDurationState.Initialise(
+                otherState: shortDurationState,
+                durationInS: 1 / fireRatePerS,
+                numOfQueriesBeforeSwitch: 1);
 
-            _currentState = inBurstState;
+            _currentState = shortDurationState;
 		}
 
         public override void MoveToNextDuration()

@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
 {
-    public abstract class BurstFireState : IBurstFireState
+    public class BurstFireState : IBurstFireState
     {
         private IBurstFireState _otherState;
         private int _numOfQueriesBeforeSwitch;
@@ -10,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
 
         public float DurationInS { get; private set; }
 
-        public bool IsInBurst { get; private set; }
+        public bool IsInBurst { get { return _numOfQueries > 0; } }
 
 		public IBurstFireState NextState
         {
@@ -31,12 +29,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.States
         }
 
         // Not constructor because of circular dependency on other state
-        protected void Initialise(IBurstFireState otherState, float durationInS, int numOfQueriesBeforeSwitch, bool isInBurst)
+        public void Initialise(IBurstFireState otherState, float durationInS, int numOfQueriesBeforeSwitch)
         {
             _otherState = otherState;
             DurationInS = durationInS;
             _numOfQueriesBeforeSwitch = numOfQueriesBeforeSwitch;
-            IsInBurst = isInBurst;
             _numOfQueries = 0;
         }
     }

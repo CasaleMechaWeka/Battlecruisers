@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
             IState firingState = CreateFiringState(waitingState);
 			waitingState.Initialise(firingState, waitingDurationProvider);
 
-			_currentState = firingState;
+            _currentState = firingState;
 		}
 
         protected abstract IState CreateFiringState(IState waitingState);
