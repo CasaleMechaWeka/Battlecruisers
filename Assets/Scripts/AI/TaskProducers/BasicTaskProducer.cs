@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly IPrefabFactory _prefabFactory;
 
         public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
+            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder, ITaskProducerFactory taskProducerFactory)
             : base(tasks, cruiser, taskFactory)
         {
             _prefabFactory = prefabFactory;
@@ -25,7 +25,7 @@ namespace BattleCruisers.AI.TaskProducers
 			IDictionary<IBuilding, IPrefabKey> buildingToKey = new Dictionary<IBuilding, IPrefabKey>();
             CreateTasks(buildOrder, buildingToKey);
 
-            // FELIX  Use TaskProducerFactory to create TP :)
+            taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _taskFactory, buildingToKey);
         }
 
         private void CreateTasks(IList<IPrefabKey> buildOrder, IDictionary<IBuilding, IPrefabKey> buildingToKey)
