@@ -12,7 +12,7 @@ namespace BattleCruisers.AI
     /// 1. Uses preset build order
     /// 2. Replaces destroyed buildings
     /// </summary>
-    public class BasicTaskProducer : ITaskProducer
+    public class BasicTaskProducer
     {
         private readonly ITaskList _tasks;
         private readonly ICruiserController _cruiser;
