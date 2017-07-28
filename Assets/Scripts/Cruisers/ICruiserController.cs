@@ -15,10 +15,20 @@ namespace BattleCruisers.Cruisers
 		}
 	}
 
+    public class BuildingDestroyedEventArgs : EventArgs
+    {
+        public IBuilding DestroyedBuilding { get; private set; }
+
+        public BuildingDestroyedEventArgs(IBuilding destroyedBuilding)
+        {
+            DestroyedBuilding = destroyedBuilding;
+        }
+    }
+
 	public interface ICruiserController
 	{
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
-
+        event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         // FELIX  event SlotFreed ?
 
         int GetSlotCount(SlotType slotType);
