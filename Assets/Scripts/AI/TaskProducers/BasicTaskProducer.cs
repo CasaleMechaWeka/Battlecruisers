@@ -6,7 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
 
-namespace BattleCruisers.AI
+namespace BattleCruisers.AI.TaskProducers
 {
     /// <summary>
     /// 1. Uses preset build order

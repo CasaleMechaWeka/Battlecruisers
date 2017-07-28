@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
@@ -9,7 +10,7 @@ using BattleCruisers.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.AI
+namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class BasicTaskProducerTests
 	{

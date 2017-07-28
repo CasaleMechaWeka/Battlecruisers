@@ -5,7 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI
+namespace BattleCruisers.AI.TaskProducers
 {
     // FELIX  Avoid duplicate code with BasicTaskProducer
     public class ReplaceDestroyedBuildingsTaskProducer

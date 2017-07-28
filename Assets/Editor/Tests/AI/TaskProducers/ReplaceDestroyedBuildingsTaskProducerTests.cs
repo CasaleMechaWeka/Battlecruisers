@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
@@ -8,7 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.AI
+namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class ReplaceDestroyedBuildingsTaskProducerTests
 	{
