@@ -27,10 +27,13 @@ namespace BattleCruisers.AI
             _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
 
-            CreateTasks(buildOrder);
+			IDictionary<IBuilding, IPrefabKey> buildingToKey = new Dictionary<IBuilding, IPrefabKey>();
+            CreateTasks(buildOrder, buildingToKey);
+
+            // FELIX  Use TaskProducerFactory to create TP :)
         }
 
-        private void CreateTasks(IList<IPrefabKey> buildOrder)
+        private void CreateTasks(IList<IPrefabKey> buildOrder, IDictionary<IBuilding, IPrefabKey> buildingToKey)
         {
             IDictionary<SlotType, int> slotTypeToBuildingCount = new Dictionary<SlotType, int>();
 
@@ -41,6 +44,11 @@ namespace BattleCruisers.AI
                 if (ShouldCreateTask(slotTypeToBuildingCount, buildingWrapper.Buildable.SlotType))
                 {
                     _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
+
+                    if (!buildingToKey.ContainsKey(buildingWrapper.Buildable))
+                    {
+                        buildingToKey.Add(buildingWrapper.Buildable, key);
+                    }
                 }
             }
         }
