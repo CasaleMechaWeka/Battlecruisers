@@ -47,8 +47,9 @@ namespace BattleCruisers.Cruisers
         public Sprite Sprite { get { return _renderer.sprite; } }
 
 		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+        public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
-		public override void StaticInitialise()
+        public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 
@@ -170,6 +171,7 @@ namespace BattleCruisers.Cruisers
             IBuilding building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
 			building.Initialise(this, _enemyCruiser, _uiManager, _factoryProvider);
 			slot.Building = building;
+            building.Destroyed += Building_Destroyed;
 
 			// Only show build menu for player's cruiser
 			if (Faction == Faction.Blues)
@@ -202,6 +204,18 @@ namespace BattleCruisers.Cruisers
             if (DroneManager.NumOfDrones > droneConsumer.NumOfDrones)
             {
                 DroneManager.ToggleDroneConsumerFocus(droneConsumer);
+            }
+        }
+
+        private void Building_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            e.DestroyedTarget.Destroyed -= Building_Destroyed;
+
+            if (BuildingDestroyed != null)
+            {
+				IBuilding destroyedBuilding = e.DestroyedTarget as IBuilding;
+				Assert.IsNotNull(destroyedBuilding);
+				BuildingDestroyed.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
             }
         }
     }
