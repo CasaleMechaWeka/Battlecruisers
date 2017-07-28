@@ -1,18 +1,16 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Fetchers;
-using BattleCruisers.Data.PrefabKeys;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
-	[Serializable]
+    [Serializable]
 	public class Loadout
 	{
 		[SerializeField]
