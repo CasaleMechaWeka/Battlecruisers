@@ -7,19 +7,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    // FELIX  Avoid duplicate code with BasicTaskProducer
-    public class ReplaceDestroyedBuildingsTaskProducer
+    public class ReplaceDestroyedBuildingsTaskProducer : BaseTaskProducer
     {
-		private readonly ITaskList _tasks;
-		private readonly ICruiserController _cruiser;
-		private readonly ITaskFactory _taskFactory;
         private readonly IDictionary<IBuilding, IPrefabKey> _buildingToKey;
 
         public ReplaceDestroyedBuildingsTaskProducer(ITaskList tasks, ICruiserController cruiser, ITaskFactory taskFactory, IDictionary<IBuilding, IPrefabKey> buildingToKey)
+            : base(tasks, cruiser, taskFactory)
         {
-            _tasks = tasks;
-            _cruiser = cruiser;
-            _taskFactory = taskFactory;
             _buildingToKey = buildingToKey;
 
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;

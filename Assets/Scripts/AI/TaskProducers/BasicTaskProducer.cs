@@ -12,20 +12,15 @@ namespace BattleCruisers.AI.TaskProducers
     /// 1. Uses preset build order
     /// 2. Replaces destroyed buildings
     /// </summary>
-    public class BasicTaskProducer
+    public class BasicTaskProducer : BaseTaskProducer
     {
-        private readonly ITaskList _tasks;
-        private readonly ICruiserController _cruiser;
         private readonly IPrefabFactory _prefabFactory;
-        private readonly ITaskFactory _taskFactory;
 
         public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, 
-             ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
+            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
+            : base(tasks, cruiser, taskFactory)
         {
-            _tasks = tasks;
-            _cruiser = cruiser;
             _prefabFactory = prefabFactory;
-            _taskFactory = taskFactory;
 
 			IDictionary<IBuilding, IPrefabKey> buildingToKey = new Dictionary<IBuilding, IPrefabKey>();
             CreateTasks(buildOrder, buildingToKey);
