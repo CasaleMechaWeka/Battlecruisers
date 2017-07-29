@@ -16,7 +16,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 	{
         private ITaskList _tasks;
         private ICruiserController _cruiser;
-        private IPrefabFactory _prefabFactory;
+		private ISlotWrapper _slotWrapper;
+		private IPrefabFactory _prefabFactory;
         private ITaskFactory _taskFactory;
         private IList<IPrefabKey> _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
@@ -28,7 +29,9 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 		public void SetuUp()
 		{
 			_tasks = Substitute.For<ITaskList>();
+            _slotWrapper = Substitute.For<ISlotWrapper>();
             _cruiser = Substitute.For<ICruiserController>();
+            _cruiser.SlotWrapper.Returns(_slotWrapper);
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
             _buildOrder = new List<IPrefabKey>();
@@ -57,7 +60,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _buildOrder.Add(_platformBuildingKey);
 
-            _cruiser.GetSlotCount(SlotType.Platform).Returns(1);
+            _cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
 
             CreateTaskProducer();
 
@@ -70,8 +73,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 			_buildOrder.Add(_platformBuildingKey);
             _buildOrder.Add(_deckBuildingKey);
 
-			_cruiser.GetSlotCount(SlotType.Platform).Returns(1);
-            _cruiser.GetSlotCount(SlotType.Deck).Returns(1);
+			_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
+            _cruiser.SlotWrapper.GetSlotCount(SlotType.Deck).Returns(1);
 
 			CreateTaskProducer();
 
@@ -84,7 +87,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _buildOrder.Add(_platformBuildingKey);
 
-			_cruiser.GetSlotCount(SlotType.Platform).Returns(0);
+			_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(0);
 
 			CreateTaskProducer();
 
@@ -97,8 +100,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 			_buildOrder.Add(_platformBuildingKey);
 			_buildOrder.Add(_deckBuildingKey);
 
-			_cruiser.GetSlotCount(SlotType.Platform).Returns(1);
-			_cruiser.GetSlotCount(SlotType.Deck).Returns(0);
+			_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
+			_cruiser.SlotWrapper.GetSlotCount(SlotType.Deck).Returns(0);
 
 			CreateTaskProducer();
 
