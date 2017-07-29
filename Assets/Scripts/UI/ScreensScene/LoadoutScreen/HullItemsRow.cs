@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;

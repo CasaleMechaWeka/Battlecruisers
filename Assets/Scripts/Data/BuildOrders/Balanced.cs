@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data.BuildOrders
 {

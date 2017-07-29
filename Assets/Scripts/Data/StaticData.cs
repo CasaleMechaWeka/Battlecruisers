@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.BuildOrders;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {

@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;

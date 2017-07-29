@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Data.PrefabKeys
+namespace BattleCruisers.Data.Models.PrefabKeys
 {
     [Serializable]
 	public class HullKey : PrefabKey

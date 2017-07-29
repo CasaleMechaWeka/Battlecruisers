@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Tasks
 {

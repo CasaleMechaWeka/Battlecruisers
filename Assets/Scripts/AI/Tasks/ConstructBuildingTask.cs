@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;

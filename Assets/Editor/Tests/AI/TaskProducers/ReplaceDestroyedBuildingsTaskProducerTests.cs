@@ -5,7 +5,7 @@ using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using NSubstitute;
 using NUnit.Framework;

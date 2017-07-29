@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

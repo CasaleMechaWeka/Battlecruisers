@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using UnityEngine;
 
-namespace BattleCruisers.Data.PrefabKeys
+namespace BattleCruisers.Data.Models.PrefabKeys
 {
     [Serializable]
 	public class BuildingKey : BuildableKey

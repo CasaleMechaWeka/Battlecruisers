@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI
 {

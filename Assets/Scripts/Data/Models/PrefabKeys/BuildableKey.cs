@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BattleCruisers.Data.PrefabKeys
+namespace BattleCruisers.Data.Models.PrefabKeys
 {
     public enum BuildableType
 	{

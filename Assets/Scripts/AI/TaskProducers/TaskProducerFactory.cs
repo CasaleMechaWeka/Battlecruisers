@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 

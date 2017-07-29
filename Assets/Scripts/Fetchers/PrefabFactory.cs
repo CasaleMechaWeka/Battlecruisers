@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine;
 
 namespace BattleCruisers.Fetchers

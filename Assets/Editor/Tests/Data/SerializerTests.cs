@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Serialization;
-using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using System.IO;
 using System.Collections.Generic;
 using NSubstitute;
