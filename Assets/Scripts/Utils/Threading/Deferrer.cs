@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Threading
 {
-    public class CoroutinesHelper : MonoBehaviour, ICoroutinesHelper
+    public class Deferrer : MonoBehaviour, IDeferrer
 	{
 		public void DeferToFrameEnd(Action action)
 		{

@@ -9,18 +9,18 @@ namespace BattleCruisers.AI.Tasks
 	{
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
-        private readonly ICoroutinesHelper _coroutinesHelper;
+        private readonly IDeferrer _deferrer;
 
-        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, ICoroutinesHelper coroutinesHelper)
+        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
         {
             _prefabFactory = prefabFactory;
             _cruiser = cruiser;
-            _coroutinesHelper = coroutinesHelper;
+            _deferrer = deferrer;
         }
 
 		public ITask CreateConstructBuildingTask(TaskPriority taskPriority, IPrefabKey buildingKey)
         {
-            IInternalTask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser, _coroutinesHelper);
+            IInternalTask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser, _deferrer);
             return new TaskController(taskPriority, constructBuildingTask);
         }
 	}

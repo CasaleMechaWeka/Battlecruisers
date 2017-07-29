@@ -14,18 +14,18 @@ namespace BattleCruisers.AI.Tasks
         private readonly IPrefabKey _key;
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
-        private readonly ICoroutinesHelper _coroutinesHelper;
+        private readonly IDeferrer _deferrer;
 
         private IBuildable _building;
 		
 		public event EventHandler Completed;
 
-        public ConstructBuildingTask(IPrefabKey key, IPrefabFactory prefabFactory, ICruiserController cruiser, ICoroutinesHelper coroutinesHelper) 
+        public ConstructBuildingTask(IPrefabKey key, IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer) 
         {
             _key = key;
             _prefabFactory = prefabFactory;
             _cruiser = cruiser;
-            _coroutinesHelper = coroutinesHelper;
+            _deferrer = deferrer;
         }
 
         public void Start()
@@ -45,7 +45,7 @@ namespace BattleCruisers.AI.Tasks
                 // Cruiser has no available slot for this building.  Task is completed.
                 // Defer to frame end to allow this callstack to unravel.  This means InProgressState.OnCompleted
                 // is called (good) isntead of InitialState.OnCompleted() being called (bad).
-                _coroutinesHelper.DeferToFrameEnd(EmitCompletedEvent);
+                _deferrer.DeferToFrameEnd(EmitCompletedEvent);
             }
         }
 

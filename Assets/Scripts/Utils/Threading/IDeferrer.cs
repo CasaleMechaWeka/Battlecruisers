@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Utils.Threading
 {
-    public interface ICoroutinesHelper
+    public interface IDeferrer
     {
         void DeferToFrameEnd(Action action);
 	}

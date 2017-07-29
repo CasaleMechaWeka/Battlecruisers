@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-		public CoroutinesHelper coroutinesHelper;
+        public Deferrer deferrer;
 
 		// User needs to be able to build at least one building
 		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
@@ -63,7 +63,7 @@ namespace BattleCruisers.Scenes
 			Assert.IsNotNull(cameraController);
 			Assert.IsNotNull(playerCruiserHealthBar);
 			Assert.IsNotNull(aiCruiserHealthBar);
-			Assert.IsNotNull(coroutinesHelper);
+			Assert.IsNotNull(deferrer);
 
 
 			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -146,7 +146,7 @@ namespace BattleCruisers.Scenes
 			// FELIX  Move to own class.  AIManager?  AIFactory?
 			tasks = new TaskList();
 			//ITaskList tasks = new TaskList();
-            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, coroutinesHelper);
+            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, deferrer);
             new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
             //new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
             //new TaskConsumer(tasks);

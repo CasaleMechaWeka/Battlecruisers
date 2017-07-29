@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 		private IPrefabFactory _prefabFactory;
 		private ICruiserController _cruiser;
         private ISlotWrapper _slotWrapper;
-        private ICoroutinesHelper _coroutinesHelper;
+        private IDeferrer _deferrer;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
         private ISlot _slot;
@@ -34,9 +34,9 @@ namespace BattleCruisers.Tests.AI.Tasks
 			_slotWrapper = Substitute.For<ISlotWrapper>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
-            _coroutinesHelper = Substitute.For<ICoroutinesHelper>();
+            _deferrer = Substitute.For<IDeferrer>();
 
-            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser, _coroutinesHelper);
+            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser, _deferrer);
 
             _task.Completed += _task_Completed;
 
@@ -66,8 +66,8 @@ namespace BattleCruisers.Tests.AI.Tasks
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
 			_cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(false);
-            _coroutinesHelper
-                .WhenForAnyArgs(coroutinesHelper => coroutinesHelper.DeferToFrameEnd(null))
+            _deferrer
+                .WhenForAnyArgs(deferrer => deferrer.DeferToFrameEnd(null))
                 .Do(callInfo =>
                 {
 	                Assert.IsTrue(callInfo.Args().Length == 1);
