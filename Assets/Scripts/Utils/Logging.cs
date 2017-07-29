@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
-	// Do not change enum value order, as int values are used for comparison!
-	public enum LoggingLevel
+    // Do not change enum value order, as int values are used for comparison!
+    public enum LoggingLevel
 	{
 		Warning, Normal, Verbose
 	}
