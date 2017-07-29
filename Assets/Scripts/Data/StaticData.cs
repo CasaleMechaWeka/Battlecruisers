@@ -5,13 +5,13 @@ using BattleCruisers.Data.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
-    /// <summary>
-    /// Provides data that does not change throughout the game.
-    /// 
-    /// This is in contrast to the GameModel, which changes as the player
-    /// progresses and unlocks new prefabs.
-    /// </summary>
-    public interface IStaticData
+	/// <summary>
+	/// Provides data that does not change throughout the game.
+	/// 
+	/// This is in contrast to the GameModel, which changes as the player
+	/// progresses and unlocks new prefabs.
+	/// </summary>
+	public interface IStaticData
 	{
 		GameModel InitialGameModel { get; }
 		IList<ILevel> Levels { get; }
@@ -30,7 +30,7 @@ namespace BattleCruisers.Data
 
 		private List<HullKey> AllHullKeys()
 		{
-			return new List<HullKey>() 
+			return new List<HullKey>()
 			{
 				new HullKey("Bullshark"),
 				new HullKey("Eagle"),
@@ -48,23 +48,23 @@ namespace BattleCruisers.Data
 			List<BuildingKey> buildings = new List<BuildingKey>();
 
 			// Factories
-			buildings.Add(new BuildingKey(BuildingCategory.Factory, "AirFactory"));
-			buildings.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			buildings.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
+			buildings.Add(StaticPrefabKeys.Buildings.AirFactory);
+			buildings.Add(StaticPrefabKeys.Buildings.NavalFactory);
+			buildings.Add(StaticPrefabKeys.Buildings.DroneStation);
 
 			// Tactical
-			buildings.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
+			buildings.Add(StaticPrefabKeys.Buildings.ShieldGenerator);
 
 			// Defence
-			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
-			buildings.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
-			buildings.Add(new BuildingKey(BuildingCategory.Defence, "Mortar"));
-			buildings.Add(new BuildingKey(BuildingCategory.Defence, "TeslaCoil"));
+			buildings.Add(StaticPrefabKeys.Buildings.AntiShipTurret);
+			buildings.Add(StaticPrefabKeys.Buildings.AntiAirTurret);
+			buildings.Add(StaticPrefabKeys.Buildings.Mortar);
+			buildings.Add(StaticPrefabKeys.Buildings.TeslaCoil);
 
 			// Offence
-			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-			buildings.Add(new BuildingKey(BuildingCategory.Offence, "RocketLauncher"));
-			buildings.Add(new BuildingKey(BuildingCategory.Offence, "Railgun"));
+			buildings.Add(StaticPrefabKeys.Buildings.Artillery);
+			buildings.Add(StaticPrefabKeys.Buildings.RocketLauncher);
+			buildings.Add(StaticPrefabKeys.Buildings.Railgun);
 
 			// Ultras
 			buildings.Add(new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"));
@@ -111,7 +111,7 @@ namespace BattleCruisers.Data
 		{
 			Loadout aiLoadout = new Loadout(AllHullKeys()[0], AllBuildingKeys(), AllUnitKeys());
 
-			return new List<ILevel>() 
+			return new List<ILevel>()
 			{
 				new Level("Sprawl Brawl", aiLoadout),
 				new Level("Fisticuffs", aiLoadout),
