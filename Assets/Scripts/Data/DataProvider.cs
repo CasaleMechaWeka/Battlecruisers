@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Data.Serialization;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BattleCruisers.Data.Serialization;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
-	public interface IDataProvider
+    public interface IDataProvider
 	{
 		IList<ILevel> Levels { get; }
 		GameModel GameModel { get; }
