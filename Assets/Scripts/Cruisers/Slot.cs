@@ -8,21 +8,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-    public enum SlotType
-	{
-		None, SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
-	}
-
-    // FELIX  Move to own class
-    // FELIX  Create slot manager
-	public interface ISlot
-	{
-		bool IsFree { get; }
-		SlotType Type { get; }
-		bool IsActive { set; }
-		IBuilding Building { set; }
-	}
-
 	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{
 		private SpriteRenderer _renderer;
