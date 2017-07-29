@@ -27,15 +27,11 @@ namespace BattleCruisers.Cruisers
 
 	public interface ICruiserController
 	{
+        ISlotWrapper SlotWrapper { get; }
+
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
-        // FELIX  event SlotFreed ?
 
-        int GetSlotCount(SlotType slotType);
-		bool IsSlotAvailable(SlotType slotType);
-		ISlot GetFreeSlot(SlotType slotType);
-		void HighlightAvailableSlots(SlotType slotType);
-		void UnhighlightSlots();
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
         void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
 	}

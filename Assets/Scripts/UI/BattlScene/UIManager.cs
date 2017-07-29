@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.BattleScene
 			{
 				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
-					_playerCruiser.HideAllSlots();
+					_playerCruiser.SlotWrapper.HideAllSlots();
 					buildableDetails.Hide();
 					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
@@ -71,14 +71,14 @@ namespace BattleCruisers.UI.BattleScene
 		private void OnBackgroundClicked(object sender, EventArgs e)
 		{
 			buildableDetails.Hide();
-			_playerCruiser.UnhighlightSlots();
+			_playerCruiser.SlotWrapper.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
 		{
 			Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
-			_playerCruiser.UnhighlightSlots();
-			_playerCruiser.HideAllSlots();
+			_playerCruiser.SlotWrapper.UnhighlightSlots();
+			_playerCruiser.SlotWrapper.HideAllSlots();
 			buildableDetails.Hide();
 			buildMenuController.ShowBuildingGroupsMenu();
 		}
@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.BattleScene
 		public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
-			_playerCruiser.ShowAllSlots();
+			_playerCruiser.SlotWrapper.ShowAllSlots();
 			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			_playerCruiser.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
+			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
 			buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
@@ -115,7 +115,7 @@ namespace BattleCruisers.UI.BattleScene
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
-			_playerCruiser.UnhighlightSlots();
+			_playerCruiser.SlotWrapper.UnhighlightSlots();
 			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 

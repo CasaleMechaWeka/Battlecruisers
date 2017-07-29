@@ -44,7 +44,7 @@ namespace BattleCruisers.AI.TaskProducers
                 slotTypeToBuildingCount.Add(slotType, 0);
 			}
 
-            if (slotTypeToBuildingCount[slotType] < _cruiser.GetSlotCount(slotType))
+            if (slotTypeToBuildingCount[slotType] < _cruiser.SlotWrapper.GetSlotCount(slotType))
             {
                 slotTypeToBuildingCount[slotType]++;
                 shouldCreateTask = true;

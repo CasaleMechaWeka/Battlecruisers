@@ -1,6 +1,4 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -20,9 +18,6 @@ namespace BattleCruisers.Cruisers
 		private HealthBarController _healthBarController;
 		private UIManager _uiManager;
 		private Cruiser _enemyCruiser;
-		private IDictionary<SlotType, IList<Slot>> _slots;
-		private GameObject _slotsWrapper;
-		private SlotType? _highlightedSlotType;
 		private IFactoryProvider _factoryProvider;
 		private SpriteRenderer _renderer;
 
@@ -45,8 +40,9 @@ namespace BattleCruisers.Cruisers
         public Vector2 Size { get { return _renderer.bounds.size; } }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public Sprite Sprite { get { return _renderer.sprite; } }
+        public ISlotWrapper SlotWrapper { get; private set; }
 
-		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+        public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         public override void StaticInitialise()
@@ -56,8 +52,10 @@ namespace BattleCruisers.Cruisers
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-			SetupSlots();
-			HideAllSlots();
+            SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
+            Assert.IsNotNull(slotWrapper);
+            slotWrapper.StaticInitialise();
+            SlotWrapper = slotWrapper;
 		}
 
 		public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
@@ -82,76 +80,6 @@ namespace BattleCruisers.Cruisers
 			Direction = facingDirection;
 
 			_healthBarController.Initialise(this);
-		}
-
-		private void SetupSlots()
-		{
-			_slots = new Dictionary<SlotType, IList<Slot>>();
-			_slotsWrapper = transform.Find("SlotsWrapper").gameObject;
-			
-			Slot[] slots = GetComponentsInChildren<Slot>(includeInactive: true);
-			
-			foreach (Slot slot in slots)
-			{
-                slot.StaticInitialise();
-
-				if (!_slots.ContainsKey(slot.type))
-				{
-					_slots[slot.type] = new List<Slot>();
-				}
-				
-				_slots[slot.type].Add(slot);
-			}
-		}
-
-		public bool IsSlotAvailable(SlotType slotType)
-		{
-            return _slots[slotType].Any(slot => slot.IsFree);
-		}
-
-		public void ShowAllSlots()
-		{
-			_slotsWrapper.SetActive(true);
-		}
-
-		public void HideAllSlots()
-		{
-			_slotsWrapper.SetActive(false);
-		}
-
-		// Only highlight one slot type at a time
-		public void HighlightAvailableSlots(SlotType slotType)
-		{
-			if (_highlightedSlotType != slotType)
-			{
-				UnhighlightSlots();
-				_highlightedSlotType = slotType;
-
-				foreach (Slot slot in _slots[slotType])
-				{
-					if (slot.IsFree)
-					{
-						slot.IsActive = true;
-					}
-				}
-			}
-		}
-
-		public void UnhighlightSlots()
-		{
-			if (_highlightedSlotType != null)
-			{
-				UnhighlightSlots((SlotType)_highlightedSlotType);
-				_highlightedSlotType = null;
-			}
-		}
-
-		private void UnhighlightSlots(SlotType slotType)
-		{
-			foreach (Slot slot in _slots[slotType])
-			{
-				slot.IsActive = false;
-			}
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
@@ -189,16 +117,6 @@ namespace BattleCruisers.Cruisers
 			}
 
 			return building;
-		}
-
-		public ISlot GetFreeSlot(SlotType slotType)
-		{
-			return _slots[slotType].FirstOrDefault(slot => slot.IsFree);
-		}
-
-		public int GetSlotCount(SlotType slotType)
-		{
-			return _slots[slotType].Count;
 		}
 
         public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
