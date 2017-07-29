@@ -57,7 +57,8 @@ namespace BattleCruisers.Data
 			// Defence
 			buildings.Add(StaticPrefabKeys.Buildings.AntiShipTurret);
 			buildings.Add(StaticPrefabKeys.Buildings.AntiAirTurret);
-			buildings.Add(StaticPrefabKeys.Buildings.Mortar);
+            buildings.Add(StaticPrefabKeys.Buildings.Mortar);
+			buildings.Add(StaticPrefabKeys.Buildings.SamSite);
 			buildings.Add(StaticPrefabKeys.Buildings.TeslaCoil);
 
 			// Offence

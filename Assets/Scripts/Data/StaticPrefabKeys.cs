@@ -18,7 +18,8 @@ namespace BattleCruisers.Data
 			// Defence
 			public static BuildingKey AntiShipTurret { get { return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"); } }
 			public static BuildingKey AntiAirTurret { get { return new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"); } }
-			public static BuildingKey Mortar { get { return new BuildingKey(BuildingCategory.Defence, "Mortar"); } }
+            public static BuildingKey Mortar { get { return new BuildingKey(BuildingCategory.Defence, "Mortar"); } }
+			public static BuildingKey SamSite { get { return new BuildingKey(BuildingCategory.Defence, "SamSite"); } }
 			public static BuildingKey TeslaCoil { get { return new BuildingKey(BuildingCategory.Defence, "TeslaCoil"); } }
 
 			// Offence
