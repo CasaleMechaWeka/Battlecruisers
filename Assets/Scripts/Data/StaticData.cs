@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
-	/// <summary>
-	/// Provides data that does not change throughout the game.
-	/// 
-	/// This is in contrast to the GameModel, which changes as the player
-	/// progresses and unlocks new prefabs.
-	/// </summary>
-	public interface IStaticData
+    /// <summary>
+    /// Provides data that does not change throughout the game.
+    /// 
+    /// This is in contrast to the GameModel, which changes as the player
+    /// progresses and unlocks new prefabs.
+    /// </summary>
+    public interface IStaticData
 	{
 		GameModel InitialGameModel { get; }
 		IList<ILevel> Levels { get; }
@@ -66,8 +65,9 @@ namespace BattleCruisers.Data
 			buildings.Add(StaticPrefabKeys.Buildings.RocketLauncher);
 			buildings.Add(StaticPrefabKeys.Buildings.Railgun);
 
-			// Ultras
-			buildings.Add(new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"));
+            // Ultras
+            buildings.Add(StaticPrefabKeys.Buildings.DeathstarLauncher);
+            buildings.Add(StaticPrefabKeys.Buildings.NukeLauncher);
 
 			return buildings;
 		}

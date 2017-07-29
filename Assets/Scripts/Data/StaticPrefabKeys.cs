@@ -28,7 +28,7 @@ namespace BattleCruisers.Data
 
 			// Ultras
 			public static BuildingKey DeathstarLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"); } }
-            // FELIX  Nuke
+			public static BuildingKey NukeLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "NukeLauncher"); } }
 		}
 	}
 }

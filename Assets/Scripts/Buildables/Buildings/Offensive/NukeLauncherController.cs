@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
-
+		
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
@@ -90,7 +90,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		protected override void EnableRenderers(bool enabled)
 		{
-			base.EnableRenderers(enabled);
+            // Do NOT call base method, because unlike most buildables we do not
+            // want to show our base sprite.  The base sprite is simply there to 
+            // for the loadout screen.
 
 			_spinner.Renderer.enabled = enabled;
 			leftSiloHalf.Renderer.enabled = enabled;
