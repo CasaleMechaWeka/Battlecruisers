@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -30,7 +32,6 @@ namespace BattleCruisers.Scenes
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
 		private BuildingGroupFactory _buildingGroupFactory;
-		private Bot _bot;
 
 		public UIManager uiManager;
 		public UIFactory uiFactory;
@@ -125,16 +126,13 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-			// AI
-			IList<BuildingKey> buildOrder = GetBuildOrder();
-			_bot = new Bot(_aiCruiser, _playerCruiser, buildOrder, prefabFactory);
-//			Invoke("StartBot", 10);
-//			Invoke("StartBot", 2);
-		}
-
-		private void StartBot()
-		{
-			_bot.Start();
+            // AI
+            // FELIX  Move to own class.  AIManager?  AIFactory?
+            ITaskList tasks = new TaskList();
+            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser);
+            new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
+            //new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
+            new TaskConsumer(tasks);
 		}
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
@@ -208,25 +206,6 @@ namespace BattleCruisers.Scenes
 			}
 
 			return unitWrappers;
-		}
-
-		private IList<BuildingKey> GetBuildOrder()
-		{
-			IList<BuildingKey> buildOrder = new List<BuildingKey>();
-
-			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "EngineeringBay"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "TeslaCoil"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "Mortar"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Factory, "NavalFactory"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"));
-//			buildOrder.Add(new BuildingKey(BuildingCategory.Offence, "Artillery"));
-			buildOrder.Add(new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"));
-
-			return buildOrder;
 		}
 
 		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.BuildOrders;
 using BattleCruisers.Data.PrefabKeys;
 
 namespace BattleCruisers.Data
@@ -114,10 +115,10 @@ namespace BattleCruisers.Data
 
 			return new List<ILevel>()
 			{
-				new Level("Sprawl Brawl", aiLoadout),
-				new Level("Fisticuffs", aiLoadout),
-				new Level("Ambush at Dire Straits", aiLoadout),
-				new Level("Battle of Watercress", aiLoadout)
+                new Level("Sprawl Brawl", aiLoadout, Balanced.BuildOrder),
+				new Level("Fisticuffs", aiLoadout, Balanced.BuildOrder),
+				new Level("Ambush at Dire Straits", aiLoadout, Balanced.BuildOrder),
+				new Level("Battle of Watercress", aiLoadout, Balanced.BuildOrder)
 			};
 		}
 	}
