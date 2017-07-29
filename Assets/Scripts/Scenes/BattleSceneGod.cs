@@ -101,6 +101,9 @@ namespace BattleCruisers.Scenes
 			rotation.eulerAngles = new Vector3(0, 180, 0);
 			_aiCruiser.transform.rotation = rotation;
 
+            // FELIX  TEMP
+            _aiCruiser.numOfDrones = 100;
+
 
 			// UIManager
 			uiManager.Initialise(_playerCruiser, _aiCruiser);
@@ -141,10 +144,20 @@ namespace BattleCruisers.Scenes
 
 			// AI
 			// FELIX  Move to own class.  AIManager?  AIFactory?
-			ITaskList tasks = new TaskList();
+			tasks = new TaskList();
+			//ITaskList tasks = new TaskList();
             ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, coroutinesHelper);
-			new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
-			//new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
+            new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
+            //new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
+            //new TaskConsumer(tasks);
+            Invoke("StartAI", 5);
+        }
+
+        // FELIX  TEMP
+        ITaskList tasks;
+
+        private void StartAI()
+        {
 			new TaskConsumer(tasks);
 		}
 
