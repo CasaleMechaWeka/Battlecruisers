@@ -4,11 +4,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
+    // FELIX  Move to own file
     public interface IDataProvider
 	{
 		IList<ILevel> Levels { get; }
 		GameModel GameModel { get; }
 		int NumOfLevelsUnlocked { get; }
+        IStaticData StaticData { get; }
 
 		ILevel GetLevel(int levelNum);
 		void SaveGame();
@@ -16,10 +18,10 @@ namespace BattleCruisers.Data
 
 	public class DataProvider : IDataProvider
 	{
-		private readonly IStaticData _staticData;
 		private readonly ISerializer _serializer;
-
-		public IList<ILevel> Levels { get { return _staticData.Levels; } }
+		
+        public IStaticData StaticData { get; private set; }
+		public IList<ILevel> Levels { get { return StaticData.Levels; } }
 		public GameModel GameModel { get; private set; }
 
 		public int NumOfLevelsUnlocked
@@ -35,12 +37,12 @@ namespace BattleCruisers.Data
 			}
 		}
 
-		public DataProvider(IStaticData staticData, ISerializer serializer)
+        public DataProvider(IStaticData staticData, ISerializer serializer)
 		{
 			Assert.IsNotNull(staticData);
 			Assert.IsNotNull(serializer);
 
-			_staticData = staticData;
+			StaticData = staticData;
 			_serializer = serializer;
 
 			if (_serializer.DoesSavedGameExist())
@@ -49,7 +51,7 @@ namespace BattleCruisers.Data
 			}
 			else
 			{
-				GameModel = _staticData.InitialGameModel;
+				GameModel = StaticData.InitialGameModel;
 			}
 		}
 

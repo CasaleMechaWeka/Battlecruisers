@@ -14,10 +14,10 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly IDictionary<string, IPrefabKey> _buildingNamesToKeys;
 
         public ReplaceDestroyedBuildingsTaskProducer(ITaskList tasks, ICruiserController cruiser, 
-            IPrefabFactory prefabFactory, ITaskFactory taskFactory, IList<IPrefabKey> unlockedBuildingKeys)
+            IPrefabFactory prefabFactory, ITaskFactory taskFactory, IList<IPrefabKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            _buildingNamesToKeys = CreateMap(unlockedBuildingKeys);
+            _buildingNamesToKeys = CreateMap(buildingKeys);
 
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
         }

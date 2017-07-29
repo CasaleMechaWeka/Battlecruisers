@@ -141,7 +141,7 @@ namespace BattleCruisers.Scenes
 
 
             // AI
-            IAIFactory aiFactory = new AIFactory(prefabFactory, deferrer);
+            IAIFactory aiFactory = new AIFactory(prefabFactory, deferrer, _dataProvider.StaticData);
             aiFactory.CreateAI(_aiCruiser, currentLevel.BuildOrder);
         }
 

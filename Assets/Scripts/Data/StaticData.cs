@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.BuildOrders;
 using BattleCruisers.Data.PrefabKeys;
@@ -11,21 +13,30 @@ namespace BattleCruisers.Data
     /// This is in contrast to the GameModel, which changes as the player
     /// progresses and unlocks new prefabs.
     /// </summary>
+    /// FELIX  Own file
     public interface IStaticData
 	{
 		GameModel InitialGameModel { get; }
 		IList<ILevel> Levels { get; }
+        ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
 	}
 
 	public class StaticData : IStaticData
 	{
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
+        public ReadOnlyCollection<IPrefabKey> BuildingKeys { get; private set; }
 
 		public StaticData()
 		{
 			InitialGameModel = CreateInitialGameModel();
 			Levels = CreateLevels();
+
+            IList<IPrefabKey> allBuildings = 
+                AllBuildingKeys()
+                .Select(buildingKey => (IPrefabKey)buildingKey)
+                .ToList();
+            this.BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 		}
 
 		private List<HullKey> AllHullKeys()
