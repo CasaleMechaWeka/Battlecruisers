@@ -93,6 +93,8 @@ namespace BattleCruisers.Cruisers
 			
 			foreach (Slot slot in slots)
 			{
+                slot.StaticInitialise();
+
 				if (!_slots.ContainsKey(slot.type))
 				{
 					_slots[slot.type] = new List<Slot>();

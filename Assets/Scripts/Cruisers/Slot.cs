@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -12,6 +13,8 @@ namespace BattleCruisers.Cruisers
 		None, SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
 	}
 
+    // FELIX  Move to own class
+    // FELIX  Create slot manager
 	public interface ISlot
 	{
 		bool IsFree { get; }
@@ -63,7 +66,7 @@ namespace BattleCruisers.Cruisers
 		public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
 
-		void Awake()
+		public void StaticInitialise()
 		{
 			_isActive = false;
 
@@ -71,7 +74,7 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
 
-			_parentCruiser = GetComponentInParent<ICruiser>();
+            _parentCruiser = gameObject.GetComponentInInactiveParent<ICruiser>();
 			Assert.IsNotNull(_parentCruiser);
 		}
 
