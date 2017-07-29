@@ -4,18 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
-    // FELIX  Move to own file
-    public interface IDataProvider
-	{
-		IList<ILevel> Levels { get; }
-		GameModel GameModel { get; }
-		int NumOfLevelsUnlocked { get; }
-        IStaticData StaticData { get; }
-
-		ILevel GetLevel(int levelNum);
-		void SaveGame();
-	}
-
 	public class DataProvider : IDataProvider
 	{
 		private readonly ISerializer _serializer;
