@@ -1,13 +1,12 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Movement.Velocity;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity;
 using UnityEngine;
 
 namespace BattleCruisers.Utils
 {
-	public static class Helper
+    public static class Helper
 	{
 		public static Faction GetOppositeFaction(Faction faction)
 		{

@@ -17,16 +17,17 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-    /// <summary>
-    /// Initialises everything :D
-    /// </summary>
-    public class BattleSceneGod : MonoBehaviour 
+	/// <summary>
+	/// Initialises everything :D
+	/// </summary>
+	public class BattleSceneGod : MonoBehaviour
 	{
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
@@ -40,7 +41,8 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-		
+		public CoroutinesHelper coroutinesHelper;
+
 		// User needs to be able to build at least one building
 		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
 		// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
@@ -51,6 +53,17 @@ namespace BattleCruisers.Scenes
 		void Awake()
 		{
 			Assert.raiseExceptions = true;
+
+
+			Assert.IsNotNull(uiManager);
+			Assert.IsNotNull(uiFactory);
+			Assert.IsNotNull(buildMenuController);
+			Assert.IsNotNull(buildableDetailsController);
+			Assert.IsNotNull(modalMenuController);
+			Assert.IsNotNull(cameraController);
+			Assert.IsNotNull(playerCruiserHealthBar);
+			Assert.IsNotNull(aiCruiserHealthBar);
+			Assert.IsNotNull(coroutinesHelper);
 
 
 			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -70,7 +83,7 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			_buildingGroupFactory = new BuildingGroupFactory();
-			IPrefabFactory prefabFactory  = new PrefabFactory(new PrefabFetcher());
+			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
 
 			// Instantiate player cruiser
@@ -82,7 +95,7 @@ namespace BattleCruisers.Scenes
 			// Instantiate AI cruiser
 			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(aiLoadout.Hull);
 			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
-			
+
 			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
 			Quaternion rotation = _aiCruiser.transform.rotation;
 			rotation.eulerAngles = new Vector3(0, 180, 0);
@@ -97,7 +110,7 @@ namespace BattleCruisers.Scenes
 			IFactoryProvider playerFactoryProvider = new FactoryProvider(prefabFactory, _playerCruiser, _aiCruiser);
 			IDroneManager playerDroneManager = new DroneManager();
 			IDroneConsumerProvider playerDroneConsumerProvider = new DroneConsumerProvider(playerDroneManager);
-			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager, 
+			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager,
 				playerDroneConsumerProvider, playerFactoryProvider, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
@@ -106,7 +119,7 @@ namespace BattleCruisers.Scenes
 			IFactoryProvider aiFactoryProvider = new FactoryProvider(prefabFactory, _aiCruiser, _playerCruiser);
 			IDroneManager aiDroneManager = new DroneManager();
 			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager, 
+			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager,
 				aiDroneConsumerProvider, aiFactoryProvider, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
@@ -115,42 +128,42 @@ namespace BattleCruisers.Scenes
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
 			buildableDetailsController.Initialise(playerDroneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, playerDroneManager);
-			
+
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
 			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
-			
-			
+
+
 			// Camera controller
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // AI
-            // FELIX  Move to own class.  AIManager?  AIFactory?
-            ITaskList tasks = new TaskList();
-            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser);
-            new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
-            //new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
-            new TaskConsumer(tasks);
+			// AI
+			// FELIX  Move to own class.  AIManager?  AIFactory?
+			ITaskList tasks = new TaskList();
+            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, coroutinesHelper);
+			new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
+			//new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
+			new TaskConsumer(tasks);
 		}
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
-			
+
 			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
 				IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
-				
+
 				if (buildingKeys.Count != 0)
 				{
 					IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
 					categoryToBuildings[category] = buildings;
-					
+
 					foreach (BuildingKey buildingKey in buildingKeys)
 					{
-                        IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+						IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
 						categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
 					}
 				}
@@ -168,16 +181,16 @@ namespace BattleCruisers.Scenes
 				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
 				buildingGroups.Add(group);
 			}
-			
+
 			if (buildingGroups.Count < MIN_NUM_OF_BUILDING_GROUPS
 				|| buildingGroups.Count > MAX_NUM_OF_BUILDING_GROUPS)
 			{
 				throw new InvalidProgramException();
 			}
-			
+
 			return buildingGroups;
 		}
-	
+
 		private IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> GetUnitsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>>();

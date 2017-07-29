@@ -30,7 +30,8 @@ namespace BattleCruisers.Tests.AI.Tasks
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _cruiser = Substitute.For<ICruiserController>();
 
-            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
+            // FELIX
+            //_task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
 
             _task.Completed += _task_Completed;
 
