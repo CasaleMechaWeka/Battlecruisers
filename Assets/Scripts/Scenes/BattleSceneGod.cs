@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.AI;
-using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -24,10 +22,10 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	/// <summary>
-	/// Initialises everything :D
-	/// </summary>
-	public class BattleSceneGod : MonoBehaviour
+    /// <summary>
+    /// Initialises everything :D
+    /// </summary>
+    public class BattleSceneGod : MonoBehaviour
 	{
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
@@ -142,24 +140,10 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-			// AI
-			// FELIX  Move to own class.  AIManager?  AIFactory?
-			tasks = new TaskList();
-			//ITaskList tasks = new TaskList();
-            ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, deferrer);
-            new BasicTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, currentLevel.BuildOrder);
-            //new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, prefabFactory, taskFactory, )
-            //new TaskConsumer(tasks);
-            Invoke("StartAI", 5);
+            // AI
+            IAIFactory aiFactory = new AIFactory(prefabFactory, deferrer);
+            aiFactory.CreateAI(_aiCruiser, currentLevel.BuildOrder);
         }
-
-        // FELIX  TEMP
-        ITaskList tasks;
-
-        private void StartAI()
-        {
-			new TaskConsumer(tasks);
-		}
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{
