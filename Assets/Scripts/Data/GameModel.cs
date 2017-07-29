@@ -1,33 +1,15 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Data.PrefabKeys;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
-	public interface IGameModel
-	{
-		int NumOfLevelsCompleted { get; }
-		Loadout PlayerLoadout { get; set; }
-		BattleResult LastBattleResult { get; set; }
-
-		ReadOnlyCollection<HullKey> UnlockedHulls { get; }
-		ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
-		ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
-
-		void AddUnlockedHull(HullKey hull);
-		void AddUnlockedBuilding(BuildingKey building);
-		void AddUnlockedUnit(UnitKey unit);
-
-		IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
-	}
-
 	[Serializable]
 	public class GameModel : IGameModel
 	{
