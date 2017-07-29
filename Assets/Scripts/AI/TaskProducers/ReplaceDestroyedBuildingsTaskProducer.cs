@@ -11,36 +11,36 @@ namespace BattleCruisers.AI.TaskProducers
 {
     public class ReplaceDestroyedBuildingsTaskProducer : BaseTaskProducer
     {
-        private readonly IDictionary<IBuilding, IPrefabKey> _buildingsToKeys;
+        private readonly IDictionary<string, IPrefabKey> _buildingNamesToKeys;
 
         public ReplaceDestroyedBuildingsTaskProducer(ITaskList tasks, ICruiserController cruiser, 
             IPrefabFactory prefabFactory, ITaskFactory taskFactory, IList<IPrefabKey> unlockedBuildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            _buildingsToKeys = CreateBuildingToPrefabKeyMap(unlockedBuildingKeys);
+            _buildingNamesToKeys = CreateMap(unlockedBuildingKeys);
 
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
         }
 
-        private IDictionary<IBuilding, IPrefabKey> CreateBuildingToPrefabKeyMap(IList<IPrefabKey> buildingKeys)
+        private IDictionary<string, IPrefabKey> CreateMap(IList<IPrefabKey> buildingKeys)
         {
-            IDictionary<IBuilding, IPrefabKey> buildingsToKeys = new Dictionary<IBuilding, IPrefabKey>();
+            IDictionary<string, IPrefabKey> buildingNamesToKeys = new Dictionary<string, IPrefabKey>();
 
             foreach (IPrefabKey key in buildingKeys)
             {
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
-                Assert.IsFalse(buildingsToKeys.ContainsKey(buildingWrapper.Buildable));
-                buildingsToKeys.Add(buildingWrapper.Buildable, key);
+                Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.Name));
+                buildingNamesToKeys.Add(buildingWrapper.Buildable.Name, key);
             }
 
-            return buildingsToKeys;
+            return buildingNamesToKeys;
         }
 
         private void _cruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
-            Assert.IsTrue(_buildingsToKeys.ContainsKey(e.DestroyedBuilding));
+            Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.Name));
 
-            IPrefabKey key = _buildingsToKeys[e.DestroyedBuilding];
+            IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.High, key));
 		}
     }

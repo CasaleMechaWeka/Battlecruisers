@@ -1,16 +1,14 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-	public class TargetProcessor : ITargetProcessor
+    public class TargetProcessor : ITargetProcessor
 	{
 		// List of targets, in decreasing priority
 		private readonly IList<ITarget> _targets;
@@ -48,7 +46,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 			_targets.Insert(insertionIndex, e.Target);
 
-			if (System.Object.ReferenceEquals(e.Target, HighestPriorityTarget))
+			if (ReferenceEquals(e.Target, HighestPriorityTarget))
 			{
 				AssignTarget(HighestPriorityTarget);
 			}
@@ -78,7 +76,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost");
 			Assert.IsTrue(_targets.Contains(e.Target));
 
-			bool wasHighestPriorityTarget = System.Object.ReferenceEquals(e.Target, HighestPriorityTarget);
+			bool wasHighestPriorityTarget = ReferenceEquals(e.Target, HighestPriorityTarget);
 			_targets.Remove(e.Target);
 
 			if (wasHighestPriorityTarget)

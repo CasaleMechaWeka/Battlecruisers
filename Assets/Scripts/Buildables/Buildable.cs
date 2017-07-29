@@ -286,17 +286,5 @@ namespace BattleCruisers.Buildables
 		}
 
 		public virtual void InitiateDelete() { }
-
-        public override bool Equals(object other)
-        {
-            Buildable otherBuildable = other as Buildable;
-            return otherBuildable != null
-                && otherBuildable.Name == Name;
-        }
-
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
 	}
 }
