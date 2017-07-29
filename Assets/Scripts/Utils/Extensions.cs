@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
 {
-	public static class Extensions
+    public static class Extensions
 	{
 		public static int GetHashCode(this object obj, params object[] fields)
 		{

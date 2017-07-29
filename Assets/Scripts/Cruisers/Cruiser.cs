@@ -106,7 +106,7 @@ namespace BattleCruisers.Cruisers
 
 		public bool IsSlotAvailable(SlotType slotType)
 		{
-            return _slots[slotType].FirstOrDefault(slot => slot.IsFree) == default(Slot);
+            return _slots[slotType].Any(slot => slot.IsFree);
 		}
 
 		public void ShowAllSlots()

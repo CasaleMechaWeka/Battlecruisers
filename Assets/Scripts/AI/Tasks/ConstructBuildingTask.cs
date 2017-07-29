@@ -39,6 +39,10 @@ namespace BattleCruisers.AI.Tasks
             }
             else
             {
+                // FELIX  Will emit completed event BEFORE this callstack unravels, so before
+                // we transition to the InProgress state.  And InitialState.OnCompleted throws :)
+                // Perhaps dispatch?
+
 				// Cruiser has no available slot for this building.  Task is completed (perhaps with a failure result?).
 				EmitCompletedEvent();
             }
