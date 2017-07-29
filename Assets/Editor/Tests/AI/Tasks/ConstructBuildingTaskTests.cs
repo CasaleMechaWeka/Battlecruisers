@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -17,6 +18,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 		private IPrefabKey _key;
 		private IPrefabFactory _prefabFactory;
 		private ICruiserController _cruiser;
+        private ICoroutinesHelper _coroutinesHelper;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
         private ISlot _slot;
@@ -29,9 +31,9 @@ namespace BattleCruisers.Tests.AI.Tasks
             _key = Substitute.For<IPrefabKey>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _cruiser = Substitute.For<ICruiserController>();
+            _coroutinesHelper = Substitute.For<ICoroutinesHelper>();
 
-            // FELIX
-            //_task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
+            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser, _coroutinesHelper);
 
             _task.Completed += _task_Completed;
 
@@ -61,6 +63,14 @@ namespace BattleCruisers.Tests.AI.Tasks
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
 			_cruiser.IsSlotAvailable(_building.SlotType).Returns(false);
+            _coroutinesHelper
+                .WhenForAnyArgs(coroutinesHelper => coroutinesHelper.DeferToFrameEnd(null))
+                .Do(callInfo =>
+                {
+	                Assert.IsTrue(callInfo.Args().Length == 1);
+	                Action actionToDefer = callInfo.Args()[0] as Action;
+                    actionToDefer.Invoke();
+                });
 
 			_task.Start();
 
