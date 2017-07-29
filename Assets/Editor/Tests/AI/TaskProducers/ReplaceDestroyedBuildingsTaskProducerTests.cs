@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 		private ITaskFactory _taskFactory;
         private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuilding _buildingWithKey, _buildingWithoutKey;
-        private IPrefabKey _buildingKey1, _buildingKey2;
+        private IPrefabKey _buildingKey1;
         private ITask _buildingTask;
         private IList<IPrefabKey> _unlockedBuildingKeys;
 
@@ -34,7 +34,9 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _taskFactory = Substitute.For<ITaskFactory>();
 
             _buildingWithKey = Substitute.For<IBuilding>();
+            _buildingWithKey.Name.Returns("DeathstarLauncher");
             _buildingWithoutKey = Substitute.For<IBuilding>();
+            _buildingWithoutKey.Name.Returns("SamSite");
 
             _buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _buildingWrapper.Buildable.Returns(_buildingWithKey);
@@ -43,8 +45,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _buildingTask = Substitute.For<ITask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.High, _buildingKey1).Returns(_buildingTask);
             
-            _buildingKey2 = Substitute.For<IPrefabKey>();
-
             _unlockedBuildingKeys = new List<IPrefabKey>();
             _unlockedBuildingKeys.Add(_buildingKey1);
             _prefabFactory.GetBuildingWrapperPrefab(_buildingKey1).Returns(_buildingWrapper);
