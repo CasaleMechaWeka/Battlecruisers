@@ -2,9 +2,11 @@
 using BattleCruisers.AI;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.PrefabKeys;
+using BattleCruisers.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -15,21 +17,27 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 	{
 		private ITaskList _tasks;
 		private ICruiserController _cruiser;
+        private IPrefabFactory _prefabFactory;
 		private ITaskFactory _taskFactory;
+        private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuilding _buildingWithKey, _buildingWithoutKey;
         private IPrefabKey _buildingKey1, _buildingKey2;
         private ITask _buildingTask;
-        private IDictionary<IBuilding, IPrefabKey> _buildingToKey;
+        private IList<IPrefabKey> _unlockedBuildingKeys;
 
 		[SetUp]
 		public void SetuUp()
 		{
             _tasks = Substitute.For<ITaskList>();
             _cruiser = Substitute.For<ICruiserController>();
+            _prefabFactory = Substitute.For<IPrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
 
             _buildingWithKey = Substitute.For<IBuilding>();
             _buildingWithoutKey = Substitute.For<IBuilding>();
+
+            _buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
+            _buildingWrapper.Buildable.Returns(_buildingWithKey);
 
             _buildingKey1 = Substitute.For<IPrefabKey>();
             _buildingTask = Substitute.For<ITask>();
@@ -37,10 +45,11 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             
             _buildingKey2 = Substitute.For<IPrefabKey>();
 
-            _buildingToKey = new Dictionary<IBuilding, IPrefabKey>();
-            _buildingToKey.Add(_buildingWithKey, _buildingKey1);
+            _unlockedBuildingKeys = new List<IPrefabKey>();
+            _unlockedBuildingKeys.Add(_buildingKey1);
+            _prefabFactory.GetBuildingWrapperPrefab(_buildingKey1).Returns(_buildingWrapper);
 
-			new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _taskFactory, _buildingToKey);
+            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _unlockedBuildingKeys);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}

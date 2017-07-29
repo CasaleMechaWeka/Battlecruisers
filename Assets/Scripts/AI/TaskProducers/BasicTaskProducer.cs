@@ -13,21 +13,14 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class BasicTaskProducer : BaseTaskProducer
     {
-        private readonly IPrefabFactory _prefabFactory;
-
         public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder, ITaskProducerFactory taskProducerFactory)
-            : base(tasks, cruiser, taskFactory)
+            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
+            : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            _prefabFactory = prefabFactory;
-
-			IDictionary<IBuilding, IPrefabKey> buildingToKey = new Dictionary<IBuilding, IPrefabKey>();
-            CreateTasks(buildOrder, buildingToKey);
-
-            taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _taskFactory, buildingToKey);
+            CreateTasks(buildOrder);
         }
 
-        private void CreateTasks(IList<IPrefabKey> buildOrder, IDictionary<IBuilding, IPrefabKey> buildingToKey)
+        private void CreateTasks(IList<IPrefabKey> buildOrder)
         {
             IDictionary<SlotType, int> slotTypeToBuildingCount = new Dictionary<SlotType, int>();
 
@@ -38,11 +31,6 @@ namespace BattleCruisers.AI.TaskProducers
                 if (ShouldCreateTask(slotTypeToBuildingCount, buildingWrapper.Buildable.SlotType))
                 {
                     _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
-
-                    if (!buildingToKey.ContainsKey(buildingWrapper.Buildable))
-                    {
-                        buildingToKey.Add(buildingWrapper.Buildable, key);
-                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using BattleCruisers.AI;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
@@ -18,7 +18,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ICruiserController _cruiser;
         private IPrefabFactory _prefabFactory;
         private ITaskFactory _taskFactory;
-        private ITaskProducerFactory _taskProducerFactory;
         private IList<IPrefabKey> _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
@@ -32,7 +31,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _cruiser = Substitute.For<ICruiserController>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
-			_taskProducerFactory = Substitute.For<ITaskProducerFactory>();
             _buildOrder = new List<IPrefabKey>();
 
             _platformSlotBuilding = Substitute.For<IBuilding>();
@@ -110,7 +108,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
         private void CreateTaskProducer()
         {
-            new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _taskProducerFactory);
+            new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
         }
     }
 }

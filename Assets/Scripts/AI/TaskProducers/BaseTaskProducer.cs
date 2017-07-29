@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
@@ -8,12 +9,15 @@ namespace BattleCruisers.AI.TaskProducers
 		protected readonly ITaskList _tasks;
 		protected readonly ICruiserController _cruiser;
 		protected readonly ITaskFactory _taskFactory;
+        protected readonly IPrefabFactory _prefabFactory;
 
-		public BaseTaskProducer(ITaskList tasks, ICruiserController cruiser, ITaskFactory taskFactory)
+		public BaseTaskProducer(ITaskList tasks, ICruiserController cruiser, 
+            ITaskFactory taskFactory, IPrefabFactory prefabFactory)
 		{
 			_tasks = tasks;
 			_cruiser = cruiser;
 			_taskFactory = taskFactory;
+            _prefabFactory = prefabFactory;
 		}
 	}
 }
