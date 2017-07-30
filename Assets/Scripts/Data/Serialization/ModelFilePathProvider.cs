@@ -1,17 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Data.Serialization
 {
-	public interface IModelFilePathProvider
-	{
-		string GameModelFilePath { get; }
-	}
-
 	public class ModelFilePathProvider : IModelFilePathProvider
 	{
 		private const string GAME_MODEL_FILE_NAME = "GameModel";
