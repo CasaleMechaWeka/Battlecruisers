@@ -18,9 +18,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
+        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-		#region Properties
-		private IBuildableWrapper<IUnit> _unitWrapper;
+        #region Properties
+        private IBuildableWrapper<IUnit> _unitWrapper;
 		public IBuildableWrapper<IUnit> UnitWrapper 
 		{ 
 			set	
@@ -165,5 +166,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
+
+        protected override void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+        {
+            base.DroneConsumer_DroneNumChanged(sender, e);
+
+            if (DroneNumChanged != null)
+            {
+                DroneNumChanged.Invoke(this, e);
+            }
+        }
 	}
 }

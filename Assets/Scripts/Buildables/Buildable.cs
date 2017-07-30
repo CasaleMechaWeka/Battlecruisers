@@ -173,7 +173,7 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnInitialised() { }
 
-		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+        protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
 			_textMesh.text = e.NewNumOfDrones.ToString();
 		}
