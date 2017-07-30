@@ -52,6 +52,7 @@ namespace BattleCruisers.Scenes
 		void Awake()
 		{
 			Assert.raiseExceptions = true;
+			Time.timeScale = 1;
 
 
 			Assert.IsNotNull(uiManager);
