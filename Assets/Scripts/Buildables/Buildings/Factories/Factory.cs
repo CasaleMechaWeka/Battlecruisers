@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-    public abstract class Factory : Building, IDroneConsumerProvider
+    public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
 		private IUnit _lastUnitProduced;
 		protected IUnit _unitUnderConstruction;
