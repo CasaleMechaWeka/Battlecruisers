@@ -34,7 +34,7 @@ namespace BattleCruisers.AI.Tasks
 
             if (_cruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType))
             {
-				ISlot slot = _cruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType);
+                ISlot slot = _cruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.PreferCruiserFront);
 				Assert.IsNotNull(slot);
 				
                 _building = _cruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
