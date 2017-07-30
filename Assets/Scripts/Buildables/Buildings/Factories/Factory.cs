@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		private IUnit _lastUnitProduced;
 		protected IUnit _unitUnderConstruction;
 
-		public UnitCategory unitCategory;
+        public abstract UnitCategory UnitCategory { get; }
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 

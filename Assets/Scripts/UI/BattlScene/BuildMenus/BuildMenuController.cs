@@ -89,12 +89,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowUnitsMenu(Factory factory)
 		{
-			if (!_unitGroupPanels.ContainsKey(factory.unitCategory))
+			if (!_unitGroupPanels.ContainsKey(factory.UnitCategory))
 			{
 				throw new ArgumentException();
 			}
 
-			Presentable panel = _unitGroupPanels[factory.unitCategory];
+			Presentable panel = _unitGroupPanels[factory.UnitCategory];
 			ChangePanel(panel, factory);
 		}
 

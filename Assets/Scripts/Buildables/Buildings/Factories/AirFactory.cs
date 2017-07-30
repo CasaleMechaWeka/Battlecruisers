@@ -7,13 +7,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public LayerMask aircraftLayerMask;
 
-		protected override LayerMask UnitLayerMask
-		{
-			get
-			{
-				return aircraftLayerMask;
-			}
-		}
+		protected override LayerMask UnitLayerMask { get { return aircraftLayerMask; } }
+
+        public override UnitCategory UnitCategory { get { return UnitCategory.Aircraft; } }
 
 		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
 		{

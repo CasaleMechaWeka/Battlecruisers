@@ -7,14 +7,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public LayerMask unitsLayerMask;
 
-		protected override LayerMask UnitLayerMask
-		{
-			get
-			{
-				return unitsLayerMask;
-			}
-		}
+		protected override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
 
+        public override UnitCategory UnitCategory { get { return UnitCategory.Naval; } }
+        
 		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
 		{
 			float horizontalChange = (Size.x * 0.6f) + (unit.Size.x * 0.5f);
