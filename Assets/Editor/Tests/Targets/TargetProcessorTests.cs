@@ -3,16 +3,13 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using System;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEditor;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets
 {
-	public class TargetProcessorTests 
+    public class TargetProcessorTests 
 	{
 		private ITargetProcessor _targetProcessor;
 		private ITargetFinder _targetFinder;
@@ -118,13 +115,13 @@ namespace BattleCruisers.Tests.Targets
 		public void DoubleAddSameConsumer_Throws()
 		{
 			_targetProcessor.AddTargetConsumer(_targetConsumer);
-			Assert.Throws<ArgumentException>(() => _targetProcessor.AddTargetConsumer(_targetConsumer));
+			Assert.Throws<UnityAsserts.AssertionException>(() => _targetProcessor.AddTargetConsumer(_targetConsumer));
 		}
 
 		[Test]
 		public void RemoveUnaddedConsumer_Throws()
 		{
-			Assert.Throws<ArgumentException>(() => _targetProcessor.RemoveTargetConsumer(_targetConsumer));
+			Assert.Throws<UnityAsserts.AssertionException>(() => _targetProcessor.RemoveTargetConsumer(_targetConsumer));
 		}
 
 		private void InvokeTargetFound(ITarget target)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
@@ -87,10 +86,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		public void AddTargetConsumer(ITargetConsumer targetConsumer)
 		{
-			if (_targetConsumers.Contains(targetConsumer))
-			{
-				throw new ArgumentException();
-			}
+            Assert.IsFalse(_targetConsumers.Contains(targetConsumer));
 
 			_targetConsumers.Add(targetConsumer);
 
@@ -99,10 +95,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		public void RemoveTargetConsumer(ITargetConsumer targetConsumer)
 		{
-			if (!_targetConsumers.Contains(targetConsumer))
-			{
-				throw new ArgumentException();
-			}
+            Assert.IsTrue(_targetConsumers.Contains(targetConsumer));
 
 			_targetConsumers.Remove(targetConsumer);
 		}
