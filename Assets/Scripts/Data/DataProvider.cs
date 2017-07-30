@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Serialization;
 using UnityEngine.Assertions;
 

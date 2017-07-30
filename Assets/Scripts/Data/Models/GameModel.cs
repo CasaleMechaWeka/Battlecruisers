@@ -8,7 +8,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Models
 {
 	[Serializable]
 	public class GameModel : IGameModel

@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
+using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Serialization
 {
-	public interface ISerializer
+    // FELIX  Move to own file
+    public interface ISerializer
 	{
 		bool DoesSavedGameExist();
 		void SaveGame(GameModel game);

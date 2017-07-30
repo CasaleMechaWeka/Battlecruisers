@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;

@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Models
 {
 	[Serializable]
 	public class BattleResult

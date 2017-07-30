@@ -1,20 +1,17 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	public interface IScreensSceneGod
+    public interface IScreensSceneGod
 	{
 		void GoToLevelsScreen();
 		void GoToHomeScreen();

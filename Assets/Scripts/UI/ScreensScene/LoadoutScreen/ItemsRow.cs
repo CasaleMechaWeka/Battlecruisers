@@ -1,15 +1,10 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
-using System;
-using System.Collections.Generic;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : IComparableItem
+    public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : IComparableItem
 	{
 		protected readonly IGameModel _gameModel;
 		protected readonly IPrefabFactory _prefabFactory;

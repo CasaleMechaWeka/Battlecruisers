@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Data
 			_gameModel = new GameModel();
 
 			_hull = new HullKey("Feuer");
-			_building = new BuildingKey(BuildingCategory.Factory, "Waser");
+			_building = new BuildingKey(BuildingCategory.Factory, "Wasser");
 			_unit = new UnitKey(UnitCategory.Naval, "Brot");
 		}
 

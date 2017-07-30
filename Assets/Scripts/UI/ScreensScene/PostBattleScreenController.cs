@@ -1,14 +1,12 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-	public class PostBattleScreenController : ScreenController
+    public class PostBattleScreenController : ScreenController
 	{
 		private BattleResult _battleResult;
 		private int _numOfLevelsUnlocked;

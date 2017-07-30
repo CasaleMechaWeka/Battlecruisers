@@ -1,21 +1,18 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using System.IO;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Serialization;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using System.IO;
-using System.Collections.Generic;
+using BattleCruisers.Data.Serialization;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEditor;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data
 {
-	public class SeriliazerTests 
+    public class SeriliazerTests 
 	{
 		private ISerializer _serializer;
 

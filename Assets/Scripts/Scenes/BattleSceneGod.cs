@@ -7,6 +7,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
