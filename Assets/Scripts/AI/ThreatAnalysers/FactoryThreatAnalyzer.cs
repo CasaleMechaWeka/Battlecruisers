@@ -13,6 +13,7 @@ namespace BattleCruisers.AI.ThreatAnalysers
     {
         private readonly ICruiserController _enemyCruiser;
         private readonly UnitCategory _threatCategory;
+        private readonly IThreatEvaluator _threatEvaluator;
         private readonly IList<IFactory> _factories;
 
         private const int NUM_OF_DRONES_FOR_HIGH_THREAT_LEVEL = 6;
@@ -37,10 +38,14 @@ namespace BattleCruisers.AI.ThreatAnalysers
 
         public event EventHandler ThreatLevelChanged;
 
-        public FactoryThreatAnalyzer(ICruiserController enemyCruiser, UnitCategory threatCategory)
+        public FactoryThreatAnalyzer(ICruiserController enemyCruiser, UnitCategory threatCategory, IThreatEvaluator threatEvaluator)
         {
+            Assert.IsNotNull(enemyCruiser);
+            Assert.IsNotNull(threatEvaluator);
+
             _enemyCruiser = enemyCruiser;
             _threatCategory = threatCategory;
+            _threatEvaluator = threatEvaluator;
             _factories = new List<IFactory>();
             CurrentThreatLevel = ThreatLevel.None;
 
@@ -86,32 +91,19 @@ namespace BattleCruisers.AI.ThreatAnalysers
         private void OnThreatLevelChanged()
         {
 			int numOfDronesUsed = FindNumOfDronesUsedByFactories(_factories);
-            CurrentThreatLevel = FindThreatLevel(numOfDronesUsed);
+            CurrentThreatLevel = _threatEvaluator.FindThreatLevel(numOfDronesUsed);
         }
         
         private int FindNumOfDronesUsedByFactories(IList<IFactory> factories)
         {
 			int numOfDronesUsed = 0;
 
-			foreach (IFactory factory in _factories)
+			foreach (IFactory factory in factories)
 			{
 				numOfDronesUsed += factory.NumOfDrones;
 			}
 
             return numOfDronesUsed;
         }
-
-		private ThreatLevel FindThreatLevel(int numOfDronesUsed)
-		{
-			if (numOfDronesUsed == 0)
-			{
-				return ThreatLevel.None;
-			}
-			else if (numOfDronesUsed < NUM_OF_DRONES_FOR_HIGH_THREAT_LEVEL)
-			{
-				return ThreatLevel.Low;
-			}
-			return ThreatLevel.High;
-		}
     }
 }
