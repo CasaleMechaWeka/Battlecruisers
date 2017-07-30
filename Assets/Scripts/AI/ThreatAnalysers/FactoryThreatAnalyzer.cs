@@ -16,8 +16,6 @@ namespace BattleCruisers.AI.ThreatAnalysers
         private readonly IThreatEvaluator _threatEvaluator;
         private readonly IList<IFactory> _factories;
 
-        private const int NUM_OF_DRONES_FOR_HIGH_THREAT_LEVEL = 6;
-
         private ThreatLevel _currentThreatLevel;
         public ThreatLevel CurrentThreatLevel 
         { 
