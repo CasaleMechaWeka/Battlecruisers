@@ -2,13 +2,6 @@
 
 namespace BattleCruisers.Drones
 {
-    public interface IDroneConsumerProvider
-	{
-		IDroneConsumer RequestDroneConsumer(int numOfDronesRequired);
-		void ActivateDroneConsumer(IDroneConsumer droneConsumer);
-		void ReleaseDroneConsumer(IDroneConsumer droneConsumer);
-	}
-
 	public class DroneConsumerProvider : IDroneConsumerProvider
 	{
 		private IDroneManager _droneManager;
