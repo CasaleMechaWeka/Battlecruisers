@@ -94,8 +94,8 @@ namespace BattleCruisers.Cruisers
 		public ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true)
 		{
             return preferFromFront ?
-                _slots[slotType].Find(slot => slot.IsFree) :
-                _slots[slotType].FindLast(slot => slot.IsFree);
+                _slots[slotType].FindLast(slot => slot.IsFree) :
+                _slots[slotType].Find(slot => slot.IsFree);
 		}
 
 		public int GetSlotCount(SlotType slotType)
