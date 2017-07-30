@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -92,19 +91,16 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		public ISlot GetFreeSlot(SlotType slotType)
+		public ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true)
 		{
-			return _slots[slotType].FirstOrDefault(slot => slot.IsFree);
+            return preferFromFront ?
+                _slots[slotType].Find(slot => slot.IsFree) :
+                _slots[slotType].FindLast(slot => slot.IsFree);
 		}
 
 		public int GetSlotCount(SlotType slotType)
 		{
 			return _slots[slotType].Count;
 		}
-
-        public ISlot GetFreeSlot(SlotType slotType, SlotLocation preferredLocation)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
