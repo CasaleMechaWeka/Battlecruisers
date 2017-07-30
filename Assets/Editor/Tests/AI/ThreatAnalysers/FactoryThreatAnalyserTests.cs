@@ -15,26 +15,30 @@ namespace BattleCruisers.Tests.AI
         private IThreatAnalyser _threatAnalyzer;
         private ICruiserController _cruiser;
         private IThreatEvaluator _threatEvaluator;
-        private IFactory _threateningFactory, _nonThreateningFactory;
+        private IFactory _threateningFactory, _threateningFactory2, _nonThreateningFactory;
         private IBuilding _nonFactoryBuilding;
         private int _numOfEventsEmitted;
 
         [SetUp]
         public void SetuUp()
         {
-			_numOfEventsEmitted = 0;
+            _numOfEventsEmitted = 0;
             UnitCategory threatCategory = UnitCategory.Aircraft;
             UnitCategory nonThreatCategory = UnitCategory.Naval;
 
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
-            _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(ThreatLevel.High);
+            _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(ThreatLevel.None);
             _threatAnalyzer = new FactoryThreatAnalyzer(_cruiser, threatCategory, _threatEvaluator);
             _threatAnalyzer.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
             _threateningFactory = Substitute.For<IFactory>();
             _threateningFactory.NumOfDrones.Returns(2);
             _threateningFactory.UnitCategory.Returns(threatCategory);
+
+            _threateningFactory2 = Substitute.For<IFactory>();
+            _threateningFactory2.NumOfDrones.Returns(7);
+            _threateningFactory2.UnitCategory.Returns(threatCategory);
 
             _nonThreateningFactory = Substitute.For<IFactory>();
             _nonThreateningFactory.UnitCategory.Returns(nonThreatCategory);
@@ -49,61 +53,60 @@ namespace BattleCruisers.Tests.AI
             Assert.AreEqual(0, _numOfEventsEmitted);
         }
 
-		#region ICruiserController.StartedConstruction
+        #region ICruiserController.StartedConstruction
         [Test]
-        public void StartedConstruction_NonFactoryBuilding_NoChange()
+        public void StartedConstruction_NonFactoryBuilding_DoesNotEvaluate()
         {
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonFactoryBuilding));
-			Assert.AreEqual(0, _numOfEventsEmitted);
             _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(numOfDrones: 72);
-		}
-
-		[Test]
-		public void StartedConstruction_FactoryBuilding_WrongUnitCategory_NoChange()
-		{
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonThreateningFactory));
-			Assert.AreEqual(0, _numOfEventsEmitted);
-			_threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(numOfDrones: 97);
-		}
-
-		[Test]
-		public void StartedConstruction_FactoryBuilding_RightUnitCategory_ChangesThreatLevel()
-		{
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
-			Assert.AreEqual(1, _numOfEventsEmitted);
-            _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
-		}
-		#endregion ICruiserController.StartedConstruction
-
-		[Test]
-		public void FactoryDestroyed_ChangesThreatLevel()
-		{
-            StartedConstruction_FactoryBuilding_RightUnitCategory_ChangesThreatLevel();
-
-			// Need to change threat level for event to be emitted
-			_threatEvaluator.FindThreatLevel(numOfDrones: 79).ReturnsForAnyArgs(ThreatLevel.None);
-
-			_threateningFactory.Destroyed += Raise.EventWith(_threateningFactory, new DestroyedEventArgs(_threateningFactory));
-			
-            Assert.AreEqual(2, _numOfEventsEmitted);
-            _threatEvaluator.Received().FindThreatLevel(numOfDrones: 0);
-		}
+        }
 
         [Test]
-        public void FatoryNumOfDronesChanged_ChangesThreatLevel()
+        public void StartedConstruction_FactoryBuilding_WrongUnitCategory_DoesNotEvaluate()
         {
-			StartedConstruction_FactoryBuilding_RightUnitCategory_ChangesThreatLevel();
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonThreateningFactory));
+            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(numOfDrones: 97);
+        }
+
+        [Test]
+        public void StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates()
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+            _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
+        }
+        #endregion ICruiserController.StartedConstruction
+
+        [Test]
+        public void FactoryDestroyed_Evaluates()
+        {
+            StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates();
+
+            _threateningFactory.Destroyed += Raise.EventWith(_threateningFactory, new DestroyedEventArgs(_threateningFactory));
+            _threatEvaluator.Received().FindThreatLevel(numOfDrones: 0);
+        }
+
+        [Test]
+        public void FatoryNumOfDronesChanged_Evaluates()
+        {
+            StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates();
 
             _threateningFactory.NumOfDrones.Returns(0);
-			// Need to change threat level for event to be emitted
-			_threatEvaluator.FindThreatLevel(numOfDrones: 79).ReturnsForAnyArgs(ThreatLevel.None);
 
-			_threateningFactory.DroneNumChanged += Raise.EventWith(_threateningFactory, new DroneNumChangedEventArgs(newNumOfDrones: 0));
+            _threateningFactory.DroneNumChanged += Raise.EventWith(_threateningFactory, new DroneNumChangedEventArgs(_threateningFactory.NumOfDrones));
+            _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
+        }
 
-			Assert.AreEqual(2, _numOfEventsEmitted);
+        [Test]
+        public void NumOfDrones_FromMultipleFactoriesIsConsidered()
+        {
+			// Factory 1
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
 			_threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
-		}
 
-        // FELIX  Test drones are added from 2 factories
+			// Factory 2
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory2));
+            _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones + _threateningFactory2.NumOfDrones);
+        }
+        // FELIX  event emitted
     }
 }
