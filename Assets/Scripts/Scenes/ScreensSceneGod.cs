@@ -11,15 +11,6 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-    public interface IScreensSceneGod
-	{
-		void GoToLevelsScreen();
-		void GoToHomeScreen();
-		void GoToLoadoutScreen();
-
-		void LoadLevel(int levelNum);
-	}
-
 	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		private PrefabFactory _prefabFactory;
