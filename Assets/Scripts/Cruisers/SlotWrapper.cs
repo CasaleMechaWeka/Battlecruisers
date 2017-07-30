@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,32 +7,39 @@ namespace BattleCruisers.Cruisers
 {
     public class SlotWrapper : MonoBehaviour, ISlotWrapper
 	{
-		private IDictionary<SlotType, IList<Slot>> _slots;
+		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
 
 		public void StaticInitialise()
 		{
-			SetupSlots();
+            SetupSlots();
 			HideAllSlots();
 		}
 
 		private void SetupSlots()
 		{
-			_slots = new Dictionary<SlotType, IList<Slot>>();
+			_slots = new Dictionary<SlotType, List<ISlot>>();
 
 			Slot[] slots = GetComponentsInChildren<Slot>(includeInactive: true);
 
+            // Sort slots by type
 			foreach (Slot slot in slots)
 			{
-				slot.StaticInitialise();
+				slot.Initialise();
 
 				if (!_slots.ContainsKey(slot.type))
 				{
-					_slots[slot.type] = new List<Slot>();
+					_slots[slot.type] = new List<ISlot>();
 				}
 
 				_slots[slot.type].Add(slot);
 			}
+
+            // Sort slots by position
+            foreach (List<ISlot> slotsOfAType in _slots.Values)
+            {
+                slotsOfAType.Sort((slot1, slot2) => slot1.XDistanceFromParentCruiser.CompareTo(slot2.XDistanceFromParentCruiser));
+            }
 		}
 
 		public bool IsSlotAvailable(SlotType slotType)
@@ -57,7 +65,7 @@ namespace BattleCruisers.Cruisers
 				UnhighlightSlots();
 				_highlightedSlotType = slotType;
 
-				foreach (Slot slot in _slots[slotType])
+				foreach (ISlot slot in _slots[slotType])
 				{
 					if (slot.IsFree)
 					{
@@ -78,7 +86,7 @@ namespace BattleCruisers.Cruisers
 
 		private void UnhighlightSlots(SlotType slotType)
 		{
-			foreach (Slot slot in _slots[slotType])
+			foreach (ISlot slot in _slots[slotType])
 			{
 				slot.IsActive = false;
 			}
@@ -93,5 +101,10 @@ namespace BattleCruisers.Cruisers
 		{
 			return _slots[slotType].Count;
 		}
-	}
+
+        public ISlot GetFreeSlot(SlotType slotType, SlotLocation preferredLocation)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

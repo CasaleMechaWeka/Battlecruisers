@@ -18,6 +18,7 @@ namespace BattleCruisers.Cruisers
 
 		public bool IsFree { get { return _building == null; } }
 		public SlotType Type { get { return type; } }
+		public float XDistanceFromParentCruiser { get; private set; }
 
 		private IBuilding _building;
 		public IBuilding Building
@@ -48,10 +49,10 @@ namespace BattleCruisers.Cruisers
 			}
 		}
 
-		public static Color DEFAULT_COLOUR = Color.yellow;
+        public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
 
-		public void StaticInitialise()
+		public void Initialise()
 		{
 			_isActive = false;
 
@@ -61,6 +62,11 @@ namespace BattleCruisers.Cruisers
 
             _parentCruiser = gameObject.GetComponentInInactiveParent<ICruiser>();
 			Assert.IsNotNull(_parentCruiser);
+
+            XDistanceFromParentCruiser =
+                _parentCruiser.Direction == Direction.Right ?
+                transform.position.x - _parentCruiser.Position.x :
+                _parentCruiser.Position.x - transform.position.x;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

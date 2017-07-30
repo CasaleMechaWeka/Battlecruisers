@@ -51,35 +51,35 @@ namespace BattleCruisers.Cruisers
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
+        }
 
-            SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
-            Assert.IsNotNull(slotWrapper);
-            slotWrapper.StaticInitialise();
-            SlotWrapper = slotWrapper;
-		}
+        public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
+            UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
+            IFactoryProvider factoryProvider, Direction facingDirection)
+        {
+            Assert.IsNotNull(enemyCruiser);
+            Assert.IsNotNull(healthBarController);
+            Assert.IsNotNull(uiManager);
+            Assert.IsNotNull(droneManager);
+            Assert.IsNotNull(droneConsumerProvider);
+            Assert.IsNotNull(factoryProvider);
 
-		public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
-			UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-			IFactoryProvider factoryProvider, Direction facingDirection)
-		{
-			Assert.IsNotNull(enemyCruiser);
-			Assert.IsNotNull(healthBarController);
-			Assert.IsNotNull(uiManager);
-			Assert.IsNotNull(droneManager);
-			Assert.IsNotNull(droneConsumerProvider);
-			Assert.IsNotNull(factoryProvider);
+            Faction = faction;
+            _enemyCruiser = enemyCruiser;
+            _healthBarController = healthBarController;
+            _uiManager = uiManager;
+            DroneManager = droneManager;
+            DroneManager.NumOfDrones = numOfDrones;
+            DroneConsumerProvider = droneConsumerProvider;
+            _factoryProvider = factoryProvider;
+            Direction = facingDirection;
 
-			Faction = faction;
-			_enemyCruiser = enemyCruiser;
-			_healthBarController = healthBarController;
-			_uiManager = uiManager;
-			DroneManager = droneManager;
-			DroneManager.NumOfDrones = numOfDrones;
-			DroneConsumerProvider = droneConsumerProvider;
-			_factoryProvider = factoryProvider;
-			Direction = facingDirection;
-
-			_healthBarController.Initialise(this);
+            _healthBarController.Initialise(this);
+			
+			SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
+			Assert.IsNotNull(slotWrapper);
+			slotWrapper.StaticInitialise();
+			SlotWrapper = slotWrapper;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
