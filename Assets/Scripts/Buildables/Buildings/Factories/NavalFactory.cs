@@ -1,14 +1,9 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets.TargetFinders;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-	public class NavalFactory : Factory
+    public class NavalFactory : Factory
 	{
 		public LayerMask unitsLayerMask;
 
