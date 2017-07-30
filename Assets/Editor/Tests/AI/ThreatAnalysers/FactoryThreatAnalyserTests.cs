@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI
 {
-    public class FactoryThreatAnalyzerTests
+    public class FactoryThreatAnalyserTests
     {
         private IThreatAnalyser _threatAnalyzer;
         private ICruiserController _cruiser;
