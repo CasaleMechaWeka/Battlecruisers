@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Drones
 {
-	public interface IDroneConsumerProvider
+    public interface IDroneConsumerProvider
 	{
 		IDroneConsumer RequestDroneConsumer(int numOfDronesRequired);
 		void ActivateDroneConsumer(IDroneConsumer droneConsumer);
