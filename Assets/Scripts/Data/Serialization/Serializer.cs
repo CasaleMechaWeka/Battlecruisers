@@ -5,14 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Serialization
 {
-    // FELIX  Move to own file
-    public interface ISerializer
-	{
-		bool DoesSavedGameExist();
-		void SaveGame(GameModel game);
-		GameModel LoadGame();
-	}
-
 	public class Serializer : ISerializer
 	{
 		private readonly IModelFilePathProvider _modelFilePathProvider;
