@@ -7,6 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public interface IFactory : IBuilding
     {
 		UnitCategory UnitCategory { get; }
+        int NumOfDrones { get; }
 
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 	}

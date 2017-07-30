@@ -42,6 +42,7 @@ namespace BattleCruisers.AI.ThreatAnalysers
             _enemyCruiser = enemyCruiser;
             _threatCategory = threatCategory;
             _factories = new List<IFactory>();
+            CurrentThreatLevel = ThreatLevel.None;
 
             _enemyCruiser.StartedConstruction += _enemyCruiser_StartedConstruction;
         }
@@ -94,10 +95,7 @@ namespace BattleCruisers.AI.ThreatAnalysers
 
 			foreach (IFactory factory in _factories)
 			{
-				if (factory.DroneConsumer != null)
-				{
-					numOfDronesUsed += factory.DroneConsumer.NumOfDrones;
-				}
+				numOfDronesUsed += factory.NumOfDrones;
 			}
 
             return numOfDronesUsed;

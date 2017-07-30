@@ -50,9 +50,17 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 
 		protected abstract LayerMask UnitLayerMask { get; }
-		#endregion Properties
 
-		protected override void OnClicked()
+        public int NumOfDrones
+        {
+            get
+            {
+                return DroneConsumer != null ? DroneConsumer.NumOfDrones : 0;
+            }
+        }
+        #endregion Properties
+
+        protected override void OnClicked()
 		{
 			base.OnClicked();
 
