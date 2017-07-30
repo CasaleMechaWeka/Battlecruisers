@@ -7,9 +7,9 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.ThreatAnalysers
+namespace BattleCruisers.AI.ThreatMonitors
 {
-    public class FactoryThreatAnalyzer : IThreatAnalyser
+    public class FactoryThreatMonitor : IThreatMonitor
     {
         private readonly ICruiserController _enemyCruiser;
         private readonly UnitCategory _threatCategory;
@@ -36,7 +36,7 @@ namespace BattleCruisers.AI.ThreatAnalysers
 
         public event EventHandler ThreatLevelChanged;
 
-        public FactoryThreatAnalyzer(ICruiserController enemyCruiser, UnitCategory threatCategory, IThreatEvaluator threatEvaluator)
+        public FactoryThreatMonitor(ICruiserController enemyCruiser, UnitCategory threatCategory, IThreatEvaluator threatEvaluator)
         {
             Assert.IsNotNull(enemyCruiser);
             Assert.IsNotNull(threatEvaluator);

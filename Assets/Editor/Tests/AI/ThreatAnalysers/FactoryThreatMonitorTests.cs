@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI.ThreatAnalysers;
+﻿using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI
 {
-    public class FactoryThreatAnalyserTests
+    public class FactoryThreatMonitorTests
     {
-        private IThreatAnalyser _threatAnalyzer;
+        private IThreatMonitor _threatMonitor;
         private ICruiserController _cruiser;
         private IThreatEvaluator _threatEvaluator;
         private IFactory _threateningFactory, _threateningFactory2, _nonThreateningFactory;
@@ -32,8 +32,8 @@ namespace BattleCruisers.Tests.AI
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
             _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(_initialThreatLevel);
-            _threatAnalyzer = new FactoryThreatAnalyzer(_cruiser, threatCategory, _threatEvaluator);
-            _threatAnalyzer.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
+            _threatMonitor = new FactoryThreatMonitor(_cruiser, threatCategory, _threatEvaluator);
+            _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
             _threateningFactory = Substitute.For<IFactory>();
             _threateningFactory.NumOfDrones.Returns(2);
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.AI
         [Test]
         public void InitialState()
         {
-            Assert.AreEqual(_initialThreatLevel, _threatAnalyzer.CurrentThreatLevel);
+            Assert.AreEqual(_initialThreatLevel, _threatMonitor.CurrentThreatLevel);
         }
 
         #region ICruiserController.StartedConstruction

@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace BattleCruisers.AI.ThreatAnalysers
+namespace BattleCruisers.AI.ThreatMonitors
 {
     public enum ThreatLevel
     {
         None, Low, High
     }
 
-    public interface IThreatAnalyser
+    public interface IThreatMonitor
     {
         ThreatLevel CurrentThreatLevel { get; }
 

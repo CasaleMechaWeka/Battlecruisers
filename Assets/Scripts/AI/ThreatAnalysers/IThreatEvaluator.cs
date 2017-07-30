@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.AI.ThreatAnalysers
+﻿namespace BattleCruisers.AI.ThreatMonitors
 {
     public interface IThreatEvaluator
 	{
