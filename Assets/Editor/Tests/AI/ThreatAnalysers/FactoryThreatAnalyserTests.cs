@@ -18,17 +18,20 @@ namespace BattleCruisers.Tests.AI
         private IFactory _threateningFactory, _threateningFactory2, _nonThreateningFactory;
         private IBuilding _nonFactoryBuilding;
         private int _numOfEventsEmitted;
+        private ThreatLevel _initialThreatLevel;
 
         [SetUp]
         public void SetuUp()
         {
             _numOfEventsEmitted = 0;
+            _initialThreatLevel = ThreatLevel.None;
+
             UnitCategory threatCategory = UnitCategory.Aircraft;
             UnitCategory nonThreatCategory = UnitCategory.Naval;
 
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
-            _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(ThreatLevel.None);
+            _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(_initialThreatLevel);
             _threatAnalyzer = new FactoryThreatAnalyzer(_cruiser, threatCategory, _threatEvaluator);
             _threatAnalyzer.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
@@ -49,8 +52,7 @@ namespace BattleCruisers.Tests.AI
         [Test]
         public void InitialState()
         {
-            Assert.AreEqual(ThreatLevel.None, _threatAnalyzer.CurrentThreatLevel);
-            Assert.AreEqual(0, _numOfEventsEmitted);
+            Assert.AreEqual(_initialThreatLevel, _threatAnalyzer.CurrentThreatLevel);
         }
 
         #region ICruiserController.StartedConstruction
@@ -86,7 +88,7 @@ namespace BattleCruisers.Tests.AI
         }
 
         [Test]
-        public void FatoryNumOfDronesChanged_Evaluates()
+        public void FactoryNumOfDronesChanged_Evaluates()
         {
             StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates();
 
@@ -107,6 +109,27 @@ namespace BattleCruisers.Tests.AI
 			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory2));
             _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones + _threateningFactory2.NumOfDrones);
         }
-        // FELIX  event emitted
+
+        [Test]
+        public void ThreatLevelChanged_EmitsEvent()
+        {
+			Assert.AreEqual(0, _numOfEventsEmitted);
+
+            _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(ThreatLevel.High);
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+
+            Assert.AreEqual(1, _numOfEventsEmitted);
+        }
+
+		[Test]
+		public void ThreatLevelNotChanged_DoesNotEmitsEvent()
+		{
+			Assert.AreEqual(0, _numOfEventsEmitted);
+
+            _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(_initialThreatLevel);
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+
+			Assert.AreEqual(0, _numOfEventsEmitted);
+		}
     }
 }
