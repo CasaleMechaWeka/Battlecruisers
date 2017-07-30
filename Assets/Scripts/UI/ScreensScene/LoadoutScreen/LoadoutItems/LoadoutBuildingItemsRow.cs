@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 		private IItemDetailsManager<IBuilding> _detailsManager;
 		private IDictionary<IBuilding, LoadoutBuildingItem> _buildingToLoadoutItem;
 
-		private const int MAX_NUM_OF_ITEMS = 4;
+		private const int MAX_NUM_OF_ITEMS = 5;
 
 		public HorizontalLayoutGroup layoutGroup;
 
