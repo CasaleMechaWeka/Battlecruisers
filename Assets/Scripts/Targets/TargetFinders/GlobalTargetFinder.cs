@@ -62,6 +62,9 @@ namespace BattleCruisers.Targets.TargetFinders
 			IBuildable buildable = e.DestroyedTarget as IBuildable;
 			Assert.IsNotNull(buildable);
 
+            // FELIX  BUG  If build progresss went past 50%, but then below 50%
+            // (due to getting damaged), TargetLost will never be called for that
+            // target :/
 			if (buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET
 				&& TargetLost != null)
 			{

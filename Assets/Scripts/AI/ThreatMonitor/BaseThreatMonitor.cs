@@ -1,14 +1,19 @@
 ﻿using System;
+using BattleCruisers.Cruisers;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
     public abstract class BaseThreatMonitor : IThreatMonitor
 	{
+		protected readonly ICruiserController _enemyCruiser;
+		protected readonly IThreatEvaluator _threatEvaluator;
+
 		private ThreatLevel _currentThreatLevel;
 		public ThreatLevel CurrentThreatLevel
 		{
 			get { return _currentThreatLevel; }
-			protected set
+			private set
 			{
 				if (_currentThreatLevel != value)
 				{
@@ -24,9 +29,22 @@ namespace BattleCruisers.AI.ThreatMonitors
 		
 		public event EventHandler ThreatLevelChanged;
 
-        public BaseThreatMonitor()
+        public BaseThreatMonitor(ICruiserController enemyCruiser, IThreatEvaluator threatEvaluator)
         {
+			Assert.IsNotNull(enemyCruiser);
+			Assert.IsNotNull(threatEvaluator);
+
+			_enemyCruiser = enemyCruiser;
+			_threatEvaluator = threatEvaluator;
+
             CurrentThreatLevel = ThreatLevel.None;
         }
+
+		protected void EvaluateThreatLevel()
+		{
+            CurrentThreatLevel = _threatEvaluator.FindThreatLevel(FindThreatEvaluationParameter());
+		}
+
+        protected abstract float FindThreatEvaluationParameter();
 	}
 }
