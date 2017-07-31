@@ -43,6 +43,8 @@ namespace BattleCruisers.Buildables
 		protected BuildableProgressController _buildableProgress;
 		private HealthBarController _healthBar;
 
+        private const float MAX_BUILD_PROGRESS = 1.0f;
+
 		#region Properties
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
@@ -223,9 +225,9 @@ namespace BattleCruisers.Buildables
 				if (BuildableProgress != null)
 				{
 					BuildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
-					if (BuildProgress > 1)
+                    if (BuildProgress > MAX_BUILD_PROGRESS)
 					{
-						BuildProgress = 1;
+                        BuildProgress = MAX_BUILD_PROGRESS;
 					}
 
 					BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
