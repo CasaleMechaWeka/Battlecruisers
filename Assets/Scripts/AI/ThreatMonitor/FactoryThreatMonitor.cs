@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
@@ -9,32 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
-    public class FactoryThreatMonitor : IThreatMonitor
+    public class FactoryThreatMonitor : BaseThreatMonitor
     {
         private readonly ICruiserController _enemyCruiser;
         private readonly UnitCategory _threatCategory;
         private readonly IThreatEvaluator _threatEvaluator;
         private readonly IList<IFactory> _factories;
-
-        private ThreatLevel _currentThreatLevel;
-        public ThreatLevel CurrentThreatLevel 
-        { 
-            get { return _currentThreatLevel; }
-            private set
-            {
-                if (_currentThreatLevel != value)
-                {
-                    _currentThreatLevel = value;
-
-                    if (ThreatLevelChanged != null)
-                    {
-                        ThreatLevelChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public event EventHandler ThreatLevelChanged;
 
         public FactoryThreatMonitor(ICruiserController enemyCruiser, UnitCategory threatCategory, IThreatEvaluator threatEvaluator)
         {
@@ -45,7 +24,6 @@ namespace BattleCruisers.AI.ThreatMonitors
             _threatCategory = threatCategory;
             _threatEvaluator = threatEvaluator;
             _factories = new List<IFactory>();
-            CurrentThreatLevel = ThreatLevel.None;
 
             _enemyCruiser.StartedConstruction += _enemyCruiser_StartedConstruction;
         }
