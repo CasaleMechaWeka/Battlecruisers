@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.AI
 
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
-            _threatEvaluator.FindThreatLevel(numOfDrones: 17).ReturnsForAnyArgs(_initialThreatLevel);
+            _threatEvaluator.FindThreatLevel(value: 17).ReturnsForAnyArgs(_initialThreatLevel);
             _threatMonitor = new FactoryThreatMonitor(_cruiser, threatCategory, _threatEvaluator);
             _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
@@ -60,14 +60,14 @@ namespace BattleCruisers.Tests.AI
         public void StartedConstruction_NonFactoryBuilding_DoesNotEvaluate()
         {
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonFactoryBuilding));
-            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(numOfDrones: 72);
+            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(value: 72);
         }
 
         [Test]
         public void StartedConstruction_FactoryBuilding_WrongUnitCategory_DoesNotEvaluate()
         {
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonThreateningFactory));
-            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(numOfDrones: 97);
+            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(value: 97);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace BattleCruisers.Tests.AI
             StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates();
 
             _threateningFactory.Destroyed += Raise.EventWith(_threateningFactory, new DestroyedEventArgs(_threateningFactory));
-            _threatEvaluator.Received().FindThreatLevel(numOfDrones: 0);
+            _threatEvaluator.Received().FindThreatLevel(value: 0);
         }
 
         [Test]

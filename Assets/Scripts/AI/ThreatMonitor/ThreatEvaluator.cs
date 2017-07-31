@@ -2,20 +2,20 @@
 {
 	public class ThreatEvaluator : IThreatEvaluator
 	{
-        private readonly int _numOfDronesRequiredForHighThreatLevel;
+        private readonly float _valueRequiredForHighThreatLevel;
 
-        public ThreatEvaluator(int numOfDronesRequiredForHighThreatLevel)
+        public ThreatEvaluator(float valueRequiredForHighThreatLevel)
         {
-            _numOfDronesRequiredForHighThreatLevel = numOfDronesRequiredForHighThreatLevel;
+            _valueRequiredForHighThreatLevel = valueRequiredForHighThreatLevel;
         }
 
-		public ThreatLevel FindThreatLevel(int numOfDrones)
+        public ThreatLevel FindThreatLevel(float value)
         {
-			if (numOfDrones == 0)
+			if (value <= 0)
 			{
 				return ThreatLevel.None;
 			}
-            else if (numOfDrones < _numOfDronesRequiredForHighThreatLevel)
+            else if (value < _valueRequiredForHighThreatLevel)
 			{
 				return ThreatLevel.Low;
 			}

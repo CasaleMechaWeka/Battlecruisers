@@ -2,6 +2,6 @@
 {
     public interface IThreatEvaluator
 	{
-        ThreatLevel FindThreatLevel(int numOfDrones);
+        ThreatLevel FindThreatLevel(float value);
 	}
 }
