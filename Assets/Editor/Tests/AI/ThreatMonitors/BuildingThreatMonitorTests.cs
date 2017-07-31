@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.AI
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
             _threatEvaluator.FindThreatLevel(value: 17).ReturnsForAnyArgs(_initialThreatLevel);
-            _threatMonitor = new BuildingThreatMonitor<IBuilding>(_cruiser, _threatEvaluator);
+            _threatMonitor = new BuildingThreatMonitor<IFactory>(_cruiser, _threatEvaluator);
             _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
             _matchingBuilding = Substitute.For<IFactory>();
@@ -46,6 +46,14 @@ namespace BattleCruisers.Tests.AI
         {
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
             _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(864);
+        }
+
+        [Test]
+        public void NonMatchingBuilding_DoesNotEvaluate()
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonMatchingBuilding));
+            _nonMatchingBuilding.CompletedBuildable += Raise.Event();
+			_threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(864);
         }
 
         #region BuildableProgress
@@ -76,5 +84,36 @@ namespace BattleCruisers.Tests.AI
 			_threatEvaluator.Received().FindThreatLevel(_matchingBuilding.BuildProgress);
 		}
 		#endregion BuildableProgress
+
+        [Test]
+        public void CompletedBuilding_Evaluates()
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+			_matchingBuilding.CompletedBuildable += Raise.Event();
+            _threatEvaluator.Received().FindThreatLevel(_matchingBuilding.BuildProgress);
+        }
+
+        [Test]
+        public void DestroyedBuilding_Evaluates()
+        {
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+            _matchingBuilding.Destroyed += Raise.EventWith(_matchingBuilding, new DestroyedEventArgs(_matchingBuilding));
+			_threatEvaluator.Received().FindThreatLevel(value: 0);
+        }
+
+        [Test]
+        public void BuildProgress_FromMultipleBuildingsIsConsidered()
+        {
+            // Building 1
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+			_matchingBuilding.BuildProgress.Returns(0.1f);
+
+			// Building 2
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding2));
+			_matchingBuilding2.BuildProgress.Returns(0.3f);
+
+            _matchingBuilding2.CompletedBuildable += Raise.Event();
+            _threatEvaluator.Received().FindThreatLevel(_matchingBuilding.BuildProgress + _matchingBuilding2.BuildProgress);
+        }
 	}
 }
