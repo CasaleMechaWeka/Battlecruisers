@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.AI
             _cruiser = Substitute.For<ICruiserController>();
             _threatEvaluator = Substitute.For<IThreatEvaluator>();
             _threatEvaluator.FindThreatLevel(value: 17).ReturnsForAnyArgs(_initialThreatLevel);
-            _threatMonitor = new FactoryThreatMonitor(_cruiser, threatCategory, _threatEvaluator);
+            _threatMonitor = new FactoryThreatMonitor(_cruiser, _threatEvaluator, threatCategory);
             _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
             _threateningFactory = Substitute.For<IFactory>();
