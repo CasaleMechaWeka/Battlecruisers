@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
@@ -30,10 +31,8 @@ namespace BattleCruisers.Tests.AI
             _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
 
             _matchingBuilding = Substitute.For<IFactory>();
-            _matchingBuilding.BuildProgress.Returns(0.1f);
             _matchingBuilding2 = Substitute.For<IFactory>();
-			_matchingBuilding2.BuildProgress.Returns(0.3f);
-			_nonMatchingBuilding = Substitute.For<IBuilding>();
+            _nonMatchingBuilding = Substitute.For<IBuilding>();
         }
 
         [Test]
@@ -41,5 +40,41 @@ namespace BattleCruisers.Tests.AI
         {
             Assert.AreEqual(_initialThreatLevel, _threatMonitor.CurrentThreatLevel);
         }
-    }
+
+        [Test]
+        public void BuildingStarted_DoesNotEvaluate()
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+            _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(864);
+        }
+
+        #region BuildableProgress
+        [Test]
+        public void BuildingBuildProgress_LessThanHalfway_DoesNotEvaluate()
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+			_matchingBuilding.BuildProgress.Returns(0.1f);
+            _matchingBuilding.BuildableProgress += Raise.EventWith(_matchingBuilding, new BuildProgressEventArgs(_matchingBuilding));
+			_threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(864);
+		}
+
+		[Test]
+		public void BuildingBuildProgress_Halfway_Evaluates()
+		{
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+			_matchingBuilding.BuildProgress.Returns(0.5f);
+			_matchingBuilding.BuildableProgress += Raise.EventWith(_matchingBuilding, new BuildProgressEventArgs(_matchingBuilding));
+            _threatEvaluator.Received().FindThreatLevel(_matchingBuilding.BuildProgress);
+		}
+
+		[Test]
+		public void BuildingBuildProgress_MoreThanHalfway_Evaluates()
+		{
+			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_matchingBuilding));
+			_matchingBuilding.BuildProgress.Returns(0.51f);
+			_matchingBuilding.BuildableProgress += Raise.EventWith(_matchingBuilding, new BuildProgressEventArgs(_matchingBuilding));
+			_threatEvaluator.Received().FindThreatLevel(_matchingBuilding.BuildProgress);
+		}
+		#endregion BuildableProgress
+	}
 }

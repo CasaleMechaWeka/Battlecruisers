@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
@@ -39,6 +40,7 @@ namespace BattleCruisers.AI.ThreatMonitors
                 _buildings.Add(building);
 
                 building.BuildableProgress += Building_BuildableProgress;
+                building.CompletedBuildable += Building_CompletedBuildable;
                 building.Destroyed += Building_Destroyed;
             }
         }
@@ -52,7 +54,16 @@ namespace BattleCruisers.AI.ThreatMonitors
 			}
 		}
 
-		private void Building_Destroyed(object sender, DestroyedEventArgs e)
+        private void Building_CompletedBuildable(object sender, EventArgs e)
+        {
+            TBuilding completedBuilding = sender as TBuilding;
+            Assert.IsNotNull(completedBuilding);
+            completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
+
+            EvaluateThreatLevel();
+        }
+
+        private void Building_Destroyed(object sender, DestroyedEventArgs e)
 		{
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
