@@ -4,7 +4,7 @@ using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.BuildOrders;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
@@ -45,7 +45,7 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = FindMaxNumOfAntiAirSlots(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck));
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiAir, airThreatMonitor, slotNumCalculator);
         }
 
 		/// <returns>Half, rounded up.</returns>

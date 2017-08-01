@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.BuildOrders;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
-	public class StaticData : IStaticData
+    public class StaticData : IStaticData
 	{
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
@@ -113,10 +112,10 @@ namespace BattleCruisers.Data
 
 			return new List<ILevel>()
 			{
-                new Level("Sprawl Brawl", aiLoadout, Balanced.BuildOrder),
-				new Level("Fisticuffs", aiLoadout, Balanced.BuildOrder),
-				new Level("Ambush at Dire Straits", aiLoadout, Balanced.BuildOrder),
-				new Level("Battle of Watercress", aiLoadout, Balanced.BuildOrder)
+                new Level("Sprawl Brawl", aiLoadout, BuildOrders.Balanced),
+				new Level("Fisticuffs", aiLoadout, BuildOrders.Balanced),
+				new Level("Ambush at Dire Straits", aiLoadout, BuildOrders.Balanced),
+				new Level("Battle of Watercress", aiLoadout, BuildOrders.Balanced)
 			};
 		}
 	}

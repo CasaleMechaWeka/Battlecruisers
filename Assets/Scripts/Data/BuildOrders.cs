@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Data.BuildOrders
+namespace BattleCruisers.Data
 {
-	public static class Balanced
+	public static class BuildOrders
 	{
-		public static IList<IPrefabKey> BuildOrder
+		public static IList<IPrefabKey> Balanced
 		{
 			get
 			{
@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.BuildOrders
 					StaticPrefabKeys.Buildings.AntiAirTurret,
 					StaticPrefabKeys.Buildings.AntiShipTurret,
 					StaticPrefabKeys.Buildings.DroneStation,
-                    StaticPrefabKeys.Buildings.SamSite,
+					StaticPrefabKeys.Buildings.SamSite,
 					StaticPrefabKeys.Buildings.Mortar,
 					StaticPrefabKeys.Buildings.ShieldGenerator,
 					StaticPrefabKeys.Buildings.TeslaCoil,
@@ -40,6 +40,20 @@ namespace BattleCruisers.Data.BuildOrders
 					StaticPrefabKeys.Buildings.Mortar,
 					StaticPrefabKeys.Buildings.SamSite,
 					StaticPrefabKeys.Buildings.NukeLauncher
+				};
+			}
+		}
+
+		public static IList<IPrefabKey> AntiAir
+		{
+			get
+			{
+				return new List<IPrefabKey>()
+				{
+					StaticPrefabKeys.Buildings.AntiAirTurret,
+					StaticPrefabKeys.Buildings.SamSite,
+					StaticPrefabKeys.Buildings.SamSite,
+					StaticPrefabKeys.Buildings.SamSite
 				};
 			}
 		}
