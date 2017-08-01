@@ -57,5 +57,19 @@ namespace BattleCruisers.Data
 				};
 			}
 		}
+
+        public static IList<IPrefabKey> AntiShip
+        {
+            get
+            {
+                return new List<IPrefabKey>()
+                {
+					StaticPrefabKeys.Buildings.AntiShipTurret,
+					StaticPrefabKeys.Buildings.Mortar,
+					StaticPrefabKeys.Buildings.Mortar,
+					StaticPrefabKeys.Buildings.Mortar
+                };
+            }
+        }
 	}
 }
