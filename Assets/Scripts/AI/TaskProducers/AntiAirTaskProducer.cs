@@ -66,6 +66,7 @@ namespace BattleCruisers.AI.TaskProducers
         private void _currentTask_Completed(object sender, EventArgs e)
         {
             _currentTask.Completed -= _currentTask_Completed;
+            _numOfTasksCompleted++;
             _currentTask = null;
 
             CreateNextTask();
