@@ -58,7 +58,7 @@ namespace BattleCruisers.Data
 			}
 		}
 
-        public static IList<IPrefabKey> AntiShip
+        public static IList<IPrefabKey> AntiNaval
         {
             get
             {

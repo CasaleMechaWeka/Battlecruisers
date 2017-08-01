@@ -2,6 +2,7 @@
 {
     public interface ISlotNumCalculatorFactory
     {
-        ISlotNumCalculator CreateAntiAirSlotNumCalculator(int maxNumOfSlots);
+		ISlotNumCalculator CreateAntiAirSlotNumCalculator(int maxNumOfSlots);
+		ISlotNumCalculator CreateAntiNavalSlotNumCalculator(int maxNumOfSlots);
     }
 }
