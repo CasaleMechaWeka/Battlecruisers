@@ -11,5 +11,10 @@
         {
             return new AntiNavalSlotNumCalculator(maxNumOfSlots);
         }
+
+        public ISlotNumCalculator CreateStaticSlotNumCalculator(int numOfSlots)
+        {
+            return new StaticSlotNumCalculator(numOfSlots);
+        }
     }
 }

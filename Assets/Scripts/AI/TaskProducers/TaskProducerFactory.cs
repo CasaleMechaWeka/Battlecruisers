@@ -3,6 +3,7 @@ using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Buildings.Turrets.Offensive;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -20,6 +21,8 @@ namespace BattleCruisers.AI.TaskProducers
 
 		private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
+        // Any rocket launcher is considered a high threat
+		private const int ROCKET_LAUNCHER_HIGH_THREAT_DRONE_NUM = 1;
 
         public TaskProducerFactory(ICruiserController aiCruiser, ICruiserController playerCruiser, IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, ISlotNumCalculatorFactory slotNumCalculatorFactory)
@@ -58,6 +61,15 @@ namespace BattleCruisers.AI.TaskProducers
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 
             new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiNaval, navalThreatMonitor, slotNumCalculator);
+		}
+
+		public void CreateAntiRocketLauncherTaskProducer(ITaskList tasks)
+		{
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_DRONE_NUM);
+			IThreatMonitor rocketLauncherThreatMonitor = new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
+            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
+
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiRocketLauncher, rocketLauncherThreatMonitor, slotNumCalculator);
 		}
 
         private int GetHalfTheSlots(int totalNumOfSlots, bool roundUp)

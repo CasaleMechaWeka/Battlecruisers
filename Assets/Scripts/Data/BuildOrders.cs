@@ -71,5 +71,16 @@ namespace BattleCruisers.Data
                 };
             }
         }
+
+		public static IList<IPrefabKey> AntiRocketLauncher
+		{
+			get
+			{
+				return new List<IPrefabKey>()
+				{
+                    StaticPrefabKeys.Buildings.TeslaCoil
+				};
+			}
+		}
 	}
 }
