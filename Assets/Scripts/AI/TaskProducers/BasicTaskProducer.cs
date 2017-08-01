@@ -9,7 +9,7 @@ using BattleCruisers.Fetchers;
 namespace BattleCruisers.AI.TaskProducers
 {
     /// <summary>
-    /// 1. Creates tasks for the given buildOrder.
+    /// Creates tasks for the given buildOrder.
     /// </summary>
     public class BasicTaskProducer : BaseTaskProducer
     {
