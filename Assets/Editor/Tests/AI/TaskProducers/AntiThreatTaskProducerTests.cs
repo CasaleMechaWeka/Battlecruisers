@@ -13,7 +13,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
-    public class AntiAirTaskProducerTests
+    public class AntiThreatTaskProducerTests
 	{
 		private ITaskList _tasks;
 		private ICruiserController _cruiser;
@@ -22,7 +22,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 		private ITaskFactory _taskFactory;
         private IList<IPrefabKey> _buildOrder;
         private IThreatMonitor _threatMonitor;
-        private ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private ISlotNumCalculator _slotNumCalculator;
         private IPrefabKey _buildingKey;
         private ITask _task;
@@ -36,31 +35,22 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
             _task = Substitute.For<ITask>();
+			_slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 
             _threatMonitor = Substitute.For<IThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
             _slotWrapper = Substitute.For<ISlotWrapper>();
             _slotWrapper.GetSlotCount(SlotType.Deck).Returns(5);
-			_cruiser = Substitute.For<ICruiserController>();
-			_cruiser.SlotWrapper.Returns(_slotWrapper);
-
-            _slotNumCalculator = Substitute.For<ISlotNumCalculator>();
-            _slotNumCalculatorFactory = Substitute.For<ISlotNumCalculatorFactory>();
-            _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(-72).ReturnsForAnyArgs(_slotNumCalculator);
+            _cruiser = Substitute.For<ICruiserController>();
+            _cruiser.SlotWrapper.Returns(_slotWrapper);
 
             _buildingKey = Substitute.For<IPrefabKey>();
             _buildOrder = new List<IPrefabKey>();
             _buildOrder.Add(_buildingKey);
 
-            new AntiAirTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculatorFactory);
+            new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
 		}
-
-        [Test]
-        public void Initialisation()
-        {
-            _slotNumCalculatorFactory.ReceivedWithAnyArgs().CreateAntiAirSlotNumCalculator(-72);
-        }
 
 		#region ThreatLevelChanged
 		[Test]

@@ -42,7 +42,7 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = FindMaxNumOfAntiAirSlots(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck));
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            new AntiAirTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
 
