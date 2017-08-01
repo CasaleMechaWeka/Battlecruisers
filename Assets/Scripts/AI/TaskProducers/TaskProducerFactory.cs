@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.BuildOrders;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
@@ -22,6 +23,8 @@ namespace BattleCruisers.AI.TaskProducers
         public TaskProducerFactory(ICruiserController aiCruiser, ICruiserController playerCruiser, IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, ISlotNumCalculatorFactory slotNumCalculatorFactory)
         {
+            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory);
+
             _aiCruiser = aiCruiser;
             _playerCruiser = playerCruiser;
             _prefabFactory = prefabFactory;
@@ -44,7 +47,6 @@ namespace BattleCruisers.AI.TaskProducers
 
             new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, slotNumCalculator);
         }
-
 
 		/// <returns>Half, rounded up.</returns>
 		private int FindMaxNumOfAntiAirSlots(int totalNumOfSlots)

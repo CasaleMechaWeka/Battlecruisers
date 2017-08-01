@@ -3,6 +3,7 @@ using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
 {
@@ -19,5 +20,13 @@ namespace BattleCruisers.Utils
 				.Select(position => new PatrolPoint(position) as IPatrolPoint)
 				.ToList();
 		}
+
+        public static void AssertIsNotNull(params object[] objs)
+        {
+            foreach (object obj in objs)
+            {
+                Assert.IsNotNull(obj);
+            }
+        }
 	}
 }
