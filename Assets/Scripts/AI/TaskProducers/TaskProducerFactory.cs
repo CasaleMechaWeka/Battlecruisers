@@ -38,8 +38,18 @@ namespace BattleCruisers.AI.TaskProducers
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
             IThreatMonitor airThreatMonitor = new BuildingThreatMonitor<AirFactory>(_playerCruiser, threatEvaluator);
+			
+            int maxNumOfDeckSlots = FindMaxNumOfAntiAirSlots(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck));
+            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            new AntiAirTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, _slotNumCalculatorFactory);
+            new AntiAirTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, AntiAir.BuildOrder, airThreatMonitor, slotNumCalculator);
         }
+
+
+		/// <returns>Half, rounded up.</returns>
+		private int FindMaxNumOfAntiAirSlots(int totalNumOfSlots)
+		{
+			return totalNumOfSlots / 2 + totalNumOfSlots % 2;
+		}
 	}
 }

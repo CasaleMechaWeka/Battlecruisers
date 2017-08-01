@@ -24,25 +24,17 @@ namespace BattleCruisers.AI.TaskProducers
         private ITask _currentTask;
 		
         public AntiAirTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, ITaskFactory taskFactory, 
-            IList<IPrefabKey> antiAirBuildOrder, IThreatMonitor airThreatMonitor, ISlotNumCalculatorFactory slotNumCalculatorFactory)
+            IList<IPrefabKey> antiAirBuildOrder, IThreatMonitor airThreatMonitor, ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
             _antiAirBuildOrder = antiAirBuildOrder;
             _airThreatMonitor = airThreatMonitor;
-
-            int maxNumOfDeckSlots = FindMaxNumOfDeckSlots(_cruiser.SlotWrapper.GetSlotCount(SlotType.Deck));
-            _slotNumCalculator = slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
+            _slotNumCalculator = slotNumCalculator;
 
             _targetNumOfSlotsToUse = 0;
             _numOfTasksCompleted = 0;
 
             _airThreatMonitor.ThreatLevelChanged += _airThreatMonitor_ThreatLevelChanged;
-        }
-
-        /// <returns>Half, rounded up.</returns>
-        private int FindMaxNumOfDeckSlots(int totalNumOfSlots)
-        {
-            return totalNumOfSlots / 2 + totalNumOfSlots % 2;
         }
 
         private void _airThreatMonitor_ThreatLevelChanged(object sender, EventArgs e)
