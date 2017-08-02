@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
+using BattleCruisers.AI.TaskProducers.SlotNumber;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -142,9 +145,13 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // AI
-            IAIFactory aiFactory = new AIFactory(prefabFactory, deferrer, _dataProvider.StaticData);
-            aiFactory.CreateAI(_aiCruiser, currentLevel.BuildOrder);
+			// AI
+			ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, deferrer);
+            ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
+            ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
+                _aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory);
+            aiFactory.CreateBasicAI(_aiCruiser, currentLevel.BuildOrder);
         }
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)

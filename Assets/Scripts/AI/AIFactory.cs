@@ -1,34 +1,35 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
-using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI
 {
+    /// <summary>
+    /// An AI consists of one or more task producers and a single task consumer.
+    /// 
+    /// This factory creates different types of AI.
+    /// </summary>
     public class AIFactory : IAIFactory
     {
-        private readonly IPrefabFactory _prefabFactory;
-        private readonly IDeferrer _deferrer;
-        private readonly IStaticData _staticData;
+        private readonly ITaskProducerFactory _taskProducerFactory;
 
-        public AIFactory(IPrefabFactory prefabFactory, IDeferrer deferrer, IStaticData staticData)
+        public AIFactory(ITaskProducerFactory taskProducerFactory)
         {
-            _prefabFactory = prefabFactory;
-            _deferrer = deferrer;
-            _staticData = staticData;
+            _taskProducerFactory = taskProducerFactory;
         }
 
-        public void CreateAI(ICruiserController aiCruiser, IList<IPrefabKey> buildOrder)
+        /// <summary>
+        /// Creates a basic AI that:
+        /// 1. Follows a preset build order
+        /// 2. Replaces destroyed buildings
+        /// </summary>
+        public void CreateBasicAI(ICruiserController aiCruiser, IList<IPrefabKey> buildOrder)
         {
 			ITaskList tasks = new TaskList();
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, aiCruiser, _deferrer);
 
-            new BasicTaskProducer(tasks, aiCruiser, _prefabFactory, taskFactory, buildOrder);
-            new ReplaceDestroyedBuildingsTaskProducer(tasks, aiCruiser, _prefabFactory, taskFactory, _staticData.BuildingKeys); 
+            _taskProducerFactory.CreateBasicTaskProducer(tasks, buildOrder);
+            _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
 			
             new TaskConsumer(tasks);
 		}

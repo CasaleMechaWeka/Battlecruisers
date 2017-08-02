@@ -17,22 +17,24 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly ICruiserController _aiCruiser, _playerCruiser;
         private readonly IPrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
-        private ISlotNumCalculatorFactory _slotNumCalculatorFactory;
+        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
+        private readonly IStaticData _staticData;
 
 		private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
         private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
         public TaskProducerFactory(ICruiserController aiCruiser, ICruiserController playerCruiser, IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, ISlotNumCalculatorFactory slotNumCalculatorFactory)
+            ITaskFactory taskFactory, ISlotNumCalculatorFactory slotNumCalculatorFactory, IStaticData staticData)
         {
-            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory);
+            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData);
 
             _aiCruiser = aiCruiser;
             _playerCruiser = playerCruiser;
             _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
             _slotNumCalculatorFactory = slotNumCalculatorFactory;
+            _staticData = staticData;
         }
 
         public void CreateBasicTaskProducer(ITaskList tasks, IList<IPrefabKey> buildOrder)
@@ -40,9 +42,9 @@ namespace BattleCruisers.AI.TaskProducers
 			new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
 		}
 
-		public void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks, IList<IPrefabKey> unlockedBuildingKeys)
+		public void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
         {
-            new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
+            new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
         }
 
 		public void CreateAntiAirTaskProducer(ITaskList tasks)

@@ -6,6 +6,6 @@ namespace BattleCruisers.AI
 {
     public interface IAIFactory
     {
-        void CreateAI(ICruiserController aiCruiser, IList<IPrefabKey> buildOrder);
+        void CreateBasicAI(ICruiserController aiCruiser, IList<IPrefabKey> buildOrder);
 	}
 }
