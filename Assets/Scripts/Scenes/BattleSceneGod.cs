@@ -151,7 +151,10 @@ namespace BattleCruisers.Scenes
                 _aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
             IBuildOrderProvider buildOrderProvider = new BuildOrderProvider();
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, buildOrderProvider);
-            aiFactory.CreateBasicAI(currentLevel);
+
+            // FELIX  Create difficulty setting, and create AI accordingly (inside AIManager probably :) )
+            //aiFactory.CreateBasicAI(currentLevel);
+            aiFactory.CreateAdaptiveAI(currentLevel);
         }
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
