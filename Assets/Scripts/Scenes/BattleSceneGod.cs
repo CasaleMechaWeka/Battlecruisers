@@ -149,8 +149,9 @@ namespace BattleCruisers.Scenes
             ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
                 _aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
-            //IAIFactory aiFactory = new AIFactory(taskProducerFactory);
-            //aiFactory.CreateBasicAI(_aiCruiser, currentLevel.BuildOrder);
+            IBuildOrderProvider buildOrderProvider = new BuildOrderProvider();
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory, buildOrderProvider);
+            aiFactory.CreateBasicAI(currentLevel);
         }
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
