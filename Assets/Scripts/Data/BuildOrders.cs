@@ -44,6 +44,43 @@ namespace BattleCruisers.Data
 			}
 		}
 
+		public static IList<IPrefabKey> AdvancedBalanced
+		{
+			get
+			{
+				return new List<IPrefabKey>()
+				{
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.ShieldGenerator,
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.Artillery,
+					StaticPrefabKeys.Buildings.ShieldGenerator,
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.DroneStation,
+					StaticPrefabKeys.Buildings.RocketLauncher,
+					StaticPrefabKeys.Buildings.ShieldGenerator,
+					StaticPrefabKeys.Buildings.DeathstarLauncher,
+					StaticPrefabKeys.Buildings.NukeLauncher
+				};
+			}
+		}
+
+        public static IList<IPrefabKey> BasicAntiAir
+        {
+            get
+            {
+                return new List<IPrefabKey>()
+                {
+                    StaticPrefabKeys.Buildings.AntiAirTurret,
+                    StaticPrefabKeys.Buildings.AntiAirTurret,
+                    StaticPrefabKeys.Buildings.AntiAirTurret,
+                    StaticPrefabKeys.Buildings.AntiAirTurret
+                };
+            }
+        }
+
 		public static IList<IPrefabKey> AntiAir
 		{
 			get
@@ -54,6 +91,20 @@ namespace BattleCruisers.Data
 					StaticPrefabKeys.Buildings.SamSite,
 					StaticPrefabKeys.Buildings.SamSite,
 					StaticPrefabKeys.Buildings.SamSite
+				};
+			}
+		}
+
+		public static IList<IPrefabKey> BasicAntiNaval
+		{
+			get
+			{
+				return new List<IPrefabKey>()
+				{
+					StaticPrefabKeys.Buildings.AntiShipTurret,
+					StaticPrefabKeys.Buildings.AntiShipTurret,
+					StaticPrefabKeys.Buildings.AntiShipTurret,
+					StaticPrefabKeys.Buildings.AntiShipTurret
 				};
 			}
 		}
