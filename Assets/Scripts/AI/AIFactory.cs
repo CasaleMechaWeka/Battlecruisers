@@ -51,16 +51,24 @@ namespace BattleCruisers.AI
 		{
             ITaskList tasks = new TaskList();
 
+            // Base build order, main strategy
             IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdvancedBuildOrder(level.Num);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
+            // Anti air
             IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num);
             _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
 
+            // Anti naval
 			IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num);
 			_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
 
-			// FELIX  Anti rocket!
+            // Anti rocket
+            if (_buildOrderProvider.IsAntiRocketBuildOrderAvailable(level.Num))
+            {
+                _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderProvider.AntiRocketBuildOrder);
+            }
+
 			// FELIX  Anti stealth!
 			
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
