@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
@@ -30,6 +31,16 @@ namespace BattleCruisers.Data
 			// Ultras
 			public static BuildingKey DeathstarLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"); } }
 			public static BuildingKey NukeLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "NukeLauncher"); } }
+		}
+
+		public static class Units
+		{
+			// Aircraft
+			public static UnitKey Bomber { get { return new UnitKey(UnitCategory.Aircraft, "Bomber"); } }
+			public static UnitKey Fighter { get { return new UnitKey(UnitCategory.Aircraft, "Fighter"); } }
+
+			// Ships
+			public static UnitKey AttackBoat { get { return new UnitKey(UnitCategory.Naval, "AttackBoat"); } }
 		}
 
 		public static class Hulls
