@@ -35,6 +35,11 @@ namespace BattleCruisers.AI.TaskProducers
             _slotNumCalculatorFactory = slotNumCalculatorFactory;
         }
 
+        public void CreateBasicTaskProducer(ITaskList tasks, IList<IPrefabKey> buildOrder)
+        {
+			new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
+		}
+
 		public void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks, IList<IPrefabKey> unlockedBuildingKeys)
         {
             new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
