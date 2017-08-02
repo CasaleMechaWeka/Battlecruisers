@@ -60,7 +60,6 @@ namespace BattleCruisers.Data
 					StaticPrefabKeys.Buildings.DroneStation,
 					StaticPrefabKeys.Buildings.DroneStation,
 					StaticPrefabKeys.Buildings.RocketLauncher,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
 					StaticPrefabKeys.Buildings.DeathstarLauncher,
 					StaticPrefabKeys.Buildings.NukeLauncher
 				};
