@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
-	public class StaticData : IStaticData
+    public class StaticData : IStaticData
 	{
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
@@ -40,51 +39,47 @@ namespace BattleCruisers.Data
 			};
 		}
 
-        // FELIX  Initialise like hull keys :)
 		private List<BuildingKey> AllBuildingKeys()
 		{
-			List<BuildingKey> buildings = new List<BuildingKey>();
+			return new List<BuildingKey>()
+			{
+                // Factories
+                StaticPrefabKeys.Buildings.AirFactory,
+				StaticPrefabKeys.Buildings.NavalFactory,
+				StaticPrefabKeys.Buildings.DroneStation,
 
-			// Factories
-			buildings.Add(StaticPrefabKeys.Buildings.AirFactory);
-			buildings.Add(StaticPrefabKeys.Buildings.NavalFactory);
-			buildings.Add(StaticPrefabKeys.Buildings.DroneStation);
+                // Tactical
+                StaticPrefabKeys.Buildings.ShieldGenerator,
 
-			// Tactical
-			buildings.Add(StaticPrefabKeys.Buildings.ShieldGenerator);
+                // Defence
+                StaticPrefabKeys.Buildings.AntiShipTurret,
+				StaticPrefabKeys.Buildings.AntiAirTurret,
+				StaticPrefabKeys.Buildings.Mortar,
+				StaticPrefabKeys.Buildings.SamSite,
+				StaticPrefabKeys.Buildings.TeslaCoil,
 
-			// Defence
-			buildings.Add(StaticPrefabKeys.Buildings.AntiShipTurret);
-			buildings.Add(StaticPrefabKeys.Buildings.AntiAirTurret);
-			buildings.Add(StaticPrefabKeys.Buildings.Mortar);
-			buildings.Add(StaticPrefabKeys.Buildings.SamSite);
-			buildings.Add(StaticPrefabKeys.Buildings.TeslaCoil);
+                // Offence
+                StaticPrefabKeys.Buildings.Artillery,
+				StaticPrefabKeys.Buildings.RocketLauncher,
+				StaticPrefabKeys.Buildings.Railgun,
 
-			// Offence
-			buildings.Add(StaticPrefabKeys.Buildings.Artillery);
-			buildings.Add(StaticPrefabKeys.Buildings.RocketLauncher);
-			buildings.Add(StaticPrefabKeys.Buildings.Railgun);
-
-			// Ultras
-			buildings.Add(StaticPrefabKeys.Buildings.DeathstarLauncher);
-			buildings.Add(StaticPrefabKeys.Buildings.NukeLauncher);
-
-			return buildings;
+                // Ultras
+                StaticPrefabKeys.Buildings.DeathstarLauncher,
+				StaticPrefabKeys.Buildings.NukeLauncher
+			};
 		}
 
-		// FELIX  Initialise like hull keys :)
 		private List<UnitKey> AllUnitKeys()
 		{
-			List<UnitKey> units = new List<UnitKey>();
-
-			// Aircraft
-			units.Add(new UnitKey(UnitCategory.Aircraft, "Bomber"));
-			units.Add(new UnitKey(UnitCategory.Aircraft, "Fighter"));
-
-			// Ships
-			units.Add(new UnitKey(UnitCategory.Naval, "AttackBoat"));
-
-			return units;
+			return new List<UnitKey>()
+			{
+                // Aircraft
+                StaticPrefabKeys.Units.Bomber,
+				StaticPrefabKeys.Units.Fighter,
+                
+                // Ships
+                StaticPrefabKeys.Units.AttackBoat
+			};
 		}
 
 		// FELIX  For final game, don't add ALL the prefabs :D
@@ -109,17 +104,15 @@ namespace BattleCruisers.Data
 		// FELIX  All 21 levels :D
 		private IList<ILevel> CreateLevels()
 		{
-			Loadout aiLoadout = new Loadout(AllHullKeys()[0], AllBuildingKeys(), AllUnitKeys());
-
 			return new List<ILevel>()
 			{
 				new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor),
-                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
+				new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
 				new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor),
-                new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw),
-                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark),
-                new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw),
-                new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw)
+				new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw),
+				new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark),
+				new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw),
+				new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw)
 			};
 		}
 	}
