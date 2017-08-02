@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data;
 
 namespace BattleCruisers.AI
 {
     public interface IAIFactory
     {
-        void CreateBasicAI(ICruiserController aiCruiser, IList<IPrefabKey> buildOrder);
+        void CreateBasicAI(ILevel level);
+        void CreateAdaptiveAI(ILevel level);
 	}
 }

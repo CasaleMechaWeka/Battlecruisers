@@ -1,24 +1,21 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
     // FELIX  Eventually add:
     // + Loot given on accomplishment
     // + Level specific graphics (ie, background image, lighting perhaps?)
-    // + AI playing style (once an AI exists :P)
     public class Level : ILevel
     {
+		public int Num { get; private set; }
         public string Name { get; private set; }
-        public Loadout AiLoadout { get; private set; }
-        public IList<IPrefabKey> BuildOrder { get; private set; }
+        public IPrefabKey Hull { get; private set; }
 
-        public Level(string name, Loadout aiLoadout, IList<IPrefabKey> buildOrder)
+        public Level(int num, string name, IPrefabKey hull)
 		{
-			Name = name;
-			AiLoadout = aiLoadout;
-            BuildOrder = buildOrder;
+			Num = num;
+            Name = name;
+            Hull = hull;
 		}
 	}
 }

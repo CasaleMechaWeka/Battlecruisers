@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
     public interface ILevel
     {
-        Loadout AiLoadout { get; }
+        int Num { get; }
         string Name { get; }
-        IList<IPrefabKey> BuildOrder { get; }
+        IPrefabKey Hull { get; }
     }
 }

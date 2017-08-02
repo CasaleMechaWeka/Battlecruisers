@@ -47,7 +47,7 @@ namespace BattleCruisers.AI.TaskProducers
             new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
         }
 
-		public void CreateAntiAirTaskProducer(ITaskList tasks)
+        public void CreateAntiAirTaskProducer(ITaskList tasks, IList<IPrefabKey> antiAirBuildOrder)
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
             IThreatMonitor airThreatMonitor = new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
@@ -55,10 +55,10 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = GetHalfTheSlots(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: true);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiAir, airThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
-		public void CreateAntiNavalTaskProducer(ITaskList tasks)
+		public void CreateAntiNavalTaskProducer(ITaskList tasks, IList<IPrefabKey> antiNavalBuildOrder)
 		{
 			IThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
             IThreatMonitor navalThreatMonitor = new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Naval);
@@ -66,16 +66,16 @@ namespace BattleCruisers.AI.TaskProducers
 			int maxNumOfDeckSlots = GetHalfTheSlots(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: false);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 
-            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiNaval, navalThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
 		}
 
-		public void CreateAntiRocketLauncherTaskProducer(ITaskList tasks)
+		public void CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IList<IPrefabKey> antiRocketLauncherBuildOrder)
 		{
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
 			IThreatMonitor rocketLauncherThreatMonitor = new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
 
-            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, BuildOrders.AntiRocketLauncher, rocketLauncherThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
 		}
 
         private int GetHalfTheSlots(int totalNumOfSlots, bool roundUp)

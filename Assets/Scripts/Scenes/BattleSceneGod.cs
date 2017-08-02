@@ -81,7 +81,6 @@ namespace BattleCruisers.Scenes
 
 			Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
 			ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
-			Loadout aiLoadout = currentLevel.AiLoadout;
 
 
 			// Common setup
@@ -96,7 +95,7 @@ namespace BattleCruisers.Scenes
 
 
 			// Instantiate AI cruiser
-			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(aiLoadout.Hull);
+            Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
 			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 
 			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
@@ -150,8 +149,8 @@ namespace BattleCruisers.Scenes
             ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
                 _aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory);
-            aiFactory.CreateBasicAI(_aiCruiser, currentLevel.BuildOrder);
+            //IAIFactory aiFactory = new AIFactory(taskProducerFactory);
+            //aiFactory.CreateBasicAI(_aiCruiser, currentLevel.BuildOrder);
         }
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
