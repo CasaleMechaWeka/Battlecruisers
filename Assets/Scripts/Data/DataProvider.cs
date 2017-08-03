@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Serialization;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
-	public class DataProvider : IDataProvider
+    public class DataProvider : IDataProvider
 	{
 		private readonly ISerializer _serializer;
 		
         public IStaticData StaticData { get; private set; }
 		public IList<ILevel> Levels { get { return StaticData.Levels; } }
 		public GameModel GameModel { get; private set; }
+		public ISettingsManager SettingsManager { get; private set; }
 
 		public int NumOfLevelsUnlocked
 		{
@@ -26,13 +29,13 @@ namespace BattleCruisers.Data
 			}
 		}
 
-        public DataProvider(IStaticData staticData, ISerializer serializer)
+        public DataProvider(IStaticData staticData, ISerializer serializer, ISettingsManager settingsManager)
 		{
-			Assert.IsNotNull(staticData);
-			Assert.IsNotNull(serializer);
+            Helper.AssertIsNotNull(staticData, serializer, settingsManager);
 
 			StaticData = staticData;
 			_serializer = serializer;
+            SettingsManager = settingsManager;
 
 			if (_serializer.DoesSavedGameExist())
 			{
@@ -56,4 +59,3 @@ namespace BattleCruisers.Data
 		}
 	}
 }
-

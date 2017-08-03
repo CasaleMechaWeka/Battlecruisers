@@ -12,6 +12,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
@@ -26,10 +27,10 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-    /// <summary>
-    /// Initialises everything :D
-    /// </summary>
-    public class BattleSceneGod : MonoBehaviour
+	/// <summary>
+	/// Initialises everything :D
+	/// </summary>
+	public class BattleSceneGod : MonoBehaviour
 	{
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
@@ -43,7 +44,7 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-        public Deferrer deferrer;
+		public Deferrer deferrer;
 
 		// User needs to be able to build at least one building
 		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
@@ -58,15 +59,8 @@ namespace BattleCruisers.Scenes
 			Time.timeScale = 1;
 
 
-			Assert.IsNotNull(uiManager);
-			Assert.IsNotNull(uiFactory);
-			Assert.IsNotNull(buildMenuController);
-			Assert.IsNotNull(buildableDetailsController);
-			Assert.IsNotNull(modalMenuController);
-			Assert.IsNotNull(cameraController);
-			Assert.IsNotNull(playerCruiserHealthBar);
-			Assert.IsNotNull(aiCruiserHealthBar);
-			Assert.IsNotNull(deferrer);
+			Helper.AssertIsNotNull(uiManager, uiFactory, buildMenuController, buildableDetailsController, 
+                modalMenuController, cameraController, playerCruiserHealthBar, aiCruiserHealthBar, deferrer);
 
 
 			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -95,7 +89,7 @@ namespace BattleCruisers.Scenes
 
 
 			// Instantiate AI cruiser
-            Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
+			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
 			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 
 			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
@@ -103,8 +97,8 @@ namespace BattleCruisers.Scenes
 			rotation.eulerAngles = new Vector3(0, 180, 0);
 			_aiCruiser.transform.rotation = rotation;
 
-            // FELIX  TEMP
-            _aiCruiser.numOfDrones = 100;
+			// FELIX  TEMP
+			_aiCruiser.numOfDrones = 100;
 
 
 			// UIManager
@@ -145,17 +139,24 @@ namespace BattleCruisers.Scenes
 
 
 			// AI
+			// FELIX  Extract to AIManager?
 			ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, deferrer);
-            ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-            ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
-                _aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
-            IBuildOrderProvider buildOrderProvider = new BuildOrderProvider();
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory, buildOrderProvider);
+			ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
+			ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
+				_aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
+			IBuildOrderProvider buildOrderProvider = new BuildOrderProvider();
+			IAIFactory aiFactory = new AIFactory(taskProducerFactory, buildOrderProvider);
 
-            // FELIX  Create difficulty setting, and create AI accordingly (inside AIManager probably :) )
-            //aiFactory.CreateBasicAI(currentLevel);
-            aiFactory.CreateAdaptiveAI(currentLevel);
-        }
+			switch (_dataProvider.SettingsManager.AIDifficulty)
+			{
+                case Difficulty.Normal:
+					aiFactory.CreateBasicAI(currentLevel);
+                    break;
+                case Difficulty.Hard:
+					aiFactory.CreateAdaptiveAI(currentLevel);
+                    break;
+            }
+		}
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
 		{

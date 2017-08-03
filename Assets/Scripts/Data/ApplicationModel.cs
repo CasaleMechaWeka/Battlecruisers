@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Serialization;
+using BattleCruisers.Data.Settings;
 
 namespace BattleCruisers.Data
 {
@@ -16,7 +17,8 @@ namespace BattleCruisers.Data
 				{
 					_dataProvider = new DataProvider(
 						new StaticData(),
-						new Serializer(new ModelFilePathProvider()));
+						new Serializer(new ModelFilePathProvider()),
+                        new SettingsManager());
 				}
 				return _dataProvider;
 			}

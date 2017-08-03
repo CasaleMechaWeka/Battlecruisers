@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
 
 namespace BattleCruisers.Data
 {
@@ -9,6 +10,7 @@ namespace BattleCruisers.Data
         GameModel GameModel { get; }
         int NumOfLevelsUnlocked { get; }
         IStaticData StaticData { get; }
+        ISettingsManager SettingsManager { get; }
 
         ILevel GetLevel(int levelNum);
         void SaveGame();
