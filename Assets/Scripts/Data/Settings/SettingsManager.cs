@@ -16,7 +16,6 @@ namespace BattleCruisers.Data.Settings
             {
                 return (Difficulty)Enum.Parse(typeof(Difficulty), PlayerPrefs.GetString(Keys.Difficulty));
             }
-
             set
             {
                 PlayerPrefs.SetString(Keys.Difficulty, value.ToString());
