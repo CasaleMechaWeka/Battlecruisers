@@ -18,7 +18,6 @@ namespace BattleCruisers.Cruisers
 		private HealthBarController _healthBarController;
 		private UIManager _uiManager;
 		private Cruiser _enemyCruiser;
-		private IFactoryProvider _factoryProvider;
 		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
@@ -41,8 +40,9 @@ namespace BattleCruisers.Cruisers
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public Sprite Sprite { get { return _renderer.sprite; } }
         public ISlotWrapper SlotWrapper { get; private set; }
+		public IFactoryProvider FactoryProvider { get; private set; }
 
-        public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         public override void StaticInitialise()
@@ -66,7 +66,7 @@ namespace BattleCruisers.Cruisers
             DroneManager = droneManager;
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = droneConsumerProvider;
-            _factoryProvider = factoryProvider;
+            FactoryProvider = factoryProvider;
             Direction = facingDirection;
 
             _healthBarController.Initialise(this);
@@ -93,8 +93,8 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotType, slot.Type);
 
-            IBuilding building = _factoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(this, _enemyCruiser, _uiManager, _factoryProvider);
+            IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+			building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider);
 			slot.Building = building;
             building.Destroyed += Building_Destroyed;
 

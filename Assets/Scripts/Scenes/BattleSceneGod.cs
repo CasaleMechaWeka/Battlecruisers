@@ -8,7 +8,6 @@ using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -68,6 +67,7 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            ICruiserFactory cruiserFactory = new CruiserFactory(uiManager, prefabFactory);
 
 
 			// Instantiate player cruiser
@@ -93,31 +93,23 @@ namespace BattleCruisers.Scenes
 			uiManager.Initialise(_playerCruiser, _aiCruiser);
 
 
-			// Initialise player cruiser
-			IFactoryProvider playerFactoryProvider = new FactoryProvider(prefabFactory, _playerCruiser, _aiCruiser);
-			IDroneManager playerDroneManager = new DroneManager();
-			IDroneConsumerProvider playerDroneConsumerProvider = new DroneConsumerProvider(playerDroneManager);
-			_playerCruiser.Initialise(Faction.Blues, _aiCruiser, playerCruiserHealthBar, uiManager, playerDroneManager,
-				playerDroneConsumerProvider, playerFactoryProvider, Direction.Right);
+            // Initialise player cruiser
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, playerCruiserHealthBar, Faction.Blues, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
-			// Initialise AI cruiser
-			IFactoryProvider aiFactoryProvider = new FactoryProvider(prefabFactory, _aiCruiser, _playerCruiser);
-			IDroneManager aiDroneManager = new DroneManager();
-			IDroneConsumerProvider aiDroneConsumerProvider = new DroneConsumerProvider(aiDroneManager);
-			_aiCruiser.Initialise(Faction.Reds, _playerCruiser, aiCruiserHealthBar, uiManager, aiDroneManager,
-				aiDroneConsumerProvider, aiFactoryProvider, Direction.Left);
+            // Initialise AI cruiser
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, aiCruiserHealthBar, Faction.Reds, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
 			// UI
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-			buildableDetailsController.Initialise(playerDroneManager, spriteFetcher);
-			uiFactory.Initialise(spriteFetcher, playerDroneManager);
+            buildableDetailsController.Initialise(_playerCruiser.DroneManager, spriteFetcher);
+			uiFactory.Initialise(spriteFetcher, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
-            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, playerFactoryProvider, buildingGroupFactory);
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);
 			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
 			buildMenuController.Initialise(buildingGroups, units);
