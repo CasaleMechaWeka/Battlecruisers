@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-    public class BuildingGroup
+    public class BuildingGroup : IBuildingGroup
 	{
         public IList<IBuildableWrapper<IBuilding>> Buildings { get; private set; }
 		public BuildingCategory BuildingCategory { get; private set; }
