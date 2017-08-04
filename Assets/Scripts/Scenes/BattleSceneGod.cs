@@ -69,7 +69,7 @@ namespace BattleCruisers.Scenes
 			_dataProvider = ApplicationModel.DataProvider;
 			_currentLevelNum = ApplicationModel.SelectedLevel;
 
-			Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+			ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
 			ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
 
 
@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes
             aiManager.CreateAI(currentLevel, _playerCruiser, _aiCruiser);
 		}
 
-		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
+		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
 
@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes
 			return buildingGroups;
 		}
 
-		private IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> GetUnitsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
+		private IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> GetUnitsFromKeys(ILoadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>>();
 
