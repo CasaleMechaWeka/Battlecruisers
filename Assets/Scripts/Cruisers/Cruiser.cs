@@ -16,7 +16,7 @@ namespace BattleCruisers.Cruisers
     public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
 	{
 		private HealthBarController _healthBarController;
-		private UIManager _uiManager;
+		private IUIManager _uiManager;
 		private ICruiser _enemyCruiser;
 		private SpriteRenderer _renderer;
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Cruisers
         }
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
-            UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
+            IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
             IFactoryProvider factoryProvider, Direction facingDirection)
         {
             Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider);

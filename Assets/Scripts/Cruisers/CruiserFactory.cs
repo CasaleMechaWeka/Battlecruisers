@@ -10,10 +10,10 @@ namespace BattleCruisers.Cruisers
 {
 	public class CruiserFactory : ICruiserFactory
 	{
-        private readonly UIManager _uiManager;
+        private readonly IUIManager _uiManager;
         private readonly IPrefabFactory _prefabFactory;
 
-        public CruiserFactory(UIManager uiManager, IPrefabFactory prefabFactory)
+        public CruiserFactory(IUIManager uiManager, IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(uiManager, prefabFactory);
             

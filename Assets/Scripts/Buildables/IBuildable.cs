@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
         void StaticInitialise();
-		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, UIManager uiManager, IFactoryProvider factoryProvider);
+		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
 		void StartConstruction();
 		void InitiateDelete();
 	}

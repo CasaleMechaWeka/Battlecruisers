@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables
 		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
 
-		protected UIManager _uiManager;
+		protected IUIManager _uiManager;
 		protected ICruiser _parentCruiser;
 		protected ICruiser _enemyCruiser;
 		protected IPrefabFactory _prefabFactory;
@@ -147,7 +147,7 @@ namespace BattleCruisers.Buildables
 			_healthBar.Initialise(this, followDamagable: true);
 		}
 
-		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, UIManager uiManager, IFactoryProvider factoryProvider)
+		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
 			Assert.IsTrue(IsStaticallyInitialised, "Must call StaticInitialise() before Initialise(...)");
 
