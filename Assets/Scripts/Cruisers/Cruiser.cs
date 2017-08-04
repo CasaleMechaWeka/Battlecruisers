@@ -57,12 +57,7 @@ namespace BattleCruisers.Cruisers
             UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
             IFactoryProvider factoryProvider, Direction facingDirection)
         {
-            Assert.IsNotNull(enemyCruiser);
-            Assert.IsNotNull(healthBarController);
-            Assert.IsNotNull(uiManager);
-            Assert.IsNotNull(droneManager);
-            Assert.IsNotNull(droneConsumerProvider);
-            Assert.IsNotNull(factoryProvider);
+            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider);
 
             Faction = faction;
             _enemyCruiser = enemyCruiser;
