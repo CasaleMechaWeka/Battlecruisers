@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class UIManager : MonoBehaviour 
+    public class UIManager : MonoBehaviour, IUIManager
 	{
 		private Cruiser _playerCruiser, _aiCruiser;
 
