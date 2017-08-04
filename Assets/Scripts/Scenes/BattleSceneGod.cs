@@ -125,7 +125,7 @@ namespace BattleCruisers.Scenes
 			uiFactory.Initialise(spriteFetcher, playerDroneManager);
 
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
-			IList<BuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
+			IList<IBuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
 			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
 			buildMenuController.Initialise(buildingGroups, units);
 
@@ -163,13 +163,13 @@ namespace BattleCruisers.Scenes
 			return categoryToBuildings;
 		}
 
-		private IList<BuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups)
+		private IList<IBuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups)
 		{
-			IList<BuildingGroup> buildingGroups = new List<BuildingGroup>();
+			IList<IBuildingGroup> buildingGroups = new List<IBuildingGroup>();
 
 			foreach (KeyValuePair<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings in buildingCategoryToGroups)
 			{
-				BuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
+				IBuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
 				buildingGroups.Add(group);
 			}
 

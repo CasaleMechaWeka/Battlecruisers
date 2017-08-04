@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene
 			return panel;
 		}
 
-        public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, BuildingGroup buildingGroup)
+        public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup buildingGroup)
 		{
 			Button button = Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);

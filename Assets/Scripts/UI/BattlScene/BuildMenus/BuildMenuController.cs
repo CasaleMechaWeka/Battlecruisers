@@ -15,12 +15,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
 		private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
 		private Presentable _currentPanel;
-		private IList<BuildingGroup> _buildingGroups;
+		private IList<IBuildingGroup> _buildingGroups;
 
 		public UIFactory uiFactory;
 		public UIManager uiManager;
 
-		public void Initialise(IList<BuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
+		public void Initialise(IList<IBuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
 		{
 			_buildingGroups = buildingGroups;
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			for (int i = 0; i < _buildingGroups.Count; ++i)
 			{
 				// Create category button
-				BuildingGroup buildingGroup = _buildingGroups[i];
+				IBuildingGroup buildingGroup = _buildingGroups[i];
 				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
 
 				// Create category panel
