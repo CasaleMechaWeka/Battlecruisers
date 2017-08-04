@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.AI;
-using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.AI.TaskProducers.SlotNumber;
-using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -12,7 +9,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
@@ -27,10 +23,10 @@ using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	/// <summary>
-	/// Initialises everything :D
-	/// </summary>
-	public class BattleSceneGod : MonoBehaviour
+    /// <summary>
+    /// Initialises everything :D
+    /// </summary>
+    public class BattleSceneGod : MonoBehaviour
 	{
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
@@ -138,24 +134,9 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-			// AI
-			// FELIX  Extract to AIManager?
-			ITaskFactory taskFactory = new TaskFactory(prefabFactory, _aiCruiser, deferrer);
-			ISlotNumCalculatorFactory slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-			ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
-				_aiCruiser, _playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, _dataProvider.StaticData);
-			IBuildOrderProvider buildOrderProvider = new BuildOrderProvider();
-			IAIFactory aiFactory = new AIFactory(taskProducerFactory, buildOrderProvider);
-
-			switch (_dataProvider.SettingsManager.AIDifficulty)
-			{
-                case Difficulty.Normal:
-					aiFactory.CreateBasicAI(currentLevel);
-                    break;
-                case Difficulty.Hard:
-					aiFactory.CreateAdaptiveAI(currentLevel);
-                    break;
-            }
+            // AI
+            IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
+            aiManager.CreateAI(currentLevel, _playerCruiser, _aiCruiser);
 		}
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(Loadout loadout, IFactoryProvider factoryProvider)
