@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
-		private BuildingGroupFactory _buildingGroupFactory;
+		private IBuildingGroupFactory _buildingGroupFactory;
 
 		public UIManager uiManager;
 		public UIFactory uiFactory;

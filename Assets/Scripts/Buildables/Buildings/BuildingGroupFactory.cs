@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-    public class BuildingGroupFactory
+    public class BuildingGroupFactory : IBuildingGroupFactory
 	{
-		public BuildingGroup CreateBuildingGroup(BuildingCategory category, IList<IBuildableWrapper<IBuilding>> buildings)
+		public IBuildingGroup CreateBuildingGroup(BuildingCategory category, IList<IBuildableWrapper<IBuilding>> buildings)
 		{
 			return new BuildingGroup(buildings, GetGroupName(category), GetGroupDescription(category));
 		}
