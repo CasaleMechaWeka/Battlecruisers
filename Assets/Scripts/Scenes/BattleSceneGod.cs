@@ -8,7 +8,6 @@ using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
@@ -31,7 +30,6 @@ namespace BattleCruisers.Scenes
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
-		private IBuildingGroupFactory _buildingGroupFactory;
 
 		public UIManager uiManager;
 		public UIFactory uiFactory;
@@ -41,11 +39,6 @@ namespace BattleCruisers.Scenes
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
 		public Deferrer deferrer;
-
-		// User needs to be able to build at least one building
-		private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
-		// Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
-		private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -74,7 +67,6 @@ namespace BattleCruisers.Scenes
 
 
 			// Common setup
-			_buildingGroupFactory = new BuildingGroupFactory();
 			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
 
@@ -124,9 +116,10 @@ namespace BattleCruisers.Scenes
 			buildableDetailsController.Initialise(playerDroneManager, spriteFetcher);
 			uiFactory.Initialise(spriteFetcher, playerDroneManager);
 
-			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(playerLoadout, playerFactoryProvider);
-			IList<IBuildingGroup> buildingGroups = CreateBuildingGroups(buildings);
-			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = GetUnitsFromKeys(playerLoadout, playerFactoryProvider);
+            IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, playerFactoryProvider, buildingGroupFactory);
+			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
+            IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
 			buildMenuController.Initialise(buildingGroups, units);
 
 
@@ -137,79 +130,6 @@ namespace BattleCruisers.Scenes
             // AI
             IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
             aiManager.CreateAI(currentLevel, _playerCruiser, _aiCruiser);
-		}
-
-		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IFactoryProvider factoryProvider)
-		{
-			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
-
-			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
-			{
-				IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
-
-				if (buildingKeys.Count != 0)
-				{
-					IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
-					categoryToBuildings[category] = buildings;
-
-					foreach (BuildingKey buildingKey in buildingKeys)
-					{
-						IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-						categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
-					}
-				}
-			}
-
-			return categoryToBuildings;
-		}
-
-		private IList<IBuildingGroup> CreateBuildingGroups(IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups)
-		{
-			IList<IBuildingGroup> buildingGroups = new List<IBuildingGroup>();
-
-			foreach (KeyValuePair<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings in buildingCategoryToGroups)
-			{
-				IBuildingGroup group = _buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
-				buildingGroups.Add(group);
-			}
-
-			if (buildingGroups.Count < MIN_NUM_OF_BUILDING_GROUPS
-				|| buildingGroups.Count > MAX_NUM_OF_BUILDING_GROUPS)
-			{
-				throw new InvalidProgramException();
-			}
-
-			return buildingGroups;
-		}
-
-		private IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> GetUnitsFromKeys(ILoadout loadout, IFactoryProvider factoryProvider)
-		{
-			IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>>();
-
-			foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
-			{
-				IList<UnitKey> unitKeys = loadout.GetUnits(unitCategory);
-
-				if (unitKeys.Count != 0)
-				{
-					categoryToUnits[unitCategory] = GetUnits(unitKeys, factoryProvider);
-				}
-			}
-
-			return categoryToUnits;
-		}
-
-		private IList<IBuildableWrapper<IUnit>> GetUnits(IList<UnitKey> unitKeys, IFactoryProvider factoryProvider)
-		{
-			IList<IBuildableWrapper<IUnit>> unitWrappers = new List<IBuildableWrapper<IUnit>>(unitKeys.Count);
-
-			foreach (UnitKey unitKey in unitKeys)
-			{
-				IBuildableWrapper<IUnit> unitWrapper = factoryProvider.PrefabFactory.GetUnitWrapperPrefab(unitKey);
-				unitWrappers.Add(unitWrapper);
-			}
-
-			return unitWrappers;
 		}
 
 		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
