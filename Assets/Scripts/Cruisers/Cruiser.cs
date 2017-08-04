@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers
 	{
 		private HealthBarController _healthBarController;
 		private UIManager _uiManager;
-		private Cruiser _enemyCruiser;
+		private ICruiser _enemyCruiser;
 		private SpriteRenderer _renderer;
 
 		public int numOfDrones;
@@ -53,7 +53,7 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(_renderer);
         }
 
-        public void Initialise(Faction faction, Cruiser enemyCruiser, HealthBarController healthBarController,
+        public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             UIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
             IFactoryProvider factoryProvider, Direction facingDirection)
         {

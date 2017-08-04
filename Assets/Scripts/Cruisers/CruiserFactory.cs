@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+﻿﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
         // FELIX  Use interface for:
         // + enemyCruiser
         // + uiManager
-        public void InitialiseCruiser(Cruiser cruiser, Cruiser enemyCruiser, 
+        public void InitialiseCruiser(Cruiser cruiser, ICruiser enemyCruiser, 
              HealthBarController healthBar, Faction faction, Direction facingDirection)
         {
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser);
