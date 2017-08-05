@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes
 			levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
-            // FELIX  Initialise settingsScreen
+            settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 
 			// FELIX  TEMP
