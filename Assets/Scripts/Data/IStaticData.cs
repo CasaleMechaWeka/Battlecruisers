@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 
@@ -17,6 +18,7 @@ namespace BattleCruisers.Data
         IList<ILevel> Levels { get; }
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
         bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum);
+        IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
     }
 }
 	

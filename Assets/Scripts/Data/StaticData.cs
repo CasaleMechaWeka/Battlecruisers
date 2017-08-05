@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
@@ -10,6 +12,7 @@ namespace BattleCruisers.Data
     public class StaticData : IStaticData
 	{
 		private readonly IDictionary<IPrefabKey, int> _buildableToUnlockedLevel;
+        private readonly IList<BuildingKey> _allBuildings;
 
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
@@ -20,8 +23,10 @@ namespace BattleCruisers.Data
 			InitialGameModel = CreateInitialGameModel();
 			Levels = CreateLevels();
 
+            _allBuildings = AllBuildingKeys();
+
 			IList<IPrefabKey> allBuildings =
-				AllBuildingKeys()
+                _allBuildings
 				.Select(buildingKey => (IPrefabKey)buildingKey)
 				.ToList();
 			this.BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
@@ -179,5 +184,13 @@ namespace BattleCruisers.Data
                 { StaticPrefabKeys.Units.Destroyer, 9 }
 			};
 		}
-	}
+
+        public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
+        {
+            return _allBuildings
+                .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildableAvailable(buildingKey, levelNum))
+                .Select(buildingKey => (IPrefabKey)buildingKey)
+                .ToList();
+        }
+    }
 }
