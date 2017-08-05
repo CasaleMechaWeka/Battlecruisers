@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				return;
 			}
 
-			if (Target != null)
+			if (Target != null && !Target.IsDestroyed)
 			{
 				Logging.Log(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
