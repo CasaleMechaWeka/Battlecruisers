@@ -16,6 +16,7 @@ namespace BattleCruisers.Data
         GameModel InitialGameModel { get; }
         IList<ILevel> Levels { get; }
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
+        bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum);
     }
 }
 	

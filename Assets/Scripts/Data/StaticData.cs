@@ -3,11 +3,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
     public class StaticData : IStaticData
 	{
+		private readonly IDictionary<IPrefabKey, int> _buildableToUnlockedLevel;
+
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
 		public ReadOnlyCollection<IPrefabKey> BuildingKeys { get; private set; }
@@ -113,6 +116,65 @@ namespace BattleCruisers.Data
 				new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark),
 				new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw),
 				new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw)
+			};
+		}
+
+		public bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum)
+		{
+			Assert.IsTrue(_buildableToUnlockedLevel.ContainsKey(buildableKey));
+
+			int levelBuildableIsAvaible = _buildableToUnlockedLevel[buildableKey];
+			return levelNum >= levelBuildableIsAvaible;
+		}
+
+		private IDictionary<IPrefabKey, int> CreateAvailabilityMap()
+		{
+			return new Dictionary<IPrefabKey, int>()
+			{
+                // === Buildings ===
+                // Factories
+                { StaticPrefabKeys.Buildings.AirFactory, 1 },
+				{ StaticPrefabKeys.Buildings.NavalFactory, 1 },
+				{ StaticPrefabKeys.Buildings.DroneStation, 5 },
+
+                // Tactical
+                { StaticPrefabKeys.Buildings.ShieldGenerator, 5 },
+				{ StaticPrefabKeys.Buildings.Booster, 10 },
+				{ StaticPrefabKeys.Buildings.ControlTower, 11 },
+				{ StaticPrefabKeys.Buildings.StealthField, 14 },
+                { StaticPrefabKeys.Buildings.SpySatellite, 14 },
+
+                // Defence
+                { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
+				{ StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
+				{ StaticPrefabKeys.Buildings.Mortar, 2 },
+				{ StaticPrefabKeys.Buildings.SamSite, 3 },
+				{ StaticPrefabKeys.Buildings.TeslaCoil, 13 },
+
+                // Offence
+                { StaticPrefabKeys.Buildings.Artillery, 1 },
+				{ StaticPrefabKeys.Buildings.RocketLauncher, 13 },
+				{ StaticPrefabKeys.Buildings.Railgun, 7 },
+
+                // Ultras
+                { StaticPrefabKeys.Buildings.DeathstarLauncher, 8 },
+				{ StaticPrefabKeys.Buildings.NukeLauncher, 15 },
+				{ StaticPrefabKeys.Buildings.Ultralisk, 16 },
+				{ StaticPrefabKeys.Buildings.KamikazeSignal, 17 },
+				{ StaticPrefabKeys.Buildings.Broadsides, 18 },
+                { StaticPrefabKeys.Buildings.ArchonBattleship, 20 },
+
+
+                // === Units ===
+                // Aircraft
+                { StaticPrefabKeys.Units.Bomber, 1 },
+				{ StaticPrefabKeys.Units.Gunship, 3 },
+                { StaticPrefabKeys.Units.Fighter, 9 },
+                
+                // Ships
+                { StaticPrefabKeys.Units.AttackBoat, 1 },
+                { StaticPrefabKeys.Units.Frigate, 2 },
+                { StaticPrefabKeys.Units.Destroyer, 9 }
 			};
 		}
 	}
