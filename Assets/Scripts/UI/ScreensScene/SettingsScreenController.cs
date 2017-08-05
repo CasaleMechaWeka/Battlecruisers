@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
 using UnityEngine;
@@ -17,12 +19,30 @@ namespace BattleCruisers.UI.ScreensScene
 		{
 			base.Initialise(screensSceneGod);
 
-            difficultyDropdown.onValueChanged.AddListener(OnDropdownChange);
+            difficultyDropdown.AddOptions(CreateDropdownOptions());
+
+			difficultyDropdown.onValueChanged.AddListener(OnDropdownChange);
+
+            //settingsManager.
 		}
+
+        private List<Dropdown.OptionData> CreateDropdownOptions()
+        {
+            List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+
+            foreach (Difficulty difficulty in Enum.GetValues(typeof(Difficulty)))
+			{
+                options.Add(new Dropdown.OptionData(difficulty.ToString()));
+			}
+
+            return options;
+        }
 
         private void OnDropdownChange(int newIndex)
         {
             Debug.Log("newIndex: " + newIndex);
+
+
         }
 	}
 }
