@@ -46,6 +46,11 @@ namespace BattleCruisers.Scenes
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 
+            // FELIX TEMP  Go to settings screen :)
+            GoToSettingsScreen();
+
+
+
 			// FELIX  TEMP
 			//if (ApplicationModel.ShowPostBattleScreen)
 			//{
