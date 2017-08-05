@@ -2,7 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.AI
+namespace BattleCruisers.AI.Providers
 {
     public class BuildOrderProvider : IBuildOrderProvider
     {

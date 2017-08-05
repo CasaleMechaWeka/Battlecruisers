@@ -1,4 +1,5 @@
-﻿using BattleCruisers.AI.TaskProducers;
+﻿using BattleCruisers.AI.Providers;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
@@ -27,7 +28,7 @@ namespace BattleCruisers.AI
             _dataProvider = dataProvider;
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-			_buildOrderProvider = new BuildOrderProvider();
+            _buildOrderProvider = new BuildOrderProvider();
         }
 
         public void CreateAI(ILevel currentLevel, ICruiserController playerCruiser, ICruiserController aiCruiser)
