@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-    // FELIX  Select right difficulty for dropdown :P
     public class SettingsScreenController : ScreenController
     {
         private ISettingsManager _settingsManager;
@@ -19,29 +18,50 @@ namespace BattleCruisers.UI.ScreensScene
 		{
 			base.Initialise(screensSceneGod);
 
-            difficultyDropdown.AddOptions(CreateDropdownOptions());
+            Assert.IsNotNull(settingsManager);
+            _settingsManager = settingsManager;
 
-			difficultyDropdown.onValueChanged.AddListener(OnDropdownChange);
+            SetupDropdown();
 		}
 
-        private List<Dropdown.OptionData> CreateDropdownOptions()
+        private void SetupDropdown()
         {
             List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
             _difficulties = new List<Difficulty>();
+            int currentIndex = 0;
 
-            foreach (Difficulty difficulty in Enum.GetValues(typeof(Difficulty)))
-			{
+            Difficulty[] difficulties = (Difficulty[])Enum.GetValues(typeof(Difficulty));
+
+			for (int i = 0; i < difficulties.Length; ++i)
+            {
+                Difficulty difficulty = difficulties[i];
+
                 options.Add(new Dropdown.OptionData(difficulty.ToString()));
                 _difficulties.Add(difficulty);
-			}
 
-            return options;
+                if (difficulty == _settingsManager.AIDifficulty)
+                {
+                    currentIndex = i;
+                }
+            }
+
+            difficultyDropdown.AddOptions(options);
+            difficultyDropdown.value = currentIndex;
         }
 
-        private void OnDropdownChange(int newIndex)
+        public void Save()
         {
-            Assert.IsTrue(newIndex < _difficulties.Count);
-            _settingsManager.AIDifficulty = _difficulties[newIndex];
+            Assert.IsTrue(difficultyDropdown.value < _difficulties.Count);
+            _settingsManager.AIDifficulty = _difficulties[difficultyDropdown.value];
+
+            _settingsManager.Save();
+
+            _screensSceneGod.GoToHomeScreen();
+        }
+
+        public void Cancel()
+        {
+            _screensSceneGod.GoToHomeScreen();
         }
 	}
 }
