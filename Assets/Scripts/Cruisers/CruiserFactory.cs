@@ -21,9 +21,6 @@ namespace BattleCruisers.Cruisers
             _prefabFactory = prefabFactory;
         }
 
-        // FELIX  Use interface for:
-        // + enemyCruiser
-        // + uiManager
         public void InitialiseCruiser(Cruiser cruiser, ICruiser enemyCruiser, 
              HealthBarController healthBar, Faction faction, Direction facingDirection)
         {
