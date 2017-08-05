@@ -1,23 +1,17 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using NSubstitute;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-	public class AntiAirVsBomberTestGod : MonoBehaviour 
+    public class AntiAirVsBomberTestGod : MonoBehaviour 
 	{
 		private BomberController _bomber;
 		private DefensiveTurret _antiAirTurret;
@@ -30,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 
 			// Set up turret
-			_antiAirTurret = GameObject.FindObjectOfType<DefensiveTurret>();
+			_antiAirTurret = FindObjectOfType<DefensiveTurret>();
 			Assert.IsNotNull(_antiAirTurret);
 
 			helper.InitialiseBuildable(_antiAirTurret, faction: Faction.Reds);
@@ -38,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 
 			// Set up bomber
-			_bomber = GameObject.FindObjectOfType<BomberController>();
+			_bomber = FindObjectOfType<BomberController>();
 			Assert.IsNotNull(_bomber);
 
 			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, _antiAirTurret.TargetType);
