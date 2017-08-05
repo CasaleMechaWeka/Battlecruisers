@@ -47,21 +47,20 @@ namespace BattleCruisers.Scenes
 
 
             // FELIX TEMP  Go to settings screen :)
-            GoToSettingsScreen();
+            //GoToSettingsScreen();
 
 
 
-			// FELIX  TEMP
-			//if (ApplicationModel.ShowPostBattleScreen)
-			//{
-			//	ApplicationModel.ShowPostBattleScreen = false;
-			//	postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
-			//	GoToScreen(postBattleScreen);
-			//}
-			//else
-			//{
-			//	GoToHomeScreen();
-			//}
+			if (ApplicationModel.ShowPostBattleScreen)
+			{
+				ApplicationModel.ShowPostBattleScreen = false;
+				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
+				GoToScreen(postBattleScreen);
+			}
+			else
+			{
+				GoToHomeScreen();
+			}
 		}
 		
 		public void GoToLevelsScreen()
