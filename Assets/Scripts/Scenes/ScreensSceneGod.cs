@@ -22,9 +22,12 @@ namespace BattleCruisers.Scenes
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
+        public SettingsScreenController settingsScreen;
 
 		void Start()
 		{
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
+
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
@@ -40,18 +43,20 @@ namespace BattleCruisers.Scenes
 			levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
+            // FELIX  Initialise settingsScreen
 
-			
-			if (ApplicationModel.ShowPostBattleScreen)
-			{
-				ApplicationModel.ShowPostBattleScreen = false;
-				postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
-				GoToScreen(postBattleScreen);
-			}
-			else
-			{
-				GoToHomeScreen();
-			}
+
+			// FELIX  TEMP
+			//if (ApplicationModel.ShowPostBattleScreen)
+			//{
+			//	ApplicationModel.ShowPostBattleScreen = false;
+			//	postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
+			//	GoToScreen(postBattleScreen);
+			//}
+			//else
+			//{
+			//	GoToHomeScreen();
+			//}
 		}
 		
 		public void GoToLevelsScreen()
@@ -68,6 +73,11 @@ namespace BattleCruisers.Scenes
 		{
 			GoToScreen(loadoutScreen);
 		}
+
+        public void GoToSettingsScreen()
+        {
+            GoToScreen(settingsScreen);
+        }
 
 		public void LoadLevel(int levelNum)
 		{

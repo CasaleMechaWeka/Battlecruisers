@@ -5,6 +5,7 @@
         void GoToLevelsScreen();
         void GoToHomeScreen();
         void GoToLoadoutScreen();
+        void GoToSettingsScreen();
 
         void LoadLevel(int levelNum);
     }
