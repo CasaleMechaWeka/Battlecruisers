@@ -9,13 +9,13 @@ namespace BattleCruisers.Cruisers
 		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
 
-		public void StaticInitialise()
+		public void Initialise(ICruiser parentCruiser)
 		{
-            SetupSlots();
+            SetupSlots(parentCruiser);
 			HideAllSlots();
 		}
 
-		private void SetupSlots()
+		private void SetupSlots(ICruiser parentCruiser)
 		{
 			_slots = new Dictionary<SlotType, List<ISlot>>();
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
             // Sort slots by type
 			foreach (Slot slot in slots)
 			{
-				slot.Initialise();
+                slot.Initialise(parentCruiser);
 
 				if (!_slots.ContainsKey(slot.type))
 				{

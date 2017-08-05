@@ -51,6 +51,11 @@ namespace BattleCruisers.Cruisers
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
+
+			SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
+			Assert.IsNotNull(slotWrapper);
+            slotWrapper.Initialise(parentCruiser: this);
+			SlotWrapper = slotWrapper;
         }
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
@@ -70,11 +75,6 @@ namespace BattleCruisers.Cruisers
             Direction = facingDirection;
 
             _healthBarController.Initialise(this);
-			
-			SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
-			Assert.IsNotNull(slotWrapper);
-			slotWrapper.StaticInitialise();
-			SlotWrapper = slotWrapper;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

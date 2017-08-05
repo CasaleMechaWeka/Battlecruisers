@@ -1,14 +1,13 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-	public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
+    public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{
 		private SpriteRenderer _renderer;
 		private ICruiser _parentCruiser;
@@ -18,7 +17,23 @@ namespace BattleCruisers.Cruisers
 
 		public bool IsFree { get { return _building == null; } }
 		public SlotType Type { get { return type; } }
-		public float XDistanceFromParentCruiser { get; private set; }
+
+        private float _xDistanceFromParentCruiser;
+        public float XDistanceFromParentCruiser
+        {
+            get 
+            { 
+				if (_xDistanceFromParentCruiser == default(float))
+				{
+					_xDistanceFromParentCruiser = 
+                        _parentCruiser.Direction == Direction.Right ?
+                        transform.position.x - _parentCruiser.Position.x :
+                        _parentCruiser.Position.x - transform.position.x;
+	            }
+
+                return _xDistanceFromParentCruiser;
+            }
+        }
 
 		private IBuilding _building;
 		public IBuilding Building
@@ -52,21 +67,16 @@ namespace BattleCruisers.Cruisers
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
 
-		public void Initialise()
+		public void Initialise(ICruiser parentCruiser)
 		{
+            Assert.IsNotNull(parentCruiser);
+
+            _parentCruiser = parentCruiser;
 			_isActive = false;
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
-
-            _parentCruiser = gameObject.GetComponentInInactiveParent<ICruiser>();
-			Assert.IsNotNull(_parentCruiser);
-
-            XDistanceFromParentCruiser =
-                _parentCruiser.Direction == Direction.Right ?
-                transform.position.x - _parentCruiser.Position.x :
-                _parentCruiser.Position.x - transform.position.x;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
