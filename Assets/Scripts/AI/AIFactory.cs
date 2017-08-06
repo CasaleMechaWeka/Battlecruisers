@@ -53,7 +53,7 @@ namespace BattleCruisers.AI
             ITaskList tasks = new TaskList();
 
             // Base build order, main strategy
-            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdvancedBuildOrder(level.Num);
+            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetBaseBuildOrder(level.Num);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
             // Anti air

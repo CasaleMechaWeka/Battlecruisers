@@ -19,7 +19,7 @@ namespace BattleCruisers.AI.Providers
             return BuildOrders.Balanced;
         }
 		
-        public IList<IPrefabKey> GetAdvancedBuildOrder(int levelNum)
+        public IList<IPrefabKey> GetBaseBuildOrder(int levelNum)
         {
             // FELIX  Don't always return same build order :P
             return BuildOrders.AdvancedBalanced;
