@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Providers
 {
@@ -16,27 +16,17 @@ namespace BattleCruisers.AI.Providers
         Low, High
     }
 
-    // FELIX  Own file
-    public class OffensiveRequest
-    {
-        public OffensiveType Type { get; private set; }
-        public OffensiveFocus Focus { get; private set; }
-
-        public OffensiveRequest(OffensiveType type, OffensiveFocus focus)
-        {
-            this.Type = type;
-            this.Focus = focus;
-        }
-    }
-
     public class OffensiveBuildOrderProvider
     {
         private readonly IStaticData _staticData;
+        private readonly IBuildingKeyProviderFactory _buildingKeyProviderFactory;
 
-        public OffensiveBuildOrderProvider(IStaticData staticData)
+        public OffensiveBuildOrderProvider(IStaticData staticData, IBuildingKeyProviderFactory buildingKeyProviderFactory)
         {
-            Assert.IsNotNull(staticData);
+            Helper.AssertIsNotNull(staticData, buildingKeyProviderFactory);
+
             _staticData = staticData;
+            _buildingKeyProviderFactory = buildingKeyProviderFactory;
         }
 
         /// <summary>
