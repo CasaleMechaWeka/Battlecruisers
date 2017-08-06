@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 

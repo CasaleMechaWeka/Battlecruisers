@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Data
 {

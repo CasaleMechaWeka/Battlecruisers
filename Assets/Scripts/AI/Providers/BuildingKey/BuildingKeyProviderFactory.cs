@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers.BuildingKey

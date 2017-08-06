@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Static
 {
 	public static class StaticBuildOrders
 	{

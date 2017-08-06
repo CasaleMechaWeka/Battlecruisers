@@ -5,8 +5,8 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings.Turrets.Offensive;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
 

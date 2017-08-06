@@ -6,7 +6,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Static
 {
     public class StaticData : IStaticData
 	{

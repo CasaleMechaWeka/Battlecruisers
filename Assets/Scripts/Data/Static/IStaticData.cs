@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Data
+namespace BattleCruisers.Data.Static
 {
     /// <summary>
     /// Provides data that does not change throughout the game.
