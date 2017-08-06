@@ -5,67 +5,120 @@ namespace BattleCruisers.Data.Static
 {
 	public static class StaticBuildOrders
 	{
-		public static IList<IPrefabKey> Balanced
-		{
-			get
+        public static class Adaptive
+        {
+			public static IList<IPrefabKeyWrapper> Balanced
 			{
-				return new List<IPrefabKey>()
+				get
 				{
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.AntiAirTurret,
-					StaticPrefabKeys.Buildings.AntiShipTurret,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
-					StaticPrefabKeys.Buildings.TeslaCoil,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.Artillery,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
-					StaticPrefabKeys.Buildings.AntiAirTurret,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.RocketLauncher,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.DeathstarLauncher,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.NukeLauncher
-				};
+					return new List<IPrefabKeyWrapper>()
+					{
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper()
+					};
+				}
 			}
-		}
-
-		public static IList<IPrefabKeyWrapper> AdaptiveBalancedBase
-		{
-			get
+			
+            public static IList<IPrefabKeyWrapper> Boom
 			{
-				return new List<IPrefabKeyWrapper>()
+				get
 				{
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                    new OffensivePrefabKeyWrapper(),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-					new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-					new OffensivePrefabKeyWrapper(),
-					new OffensivePrefabKeyWrapper(),
-					new OffensivePrefabKeyWrapper()
-				};
+					return new List<IPrefabKeyWrapper>()
+					{
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper()
+					};
+				}
 			}
-		}
+			
+            public static IList<IPrefabKeyWrapper> Rush
+			{
+				get
+				{
+					return new List<IPrefabKeyWrapper>()
+					{
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation)
+					};
+				}
+			}
+        }
 
+        public static class Basic
+        {
+			public static IList<IPrefabKey> Balanced
+			{
+				get
+				{
+					return new List<IPrefabKey>()
+					{
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.AntiAirTurret,
+						StaticPrefabKeys.Buildings.AntiShipTurret,
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.ShieldGenerator,
+						StaticPrefabKeys.Buildings.TeslaCoil,
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.Artillery,
+						StaticPrefabKeys.Buildings.ShieldGenerator,
+						StaticPrefabKeys.Buildings.AntiAirTurret,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.DroneStation,
+						StaticPrefabKeys.Buildings.RocketLauncher,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.ShieldGenerator,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.DeathstarLauncher,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.Mortar,
+						StaticPrefabKeys.Buildings.SamSite,
+						StaticPrefabKeys.Buildings.NukeLauncher
+					};
+				}
+			}
+        }
+
+        // FELIX  Replace with DefensiveBuildOrderProvider :)
         public static IList<IPrefabKey> BasicAntiAir
         {
             get

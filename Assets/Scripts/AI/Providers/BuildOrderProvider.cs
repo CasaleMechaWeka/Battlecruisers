@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.Providers
 			// Create base build order
 
 			// FELIX  Don't always return same build order :P
-			return StaticBuildOrders.Balanced;
+			return StaticBuildOrders.Basic.Balanced;
         }
 		
         /// <summary>
