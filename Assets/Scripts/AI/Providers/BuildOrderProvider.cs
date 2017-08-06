@@ -1,17 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
+using BattleCruisers.AI.Providers.BuildingKey;
+using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
 {
     public class BuildOrderProvider : IBuildOrderProvider
     {
+        private readonly IBuildingKeyProviderFactory _buildingKeyProviderFactory;
+
         // FELIX  Use StaticData instead
 		private const int LEVEL_SAM_SITE_IS_UNLOCKED = 2;
 		private const int LEVEL_MORTAR_IS_UNLOCKED = 1;
 		private const int LEVEL_TESLA_COIL_IS_UNLOCKED = 12;
 
         public IList<IPrefabKey> AntiRocketBuildOrder { get { return StaticBuildOrders.AntiRocketLauncher; } }
+
+        public BuildOrderProvider(IBuildingKeyProviderFactory buildingKeyProviderFactory)
+        {
+            Assert.IsNotNull(buildingKeyProviderFactory);
+            _buildingKeyProviderFactory = buildingKeyProviderFactory;
+        }
 
         // FELIX  Avoid duplicate code?
         /// <summary>
@@ -33,12 +45,20 @@ namespace BattleCruisers.AI.Providers
         /// </summary>
         public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum)
         {
-            // Get base strategy for level (balanced, boom, rush)
+            // Get level strategy
+            int levelIndex = levelNum - 1;
+            IStrategy strategy = LevelStrategies.Strategies[levelIndex];
 
-            // Get offensive strategy for level (naval, air, offensive buildings, ultras)
+            // Convert IBasicOffensiveRequests to IOffensiveRequests
+            IEnumerable<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest => 
+            {
+                IBuildingKeyProvider buildingKeyProvider = _buildingKeyProviderFactory.CreateBuildingKeyProvider(basicRequest.Type, levelNum);
+                return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
+            });
 
             // Create offensive build order
-
+            //IBuildingKeyProvider buildingKeyProvider
+            //new OffensiveBuildOrderProvider()
             // Create BuildOrders class
 
             // Initialise build order
