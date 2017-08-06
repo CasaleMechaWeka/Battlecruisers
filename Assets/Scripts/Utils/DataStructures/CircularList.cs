@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using UnityEngine;
+﻿using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.DataStrctures
 {
-	public class CircularList<T> : ICircularList<T>
+    public class CircularList<T> : ICircularList<T>
 	{
 		private T[] _items;
 		private int _index;
