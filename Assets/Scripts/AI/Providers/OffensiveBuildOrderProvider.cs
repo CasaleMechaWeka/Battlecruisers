@@ -24,13 +24,16 @@ namespace BattleCruisers.AI.Providers
         {
             IList<IPrefabKey> buildOrder = new List<IPrefabKey>();
 
+            // Only the naval request requires the bow slot, so can always assign 
+            // this slot to the naval request.
             IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
             if (navalRequest != null)
             {
-                buildOrder.Add(StaticPrefabKeys.Buildings.NavalFactory);
+                buildOrder.Add(navalRequest.BuildingKeyProvider.Next);
             }
 
-            // All non-naval requests require platform slots
+            // All non-naval requests require platform slots, so need to split the available
+            // platform slots between these requests.
             // FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
             IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
 
