@@ -1,27 +1,30 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.DataStrctures
 {
     public class CircularList<T> : ICircularList<T>
 	{
-		private T[] _items;
+		private IList<T> _items;
 		private int _index;
 
 		public ReadOnlyCollection<T> Items { get; private set; }
 
-		public CircularList(T[] items)
-		{
-			Assert.IsTrue(items.Length != 0);
-
+        public CircularList(T[] items) : this(new List<T>(items)) { }
+        
+        public CircularList(IList<T> items)
+        {
+            Assert.IsTrue(items.Count != 0);
+			
 			_items = items;
 			Items = new ReadOnlyCollection<T>(_items);
-			_index = _items.Length -1;
+            _index = _items.Count - 1;
 		}
 
 		public T Next()
 		{
-			_index = (_index + 1) % _items.Length;
+            _index = (_index + 1) % _items.Count;
 			return _items[_index];
 		}
 	}
