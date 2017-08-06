@@ -11,7 +11,7 @@ namespace BattleCruisers.AI.Providers
 		private const int LEVEL_MORTAR_IS_UNLOCKED = 1;
 		private const int LEVEL_TESLA_COIL_IS_UNLOCKED = 12;
 
-        public IList<IPrefabKey> AntiRocketBuildOrder { get { return BuildOrders.AntiRocketLauncher; } }
+        public IList<IPrefabKey> AntiRocketBuildOrder { get { return StaticBuildOrders.AntiRocketLauncher; } }
 
         // FELIX  Avoid duplicate code?
         /// <summary>
@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.Providers
 			// Create base build order
 
 			// FELIX  Don't always return same build order :P
-			return BuildOrders.Balanced;
+			return StaticBuildOrders.Balanced;
         }
 		
         /// <summary>
@@ -44,17 +44,17 @@ namespace BattleCruisers.AI.Providers
             // Get base strategy for level (balanced, boom, rush)
 
             // FELIX  Don't always return same build order :P
-            return BuildOrders.AdvancedBalanced;
+            return StaticBuildOrders.AdvancedBalanced;
         }
 
         public IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum)
         {
-            return levelNum > LEVEL_SAM_SITE_IS_UNLOCKED ? BuildOrders.AntiAir : BuildOrders.BasicAntiAir;
+            return levelNum > LEVEL_SAM_SITE_IS_UNLOCKED ? StaticBuildOrders.AntiAir : StaticBuildOrders.BasicAntiAir;
         }
 
         public IList<IPrefabKey> GetAntiNavalBuildOrder(int levelNum)
         {
-            return levelNum > LEVEL_MORTAR_IS_UNLOCKED ? BuildOrders.AntiNaval : BuildOrders.BasicAntiNaval;
+            return levelNum > LEVEL_MORTAR_IS_UNLOCKED ? StaticBuildOrders.AntiNaval : StaticBuildOrders.BasicAntiNaval;
         }
 
         public bool IsAntiRocketBuildOrderAvailable(int levelNum)

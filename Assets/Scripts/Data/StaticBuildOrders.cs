@@ -3,7 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data
 {
-	public static class BuildOrders
+	public static class StaticBuildOrders
 	{
 		public static IList<IPrefabKey> Balanced
 		{
