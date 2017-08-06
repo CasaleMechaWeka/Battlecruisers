@@ -6,16 +6,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Providers
 {
-    public enum OffensiveType
-    {
-        Air, Naval, Buildings, Ultras
-    }
-
-    public enum OffensiveFocus
-    {
-        Low, High
-    }
-
     public class OffensiveBuildOrderProvider
     {
         private readonly IStaticData _staticData;
@@ -29,18 +19,11 @@ namespace BattleCruisers.AI.Providers
             _buildingKeyProviderFactory = buildingKeyProviderFactory;
         }
 
-        /// <summary>
-        /// FELIX  Need:
-        /// + Available buildings
-        ///     + Offensive
-        ///     + Ultra
-        /// + Number of platform slots
-        /// </summary>
-        public IList<IPrefabKey> CreateBuildOrder(int levelNum, int numOfPlatformSlots, params OffensiveRequest[] requests)
+        public IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, params IOffensiveRequest[] requests)
         {
             IList<IPrefabKey> buildOrder = new List<IPrefabKey>();
 
-            OffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
+            IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
             if (navalRequest != null)
             {
                 buildOrder.Add(StaticPrefabKeys.Buildings.NavalFactory);
@@ -48,58 +31,53 @@ namespace BattleCruisers.AI.Providers
 
             // All non-naval requests require platform slots
             // FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
-            IEnumerable<OffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
+            IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
 
-            IDictionary<OffensiveType, int> requestTypeToSlotNum = AssignPlatformSlots(platformRequests, numOfPlatformSlots);
+            AssignPlatformSlots(platformRequests, numOfPlatformSlots);
 
-            foreach (KeyValuePair<OffensiveType, int> pair in requestTypeToSlotNum)
+            foreach (IOffensiveRequest request in platformRequests)
             {
-                for (int i = 0; i < pair.Value; ++i)
-                {
-                    // FELIX
-                    //buildOrder.Add();
-                }
+                for (int i = 0; i < request.NumOfSlotsToUse; ++i)
+				{
+                    buildOrder.Add(request.BuildingKeyProvider.Next);
+				}
             }
 
             return buildOrder;
         }
 
-        private IDictionary<OffensiveType, int> AssignPlatformSlots(IEnumerable<OffensiveRequest> platformRequests, int numOfPlatformSlots)
+        /// <summary>
+        /// 1. High focus requests are served once before low focus requests
+        /// 2. Low focus request get one slot at most
+        /// 3. Remaining slots are split evenly between high focus requests
+        /// </summary>
+        private void AssignPlatformSlots(IEnumerable<IOffensiveRequest> platformRequests, int numOfPlatformSlots)
         {
-            IEnumerable<OffensiveRequest> highFocusRequests = platformRequests.Where(request => request.Focus == OffensiveFocus.High);
-            IEnumerable<OffensiveRequest> lowFocusRequest = platformRequests.Where(request => request.Focus == OffensiveFocus.Low);
-
-            IDictionary<OffensiveType, int> requestTypeToSlotNum = new Dictionary<OffensiveType, int>();
+            IEnumerable<IOffensiveRequest> highFocusRequests = platformRequests.Where(request => request.Focus == OffensiveFocus.High);
+            IEnumerable<IOffensiveRequest> lowFocusRequest = platformRequests.Where(request => request.Focus == OffensiveFocus.Low);
 
             int numOfSlotsUsed = 0;
 
             // Assign a round of high focus requests
-            numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, requestTypeToSlotNum, numOfPlatformSlots, numOfSlotsUsed);
+            numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, numOfPlatformSlots, numOfSlotsUsed);
 
             // Assign a round of low focus request
-            numOfSlotsUsed = AssignSlotsToRequests(lowFocusRequest, requestTypeToSlotNum, numOfPlatformSlots, numOfSlotsUsed);
+            numOfSlotsUsed = AssignSlotsToRequests(lowFocusRequest, numOfPlatformSlots, numOfSlotsUsed);
 
             // Assign remaining slots to high focus requests
             while (numOfSlotsUsed < numOfPlatformSlots)
             {
-                numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, requestTypeToSlotNum, numOfPlatformSlots, numOfSlotsUsed);
+                numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, numOfPlatformSlots, numOfSlotsUsed);
             }
-
-            return requestTypeToSlotNum;
         }
 
-        private int AssignSlotsToRequests(IEnumerable<OffensiveRequest> requests, IDictionary<OffensiveType, int> requestTypeToSlotNum, int numOfPlatformSlots, int numOfSlotsUsed)
+        private int AssignSlotsToRequests(IEnumerable<IOffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
         {
-            foreach (OffensiveRequest request in requests)
+            foreach (IOffensiveRequest request in requests)
             {
                 if (numOfSlotsUsed < numOfPlatformSlots)
                 {
-                    if (!requestTypeToSlotNum.ContainsKey(request.Type))
-                    {
-                        requestTypeToSlotNum.Add(request.Type, value: 0);
-                    }
-
-                    requestTypeToSlotNum[request.Type]++;
+                    request.NumOfSlotsToUse++;
                     numOfSlotsUsed++;
                 }
                 else
