@@ -1,6 +1,6 @@
-﻿﻿using BattleCruisers.Buildables.Buildings;
+﻿using System;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
@@ -15,14 +15,25 @@ namespace BattleCruisers.AI.Providers
             _staticData = staticData;
         }
 
-        public IBuildingKeyProvider CreateBuildingKeyProvider(BuildingCategory buildingCategory, int levelNum)
+        public IBuildingKeyProvider CreateBuildingKeyProvider(OffensiveType offensiveType, int levelNum)
         {
-            return new BuildingKeyProvider(_staticData, buildingCategory, levelNum);
-        }
+            switch (offensiveType)
+            {
+                case OffensiveType.Air:
+                    return new DummyBuildingKeyProvider(StaticPrefabKeys.Buildings.AirFactory);
 
-        public IBuildingKeyProvider CreateDummyBuildingKeyProvider(IPrefabKey buildingKey)
-        {
-            return new DummyBuildingKeyProvider(buildingKey);
+                case OffensiveType.Naval:
+                    return new DummyBuildingKeyProvider(StaticPrefabKeys.Buildings.NavalFactory);
+
+                case OffensiveType.Buildings:
+                    return new BuildingKeyProvider(_staticData, BuildingCategory.Offence, levelNum);
+
+                case OffensiveType.Ultras:
+                    return new BuildingKeyProvider(_staticData, BuildingCategory.Ultra, levelNum);
+
+                default:
+                    throw new ArgumentException();
+            }
         }
 	}
 }
