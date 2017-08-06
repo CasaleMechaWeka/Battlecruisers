@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.Providers.BuildingKey;
+using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;

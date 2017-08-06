@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.AI.Providers.BuildingKey
+﻿using BattleCruisers.AI.Providers.Strategies;
+
+namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public interface IBuildingKeyProviderFactory
 	{

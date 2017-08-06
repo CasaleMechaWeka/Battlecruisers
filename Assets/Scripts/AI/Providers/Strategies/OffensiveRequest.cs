@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.AI.Providers.BuildingKey;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.Providers.Strategies
 {
     public class OffensiveRequest : IOffensiveRequest
     {
