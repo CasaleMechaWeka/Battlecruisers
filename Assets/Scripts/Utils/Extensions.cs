@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
@@ -31,5 +33,10 @@ namespace BattleCruisers.Utils
 			Assert.IsTrue(componentAsList.Length == 1);
 			return componentAsList[0];
 		}
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            list.OrderBy(item => Random.value);
+        }
 	}
 }
