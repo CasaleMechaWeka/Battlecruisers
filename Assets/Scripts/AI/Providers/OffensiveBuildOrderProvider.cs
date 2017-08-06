@@ -5,7 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers
 {
-    public class OffensiveBuildOrderProvider
+    public class OffensiveBuildOrderProvider : IOffensiveBuildOrderProvider
     {
         public IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, IEnumerable<IOffensiveRequest> requests)
         {
