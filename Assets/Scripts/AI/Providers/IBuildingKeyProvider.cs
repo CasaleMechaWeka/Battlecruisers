@@ -4,6 +4,6 @@ namespace BattleCruisers.AI.Providers
 {
     public interface IBuildingKeyProvider
     {
-        IPrefabKey Next();
+        IPrefabKey Next { get; }
     }
 }

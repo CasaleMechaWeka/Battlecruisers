@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -12,6 +12,8 @@ namespace BattleCruisers.AI.Providers
     {
         private readonly ICircularList<IPrefabKey> _buildingKeys;
 
+        public IPrefabKey Next { get { return _buildingKeys.Next(); } }
+
         public BuildingKeyProvider(IStaticData staticData, BuildingCategory buildingCategory, int levelNum)
         {
             IList<IPrefabKey> buildingKeys = staticData.GetAvailableBuildings(buildingCategory, levelNum);
@@ -21,11 +23,6 @@ namespace BattleCruisers.AI.Providers
             buildingKeys.Shuffle();
 
             _buildingKeys = new CircularList<IPrefabKey>(buildingKeys);
-        }
-
-        public IPrefabKey Next()
-        {
-            return _buildingKeys.Next();
         }
     }
 }
