@@ -44,7 +44,7 @@ namespace BattleCruisers.Data
 			}
 		}
 
-		public static IList<IPrefabKey> AdvancedBalanced
+		public static IList<IPrefabKey> AdaptiveBalancedBase
 		{
 			get
 			{

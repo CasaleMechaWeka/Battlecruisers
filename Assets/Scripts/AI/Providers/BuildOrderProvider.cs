@@ -46,7 +46,7 @@ namespace BattleCruisers.AI.Providers
 
 
             // FELIX  Don't always return same build order :P
-            return StaticBuildOrders.AdvancedBalanced;
+            return StaticBuildOrders.AdaptiveBalancedBase;
         }
 
         public IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum)
