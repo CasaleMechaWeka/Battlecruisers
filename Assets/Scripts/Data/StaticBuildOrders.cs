@@ -44,24 +44,24 @@ namespace BattleCruisers.Data
 			}
 		}
 
-		public static IList<IPrefabKey> AdaptiveBalancedBase
+		public static IList<IPrefabKeyWrapper> AdaptiveBalancedBase
 		{
 			get
 			{
-				return new List<IPrefabKey>()
+				return new List<IPrefabKeyWrapper>()
 				{
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.Artillery,
-					StaticPrefabKeys.Buildings.ShieldGenerator,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.DroneStation,
-					StaticPrefabKeys.Buildings.RocketLauncher,
-					StaticPrefabKeys.Buildings.DeathstarLauncher,
-					StaticPrefabKeys.Buildings.NukeLauncher
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                    new OffensivePrefabKeyWrapper(),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                    new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+					new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+					new OffensivePrefabKeyWrapper(),
+					new OffensivePrefabKeyWrapper(),
+					new OffensivePrefabKeyWrapper()
 				};
 			}
 		}
