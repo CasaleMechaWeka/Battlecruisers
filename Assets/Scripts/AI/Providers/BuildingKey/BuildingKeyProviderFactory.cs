@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public class BuildingKeyProviderFactory : IBuildingKeyProviderFactory
     {

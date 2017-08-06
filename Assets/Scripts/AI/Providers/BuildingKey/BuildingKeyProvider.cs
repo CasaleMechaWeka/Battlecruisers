@@ -6,7 +6,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public class BuildingKeyProvider : IBuildingKeyProvider
     {

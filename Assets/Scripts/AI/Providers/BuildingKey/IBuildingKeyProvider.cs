@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public interface IBuildingKeyProvider
     {

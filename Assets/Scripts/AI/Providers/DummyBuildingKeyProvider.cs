@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.AI.Providers.BuildingKey;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers
 {

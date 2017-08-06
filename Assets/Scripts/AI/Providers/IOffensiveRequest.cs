@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.AI.Providers
+﻿using BattleCruisers.AI.Providers.BuildingKey;
+
+namespace BattleCruisers.AI.Providers
 {
     public enum OffensiveType
     {
