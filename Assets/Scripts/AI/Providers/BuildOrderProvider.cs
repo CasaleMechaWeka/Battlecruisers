@@ -33,15 +33,17 @@ namespace BattleCruisers.AI.Providers
         /// </summary>
         public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum)
         {
+			// Get base strategy for level (balanced, boom, rush)
+
+			// Get offensive strategy for level (naval, air, offensive buildings, ultras)
+   
             // Create offensive build order
 
-            // Get offensive strategy for (naval, air, offensive buildings, ultras)
+            // Create BuildOrders class
 
-            //IList<IPrefabKey> offensiveBuildOrder = 
+            // Initialise build order
 
-            // Create base build order
 
-            // Get base strategy for level (balanced, boom, rush)
 
             // FELIX  Don't always return same build order :P
             return StaticBuildOrders.AdvancedBalanced;
