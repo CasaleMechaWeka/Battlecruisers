@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void LowNaval()
 		{
 			_numOfPlatformSlots = 0;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _lowNavalRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _lowNavalRequest });
 
 			Assert.AreEqual(1, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _navalKey }));
@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.AI.Providers
         public void HighNaval()
         {
 			_numOfPlatformSlots = 0;
-			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highNavalRequest);
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highNavalRequest });
 
             Assert.AreEqual(1, buildOrder.Count);
 			Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _navalKey }));
@@ -81,7 +81,7 @@ namespace BattleCruisers.Tests.AI.Providers
         public void LowNaval_HighOther()
         {
             _numOfPlatformSlots = 0;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _lowNavalRequest, _highAirRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _lowNavalRequest, _highAirRequest });
 
             Assert.AreEqual(1, buildOrder.Count);
 			Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _navalKey }));
@@ -92,7 +92,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_Low_1Slot()
 		{
 			_numOfPlatformSlots = 1;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest });
 
 			Assert.AreEqual(1, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey }));
@@ -102,7 +102,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_Low_2Slots()
 		{
 			_numOfPlatformSlots = 2;
-			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest);
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest });
 
 			Assert.AreEqual(2, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _offensiveKey }));
@@ -112,7 +112,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_Low_3Slots()
 		{
 			_numOfPlatformSlots = 3;
-			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest);
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest });
 
 			Assert.AreEqual(3, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _airKey, _offensiveKey }));
@@ -122,7 +122,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_Low_4Slots()
 		{
 			_numOfPlatformSlots = 4;
-			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest);
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest });
 
 			Assert.AreEqual(4, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _airKey, _airKey, _offensiveKey }));
@@ -133,7 +133,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_Low_Low_4Slots()
 		{
 			_numOfPlatformSlots = 4;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _lowAirRequest, _lowOffensiveRequest, _highUltrasRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _lowAirRequest, _lowOffensiveRequest, _highUltrasRequest });
 
 			Assert.AreEqual(4, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _offensiveKey, _ultrasKey, _ultrasKey}));
@@ -143,7 +143,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_High_Low_2Slots()
 		{
 			_numOfPlatformSlots = 2;
-			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest, _highUltrasRequest);
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest, _highUltrasRequest });
 			
 			Assert.AreEqual(2, buildOrder.Count);
 			Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _ultrasKey }));
@@ -153,7 +153,7 @@ namespace BattleCruisers.Tests.AI.Providers
         public void High_High_Low_4Slots()
         {
             _numOfPlatformSlots = 4;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest, _highUltrasRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest, _highUltrasRequest });
 
             Assert.AreEqual(4, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _airKey, _offensiveKey, _ultrasKey }));
@@ -163,7 +163,7 @@ namespace BattleCruisers.Tests.AI.Providers
         public void High_High_Low_5Slots()
         {
             _numOfPlatformSlots = 5;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highAirRequest, _lowOffensiveRequest, _highUltrasRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highAirRequest, _lowOffensiveRequest, _highUltrasRequest });
 
             Assert.AreEqual(5, buildOrder.Count);
             Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey, _airKey, _offensiveKey, _ultrasKey, _ultrasKey }));
@@ -173,7 +173,7 @@ namespace BattleCruisers.Tests.AI.Providers
 		public void High_High_1Slots()
 		{
 			_numOfPlatformSlots = 1;
-            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, _highUltrasRequest, _highAirRequest);
+            IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _highUltrasRequest, _highAirRequest });
 
 			Assert.AreEqual(1, buildOrder.Count);
 			Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _ultrasKey }));
