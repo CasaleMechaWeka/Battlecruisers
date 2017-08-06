@@ -1,21 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
 {
     public class OffensiveBuildOrderProvider
     {
-        private readonly IStaticData _staticData;
-
-        public OffensiveBuildOrderProvider(IStaticData staticData)
-        {
-            Assert.IsNotNull(staticData);
-            _staticData = staticData;
-        }
-
         public IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, params IOffensiveRequest[] requests)
         {
             IList<IPrefabKey> buildOrder = new List<IPrefabKey>();
