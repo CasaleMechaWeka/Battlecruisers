@@ -3,22 +3,23 @@ using BattleCruisers.AI.Providers.Strategies;
 
 namespace BattleCruisers.Data.Static
 {
-    public static class LevelStrategies
+    public class LevelStrategies : ILevelStrategies
     {
-        private static IList<IStrategy> _strategies;
-        public static IList<IStrategy> AdaptiveStrategies
+		public IList<IStrategy> AdaptiveStrategies { get; private set; }
+		public IList<IStrategy> BasicStrategies { get; private set; }
+
+        public LevelStrategies()
         {
-            get
-            {
-                if (_strategies == null)
-                {
-                    _strategies = CreateAdaptiveStrategies();
-                }
-                return _strategies;
-            }
+            AdaptiveStrategies = CreateAdaptiveStrategies();
+            BasicStrategies = CreateBasicStrategies();
         }
 
-        private static IList<IStrategy> CreateAdaptiveStrategies()
+		private IList<IStrategy> CreateBasicStrategies()
+        {
+            return null;
+        }
+
+		private IList<IStrategy> CreateAdaptiveStrategies()
         {
             return new List<IStrategy>()
             {

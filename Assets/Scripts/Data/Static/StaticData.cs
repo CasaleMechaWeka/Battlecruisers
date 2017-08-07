@@ -13,6 +13,7 @@ namespace BattleCruisers.Data.Static
 	{
 		private readonly IDictionary<IPrefabKey, int> _buildableToUnlockedLevel;
         private readonly IList<BuildingKey> _allBuildings;
+        private readonly ILevelStrategies _strategies;
 
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
@@ -32,6 +33,8 @@ namespace BattleCruisers.Data.Static
 			this.BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 
             _buildableToUnlockedLevel = CreateAvailabilityMap();
+
+            _strategies = new LevelStrategies();
 		}
 
 		private List<HullKey> AllHullKeys()
@@ -196,9 +199,9 @@ namespace BattleCruisers.Data.Static
         public IStrategy GetAdaptiveStrategy(int levelNum)
         {
 			int levelIndex = levelNum - 1;
-            Assert.IsTrue(levelIndex < LevelStrategies.AdaptiveStrategies.Count);
+            Assert.IsTrue(levelIndex < _strategies.AdaptiveStrategies.Count);
 
-            return LevelStrategies.AdaptiveStrategies[levelIndex];
+            return _strategies.AdaptiveStrategies[levelIndex];
 		}
     }
 }
