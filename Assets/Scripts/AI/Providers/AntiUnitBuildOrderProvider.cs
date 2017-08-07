@@ -6,14 +6,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
 {
-    public abstract class AntiUnitBuilOrderProvider
+    public abstract class AntiUnitBuildOrderProvider
     {
         private readonly IStaticData _staticData;
         private readonly IPrefabKey _basicDefenceKey, _advancedDefenceKey;
 
         private const int MIN_NUM_OF_SLOTS = 1;
 
-        public AntiUnitBuilOrderProvider(IStaticData staticData, IPrefabKey basicDefenceKey, IPrefabKey advancedDefenceKey)
+        public AntiUnitBuildOrderProvider(IStaticData staticData, IPrefabKey basicDefenceKey, IPrefabKey advancedDefenceKey)
         {
             Helper.AssertIsNotNull(staticData, basicDefenceKey, advancedDefenceKey);
 
