@@ -117,6 +117,115 @@ namespace BattleCruisers.Data.Static
 					};
 				}
 			}
+
+            public static IList<IPrefabKeyWrapper> BoomAggressive
+            {
+                get
+                {
+                    List<IPrefabKeyWrapper> buildOrder = BoomCommon;
+                    buildOrder.AddRange(new IPrefabKeyWrapper[] 
+                    {
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper()
+                    });
+                    return buildOrder;
+                }
+            }
+
+            public static IList<IPrefabKeyWrapper> BoomDefensive
+            {
+                get
+                {
+					List<IPrefabKeyWrapper> buildOrder = BoomCommon;
+                    buildOrder.AddRange(new IPrefabKeyWrapper[]
+                    {
+                        new OffensivePrefabKeyWrapper(),
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                        new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper()
+					});
+					return buildOrder;
+				}
+            }
+
+			private static List<IPrefabKeyWrapper> BoomCommon
+            {
+                get
+                {
+                    return new List<IPrefabKeyWrapper>()
+                    {
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil),
+                    };
+                }
+            }
+
+			public static List<IPrefabKeyWrapper> Turtle
+			{
+				get
+				{
+					return new List<IPrefabKeyWrapper>()
+					{
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new OffensivePrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new AntiAirPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper()
+					};
+				}
+			}
         }
 
         // FELIX  Replace with DefensiveBuildOrderProvider :)
