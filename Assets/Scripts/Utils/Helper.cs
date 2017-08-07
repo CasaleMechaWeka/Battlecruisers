@@ -28,5 +28,17 @@ namespace BattleCruisers.Utils
                 Assert.IsNotNull(obj);
             }
         }
+
+        public static int Half(int number, bool roundUp)
+		{
+			int half = number / 2;
+
+			if (roundUp)
+			{
+				half += number % 2;
+			}
+
+			return half;
+		}
 	}
 }
