@@ -187,6 +187,32 @@ namespace BattleCruisers.Data.Static
                 }
             }
 
+            public static IList<IPrefabKeyWrapper> Rush
+            {
+                get
+                {
+                    return new List<IPrefabKeyWrapper>()
+                    {
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new AntiAirPrefabKeyWrapper(),
+						new AntiNavalPrefabKeyWrapper(),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+					};
+                }
+            }
+
 			public static List<IPrefabKeyWrapper> Turtle
 			{
 				get
