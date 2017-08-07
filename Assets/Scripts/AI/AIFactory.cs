@@ -41,19 +41,19 @@ namespace BattleCruisers.AI
             
             new TaskConsumer(tasks);
         }
-		
-        /// <summary>
-        /// Creates an adaptive AI that:
-        /// 1. Follows a base strategy (eg:  boom, turtle, ect)
-        /// 2. Responds to threats (eg: air, naval)
-        /// 3. Replaces destroyed buildings
-        /// </summary>
-		public void CreateAdaptiveAI(ILevel level)
+
+		/// <summary>
+		/// Creates an adaptive AI that:
+		/// 1. Follows a base strategy (eg:  balanced, boom or rushIStaticData staticData)
+		/// 2. Responds to threats (eg: air, naval)
+		/// 3. Replaces destroyed buildings
+		/// </summary>
+		public void CreateAdaptiveAI(ILevel level, int numOfPLatformSlots)
 		{
             ITaskList tasks = new TaskList();
 
             // Base build order, main strategy
-            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num);
+            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, numOfPLatformSlots);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
             // Anti air

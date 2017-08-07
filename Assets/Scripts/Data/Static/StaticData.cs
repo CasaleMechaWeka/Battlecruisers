@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -191,5 +192,14 @@ namespace BattleCruisers.Data.Static
                 .Select(buildingKey => (IPrefabKey)buildingKey)
                 .ToList();
         }
+
+        public IStrategy GetStrategy(int levelNum)
+        {
+			int levelIndex = levelNum - 1;
+            Assert.IsTrue(levelIndex < LevelStrategies.Strategies.Count);
+
+            // Copy, so caller original base strategy cannot be modified
+            return new Strategy(LevelStrategies.Strategies[levelIndex]);
+		}
     }
 }

@@ -30,7 +30,8 @@ namespace BattleCruisers.AI
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             IBuildingKeyProviderFactory buildingKeyProviderFactory = new BuildingKeyProviderFactory(_dataProvider.StaticData);
-            _buildOrderProvider = new BuildOrderProvider(buildingKeyProviderFactory);
+            IOffensiveBuildOrderProvider offensiveBuildOrderProvider = new OffensiveBuildOrderProvider();
+            _buildOrderProvider = new BuildOrderProvider(buildingKeyProviderFactory, offensiveBuildOrderProvider, _dataProvider.StaticData);
         }
 
         public void CreateAI(ILevel currentLevel, ICruiserController playerCruiser, ICruiserController aiCruiser)
@@ -46,7 +47,7 @@ namespace BattleCruisers.AI
 					aiFactory.CreateBasicAI(currentLevel);
 					break;
 				case Difficulty.Hard:
-					aiFactory.CreateAdaptiveAI(currentLevel);
+                    aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper.GetSlotCount(SlotType.Platform));
 					break;
 			}
         }
