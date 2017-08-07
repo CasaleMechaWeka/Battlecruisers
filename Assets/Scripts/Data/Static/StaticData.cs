@@ -203,5 +203,13 @@ namespace BattleCruisers.Data.Static
 
             return _strategies.AdaptiveStrategies[levelIndex];
 		}
+
+        public IStrategy GetBasicStrategy(int levelNum)
+        {
+			int levelIndex = levelNum - 1;
+            Assert.IsTrue(levelIndex < _strategies.BasicStrategies.Count);
+
+            return _strategies.BasicStrategies[levelIndex];
+        }
     }
 }
