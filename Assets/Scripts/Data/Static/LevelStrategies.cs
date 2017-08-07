@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.Providers.Strategies;
+using BattleCruisers.AI.Providers.Strategies.Requests;
 
 namespace BattleCruisers.Data.Static
 {

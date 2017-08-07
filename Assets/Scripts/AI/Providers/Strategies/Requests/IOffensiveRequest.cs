@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.AI.Providers.BuildingKey;
 
-namespace BattleCruisers.AI.Providers.Strategies
+namespace BattleCruisers.AI.Providers.Strategies.Requests
 {
     public interface IOffensiveRequest : IBasicOffensiveRequest
     {

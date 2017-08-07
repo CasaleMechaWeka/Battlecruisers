@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.AI.Providers.Strategies.Requests;
 
 namespace BattleCruisers.AI.Providers.Strategies
 {

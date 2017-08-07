@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleCruisers.AI.Providers.Strategies;
+using BattleCruisers.AI.Providers.Strategies.Requests;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using UnityEngine.Assertions;
