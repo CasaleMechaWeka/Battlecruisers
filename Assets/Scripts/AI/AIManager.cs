@@ -40,14 +40,15 @@ namespace BattleCruisers.AI
             ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
                 aiCruiser, playerCruiser, _prefabFactory, taskFactory, _slotNumCalculatorFactory, _dataProvider.StaticData);
 			IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderProvider);
+            int numOfPlatformSlots = aiCruiser.SlotWrapper.GetSlotCount(SlotType.Platform);
 
 			switch (_dataProvider.SettingsManager.AIDifficulty)
 			{
 				case Difficulty.Normal:
-					aiFactory.CreateBasicAI(currentLevel);
+                    aiFactory.CreateBasicAI(currentLevel, numOfPlatformSlots);
 					break;
 				case Difficulty.Hard:
-                    aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper.GetSlotCount(SlotType.Platform));
+                    aiFactory.CreateAdaptiveAI(currentLevel, numOfPlatformSlots);
 					break;
 			}
         }

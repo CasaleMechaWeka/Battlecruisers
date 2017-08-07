@@ -30,11 +30,11 @@ namespace BattleCruisers.AI
         /// 1. Follows a preset build order
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public void CreateBasicAI(ILevel level)
+        public void CreateBasicAI(ILevel level, int numOfPlatformSlots)
         {
             ITaskList tasks = new TaskList();
 
-            IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num);
+            IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, numOfPlatformSlots);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
 
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);

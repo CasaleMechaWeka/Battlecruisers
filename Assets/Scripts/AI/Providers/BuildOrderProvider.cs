@@ -36,11 +36,25 @@ namespace BattleCruisers.AI.Providers
         /// <summary>
         /// Gets the basic build order, which contains threat counters.
         /// </summary>
-        public IList<IPrefabKey> GetBasicBuildOrder(int levelNum)
+        public IList<IPrefabKey> GetBasicBuildOrder(int levelNum, int numOfPlatformSlots)
         {
-            // Create offensive build order
+            IStrategy strategy = _staticData.GetBasicStrategy(levelNum);
 
-            // Create base build order
+			// FELIX  Avoid duplicate code
+			// Convert IBasicOffensiveRequests to IOffensiveRequests
+			IList<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest =>
+			{
+				IBuildingKeyProvider buildingKeyProvider = _buildingKeyProviderFactory.CreateBuildingKeyProvider(basicRequest.Type, levelNum);
+				return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
+			}).ToList();
+
+			// Create offensive build order
+			IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
+
+            // Create defensive build orders
+
+
+			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
 
             // FELIX  Don't always return same build order :P
             // FELIX  TEMP
@@ -49,7 +63,7 @@ namespace BattleCruisers.AI.Providers
         }
 		
         /// <summary>
-        /// Build orders do NOT contain threat counters.  These counters
+        /// Build orders do NOT contain counters to threats.  These counters
         /// get created on the fly in response to threats.
         /// </summary>
         public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum, int numOfPlatformSlots)

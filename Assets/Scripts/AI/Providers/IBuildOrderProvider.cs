@@ -7,7 +7,7 @@ namespace BattleCruisers.AI.Providers
     {
         IList<IPrefabKey> AntiRocketBuildOrder { get; }
 
-        IList<IPrefabKey> GetBasicBuildOrder(int levelNum);
+        IList<IPrefabKey> GetBasicBuildOrder(int levelNum, int numOfPlatformSlots);
         IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum, int numOfPlatformSlots);
         IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum);
         IList<IPrefabKey> GetAntiNavalBuildOrder(int levelNum);
