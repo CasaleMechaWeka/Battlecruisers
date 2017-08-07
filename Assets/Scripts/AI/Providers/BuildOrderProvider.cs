@@ -37,12 +37,14 @@ namespace BattleCruisers.AI.Providers
         /// </summary>
         public IList<IPrefabKey> GetBasicBuildOrder(int levelNum)
         {
-			// Create offensive build order
+            // Create offensive build order
 
-			// Create base build order
+            // Create base build order
 
-			// FELIX  Don't always return same build order :P
-			return StaticBuildOrders.Basic.Balanced;
+            // FELIX  Don't always return same build order :P
+            // FELIX  TEMP
+            //return StaticBuildOrders.Basic.Balanced;
+            return new List<IPrefabKey>();
         }
 		
         /// <summary>
