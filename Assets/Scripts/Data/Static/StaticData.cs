@@ -193,12 +193,12 @@ namespace BattleCruisers.Data.Static
                 .ToList();
         }
 
-        public IStrategy GetStrategy(int levelNum)
+        public IStrategy GetAdaptiveStrategy(int levelNum)
         {
 			int levelIndex = levelNum - 1;
-            Assert.IsTrue(levelIndex < LevelStrategies.Strategies.Count);
+            Assert.IsTrue(levelIndex < LevelStrategies.AdaptiveStrategies.Count);
 
-            return LevelStrategies.Strategies[levelIndex];
+            return LevelStrategies.AdaptiveStrategies[levelIndex];
 		}
     }
 }

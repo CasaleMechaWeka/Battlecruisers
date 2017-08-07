@@ -6,19 +6,19 @@ namespace BattleCruisers.Data.Static
     public static class LevelStrategies
     {
         private static IList<IStrategy> _strategies;
-        public static IList<IStrategy> Strategies
+        public static IList<IStrategy> AdaptiveStrategies
         {
             get
             {
                 if (_strategies == null)
                 {
-                    _strategies = CreateStrategies();
+                    _strategies = CreateAdaptiveStrategies();
                 }
                 return _strategies;
             }
         }
 
-        private static IList<IStrategy> CreateStrategies()
+        private static IList<IStrategy> CreateAdaptiveStrategies()
         {
             return new List<IStrategy>()
             {

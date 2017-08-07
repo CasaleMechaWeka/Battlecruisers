@@ -20,7 +20,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
         bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum);
         IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
-        IStrategy GetStrategy(int levelNum);
+        IStrategy GetAdaptiveStrategy(int levelNum);
     }
 }
 	

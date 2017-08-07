@@ -53,7 +53,7 @@ namespace BattleCruisers.AI.Providers
         /// </summary>
         public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum, int numOfPlatformSlots)
         {
-            IStrategy strategy = _staticData.GetStrategy(levelNum);
+            IStrategy strategy = _staticData.GetAdaptiveStrategy(levelNum);
 
             // Convert IBasicOffensiveRequests to IOffensiveRequests
             IList<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest => 
