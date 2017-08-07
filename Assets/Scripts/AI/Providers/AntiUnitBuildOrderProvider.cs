@@ -27,7 +27,7 @@ namespace BattleCruisers.AI.Providers
 			IList<IPrefabKey> buildOrder = new List<IPrefabKey>();
 
             int numOfSlotsToUse = FindNumOfSlotsToUse(numOfDeckSlots);
-            Assert.IsTrue(numOfDeckSlots > MIN_NUM_OF_SLOTS);
+            Assert.IsTrue(numOfSlotsToUse >= MIN_NUM_OF_SLOTS && numOfSlotsToUse <= numOfDeckSlots);
 
             buildOrder.Add(_basicDefenceKey);
 
