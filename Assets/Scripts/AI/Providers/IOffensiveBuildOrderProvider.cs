@@ -6,6 +6,6 @@ namespace BattleCruisers.AI.Providers
 {
     public interface IOffensiveBuildOrderProvider
     {
-        IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, IEnumerable<IOffensiveRequest> requests);
+        IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, IList<IOffensiveRequest> requests);
     }
 }

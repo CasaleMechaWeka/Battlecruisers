@@ -5,7 +5,6 @@ using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.AI.Providers
 {
@@ -55,15 +54,15 @@ namespace BattleCruisers.AI.Providers
             IStrategy strategy = _staticData.GetStrategy(levelNum);
 
             // Convert IBasicOffensiveRequests to IOffensiveRequests
-            IEnumerable<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest => 
+            IList<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest => 
             {
                 IBuildingKeyProvider buildingKeyProvider = _buildingKeyProviderFactory.CreateBuildingKeyProvider(basicRequest.Type, levelNum);
                 return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
-            });
+            }).ToList();
 
             // Create offensive build order
             IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
-            IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
+			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
 
             IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 

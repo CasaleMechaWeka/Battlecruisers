@@ -7,7 +7,13 @@ namespace BattleCruisers.AI.Providers
 {
     public class OffensiveBuildOrderProvider : IOffensiveBuildOrderProvider
     {
-        public IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, IEnumerable<IOffensiveRequest> requests)
+        /// <summary>
+        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+        /// IEnumerable from a LINQ Select query, but every time I looped through this
+        /// IEnumerable I would get a fresh copy of the object, so any changes I made to
+        /// those objects were lost!!!
+        /// </summary>
+        public IList<IPrefabKey> CreateBuildOrder(int numOfPlatformSlots, IList<IOffensiveRequest> requests)
         {
             IList<IPrefabKey> buildOrder = new List<IPrefabKey>();
 
@@ -19,14 +25,13 @@ namespace BattleCruisers.AI.Providers
                 buildOrder.Add(navalRequest.BuildingKeyProvider.Next);
             }
 
-            // All non-naval requests require platform slots, so need to split the available
-            // platform slots between these requests.
-            // FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
-            IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
+			// All non-naval requests require platform slots, so need to split the available
+			// platform slots between these requests.
+			// FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
+			IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
+			AssignPlatformSlots(platformRequests, numOfPlatformSlots);
 
-            AssignPlatformSlots(platformRequests, numOfPlatformSlots);
-
-            foreach (IOffensiveRequest request in platformRequests)
+			foreach (IOffensiveRequest request in platformRequests)
             {
                 for (int i = 0; i < request.NumOfSlotsToUse; ++i)
 				{
@@ -52,11 +57,11 @@ namespace BattleCruisers.AI.Providers
             // Assign a round of high focus requests
             numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, numOfPlatformSlots, numOfSlotsUsed);
 
-            // Assign a round of low focus request
-            numOfSlotsUsed = AssignSlotsToRequests(lowFocusRequest, numOfPlatformSlots, numOfSlotsUsed);
+			// Assign a round of low focus request
+			numOfSlotsUsed = AssignSlotsToRequests(lowFocusRequest, numOfPlatformSlots, numOfSlotsUsed);
 
-            // Assign remaining slots to high focus requests
-            if (highFocusRequests.Any())
+			// Assign remaining slots to high focus requests
+			if (highFocusRequests.Any())
             {
 	            while (numOfSlotsUsed < numOfPlatformSlots)
 	            {
@@ -71,8 +76,8 @@ namespace BattleCruisers.AI.Providers
             {
                 if (numOfSlotsUsed < numOfPlatformSlots)
                 {
-                    request.NumOfSlotsToUse++;
-                    numOfSlotsUsed++;
+					request.NumOfSlotsToUse++;
+					numOfSlotsUsed++;
                 }
                 else
                 {
