@@ -16,11 +16,5 @@ namespace BattleCruisers.AI.Providers.Strategies
             BaseStrategy = baseStrategy;
             Offensives = offensives;
         }
-
-        public Strategy(IStrategy strategy)
-        {
-            BaseStrategy = strategy.BaseStrategy;
-            Offensives = strategy.Offensives;
-        }
     }
 }

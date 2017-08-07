@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.AI.Providers
 {
@@ -64,14 +65,16 @@ namespace BattleCruisers.AI.Providers
             IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
             IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
 
+            IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
+
             // Initialise key wrappers, to offensive blanks to be filled
-            foreach (IPrefabKeyWrapper keyWrapper in strategy.BaseStrategy.BuildOrder)
+            foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
             {
                 keyWrapper.Initialise(buildOrders);
             }
 
             return 
-                strategy.BaseStrategy.BuildOrder
+                baseBuildOrder
                     .Where(keyWrapper => keyWrapper.HasKey)
                     .Select(keyWrapper => keyWrapper.Key)
                     .ToList();

@@ -198,8 +198,7 @@ namespace BattleCruisers.Data.Static
 			int levelIndex = levelNum - 1;
             Assert.IsTrue(levelIndex < LevelStrategies.Strategies.Count);
 
-            // Copy, so caller original base strategy cannot be modified
-            return new Strategy(LevelStrategies.Strategies[levelIndex]);
+            return LevelStrategies.Strategies[levelIndex];
 		}
     }
 }
