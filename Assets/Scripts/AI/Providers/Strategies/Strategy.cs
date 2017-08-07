@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.Providers.Strategies
         public IBaseStrategy BaseStrategy { get; private set; }
         public IEnumerable<IBasicOffensiveRequest> Offensives { get; private set; }
 
-        public Strategy(IBaseStrategy baseStrategy, params IBasicOffensiveRequest[] offensives)
+        public Strategy(IBaseStrategy baseStrategy, IBasicOffensiveRequest[] offensives)
         {
             Assert.IsNotNull(baseStrategy);
             Assert.IsTrue(offensives.Length != 0);
