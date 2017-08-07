@@ -6,7 +6,7 @@ namespace BattleCruisers.AI.Providers
     public interface IBuildOrders
     {
 		IEnumerator<IPrefabKey> OffensiveBuildOrder { get; }
-
-        // FELIX  Add:  Anti-Air & Anti-Naval
+		IEnumerator<IPrefabKey> AntiAirBuildOrder { get; }
+		IEnumerator<IPrefabKey> AntiNavalBuildOrder { get; }
 	}
 }
