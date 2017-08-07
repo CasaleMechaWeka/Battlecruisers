@@ -178,5 +178,15 @@ namespace BattleCruisers.Tests.AI.Providers
 			Assert.AreEqual(1, buildOrder.Count);
 			Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _ultrasKey }));
 		}
+
+		[Test]
+		public void LeftOverSlots()
+		{
+			_numOfPlatformSlots = 2;
+			IList<IPrefabKey> buildOrder = _provider.CreateBuildOrder(_numOfPlatformSlots, new IOffensiveRequest[] { _lowAirRequest });
+
+			Assert.AreEqual(1, buildOrder.Count);
+            Assert.IsTrue(buildOrder.SequenceEqual(new IPrefabKey[] { _airKey }));
+		}
     }
 }

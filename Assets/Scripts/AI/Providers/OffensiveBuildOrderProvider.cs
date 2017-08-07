@@ -56,10 +56,13 @@ namespace BattleCruisers.AI.Providers
             numOfSlotsUsed = AssignSlotsToRequests(lowFocusRequest, numOfPlatformSlots, numOfSlotsUsed);
 
             // Assign remaining slots to high focus requests
-            while (numOfSlotsUsed < numOfPlatformSlots)
+            if (highFocusRequests.Any())
             {
-                numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, numOfPlatformSlots, numOfSlotsUsed);
-            }
+	            while (numOfSlotsUsed < numOfPlatformSlots)
+	            {
+	                numOfSlotsUsed = AssignSlotsToRequests(highFocusRequests, numOfPlatformSlots, numOfSlotsUsed);
+	            }
+			}
         }
 
         private int AssignSlotsToRequests(IEnumerable<IOffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
