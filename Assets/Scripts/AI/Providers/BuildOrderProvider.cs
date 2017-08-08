@@ -17,9 +17,6 @@ namespace BattleCruisers.AI.Providers
         private readonly IAntiUnitBuildOrderProvider _antiAirBuildOrderProvider, _antiNavalBuildOrderProvider;
         private readonly IStaticData _staticData;
 
-        // FELIX  Use StaticData instead
-		private const int LEVEL_TESLA_COIL_IS_UNLOCKED = 12;
-
         public IList<IPrefabKey> AntiRocketBuildOrder { get { return StaticBuildOrders.AntiRocketLauncher; } }
 
         public BuildOrderProvider(IBuildingKeyProviderFactory buildingKeyProviderFactory, IOffensiveBuildOrderProvider offensiveBuildOrderProvider, 
@@ -125,7 +122,7 @@ namespace BattleCruisers.AI.Providers
 
         public bool IsAntiRocketBuildOrderAvailable(int levelNum)
         {
-            return levelNum > LEVEL_TESLA_COIL_IS_UNLOCKED;
+            return _staticData.IsBuildableAvailable(StaticPrefabKeys.Buildings.TeslaCoil, levelNum);
         }
     }
 }
