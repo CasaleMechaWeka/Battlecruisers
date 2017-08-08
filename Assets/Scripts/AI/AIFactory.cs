@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
@@ -30,11 +31,11 @@ namespace BattleCruisers.AI
         /// 1. Follows a preset build order
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public void CreateBasicAI(ILevel level, int numOfPlatformSlots)
+        public void CreateBasicAI(ILevel level, ISlotWrapper slotWrapper)
         {
             ITaskList tasks = new TaskList();
 
-            IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, numOfPlatformSlots);
+            IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, slotWrapper);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
 
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
@@ -48,12 +49,12 @@ namespace BattleCruisers.AI
 		/// 2. Responds to threats (eg: air, naval)
 		/// 3. Replaces destroyed buildings
 		/// </summary>
-		public void CreateAdaptiveAI(ILevel level, int numOfPLatformSlots)
+		public void CreateAdaptiveAI(ILevel level, ISlotWrapper slotWrapper)
 		{
             ITaskList tasks = new TaskList();
 
             // Base build order, main strategy
-            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, numOfPLatformSlots);
+            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, slotWrapper);
             _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
             // Anti air

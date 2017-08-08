@@ -31,7 +31,9 @@ namespace BattleCruisers.AI
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             IBuildingKeyProviderFactory buildingKeyProviderFactory = new BuildingKeyProviderFactory(_dataProvider.StaticData);
             IOffensiveBuildOrderProvider offensiveBuildOrderProvider = new OffensiveBuildOrderProvider();
-            _buildOrderProvider = new BuildOrderProvider(buildingKeyProviderFactory, offensiveBuildOrderProvider, _dataProvider.StaticData);
+            IAntiUnitBuildOrderProvider antiAirBuildOrderProvider = new AntiAirBuildOrderProvivder(_dataProvider.StaticData);
+            IAntiUnitBuildOrderProvider antiNavalBuildOrderProvider = new AntiNavalBuildOrderProvivder(_dataProvider.StaticData);
+            _buildOrderProvider = new BuildOrderProvider(buildingKeyProviderFactory, offensiveBuildOrderProvider, antiAirBuildOrderProvider, antiNavalBuildOrderProvider, _dataProvider.StaticData);
         }
 
         public void CreateAI(ILevel currentLevel, ICruiserController playerCruiser, ICruiserController aiCruiser)
@@ -40,15 +42,14 @@ namespace BattleCruisers.AI
             ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
                 aiCruiser, playerCruiser, _prefabFactory, taskFactory, _slotNumCalculatorFactory, _dataProvider.StaticData);
 			IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderProvider);
-            int numOfPlatformSlots = aiCruiser.SlotWrapper.GetSlotCount(SlotType.Platform);
 
 			switch (_dataProvider.SettingsManager.AIDifficulty)
 			{
 				case Difficulty.Normal:
-                    aiFactory.CreateBasicAI(currentLevel, numOfPlatformSlots);
+                    aiFactory.CreateBasicAI(currentLevel, aiCruiser.SlotWrapper);
 					break;
 				case Difficulty.Hard:
-                    aiFactory.CreateAdaptiveAI(currentLevel, numOfPlatformSlots);
+                    aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper);
 					break;
 			}
         }

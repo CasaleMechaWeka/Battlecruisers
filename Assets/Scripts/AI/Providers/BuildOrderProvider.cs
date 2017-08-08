@@ -3,6 +3,7 @@ using System.Linq;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.AI.Providers.Strategies.Requests;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
@@ -13,6 +14,7 @@ namespace BattleCruisers.AI.Providers
     {
         private readonly IBuildingKeyProviderFactory _buildingKeyProviderFactory;
         private readonly IOffensiveBuildOrderProvider _offensiveBuildOrderProvider;
+        private readonly IAntiUnitBuildOrderProvider _antiAirBuildOrderProvider, _antiNavalBuildOrderProvider;
         private readonly IStaticData _staticData;
 
         // FELIX  Use StaticData instead
@@ -22,13 +24,15 @@ namespace BattleCruisers.AI.Providers
 
         public IList<IPrefabKey> AntiRocketBuildOrder { get { return StaticBuildOrders.AntiRocketLauncher; } }
 
-        public BuildOrderProvider(IBuildingKeyProviderFactory buildingKeyProviderFactory, 
-            IOffensiveBuildOrderProvider offensiveBuildOrderProvider, IStaticData staticData)
+        public BuildOrderProvider(IBuildingKeyProviderFactory buildingKeyProviderFactory, IOffensiveBuildOrderProvider offensiveBuildOrderProvider, 
+            IAntiUnitBuildOrderProvider antiAirBuildOrderProvider, IAntiUnitBuildOrderProvider antiNavalBuildOrderProvider, IStaticData staticData)
         {
-            Helper.AssertIsNotNull(buildingKeyProviderFactory, offensiveBuildOrderProvider, staticData);
+            Helper.AssertIsNotNull(buildingKeyProviderFactory, offensiveBuildOrderProvider, antiAirBuildOrderProvider, antiNavalBuildOrderProvider, staticData);
 
             _buildingKeyProviderFactory = buildingKeyProviderFactory;
             _offensiveBuildOrderProvider = offensiveBuildOrderProvider;
+            _antiAirBuildOrderProvider = antiAirBuildOrderProvider;
+            _antiNavalBuildOrderProvider = antiNavalBuildOrderProvider;
             _staticData = staticData;
         }
 
@@ -36,7 +40,7 @@ namespace BattleCruisers.AI.Providers
         /// <summary>
         /// Gets the basic build order, which contains threat counters.
         /// </summary>
-        public IList<IPrefabKey> GetBasicBuildOrder(int levelNum, int numOfPlatformSlots)
+        public IList<IPrefabKey> GetBasicBuildOrder(int levelNum, ISlotWrapper slotWrapper)
         {
             IStrategy strategy = _staticData.GetBasicStrategy(levelNum);
 
@@ -48,25 +52,37 @@ namespace BattleCruisers.AI.Providers
 				return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
 			}).ToList();
 
-			// Create offensive build order
+            // Create offensive build order
+            int numOfPlatformSlots = slotWrapper.GetSlotCount(SlotType.Platform);
 			IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
 
             // Create defensive build orders
+            int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
+            IList<IPrefabKey> antiAirBuildOrder = _antiAirBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum);
+            IList<IPrefabKey> antiNavalBuildOrder = _antiNavalBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum);
 
+            IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
 
-			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
+			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 
-            // FELIX  Don't always return same build order :P
-            // FELIX  TEMP
-            //return StaticBuildOrders.Basic.Balanced;
-            return new List<IPrefabKey>();
+			// Initialise key wrappers, to offensive and defensive blanks to be filled
+			foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
+			{
+				keyWrapper.Initialise(buildOrders);
+			}
+
+			return
+				baseBuildOrder
+					.Where(keyWrapper => keyWrapper.HasKey)
+					.Select(keyWrapper => keyWrapper.Key)
+					.ToList();
         }
 		
         /// <summary>
         /// Build orders do NOT contain counters to threats.  These counters
         /// get created on the fly in response to threats.
         /// </summary>
-        public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum, int numOfPlatformSlots)
+        public IList<IPrefabKey> GetAdaptiveBuildOrder(int levelNum, ISlotWrapper slotWrapper)
         {
             IStrategy strategy = _staticData.GetAdaptiveStrategy(levelNum);
 
@@ -77,8 +93,9 @@ namespace BattleCruisers.AI.Providers
                 return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
             }).ToList();
 
-            // Create offensive build order
-            IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
+			// Create offensive build order
+			int numOfPlatformSlots = slotWrapper.GetSlotCount(SlotType.Platform);
+			IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
 			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder);
 
             IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
