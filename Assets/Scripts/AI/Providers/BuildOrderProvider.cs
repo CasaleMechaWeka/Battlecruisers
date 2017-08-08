@@ -72,7 +72,7 @@ namespace BattleCruisers.AI.Providers
 
 			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 
-			// Initialise key wrappers, to offensive and defensive placeholders to be filled
+			// Initialise key wrappers, so offensive and defensive placeholders are filled
 			foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
 			{
 				keyWrapper.Initialise(buildOrders);
@@ -82,6 +82,7 @@ namespace BattleCruisers.AI.Providers
 				baseBuildOrder
 					.Where(keyWrapper => keyWrapper.HasKey)
 					.Select(keyWrapper => keyWrapper.Key)
+                    .Where(key => _staticData.IsBuildableAvailable(key, levelNum))
 					.ToList();
         }
 
