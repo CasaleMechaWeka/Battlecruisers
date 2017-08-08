@@ -113,14 +113,16 @@ namespace BattleCruisers.AI.Providers
                     .ToList();
         }
 
-        public IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum)
+        public IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum, ISlotWrapper slotWrapper)
         {
-            return levelNum > LEVEL_SAM_SITE_IS_UNLOCKED ? StaticBuildOrders.AntiAir : StaticBuildOrders.BasicAntiAir;
+            int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
+            return _antiAirBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum);
         }
 
-        public IList<IPrefabKey> GetAntiNavalBuildOrder(int levelNum)
+        public IList<IPrefabKey> GetAntiNavalBuildOrder(int levelNum, ISlotWrapper slotWrapper)
         {
-            return levelNum > LEVEL_MORTAR_IS_UNLOCKED ? StaticBuildOrders.AntiNaval : StaticBuildOrders.BasicAntiNaval;
+			int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
+			return _antiNavalBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum);
         }
 
         public bool IsAntiRocketBuildOrderAvailable(int levelNum)

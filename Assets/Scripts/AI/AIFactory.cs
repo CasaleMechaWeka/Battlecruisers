@@ -58,11 +58,11 @@ namespace BattleCruisers.AI
             _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
             // Anti air
-            IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num);
+            IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num, slotWrapper);
             _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
 
             // Anti naval
-			IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num);
+            IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num, slotWrapper);
 			_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
 
             // Anti rocket
