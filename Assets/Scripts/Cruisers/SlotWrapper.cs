@@ -34,7 +34,7 @@ namespace BattleCruisers.Cruisers
 				_slots[slot.type].Add(slot);
 			}
 
-            // Sort slots by position
+            // Sort slots by position (cruiser front to cruiser rear)
             foreach (List<ISlot> slotsOfAType in _slots.Values)
             {
                 slotsOfAType.Sort((slot1, slot2) => slot1.XDistanceFromParentCruiser.CompareTo(slot2.XDistanceFromParentCruiser));
@@ -94,8 +94,8 @@ namespace BattleCruisers.Cruisers
 		public ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true)
 		{
             return preferFromFront ?
-                _slots[slotType].FindLast(slot => slot.IsFree) :
-                _slots[slotType].Find(slot => slot.IsFree);
+                _slots[slotType].Find(slot => slot.IsFree) :
+                _slots[slotType].FindLast(slot => slot.IsFree);
 		}
 
 		public int GetSlotCount(SlotType slotType)
