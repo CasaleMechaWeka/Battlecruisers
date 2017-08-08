@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
 {
-    public abstract class AntiUnitBuildOrderProvider
+    public abstract class AntiUnitBuildOrderProvider : IAntiUnitBuildOrderProvider
     {
         private readonly IStaticData _staticData;
         private readonly IPrefabKey _basicDefenceKey, _advancedDefenceKey;
