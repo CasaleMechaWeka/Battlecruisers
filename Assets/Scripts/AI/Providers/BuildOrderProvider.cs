@@ -18,8 +18,6 @@ namespace BattleCruisers.AI.Providers
         private readonly IStaticData _staticData;
 
         // FELIX  Use StaticData instead
-		private const int LEVEL_SAM_SITE_IS_UNLOCKED = 2;
-		private const int LEVEL_MORTAR_IS_UNLOCKED = 1;
 		private const int LEVEL_TESLA_COIL_IS_UNLOCKED = 12;
 
         public IList<IPrefabKey> AntiRocketBuildOrder { get { return StaticBuildOrders.AntiRocketLauncher; } }

@@ -254,63 +254,6 @@ namespace BattleCruisers.Data.Static
 			}
         }
 
-        // FELIX  Replace with DefensiveBuildOrderProvider :)
-        public static IList<IPrefabKey> BasicAntiAir
-        {
-            get
-            {
-                return new List<IPrefabKey>()
-                {
-                    StaticPrefabKeys.Buildings.AntiAirTurret,
-                    StaticPrefabKeys.Buildings.AntiAirTurret,
-                    StaticPrefabKeys.Buildings.AntiAirTurret,
-                    StaticPrefabKeys.Buildings.AntiAirTurret
-                };
-            }
-        }
-
-		public static IList<IPrefabKey> AntiAir
-		{
-			get
-			{
-				return new List<IPrefabKey>()
-				{
-					StaticPrefabKeys.Buildings.AntiAirTurret,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.SamSite,
-					StaticPrefabKeys.Buildings.SamSite
-				};
-			}
-		}
-
-		public static IList<IPrefabKey> BasicAntiNaval
-		{
-			get
-			{
-				return new List<IPrefabKey>()
-				{
-					StaticPrefabKeys.Buildings.AntiShipTurret,
-					StaticPrefabKeys.Buildings.AntiShipTurret,
-					StaticPrefabKeys.Buildings.AntiShipTurret,
-					StaticPrefabKeys.Buildings.AntiShipTurret
-				};
-			}
-		}
-
-        public static IList<IPrefabKey> AntiNaval
-        {
-            get
-            {
-                return new List<IPrefabKey>()
-                {
-					StaticPrefabKeys.Buildings.AntiShipTurret,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.Mortar,
-					StaticPrefabKeys.Buildings.Mortar
-                };
-            }
-        }
-
 		public static IList<IPrefabKey> AntiRocketLauncher
 		{
 			get
