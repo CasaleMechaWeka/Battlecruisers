@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers
@@ -12,18 +11,12 @@ namespace BattleCruisers.AI.Providers
 
         public BuildOrders(
             IList<IPrefabKey> offensiveBuildOrder,
-	        IList<IPrefabKey> antiAirBuildOrder = null,
-	        IList<IPrefabKey> antiNavalBuildOrder = null)
+	        IList<IPrefabKey> antiAirBuildOrder,
+	        IList<IPrefabKey> antiNavalBuildOrder)
         {
             OffensiveBuildOrder = offensiveBuildOrder.GetEnumerator();
-
-            AntiAirBuildOrder = antiAirBuildOrder != null ? 
-                antiAirBuildOrder.GetEnumerator() : 
-                Enumerable.Empty<IPrefabKey>().GetEnumerator();
-
-            AntiNavalBuildOrder = antiNavalBuildOrder != null ?
-                antiNavalBuildOrder.GetEnumerator() :
-				Enumerable.Empty<IPrefabKey>().GetEnumerator();
+            AntiAirBuildOrder = antiAirBuildOrder.GetEnumerator();
+            AntiNavalBuildOrder = antiNavalBuildOrder.GetEnumerator();
 		}
 	}
 }
