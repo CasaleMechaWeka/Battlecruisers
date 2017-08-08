@@ -30,7 +30,7 @@ namespace BattleCruisers.Data.Static
                 _allBuildings
 				.Select(buildingKey => (IPrefabKey)buildingKey)
 				.ToList();
-			this.BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
+			BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 
             _buildableToUnlockedLevel = CreateAvailabilityMap();
 
