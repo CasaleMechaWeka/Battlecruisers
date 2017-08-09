@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
 	public interface IUIFactory
 	{
-		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
+		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
 		void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod);
 	}
 
@@ -22,11 +22,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 		public Button levelButtonPrefab;
 		public Button homeButtonPrefab;
 
-		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, int levelNum, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
+		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
 		{
 			Button levelButton = Instantiate<Button>(levelButtonPrefab);
 			levelButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			levelButton.GetComponent<LevelButtonController>().Initialise(levelNum, level, isLevelUnlocked, screensSceneGod);
+			levelButton.GetComponent<LevelButtonController>().Initialise(level, isLevelUnlocked, screensSceneGod);
 		}
 
 		public void CreateHomeButton(HorizontalOrVerticalLayoutGroup buttonParent, IScreensSceneGod screensSceneGod)
