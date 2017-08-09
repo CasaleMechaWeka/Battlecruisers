@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Commands
 {
@@ -25,6 +26,7 @@ namespace BattleCruisers.UI.Commands
 
 		public void Execute()
         {
+            Assert.IsTrue(CanExecute);
             _action.Invoke();
         }
 
