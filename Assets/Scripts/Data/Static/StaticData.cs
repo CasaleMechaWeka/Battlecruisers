@@ -114,18 +114,37 @@ namespace BattleCruisers.Data.Static
 				AllUnitKeys());
 		}
 
-		// FELIX  All 21 levels :D
+        // FELIX  Create 4th set :)
 		private IList<ILevel> CreateLevels()
 		{
 			return new List<ILevel>()
 			{
+                // Set 1
 				new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor),
 				new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
 				new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor),
 				new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw),
 				new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark),
 				new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw),
-				new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw)
+				new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw),
+
+                // Set 2
+                new Level(8, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle),
+                new Level(9, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
+                new Level(10, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Hammerhead),
+                new Level(11, "Battle of Watercress", StaticPrefabKeys.Hulls.Eagle),
+                new Level(12, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead),
+                new Level(13, "Dunspock", StaticPrefabKeys.Hulls.Eagle),
+                new Level(14, "Gallient Flippery", StaticPrefabKeys.Hulls.Hammerhead),
+
+                // Set 3
+                new Level(15, "Sprawl Brawl", StaticPrefabKeys.Hulls.Longbow),
+                new Level(16, "Fisticuffs", StaticPrefabKeys.Hulls.Hammerhead),
+                new Level(17, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Megalodon),
+                new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow),
+                new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle),
+                new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon),
+                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon),
 			};
 		}
 
