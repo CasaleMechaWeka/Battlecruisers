@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
+using BattleCruisers.UI.Common;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -10,6 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 	{
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand;
+
+        public ButtonController nextSetButton;
 
         private const int SET_SIZE = 7;
 
@@ -36,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             CreateLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, uiFactory);
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
+            nextSetButton.Initialise(_nextSetCommand);
 
             // FELIX  Focus on set which had the last played level, not just hardcoded :P
             VisibleSetIndex = 1;
