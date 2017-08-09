@@ -8,8 +8,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsScreenController : ScreenController
 	{
         private IList<LevelsSetController> _levelSets;
+        private int _visibleSetIndex;
 
         private const int SET_SIZE = 7;
+
+        private LevelsSetController VisibleLevelsSet { get { return _levelSets[_visibleSetIndex]; } }
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
 		{
@@ -37,7 +40,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             }
 
             // FELIX  Focus on set which had the last played level, not just hardcoded :P
-            _levelSets[1].gameObject.SetActive(true);
+            _visibleSetIndex = 1;
+            ShowSet(_visibleSetIndex);
+        }
+
+        private void ShowSet(int setIndex)
+        {
+            Assert.IsTrue(setIndex >= 0 && setIndex < _levelSets.Count);
+
+            VisibleLevelsSet.gameObject.SetActive(false);
+            _visibleSetIndex = setIndex;
+            VisibleLevelsSet.gameObject.SetActive(true);
         }
 	}
 }
