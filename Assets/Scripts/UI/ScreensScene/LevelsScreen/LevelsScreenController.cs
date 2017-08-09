@@ -14,16 +14,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 		{
 			base.Initialise(screensSceneGod);
 
-			// Create level buttons
-			for (int i = 0; i < levels.Count; ++i)
-			{
-				int levelNum = i + 1;
-				bool isLevelUnlocked = levelNum <= numOfLevelsUnlocked;
+            // FELIX
+			//// Create level buttons
+			//for (int i = 0; i < levels.Count; ++i)
+			//{
+			//	int levelNum = i + 1;
+			//	bool isLevelUnlocked = levelNum <= numOfLevelsUnlocked;
 
-				uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], isLevelUnlocked, screensSceneGod); 
-			}
+			//	uiFactory.CreateLevelButton(buttonsWrapper, levelNum, levels[i], isLevelUnlocked, screensSceneGod); 
+			//}
 
-			uiFactory.CreateHomeButton(buttonsWrapper, screensSceneGod);
+			//uiFactory.CreateHomeButton(buttonsWrapper, screensSceneGod);
 		}
 	}
 }
