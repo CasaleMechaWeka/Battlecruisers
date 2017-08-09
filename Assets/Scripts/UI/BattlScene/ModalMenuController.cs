@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public enum UserAction
+    public enum UserAction
 	{
 		Dismissed, Quit
 	}
@@ -38,7 +35,6 @@ namespace BattleCruisers.UI.BattleScene
 				DismissMenu(UserAction.Dismissed);
 			}
 		}
-
 
 		public void Cancel()
 		{
