@@ -10,9 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsScreenController : ScreenController
 	{
         private IList<LevelsSetController> _levelSets;
-        private ICommand _nextSetCommand;
+        private ICommand _nextSetCommand, _previousSetCommand;
 
-        public ButtonController nextSetButton;
+        public ButtonController nextSetButton, previousSetButton;
 
         private const int SET_SIZE = 7;
 
@@ -25,7 +25,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             set
             {
                 _visibleSetIndex = value;
+
                 _nextSetCommand.EmitCanExecuteChanged();
+                _previousSetCommand.EmitCanExecuteChanged();
             }
         }
 
@@ -40,6 +42,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(_nextSetCommand);
+
+            _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
+            previousSetButton.Initialise(_previousSetCommand);
 
             // FELIX  Focus on set which had the last played level, not just hardcoded :P
             VisibleSetIndex = 1;
@@ -76,14 +81,24 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.gameObject.SetActive(true);
         }
 
-        private void NextSetCommandExecute()
+		private void NextSetCommandExecute()
+		{
+			ShowSet(VisibleSetIndex + 1);
+		}
+
+		private bool CanNextSetCommandExecute()
+		{
+			return VisibleSetIndex < _levelSets.Count - 1;
+		}
+
+        private void PreviousSetCommandExecute()
         {
-            ShowSet(VisibleSetIndex + 1);
+            ShowSet(VisibleSetIndex - 1);
         }
 
-        private bool CanNextSetCommandExecute()
+        private bool CanPreviousSetCommandExecute()
         {
-            return VisibleSetIndex < _levelSets.Count - 1;
+            return VisibleSetIndex > 0;
         }
 	}
 }
