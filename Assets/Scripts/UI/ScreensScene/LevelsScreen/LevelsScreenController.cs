@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Commands;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -8,19 +9,41 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsScreenController : ScreenController
 	{
         private IList<LevelsSetController> _levelSets;
-        private int _visibleSetIndex;
+        private ICommand _nextSetCommand;
 
         private const int SET_SIZE = 7;
 
-        private LevelsSetController VisibleLevelsSet { get { return _levelSets[_visibleSetIndex]; } }
+        private LevelsSetController VisibleLevelsSet { get { return _levelSets[VisibleSetIndex]; } }
+
+        private int _visibleSetIndex;
+        private int VisibleSetIndex 
+        { 
+            get { return _visibleSetIndex; }
+            set
+            {
+                _visibleSetIndex = value;
+                _nextSetCommand.EmitCanExecuteChanged();
+            }
+        }
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
-		{
-			base.Initialise(screensSceneGod);
+        {
+            base.Initialise(screensSceneGod);
 
             UIFactory uiFactory = GetComponent<UIFactory>();
             Assert.IsNotNull(uiFactory);
 
+            CreateLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, uiFactory);
+			
+			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
+
+            // FELIX  Focus on set which had the last played level, not just hardcoded :P
+            VisibleSetIndex = 1;
+            ShowSet(VisibleSetIndex);
+        }
+
+        private void CreateLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, UIFactory uiFactory)
+        {
             Assert.IsTrue(levels.Count % SET_SIZE == 0);
             int numOfSets = levels.Count / SET_SIZE;
             _levelSets = new List<LevelsSetController>(numOfSets);
@@ -38,10 +61,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.gameObject.SetActive(false);
                 _levelSets.Add(levelsSet);
             }
-
-            // FELIX  Focus on set which had the last played level, not just hardcoded :P
-            _visibleSetIndex = 1;
-            ShowSet(_visibleSetIndex);
         }
 
         private void ShowSet(int setIndex)
@@ -49,8 +68,18 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Assert.IsTrue(setIndex >= 0 && setIndex < _levelSets.Count);
 
             VisibleLevelsSet.gameObject.SetActive(false);
-            _visibleSetIndex = setIndex;
+            VisibleSetIndex = setIndex;
             VisibleLevelsSet.gameObject.SetActive(true);
+        }
+
+        private void NextSetCommandExecute()
+        {
+            ShowSet(VisibleSetIndex + 1);
+        }
+
+        private bool CanNextSetCommandExecute()
+        {
+            return VisibleSetIndex < _levelSets.Count - 1;
         }
 	}
 }
