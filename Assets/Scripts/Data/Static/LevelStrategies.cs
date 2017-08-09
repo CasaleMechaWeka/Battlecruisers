@@ -1,4 +1,4 @@
-﻿﻿﻿﻿using System.Collections.Generic;
+﻿﻿﻿﻿﻿using System.Collections.Generic;
 using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.AI.Providers.Strategies.Requests;
 using UnityEngine.Assertions;
@@ -43,7 +43,13 @@ namespace BattleCruisers.Data.Static
 				new BalancedStrategy(),
 
                 // Set 3:  Levels 15 - 21
-                // FELIX
+				new BalancedStrategy(),
+				new BoomStrategy(),
+				new RushStrategy(),
+				new BoomStrategy(),
+				new BoomStrategy(),
+				new RushStrategy(),
+				new BalancedStrategy()
             };
         }
 
@@ -70,92 +76,135 @@ namespace BattleCruisers.Data.Static
                 new BasicBalancedStrategy(),
 
                 // Set 3:  Levels 15 - 21
-                // FELIX
+				new BasicTurtleStrategy(),
+				new BasicBoomAggressiveStrategy(),
+				new BasicRushStrategy(),
+				new BasicBoomDefensiveStrategy(),
+				new BasicBoomAggressiveStrategy(),
+				new BasicRushStrategy(),
+				new BasicBalancedStrategy()
             };
 		}
 
         private IList<IBasicOffensiveRequest[]> CreateOffensiveRequests()
         {
             return new List<IBasicOffensiveRequest[]>()
-			{
+            {
                 // Set 1:  Levels 1 - 7
                 new IBasicOffensiveRequest[]
                 {
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				},
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
                 
                 // Set 2:  Levels 8 - 14
                 new IBasicOffensiveRequest[]
                 {
-					new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				},
-				new IBasicOffensiveRequest[]
-				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-				}
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IBasicOffensiveRequest[]
+                {
+                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
 
                 // Set 3:  Levels 15 - 21
-                // FELIX
+                new IBasicOffensiveRequest[]
+                {
+					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+				new IBasicOffensiveRequest[]
+				{
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+				},
+				new IBasicOffensiveRequest[]
+				{
+                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+				},
+				new IBasicOffensiveRequest[]
+				{
+					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+				},
+				new IBasicOffensiveRequest[]
+				{
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+				},
+				new IBasicOffensiveRequest[]
+				{
+					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+				},
+				new IBasicOffensiveRequest[]
+				{
+					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+				}
             };
         }
 
