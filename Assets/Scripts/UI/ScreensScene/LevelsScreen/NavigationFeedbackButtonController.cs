@@ -25,7 +25,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _levelScreenController.VisibleSetChanged += _levelScreenController_VisibleSetChanged;
         }
 		
-        // FELIX  Use states :P
 		private void _levelScreenController_VisibleSetChanged(object sender, EventArgs e)
 		{
             bool wasSelected = _isSelected;
