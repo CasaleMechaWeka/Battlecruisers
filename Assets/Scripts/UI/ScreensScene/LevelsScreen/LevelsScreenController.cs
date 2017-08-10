@@ -112,5 +112,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             return VisibleSetIndex > 0;
         }
+
+        public void GoHome()
+        {
+            _screensSceneGod.GoToHomeScreen();
+        }
 	}
 }
