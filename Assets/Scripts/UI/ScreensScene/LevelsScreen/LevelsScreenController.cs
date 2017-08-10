@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
@@ -21,17 +22,24 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private LevelsSetController VisibleLevelsSet { get { return _levelSets[VisibleSetIndex]; } }
 
         private int _visibleSetIndex;
-        private int VisibleSetIndex 
+        public int VisibleSetIndex 
         { 
             get { return _visibleSetIndex; }
-            set
+            private set
             {
                 _visibleSetIndex = value;
 
                 _nextSetCommand.EmitCanExecuteChanged();
                 _previousSetCommand.EmitCanExecuteChanged();
+
+                if (VisibleSetChanged != null)
+                {
+                    VisibleSetChanged.Invoke(this, EventArgs.Empty);
+                }
             }
         }
+
+        public event EventHandler VisibleSetChanged;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
         {
