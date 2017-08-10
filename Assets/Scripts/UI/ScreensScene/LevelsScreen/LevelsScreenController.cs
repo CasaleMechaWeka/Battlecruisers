@@ -4,6 +4,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -13,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private ICommand _nextSetCommand, _previousSetCommand;
 
         public ButtonController nextSetButton, previousSetButton;
+        public HorizontalOrVerticalLayoutGroup navigationFeedbackButtonsWrapper;
 
         private const int SET_SIZE = 7;
 
@@ -69,10 +71,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelsSetController levelsSet = uiFactory.CreateLevelsSet(screensSceneGod, this, uiFactory, setLevels, numOfLevelsUnlocked);
                 levelsSet.gameObject.SetActive(false);
                 _levelSets.Add(levelsSet);
+
+                uiFactory.CreateNavigationFeedbackButton(navigationFeedbackButtonsWrapper, this, j);
             }
         }
 
-        private void ShowSet(int setIndex)
+        public void ShowSet(int setIndex)
         {
             Assert.IsTrue(setIndex >= 0 && setIndex < _levelSets.Count);
 

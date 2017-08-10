@@ -9,27 +9,36 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public interface IUIFactory
 	{
 		void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod);
-        LevelsSetController CreateLevelsSet(IScreensSceneGod screensSceneGod, LevelsScreenController levelsScreen, UIFactory uiFactory, IList<ILevel> levels, int numOfLevelsUnlocked);
+        void CreateNavigationFeedbackButton(HorizontalOrVerticalLayoutGroup buttonParent, LevelsScreenController levelsScreenController, int setIndex);
+		LevelsSetController CreateLevelsSet(IScreensSceneGod screensSceneGod, LevelsScreenController levelsScreen, UIFactory uiFactory, IList<ILevel> levels, int numOfLevelsUnlocked);
 	}
 
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
-		public Button levelButtonPrefab;
+        public LevelButtonController levelButtonPrefab;
         public LevelsSetController levelsSetPrefab;
+        public NavigationFeedbackButtonController navigationFeedabckButtonPrefab;
 
 		public void CreateLevelButton(HorizontalOrVerticalLayoutGroup buttonParent, ILevel level, bool isLevelUnlocked, IScreensSceneGod screensSceneGod)
 		{
-			Button levelButton = Instantiate<Button>(levelButtonPrefab);
+            LevelButtonController levelButton = Instantiate(levelButtonPrefab);
 			levelButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			levelButton.GetComponent<LevelButtonController>().Initialise(level, isLevelUnlocked, screensSceneGod);
+            levelButton.Initialise(level, isLevelUnlocked, screensSceneGod);
 		}
 
-        public LevelsSetController CreateLevelsSet(IScreensSceneGod screensSceneGod, LevelsScreenController levelsScreen, UIFactory uiFactory, IList<ILevel> levels, int numOfLevelsUnlocked)
+        public void CreateNavigationFeedbackButton(HorizontalOrVerticalLayoutGroup buttonParent, LevelsScreenController levelsScreenController, int setIndex)
         {
-            LevelsSetController levelsSet = Instantiate(levelsSetPrefab);
-            levelsSet.transform.SetParent(levelsScreen.transform, worldPositionStays: false);
-            levelsSet.Initialise(screensSceneGod, uiFactory, levels, numOfLevelsUnlocked);
-            return levelsSet;
+            NavigationFeedbackButtonController navigationFeedbackButton = Instantiate(navigationFeedabckButtonPrefab);
+            navigationFeedbackButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
+            navigationFeedbackButton.Initialise(levelsScreenController, setIndex);
         }
+		
+		public LevelsSetController CreateLevelsSet(IScreensSceneGod screensSceneGod, LevelsScreenController levelsScreen, UIFactory uiFactory, IList<ILevel> levels, int numOfLevelsUnlocked)
+		{
+			LevelsSetController levelsSet = Instantiate(levelsSetPrefab);
+			levelsSet.transform.SetParent(levelsScreen.transform, worldPositionStays: false);
+			levelsSet.Initialise(screensSceneGod, uiFactory, levels, numOfLevelsUnlocked);
+			return levelsSet;
+		}
     }
 }
