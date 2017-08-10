@@ -34,13 +34,16 @@ namespace BattleCruisers.Scenes
 
 
             // FELIX  TEMP  For showing PostBattleScreen :)
-//			ApplicationModel.BattleResult = new BattleResult(1, false);
-//			ApplicationModel.BattleResult = new BattleResult(1, true);
-//			_gameModel.LastBattleResult = null;
-//			ApplicationModel.ShowPostBattleScreen = false;
+            //			ApplicationModel.BattleResult = new BattleResult(1, false);
+            //			ApplicationModel.BattleResult = new BattleResult(1, true);
+            //			_gameModel.LastBattleResult = null;
+            //			ApplicationModel.ShowPostBattleScreen = false;
 
 
-			levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked);
+            BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
+            int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
+
+            levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked, lastPlayedLevel);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
 			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
@@ -60,7 +63,7 @@ namespace BattleCruisers.Scenes
 			
 			// FELIX TEMP  Go to specific screen :)
 			//GoToSettingsScreen();
-			GoToLevelsScreen();
+			//GoToLevelsScreen();
 		}
 		
 		public void GoToLevelsScreen()

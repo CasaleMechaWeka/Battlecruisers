@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, int lastPlayedLevelNum)
         {
             base.Initialise(screensSceneGod);
 
@@ -56,8 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(_previousSetCommand);
 
-            // FELIX  Focus on set which had the last played level, not just hardcoded :P
-            VisibleSetIndex = 1;
+            VisibleSetIndex = (lastPlayedLevelNum - 1) / SET_SIZE;
             ShowSet(VisibleSetIndex);
         }
 
