@@ -23,7 +23,8 @@ namespace BattleCruisers.Cameras
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
-        private const float ZOOM_SPEED = 0.5f;
+		private const float ZOOM_SPEED = 0.5f;
+		private const float PAN_SPEED = 20.0f;
 
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
@@ -139,12 +140,19 @@ namespace BattleCruisers.Cameras
 			
 			return isRightOrthographicSize;
 		}
-		
+
+        // FELIX  Move to top
+        private bool _inDrag;
+        private Vector3 _dragStartCameraPosition;
+        private Vector3 _dragStartMousePosition;
+
         // FELIX  Adapt for IPad :P
 		private void HandleUserInput()
         {
             float yScrollDelta = Input.mouseScrollDelta.y; 
 
+            // FELIX  Extract to method
+            // Zoom
             if (yScrollDelta != 0)
             {
                 if (_currentTarget != _playerInputTarget)
@@ -169,6 +177,29 @@ namespace BattleCruisers.Cameras
                     _camera.orthographicSize = CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE;
                 }
             }
+
+            // FELIX  Extract to method
+            // Translation movement
+            // FELIX  Magic number!
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Drag start
+                _inDrag = true;
+                _dragStartCameraPosition = transform.position;
+                _dragStartMousePosition = _camera.ScreenToViewportPoint(Input.mousePosition);
+            }
+            else if (Input.GetMouseButton(0))
+            {
+				// Mid drag
+                Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
+                transform.position = _dragStartCameraPosition - mousePositionDelta * PAN_SPEED;
+			}
+            else if (Input.GetMouseButtonUp(0))
+            {
+                // Drag end
+                _inDrag = false;
+            }
+
         }
 		
         public void FocusOnPlayerCruiser()
