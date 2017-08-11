@@ -1,15 +1,8 @@
 ﻿using BattleCruisers.Cruisers;
-using System;
 using UnityEngine;
 
 namespace BattleCruisers.Cameras
 {
-	public interface ICameraCalculator
-	{
-		float FindCameraOrthographicSize(ICruiser cruiser);
-		float FindCameraYPosition(float desiredOrthographicSize);
-	}
-
 	public class CameraCalculator : ICameraCalculator
 	{
 		private readonly Camera _camera;
@@ -47,4 +40,3 @@ namespace BattleCruisers.Cameras
 		}
 	}
 }
-
