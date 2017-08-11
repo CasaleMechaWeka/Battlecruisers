@@ -10,7 +10,7 @@ namespace BattleCruisers.Cameras
 	public class CameraController : MonoBehaviour, ICameraController
 	{
 		private Camera _camera;
-		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget;
+        private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget, _playerInputTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity = 0;
 
@@ -72,6 +72,14 @@ namespace BattleCruisers.Cameras
 			// Right mid view
 			Vector3 rightMidPosition = new Vector3(MID_VIEWS_POSITION_X, midViewsPositionY, transform.position.z);
 			_midRightTarget = new CameraTarget(rightMidPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.RightMid, rightSideInstants);
+
+            // Player input controlled
+            _playerInputTarget
+                = new CameraTarget(
+                    position: default(Vector3),
+	                orthographicSize: -1,
+	                state: CameraState.PlayerInputControlled,
+	                instantStates: new List<CameraState>());
 
 			FocusOnPlayerCruiser();
 		}
@@ -139,6 +147,17 @@ namespace BattleCruisers.Cameras
 
             if (yScrollDelta != 0)
             {
+                if (_currentTarget != _playerInputTarget)
+                {
+                    if (CameraTransitionStarted != null)
+                    {
+                        CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _playerInputTarget.State));
+                    }
+					
+                    _cameraState = _playerInputTarget.State;
+					_currentTarget = _playerInputTarget;
+				}
+
                 _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
 
                 if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
