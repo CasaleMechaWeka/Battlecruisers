@@ -7,35 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cameras
 {
-    public enum CameraState
-	{
-		PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid
-	}
-
-	public class CameraTransitionArgs : EventArgs
-	{
-		public CameraState Origin { get; private set; }
-		public CameraState Destination  { get; private set; }
-
-		public CameraTransitionArgs(CameraState origin, CameraState destination)
-		{
-			Origin = origin;
-			Destination = destination;
-		}
-	}
-
-	public interface ICameraController 
-	{
-		CameraState State { get; }
-
-		void FocusOnPlayerCruiser();
-		void FocusOnAiCruiser();
-		void ShowFullMapView();
-		void ShowMidLeft();
-		void ShowMidRight();
-	}
-
-	public class CameraController : MonoBehaviour, ICameraController 
+	public class CameraController : MonoBehaviour, ICameraController
 	{
 		private Camera _camera;
 		private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget;
