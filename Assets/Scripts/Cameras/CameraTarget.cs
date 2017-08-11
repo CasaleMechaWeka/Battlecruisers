@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cameras
 {
-	public interface ICameraTarget
-	{
-		Vector3 Position { get; } 
-		float OrthographicSize { get; }
-		CameraState State { get; }
-		bool IsInstantTransition(CameraState nextState);
-	}
-
 	public class CameraTarget : ICameraTarget
 	{
 		private readonly IList<CameraState> _instantStates;
@@ -37,4 +28,3 @@ namespace BattleCruisers.Cameras
 		}
 	}
 }
-
