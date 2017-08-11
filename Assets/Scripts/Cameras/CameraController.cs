@@ -135,19 +135,20 @@ namespace BattleCruisers.Cameras
         // FELIX  Adapt for IPad :P
 		private void HandleUserInput()
         {
-            //Input.GetKey(KeyCode.LeftArrow);
-
-            // FELIX  TEMP
-            if (Input.mouseScrollDelta != default(Vector2))
-            {
-                Debug.Log("Input.mouseScrollDelta: " + Input.mouseScrollDelta);
-			}
-
             float yScrollDelta = Input.mouseScrollDelta.y; 
 
             if (yScrollDelta != 0)
             {
                 _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
+
+                if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
+                {
+                    _camera.orthographicSize = CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE;
+                } 
+                else if (_camera.orthographicSize < CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE)
+                {
+                    _camera.orthographicSize = CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE;
+                }
             }
         }
 		

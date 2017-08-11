@@ -10,8 +10,9 @@ namespace BattleCruisers.Cameras
 		private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
         private const float WATER_RATIO = 0.35f;
         private const float MAX_WATER_Y = -1.5f;
-		
-        public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
+
+		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
+		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
 
 		public CameraCalculator(Camera camera)
 		{
