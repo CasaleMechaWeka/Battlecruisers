@@ -106,45 +106,65 @@ namespace BattleCruisers.Cameras
 		void Update()
 		{
 			if (_cameraState != _currentTarget.State)
-			{
-				// Camera position
-				bool isInPosition = (transform.position - _currentTarget.Position).magnitude < POSITION_EQUALITY_MARGIN;
-				if (!isInPosition)
-				{
-					transform.position = Vector3.SmoothDamp(transform.position, _currentTarget.Position, ref _cameraPositionChangeVelocity, smoothTime);
-				}
-				else if (transform.position != _currentTarget.Position)
-				{
-					transform.position = _currentTarget.Position;
-					Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController position done");
-				}
+            {
+                bool isInPosition = UpdateCameraPosition();
+                bool isRightOrthographicSize = UpdateCameraZoom();
 
-				// Camera zoom
-				bool isRightOrthographicSize = Math.Abs(_camera.orthographicSize - _currentTarget.OrthographicSize) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
-				if (!isRightOrthographicSize)
-				{
-					_camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, _currentTarget.OrthographicSize, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
-				}
-				else if (_camera.orthographicSize != _currentTarget.OrthographicSize)
-				{
-					_camera.orthographicSize = _currentTarget.OrthographicSize;
-					Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController zoom done");
-				}
+                // Camera state
+                if (isInPosition && isRightOrthographicSize)
+                {
+                    if (CameraTransitionCompleted != null)
+                    {
+                        CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(_cameraState, _currentTarget.State));
+                    }
 
-				// Camera state
-				if (isInPosition && isRightOrthographicSize)
-				{
-					if (CameraTransitionCompleted != null)
-					{
-						CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(_cameraState, _currentTarget.State));
-					}
-
-					_cameraState = _currentTarget.State;
-				}
-			}
+                    _cameraState = _currentTarget.State;
+                }
+            }
+            else
+            {
+                HandleUserInput();
+            }
 		}
 
-		public void FocusOnPlayerCruiser()
+        private bool UpdateCameraPosition()
+        {
+            bool isInPosition = (transform.position - _currentTarget.Position).magnitude < POSITION_EQUALITY_MARGIN;
+            if (!isInPosition)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, _currentTarget.Position, ref _cameraPositionChangeVelocity, smoothTime);
+            }
+            else if (transform.position != _currentTarget.Position)
+            {
+                transform.position = _currentTarget.Position;
+                Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController position done");
+            }
+
+            return isInPosition;
+        }
+
+		private bool UpdateCameraZoom()
+		{
+			bool isRightOrthographicSize = Math.Abs(_camera.orthographicSize - _currentTarget.OrthographicSize) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
+			if (!isRightOrthographicSize)
+			{
+				_camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, _currentTarget.OrthographicSize, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
+			}
+			else if (_camera.orthographicSize != _currentTarget.OrthographicSize)
+			{
+				_camera.orthographicSize = _currentTarget.OrthographicSize;
+				Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController zoom done");
+			}
+			
+			return isRightOrthographicSize;
+		}
+
+        private void HandleUserInput()
+        {
+            // FELIX
+        }
+		
+        public void FocusOnPlayerCruiser()
 		{
 			MoveCamera(_playerCruiserTarget);
 		}
