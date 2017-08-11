@@ -23,6 +23,7 @@ namespace BattleCruisers.Cameras
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
+        private const float ZOOM_SPEED = 0.5f;
 
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
@@ -130,10 +131,24 @@ namespace BattleCruisers.Cameras
 			
 			return isRightOrthographicSize;
 		}
-
-        private void HandleUserInput()
+		
+        // FELIX  Adapt for IPad :P
+		private void HandleUserInput()
         {
-            // FELIX
+            //Input.GetKey(KeyCode.LeftArrow);
+
+            // FELIX  TEMP
+            if (Input.mouseScrollDelta != default(Vector2))
+            {
+                Debug.Log("Input.mouseScrollDelta: " + Input.mouseScrollDelta);
+			}
+
+            float yScrollDelta = Input.mouseScrollDelta.y; 
+
+            if (yScrollDelta != 0)
+            {
+                _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
+            }
         }
 		
         public void FocusOnPlayerCruiser()
