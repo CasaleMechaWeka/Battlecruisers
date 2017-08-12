@@ -3,15 +3,11 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-	public abstract class DefensiveTurret : Turret
+    public abstract class DefensiveTurret : Turret
 	{
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
@@ -31,7 +27,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 			enemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			bool isDetectable = true;
-			ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, _attackCapabilities);
+            bool ignoreDestroyedTargets = true;
+            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, _attackCapabilities, ignoreDestroyedTargets);
 			_targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();

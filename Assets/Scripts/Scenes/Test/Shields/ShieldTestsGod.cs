@@ -1,17 +1,16 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-	public class ShieldTestsGod : MonoBehaviour 
+    public class ShieldTestsGod : MonoBehaviour 
 	{
 		public ShieldController shield;
 		public BarrelController turret;
@@ -21,7 +20,8 @@ namespace BattleCruisers.Scenes.Test.Shields
 			shield.Initialise(Faction.Reds);
 			turret.StaticInitialise();
 
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, TargetType.Buildings);
+            IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes, ignoreDestroyedTargets: true);
 			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
 			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, turret.TurretStats.turretRotateSpeedInDegrees, turret.transform);
 			turret.Initialise(targetFilter, angleCalculator, rotationMovementController);

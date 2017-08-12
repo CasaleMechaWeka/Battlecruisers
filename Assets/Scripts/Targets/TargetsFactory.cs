@@ -1,17 +1,14 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 
 namespace BattleCruisers.Targets
 {
-	public class TargetsFactory : ITargetsFactory
+    public class TargetsFactory : ITargetsFactory
 	{
 		public ITargetProcessor BomberTargetProcessor { get; private set; }
 		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
@@ -37,24 +34,14 @@ namespace BattleCruisers.Targets
 		#endregion TargetFinders
 
 		#region TargetFilters
-		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, List<TargetType> targetTypes)
+		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
 		{
-			return CreateDetectableTargetFilter(faction, isDetectable, targetTypes.ToArray());
+            return new DetectableFilter(faction, isDetectable, targetTypes, ignoreDestroyedTargets);
 		}
 
-		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, params TargetType[] targetTypes)
+		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
 		{
-			return new DetectableFilter(faction, isDetectable, targetTypes);
-		}
-
-		public ITargetFilter CreateTargetFilter(Faction faction, List<TargetType> targetTypes)
-		{
-			return CreateTargetFilter(faction, targetTypes.ToArray());
-		}
-
-		public ITargetFilter CreateTargetFilter(Faction faction, params TargetType[] targetTypes)
-		{
-			return new FactionAndTargetTypeFilter(faction, targetTypes);
+            return new FactionAndTargetTypeFilter(faction, targetTypes, ignoreDestroyedTargets);
 		}
 
 		public IExactMatchTargetFilter CreateExactMatchTargetFilter()

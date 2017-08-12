@@ -1,24 +1,17 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Scenes.Test;
 using BattleCruisers.Scenes.Test.Utilities;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-	public class BombingTestsGod : MonoBehaviour 
+    public class BombingTestsGod : MonoBehaviour 
 	{
 		public BomberController bomberToLeft, bomberToRight;
 		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
@@ -27,10 +20,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 		{
 			Helper helper = new Helper();
 
-			AirFactory factory = GameObject.FindObjectOfType<AirFactory>();
+			AirFactory factory = FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(factory, Faction.Blues);
 
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, factory.TargetType);
+            IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes, ignoreDestroyedTargets: true);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
 
 			IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);

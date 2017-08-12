@@ -68,9 +68,10 @@ namespace BattleCruisers.Scenes.Test
 			// Setup target
 			_helper.InitialiseBuildable(target, _enemyFaction);
 			target.StartConstruction();
-			
+
 			// Setup laser
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, TargetType.Buildings, TargetType.Cruiser);
+			IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes, ignoreDestroyedTargets: true);
 			laserEmitter.Initialise(targetFilter, damagePerS: 100);
 		}
 

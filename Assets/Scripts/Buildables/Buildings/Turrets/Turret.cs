@@ -1,22 +1,15 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-	public abstract class Turret : Building, ITargetConsumer
+    public abstract class Turret : Building, ITargetConsumer
 	{
 		private GameObject _turretBase;
 		private Renderer _turretBaseRenderer;
@@ -87,7 +80,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected virtual ITargetFilter CreateTargetFilter()
 		{
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
 		}
 
 		protected abstract IAngleCalculator CreateAngleCalculator();

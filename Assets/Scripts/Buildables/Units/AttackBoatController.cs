@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets;
@@ -76,7 +77,7 @@ namespace BattleCruisers.Buildables.Units
 			
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_turretBarrelController.TurretStats.turretRotateSpeedInDegrees, _turretBarrelController.transform);
 			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator, rotationMovementController);
 		}
@@ -91,15 +92,16 @@ namespace BattleCruisers.Buildables.Units
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			bool isDetectable = true;
 			enemyDetector.Initialise(_turretBarrelController.TurretStats.rangeInM);
-			ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, _attackCapabilities);
+            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, _attackCapabilities, ignoreDestroyedTargets: false);
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
 
-			// Friend detection
-			ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, TargetType.Ships);
+            // Friend detection
+            IList<TargetType> friendTargetTypes = new List<TargetType>() { TargetType.Ships };
+            ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, friendTargetTypes, ignoreDestroyedTargets: false);
 			_friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
 			_friendFinder.TargetFound += OnFriendFound;
 			_friendFinder.TargetLost += OnFriendLost;
@@ -164,17 +166,17 @@ namespace BattleCruisers.Buildables.Units
 		private void StartMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
-            Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
+            Logging.Verbose(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
-			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
+            Logging.Verbose(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 		}
 
 		private void StopMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StopMoving()");
-			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
+            Logging.Verbose(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 			rigidBody.velocity = new Vector2(0, 0);
-			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
+            Logging.Verbose(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 		}
 	}
 }

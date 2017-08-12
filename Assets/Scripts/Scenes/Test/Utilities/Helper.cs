@@ -156,12 +156,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
 
+            if (exactMatchTargetFilter == null)
+            {
+                exactMatchTargetFilter = new ExactMatchTargetFilter();
+            }
+
 			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
 			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
-			targetsFactory.CreateTargetFilter(Faction.Reds, TargetType.Aircraft).ReturnsForAnyArgs(targetFilter);
-			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
+			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>(), true).ReturnsForAnyArgs(targetFilter);
 			targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
 			targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
             targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));

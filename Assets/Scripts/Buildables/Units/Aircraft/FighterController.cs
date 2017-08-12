@@ -89,7 +89,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
 			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
@@ -112,7 +112,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			// Detect followable enemies
 			followableEnemyDetector.Initialise(enemyFollowDetectionRangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, TargetType.Aircraft);
+            IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow, ignoreDestroyedTargets: false);
 			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
 			
 			ITargetRanker followableTargetRanker = _targetsFactory.CreateEqualTargetRanker();

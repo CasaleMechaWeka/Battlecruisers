@@ -1,19 +1,14 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Buildables.Units.Aircraft;
-using NSubstitute;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
-	public class StationaryTargetTestGod : MonoBehaviour 
+    public class StationaryTargetTestGod : MonoBehaviour 
 	{
 		private Helper _helper;
 
@@ -37,7 +32,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			target.StartConstruction();
 
 			// Fighter
-			ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, target.TargetType);
+			IList<TargetType> targetTypes = new List<TargetType>() { target.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, targetTypes, ignoreDestroyedTargets: true);
 			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject, targetFilter);
 			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
 			fighter.StartConstruction();

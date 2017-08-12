@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
@@ -9,8 +10,8 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 	{
 		private readonly bool _isDetectable;
 
-		public DetectableFilter(Faction faction, bool isDetectable, params TargetType[] targetTypes)
-			: base(faction, targetTypes)
+		public DetectableFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
+            : base(faction, targetTypes, ignoreDestroyedTargets)
 		{
 			_isDetectable = isDetectable;
 		}
