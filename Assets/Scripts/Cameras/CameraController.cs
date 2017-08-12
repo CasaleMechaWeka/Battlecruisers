@@ -25,6 +25,10 @@ namespace BattleCruisers.Cameras
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
 		private const float ZOOM_SPEED = 0.5f;
+		private const float CAMERA_POSITION_MAX_X = 35;
+		private const float CAMERA_POSITION_MIN_X = -35;
+		private const float CAMERA_POSITION_MAX_Y = 30;
+		private const float CAMERA_POSITION_MIN_Y = 0;
 
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
@@ -192,16 +196,39 @@ namespace BattleCruisers.Cameras
             {
 				// Mid drag
                 Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
-                transform.position = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+                Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+                transform.position = EnforeCameraBounds(desiredCameraPosition);
 			}
             else if (Input.GetMouseButtonUp(0))
             {
                 // Drag end
                 _inDrag = false;
             }
-
         }
 		
+        private Vector3 EnforeCameraBounds(Vector3 desiredCameraPosition)
+        {
+            if (desiredCameraPosition.x < CAMERA_POSITION_MIN_X)
+            {
+                desiredCameraPosition.x = CAMERA_POSITION_MIN_X;
+            }
+            else if (desiredCameraPosition.x > CAMERA_POSITION_MAX_X)
+            {
+                desiredCameraPosition.x = CAMERA_POSITION_MAX_X;
+            }
+
+            if (desiredCameraPosition.y < CAMERA_POSITION_MIN_Y)
+            {
+                desiredCameraPosition.y = CAMERA_POSITION_MIN_Y;
+            }
+            else if (desiredCameraPosition.y > CAMERA_POSITION_MAX_Y)
+            {
+                desiredCameraPosition.y = CAMERA_POSITION_MAX_Y;
+            }
+
+            return desiredCameraPosition;
+        }
+
         public void FocusOnPlayerCruiser()
 		{
 			MoveCamera(_playerCruiserTarget);
