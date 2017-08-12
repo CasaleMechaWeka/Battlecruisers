@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -25,6 +26,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
+			Logging.Log(Tags.TARGET_FINDER, "OnEnemyEntered()");
+
 			if (_targetFilter.IsMatch(args.Target) && TargetFound != null)
 			{
 				TargetFound.Invoke(this, args);
@@ -33,6 +36,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyExited(object sender, TargetEventArgs args)
 		{
+            Logging.Log(Tags.TARGET_FINDER, "OnEnemyExited()");
+
 			if (_targetFilter.IsMatch(args.Target) && TargetLost != null)
 			{
 				TargetLost.Invoke(this, args);

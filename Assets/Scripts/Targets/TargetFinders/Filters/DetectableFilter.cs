@@ -1,17 +1,11 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-	/// <summary>
-	/// Only detects targets that have their IsDetectable property set to true.
-	/// </summary>
-	public class DetectableFilter : FactionAndTargetTypeFilter
+    /// <summary>
+    /// Only detects targets that have their IsDetectable property set to true.
+    /// </summary>
+    public class DetectableFilter : FactionAndTargetTypeFilter
 	{
 		private readonly bool _isDetectable;
 
