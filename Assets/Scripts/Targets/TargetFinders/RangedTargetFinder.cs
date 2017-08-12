@@ -1,14 +1,9 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetFinders;
+﻿using System;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public class RangedTargetFinder : ITargetFinder
+    public class RangedTargetFinder : ITargetFinder
 	{
 		private ITargetDetector _enemyDetector;
 		private ITargetFilter _targetFilter;

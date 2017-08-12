@@ -1,14 +1,11 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
-using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public class TargetDetector : MonoBehaviour, ITargetDetector
+    public class TargetDetector : MonoBehaviour, ITargetDetector
 	{
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;

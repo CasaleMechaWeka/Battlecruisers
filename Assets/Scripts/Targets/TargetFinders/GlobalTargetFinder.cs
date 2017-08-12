@@ -1,24 +1,21 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	/// <summary>
-	/// Keeps track of all buildings constructed by the enemy cruiser.
-	/// 
-	/// When a building reaches 50% completion, it is considered a valid target.
-	/// 
-	/// This avoids users fooling the AI by starting lots of buildings, but
-	/// never committing any resources to them and never completing them.
-	/// 
-	/// Also has the enemy cruiser as a target.
-	/// </summary>
-	public class GlobalTargetFinder : ITargetFinder
+    /// <summary>
+    /// Keeps track of all buildings constructed by the enemy cruiser.
+    /// 
+    /// When a building reaches 50% completion, it is considered a valid target.
+    /// 
+    /// This avoids users fooling the AI by starting lots of buildings, but
+    /// never committing any resources to them and never completing them.
+    /// 
+    /// Also has the enemy cruiser as a target.
+    /// </summary>
+    public class GlobalTargetFinder : ITargetFinder
 	{
 		private ICruiser _enemyCruiser;
 

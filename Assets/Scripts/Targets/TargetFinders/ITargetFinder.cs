@@ -1,13 +1,9 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-	public class TargetEventArgs : EventArgs
+    public class TargetEventArgs : EventArgs
 	{
 		public TargetEventArgs(ITarget target)
 		{
