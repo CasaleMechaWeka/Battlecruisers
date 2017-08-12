@@ -35,9 +35,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		}
 
 		public void InitialiseBuildable(
-			Buildable buildable,
+			IBuildable buildable,
 			Faction faction = Faction.Blues,
-			UIManager uiManager = null,
+			IUIManager uiManager = null,
 			ICruiser parentCruiser = null,
 			ICruiser enemyCruiser = null,
 			IAircraftProvider aircraftProvider = null,
@@ -60,6 +60,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			{
 				enemyCruiser = CreateCruiser(_numOfDrones, Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
 			}
+
+            if (uiManager == null)
+            {
+                uiManager = Substitute.For<IUIManager>();
+            }
 
 			if (aircraftProvider == null)
 			{
