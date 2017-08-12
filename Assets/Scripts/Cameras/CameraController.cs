@@ -15,6 +15,11 @@ namespace BattleCruisers.Cameras
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity = 0;
 
+        // Dragging
+		private bool _inDrag;
+		private Vector3 _dragStartCameraPosition;
+		private Vector3 _dragStartMousePosition;
+
 		public float smoothTime;
 
 		public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
@@ -25,6 +30,9 @@ namespace BattleCruisers.Cameras
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
 		private const float ZOOM_SPEED = 0.5f;
+
+        // Dragging
+        private const int DRAGGING_MOUSE_BUTTON_INDEX = 0;  // Primary mouse button
 		private const float CAMERA_POSITION_MAX_X = 35;
 		private const float CAMERA_POSITION_MIN_X = -35;
 		private const float CAMERA_POSITION_MAX_Y = 30;
@@ -145,15 +153,10 @@ namespace BattleCruisers.Cameras
 			return isRightOrthographicSize;
 		}
 
-        // FELIX  Move to top
-        private bool _inDrag;
-        private Vector3 _dragStartCameraPosition;
-        private Vector3 _dragStartMousePosition;
-
         // FELIX  Adapt for IPad :P
 		private void HandleUserInput()
         {
-            float yScrollDelta = Input.mouseScrollDelta.y; 
+            float yScrollDelta = Input.mouseScrollDelta.y;
 
             // FELIX  Extract to method
             // Zoom
@@ -165,47 +168,52 @@ namespace BattleCruisers.Cameras
                     {
                         CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _playerInputTarget.State));
                     }
-					
+
                     _cameraState = _playerInputTarget.State;
-					_currentTarget = _playerInputTarget;
-				}
+                    _currentTarget = _playerInputTarget;
+                }
 
                 _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
 
                 if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
                 {
                     _camera.orthographicSize = CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE;
-                } 
+                }
                 else if (_camera.orthographicSize < CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE)
                 {
                     _camera.orthographicSize = CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE;
                 }
             }
 
-            // FELIX  Extract to method
-            // Translation movement
-            // FELIX  Magic number!
-            if (Input.GetMouseButtonDown(0))
+            bool inDrag = HandleDrag();
+        }
+
+        /// <returns><c>true</c>, if in drag, <c>false</c> otherwise.</returns>
+        private bool HandleDrag()
+        {
+            if (Input.GetMouseButtonDown(DRAGGING_MOUSE_BUTTON_INDEX))
             {
                 // Drag start
                 _inDrag = true;
                 _dragStartCameraPosition = transform.position;
                 _dragStartMousePosition = _camera.ScreenToViewportPoint(Input.mousePosition);
             }
-            else if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(DRAGGING_MOUSE_BUTTON_INDEX))
             {
-				// Mid drag
+                // Mid drag
                 Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
                 Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
                 transform.position = EnforeCameraBounds(desiredCameraPosition);
-			}
-            else if (Input.GetMouseButtonUp(0))
+            }
+            else if (Input.GetMouseButtonUp(DRAGGING_MOUSE_BUTTON_INDEX))
             {
                 // Drag end
                 _inDrag = false;
             }
+
+            return _inDrag;
         }
-		
+
         private Vector3 EnforeCameraBounds(Vector3 desiredCameraPosition)
         {
             if (desiredCameraPosition.x < CAMERA_POSITION_MIN_X)
