@@ -10,6 +10,7 @@ namespace BattleCruisers.Cameras
 	public class CameraController : MonoBehaviour, ICameraController
 	{
 		private Camera _camera;
+        private ICameraCalculator _cameraCalculator;
         private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget, _playerInputTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity = 0;
@@ -24,7 +25,6 @@ namespace BattleCruisers.Cameras
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
 		private const float ZOOM_SPEED = 0.5f;
-		private const float PAN_SPEED = 20.0f;
 
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
@@ -36,17 +36,17 @@ namespace BattleCruisers.Cameras
 
 			_cameraState = CameraState.Overview;
 
-			ICameraCalculator cameraCalculator = new CameraCalculator(_camera);
+            _cameraCalculator = new CameraCalculator(_camera);
 
 			// Camera starts in overiview (ish, y-position is only roughly right :P)
 			Vector3 overviewTargetPosition = transform.position;
-			overviewTargetPosition.y = cameraCalculator.FindCameraYPosition(_camera.orthographicSize);
+			overviewTargetPosition.y = _cameraCalculator.FindCameraYPosition(_camera.orthographicSize);
 			IList<CameraState> overviewInstants = new List<CameraState>();
 			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview, overviewInstants);
 
 			// Player cruiser view
-			float playerCruiserOrthographicSize = cameraCalculator.FindCameraOrthographicSize(playerCruiser);
-			Vector3 playerCruiserTargetPosition = new Vector3(playerCruiser.Position.x, cameraCalculator.FindCameraYPosition(playerCruiserOrthographicSize), transform.position.z);
+			float playerCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(playerCruiser);
+			Vector3 playerCruiserTargetPosition = new Vector3(playerCruiser.Position.x, _cameraCalculator.FindCameraYPosition(playerCruiserOrthographicSize), transform.position.z);
 			IList<CameraState> leftSideInstants = new List<CameraState> 
 			{
 				CameraState.RightMid,
@@ -55,8 +55,8 @@ namespace BattleCruisers.Cameras
 			_playerCruiserTarget = new CameraTarget(playerCruiserTargetPosition, playerCruiserOrthographicSize, CameraState.PlayerCruiser, leftSideInstants);
 
 			// Ai cruiser overview
-			float aiCruiserOrthographicSize = cameraCalculator.FindCameraOrthographicSize(aiCruiser);
-			Vector3 aiCruiserTargetPosition = new Vector3(aiCruiser.Position.x, cameraCalculator.FindCameraYPosition(aiCruiserOrthographicSize), transform.position.z);
+			float aiCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(aiCruiser);
+			Vector3 aiCruiserTargetPosition = new Vector3(aiCruiser.Position.x, _cameraCalculator.FindCameraYPosition(aiCruiserOrthographicSize), transform.position.z);
 			IList<CameraState> rightSideInstants = new List<CameraState> 
 			{
 				CameraState.LeftMid,
@@ -64,7 +64,7 @@ namespace BattleCruisers.Cameras
 			};
 			_aiCruiserTarget = new CameraTarget(aiCruiserTargetPosition, aiCruiserOrthographicSize, CameraState.AiCruiser, rightSideInstants);
 
-			float midViewsPositionY = cameraCalculator.FindCameraYPosition(MID_VIEWS_ORTHOGRAPHIC_SIZE);
+			float midViewsPositionY = _cameraCalculator.FindCameraYPosition(MID_VIEWS_ORTHOGRAPHIC_SIZE);
 
 			// Left mid view
 			Vector3 leftMidViewPosition = new Vector3(-MID_VIEWS_POSITION_X, midViewsPositionY, transform.position.z);
@@ -192,7 +192,7 @@ namespace BattleCruisers.Cameras
             {
 				// Mid drag
                 Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
-                transform.position = _dragStartCameraPosition - mousePositionDelta * PAN_SPEED;
+                transform.position = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
 			}
             else if (Input.GetMouseButtonUp(0))
             {

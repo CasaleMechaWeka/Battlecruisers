@@ -11,6 +11,10 @@ namespace BattleCruisers.Cameras
         private const float WATER_RATIO = 0.35f;
         private const float MAX_WATER_Y = -1.5f;
 
+        // Based off the two points:  (5, 10) and (33, 50)
+		private const float SCROLL_SPEED_GRADIENT = 1.43f;  // 10/7
+		private const float SCROLL_SPEED_CONSTANT = 2.86f;  // 20/7
+
 		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
 		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
 
@@ -40,5 +44,10 @@ namespace BattleCruisers.Cameras
 			float desiredHeight = 2 * desiredOrthographicSize;
 			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
 		}
+
+        public float FindScrollSpeed(float orthographicSize)
+        {
+            return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
+        }
 	}
 }
