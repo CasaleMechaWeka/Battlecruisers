@@ -32,7 +32,7 @@ namespace BattleCruisers.Cameras
 		private const float ZOOM_SPEED = 0.5f;
 
         // Dragging
-        private const int DRAGGING_MOUSE_BUTTON_INDEX = 0;  // Primary mouse button
+        private const int DRAGGING_MOUSE_BUTTON_INDEX = 1;  // Primary mouse button
 		private const float CAMERA_POSITION_MAX_X = 35;
 		private const float CAMERA_POSITION_MIN_X = -35;
 		private const float CAMERA_POSITION_MAX_Y = 30;
@@ -156,22 +156,31 @@ namespace BattleCruisers.Cameras
         // FELIX  Adapt for IPad :P
 		private void HandleUserInput()
         {
+            bool inZoom = HandleZoom();
+            bool inDrag = HandleDrag();
+
+            if ((inZoom || inDrag)
+			    && _currentTarget != _playerInputTarget)
+			{
+				if (CameraTransitionStarted != null)
+				{
+					CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _playerInputTarget.State));
+				}
+				
+				_cameraState = _playerInputTarget.State;
+				_currentTarget = _playerInputTarget;
+			}
+        }
+
+        /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
+        private bool HandleZoom()
+        {
+            bool inZoom = false;
             float yScrollDelta = Input.mouseScrollDelta.y;
 
-            // FELIX  Extract to method
-            // Zoom
             if (yScrollDelta != 0)
             {
-                if (_currentTarget != _playerInputTarget)
-                {
-                    if (CameraTransitionStarted != null)
-                    {
-                        CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(_cameraState, _playerInputTarget.State));
-                    }
-
-                    _cameraState = _playerInputTarget.State;
-                    _currentTarget = _playerInputTarget;
-                }
+                inZoom = true;
 
                 _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
 
@@ -185,7 +194,7 @@ namespace BattleCruisers.Cameras
                 }
             }
 
-            bool inDrag = HandleDrag();
+            return inZoom;
         }
 
         /// <returns><c>true</c>, if in drag, <c>false</c> otherwise.</returns>
