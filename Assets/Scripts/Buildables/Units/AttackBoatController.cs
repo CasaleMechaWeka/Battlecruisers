@@ -1,35 +1,29 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-	// FELIX  Create parent boat class
-	// FELIX  Create Naval folder & namespace
-	/// <summary>
-	/// Assumptions:
-	/// 1. Boats only move horizontally, and are all at the same height
-	/// 2. Boats only engage one enemy at a time
-	/// 3. All enemies will come towards the front of the boat, and all allies will come
-	/// 	towards the rear of the boat.
-	/// 4. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
-	/// 	enemy, in which case this boat will continue moving.
-	/// </summary>
-	public class AttackBoatController : Unit, ITargetConsumer
+    // FELIX  Create parent boat class
+    // FELIX  Create Naval folder & namespace
+    /// <summary>
+    /// Assumptions:
+    /// 1. Boats only move horizontally, and are all at the same height
+    /// 2. Boats only engage one enemy at a time
+    /// 3. All enemies will come towards the front of the boat, and all allies will come
+    /// 	towards the rear of the boat.
+    /// 4. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
+    /// 	enemy, in which case this boat will continue moving.
+    /// </summary>
+    public class AttackBoatController : Unit, ITargetConsumer
 	{
 		private ShellTurretBarrelController _turretBarrelController;
 		private int _directionMultiplier;
@@ -170,13 +164,17 @@ namespace BattleCruisers.Buildables.Units
 		private void StartMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
+            Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
+			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 		}
 
 		private void StopMoving()
 		{
 			Logging.Log(Tags.ATTACK_BOAT, "StopMoving()");
+			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 			rigidBody.velocity = new Vector2(0, 0);
+			Logging.Log(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 		}
 	}
 }
