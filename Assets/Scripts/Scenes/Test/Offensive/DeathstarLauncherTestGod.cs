@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 	{
 		protected override void OnStart()
 		{
-			DeathstarLauncherController launcher = GameObject.FindObjectOfType<DeathstarLauncherController>();
+			DeathstarLauncherController launcher = FindObjectOfType<DeathstarLauncherController>();
 
 			Vector2 parentCruiserPosition = launcher.transform.position;
 			Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
