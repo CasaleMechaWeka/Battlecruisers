@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
     public class AntiAirVsBomberTestGod : MonoBehaviour 
 	{
 		private BomberController _bomber;
-		private DefensiveTurret _antiAirTurret;
+		private TurretController _antiAirTurret;
 
 		public List<Vector2> bomberPatrolPoints;
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 
 			// Set up turret
-			_antiAirTurret = FindObjectOfType<DefensiveTurret>();
+			_antiAirTurret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_antiAirTurret);
 
 			helper.InitialiseBuildable(_antiAirTurret, faction: Faction.Reds);

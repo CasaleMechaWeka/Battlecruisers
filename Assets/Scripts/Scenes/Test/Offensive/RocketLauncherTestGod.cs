@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Buildings.Turrets.Offensive;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
 
 			// Setup rocket launcher
-			RocketLauncherController rocketLauncher = FindObjectOfType<RocketLauncherController>();
+			TurretController rocketLauncher = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target

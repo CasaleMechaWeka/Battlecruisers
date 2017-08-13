@@ -1,16 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Buildings.Turrets.Offensive;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class RailgunTestGod : MonoBehaviour 
+    public class RailgunTestGod : MonoBehaviour 
 	{
 		void Start()
 		{
@@ -18,13 +16,13 @@ namespace BattleCruisers.Scenes.Test
 
 
 			// Setup target
-			Buildable target = GameObject.FindObjectOfType<AirFactory>();
+			Buildable target = FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(target, Faction.Reds);
 			target.StartConstruction();
 
 
 			// Setup railgun
-			Buildable railgun = GameObject.FindObjectOfType<RailgunController>();
+			Buildable railgun = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
