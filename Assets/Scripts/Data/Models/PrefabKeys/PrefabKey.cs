@@ -3,12 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    // FELIX  Move to own file
-    public interface IPrefabKey
-	{
-		string PrefabPath { get; }
-	}
-
 	[Serializable]
 	public abstract class PrefabKey : IPrefabKey
 	{
