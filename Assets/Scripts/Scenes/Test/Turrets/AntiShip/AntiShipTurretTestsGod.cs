@@ -8,18 +8,17 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
     public class AntiShipTurretTestsGod : MonoBehaviour 
 	{
-		public AttackBoatController boat;
-		public TurretController rightTurret;
-
 		void Start () 
 		{
 			Helper helper = new Helper();
 
+            AttackBoatController boat = FindObjectOfType<AttackBoatController>();
 			helper.InitialiseBuildable(boat, Faction.Blues);
 			boat.StartConstruction();
 
-			helper.InitialiseBuildable(rightTurret, Faction.Reds);
-			rightTurret.StartConstruction();
+            TurretController turret = FindObjectOfType<TurretController>();
+			helper.InitialiseBuildable(turret, Faction.Reds);
+			turret.StartConstruction();
 		}
 	}
 }
