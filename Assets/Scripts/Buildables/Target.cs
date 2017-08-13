@@ -92,9 +92,13 @@ namespace BattleCruisers.Buildables
 
 		public void TakeDamage(float damageAmount)
 		{
-			Assert.IsTrue(Health > 0);
-			Health -= damageAmount;
-			OnTakeDamage();
+            // Guard against the rare case where a target takes damage after it has
+            // been destroyed, in the same frame it was destroyed in.
+            if (Health > 0)
+            {
+	            Health -= damageAmount;
+	            OnTakeDamage();
+			}
 		}
 
 		protected virtual void OnTakeDamage() { }
