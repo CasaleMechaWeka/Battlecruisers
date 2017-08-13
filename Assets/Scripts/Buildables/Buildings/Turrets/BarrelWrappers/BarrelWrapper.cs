@@ -15,17 +15,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
+    // FELIX  Use in Turret class to avoid duplicate code!
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
+		private CircleTargetDetector _enemyDetector;
+        protected BarrelController _barrelController;
         protected IFactoryProvider _factoryProvider;
         private Faction _enemyFaction;
-		private IList<TargetType> _attackCapabilities;
+        private IList<TargetType> _attackCapabilities;
         private ITargetFinder _targetFinder;
         private ITargetProcessor _targetProcessor;
-
-        protected BarrelController _barrelController;
-
-        public CircleTargetDetector enemyDetector;
 
 		public TurretStats TurretStats { get { return _barrelController.TurretStats; } }
 
@@ -37,6 +36,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void StaticInitialise()
         {
+            _enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
+            Assert.IsNotNull(_enemyDetector);
+
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
             Assert.IsNotNull(_barrelController);
             _barrelController.StaticInitialise();
@@ -60,12 +62,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void StartAttackingTargets()
         {
             // FELIX  Specific to defensive turrets.  Perhaps DefensiveBarrelWrapper and OffensiveBarrelWrapper classes?
+            // Ranged detection vs global detection
 
             // Create target finder
-            enemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
+            _enemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
 			bool isDetectable = true;
 			ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateDetectableTargetFilter(_enemyFaction, isDetectable, _attackCapabilities);
-            _targetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            _targetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(_enemyDetector, enemyDetectionFilter);
 
             // Start processing targets
 			ITargetRanker targetRanker = _factoryProvider.TargetsFactory.CreateEqualTargetRanker();

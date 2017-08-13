@@ -7,6 +7,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
+    // FELIX  Use BarrelWrapper!  Need an extra enemy target detector, finder and processor :/
+    // Ie, 1 for blocking enemies, 1 for attacking enemeis :)
     public class AttackBoatController : ShipController
 	{
 		private ShellTurretBarrelController _turretBarrelController;
