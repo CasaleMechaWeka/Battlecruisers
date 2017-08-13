@@ -1,15 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-	public class ShieldDetectionTestGod : MonoBehaviour 
+    public class ShieldDetectionTestGod : MonoBehaviour 
 	{
 		void Start () 
 		{
@@ -17,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Shields
 
 
 			// Setup shields
-			ShieldGenerator[] shields = GameObject.FindObjectsOfType<ShieldGenerator>();
+			ShieldGenerator[] shields = FindObjectsOfType<ShieldGenerator>();
 			Assert.IsTrue(shields.Length > 0);
 
 			foreach (ShieldGenerator shield in shields)
@@ -28,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Shields
 
 
 			// Setup attack boats
-			AttackBoatController[] attackBoats = GameObject.FindObjectsOfType<AttackBoatController>();
+			AttackBoatController[] attackBoats = FindObjectsOfType<AttackBoatController>();
 			Assert.IsTrue(attackBoats.Length > 0);
 
 			foreach (AttackBoatController attackBoat in attackBoats)

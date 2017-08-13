@@ -11,7 +11,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Units
+namespace BattleCruisers.Buildables.Units.Ships
 {
     // FELIX  Create parent boat class
     // FELIX  Create Naval folder & namespace
