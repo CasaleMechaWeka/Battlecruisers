@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-	public class MortarFireBarrelWrapper : BarrelWrapper
+    public class MortarFireBarrelWrapper : ProximityTargetBarrelWrapper
 	{
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
