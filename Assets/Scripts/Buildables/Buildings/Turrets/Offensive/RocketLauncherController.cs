@@ -1,13 +1,10 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
-	public class RocketLauncherController : OffensiveTurret
+    public class RocketLauncherController : OffensiveTurret
 	{
 		private const float ROCKET_LAUNCH_ANGLE_IN_DEGREES = 60;
 

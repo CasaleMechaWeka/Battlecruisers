@@ -1,14 +1,10 @@
 ﻿using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Offensive
 {
-	public abstract class OffensiveTurret : Turret, ITargetConsumer
+    public abstract class OffensiveTurret : Turret, ITargetConsumer
 	{
 		private ITargetProcessor _targetProcessor;
 
