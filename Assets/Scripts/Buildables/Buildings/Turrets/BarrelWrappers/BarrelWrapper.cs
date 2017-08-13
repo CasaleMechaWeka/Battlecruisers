@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -16,8 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    // FELIX  Create interface
-    public abstract class BarrelWrapper : MonoBehaviour, ITargetConsumer, IDisposable
+    public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
         protected IFactoryProvider _factoryProvider;
         private Faction _enemyFaction;
