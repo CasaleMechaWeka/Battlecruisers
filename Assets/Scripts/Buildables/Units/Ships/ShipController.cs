@@ -23,13 +23,27 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
 		private ITargetFinder _enemyFinder, _friendFinder;
-		private ITargetProcessor _targetProcessor;
+        protected ITargetProcessor _enemyStoppingTargetProcessor;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
         protected abstract float EnemyDetectionRangeInM { get; }
 		public override TargetType TargetType { get { return TargetType.Ships; } }
-        public ITarget Target { private get; set; }
+
+        private ITarget _blockingEnemyTarget;
+        public ITarget Target 
+        { 
+            private get { return _blockingEnemyTarget; }
+            set
+            {
+                if (value != null)
+                {
+                    Assert.IsTrue(IsObjectInFront(value));
+                }
+
+                _blockingEnemyTarget = value;
+            }
+        }
 
         public override void StaticInitialise()
 		{
@@ -55,8 +69,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 			
             ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
-			_targetProcessor.AddTargetConsumer(this);
+			_enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
+			_enemyStoppingTargetProcessor.AddTargetConsumer(this);
 
 			// Friend detection for stopping
 			IList<TargetType> friendTargetTypes = new List<TargetType>() { TargetType.Ships };
