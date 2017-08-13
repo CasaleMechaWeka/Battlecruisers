@@ -1,21 +1,16 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public abstract class Turret : Building, ITargetConsumer
+    public abstract class Turret : Building
 	{
 		private GameObject _turretBase;
 		private Renderer _turretBaseRenderer;
-		private GameObject _turretBarrel;
 		private Renderer _turretBarrelRenderer;
-		protected BarrelController _barrelController;
+		protected IBarrelWrapper _barrelWrapper;
 
 		protected override Renderer Renderer
 		{
@@ -27,12 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 				}
 				return _renderer;
 			}
-		}
-
-		public ITarget Target 
-		{ 
-			get { return _barrelController.Target; }
-			set { _barrelController.Target = value; }
 		}
 
 		public override Sprite Sprite
@@ -47,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			}
 		}
 
-		public override float Damage { get { return _barrelController.TurretStats.DamagePerS; } }
+		public override float Damage { get { return _barrelWrapper.TurretStats.DamagePerS; } }
 
 		public override void StaticInitialise()
 		{
@@ -57,37 +46,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBaseRenderer = _turretBase.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBaseRenderer);
 			
-			_turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
-			_turretBarrelRenderer = _turretBarrel.GetComponent<Renderer>();
+            GameObject turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
+			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
 			
-			_barrelController = gameObject.GetComponentInChildren<BarrelController>();
-			Assert.IsNotNull(_barrelController);
-			_barrelController.StaticInitialise();
+            _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_barrelWrapper);
+			_barrelWrapper.StaticInitialise();
 		}
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
-			InitialiseTurretBarrel();
-		}
 
-		protected virtual void InitialiseTurretBarrel()
-		{
-			_barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController());
-		}
-
-		protected ITargetFilter CreateTargetFilter()
-		{
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-		}
-
-		protected abstract IAngleCalculator CreateAngleCalculator();
-
-		protected IRotationMovementController CreateRotationMovementController()
-		{
-			return _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
 		}
 
 		protected override void EnableRenderers(bool enabled)
