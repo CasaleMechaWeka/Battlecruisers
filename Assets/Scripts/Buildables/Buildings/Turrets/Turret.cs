@@ -77,7 +77,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_barrelController.Initialise(CreateTargetFilter(), CreateAngleCalculator(), CreateRotationMovementController());
 		}
 
-		protected virtual ITargetFilter CreateTargetFilter()
+		protected ITargetFilter CreateTargetFilter()
 		{
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		protected abstract IAngleCalculator CreateAngleCalculator();
 
-		protected virtual IRotationMovementController CreateRotationMovementController()
+		protected IRotationMovementController CreateRotationMovementController()
 		{
 			return _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
 		}
