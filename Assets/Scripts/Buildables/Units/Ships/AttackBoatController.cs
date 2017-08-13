@@ -1,46 +1,37 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
-    // FELIX  Use BarrelWrapper!  Need an extra enemy target detector, finder and processor :/
-    // Ie, 1 for blocking enemies, 1 for attacking enemeis :)
     public class AttackBoatController : ShipController
 	{
-		private ShellTurretBarrelController _turretBarrelController;
+		private IBarrelWrapper _directFireAntiSea;
 
-        public override float Damage { get { return _turretBarrelController.TurretStats.DamagePerS; } }
-        protected override float EnemyDetectionRangeInM { get { return _turretBarrelController.TurretStats.rangeInM; } }
+        public override float Damage { get { return _directFireAntiSea.TurretStats.DamagePerS; } }
+        protected override float EnemyDetectionRangeInM { get { return _directFireAntiSea.TurretStats.rangeInM; } }
 
         public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 
-            _turretBarrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
-			Assert.IsNotNull(_turretBarrelController);
-			_turretBarrelController.StaticInitialise();
+            _directFireAntiSea = gameObject.GetComponentInChildren<IBarrelWrapper>();
+            Assert.IsNotNull(_directFireAntiSea);
+            _directFireAntiSea.StaticInitialise();
 		}
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
-			
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
+
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter turretBarrelFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_turretBarrelController.TurretStats.turretRotateSpeedInDegrees, _turretBarrelController.transform);
-			_turretBarrelController.Initialise(turretBarrelFilter, angleCalculator, rotationMovementController);
+            _directFireAntiSea.Initialise(_factoryProvider, enemyFaction, _attackCapabilities);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-
-            _enemyStoppingTargetProcessor.AddTargetConsumer(_turretBarrelController);
+            _directFireAntiSea.StartAttackingTargets();
 		}
 	}
 }
