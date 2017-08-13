@@ -80,7 +80,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			bool ignoreGravity = false;
 			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 
 			_bombSpawner.Initialise(shellStats, targetFilter);
 

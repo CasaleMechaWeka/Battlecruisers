@@ -80,7 +80,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		protected virtual ITargetFilter CreateTargetFilter()
 		{
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
+            return _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 		}
 
 		protected abstract IAngleCalculator CreateAngleCalculator();

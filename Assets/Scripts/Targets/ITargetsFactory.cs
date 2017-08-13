@@ -19,8 +19,8 @@ namespace BattleCruisers.Targets
 		ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
 
 		// Filters
-		ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes, bool ignoreDestroyedTargets);
-		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes, bool ignoreDestroyedTargets);
+		ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes);
+		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         ITargetFilter CreateDummyTargetFilter(bool isMatchResult);
 		IExactMatchTargetFilter CreateExactMatchTargetFilter();
 		IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);

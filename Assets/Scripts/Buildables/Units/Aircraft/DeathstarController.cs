@@ -69,7 +69,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			// Barrel controller
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: true);
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateLeadingAngleCalcultor(_targetPositionPredictorFactory);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
 			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);

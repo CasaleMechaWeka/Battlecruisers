@@ -34,14 +34,14 @@ namespace BattleCruisers.Targets
 		#endregion TargetFinders
 
 		#region TargetFilters
-		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
+		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes)
 		{
-            return new DetectableFilter(faction, isDetectable, targetTypes, ignoreDestroyedTargets);
+            return new DetectableFilter(faction, isDetectable, targetTypes);
 		}
 
-		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
+		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
 		{
-            return new FactionAndTargetTypeFilter(faction, targetTypes, ignoreDestroyedTargets);
+            return new FactionAndTargetTypeFilter(faction, targetTypes);
 		}
 
 		public IExactMatchTargetFilter CreateExactMatchTargetFilter()

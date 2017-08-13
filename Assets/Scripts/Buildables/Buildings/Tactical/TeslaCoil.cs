@@ -45,7 +45,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 			_rocketDetector.Initialise(_teslaCoilStats.rangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities, ignoreDestroyedTargets: false);
+            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			_targetFinder = _targetsFactory.CreateRangedTargetFinder(_rocketDetector, enemyDetectionFilter);
 			
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();

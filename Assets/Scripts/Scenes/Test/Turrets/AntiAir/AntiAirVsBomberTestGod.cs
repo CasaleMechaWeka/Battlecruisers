@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			Assert.IsNotNull(_bomber);
 
             IList<TargetType> targetTypes = new List<TargetType>() { _antiAirTurret.TargetType };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, targetTypes, ignoreDestroyedTargets: true);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, targetTypes);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(_antiAirTurret.GameObject, targetFilter);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
 			helper.InitialiseBuildable(_bomber, faction: Faction.Blues, targetsFactory: targetsFactory, aircraftProvider: aircraftProvider);

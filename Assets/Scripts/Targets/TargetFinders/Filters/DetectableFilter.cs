@@ -10,8 +10,8 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 	{
 		private readonly bool _isDetectable;
 
-		public DetectableFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes, bool ignoreDestroyedTargets)
-            : base(faction, targetTypes, ignoreDestroyedTargets)
+		public DetectableFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes)
+            : base(faction, targetTypes)
 		{
 			_isDetectable = isDetectable;
 		}

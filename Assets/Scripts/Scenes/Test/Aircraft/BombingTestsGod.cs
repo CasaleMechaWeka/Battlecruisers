@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			helper.InitialiseBuildable(factory, Faction.Blues);
 
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes, ignoreDestroyedTargets: true);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
 
 			IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
