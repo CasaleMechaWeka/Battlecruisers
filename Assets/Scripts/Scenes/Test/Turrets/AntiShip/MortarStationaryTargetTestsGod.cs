@@ -1,17 +1,12 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Factories;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Buildables.Units.Aircraft;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-	public class MortarStationaryTargetTestsGod : MonoBehaviour 
+    public class MortarStationaryTargetTestsGod : MonoBehaviour 
 	{
 		void Start () 
 		{
@@ -19,14 +14,15 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
 
 			// Setup target
-			TestAircraftController target = GameObject.FindObjectOfType<TestAircraftController>();
+			TestAircraftController target = FindObjectOfType<TestAircraftController>();
+            target.PatrolPoints = new List<Vector2>() { new Vector2(0, -5), new Vector2(0, -5.01f) };
 			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
 			helper.InitialiseBuildable(target, Faction.Blues);
 			target.StartConstruction();
 
 
 			// Setup mortars
-			MortarController[] mortars = GameObject.FindObjectsOfType(typeof(MortarController)) as MortarController[];
+			MortarController[] mortars = FindObjectsOfType(typeof(MortarController)) as MortarController[];
 			foreach (MortarController mortar in mortars)
 			{
 				helper.InitialiseBuildable(mortar, Faction.Reds);
