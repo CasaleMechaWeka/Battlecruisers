@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    // FELIX  Use in Turret class to avoid duplicate code!
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
         protected BarrelController _barrelController;

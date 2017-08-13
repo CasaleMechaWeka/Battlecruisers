@@ -63,6 +63,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
 		}
 
+		protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _barrelWrapper.StartAttackingTargets();
+        }
+
 		protected override void EnableRenderers(bool enabled)
 		{
 			_turretBaseRenderer.enabled = enabled;
