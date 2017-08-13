@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public abstract class Turret : Building
+    public class TurretController : Building
 	{
 		private GameObject _turretBase;
 		private Renderer _turretBaseRenderer;

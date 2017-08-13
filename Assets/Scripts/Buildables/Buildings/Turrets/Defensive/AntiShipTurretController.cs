@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-    public class AntiShipTurretController : Turret
+    public class AntiShipTurretController : TurretController
 	{
 		public override void StaticInitialise()
 		{

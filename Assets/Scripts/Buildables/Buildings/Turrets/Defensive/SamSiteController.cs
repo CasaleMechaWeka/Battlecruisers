@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-    public class SamSiteController : Turret
+    public class SamSiteController : TurretController
 	{
 		public override void StaticInitialise()
 		{

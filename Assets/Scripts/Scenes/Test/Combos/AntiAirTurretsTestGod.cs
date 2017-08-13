@@ -33,8 +33,8 @@ namespace BattleCruisers.Scenes.Test.Factories
             factory.StartConstruction();
 
             // Initialise turrets
-            Turret[] turrets = FindObjectsOfType<Turret>();
-            foreach (Turret turret in turrets)
+            TurretController[] turrets = FindObjectsOfType<TurretController>();
+            foreach (TurretController turret in turrets)
             {
                 helper.InitialiseBuildable(turret, Faction.Reds);
                 turret.StartConstruction();
