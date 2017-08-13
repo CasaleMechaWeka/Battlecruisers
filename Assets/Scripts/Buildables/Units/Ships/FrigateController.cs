@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class FrigateController : ShipController
 	{
-        private IBarrelWrapper _directFireAntiSea, _mortar;
+        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
 		// FELIX
 		public override float Damage { get { return 0; } }
@@ -31,6 +31,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             _mortar.StaticInitialise();
 
             // SAM site
+            _directFireAntiAir = transform.Find("DirectBurstFireAntiAir").gameObject.GetComponent<IBarrelWrapper>();
+            Assert.IsNotNull(_directFireAntiAir);
+            _directFireAntiAir.StaticInitialise();
 		}
 
 		protected override void OnInitialised()
@@ -38,20 +41,22 @@ namespace BattleCruisers.Buildables.Units.Ships
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            IList<TargetType> nonAirTargets = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
 
+			IList<TargetType> nonAirTargets = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             _directFireAntiSea.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
             _mortar.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
-            // SAM site
+
+            IList<TargetType> airTargets = new List<TargetType>() { TargetType.Aircraft };
+            _directFireAntiAir.Initialise(_factoryProvider, enemyFaction, airTargets);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			// FELIX  Turrets :D
             _directFireAntiSea.StartAttackingTargets();
             _mortar.StartAttackingTargets();
+            _directFireAntiAir.StartAttackingTargets();
 		}
 	}
 }
