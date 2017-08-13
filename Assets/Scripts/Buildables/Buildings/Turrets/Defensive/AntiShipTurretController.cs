@@ -2,17 +2,12 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-    public class AntiShipTurretController : DefensiveTurret
+    public class AntiShipTurretController : Turret
 	{
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 			_attackCapabilities.Add(TargetType.Ships);
-		}
-
-		protected override IAngleCalculator CreateAngleCalculator()
-		{
-			return _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictorFactory);
 		}
 	}
 }
