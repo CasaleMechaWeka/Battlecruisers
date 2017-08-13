@@ -12,7 +12,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private ShellTurretBarrelController _turretBarrelController;
 
         public override float Damage { get { return _turretBarrelController.TurretStats.DamagePerS; } }
-		public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override float EnemyDetectionRangeInM { get { return _turretBarrelController.TurretStats.rangeInM; } }
 
         public override void StaticInitialise()
