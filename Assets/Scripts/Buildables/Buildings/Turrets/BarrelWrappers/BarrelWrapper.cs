@@ -2,9 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Movement;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
@@ -44,11 +42,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _enemyFaction = enemyFaction;
             _attackCapabilities = attackCapabilities;
 
-            _barrelController
-                .Initialise(
-                    CreateTargetFilter(_factoryProvider.TargetsFactory, enemyFaction), 
-                    CreateAngleCalculator(), 
-                    CreateRotationMovementController(_factoryProvider.MovementControllerFactory));
+            InitialiseBarrelController();
+        }
+
+        protected virtual void InitialiseBarrelController()
+        {
+			_barrelController
+				.Initialise(
+                    CreateTargetFilter(), 
+					CreateAngleCalculator(), 
+					CreateRotationMovementController());
         }
 
         public void StartAttackingTargets()
@@ -58,16 +61,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected abstract ITargetProcessor GetTargetProcessor();
 
-        protected ITargetFilter CreateTargetFilter(ITargetsFactory targetsFactory, Faction enemyFaction)
+        protected ITargetFilter CreateTargetFilter()
         {
-            return targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, _attackCapabilities);
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator();
 
-        protected IRotationMovementController CreateRotationMovementController(IMovementControllerFactory movementControllerFactory)
+        protected IRotationMovementController CreateRotationMovementController()
         {
-            return movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
+            return _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
+                _barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
         }
 
         public abstract void Dispose();
