@@ -1,12 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
 {
-	public class MortarController : DefensiveTurret
+    public class MortarController : DefensiveTurret
 	{
 		public override void StaticInitialise()
 		{
