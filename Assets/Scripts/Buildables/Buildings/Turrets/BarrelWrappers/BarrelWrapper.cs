@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
+        private ITargetProcessorWrapper _targetProcessorWrapper;
 
 		public TurretStats TurretStats { get { return _barrelController.TurretStats; } }
 
@@ -32,6 +33,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
             Assert.IsNotNull(_barrelController);
             _barrelController.StaticInitialise();
+
+            _targetProcessorWrapper = gameObject.GetComponentInChildren<ITargetProcessorWrapper>();
+            Assert.IsNotNull(_targetProcessorWrapper);
         }
 
         public void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
@@ -56,10 +60,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void StartAttackingTargets()
         {
-            GetTargetProcessor().AddTargetConsumer(this);            
+            _targetProcessorWrapper.StartProvidingTargets(
+                _factoryProvider.TargetsFactory,
+                this,
+                _enemyFaction,
+                TurretStats.rangeInM,
+                _attackCapabilities);
         }
-
-        protected abstract ITargetProcessor GetTargetProcessor();
 
         protected ITargetFilter CreateTargetFilter()
         {
@@ -74,6 +81,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 _barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
         }
 
-        public abstract void Dispose();
+        public void Dispose()
+        {
+            _targetProcessorWrapper.Dispose();
+        }
     }
 }

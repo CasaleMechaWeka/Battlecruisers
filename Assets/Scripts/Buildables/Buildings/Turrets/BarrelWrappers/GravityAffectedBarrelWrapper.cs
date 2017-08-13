@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    public class GravityAffectedBarrelWrapper : ProximityTargetBarrelWrapper
+    public class GravityAffectedBarrelWrapper : BarrelWrapper
 	{
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
