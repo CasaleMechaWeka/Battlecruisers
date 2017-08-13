@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
-	public class SafeZone
+    public class SafeZone
 	{
 		public float MinX { get; private set; }
 		public float MaxX { get; private set; }

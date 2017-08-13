@@ -1,16 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Buildables.Units.Aircraft;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-	public class AntiShipTurretTestsGod : MonoBehaviour 
+    public class AntiShipTurretTestsGod : MonoBehaviour 
 	{
 		public AttackBoatController boat;
 		public DefensiveTurret rightTurret;
@@ -19,10 +15,10 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 		{
 			Helper helper = new Helper();
 
-			helper.InitialiseBuildable(boat, faction: Faction.Blues);
+			helper.InitialiseBuildable(boat, Faction.Blues);
 			boat.StartConstruction();
 
-			helper.InitialiseBuildable(rightTurret, faction: Faction.Reds);
+			helper.InitialiseBuildable(rightTurret, Faction.Reds);
 			rightTurret.StartConstruction();
 		}
 	}
