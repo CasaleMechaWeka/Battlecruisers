@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -8,32 +9,39 @@ namespace BattleCruisers.Buildables.Units.Ships
     public class FrigateController : ShipController
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
+        private IList<IBarrelWrapper> _turrets;
 
-		// FELIX
-		public override float Damage { get { return 0; } }
-		// FELIX
-		protected override float EnemyDetectionRangeInM { get { return 15; } }
+        private float _damage;
+        public override float Damage { get { return _damage; } }
+
+        protected override float EnemyDetectionRangeInM { get { return _mortar.TurretStats.rangeInM; } }
 
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 
             _attackCapabilities.Add(TargetType.Aircraft);
+            _turrets = new List<IBarrelWrapper>();
 
             // Anti ship turret
             _directFireAntiSea = transform.Find("DirectFireAntiSea").gameObject.GetComponent<IBarrelWrapper>();
             Assert.IsNotNull(_directFireAntiSea);
             _directFireAntiSea.StaticInitialise();
+            _turrets.Add(_directFireAntiSea);
 
             // Mortar
             _mortar = transform.Find("Mortar").gameObject.GetComponent<IBarrelWrapper>();
             Assert.IsNotNull(_mortar);
             _mortar.StaticInitialise();
+            _turrets.Add(_mortar);
 
             // SAM site
             _directFireAntiAir = transform.Find("DirectBurstFireAntiAir").gameObject.GetComponent<IBarrelWrapper>();
             Assert.IsNotNull(_directFireAntiAir);
             _directFireAntiAir.StaticInitialise();
+			_turrets.Add(_directFireAntiAir);
+
+            _damage = _turrets.Sum(turret => turret.TurretStats.DamagePerS);
 		}
 
 		protected override void OnInitialised()
@@ -54,9 +62,10 @@ namespace BattleCruisers.Buildables.Units.Ships
 		{
 			base.OnBuildableCompleted();
 
-            _directFireAntiSea.StartAttackingTargets();
-            _mortar.StartAttackingTargets();
-            _directFireAntiAir.StartAttackingTargets();
+            foreach (IBarrelWrapper turret in _turrets)
+            {
+                turret.StartAttackingTargets();
+            }
 		}
 	}
 }
