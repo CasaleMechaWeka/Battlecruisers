@@ -10,6 +10,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,16 +19,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     // FELIX  Create interface
     public abstract class BarrelWrapper : MonoBehaviour, ITargetConsumer, IDisposable
     {
-        private ITargetsFactory _targetsFactory;
+        protected IFactoryProvider _factoryProvider;
         private Faction _enemyFaction;
+		private IList<TargetType> _attackCapabilities;
         private ITargetFinder _targetFinder;
         private ITargetProcessor _targetProcessor;
 
         protected BarrelController _barrelController;
 
-		public CircleTargetDetector enemyDetector;
+        public CircleTargetDetector enemyDetector;
 
-		protected abstract IList<TargetType> AttackCapabilities { get; }
 		public TurretStats TurretStats { get { return _barrelController.TurretStats; } }
 
         public ITarget Target 
@@ -43,16 +44,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _barrelController.StaticInitialise();
         }
 
-        public void Initialise(ITargetsFactory targetsFactory, IMovementControllerFactory movementControllerFactory, Faction enemyFaction)
+        public void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
         {
-            _targetsFactory = targetsFactory;
+            Helper.AssertIsNotNull(factoryProvider, enemyFaction, attackCapabilities);
+
+            _factoryProvider = factoryProvider;
             _enemyFaction = enemyFaction;
+            _attackCapabilities = attackCapabilities;
 
             _barrelController
                 .Initialise(
-                    CreateTargetFilter(targetsFactory, enemyFaction), 
+                    CreateTargetFilter(_factoryProvider.TargetsFactory, enemyFaction), 
                     CreateAngleCalculator(), 
-                    CreateRotationMovementController(movementControllerFactory));
+                    CreateRotationMovementController(_factoryProvider.MovementControllerFactory));
         }
 
         public void StartAttackingTargets()
@@ -62,23 +66,23 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             // Create target finder
             enemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
 			bool isDetectable = true;
-			ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(_enemyFaction, isDetectable, AttackCapabilities);
-            _targetFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+			ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateDetectableTargetFilter(_enemyFaction, isDetectable, _attackCapabilities);
+            _targetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             // Start processing targets
-			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-            _targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+			ITargetRanker targetRanker = _factoryProvider.TargetsFactory.CreateEqualTargetRanker();
+            _targetProcessor = _factoryProvider.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);            
         }
 
-        protected virtual ITargetFilter CreateTargetFilter(ITargetsFactory targetsFactory, Faction enemyFaction)
+        protected ITargetFilter CreateTargetFilter(ITargetsFactory targetsFactory, Faction enemyFaction)
         {
-            return targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            return targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator();
 
-        protected virtual IRotationMovementController CreateRotationMovementController(IMovementControllerFactory movementControllerFactory)
+        protected IRotationMovementController CreateRotationMovementController(IMovementControllerFactory movementControllerFactory)
         {
             return movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
         }
