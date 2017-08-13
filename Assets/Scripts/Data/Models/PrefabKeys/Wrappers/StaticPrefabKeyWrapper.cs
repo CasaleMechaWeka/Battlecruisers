@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.AI.Providers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data.Models.PrefabKeys
+namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public class StaticPrefabKeyWrapper : IPrefabKeyWrapper
 	{

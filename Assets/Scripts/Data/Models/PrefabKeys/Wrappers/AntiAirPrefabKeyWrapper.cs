@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.Providers;
 
-namespace BattleCruisers.Data.Models.PrefabKeys
+namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
 	public class AntiAirPrefabKeyWrapper : BasePrefabKeyWrapper
 	{

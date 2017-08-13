@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.AI.Providers.Strategies
