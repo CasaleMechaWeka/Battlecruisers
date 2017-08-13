@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_turretBaseRenderer = _turretBase.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBaseRenderer);
 			
-            GameObject turretBarrel = transform.Find("BarrelWrapper/Barrel").gameObject;
+            GameObject turretBarrel = transform.Find("BarrelWrapper/BarrelController/Barrel").gameObject;
 			_turretBarrelRenderer = turretBarrel.GetComponent<Renderer>();
 			Assert.IsNotNull(_turretBarrelRenderer);
 			
