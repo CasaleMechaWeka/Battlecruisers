@@ -1,19 +1,13 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
-	public class FrigateController : ShipController
+    public class FrigateController : ShipController
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar;
-
 
 		// FELIX
 		public override float Damage { get { return 0; } }
