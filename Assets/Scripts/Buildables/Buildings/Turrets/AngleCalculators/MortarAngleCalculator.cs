@@ -1,18 +1,16 @@
-﻿using BattleCruisers.Movement.Predictors;
+﻿using System;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	/// <summary>
-	/// Assumes:
-	/// 1. Shells ARE affected by gravity
-	/// 2. Target is in facing direction of source
-	/// </summary>
-	public class MortarAngleCalculator : AngleCalculator
+    /// <summary>
+    /// Assumes:
+    /// 1. Shells ARE affected by gravity
+    /// 2. Target is in facing direction of source
+    /// </summary>
+    public class MortarAngleCalculator : AngleCalculator
 	{
 		private const float MAX_ANGLE_IN_DEGREES = 85;
 

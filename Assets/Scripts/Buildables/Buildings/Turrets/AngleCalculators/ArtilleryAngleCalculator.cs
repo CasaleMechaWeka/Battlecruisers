@@ -1,20 +1,18 @@
-﻿using BattleCruisers.Movement.Predictors;
+﻿using System;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	/// <summary>
-	/// Assumes:
-	/// 1. Shells ARE affected by gravity
-	/// 2. Targets do not move
-	/// 3. No y axis difference in source and target
-	/// 4. Target is in facing direction of source
-	/// </summary>
-	public class ArtilleryAngleCalculator : AngleCalculator
+    /// <summary>
+    /// Assumes:
+    /// 1. Shells ARE affected by gravity
+    /// 2. Targets do not move
+    /// 3. No y axis difference in source and target
+    /// 4. Target is in facing direction of source
+    /// </summary>
+    public class ArtilleryAngleCalculator : AngleCalculator
 	{
 		protected override bool MustFaceTarget { get { return true; } }
 

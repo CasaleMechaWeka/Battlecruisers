@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Movement.Predictors;
-using System;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public class AngleCalculatorFactory : IAngleCalculatorFactory
+    public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
 		public IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{

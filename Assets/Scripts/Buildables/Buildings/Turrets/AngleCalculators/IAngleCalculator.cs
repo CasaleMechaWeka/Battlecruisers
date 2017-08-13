@@ -1,14 +1,8 @@
-﻿using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public interface IAngleCalculator
+    public interface IAngleCalculator
 	{
 		// Cannot use both namespaces and optional parameters in MonoBehaviour scripts :D
 		// Otherwise I would use optional parameters for the last two parameters.
