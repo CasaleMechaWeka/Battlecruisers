@@ -1,17 +1,13 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
-using BattleCruisers.Targets.TargetFinders;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Buildables.Units.Aircraft;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Buildables.Buildings.Turrets;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-	public class AntiAirVsPatrollingAircraftTestGod : MonoBehaviour 
+    public class AntiAirVsPatrollingAircraftTestGod : MonoBehaviour 
 	{
 		private TurretController _turret;
 		private TestAircraftController[] _aircraft;
@@ -23,12 +19,12 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			Helper helper = new Helper();
 
 			// Setup turret
-			_turret = GameObject.FindObjectOfType<TurretController>();
+			_turret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_turret);
 			helper.InitialiseBuildable(_turret, faction: Faction.Reds);
 			_turret.StartConstruction();
 
-			_aircraft = GameObject.FindObjectsOfType<TestAircraftController>();
+			_aircraft = FindObjectsOfType<TestAircraftController>();
 			Assert.IsTrue(_aircraft.Length > 0);
 			InitialisePlanes(helper, _aircraft, Faction.Blues);
 		}

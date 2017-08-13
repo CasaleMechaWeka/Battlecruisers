@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.Defensive;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 

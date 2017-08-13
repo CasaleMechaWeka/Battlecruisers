@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class AntiShipTurretController : TurretController
 	{

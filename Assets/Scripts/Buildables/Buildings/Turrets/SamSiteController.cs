@@ -1,6 +1,6 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Turrets.Defensive
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class AntiAirTurretController : TurretController
+    public class SamSiteController : TurretController
 	{
 		public override void StaticInitialise()
 		{
@@ -9,4 +9,3 @@
 		}
 	}
 }
-
