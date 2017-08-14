@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
-    public class FrigateController : ShipController
+    public class DestroyerController : ShipController
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
@@ -35,6 +35,10 @@ namespace BattleCruisers.Buildables.Units.Ships
             _directFireAntiAir = transform.Find("DirectBurstFireAntiAir").gameObject.GetComponent<IBarrelWrapper>();
             Assert.IsNotNull(_directFireAntiAir);
 			turrets.Add(_directFireAntiAir);
+
+            // SAM site
+
+            // Rocket launcher
 
             return turrets;
 		}
