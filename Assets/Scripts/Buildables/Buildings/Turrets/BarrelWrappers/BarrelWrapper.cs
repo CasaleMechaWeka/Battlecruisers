@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected abstract IAngleCalculator CreateAngleCalculator();
 
-        protected IRotationMovementController CreateRotationMovementController()
+        protected virtual IRotationMovementController CreateRotationMovementController()
         {
             return _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
                 _barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
