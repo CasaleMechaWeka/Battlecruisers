@@ -1,22 +1,18 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils;
-using System;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-	public class RocketBarrelController : BarrelController
+    public class RocketBarrelController : BarrelController
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
 		private Faction _faction;
