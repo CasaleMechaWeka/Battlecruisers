@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -24,11 +26,15 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private ITarget _blockingFriendlyUnit;
 		private ITargetFinder _enemyFinder, _friendFinder;
         protected ITargetProcessor _enemyStoppingTargetProcessor;
+        private IList<IBarrelWrapper> _turrets;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
         protected abstract float EnemyDetectionRangeInM { get; }
 		public override TargetType TargetType { get { return TargetType.Ships; } }
+
+		private float _damage;
+		public sealed override float Damage { get { return _damage; } }
 
         private ITarget _blockingEnemyTarget;
         public ITarget Target 
@@ -52,36 +58,58 @@ namespace BattleCruisers.Buildables.Units.Ships
 			_attackCapabilities.Add(TargetType.Ships);
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
+
+            _turrets = GetTurrets();
+
+			foreach (IBarrelWrapper turret in _turrets)
+            {
+                turret.StaticInitialise();
+            }
+
+			_damage = _turrets.Sum(turret => turret.TurretStats.DamagePerS);
 		}
 
+        protected abstract IList<IBarrelWrapper> GetTurrets();
+
 		protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
+        {
+            base.OnBuildableCompleted();
 
-			_directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
+            _directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 
+            SetupBlockingUnitDetection();
+
+            // Initialise turrets
+            foreach (IBarrelWrapper turret in _turrets)
+            {
+                turret.StartAttackingTargets();
+            }
+        }
+
+        private void SetupBlockingUnitDetection()
+        {
             // Enemy detection for stopping (gnore aircraft for stopping)
-			IList<TargetType> enemyTypesToStopFor = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
+            IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             bool isDetectable = true;
             enemyDetector.Initialise(EnemyDetectionRangeInM);
-            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, enemyTypesToStopFor);
-			_enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
-			
+            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, blockingEnemyTypes);
+            _enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+
             ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-			_enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
-			_enemyStoppingTargetProcessor.AddTargetConsumer(this);
+            _enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
+            _enemyStoppingTargetProcessor.AddTargetConsumer(this);
 
-			// Friend detection for stopping
-			IList<TargetType> friendTargetTypes = new List<TargetType>() { TargetType.Ships };
-			ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, friendTargetTypes);
-			_friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
-			_friendFinder.TargetFound += OnFriendFound;
-			_friendFinder.TargetLost += OnFriendLost;
-			_friendFinder.StartFindingTargets();
-		}
+            // Friend detection for stopping
+            IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
+            ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, blockingFriendlyTypes);
+            _friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+            _friendFinder.TargetFound += OnFriendFound;
+            _friendFinder.TargetLost += OnFriendLost;
+            _friendFinder.StartFindingTargets();
+        }
 
-		protected override void OnFixedUpdate()
+        protected override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
 
