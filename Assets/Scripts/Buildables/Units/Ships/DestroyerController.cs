@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class DestroyerController : ShipController
 	{
-        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
+        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite;
 
         protected override float EnemyDetectionRangeInM { get { return _mortar.TurretStats.rangeInM; } }
 
@@ -37,8 +37,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 			turrets.Add(_directFireAntiAir);
 
             // SAM site
+            _samSite = transform.Find("SamSite").gameObject.GetComponent<IBarrelWrapper>();
+            Assert.IsNotNull(_samSite);
+            turrets.Add(_samSite);
 
-            // Rocket launcher
+            // Missile launcher
+            // FELIX
 
             return turrets;
 		}
@@ -55,6 +59,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             IList<TargetType> airTargets = new List<TargetType>() { TargetType.Aircraft };
             _directFireAntiAir.Initialise(_factoryProvider, enemyFaction, airTargets);
+            _samSite.Initialise(_factoryProvider, enemyFaction, airTargets);
 		}
 	}
 }
