@@ -9,7 +9,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Use IPrefabKey intead of concrete Unit/Building Key classes?
     public class PrefabOrganiser : IPrefabOrganiser
     {
         private readonly ILoadout _playerLoadout;
