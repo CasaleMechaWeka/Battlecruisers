@@ -1,15 +1,30 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
     public class DestroyerController : ShipController
 	{
-        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite;
+        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite, _missileLauncher;
 
-        protected override float EnemyDetectionRangeInM { get { return _mortar.TurretStats.rangeInM; } }
+        private float _enemyDetectionRangeInM = -1;
+        protected override float EnemyDetectionRangeInM 
+        { 
+            get 
+            {
+                if (_enemyDetectionRangeInM == -1)
+                {
+                    // Enemy detector is in ship center, but missile launcher is behind
+                    // ship center.  Want to only stop once missile launcher is in range,
+                    // so have to adjust missile launcher range.
+                    _enemyDetectionRangeInM = _missileLauncher.TurretStats.rangeInM - (Mathf.Abs(transform.position.x - _missileLauncher.Position.x));
+                }
+                return _enemyDetectionRangeInM; 
+            } 
+        }
 
         public override void StaticInitialise()
         {
@@ -42,7 +57,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             turrets.Add(_samSite);
 
             // Missile launcher
-            // FELIX
+            _missileLauncher = transform.Find("MissileLauncher").gameObject.GetComponent<IBarrelWrapper>();
+            Assert.IsNotNull(_missileLauncher);
+            turrets.Add(_missileLauncher);
 
             return turrets;
 		}
@@ -56,6 +73,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 			IList<TargetType> nonAirTargets = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             _directFireAntiSea.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
             _mortar.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
+            _missileLauncher.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
 
             IList<TargetType> airTargets = new List<TargetType>() { TargetType.Aircraft };
             _directFireAntiAir.Initialise(_factoryProvider, enemyFaction, airTargets);

@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private ITargetProcessorWrapper _targetProcessorWrapper;
 
 		public TurretStats TurretStats { get { return _barrelController.TurretStats; } }
+        public Vector2 Position { get { return transform.position; } }
 
         public ITarget Target 
         { 
