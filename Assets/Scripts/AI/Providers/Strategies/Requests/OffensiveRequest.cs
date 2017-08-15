@@ -8,7 +8,11 @@ namespace BattleCruisers.AI.Providers.Strategies.Requests
         public IBuildingKeyProvider BuildingKeyProvider { get; private set; }
         public int NumOfSlotsToUse { get; set; }
 
-        // FELIX  Take BasicOffensiveRequest as arg
+        public OffensiveRequest(IBasicOffensiveRequest request, IBuildingKeyProvider buildingKeyprovider)
+            : this(request.Type, request.Focus, buildingKeyprovider)
+        {
+        }
+
         public OffensiveRequest(OffensiveType type, OffensiveFocus focus, IBuildingKeyProvider buildingKeyProvider)
             : base(type, focus)
         {

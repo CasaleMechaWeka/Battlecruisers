@@ -57,7 +57,7 @@ namespace BattleCruisers.AI.Providers
 			IList<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest =>
 			{
 				IBuildingKeyProvider buildingKeyProvider = _buildingKeyProviderFactory.CreateBuildingKeyProvider(basicRequest.Type, levelNum);
-				return (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus, buildingKeyProvider);
+				return (IOffensiveRequest)new OffensiveRequest(basicRequest, buildingKeyProvider);
 			}).ToList();
 
             // Create offensive build order
