@@ -8,6 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     {
 		UnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
+        IBuildableWrapper<IUnit> UnitWrapper { set; }
 
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 	}
