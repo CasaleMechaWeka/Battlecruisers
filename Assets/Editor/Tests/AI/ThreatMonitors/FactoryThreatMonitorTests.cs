@@ -94,7 +94,8 @@ namespace BattleCruisers.Tests.AI
 
             _threateningFactory.NumOfDrones.Returns(0);
 
-            _threateningFactory.DroneNumChanged += Raise.EventWith(_threateningFactory, new DroneNumChangedEventArgs(_threateningFactory.NumOfDrones));
+            int oldNumOfDrones = 0;
+            _threateningFactory.DroneNumChanged += Raise.EventWith(_threateningFactory, new DroneNumChangedEventArgs(oldNumOfDrones, _threateningFactory.NumOfDrones));
             _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
         }
 

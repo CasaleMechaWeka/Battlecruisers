@@ -18,13 +18,17 @@ namespace BattleCruisers.Drones
 
 				if (value != _numOfDrones)
 				{
+                    int oldNumOfDrones = _numOfDrones;
 					_numOfDrones = value;
+
 					if (DroneNumChanged != null)
 					{
-						DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
+                        DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(oldNumOfDrones, _numOfDrones));
 					}
-					DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
-					if (newState != State)
+					
+                    DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
+					
+                    if (newState != State)
 					{
 						if (DroneStateChanged != null)
 						{
