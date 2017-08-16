@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -10,6 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         int NumOfDrones { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; set; }
 
+		event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 	}
 }

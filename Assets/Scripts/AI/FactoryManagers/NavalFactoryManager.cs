@@ -64,12 +64,19 @@ namespace BattleCruisers.AI.FactoryManagers
         private void _navalFactory_CompletedBuildable(object sender, EventArgs e)
         {
             _navalFactory.UnitWrapper = _boatToBuild;
+            _navalFactory.CompletedBuildingUnit += _navalFactory_CompletedBuildingUnit;
+        }
+
+        private void _navalFactory_CompletedBuildingUnit(object sender, CompletedConstructionEventArgs e)
+        {
+            _navalFactory.UnitWrapper = _boatToBuild;
         }
 
         private void _navalFactory_Destroyed(object sender, DestroyedEventArgs e)
         {
             _navalFactory.CompletedBuildable -= _navalFactory_CompletedBuildable; 
             _navalFactory.Destroyed -= _navalFactory_Destroyed;
+            _navalFactory.CompletedBuildingUnit -= _navalFactory_CompletedBuildingUnit;
             _navalFactory = null;
         }
 
