@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
-		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
+        public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         #region Properties
@@ -29,24 +29,27 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 				Logging.Log(Tags.FACTORY, "set_UnitWrapper: " + _unitWrapper + " > " + value);
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
-				if (_unitWrapper != null)
-				{
-					Assert.IsNotNull(DroneConsumer);
-					_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-					DroneConsumer = null;
-					DestroyUnitUnderConstruction();
-				}
+                if (!ReferenceEquals(_unitWrapper, value))
+                {
+	                if (_unitWrapper != null)
+	                {
+	                    Assert.IsNotNull(DroneConsumer);
+	                    _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+	                    DroneConsumer = null;
+	                    DestroyUnitUnderConstruction();
+	                }
 
-				_unitWrapper = value;
+	                _unitWrapper = value;
 
-				if (_unitWrapper != null)
-				{
-					Assert.IsNull(DroneConsumer);
-                    DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
-					_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+	                if (_unitWrapper != null)
+	                {
+	                    Assert.IsNull(DroneConsumer);
+	                    DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
+	                    _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+	                }
 				}
 			}
-			private get { return _unitWrapper; }
+			get { return _unitWrapper; }
 		}
 
 		protected abstract LayerMask UnitLayerMask { get; }
@@ -118,11 +121,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
 
 			_unitUnderConstruction.StartConstruction();
-
-			if (StartedBuildingUnit != null)
-			{
-				StartedBuildingUnit.Invoke(this, new StartedConstructionEventArgs(_unitUnderConstruction));
-			}
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(IUnit unit);
@@ -138,7 +136,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
 		{
-			CleanUpUnitUnderConstruction();
+			if (CompletedBuildingUnit != null)
+			{
+				CompletedBuildingUnit.Invoke(this, new CompletedConstructionEventArgs(_unitUnderConstruction));
+			}
+
+            CleanUpUnitUnderConstruction();
 		}
 		
 		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
@@ -158,7 +161,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void DestroyUnitUnderConstruction()
 		{
-			if (_unitUnderConstruction != null)
+			if (_unitUnderConstruction != null
+                && _unitUnderConstruction.BuildableState != BuildableState.Completed)
 			{
 				_unitUnderConstruction.Destroy();
 				CleanUpUnitUnderConstruction();

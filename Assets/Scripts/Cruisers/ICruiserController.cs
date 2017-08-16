@@ -5,15 +5,27 @@ using BattleCruisers.Drones;
 
 namespace BattleCruisers.Cruisers
 {
-    public class StartedConstructionEventArgs : EventArgs
-	{
+    public abstract class BuildableConstructionEventArgs : EventArgs
+    {
 		public IBuildable Buildable { get; private set; }
 
-		public StartedConstructionEventArgs(IBuildable buildable)
+		public BuildableConstructionEventArgs(IBuildable buildable)
 		{
 			Buildable = buildable;
 		}
-	}
+    }
+
+    public class StartedConstructionEventArgs : BuildableConstructionEventArgs
+    {
+        public StartedConstructionEventArgs(IBuildable buildable)
+            : base(buildable) { }
+    }
+
+    public class CompletedConstructionEventArgs : BuildableConstructionEventArgs
+    {
+        public CompletedConstructionEventArgs(IBuildable buildable) 
+            : base(buildable) { }
+    }
 
     public class BuildingDestroyedEventArgs : EventArgs
     {

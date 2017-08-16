@@ -20,10 +20,11 @@ namespace BattleCruisers.AI.FactoryManagers
 
 		public IBuildableWrapper<IUnit> ChooseUnit(int numOfDrones)
         {
-            _units
-                .Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= numOfDrones)
-                .OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
-                .FirstOrDefault();
+            return
+	            _units
+	                .Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= numOfDrones)
+	                .OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
+	                .FirstOrDefault();
         }
 	}
 }
