@@ -23,14 +23,15 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
+			_droneManager = Substitute.For<IDroneManager>();
             _friendlyCruiser = Substitute.For<ICruiserController>();
-            _droneManager = Substitute.For<IDroneManager>();
+            _friendlyCruiser.DroneManager.Returns(_droneManager);
             _droneManager.NumOfDrones.Returns(12);
             _unit = Substitute.For<IBuildableWrapper<IUnit>>();
             _unit2 = Substitute.For<IBuildableWrapper<IUnit>>();
             _unitChooser = Substitute.For<IUnitChooser>();
             _unitChooser.ChooseUnit(numOfDrones: -12).ReturnsForAnyArgs(_unit, _unit2);
-            new NavalFactoryManager(_friendlyCruiser, _droneManager, _unitChooser);
+            new NavalFactoryManager(_friendlyCruiser, _unitChooser);
             
 			_navalFactory = Substitute.For<IFactory>();
 			_navalFactory.UnitCategory.Returns(UnitCategory.Naval);
@@ -45,7 +46,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         public void Constructor_ChoosesUnit()
         {
             _unitChooser.ClearReceivedCalls();
-            new NavalFactoryManager(_friendlyCruiser, _droneManager, _unitChooser);
+            new NavalFactoryManager(_friendlyCruiser, _unitChooser);
             _unitChooser.Received().ChooseUnit(_droneManager.NumOfDrones);
         }
 
