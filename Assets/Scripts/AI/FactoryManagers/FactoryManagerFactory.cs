@@ -11,7 +11,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public class FactoryManagerFactory
+    public class FactoryManagerFactory : IFactoryManagerFactory
     {
         private readonly IStaticData _staticData;
         private readonly IPrefabFactory _prefabFactory;
@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.FactoryManagers
             _prefabFactory = prefabFactory;
         }
 
-        public IFactoryManager CreateNavalFactoryManager(int levelNum, ICruiserController friendlyCruiser, IDroneManager droneManager)
+        public IFactoryManager CreateNavalFactoryManager(int levelNum, ICruiserController friendlyCruiser)
         {
             IList<IPrefabKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelNum);
             IList<IBuildableWrapper<IUnit>> availableShips =
@@ -33,7 +33,7 @@ namespace BattleCruisers.AI.FactoryManagers
                     .ToList();
             IUnitChooser unitChooser = new UnitChooser(availableShips);
 
-            return new NavalFactoryManager(friendlyCruiser, droneManager, unitChooser);
+            return new NavalFactoryManager(friendlyCruiser, unitChooser);
         }
     }
 }

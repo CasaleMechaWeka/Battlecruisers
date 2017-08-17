@@ -33,12 +33,12 @@ namespace BattleCruisers.AI.FactoryManagers
         private IBuildableWrapper<IUnit> _boatToBuild;
         private IFactory _navalFactory;
 
-        public NavalFactoryManager(ICruiserController friendlyCruiser, IDroneManager droneManager, IUnitChooser unitChooser)
+        public NavalFactoryManager(ICruiserController friendlyCruiser, IUnitChooser unitChooser)
         {
-            Helper.AssertIsNotNull(friendlyCruiser, droneManager, unitChooser);
+            Helper.AssertIsNotNull(friendlyCruiser, friendlyCruiser.DroneManager, unitChooser);
 
             _friendlyCruiser = friendlyCruiser;
-            _droneManager = droneManager;
+            _droneManager = _friendlyCruiser.DroneManager;
             _unitChooser = unitChooser;
 
             _friendlyCruiser.StartedConstruction += _friendlyCruiser_StartedConstruction;

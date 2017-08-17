@@ -1,4 +1,5 @@
-﻿using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.FactoryManagers;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
@@ -18,6 +19,7 @@ namespace BattleCruisers.AI
         private readonly IDeferrer _deferrer;
         private readonly IDataProvider _dataProvider;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
+		private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderProvider _buildOrderProvider;
 
         public AIManager(IPrefabFactory prefabFactory, IDeferrer deferrer, IDataProvider dataProvider)
@@ -29,6 +31,8 @@ namespace BattleCruisers.AI
             _dataProvider = dataProvider;
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
+            _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory);
+
             IBuildingKeyProviderFactory buildingKeyProviderFactory = new BuildingKeyProviderFactory(_dataProvider.StaticData);
             IOffensiveBuildOrderProvider offensiveBuildOrderProvider = new OffensiveBuildOrderProvider();
             IAntiUnitBuildOrderProvider antiAirBuildOrderProvider = new AntiAirBuildOrderProvivder(_dataProvider.StaticData);
@@ -52,6 +56,10 @@ namespace BattleCruisers.AI
                     aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper);
 					break;
 			}
+
+            // Manage AI unit factories
+            _factoryManagerFactory.CreateNavalFactoryManager(currentLevel.Num, aiCruiser);
+            // FELIX  Create air factory manager :)
         }
     }
 }

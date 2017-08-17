@@ -40,6 +40,7 @@ namespace BattleCruisers.Cruisers
 	public interface ICruiserController
 	{
         ISlotWrapper SlotWrapper { get; }
+		IDroneManager DroneManager { get; }
 
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
