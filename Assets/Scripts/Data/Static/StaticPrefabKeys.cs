@@ -53,7 +53,6 @@ namespace BattleCruisers.Data.Static
 
 			// Ships
 			public static UnitKey AttackBoat { get { return new UnitKey(UnitCategory.Naval, "AttackBoat"); } }
-			// FELIX  Don't exist yet :/
             public static UnitKey Frigate { get { return new UnitKey(UnitCategory.Naval, "Frigate"); } }
             public static UnitKey Destroyer { get { return new UnitKey(UnitCategory.Naval, "Destroyer"); } }
 		}

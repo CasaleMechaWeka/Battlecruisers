@@ -96,8 +96,9 @@ namespace BattleCruisers.Data.Static
                 // FELIX  Gunship
 
                 // Ships
-                StaticPrefabKeys.Units.AttackBoat
-                // FELIX  Other 2 :D
+                StaticPrefabKeys.Units.AttackBoat,
+				StaticPrefabKeys.Units.Frigate,
+                StaticPrefabKeys.Units.Destroyer
 			};
 		}
 
