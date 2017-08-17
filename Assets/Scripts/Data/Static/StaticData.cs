@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.AI.Providers.Strategies;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Data.Static
 	{
 		private readonly IDictionary<IPrefabKey, int> _buildableToUnlockedLevel;
         private readonly IList<BuildingKey> _allBuildings;
+        private readonly IList<UnitKey> _allUnits;
         private readonly ILevelStrategies _strategies;
 
 		public GameModel InitialGameModel { get; private set; }
@@ -31,6 +33,8 @@ namespace BattleCruisers.Data.Static
 				.Select(buildingKey => (IPrefabKey)buildingKey)
 				.ToList();
 			BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
+
+            _allUnits = AllUnitKeys();
 
             _buildableToUnlockedLevel = CreateAvailabilityMap();
 
@@ -89,9 +93,11 @@ namespace BattleCruisers.Data.Static
                 // Aircraft
                 StaticPrefabKeys.Units.Bomber,
 				StaticPrefabKeys.Units.Fighter,
-                
+                // FELIX  Gunship
+
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat
+                // FELIX  Other 2 :D
 			};
 		}
 
@@ -209,10 +215,20 @@ namespace BattleCruisers.Data.Static
 
         public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
         {
-            return _allBuildings
-                .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildableAvailable(buildingKey, levelNum))
-                .Select(buildingKey => (IPrefabKey)buildingKey)
-                .ToList();
+            return 
+                _allBuildings
+	                .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildableAvailable(buildingKey, levelNum))
+	                .Select(buildingKey => (IPrefabKey)buildingKey)
+	                .ToList();
+        }
+
+        public IList<IPrefabKey> GetAvailableUnits(UnitCategory category, int levelNum)
+        {
+            return
+                _allUnits
+                    .Where(unitKey => unitKey.UnitCategory == category && IsBuildableAvailable(unitKey, levelNum))
+                    .Select(unitKey => (IPrefabKey)unitKey)
+                    .ToList();
         }
 
         public IStrategy GetAdaptiveStrategy(int levelNum)
