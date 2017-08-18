@@ -42,24 +42,25 @@ namespace BattleCruisers.AI
 
         public void CreateAI(ILevel currentLevel, ICruiserController playerCruiser, ICruiserController aiCruiser)
         {
+            // Manage AI unit factories (needs to be before the AI strategy is created,
+            // otherwise miss started construction event for first building :) )
+            _factoryManagerFactory.CreateNavalFactoryManager(currentLevel.Num, aiCruiser);
+            // FELIX  Create air factory manager :)
+			
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, aiCruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
                 aiCruiser, playerCruiser, _prefabFactory, taskFactory, _slotNumCalculatorFactory, _dataProvider.StaticData);
-			IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderProvider);
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderProvider);
 
-			switch (_dataProvider.SettingsManager.AIDifficulty)
-			{
-				case Difficulty.Normal:
+            switch (_dataProvider.SettingsManager.AIDifficulty)
+            {
+                case Difficulty.Normal:
                     aiFactory.CreateBasicAI(currentLevel, aiCruiser.SlotWrapper);
-					break;
-				case Difficulty.Hard:
+                    break;
+                case Difficulty.Hard:
                     aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper);
-					break;
-			}
-
-            // Manage AI unit factories
-            _factoryManagerFactory.CreateNavalFactoryManager(currentLevel.Num, aiCruiser);
-            // FELIX  Create air factory manager :)
+                    break;
+            }
         }
     }
 }

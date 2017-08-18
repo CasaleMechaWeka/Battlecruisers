@@ -79,11 +79,13 @@ namespace BattleCruisers.Cruisers
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			Logging.Log(Tags.CRUISER, "Cruiser.OnPointerClick()");
+			Logging.Log(Tags.CRUISER, "OnPointerClick()");
 		}
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
+            Logging.Log(Tags.CRUISER, "ConstructBuilding() " + buildingPrefab.Buildable.Name);
+
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);
 		}

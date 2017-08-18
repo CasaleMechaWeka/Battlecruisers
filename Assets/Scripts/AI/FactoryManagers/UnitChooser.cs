@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-	public class UnitChooser : IUnitChooser
+    public class UnitChooser : IUnitChooser
 	{
         private readonly IList<IBuildableWrapper<IUnit>> _units;
 
