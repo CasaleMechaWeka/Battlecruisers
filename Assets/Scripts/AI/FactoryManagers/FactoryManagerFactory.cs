@@ -32,7 +32,7 @@ namespace BattleCruisers.AI.FactoryManagers
                     .ToList();
             IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips);
 
-            return new NavalFactoryManager(friendlyCruiser, unitChooser);
+            return new FactoryManager(UnitCategory.Naval, friendlyCruiser, unitChooser);
         }
     }
 }

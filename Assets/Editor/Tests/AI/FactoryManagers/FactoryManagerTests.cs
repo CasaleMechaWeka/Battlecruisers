@@ -10,7 +10,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
-    public class NavalFactoryManagerTests
+    public class FactoryManagerTests
     {
         private ICruiserController _friendlyCruiser;
         private IDroneManager _droneManager;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _unit2 = Substitute.For<IBuildableWrapper<IUnit>>();
             _unitChooser = Substitute.For<IUnitChooser>();
             _unitChooser.ChooseUnit(numOfDrones: -12).ReturnsForAnyArgs(_unit, _unit2);
-            new NavalFactoryManager(_friendlyCruiser, _unitChooser);
+            new FactoryManager(UnitCategory.Naval, _friendlyCruiser, _unitChooser);
             
 			_navalFactory = Substitute.For<IFactory>();
 			_navalFactory.UnitCategory.Returns(UnitCategory.Naval);
@@ -46,12 +46,12 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         public void Constructor_ChoosesUnit()
         {
             _unitChooser.ClearReceivedCalls();
-            new NavalFactoryManager(_friendlyCruiser, _unitChooser);
+            new FactoryManager(UnitCategory.Naval, _friendlyCruiser, _unitChooser);
             _unitChooser.Received().ChooseUnit(_droneManager.NumOfDrones);
         }
 
         [Test]
-        public void NavalFactoryBuilt_SetsUnit()
+        public void MatchingFactoryBuilt_SetsUnit()
         {
             _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory));
             Assert.IsNull(_navalFactory.UnitWrapper);
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         }
 
         [Test]
-        public void AirFactoryBuilt_DoesNotSetUnit()
+        public void NonMatchingFactoryBuilt_DoesNotSetUnit()
         {
             _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_airFactory));
             Assert.IsNull(_airFactory.UnitWrapper);
@@ -68,6 +68,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 			Assert.IsNull(_airFactory.UnitWrapper);
         }
 
+        // FELIX  Update
         [Test]
         public void NumOfDronesChanged_NewNumOfDronesIsGreater_ChoosesUnit()
         {

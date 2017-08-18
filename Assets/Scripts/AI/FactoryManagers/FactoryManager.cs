@@ -15,6 +15,8 @@ namespace BattleCruisers.AI.FactoryManagers
     /// This manager asks the injected IUnitChooser which unit a factory should
     /// build when the number of drones aivailable to the cruiser change.
     /// 
+    /// FELIX  Never cache unit to build.  ALWAYS query unit chooser!
+    /// 
     /// This manager sets the unit to build for a factory when that factory:
     /// a) Completes building (itself)
     /// b) Completes building a unit
