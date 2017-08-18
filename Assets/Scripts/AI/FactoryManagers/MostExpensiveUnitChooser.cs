@@ -30,7 +30,6 @@ namespace BattleCruisers.AI.FactoryManagers
 
 			_droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
 
-            // FELIX  Test that this is set in constructor :)
             ChooseUnit();
 		}
 

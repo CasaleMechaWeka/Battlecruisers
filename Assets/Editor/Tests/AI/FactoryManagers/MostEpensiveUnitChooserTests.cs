@@ -53,6 +53,12 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             Assert.Throws<UnityAsserts.AssertionException>(() => new MostExpensiveUnitChooser(units, _droneManager));
 		}
 
+		[Test]
+		public void Constructor_ChoosesUnit()
+		{
+            Assert.IsNotNull(_unitChooser.ChosenUnit);
+		}
+
         [Test]
         public void ChooseUnit_ReturnsNullIfCannotAffordAnyUnits()
         {
