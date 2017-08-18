@@ -20,15 +20,14 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly IBuildableWrapper<IUnit> _defaultPlane, _antiAirPlane, _antiNavalPlane;
 		private readonly IDroneManager _droneManager;
         private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
-
-        private const ThreatLevel THREAT_LEVEL_THRESHOLD = ThreatLevel.High;
+        private readonly ThreatLevel _threatLevelThreshold;
 
 		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
 
-		public AircraftUnitChooser(
-            IBuildableWrapper<IUnit> defaultPlane, IBuildableWrapper<IUnit> antiAirPlane,
-            IBuildableWrapper<IUnit> antiNavalPlane, IDroneManager droneManager, 
-            IThreatMonitor airThreatMonitor, IThreatMonitor navalThreatMonitor)
+		public AircraftUnitChooser(IBuildableWrapper<IUnit> defaultPlane, 
+            IBuildableWrapper<IUnit> antiAirPlane, IBuildableWrapper<IUnit> antiNavalPlane, 
+            IDroneManager droneManager, IThreatMonitor airThreatMonitor, 
+            IThreatMonitor navalThreatMonitor, ThreatLevel threatLevelThreshold)
 		{
             Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, droneManager, airThreatMonitor, navalThreatMonitor);
 
@@ -38,6 +37,7 @@ namespace BattleCruisers.AI.FactoryManagers
 			_droneManager = droneManager;
             _airThreatMonitor = airThreatMonitor;
             _navalThreatMonitor = navalThreatMonitor;
+            _threatLevelThreshold = threatLevelThreshold;
 
             _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
             _airThreatMonitor.ThreatLevelChanged += ThreatMonitor_ThreatLevelChanged;
@@ -68,16 +68,16 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private IBuildableWrapper<IUnit> ChooseDesiredUnit()
         {
-			if (_airThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD
-				&& _navalThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			if (_airThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold
+				&& _navalThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)
 			{
 				return RandBool() ? _antiAirPlane : _antiNavalPlane;
 			}
-			else if (_airThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			else if (_airThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)
 			{
 				return _antiAirPlane;
 			}
-			else if (_navalThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			else if (_navalThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)
 			{
 				return _antiNavalPlane;
 			}
