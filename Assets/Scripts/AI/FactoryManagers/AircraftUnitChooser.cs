@@ -91,7 +91,6 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private bool RandBool()
         {
-            // FELIX  test value changes :P
             return UnityEngine.Random.value > 0.5;
         }
 
