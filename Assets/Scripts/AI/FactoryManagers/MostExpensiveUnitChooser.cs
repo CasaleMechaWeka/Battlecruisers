@@ -6,11 +6,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public class UnitChooser : IUnitChooser
+    public class MostExpensiveUnitChooser : IUnitChooser
 	{
         private readonly IList<IBuildableWrapper<IUnit>> _units;
 
-        public UnitChooser(IList<IBuildableWrapper<IUnit>> units)
+        public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units)
         {
             Assert.IsNotNull(units);
             Assert.IsTrue(units.Count != 0);

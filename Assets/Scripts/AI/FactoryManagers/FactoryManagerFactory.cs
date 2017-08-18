@@ -30,7 +30,7 @@ namespace BattleCruisers.AI.FactoryManagers
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
-            IUnitChooser unitChooser = new UnitChooser(availableShips);
+            IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips);
 
             return new NavalFactoryManager(friendlyCruiser, unitChooser);
         }

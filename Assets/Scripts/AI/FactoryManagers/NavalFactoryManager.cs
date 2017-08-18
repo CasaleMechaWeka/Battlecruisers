@@ -10,19 +10,12 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.FactoryManagers
 {
     /// <summary>
-    /// Decides which type of boat to build.
+    /// Monitors all factories for a unit category (air/naval).
     /// 
-    /// Builds the most expensive boat we can afford.
-    /// 
-    /// If we gain enough drones for a more epensive boat, starts building the
-    /// more expensive boat when the current boat under construction completes.  
-    /// Ie, do not want to build a boat to 90% completion and waste it by 
-    /// starting construction on a different boat.
-    /// 
-    /// If we lose drones and can no longer afford to build the current boat, 
-    /// does nothing.  This means no drones are wasted building cheaper boats
-    /// and can instead be used to replace lost drone stations and hopefully
-    /// continue buildng the current boat once the drone stations are rebuilt.
+    /// This manager asks the injected IUnitChooser which unit a factory should
+    /// build when:
+    /// a) Completes building
+    /// b) Completes building a unit
     /// </summary>
     public class NavalFactoryManager : IFactoryManager
 	{

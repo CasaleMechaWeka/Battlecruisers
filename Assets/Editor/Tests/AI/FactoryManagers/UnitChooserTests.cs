@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
                 _unit6Drones
             };
 
-            _unitChooser = new UnitChooser(_units);
+            _unitChooser = new MostExpensiveUnitChooser(_units);
 		}
 
         private IBuildableWrapper<IUnit> CreateUnit(int numOfDrones)
@@ -44,14 +44,14 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 		[Test]
 		public void Constructor_NullUnitsThrows()
 		{
-            Assert.Throws<UnityAsserts.AssertionException>(() => new UnitChooser(units: null));
+            Assert.Throws<UnityAsserts.AssertionException>(() => new MostExpensiveUnitChooser(units: null));
 		}
 
 		[Test]
 		public void Constructor_EmptyUnitsThrows()
 		{
             IList<IBuildableWrapper<IUnit>> units = new List<IBuildableWrapper<IUnit>>();
-			Assert.Throws<UnityAsserts.AssertionException>(() => new UnitChooser(units));
+			Assert.Throws<UnityAsserts.AssertionException>(() => new MostExpensiveUnitChooser(units));
 		}
 
         [Test]
