@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
@@ -10,19 +9,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite, _missileLauncher;
 
-        private float _enemyDetectionRangeInM = -1;
         protected override float EnemyDetectionRangeInM 
         { 
             get 
             {
-                if (_enemyDetectionRangeInM == -1)
-                {
-                    // Enemy detector is in ship center, but missile launcher is behind
-                    // ship center.  Want to only stop once missile launcher is in range,
-                    // so have to adjust missile launcher range.
-                    _enemyDetectionRangeInM = _missileLauncher.TurretStats.rangeInM - (Mathf.Abs(transform.position.x - _missileLauncher.Position.x));
-                }
-                return _enemyDetectionRangeInM; 
+                return FindEnemyDetectionRange(_missileLauncher);
             } 
         }
 

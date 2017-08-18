@@ -9,7 +9,13 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
-        protected override float EnemyDetectionRangeInM { get { return _mortar.TurretStats.rangeInM; } }
+		protected override float EnemyDetectionRangeInM
+		{
+			get
+			{
+				return FindEnemyDetectionRange(_mortar);
+			}
+		}
 
         public override void StaticInitialise()
         {

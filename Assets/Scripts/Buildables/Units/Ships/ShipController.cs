@@ -179,5 +179,13 @@ namespace BattleCruisers.Buildables.Units.Ships
 			rigidBody.velocity = new Vector2(0, 0);
 			Logging.Verbose(Tags.ATTACK_BOAT, "rigidBody.velocity: " + rigidBody.velocity);
 		}
+
+		// Enemy detector is in ship center, but longest range barrel may be behind
+		// ship center.  Want to only stop once barrel is in range, so enemy detection 
+        // range has to be less than the longest range barrel.
+        protected float FindEnemyDetectionRange(IBarrelWrapper longestRangeBarrel)
+        {
+            return longestRangeBarrel.TurretStats.rangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
+        }
 	}
 }
