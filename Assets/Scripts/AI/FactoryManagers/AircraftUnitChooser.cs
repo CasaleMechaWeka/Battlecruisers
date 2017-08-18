@@ -1,0 +1,108 @@
+﻿using System;
+using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Drones;
+using BattleCruisers.Utils;
+
+namespace BattleCruisers.AI.FactoryManagers
+{
+    /// <summary>
+    /// Chooses the unit that best counters the current threat (as long as we 
+    /// can afford that plane).
+    /// 
+    /// If user builds lots of:
+    /// A) Planes => Build interceptors
+    /// B) Lots of ships => Build gunships
+    /// </summary>
+    public class AircraftUnitChooser : IUnitChooser
+	{
+        private readonly IBuildableWrapper<IUnit> _defaultPlane, _antiAirPlane, _antiNavalPlane;
+		private readonly IDroneManager _droneManager;
+        private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
+
+        private const ThreatLevel THREAT_LEVEL_THRESHOLD = ThreatLevel.High;
+
+		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
+
+		public AircraftUnitChooser(
+            IBuildableWrapper<IUnit> defaultPlane, IBuildableWrapper<IUnit> antiAirPlane,
+            IBuildableWrapper<IUnit> antiNavalPlane, IDroneManager droneManager, 
+            IThreatMonitor airThreatMonitor, IThreatMonitor navalThreatMonitor)
+		{
+            Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, droneManager, airThreatMonitor, navalThreatMonitor);
+
+            _defaultPlane = defaultPlane;
+            _antiAirPlane = antiAirPlane;
+            _antiNavalPlane = antiNavalPlane;
+			_droneManager = droneManager;
+            _airThreatMonitor = airThreatMonitor;
+            _navalThreatMonitor = navalThreatMonitor;
+
+            _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+            _airThreatMonitor.ThreatLevelChanged += ThreatMonitor_ThreatLevelChanged;
+            _navalThreatMonitor.ThreatLevelChanged += ThreatMonitor_ThreatLevelChanged;
+		}
+
+		private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+		{
+            ChooseUnit();
+		}
+
+        private void ThreatMonitor_ThreatLevelChanged(object sender, EventArgs e)
+        {
+            ChooseUnit();
+        }
+
+        private void ChooseUnit()
+		{
+            IBuildableWrapper<IUnit> desiredUnit = ChooseDesiredUnit();
+
+            if (!CanAfforUnit(desiredUnit))
+            {
+                desiredUnit = CanAfforUnit(_defaultPlane) ? _defaultPlane : null;
+            }
+
+            ChosenUnit = desiredUnit;
+		}
+
+        private IBuildableWrapper<IUnit> ChooseDesiredUnit()
+        {
+			if (_airThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD
+				&& _navalThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			{
+				return RandBool() ? _antiAirPlane : _antiNavalPlane;
+			}
+			else if (_airThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			{
+				return _antiAirPlane;
+			}
+			else if (_navalThreatMonitor.CurrentThreatLevel >= THREAT_LEVEL_THRESHOLD)
+			{
+				return _antiNavalPlane;
+			}
+			else
+			{
+				return _defaultPlane;
+			}
+        }
+
+        private bool RandBool()
+        {
+            // FELIX  test value changes :P
+            return UnityEngine.Random.value > 0.5;
+        }
+
+        private bool CanAfforUnit(IBuildableWrapper<IUnit> unitWrapper)
+        {
+            return unitWrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones;
+        }
+
+		public void Dispose()
+		{
+			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
+            _airThreatMonitor.ThreatLevelChanged -= ThreatMonitor_ThreatLevelChanged;
+			_navalThreatMonitor.ThreatLevelChanged -= ThreatMonitor_ThreatLevelChanged;		
+        }
+	}
+}
