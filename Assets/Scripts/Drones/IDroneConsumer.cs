@@ -11,12 +11,10 @@ namespace BattleCruisers.Drones
 
 	public class DroneNumChangedEventArgs : EventArgs
 	{
-        public int OldNumOfDrones { get; private set; }
 		public int NewNumOfDrones { get; private set; }
 
-		public DroneNumChangedEventArgs(int oldNumOfDrones, int newNumOfDrones)
+		public DroneNumChangedEventArgs(int newNumOfDrones)
 		{
-            OldNumOfDrones = oldNumOfDrones;
 			NewNumOfDrones = newNumOfDrones;
 		}
 	}

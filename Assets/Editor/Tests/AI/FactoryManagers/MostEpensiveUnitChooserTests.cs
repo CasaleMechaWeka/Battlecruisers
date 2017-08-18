@@ -85,7 +85,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         private void DroneNumberChanged(int newDroneNum, IBuildableWrapper<IUnit> expectedChosenUnit)
         {
             _droneManager.NumOfDrones.Returns(newDroneNum);
-            _droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(oldNumOfDrones: -99, newNumOfDrones: newDroneNum));
+            _droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(newNumOfDrones: newDroneNum));
             Assert.AreSame(expectedChosenUnit, _unitChooser.ChosenUnit);
         }
 	}
