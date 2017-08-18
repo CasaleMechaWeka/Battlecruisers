@@ -110,10 +110,10 @@ namespace BattleCruisers.Data.Static
 		{
 			Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
-			int numOfLevelsUnlocked = 1;
+			int numOfLevelsCompleted = 0;
 
 			return new GameModel(
-				numOfLevelsUnlocked,
+                numOfLevelsCompleted,
 				playerLoadout,
 				null,
 				AllHullKeys(),

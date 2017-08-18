@@ -63,6 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private void CreateLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, UIFactory uiFactory)
         {
             Assert.IsTrue(levels.Count % SET_SIZE == 0);
+
             int numOfSets = levels.Count / SET_SIZE;
             _levelSets = new List<LevelsSetController>(numOfSets);
 
