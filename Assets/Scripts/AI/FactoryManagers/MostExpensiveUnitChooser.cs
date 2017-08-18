@@ -29,18 +29,21 @@ namespace BattleCruisers.AI.FactoryManagers
             _droneManager = droneManager;
 
 			_droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+
+            // FELIX  Test that this is set in constructor :)
+            ChooseUnit();
 		}
 
         private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            ChosenUnit = ChooseUnit(_droneManager.NumOfDrones);
+            ChooseUnit();
         }
 
-        private IBuildableWrapper<IUnit> ChooseUnit(int numOfDrones)
+        private void ChooseUnit()
         {
-            return
+            ChosenUnit =
 	            _units
-	                .Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= numOfDrones)
+	                .Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones)
 	                .OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
 	                .FirstOrDefault();
         }

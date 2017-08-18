@@ -42,6 +42,8 @@ namespace BattleCruisers.AI.FactoryManagers
             _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
             _airThreatMonitor.ThreatLevelChanged += ThreatMonitor_ThreatLevelChanged;
             _navalThreatMonitor.ThreatLevelChanged += ThreatMonitor_ThreatLevelChanged;
+
+            ChooseUnit();
 		}
 
 		private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
