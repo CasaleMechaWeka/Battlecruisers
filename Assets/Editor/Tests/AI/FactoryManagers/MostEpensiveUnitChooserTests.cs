@@ -46,6 +46,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             return unit;
         }
 
+        [Test]
 		public void Constructor_EmptyUnitsThrows()
 		{
             IList<IBuildableWrapper<IUnit>> units = new List<IBuildableWrapper<IUnit>>();
