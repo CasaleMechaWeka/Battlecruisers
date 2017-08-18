@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public interface IUnitChooser
+    public interface IUnitChooser : IDisposable
 	{
-        // FELIX  Take no arguments.  MostExpensiveUnitChooser should have drone manager as a property :)
-        IBuildableWrapper<IUnit> ChooseUnit(int numOfDrones);
+        IBuildableWrapper<IUnit> ChosenUnit { get; }
 	}
 }

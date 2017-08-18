@@ -3,7 +3,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -13,7 +12,6 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
     public class FactoryManagerTests
     {
         private ICruiserController _friendlyCruiser;
-        private IDroneManager _droneManager;
         private IUnitChooser _unitChooser;
         private IBuildableWrapper<IUnit> _unit, _unit2;
         private IFactory _navalFactory, _airFactory;
@@ -23,14 +21,11 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-			_droneManager = Substitute.For<IDroneManager>();
             _friendlyCruiser = Substitute.For<ICruiserController>();
-            _friendlyCruiser.DroneManager.Returns(_droneManager);
-            _droneManager.NumOfDrones.Returns(12);
             _unit = Substitute.For<IBuildableWrapper<IUnit>>();
             _unit2 = Substitute.For<IBuildableWrapper<IUnit>>();
             _unitChooser = Substitute.For<IUnitChooser>();
-            _unitChooser.ChooseUnit(numOfDrones: -12).ReturnsForAnyArgs(_unit, _unit2);
+            _unitChooser.ChosenUnit.Returns(_unit, _unit2);
             new FactoryManager(UnitCategory.Naval, _friendlyCruiser, _unitChooser);
             
 			_navalFactory = Substitute.For<IFactory>();
@@ -40,14 +35,6 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _airFactory = Substitute.For<IFactory>();
             _airFactory.UnitCategory.Returns(UnitCategory.Aircraft);
             _airFactory.UnitWrapper = null;
-        }
-
-        [Test]
-        public void Constructor_ChoosesUnit()
-        {
-            _unitChooser.ClearReceivedCalls();
-            new FactoryManager(UnitCategory.Naval, _friendlyCruiser, _unitChooser);
-            _unitChooser.Received().ChooseUnit(_droneManager.NumOfDrones);
         }
 
         [Test]
@@ -68,33 +55,15 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 			Assert.IsNull(_airFactory.UnitWrapper);
         }
 
-        // FELIX  Update
-        [Test]
-        public void NumOfDronesChanged_NewNumOfDronesIsGreater_ChoosesUnit()
-        {
-            _unitChooser.ClearReceivedCalls();
-            _droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(oldNumOfDrones: 2, newNumOfDrones: 3));
-            _unitChooser.Received().ChooseUnit(numOfDrones: 3);
-		}
-
-		[Test]
-		public void NumOfDronesChanged_NewNumOfDronesIsNotGreater_DoesNotChoosesUnit()
-		{
-			_unitChooser.ClearReceivedCalls();
-			_droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(oldNumOfDrones: 4, newNumOfDrones: 3));
-            _unitChooser.DidNotReceiveWithAnyArgs().ChooseUnit(numOfDrones: -12);
-		}
-
 		[Test]
 		public void NavalFactory_UnitCompleted_SetsUnit()
 		{
+            // Factory completed
 			_friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory));
             _navalFactory.CompletedBuildable += Raise.Event();
 			Assert.AreNotSame(_unit2, _navalFactory.UnitWrapper);
 
-            // Trigger ChooseUnit()
-			_droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(oldNumOfDrones: 2, newNumOfDrones: 3));
-
+            // Unit completed
             _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new CompletedConstructionEventArgs(_unit.Buildable));
 			Assert.AreSame(_unit2, _navalFactory.UnitWrapper);
 		}

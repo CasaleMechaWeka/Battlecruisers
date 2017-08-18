@@ -2,23 +2,41 @@
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Drones;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
+    /// <summary>
+    /// Chooses the most expensive unit the cruiser can afford (has enough drones for).
+    /// 
+    /// Updates the chosen unit every time the cruiser's number of drones changes.
+    /// </summary>
     public class MostExpensiveUnitChooser : IUnitChooser
 	{
         private readonly IList<IBuildableWrapper<IUnit>> _units;
-
-        public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units)
+		private readonly IDroneManager _droneManager;
+		
+		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
+		
+        public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
         {
-            Assert.IsNotNull(units);
+            Helper.AssertIsNotNull(units, droneManager);
             Assert.IsTrue(units.Count != 0);
 
             _units = units;
+            _droneManager = droneManager;
+
+			_droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+		}
+
+        private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+        {
+            ChosenUnit = ChooseUnit(_droneManager.NumOfDrones);
         }
 
-		public IBuildableWrapper<IUnit> ChooseUnit(int numOfDrones)
+        private IBuildableWrapper<IUnit> ChooseUnit(int numOfDrones)
         {
             return
 	            _units
@@ -26,5 +44,10 @@ namespace BattleCruisers.AI.FactoryManagers
 	                .OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
 	                .FirstOrDefault();
         }
-	}
+
+        public void Dispose()
+        {
+			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
+		}
+    }
 }
