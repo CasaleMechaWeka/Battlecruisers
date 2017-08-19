@@ -111,7 +111,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
         private void CreateTaskProducer()
         {
-            new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
+            // FELIX
+            //new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
         }
     }
 }

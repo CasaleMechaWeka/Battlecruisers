@@ -3,6 +3,7 @@
 namespace BattleCruisers.AI.Providers
 {
     // FELIX  Rename
+    // FELIX  Delete :P  Unused :(
     public interface INewBuildingKeyProvider
     {
         bool HasNext { get; }

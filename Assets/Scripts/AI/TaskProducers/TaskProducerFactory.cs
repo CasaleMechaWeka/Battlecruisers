@@ -39,7 +39,8 @@ namespace BattleCruisers.AI.TaskProducers
 
         public void CreateBasicTaskProducer(ITaskList tasks, IList<IPrefabKey> buildOrder)
         {
-			new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
+            // FELIX
+			//new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
 		}
 
 		public void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)

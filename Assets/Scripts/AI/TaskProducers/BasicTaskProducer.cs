@@ -1,56 +1,85 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
 {
     /// <summary>
-    /// Creates tasks for the given buildOrder.
+    /// Lazily creates tasks when the task list becomes empty.
     /// </summary>
     public class BasicTaskProducer : BaseTaskProducer
     {
-        public BasicTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, IList<IPrefabKey> buildOrder)
+        private readonly IEnumerator<IPrefabKey> _buildOrder;
+
+        public BasicTaskProducer(
+            ITaskList tasks, 
+            ICruiserController cruiser, 
+            IPrefabFactory prefabFactory, 
+            ITaskFactory taskFactory, 
+            IEnumerator<IPrefabKey> buildOrder)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            CreateTasks(buildOrder);
+            Assert.IsNotNull(buildOrder);
+
+            _buildOrder = buildOrder;
+
+            _tasks.IsEmptyChanged += _tasks_IsEmptyChanged;
+
+            // Trigger once to create first task from first prefab key
+            _tasks_IsEmptyChanged(sender: null, e: EventArgs.Empty);
         }
 
-        private void CreateTasks(IList<IPrefabKey> buildOrder)
+        private void _tasks_IsEmptyChanged(object sender, EventArgs e)
         {
-            IDictionary<SlotType, int> slotTypeToBuildingCount = new Dictionary<SlotType, int>();
-
-            foreach (IPrefabKey key in buildOrder)
+            if (_tasks.IsEmpty)
             {
-                IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
+                ITask newTask = CreateTask();
 
-                if (ShouldCreateTask(slotTypeToBuildingCount, buildingWrapper.Buildable.SlotType))
+                if (newTask != null)
                 {
-                    _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
+                    _tasks.Add(newTask);
+                }
+                else
+                {
+                    // Have run out of building keys to create tasks for
+                    _tasks.IsEmptyChanged -= _tasks_IsEmptyChanged;
                 }
             }
         }
 
-        private bool ShouldCreateTask(IDictionary<SlotType, int> slotTypeToBuildingCount, SlotType slotType)
+        /// <returns>
+        /// The next task, or null, if we have run out of building keys to create tasks from.
+        /// </returns>
+        private ITask CreateTask()
         {
-            bool shouldCreateTask = false;
+            while (_buildOrder.MoveNext())
+            {
+                IPrefabKey buildingKey = _buildOrder.Current;
+				IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
-			if (!slotTypeToBuildingCount.ContainsKey(slotType))
-			{
-                slotTypeToBuildingCount.Add(slotType, 0);
+                if (CanConstructBuilding(buildingWrapper.Buildable))
+                {
+                    return _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, buildingKey);
+                }
 			}
 
-            if (slotTypeToBuildingCount[slotType] < _cruiser.SlotWrapper.GetSlotCount(slotType))
-            {
-                slotTypeToBuildingCount[slotType]++;
-                shouldCreateTask = true;
-            }
+            return null;
+        }
 
-            return shouldCreateTask;
+        private bool CanConstructBuilding(IBuilding building)
+        {
+            return _cruiser.SlotWrapper.IsSlotAvailable(building.SlotType);
+        }
+
+        public override void Dispose()
+        {
+            _tasks.IsEmptyChanged -= _tasks_IsEmptyChanged;
         }
     }
 }
