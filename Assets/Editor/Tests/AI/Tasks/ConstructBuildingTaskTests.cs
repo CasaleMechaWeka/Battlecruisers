@@ -4,10 +4,12 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
@@ -29,6 +31,8 @@ namespace BattleCruisers.Tests.AI.Tasks
         [SetUp]
         public void SetuUp()
         {
+            UnityAsserts.Assert.raiseExceptions = true;
+
             _key = Substitute.For<IPrefabKey>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
 			_slotWrapper = Substitute.For<ISlotWrapper>();
@@ -61,6 +65,18 @@ namespace BattleCruisers.Tests.AI.Tasks
 
             _cruiser.Received().ConstructBuilding(_prefab.UnityObject, _slot);
         }
+
+        [Test]
+        public void Start_CannotAffordBuilding_Throws()
+        {
+			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            _building.NumOfDronesRequired.Returns(4);
+            IDroneManager droneManager = Substitute.For<IDroneManager>();
+            droneManager.NumOfDrones = 2;
+            _cruiser.DroneManager.Returns(droneManager);
+
+            Assert.Throws<UnityAsserts.AssertionException>(() => _task.Start());
+		}
 
 		[Test]
 		public void Start_NoAvailabeSlots_EmitsCompletedEvent()
