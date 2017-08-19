@@ -9,6 +9,7 @@ namespace BattleCruisers.AI
         ITask HighestPriorityTask { get; }
 
         event EventHandler HighestPriorityTaskChanged;
+        event EventHandler IsEmptyChanged;
 
         void Add(ITask taskToAdd);
         void Remove(ITask taskToRemove);

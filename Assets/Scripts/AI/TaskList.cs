@@ -23,6 +23,8 @@ namespace BattleCruisers.AI
         public ITask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
 
         public event EventHandler HighestPriorityTaskChanged;
+        // FELIX  Invoke!
+        public event EventHandler IsEmptyChanged;
 
         public TaskList()
         {
