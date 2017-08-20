@@ -34,9 +34,9 @@ namespace BattleCruisers.Utils
 			return componentAsList[0];
 		}
 
-        public static void Shuffle<T>(this IList<T> list)
+        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> enumerable)
         {
-            list.OrderBy(item => Random.value);
+            return enumerable.OrderBy(item => Random.value);
         }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Drones;
@@ -7,6 +8,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Providers.BuildingKey
 {
+    // FELIX  Tied to specific level.  Rename to LevelHelper?  LevelWrapper?
     public class BuildingKeyHelper : IBuildingKeyHelper
 	{
 		private readonly IDroneManager _droneManager;
@@ -36,5 +38,10 @@ namespace BattleCruisers.AI.Providers.BuildingKey
 				_staticData.IsBuildableAvailable(buildingKey, _levelNum)
 				&& building.NumOfDronesRequired <= _droneManager.NumOfDrones;
         }
-	}
+
+        public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category)
+        {
+            return _staticData.GetAvailableBuildings(category, _levelNum);
+        }
+    }
 }
