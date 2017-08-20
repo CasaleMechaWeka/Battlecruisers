@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers
 {
-    public interface IDynamicBuildOrder : IEnumerator<IPrefabKey>
+    /// <summary>
+    /// Subset if IEnumerator<IPrefabKey>
+    /// </summary>
+    public interface IDynamicBuildOrder
     {
-        // Empty
+        IPrefabKey Current { get; }
+
+        bool MoveNext();
     }
 }

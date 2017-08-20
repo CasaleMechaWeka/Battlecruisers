@@ -15,6 +15,7 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class BasicTaskProducer : BaseTaskProducer
     {
+        // FELIX  Use IDynamicBuildOrder instead of IEnumerator :)
         private readonly IEnumerator<IPrefabKey> _buildOrder;
 
         public BasicTaskProducer(
