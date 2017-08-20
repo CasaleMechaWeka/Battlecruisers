@@ -3,12 +3,23 @@
 namespace BattleCruisers.AI.Providers
 {
     /// <summary>
-    /// Subset if IEnumerator<IPrefabKey>
+    /// Subset if IEnumerator<IPrefabKey>.  Slight modification on the
+    /// Current property.
     /// </summary>
     public interface IDynamicBuildOrder
     {
+        /// <summary>
+        /// Gets the prefab key.  If the last MoveNext() call retruned false,
+        /// will return null (unlike IEnumerator, where the behaviour is undefined).
+        /// </summary>
         IPrefabKey Current { get; }
 
+
+        /// <summary>
+        /// Returns true while the build order has a valid Current.  Returns
+        /// false once we have run out of valid Currents.  Subsequent calls
+        /// will also return false.
+        /// </summary>
         bool MoveNext();
     }
 }
