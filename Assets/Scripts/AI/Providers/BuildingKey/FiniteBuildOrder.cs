@@ -32,6 +32,10 @@ namespace BattleCruisers.AI.Providers.BuildingKey
                 Current = _infiniteBuildOrder.Current;
                 _index++;
             }
+            else
+            {
+                Current = null;
+            }
 
             return hasKey;
 		}
