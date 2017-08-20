@@ -1,7 +1,6 @@
-﻿using BattleCruisers.AI.Providers.BuildingKey;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public class DummyBuildingKeyProvider : IBuildingKeyProvider
     {
