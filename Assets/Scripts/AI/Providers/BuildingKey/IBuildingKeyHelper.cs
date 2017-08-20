@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers.Strategies.Requests;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 
@@ -9,6 +8,5 @@ namespace BattleCruisers.AI.Providers.BuildingKey
 	{
         bool CanConstructBuilding(IPrefabKey buildingKey);
         IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category);
-        void AssignSlots(IEnumerable<IOffensiveRequest> slotRequests, int numOfSlotsAvailable);
 	}
 }
