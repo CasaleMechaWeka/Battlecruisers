@@ -1,40 +1,37 @@
 ﻿using System;
-using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers
 {
     /// <summary>
-    /// Always tries to provide the advanced defence key, as long as we can afford it.
+    /// Always tries to provide the advanced defence key, as long as:
+    /// 1. It is unlocked
+    /// 2. AND we can afford it
     /// </summary>
     public class AntiUnitBuildOrder : IDynamicBuildOrder
     {
         private readonly IPrefabKey _basicDefenceKey, _advancedDefenceKey;
-        private readonly IBuilding _basicDefenceBuilding, _advancedDefenceBuilding;
-        private readonly IDroneManager _droneManager;
-        private int _numOfSlotsToUse, _numOfSlotsUsed;
+        private readonly IBuildingKeyHelper _buildingKeyHelper;
+		private readonly int _numOfSlotsToUse;
+        private int _numOfSlotsUsed;
 
         public IPrefabKey Current { get; private set; }
 
         public AntiUnitBuildOrder(
             IPrefabKey basicDefenceKey,
             IPrefabKey advancedDefenceKey,
-            IPrefabFactory prefabFactory,
-            IDroneManager droneManager,
+			IBuildingKeyHelper buildingKeyHelper,
             int numOfSlotsToUse)
         {
-            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, prefabFactory, droneManager);
+            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, buildingKeyHelper);
             Assert.IsTrue(numOfSlotsToUse > 0);
 
             _basicDefenceKey = basicDefenceKey;
             _advancedDefenceKey = advancedDefenceKey;
-            _basicDefenceBuilding = prefabFactory.GetBuildingWrapperPrefab(_basicDefenceKey).Buildable;
-            _advancedDefenceBuilding = prefabFactory.GetBuildingWrapperPrefab(_advancedDefenceKey).Buildable;
-            _droneManager = droneManager;
+            _buildingKeyHelper = buildingKeyHelper;
             _numOfSlotsToUse = numOfSlotsToUse;
             _numOfSlotsUsed = 0;
         }
@@ -45,11 +42,11 @@ namespace BattleCruisers.AI.Providers
 
             if (_numOfSlotsUsed < _numOfSlotsToUse)
             {
-                if (CanAffordBuilding(_advancedDefenceBuilding))
+                if (_buildingKeyHelper.CanConstructBuilding(_advancedDefenceKey))
                 {
                     Current = _advancedDefenceKey;
                 }
-                else if (CanAffordBuilding(_basicDefenceBuilding))
+                else if (_buildingKeyHelper.CanConstructBuilding(_basicDefenceKey))
                 {
                     Current = _basicDefenceKey;
                 }
@@ -67,11 +64,6 @@ namespace BattleCruisers.AI.Providers
             }
 
             return haveKey;
-        }
-
-        private bool CanAffordBuilding(IBuilding building)
-        {
-            return building.NumOfDronesRequired <= _droneManager.NumOfDrones;
         }
     }
 }
