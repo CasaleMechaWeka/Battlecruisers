@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.AI;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
@@ -14,27 +13,28 @@ using NUnit.Framework;
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class BasicTaskProducerTests
-	{
+    {
         private BasicTaskProducer _taskProducer;
         private ITaskList _tasks;
         private ICruiserController _cruiser;
-		private ISlotWrapper _slotWrapper;
-		private IPrefabFactory _prefabFactory;
+        private ISlotWrapper _slotWrapper;
+        private IPrefabFactory _prefabFactory;
         private ITaskFactory _taskFactory;
         private IEnumerator<IPrefabKey> _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
-		private IPrefabKey _platformBuildingKey, _deckBuildingKey;
+        private IPrefabKey _platformBuildingKey, _deckBuildingKey;
         private ITask _platformBuildingTask, _deckBuildingTask;
 
-		[SetUp]
-		public void SetuUp()
-		{
-			_tasks = Substitute.For<ITaskList>();
+        [SetUp]
+        public void SetuUp()
+        {
+            _tasks = Substitute.For<ITaskList>();
             _tasks.IsEmpty.Returns(true);
 
             _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotWrapper.IsSlotAvailable(SlotType.Deck).ReturnsForAnyArgs(true);
+            _slotWrapper.IsSlotAvailable(SlotType.Platform).Returns(true);
+            _slotWrapper.IsSlotAvailable(SlotType.Deck).Returns(false);
 
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
@@ -59,12 +59,12 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckBuildingTask = Substitute.For<ITask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _deckBuildingKey).Returns(_deckBuildingTask);
 
-			_buildOrder = Substitute.For<IEnumerator<IPrefabKey>>();
-			_buildOrder.MoveNext().Returns(true);
+            _buildOrder = Substitute.For<IEnumerator<IPrefabKey>>();
+            _buildOrder.MoveNext().Returns(true);
             _buildOrder.Current.Returns(_platformBuildingKey);
 
             _taskProducer = new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
-		}
+        }
 
         [Test]
         public void Constructor_CreatesFirstTask()
@@ -72,64 +72,70 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _tasks.Received().Add(_platformBuildingTask);
         }
 
-		//[Test]
-		//public void SingleKey_CreatesSingleTask()
-  //      {
-  //          _buildOrder.Add(_platformBuildingKey);
-
-  //          _cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
-
-  //          CreateTaskProducer();
-
-  //          _tasks.Received().Add(_platformBuildingTask);
-  //      }
-
-		//[Test]
-		//public void MultipleKeys_CreatesMultipleTask()
-		//{
-		//	_buildOrder.Add(_platformBuildingKey);
-  //          _buildOrder.Add(_deckBuildingKey);
-
-		//	_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
-  //          _cruiser.SlotWrapper.GetSlotCount(SlotType.Deck).Returns(1);
-
-		//	CreateTaskProducer();
-
-		//	_tasks.Received().Add(_platformBuildingTask);
-  //          _tasks.Received().Add(_deckBuildingTask);
-		//}
-
-		//[Test]
-  //      public void SingleKey_CruiserDoesNotHaveCapacity_DoesNotCreateTask()
-  //      {
-  //          _buildOrder.Add(_platformBuildingKey);
-
-		//	_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(0);
-
-		//	CreateTaskProducer();
-
-  //          _tasks.DidNotReceive().Add(_platformBuildingTask);
-  //      }
-
-		//[Test]
-		//public void MultipleKeys_CruiserDoesNotHaveCapacity_OnlyCreatesTaskForKeysWithCapacity()
-		//{
-		//	_buildOrder.Add(_platformBuildingKey);
-		//	_buildOrder.Add(_deckBuildingKey);
-
-		//	_cruiser.SlotWrapper.GetSlotCount(SlotType.Platform).Returns(1);
-		//	_cruiser.SlotWrapper.GetSlotCount(SlotType.Deck).Returns(0);
-
-		//	CreateTaskProducer();
-
-		//	_tasks.Received().Add(_platformBuildingTask);
-  //          _tasks.DidNotReceive().Add(_deckBuildingTask);
-		//}
-
-        private void CreateTaskProducer()
+        [Test]
+        public void IsEmptyChanged_IsNotEmpty_DoesNothing()
         {
-            // FELIX
-            //new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
+            _buildOrder.ClearReceivedCalls();
+            _tasks.IsEmpty.Returns(false);
+
+            _tasks.IsEmptyChanged += Raise.Event();
+
+            _buildOrder.DidNotReceive().MoveNext();
+        }
+
+        [Test]
+        public void IsEmptyChanged_IsEmpty_CreatesTask()
+        {
+            _tasks.ClearReceivedCalls();
+            _tasks.IsEmpty.Returns(true);
+
+            _tasks.IsEmptyChanged += Raise.Event();
+
+            _tasks.Received().Add(_platformBuildingTask);
+        }
+
+        [Test]
+        public void NoSlotForCurrentBuilding_MovesToNextBuilding()
+        {
+            _tasks.ClearReceivedCalls();
+            _tasks.IsEmpty.Returns(true);
+            _slotWrapper.ClearReceivedCalls();
+
+            _buildOrder.Current.Returns(_deckBuildingKey, _platformBuildingKey);
+
+            _tasks.IsEmptyChanged += Raise.Event();
+
+            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotType);
+            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotType);
+            _tasks.Received().Add(_platformBuildingTask);
+        }
+
+        [Test]
+        public void NoMoreBuildingKeys_DoesNotCreateTask_AndUnsubscribesFromTaskList()
+        {
+            _tasks.ClearReceivedCalls();
+            _buildOrder.ClearReceivedCalls();
+            _buildOrder.MoveNext().Returns(false);
+
+            _tasks.IsEmptyChanged += Raise.Event();
+            _buildOrder.Received().MoveNext();
+            _tasks.DidNotReceiveWithAnyArgs().Add(taskToAdd: null);
+
+            _buildOrder.ClearReceivedCalls();
+            _tasks.IsEmptyChanged += Raise.Event();
+            _buildOrder.DidNotReceive().MoveNext();
+        }
+
+        [Test]
+        public void Dispose_UnsubscribesFromTaskList()
+        {
+            _buildOrder.ClearReceivedCalls();
+
+            _taskProducer.Dispose();
+
+            _tasks.IsEmptyChanged += Raise.Event();
+
+            _buildOrder.DidNotReceive().MoveNext();
         }
     }
 }
