@@ -57,6 +57,8 @@ namespace BattleCruisers.AI.Providers
                 {
                     throw new ArgumentException("Should always have enough drones to build the basic defence building :(");
                 }
+
+                _numOfSlotsUsed++;
                 haveKey = true;
             }
             else
