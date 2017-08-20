@@ -23,7 +23,6 @@ namespace BattleCruisers.AI
         public ITask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
 
         public event EventHandler HighestPriorityTaskChanged;
-        // FELIX  Invoke!
         public event EventHandler IsEmptyChanged;
 
         public TaskList()
@@ -35,6 +34,7 @@ namespace BattleCruisers.AI
         {
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
+            bool wasEmpty = IsEmpty;
             int insertionIndex = _tasks.Count;
 
             for (int i = 0; i < _tasks.Count; i++)
@@ -52,6 +52,11 @@ namespace BattleCruisers.AI
             {
                 EmitHighestPriorityTaskChangedEvent();
             }
+
+            if (wasEmpty)
+            {
+				EmitIsEmptyChangedEvent();
+			}
         }
 
         public void Remove(ITask taskToRemove)
@@ -66,6 +71,11 @@ namespace BattleCruisers.AI
             {
                 EmitHighestPriorityTaskChangedEvent();
             }
+
+            if (IsEmpty)
+            {
+                EmitIsEmptyChangedEvent();
+            }
         }
 
         private void EmitHighestPriorityTaskChangedEvent()
@@ -74,6 +84,14 @@ namespace BattleCruisers.AI
             {
                 HighestPriorityTaskChanged.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void EmitIsEmptyChangedEvent()
+        {
+            if (IsEmptyChanged != null)
+            {
+				IsEmptyChanged.Invoke(this, EventArgs.Empty);
+			}
         }
     }
 }

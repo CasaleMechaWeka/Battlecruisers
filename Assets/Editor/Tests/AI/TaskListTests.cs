@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.AI;
+﻿using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using NSubstitute;
 using NUnit.Framework;
@@ -7,12 +6,12 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI
 {
-	public class TaskListTests
+    public class TaskListTests
 	{
         private ITaskList _taskList;
 
         private ITask _normalTask1, _normalTask2, _highTask1, _highTask2;
-        private int _numOfEventCalls;
+        private int _highestPriorityChangedCount, _isEmptyChangedCount;
 
 		[SetUp]
 		public void SetuUp()
@@ -26,8 +25,11 @@ namespace BattleCruisers.Tests.AI
             _highTask1 = CreateMockTask(TaskPriority.High);
             _highTask2 = CreateMockTask(TaskPriority.High);
 			
-			_numOfEventCalls = 0;
-            _taskList.HighestPriorityTaskChanged += _taskList_HighestPriorityTaskChanged;
+			_highestPriorityChangedCount = 0;
+            _taskList.HighestPriorityTaskChanged += (sender, e) => _highestPriorityChangedCount++;
+
+            _isEmptyChangedCount = 0;
+            _taskList.IsEmptyChanged += (sender, e) => _isEmptyChangedCount++;
         }
 
         private ITask CreateMockTask(TaskPriority priority)
@@ -45,7 +47,8 @@ namespace BattleCruisers.Tests.AI
             _taskList.Add(_normalTask1);
 
             Assert.IsFalse(_taskList.IsEmpty);
-            Assert.AreEqual(1, _numOfEventCalls);
+			Assert.AreEqual(1, _highestPriorityChangedCount);
+			Assert.AreEqual(1, _isEmptyChangedCount);
             Assert.AreSame(_normalTask1, _taskList.HighestPriorityTask);
 		}
 
@@ -56,19 +59,21 @@ namespace BattleCruisers.Tests.AI
 
             _taskList.Add(_normalTask1);    // N1
 			Assert.IsFalse(_taskList.IsEmpty);
-			Assert.AreEqual(1, _numOfEventCalls);
+			Assert.AreEqual(1, _highestPriorityChangedCount);
+			Assert.AreEqual(1, _isEmptyChangedCount);
 			Assert.AreSame(_normalTask1, _taskList.HighestPriorityTask);
 
 			_taskList.Add(_highTask1);      // N1, H1
-			Assert.AreEqual(2, _numOfEventCalls);
-            Assert.AreSame(_highTask1, _taskList.HighestPriorityTask);
+			Assert.AreEqual(2, _highestPriorityChangedCount);
+			Assert.AreEqual(1, _isEmptyChangedCount);
+			Assert.AreSame(_highTask1, _taskList.HighestPriorityTask);
 
             _taskList.Add(_normalTask2);    // N2, N1, H1
-			Assert.AreEqual(2, _numOfEventCalls);
+			Assert.AreEqual(2, _highestPriorityChangedCount);
 			Assert.AreSame(_highTask1, _taskList.HighestPriorityTask);
 
             _taskList.Add(_highTask2);      // N2, N1, H2, H1
-			Assert.AreEqual(2, _numOfEventCalls);
+			Assert.AreEqual(2, _highestPriorityChangedCount);
 			Assert.AreSame(_highTask1, _taskList.HighestPriorityTask);
         }
 
@@ -85,10 +90,13 @@ namespace BattleCruisers.Tests.AI
             Add_SingleTask();
 
             ResetEventCalls();
+
             _taskList.Remove(_normalTask1);
+
             Assert.IsTrue(_taskList.IsEmpty);
-            Assert.AreEqual(1, _numOfEventCalls);
-        }
+            Assert.AreEqual(1, _highestPriorityChangedCount);
+			Assert.AreEqual(1, _isEmptyChangedCount);
+		}
 		
         [Test]
 		public void Remove_ManyTask()
@@ -101,19 +109,21 @@ namespace BattleCruisers.Tests.AI
 
 			_taskList.Remove(_taskList.HighestPriorityTask);  // N2, N1, H2
 			Assert.AreSame(_highTask2, _taskList.HighestPriorityTask);
-			Assert.AreEqual(1, _numOfEventCalls);
+			Assert.AreEqual(1, _highestPriorityChangedCount);
+			Assert.AreEqual(0, _isEmptyChangedCount);
 
 			_taskList.Remove(_taskList.HighestPriorityTask);  // N2, N1
             Assert.AreSame(_normalTask1, _taskList.HighestPriorityTask);
-			Assert.AreEqual(2, _numOfEventCalls);
+			Assert.AreEqual(2, _highestPriorityChangedCount);
 
 			_taskList.Remove(_taskList.HighestPriorityTask);  // N2
 	        Assert.AreSame(_normalTask2, _taskList.HighestPriorityTask);
-			Assert.AreEqual(3, _numOfEventCalls);
+			Assert.AreEqual(3, _highestPriorityChangedCount);
 
             _taskList.Remove(_taskList.HighestPriorityTask);  // (empty)
             Assert.IsNull(_taskList.HighestPriorityTask);
-			Assert.AreEqual(4, _numOfEventCalls);
+			Assert.AreEqual(4, _highestPriorityChangedCount);
+			Assert.AreEqual(1, _isEmptyChangedCount);
 		}
 
 		[Test]
@@ -122,15 +132,10 @@ namespace BattleCruisers.Tests.AI
             Assert.Throws<UnityAsserts.AssertionException>(() => _taskList.Remove(_normalTask1));
 		}
 
-        private void _taskList_HighestPriorityTaskChanged(object sender, EventArgs e)
-        {
-            Assert.AreSame(_taskList, sender);
-            _numOfEventCalls++;
-        }
-
         private void ResetEventCalls()
         {
-            _numOfEventCalls = 0;
+            _highestPriorityChangedCount = 0;
+            _isEmptyChangedCount = 0;
         }
     }
 }
