@@ -49,7 +49,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _buildOrder = new List<IPrefabKey>();
             _buildOrder.Add(_buildingKey);
 
-            new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
+            //new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
 		}
 
 		#region ThreatLevelChanged

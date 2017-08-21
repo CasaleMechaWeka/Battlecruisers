@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
     public class AntiThreatTaskProducer : BaseTaskProducer
     {
-        private readonly IList<IPrefabKey> _antiThreatBuildOrder;
+        private readonly IDynamicBuildOrder _antiThreatBuildOrder;
         private readonly IThreatMonitor _threatMonitor;
         private readonly ISlotNumCalculator _slotNumCalculator;
 
@@ -21,9 +20,11 @@ namespace BattleCruisers.AI.TaskProducers
         private ITask _currentTask;
 		
         public AntiThreatTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, ITaskFactory taskFactory, 
-            IList<IPrefabKey> antiThreatBuildOrder, IThreatMonitor threatMonitor, ISlotNumCalculator slotNumCalculator)
+            IDynamicBuildOrder antiThreatBuildOrder, IThreatMonitor threatMonitor, ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
+            Helper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);
+
             _antiThreatBuildOrder = antiThreatBuildOrder;
             _threatMonitor = threatMonitor;
             _slotNumCalculator = slotNumCalculator;
@@ -44,10 +45,10 @@ namespace BattleCruisers.AI.TaskProducers
 		private void CreateNextTask()
         {
             if (_currentTask == null
-                && _targetNumOfSlotsToUse > _numOfTasksCompleted)
+                && _targetNumOfSlotsToUse > _numOfTasksCompleted
+                && _antiThreatBuildOrder.MoveNext())
             {
-                Assert.IsTrue(_antiThreatBuildOrder.Count > _numOfTasksCompleted);
-                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.High, _antiThreatBuildOrder[_numOfTasksCompleted]);
+                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.High, _antiThreatBuildOrder.Current);
                 _currentTask.Completed += _currentTask_Completed;
                 _tasks.Add(_currentTask);
             }
