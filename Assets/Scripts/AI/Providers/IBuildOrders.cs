@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys;
-
-namespace BattleCruisers.AI.Providers
+﻿namespace BattleCruisers.AI.Providers
 {
     public interface IBuildOrders
     {
-		IEnumerator<IPrefabKey> OffensiveBuildOrder { get; }
-		IEnumerator<IPrefabKey> AntiAirBuildOrder { get; }
-		IEnumerator<IPrefabKey> AntiNavalBuildOrder { get; }
+		IDynamicBuildOrder OffensiveBuildOrder { get; }
+		IDynamicBuildOrder AntiAirBuildOrder { get; }
+		IDynamicBuildOrder AntiNavalBuildOrder { get; }
 	}
 }

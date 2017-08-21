@@ -69,22 +69,25 @@ namespace BattleCruisers.AI.Providers
             IList<IPrefabKey> antiAirBuildOrder = hasDefensivePlaceholders ? _antiAirBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum) : new List<IPrefabKey>();
             IList<IPrefabKey> antiNavalBuildOrder = hasDefensivePlaceholders ? _antiNavalBuildOrderProvider.CreateBuildOrder(numOfDeckSlots, levelNum) : new List<IPrefabKey>();
 
-            IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
+            //IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
 
-			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
+			//IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 
-			// Initialise key wrappers, so offensive and defensive placeholders are filled
-			foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
-			{
-				keyWrapper.Initialise(buildOrders);
-			}
+			//// Initialise key wrappers, so offensive and defensive placeholders are filled
+			//foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
+			//{
+			//	keyWrapper.Initialise(buildOrders);
+			//}
 
-			return
-				baseBuildOrder
-					.Where(keyWrapper => keyWrapper.HasKey)
-					.Select(keyWrapper => keyWrapper.Key)
-                    .Where(key => _staticData.IsBuildableAvailable(key, levelNum))
-					.ToList();
+			//return
+				//baseBuildOrder
+					//.Where(keyWrapper => keyWrapper.HasKey)
+					//.Select(keyWrapper => keyWrapper.Key)
+     //               .Where(key => _staticData.IsBuildableAvailable(key, levelNum))
+					//.ToList();
+
+            // FELIX
+            return null;
         }
 
         public IList<IPrefabKey> GetAntiAirBuildOrder(int levelNum, ISlotWrapper slotWrapper)

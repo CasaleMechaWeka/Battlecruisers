@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
-	public abstract class BasePrefabKeyWrapper : IPrefabKeyWrapper
+    public abstract class BasePrefabKeyWrapper : IPrefabKeyWrapper
 	{
 		public bool HasKey { get; private set; }
 		public IPrefabKey Key { get; private set; }
 
 		public void Initialise(IBuildOrders buildOrders)
 		{
-            IEnumerator<IPrefabKey> buildOrder = GetBuildOrder(buildOrders);
+            IDynamicBuildOrder buildOrder = GetBuildOrder(buildOrders);
 
             HasKey = buildOrder.MoveNext();
 
@@ -22,6 +21,6 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 			}
 		}
 
-        protected abstract IEnumerator<IPrefabKey> GetBuildOrder(IBuildOrders buildOrders);
+        protected abstract IDynamicBuildOrder GetBuildOrder(IBuildOrders buildOrders);
 	}
 }
