@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
 
@@ -6,14 +7,14 @@ namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public class CombinedBuildOrders : IDynamicBuildOrder
 	{
-        private readonly IDynamicBuildOrder[] _buildOrders;
+        private readonly IList<IDynamicBuildOrder> _buildOrders;
 
 		public IPrefabKey Current { get; private set; }
 
-        public CombinedBuildOrders(params IDynamicBuildOrder[] buildOrders)
+        public CombinedBuildOrders(IList<IDynamicBuildOrder> buildOrders)
 		{
             Assert.IsNotNull(buildOrders);
-            Assert.IsTrue(buildOrders.Length > 0);
+            Assert.IsTrue(buildOrders.Count > 0);
 
             _buildOrders = buildOrders;
 		}

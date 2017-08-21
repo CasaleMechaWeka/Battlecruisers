@@ -1,9 +1,10 @@
-﻿using BattleCruisers.AI.Providers.Strategies.Requests;
+﻿using System.Collections.Generic;
+using BattleCruisers.AI.Providers.Strategies.Requests;
 
 namespace BattleCruisers.AI.Providers
 {
     public interface IBuildOrderFactory
     {
-        IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request);
+        IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots);
     }
 }

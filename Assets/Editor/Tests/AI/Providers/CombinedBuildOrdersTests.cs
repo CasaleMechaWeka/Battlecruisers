@@ -1,4 +1,5 @@
-﻿using BattleCruisers.AI.Providers;
+﻿using System.Collections.Generic;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Tests.AI.Providers
             _key2 = Substitute.For<IPrefabKey>();
             _buildOrder2 = CreateBuildOrder(_key2);
 
-            _comboBuildOrder = new CombinedBuildOrders(_buildOrder1, _buildOrder2);
+            _comboBuildOrder = new CombinedBuildOrders(new List<IDynamicBuildOrder>() { _buildOrder1, _buildOrder2 });
         }
 
         private IDynamicBuildOrder CreateBuildOrder(IPrefabKey key)

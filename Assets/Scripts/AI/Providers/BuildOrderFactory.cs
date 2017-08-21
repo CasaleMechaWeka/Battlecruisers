@@ -1,24 +1,68 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.Providers.Strategies.Requests;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Providers
 {
     public class BuildOrderFactory : IBuildOrderFactory
 	{
         private readonly IBuildingKeyHelper _buildingKeyHelper;
+        private readonly ISlotAssigner _slotAssigner;
+		
+        private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
 
-        public BuildOrderFactory(IBuildingKeyHelper buildingKeyHelper)
+		public BuildOrderFactory(IBuildingKeyHelper buildingKeyHelper, ISlotAssigner slotAssigner)
 		{
-            Assert.IsNotNull(buildingKeyHelper);
+            Helper.AssertIsNotNull(buildingKeyHelper, slotAssigner);
+
             _buildingKeyHelper = buildingKeyHelper;
+            _slotAssigner = slotAssigner;
 		}
 
-        public IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request)
+		/// <summary>
+		/// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+		/// IEnumerable from a LINQ Select query, but every time I looped through this
+		/// IEnumerable I would get a fresh copy of the object, so any changes I made to
+		/// those objects were lost!!!
+		/// </summary>
+        public IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+		{
+			AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
+
+			// Create individual build orders
+			IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
+			foreach (IOffensiveRequest request in requests)
+			{
+				buildOrders.Add(CreateBuildOrder(request));
+			}
+
+			// Create combined build order
+			return new CombinedBuildOrders(buildOrders);
+		}
+
+		private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+		{
+			// Should have a single naval request at most
+			IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
+			if (navalRequest != null)
+			{
+				navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
+			}
+
+			// All non-naval requests require platform slots, so need to split the available
+			// platform slots between these requests.
+			// FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
+			IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
+			slotAssigner.AssignSlots(requests, numOfPlatformSlots);
+		}
+
+        private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request)
         {
             switch (request.Type)
 			{
