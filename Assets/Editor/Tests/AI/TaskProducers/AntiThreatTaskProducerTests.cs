@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI;
+﻿using BattleCruisers.AI;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ISlotWrapper _slotWrapper;
 		private IPrefabFactory _prefabFactory;
 		private ITaskFactory _taskFactory;
-        private IList<IPrefabKey> _buildOrder;
+        private IDynamicBuildOrder _buildOrder;
         private IThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
         private IPrefabKey _buildingKey;
@@ -46,10 +46,11 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _cruiser.SlotWrapper.Returns(_slotWrapper);
 
             _buildingKey = Substitute.For<IPrefabKey>();
-            _buildOrder = new List<IPrefabKey>();
-            _buildOrder.Add(_buildingKey);
+            _buildOrder = Substitute.For<IDynamicBuildOrder>();
+            _buildOrder.Current.Returns(_buildingKey);
+            _buildOrder.MoveNext().Returns(true);
 
-            //new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
+            new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
 		}
 
 		#region ThreatLevelChanged
@@ -86,9 +87,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         [Test]
         public void TaskCompleted_HaveNotMetThreat_CreatesTask()
 		{
-            _buildOrder.Add(_buildingKey);
-            Assert.IsTrue(_buildOrder.Count == 2);
-
 			CreateTask(numOfSlotsForThreat: 2);  // Have 1/2 tasks
 
             _taskFactory.ClearReceivedCalls();
@@ -99,12 +97,13 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         }
 
 		[Test]
-		public void BuildOrderTooShort_Throws()
+		public void BuildOrderEmpty_DoesNotCreateTask()
 		{
-            CreateTask(numOfSlotsForThreat: 2);  // Have 1/2 tasks
-            Assert.IsTrue(_buildOrder.Count == 1);
+            _buildOrder.MoveNext().Returns(false);
 
-            Assert.Throws<UnityAsserts.AssertionException>(() => _task.Completed += Raise.Event());
+			_threatMonitor.ThreatLevelChanged += Raise.Event();
+
+            _tasks.DidNotReceiveWithAnyArgs().Add(taskToAdd: null);
 		}
 
         private void CreateTask(int numOfSlotsForThreat)
