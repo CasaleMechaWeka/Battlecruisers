@@ -4,6 +4,7 @@ using System.Linq;
 using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.Providers.Strategies.Requests;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
@@ -17,6 +18,7 @@ namespace BattleCruisers.AI.Providers
 		
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
 
+        // FELIX  Do make IBuildingKeyHelper be tied to a level :(
 		public BuildOrderFactory(IBuildingKeyHelper buildingKeyHelper, ISlotAssigner slotAssigner)
 		{
             Helper.AssertIsNotNull(buildingKeyHelper, slotAssigner);
@@ -98,5 +100,37 @@ namespace BattleCruisers.AI.Providers
                     new InfiniteBuildOrder(buildingCategory, _buildingKeyHelper),
                     size);
         }
+
+        public IDynamicBuildOrder CreateAntiAirBuildOrder(int levelNum, ISlotWrapper slotWrapper)
+        {
+            int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
+			int numOfSlotsToUse = Helper.Half(numOfDeckSlots, roundUp: true);
+
+            return
+                new AntiUnitBuildOrder(
+                    basicDefenceKey: StaticPrefabKeys.Buildings.AntiAirTurret,
+                    advancedDefenceKey: StaticPrefabKeys.Buildings.SamSite,
+                    buildingKeyHelper: _buildingKeyHelper,
+                    numOfSlotsToUse: numOfSlotsToUse);
+        }
+
+		public IDynamicBuildOrder CreateAntiNavalBuildOrder(int levelNum, ISlotWrapper slotWrapper)
+		{
+			int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
+			int numOfSlotsToUse = Helper.Half(numOfDeckSlots, roundUp: false);
+
+			return
+				new AntiUnitBuildOrder(
+                    basicDefenceKey: StaticPrefabKeys.Buildings.AntiShipTurret,
+                    advancedDefenceKey: StaticPrefabKeys.Buildings.Mortar,
+					buildingKeyHelper: _buildingKeyHelper,
+					numOfSlotsToUse: numOfSlotsToUse);
+		}
+		
+        // FELIX
+        //public bool IsAntiRocketBuildOrderAvailable(int levelNum)
+        //{
+        //    return _staticData.IsBuildableAvailable(StaticPrefabKeys.Buildings.TeslaCoil, levelNum);
+        //}
     }
 }
