@@ -1,12 +1,20 @@
-﻿using BattleCruisers.AI.Providers.BuildingKey;
-
-namespace BattleCruisers.AI.Providers.Strategies.Requests
+﻿namespace BattleCruisers.AI.Providers.Strategies.Requests
 {
-    public interface IOffensiveRequest : IBasicOffensiveRequest
-    {
-        // FELIX  Remove
-        IBuildingKeyProvider BuildingKeyProvider { get; }
+	public enum OffensiveType
+	{
+		Air, Naval, Buildings, Ultras
+	}
 
-        int NumOfSlotsToUse { get; set; }
-    }
+	public enum OffensiveFocus
+	{
+		Low, High
+	}
+
+    // FELIX  Move up one namespace
+	public interface IOffensiveRequest
+	{
+		OffensiveType Type { get; }
+		OffensiveFocus Focus { get; }
+		int NumOfSlotsToUse { get; set; }
+	}
 }

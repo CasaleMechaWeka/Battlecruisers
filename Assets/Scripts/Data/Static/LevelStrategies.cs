@@ -14,7 +14,7 @@ namespace BattleCruisers.Data.Static
         {
             IList<IBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
             IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
-			IList<IBasicOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
+			IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             AdaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             BasicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
@@ -86,129 +86,129 @@ namespace BattleCruisers.Data.Static
             };
 		}
 
-        private IList<IBasicOffensiveRequest[]> CreateOffensiveRequests()
+        private IList<IOffensiveRequest[]> CreateOffensiveRequests()
         {
-            return new List<IBasicOffensiveRequest[]>()
+            return new List<IOffensiveRequest[]>()
             {
                 // Set 1:  Levels 1 - 7
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 
                 // Set 2:  Levels 8 - 14
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
 
                 // Set 3:  Levels 15 - 21
-                new IBasicOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
 				},
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-                    new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
 				},
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
 				},
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
 				},
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
 				},
-				new IBasicOffensiveRequest[]
+				new IOffensiveRequest[]
 				{
-					new BasicOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new BasicOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new BasicOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
 				}
             };
         }
 
-        private IList<IStrategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<IBasicOffensiveRequest[]> offensiveRequests)
+        private IList<IStrategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<IOffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 

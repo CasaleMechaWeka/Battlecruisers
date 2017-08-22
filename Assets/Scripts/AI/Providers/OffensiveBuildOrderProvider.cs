@@ -5,10 +5,11 @@ using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers
 {
+    // FELIX  Delete ALL providers :)
     public class OffensiveBuildOrderProvider : IOffensiveBuildOrderProvider
     {
         /// <summary>
-        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+        /// NOTE:  Must use IList as a parameter instead if IEnumerable.  Initially I used
         /// IEnumerable from a LINQ Select query, but every time I looped through this
         /// IEnumerable I would get a fresh copy of the object, so any changes I made to
         /// those objects were lost!!!
@@ -22,7 +23,7 @@ namespace BattleCruisers.AI.Providers
             IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
             if (navalRequest != null)
             {
-                buildOrder.Add(navalRequest.BuildingKeyProvider.Next);
+                //buildOrder.Add(navalRequest.BuildingKeyProvider.Next);
             }
 
 			// All non-naval requests require platform slots, so need to split the available
@@ -35,7 +36,7 @@ namespace BattleCruisers.AI.Providers
             {
                 for (int i = 0; i < request.NumOfSlotsToUse; ++i)
 				{
-                    buildOrder.Add(request.BuildingKeyProvider.Next);
+                    //buildOrder.Add(request.BuildingKeyProvider.Next);
 				}
             }
 

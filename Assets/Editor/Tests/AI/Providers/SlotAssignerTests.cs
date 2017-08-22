@@ -21,16 +21,16 @@ namespace BattleCruisers.Tests.AI.Providers
 
             // Air
             _airKey = Substitute.For<IPrefabKey>();
-            _lowAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
-            _highAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
+            _lowAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low);
+            _highAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High);
 
             // Offensive
             _offensiveKey = Substitute.For<IPrefabKey>();
-            _lowOffensiveRequest = new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
+            _lowOffensiveRequest = new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low);
 
             // Ultras
             _ultrasKey = Substitute.For<IPrefabKey>();
-            _highUltrasRequest = new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
+            _highUltrasRequest = new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High);
         }
 
         #region High_Low

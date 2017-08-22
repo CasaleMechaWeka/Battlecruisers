@@ -49,16 +49,9 @@ namespace BattleCruisers.AI.Providers
 
         private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
 		{
-            // FELIX  Conversion should soon not be necessary :)
-			// Convert IBasicOffensiveRequests to IOffensiveRequests
-			IList<IOffensiveRequest> offensiveRequests 
-                = strategy.Offensives
-                    .Select(basicRequest => (IOffensiveRequest)new OffensiveRequest(basicRequest.Type, basicRequest.Focus))
-                    .ToList();
-
 			// Create offensive build order
             int numOfPlatformSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Platform);
-            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(offensiveRequests, numOfPlatformSlots, levelInfo);
+            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
 
             // Create defensive build orders (only for basic AI)
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;

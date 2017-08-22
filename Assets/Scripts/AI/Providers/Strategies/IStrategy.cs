@@ -6,6 +6,6 @@ namespace BattleCruisers.AI.Providers.Strategies
     public interface IStrategy
     {
         IBaseStrategy BaseStrategy { get; }
-        IEnumerable<IBasicOffensiveRequest> Offensives { get; }
+        IEnumerable<IOffensiveRequest> Offensives { get; }
     }
 }

@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Providers
 {
+    // FELIX  Delete!
     public class OffensiveBuildOrderProviderTests
     {
         private OffensiveBuildOrderProvider _provider;
@@ -26,35 +27,35 @@ namespace BattleCruisers.Tests.AI.Providers
             // Naval
             _navalKey = Substitute.For<IPrefabKey>();
 			
-			_lowNavalRequest = new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
-			_lowNavalRequest.BuildingKeyProvider.Next.Returns(_navalKey);
+			//_lowNavalRequest = new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
+			//_lowNavalRequest.BuildingKeyProvider.Next.Returns(_navalKey);
 
-            _highNavalRequest = new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
-            _highNavalRequest.BuildingKeyProvider.Next.Returns(_navalKey);
-
-
-            // Air
-            _airKey = Substitute.For<IPrefabKey>();
-
-            _lowAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
-            _lowAirRequest.BuildingKeyProvider.Next.Returns(_airKey);
-
-            _highAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
-            _highAirRequest.BuildingKeyProvider.Next.Returns(_airKey);
+            //_highNavalRequest = new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
+            //_highNavalRequest.BuildingKeyProvider.Next.Returns(_navalKey);
 
 
-            // Offensive
-            _offensiveKey = Substitute.For<IPrefabKey>();
+            //// Air
+            //_airKey = Substitute.For<IPrefabKey>();
 
-            _lowOffensiveRequest = new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
-            _lowOffensiveRequest.BuildingKeyProvider.Next.Returns(_offensiveKey);
+            //_lowAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
+            //_lowAirRequest.BuildingKeyProvider.Next.Returns(_airKey);
+
+            //_highAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
+            //_highAirRequest.BuildingKeyProvider.Next.Returns(_airKey);
 
 
-            // Ultras
-            _ultrasKey = Substitute.For<IPrefabKey>();
+            //// Offensive
+            //_offensiveKey = Substitute.For<IPrefabKey>();
 
-            _highUltrasRequest = new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
-            _highUltrasRequest.BuildingKeyProvider.Next.Returns(_ultrasKey);
+            //_lowOffensiveRequest = new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low, Substitute.For<IBuildingKeyProvider>());
+            //_lowOffensiveRequest.BuildingKeyProvider.Next.Returns(_offensiveKey);
+
+
+            //// Ultras
+            //_ultrasKey = Substitute.For<IPrefabKey>();
+
+            //_highUltrasRequest = new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High, Substitute.For<IBuildingKeyProvider>());
+            //_highUltrasRequest.BuildingKeyProvider.Next.Returns(_ultrasKey);
         }
 
 		[Test]

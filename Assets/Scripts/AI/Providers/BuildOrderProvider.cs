@@ -53,16 +53,9 @@ namespace BattleCruisers.AI.Providers
 
         private IList<IPrefabKey> GetBuildOrder(IStrategy strategy, int levelNum, ISlotWrapper slotWrapper, bool hasDefensivePlaceholders)
         {
-			// Convert IBasicOffensiveRequests to IOffensiveRequests
-			IList<IOffensiveRequest> offensiveRequests = strategy.Offensives.Select(basicRequest =>
-			{
-				IBuildingKeyProvider buildingKeyProvider = _buildingKeyProviderFactory.CreateBuildingKeyProvider(basicRequest.Type, levelNum);
-				return (IOffensiveRequest)new OffensiveRequest(basicRequest, buildingKeyProvider);
-			}).ToList();
-
             // Create offensive build order
             int numOfPlatformSlots = slotWrapper.GetSlotCount(SlotType.Platform);
-			IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, offensiveRequests);
+            IList<IPrefabKey> offensiveBuildOrder = _offensiveBuildOrderProvider.CreateBuildOrder(numOfPlatformSlots, strategy.Offensives.ToList());
 
             // Create defensive build orders
             int numOfDeckSlots = slotWrapper.GetSlotCount(SlotType.Deck);
