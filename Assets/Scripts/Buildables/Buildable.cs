@@ -149,7 +149,7 @@ namespace BattleCruisers.Buildables
 
 		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
-			Assert.IsTrue(IsStaticallyInitialised, "Must call StaticInitialise() before Initialise(...)");
+            Assert.IsNotNull(_textMesh, "Must call StaticInitialise() before Initialise(...)");
 
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
