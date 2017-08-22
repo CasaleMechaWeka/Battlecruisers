@@ -1,0 +1,16 @@
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models.PrefabKeys;
+
+namespace BattleCruisers.AI
+{
+    public interface ILevelInfo
+	{
+        ICruiserController AICruiser { get; }
+        ICruiserController PlayerCruiser { get; }
+
+		bool CanConstructBuilding(IPrefabKey buildingKey);
+		IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category);
+	}
+}
