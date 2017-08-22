@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes
 			_aiCruiser.transform.rotation = rotation;
 
 			// FELIX  TEMP
-			_aiCruiser.numOfDrones = 100;
+			_aiCruiser.numOfDrones = 500;
 
 
 			// UIManager
