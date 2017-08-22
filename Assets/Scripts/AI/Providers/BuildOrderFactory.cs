@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.Providers
 		
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
 
-        // FELIX  Do make IBuildingKeyHelper be tied to a level :(
+        // FELIX  Don't make IBuildingKeyHelper be tied to a level :(
 		public BuildOrderFactory(IBuildingKeyHelper buildingKeyHelper, ISlotAssigner slotAssigner, IStaticData staticData)
 		{
             Helper.AssertIsNotNull(buildingKeyHelper, slotAssigner, staticData);

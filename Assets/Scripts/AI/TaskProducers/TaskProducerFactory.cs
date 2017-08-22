@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
@@ -37,10 +36,9 @@ namespace BattleCruisers.AI.TaskProducers
             _staticData = staticData;
         }
 
-        public void CreateBasicTaskProducer(ITaskList tasks, IList<IPrefabKey> buildOrder)
+        public void CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder)
         {
-            // FELIX
-			//new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
+			new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
 		}
 
 		public void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
@@ -48,7 +46,7 @@ namespace BattleCruisers.AI.TaskProducers
             new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
         }
 
-        public void CreateAntiAirTaskProducer(ITaskList tasks, IList<IPrefabKey> antiAirBuildOrder)
+        public void CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
             IThreatMonitor airThreatMonitor = new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
@@ -56,11 +54,10 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: true);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            // FELIX
-            //new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
-		public void CreateAntiNavalTaskProducer(ITaskList tasks, IList<IPrefabKey> antiNavalBuildOrder)
+		public void CreateAntiNavalTaskProducer(ITaskList tasks, IDynamicBuildOrder antiNavalBuildOrder)
 		{
 			IThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
             IThreatMonitor navalThreatMonitor = new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Naval);
@@ -68,18 +65,16 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: false);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 			
-            // FELIX
-			//new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
+			new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
 		}
 
-		public void CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IList<IPrefabKey> antiRocketLauncherBuildOrder)
+		public void CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder)
 		{
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
             IThreatMonitor rocketLauncherThreatMonitor = new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
 			ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
 
-			// FELIX
-			//new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
+			new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
 		}
 	}
 }

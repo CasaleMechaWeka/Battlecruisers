@@ -35,10 +35,11 @@ namespace BattleCruisers.AI
         {
             ITaskList tasks = new TaskList();
 
-            IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, slotWrapper);
-            _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
+            // FELIX
+            //IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, slotWrapper);
+            //_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
 
-            _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
+            //_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
             
             new TaskConsumer(tasks);
         }
@@ -53,23 +54,24 @@ namespace BattleCruisers.AI
 		{
             ITaskList tasks = new TaskList();
 
-            // Base build order, main strategy
-            IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, slotWrapper);
-            _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
+            // FELIX
+   //         // Base build order, main strategy
+   //         IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, slotWrapper);
+   //         _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
-            // Anti air
-            IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num, slotWrapper);
-            _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
+   //         // Anti air
+   //         IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num, slotWrapper);
+   //         _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
 
-            // Anti naval
-            IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num, slotWrapper);
-			_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
+   //         // Anti naval
+   //         IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num, slotWrapper);
+			//_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
 
-            // Anti rocket
-            if (_buildOrderProvider.IsAntiRocketBuildOrderAvailable(level.Num))
-            {
-                _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderProvider.AntiRocketBuildOrder);
-            }
+            //// Anti rocket
+            //if (_buildOrderProvider.IsAntiRocketBuildOrderAvailable(level.Num))
+            //{
+            //    _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderProvider.AntiRocketBuildOrder);
+            //}
 
 			// FELIX  Anti stealth!
 			

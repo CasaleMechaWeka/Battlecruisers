@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.AI.Providers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
     public interface ITaskProducerFactory
     {
-        void CreateBasicTaskProducer(ITaskList tasks, IList<IPrefabKey> buildOrder);
+        void CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder);
 		void CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks);
-        void CreateAntiAirTaskProducer(ITaskList tasks, IList<IPrefabKey> antiAirBuildOrder);
-        void CreateAntiNavalTaskProducer(ITaskList tasks, IList<IPrefabKey> antiNavalBuildOrder);
-        void CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IList<IPrefabKey> antiRocketLauncherBuildOrder);
+        void CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder);
+        void CreateAntiNavalTaskProducer(ITaskList tasks, IDynamicBuildOrder antiNavalBuildOrder);
+        void CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder);
 	}
 }
