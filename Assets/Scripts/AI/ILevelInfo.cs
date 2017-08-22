@@ -7,6 +7,7 @@ namespace BattleCruisers.AI
 {
     public interface ILevelInfo
 	{
+        int LevelNum { get; }
         ICruiserController AICruiser { get; }
         ICruiserController PlayerCruiser { get; }
 

@@ -4,7 +4,6 @@ using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Fetchers;
@@ -20,7 +19,7 @@ namespace BattleCruisers.AI
         private readonly IDataProvider _dataProvider;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
-        private readonly IBuildOrderProvider _buildOrderProvider;
+        private readonly IBuildOrderFactory _buildOrderFactory;
 
         public AIManager(IPrefabFactory prefabFactory, IDeferrer deferrer, IDataProvider dataProvider)
         {
@@ -33,32 +32,35 @@ namespace BattleCruisers.AI
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory);
 
-            IBuildingKeyProviderFactory buildingKeyProviderFactory = new BuildingKeyProviderFactory(_dataProvider.StaticData);
-            IOffensiveBuildOrderProvider offensiveBuildOrderProvider = new OffensiveBuildOrderProvider();
-            IAntiUnitBuildOrderProvider antiAirBuildOrderProvider = new AntiAirBuildOrderProvivder(_dataProvider.StaticData);
-            IAntiUnitBuildOrderProvider antiNavalBuildOrderProvider = new AntiNavalBuildOrderProvivder(_dataProvider.StaticData);
-            _buildOrderProvider = new BuildOrderProvider(buildingKeyProviderFactory, offensiveBuildOrderProvider, antiAirBuildOrderProvider, antiNavalBuildOrderProvider, _dataProvider.StaticData);
+            ISlotAssigner slotAssigner = new SlotAssigner();
+            _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
         }
 
-        public void CreateAI(ILevel currentLevel, ICruiserController playerCruiser, ICruiserController aiCruiser)
+        public void CreateAI(ILevelInfo levelInfo)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
-            _factoryManagerFactory.CreateNavalFactoryManager(currentLevel.Num, aiCruiser);
+            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.LevelNum, levelInfo.AICruiser);
             // FELIX  Create air factory manager :)
 			
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, aiCruiser, _deferrer);
-            ITaskProducerFactory taskProducerFactory = new TaskProducerFactory(
-                aiCruiser, playerCruiser, _prefabFactory, taskFactory, _slotNumCalculatorFactory, _dataProvider.StaticData);
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderProvider);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskProducerFactory taskProducerFactory 
+                = new TaskProducerFactory(
+                    levelInfo.AICruiser, 
+                    levelInfo.PlayerCruiser, 
+                    _prefabFactory, 
+                    taskFactory, 
+                    _slotNumCalculatorFactory, 
+                    _dataProvider.StaticData);
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
                 case Difficulty.Normal:
-                    aiFactory.CreateBasicAI(currentLevel, aiCruiser.SlotWrapper);
+                    aiFactory.CreateBasicAI(levelInfo);
                     break;
                 case Difficulty.Hard:
-                    aiFactory.CreateAdaptiveAI(currentLevel, aiCruiser.SlotWrapper);
+                    aiFactory.CreateAdaptiveAI(levelInfo);
                     break;
             }
         }

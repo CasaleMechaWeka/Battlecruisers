@@ -12,8 +12,8 @@ namespace BattleCruisers.AI
 	{
 		private readonly IStaticData _staticData;
 		private readonly IPrefabFactory _prefabFactory;
-		private readonly int _levelNum;
-		
+        
+        public int LevelNum { get; private set; }
 		public ICruiserController AICruiser { get; private set; }
 		public ICruiserController PlayerCruiser { get; private set; }
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.AI
             PlayerCruiser = playerCruiser;
             _staticData = staticData;
             _prefabFactory = prefabFactory;
-            _levelNum = levelNum;
+            LevelNum = levelNum;
         }
 
         public bool CanConstructBuilding(IPrefabKey buildingKey)
@@ -38,13 +38,13 @@ namespace BattleCruisers.AI
 			IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
 			return
-				_staticData.IsBuildableAvailable(buildingKey, _levelNum)
+				_staticData.IsBuildableAvailable(buildingKey, LevelNum)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
 		}
 
 		public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category)
 		{
-			return _staticData.GetAvailableBuildings(category, _levelNum);
+			return _staticData.GetAvailableBuildings(category, LevelNum);
 		}
 	}
 }

@@ -8,8 +8,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Providers.BuildingKey
 {
-    // FELIX  Tied to specific level.  Rename to LevelHelper?  LevelWrapper?
-    // FELIX  Test!
     public class BuildingKeyHelper : IBuildingKeyHelper
     {
         private readonly IDroneManager _droneManager;

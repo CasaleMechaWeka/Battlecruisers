@@ -4,7 +4,8 @@ using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Providers.BuildingKey
 {
-    public interface IBuildingKeyHelper
+	// FELIX  Delete!
+	public interface IBuildingKeyHelper
 	{
         bool CanConstructBuilding(IPrefabKey buildingKey);
         IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category);

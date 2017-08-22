@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
 
 namespace BattleCruisers.AI.FactoryManagers
 {

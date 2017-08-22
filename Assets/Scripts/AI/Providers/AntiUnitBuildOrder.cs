@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -14,7 +13,7 @@ namespace BattleCruisers.AI.Providers
     public class AntiUnitBuildOrder : IDynamicBuildOrder
     {
         private readonly IPrefabKey _basicDefenceKey, _advancedDefenceKey;
-        private readonly IBuildingKeyHelper _buildingKeyHelper;
+        private readonly ILevelInfo _levelInfo;
 		private readonly int _numOfSlotsToUse;
         private int _numOfSlotsUsed;
 
@@ -23,15 +22,15 @@ namespace BattleCruisers.AI.Providers
         public AntiUnitBuildOrder(
             IPrefabKey basicDefenceKey,
             IPrefabKey advancedDefenceKey,
-			IBuildingKeyHelper buildingKeyHelper,
+			ILevelInfo levelInfo,
             int numOfSlotsToUse)
         {
-            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, buildingKeyHelper);
+            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, _levelInfo);
             Assert.IsTrue(numOfSlotsToUse > 0);
 
             _basicDefenceKey = basicDefenceKey;
             _advancedDefenceKey = advancedDefenceKey;
-            _buildingKeyHelper = buildingKeyHelper;
+            _levelInfo = levelInfo;
             _numOfSlotsToUse = numOfSlotsToUse;
             _numOfSlotsUsed = 0;
         }
@@ -42,11 +41,11 @@ namespace BattleCruisers.AI.Providers
 
             if (_numOfSlotsUsed < _numOfSlotsToUse)
             {
-                if (_buildingKeyHelper.CanConstructBuilding(_advancedDefenceKey))
+                if (_levelInfo.CanConstructBuilding(_advancedDefenceKey))
                 {
                     Current = _advancedDefenceKey;
                 }
-                else if (_buildingKeyHelper.CanConstructBuilding(_basicDefenceKey))
+                else if (_levelInfo.CanConstructBuilding(_basicDefenceKey))
                 {
                     Current = _basicDefenceKey;
                 }

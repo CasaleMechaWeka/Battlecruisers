@@ -23,8 +23,13 @@ namespace BattleCruisers.AI.TaskProducers
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
         private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
-        public TaskProducerFactory(ICruiserController aiCruiser, ICruiserController playerCruiser, IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, ISlotNumCalculatorFactory slotNumCalculatorFactory, IStaticData staticData)
+        public TaskProducerFactory(
+            ICruiserController aiCruiser, 
+            ICruiserController playerCruiser, 
+            IPrefabFactory prefabFactory, 
+            ITaskFactory taskFactory, 
+            ISlotNumCalculatorFactory slotNumCalculatorFactory, 
+            IStaticData staticData)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData);
 

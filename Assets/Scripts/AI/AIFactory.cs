@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI
@@ -16,62 +12,60 @@ namespace BattleCruisers.AI
     public class AIFactory : IAIFactory
     {
         private readonly ITaskProducerFactory _taskProducerFactory;
-        private readonly IBuildOrderProvider _buildOrderProvider;
+        private readonly IBuildOrderFactory _buildOrderFactory;
 
-        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderProvider buildOrderProvider)
+        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory)
         {
-            Helper.AssertIsNotNull(taskProducerFactory, buildOrderProvider);
+            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
 
             _taskProducerFactory = taskProducerFactory;
-            _buildOrderProvider = buildOrderProvider;
+            _buildOrderFactory = buildOrderFactory;
         }
 
-        /// <summary>
-        /// Creates a basic AI that:
-        /// 1. Follows a preset build order
-        /// 2. Replaces destroyed buildings
-        /// </summary>
-        public void CreateBasicAI(ILevel level, ISlotWrapper slotWrapper)
+		/// <summary>
+		/// Creates a basic AI that:
+		/// 1. Follows a base strategy (eg:  balanced, boom or rush)
+		/// 2. Replaces destroyed buildings
+		/// </summary>
+		public void CreateBasicAI(ILevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
 
-            // FELIX
-            //IList<IPrefabKey> basicBuildOrder = _buildOrderProvider.GetBasicBuildOrder(level.Num, slotWrapper);
-            //_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
+            IDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
+            _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
 
-            //_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
+            _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
             
             new TaskConsumer(tasks);
         }
 
 		/// <summary>
 		/// Creates an adaptive AI that:
-		/// 1. Follows a base strategy (eg:  balanced, boom or rushIStaticData staticData)
+		/// 1. Follows a base strategy (eg:  balanced, boom or rush)
 		/// 2. Responds to threats (eg: air, naval)
 		/// 3. Replaces destroyed buildings
 		/// </summary>
-		public void CreateAdaptiveAI(ILevel level, ISlotWrapper slotWrapper)
+		public void CreateAdaptiveAI(ILevelInfo levelInfo)
 		{
             ITaskList tasks = new TaskList();
 
-            // FELIX
-   //         // Base build order, main strategy
-   //         IList<IPrefabKey> advancedBuildOrder = _buildOrderProvider.GetAdaptiveBuildOrder(level.Num, slotWrapper);
-   //         _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
+            // Base build order, main strategy
+            IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
+            _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
 
-   //         // Anti air
-   //         IList<IPrefabKey> antiAirBuildOrder = _buildOrderProvider.GetAntiAirBuildOrder(level.Num, slotWrapper);
-   //         _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
+            // Anti air
+            IDynamicBuildOrder antiAirBuildOrder = _buildOrderFactory.CreateAntiAirBuildOrder(levelInfo);
+            _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
 
-   //         // Anti naval
-   //         IList<IPrefabKey> antiNavalBuildOrder = _buildOrderProvider.GetAntiNavalBuildOrder(level.Num, slotWrapper);
-			//_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
+            // Anti naval
+            IDynamicBuildOrder antiNavalBuildOrder = _buildOrderFactory.CreateAntiNavalBuildOrder(levelInfo);
+			_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
 
-            //// Anti rocket
-            //if (_buildOrderProvider.IsAntiRocketBuildOrderAvailable(level.Num))
-            //{
-            //    _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderProvider.AntiRocketBuildOrder);
-            //}
+            // Anti rocket
+            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable(levelInfo.LevelNum))
+            {
+                _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder());
+            }
 
 			// FELIX  Anti stealth!
 			

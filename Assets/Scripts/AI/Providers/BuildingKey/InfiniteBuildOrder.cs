@@ -9,20 +9,20 @@ namespace BattleCruisers.AI.Providers.BuildingKey
 {
     public class InfiniteBuildOrder : IDynamicBuildOrder
 	{
-        private readonly IBuildingKeyHelper _buildingKeyHelper;
+        private readonly ILevelInfo _levelInfo;
         private readonly IList<IPrefabKey> _availableBuildings;
 
         public IPrefabKey Current { get; private set; }
 
         public InfiniteBuildOrder(
             BuildingCategory buildingCategory, 
-            IBuildingKeyHelper buildingKeyHelper)
+            ILevelInfo levelInfo)
 		{
-            Assert.IsNotNull(buildingKeyHelper);
+            Assert.IsNotNull(levelInfo);
 
-            _buildingKeyHelper = buildingKeyHelper;
+            _levelInfo = levelInfo;
 
-            _availableBuildings = _buildingKeyHelper.GetAvailableBuildings(buildingCategory);
+            _availableBuildings = _levelInfo.GetAvailableBuildings(buildingCategory);
             Assert.IsTrue(_availableBuildings.Count != 0);
 		}
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.AI.Providers.BuildingKey
         {
             Current
                 = _availableBuildings
-                    .Where(buildingKey => _buildingKeyHelper.CanConstructBuilding(buildingKey))
+                    .Where(buildingKey => _levelInfo.CanConstructBuilding(buildingKey))
                     .Shuffle()
                     .FirstOrDefault();
             
