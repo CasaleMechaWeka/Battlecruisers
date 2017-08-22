@@ -103,7 +103,7 @@ namespace BattleCruisers.AI.Providers
 			// platform slots between these requests.
 			// FELIX  Handle ArchonBattleship Ultra, which may be the exception :P
 			IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
-			slotAssigner.AssignSlots(requests, numOfPlatformSlots);
+            slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
 		}
 
         private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, ILevelInfo levelInfo)
