@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,6 +12,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		private Renderer _turretBaseRenderer;
 		private Renderer _turretBarrelRenderer;
 		protected IBarrelWrapper _barrelWrapper;
+
+		public List<TargetType> attackCapabilities;
 
 		protected override Renderer Renderer
 		{
@@ -53,6 +56,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
+
+            Assert.IsNotNull(attackCapabilities);
+            Assert.IsTrue(attackCapabilities.Count != 0);
+            _attackCapabilities.AddRange(attackCapabilities);
 		}
 
 		protected override void OnInitialised()

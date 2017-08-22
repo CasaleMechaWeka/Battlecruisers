@@ -1,11 +1,12 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class AntiAirTurretController : TurretController
+	// FELIX  Delete!
+	public class AntiAirTurretController : TurretController
 	{
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
-			_attackCapabilities.Add(TargetType.Aircraft);
+			//_attackCapabilities.Add(TargetType.Aircraft);
 		}
 	}
 }
