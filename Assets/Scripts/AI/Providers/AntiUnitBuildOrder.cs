@@ -25,7 +25,7 @@ namespace BattleCruisers.AI.Providers
 			ILevelInfo levelInfo,
             int numOfSlotsToUse)
         {
-            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, _levelInfo);
+            Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, levelInfo);
             Assert.IsTrue(numOfSlotsToUse > 0);
 
             _basicDefenceKey = basicDefenceKey;
