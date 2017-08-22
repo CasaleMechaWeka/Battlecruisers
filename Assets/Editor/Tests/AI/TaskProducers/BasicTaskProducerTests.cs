@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI;
+﻿using BattleCruisers.AI;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ISlotWrapper _slotWrapper;
         private IPrefabFactory _prefabFactory;
         private ITaskFactory _taskFactory;
-        private IEnumerator<IPrefabKey> _buildOrder;
+        private IDynamicBuildOrder _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
         private IPrefabKey _platformBuildingKey, _deckBuildingKey;
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckBuildingTask = Substitute.For<ITask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _deckBuildingKey).Returns(_deckBuildingTask);
 
-            _buildOrder = Substitute.For<IEnumerator<IPrefabKey>>();
+            _buildOrder = Substitute.For<IDynamicBuildOrder>();
             _buildOrder.MoveNext().Returns(true);
             _buildOrder.Current.Returns(_platformBuildingKey);
 

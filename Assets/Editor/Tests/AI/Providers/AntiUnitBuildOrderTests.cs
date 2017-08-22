@@ -1,6 +1,6 @@
 ﻿using System;
+using BattleCruisers.AI;
 using BattleCruisers.AI.Providers;
-using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.AI.Providers
 	{
         private IDynamicBuildOrder _buildOrder;
 		private IPrefabKey _basicDefenceKey, _advancedDefenceKey;
-        private IBuildingKeyHelper _buildingKeyHelper;
+        private ILevelInfo _levelInfo;
 
 		[SetUp]
 		public void SetuUp()
@@ -21,20 +21,20 @@ namespace BattleCruisers.Tests.AI.Providers
 
 			_basicDefenceKey = Substitute.For<IPrefabKey>();
             _advancedDefenceKey = Substitute.For<IPrefabKey>();
-            _buildingKeyHelper = Substitute.For<IBuildingKeyHelper>();
+            _levelInfo = Substitute.For<ILevelInfo>();
 
             _buildOrder
                 = new AntiUnitBuildOrder(
                     _basicDefenceKey,
                     _advancedDefenceKey,
-                    _buildingKeyHelper,
+                    _levelInfo,
                     numOfSlotsToUse: 1);
 		}
 
 		[Test]
 		public void MoveNext_CanBuildAdvanced_CurrentIsAdvanced()
 		{
-            _buildingKeyHelper.CanConstructBuilding(_advancedDefenceKey).Returns(true);
+            _levelInfo.CanConstructBuilding(_advancedDefenceKey).Returns(true);
 
             bool hasKey = _buildOrder.MoveNext();
 
@@ -45,8 +45,8 @@ namespace BattleCruisers.Tests.AI.Providers
         [Test]
         public void MoveNext_CannotBuildAdvanced_CanBuildBasic_CurrentIsBasic()
 		{
-			_buildingKeyHelper.CanConstructBuilding(_advancedDefenceKey).Returns(false);
-            _buildingKeyHelper.CanConstructBuilding(_basicDefenceKey).Returns(true);
+			_levelInfo.CanConstructBuilding(_advancedDefenceKey).Returns(false);
+            _levelInfo.CanConstructBuilding(_basicDefenceKey).Returns(true);
 			
             bool hasKey = _buildOrder.MoveNext();
 			
@@ -57,8 +57,8 @@ namespace BattleCruisers.Tests.AI.Providers
 		[Test]
 		public void MoveNext_CannotBuildAdvanced_CannnotBuildBasic_Throws()
 		{
-			_buildingKeyHelper.CanConstructBuilding(_advancedDefenceKey).Returns(false);
-            _buildingKeyHelper.CanConstructBuilding(_basicDefenceKey).Returns(false);
+			_levelInfo.CanConstructBuilding(_advancedDefenceKey).Returns(false);
+            _levelInfo.CanConstructBuilding(_basicDefenceKey).Returns(false);
 
             Assert.Throws<ArgumentException>(() => _buildOrder.MoveNext());
 		}
