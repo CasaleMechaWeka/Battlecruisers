@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using BattleCruisers.AI.Providers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
@@ -15,15 +15,14 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class BasicTaskProducer : BaseTaskProducer
     {
-        // FELIX  Use IDynamicBuildOrder instead of IEnumerator :)
-        private readonly IEnumerator<IPrefabKey> _buildOrder;
+        private readonly IDynamicBuildOrder _buildOrder;
 
         public BasicTaskProducer(
             ITaskList tasks, 
             ICruiserController cruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
-            IEnumerator<IPrefabKey> buildOrder)
+            IDynamicBuildOrder buildOrder)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
             Assert.IsNotNull(buildOrder);
