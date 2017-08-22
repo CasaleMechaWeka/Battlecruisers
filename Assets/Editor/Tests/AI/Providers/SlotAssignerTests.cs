@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.AI.Providers.Strategies.Requests;
-using BattleCruisers.Data.Models.PrefabKeys;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Providers
@@ -9,9 +7,7 @@ namespace BattleCruisers.Tests.AI.Providers
     public class SlotAssignerTests
     {
         private ISlotAssigner _slotAssigner;
-
         private IOffensiveRequest _lowAirRequest, _highAirRequest, _lowOffensiveRequest, _highUltrasRequest;
-        private IPrefabKey _airKey, _offensiveKey, _ultrasKey;
         private int _numOfSlotsAvailable;
 
         [SetUp]
@@ -20,16 +16,13 @@ namespace BattleCruisers.Tests.AI.Providers
             _slotAssigner = new SlotAssigner();
 
             // Air
-            _airKey = Substitute.For<IPrefabKey>();
             _lowAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low);
             _highAirRequest = new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High);
 
             // Offensive
-            _offensiveKey = Substitute.For<IPrefabKey>();
             _lowOffensiveRequest = new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low);
 
             // Ultras
-            _ultrasKey = Substitute.For<IPrefabKey>();
             _highUltrasRequest = new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High);
         }
 
