@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.AI.Providers.BuildingKey;
-using BattleCruisers.AI.Providers.Strategies.Requests;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Providers

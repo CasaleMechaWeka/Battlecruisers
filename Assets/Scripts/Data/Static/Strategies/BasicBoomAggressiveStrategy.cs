@@ -2,7 +2,7 @@
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static;
 
-namespace BattleCruisers.AI.Providers.Strategies
+namespace BattleCruisers.Data.Static.Strategies
 {
 	public class BasicBoomAggressiveStrategy : IBaseStrategy
 	{

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers.Strategies.Requests;
+using BattleCruisers.Data.Static.Strategies.Requests;
 
 namespace BattleCruisers.AI.Providers.BuildingKey
 {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.AI.Providers.BuildingKey;
-using BattleCruisers.AI.Providers.Strategies;
-using BattleCruisers.AI.Providers.Strategies.Requests;
+using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;

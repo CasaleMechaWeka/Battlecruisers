@@ -1,6 +1,6 @@
-﻿﻿﻿﻿﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers.Strategies;
-using BattleCruisers.AI.Providers.Strategies.Requests;
+﻿﻿﻿﻿using System.Collections.Generic;
+using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static

@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.AI.Providers.Strategies.Requests
+﻿namespace BattleCruisers.Data.Static.Strategies.Requests
 {
 	public enum OffensiveType
 	{

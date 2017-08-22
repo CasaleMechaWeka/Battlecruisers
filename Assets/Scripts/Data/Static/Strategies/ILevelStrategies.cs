@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers.Strategies;
+using BattleCruisers.Data.Static.Strategies;
 
 namespace BattleCruisers.Data.Static
 {

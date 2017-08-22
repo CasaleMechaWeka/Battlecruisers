@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.AI.Providers.Strategies.Requests;
+using BattleCruisers.Data.Static.Strategies.Requests;
 
 namespace BattleCruisers.AI.Providers.BuildingKey
 {
