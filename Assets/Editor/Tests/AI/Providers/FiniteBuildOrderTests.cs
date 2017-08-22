@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI.Providers;
-using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -7,7 +6,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Providers
 {
-	public class FiniteBuildOrderTests
+    public class FiniteBuildOrderTests
 	{
 		private IDynamicBuildOrder _finiteBuildOrder, _infiniteBuildOrder;
         private IPrefabKey _key;

@@ -5,7 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers.BuildingKey
+namespace BattleCruisers.AI.Providers
 {
     public class InfiniteBuildOrder : IDynamicBuildOrder
 	{

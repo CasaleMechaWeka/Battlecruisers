@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.Providers;
-using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -8,7 +7,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Providers
 {
-	public class CombinedBuildOrdersTests
+    public class CombinedBuildOrdersTests
 	{
         private IDynamicBuildOrder _comboBuildOrder, _buildOrder1, _buildOrder2;
         private IPrefabKey _key1, _key2;

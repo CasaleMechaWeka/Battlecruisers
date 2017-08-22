@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI;
 using BattleCruisers.AI.Providers;
-using BattleCruisers.AI.Providers.BuildingKey;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;

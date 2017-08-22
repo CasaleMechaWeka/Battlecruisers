@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.AI.Providers.BuildingKey
+namespace BattleCruisers.AI.Providers
 {
     public class InfiniteStaticBuildOrder : IDynamicBuildOrder
 	{

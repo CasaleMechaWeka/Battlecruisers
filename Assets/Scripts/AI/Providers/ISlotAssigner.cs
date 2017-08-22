@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Static.Strategies.Requests;
 
-namespace BattleCruisers.AI.Providers.BuildingKey
+namespace BattleCruisers.AI.Providers
 {
     public interface ISlotAssigner
 	{

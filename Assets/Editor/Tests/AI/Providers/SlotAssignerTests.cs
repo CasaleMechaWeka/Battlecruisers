@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI.Providers.BuildingKey;
+﻿using BattleCruisers.AI.Providers;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using NUnit.Framework;
 
