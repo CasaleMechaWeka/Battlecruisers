@@ -22,8 +22,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
 
 			// Setup mortars
-            MortarController[] mortars = FindObjectsOfType<MortarController>();
-			foreach (MortarController mortar in mortars)
+            TurretController[] mortars = FindObjectsOfType<TurretController>();
+			foreach (TurretController mortar in mortars)
 			{
 				helper.InitialiseBuildable(mortar, Faction.Reds);
 				mortar.StartConstruction();
