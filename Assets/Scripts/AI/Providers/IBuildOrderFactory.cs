@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.Providers.Strategies.Requests;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.AI.Providers
 {
     public interface IBuildOrderFactory
     {
-        IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots);
-        IDynamicBuildOrder CreateAntiAirBuildOrder(int levelNum, ISlotWrapper slotWrapper);
+        IDynamicBuildOrder GetBasicBuildOrder(int levelNum, ISlotWrapper slotWrapper);
+        IDynamicBuildOrder GetAdaptiveBuildOrder(int levelNum, ISlotWrapper slotWrapper);
+		IDynamicBuildOrder CreateAntiAirBuildOrder(int levelNum, ISlotWrapper slotWrapper);
         IDynamicBuildOrder CreateAntiNavalBuildOrder(int levelNum, ISlotWrapper slotWrapper);
 	}
 }

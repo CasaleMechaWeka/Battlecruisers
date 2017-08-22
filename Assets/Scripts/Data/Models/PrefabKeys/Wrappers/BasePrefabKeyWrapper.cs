@@ -11,6 +11,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 		public void Initialise(IBuildOrders buildOrders)
 		{
             IDynamicBuildOrder buildOrder = GetBuildOrder(buildOrders);
+            Assert.IsNotNull(buildOrder);
 
             HasKey = buildOrder.MoveNext();
 

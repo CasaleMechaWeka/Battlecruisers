@@ -3,11 +3,19 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Providers.Strategies.Requests
 {
-    public class OffensiveRequest : BasicOffensiveRequest, IOffensiveRequest
+    // FELIX  Delete base class, remove unused BuildingKeyProvider property :)
+	public class OffensiveRequest : BasicOffensiveRequest, IOffensiveRequest
     {
         public IBuildingKeyProvider BuildingKeyProvider { get; private set; }
         public int NumOfSlotsToUse { get; set; }
 
+        public OffensiveRequest(OffensiveType type, OffensiveFocus focus)
+            : base(type, focus)
+        {
+            NumOfSlotsToUse = 0;
+        }
+
+        // FELIX  Remove obsolete constructors
         public OffensiveRequest(IBasicOffensiveRequest request, IBuildingKeyProvider buildingKeyprovider)
             : this(request.Type, request.Focus, buildingKeyprovider)
         {
