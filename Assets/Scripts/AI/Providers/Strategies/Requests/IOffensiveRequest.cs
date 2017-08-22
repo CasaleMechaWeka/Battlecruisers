@@ -10,7 +10,6 @@
 		Low, High
 	}
 
-    // FELIX  Move up one namespace
 	public interface IOffensiveRequest
 	{
 		OffensiveType Type { get; }
