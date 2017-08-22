@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.AI;
-using BattleCruisers.AI.Providers;
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;

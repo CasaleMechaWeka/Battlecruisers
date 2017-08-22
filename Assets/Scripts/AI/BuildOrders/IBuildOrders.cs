@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.AI.Providers
+﻿namespace BattleCruisers.AI.BuildOrders
 {
     public interface IBuildOrders
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleCruisers.AI.Providers;
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;

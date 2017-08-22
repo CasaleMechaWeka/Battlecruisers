@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.BuildOrders;
 
 namespace BattleCruisers.AI.TaskProducers
 {

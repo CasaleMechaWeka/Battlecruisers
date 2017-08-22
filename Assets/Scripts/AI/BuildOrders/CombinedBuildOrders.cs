@@ -3,7 +3,7 @@ using System.Linq;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.BuildOrders
 {
     public class CombinedBuildOrders : IDynamicBuildOrder
 	{

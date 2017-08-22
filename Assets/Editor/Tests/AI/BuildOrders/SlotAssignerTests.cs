@@ -1,8 +1,8 @@
-﻿using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.AI.Providers
+namespace BattleCruisers.Tests.AI.BuildOrders
 {
     public class SlotAssignerTests
     {

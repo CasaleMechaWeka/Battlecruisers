@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleCruisers.AI.Providers;
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;

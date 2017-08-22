@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI.Providers;
+﻿using BattleCruisers.AI.BuildOrders;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.BuildOrders
 {
     /// <summary>
     /// Subset if IEnumerator<IPrefabKey>.  Slight modification on the

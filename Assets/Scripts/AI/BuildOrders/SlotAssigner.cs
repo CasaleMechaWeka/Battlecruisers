@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleCruisers.Data.Static.Strategies.Requests;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.BuildOrders
 {
     public class SlotAssigner : ISlotAssigner
 	{

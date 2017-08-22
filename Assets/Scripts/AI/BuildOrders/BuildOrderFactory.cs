@@ -10,7 +10,7 @@ using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.BuildOrders
 {
     public class BuildOrderFactory : IBuildOrderFactory
 	{

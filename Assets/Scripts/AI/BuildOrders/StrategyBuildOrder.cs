@@ -3,7 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Providers
+namespace BattleCruisers.AI.BuildOrders
 {
     public class StrategyBuildOrder : IDynamicBuildOrder
     {

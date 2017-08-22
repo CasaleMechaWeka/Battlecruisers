@@ -1,12 +1,12 @@
 ﻿using System;
 using BattleCruisers.AI;
-using BattleCruisers.AI.Providers;
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.AI.Providers
+namespace BattleCruisers.Tests.AI.BuildOrders
 {
     public class AntiUnitBuildOrderTests
 	{
