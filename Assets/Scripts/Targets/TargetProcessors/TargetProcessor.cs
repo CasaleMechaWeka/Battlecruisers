@@ -83,7 +83,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost");
 
-
             if (!_targets.Contains(e.Target))
             {
                 // Edge case, where collider object is destroyed and OnTriggerExit2D() 

@@ -68,6 +68,14 @@ namespace BattleCruisers.Tests.Targets
 			_targetConsumer.Received().Target = _target1;
 		}
 
+        [Test]
+        public void TargetFound_TargetIsDestroyed_IsIgnored()
+        {
+            _target1.IsDestroyed.Returns(true);
+            InvokeTargetFound(_target1);
+            _targetRanker.DidNotReceive().RankTarget(_target1);
+        }
+
 		[Test]
 		public void TargetLost_RemovesTargetFromConsumers()
 		{
@@ -103,12 +111,6 @@ namespace BattleCruisers.Tests.Targets
 		{
 			InvokeTargetFound(_target1);
 			Assert.Throws<UnityAsserts.AssertionException>(() => InvokeTargetFound(_target1));
-		}
-
-		[Test]
-		public void LostNotAddedTarget_Throws()
-		{
-			Assert.Throws<UnityAsserts.AssertionException>(() => InvokeTargetLost(_target1));
 		}
 
 		[Test]
