@@ -12,7 +12,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerEnter2D()");
+			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerEnter2D()  collider id: " + collider.GetInstanceID());
 
 			if (OnEntered != null)
 			{
@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		void OnTriggerExit2D(Collider2D collider)
 		{
-			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerExit2D()");
+            Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerExit2D()  collider id: " + collider.GetInstanceID());
 
 			if (OnExited != null)
 			{
