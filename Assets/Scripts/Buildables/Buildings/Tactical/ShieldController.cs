@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			healthBar.Initialise(this);
 			
 			float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * shieldRadiusInM;
-			healthBar.UpdateOffset(new Vector2(0, transform.position.y + yPos));
+            healthBar.UpdateOffset(new Vector2(0, yPos));
 			
 			float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * shieldRadiusInM;
 			float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;

@@ -1,15 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-	public class HealthBarController : BaseProgressBarController
+    public class HealthBarController : BaseProgressBarController
 	{
 		private IDamagable _damagable;
 		private float _maxHealth;
@@ -40,13 +36,19 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		{
 			if (_followDamagable)
 			{
-				transform.position = _damagable.GameObject.transform.position + _offset;
+                UpdatePosition();
 			}
 		}
 
 		public void UpdateOffset(Vector2 offset)
 		{
 			_offset = offset;
+            UpdatePosition();
+		}
+
+        private void UpdatePosition()
+        {
+			transform.position = _damagable.GameObject.transform.position + _offset;
 		}
 	}
 }
