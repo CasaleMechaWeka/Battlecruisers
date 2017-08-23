@@ -41,6 +41,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound");
 			Assert.IsFalse(_targets.Contains(e.Target));
 
+            if (e.Target.IsDestroyed)
+            {
+                // Edge case, where collider object is destroyed and OnTriggerExit2D() 
+                // is called **before** OnTriggerEnter2D().  Hence ignore the
+                // TargetFound events for already destroyed objects, as they have
+                // already had their corresponding TargetLost event.
+				return;
+            }
+
 			int insertionIndex = FindInsertionIndex(e.Target);
 
 			_targets.Insert(insertionIndex, e.Target);
@@ -73,7 +82,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost");
-			Assert.IsTrue(_targets.Contains(e.Target));
+
+
+            if (!_targets.Contains(e.Target))
+            {
+                // Edge case, where collider object is destroyed and OnTriggerExit2D() 
+                // is called **before** OnTriggerEnter2D().  Hence ignore this
+                // TargetLost event.
+                return;
+			}
 
 			bool wasHighestPriorityTarget = ReferenceEquals(e.Target, HighestPriorityTarget);
 			_targets.Remove(e.Target);
