@@ -47,6 +47,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                 // is called **before** OnTriggerEnter2D().  Hence ignore the
                 // TargetFound events for already destroyed objects, as they have
                 // already had their corresponding TargetLost event.
+                Logging.Warn(Tags.TARGET_PROCESSORS, "Received TargetFound event for a destroyed target");
 				return;
             }
 
@@ -85,10 +86,11 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             if (!_targets.Contains(e.Target))
             {
-                // Edge case, where collider object is destroyed and OnTriggerExit2D() 
-                // is called **before** OnTriggerEnter2D().  Hence ignore this
-                // TargetLost event.
-                return;
+				// Edge case, where collider object is destroyed and OnTriggerExit2D() 
+				// is called **before** OnTriggerEnter2D().  Hence ignore this
+				// TargetLost event.
+				Logging.Warn(Tags.TARGET_PROCESSORS, "Received TargetLost event without a preceeding TargetFound event");
+				return;
 			}
 
 			bool wasHighestPriorityTarget = ReferenceEquals(e.Target, HighestPriorityTarget);
