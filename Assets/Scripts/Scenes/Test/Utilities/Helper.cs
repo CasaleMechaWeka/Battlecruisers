@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		private readonly int _numOfDrones;
 
 		// Massive, so buildables build instantly
-		private const int NUM_OF_DRONES = 100;
+		private const int NUM_OF_DRONES = 500;
 
 		public Helper(int numOfDrones = NUM_OF_DRONES)
 		{
