@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
+		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
@@ -128,6 +129,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			IUnit unit = sender as IUnit;
 			Assert.IsNotNull(unit);
 			_lastUnitProduced = unit;
+
+            if (StartedBuildingUnit != null)
+            {
+                StartedBuildingUnit.Invoke(this, new StartedConstructionEventArgs(unit));
+            }
 		}
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
