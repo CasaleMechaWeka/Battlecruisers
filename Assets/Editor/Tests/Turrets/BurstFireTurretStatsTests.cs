@@ -34,29 +34,42 @@ namespace BattleCruisers.Tests.Turrets
 			_expectedBurstInterval = 1 / _turretStats.burstFireRatePerS;
 		}
 
+        /// <summary>
+        /// Burst size = 3:
+        /// 
+        /// Duration (S = short / L = long):    S S L   S S L
+        /// InBurst (T = true / F = false):     F T T   F T T
+        /// </summary>
 		[Test]
 		public void NextFireIntervalInS_And_IsInBurst()
 		{
 			_turretStats.Initialise();
 
-			for (int j = 0; j < 2; ++j)
-			{
-                // Short interval in burst
-                for (int i = 0; i < _turretStats.burstSize - 1; ++i)
+            // Several bursts
+            for (int j = 0; j < 2; ++j)
+            {
+                for (int i = 0; i < _turretStats.burstSize; ++i)
                 {
-                    Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
-                    if (i != 0)
+                    if (i == 0)
                     {
+                        // First shot in burst
+                        Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
+                        Assert.IsFalse(_turretStats.IsInBurst);
+                    }
+                    else if (i == _turretStats.burstSize - 1)
+                    {
+                        // Last shot in burst
+                        Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
                         Assert.IsTrue(_turretStats.IsInBurst);
-					}
-                    _turretStats.MoveToNextDuration();
+                    }
+                    else
+                    {
+                        // Middle of burst
+                        Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
+                        Assert.IsTrue(_turretStats.IsInBurst);
+                    }
                 }
-				
-                // Long interval in between bursts
-                Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
-				Assert.IsFalse(_turretStats.IsInBurst);
-				_turretStats.MoveToNextDuration();
-			}
+            }				
 		}
 	}
 }
