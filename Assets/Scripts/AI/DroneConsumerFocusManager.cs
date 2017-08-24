@@ -74,16 +74,9 @@ namespace BattleCruisers.AI
             IFactory factory = sender as IFactory;
             Assert.IsNotNull(factory);
 
-            if (factory.DroneConsumer.State == DroneConsumerState.Focused
-                && _inProgressBuildings.Count != 0)
+            if (factory.DroneConsumer.State != DroneConsumerState.Idle)
             {
-                // Factory is taking most of the drones producing units, even
-                // though there is a building trying to be constructed.  Hence
-                // focus on an in progress building, to ensure it gets the
-                // most drones.
-                IBuildable affordableBuilding 
-                    = _inProgressBuildings
-                        .FirstOrDefault(building => building.DroneConsumer.NumOfDronesRequired <= _droneManager.NumOfDrones);
+                IBuildable affordableBuilding = GetAffordableInProgressBuilding();
 
                 if (affordableBuilding != null)
                 {
@@ -106,6 +99,21 @@ namespace BattleCruisers.AI
 					}
                 }
             }
+        }
+
+        private IBuildable GetAffordableInProgressBuilding()
+        {
+            IBuildable affordableBuilding = null;
+
+            if (_inProgressBuildings.Count != 0
+                && _inProgressBuildings.All(building => building.DroneConsumer.State != DroneConsumerState.Focused))
+            {
+                affordableBuilding
+				    = _inProgressBuildings
+						.FirstOrDefault(building => building.DroneConsumer.NumOfDronesRequired <= _droneManager.NumOfDrones);
+            }
+
+            return affordableBuilding;
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
