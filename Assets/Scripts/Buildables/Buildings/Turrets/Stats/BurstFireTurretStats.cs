@@ -1,11 +1,17 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats.States;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
+    /// <summary>
+    /// For example, if burst size = 3:
+    /// 
+    /// Duration (S = short / L = long):    S S L   S S L
+    /// InBurst (T = true / F = false):     F T T   F T T
+    /// </summary>
     public class BurstFireTurretStats : TurretStats
     {
-        private IBurstFireState _currentState;
+        private float _shortDurationInS;
+        private float _longDurationInS;
 
         public int burstSize;
         public float burstFireRatePerS;
@@ -22,9 +28,36 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
-        public override float DurationInS { get { return _currentState.DurationInS; } }
+        private int _queryIndex;
+        private int QueryIndex
+        {
+            get { return _queryIndex; }
+            set
+            {
+                _queryIndex = value;
 
-        public override bool IsInBurst { get { return _currentState.IsInBurst; } }
+                if (_queryIndex % burstSize == 0)
+                {
+                    _queryIndex = 0;
+                }
+            }
+        }
+
+        public override float DurationInS 
+        { 
+            get 
+            {
+                return QueryIndex == burstSize - 1 ? _longDurationInS : _shortDurationInS;
+            }
+        }
+
+        public override bool IsInBurst 
+        { 
+            get 
+            {
+                return QueryIndex != 0;
+            }
+        }
 
 		public override void Initialise()
 		{
@@ -33,25 +66,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
 			Assert.IsTrue(burstFireRatePerS > 0);
 
-            BurstFireState shortDurationState = new BurstFireState();
-            BurstFireState longDurationState = new BurstFireState();
+			_shortDurationInS = 1 / burstFireRatePerS;
+            _longDurationInS = 1 / fireRatePerS;
 
-            shortDurationState.Initialise(
-                otherState: longDurationState,
-                durationInS: 1 / burstFireRatePerS,
-                numOfQueriesBeforeSwitch: burstSize - 1);
-
-            longDurationState.Initialise(
-                otherState: shortDurationState,
-                durationInS: 1 / fireRatePerS,
-                numOfQueriesBeforeSwitch: 1);
-
-            _currentState = shortDurationState;
+            QueryIndex = 0;
 		}
 
         public override void MoveToNextDuration()
         {
-			_currentState = _currentState.NextState;
+            QueryIndex++;
 		}
 	}
 }

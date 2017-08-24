@@ -68,6 +68,8 @@ namespace BattleCruisers.Tests.Turrets
                         Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
                         Assert.IsTrue(_turretStats.IsInBurst);
                     }
+
+                    _turretStats.MoveToNextDuration();
                 }
             }				
 		}
