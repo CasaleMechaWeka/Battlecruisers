@@ -82,10 +82,6 @@ namespace BattleCruisers.AI
                 {
                     IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
 
-                    Assert.IsTrue(
-                        affordableDroneConsumer.State != DroneConsumerState.Focused,
-                        "Only a single drone consumer should be focused at a time, and code should only be reached if a factory is focused.  Hnece this in progress building should not be focused as well.");
-
                     if (affordableDroneConsumer.State == DroneConsumerState.Idle)
                     {
                         // Try to upgrade to active
