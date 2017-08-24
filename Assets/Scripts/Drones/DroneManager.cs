@@ -109,7 +109,7 @@ namespace BattleCruisers.Drones
 			}
 			else
 			{
-				// Make the new consumer be have the highest priority
+				// Make the new consumer have the highest priority
 				_droneConsumers.Add(droneConsumer);
 			}
 
