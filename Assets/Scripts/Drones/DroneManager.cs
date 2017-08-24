@@ -121,6 +121,8 @@ namespace BattleCruisers.Drones
 			{
 				AssignSpareDrones(numOfSpareDrones);
 			}
+
+			EmitDroneConsumersChangedEvent();
 		}
 
 		/// <summary>
@@ -145,6 +147,8 @@ namespace BattleCruisers.Drones
 				}
 				droneConsumer.NumOfDrones = 0;
 			}
+
+            EmitDroneConsumersChangedEvent();
 		}
 
 		/// <summary>
