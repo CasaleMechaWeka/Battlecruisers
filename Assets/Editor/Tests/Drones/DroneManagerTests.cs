@@ -8,8 +8,8 @@ namespace BattleCruisers.Tests.Drones
     public class DroneManagerTests 
 	{
 		private IDroneManager _droneManager;
-
 		private IDroneConsumer _droneConsumer1, _droneConsumer2, _droneConsumer3, _droneConsumer4;
+        private int _droneConsumersChangedCount;
 
 		[SetUp]
 		public void TestSetup()
@@ -20,6 +20,9 @@ namespace BattleCruisers.Tests.Drones
 			_droneConsumer2 = new DroneConsumer(2);
 			_droneConsumer3 = new DroneConsumer(2);
 			_droneConsumer4 = new DroneConsumer(4);
+
+            _droneConsumersChangedCount = 0;
+            _droneManager.DroneConsumersChanged += (sender, e) => _droneConsumersChangedCount++;
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
@@ -121,6 +124,27 @@ namespace BattleCruisers.Tests.Drones
 			Assert.IsTrue(wasEventCalled);
 		}
 		#endregion DroneNumChanged
+
+		#region DroneConsumersChanged
+		[Test]
+		public void AddDroneConsumer_EmitsDroneConsumersChanged()
+        {
+            _droneManager.NumOfDrones = 99;
+            _droneManager.AddDroneConsumer(_droneConsumer1);
+            Assert.AreEqual(1, _droneConsumersChangedCount);
+        }
+
+		[Test]
+		public void RemoveDroneConsumer_EmitsDroneConsumersChanged()
+		{
+			_droneManager.NumOfDrones = 99;
+			_droneManager.AddDroneConsumer(_droneConsumer1);
+			Assert.AreEqual(1, _droneConsumersChangedCount);
+
+            _droneManager.RemoveDroneConsumer(_droneConsumer1);
+			Assert.AreEqual(2, _droneConsumersChangedCount);
+		}
+		#endregion DroneConsumersChanged
 
 		#region CanSupportDroneConsumer()
 		[Test]

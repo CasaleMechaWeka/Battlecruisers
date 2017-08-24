@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Drones
 {
-    // FELIX  Update tests
     public interface IDroneManager
     {
         int NumOfDrones { get; set; }
