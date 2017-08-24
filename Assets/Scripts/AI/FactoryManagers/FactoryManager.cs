@@ -46,8 +46,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
         {
-            IFactory factory = sender as IFactory;
-            Assert.IsNotNull(factory);
+            IFactory factory = ParseSender(sender);
 
             factory.UnitWrapper = _unitChooser.ChosenUnit;
             factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
@@ -55,20 +54,24 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedConstructionEventArgs e)
         {
-			IFactory factory = sender as IFactory;
-			Assert.IsNotNull(factory);
-
+            IFactory factory = ParseSender(sender);
             factory.UnitWrapper = _unitChooser.ChosenUnit;
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
-			IFactory factory = sender as IFactory;
-			Assert.IsNotNull(factory);
+            IFactory factory = ParseSender(sender);
 
-            factory.CompletedBuildable -= Factory_CompletedBuildable; 
+            factory.CompletedBuildable -= Factory_CompletedBuildable;
             factory.Destroyed -= Factory_Destroyed;
             factory.CompletedBuildingUnit -= Factory_CompletedBuildingUnit;
+        }
+
+        private IFactory ParseSender(object sender)
+        {
+            IFactory factory = sender as IFactory;
+            Assert.IsNotNull(factory);
+            return factory;
         }
 
         public void Dispose()
