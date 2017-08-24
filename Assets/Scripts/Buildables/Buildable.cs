@@ -197,7 +197,7 @@ namespace BattleCruisers.Buildables
 
 		public void StartConstruction()
 		{
-			SetupDroneConsumer();
+            SetupDroneConsumer(numOfDronesRequired);
 
 			EnableRenderers(false);
 			BuildableState = BuildableState.InProgress;
@@ -206,13 +206,6 @@ namespace BattleCruisers.Buildables
 			{
 				StartedConstruction.Invoke(this, EventArgs.Empty);
 			}
-		}
-
-		private void SetupDroneConsumer()
-		{
-			Assert.IsNull(DroneConsumer);
-			DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired);
-			_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 		}
 
 		void Update()
@@ -281,8 +274,17 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		private void CleanUpDroneConsumer()
+		protected void SetupDroneConsumer(int numOfDrones)
 		{
+			Assert.IsNull(DroneConsumer);
+            DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
+			_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+		}
+
+
+		protected void CleanUpDroneConsumer()
+		{
+            Assert.IsNotNull(DroneConsumer);
 			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
 			DroneConsumer = null;
 		}
