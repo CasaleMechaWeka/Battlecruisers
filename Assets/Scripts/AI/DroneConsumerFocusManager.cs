@@ -83,34 +83,27 @@ namespace BattleCruisers.AI
 			
             if (_completedFactories.Any(factory => factory.DroneConsumer.State != DroneConsumerState.Idle))
             {
-                IBuildable affordableBuilding = GetAffordableInProgressBuilding();
+                IBuildable idleAffordableBuilding = GetIdleAffordableBuilding();
 
-                if (affordableBuilding != null)
+                if (idleAffordableBuilding != null)
                 {
-					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
-                    IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
+					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + idleAffordableBuilding);
+     
+                    IDroneConsumer idleAffordableDroneConsumer = idleAffordableBuilding.DroneConsumer;
 
-					if (affordableDroneConsumer.State == DroneConsumerState.Idle)
-                    {
-                        // Try to upgrade to active
-                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-                    }
-
-                    if (affordableDroneConsumer.State == DroneConsumerState.Active)
-                    {
-                        // Try to upgrade to focused
-                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-                    }
+                    // Try to upgrade to Active, but NOT Focused, so that any left over
+                    // drones can be used by completed factories.
+					_droneManager.ToggleDroneConsumerFocus(idleAffordableDroneConsumer);
                 }
             }
         }
 
-        private IBuildable GetAffordableInProgressBuilding()
+        private IBuildable GetIdleAffordableBuilding()
         {
             IBuildable affordableBuilding = null;
 
             if (_inProgressBuildings.Count != 0
-                && _inProgressBuildings.All(building => building.DroneConsumer.State != DroneConsumerState.Focused))
+                && _inProgressBuildings.All(building => building.DroneConsumer.State == DroneConsumerState.Idle))
             {
                 affordableBuilding
 				    = _inProgressBuildings

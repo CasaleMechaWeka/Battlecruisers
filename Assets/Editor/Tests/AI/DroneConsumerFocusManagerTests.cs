@@ -92,15 +92,15 @@ namespace BattleCruisers.Tests.AI
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Idle, DroneConsumerState.Active);
+            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
             int numOfDronesRequired = _droneManager.NumOfDrones - 1;
             _inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
             EmitFocusOnNonFactoryDroneConsumer();
 
-            // One toggle for Idle => Active, another for Active => Focused
-            _droneManager.Received(requiredNumberOfCalls: 2).ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
+            // Idle => Active
+            _droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
         }
 
         [Test]
@@ -112,15 +112,15 @@ namespace BattleCruisers.Tests.AI
 			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
 			// Setup in progress building
-			_inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Idle, DroneConsumerState.Active);
+			_inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
 			int numOfDronesRequired = _droneManager.NumOfDrones - 1;
 			_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
 
             // Trigger FocusOnNonFactoryDroneConsumer()
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-			// One toggle for Idle => Active, another for Active => Focused
-			_droneManager.Received(requiredNumberOfCalls: 2).ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
+			// Idle => Active
+			_droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
 		}
 		
 		private void EmitFocusOnNonFactoryDroneConsumer()
