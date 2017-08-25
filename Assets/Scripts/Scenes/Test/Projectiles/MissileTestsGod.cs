@@ -1,21 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Buildables.Units.Aircraft;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class MissileTestsGod : MonoBehaviour 
+    public class MissileTestsGod : MonoBehaviour 
 	{
 		protected void SetupMissiles(ITarget target)
 		{
@@ -29,7 +22,7 @@ namespace BattleCruisers.Scenes.Test
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
 
-			MissileController[] missiles = GameObject.FindObjectsOfType<MissileController>() as MissileController[];
+            MissileController[] missiles = FindObjectsOfType<MissileController>();
 			foreach (MissileController missile in missiles)
 			{
 				missile.Initialise(missileStats, initialVelocity, targetFilter, target, movementControllerFactory, targetPositionPredictorFactory);
