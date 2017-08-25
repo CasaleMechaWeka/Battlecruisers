@@ -1,6 +1,6 @@
 ﻿using System;
+using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -18,9 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _levelScreenController = levelScreenController;
             _setIndex = setIndex;
             _isSelected = true;
-
-            _transform = transform as RectTransform;
-            Assert.IsNotNull(_transform);
+            _transform = transform.Parse<RectTransform>();
 
             _levelScreenController.VisibleSetChanged += _levelScreenController_VisibleSetChanged;
         }

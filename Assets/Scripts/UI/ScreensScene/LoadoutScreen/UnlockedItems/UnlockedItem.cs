@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -37,8 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 			itemImage.sprite = item.Sprite;
 
-			_rectTransform = transform as RectTransform;
-			Assert.IsNotNull(_rectTransform);
+			_rectTransform = transform.Parse<RectTransform>();
 		}
 
 		public void SelectItem()

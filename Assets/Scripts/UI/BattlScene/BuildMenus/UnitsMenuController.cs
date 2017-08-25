@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
@@ -38,8 +38,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
 			base.OnPresenting(activationParameter);
 
-			_factory = activationParameter as Factory;
-			Assert.IsNotNull(_factory);
+			_factory = activationParameter.Parse<Factory>();
 			_factory.Destroyed += _factory_Destroyed;
 		}
 

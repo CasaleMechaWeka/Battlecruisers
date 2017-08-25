@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
@@ -20,8 +20,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public override void OnPresenting(object activationParameter)
 		{
-			_factory = activationParameter as Factory;
-			Assert.IsNotNull(_factory);
+            // FELIX  Use IFactory?
+			_factory = activationParameter.Parse<Factory>();
 
 			if (_factory.BuildableState != BuildableState.Completed)
 			{

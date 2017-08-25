@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -8,8 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 	{
 		protected override void InitialiseBarrelController()
         {
-			SamSiteBarrelController barrelController = _barrelController as SamSiteBarrelController;
-			Assert.IsNotNull(barrelController);
+			SamSiteBarrelController barrelController = _barrelController.Parse<SamSiteBarrelController>();
 
             IExactMatchTargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
 			barrelController.Initialise(
