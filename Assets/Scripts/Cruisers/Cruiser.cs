@@ -130,8 +130,7 @@ namespace BattleCruisers.Cruisers
 
             if (BuildingDestroyed != null)
             {
-				IBuilding destroyedBuilding = e.DestroyedTarget as IBuilding;
-				Assert.IsNotNull(destroyedBuilding);
+                IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
 				BuildingDestroyed.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
             }
         }

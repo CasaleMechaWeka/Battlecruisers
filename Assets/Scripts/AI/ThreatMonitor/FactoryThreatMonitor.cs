@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.ThreatMonitors
@@ -52,8 +53,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         {
             e.DestroyedTarget.Destroyed -= Factory_Destroyed;
 
-            IFactory destroyedFactory = e.DestroyedTarget as IFactory;
-            Assert.IsNotNull(destroyedFactory);
+            IFactory destroyedFactory = e.DestroyedTarget.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(destroyedFactory));
 
             _factories.Remove(destroyedFactory);

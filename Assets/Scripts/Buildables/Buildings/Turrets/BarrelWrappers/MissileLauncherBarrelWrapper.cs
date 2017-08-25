@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -9,8 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override void InitialiseBarrelController()
 		{
-            MissileBarrelController barrelController = _barrelController as MissileBarrelController;
-			Assert.IsNotNull(barrelController);
+            MissileBarrelController barrelController = _barrelController.Parse<MissileBarrelController>();
 
 			barrelController.Initialise(
                 CreateTargetFilter(),

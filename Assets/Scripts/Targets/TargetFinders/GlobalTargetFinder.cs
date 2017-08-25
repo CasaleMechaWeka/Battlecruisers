@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
@@ -56,8 +57,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			e.DestroyedTarget.Destroyed -= Buildable_Destroyed;
 
-			IBuildable buildable = e.DestroyedTarget as IBuildable;
-			Assert.IsNotNull(buildable);
+			IBuildable buildable = e.DestroyedTarget.Parse<IBuildable>();
 
             // Build progress NEVER decreases.  Otherwise there would be a subtle bug:
             // If build progresss went past 50%, but then below 50%

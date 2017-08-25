@@ -67,8 +67,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 		{
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
-            TBuilding destroyedBuilding = e.DestroyedTarget as TBuilding;
-            Assert.IsNotNull(destroyedBuilding);
+            TBuilding destroyedBuilding = e.DestroyedTarget.Parse<TBuilding>();
             Assert.IsTrue(_buildings.Contains(destroyedBuilding));
 
             _buildings.Remove(destroyedBuilding);
