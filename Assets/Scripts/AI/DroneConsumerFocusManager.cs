@@ -29,12 +29,12 @@ namespace BattleCruisers.AI
         private readonly IList<IFactory> _completedFactories;
         private readonly IList<IBuildable> _inProgressBuildings;
 
-        public DroneConsumerFocusManager(ICruiserController aiCruiser, IDroneManager droneManager)
+        public DroneConsumerFocusManager(ICruiserController aiCruiser)
         {
-            Helper.AssertIsNotNull(aiCruiser, droneManager);
+            Helper.AssertIsNotNull(aiCruiser, aiCruiser.DroneManager);
 
             _aiCruiser = aiCruiser;
-            _droneManager = droneManager;
+            _droneManager = _aiCruiser.DroneManager;
 
             _completedFactories = new List<IFactory>();
             _inProgressBuildings = new List<IBuildable>();
@@ -70,6 +70,8 @@ namespace BattleCruisers.AI
 
         private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
         {
+            Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Factory_StartedBuildingUnit()");
+
             // FELIX  Create generic helper method :P
             IFactory factory = sender as IFactory;
             Assert.IsNotNull(factory);
@@ -77,21 +79,31 @@ namespace BattleCruisers.AI
             if (factory.DroneConsumer.State != DroneConsumerState.Idle)
             {
                 IBuildable affordableBuilding = GetAffordableInProgressBuilding();
+                Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableBuilding: " + affordableBuilding);
 
-                if (affordableBuilding != null)
+				if (affordableBuilding != null)
                 {
                     IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
+					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
 
-                    if (affordableDroneConsumer.State == DroneConsumerState.Idle)
+					if (affordableDroneConsumer.State == DroneConsumerState.Idle)
                     {
+                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Try to upgrade to active");
+						
                         // Try to upgrade to active
-                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-                    }
+						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+						
+                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
+					}
 
                     if (affordableDroneConsumer.State == DroneConsumerState.Active)
 					{
-						// Try to upgrade to focused
+						Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Try to upgrade to focused");
+						
+                        // Try to upgrade to focused
 						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+					
+                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
 					}
                 }
             }

@@ -41,7 +41,9 @@ namespace BattleCruisers.AI
             // otherwise miss started construction event for first building :) )
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.LevelNum, levelInfo.AICruiser);
             // FELIX  Create air factory manager :)
-			
+
+            new DroneConsumerFocusManager(levelInfo.AICruiser);
+
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(

@@ -37,8 +37,11 @@ namespace BattleCruisers.Utils
 		public const string PROGRESS_BARS = "ProgressBars";
 		public const string UI_MANAGER = "UIManager";
 
-		// Other
+        //AI
 		public const string AI = "AI";
+        public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
+
+        // Other
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string CRUISER = "Cruiser";
 		public const string DRONES = "Drones";
@@ -94,8 +97,11 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 
-			// Other
+            // AI
 			tagsToActiveness.Add(Tags.AI, false);
+            tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, true);
+
+            // Other
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.DRONES, false);

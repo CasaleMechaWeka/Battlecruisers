@@ -20,11 +20,12 @@ namespace BattleCruisers.Tests.AI
 		[SetUp]
 		public void SetuUp()
 		{
-            _aiCruiser = Substitute.For<ICruiserController>();
             _droneManager = Substitute.For<IDroneManager>();
             _droneManager.NumOfDrones = 12;
+			_aiCruiser = Substitute.For<ICruiserController>();
+            _aiCruiser.DroneManager.Returns(_droneManager);
 
-            new DroneConsumerFocusManager(_aiCruiser, _droneManager);
+            new DroneConsumerFocusManager(_aiCruiser);
 
             _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
             _factory = Substitute.For<IFactory>();
