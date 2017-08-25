@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Drones
 {
-	/// <summary>
-	/// Only one drone consumer (DC) can be focused at a time (focused 
-	/// meaning they have more than their required number of drones).
-	/// 
-	/// If a DC is focused they are the highest priority DC, and any 
-	/// newly available drones will go to them.
-	/// </summary>
-	public class DroneManager : IDroneManager
+    /// <summary>
+    /// Only one drone consumer (DC) can be focused at a time (focused 
+    /// meaning they have more than their required number of drones).
+    /// 
+    /// If a DC is focused they are the highest priority DC, and any 
+    /// newly available drones will go to them.
+    /// </summary>
+    public class DroneManager : IDroneManager
 	{
 		private IList<IDroneConsumer> _droneConsumers;
-        public ReadOnlyCollection<IDroneConsumer> DroneConsumers { get; private set; }
 
 		private int _numOfDrones;
 		public int NumOfDrones
@@ -68,12 +66,10 @@ namespace BattleCruisers.Drones
 		}
 
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
-        public event EventHandler DroneConsumersChanged;
 
         public DroneManager()
 		{
 			_droneConsumers = new List<IDroneConsumer>();
-            DroneConsumers = new ReadOnlyCollection<IDroneConsumer>(_droneConsumers);
 			_numOfDrones = 0;
 		}
 
@@ -121,8 +117,6 @@ namespace BattleCruisers.Drones
 			{
 				AssignSpareDrones(numOfSpareDrones);
 			}
-
-			EmitDroneConsumersChangedEvent();
 		}
 
 		/// <summary>
@@ -147,8 +141,6 @@ namespace BattleCruisers.Drones
 				}
 				droneConsumer.NumOfDrones = 0;
 			}
-
-            EmitDroneConsumersChangedEvent();
 		}
 
 		/// <summary>
@@ -387,13 +379,5 @@ namespace BattleCruisers.Drones
 		{
 			return _droneConsumers.LastOrDefault();
 		}
-
-        private void EmitDroneConsumersChangedEvent()
-        {
-            if (DroneConsumersChanged != null)
-            {
-                DroneConsumersChanged.Invoke(this, EventArgs.Empty);
-            }
-        }
 	}
 }
