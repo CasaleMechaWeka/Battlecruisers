@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 
-			Buildable[] buildables = FindObjectsOfType(typeof(Buildable)) as Buildable[];
+            Buildable[] buildables = FindObjectsOfType<Buildable>();
 
 			foreach (Buildable buildable in buildables)
 			{
