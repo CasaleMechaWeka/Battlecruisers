@@ -4,15 +4,12 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
 using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class ArtilleryBarrelControllerTests : MonoBehaviour 
+    public class ArtilleryBarrelControllerTests : MonoBehaviour 
 	{
 		public GameObject targetGameObject;
 
@@ -24,8 +21,9 @@ namespace BattleCruisers.Scenes.Test
 			IAngleCalculator angleCalculator = new ArtilleryAngleCalculator(new TargetPositionPredictorFactory());
 			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
 
-			BarrelController[] artilleryBarrels = GameObject.FindObjectsOfType<BarrelController>() as BarrelController[];
-			foreach (BarrelController barrel in artilleryBarrels)
+			BarrelController[] artilleryBarrels = FindObjectsOfType<BarrelController>();
+			
+            foreach (BarrelController barrel in artilleryBarrels)
 			{
 				barrel.StaticInitialise();
 				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
