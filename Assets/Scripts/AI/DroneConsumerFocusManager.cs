@@ -48,6 +48,8 @@ namespace BattleCruisers.AI
             e.Buildable.Destroyed += Buildable_Destroyed;
 
             _inProgressBuildings.Add(e.Buildable);
+
+            FocusOnNonFactoryDroneConsumer();
         }
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
@@ -70,41 +72,35 @@ namespace BattleCruisers.AI
 
         private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
         {
-            Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Factory_StartedBuildingUnit()");
+			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Factory_StartedBuildingUnit()");
+			
+            FocusOnNonFactoryDroneConsumer();
+        }
 
-            // FELIX  Create generic helper method :P
-            IFactory factory = sender as IFactory;
-            Assert.IsNotNull(factory);
-
-            if (factory.DroneConsumer.State != DroneConsumerState.Idle)
+        private void FocusOnNonFactoryDroneConsumer()
+        {
+			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
+			
+            if (_completedFactories.Any(factory => factory.DroneConsumer.State != DroneConsumerState.Idle))
             {
                 IBuildable affordableBuilding = GetAffordableInProgressBuilding();
-                Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableBuilding: " + affordableBuilding);
 
-				if (affordableBuilding != null)
+                if (affordableBuilding != null)
                 {
+					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
                     IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
-					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
 
 					if (affordableDroneConsumer.State == DroneConsumerState.Idle)
                     {
-                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Try to upgrade to active");
-						
                         // Try to upgrade to active
-						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-						
-                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
-					}
+                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+                    }
 
                     if (affordableDroneConsumer.State == DroneConsumerState.Active)
-					{
-						Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Try to upgrade to focused");
-						
+                    {
                         // Try to upgrade to focused
-						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-					
-                        Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "affordableDroneConsumer.State: " + affordableDroneConsumer.State);
-					}
+                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+                    }
                 }
             }
         }
@@ -126,7 +122,8 @@ namespace BattleCruisers.AI
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
-            IFactory destroyedFactory = e.DestroyedTarget as IFactory;
+			// FELIX  Create generic helper method :P
+			IFactory destroyedFactory = e.DestroyedTarget as IFactory;
             Assert.IsNotNull(destroyedFactory);
 
             RemoveFactory(destroyedFactory);

@@ -200,7 +200,11 @@ namespace BattleCruisers.Buildables
             SetupDroneConsumer(numOfDronesRequired);
 
 			EnableRenderers(false);
-			BuildableState = BuildableState.InProgress;
+
+            if (DroneConsumer.State != DroneConsumerState.Idle)
+            {
+                BuildableState = BuildableState.InProgress;
+			}
 
 			if (StartedConstruction != null)
 			{

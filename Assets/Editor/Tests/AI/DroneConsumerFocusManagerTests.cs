@@ -39,40 +39,40 @@ namespace BattleCruisers.Tests.AI
 		}
 
 		[Test]
-		public void FactoryStartedBuildingUnit_FactoryIdle_DoesNothing()
+		public void FocusOnNonFactoryDroneConsumer_FactoryIdle_DoesNothing()
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Idle);
 
-            EmitFactoryStartedBuildingUnit();
+            EmitFocusOnNonFactoryDroneConsumer();
 
             _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
         }
 
         [Test]
-        public void FactoryStartedBuildingUnit_NoInProgressBuildings_DoesNothing()
+        public void FocusOnNonFactoryDroneConsumer_NoInProgressBuildings_DoesNothing()
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-            EmitFactoryStartedBuildingUnit();
+            EmitFocusOnNonFactoryDroneConsumer();
 
             _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
         }
 
 		[Test]
-		public void FactoryStartedBuildingUnit_FocusedInProgressBuildingExists_DoesNothing()
+		public void FocusOnNonFactoryDroneConsumer_FocusedInProgressBuildingExists_DoesNothing()
 		{
 			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Focused);
             _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-			EmitFactoryStartedBuildingUnit();
+			EmitFocusOnNonFactoryDroneConsumer();
 
 			_droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
 		}
 
         [Test]
-        public void FactoryStartedBuildingUnit_NoAffordableInProgressBuilding_DoesNothing()
+        public void FocusOnNonFactoryDroneConsumer_NoAffordableInProgressBuilding_DoesNothing()
 		{
 			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
@@ -82,13 +82,13 @@ namespace BattleCruisers.Tests.AI
 
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-			EmitFactoryStartedBuildingUnit();
+			EmitFocusOnNonFactoryDroneConsumer();
 
 			_droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
 		}
 
         [Test]
-        public void FactoryStartedBuildingUnit_FactoryNotIdle_AndHaveInProgessBuildings_AndNoFocusedInProgressBuilding_AndCanAffordInProgressBuilding_FocusesOnInProgressBuilding()
+        public void FocusOnNonFactoryDroneConsumer_FactoryNotIdle_AndHaveInProgessBuildings_AndNoFocusedInProgressBuilding_AndCanAffordInProgressBuilding_FocusesOnInProgressBuilding()
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
@@ -97,13 +97,33 @@ namespace BattleCruisers.Tests.AI
             _inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-            EmitFactoryStartedBuildingUnit();
+            EmitFocusOnNonFactoryDroneConsumer();
 
             // One toggle for Idle => Active, another for Active => Focused
             _droneManager.Received(requiredNumberOfCalls: 2).ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
         }
+
+        [Test]
+        public void BuildingStartedConstruction_AlsoTriggers_FocusOnNonFactoryDroneConsumer()
+        {
+            // Create active factory
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_factory));
+            _factory.CompletedBuildable += Raise.Event();
+			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
+
+			// Setup in progress building
+			_inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Idle, DroneConsumerState.Active);
+			int numOfDronesRequired = _droneManager.NumOfDrones - 1;
+			_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
+
+            // Trigger FocusOnNonFactoryDroneConsumer()
+			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+
+			// One toggle for Idle => Active, another for Active => Focused
+			_droneManager.Received(requiredNumberOfCalls: 2).ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
+		}
 		
-		private void EmitFactoryStartedBuildingUnit()
+		private void EmitFocusOnNonFactoryDroneConsumer()
 		{
             _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_factory));
 			_factory.CompletedBuildable += Raise.Event();
