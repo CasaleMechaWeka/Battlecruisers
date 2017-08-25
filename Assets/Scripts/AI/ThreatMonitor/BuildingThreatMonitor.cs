@@ -4,6 +4,7 @@ using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.ThreatMonitors
@@ -56,8 +57,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
-            TBuilding completedBuilding = sender as TBuilding;
-            Assert.IsNotNull(completedBuilding);
+            TBuilding completedBuilding = sender.Parse<TBuilding>();
             completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
             EvaluateThreatLevel();

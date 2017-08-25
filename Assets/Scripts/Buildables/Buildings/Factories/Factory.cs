@@ -126,8 +126,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{ 
 			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;
 
-			IUnit unit = sender as IUnit;
-			Assert.IsNotNull(unit);
+            IUnit unit = sender.Parse<IUnit>();
 			_lastUnitProduced = unit;
 
             if (StartedBuildingUnit != null)

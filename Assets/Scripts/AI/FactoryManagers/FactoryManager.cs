@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -46,7 +45,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
         {
-            IFactory factory = ParseSender(sender);
+			IFactory factory = sender.Parse<IFactory>();
 
             factory.UnitWrapper = _unitChooser.ChosenUnit;
             factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
@@ -54,24 +53,17 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedConstructionEventArgs e)
         {
-            IFactory factory = ParseSender(sender);
+			IFactory factory = sender.Parse<IFactory>();
             factory.UnitWrapper = _unitChooser.ChosenUnit;
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
-            IFactory factory = ParseSender(sender);
+            IFactory factory = sender.Parse<IFactory>();
 
             factory.CompletedBuildable -= Factory_CompletedBuildable;
             factory.Destroyed -= Factory_Destroyed;
             factory.CompletedBuildingUnit -= Factory_CompletedBuildingUnit;
-        }
-
-        private IFactory ParseSender(object sender)
-        {
-            IFactory factory = sender as IFactory;
-            Assert.IsNotNull(factory);
-            return factory;
         }
 
         public void Dispose()

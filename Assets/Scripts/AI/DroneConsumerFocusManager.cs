@@ -54,8 +54,7 @@ namespace BattleCruisers.AI
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
         {
-            IBuildable completedBuildable = sender as IBuildable;
-            Assert.IsNotNull(completedBuildable);
+            IBuildable completedBuildable = sender.Parse<IBuildable>();
 
             RemoveInProgressBuilding(completedBuildable);
 
@@ -115,18 +114,13 @@ namespace BattleCruisers.AI
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
-			// FELIX  Create generic helper method :P
-			IFactory destroyedFactory = e.DestroyedTarget as IFactory;
-            Assert.IsNotNull(destroyedFactory);
-
+            IFactory destroyedFactory = e.DestroyedTarget.Parse<IFactory>();
             RemoveFactory(destroyedFactory);
         }
 
         private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {
-            IBuildable destroyedBuildable = e.DestroyedTarget as IBuildable;
-            Assert.IsNotNull(destroyedBuildable);
-
+            IBuildable destroyedBuildable = e.DestroyedTarget.Parse<IBuildable>();
             RemoveInProgressBuilding(destroyedBuildable);
 		}
 

@@ -38,5 +38,12 @@ namespace BattleCruisers.Utils
         {
             return enumerable.OrderBy(item => Random.value);
         }
+
+        public static T Parse<T>(this object objToParse) where T : class
+        {
+            T parsedObj = objToParse as T;
+            Assert.IsNotNull(parsedObj);
+            return parsedObj;
+        }
 	}
 }
