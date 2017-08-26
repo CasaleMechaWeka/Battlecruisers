@@ -8,21 +8,19 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    // FELIX  Rename!
-
 	/// <summary>
 	/// Chooses the most expensive acceptable unit.
 	/// 
 	/// Updates the chosen unit every time the cruiser's number of drones changes.
 	/// </summary>
-	public abstract class CostUnitChooser : IUnitChooser
+	public abstract class MostExpensiveUnitChooserBase : IUnitChooser
 	{
 		private readonly IList<IBuildableWrapper<IUnit>> _units;
 		private readonly IDroneManager _droneManager;
 
 		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
 
-		public CostUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
+		public MostExpensiveUnitChooserBase(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
 		{
 			Helper.AssertIsNotNull(units, droneManager);
 			Assert.IsTrue(units.Count != 0);

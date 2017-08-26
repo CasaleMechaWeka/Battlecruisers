@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// Chooses the most expensive unit the cruiser can afford, while mainting
     /// a specified number of spare drones.
     /// </summary>
-    public class ConsiderateUnitChooser : CostUnitChooser
+    public class ConsiderateUnitChooser : MostExpensiveUnitChooserBase
 	{
         private readonly int _spareDroneNum;
 

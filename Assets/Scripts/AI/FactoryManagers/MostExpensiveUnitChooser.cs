@@ -8,7 +8,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// <summary>
     /// Chooses the most expensive unit the cruiser can afford (has enough drones for).
     /// </summary>
-    public class MostExpensiveUnitChooser : CostUnitChooser
+    public class MostExpensiveUnitChooser : MostExpensiveUnitChooserBase
 	{
         public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
             : base(units, droneManager)
