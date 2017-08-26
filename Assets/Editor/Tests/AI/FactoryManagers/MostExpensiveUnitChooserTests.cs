@@ -9,7 +9,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
-	public class MostEpensiveUnitChooserTests
+	public class MostExpensiveUnitChooserTests
 	{
         private IUnitChooser _unitChooser;
 		private IDroneManager _droneManager;
