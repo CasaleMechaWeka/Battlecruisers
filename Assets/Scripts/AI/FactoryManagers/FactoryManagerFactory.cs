@@ -31,7 +31,7 @@ namespace BattleCruisers.AI.FactoryManagers
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
             // FELIX  Create with input from level strategy?
-            IUnitChooser unitChooser = new MostExpensiveUnitChooserBase(availableShips, friendlyCruiser.DroneManager, new BufferUnitFilter(droneBuffer: 4));
+            IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips, friendlyCruiser.DroneManager, new BufferUnitFilter(droneBuffer: 4));
 
             return new FactoryManager(UnitCategory.Naval, friendlyCruiser, unitChooser);
         }

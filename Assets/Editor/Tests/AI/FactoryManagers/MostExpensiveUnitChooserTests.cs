@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 			_droneManager = Substitute.For<IDroneManager>();
 			_droneManager.NumOfDrones.Returns(12);
 
-            _unitChooser = new MostExpensiveUnitChooserBase(_units, _droneManager, new AffordableUnitFilter());
+            _unitChooser = new MostExpensiveUnitChooser(_units, _droneManager, new AffordableUnitFilter());
 		}
 
         private IBuildableWrapper<IUnit> CreateUnit(int numOfDrones)
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 		public void Constructor_EmptyUnitsThrows()
 		{
             IList<IBuildableWrapper<IUnit>> units = new List<IBuildableWrapper<IUnit>>();
-            Assert.Throws<UnityAsserts.AssertionException>(() => new MostExpensiveUnitChooserBase(units, _droneManager, new AffordableUnitFilter()));
+            Assert.Throws<UnityAsserts.AssertionException>(() => new MostExpensiveUnitChooser(units, _droneManager, new AffordableUnitFilter()));
 		}
 
 		[Test]
