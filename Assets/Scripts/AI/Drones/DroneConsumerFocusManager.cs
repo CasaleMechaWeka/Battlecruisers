@@ -8,7 +8,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI
+namespace BattleCruisers.AI.Drones
 {
     /// <summary>
     /// Manages which drone consumer should be in focus, thus having the most
