@@ -22,9 +22,11 @@ namespace BattleCruisers.Tests.AI.Drones
 		public void SetuUp()
 		{
             _strategy = Substitute.For<IDroneFocusingStrategy>();
-			_strategy.EvaluateWhenUnitStarted.Returns(true);
-			_strategy.EvaluateWhenBuildingStarted.Returns(true);
-            _strategy.ForceInProgressBuildingToFocused.Returns(false);
+
+            // FELIX  Remove!
+			//_strategy.EvaluateWhenUnitStarted.Returns(true);
+			//_strategy.EvaluateWhenBuildingStarted.Returns(true);
+            //_strategy.ForceInProgressBuildingToFocused.Returns(false);
 
             _droneManager = Substitute.For<IDroneManager>();
             _droneManager.NumOfDrones = 12;
@@ -44,12 +46,13 @@ namespace BattleCruisers.Tests.AI.Drones
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
+		#region FocusOnNonFactoryDroneConsumer
 		[Test]
 		public void FocusOnNonFactoryDroneConsumer_FactoryIdle_DoesNothing()
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Idle);
 
-            FactoryStartBuildingUnit();
+            TriggerFocusOnNonFactoryDroneConsumer();
 
             _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
         }
@@ -59,7 +62,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-            FactoryStartBuildingUnit();
+            TriggerFocusOnNonFactoryDroneConsumer();
 
             _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
         }
@@ -72,7 +75,7 @@ namespace BattleCruisers.Tests.AI.Drones
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Focused);
             _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-			FactoryStartBuildingUnit();
+			TriggerFocusOnNonFactoryDroneConsumer();
 
 			_droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
 		}
@@ -88,47 +91,112 @@ namespace BattleCruisers.Tests.AI.Drones
 
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
 
-			FactoryStartBuildingUnit();
+			TriggerFocusOnNonFactoryDroneConsumer();
 
 			_droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
 		}
 
         [Test]
-        public void FocusOnNonFactoryDroneConsumer_FactoryNotIdle_AndHaveInProgessBuildings_AndNoFocusedInProgressBuilding_AndCanAffordInProgressBuilding_FocusesOnInProgressBuilding()
+        public void FocusOnNonFactoryDroneConsumer_GoesActive()
         {
             _factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
-            int numOfDronesRequired = _droneManager.NumOfDrones - 1;
-            _inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
+			SetupInProgressBuilding();
 			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+
+			_strategy.ForceInProgressBuildingToFocused.Returns(false);
+            TriggerFocusOnNonFactoryDroneConsumer();
+
+            // Idle => Active
+			_droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
+        }
+
+		[Test]
+		public void FocusOnNonFactoryDroneConsumer_GoesFocused()
+		{
+			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
+
+            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Idle, DroneConsumerState.Active);
+			int numOfDronesRequired = _droneManager.NumOfDrones - 1;
+			_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
+			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+
+			_strategy.ForceInProgressBuildingToFocused.Returns(true);
+			TriggerFocusOnNonFactoryDroneConsumer();
+
+			// Idle => Active, Active => Focused
+            _droneManager.Received(requiredNumberOfCalls: 2).ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
+		}
+		#endregion FocusOnNonFactoryDroneConsumer
+
+		#region UnitStartedConstruction
+        [Test]
+        public void UnitStartedConstruction_DoesNotEvaluate()
+        {
+            _strategy.EvaluateWhenUnitStarted.Returns(false);
+
+            SetupInProgressBuilding();
 
             FactoryStartBuildingUnit();
 
-            // Idle => Active
+			// No focusing
+			_droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
+        }
+		#endregion UnitStartedConstruction
+
+		#region BuildingStartedConstruction
+		[Test]
+        public void BuildingStartedConstruction_AlsoTriggers_FocusOnNonFactoryDroneConsumer()
+        {
+            CreateActiveFactory();
+
+            SetupInProgressBuilding();
+
+			_strategy.ForceInProgressBuildingToFocused.Returns(false);
+            _strategy.EvaluateWhenBuildingStarted.Returns(true);
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+
+            // Focusing:  Idle => Active
             _droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
         }
 
         [Test]
-        public void BuildingStartedConstruction_AlsoTriggers_FocusOnNonFactoryDroneConsumer()
+        public void BuildingStartedConstruction_DoesNotEvalute()
         {
-            // Create active factory
-            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_factory));
-            _factory.CompletedBuildable += Raise.Event();
-			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
+			_strategy.EvaluateWhenBuildingStarted.Returns(false);
 
-			// Setup in progress building
+            CreateActiveFactory();
+
+            SetupInProgressBuilding();
+
+			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+
+            // No focusing
+            _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
+		}
+		#endregion BuildingStartedConstruction
+
+		private void SetupInProgressBuilding()
+		{
 			_inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
 			int numOfDronesRequired = _droneManager.NumOfDrones - 1;
 			_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
-
-            // Trigger FocusOnNonFactoryDroneConsumer()
-			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
-
-			// Idle => Active
-			_droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
 		}
 		
+		private void CreateActiveFactory()
+		{
+			_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_factory));
+			_factory.CompletedBuildable += Raise.Event();
+			_factoryDroneConsumer.State.Returns(DroneConsumerState.Active);
+		}
+		
+        private void TriggerFocusOnNonFactoryDroneConsumer()
+        {
+            _strategy.EvaluateWhenUnitStarted.Returns(true);
+
+            FactoryStartBuildingUnit();
+        }
+
         private void FactoryStartBuildingUnit()
 		{
             _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_factory));
