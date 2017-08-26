@@ -44,6 +44,8 @@ namespace BattleCruisers.Buildables
 		private HealthBarController _healthBar;
 
         private const float MAX_BUILD_PROGRESS = 1.0f;
+        // FELIX  TEMP
+        private const float BUILD_CHEAT_MULTIPLIER = 50;
 
 		#region Properties
 		public BuildableState BuildableState { get; private set; }
@@ -217,7 +219,7 @@ namespace BattleCruisers.Buildables
 			if (BuildableState == BuildableState.InProgress)
 			{
 				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
-				_buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * Time.deltaTime;
+                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
 
 				if (BuildableProgress != null)
 				{

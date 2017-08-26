@@ -85,9 +85,6 @@ namespace BattleCruisers.Scenes
 			rotation.eulerAngles = new Vector3(0, 180, 0);
 			_aiCruiser.transform.rotation = rotation;
 
-			// FELIX  TEMP
-			_aiCruiser.numOfDrones = 500;
-
 
 			// UIManager
 			uiManager.Initialise(_playerCruiser, _aiCruiser);
