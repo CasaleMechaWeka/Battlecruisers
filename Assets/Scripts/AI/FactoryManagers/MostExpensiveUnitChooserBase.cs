@@ -8,25 +8,29 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-	/// <summary>
+    // FELIX  Rename!
+
+    /// <summary>
 	/// Chooses the most expensive acceptable unit.
 	/// 
 	/// Updates the chosen unit every time the cruiser's number of drones changes.
 	/// </summary>
-	public abstract class MostExpensiveUnitChooserBase : IUnitChooser
+	public class MostExpensiveUnitChooserBase : IUnitChooser
 	{
 		private readonly IList<IBuildableWrapper<IUnit>> _units;
 		private readonly IDroneManager _droneManager;
+        private readonly IUnitFilter _unitFilter;
 
 		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
 
-		public MostExpensiveUnitChooserBase(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
+        public MostExpensiveUnitChooserBase(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager, IUnitFilter unitFilter)
 		{
-			Helper.AssertIsNotNull(units, droneManager);
+            Helper.AssertIsNotNull(units, droneManager, unitFilter);
 			Assert.IsTrue(units.Count != 0);
 
 			_units = units;
 			_droneManager = droneManager;
+            _unitFilter = unitFilter;
 
 			_droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
 
@@ -42,12 +46,10 @@ namespace BattleCruisers.AI.FactoryManagers
 		{
 			ChosenUnit =
 				_units
-					.Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones)
+                    .Where(wrapper => _unitFilter.IsBuildableAcceptable(wrapper.Buildable.NumOfDronesRequired, _droneManager.NumOfDrones))
 					.OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
 					.FirstOrDefault();
 		}
-
-        protected abstract bool IsBuildableAcceptable(int buildableDroneNum, int droneManagerDroneNum);
 
 		public void Dispose()
 		{
