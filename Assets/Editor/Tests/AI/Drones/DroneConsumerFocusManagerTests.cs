@@ -7,7 +7,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.AI
+namespace BattleCruisers.Tests.AI.Drones
 {
     public class DroneConsumerFocusManagerTests
 	{
