@@ -24,15 +24,17 @@ namespace BattleCruisers.AI.Drones
     /// </summary>
     public class DroneConsumerFocusManager : IDisposable
     {
+        private readonly IDroneFocusingStrategy _strategy;
         private readonly ICruiserController _aiCruiser;
         private readonly IDroneManager _droneManager;
         private readonly IList<IFactory> _completedFactories;
         private readonly IList<IBuildable> _inProgressBuildings;
 
-        public DroneConsumerFocusManager(ICruiserController aiCruiser)
+        public DroneConsumerFocusManager(IDroneFocusingStrategy strategy, ICruiserController aiCruiser)
         {
-            Helper.AssertIsNotNull(aiCruiser, aiCruiser.DroneManager);
+            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager);
 
+            _strategy = strategy;
             _aiCruiser = aiCruiser;
             _droneManager = _aiCruiser.DroneManager;
 
@@ -49,7 +51,10 @@ namespace BattleCruisers.AI.Drones
 
             _inProgressBuildings.Add(e.Buildable);
 
-            FocusOnNonFactoryDroneConsumer();
+            if (_strategy.EvaluateWhenBuildingStarted)
+            {
+                FocusOnNonFactoryDroneConsumer();
+			}
         }
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
@@ -72,8 +77,11 @@ namespace BattleCruisers.AI.Drones
         private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Factory_StartedBuildingUnit()");
-			
-            FocusOnNonFactoryDroneConsumer();
+
+            if (_strategy.EvaluateWhenUnitStarted)
+            {
+                FocusOnNonFactoryDroneConsumer();
+			}
         }
 
         private void FocusOnNonFactoryDroneConsumer()
@@ -82,27 +90,36 @@ namespace BattleCruisers.AI.Drones
 			
             if (_completedFactories.Any(factory => factory.DroneConsumer.State != DroneConsumerState.Idle))
             {
-                IBuildable idleAffordableBuilding = GetIdleAffordableBuilding();
+                IBuildable AffordableBuilding = GetNonFocusedAffordableBuilding();
 
-                if (idleAffordableBuilding != null)
+                if (AffordableBuilding != null)
                 {
-					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + idleAffordableBuilding);
+					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + AffordableBuilding);
      
-                    IDroneConsumer idleAffordableDroneConsumer = idleAffordableBuilding.DroneConsumer;
+                    IDroneConsumer affordableDroneConsumer = AffordableBuilding.DroneConsumer;
 
-                    // Try to upgrade to Active, but NOT Focused, so that any left over
-                    // drones can be used by completed factories.
-					_droneManager.ToggleDroneConsumerFocus(idleAffordableDroneConsumer);
+                    // Try to upgrade: Idle => Active
+                    if (affordableDroneConsumer.State == DroneConsumerState.Idle)
+                    {
+                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+					}
+
+					// Try to upgrade: Active => Focused
+                    if (affordableDroneConsumer.State == DroneConsumerState.Active
+                        && _strategy.ForceInProgressBuildingToFocused)
+					{
+						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+					}
                 }
             }
         }
 
-        private IBuildable GetIdleAffordableBuilding()
+        private IBuildable GetNonFocusedAffordableBuilding()
         {
             IBuildable affordableBuilding = null;
 
             if (_inProgressBuildings.Count != 0
-                && _inProgressBuildings.All(building => building.DroneConsumer.State == DroneConsumerState.Idle))
+                && _inProgressBuildings.All(building => building.DroneConsumer.State != DroneConsumerState.Focused))
             {
                 affordableBuilding
 				    = _inProgressBuildings
