@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.UI.Commands;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -54,10 +55,13 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		public virtual void StaticInitialise()
+        public IParameterisedCommand<float> Repair { get; private set; }
+
+        public virtual void StaticInitialise()
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
+            Repair = new ParameterisedCommand<float>(RepairCommandExecute, CanRepairCommandExecute);
 		}
 
 		protected virtual void OnFullyRepaired() { }
@@ -102,12 +106,17 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnTakeDamage() { }
 
-		protected void Repair(float repairAmount)
+		protected void RepairCommandExecute(float repairAmount)
 		{
 			Assert.IsTrue(Health < maxHealth);
 			Health += repairAmount;
 			OnRepair();
 		}
+
+        protected virtual bool CanRepairCommandExecute()
+        {
+            return false;
+        }
 
 		protected virtual void OnRepair() { }
 	}

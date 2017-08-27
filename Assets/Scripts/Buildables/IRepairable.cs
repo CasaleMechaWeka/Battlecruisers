@@ -4,6 +4,6 @@ namespace BattleCruisers.Buildables
 {
     public interface IRepairable
     {
-        IParameterisedCommand<int> Repair { get; }
+        IParameterisedCommand<float> Repair { get; }
     }
 }

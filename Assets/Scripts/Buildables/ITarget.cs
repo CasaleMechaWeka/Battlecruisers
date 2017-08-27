@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables
 		Low, Medium, High
 	}
 
-	public interface ITarget : IDamagable
+    public interface ITarget : IDamagable, IRepairable
 	{
 		Faction Faction { get; }
 		TargetType TargetType { get; }

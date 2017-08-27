@@ -64,7 +64,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 						EnableShield();
 					}
 
-					Repair(shieldRechargeRatePerS * Time.deltaTime);
+					RepairCommandExecute(shieldRechargeRatePerS * Time.deltaTime);
 				}
 			}
 		}
