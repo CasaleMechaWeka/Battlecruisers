@@ -19,7 +19,7 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
 		private ICruiser _enemyCruiser;
 		private SpriteRenderer _renderer;
-        private IRepairManager _repairManager;
+        private RepairManager _repairManager;
 
 		public int numOfDrones;
 		public float yAdjustmentInM;
@@ -64,7 +64,7 @@ namespace BattleCruisers.Cruisers
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-            IFactoryProvider factoryProvider, Direction facingDirection, IRepairManager repairManager)
+            IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager)
         {
             Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
 
@@ -80,6 +80,7 @@ namespace BattleCruisers.Cruisers
             _repairManager = repairManager;
 
             _healthBarController.Initialise(this);
+            _repairManager.Initialise(this);
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

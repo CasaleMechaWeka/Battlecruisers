@@ -10,13 +10,14 @@ namespace BattleCruisers.Buildables
 {
     public class RepairManager : IRepairManager
     {
-        private readonly ICruiser _cruiser;
-        private readonly IDroneConsumerProvider _droneConsumerProvider;
-        private readonly IDictionary<IRepairable, IDroneConsumer> _repairableToDroneConsumer;
+        private ICruiser _cruiser;
+        private IDroneConsumerProvider _droneConsumerProvider;
+        private IDictionary<IRepairable, IDroneConsumer> _repairableToDroneConsumer;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
-        public RepairManager(ICruiser cruiser)
+        // Not constructor because of circular dependency between Cruiser and RepairManager
+        public void Initialise(ICruiser cruiser)
         {
             Helper.AssertIsNotNull(cruiser, cruiser.DroneConsumerProvider);
 

@@ -2,16 +2,15 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.UI.Commands;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables
 {
-	public class RepairManagerTests
+    public class RepairManagerTests
 	{
-        private IRepairManager _repairManager;
+        private RepairManager _repairManager;
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
         private IDroneConsumer _droneConsumer;
@@ -45,25 +44,27 @@ namespace BattleCruisers.Tests.Buildables
 
             _repairAmount = DELTA_TIME_IN_S * _droneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S;
 
+            _repairManager = new RepairManager();
+
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]
-		public void Constructor_AddsCruiserAsRepairable_NotRepairable_DoesNotCreateDroneConsumer()
+		public void Initialise_AddsCruiserAsRepairable_NotRepairable_DoesNotCreateDroneConsumer()
 		{
             _cruiserRepairCommand.CanExecute.Returns(false);
 
-            _repairManager = new RepairManager(_cruiser);
+            _repairManager.Initialise(_cruiser);
 
             _droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99);
 		}
 
 		[Test]
-        public void Constructor_AddsCruiserAsRepairable_Repairable_CreatesDroneConsumer()
+        public void Initialise_AddsCruiserAsRepairable_Repairable_CreatesDroneConsumer()
 		{
 			_cruiserRepairCommand.CanExecute.Returns(true);
 
-			_repairManager = new RepairManager(_cruiser);
+			_repairManager.Initialise(_cruiser);
 
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
 		}
@@ -230,14 +231,14 @@ namespace BattleCruisers.Tests.Buildables
         private void AddRepairableCruiser()
         {
             _cruiserRepairCommand.CanExecute.Returns(true);
-            _repairManager = new RepairManager(_cruiser);
+			_repairManager.Initialise(_cruiser);
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
         }
 
         private void AddUnrepairableCruiser()
         {
 			_cruiserRepairCommand.CanExecute.Returns(false);
-			_repairManager = new RepairManager(_cruiser);
+			_repairManager.Initialise(_cruiser);
         }
 	}
 }
