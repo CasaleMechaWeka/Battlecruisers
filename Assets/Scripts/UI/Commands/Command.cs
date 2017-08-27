@@ -4,38 +4,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Commands
 {
-    public class Command : ICommand
+    public class Command :  CommandBase, ICommand
 	{
         private readonly Action _action;
-        private readonly Func<bool> _canExecute;
-
-		public bool CanExecute 
-        { 
-            get { return _canExecute.Invoke(); }
-        }
-
-		public event EventHandler CanExecuteChanged;
 
         public Command(Action action, Func<bool> canExecute)
+            : base(canExecute)
         {
             Helper.AssertIsNotNull(action, canExecute);
-
             _action = action;
-            _canExecute = canExecute;
         }
 
 		public void Execute()
         {
             Assert.IsTrue(CanExecute);
             _action.Invoke();
-        }
-
-		public void EmitCanExecuteChanged()
-        {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged.Invoke(this, EventArgs.Empty);
-            }
         }
 	}
 }
