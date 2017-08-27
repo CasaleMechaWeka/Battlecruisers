@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
@@ -61,7 +62,6 @@ namespace BattleCruisers.Targets
         {
             return new DummyTargetFilter(isMatchResult);
         }
-
 		#endregion TargetFilters
 
 		#region TargetRankers
@@ -69,6 +69,13 @@ namespace BattleCruisers.Targets
 		{
 			return new EqualTargetRanker();
 		}
-		#endregion TargetRankers
+        #endregion TargetRankers
+
+        #region TargetProviders
+        public ITargetProvider CreateStaticTargetProvider(ITarget target)
+		{
+            return new StaticTargetProvider(target);
+		}
+		#endregion TargetProviders
 	}
 }

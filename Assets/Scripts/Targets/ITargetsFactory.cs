@@ -27,5 +27,8 @@ namespace BattleCruisers.Targets
 
 		// Rankers
 		ITargetRanker CreateEqualTargetRanker();
+
+        // Providers
+        ITargetProvider CreateStaticTargetProvider(ITarget target);
 	}
 }
