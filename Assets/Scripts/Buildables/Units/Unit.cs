@@ -84,5 +84,11 @@ namespace BattleCruisers.Buildables.Units
 					throw new ArgumentException();
 			}
 		}
+
+		protected override bool CanRepairCommandExecute()
+		{
+			// Cannot repair units :)
+			return false;
+		}
 	}
 }

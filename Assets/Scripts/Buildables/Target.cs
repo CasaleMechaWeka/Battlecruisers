@@ -57,6 +57,8 @@ namespace BattleCruisers.Buildables
 
         public IParameterisedCommand<float> Repair { get; private set; }
 
+        private bool IsFullHealth { get { return Health == maxHealth; } }
+
         public virtual void StaticInitialise()
 		{
 			_health = maxHealth;
@@ -95,6 +97,8 @@ namespace BattleCruisers.Buildables
 
 		public void TakeDamage(float damageAmount)
 		{
+            bool wasFullHealth = IsFullHealth;
+
             // Guard against the rare case where a target takes damage after it has
             // been destroyed, in the same frame it was destroyed in.
             if (Health > 0)
@@ -102,6 +106,11 @@ namespace BattleCruisers.Buildables
 	            Health -= damageAmount;
 	            OnTakeDamage();
 			}
+
+            if (wasFullHealth)
+            {
+                Repair.EmitCanExecuteChanged();
+            }
 		}
 
 		protected virtual void OnTakeDamage() { }
@@ -111,11 +120,16 @@ namespace BattleCruisers.Buildables
 			Assert.IsTrue(Health < maxHealth);
 			Health += repairAmount;
 			OnRepair();
+
+            if (IsFullHealth)
+            {
+                Repair.EmitCanExecuteChanged();
+            }
 		}
 
         protected virtual bool CanRepairCommandExecute()
         {
-            return false;
+            return Health < maxHealth;
         }
 
 		protected virtual void OnRepair() { }

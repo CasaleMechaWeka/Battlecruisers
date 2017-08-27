@@ -254,6 +254,8 @@ namespace BattleCruisers.Buildables
 			{
 				CompletedBuildable.Invoke(this, EventArgs.Empty);
 			}
+
+            Repair.EmitCanExecuteChanged();
 		}
 
 		protected virtual void EnableRenderers(bool enabled)
@@ -294,6 +296,13 @@ namespace BattleCruisers.Buildables
 			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
 			DroneConsumer = null;
 		}
+
+        protected override bool CanRepairCommandExecute()
+        {
+            return
+                base.CanRepairCommandExecute()
+                && BuildableState == BuildableState.Completed;       
+        }
 
 		public virtual void InitiateDelete() { }
 	}
