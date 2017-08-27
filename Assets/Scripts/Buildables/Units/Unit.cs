@@ -8,16 +8,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public enum UnitCategory
-	{
-		Naval, Aircraft, Untouchable
-	}
-
-	public enum Direction
-	{
-		Left, Right, Up, Down
-	}
-
     public abstract class Unit : Buildable, IUnit, IPointerClickHandler
 	{
 		public UnitCategory category;
