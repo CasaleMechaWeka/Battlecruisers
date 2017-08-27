@@ -8,56 +8,59 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables
 {
     public abstract class Target : MonoBehaviour, ITarget
-	{
-		public float maxHealth;
+    {
+        public float maxHealth;
 
-		public bool IsDestroyed { get { return Health == 0; } }
-		public Faction Faction { get; protected set; }
-		public GameObject GameObject { get { return gameObject; } }
-		public abstract TargetType TargetType { get; }
-		public virtual bool IsDetectable { get { return true; } }
-		public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
-		public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
-		public Vector2 Position { get { return gameObject.transform.position; } }
+        public bool IsDestroyed { get { return Health == 0; } }
+        public Faction Faction { get; protected set; }
+        public GameObject GameObject { get { return gameObject; } }
+        public abstract TargetType TargetType { get; }
+        public virtual bool IsDetectable { get { return true; } }
+        public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
+        public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
+        public Vector2 Position { get { return gameObject.transform.position; } }
 
-		public event EventHandler<DestroyedEventArgs> Destroyed;
-		public event EventHandler<HealthChangedEventArgs> HealthChanged;
+        public event EventHandler<DestroyedEventArgs> Destroyed;
+        public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
-		protected List<TargetType> _attackCapabilities;
-		public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
+        private bool IsFullHealth { get { return Health == maxHealth; } }
 
-		private float _health;
-		public float Health
-		{
-			get { return _health; }
-			private set
-			{
-				if (value >= maxHealth)
-				{
-					_health = maxHealth;
-					OnFullyRepaired();
-				}
-				else if (value <= 0)
-				{
-					_health = 0;
-					OnHealthGone();
-				}
-				else
-				{
-					_health = value;
-				}
+        protected List<TargetType> _attackCapabilities;
+        public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
 
-				if (HealthChanged != null)
-				{
-					Logging.Log(Tags.TARGET, "HealthChanged  " + this);
-					HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
-				}
-			}
-		}
+        private float _health;
+        public float Health
+        {
+            get { return _health; }
+            private set
+            {
+                if (value >= maxHealth)
+                {
+                    _health = maxHealth;
+                    OnFullyRepaired();
+                }
+                else if (value <= 0)
+                {
+                    _health = 0;
+                    OnHealthGone();
+                }
+                else
+                {
+                    _health = value;
+                }
+
+                if (HealthChanged != null)
+                {
+                    Logging.Log(Tags.TARGET, "HealthChanged  " + this);
+                    HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
+                }
+            }
+        }
 
         public IParameterisedCommand<float> RepairCommand { get; private set; }
 
-        private bool IsFullHealth { get { return Health == maxHealth; } }
+        // Seems to be an okay approximation (for cruisers at least)
+        public virtual float HealthGainPerDroneS { get { return 1; } }
 
         public virtual void StaticInitialise()
 		{

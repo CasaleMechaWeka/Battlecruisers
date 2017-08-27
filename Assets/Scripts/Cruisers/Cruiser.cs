@@ -42,7 +42,10 @@ namespace BattleCruisers.Cruisers
         public ISlotWrapper SlotWrapper { get; private set; }
 		public IFactoryProvider FactoryProvider { get; private set; }
 
-		public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+        // This seems to be a good approximtion :)
+        public override float HealthGainPerDroneS { get { return maxHealth; } }
+
+        public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         public override void StaticInitialise()

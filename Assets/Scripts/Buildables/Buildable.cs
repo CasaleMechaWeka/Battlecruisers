@@ -17,8 +17,8 @@ namespace BattleCruisers.Buildables
 {
     public abstract class Buildable : Target, IBuildable
 	{
-		private float _buildTimeInDroneSeconds;
 		private float _buildProgressInDroneSeconds;
+		private float _buildTimeInDroneSeconds;
 
 		protected IUIManager _uiManager;
 		protected ICruiser _parentCruiser;
@@ -127,6 +127,9 @@ namespace BattleCruisers.Buildables
         public SlotType SlotType { get { return slotType; } }
 
         protected abstract HealthBarController HealthBarController { get; }
+
+        private float _healthGainperDroneS;
+        public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
 		#endregion Properties
 
 		public event EventHandler StartedConstruction;
@@ -171,6 +174,7 @@ namespace BattleCruisers.Buildables
 			BuildableState = BuildableState.NotStarted;
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
+            _healthGainperDroneS = _buildTimeInDroneSeconds / maxHealth;
 			
 			OnInitialised();
 		}

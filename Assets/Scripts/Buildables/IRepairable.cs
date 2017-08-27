@@ -2,8 +2,9 @@
 
 namespace BattleCruisers.Buildables
 {
-    public interface IRepairable
+    public interface IRepairable : IDamagable
     {
+        float HealthGainPerDroneS { get; }
         IParameterisedCommand<float> RepairCommand { get; }
     }
 }

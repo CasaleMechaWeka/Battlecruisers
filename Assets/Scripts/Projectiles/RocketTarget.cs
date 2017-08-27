@@ -1,26 +1,18 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using BattleCruisers.Buildables;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-	public class RocketTarget : Target
+    public class RocketTarget : Target
 	{
 		private Rigidbody2D _rigidBody;
 
 		public override TargetType TargetType { get { return TargetType.Rocket; } }
 		public override Vector2 Velocity { get { return _rigidBody.velocity; } }
 
-		public void Initialise(Faction faction, Rigidbody2D rigidBody)
+        public void Initialise(Faction faction, Rigidbody2D rigidBody)
 		{
 			StaticInitialise();
 
