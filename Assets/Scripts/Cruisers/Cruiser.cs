@@ -19,6 +19,7 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
 		private ICruiser _enemyCruiser;
 		private SpriteRenderer _renderer;
+        private IRepairManager _repairManager;
 
 		public int numOfDrones;
 		public float yAdjustmentInM;
@@ -63,9 +64,9 @@ namespace BattleCruisers.Cruisers
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-            IFactoryProvider factoryProvider, Direction facingDirection)
+            IFactoryProvider factoryProvider, Direction facingDirection, IRepairManager repairManager)
         {
-            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider);
+            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
 
             Faction = faction;
             _enemyCruiser = enemyCruiser;
@@ -76,6 +77,7 @@ namespace BattleCruisers.Cruisers
             DroneConsumerProvider = droneConsumerProvider;
             FactoryProvider = factoryProvider;
             Direction = facingDirection;
+            _repairManager = repairManager;
 
             _healthBarController.Initialise(this);
 		}
@@ -136,6 +138,11 @@ namespace BattleCruisers.Cruisers
                 IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
 				BuildingDestroyed.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
             }
+        }
+
+        void Update()
+        {
+            _repairManager.Repair(Time.deltaTime);
         }
     }
 }

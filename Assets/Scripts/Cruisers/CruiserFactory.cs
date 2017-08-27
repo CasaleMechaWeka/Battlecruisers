@@ -27,8 +27,10 @@ namespace BattleCruisers.Cruisers
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
+            IRepairManager repairManager = new RepairManager(cruiser);
+
             cruiser.Initialise(faction, enemyCruiser, healthBar, _uiManager, droneManager,
-                droneConsumerProvider, factoryProvider, facingDirection);
+                droneConsumerProvider, factoryProvider, facingDirection, repairManager);
         }
 	}
 }
