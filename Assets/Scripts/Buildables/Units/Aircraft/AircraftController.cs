@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Targets;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -58,5 +60,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController = newMovementController;
 			_activeMovementController.DirectionChanged += _movementController_DirectionChanged;
 		}
+
+        public void Kamikaze(ICruiser target)
+        {
+            ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
+            SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, maxVelocityInMPerS, cruiserTarget));
+        }
 	}
 }
