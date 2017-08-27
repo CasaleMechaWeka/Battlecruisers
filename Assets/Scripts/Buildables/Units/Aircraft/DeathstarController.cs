@@ -1,27 +1,20 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public class DeathstarController : AircraftController
+    public class DeathstarController : AircraftController
 	{
 		private LaserBarrelController _barrelController;
 		private ITargetDetector _targetDetector;

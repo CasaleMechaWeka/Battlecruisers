@@ -1,8 +1,6 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
@@ -10,17 +8,12 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-	public class FighterController : AircraftController, ITargetConsumer, ITargetProvider
+    public class FighterController : AircraftController, ITargetConsumer, ITargetProvider
 	{
 		private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
