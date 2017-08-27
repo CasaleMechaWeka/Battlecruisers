@@ -1,13 +1,12 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
 using BattleCruisers.Targets;
-using System;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-	public class HomingMovementController : IMovementController
+    public class HomingMovementController : IMovementController
 	{
 		protected readonly Rigidbody2D _rigidBody;
 		protected readonly float _maxVelocityInMPerS;

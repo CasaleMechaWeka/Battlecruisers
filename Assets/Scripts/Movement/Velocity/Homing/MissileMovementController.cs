@@ -1,12 +1,11 @@
 ﻿using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
-using System;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-	public class MissileMovementController : HomingMovementController
+    public class MissileMovementController : HomingMovementController
 	{
 		private ITargetPositionPredictor _targetPositionPredictor;
 
