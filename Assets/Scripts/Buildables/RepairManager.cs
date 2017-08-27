@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Utils;
@@ -28,7 +29,6 @@ namespace BattleCruisers.Buildables
 
             _cruiser.StartedConstruction += _cruiser_StartedConstruction;
             _cruiser.Destroyed += _cruiser_Destroyed;
-
         }
 
         private void AddRepairable(IRepairable repairable)
@@ -101,11 +101,6 @@ namespace BattleCruisers.Buildables
 
         public void Dispose()
         {
-            foreach (IRepairable repairable in _repairableToDroneConsumer.Keys)
-            {
-                RemoveRepairable(repairable);
-            }
-
             CleanUpCruiser();
         }
 
@@ -127,6 +122,13 @@ namespace BattleCruisers.Buildables
 
         private void CleanUpCruiser()
         {
+            IList<IRepairable> repairables = _repairableToDroneConsumer.Keys.ToList();
+
+            foreach (IRepairable repairable in repairables)
+			{
+				RemoveRepairable(repairable);
+			}
+
             _cruiser.Destroyed -= _cruiser_Destroyed;
             _cruiser.StartedConstruction -= _cruiser_StartedConstruction;
         }
