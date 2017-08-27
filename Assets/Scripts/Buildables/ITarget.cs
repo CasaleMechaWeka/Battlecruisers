@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables
 
 	public interface IDamagable
 	{
-		/// <value><c>true</c> if healht is 0; otherwise, <c>false</c>.</value>
+		/// <value><c>true</c> if health is 0; otherwise, <c>false</c>.</value>
 		bool IsDestroyed { get; }
 		float Health { get; }
 		GameObject GameObject { get; }
@@ -56,7 +56,6 @@ namespace BattleCruisers.Buildables
 		event EventHandler<HealthChangedEventArgs> HealthChanged;
 
 		void TakeDamage(float damageAmount);
-		void Repair(float repairAmount);
         void Destroy();
 	}
 

@@ -102,7 +102,7 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnTakeDamage() { }
 
-		public void Repair(float repairAmount)
+		protected void Repair(float repairAmount)
 		{
 			Assert.IsTrue(Health < maxHealth);
 			Health += repairAmount;
