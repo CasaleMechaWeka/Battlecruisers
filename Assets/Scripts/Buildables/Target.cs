@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleCruisers.UI.Commands;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -57,7 +56,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public IParameterisedCommand<float> RepairCommand { get; private set; }
+        public IRepairCommand RepairCommand { get; private set; }
 
         // Seems to be an okay approximation (for cruisers at least)
         public virtual float HealthGainPerDroneS { get { return 1; } }
@@ -66,7 +65,7 @@ namespace BattleCruisers.Buildables
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
-            RepairCommand = new ParameterisedCommand<float>(RepairCommandExecute, CanRepairCommandExecute);
+            RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
 		}
 
 		protected virtual void OnFullyRepaired() { }
