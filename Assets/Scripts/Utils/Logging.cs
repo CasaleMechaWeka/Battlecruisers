@@ -108,7 +108,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.DRONES, false);
 			tagsToActiveness.Add(Tags.MOVEMENT, false);
 			tagsToActiveness.Add(Tags.PREDICTORS, false);
-            tagsToActiveness.Add(Tags.REPAIR_MANAGER, true);
+            tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
 
 			return tagsToActiveness;
 		}
