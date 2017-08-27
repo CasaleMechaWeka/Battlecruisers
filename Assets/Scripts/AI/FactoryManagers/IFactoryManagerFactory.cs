@@ -1,9 +1,8 @@
-﻿using BattleCruisers.Cruisers;
-
-namespace BattleCruisers.AI.FactoryManagers
+﻿namespace BattleCruisers.AI.FactoryManagers
 {
     public interface IFactoryManagerFactory
     {
-        IFactoryManager CreateNavalFactoryManager(int levelNum, ICruiserController friendlyCruiser);
-    }
+        IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo);
+        IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo);
+	}
 }

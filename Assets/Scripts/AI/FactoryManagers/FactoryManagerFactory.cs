@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -14,26 +15,62 @@ namespace BattleCruisers.AI.FactoryManagers
     {
         private readonly IStaticData _staticData;
         private readonly IPrefabFactory _prefabFactory;
+		private readonly IThreatMonitorFactory _threatMonitorFactory;
 
-        public FactoryManagerFactory(IStaticData staticData, IPrefabFactory prefabFactory)
+		private static IPrefabKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
+        private static IPrefabKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
+        private static IPrefabKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
+
+		public FactoryManagerFactory(IStaticData staticData, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(staticData, prefabFactory);
+            Helper.AssertIsNotNull(staticData, prefabFactory, threatMonitorFactory);
 
             _staticData = staticData;
             _prefabFactory = prefabFactory;
+            _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IFactoryManager CreateNavalFactoryManager(int levelNum, ICruiserController friendlyCruiser)
+        public IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo)
         {
-            IList<IPrefabKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelNum);
+            IList<IPrefabKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelInfo.LevelNum);
             IList<IBuildableWrapper<IUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
-            // FELIX  Create with input from level strategy?
-            IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips, friendlyCruiser.DroneManager, new BufferUnitFilter(droneBuffer: 4));
+            IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips, levelInfo.AICruiser.DroneManager, new BufferUnitFilter(droneBuffer: 4));
 
-            return new FactoryManager(UnitCategory.Naval, friendlyCruiser, unitChooser);
+            return new FactoryManager(UnitCategory.Naval, levelInfo.AICruiser, unitChooser);
+        }
+
+        public IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo)
+        {
+            Assert.IsTrue(_staticData.IsBuildableAvailable(DEFAULT_PLANE_KEY, levelInfo.LevelNum),"Default plane should always be available.");
+            IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
+
+            IBuildableWrapper<IUnit> antiAirPlane =
+                _staticData.IsBuildableAvailable(ANTI_AIR_PLANE_KEY, levelInfo.LevelNum) ?
+                _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
+                defaultPlane;
+
+            IBuildableWrapper<IUnit> antiNavalPlane =
+                _staticData.IsBuildableAvailable(ANTI_NAVAL_PLANE_KEY, levelInfo.LevelNum) ?
+                _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
+                defaultPlane;
+
+            IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateAirThreatMonitor(levelInfo.PlayerCruiser);
+            IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateNavalThreatMonitor(levelInfo.PlayerCruiser);
+
+            IUnitChooser unitchooser
+                = new AircraftUnitChooser(
+                    defaultPlane,
+                    antiAirPlane,
+                    antiNavalPlane,
+                    levelInfo.AICruiser.DroneManager,
+                    airThreatMonitor,
+                    navalThreatMonitor,
+                    threatLevelThreshold: ThreatLevel.High);
+
+            return new FactoryManager(UnitCategory.Aircraft, levelInfo.AICruiser, unitchooser);
         }
     }
 }

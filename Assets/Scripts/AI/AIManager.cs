@@ -32,8 +32,8 @@ namespace BattleCruisers.AI
             _dataProvider = dataProvider;
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-            _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory);
 			_threatMonitorFactory = new ThreatMonitorFactory();
+            _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
@@ -44,8 +44,8 @@ namespace BattleCruisers.AI
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
-            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.LevelNum, levelInfo.AICruiser);
-            // FELIX  Create air factory manager :)
+            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
+            _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
 
             new DroneConsumerFocusManager(new ResponsiveStrategy(), levelInfo.AICruiser);
 
