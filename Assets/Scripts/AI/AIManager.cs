@@ -9,6 +9,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.AI
 {
@@ -19,6 +20,7 @@ namespace BattleCruisers.AI
         private readonly IDataProvider _dataProvider;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
+		private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
 
         public AIManager(IPrefabFactory prefabFactory, IDeferrer deferrer, IDataProvider dataProvider)
@@ -31,9 +33,11 @@ namespace BattleCruisers.AI
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory);
+			_threatMonitorFactory = new ThreatMonitorFactory();
 
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
+
         }
 
         public void CreateAI(ILevelInfo levelInfo)
@@ -53,7 +57,8 @@ namespace BattleCruisers.AI
                     _prefabFactory, 
                     taskFactory, 
                     _slotNumCalculatorFactory, 
-                    _dataProvider.StaticData);
+                    _dataProvider.StaticData,
+                    _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
             switch (_dataProvider.SettingsManager.AIDifficulty)
