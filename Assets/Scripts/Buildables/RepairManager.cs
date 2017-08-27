@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public class RepairManager : IDisposable
+    public class RepairManager : IRepairManager
     {
         private readonly ICruiser _cruiser;
         private readonly IDroneConsumerProvider _droneConsumerProvider;
