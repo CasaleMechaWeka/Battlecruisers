@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test
 
 		void Start() 
 		{
-			Helper helper = new Helper();
+            Helper helper = new Helper(numOfDrones: 2);
 			
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
