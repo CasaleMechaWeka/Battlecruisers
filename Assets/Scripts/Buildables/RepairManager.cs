@@ -52,7 +52,8 @@ namespace BattleCruisers.Buildables
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
-            IRepairable repairable = sender.Parse<IRepairable>();
+            IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
+            Assert.IsNotNull(repairable);
 
             Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
             IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable];

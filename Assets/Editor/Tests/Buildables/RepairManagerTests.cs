@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Buildables
         private IDroneConsumerProvider _droneConsumerProvider;
         private IDroneConsumer _droneConsumer;
         private IBuilding _building;
-        private IParameterisedCommand<float> _cruiserRepairCommand, _buildingRepairCommand;
+        private IRepairCommand _cruiserRepairCommand, _buildingRepairCommand;
         private float _repairAmount;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
@@ -30,16 +30,18 @@ namespace BattleCruisers.Tests.Buildables
             _droneConsumer.NumOfDronesRequired.Returns(2);
             _droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
             _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired: -99).ReturnsForAnyArgs(_droneConsumer);
-            _cruiserRepairCommand = Substitute.For<IParameterisedCommand<float>>();
+            _cruiserRepairCommand = Substitute.For<IRepairCommand>();
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _cruiser.DroneConsumerProvider.Returns(_droneConsumerProvider);
             _cruiser.RepairCommand.Returns(_cruiserRepairCommand);
+            _cruiserRepairCommand.Repairable.Returns(_cruiser);
 
-            _buildingRepairCommand = Substitute.For<IParameterisedCommand<float>>();
+            _buildingRepairCommand = Substitute.For<IRepairCommand>();
             _building = Substitute.For<IBuilding>();
             _building.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _building.RepairCommand.Returns(_buildingRepairCommand);
+            _buildingRepairCommand.Repairable.Returns(_building);
 
             _repairAmount = DELTA_TIME_IN_S * _droneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S;
 
