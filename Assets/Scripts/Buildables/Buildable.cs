@@ -255,7 +255,7 @@ namespace BattleCruisers.Buildables
 				CompletedBuildable.Invoke(this, EventArgs.Empty);
 			}
 
-            Repair.EmitCanExecuteChanged();
+            RepairCommand.EmitCanExecuteChanged();
 		}
 
 		protected virtual void EnableRenderers(bool enabled)

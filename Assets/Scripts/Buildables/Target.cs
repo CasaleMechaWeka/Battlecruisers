@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-        public IParameterisedCommand<float> Repair { get; private set; }
+        public IParameterisedCommand<float> RepairCommand { get; private set; }
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
@@ -63,7 +63,7 @@ namespace BattleCruisers.Buildables
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
-            Repair = new ParameterisedCommand<float>(RepairCommandExecute, CanRepairCommandExecute);
+            RepairCommand = new ParameterisedCommand<float>(RepairCommandExecute, CanRepairCommandExecute);
 		}
 
 		protected virtual void OnFullyRepaired() { }
@@ -109,7 +109,7 @@ namespace BattleCruisers.Buildables
 
             if (wasFullHealth)
             {
-                Repair.EmitCanExecuteChanged();
+                RepairCommand.EmitCanExecuteChanged();
             }
 		}
 
@@ -123,7 +123,7 @@ namespace BattleCruisers.Buildables
 
             if (IsFullHealth)
             {
-                Repair.EmitCanExecuteChanged();
+                RepairCommand.EmitCanExecuteChanged();
             }
 		}
 
