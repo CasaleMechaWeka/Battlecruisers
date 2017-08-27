@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Buildables
+﻿namespace BattleCruisers.Buildables.Repairables
 {
     public interface IRepairable : IDamagable
     {

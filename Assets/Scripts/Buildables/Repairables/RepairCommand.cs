@@ -2,7 +2,7 @@
 using BattleCruisers.UI.Commands;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables
+namespace BattleCruisers.Buildables.Repairables
 {
     public class RepairCommand : ParameterisedCommand<float>, IRepairCommand
 	{

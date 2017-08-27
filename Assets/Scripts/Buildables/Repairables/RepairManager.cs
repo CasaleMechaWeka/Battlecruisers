@@ -7,7 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables
+namespace BattleCruisers.Buildables.Repairables
 {
     public class RepairManager : IRepairManager
     {

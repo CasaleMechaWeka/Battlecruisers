@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using NSubstitute;

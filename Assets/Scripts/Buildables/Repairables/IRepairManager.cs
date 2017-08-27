@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Buildables
+namespace BattleCruisers.Buildables.Repairables
 {
     public interface IRepairManager : IDisposable
     {
