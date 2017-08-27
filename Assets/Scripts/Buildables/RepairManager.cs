@@ -4,17 +4,25 @@ using System.Linq;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
     public class RepairManager : IRepairManager
     {
+        private readonly IDeferrer _deferrer;
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
         private IDictionary<IRepairable, IDroneConsumer> _repairableToDroneConsumer;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
+
+        public RepairManager(IDeferrer deferrer)
+        {
+            Assert.IsNotNull(deferrer);
+            _deferrer = deferrer;
+        }
 
         // Not constructor because of circular dependency between Cruiser and RepairManager
         public void Initialise(ICruiser cruiser)
@@ -108,7 +116,10 @@ namespace BattleCruisers.Buildables
 
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS;
-                    repairable.RepairCommand.Execute(healthGained);
+
+                    // Defer, as this may bring the repairable to full health, which 
+                    // sets its DroneConsumer to null, which modifies this enumerable :)
+                    _deferrer.DeferToFrameEnd(() => repairable.RepairCommand.Execute(healthGained));
                 }
             }
         }

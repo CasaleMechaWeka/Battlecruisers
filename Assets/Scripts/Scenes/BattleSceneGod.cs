@@ -67,7 +67,7 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
-            ICruiserFactory cruiserFactory = new CruiserFactory(uiManager, prefabFactory);
+            ICruiserFactory cruiserFactory = new CruiserFactory(uiManager, prefabFactory, deferrer);
 
 
 			// Instantiate player cruiser

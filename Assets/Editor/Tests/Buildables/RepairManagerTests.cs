@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Tests.Buildables
         private IBuilding _building;
         private IRepairCommand _cruiserRepairCommand, _buildingRepairCommand;
         private float _repairAmount;
+        private IDeferrer _deferrer;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 		private const float DELTA_TIME_IN_S = 1;
@@ -44,7 +46,9 @@ namespace BattleCruisers.Tests.Buildables
 
             _repairAmount = DELTA_TIME_IN_S * _droneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S;
 
-            _repairManager = new RepairManager();
+            _deferrer = Substitute.For<IDeferrer>();
+
+            _repairManager = new RepairManager(_deferrer);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
