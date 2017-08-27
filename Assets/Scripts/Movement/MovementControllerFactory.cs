@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -6,13 +7,11 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
 {
-	public class MovementControllerFactory : IMovementControllerFactory
+    public class MovementControllerFactory : IMovementControllerFactory
 	{
 		private readonly IAngleCalculatorFactory _angleCalculatorFactory;
 		private readonly ITargetPositionPredictorFactory _targetPositionPredictionFactory;
