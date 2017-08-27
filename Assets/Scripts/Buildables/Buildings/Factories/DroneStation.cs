@@ -8,16 +8,16 @@
 
 		protected override void OnBuildableCompleted()
 		{
-			base.OnBuildableCompleted();
-
 			_droneManager.NumOfDrones += numOfDronesProvided;
+            
+            base.OnBuildableCompleted();
 		}
 
 		protected override void OnDestroyed()
 		{
-			base.OnDestroyed();
-
 			_droneManager.NumOfDrones -= numOfDronesProvided;
+            
+            base.OnDestroyed();
 		}
 	}
 }
