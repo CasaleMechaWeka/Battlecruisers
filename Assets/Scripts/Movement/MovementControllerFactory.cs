@@ -38,6 +38,11 @@ namespace BattleCruisers.Movement
 			return new RocketMovementController(rigidBody, maxVelocityInMPerS, targetProvider, cruisingAltitudeInM, flightPointsProvider);
 		}
 
+        public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
+        {
+            return new HomingMovementController(rigidBody, maxVelocityInMPerS, targetProvider);
+        }
+
 		public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)
 		{
 			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
