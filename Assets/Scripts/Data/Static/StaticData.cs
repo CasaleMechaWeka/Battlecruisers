@@ -82,7 +82,8 @@ namespace BattleCruisers.Data.Static
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
-				StaticPrefabKeys.Buildings.NukeLauncher
+				StaticPrefabKeys.Buildings.NukeLauncher,
+                StaticPrefabKeys.Buildings.Ultralisk
 			};
 		}
 
