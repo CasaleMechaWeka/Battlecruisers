@@ -67,6 +67,7 @@ namespace BattleCruisers.Tests.Buildables
 			_repairManager.Initialise(_cruiser);
 
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
 		}
 
         [Test]
@@ -226,14 +227,16 @@ namespace BattleCruisers.Tests.Buildables
             _buildingRepairCommand.CanExecute.Returns(true);
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_building));
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
-        }
+			_droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
+		}
 
         private void AddRepairableCruiser()
         {
             _cruiserRepairCommand.CanExecute.Returns(true);
 			_repairManager.Initialise(_cruiser);
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
-        }
+			_droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
+		}
 
         private void AddUnrepairableCruiser()
         {
