@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
@@ -75,7 +74,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController.DirectionChanged += _movementController_DirectionChanged;
 		}
 
-        public void Kamikaze(ICruiser target)
+        public void Kamikaze(ITarget target)
         {
 			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
