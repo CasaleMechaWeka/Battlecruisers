@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -70,7 +71,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
             SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, maxVelocityInMPerS, cruiserTarget));
+
             _isInKamikazeMode = true;
+            Faction = Helper.GetOppositeFaction(target.Faction);
 
             OnKamikaze();
         }
