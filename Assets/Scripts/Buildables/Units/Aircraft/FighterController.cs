@@ -148,23 +148,34 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnDestroyed();
 
-			if (BuildableState == BuildableState.Completed)
-			{
-				_followableTargetProcessor.RemoveTargetConsumer(this);
-				_followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
-				_followableTargetProcessor.Dispose();
-				_followableTargetProcessor = null;
+			if (BuildableState == BuildableState.Completed
+                && !_isInKamikazeMode)
+            {
+                CleanUp();
+            }
+        }
 
-				_followableTargetFinder.Dispose();
-				_followableTargetFinder = null;
+		protected override void OnKamikaze()
+        {
+            CleanUp();
+        }
 
-				_shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
-				_shootableTargetProcessor.Dispose();
-				_shootableTargetProcessor = null;
+        private void CleanUp()
+        {
+            _followableTargetProcessor.RemoveTargetConsumer(this);
+            _followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
+            _followableTargetProcessor.Dispose();
+            _followableTargetProcessor = null;
 
-				_shootableTargetFinder.Dispose();
-				_shootableTargetFinder = null;
-			}
-		}
-	}
+            _followableTargetFinder.Dispose();
+            _followableTargetFinder = null;
+
+            _shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
+            _shootableTargetProcessor.Dispose();
+            _shootableTargetProcessor = null;
+
+            _shootableTargetFinder.Dispose();
+            _shootableTargetFinder = null;
+        }
+    }
 }

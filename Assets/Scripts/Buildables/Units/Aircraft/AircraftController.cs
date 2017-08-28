@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected IMovementController _activeMovementController;
 		protected IMovementController _dummyMovementController;
 		protected IMovementController _patrollingMovementController;
-
+        protected bool _isInKamikazeMode;
 		public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
 		public override Vector2 Velocity { get { return _activeMovementController.Velocity; } }
@@ -27,6 +27,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController = _dummyMovementController;
 
 			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
+
+            _isInKamikazeMode = false;
 		}
 
 		protected override void OnBuildableCompleted()
@@ -63,8 +65,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public void Kamikaze(ICruiser target)
         {
+			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
+            Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
+
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
             SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, maxVelocityInMPerS, cruiserTarget));
+            _isInKamikazeMode = true;
+
+            OnKamikaze();
         }
+
+        protected virtual void OnKamikaze() { }
 	}
 }
