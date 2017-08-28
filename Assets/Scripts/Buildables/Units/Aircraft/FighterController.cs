@@ -149,7 +149,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnDestroyed();
 
 			if (BuildableState == BuildableState.Completed
-                && !_isInKamikazeMode)
+                && !IsInKamikazeMode)
             {
                 CleanUp();
             }

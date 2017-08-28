@@ -119,7 +119,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            if (_isAtCruisingHeight && !_isInKamikazeMode)
+            if (_isAtCruisingHeight && !IsInKamikazeMode)
 			{
 				TryBombTarget();
 			}

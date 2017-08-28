@@ -10,15 +10,28 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public abstract class AircraftController : Unit
 	{
-		protected IMovementController _activeMovementController;
+        private KamikazeController _kamikazeController;
+
+        protected IMovementController _activeMovementController;
 		protected IMovementController _dummyMovementController;
 		protected IMovementController _patrollingMovementController;
-        protected bool _isInKamikazeMode;
-		public override TargetType TargetType { get { return TargetType.Aircraft; } }
+
+        protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
+		
+        public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
 		public override Vector2 Velocity { get { return _activeMovementController.Velocity; } }
 
 		protected virtual float MaxPatrollingVelocity { get { return maxVelocityInMPerS; } }
+
+		public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
+            Assert.IsNotNull(_kamikazeController);
+            Assert.IsFalse(IsInKamikazeMode);
+        }
 
 		protected override void OnInitialised()
 		{
@@ -28,8 +41,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_activeMovementController = _dummyMovementController;
 
 			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
-
-            _isInKamikazeMode = false;
 		}
 
 		protected override void OnBuildableCompleted()
@@ -72,8 +83,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
             SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, maxVelocityInMPerS, cruiserTarget));
 
-            _isInKamikazeMode = true;
             Faction = Helper.GetOppositeFaction(target.Faction);
+
+            _kamikazeController.gameObject.SetActive(true);
 
             OnKamikaze();
         }
