@@ -10,8 +10,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
     public class KamikazeTestGod : MonoBehaviour
 	{
         private IFactory _target;
+
+        // FELIX  Ues array of AircraftController?
         private TestAircraftController _aircraft;
         private BomberController _bomber;
+        private FighterController _fighter;
 
 		public List<Vector2> bomberPatrolPoints;
 
@@ -39,6 +42,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             helper.InitialiseBuildable(_bomber);
 			_bomber.StartConstruction();
 
+            // Setup fighter
+            _fighter = FindObjectOfType<FighterController>();
+            helper.InitialiseBuildable(_fighter);
+            _fighter.StartConstruction();
+
 			// When completed, aircraft switches to patrol movement controller.
 			// Hence wait a bit after completed before setting kamikaze
 			// homing movement controller.
@@ -50,6 +58,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
         {
             _aircraft.Kamikaze(_target);
             _bomber.Kamikaze(_target);
+            _fighter.Kamikaze(_target);
         }
 	}
 }
