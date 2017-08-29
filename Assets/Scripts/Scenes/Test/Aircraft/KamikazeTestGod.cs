@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
@@ -9,6 +11,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 	{
         private IFactory _target;
         private TestAircraftController _aircraft;
+        private BomberController _bomber;
+
+		public List<Vector2> bomberPatrolPoints;
 
 		void Start()
 		{
@@ -24,10 +29,15 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             helper.InitialiseBuildable(aaTurret);
             aaTurret.StartConstruction();
 
-            // Setup aircraft
+            // Setup test aircraft
             _aircraft = FindObjectOfType<TestAircraftController>();
             helper.InitialiseBuildable(_aircraft);
             _aircraft.StartConstruction();
+
+            // Setup bomber
+			_bomber = FindObjectOfType<BomberController>();
+            helper.InitialiseBuildable(_bomber);
+			_bomber.StartConstruction();
 
 			// When completed, aircraft switches to patrol movement controller.
 			// Hence wait a bit after completed before setting kamikaze
@@ -39,6 +49,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
         public void Kamikaze()
         {
             _aircraft.Kamikaze(_target);
+            _bomber.Kamikaze(_target);
         }
 	}
 }
