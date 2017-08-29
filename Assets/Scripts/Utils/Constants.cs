@@ -15,4 +15,9 @@
 		public const string BATTLE_SCENE = "BattleScene";
 		public const string SCREENS_SCENE = "ScreensScene";
 	}
+
+    public static class GameObjectTags
+    {
+        public const string AIRCRAFT = "Aircraft";
+    }
 }
