@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Projectiles.DamageAppliers;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -84,6 +86,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Faction = Helper.GetOppositeFaction(target.Faction);
 
+            IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(target.Faction, targetTypes);
+            IDamageApplier damageApplier = new SingleDamageApplier(maxHealth);
+
+            _kamikazeController.Initialise(this, targetFilter, damageApplier);
             _kamikazeController.gameObject.SetActive(true);
 
             OnKamikaze();
