@@ -17,7 +17,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             {
                 AircraftController aircraftController = aircraftGameObject.GetComponentInChildren<AircraftController>();
                 Assert.IsNotNull(aircraftController);
-                aircraftController.Kamikaze(_enemyCruiser);
+
+                if (aircraftController.BuildableState == BuildableState.Completed)
+                {
+                    aircraftController.Kamikaze(_enemyCruiser);
+				}
             }
         }
     }
