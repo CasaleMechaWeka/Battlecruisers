@@ -36,10 +36,10 @@ namespace BattleCruisers.Data.Static
 			// Ultras
 			public static BuildingKey DeathstarLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"); } }
 			public static BuildingKey NukeLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "NukeLauncher"); } }
-			// FELIX  Don't exist yet :/
-			public static BuildingKey Broadsides { get { return new BuildingKey(BuildingCategory.Ultra, "Broadsides"); } }
-			public static BuildingKey KamikazeSignal { get { return new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal"); } }
 			public static BuildingKey Ultralisk { get { return new BuildingKey(BuildingCategory.Ultra, "Ultralisk"); } }
+            public static BuildingKey KamikazeSignal { get { return new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal"); } }
+            // FELIX  Don't exist yet :/
+            public static BuildingKey Broadsides { get { return new BuildingKey(BuildingCategory.Ultra, "Broadsides"); } }
 			public static BuildingKey ArchonBattleship { get { return new BuildingKey(BuildingCategory.Ultra, "ArchonBattleship"); } }
 		}
 
