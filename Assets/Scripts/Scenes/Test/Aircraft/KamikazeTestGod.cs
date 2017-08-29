@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class KamikazeTestGod : MonoBehaviour
 	{
+        private KamikazeSignal _kamikazeSignal;
         private IFactory _target;
         private AircraftController[] _aircraft;
 
@@ -22,6 +27,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			_target = FindObjectOfType<Factory>();
 			helper.InitialiseBuildable(_target);
 			_target.StartConstruction();
+
+			ICruiser enemyCruiser = Substitute.For<ICruiser>();
+			enemyCruiser.GameObject.Returns(_target.GameObject);
+			enemyCruiser.AttackCapabilities.Returns(new List<TargetType>());
+            
+			// Setup kamikaze signal
+			_kamikazeSignal = FindObjectOfType<KamikazeSignal>();
+			helper.InitialiseBuildable(_kamikazeSignal, enemyCruiser: enemyCruiser);
 
             // Setup AA
             TurretController aaTurret = FindObjectOfType<TurretController>();
@@ -39,16 +52,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			// When completed, aircraft switches to patrol movement controller.
 			// Hence wait a bit after completed before setting kamikaze
 			// homing movement controller.
-			//_aircraft.CompletedBuildable += (sender, e) => Invoke("Kamikaze", time: 0.1f);
 			Invoke("Kamikaze", time: 1);
 		}
 
         public void Kamikaze()
         {
-            foreach (AircraftController aircraft in _aircraft)
-            {
-                aircraft.Kamikaze(_target);
-            }
+            _kamikazeSignal.StartConstruction();
         }
 	}
 }

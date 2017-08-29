@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
             foreach (GameObject aircraftGameObject in aircraftGameObjects)
             {
-                AircraftController aircraftController = aircraftGameObject.GetComponent<AircraftController>();
+                AircraftController aircraftController = aircraftGameObject.GetComponentInChildren<AircraftController>();
                 Assert.IsNotNull(aircraftController);
                 aircraftController.Kamikaze(_enemyCruiser);
             }
