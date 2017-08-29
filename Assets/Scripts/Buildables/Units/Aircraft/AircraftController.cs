@@ -86,6 +86,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Faction = Helper.GetOppositeFaction(target.Faction);
 
+			// Make our collider be lost and refound by all target detectors.
+            // Means target detectors that we are already in range of can 
+            // re-evaluate whether we are a target, as our faction has just changed.
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
+
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(target.Faction, targetTypes);
             IDamageApplier damageApplier = new SingleDamageApplier(maxHealth);
