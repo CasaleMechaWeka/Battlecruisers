@@ -10,11 +10,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
     public class KamikazeTestGod : MonoBehaviour
 	{
         private IFactory _target;
-
-        // FELIX  Ues array of AircraftController?
-        private TestAircraftController _aircraft;
-        private BomberController _bomber;
-        private FighterController _fighter;
+        private AircraftController[] _aircraft;
 
 		public List<Vector2> bomberPatrolPoints;
 
@@ -32,33 +28,27 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             helper.InitialiseBuildable(aaTurret);
             aaTurret.StartConstruction();
 
-            // Setup test aircraft
-            _aircraft = FindObjectOfType<TestAircraftController>();
-            helper.InitialiseBuildable(_aircraft);
-            _aircraft.StartConstruction();
-
-            // Setup bomber
-			_bomber = FindObjectOfType<BomberController>();
-            helper.InitialiseBuildable(_bomber);
-			_bomber.StartConstruction();
-
-            // Setup fighter
-            _fighter = FindObjectOfType<FighterController>();
-            helper.InitialiseBuildable(_fighter);
-            _fighter.StartConstruction();
+            // Setup aircraft
+            _aircraft = FindObjectsOfType<AircraftController>();
+            foreach (AircraftController aircraft in _aircraft)
+            {
+                helper.InitialiseBuildable(aircraft);
+                aircraft.StartConstruction();
+            }
 
 			// When completed, aircraft switches to patrol movement controller.
 			// Hence wait a bit after completed before setting kamikaze
 			// homing movement controller.
 			//_aircraft.CompletedBuildable += (sender, e) => Invoke("Kamikaze", time: 0.1f);
-			_aircraft.CompletedBuildable += (sender, e) => Invoke("Kamikaze", time: 1);
+			Invoke("Kamikaze", time: 1);
 		}
 
         public void Kamikaze()
         {
-            _aircraft.Kamikaze(_target);
-            _bomber.Kamikaze(_target);
-            _fighter.Kamikaze(_target);
+            foreach (AircraftController aircraft in _aircraft)
+            {
+                aircraft.Kamikaze(_target);
+            }
         }
 	}
 }
