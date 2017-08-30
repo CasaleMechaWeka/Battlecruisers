@@ -20,11 +20,5 @@
 
 			shieldController.gameObject.SetActive(true);
 		}
-
-		protected override void OnDestroyed()
-		{
-			base.OnDestroyed();
-			shieldController.Destroy();
-		}
 	}
 }

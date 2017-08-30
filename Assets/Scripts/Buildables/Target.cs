@@ -73,14 +73,15 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnHealthGone()
 		{
-			Destroy();
-		}
-
-		public void Destroy()
-		{
 			OnDestroyed();
 			InvokeDestroyedEvent();
 			InternalDestroy();
+        }
+
+        public void Destroy()
+        {
+            Assert.IsFalse(IsDestroyed, "Same target should not be destroyed more than once scrub :P");
+            Health = 0;
 		}
 
 		protected virtual void InternalDestroy()

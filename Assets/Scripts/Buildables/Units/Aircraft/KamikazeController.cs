@@ -25,7 +25,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
 
-			if (target != null && _targetFilter.IsMatch(target))
+			if (target != null 
+                && _targetFilter.IsMatch(target)
+                && !target.IsDestroyed
+                && !_parentAircraft.IsDestroyed)
 			{
 				_damageApplier.ApplyDamage(target);
                 _parentAircraft.Destroy();
