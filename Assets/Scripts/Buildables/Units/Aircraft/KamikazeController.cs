@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    // FELIX  Avoid duplicate code with ProjectileController
     public class KamikazeController : MonoBehaviour
     {
         private IUnit _parentAircraft;
