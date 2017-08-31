@@ -41,8 +41,12 @@ namespace BattleCruisers.Movement.Velocity
             }
             else
             {
+                Vector2 oldVelocity = Velocity;
+
                 float velocitySmoothTime = FindVelocitySmoothTime();
                 _rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _maxVelocityInMPerS, Time.deltaTime);
+
+                HandleDirectionChange(oldVelocity, Velocity);
             }
         }
 
