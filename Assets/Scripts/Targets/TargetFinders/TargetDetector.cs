@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -35,12 +36,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		private ITarget GetTarget(Collider2D collider)
 		{
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
-
-			if (target == null)
-			{
-				throw new InvalidOperationException("Should only collide with game objects that have a ITarget component.");
-			}
-
+            Assert.IsNotNull(target, "Should only collide with game objects that have a ITarget component.");
 			return target;
 		}
 	}
