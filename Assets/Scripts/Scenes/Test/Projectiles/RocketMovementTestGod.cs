@@ -1,33 +1,26 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using NSubstitute;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-	public class RocketMovementTestGod : MonoBehaviour 
+    public class RocketMovementTestGod : MonoBehaviour 
 	{
 		void Start()
 		{
 			// Setup target
 			Helper helper = new Helper();
-			AirFactory target = GameObject.FindObjectOfType<AirFactory>();
+			AirFactory target = FindObjectOfType<AirFactory>();
 			helper.InitialiseBuildable(target);
 
 			// Setup rocket
-			RocketController rocket = GameObject.FindObjectOfType<RocketController>();
+			RocketController rocket = FindObjectOfType<RocketController>();
 
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
