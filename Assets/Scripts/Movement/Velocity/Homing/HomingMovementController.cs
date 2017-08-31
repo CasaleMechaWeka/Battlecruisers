@@ -6,67 +6,23 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-    public class HomingMovementController : IMovementController
+    public class HomingMovementController : TargetVelocityMovementController
 	{
-		protected readonly Rigidbody2D _rigidBody;
-		protected readonly float _maxVelocityInMPerS;
 		protected readonly ITargetProvider _targetProvider;
 
-		private Vector2 _velocity;
-		
-		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
-		public Vector2 Velocity
-		{
-			get { return _rigidBody.velocity; }
-			set { _rigidBody.velocity = value; }
-		}
-
-		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged { add {} remove {} }
-
 		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
+            : base(rigidBody, maxVelocityInMPerS)
 		{
-			Assert.IsNotNull(rigidBody);
-			Assert.IsTrue(maxVelocityInMPerS > 0);
 			Assert.IsNotNull(targetProvider);
-
-			_rigidBody = rigidBody;
-			_maxVelocityInMPerS = maxVelocityInMPerS;
 			_targetProvider = targetProvider;
 		}
 
-		public void AdjustVelocity()
+		protected override Vector2 FindDesiredVelocity()
 		{
-			Assert.IsTrue(_targetProvider.Target != null);
-
 			Vector2 sourcePosition = _rigidBody.transform.position;
-			Vector2 targetPosition = FindTargetPosition();
-			Vector2 desiredVelocity = FindDesiredVelocity(sourcePosition, targetPosition, _maxVelocityInMPerS);
-
-			if (Math.Abs(_rigidBody.velocity.x - desiredVelocity.x) <= VELOCITY_EQUALITY_MARGIN
-				&& Math.Abs(_rigidBody.velocity.y - desiredVelocity.y) <= VELOCITY_EQUALITY_MARGIN)
-			{
-				_rigidBody.velocity = desiredVelocity;
-			}
-			else
-			{
-				float velocitySmoothTime = FindVelocitySmoothTime(targetPosition);
-
-				Logging.Log(Tags.MOVEMENT, string.Format("AdjustVelocity():  _rigidBody.velocity: {0}  desiredVelocity: {1}  _velocitySmoothTime: {2}  maxVelocityInMPerS: {3}", 
-					_rigidBody.velocity, desiredVelocity, velocitySmoothTime, _maxVelocityInMPerS));
-
-				_rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _maxVelocityInMPerS, Time.deltaTime);
-			}
-		}
-
-		protected virtual Vector2 FindTargetPosition()
-		{
-			return _targetProvider.Target.GameObject.transform.position;
-		}
-
-		private Vector2 FindDesiredVelocity(Vector2 sourcePosition, Vector2 targetPosition, float maxVelocityInMPerS)
-		{
+            Vector2 targetPosition = FindTargetPosition();
 			Vector2 desiredVelocity = new Vector2(0, 0);
 
 			if (sourcePosition == targetPosition)
@@ -77,12 +33,12 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			if (sourcePosition.x == targetPosition.x)
 			{
 				// On same x-axis
-				desiredVelocity.y = sourcePosition.y < targetPosition.y ? maxVelocityInMPerS : -maxVelocityInMPerS;
+				desiredVelocity.y = sourcePosition.y < targetPosition.y ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
 			}
 			else if (sourcePosition.y == targetPosition.y)
 			{
 				// On same y-axis
-				desiredVelocity.x = sourcePosition.x < targetPosition.x ? maxVelocityInMPerS : -maxVelocityInMPerS;
+				desiredVelocity.x = sourcePosition.x < targetPosition.x ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
 			}
 			else
 			{
@@ -92,8 +48,8 @@ namespace BattleCruisers.Movement.Velocity.Homing
 				float angleInRadians = Mathf.Atan(yDiff / xDiff);
 				float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-				float velocityX = Mathf.Cos(angleInRadians) * maxVelocityInMPerS;
-				float velocityY = Mathf.Sin(angleInRadians) * maxVelocityInMPerS;
+				float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityInMPerS;
+				float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityInMPerS;
 				Logging.Log(Tags.MOVEMENT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
 					angleInDegrees, velocityX, velocityY));
 
@@ -117,9 +73,16 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			return desiredVelocity;
 		}
 	
-		protected virtual float FindVelocitySmoothTime(Vector2 targetPosition)
-		{
+
+        protected virtual Vector2 FindTargetPosition()
+        {
+            Assert.IsTrue(_targetProvider.Target != null);
+            return _targetProvider.Target.GameObject.transform.position;
+        }
+
+        protected override float FindVelocitySmoothTime()
+        {
 			return MAX_VELOCITY_SMOOTH_TIME;
-		}
-	}
+        }
+    }
 }

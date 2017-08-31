@@ -16,6 +16,12 @@ namespace BattleCruisers.Movement.Velocity
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 
+		public sealed override Vector2 Velocity
+		{
+			get { return _rigidBody.velocity; }
+			set { _rigidBody.velocity = value; }
+		}
+
         public TargetVelocityMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{
 			Assert.IsNotNull(rigidBody);

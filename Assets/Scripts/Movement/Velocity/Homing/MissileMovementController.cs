@@ -20,8 +20,10 @@ namespace BattleCruisers.Movement.Velocity.Homing
 			return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target, _maxVelocityInMPerS, currentAngleInRadians: -1);
 		}
 
-		protected override float FindVelocitySmoothTime(Vector2 targetPosition)
+		protected override float FindVelocitySmoothTime()
 		{
+            Vector2 targetPosition = FindTargetPosition();
+
 			float distance = Vector2.Distance(_rigidBody.transform.position, targetPosition);
 			float smoothTimeInS = distance / _maxVelocityInMPerS;
 			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
@@ -34,4 +36,3 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		}
 	}
 }
-
