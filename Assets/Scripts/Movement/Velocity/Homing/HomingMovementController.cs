@@ -7,82 +7,75 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Movement.Velocity.Homing
 {
     public class HomingMovementController : TargetVelocityMovementController
-	{
-		protected readonly ITargetProvider _targetProvider;
+    {
+        protected readonly ITargetProvider _targetProvider;
 
-		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
-
-		public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
+        public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
             : base(rigidBody, maxVelocityInMPerS)
-		{
-			Assert.IsNotNull(targetProvider);
-			_targetProvider = targetProvider;
-		}
+        {
+            Assert.IsNotNull(targetProvider);
+            _targetProvider = targetProvider;
+        }
 
-		protected override Vector2 FindDesiredVelocity()
-		{
-			Vector2 sourcePosition = _rigidBody.transform.position;
+        protected override Vector2 FindDesiredVelocity()
+        {
+            Vector2 sourcePosition = _rigidBody.transform.position;
             Vector2 targetPosition = FindTargetPosition();
-			Vector2 desiredVelocity = new Vector2(0, 0);
+            Vector2 desiredVelocity = new Vector2(0, 0);
 
-			if (sourcePosition == targetPosition)
-			{
-				return desiredVelocity;
-			}
+            if (sourcePosition == targetPosition)
+            {
+                return desiredVelocity;
+            }
 
-			if (sourcePosition.x == targetPosition.x)
-			{
-				// On same x-axis
-				desiredVelocity.y = sourcePosition.y < targetPosition.y ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
-			}
-			else if (sourcePosition.y == targetPosition.y)
-			{
-				// On same y-axis
-				desiredVelocity.x = sourcePosition.x < targetPosition.x ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
-			}
-			else
-			{
-				// Different x and y axes, so need to calculate the angle
-				float xDiff = Math.Abs(sourcePosition.x - targetPosition.x);
-				float yDiff = Math.Abs(sourcePosition.y - targetPosition.y);
-				float angleInRadians = Mathf.Atan(yDiff / xDiff);
-				float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
+            if (sourcePosition.x == targetPosition.x)
+            {
+                // On same x-axis
+                desiredVelocity.y = sourcePosition.y < targetPosition.y ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
+            }
+            else if (sourcePosition.y == targetPosition.y)
+            {
+                // On same y-axis
+                desiredVelocity.x = sourcePosition.x < targetPosition.x ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
+            }
+            else
+            {
+                // Different x and y axes, so need to calculate the angle
+                float xDiff = Math.Abs(sourcePosition.x - targetPosition.x);
+                float yDiff = Math.Abs(sourcePosition.y - targetPosition.y);
+                float angleInRadians = Mathf.Atan(yDiff / xDiff);
+                float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-				float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityInMPerS;
-				float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityInMPerS;
-				Logging.Log(Tags.MOVEMENT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
-					angleInDegrees, velocityX, velocityY));
+                float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityInMPerS;
+                float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityInMPerS;
+                Logging.Log(Tags.MOVEMENT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
+                    angleInDegrees, velocityX, velocityY));
 
-				if (sourcePosition.x > targetPosition.x)
-				{
-					// Source is to right of target
-					velocityX *= -1;
-				}
+                if (sourcePosition.x > targetPosition.x)
+                {
+                    // Source is to right of target
+                    velocityX *= -1;
+                }
 
-				if (sourcePosition.y > targetPosition.y)
-				{
-					// Source is above target
-					velocityY *= -1;
-				}
+                if (sourcePosition.y > targetPosition.y)
+                {
+                    // Source is above target
+                    velocityY *= -1;
+                }
 
-				desiredVelocity.x = velocityX;
-				desiredVelocity.y = velocityY;
-			}
+                desiredVelocity.x = velocityX;
+                desiredVelocity.y = velocityY;
+            }
 
-			Logging.Log(Tags.MOVEMENT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
-			return desiredVelocity;
-		}
-	
+            Logging.Log(Tags.MOVEMENT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
+            return desiredVelocity;
+        }
+
 
         protected virtual Vector2 FindTargetPosition()
         {
             Assert.IsTrue(_targetProvider.Target != null);
             return _targetProvider.Target.GameObject.transform.position;
-        }
-
-        protected override float FindVelocitySmoothTime()
-        {
-			return MAX_VELOCITY_SMOOTH_TIME;
         }
     }
 }

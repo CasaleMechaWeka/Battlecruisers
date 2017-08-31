@@ -15,6 +15,7 @@ namespace BattleCruisers.Movement.Velocity
 		protected readonly float _maxVelocityInMPerS;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
+		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
 
 		public sealed override Vector2 Velocity
 		{
@@ -52,6 +53,9 @@ namespace BattleCruisers.Movement.Velocity
 
         protected abstract Vector2 FindDesiredVelocity();
 
-        protected abstract float FindVelocitySmoothTime();
+        protected virtual float FindVelocitySmoothTime()
+        {
+            return MAX_VELOCITY_SMOOTH_TIME;
+        }
     }
 }
