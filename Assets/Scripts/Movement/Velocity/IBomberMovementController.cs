@@ -1,11 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public interface IBomberMovementController : IMovementController
+    public interface IBomberMovementController : IMovementController
 	{
 		Vector2 TargetVelocity { get; set; }
 	}
