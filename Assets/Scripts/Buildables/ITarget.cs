@@ -26,7 +26,6 @@ namespace BattleCruisers.Buildables
 	{
 		Faction Faction { get; }
 		TargetType TargetType { get; }
-		bool IsDetectable { get; }
 		Vector2 Velocity { get; }
 		List<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }

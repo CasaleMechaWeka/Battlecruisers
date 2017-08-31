@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
@@ -35,11 +34,6 @@ namespace BattleCruisers.Targets
 		#endregion TargetFinders
 
 		#region TargetFilters
-		public ITargetFilter CreateDetectableTargetFilter(Faction faction, bool isDetectable, IList<TargetType> targetTypes)
-		{
-            return new DetectableFilter(faction, isDetectable, targetTypes);
-		}
-
 		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
 		{
             return new FactionAndTargetTypeFilter(faction, targetTypes);

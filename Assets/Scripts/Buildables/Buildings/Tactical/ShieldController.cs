@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
 		public override TargetType TargetType { get { return TargetType.Buildings; } }
-		public override bool IsDetectable { get { return false; } }
 
 		public void Initialise(Faction faction)
 		{

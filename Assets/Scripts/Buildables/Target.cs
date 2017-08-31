@@ -15,7 +15,6 @@ namespace BattleCruisers.Buildables
         public Faction Faction { get; protected set; }
         public GameObject GameObject { get { return gameObject; } }
         public abstract TargetType TargetType { get; }
-        public virtual bool IsDetectable { get { return true; } }
         public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
         public Vector2 Position { get { return gameObject.transform.position; } }

@@ -27,8 +27,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             // Create target finder
             _enemyDetector.Initialise(detectionRangeInM);
-			bool isDetectable = true;
-			ITargetFilter enemyDetectionFilter = targetsFactory.CreateDetectableTargetFilter(enemyFaction, isDetectable, attackCapabilities);
+			ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, attackCapabilities);
 			_targetFinder = targetsFactory.CreateRangedTargetFinder(_enemyDetector, enemyDetectionFilter);
 
 			// Start processing targets
