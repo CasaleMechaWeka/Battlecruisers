@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public class BomberMovementController : MovementController, IBomberMovementController
+    public class BomberMovementController : MovementController, IBomberMovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly float _maxVelocityInMPerS;
