@@ -84,6 +84,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void Dispose()
         {
             _targetProcessorWrapper.Dispose();
+            _targetProcessorWrapper = null;
         }
     }
 }
