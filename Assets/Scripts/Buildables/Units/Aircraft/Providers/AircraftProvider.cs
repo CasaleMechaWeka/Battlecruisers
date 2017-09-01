@@ -1,13 +1,9 @@
-﻿using BattleCruisers.Movement.Velocity;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
-	public class AircraftProvider : IAircraftProvider
+    public class AircraftProvider : IAircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
 
@@ -20,6 +16,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float BOMBER_PATROL_MARGIN = 10;
 		private const float DEATHSTAR_PATROL_MARGIN = 5;
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
+        private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
+        private const float GUNSHIP_TURN_AROUND_POINT_X = 0;
 
 		public SafeZone FighterSafeZone { get; private set; }
 
@@ -60,6 +58,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 			{
 				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
 				new Vector2(enemyCruiserpatrolPointX, cruisingAltitudeInM)
+			};
+		}
+
+		public IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM)
+		{
+            float parentCruiserPatrolPointAdjustmentX = _parentCruiserPosition.x < 0 ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
+			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
+
+			return new List<Vector2>()
+			{
+				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
+                new Vector2(GUNSHIP_TURN_AROUND_POINT_X, cruisingAltitudeInM)
 			};
 		}
 
