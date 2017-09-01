@@ -22,7 +22,9 @@ namespace BattleCruisers.Movement
 			_targetPositionPredictionFactory = targetPositionPredictionFactory;
 		}
 
-		public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, 
+        #region Velocity
+        #region Homing
+        public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, 
 			ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			return new MissileMovementController(rigidBody, maxVelocityInMPerS, targetProvider, targetPositionPredictorFactory);
@@ -42,8 +44,9 @@ namespace BattleCruisers.Movement
         {
             return new HomingMovementController(rigidBody, maxVelocityInMPerS, targetProvider);
         }
+        #endregion Homing
 
-		public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)
+        public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)
 		{
 			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
 		}
@@ -53,12 +56,24 @@ namespace BattleCruisers.Movement
 			return new BomberMovementController(rigidBody, maxVelocityInMPerS);
 		}
 
+		public IMovementController CreateHoveringMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		{
+            return new HoveringMovementController(rigidBody, maxVelocityInMPerS);
+		}
+
+		public IMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		{
+            return new FollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
+		}
+
 		public IMovementController CreateDummyMovementController()
 		{
 			return new DummyMovementController();
 		}
+        #endregion Velocity
 
-		public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
+        #region Rotation
+        public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
 			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictionFactory);
 			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
@@ -78,5 +93,6 @@ namespace BattleCruisers.Movement
 		{
 			return new DummyConstantRotationController();
 		}
+		#endregion Rotation
 	}
 }
