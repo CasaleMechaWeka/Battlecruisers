@@ -3,7 +3,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Targets
 {
-    public interface ITargetTracker
+    public interface ITargetTracker : IDisposable
     {
         event EventHandler TargetsChanged;
 

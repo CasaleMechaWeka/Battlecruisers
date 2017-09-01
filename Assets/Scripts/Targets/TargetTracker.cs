@@ -53,5 +53,11 @@ namespace BattleCruisers.Targets
         {
             return _targets.Contains(target);
         }
-	}
+
+        public void Dispose()
+        {
+            _targetFinder.TargetFound -= _targetFinder_TargetFound;
+            _targetFinder.TargetLost -= _targetFinder_TargetLost;
+        }
+    }
 }
