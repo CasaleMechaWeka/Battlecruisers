@@ -10,7 +10,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class ProximityTargetProcessorWrapper : MonoBehaviour, ITargetProcessorWrapper
 	{
-		private CircleTargetDetector _enemyDetector;
         private ITargetConsumer _targetConsumer;
 		private ITargetFinder _targetFinder;
 		private ITargetProcessor _targetProcessor;
@@ -20,15 +19,15 @@ namespace BattleCruisers.Targets.TargetProcessors
         public void StartProvidingTargets(ITargetsFactory targetsFactory, ITargetConsumer targetConsumer, 
             Faction enemyFaction, float detectionRangeInM, IList<TargetType> attackCapabilities)
 		{
-			_enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
-			Assert.IsNotNull(_enemyDetector);
+			CircleTargetDetector enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
+			Assert.IsNotNull(enemyDetector);
 
             _targetConsumer = targetConsumer;
 
             // Create target finder
-            _enemyDetector.Initialise(detectionRangeInM);
+            enemyDetector.Initialise(detectionRangeInM);
 			ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, attackCapabilities);
-			_targetFinder = targetsFactory.CreateRangedTargetFinder(_enemyDetector, enemyDetectionFilter);
+			_targetFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
 			// Start processing targets
 			ITargetRanker targetRanker = targetsFactory.CreateEqualTargetRanker();
