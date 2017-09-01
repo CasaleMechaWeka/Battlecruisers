@@ -18,6 +18,9 @@ namespace BattleCruisers.Targets
 		// Finders
 		ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
 
+        // Trackers
+        ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);
+
 		// Filters
 		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         ITargetFilter CreateDummyTargetFilter(bool isMatchResult);

@@ -31,10 +31,17 @@ namespace BattleCruisers.Targets
 		{
 			return new RangedTargetFinder(targetDetector, targetFilter);
 		}
-		#endregion TargetFinders
+        #endregion TargetFinders
 
-		#region TargetFilters
-		public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
+        #region TargetTrackers
+        public ITargetTracker CreateTargetTracker(ITargetFinder targetFinder)
+        {
+            return new TargetTracker(targetFinder);
+        }
+        #endregion TargetTrackers
+
+        #region TargetFilters
+        public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
 		{
             return new FactionAndTargetTypeFilter(faction, targetTypes);
 		}
