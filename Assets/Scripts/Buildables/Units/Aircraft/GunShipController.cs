@@ -11,8 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    // FELIX  Rename to GunshipController
-    public class GunShipController : AircraftController, ITargetConsumer
+    public class GunshipController : AircraftController, ITargetConsumer
 	{
         private ITargetFinder _hoveringTargetFinder;
         private IMovementController _hoverMovementController, _followingMovementController;

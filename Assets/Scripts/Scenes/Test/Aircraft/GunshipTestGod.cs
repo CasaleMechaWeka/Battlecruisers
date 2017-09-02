@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
         {
             Helper helper = new Helper();
 
-            GunShipController gunship = FindObjectOfType<GunShipController>();
+            GunshipController gunship = FindObjectOfType<GunshipController>();
             helper.InitialiseBuildable(gunship);
             gunship.StartConstruction();
         }
