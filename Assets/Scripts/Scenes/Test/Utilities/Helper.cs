@@ -197,6 +197,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 		public IAircraftProvider CreateAircraftProvider(
 			IList<Vector2> bomberPatrolPoints = null,
+            IList<Vector2> gunshipPatrolPoints = null,
 			IList<Vector2> fighterPatrolPoints = null,
 			IList<Vector2> deathstarPatrolPoints = null,
 			SafeZone fighterSafeZone = null)
@@ -212,6 +213,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				};
 			}
 			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+
+            if (gunshipPatrolPoints == null)
+			{
+				gunshipPatrolPoints = new List<Vector2>()
+				{
+					new Vector2(0, 1),
+					new Vector2(0, 2)
+				};
+			}
+            provider.FindGunshipPatrolPoints(0).ReturnsForAnyArgs(gunshipPatrolPoints);
 
 			if (fighterPatrolPoints == null)
 			{
