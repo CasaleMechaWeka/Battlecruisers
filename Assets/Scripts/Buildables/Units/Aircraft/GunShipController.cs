@@ -14,7 +14,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public class GunshipController : AircraftController, ITargetConsumer
 	{
         private ITargetFinder _hoveringTargetFinder;
-        private IMovementController _hoverMovementController, _followingMovementController;
+        private IMovementController _hoverMovementController;
+        private FollowingXAxisMovementController _followingMovementController;
         private IBarrelWrapper _barrelWrapper;
 		private ITargetProcessorWrapper _targetProcessorWrapper;
         private ITargetTracker _hoverRangeTargetTracker;
@@ -31,6 +32,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			set
 			{
 				_target = value;
+                _followingMovementController.Target = _target;
+
                 UpdateMovementController();
 			}
 		}
@@ -66,7 +69,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
 
-            // Create target follower => For following enemies
+            // Create target processor => For following enemies
             ITargetConsumer targetConsumer = this;
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
@@ -83,8 +86,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _hoveringTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
             _hoverRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_hoveringTargetFinder);
-
             _hoverRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
+
+            _barrelWrapper.StartAttackingTargets();
 		}
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)

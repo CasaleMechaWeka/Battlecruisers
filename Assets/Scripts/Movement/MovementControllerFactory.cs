@@ -61,7 +61,7 @@ namespace BattleCruisers.Movement
             return new HoveringMovementController(rigidBody, maxVelocityInMPerS);
 		}
 
-		public IMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		public FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
 		{
             return new FollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
 		}

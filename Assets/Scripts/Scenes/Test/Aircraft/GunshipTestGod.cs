@@ -1,4 +1,8 @@
-﻿using BattleCruisers.Buildables.Units.Aircraft;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
@@ -6,13 +10,22 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class GunshipTestGod : MonoBehaviour
     {
+        public List<Vector2> gunshipPatrolPoints;
+
         void Start()
         {
             Helper helper = new Helper();
 
+            // Setup gunship
+            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
             GunshipController gunship = FindObjectOfType<GunshipController>();
-            helper.InitialiseBuildable(gunship);
+            helper.InitialiseBuildable(gunship, Faction.Blues, aircraftProvider: aircraftProvider);
             gunship.StartConstruction();
+
+            // Setup target attack boat
+            AttackBoatController ship = FindObjectOfType<AttackBoatController>();
+            helper.InitialiseBuildable(ship, Faction.Reds);
+            ship.StartConstruction();
         }
     }
 }
