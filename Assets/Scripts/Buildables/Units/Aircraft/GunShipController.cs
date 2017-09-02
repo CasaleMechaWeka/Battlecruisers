@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private ITargetFinder _hoveringTargetFinder;
         private IMovementController _hoverMovementController, _followingMovementController;
-		private BarrelController _barrelController;
+        private IBarrelWrapper _barrelWrapper;
 		private ITargetProcessorWrapper _targetProcessorWrapper;
         private ITargetTracker _hoverRangeTargetTracker;
 
@@ -44,9 +44,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _attackCapabilities.Add(TargetType.Ships);
 
-			_barrelController = gameObject.GetComponentInChildren<BarrelController>();
-			Assert.IsNotNull(_barrelController);
-			_barrelController.StaticInitialise();
+            _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_barrelWrapper);
+			_barrelWrapper.StaticInitialise();
 
             _targetProcessorWrapper = transform.Find("TargetProcessor").gameObject.GetComponent<ProximityTargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
@@ -58,12 +58,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _hoverMovementController = _movementControllerFactory.CreateHoveringMovementController(rigidBody, maxVelocityInMPerS);
             _followingMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
+
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
+            // Create target follower => For following enemies
             ITargetConsumer targetConsumer = this;
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
@@ -75,7 +79,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     enemyFollowRangeInM,
                     AttackCapabilities);
 
-			// Create target tracker
+			// Create target tracker => For hovering over enemies
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _hoveringTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
