@@ -75,7 +75,7 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
 			// Units
-			tagsToActiveness.Add(Tags.AIRCRAFT, true);
+			tagsToActiveness.Add(Tags.AIRCRAFT, false);
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 
 			// Buildings
@@ -94,7 +94,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
 			tagsToActiveness.Add(Tags.TARGET_FILTER, false);
 			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
-            tagsToActiveness.Add(Tags.TARGET_TRACKER, true);
+            tagsToActiveness.Add(Tags.TARGET_TRACKER, false);
 
 			// UI
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
