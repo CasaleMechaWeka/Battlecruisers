@@ -13,15 +13,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private KamikazeController _kamikazeController;
 
-        protected IMovementController _activeMovementController;
-		protected IMovementController _dummyMovementController;
-		protected IMovementController _patrollingMovementController;
+        protected IMovementController ActiveMovementController { get; private set; }
+        protected IMovementController DummyMovementController { get; private set; }
+        protected IMovementController PatrollingMovementController { get; private set; }
 
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
 		
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 
-		public override Vector2 Velocity { get { return _activeMovementController.Velocity; } }
+		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
 
 		protected virtual float MaxPatrollingVelocity { get { return maxVelocityInMPerS; } }
 
@@ -38,17 +38,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-			_dummyMovementController = _movementControllerFactory.CreateDummyMovementController();
-			_activeMovementController = _dummyMovementController;
+			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+			PatrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
 
-			_patrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
+			SwitchMovementControllers(DummyMovementController);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			_activeMovementController = _patrollingMovementController;
+            SwitchMovementControllers(PatrollingMovementController);
 		}
 
 		protected abstract IList<IPatrolPoint> GetPatrolPoints();
@@ -62,20 +62,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-			Assert.IsNotNull(_activeMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
-			_activeMovementController.AdjustVelocity();
+			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
+			ActiveMovementController.AdjustVelocity();
 		}
 
 		protected void SwitchMovementControllers(IMovementController newMovementController)
 		{
-            Logging.Log(Tags.AIRCRAFT, "SwitchMovementControllers: " + _activeMovementController + " => " + newMovementController);
+            Logging.Log(Tags.AIRCRAFT, "SwitchMovementControllers: " + ActiveMovementController + " => " + newMovementController);
 
-			newMovementController.Velocity = _activeMovementController.Velocity;
-			_activeMovementController.Velocity = new Vector2(0, 0);
-			_activeMovementController.DirectionChanged -= _movementController_DirectionChanged;
+            if (ActiveMovementController != null)
+            {
+                newMovementController.Velocity = ActiveMovementController.Velocity;
+                ActiveMovementController.DirectionChanged -= _movementController_DirectionChanged;
+			}
 
-			_activeMovementController = newMovementController;
-			_activeMovementController.DirectionChanged += _movementController_DirectionChanged;
+			ActiveMovementController = newMovementController;
+			ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
+            ActiveMovementController.Activate();
 		}
 
         public void Kamikaze(ITarget target)

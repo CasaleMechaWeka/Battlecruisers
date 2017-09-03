@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
 using BattleCruisers.Buildables.Units;
-using System;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public class XDirectionChangeEventArgs : EventArgs
+    public class XDirectionChangeEventArgs : EventArgs
 	{
 		public Direction NewDirection { get; private set; }
 
@@ -21,6 +20,7 @@ namespace BattleCruisers.Movement.Velocity
 
 		event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
+        void Activate();
 		void AdjustVelocity();
 	}
 }

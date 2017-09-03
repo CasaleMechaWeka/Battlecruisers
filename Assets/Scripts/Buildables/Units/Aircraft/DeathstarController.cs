@@ -90,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private void OnClearingLaunchStation()
 		{
 			// Stop moving
-			SwitchMovementControllers(_dummyMovementController);
+			SwitchMovementControllers(DummyMovementController);
 
 			UnfoldWings();
 		}
@@ -107,7 +107,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			leftWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
 
-			SwitchMovementControllers(_patrollingMovementController);
+			SwitchMovementControllers(PatrollingMovementController);
 		}
 
 		protected override void OnDestroyed()

@@ -10,7 +10,9 @@ namespace BattleCruisers.Movement.Velocity
 
 		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
-		public abstract void AdjustVelocity();
+        public virtual void Activate() { }
+
+        public abstract void AdjustVelocity();
 
 		protected void HandleDirectionChange(Vector2 oldVelocity, Vector2 currentVelocity)
 		{

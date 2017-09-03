@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			if (UseDummyMovementController)
 			{
-				SwitchMovementControllers(_dummyMovementController);
+				SwitchMovementControllers(DummyMovementController);
 			}
 		}
 

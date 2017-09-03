@@ -39,7 +39,7 @@ namespace BattleCruisers.Movement.Velocity
 
 		public override void AdjustVelocity()
 		{
-			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P");
+            Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");
 
 			bool isInPosition = Vector2.Distance(_rigidBody.transform.position, _targetPatrolPoint.Position) <= POSITION_EQUALITY_MARGIN;
 			if (!isInPosition)
@@ -83,5 +83,13 @@ namespace BattleCruisers.Movement.Velocity
 			int nextIndex = currentIndex == _patrolPoints.Count - 1 ? 0 : currentIndex + 1;
 			return _patrolPoints[nextIndex];
 		}
+
+        public override void Activate()
+        {
+			// Patrolling directly manipulates the game object's position.  If the rigidbody has a 
+            // non-zero veolcity this seriously messes with things.  Hence, ensure the rigidbody has
+            // a zero velocity :)
+			_rigidBody.velocity = new Vector2(0, 0);
+        }
 	}
 }

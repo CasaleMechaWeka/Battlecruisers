@@ -125,7 +125,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             IMovementController desiredMovementController = ChooseMovementController();
 
-            if (!ReferenceEquals(_activeMovementController, desiredMovementController))
+            if (!ReferenceEquals(ActiveMovementController, desiredMovementController))
             {
                 SwitchMovementControllers(desiredMovementController);
             }
@@ -137,7 +137,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
                 return _inRangeTargetTracker.ContainsTarget(Target) ? _inRangeMovementController : _outsideRangeMovementController;
 			}
-            return _patrollingMovementController;
+            return PatrollingMovementController;
         }
 
 		private void CleanUp()
