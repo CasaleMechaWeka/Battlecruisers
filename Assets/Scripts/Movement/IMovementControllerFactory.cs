@@ -14,7 +14,6 @@ namespace BattleCruisers.Movement
         // Velocity
 		IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints);
 		IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS);
-		IMovementController CreateHoveringMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS);
         FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS);
 		IMovementController CreateDummyMovementController();
 
