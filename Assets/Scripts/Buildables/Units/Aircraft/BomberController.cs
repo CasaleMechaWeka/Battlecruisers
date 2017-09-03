@@ -26,7 +26,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
-		private const int NUM_OF_PATROL_POINTS = 2;
 
 		#region Properties
 		private ITarget _target;
@@ -100,13 +99,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
-			Assert.IsTrue(patrolPositions.Count == NUM_OF_PATROL_POINTS);
-
-			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
-			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: OnFirstPatrolPointReached));
-			patrolPoints.Add(new PatrolPoint(patrolPositions[1]));
-
-			return patrolPoints;
+            return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
 		}
 
 		private void OnFirstPatrolPointReached()

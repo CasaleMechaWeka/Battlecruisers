@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _isAtCruisingHeight;
 
 		private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
-        private const int NUM_OF_PATROL_POINTS = 2;
 
 		public CircleTargetDetector hoverRangeEnemyDetector;
 
@@ -105,17 +104,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateMovementController();
         }
 
-        // FELIX  Avoid duplicate code with BomberController :/
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
             IList<Vector2> patrolPositions = _aircraftProvider.FindGunshipPatrolPoints(cruisingAltitudeInM);
-			Assert.IsTrue(patrolPositions.Count == NUM_OF_PATROL_POINTS);
-
-			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
-			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: OnFirstPatrolPointReached));
-			patrolPoints.Add(new PatrolPoint(patrolPositions[1]));
-
-			return patrolPoints;
+            return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
 		}
 
 		private void OnFirstPatrolPointReached()

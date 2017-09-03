@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Projectiles.DamageAppliers;
+using System;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -108,5 +109,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         protected virtual void OnKamikaze() { }
+
+        protected IList<IPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
+        {
+			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
+
+			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: onFirstPatrolPointReached));
+
+            for (int i = 1; i < patrolPositions.Count; ++i)
+            {
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
+			}
+
+			return patrolPoints;
+        }
 	}
 }
