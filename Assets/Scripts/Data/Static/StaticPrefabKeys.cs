@@ -48,7 +48,6 @@ namespace BattleCruisers.Data.Static
 			// Aircraft
 			public static UnitKey Bomber { get { return new UnitKey(UnitCategory.Aircraft, "Bomber"); } }
 			public static UnitKey Fighter { get { return new UnitKey(UnitCategory.Aircraft, "Fighter"); } }
-            // FELIX  Don't exist yet :/
 			public static UnitKey Gunship { get { return new UnitKey(UnitCategory.Aircraft, "Gunship"); } }
 
 			// Ships

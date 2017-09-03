@@ -19,9 +19,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
 		private static IPrefabKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
         private static IPrefabKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
-		// FELIX  Use gunship once implemented :P
-        private static IPrefabKey ANTI_NAVAL_PLANE_KEY = DEFAULT_PLANE_KEY;
-		//private static IPrefabKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
+		private static IPrefabKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
 
 		public FactoryManagerFactory(IStaticData staticData, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {

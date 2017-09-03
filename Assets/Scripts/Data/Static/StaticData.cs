@@ -95,7 +95,7 @@ namespace BattleCruisers.Data.Static
                 // Aircraft
                 StaticPrefabKeys.Units.Bomber,
 				StaticPrefabKeys.Units.Fighter,
-                // FELIX  Gunship
+                StaticPrefabKeys.Units.Gunship,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
