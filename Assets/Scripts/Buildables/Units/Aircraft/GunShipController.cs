@@ -7,6 +7,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
@@ -18,8 +19,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetProcessorWrapper _targetProcessorWrapper;
 		private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
+		private bool _isAtCruisingHeight;
 
-        private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
+		private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
+        private const int NUM_OF_PATROL_POINTS = 2;
 
 		public CircleTargetDetector hoverRangeEnemyDetector;
 
@@ -54,6 +57,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _targetProcessorWrapper = transform.Find("TargetProcessor").gameObject.GetComponent<ProximityTargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
+
+            _isAtCruisingHeight = false;
 		}
 
 		protected override void OnInitialised()
@@ -100,9 +105,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateMovementController();
         }
 
-        protected override IList<IPatrolPoint> GetPatrolPoints()
+        // FELIX  Avoid duplicate code with BomberController :/
+		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-            return Helper.ConvertVectorsToPatrolPoints(_aircraftProvider.FindGunshipPatrolPoints(cruisingAltitudeInM));
+            IList<Vector2> patrolPositions = _aircraftProvider.FindGunshipPatrolPoints(cruisingAltitudeInM);
+			Assert.IsTrue(patrolPositions.Count == NUM_OF_PATROL_POINTS);
+
+			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
+			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: OnFirstPatrolPointReached));
+			patrolPoints.Add(new PatrolPoint(patrolPositions[1]));
+
+			return patrolPoints;
+		}
+
+		private void OnFirstPatrolPointReached()
+		{
+			_isAtCruisingHeight = true;
+            UpdateMovementController();
 		}
 
 		protected override void OnDestroyed()
@@ -133,7 +152,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private IMovementController ChooseMovementController()
         {
-			if (Target != null)
+            if (_isAtCruisingHeight && Target != null)
 			{
                 return _inRangeTargetTracker.ContainsTarget(Target) ? _inRangeMovementController : _outsideRangeMovementController;
 			}
