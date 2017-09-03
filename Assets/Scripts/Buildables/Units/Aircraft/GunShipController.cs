@@ -13,12 +13,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class GunshipController : AircraftController, ITargetConsumer
 	{
-        private ITargetFinder _hoveringTargetFinder;
-        private IMovementController _hoverMovementController;
-        private FollowingXAxisMovementController _followingMovementController;
+        private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
-		private ITargetProcessorWrapper _targetProcessorWrapper;
-        private ITargetTracker _hoverRangeTargetTracker;
+        private ITargetProcessorWrapper _targetProcessorWrapper;
+		private ITargetFinder _inRangeTargetFinder;
+        private ITargetTracker _inRangeTargetTracker;
+
+        private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
 		public CircleTargetDetector hoverRangeEnemyDetector;
 
@@ -32,7 +33,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			set
 			{
 				_target = value;
-                _followingMovementController.Target = _target;
+                _outsideRangeMovementController.Target = _target;
+                _inRangeMovementController.Target = _target;
 
                 UpdateMovementController();
 			}
@@ -58,8 +60,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-            _hoverMovementController = _movementControllerFactory.CreateHoveringMovementController(rigidBody, maxVelocityInMPerS);
-            _followingMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
+            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
+			_inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS * WITHTIN_RANGE_MULTIPLIER);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
@@ -81,13 +83,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     enemyFollowRangeInM,
                     AttackCapabilities);
 
-			// Create target tracker => For hovering over enemies
+			// Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
-            _hoveringTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
-            _hoverRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_hoveringTargetFinder);
-            _hoverRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
-            _hoveringTargetFinder.StartFindingTargets();
+            _inRangeTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
+            _inRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_inRangeTargetFinder);
+            _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
+            _inRangeTargetFinder.StartFindingTargets();
 
             _barrelWrapper.StartAttackingTargets();
 		}
@@ -133,7 +135,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
 			if (Target != null)
 			{
-                return _hoverRangeTargetTracker.ContainsTarget(Target) ? _hoverMovementController : _followingMovementController;
+                return _inRangeTargetTracker.ContainsTarget(Target) ? _inRangeMovementController : _outsideRangeMovementController;
 			}
             return _patrollingMovementController;
         }
@@ -143,12 +145,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetProcessorWrapper.Dispose();
             _targetProcessorWrapper = null;
 
-            _hoverRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
-            _hoveringTargetFinder.Dispose();
-            _hoveringTargetFinder = null;
+            _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
+            _inRangeTargetFinder.Dispose();
+            _inRangeTargetFinder = null;
 
-            _hoverRangeTargetTracker.Dispose();
-            _hoverRangeTargetTracker = null;
+            _inRangeTargetTracker.Dispose();
+            _inRangeTargetTracker = null;
 		}
 	}
 }
