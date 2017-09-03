@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Ships;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             // Setup gunship
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
             GunshipController gunship = FindObjectOfType<GunshipController>();
-            helper.InitialiseBuildable(gunship, Faction.Blues, aircraftProvider: aircraftProvider);
+            helper.InitialiseBuildable(gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
             gunship.StartConstruction();
 
             // Setup target attack boat
