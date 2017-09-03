@@ -87,12 +87,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _hoveringTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
             _hoverRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_hoveringTargetFinder);
             _hoverRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
+            _hoveringTargetFinder.StartFindingTargets();
 
             _barrelWrapper.StartAttackingTargets();
 		}
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
         {
+            Logging.Log(Tags.AIRCRAFT, "GunshipController._hoverRangeTargetTracker_TargetsChanged()");
             UpdateMovementController();
         }
 

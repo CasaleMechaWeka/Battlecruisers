@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets
@@ -29,6 +30,8 @@ namespace BattleCruisers.Targets
 
         private void _targetFinder_TargetFound(object sender, TargetEventArgs e)
         {
+            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound()");
+
             Assert.IsFalse(_targets.Contains(e.Target));
             _targets.Add(e.Target);
             EmitTargetsChangedEvent();
@@ -36,7 +39,9 @@ namespace BattleCruisers.Targets
 
         private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-            Assert.IsTrue(_targets.Contains(e.Target));
+			Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost()");
+
+			Assert.IsTrue(_targets.Contains(e.Target));
             _targets.Remove(e.Target);
             EmitTargetsChangedEvent();
         }

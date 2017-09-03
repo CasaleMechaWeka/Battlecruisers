@@ -49,7 +49,7 @@ namespace BattleCruisers.Movement.Velocity
 				Vector2 moveToPosition = Vector2.SmoothDamp(_rigidBody.transform.position, _targetPatrolPoint.Position, ref _patrollingVelocity, DEFAULT_SMOOTH_TIME_IN_S, _maxPatrollilngVelocityInMPerS, Time.deltaTime);
 				_rigidBody.MovePosition(moveToPosition);
 
-				Logging.Log(Tags.AIRCRAFT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
+                Logging.Log(Tags.MOVEMENT, string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
 					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, _maxPatrollilngVelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);

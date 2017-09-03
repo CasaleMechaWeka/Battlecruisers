@@ -68,6 +68,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected void SwitchMovementControllers(IMovementController newMovementController)
 		{
+            Logging.Log(Tags.AIRCRAFT, "SwitchMovementControllers: " + _activeMovementController + " => " + newMovementController);
+
 			newMovementController.Velocity = _activeMovementController.Velocity;
 			_activeMovementController.Velocity = new Vector2(0, 0);
 			_activeMovementController.DirectionChanged -= _movementController_DirectionChanged;

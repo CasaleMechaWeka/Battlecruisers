@@ -32,6 +32,7 @@ namespace BattleCruisers.Utils
 		public const string TARGET_FINDER = "TargetFinder";
 		public const string TARGET_FILTER = "TargetFilter";
 		public const string TARGET_PROCESSORS = "TargetProcessors";
+		public const string TARGET_TRACKER = "TargetTracker";
 
 		// UI
 		public const string PROGRESS_BARS = "ProgressBars";
@@ -74,7 +75,7 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
 			// Units
-			tagsToActiveness.Add(Tags.AIRCRAFT, false);
+			tagsToActiveness.Add(Tags.AIRCRAFT, true);
 			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
 
 			// Buildings
@@ -92,7 +93,8 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
 			tagsToActiveness.Add(Tags.TARGET_FILTER, false);
-            tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
+			tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
+            tagsToActiveness.Add(Tags.TARGET_TRACKER, true);
 
 			// UI
 			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
