@@ -23,10 +23,13 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             helper.InitialiseBuildable(gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
             gunship.StartConstruction();
 
-            // Setup target attack boat
-            AttackBoatController ship = FindObjectOfType<AttackBoatController>();
-            helper.InitialiseBuildable(ship, Faction.Reds);
-            ship.StartConstruction();
+            // Setup target attack boats
+            AttackBoatController[] ships = FindObjectsOfType<AttackBoatController>();
+            foreach (AttackBoatController ship in ships)
+            {
+                helper.InitialiseBuildable(ship, Faction.Reds);
+                ship.StartConstruction();
+			}
         }
     }
 }
