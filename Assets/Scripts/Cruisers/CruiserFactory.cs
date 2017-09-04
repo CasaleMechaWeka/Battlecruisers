@@ -34,9 +34,10 @@ namespace BattleCruisers.Cruisers
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer);
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
+            bool shouldShowFog = facingDirection == Direction.Left;
 
             cruiser.Initialise(faction, enemyCruiser, healthBar, _uiManager, droneManager,
-                droneConsumerProvider, factoryProvider, facingDirection, repairManager);
+                droneConsumerProvider, factoryProvider, facingDirection, repairManager, shouldShowFog);
         }
 	}
 }

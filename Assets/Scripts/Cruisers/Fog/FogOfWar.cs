@@ -5,10 +5,10 @@ namespace BattleCruisers.Cruisers.Fog
 {
     public class FogOfWar : MonoBehaviour, IFogOfWar
     {
-        // We never want tos how fog over the player's cruiser, even if they have
+        // We never want to show fog over the player's cruiser, even if they have
         // a working stealth generator.  Simply want the enemy cruiser to be blinded
         // (ie, global target finder no longer can pinpoint targets).
-        public bool shouldShowFog;
+        private bool _shouldShowFog;
 
 		private bool _isFogEnabled;
 		public bool IsFogEnabled
@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers.Fog
                 {
                     _isFogEnabled = value;
 
-                    if (shouldShowFog)
+                    if (_shouldShowFog)
                     {
                         gameObject.SetActive(_isFogEnabled);
 					}
@@ -35,8 +35,9 @@ namespace BattleCruisers.Cruisers.Fog
 
         public event EventHandler IsFogEnabledChanged;
 
-        public void StaticInitialise()
+        public void Initialise(bool shouldShowFog)
         {
+            _shouldShowFog = shouldShowFog;
             IsFogEnabled = false;
         }
 

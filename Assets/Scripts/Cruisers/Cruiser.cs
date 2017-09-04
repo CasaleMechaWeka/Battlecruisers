@@ -45,7 +45,8 @@ namespace BattleCruisers.Cruisers
         public Sprite Sprite { get { return _renderer.sprite; } }
         public ISlotWrapper SlotWrapper { get; private set; }
 		public IFactoryProvider FactoryProvider { get; private set; }
-		public IFogOfWar Fog { get; private set; }
+        private FogOfWar _fog;
+        public IFogOfWar Fog { get { return _fog; } }
 
         // This seems to be a good approximtion :)
         public override float HealthGainPerDroneS { get { return maxHealth; } }
@@ -66,14 +67,13 @@ namespace BattleCruisers.Cruisers
             slotWrapper.Initialise(parentCruiser: this);
 			SlotWrapper = slotWrapper;
 
-            FogOfWar fog = GetComponentInChildren<FogOfWar>();
-            fog.StaticInitialise();
-            Fog = fog;
+            _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
+            Assert.IsNotNull(_fog);
         }
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-            IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager)
+            IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
         {
             Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
 
@@ -90,6 +90,7 @@ namespace BattleCruisers.Cruisers
 
             _healthBarController.Initialise(this);
             _repairManager.Initialise(this);
+            _fog.Initialise(shouldShowFog);
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
