@@ -18,8 +18,6 @@ namespace BattleCruisers.Cruisers.Fog
         private readonly IList<StealthGenerator> _friendlyStealthGenerators;
         private readonly IList<SpySatelliteLauncher> _enemySpySatellites;
 
-		public event EventHandler IsFogEnabledChanged;
-
         public FogOfWarManager(IFogOfWar fog, ICruiserController friendlyCruiser, ICruiserController enemyCruiser)
         {
             Helper.AssertIsNotNull(fog, friendlyCruiser, enemyCruiser);
