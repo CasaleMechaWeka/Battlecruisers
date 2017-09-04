@@ -67,6 +67,7 @@ namespace BattleCruisers.Data.Static
 
                 // Tactical
                 StaticPrefabKeys.Buildings.ShieldGenerator,
+                StaticPrefabKeys.Buildings.StealthField,
 
                 // Defence
                 StaticPrefabKeys.Buildings.AntiShipTurret,
@@ -112,7 +113,9 @@ namespace BattleCruisers.Data.Static
 		{
 			Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
-			int numOfLevelsCompleted = 0;
+			// FELIX  TEMP  Unlock all levels :)
+			int numOfLevelsCompleted = 20;
+			//int numOfLevelsCompleted = 0;
 
 			return new GameModel(
                 numOfLevelsCompleted,
