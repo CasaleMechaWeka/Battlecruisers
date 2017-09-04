@@ -1,13 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Fog
 {
-    public class FogOfWar : IFogOfWar
+    public class FogOfWar : MonoBehaviour, IFogOfWar
     {
-        private readonly GameObject _fogGameObject;
-
 		private bool _isFogEnabled;
 		public bool IsFogEnabled
 		{
@@ -17,7 +14,7 @@ namespace BattleCruisers.Cruisers.Fog
 				if (_isFogEnabled != value)
 				{
 					_isFogEnabled = value;
-                    _fogGameObject.SetActive(_isFogEnabled);
+                    gameObject.SetActive(_isFogEnabled);
 
 					if (IsFogEnabledChanged != null)
 					{
@@ -29,11 +26,8 @@ namespace BattleCruisers.Cruisers.Fog
 
         public event EventHandler IsFogEnabledChanged;
 
-        public FogOfWar(GameObject fogGameObject)
+        public void StaticInitialise()
         {
-            Assert.IsNotNull(fogGameObject);
-
-            _fogGameObject = fogGameObject;
             IsFogEnabled = false;
         }
 
