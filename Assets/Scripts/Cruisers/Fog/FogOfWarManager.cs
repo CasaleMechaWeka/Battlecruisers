@@ -8,31 +8,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Fog
 {
-    public class FogOfWarManager : IFogOfWarManager
+    /// <summary>
+    /// Determines when to re-evalute whether fog of war should be enabled or not.
+    /// </summary>
+    public class FogOfWarManager : IDisposable
 	{
         private readonly IFogOfWar _fog;
         private readonly ICruiserController _friendlyCruiser, _enemyCruiser;
         private readonly IList<StealthGenerator> _friendlyStealthGenerators;
         private readonly IList<SpySatelliteLauncher> _enemySpySatellites;
-
-        private bool _isFogEnabled;
-        public bool IsFogEnabled 
-        { 
-            get { return _isFogEnabled; } 
-            private set
-            {
-                if (_isFogEnabled != value)
-                {
-                    _isFogEnabled = value;
-                    _fog.SetEnabled(_isFogEnabled);
-
-                    if (IsFogEnabledChanged != null)
-                    {
-                        IsFogEnabledChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
-        }
 
 		public event EventHandler IsFogEnabledChanged;
 
@@ -102,7 +86,7 @@ namespace BattleCruisers.Cruisers.Fog
 
         private void UpdateFogState()
         {
-            IsFogEnabled = _friendlyStealthGenerators.Count != 0 && _enemySpySatellites.Count == 0;
+            _fog.UpdateIsEnabled(_friendlyStealthGenerators.Count, _enemySpySatellites.Count);
         }
 
         public void Dispose()
