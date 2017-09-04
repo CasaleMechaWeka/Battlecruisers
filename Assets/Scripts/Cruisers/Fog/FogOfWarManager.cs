@@ -15,8 +15,8 @@ namespace BattleCruisers.Cruisers.Fog
 	{
         private readonly IFogOfWar _fog;
         private readonly ICruiserController _friendlyCruiser, _enemyCruiser;
-        private readonly IList<StealthGenerator> _friendlyStealthGenerators;
-        private readonly IList<SpySatelliteLauncher> _enemySpySatellites;
+        private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
+        private readonly IList<ISpySatelliteLauncher> _enemySpySatellites;
 
         public FogOfWarManager(IFogOfWar fog, ICruiserController friendlyCruiser, ICruiserController enemyCruiser)
         {
@@ -29,19 +29,19 @@ namespace BattleCruisers.Cruisers.Fog
             _friendlyCruiser.BuildingCompleted += _friendlyCruiser_BuildingCompleted;
             _enemyCruiser.BuildingCompleted += _enemyCruiser_BuildingCompleted;
 
-            _friendlyStealthGenerators = new List<StealthGenerator>();
-            _enemySpySatellites = new List<SpySatelliteLauncher>();
+            _friendlyIStealthGenerators = new List<IStealthGenerator>();
+            _enemySpySatellites = new List<ISpySatelliteLauncher>();
         }
 
         private void _friendlyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
         {
             // Look for stealth generators
-            AddBuilding(_friendlyStealthGenerators, e.Buildable, StealthGenerator_Destroyed);
+            AddBuilding(_friendlyIStealthGenerators, e.Buildable, IStealthGenerator_Destroyed);
         }
 
-        private void StealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
+        private void IStealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
         {
-            RemoveBuilding(_friendlyStealthGenerators, e.DestroyedTarget, StealthGenerator_Destroyed);
+            RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, IStealthGenerator_Destroyed);
 		}
 
         private void _enemyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
@@ -84,7 +84,7 @@ namespace BattleCruisers.Cruisers.Fog
 
         private void UpdateFogState()
         {
-            _fog.UpdateIsEnabled(_friendlyStealthGenerators.Count, _enemySpySatellites.Count);
+            _fog.UpdateIsEnabled(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count);
         }
 
         public void Dispose()
