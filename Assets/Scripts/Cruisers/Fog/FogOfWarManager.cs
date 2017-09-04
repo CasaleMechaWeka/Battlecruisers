@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -50,55 +51,51 @@ namespace BattleCruisers.Cruisers.Fog
             _enemySpySatellites = new List<SpySatelliteLauncher>();
         }
 
-        // FELIX  Generic methods :D
         private void _friendlyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
         {
             // Look for stealth generators
-            StealthGenerator stealthGenerator = e.Buildable as StealthGenerator;
-
-            if (stealthGenerator != null)
-            {
-                _friendlyStealthGenerators.Add(stealthGenerator);
-                stealthGenerator.Destroyed += StealthGenerator_Destroyed;
-				
-                UpdateFogState();
-			}
+            AddBuilding(_friendlyStealthGenerators, e.Buildable, StealthGenerator_Destroyed);
         }
 
         private void StealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
         {
-            StealthGenerator destroyedGenerator = e.DestroyedTarget.Parse<StealthGenerator>();
-
-            destroyedGenerator.Destroyed -= StealthGenerator_Destroyed;
-
-            Assert.IsTrue(_friendlyStealthGenerators.Contains(destroyedGenerator));
-            _friendlyStealthGenerators.Remove(destroyedGenerator);
-		
-            UpdateFogState();
+            RemoveBuilding(_friendlyStealthGenerators, e.DestroyedTarget, StealthGenerator_Destroyed);
 		}
 
         private void _enemyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
         {
             // Look for spy satellite launchers
-            SpySatelliteLauncher satelliteLauncher = e.Buildable as SpySatelliteLauncher;
-
-            if (satelliteLauncher != null)
-            {
-                _enemySpySatellites.Add(satelliteLauncher);
-                satelliteLauncher.Destroyed += SatelliteLauncher_Destroyed;
-				
-                UpdateFogState();
-			}
+            AddBuilding(_enemySpySatellites, e.Buildable, SatelliteLauncher_Destroyed);
         }
 
         private void SatelliteLauncher_Destroyed(object sender, DestroyedEventArgs e)
         {
-            SpySatelliteLauncher destroyedLauncher = e.DestroyedTarget.Parse<SpySatelliteLauncher>();
+            RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
+        }
 
-            destroyedLauncher.Destroyed -= SatelliteLauncher_Destroyed;
+        private void AddBuilding<T>(IList<T> buildings, IBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander) 
+            where T : class, IBuilding
+        {
+            T building = buildingCompleted as T;
 
-            Assert.IsTrue(_enemySpySatellites.Contains(destroyedLauncher));
-            _enemySpySatellites.Remove(destroyedLauncher);
+            if (building != null)
+            {
+                buildings.Add(building);
+                building.Destroyed += destroyedHander;
+
+                UpdateFogState();
+            }
+        }
+
+        private void RemoveBuilding<T>(IList<T> buildings, ITarget destroyedTarget, EventHandler<DestroyedEventArgs> destroyedHandler) 
+            where T : class, IBuilding
+        {
+            T destroyedBuilding = destroyedTarget.Parse<T>();
+
+            destroyedBuilding.Destroyed -= destroyedHandler;
+
+            Assert.IsTrue(buildings.Contains(destroyedBuilding));
+            buildings.Remove(destroyedBuilding);
 
             UpdateFogState();
         }
