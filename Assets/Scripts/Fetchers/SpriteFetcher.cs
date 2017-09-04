@@ -1,12 +1,10 @@
-﻿using BattleCruisers.Cruisers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using BattleCruisers.Cruisers.Slots;
 using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
-	public class SpriteFetcher : ISpriteFetcher
+    public class SpriteFetcher : ISpriteFetcher
 	{
 		private const string SLOT_SPRITES_BASE_PATH = "Sprites/Slots/";
 		private const string SLOT_SPRITE_NAME_PREFIX = "slot-";

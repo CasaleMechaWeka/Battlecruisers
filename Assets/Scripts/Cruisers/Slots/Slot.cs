@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.Cruisers.Slots
 {
     public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
 	{

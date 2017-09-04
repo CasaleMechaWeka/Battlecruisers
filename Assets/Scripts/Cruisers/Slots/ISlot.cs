@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.Cruisers.Slots
 {
     // FELIX  Remove SternTop & BowTop slots?
     public enum SlotType

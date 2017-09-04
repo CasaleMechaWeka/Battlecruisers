@@ -3,6 +3,7 @@ using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;

@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;

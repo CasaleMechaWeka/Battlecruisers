@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {

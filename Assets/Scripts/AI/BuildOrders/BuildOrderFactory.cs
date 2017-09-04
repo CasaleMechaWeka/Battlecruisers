@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static;

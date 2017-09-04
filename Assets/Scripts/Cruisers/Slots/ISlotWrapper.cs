@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Cruisers
+﻿namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotWrapper
 	{

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.Cruisers.Slots
 {
     public class SlotWrapper : MonoBehaviour, ISlotWrapper
 	{
