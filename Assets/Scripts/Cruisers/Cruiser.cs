@@ -49,6 +49,7 @@ namespace BattleCruisers.Cruisers
         public override float HealthGainPerDroneS { get { return maxHealth; } }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
+        public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         public override void StaticInitialise()
@@ -106,6 +107,8 @@ namespace BattleCruisers.Cruisers
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
 			building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider);
 			slot.Building = building;
+
+			building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
 			// Only show build menu for player's cruiser
@@ -132,13 +135,26 @@ namespace BattleCruisers.Cruisers
             }
         }
 
+        private void Building_CompletedBuildable(object sender, EventArgs e)
+        {
+            IBuilding completedBuilding = sender.Parse<IBuilding>();
+            completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
+
+            if (BuildingCompleted != null)
+            {
+                BuildingCompleted.Invoke(this, new CompletedConstructionEventArgs(completedBuilding));
+            }
+        }
+
         private void Building_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
+			IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
+            destroyedBuilding.CompletedBuildable -= Building_CompletedBuildable;
+
             if (BuildingDestroyed != null)
             {
-                IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
 				BuildingDestroyed.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
             }
         }

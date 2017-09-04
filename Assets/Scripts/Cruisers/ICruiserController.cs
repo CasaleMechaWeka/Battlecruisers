@@ -44,7 +44,8 @@ namespace BattleCruisers.Cruisers
 		IDroneManager DroneManager { get; }
 
 		event EventHandler<StartedConstructionEventArgs> StartedConstruction;
-        event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
+		event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
+		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
         void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
