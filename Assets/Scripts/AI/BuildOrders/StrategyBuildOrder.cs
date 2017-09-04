@@ -11,8 +11,7 @@ namespace BattleCruisers.AI.BuildOrders
 
         public IPrefabKey Current { get; private set; }
 
-        public StrategyBuildOrder(
-            IList<IPrefabKeyWrapper> baseBuildOrder)
+        public StrategyBuildOrder(IList<IPrefabKeyWrapper> baseBuildOrder)
         {
             Assert.IsNotNull(baseBuildOrder);
             _baseBuildOrder = baseBuildOrder.GetEnumerator();
