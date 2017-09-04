@@ -1,6 +1,7 @@
 ﻿﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
@@ -32,6 +33,7 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer);
+            new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
 
             cruiser.Initialise(faction, enemyCruiser, healthBar, _uiManager, droneManager,
                 droneConsumerProvider, factoryProvider, facingDirection, repairManager);

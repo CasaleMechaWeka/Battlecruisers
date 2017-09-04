@@ -1,8 +1,9 @@
-﻿﻿using System;
+﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.UI.BattleScene;
@@ -44,6 +45,7 @@ namespace BattleCruisers.Cruisers
         public Sprite Sprite { get { return _renderer.sprite; } }
         public ISlotWrapper SlotWrapper { get; private set; }
 		public IFactoryProvider FactoryProvider { get; private set; }
+		public IFogOfWar Fog { get; private set; }
 
         // This seems to be a good approximtion :)
         public override float HealthGainPerDroneS { get { return maxHealth; } }
@@ -63,6 +65,10 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(slotWrapper);
             slotWrapper.Initialise(parentCruiser: this);
 			SlotWrapper = slotWrapper;
+
+            FogOfWar fog = GetComponentInChildren<FogOfWar>();
+            fog.StaticInitialise();
+            Fog = fog;
         }
 
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
