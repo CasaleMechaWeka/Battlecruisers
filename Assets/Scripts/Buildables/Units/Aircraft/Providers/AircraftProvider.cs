@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
         private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
         private const float GUNSHIP_TURN_AROUND_POINT_X = 0;
+        private const float SPY_SATELLITE_PATROL_MARGIN = 5;
 
 		public SafeZone FighterSafeZone { get; private set; }
 
@@ -95,5 +96,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				new Vector2(_enemyCruiserPosition.x + closerEnemyCruiserPatrolPointAdjustemntX, cruisingAltitudeInM)
 			};
 		}
+
+        public IList<Vector2> FindSpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM)
+        {
+            float closerToEnemyCruiserPatrolPointX = _enemyCruiserPosition.x > 0 ? SPY_SATELLITE_PATROL_MARGIN : -SPY_SATELLITE_PATROL_MARGIN;
+            float closerToFriendlyCruiserPatrolPointX = _enemyCruiserPosition.x > 0 ? -SPY_SATELLITE_PATROL_MARGIN : SPY_SATELLITE_PATROL_MARGIN;
+
+            return new List<Vector2>()
+            {
+                new Vector2(satellitePosition.x, cruisingAltitudeInM),
+                new Vector2(closerToEnemyCruiserPatrolPointX, cruisingAltitudeInM),
+                new Vector2(closerToFriendlyCruiserPatrolPointX, cruisingAltitudeInM)
+            };
+        }
 	}
 }

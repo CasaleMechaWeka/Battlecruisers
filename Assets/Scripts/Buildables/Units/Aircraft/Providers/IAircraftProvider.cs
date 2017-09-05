@@ -11,5 +11,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM);
 		IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM);
 		IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM);
+        IList<Vector2> FindSpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM);
 	}
 }
