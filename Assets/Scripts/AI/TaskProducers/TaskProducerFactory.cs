@@ -79,5 +79,13 @@ namespace BattleCruisers.AI.TaskProducers
 
 			new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
 		}
+
+        public void CreateAntiStealthTaskProducer(ITaskList tasks, IDynamicBuildOrder antiStealthBuildOrder)
+        {
+            IThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor(_playerCruiser);
+            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
+
+            new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiStealthBuildOrder, stealthThreatMonitor, slotNumCalculator);
+        }
 	}
 }
