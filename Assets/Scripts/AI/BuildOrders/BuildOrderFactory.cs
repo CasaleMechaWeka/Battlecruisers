@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
@@ -19,6 +18,8 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly IStaticData _staticData;
 		
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
+        // For spy satellite launcher
+        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
 		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData)
 		{
@@ -130,7 +131,7 @@ namespace BattleCruisers.AI.BuildOrders
         public IDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Deck);
-			int numOfSlotsToUse = Helper.Half(numOfDeckSlots, roundUp: true);
+            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
 
             return
                 new AntiUnitBuildOrder(
@@ -143,7 +144,7 @@ namespace BattleCruisers.AI.BuildOrders
 		public IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
 		{
             int numOfDeckSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Deck);
-			int numOfSlotsToUse = Helper.Half(numOfDeckSlots, roundUp: false);
+            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
 			return
 				new AntiUnitBuildOrder(

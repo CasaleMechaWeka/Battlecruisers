@@ -19,6 +19,9 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly IStaticData _staticData;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
+		// For spy satellite launcher
+		private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+
         public TaskProducerFactory(
             ICruiserController aiCruiser, 
             ICruiserController playerCruiser, 
@@ -53,7 +56,7 @@ namespace BattleCruisers.AI.TaskProducers
         {
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateAirThreatMonitor(_playerCruiser);
 			
-            int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: true);
+            int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
             new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
@@ -63,7 +66,7 @@ namespace BattleCruisers.AI.TaskProducers
 		{
             IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateNavalThreatMonitor(_playerCruiser);
 
-            int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck), roundUp: false);
+            int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotWrapper.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
             ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 			
 			new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
