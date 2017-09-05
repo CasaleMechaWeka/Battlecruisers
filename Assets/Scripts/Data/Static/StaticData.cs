@@ -68,6 +68,7 @@ namespace BattleCruisers.Data.Static
                 // Tactical
                 StaticPrefabKeys.Buildings.ShieldGenerator,
                 StaticPrefabKeys.Buildings.StealthGenerator,
+                StaticPrefabKeys.Buildings.SpySatelliteLauncher,
 
                 // Defence
                 StaticPrefabKeys.Buildings.AntiShipTurret,
@@ -183,7 +184,7 @@ namespace BattleCruisers.Data.Static
 				{ StaticPrefabKeys.Buildings.Booster, 10 },
 				{ StaticPrefabKeys.Buildings.ControlTower, 11 },
 				{ StaticPrefabKeys.Buildings.StealthGenerator, 14 },
-                { StaticPrefabKeys.Buildings.SpySatellite, 14 },
+                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 14 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
