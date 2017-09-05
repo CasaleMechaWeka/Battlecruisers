@@ -67,7 +67,11 @@ namespace BattleCruisers.AI
                 _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder());
             }
 
-			// FELIX  Anti stealth!
+            // Anti stealth
+            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable(levelInfo.LevelNum))
+            {
+                _taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder());
+            }
 			
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
 
