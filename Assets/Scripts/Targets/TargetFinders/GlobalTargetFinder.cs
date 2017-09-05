@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
