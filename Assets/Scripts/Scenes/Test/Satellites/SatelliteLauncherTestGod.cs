@@ -1,9 +1,10 @@
 ﻿using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Scenes.Test.Offensive;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Offensive
+namespace BattleCruisers.Scenes.Test.Satellites
 {
     public class SatelliteLauncherTestGod : CameraToggleTestGod
     {
