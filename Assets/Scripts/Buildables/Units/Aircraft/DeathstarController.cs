@@ -26,7 +26,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float LEFT_WING_TARGET_ANGLE_IN_DEGREES = 270;
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
-		private const int NUM_OF_PATROL_POINTS = 4;
 
 		public override void StaticInitialise()
 		{
@@ -76,13 +75,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
-			Assert.IsTrue(patrolPositions.Count == NUM_OF_PATROL_POINTS);
 
-			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
-			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: true, actionOnReached: OnClearingLaunchStation));
-			patrolPoints.Add(new PatrolPoint(patrolPositions[1], removeOnceReached: true));
-			patrolPoints.Add(new PatrolPoint(patrolPositions[2]));
-			patrolPoints.Add(new PatrolPoint(patrolPositions[3]));
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
+            {
+                new PatrolPoint(patrolPositions[0], removeOnceReached: true, actionOnReached: OnClearingLaunchStation),
+                new PatrolPoint(patrolPositions[1], removeOnceReached: true)
+            };
+
+            for (int i = 2; i < patrolPositions.Count; ++i)
+            {
+				patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
+            }
 
 			return patrolPoints;
 		}
