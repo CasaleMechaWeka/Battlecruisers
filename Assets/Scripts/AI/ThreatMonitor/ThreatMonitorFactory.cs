@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings.Tactical;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 
@@ -9,6 +10,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 		private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
 		private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
+		private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
 		public IThreatMonitor CreateAirThreatMonitor(ICruiserController playerCruiser)
         {
@@ -26,6 +28,12 @@ namespace BattleCruisers.AI.ThreatMonitors
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
 			return new BuildingThreatMonitor<RocketLauncherController>(playerCruiser, threatEvaluator);
+        }
+
+        public IThreatMonitor CreateStealthThreatMonitor(ICruiserController playerCruiser)
+        {
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
+            return new BuildingThreatMonitor<IStealthGenerator>(playerCruiser, threatEvaluator);
         }
     }
 }

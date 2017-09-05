@@ -7,5 +7,6 @@ namespace BattleCruisers.AI.ThreatMonitors
 		IThreatMonitor CreateAirThreatMonitor(ICruiserController playerCruiser);
 		IThreatMonitor CreateNavalThreatMonitor(ICruiserController playerCruiser);
         IThreatMonitor CreateRocketThreatMonitor(ICruiserController playerCruiser);
-    }
+        IThreatMonitor CreateStealthThreatMonitor(ICruiserController playerCruiser);
+	}
 }
