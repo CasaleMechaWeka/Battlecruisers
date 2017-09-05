@@ -163,21 +163,31 @@ namespace BattleCruisers.AI.BuildOrders
         {
             return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.TeslaCoil, size: 1);
         }
-
-		private IDynamicBuildOrder CreateStaticBuildOrder(IPrefabKey buildingKey, int size)
+		
+		public bool IsAntiStealthBuildOrderAvailable(int levelNum)
 		{
-			return
-				new FiniteBuildOrder(
-					new InfiniteStaticBuildOrder(buildingKey),
-					size);
+            return _staticData.IsBuildableAvailable(StaticPrefabKeys.Buildings.SpySatelliteLauncher, levelNum);
 		}
 
-		private IDynamicBuildOrder CreateDynamicBuildOrder(BuildingCategory buildingCategory, int size, ILevelInfo levelInfo)
-		{
-			return
-				new FiniteBuildOrder(
+        public IDynamicBuildOrder CreateAntiStealthBuildOrder()
+        {
+            return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.SpySatelliteLauncher, size: 1);
+        }
+
+        private IDynamicBuildOrder CreateStaticBuildOrder(IPrefabKey buildingKey, int size)
+        {
+            return
+                new FiniteBuildOrder(
+                    new InfiniteStaticBuildOrder(buildingKey),
+                    size);
+        }
+
+        private IDynamicBuildOrder CreateDynamicBuildOrder(BuildingCategory buildingCategory, int size, ILevelInfo levelInfo)
+        {
+            return
+                new FiniteBuildOrder(
                     new InfiniteBuildOrder(buildingCategory, levelInfo),
-					size);
-		}
+                    size);
+        }
     }
 }

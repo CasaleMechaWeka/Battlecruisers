@@ -8,5 +8,7 @@
         IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo);
         bool IsAntiRocketBuildOrderAvailable(int levelNum);
         IDynamicBuildOrder CreateAntiRocketBuildOrder();
+        bool IsAntiStealthBuildOrderAvailable(int levelNum);
+        IDynamicBuildOrder CreateAntiStealthBuildOrder();
 	}
 }
