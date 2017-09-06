@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Offensive
+namespace BattleCruisers.Buildables.Buildings
 {
 	public abstract class SatelliteLauncherController : Building
 	{
