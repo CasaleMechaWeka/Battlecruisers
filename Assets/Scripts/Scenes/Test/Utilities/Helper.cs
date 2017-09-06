@@ -200,6 +200,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IList<Vector2> gunshipPatrolPoints = null,
 			IList<Vector2> fighterPatrolPoints = null,
 			IList<Vector2> deathstarPatrolPoints = null,
+            IList<Vector2> spySatellitePatrolPoints = null,
 			SafeZone fighterSafeZone = null)
 		{
 			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
@@ -245,6 +246,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				};
 			}
 			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+
+            if (spySatellitePatrolPoints == null)
+            {
+                spySatellitePatrolPoints = new List<Vector2>()
+                {
+					new Vector2(0, 1),
+					new Vector2(0, 2),
+					new Vector2(0, 3)
+                };
+            }
+            provider.FindSpySatellitePatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
 
 			if (fighterSafeZone == null)
 			{
