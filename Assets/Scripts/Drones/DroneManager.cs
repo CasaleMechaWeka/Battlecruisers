@@ -79,6 +79,8 @@ namespace BattleCruisers.Drones
 		}
 
 		/// <summary>
+        /// === High Priority Drone Consumer ===
+        /// 
 		/// The newly added consumer will always be provided with at least
 		/// its required number of drones.
 		/// 
@@ -88,6 +90,11 @@ namespace BattleCruisers.Drones
 		/// enough drones to spare for the newly added consumer AND still be
 		/// focused.  In this case that focused consumer remains the highest
 		/// priority consumer.
+        /// 
+        /// 
+        /// === Low Priority Drone Consumer ===
+        /// Will be added as the lowest priority drone consumer.  Hence, will NOT
+        /// be assigned any drones unless it is the only drone consumer.
 		/// </summary>
 		public void AddDroneConsumer(IDroneConsumer droneConsumer)
 		{
@@ -99,8 +106,20 @@ namespace BattleCruisers.Drones
 				throw new ArgumentException();
 			}
 
-			int numOfSpareDrones = ProvideRequiredDrones(droneConsumer);
+            if (droneConsumer.IsHighPriority)
+            {
+                AddHighPriorityDroneConsumer(droneConsumer);
+            }
+            else
+            {
+                
+            }
+        }
 
+        private void AddHighPriorityDroneConsumer(IDroneConsumer droneConsumer)
+        {
+			int numOfSpareDrones = ProvideRequiredDrones(droneConsumer);
+			
 			IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
 			if (focusedConsumer != null && focusedConsumer.State == DroneConsumerState.Focused)
 			{
@@ -112,12 +131,23 @@ namespace BattleCruisers.Drones
 				// Make the new consumer have the highest priority
 				_droneConsumers.Add(droneConsumer);
 			}
-
+			
 			if (numOfSpareDrones > 0)
 			{
 				AssignSpareDrones(numOfSpareDrones);
 			}
-		}
+        }
+
+        private void AddLowPriorityDroneConsumer(IDroneConsumer droneConsumer)
+        {
+            // Make new consumer have the lowest priority
+            _droneConsumers.Insert(0, droneConsumer);
+
+            if (_droneConsumers.Count == 1)
+            {
+                droneConsumer.NumOfDrones = NumOfDrones;
+            }
+        }
 
 		/// <summary>
 		/// Remove the given consumer and reassign their drones (if they had any).
