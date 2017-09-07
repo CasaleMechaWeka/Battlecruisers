@@ -749,6 +749,30 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);  // 2
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer3.State);  // 3
 		}
+
+        /// <summary>
+        /// Checks a case that was a bug:
+        /// 1. Start constructing building costing 6 (have 6 drones)
+        /// 2. Lose drone station => have 4 drones, building paused
+        /// 3. Try to start building a drone station (costing 4 drones) 
+        ///     => Error!  No freed drones, as previously freed drones
+        ///     when we puased the building were "lost"  (ie, could only
+        ///     be freed once :) ).
+        /// </summary>
+        [Test]
+        public void Add_LoseDrones_CurrentConsumerPaused_Add()
+        {
+            _droneManager.NumOfDrones = 4;
+
+            _droneManager.AddDroneConsumer(_droneConsumer4);
+            Assert.AreEqual(DroneConsumerState.Active, _droneConsumer4.State);
+
+            _droneManager.NumOfDrones = 2;
+            Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer4.State);
+
+            _droneManager.AddDroneConsumer(_droneConsumer1);
+            Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer1.State);
+        }
 		#endregion Everything
 	}
 }
