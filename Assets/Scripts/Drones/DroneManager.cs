@@ -354,19 +354,14 @@ namespace BattleCruisers.Drones
 		/// <param name="numOfDesiredDrones">Number of desired drones.</param>
 		private int FreeUpDrones(int numOfDesiredDrones)
 		{
-			int numOfFreedDrones = 0;
+            int numOfFreedDrones = FindSpareDrones();
 
-			if (_droneConsumers.Count == 0)
-			{
-				numOfFreedDrones = NumOfDrones;
-			}
-			else
+            if (numOfFreedDrones < numOfDesiredDrones)
 			{
 				// Remove drones from focused consuemr
 				IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
 
 				if (focusedConsumer.State == DroneConsumerState.Focused)
-
 				{
 					if (focusedConsumer.NumOfDrones - numOfDesiredDrones > focusedConsumer.NumOfDronesRequired)
 					{
@@ -383,10 +378,9 @@ namespace BattleCruisers.Drones
 					}
 				}
 
-				if (numOfFreedDrones < numOfDesiredDrones)
-				{
-					// Remove drones from active consumers
-					// Consumer priority:  Low => High
+				// Remove drones from active consumers (from low => high priority)
+                if (numOfFreedDrones < numOfDesiredDrones)
+                {
 					for (int i = 0; i < _droneConsumers.Count; ++i)
 					{
 						IDroneConsumer droneConsumer = _droneConsumers[i];
@@ -401,9 +395,17 @@ namespace BattleCruisers.Drones
 				}
 			}
 
+            Logging.Log(Tags.DRONES, "DroneManager.FreeUpDrones() numOfDesiredDrones: " + numOfDesiredDrones + "  numOfFreedDrones: " + numOfFreedDrones);
+
 			Assert.IsTrue(numOfFreedDrones >= numOfDesiredDrones);
 			return numOfFreedDrones;
 		}
+
+        private int FindSpareDrones()
+        {
+            int numOfDronesUsed = _droneConsumers.Sum(droneConsumer => droneConsumer.NumOfDrones);
+            return NumOfDrones - numOfDronesUsed;
+        }
 
 		private IDroneConsumer GetHighestPriorityConsumer()
 		{
