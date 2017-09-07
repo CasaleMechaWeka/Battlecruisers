@@ -32,6 +32,8 @@ namespace BattleCruisers.Tests.Turrets
 
 			_expectedLongInterval = 1 / _turretStats.fireRatePerS;
 			_expectedBurstInterval = 1 / _turretStats.burstFireRatePerS;
+
+            _turretStats.Initialise();
 		}
 
         /// <summary>
@@ -43,8 +45,6 @@ namespace BattleCruisers.Tests.Turrets
 		[Test]
 		public void NextFireIntervalInS_And_IsInBurst()
 		{
-			_turretStats.Initialise();
-
             // Several bursts
             for (int j = 0; j < 2; ++j)
             {
@@ -73,5 +73,23 @@ namespace BattleCruisers.Tests.Turrets
                 }
             }				
 		}
+
+        [Test]
+        public void ChangingFireRateMultiplier_AffectsDuration()
+        {
+            _turretStats.FireRateMultiplier = 2;
+            _expectedLongInterval = 1 / (_turretStats.fireRatePerS * _turretStats.FireRateMultiplier);
+
+            for (int i = 0; i < _turretStats.burstSize; ++i)
+            {
+                if (i == _turretStats.burstSize - 1)
+                {
+                    // Last shot in burst
+                    Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
+                }
+
+                _turretStats.MoveToNextDuration();
+            }
+        }
 	}
 }

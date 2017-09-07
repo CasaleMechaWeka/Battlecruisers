@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public virtual float DamagePerS { get { return damage * EffectiveFireRatePerS; } }
 		public virtual float DurationInS { get { return 1 / EffectiveFireRatePerS; } }
-        public float FireRateMultiplier { get; private set; }
+        public float FireRateMultiplier { get; set; }
 
         public virtual void Initialise()
 		{
