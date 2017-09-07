@@ -13,6 +13,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
 		public override void Initialise()
 		{
+            base.Initialise();
+
 			Assert.IsTrue(accuracy >= 0 && accuracy <= 1);
 			Assert.IsTrue(bulletVelocityInMPerS > 0);
 			Assert.IsTrue(turretRotateSpeedInDegrees > 0);

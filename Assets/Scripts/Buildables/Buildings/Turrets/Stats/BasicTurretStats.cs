@@ -10,14 +10,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 		public float damage;
 		public float rangeInM;
 
-		public virtual float DamagePerS { get { return damage * fireRatePerS; } }
-		public virtual float DurationInS { get { return 1 / fireRatePerS; } }
+        private const float DEFAULT_FIRE_RATE_MULTIPLIER = 1;
 
-		public virtual void Initialise()
+        protected float EffectiveFireRatePerS { get { return FireRateMultiplier * fireRatePerS; } }
+
+        public virtual float DamagePerS { get { return damage * EffectiveFireRatePerS; } }
+		public virtual float DurationInS { get { return 1 / EffectiveFireRatePerS; } }
+        public float FireRateMultiplier { get; private set; }
+
+        public virtual void Initialise()
 		{
 			Assert.IsTrue(fireRatePerS > 0);
 			Assert.IsTrue(damage > 0);
 			Assert.IsTrue(rangeInM > 0);
+
+            FireRateMultiplier = DEFAULT_FIRE_RATE_MULTIPLIER;
 		}
 
         public virtual void MoveToNextDuration()

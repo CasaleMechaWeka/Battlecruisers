@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     public class BurstFireTurretStats : TurretStats
     {
         private float _shortDurationInS;
-        private float _longDurationInS;
 
         public int burstSize;
         public float burstFireRatePerS;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             get
             {
                 float cycleDamage = burstSize * damage;
-                float cycleTime = (1 / fireRatePerS) + burstSize * (1 / burstFireRatePerS);
+                float cycleTime = (1 / EffectiveFireRatePerS) + burstSize * (1 / burstFireRatePerS);
                 return cycleDamage / cycleTime;
             }
         }
@@ -47,9 +46,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         { 
             get 
             {
-                return QueryIndex == burstSize - 1 ? _longDurationInS : _shortDurationInS;
+                return QueryIndex == burstSize - 1 ? LongDurationInS : _shortDurationInS;
             }
         }
+
+        private float LongDurationInS { get { return 1 / EffectiveFireRatePerS; } }
 
         public override bool IsInBurst 
         { 
@@ -67,7 +68,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(burstFireRatePerS > 0);
 
 			_shortDurationInS = 1 / burstFireRatePerS;
-            _longDurationInS = 1 / fireRatePerS;
 
             QueryIndex = 0;
 		}
