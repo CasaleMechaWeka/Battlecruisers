@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Drones
     public class DroneManagerTests 
 	{
 		private IDroneManager _droneManager;
-		private IDroneConsumer _droneConsumer1, _droneConsumer2, _droneConsumer3, _droneConsumer4;
+		private IDroneConsumer _droneConsumer1, _droneConsumer2, _droneConsumer3, _droneConsumer4, _lowPriorityDroneConsumer;
 
 		[SetUp]
 		public void TestSetup()
@@ -19,6 +19,7 @@ namespace BattleCruisers.Tests.Drones
 			_droneConsumer2 = new DroneConsumer(2);
 			_droneConsumer3 = new DroneConsumer(2);
 			_droneConsumer4 = new DroneConsumer(4);
+            _lowPriorityDroneConsumer = new DroneConsumer(1, isHighPriority: false);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
@@ -274,6 +275,29 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer4.State);
+		}
+
+        [Test]
+        public void AddDroneConsumer_LowPriorityDroneConsumer_DoesNotAssignDrones()
+        {
+            _droneManager.NumOfDrones = 5;
+            _droneManager.AddDroneConsumer(_droneConsumer2);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+            Assert.AreEqual(5, _droneConsumer2.NumOfDrones);
+
+            _droneManager.AddDroneConsumer(_lowPriorityDroneConsumer);
+            Assert.AreEqual(DroneConsumerState.Idle, _lowPriorityDroneConsumer.State);
+			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);
+			Assert.AreEqual(5, _droneConsumer2.NumOfDrones);
+		}
+
+        [Test]
+		public void AddDroneConsumer_LowPriorityDroneConsumer_OnlyDroneConsumer_AssignsDrones()
+		{
+            _droneManager.NumOfDrones = 5;
+            _droneManager.AddDroneConsumer(_lowPriorityDroneConsumer);
+            Assert.AreEqual(DroneConsumerState.Focused, _lowPriorityDroneConsumer.State);
+            Assert.AreEqual(5, _lowPriorityDroneConsumer.NumOfDrones);
 		}
 		#endregion AddDroneConsumer()
 

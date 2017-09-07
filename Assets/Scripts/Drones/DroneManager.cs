@@ -112,7 +112,7 @@ namespace BattleCruisers.Drones
             }
             else
             {
-                
+                AddLowPriorityDroneConsumer(droneConsumer);
             }
         }
 
