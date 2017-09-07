@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables.Repairables
             IDroneConsumer droneConsumer = null;
             if (repairable.RepairCommand.CanExecute)
             {
-                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
                 _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
 
@@ -67,7 +67,6 @@ namespace BattleCruisers.Buildables.Repairables
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
             IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
-            Assert.IsNotNull(repairable);
 
             Logging.Log(Tags.REPAIR_MANAGER, "RepairCommand_CanExecuteChanged() " + repairable);
 
@@ -77,7 +76,7 @@ namespace BattleCruisers.Buildables.Repairables
             if (repairable.RepairCommand.CanExecute
                 && droneConsumer == null)
             {
-                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
                 _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
             else if (!repairable.RepairCommand.CanExecute

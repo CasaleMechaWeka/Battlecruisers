@@ -11,9 +11,9 @@ namespace BattleCruisers.Drones
 			_droneManager = droneManager;
 		}
 
-		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
+		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority)
 		{
-			return new DroneConsumer(numOfDronesRequired);
+            return new DroneConsumer(numOfDronesRequired, isHighPriority);
 		}
 
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)

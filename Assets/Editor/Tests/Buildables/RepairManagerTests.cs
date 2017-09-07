@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.Buildables
             _droneConsumer = Substitute.For<IDroneConsumer>();
             _droneConsumer.NumOfDronesRequired.Returns(2);
             _droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-            _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired: -99).ReturnsForAnyArgs(_droneConsumer);
+            _droneConsumerProvider.RequestDroneConsumer(numOfDronesRequired: -99, isHighPriority: false).ReturnsForAnyArgs(_droneConsumer);
             _cruiserRepairCommand = Substitute.For<IRepairCommand>();
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.Buildables
 
             _repairManager.Initialise(_cruiser);
 
-            _droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99);
+            _droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99, isHighPriority: false);
 		}
 
 		[Test]
@@ -67,7 +67,7 @@ namespace BattleCruisers.Tests.Buildables
 
 			_repairManager.Initialise(_cruiser);
 
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
             _droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
 		}
 
@@ -177,7 +177,7 @@ namespace BattleCruisers.Tests.Buildables
             _cruiserRepairCommand.CanExecute.Returns(true);
             _cruiserRepairCommand.CanExecuteChanged += Raise.Event();
 
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
         }
 
 		[Test]
@@ -190,7 +190,7 @@ namespace BattleCruisers.Tests.Buildables
 			_cruiserRepairCommand.CanExecute.Returns(true);
 			_cruiserRepairCommand.CanExecuteChanged += Raise.Event();
 
-			_droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99);
+			_droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99, isHighPriority: false);
             _droneConsumerProvider.DidNotReceiveWithAnyArgs().ReleaseDroneConsumer(droneConsumer: null);
 		}
 
@@ -205,7 +205,7 @@ namespace BattleCruisers.Tests.Buildables
 			_cruiserRepairCommand.CanExecute.Returns(false);
 			_cruiserRepairCommand.CanExecuteChanged += Raise.Event();
 
-            _droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99);
+            _droneConsumerProvider.DidNotReceiveWithAnyArgs().RequestDroneConsumer(numOfDronesRequired: -99, isHighPriority: false);
 			_droneConsumerProvider.DidNotReceiveWithAnyArgs().ReleaseDroneConsumer(droneConsumer: null);
 		}
 
@@ -227,7 +227,7 @@ namespace BattleCruisers.Tests.Buildables
         {
             _buildingRepairCommand.CanExecute.Returns(true);
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_building));
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
 			_droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
 		}
 
@@ -235,7 +235,7 @@ namespace BattleCruisers.Tests.Buildables
         {
             _cruiserRepairCommand.CanExecute.Returns(true);
 			_repairManager.Initialise(_cruiser);
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
 			_droneConsumerProvider.Received().ActivateDroneConsumer(_droneConsumer);
 		}
 

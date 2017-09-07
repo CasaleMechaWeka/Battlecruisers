@@ -145,7 +145,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             CleanUpUnitUnderConstruction();
 		}
 		
-		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
+		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority)
 		{
 			Assert.IsNotNull(DroneConsumer);
 			Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired);

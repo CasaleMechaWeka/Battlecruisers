@@ -41,11 +41,12 @@ namespace BattleCruisers.Drones
 
 		public int NumOfDronesRequired { get; set; }
 		public DroneConsumerState State { get; private set; }
+        public bool IsHighPriority { get; private set; }
 
 		public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
-		public DroneConsumer(int numOfDronesRequired)
+		public DroneConsumer(int numOfDronesRequired, bool isHighPriority = true)
 		{
 			if (numOfDronesRequired < 0)
 			{
@@ -55,6 +56,7 @@ namespace BattleCruisers.Drones
 			NumOfDronesRequired = numOfDronesRequired;
 			NumOfDrones = 0;
 			State = DroneConsumerState.Idle;
+            IsHighPriority = isHighPriority;
 		}
 
 		private DroneConsumerState FindDroneState(int numOfDrones, int numOfDronesRequired)

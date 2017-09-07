@@ -38,6 +38,7 @@ namespace BattleCruisers.Drones
 		int NumOfDrones { get; set; }
 		int NumOfDronesRequired { get; }
 		DroneConsumerState State { get; }
+        bool IsHighPriority { get; }
 
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;

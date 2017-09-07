@@ -118,7 +118,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			droneConsumer.State.Returns(DroneConsumerState.Active);
 
 			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-			droneConsumerProvider.RequestDroneConsumer(0).ReturnsForAnyArgs(callInfo =>
+			droneConsumerProvider.RequestDroneConsumer(-99, true).ReturnsForAnyArgs(callInfo =>
 			{
 				droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
 				return droneConsumer;
