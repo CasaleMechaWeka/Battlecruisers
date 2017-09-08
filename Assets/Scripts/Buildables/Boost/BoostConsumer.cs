@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Buildables.Boost
+{
+    /// <summary>
+    /// Consumers boost producer(s).  Simply provides the cumulative boost
+    /// of all boost providers.
+    /// </summary>
+    public class BoostConsumer : IBoostConsumer
+	{
+        private readonly IList<IBoostProvider> _boostProviders;
+
+        private const float DEFAULT_BOOST_MULTIPLIER = 1;
+
+        private float _cumulativeBoost;
+		public float CumulativeBoost 
+        { 
+            get { return _cumulativeBoost; }
+            set
+            {
+                if (_cumulativeBoost != value)
+                {
+                    _cumulativeBoost = value;
+
+                    if (BoostChanged != null)
+                    {
+                        BoostChanged.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public event EventHandler BoostChanged;
+
+        public BoostConsumer()
+        {
+            _cumulativeBoost = DEFAULT_BOOST_MULTIPLIER;
+            _boostProviders = new List<IBoostProvider>();
+        }
+
+        public void AddBoostProvider(IBoostProvider boostProvider)
+        {
+            Assert.IsFalse(_boostProviders.Contains(boostProvider));
+            _boostProviders.Add(boostProvider);
+        }
+		
+		public void RemoveBoostProvider(IBoostProvider boostProvider)
+		{
+            Assert.IsTrue(_boostProviders.Contains(boostProvider));
+            _boostProviders.Remove(boostProvider);
+		}
+		
+        private void UpdateCumulativeBoost()
+        {
+            float cumulativeBoost = DEFAULT_BOOST_MULTIPLIER;
+
+            foreach (IBoostProvider provider in _boostProviders)
+            {
+                cumulativeBoost *= provider.BoostMultiplier;
+            }
+
+            CumulativeBoost = cumulativeBoost;
+        }
+    }
+}
