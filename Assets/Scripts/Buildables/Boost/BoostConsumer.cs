@@ -44,12 +44,14 @@ namespace BattleCruisers.Buildables.Boost
         {
             Assert.IsFalse(_boostProviders.Contains(boostProvider));
             _boostProviders.Add(boostProvider);
+            UpdateCumulativeBoost();
         }
 		
 		public void RemoveBoostProvider(IBoostProvider boostProvider)
 		{
             Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);
+			UpdateCumulativeBoost();
 		}
 		
         private void UpdateCumulativeBoost()
