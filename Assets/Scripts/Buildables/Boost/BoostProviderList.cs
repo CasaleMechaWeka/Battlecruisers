@@ -16,18 +16,20 @@ namespace BattleCruisers.Buildables.Boost
         {
             _boostProviders = new List<IBoostProvider>();
             BoostProviders = new ReadOnlyCollection<IBoostProvider>(_boostProviders);
-        }
+		}
 
         public void AddBoostProvider(IBoostProvider boostProvider)
         {
             Assert.IsFalse(_boostProviders.Contains(boostProvider));
             _boostProviders.Add(boostProvider);
+            EmitChangedEvent();
         }
 
         public void RemoveBoostProvider(IBoostProvider boostProvider)
         {
             Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);
+            EmitChangedEvent();
         }
 
         private void EmitChangedEvent()
