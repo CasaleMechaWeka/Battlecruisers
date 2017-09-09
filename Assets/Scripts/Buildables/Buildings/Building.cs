@@ -1,12 +1,18 @@
 ﻿using System;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Buildings
 {
 	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
+        protected IBoostProviderList _localBoostProviders;
+
 		public BuildingCategory category;
 		// Proportional to building size
 		public float customOffsetProportion;
@@ -26,7 +32,20 @@ namespace BattleCruisers.Buildables.Buildings
 			}
 		}
 
-		public void OnPointerClick(PointerEventData eventData)
+		public void Initialise(
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUIManager uiManager, 
+            IFactoryProvider factoryProvider,
+            IBoostProviderList localBoostProviders)
+        {
+            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
+
+            Assert.IsNotNull(localBoostProviders);
+            _localBoostProviders = localBoostProviders;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
 			OnClicked();
@@ -41,6 +60,7 @@ namespace BattleCruisers.Buildables.Buildings
 
 		public void CancelDelete()
 		{
+            // FELIX  Implement and use :)
 			throw new NotImplementedException();
 		}
 	}

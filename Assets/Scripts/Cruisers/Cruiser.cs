@@ -112,7 +112,7 @@ namespace BattleCruisers.Cruisers
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotType, slot.Type);
 
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
-			building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider);
+            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, slot.BoostProviders);
 			slot.Building = building;
 
 			building.CompletedBuildable += Building_CompletedBuildable;
