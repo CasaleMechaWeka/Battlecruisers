@@ -1,4 +1,7 @@
-﻿using BattleCruisers.Drones;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Drones;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Units
 {
@@ -16,5 +19,7 @@ namespace BattleCruisers.Buildables.Units
     {
 		UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }
+
+		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
 	}
 }

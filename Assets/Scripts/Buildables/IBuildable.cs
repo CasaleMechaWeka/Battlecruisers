@@ -1,10 +1,7 @@
 ﻿using System;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
-using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
-using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
@@ -45,7 +42,6 @@ namespace BattleCruisers.Buildables
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
         void StaticInitialise();
-		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
 		void StartConstruction();
 		void InitiateDelete();
 	}

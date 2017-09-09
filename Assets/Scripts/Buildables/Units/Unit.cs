@@ -1,5 +1,7 @@
 ﻿using System;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -42,13 +44,13 @@ namespace BattleCruisers.Buildables.Units
         }
 		#endregion Properties
 
-		protected override void OnInitialised()
+		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
-			base.OnInitialised();
-
-			Assert.IsTrue(maxVelocityInMPerS > 0);
+            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
+			
+            Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = _parentCruiser.Direction;
-		}
+        }
 
 		void FixedUpdate()
 		{
@@ -90,5 +92,5 @@ namespace BattleCruisers.Buildables.Units
 			// Cannot repair units :)
 			return false;
 		}
-	}
+    }
 }

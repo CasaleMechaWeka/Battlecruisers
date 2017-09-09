@@ -153,7 +153,7 @@ namespace BattleCruisers.Buildables
 			_healthBar.Initialise(this, followDamagable: true);
 		}
 
-		public void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
+		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
             Assert.IsNotNull(_textMesh, "Must call StaticInitialise() before Initialise(...)");
 
