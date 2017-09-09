@@ -4,30 +4,30 @@ namespace BattleCruisers.Buildables.Boost
 {
     public class BoostProvider : IBoostProvider
     {
-        private IList<IBoostConsumer> _boostConsumers;
+        private IList<IBoostUser> _boostUsers;
 
         public float BoostMultiplier { get; private set; }
 
         public BoostProvider(float boostMultiplier)
         {
             BoostMultiplier = boostMultiplier;
-            _boostConsumers = new List<IBoostConsumer>();
+            _boostUsers = new List<IBoostUser>();
         }
 
-        public void AddBoostConsumer(IBoostConsumer boostConsumer)
+        public void AddBoostConsumer(IBoostUser boostConsumer)
         {
-            _boostConsumers.Add(boostConsumer);
+            _boostUsers.Add(boostConsumer);
             boostConsumer.AddBoostProvider(this);
         }
 
         public void ClearBoostConsumers()
         {
-            foreach (IBoostConsumer consumer in _boostConsumers)
+            foreach (IBoostUser consumer in _boostUsers)
             {
                 consumer.RemoveBoostProvider(this);
             }
 
-            _boostConsumers.Clear();
+            _boostUsers.Clear();
         }
     }
 }

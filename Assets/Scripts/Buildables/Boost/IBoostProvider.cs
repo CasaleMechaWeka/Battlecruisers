@@ -5,7 +5,7 @@
 		// < 1 to reduce performance, > 1 to improve performance, 1 by default
 		float BoostMultiplier { get; }
 
-        void AddBoostConsumer(IBoostConsumer boostConsumer);
+        void AddBoostConsumer(IBoostUser boostUser);
         void ClearBoostConsumers();
 	}
 }

@@ -3,13 +3,10 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost
 {
-	public interface IBoostProviderList
+    public interface IBoostProviderList : IBoostUser
 	{
         ReadOnlyCollection<IBoostProvider> BoostProviders { get; }
 
 		event EventHandler ProvidersChanged;
-
-		void AddBoostProvider(IBoostProvider boostProvider);
-		void RemoveBoostProvider(IBoostProvider boostProvider);
 	}
 }
