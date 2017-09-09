@@ -14,13 +14,13 @@ namespace BattleCruisers.Buildables.Boost
             _boostUsers = new List<IBoostUser>();
         }
 
-        public void AddBoostConsumer(IBoostUser boostConsumer)
+        public void AddBoostUser(IBoostUser boostConsumer)
         {
             _boostUsers.Add(boostConsumer);
             boostConsumer.AddBoostProvider(this);
         }
 
-        public void ClearBoostConsumers()
+        public void ClearBoostUsers()
         {
             foreach (IBoostUser consumer in _boostUsers)
             {

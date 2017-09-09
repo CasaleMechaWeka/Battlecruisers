@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
                 ISlot slot = collider.GetComponent<ISlot>();
                 Assert.IsNotNull(slot, "All colliders in the slots layer should contain an ISlot component :D");
 
-                _boostProvider.AddBoostConsumer(slot.BoostProviders);
+                _boostProvider.AddBoostUser(slot.BoostProviders);
             }
 		}
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnDestroyed();
 
-            _boostProvider.ClearBoostConsumers();
+            _boostProvider.ClearBoostUsers();
         }
     }
 }
