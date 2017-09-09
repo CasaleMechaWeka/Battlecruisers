@@ -65,7 +65,7 @@ namespace BattleCruisers.Cruisers.Slots
 			}
 		}
 
-        public IBoostConsumer BoostConsumer { get; private set; }
+        public IBoostProviderList BoostProviders { get; private set; }
 
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
@@ -81,7 +81,7 @@ namespace BattleCruisers.Cruisers.Slots
 			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
 
-            BoostConsumer = new BoostConsumer();
+            BoostProviders = new BoostProviderList();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

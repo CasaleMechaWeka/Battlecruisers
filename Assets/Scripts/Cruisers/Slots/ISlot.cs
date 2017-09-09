@@ -16,6 +16,6 @@ namespace BattleCruisers.Cruisers.Slots
         float XDistanceFromParentCruiser { get; }
         bool IsActive { set; }
         IBuilding Building { set; }
-        IBoostConsumer BoostConsumer { get; }
+        IBoostProviderList BoostProviders { get; }
 	}
 }
