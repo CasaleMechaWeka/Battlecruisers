@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnBuildableCompleted();
 
-            // Provide boost to nearby slots
+            // Provide boost to nearby slots (and own slot :P )
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, BOOST_RADIUS_IN_M, slotLayerMask);
 
             foreach (Collider2D collider in colliders)
@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
                 ISlot slot = collider.GetComponent<ISlot>();
                 Assert.IsNotNull(slot, "All colliders in the slots layer should contain an ISlot component :D");
 
-                slot.BoostConsumer.AddBoostProvider(_boostProvider);
+                _boostProvider.AddBoostConsumer(slot.BoostConsumer);
             }
 		}
 
