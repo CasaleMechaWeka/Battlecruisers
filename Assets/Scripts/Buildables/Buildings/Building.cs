@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables.Buildings
 			_localBoostProviders.Changed += _localBoostProviders_Changed;
 
             _boostConsumer = new BoostConsumer();
-
+            _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
 		}
 
         public void OnPointerClick(PointerEventData eventData)
@@ -84,5 +84,18 @@ namespace BattleCruisers.Buildables.Buildings
                     break;
 			}
 		}
+
+        private void _boostConsumer_BoostChanged(object sender, EventArgs e)
+        {
+            OnBoostChanged();
+        }
+
+        protected virtual void OnBoostChanged() { }
+
+		protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            _boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+        }
 	}
 }
