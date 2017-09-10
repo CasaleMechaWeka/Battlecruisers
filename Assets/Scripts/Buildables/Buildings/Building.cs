@@ -12,6 +12,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
+        protected IBoostConsumer _boostConsumer;
         protected IObservableCollection<IBoostProvider> _localBoostProviders;
 
 		public BuildingCategory category;
@@ -43,8 +44,13 @@ namespace BattleCruisers.Buildables.Buildings
             base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
 
             Assert.IsNotNull(localBoostProviders);
+   
             _localBoostProviders = localBoostProviders;
-        }
+			_localBoostProviders.Changed += _localBoostProviders_Changed;
+
+            _boostConsumer = new BoostConsumer();
+
+		}
 
         public void OnPointerClick(PointerEventData eventData)
 		{
@@ -63,6 +69,20 @@ namespace BattleCruisers.Buildables.Buildings
 		{
             // FELIX  Implement and use :)
 			throw new NotImplementedException();
+		}
+
+		private void _localBoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
+		{
+            switch (e.Type)
+			{
+                case ChangeType.Add:
+                    e.Item.AddBoostConsumer(_boostConsumer);
+                    break;
+
+                case ChangeType.Remove:
+                    e.Item.RemoveBoostConsumer(_boostConsumer);
+                    break;
+			}
 		}
 	}
 }
