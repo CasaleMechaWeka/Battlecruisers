@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,6 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
     public class LocalBoosterController : Building
     {
         private IBoostProvider _boostProvider;
+        private IList<ISlot> _neighbouringSlots;
 
         private const int BOOST_RADIUS_IN_M = 1;
 
@@ -19,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             base.OnInitialised();
 
             _boostProvider = new BoostProvider(boostMultiplier);
+			_neighbouringSlots = new List<ISlot>();
         }
 
         protected override void OnBuildableCompleted()
@@ -32,6 +35,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             {
                 ISlot slot = collider.GetComponent<ISlot>();
                 Assert.IsNotNull(slot, "All colliders in the slots layer should contain an ISlot component :D");
+                _neighbouringSlots.Add(slot);
 
                 slot.BoostProviders.Add(_boostProvider);
             }
@@ -41,7 +45,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnDestroyed();
 
-            _boostProvider.ClearBoostConsumers();
+            foreach (ISlot slot in _neighbouringSlots)
+            {
+                slot.BoostProviders.Remove(_boostProvider);
+            }
         }
     }
 }
