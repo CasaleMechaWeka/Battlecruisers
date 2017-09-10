@@ -112,11 +112,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             InitialiseBuilding(building, args, localBoostProviders);
         }
 
-		public void InitialiseBuilding(
+        public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
             IBoostProviderList localBoostProviders = null)
         {
+			building.StaticInitialise();
             building.Initialise(
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
@@ -163,6 +164,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUnit unit,
             BuildableInitialisationArgs initialisationArgs)
         {
+            unit.StaticInitialise();
             unit.Initialise(
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
