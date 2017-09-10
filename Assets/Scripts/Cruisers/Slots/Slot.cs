@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -9,63 +11,63 @@ using UnityEngine.EventSystems;
 namespace BattleCruisers.Cruisers.Slots
 {
     public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
-	{
-		private SpriteRenderer _renderer;
-		private ICruiser _parentCruiser;
+    {
+        private SpriteRenderer _renderer;
+        private ICruiser _parentCruiser;
 
-		public SlotType type;
-		public Direction direction;
+        public SlotType type;
+        public Direction direction;
 
-		public bool IsFree { get { return _building == null; } }
-		public SlotType Type { get { return type; } }
+        public bool IsFree { get { return _building == null; } }
+        public SlotType Type { get { return type; } }
 
         private float _xDistanceFromParentCruiser;
         public float XDistanceFromParentCruiser
         {
-            get 
-            { 
-				if (_xDistanceFromParentCruiser == default(float))
-				{
-					_xDistanceFromParentCruiser = 
+            get
+            {
+                if (_xDistanceFromParentCruiser == default(float))
+                {
+                    _xDistanceFromParentCruiser =
                         _parentCruiser.Direction == Direction.Right ?
                         transform.position.x - _parentCruiser.Position.x :
                         _parentCruiser.Position.x - transform.position.x;
-	            }
+                }
 
                 return _xDistanceFromParentCruiser;
             }
         }
 
-		private IBuilding _building;
-		public IBuilding Building
-		{
-			set
-			{
-				Assert.IsNotNull(value);
-				Assert.IsNull(_building);
+        private IBuilding _building;
+        public IBuilding Building
+        {
+            set
+            {
+                Assert.IsNotNull(value);
+                Assert.IsNull(_building);
 
-				_building = value;
+                _building = value;
 
                 _building.Position = FindSpawnPosition(_building);
-				_building.Rotation = transform.rotation;
-				_building.Destroyed += OnBuildingDestroyed;
-			}
-		}
+                _building.Rotation = transform.rotation;
+                _building.Destroyed += OnBuildingDestroyed;
+            }
+        }
 
-		private bool _isActive;
-		public bool IsActive
-		{
-			set
-			{
-				if (_isActive != value)
-				{
-					_isActive = value;
-					_renderer.color = _isActive ? ACTIVE_COLOUR : DEFAULT_COLOUR;
-				}
-			}
-		}
+        private bool _isActive;
+        public bool IsActive
+        {
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    _renderer.color = _isActive ? ACTIVE_COLOUR : DEFAULT_COLOUR;
+                }
+            }
+        }
 
-        public IBoostProviderList BoostProviders { get; private set; }
+        public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
 
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
@@ -81,7 +83,7 @@ namespace BattleCruisers.Cruisers.Slots
 			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
 
-            BoostProviders = new BoostProviderList();
+            BoostProviders = new ObservableCollection<IBoostProvider>(new List<IBoostProvider>());
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

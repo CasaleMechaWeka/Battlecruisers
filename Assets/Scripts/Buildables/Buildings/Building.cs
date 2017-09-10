@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
@@ -11,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
-        protected IBoostProviderList _localBoostProviders;
+        protected IObservableCollection<IBoostProvider> _localBoostProviders;
 
 		public BuildingCategory category;
 		// Proportional to building size
@@ -37,7 +38,7 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider,
-            IBoostProviderList localBoostProviders)
+            IObservableCollection<IBoostProvider> localBoostProviders)
         {
             base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
 

@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -16,6 +17,11 @@ namespace BattleCruisers.Buildables.Buildings
 		float CustomOffsetProportion { get; }
         bool PreferCruiserFront { get; }
 
-        void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider, IBoostProviderList localBoostProviders);
+        void Initialise(
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUIManager uiManager, 
+            IFactoryProvider factoryProvider, 
+            IObservableCollection<IBoostProvider> localBoostProviders);
 	}
 }

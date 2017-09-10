@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -16,6 +17,6 @@ namespace BattleCruisers.Cruisers.Slots
         float XDistanceFromParentCruiser { get; }
         bool IsActive { set; }
         IBuilding Building { set; }
-        IBoostProviderList BoostProviders { get; }
+        IObservableCollection<IBoostProvider> BoostProviders { get; }
 	}
 }

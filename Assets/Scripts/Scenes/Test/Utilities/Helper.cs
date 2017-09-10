@@ -18,6 +18,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
@@ -91,7 +92,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-			IBoostProviderList localBoostProviders = null)
+			IObservableCollection<IBoostProvider> localBoostProviders = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -115,7 +116,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
-            IBoostProviderList localBoostProviders = null)
+            IObservableCollection<IBoostProvider> localBoostProviders = null)
         {
 			building.StaticInitialise();
             building.Initialise(
@@ -123,7 +124,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
-                localBoostProviders ?? Substitute.For<IBoostProviderList>());
+                localBoostProviders ?? Substitute.For<IObservableCollection<IBoostProvider>>());
         }
 
 		public void InitialiseUnit(
