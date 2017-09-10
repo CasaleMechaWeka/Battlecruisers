@@ -32,7 +32,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		public ICruiser EnemyCruiser { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
 
-
 		public BuildableInitialisationArgs(
             Helper helper,
 		    Faction faction = Faction.Blues,
@@ -80,6 +79,41 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void InitialiseBuilding(
             IBuilding building,
+			Faction faction = Faction.Blues,
+            IUIManager uiManager = null,
+			ICruiser parentCruiser = null,
+            ICruiser enemyCruiser = null,
+			IAircraftProvider aircraftProvider = null,
+            IPrefabFactory prefabFactory = null,
+			ITargetsFactory targetsFactory = null,
+            IMovementControllerFactory movementControllerFactory = null,
+			IAngleCalculatorFactory angleCalculatorFactory = null,
+            ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
+			IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            Direction parentCruiserDirection = Direction.Right,
+			IBoostProviderList localBoostProviders = null)
+        {
+            BuildableInitialisationArgs args
+                = new BuildableInitialisationArgs(
+                    this,
+                    faction,
+                    uiManager,
+                    parentCruiser,
+                    enemyCruiser,
+                    aircraftProvider,
+                    prefabFactory,
+                    targetsFactory,
+                    movementControllerFactory,
+                    angleCalculatorFactory,
+                    targetPositionPredictorFactory,
+                    flightPointsProviderFactory,
+                    parentCruiserDirection);
+
+            InitialiseBuilding(building, args, localBoostProviders);
+        }
+
+		public void InitialiseBuilding(
+            IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
             IBoostProviderList localBoostProviders = null)
         {
@@ -91,20 +125,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 localBoostProviders ?? Substitute.For<IBoostProviderList>());
         }
 
-        public void InitialiseUnit(
-            IUnit unit,
-            BuildableInitialisationArgs initialisationArgs)
-        {
-            unit.Initialise(
-                initialisationArgs.ParentCruiser,
-                initialisationArgs.EnemyCruiser,
-                initialisationArgs.UiManager,
-                initialisationArgs.FactoryProvider);
-        }
-
-        // FELIX  Remove method.  Use above 2 instead :)
-		public void InitialiseBuildable(
-			IBuildable buildable,
+		public void InitialiseUnit(
+			IUnit unit,
 			Faction faction = Faction.Blues,
 			IUIManager uiManager = null,
 			ICruiser parentCruiser = null,
@@ -116,70 +138,37 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IAngleCalculatorFactory angleCalculatorFactory = null,
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
-			Direction parentCruiserDirection = Direction.Right)
+            Direction parentCruiserDirection = Direction.Right)
 		{
-			buildable.StaticInitialise();
+			BuildableInitialisationArgs args
+				= new BuildableInitialisationArgs(
+					this,
+					faction,
+					uiManager,
+					parentCruiser,
+					enemyCruiser,
+					aircraftProvider,
+					prefabFactory,
+					targetsFactory,
+					movementControllerFactory,
+					angleCalculatorFactory,
+					targetPositionPredictorFactory,
+					flightPointsProviderFactory,
+					parentCruiserDirection);
 
-			if (parentCruiser == null)
-			{
-				parentCruiser = CreateCruiser(parentCruiserDirection, faction);
-			}
-
-			if (enemyCruiser == null)
-			{
-				enemyCruiser = CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
-			}
-
-            if (uiManager == null)
-            {
-                uiManager = Substitute.For<IUIManager>();
-            }
-
-			if (aircraftProvider == null)
-			{
-				aircraftProvider = CreateAircraftProvider();
-			}
-
-			if (targetsFactory == null)
-			{
-				targetsFactory = new TargetsFactory(enemyCruiser);
-			}
-
-			if (angleCalculatorFactory == null)
-			{
-				angleCalculatorFactory = new AngleCalculatorFactory();
-			}
-
-			if (targetPositionPredictorFactory == null)
-			{
-				targetPositionPredictorFactory = new TargetPositionPredictorFactory();
-			}
-			
-			if (movementControllerFactory == null)
-			{
-				movementControllerFactory = new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory);
-			}
-
-			if (prefabFactory == null)
-			{
-				prefabFactory = new PrefabFactory(new PrefabFetcher());
-			}
-
-			if (flightPointsProviderFactory == null)
-			{
-				flightPointsProviderFactory = new FlightPointsProviderFactory();
-			}
-
-			IFactoryProvider factoryProvider = CreateFactoryProvider(prefabFactory, targetsFactory, movementControllerFactory, 
-				angleCalculatorFactory, targetPositionPredictorFactory, aircraftProvider, flightPointsProviderFactory);
-
-            // FELIX
-			//buildable.Initialise(
-				//parentCruiser,
-				//enemyCruiser,
-				//uiManager,
-				//factoryProvider);
+            InitialiseUnit(unit, args);
 		}
+
+        public void InitialiseUnit(
+            IUnit unit,
+            BuildableInitialisationArgs initialisationArgs)
+        {
+            unit.Initialise(
+                initialisationArgs.ParentCruiser,
+                initialisationArgs.EnemyCruiser,
+                initialisationArgs.UiManager,
+                initialisationArgs.FactoryProvider);
+        }
 
 		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
 		{
