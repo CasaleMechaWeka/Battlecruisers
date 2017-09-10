@@ -6,6 +6,7 @@
 		float BoostMultiplier { get; }
 
         void AddBoostConsumer(IBoostConsumer boostConsumer);
+        void RemoveBoostConsumer(IBoostConsumer boostConsumer);
         void ClearBoostConsumers();
 	}
 }

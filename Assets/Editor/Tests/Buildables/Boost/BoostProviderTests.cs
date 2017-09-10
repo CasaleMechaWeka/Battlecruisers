@@ -5,7 +5,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Boost
 {
-	public class BoostProducerTests
+	public class BoostProviderTests
 	{
         private IBoostProvider _provider;
         private IBoostConsumer _consumer1, _consumer2;
@@ -32,6 +32,15 @@ namespace BattleCruisers.Tests.Buildables.Boost
         {
             _provider.AddBoostConsumer(_consumer1);
             _consumer1.Received().AddBoostProvider(_provider);
+        }
+
+        [Test]
+        public void RemoveConsumer_RemovesSelfFromConsumer()
+        {
+			_provider.AddBoostConsumer(_consumer1);
+
+            _provider.RemoveBoostConsumer(_consumer1);
+            _consumer1.Received().RemoveBoostProvider(_provider);
         }
 
         [Test]
