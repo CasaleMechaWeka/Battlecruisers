@@ -21,6 +21,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 			
 			TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
 			aircraft.UseDummyMovementController = true;
+            helper.InitialiseUnit(aircraft, factionToTarget);
 
             IBuilding[] targets = FindObjectsOfType<Building>();
             foreach (IBuilding target in targets)
@@ -35,7 +36,6 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
 			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter);
-			//IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter, targetLayerMask);
             damageApplier.ApplyDamage(baseTarget);
 	    }
     }
