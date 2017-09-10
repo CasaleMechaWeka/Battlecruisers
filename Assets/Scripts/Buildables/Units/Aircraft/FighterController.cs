@@ -31,9 +31,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
-		// Even setting the rigidBody.velocity in FixedUpdate() instead of in
-		// this setter did not fix my double OnTriggerEnter2D() problem.  This
-		// would happen when both aircraft are patrolling.
 		private ITarget _target;
 		public ITarget Target 
 		{ 
