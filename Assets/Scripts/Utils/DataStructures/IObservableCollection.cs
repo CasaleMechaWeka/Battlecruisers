@@ -18,6 +18,21 @@ namespace BattleCruisers.Utils.DataStrctures
             Type = type;
             Item = item;
         }
+
+        public override bool Equals(object obj)
+        {
+            CollectionChangedEventArgs<T> other = obj as CollectionChangedEventArgs<T>;
+
+            return
+                other != null
+                && Type == other.Type
+                && ReferenceEquals(Item, other.Item);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Type, Item);
+        }
     }
 
     /// <summary>
@@ -30,6 +45,6 @@ namespace BattleCruisers.Utils.DataStrctures
         event EventHandler<CollectionChangedEventArgs<T>> Changed;
 
         void Add(T item);
-        void Remove(T item);
+        bool Remove(T item);
     }
 }

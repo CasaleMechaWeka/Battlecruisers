@@ -26,7 +26,7 @@ namespace BattleCruisers.Utils.DataStrctures
             EmitChangedEvent(ChangeType.Add, item);
         }
 
-        public void Remove(T item)
+        public bool Remove(T item)
         {
             bool wasSuccessful = _items.Remove(item);
 
@@ -34,6 +34,8 @@ namespace BattleCruisers.Utils.DataStrctures
             {
                 EmitChangedEvent(ChangeType.Remove, item);
             }
+
+            return wasSuccessful;
         }
 
         private void EmitChangedEvent(ChangeType type, T item)
