@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnDestroyed();
 
-            _boostProvider.ClearBoostUsers();
+            _boostProvider.ClearBoostConsumers();
         }
     }
 }
