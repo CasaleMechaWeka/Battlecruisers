@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
 
             // Setup target
             AirFactory target = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuildable(target, Faction.Reds);
+            helper.InitialiseBuilding(target, Faction.Reds);
             target.StartConstruction();
 
 

@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test
 
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
             target.UseDummyMovementController = true;
-			helper.InitialiseBuildable(target);
+            helper.InitialiseUnit(target);
 			target.StartConstruction();
 
 			SetupMissiles(target);

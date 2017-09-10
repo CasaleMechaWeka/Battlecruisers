@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			// Setup turret
 			_turret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_turret);
-			helper.InitialiseBuildable(_turret, faction: Faction.Reds);
+            helper.InitialiseBuilding(_turret, faction: Faction.Reds);
 			_turret.StartConstruction();
 
 			_aircraft = FindObjectsOfType<TestAircraftController>();
@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 			foreach (TestAircraftController plane in planes)
 			{
 				plane.PatrolPoints = aircraftPatrolPoints;
-				helper.InitialiseBuildable(plane, faction);
+                helper.InitialiseUnit(plane, faction);
 				plane.StartConstruction();
 			}
 		}

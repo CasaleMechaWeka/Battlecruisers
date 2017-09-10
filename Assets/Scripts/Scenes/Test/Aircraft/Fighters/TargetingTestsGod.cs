@@ -26,12 +26,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
 			FighterController fighter = FindObjectOfType<FighterController>();
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
-			_helper.InitialiseBuildable(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
+            _helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();
 
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
-			_helper.InitialiseBuildable(target, faction: Faction.Blues);
+            _helper.InitialiseUnit(target, faction: Faction.Blues);
 			target.StartConstruction();
 		}
 	}

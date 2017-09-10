@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
 			// Setup target
 			AirFactory target = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(target, Faction.Blues);
+            helper.InitialiseBuilding(target, Faction.Blues);
 			target.StartConstruction();
 
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 				Target = target
 			};
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
-			helper.InitialiseBuildable(rocketLauncher, Faction.Reds, targetsFactory: targetsFactory);
+            helper.InitialiseBuilding(rocketLauncher, Faction.Reds, targetsFactory: targetsFactory);
 			rocketLauncher.StartConstruction();
 		}
 	}

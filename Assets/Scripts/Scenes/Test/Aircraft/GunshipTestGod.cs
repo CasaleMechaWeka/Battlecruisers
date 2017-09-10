@@ -20,14 +20,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             // Setup gunship
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
             GunshipController gunship = FindObjectOfType<GunshipController>();
-            helper.InitialiseBuildable(gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
+            helper.InitialiseUnit(gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
             gunship.StartConstruction();
 
             // Setup target attack boats
             AttackBoatController[] ships = FindObjectsOfType<AttackBoatController>();
             foreach (AttackBoatController ship in ships)
             {
-                helper.InitialiseBuildable(ship, Faction.Reds);
+                helper.InitialiseUnit(ship, Faction.Reds);
                 ship.StartConstruction();
 			}
         }

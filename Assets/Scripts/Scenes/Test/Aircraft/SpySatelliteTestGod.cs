@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
             SpySatelliteController satellite = FindObjectOfType<SpySatelliteController>();
-            helper.InitialiseBuildable(satellite, aircraftProvider: aircraftProvider);
+            helper.InitialiseUnit(satellite, aircraftProvider: aircraftProvider);
             satellite.StartConstruction();
         }
     }

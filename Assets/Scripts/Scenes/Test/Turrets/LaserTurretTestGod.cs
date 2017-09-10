@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
 
             // Setup target
             AirFactory airFactory = FindObjectOfType<AirFactory>();
-            new Helper().InitialiseBuildable(airFactory);
+            new Helper().InitialiseBuilding(airFactory);
             airFactory.Destroyed += (sender, e) => laserBarrel.Target = null;
 			laserBarrel.Target = airFactory;
 	    }

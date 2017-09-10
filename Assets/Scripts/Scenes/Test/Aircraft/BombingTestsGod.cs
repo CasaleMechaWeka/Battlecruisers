@@ -21,18 +21,18 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			Helper helper = new Helper();
 
 			AirFactory factory = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(factory, Faction.Blues);
+            helper.InitialiseBuilding(factory, Faction.Blues);
 
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
 
 			IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
-			helper.InitialiseBuildable(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+            helper.InitialiseUnit(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
 			bomberToLeft.StartConstruction();
 			
 			IAircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
-			helper.InitialiseBuildable(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
+            helper.InitialiseUnit(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Left);
 			bomberToRight.StartConstruction();
 		}
 	}

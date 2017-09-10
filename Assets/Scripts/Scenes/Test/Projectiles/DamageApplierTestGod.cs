@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -21,10 +22,10 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 			TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
 			aircraft.UseDummyMovementController = true;
 
-            Buildable[] targets = FindObjectsOfType<Buildable>();
-            foreach (Buildable target in targets)
+            IBuilding[] targets = FindObjectsOfType<Building>();
+            foreach (IBuilding target in targets)
             {
-                helper.InitialiseBuildable(target, factionToTarget);
+                helper.InitialiseBuilding(target, factionToTarget);
             }
 
 

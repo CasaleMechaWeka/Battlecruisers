@@ -21,8 +21,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 			Helper helper = new Helper();
 
-			helper.InitialiseBuildable(factoryFacingRight, FactoryFacingRightFaction, parentCruiserDirection: Direction.Right);
-			helper.InitialiseBuildable(factoryFacingLeft, FactoryFacingLeftFaction, parentCruiserDirection: Direction.Left);
+            helper.InitialiseBuilding(factoryFacingRight, FactoryFacingRightFaction, parentCruiserDirection: Direction.Right);
+            helper.InitialiseBuilding(factoryFacingLeft, FactoryFacingLeftFaction, parentCruiserDirection: Direction.Left);
 
 			factoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			factoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;

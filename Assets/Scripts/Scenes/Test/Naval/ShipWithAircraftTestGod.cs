@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Naval
                     faction = FactoryFacingRightFaction;
                 }
 
-                helper.InitialiseBuildable(plane, faction);
+                helper.InitialiseUnit(plane, faction);
                 plane.StartConstruction();
             }
         }

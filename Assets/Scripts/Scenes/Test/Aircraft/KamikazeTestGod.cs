@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			
             // Setup target
 			_target = FindObjectOfType<Factory>();
-			helper.InitialiseBuildable(_target);
+            helper.InitialiseBuilding(_target);
 			_target.StartConstruction();
 
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
@@ -34,18 +34,18 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             
 			// Setup kamikaze signal
 			_kamikazeSignal = FindObjectOfType<KamikazeSignal>();
-			helper.InitialiseBuildable(_kamikazeSignal, enemyCruiser: enemyCruiser);
+            helper.InitialiseBuilding(_kamikazeSignal, enemyCruiser: enemyCruiser);
 
             // Setup AA
             TurretController aaTurret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuildable(aaTurret);
+            helper.InitialiseBuilding(aaTurret);
             aaTurret.StartConstruction();
 
             // Setup aircraft
             _aircraft = FindObjectsOfType<AircraftController>();
             foreach (AircraftController aircraft in _aircraft)
             {
-                helper.InitialiseBuildable(aircraft);
+                helper.InitialiseUnit(aircraft);
                 aircraft.StartConstruction();
             }
 

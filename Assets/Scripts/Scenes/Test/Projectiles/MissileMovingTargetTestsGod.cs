@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test
 
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
-			helper.InitialiseBuildable(target);
+            helper.InitialiseUnit(target);
 			target.StartConstruction();
 
 			SetupMissiles(target);

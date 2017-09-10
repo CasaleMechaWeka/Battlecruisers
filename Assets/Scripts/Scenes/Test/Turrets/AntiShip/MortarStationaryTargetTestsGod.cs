@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
             target.PatrolPoints = new List<Vector2>() { new Vector2(0, 0), new Vector2(0, -0.01f) };
 			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
-			helper.InitialiseBuildable(target, Faction.Blues);
+            helper.InitialiseUnit(target, Faction.Blues);
 			target.StartConstruction();
 
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
             TurretController[] mortars = FindObjectsOfType<TurretController>();
 			foreach (TurretController mortar in mortars)
 			{
-				helper.InitialiseBuildable(mortar, Faction.Reds);
+                helper.InitialiseBuilding(mortar, Faction.Reds);
 				mortar.StartConstruction();
 			}
 		}

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
@@ -18,13 +18,12 @@ namespace BattleCruisers.Scenes.Test
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 
-            Buildable[] buildables = FindObjectsOfType<Buildable>();
-
-			foreach (Buildable buildable in buildables)
-			{
-                helper.InitialiseBuildable(buildable, targetsFactory: targetsFactory, enemyCruiser: enemyCruiser);
-				buildable.StartConstruction();
-			}
+            IBuilding[] buildings = FindObjectsOfType<Building>();
+            foreach (IBuilding building in buildings)
+            {
+                helper.InitialiseBuilding(building, targetsFactory: targetsFactory, enemyCruiser: enemyCruiser);
+                building.StartConstruction();
+            }
 		}
 	}
 }

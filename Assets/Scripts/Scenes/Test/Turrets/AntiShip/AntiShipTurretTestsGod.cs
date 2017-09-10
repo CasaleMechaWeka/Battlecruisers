@@ -13,11 +13,11 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 			Helper helper = new Helper();
 
             AttackBoatController boat = FindObjectOfType<AttackBoatController>();
-			helper.InitialiseBuildable(boat, Faction.Blues);
+            helper.InitialiseUnit(boat, Faction.Blues);
 			boat.StartConstruction();
 
             TurretController turret = FindObjectOfType<TurretController>();
-			helper.InitialiseBuildable(turret, Faction.Reds);
+            helper.InitialiseBuilding(turret, Faction.Reds);
 			turret.StartConstruction();
 		}
 	}

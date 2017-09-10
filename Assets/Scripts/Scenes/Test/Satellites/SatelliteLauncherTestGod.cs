@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Satellites
             IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
             Helper helper = new Helper(numOfDrones);
-            helper.InitialiseBuildable(launcher, aircraftProvider: aircraftProvider);
+            helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
             launcher.StartConstruction();
         }
     }

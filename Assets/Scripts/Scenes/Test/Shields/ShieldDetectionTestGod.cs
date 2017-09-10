@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Shields
 
 			foreach (ShieldGenerator shield in shields)
 			{
-				helper.InitialiseBuildable(shield, Faction.Blues);
+                helper.InitialiseBuilding(shield, Faction.Blues);
 				shield.StartConstruction();
 			}
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Shields
 
 			foreach (AttackBoatController attackBoat in attackBoats)
 			{
-				helper.InitialiseBuildable(attackBoat, Faction.Reds, parentCruiserDirection: Direction.Left);
+                helper.InitialiseUnit(attackBoat, Faction.Reds, parentCruiserDirection: Direction.Left);
 				attackBoat.StartConstruction();
 			}
 		}

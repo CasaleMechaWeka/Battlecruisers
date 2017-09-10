@@ -17,12 +17,12 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
 			// Setup targets
             AirFactory basetarget = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(basetarget);
+            helper.InitialiseBuilding(basetarget);
 
             DroneStation[] targets = FindObjectsOfType<DroneStation>();
             foreach (DroneStation target in targets)
             {
-                helper.InitialiseBuildable(target);
+                helper.InitialiseBuilding(target);
             }
 
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(basetarget.GameObject, exactMatchTargetFilter: targetFilter);
 
 			NukeLauncherController launcher = FindObjectOfType<NukeLauncherController>();
-			helper.InitialiseBuildable(launcher, enemyCruiser: enemyCruiser, targetsFactory: targetsFactory);
+            helper.InitialiseBuilding(launcher, enemyCruiser: enemyCruiser, targetsFactory: targetsFactory);
 			launcher.StartConstruction();
 		}
 	}

@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test
 			// Setup target
 			Helper helper = new Helper();
 			AirFactory target = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(target);
+            helper.InitialiseBuilding(target);
 
 			// Setup nuke
 			NukeController nuke = FindObjectOfType<NukeController>();

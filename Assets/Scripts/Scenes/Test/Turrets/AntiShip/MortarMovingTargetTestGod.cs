@@ -18,14 +18,14 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
 			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
-			helper.InitialiseBuildable(target, Faction.Blues);
+            helper.InitialiseUnit(target, Faction.Blues);
 			target.StartConstruction();
 
             // Setup mortars
             TurretController[] mortars = FindObjectsOfType<TurretController>();
             foreach (TurretController mortar in mortars)
 			{
-				helper.InitialiseBuildable(mortar, Faction.Reds);
+                helper.InitialiseBuilding(mortar, Faction.Reds);
 				mortar.StartConstruction();
 			}
 		}

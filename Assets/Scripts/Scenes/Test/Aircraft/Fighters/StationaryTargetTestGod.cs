@@ -28,14 +28,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		{
 			// Target
 			target.UseDummyMovementController = true;
-			_helper.InitialiseBuildable(target, faction: Faction.Blues);
+            _helper.InitialiseUnit(target, faction: Faction.Blues);
 			target.StartConstruction();
 
 			// Fighter
 			IList<TargetType> targetTypes = new List<TargetType>() { target.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, targetTypes);
 			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject, targetFilter);
-			_helper.InitialiseBuildable(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
+            _helper.InitialiseUnit(fighter, faction: Faction.Reds, targetsFactory: targetsFactory);
 			fighter.StartConstruction();
 		}
 	}

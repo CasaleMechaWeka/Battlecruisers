@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -16,19 +17,19 @@ namespace BattleCruisers.Scenes.Test
 
 
 			// Setup target
-			Buildable target = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuildable(target, Faction.Reds);
+            IBuilding target = FindObjectOfType<AirFactory>();
+			helper.InitialiseBuilding(target, Faction.Reds);
 			target.StartConstruction();
 
 
 			// Setup railgun
-			Buildable railgun = FindObjectOfType<TurretController>();
+            IBuilding railgun = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
 			};
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
-			helper.InitialiseBuildable(railgun, Faction.Blues, targetsFactory: targetsFactory);
+			helper.InitialiseBuilding(railgun, Faction.Blues, targetsFactory: targetsFactory);
 			railgun.StartConstruction();
 		}
 	}

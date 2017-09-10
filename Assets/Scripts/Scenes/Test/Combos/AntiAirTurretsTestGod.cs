@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
             // Initialise air factory
             AirFactory factory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuildable(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
+            helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
             factory.CompletedBuildable += Factory_CompletedBuildable;
             factory.StartConstruction();
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Factories
             TurretController[] turrets = FindObjectsOfType<TurretController>();
             foreach (TurretController turret in turrets)
             {
-                helper.InitialiseBuildable(turret, Faction.Reds);
+                helper.InitialiseBuilding(turret, Faction.Reds);
                 turret.StartConstruction();
             }
 		}
