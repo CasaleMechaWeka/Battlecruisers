@@ -5,14 +5,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.DataStrctures
 {
-    public class ReadOnlyObservableCollection<T> : IReadOnlyObservableCollection<T>
+    public class ObservableCollection<T> : IObservableCollection<T>
     {
         private readonly IList<T> _items;
         public ReadOnlyCollection<T> Items { get; private set; }
 
         public event EventHandler<CollectionChangedEventArgs<T>> Changed;
 
-        public ReadOnlyObservableCollection(IList<T> items)
+        public ObservableCollection(IList<T> items)
         {
             Assert.IsNotNull(items);
 

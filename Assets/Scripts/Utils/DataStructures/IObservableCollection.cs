@@ -21,9 +21,9 @@ namespace BattleCruisers.Utils.DataStrctures
     }
 
     /// <summary>
-    /// Unity does not have ReadOnlyObservableCollection, so have to implement my own :)
+    /// Unity does not have ObservableCollection, so have to implement my own :)
     /// </summary>
-    public interface IReadOnlyObservableCollection<T>
+    public interface IObservableCollection<T>
     {
         ReadOnlyCollection<T> Items { get; }
 
