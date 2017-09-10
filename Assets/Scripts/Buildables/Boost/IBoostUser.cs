@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace BattleCruisers.Buildables.Boost
+﻿namespace BattleCruisers.Buildables.Boost
 {
-	public interface IBoostUser
+    public interface IBoostUser
 	{
 		void AddBoostProvider(IBoostProvider boostProvider);
 		void RemoveBoostProvider(IBoostProvider boostProvider);
