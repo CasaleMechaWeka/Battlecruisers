@@ -50,6 +50,8 @@ namespace BattleCruisers.Buildables.Units
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = _parentCruiser.Direction;
+
+            OnInitialised();
         }
 
 		void FixedUpdate()

@@ -50,9 +50,11 @@ namespace BattleCruisers.Buildables.Buildings
 
             _boostConsumer = new BoostConsumer();
             _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
+
+            OnInitialised();
 		}
 
-        public void OnPointerClick(PointerEventData eventData)
+		public void OnPointerClick(PointerEventData eventData)
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
 			OnClicked();

@@ -176,13 +176,11 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
             _healthGainperDroneS = _buildTimeInDroneSeconds / maxHealth;
-			
-			OnInitialised();
 		}
 
 		protected virtual void OnInitialised() { }
 
-        protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+		protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
 			_textMesh.text = e.NewNumOfDrones.ToString();
 		}
