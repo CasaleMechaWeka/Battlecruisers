@@ -66,10 +66,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.OnInitialised();
 
-            OnBoostChanged();
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+			_barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
 
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
+			OnBoostChanged();
 		}
 
 		protected override void OnBuildableCompleted()
