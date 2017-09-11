@@ -21,51 +21,9 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-    // FELIX  Move to own class
-    public class BuildableInitialisationArgs
-    {
-		public IUIManager UiManager { get; private set; }
-        public ICruiser ParentCruiser { get; private set; }
-		public ICruiser EnemyCruiser { get; private set; }
-        public IFactoryProvider FactoryProvider { get; private set; }
-
-		public BuildableInitialisationArgs(
-            Helper helper,
-		    Faction faction = Faction.Blues,
-			IUIManager uiManager = null,
-			ICruiser parentCruiser = null,
-			ICruiser enemyCruiser = null,
-			IAircraftProvider aircraftProvider = null,
-			IPrefabFactory prefabFactory = null,
-			ITargetsFactory targetsFactory = null,
-			IMovementControllerFactory movementControllerFactory = null,
-			IAngleCalculatorFactory angleCalculatorFactory = null,
-			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
-			IFlightPointsProviderFactory flightPointsProviderFactory = null,
-			Direction parentCruiserDirection = Direction.Right)
-        {
-            ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
-            EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
-            UiManager = uiManager ?? Substitute.For<IUIManager>();
-            angleCalculatorFactory = angleCalculatorFactory ?? new AngleCalculatorFactory();
-			targetPositionPredictorFactory = targetPositionPredictorFactory ?? new TargetPositionPredictorFactory();
-
-            FactoryProvider
-                = helper.CreateFactoryProvider(
-                    prefabFactory ?? new PrefabFactory(new PrefabFetcher()),
-                    targetsFactory ?? new TargetsFactory(EnemyCruiser),
-                    movementControllerFactory ?? new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory),
-                    angleCalculatorFactory,
-                    targetPositionPredictorFactory,
-                    aircraftProvider ?? helper.CreateAircraftProvider(),
-                    flightPointsProviderFactory ?? new FlightPointsProviderFactory());
-        }
-    }
-
     public class Helper
 	{
 		private readonly int _numOfDrones;
