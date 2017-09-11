@@ -46,6 +46,7 @@ namespace BattleCruisers.Utils
 		public const string CAMERA_CONTROLLER = "CameraController";
 		public const string CRUISER = "Cruiser";
 		public const string DRONES = "Drones";
+        public const string LOCAL_BOOSTER = "LocalBooster";
 		public const string MOVEMENT = "Movement";
 		public const string PREDICTORS = "TargetPositionPredictors";
         public const string REPAIR_MANAGER = "RepairManager";
@@ -108,6 +109,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.DRONES, false);
+            tagsToActiveness.Add(Tags.LOCAL_BOOSTER, true);
 			tagsToActiveness.Add(Tags.MOVEMENT, false);
 			tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);

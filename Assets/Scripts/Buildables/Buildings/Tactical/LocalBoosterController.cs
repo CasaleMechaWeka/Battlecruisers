@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -29,7 +30,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             base.OnBuildableCompleted();
 
             // Provide boost to nearby slots (and own slot :P )
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, BOOST_RADIUS_IN_M, slotLayerMask);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(Position, BOOST_RADIUS_IN_M, slotLayerMask);
+            Logging.Log(Tags.LOCAL_BOOSTER, "About to boost " + colliders.Length + " slots :D");
 
             foreach (Collider2D collider in colliders)
             {
