@@ -20,6 +20,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public bool IsFree { get { return _building == null; } }
         public SlotType Type { get { return type; } }
+        public Vector2 Position { get { return gameObject.transform.position; } }
 
         private float _xDistanceFromParentCruiser;
         public float XDistanceFromParentCruiser

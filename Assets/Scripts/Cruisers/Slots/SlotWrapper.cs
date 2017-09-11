@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -9,7 +10,9 @@ namespace BattleCruisers.Cruisers.Slots
 		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
 
-		public void Initialise(ICruiser parentCruiser)
+        public ReadOnlyCollection<ISlot> Slots { get; private set; }
+
+        public void Initialise(ICruiser parentCruiser)
 		{
             SetupSlots(parentCruiser);
 			HideAllSlots();
@@ -20,6 +23,7 @@ namespace BattleCruisers.Cruisers.Slots
 			_slots = new Dictionary<SlotType, List<ISlot>>();
 
 			Slot[] slots = GetComponentsInChildren<Slot>(includeInactive: true);
+            Slots = new ReadOnlyCollection<ISlot>(slots);
 
             // Sort slots by type
 			foreach (Slot slot in slots)

@@ -1,7 +1,10 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -26,8 +29,14 @@ namespace BattleCruisers.Scenes.Test.Tactical
 			
 			
 			// Setup artillery slot
-			ICruiser parentCruiser = Substitute.For<ICruiser>();
 			Slot slotToBoost = FindObjectOfType<Slot>();
+
+            ISlotWrapper slotWrapper = Substitute.For<ISlotWrapper>();
+            slotWrapper.Slots.Returns(new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost }));
+
+            ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues, slotWrapper);
+            parentCruiser.SlotWrapper.Returns(slotWrapper);
+
 			slotToBoost.Initialise(parentCruiser);
 
 
@@ -43,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
 
             // Setup local booster
             LocalBoosterController localBooster = FindObjectOfType<LocalBoosterController>();
-            helper.InitialiseBuilding(localBooster);
+            helper.InitialiseBuilding(localBooster, parentCruiser: parentCruiser);
             localBooster.StartConstruction();
         }
     }

@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -131,7 +132,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.FactoryProvider);
         }
 
-		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
+		public ICruiser CreateCruiser(Direction facingDirection, Faction faction, ISlotWrapper slotWrapper = null)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
             droneConsumer.NumOfDrones = _numOfDrones;
@@ -149,6 +150,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			cruiser.Direction.Returns(facingDirection);
 			cruiser.AttackCapabilities.Returns(new List<TargetType>());
 			cruiser.Faction.Returns(faction);
+            cruiser.SlotWrapper.Returns(slotWrapper);
 
 			return cruiser;
 		}

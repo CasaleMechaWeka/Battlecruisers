@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -12,6 +13,7 @@ namespace BattleCruisers.Cruisers.Slots
 
     public interface ISlot
     {
+        Vector2 Position { get; }
         bool IsFree { get; }
         SlotType Type { get; }
         float XDistanceFromParentCruiser { get; }

@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
@@ -12,8 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         private IBoostProvider _boostProvider;
         private IList<ISlot> _neighbouringSlots;
 
-        private const int BOOST_RADIUS_IN_M = 1;
-
+        public float boostRadiusInM;
         public float boostMultiplier;
         public LayerMask slotLayerMask;
 
@@ -29,19 +27,26 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnBuildableCompleted();
 
-            // Provide boost to nearby slots (and own slot :P )
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(Position, BOOST_RADIUS_IN_M, slotLayerMask);
-            Logging.Log(Tags.LOCAL_BOOSTER, "About to boost " + colliders.Length + " slots :D");
+            AddSlotsWithinRange();
 
-            foreach (Collider2D collider in colliders)
+            Logging.Log(Tags.LOCAL_BOOSTER, "About to boost " + _neighbouringSlots.Count + " slots :D");
+
+            foreach (ISlot slot in _neighbouringSlots)
             {
-                ISlot slot = collider.GetComponent<ISlot>();
-                Assert.IsNotNull(slot, "All colliders in the slots layer should contain an ISlot component :D");
-                _neighbouringSlots.Add(slot);
-
                 slot.BoostProviders.Add(_boostProvider);
             }
 		}
+
+        private void AddSlotsWithinRange()
+        {
+            foreach (ISlot slot in _parentCruiser.SlotWrapper.Slots)
+            {
+                if (Vector2.Distance(Position, slot.Position) <= boostRadiusInM)
+                {
+                    _neighbouringSlots.Add(slot);
+                }
+            }
+        }
 
         protected override void OnDestroyed()
         {
