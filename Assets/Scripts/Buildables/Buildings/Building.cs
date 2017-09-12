@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
-        protected IBoostConsumer _boostConsumer;
+        protected IBoostableGroup _boostableGroup;
         protected IObservableCollection<IBoostProvider> _localBoostProviders;
 
 		public BuildingCategory category;
@@ -48,8 +48,7 @@ namespace BattleCruisers.Buildables.Buildings
             _localBoostProviders = localBoostProviders;
 			_localBoostProviders.Changed += _localBoostProviders_Changed;
 
-            _boostConsumer = new BoostConsumer();
-            _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
+            _boostableGroup = new BoostableGroup(new BoostConsumer());
 
             OnInitialised();
 		}
@@ -78,26 +77,13 @@ namespace BattleCruisers.Buildables.Buildings
             switch (e.Type)
 			{
                 case ChangeType.Add:
-                    e.Item.AddBoostConsumer(_boostConsumer);
+                    e.Item.AddBoostConsumer(_boostableGroup.BoostConsumer);
                     break;
 
                 case ChangeType.Remove:
-                    e.Item.RemoveBoostConsumer(_boostConsumer);
+                    e.Item.RemoveBoostConsumer(_boostableGroup.BoostConsumer);
                     break;
 			}
 		}
-
-        private void _boostConsumer_BoostChanged(object sender, EventArgs e)
-        {
-            OnBoostChanged();
-        }
-
-        protected virtual void OnBoostChanged() { }
-
-		protected override void OnDestroyed()
-        {
-            base.OnDestroyed();
-            _boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
-        }
 	}
 }

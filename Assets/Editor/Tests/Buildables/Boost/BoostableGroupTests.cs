@@ -25,6 +25,12 @@ namespace BattleCruisers.Tests.Buildables.Boost
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
+        [Test]
+        public void BoostableConsumer_ReturnsConsumer()
+        {
+            Assert.AreSame(_consumer, _group.BoostConsumer);
+        }
+
 		[Test]
 		public void AddBoostable_SetsBoost()
 		{

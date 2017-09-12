@@ -6,24 +6,25 @@ namespace BattleCruisers.Buildables.Boost
 {
     public class BoostableGroup : IBoostableGroup, IDisposable
 	{
-        private readonly IBoostConsumer _boostConsumer;
         private readonly IList<IBoostable> _boostables;
+
+		public IBoostConsumer BoostConsumer { get; private set; }
 
         public BoostableGroup(IBoostConsumer boostConsumer)
         {
             Assert.IsNotNull(boostConsumer);
 
-            _boostConsumer = boostConsumer;
+            BoostConsumer = boostConsumer;
             _boostables = new List<IBoostable>();
 
-            _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
+            BoostConsumer.BoostChanged += _boostConsumer_BoostChanged;
         }
 
         private void _boostConsumer_BoostChanged(object sender, EventArgs e)
         {
             foreach (IBoostable boostable in _boostables)
             {
-                boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
+                boostable.BoostMultiplier = BoostConsumer.CumulativeBoost;
             }
         }
 
@@ -32,12 +33,12 @@ namespace BattleCruisers.Buildables.Boost
             Assert.IsFalse(_boostables.Contains(boostable));
 
             _boostables.Add(boostable);
-            boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
+            boostable.BoostMultiplier = BoostConsumer.CumulativeBoost;
         }
 
         public void Dispose()
         {
-            _boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+            BoostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
         }
     }
 }

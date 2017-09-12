@@ -2,6 +2,8 @@
 {
     public interface IBoostableGroup
     {
+        IBoostConsumer BoostConsumer { get; }
+
         void AddBoostable(IBoostable boostable);
     }
 }
