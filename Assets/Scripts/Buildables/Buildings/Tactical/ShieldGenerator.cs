@@ -1,24 +1,34 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Tactical
+﻿using UnityEngine.Assertions;
+
+namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class ShieldGenerator : Building
 	{
-		public ShieldController shieldController;
+        private ShieldController _shieldController;
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+
+		public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
+            Assert.IsNotNull(_shieldController);
+        }
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
-			shieldController.Initialise(Faction);
-			shieldController.gameObject.SetActive(false);
+			_shieldController.Initialise(Faction);
+			_shieldController.gameObject.SetActive(false);
 		}
 
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
-			shieldController.gameObject.SetActive(true);
+			_shieldController.gameObject.SetActive(true);
 		}
 	}
 }
