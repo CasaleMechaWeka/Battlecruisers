@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
         protected override void OnBoostChanged()
         {
-			_barrelWrapper.TurretStats.FireRateMultiplier = _boostConsumer.CumulativeBoost;
+            _barrelWrapper.TurretStats.BoostMultiplier = _boostConsumer.CumulativeBoost;
 		}
     }
 }

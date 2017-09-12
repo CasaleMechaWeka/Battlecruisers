@@ -1,10 +1,11 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public class BasicTurretStats : MonoBehaviour, IDurationProvider
+    public class BasicTurretStats : MonoBehaviour, IDurationProvider, IBoostable
 	{
 		public float fireRatePerS;
 		public float damage;
@@ -12,11 +13,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         private const float DEFAULT_FIRE_RATE_MULTIPLIER = 1;
 
-        protected float EffectiveFireRatePerS { get { return FireRateMultiplier * fireRatePerS; } }
+        protected float EffectiveFireRatePerS { get { return BoostMultiplier * fireRatePerS; } }
 
         public virtual float DamagePerS { get { return damage * EffectiveFireRatePerS; } }
 		public virtual float DurationInS { get { return 1 / EffectiveFireRatePerS; } }
-        public float FireRateMultiplier { get; set; }
+        public float BoostMultiplier { private get; set; }
 
         public virtual void Initialise()
 		{
@@ -24,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(damage > 0);
 			Assert.IsTrue(rangeInM > 0);
 
-            FireRateMultiplier = DEFAULT_FIRE_RATE_MULTIPLIER;
+            BoostMultiplier = DEFAULT_FIRE_RATE_MULTIPLIER;
 		}
 
         public virtual void MoveToNextDuration()

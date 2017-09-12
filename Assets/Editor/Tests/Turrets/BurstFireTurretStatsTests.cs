@@ -77,8 +77,9 @@ namespace BattleCruisers.Tests.Turrets
         [Test]
         public void ChangingFireRateMultiplier_AffectsDuration()
         {
-            _turretStats.FireRateMultiplier = 2;
-            _expectedLongInterval = 1 / (_turretStats.fireRatePerS * _turretStats.FireRateMultiplier);
+            float boostMultiplier = 2;
+            _turretStats.BoostMultiplier = boostMultiplier;
+            _expectedLongInterval = 1 / (_turretStats.fireRatePerS * boostMultiplier);
 
             for (int i = 0; i < _turretStats.burstSize; ++i)
             {
