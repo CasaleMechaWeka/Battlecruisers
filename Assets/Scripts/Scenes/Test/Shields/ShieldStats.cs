@@ -1,6 +1,9 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
+﻿using UnityEngine;
+
+namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
-    public class ShieldStats : IShieldStats
+    // FELIX  Also move shield health here, currently using Target.Health : /
+    public class ShieldStats : MonoBehaviour, IShieldStats
 	{
 		public float shieldRadiusInM;
 		public float shieldRechargeDelayInS;

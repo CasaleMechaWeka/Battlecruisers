@@ -14,6 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);
+            _shieldController.StaticInitialise();
         }
 
 		protected override void OnInitialised()
