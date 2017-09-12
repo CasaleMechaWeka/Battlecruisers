@@ -23,6 +23,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
 			_shieldController.Initialise(Faction);
 			_shieldController.gameObject.SetActive(false);
+
+            _boostableGroup.AddBoostable(_shieldController.Stats);
 		}
 
 		protected override void OnBuildableCompleted()
