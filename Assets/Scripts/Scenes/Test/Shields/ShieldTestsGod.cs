@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Tactical;
+using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;

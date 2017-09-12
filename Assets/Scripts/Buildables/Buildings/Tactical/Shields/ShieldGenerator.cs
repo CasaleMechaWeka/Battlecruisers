@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Tactical
+namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldGenerator : Building
 	{

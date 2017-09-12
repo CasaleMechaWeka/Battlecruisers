@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.UI.BattleScene.ProgressBars;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables.Buildings.Tactical
+namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
 	{
