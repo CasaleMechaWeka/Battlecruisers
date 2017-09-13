@@ -39,6 +39,26 @@ namespace BattleCruisers.Tests.Buildables.Boost
 		}
 
         [Test]
+        public void AddDuplicateBoostable_Throws()
+        {
+			_group.AddBoostable(_boostable1);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _group.AddBoostable(_boostable1));
+		}
+
+        [Test]
+        public void RemoveBoostable_DoesNotThrow()
+        {
+            _group.AddBoostable(_boostable1);
+            _group.RemoveBoostable(_boostable1);
+        }
+
+        [Test]
+        public void RemoveNonExistantBoostable_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _group.RemoveBoostable(_boostable1));
+        }
+
+        [Test]
         public void BoostChanged_UpdatesBoostables()
         {
 			_group.AddBoostable(_boostable1);
