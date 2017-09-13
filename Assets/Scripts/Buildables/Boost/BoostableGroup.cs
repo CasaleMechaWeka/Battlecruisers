@@ -30,11 +30,17 @@ namespace BattleCruisers.Buildables.Boost
 
         public void AddBoostable(IBoostable boostable)
         {
-            Assert.IsFalse(_boostables.Contains(boostable));
+            Assert.IsFalse(_boostables.Contains(boostable), "Not allowed to add duplicates, tsk tsk tsk");
 
             _boostables.Add(boostable);
             boostable.BoostMultiplier = BoostConsumer.CumulativeBoost;
         }
+		
+		public bool RemoveBoostable(IBoostable boostable)
+		{
+            Assert.IsTrue(_boostables.Contains(boostable));
+            return _boostables.Remove(boostable);
+		}
 
         public void Dispose()
         {
