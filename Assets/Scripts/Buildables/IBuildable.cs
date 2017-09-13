@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-    public interface IBuildable : ITarget, IComparableItem
+    public interface IBuildable : ITarget, IComparableItem, IBoostable
     {
         /// <summary>
         /// 0-1

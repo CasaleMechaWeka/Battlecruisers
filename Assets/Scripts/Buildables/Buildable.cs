@@ -44,7 +44,8 @@ namespace BattleCruisers.Buildables
 		protected BuildableProgressController _buildableProgress;
 		private HealthBarController _healthBar;
 
-        private const float MAX_BUILD_PROGRESS = 1.0f;
+        private const float MAX_BUILD_PROGRESS = 1;
+        private const float DEFAULT_BOOST_MULTIPLIER = 1;
         // FELIX  TEMP
         private const float BUILD_CHEAT_MULTIPLIER = 50;
 
@@ -131,9 +132,11 @@ namespace BattleCruisers.Buildables
 
         private float _healthGainperDroneS;
         public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
-		#endregion Properties
 
-		public event EventHandler StartedConstruction;
+        public float BoostMultiplier { set; private get; }
+        #endregion Properties
+
+        public event EventHandler StartedConstruction;
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
@@ -151,6 +154,8 @@ namespace BattleCruisers.Buildables
             _healthBar = HealthBarController;
 			Assert.IsNotNull(_healthBar);
 			_healthBar.Initialise(this, followDamagable: true);
+
+            BoostMultiplier = DEFAULT_BOOST_MULTIPLIER;
 		}
 
 		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -222,7 +227,7 @@ namespace BattleCruisers.Buildables
 			if (BuildableState == BuildableState.InProgress)
 			{
 				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
-                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
+                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
 
 				if (BuildableProgress != null)
 				{
