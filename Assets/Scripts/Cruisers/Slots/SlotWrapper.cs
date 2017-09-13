@@ -10,6 +10,9 @@ namespace BattleCruisers.Cruisers.Slots
 		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
 
+        private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
+
+        // FELIX  Remove
         public ReadOnlyCollection<ISlot> Slots { get; private set; }
 
         public void Initialise(ICruiser parentCruiser)
@@ -22,28 +25,48 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			_slots = new Dictionary<SlotType, List<ISlot>>();
 
-			Slot[] slots = GetComponentsInChildren<Slot>(includeInactive: true);
-            Slots = new ReadOnlyCollection<ISlot>(slots);
+            List<Slot> slots = GetComponentsInChildren<Slot>(includeInactive: true).ToList();
 
-            // Sort slots by type
-			foreach (Slot slot in slots)
+			// Sort slots by position (cruiser front to cruiser rear)
+			slots.Sort((slot1, slot2) => slot1.XDistanceFromParentCruiser.CompareTo(slot2.XDistanceFromParentCruiser));
+
+            for (int i = 0; i < slots.Count; ++i)
 			{
-                slot.Initialise(parentCruiser);
+                Slot slot = slots[i];
+                IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
+                slot.Initialise(parentCruiser, neighbouringSlots);
+                SortSlotsByType(slot);
+            }
+        }
 
-				if (!_slots.ContainsKey(slot.type))
-				{
-					_slots[slot.type] = new List<ISlot>();
-				}
-
-				_slots[slot.type].Add(slot);
+        private IList<ISlot> FindSlotNeighbours(IList<Slot> slots, int slotIndex)
+        {
+			IList<ISlot> neighbouringSlots = new List<ISlot>(DEFAULT_NUM_OF_NEIGHBOURS);
+			
+			// Add slot to the front
+            if (slotIndex != 0)
+			{
+				neighbouringSlots.Add(slots[slotIndex - 1]);
+			}
+			
+			// Add slot to the rear
+			if (slotIndex != slots.Count - 1)
+			{
+				neighbouringSlots.Add(slots[slots.Count - 1]);
 			}
 
-            // Sort slots by position (cruiser front to cruiser rear)
-            foreach (List<ISlot> slotsOfAType in _slots.Values)
-            {
-                slotsOfAType.Sort((slot1, slot2) => slot1.XDistanceFromParentCruiser.CompareTo(slot2.XDistanceFromParentCruiser));
-            }
-		}
+            return neighbouringSlots;
+        }
+
+        private void SortSlotsByType(ISlot slot)
+        {
+			if (!_slots.ContainsKey(slot.Type))
+			{
+				_slots[slot.Type] = new List<ISlot>();
+			}
+			
+			_slots[slot.Type].Add(slot);
+        }
 
 		public bool IsSlotAvailable(SlotType slotType)
 		{

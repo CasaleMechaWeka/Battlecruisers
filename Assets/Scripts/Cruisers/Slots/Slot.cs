@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -69,15 +71,17 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
+        public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
 
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
 
-		public void Initialise(ICruiser parentCruiser)
+		public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
 		{
-            Assert.IsNotNull(parentCruiser);
+            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
             _parentCruiser = parentCruiser;
+            NeighbouringSlots = new ReadOnlyCollection<ISlot>(neighbouringSlots);
 			_isActive = false;
 
 			_renderer = GetComponent<SpriteRenderer>();

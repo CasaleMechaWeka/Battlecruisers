@@ -37,7 +37,8 @@ namespace BattleCruisers.Scenes.Test.Tactical
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues, slotWrapper);
             parentCruiser.SlotWrapper.Returns(slotWrapper);
 
-			slotToBoost.Initialise(parentCruiser);
+            // FELIX  Fix!
+			slotToBoost.Initialise(parentCruiser, null);
 
 
             // Setup artillery
