@@ -117,6 +117,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
 
+            _boostableGroup.AddBoostable(_unitUnderConstruction);
+
 			_unitUnderConstruction.StartConstruction();
 		}
 
@@ -172,6 +174,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void CleanUpUnitUnderConstruction()
 		{
+            _boostableGroup.RemoveBoostable(_unitUnderConstruction);
 			_unitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
 			_unitUnderConstruction = null;
 		}
