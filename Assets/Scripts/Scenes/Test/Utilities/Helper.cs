@@ -77,14 +77,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildableInitialisationArgs initialisationArgs,
             ISlot parentSlot = null)
         {
-            if (parentSlot == null)
-            {
-                parentSlot = Substitute.For<ISlot>();
-                parentSlot.BoostProviders.Returns(Substitute.For<IObservableCollection<IBoostProvider>>());
-            }
-
 			building.StaticInitialise();
-
             building.Initialise(
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
