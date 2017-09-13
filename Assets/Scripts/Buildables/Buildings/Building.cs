@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
@@ -12,8 +13,9 @@ namespace BattleCruisers.Buildables.Buildings
 {
 	public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
+        protected ISlot _parentSlot;
+
         protected IBoostableGroup _boostableGroup;
-        protected IObservableCollection<IBoostProvider> _localBoostProviders;
 
 		public BuildingCategory category;
 		// Proportional to building size
@@ -39,14 +41,14 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider,
-            IObservableCollection<IBoostProvider> localBoostProviders)
+            ISlot parentSlot)
         {
             base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
 
-            Assert.IsNotNull(localBoostProviders);
-   
-            _localBoostProviders = localBoostProviders;
-			_localBoostProviders.Changed += _localBoostProviders_Changed;
+            Assert.IsNotNull(parentSlot);
+
+            _parentSlot = parentSlot;
+            _parentSlot.BoostProviders.Changed += LocalBoostProviders_Changed;
 
             _boostableGroup = new BoostableGroup(new BoostConsumer());
 
@@ -72,7 +74,7 @@ namespace BattleCruisers.Buildables.Buildings
 			throw new NotImplementedException();
 		}
 
-		private void _localBoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
+		private void LocalBoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
 		{
             switch (e.Type)
 			{

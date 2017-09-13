@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Buildings.Turrets;
@@ -10,6 +11,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
 
@@ -30,30 +32,34 @@ namespace BattleCruisers.Scenes.Test.Tactical
 			
 			// Setup artillery slot
 			Slot slotToBoost = FindObjectOfType<Slot>();
+            ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
-            ISlotWrapper slotWrapper = Substitute.For<ISlotWrapper>();
-            slotWrapper.Slots.Returns(new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost }));
-
-            ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues, slotWrapper);
-            parentCruiser.SlotWrapper.Returns(slotWrapper);
-
-            // FELIX  Fix!
-			slotToBoost.Initialise(parentCruiser, null);
+            slotToBoost.Initialise(parentCruiser, neighbouringSlots: new List<ISlot>());
 
 
             // Setup artillery
-            IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter();
-            targetFilter.Target = target;
+            IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
+            {
+                Target = target
+            };
             ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
 
             TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Blues, targetsFactory: targetsFactory, localBoostProviders: slotToBoost.BoostProviders);
+            helper.InitialiseBuilding(turret, Faction.Blues, targetsFactory: targetsFactory, parentSlot: slotToBoost);
             turret.StartConstruction();
 
 
             // Setup local booster
+			ISlot localBoosterParentSlot = Substitute.For<ISlot>();
+
+            IObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>(new List<IBoostProvider>());
+            localBoosterParentSlot.BoostProviders.Returns(boostProviders);
+
+            ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost });
+			localBoosterParentSlot.NeighbouringSlots.Returns(neighbouringSlots);
+   
             LocalBoosterController localBooster = FindObjectOfType<LocalBoosterController>();
-            helper.InitialiseBuilding(localBooster, parentCruiser: parentCruiser);
+            helper.InitialiseBuilding(localBooster, parentCruiser: parentCruiser, parentSlot: localBoosterParentSlot);
             localBooster.StartConstruction();
         }
     }

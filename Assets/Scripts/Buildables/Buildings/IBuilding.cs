@@ -1,12 +1,11 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	public enum BuildingCategory
+    public enum BuildingCategory
 	{
 		Factory, Defence, Offence, Tactical, Ultra
 	}
@@ -22,6 +21,6 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider, 
-            IObservableCollection<IBoostProvider> localBoostProviders);
+            ISlot parentSlot);
 	}
 }

@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-			IObservableCollection<IBoostProvider> localBoostProviders = null)
+			ISlot parentSlot = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -69,21 +69,28 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory,
                     parentCruiserDirection);
 
-            InitialiseBuilding(building, args, localBoostProviders);
+            InitialiseBuilding(building, args, parentSlot);
         }
 
         public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
+            ISlot parentSlot = null)
         {
+            if (parentSlot == null)
+            {
+                parentSlot = Substitute.For<ISlot>();
+                parentSlot.BoostProviders.Returns(Substitute.For<IObservableCollection<IBoostProvider>>());
+            }
+
 			building.StaticInitialise();
+
             building.Initialise(
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
-                localBoostProviders ?? Substitute.For<IObservableCollection<IBoostProvider>>());
+                parentSlot ?? Substitute.For<ISlot>());
         }
 
 		public void InitialiseUnit(
@@ -132,7 +139,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.FactoryProvider);
         }
 
-		public ICruiser CreateCruiser(Direction facingDirection, Faction faction, ISlotWrapper slotWrapper = null)
+		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
 		{
 			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
             droneConsumer.NumOfDrones = _numOfDrones;
@@ -150,7 +157,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			cruiser.Direction.Returns(facingDirection);
 			cruiser.AttackCapabilities.Returns(new List<TargetType>());
 			cruiser.Faction.Returns(faction);
-            cruiser.SlotWrapper.Returns(slotWrapper);
 
 			return cruiser;
 		}

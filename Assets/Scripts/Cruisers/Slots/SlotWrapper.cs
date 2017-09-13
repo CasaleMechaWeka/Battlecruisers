@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -11,9 +10,6 @@ namespace BattleCruisers.Cruisers.Slots
 		private SlotType? _highlightedSlotType;
 
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
-
-        // FELIX  Remove
-        public ReadOnlyCollection<ISlot> Slots { get; private set; }
 
         public void Initialise(ICruiser parentCruiser)
 		{
