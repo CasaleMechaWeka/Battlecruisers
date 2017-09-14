@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers.Slots
 			slots.Sort((slot1, slot2) => slot1.Index.CompareTo(slot2.Index));
 
             for (int i = 0; i < slots.Count; ++i)
-			{
+            {
                 Slot slot = slots[i];
                 IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots);
@@ -48,7 +48,7 @@ namespace BattleCruisers.Cruisers.Slots
 			// Add slot to the rear
 			if (slotIndex != slots.Count - 1)
 			{
-				neighbouringSlots.Add(slots[slots.Count - 1]);
+                neighbouringSlots.Add(slots[slotIndex + 1]);
 			}
 
             return neighbouringSlots;
