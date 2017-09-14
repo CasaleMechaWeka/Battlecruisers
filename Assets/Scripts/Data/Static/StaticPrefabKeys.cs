@@ -18,7 +18,6 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey StealthGenerator { get { return new BuildingKey(BuildingCategory.Tactical, "StealthGenerator"); } }
             public static BuildingKey SpySatelliteLauncher { get { return new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher"); } }
 			public static BuildingKey LocalBooster { get { return new BuildingKey(BuildingCategory.Tactical, "LocalBooster"); } }
-            // FELIX  Don't exist yet :/
             public static BuildingKey ControlTower { get { return new BuildingKey(BuildingCategory.Tactical, "ControlTower"); } }
 
 			// Defence

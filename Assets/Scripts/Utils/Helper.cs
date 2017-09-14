@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
@@ -9,6 +10,9 @@ namespace BattleCruisers.Utils
 {
     public static class Helper
 	{
+		private const float Y_DEGREES_MIRRORED = 180;
+		private const float Y_DEGREES_NOT_MIRRORED = 0;
+
 		public static Faction GetOppositeFaction(Faction faction)
 		{
 			return faction == Faction.Blues ? Faction.Reds : Faction.Blues;
@@ -40,5 +44,28 @@ namespace BattleCruisers.Utils
 
 			return half;
 		}
+
+        public static Quaternion MirrorAccrossYAxis(Quaternion rotation)
+        {
+            float yDegrees;
+
+            if (rotation.eulerAngles.y == Y_DEGREES_MIRRORED)
+            {
+                yDegrees = Y_DEGREES_NOT_MIRRORED;
+            }
+            else if (rotation.eulerAngles.y == Y_DEGREES_NOT_MIRRORED)
+            {
+                yDegrees = Y_DEGREES_MIRRORED;
+            }
+            else
+            {
+                throw new ArgumentException("Expect y angle to be " + Y_DEGREES_MIRRORED + " or " + Y_DEGREES_NOT_MIRRORED + " not " + rotation.eulerAngles.y);
+            }
+
+            Vector3 mirroredEulerAngles = new Vector3(rotation.eulerAngles.x, yDegrees, rotation.eulerAngles.z);
+            rotation.eulerAngles = mirroredEulerAngles;
+
+            return rotation;
+        }
 	}
 }

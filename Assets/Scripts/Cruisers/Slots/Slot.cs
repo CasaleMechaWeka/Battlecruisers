@@ -105,13 +105,7 @@ namespace BattleCruisers.Cruisers.Slots
         private Quaternion FindBuildingRotation()
         {
             Quaternion buildingRotation = transform.rotation;
-
-            if (mirrorBuilding)
-            {
-                buildingRotation.eulerAngles = new Vector3(0, buildingRotation.eulerAngles.y * -1, 0);
-            }
-
-            return buildingRotation;
+            return mirrorBuilding ? Helper.MirrorAccrossYAxis(buildingRotation) : buildingRotation;
         }
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
