@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class ConstrolTowerController : Building
+    public class ControlTowerController : Building
     {
         // FELIX  :P
     }
