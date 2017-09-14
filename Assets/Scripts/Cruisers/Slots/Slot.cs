@@ -20,6 +20,7 @@ namespace BattleCruisers.Cruisers.Slots
         public SlotType type;
         public Direction direction;
         public float index;
+        public bool mirrorBuilding;
 
         public bool IsFree { get { return _building == null; } }
         public SlotType Type { get { return type; } }
@@ -36,7 +37,7 @@ namespace BattleCruisers.Cruisers.Slots
                 _building = value;
 
                 _building.Position = FindSpawnPosition(_building);
-                _building.Rotation = transform.rotation;
+                _building.Rotation = FindBuildingRotation();
                 _building.Destroyed += OnBuildingDestroyed;
             }
         }
@@ -100,6 +101,18 @@ namespace BattleCruisers.Cruisers.Slots
 					throw new InvalidProgramException();
 			}
 		}
+
+        private Quaternion FindBuildingRotation()
+        {
+            Quaternion buildingRotation = transform.rotation;
+
+            if (mirrorBuilding)
+            {
+                buildingRotation.eulerAngles = new Vector3(0, buildingRotation.eulerAngles.y * -1, 0);
+            }
+
+            return buildingRotation;
+        }
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
