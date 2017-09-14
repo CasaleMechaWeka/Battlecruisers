@@ -19,27 +19,11 @@ namespace BattleCruisers.Cruisers.Slots
 
         public SlotType type;
         public Direction direction;
+        public float index;
 
         public bool IsFree { get { return _building == null; } }
         public SlotType Type { get { return type; } }
         public Vector2 Position { get { return gameObject.transform.position; } }
-
-        private float _xDistanceFromParentCruiser;
-        public float XDistanceFromParentCruiser
-        {
-            get
-            {
-                if (_xDistanceFromParentCruiser == default(float))
-                {
-                    _xDistanceFromParentCruiser =
-                        _parentCruiser.Direction == Direction.Right ?
-                        transform.position.x - _parentCruiser.Position.x :
-                        _parentCruiser.Position.x - transform.position.x;
-                }
-
-                return _xDistanceFromParentCruiser;
-            }
-        }
 
         private IBuilding _building;
         public IBuilding Building
@@ -72,6 +56,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
+        public float Index { get { return index; } }
 
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;

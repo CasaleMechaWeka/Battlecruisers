@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers.Slots
             List<Slot> slots = GetComponentsInChildren<Slot>(includeInactive: true).ToList();
 
 			// Sort slots by position (cruiser front to cruiser rear)
-			slots.Sort((slot1, slot2) => slot1.XDistanceFromParentCruiser.CompareTo(slot2.XDistanceFromParentCruiser));
+			slots.Sort((slot1, slot2) => slot1.Index.CompareTo(slot2.Index));
 
             for (int i = 0; i < slots.Count; ++i)
 			{

@@ -17,14 +17,23 @@ namespace BattleCruisers.Cruisers.Slots
         Vector2 Position { get; }
         bool IsFree { get; }
         SlotType Type { get; }
-        float XDistanceFromParentCruiser { get; }
         bool IsActive { set; }
         IBuilding Building { set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
 
-        // Usually contains 2 slots, the neighbour to the right and the neighbour to the left.
-        // Each cruiser will have two slots (the left most and the right most) that
-        // will only have one neighbour.
+        /// <summary>
+        /// Slots are ordered via their index, from the crusier front (low
+        /// index) to the cruiser rear (high index).  This is float and not
+        /// int to allow the later insertion of slots without having to change
+        /// the index of existing slots.
+        /// </summary>
+        float Index { get; }
+
+        /// <summary>
+		/// Usually contains 2 slots, the neighbour to the right and the neighbour to the left.
+		/// Each cruiser will have two slots (the left most and the right most) that
+		/// will only have one neighbour.
+        /// </summary>
         ReadOnlyCollection<ISlot> NeighbouringSlots { get; }
 	}
 }
