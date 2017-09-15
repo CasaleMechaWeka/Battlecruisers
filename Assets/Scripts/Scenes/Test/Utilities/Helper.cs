@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
@@ -19,7 +20,6 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
 
@@ -77,16 +77,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildableInitialisationArgs initialisationArgs,
             ISlot parentSlot = null)
         {
-			building.StaticInitialise();
+            building.StaticInitialise();
             building.Initialise(
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
-                parentSlot ?? Substitute.For<ISlot>());
+                parentSlot ?? CreateParentSlot());
         }
 
-		public void InitialiseUnit(
+        public void InitialiseUnit(
 			IUnit unit,
 			Faction faction = Faction.Blues,
 			IUIManager uiManager = null,
@@ -290,6 +290,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			provider.FighterSafeZone.Returns(fighterSafeZone);
 
 			return provider;
+		}
+
+		private ISlot CreateParentSlot()
+		{
+			ISlot parentSlot = Substitute.For<ISlot>();
+
+            ReadOnlyCollection<IBoostProvider> boostProviders = new ReadOnlyCollection<IBoostProvider>(new List<IBoostProvider>());
+			parentSlot.BoostProviders.Items.Returns(boostProviders);
+
+			ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+			parentSlot.NeighbouringSlots.Returns(neighbouringSlots);
+
+			return parentSlot;
 		}
 	}
 }
