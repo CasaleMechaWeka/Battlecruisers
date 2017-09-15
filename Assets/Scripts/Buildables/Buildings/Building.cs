@@ -1,17 +1,15 @@
 ﻿using System;
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-	public class Building : Buildable, IPointerClickHandler, IBuilding
+    public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
         protected ISlot _parentSlot;
 
@@ -46,7 +44,7 @@ namespace BattleCruisers.Buildables.Buildings
             Assert.IsNotNull(parentSlot);
 
             _parentSlot = parentSlot;
-            _parentSlot.BoostProviders.Changed += LocalBoostProviders_Changed;
+            _boostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
             OnInitialised();
 		}
@@ -70,18 +68,10 @@ namespace BattleCruisers.Buildables.Buildings
 			throw new NotImplementedException();
 		}
 
-		private void LocalBoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
-		{
-            switch (e.Type)
-			{
-                case ChangeType.Add:
-                    e.Item.AddBoostConsumer(_boostableGroup.BoostConsumer);
-                    break;
-
-                case ChangeType.Remove:
-                    e.Item.RemoveBoostConsumer(_boostableGroup.BoostConsumer);
-                    break;
-			}
-		}
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            _boostableGroup.CleanUp();
+        }
 	}
 }
