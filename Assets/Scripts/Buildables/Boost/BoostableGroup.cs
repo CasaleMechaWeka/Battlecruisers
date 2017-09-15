@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Boost
 {
-    public class BoostableGroup : IBoostableGroup, IDisposable
+    public class BoostableGroup : IBoostableGroup
 	{
         private readonly IList<IBoostable> _boostables;
 
@@ -78,8 +78,10 @@ namespace BattleCruisers.Buildables.Boost
 			}
 		}
 
-        public void Dispose()
+		public void CleanUp()
 		{
+            Assert.IsNotNull(BoostConsumer, "CleanUp() should only be called once.");
+
             foreach (IObservableCollection<IBoostProvider> boostProviders in _boostProviders)
             {
                 foreach (IBoostProvider provider in boostProviders.Items)
@@ -91,6 +93,8 @@ namespace BattleCruisers.Buildables.Boost
 			}
 
 			BoostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+
+            BoostConsumer = null;
 		}
     }
 }

@@ -18,5 +18,7 @@ namespace BattleCruisers.Buildables.Boost
         bool RemoveBoostable(IBoostable boostable);
 
         void AddBoostProvidersList(IObservableCollection<IBoostProvider> boostProviders);
+
+        void CleanUp();
     }
 }

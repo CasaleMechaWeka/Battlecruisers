@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -10,6 +11,8 @@ namespace BattleCruisers.Tests.Buildables.Boost
         private IBoostableGroup _group;
         private IBoostConsumer _consumer;
         private IBoostable _boostable1, _boostable2;
+        private IObservableCollection<IBoostProvider> _providers1, _providers2;
+        private IBoostProvider _provider1, _provider2;
 
 		[SetUp]
 		public void SetuUp()
@@ -22,6 +25,14 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _boostable1 = Substitute.For<IBoostable>();
 			_boostable2 = Substitute.For<IBoostable>();
 
+            _provider1 = Substitute.For<IBoostProvider>();
+			_providers1 = new ObservableCollection<IBoostProvider>();
+            _providers1.Add(_provider1);
+
+            _provider2 = Substitute.For<IBoostProvider>();
+			_providers2 = new ObservableCollection<IBoostProvider>();
+            _providers2.Add(_provider2);
+
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
@@ -31,7 +42,8 @@ namespace BattleCruisers.Tests.Buildables.Boost
             Assert.AreSame(_consumer, _group.BoostConsumer);
         }
 
-		[Test]
+        #region Boostables
+        [Test]
 		public void AddBoostable_SetsBoost()
 		{
             _group.AddBoostable(_boostable1);
@@ -57,8 +69,9 @@ namespace BattleCruisers.Tests.Buildables.Boost
         {
             Assert.Throws<UnityAsserts.AssertionException>(() => _group.RemoveBoostable(_boostable1));
         }
+		#endregion Boostables
 
-        [Test]
+		[Test]
         public void BoostChanged_UpdatesBoostables()
         {
 			_group.AddBoostable(_boostable1);
@@ -70,5 +83,66 @@ namespace BattleCruisers.Tests.Buildables.Boost
 			_boostable1.Received().BoostMultiplier = _consumer.CumulativeBoost;
 			_boostable2.Received().BoostMultiplier = _consumer.CumulativeBoost;
 		}
+
+        #region BoostProviders
+        [Test]
+        public void AddBoostProviders()
+        {
+            _group.AddBoostProvidersList(_providers1);
+            _provider1.Received().AddBoostConsumer(_consumer);
+        }
+
+        [Test]
+        public void AddMultipleBoostProviders()
+        {
+			_group.AddBoostProvidersList(_providers1);
+			_provider1.Received().AddBoostConsumer(_consumer);
+
+			_group.AddBoostProvidersList(_providers2);
+			_provider2.Received().AddBoostConsumer(_consumer);
+        }
+
+        [Test]
+        public void BoostProviderAdded_AddsBoostConsumer()
+        {
+			_group.AddBoostProvidersList(_providers1);
+			_provider1.Received().AddBoostConsumer(_consumer);
+
+            _providers1.Add(_provider2);
+			_provider2.Received().AddBoostConsumer(_consumer);
+        }
+
+        [Test]
+        public void BoostProviderRemoved_RemovesBoostConsumer()
+        {
+            _group.AddBoostProvidersList(_providers1);
+            _provider1.Received().AddBoostConsumer(_consumer);
+			
+            _providers1.Remove(_provider1);
+            _provider1.Received().RemoveBoostConsumer(_consumer);
+		}
+		#endregion BoostProviders
+
+        [Test]
+        public void CleanUp_RemovesBoostConsumerFromAllBoostProviders()
+        {
+			_group.AddBoostProvidersList(_providers1);
+			_provider1.Received().AddBoostConsumer(_consumer);
+
+			_group.AddBoostProvidersList(_providers2);
+			_provider2.Received().AddBoostConsumer(_consumer);
+
+            _group.CleanUp();
+
+			_provider1.Received().RemoveBoostConsumer(_consumer);
+			_provider2.Received().RemoveBoostConsumer(_consumer);
+        }
+
+        [Test]
+        public void DoubleCleanUp_Throws()
+        {
+            _group.CleanUp();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _group.CleanUp());
+        }
 	}
 }
