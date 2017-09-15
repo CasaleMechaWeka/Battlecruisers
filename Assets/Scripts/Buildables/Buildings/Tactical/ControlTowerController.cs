@@ -1,7 +1,29 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Tactical
+﻿using BattleCruisers.Buildables.Boost;
+
+namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class ControlTowerController : Building
     {
-        // FELIX  :P
-    }
+		private IBoostProvider _boostProvider;
+
+		public float boostMultiplier;
+
+		protected override void OnInitialised()
+		{
+			base.OnInitialised();
+			_boostProvider = new BoostProvider(boostMultiplier);
+		}
+
+		protected override void OnBuildableCompleted()
+		{
+			base.OnBuildableCompleted();
+            _factoryProvider.BoostProvidersManager.AircraftBoostProviders.Add(_boostProvider);
+		}
+
+		protected override void OnDestroyed()
+		{
+			base.OnDestroyed();
+            _factoryProvider.BoostProvidersManager.AircraftBoostProviders.Remove(_boostProvider);
+		}
+	}
 }
