@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Boost
@@ -8,6 +9,13 @@ namespace BattleCruisers.Buildables.Boost
 	{
         private readonly IList<IBoostable> _boostables;
 
+        // Need multiple boost provider lists.  Eg:
+        // 1. List of local boosters for building
+        // 2. List of global boosters that apply to building (eg, cruiser benefit
+        //      that improves all turrets).
+        private readonly IList<IObservableCollection<IBoostProvider>> _boostProviders;
+
+        // FELIX  Make this private?  And not injected?
 		public IBoostConsumer BoostConsumer { get; private set; }
 
         public BoostableGroup(IBoostConsumer boostConsumer)
@@ -16,6 +24,7 @@ namespace BattleCruisers.Buildables.Boost
 
             BoostConsumer = boostConsumer;
             _boostables = new List<IBoostable>();
+            _boostProviders = new List<IObservableCollection<IBoostProvider>>();
 
             BoostConsumer.BoostChanged += _boostConsumer_BoostChanged;
         }
@@ -42,9 +51,46 @@ namespace BattleCruisers.Buildables.Boost
             return _boostables.Remove(boostable);
 		}
 
-        public void Dispose()
+        public void AddBoostProvidersList(IObservableCollection<IBoostProvider> boostProviders)
         {
-            BoostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+            Assert.IsFalse(_boostProviders.Contains(boostProviders));
+            _boostProviders.Add(boostProviders);
+
+            foreach (IBoostProvider provider in boostProviders.Items)
+            {
+                provider.AddBoostConsumer(BoostConsumer);
+            }
+
+            boostProviders.Changed += BoostProviders_Changed;
         }
+
+        private void BoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
+        {
+			switch (e.Type)
+			{
+				case ChangeType.Add:
+					e.Item.AddBoostConsumer(BoostConsumer);
+					break;
+
+				case ChangeType.Remove:
+					e.Item.RemoveBoostConsumer(BoostConsumer);
+					break;
+			}
+		}
+
+        public void Dispose()
+		{
+            foreach (IObservableCollection<IBoostProvider> boostProviders in _boostProviders)
+            {
+                foreach (IBoostProvider provider in boostProviders.Items)
+                {
+                    provider.RemoveBoostConsumer(BoostConsumer);
+                }
+
+                boostProviders.Changed -= BoostProviders_Changed;
+			}
+
+			BoostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+		}
     }
 }
