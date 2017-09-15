@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
@@ -33,6 +34,7 @@ namespace BattleCruisers.Buildables
 		protected IAngleCalculatorFactory _angleCalculatorFactory;
 		protected ITargetPositionPredictorFactory _targetPositionPredictorFactory;
 		protected IFactoryProvider _factoryProvider;
+		protected IBoostableGroup _boostableGroup;
 
 		public string buildableName;
 		public string description;
@@ -181,6 +183,7 @@ namespace BattleCruisers.Buildables
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
             _healthGainperDroneS = _buildTimeInDroneSeconds / maxHealth;
+			_boostableGroup = new BoostableGroup(new BoostConsumer());
 		}
 
 		protected virtual void OnInitialised() { }

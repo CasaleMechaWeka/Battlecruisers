@@ -15,8 +15,6 @@ namespace BattleCruisers.Buildables.Buildings
 	{
         protected ISlot _parentSlot;
 
-        protected IBoostableGroup _boostableGroup;
-
 		public BuildingCategory category;
 		// Proportional to building size
 		public float customOffsetProportion;
@@ -49,8 +47,6 @@ namespace BattleCruisers.Buildables.Buildings
 
             _parentSlot = parentSlot;
             _parentSlot.BoostProviders.Changed += LocalBoostProviders_Changed;
-
-            _boostableGroup = new BoostableGroup(new BoostConsumer());
 
             OnInitialised();
 		}
