@@ -1,17 +1,16 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
-using System;
 
 namespace BattleCruisers.Utils
 {
-	public class FactoryProvider : IFactoryProvider
+    public class FactoryProvider : IFactoryProvider
 	{
 		public IPrefabFactory PrefabFactory { get; private set; }
 		public ITargetsFactory TargetsFactory { get; private set; }
@@ -20,6 +19,7 @@ namespace BattleCruisers.Utils
 		public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
 		public IAircraftProvider AircraftProvider { get; private set; }
 		public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; } 
+        public IBoostProvidersManager BoostProvidersManager { get; private set; }
 
 		public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
@@ -30,6 +30,7 @@ namespace BattleCruisers.Utils
 			MovementControllerFactory = new MovementControllerFactory(AngleCalculatorFactory, TargetPositionPredictorFactory);
 			AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position);
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
+            BoostProvidersManager = new BoostProvidersManager();
 		}
 	}
 }

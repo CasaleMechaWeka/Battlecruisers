@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Utils
 		IAngleCalculatorFactory AngleCalculatorFactory { get; }
 		ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
 		IAircraftProvider AircraftProvider { get; }
-		IFlightPointsProviderFactory FlightPointsProviderFactory { get; } 
+		IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
+        IBoostProvidersManager BoostProvidersManager { get; }
 	}
 }
