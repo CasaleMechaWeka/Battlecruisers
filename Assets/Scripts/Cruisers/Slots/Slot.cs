@@ -74,7 +74,7 @@ namespace BattleCruisers.Cruisers.Slots
 			Assert.IsNotNull(_renderer);
 			_renderer.color = DEFAULT_COLOUR;
 
-            BoostProviders = new ObservableCollection<IBoostProvider>(new List<IBoostProvider>());
+            BoostProviders = new ObservableCollection<IBoostProvider>();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

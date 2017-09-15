@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.DataStrctures
 {
@@ -12,11 +11,9 @@ namespace BattleCruisers.Utils.DataStrctures
 
         public event EventHandler<CollectionChangedEventArgs<T>> Changed;
 
-        public ObservableCollection(IList<T> items)
+        public ObservableCollection()
         {
-            Assert.IsNotNull(items);
-
-            _items = items;
+            _items = new List<T>();
             Items = new ReadOnlyCollection<T>(_items);
         }
 

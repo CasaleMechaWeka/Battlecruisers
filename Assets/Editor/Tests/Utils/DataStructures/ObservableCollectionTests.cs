@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Utils.DataStrctures;
+﻿using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -14,7 +13,7 @@ namespace BattleCruisers.Tests.Utils.DataStructures
 		[SetUp]
 		public void SetuUp()
 		{
-            _collection = new ObservableCollection<object>(new List<object>());
+            _collection = new ObservableCollection<object>();
 			_collection.Changed += (sender, e) => _lastEventArgs = e;
             _item = new object();
             _lastEventArgs = null;

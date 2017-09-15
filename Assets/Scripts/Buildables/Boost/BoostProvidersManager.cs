@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Utils.DataStrctures;
+﻿using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Boost
 {
@@ -9,7 +8,7 @@ namespace BattleCruisers.Buildables.Boost
 
         public BoostProvidersManager()
         {
-            AircraftBoostProviders = new ObservableCollection<IBoostProvider>(new List<IBoostProvider>());
+            AircraftBoostProviders = new ObservableCollection<IBoostProvider>();
         }
 	}
 }

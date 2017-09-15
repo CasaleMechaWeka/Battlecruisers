@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
             // Setup local booster
 			ISlot localBoosterParentSlot = Substitute.For<ISlot>();
 
-            IObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>(new List<IBoostProvider>());
+            IObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
             localBoosterParentSlot.BoostProviders.Returns(boostProviders);
 
             ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost });
