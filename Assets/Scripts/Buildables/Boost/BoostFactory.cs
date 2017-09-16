@@ -1,22 +1,20 @@
-﻿using System;
-
-namespace BattleCruisers.Buildables.Boost
+﻿namespace BattleCruisers.Buildables.Boost
 {
     public class BoostFactory : IBoostFactory
     {
         public IBoostableGroup CreateBoostableGroup()
         {
-            throw new NotImplementedException();
+            return new BoostableGroup(this);
         }
 
         public IBoostConsumer CreateBoostConsumer()
         {
-            throw new NotImplementedException();
+            return new BoostConsumer();
         }
 
-        public IBoostProvider CreateBoostProvider()
+        public IBoostProvider CreateBoostProvider(float boostMultiplier)
         {
-            throw new NotImplementedException();
+            return new BoostProvider(boostMultiplier);
         }
     }
 }

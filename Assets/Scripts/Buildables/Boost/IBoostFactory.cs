@@ -3,7 +3,7 @@
     public interface IBoostFactory
     {
         IBoostConsumer CreateBoostConsumer();
-        IBoostProvider CreateBoostProvider();
+        IBoostProvider CreateBoostProvider(float boostMultiplier);
         IBoostableGroup CreateBoostableGroup();
     }
 }
