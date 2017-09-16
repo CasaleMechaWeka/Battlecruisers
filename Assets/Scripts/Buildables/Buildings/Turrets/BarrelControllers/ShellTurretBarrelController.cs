@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class ShellTurretBarrelController : BarrelController
 	{
-		private ShellSpawner _shellSpawner;
+        private ShellSpawner[] _shellSpawners;
 
 		public ProjectileController shellPrefab;
 
@@ -20,8 +20,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			Assert.IsNotNull(shellPrefab);
 			
-			_shellSpawner = gameObject.GetComponentInChildren<ShellSpawner>();
-			Assert.IsNotNull(_shellSpawner);
+			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
+			Assert.IsNotNull(_shellSpawners);
+            Assert.IsTrue(_shellSpawners.Length != 0);
 		}
 
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
@@ -29,12 +30,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			ShellStats shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
-			_shellSpawner.Initialise(shellStats, targetFilter);
+
+            foreach (ShellSpawner spawner in _shellSpawners)
+            {
+                spawner.Initialise(shellStats, targetFilter);
+            }
 		}
 
 		protected override void Fire(float angleInDegrees)
 		{
-			_shellSpawner.SpawnShell(angleInDegrees, IsSourceMirrored);
+			foreach (ShellSpawner spawner in _shellSpawners)
+            {
+                spawner.SpawnShell(angleInDegrees, IsSourceMirrored);
+			}
 		}
 	}
 }
