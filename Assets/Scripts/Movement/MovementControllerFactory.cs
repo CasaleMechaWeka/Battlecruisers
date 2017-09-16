@@ -24,41 +24,41 @@ namespace BattleCruisers.Movement
 
         #region Velocity
         #region Homing
-        public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, 
+        public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, 
 			ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			return new MissileMovementController(rigidBody, maxVelocityInMPerS, targetProvider, targetPositionPredictorFactory);
+			return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
 		}
 
-		public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone)
+		public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, SafeZone safeZone)
 		{
-			return new FighterMovementController(rigidBody, maxVelocityInMPerS, targetProvider, safeZone);
+			return new FighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
 		}
 
-		public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
+		public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
 		{
-			return new RocketMovementController(rigidBody, maxVelocityInMPerS, targetProvider, cruisingAltitudeInM, flightPointsProvider);
+			return new RocketMovementController(rigidBody, maxVelocityProvider, targetProvider, cruisingAltitudeInM, flightPointsProvider);
 		}
 
-        public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
+        public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider)
         {
-            return new HomingMovementController(rigidBody, maxVelocityInMPerS, targetProvider);
+            return new HomingMovementController(rigidBody, maxVelocityProvider, targetProvider);
         }
         #endregion Homing
 
-        public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, float maxPatrollilngVelocityInMPerS, IList<IPatrolPoint> patrolPoints)
+        public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
 		{
-			return new PatrollingMovementController(rigidBody, maxPatrollilngVelocityInMPerS, patrolPoints);
+            return new PatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints);
 		}
 
-		public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
 		{
-			return new BomberMovementController(rigidBody, maxVelocityInMPerS);
+			return new BomberMovementController(rigidBody, maxVelocityProvider);
 		}
 
-		public FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+		public FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
 		{
-            return new FollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
+            return new FollowingXAxisMovementController(rigidBody, maxVelocityProvider);
 		}
 
 		public IMovementController CreateDummyMovementController()
