@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Movement.Velocity.Providers;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity

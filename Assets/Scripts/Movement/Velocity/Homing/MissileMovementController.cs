@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
 using UnityEngine;

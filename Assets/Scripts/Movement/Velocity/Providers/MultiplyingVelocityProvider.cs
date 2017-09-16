@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
-namespace BattleCruisers.Movement.Velocity
+namespace BattleCruisers.Movement.Velocity.Providers
 {
     public class MultiplyingVelocityProvider : IVelocityProvider
     {

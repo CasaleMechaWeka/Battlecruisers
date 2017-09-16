@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Movement.Velocity
+﻿namespace BattleCruisers.Movement.Velocity.Providers
 {
     public class StaticVelocityProvider : IVelocityProvider
     {
