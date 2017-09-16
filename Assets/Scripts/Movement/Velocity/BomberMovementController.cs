@@ -15,12 +15,12 @@ namespace BattleCruisers.Movement.Velocity
 			{
 				_targetVelocity = value;
 				float velocityChange = (_rigidBody.velocity - _targetVelocity).magnitude;
-				_velocitySmoothTime = velocityChange / _maxVelocityInMPerS;
+                _velocitySmoothTime = velocityChange / _maxVelocityProvider.VelocityInMPerS;
 			}
 		}
 
-		public BomberMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
-            : base(rigidBody, maxVelocityInMPerS) { }
+		public BomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
+            : base(rigidBody, maxVelocityProvider) { }
 
         protected override Vector2 FindDesiredVelocity()
         {

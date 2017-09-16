@@ -12,7 +12,7 @@ namespace BattleCruisers.Movement.Velocity
 		private Vector2 _velocity;
 
 		protected readonly Rigidbody2D _rigidBody;
-		protected readonly float _maxVelocityInMPerS;
+		protected readonly IVelocityProvider _maxVelocityProvider;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
@@ -23,13 +23,13 @@ namespace BattleCruisers.Movement.Velocity
 			set { _rigidBody.velocity = value; }
 		}
 
-        public TargetVelocityMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS)
+        public TargetVelocityMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);
-			Assert.IsTrue(maxVelocityInMPerS > 0);
+            Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
 
 			_rigidBody = rigidBody;
-			_maxVelocityInMPerS = maxVelocityInMPerS;
+			_maxVelocityProvider = maxVelocityProvider;
 		}
 
         public override void AdjustVelocity()
@@ -45,7 +45,7 @@ namespace BattleCruisers.Movement.Velocity
                 Vector2 oldVelocity = Velocity;
 
                 float velocitySmoothTime = FindVelocitySmoothTime();
-                _rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _maxVelocityInMPerS, Time.deltaTime);
+                _rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _maxVelocityProvider.VelocityInMPerS, Time.deltaTime);
 
                 HandleDirectionChange(oldVelocity, Velocity);
             }

@@ -9,15 +9,15 @@ namespace BattleCruisers.Movement.Velocity.Homing
 	{
 		private ITargetPositionPredictor _targetPositionPredictor;
 
-		public MissileMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(rigidBody, maxVelocityInMPerS, targetProvider) 
+		public MissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+            : base(rigidBody, maxVelocityProvider, targetProvider) 
 		{ 
 			_targetPositionPredictor = targetPositionPredictorFactory.CreateLinearPredictor();
 		}
 
 		protected override Vector2 FindTargetPosition()
 		{
-			return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target, _maxVelocityInMPerS, currentAngleInRadians: -1);
+            return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target, _maxVelocityProvider.VelocityInMPerS, currentAngleInRadians: -1);
 		}
 
 		protected override float FindVelocitySmoothTime()
@@ -25,7 +25,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
             Vector2 targetPosition = FindTargetPosition();
 
 			float distance = Vector2.Distance(_rigidBody.transform.position, targetPosition);
-			float smoothTimeInS = distance / _maxVelocityInMPerS;
+            float smoothTimeInS = distance / _maxVelocityProvider.VelocityInMPerS;
 			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
 			{
 				smoothTimeInS = MAX_VELOCITY_SMOOTH_TIME;

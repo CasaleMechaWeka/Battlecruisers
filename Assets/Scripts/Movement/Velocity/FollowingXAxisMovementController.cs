@@ -12,8 +12,8 @@ namespace BattleCruisers.Movement.Velocity
     {
         public ITarget Target { private get; set; }
 		
-        public FollowingXAxisMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS) 
-            : base(rigidBody, maxVelocityInMPerS) { }
+        public FollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider) 
+            : base(rigidBody, maxVelocityProvider) { }
 
         protected override Vector2 FindDesiredVelocity()
         {
@@ -21,11 +21,11 @@ namespace BattleCruisers.Movement.Velocity
 
             if (Target.Position.x < _rigidBody.position.x)
             {
-                return new Vector2(-_maxVelocityInMPerS, 0);
+                return new Vector2(-_maxVelocityProvider.VelocityInMPerS, 0);
             }
             else if (Target.Position.x > _rigidBody.position.x)
             {
-                return new Vector2(_maxVelocityInMPerS, 0);
+                return new Vector2(_maxVelocityProvider.VelocityInMPerS, 0);
             }
             return new Vector2(0, 0);
         }

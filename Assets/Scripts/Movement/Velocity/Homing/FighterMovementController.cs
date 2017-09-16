@@ -1,18 +1,17 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Targets;
-using System;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity.Homing
 {
-	public class FighterMovementController : HomingMovementController
+    public class FighterMovementController : HomingMovementController
 	{
 		// Zone in which fighter will pursue enemies.  If those enemies move outside this
 		// safe zone the fighter will abandon pursuit.
 		private SafeZone _safeZone;
 
-		public FighterMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider, SafeZone safeZone)
-			: base(rigidBody, maxVelocityInMPerS, targetProvider) 
+		public FighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, SafeZone safeZone)
+            : base(rigidBody, maxVelocityProvider, targetProvider) 
 		{ 
 			_safeZone = safeZone;
 		}
@@ -45,4 +44,3 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		}
 	}
 }
-

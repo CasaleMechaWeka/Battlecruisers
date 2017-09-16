@@ -10,8 +10,8 @@ namespace BattleCruisers.Movement.Velocity.Homing
     {
         protected readonly ITargetProvider _targetProvider;
 
-        public HomingMovementController(Rigidbody2D rigidBody, float maxVelocityInMPerS, ITargetProvider targetProvider)
-            : base(rigidBody, maxVelocityInMPerS)
+        public HomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider)
+            : base(rigidBody, maxVelocityProvider)
         {
             Assert.IsNotNull(targetProvider);
             _targetProvider = targetProvider;
@@ -31,12 +31,12 @@ namespace BattleCruisers.Movement.Velocity.Homing
             if (sourcePosition.x == targetPosition.x)
             {
                 // On same x-axis
-                desiredVelocity.y = sourcePosition.y < targetPosition.y ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
+                desiredVelocity.y = sourcePosition.y < targetPosition.y ? _maxVelocityProvider.VelocityInMPerS : -_maxVelocityProvider.VelocityInMPerS;
             }
             else if (sourcePosition.y == targetPosition.y)
             {
                 // On same y-axis
-                desiredVelocity.x = sourcePosition.x < targetPosition.x ? _maxVelocityInMPerS : -_maxVelocityInMPerS;
+                desiredVelocity.x = sourcePosition.x < targetPosition.x ? _maxVelocityProvider.VelocityInMPerS : -_maxVelocityProvider.VelocityInMPerS;
             }
             else
             {
@@ -46,8 +46,8 @@ namespace BattleCruisers.Movement.Velocity.Homing
                 float angleInRadians = Mathf.Atan(yDiff / xDiff);
                 float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-                float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityInMPerS;
-                float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityInMPerS;
+                float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityProvider.VelocityInMPerS;
+                float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityProvider.VelocityInMPerS;
                 Logging.Log(Tags.MOVEMENT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
                     angleInDegrees, velocityX, velocityY));
 
