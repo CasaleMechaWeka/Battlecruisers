@@ -67,11 +67,5 @@ namespace BattleCruisers.Buildables.Buildings
             // FELIX  Implement and use :)
 			throw new NotImplementedException();
 		}
-
-        protected override void OnDestroyed()
-        {
-            base.OnDestroyed();
-            _boostableGroup.CleanUp();
-        }
 	}
 }
