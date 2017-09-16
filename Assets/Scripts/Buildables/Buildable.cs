@@ -135,7 +135,7 @@ namespace BattleCruisers.Buildables
         private float _healthGainperDroneS;
         public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
 
-        public float BoostMultiplier { set; private get; }
+        public float BoostMultiplier { set; protected get; }
         #endregion Properties
 
         public event EventHandler StartedConstruction;
@@ -291,6 +291,8 @@ namespace BattleCruisers.Buildables
 			{
 				CleanUpDroneConsumer();
 			}
+
+            _boostableGroup.CleanUp();
 		}
 
 		protected void SetupDroneConsumer(int numOfDrones)

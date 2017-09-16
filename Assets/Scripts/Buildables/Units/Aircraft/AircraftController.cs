@@ -1,12 +1,12 @@
-﻿using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Projectiles.DamageAppliers;
-using System;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -19,12 +19,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected IMovementController PatrollingMovementController { get; private set; }
 
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
-		
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
-
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
-
 		protected virtual float MaxPatrollingVelocity { get { return maxVelocityInMPerS; } }
+        protected float EffectiveMaxVelocityInMPerS { get { return BoostMultiplier * maxVelocityInMPerS; } }
 
 		public override void StaticInitialise()
         {
@@ -38,6 +36,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
+
+            _boostableGroup.AddBoostable(this);
+            _boostableGroup.AddBoostProvidersList(_factoryProvider.BoostProvidersManager.AircraftBoostProviders);
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
 			PatrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
