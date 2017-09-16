@@ -44,7 +44,14 @@ namespace BattleCruisers.Movement
         {
             return new HomingMovementController(rigidBody, maxVelocityProvider, targetProvider);
         }
-        #endregion Homing
+		#endregion Homing
+
+		#region Providers
+		public IVelocityProvider CreateStaticVelocityProvider(float velocityInMPerS)
+		{
+            return new StaticVelocityProvider(velocityInMPerS);
+		}
+        #endregion Providers
 
         public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
 		{
@@ -88,6 +95,6 @@ namespace BattleCruisers.Movement
 		{
 			return new DummyConstantRotationController();
 		}
-		#endregion Rotation
-	}
+        #endregion Rotation
+    }
 }
