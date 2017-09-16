@@ -2,6 +2,6 @@
 {
     public interface IBoostable
     {
-        float BoostMultiplier { set; }
+        float BoostMultiplier { get; set; }
     }
 }

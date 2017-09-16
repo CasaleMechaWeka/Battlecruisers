@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public abstract class AircraftController : Unit, IVelocityProvider
 	{
         private KamikazeController _kamikazeController;
+		private IBoostable _velocityBoostable;
 
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
@@ -22,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
         protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
-        protected float EffectiveMaxVelocityInMPerS { get { return BoostMultiplier * maxVelocityInMPerS; } }
+        protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * maxVelocityInMPerS; } }
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
 
         public override void StaticInitialise()
@@ -38,7 +40,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-            _boostableGroup.AddBoostable(this);
+            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _boostableGroup.AddBoostable(_velocityBoostable);
             _boostableGroup.AddBoostProvidersList(_factoryProvider.BoostProvidersManager.AircraftBoostProviders);
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();

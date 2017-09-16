@@ -2,6 +2,8 @@
 {
     public class BoostFactory : IBoostFactory
     {
+        private const float DEFAULT_BOOST_MULTIPLIER = 1;
+
         public IBoostableGroup CreateBoostableGroup()
         {
             return new BoostableGroup(this);
@@ -19,7 +21,7 @@
 
         public IBoostable CreateBoostable()
         {
-            return new Boostable();
+            return new Boostable(DEFAULT_BOOST_MULTIPLIER);
         }
     }
 }

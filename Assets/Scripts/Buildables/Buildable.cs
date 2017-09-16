@@ -47,7 +47,6 @@ namespace BattleCruisers.Buildables
 		private HealthBarController _healthBar;
 
         private const float MAX_BUILD_PROGRESS = 1;
-        private const float DEFAULT_BOOST_MULTIPLIER = 1;
         // FELIX  TEMP
         private const float BUILD_CHEAT_MULTIPLIER = 50;
 
@@ -135,7 +134,7 @@ namespace BattleCruisers.Buildables
         private float _healthGainperDroneS;
         public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
 
-        public float BoostMultiplier { set; protected get; }
+        public IBoostable BuildProgressBoostable { get; private set; }
         #endregion Properties
 
         public event EventHandler StartedConstruction;
@@ -156,8 +155,6 @@ namespace BattleCruisers.Buildables
             _healthBar = HealthBarController;
 			Assert.IsNotNull(_healthBar);
 			_healthBar.Initialise(this, followDamagable: true);
-
-            BoostMultiplier = DEFAULT_BOOST_MULTIPLIER;
 		}
 
 		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -184,6 +181,7 @@ namespace BattleCruisers.Buildables
 			_buildProgressInDroneSeconds = 0;
             _healthGainperDroneS = _buildTimeInDroneSeconds / maxHealth;
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
+            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 		}
 
 		protected virtual void OnInitialised() { }
@@ -230,7 +228,7 @@ namespace BattleCruisers.Buildables
 			if (BuildableState == BuildableState.InProgress)
 			{
 				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
-                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
+                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
 
 				if (BuildableProgress != null)
 				{
@@ -318,5 +316,7 @@ namespace BattleCruisers.Buildables
         }
 
 		public virtual void InitiateDelete() { }
+
+        protected virtual void OnBoostChanged() { }
 	}
 }

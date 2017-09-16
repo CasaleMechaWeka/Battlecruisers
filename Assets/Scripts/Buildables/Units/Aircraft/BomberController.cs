@@ -35,16 +35,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			set
 			{
 				_target = value;
-
-				if (_target != null)
-				{
-					float xVelocity = EffectiveMaxVelocityInMPerS;
-					if (_target.Position.x < transform.position.x)
-					{
-						xVelocity *= -1;
-					}
-					_bomberMovementControler.TargetVelocity = new Vector2(xVelocity, 0);
-				}
+                SetTargetVelocity();
 			}
 		}
 
@@ -212,6 +203,29 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			return Mathf.Sqrt(2 * verticalDistanceInM / Constants.GRAVITY);
 		}
+
+		protected override void OnBoostChanged()
+        {
+            SetTargetVelocity();
+        }
+
+        private void SetTargetVelocity()
+        {
+			if (_target != null)
+			{
+				_bomberMovementControler.TargetVelocity = FindTargetVelocity(_target.Position);
+			}
+        }
+
+        private Vector2 FindTargetVelocity(Vector2 targetPosition)
+        {
+			float xVelocity = EffectiveMaxVelocityInMPerS;
+            if (targetPosition.x < transform.position.x)
+			{
+				xVelocity *= -1;
+			}
+			return new Vector2(xVelocity, 0);
+        }
 
 		protected override void OnDestroyed()
 		{

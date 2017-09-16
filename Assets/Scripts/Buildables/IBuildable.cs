@@ -22,21 +22,25 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-    public interface IBuildable : ITarget, IComparableItem, IBoostable
+    public interface IBuildable : ITarget, IComparableItem
     {
         /// <summary>
         /// 0-1
         /// </summary>
         float BuildProgress { get; }
         BuildableState BuildableState { get; }
+		int NumOfDronesRequired { get; }
+		float BuildTimeInS { get; }
+		IDroneConsumer DroneConsumer { get; }
+
         float Damage { get; }
         Vector3 Size { get; }
-        IDroneConsumer DroneConsumer { get; }
         SlotType SlotType { get; }
+  
         new Vector2 Position { get; set; }
         Quaternion Rotation { set; }
-        int NumOfDronesRequired { get; }
-        float BuildTimeInS { get; }
+
+        IBoostable BuildProgressBoostable { get; }
 
 		event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;
