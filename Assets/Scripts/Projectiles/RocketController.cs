@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
@@ -20,14 +21,29 @@ namespace BattleCruisers.Projectiles
 	{
 		public ITarget Target { get; private set; }
 
-		public void Initialise(RocketStats rocketStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
-			IMovementControllerFactory movementControllerFactory, Faction faction, IFlightPointsProvider flightPointsProvider)
+		public void Initialise(
+            RocketStats rocketStats, 
+            Vector2 initialVelocityInMPerS, 
+            ITargetFilter targetFilter, 
+            ITarget target, 
+			IMovementControllerFactory movementControllerFactory, 
+            Faction faction, 
+            IFlightPointsProvider flightPointsProvider)
 		{
 			base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter);
 
 			Target = target;
 
-			_movementController = movementControllerFactory.CreateRocketMovementController(_rigidBody, rocketStats.MaxVelocityInMPerS, this, rocketStats.CruisingAltitudeInM, flightPointsProvider);
+            IVelocityProvider maxVelocityProvider = movementControllerFactory.CreateStaticVelocityProvider(rocketStats.MaxVelocityInMPerS);
+            ITargetProvider targetProvider = this;
+
+			_movementController 
+                = movementControllerFactory.CreateRocketMovementController(
+                    _rigidBody,
+                    maxVelocityProvider, 
+                    targetProvider, 
+                    rocketStats.CruisingAltitudeInM, 
+                    flightPointsProvider);
 
 			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
 			Assert.IsNotNull(rocketTarget);

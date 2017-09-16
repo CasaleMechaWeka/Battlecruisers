@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 				if (_target != null)
 				{
-					float xVelocity = maxVelocityInMPerS;
+					float xVelocity = EffectiveMaxVelocityInMPerS;
 					if (_target.Position.x < transform.position.x)
 					{
 						xVelocity *= -1;
@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			_bombSpawner.Initialise(shellStats, targetFilter);
 
-			_bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityInMPerS);
+            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -124,7 +124,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			if (_haveDroppedBombOnRun)
 			{
-				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, maxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
+				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
 				{
 					Logging.Log(Tags.AIRCRAFT, "TryBombTarget():  About to turn around");
 
@@ -163,7 +163,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void TurnAround()
 		{
-			Vector2 newTargetVelocity = new Vector2(maxVelocityInMPerS, 0);
+			Vector2 newTargetVelocity = new Vector2(EffectiveMaxVelocityInMPerS, 0);
 			if (rigidBody.velocity.x > 0)
 			{
 				newTargetVelocity *= -1;

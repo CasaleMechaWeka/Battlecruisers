@@ -64,8 +64,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS);
-			_inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityInMPerS * WITHTIN_RANGE_MULTIPLIER);
+            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
+
+            IVelocityProvider inRangeVelocityProvider
+                = _movementControllerFactory.CreateMultiplyingVelocityProvider(
+                providerToWrap: this,
+                multiplier: WITHTIN_RANGE_MULTIPLIER);
+            _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);

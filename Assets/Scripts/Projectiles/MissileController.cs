@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -19,7 +20,15 @@ namespace BattleCruisers.Projectiles
 
 			Target = target;
 
-			_movementController = movementControllerFactory.CreateMissileMovementController(_rigidBody, missileStats.MaxVelocityInMPerS, this, targetPositionPredictorFactory);
+            IVelocityProvider maxVelocityProvider = movementControllerFactory.CreateStaticVelocityProvider(missileStats.MaxVelocityInMPerS);
+			ITargetProvider targetProvider = this;
+
+			_movementController 
+                = movementControllerFactory.CreateMissileMovementController(
+                    _rigidBody, 
+                    maxVelocityProvider, 
+                    targetProvider, 
+                    targetPositionPredictorFactory);
 
 			target.Destroyed += Target_Destroyed;
 		}

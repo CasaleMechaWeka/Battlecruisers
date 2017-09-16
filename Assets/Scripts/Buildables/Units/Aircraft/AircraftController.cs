@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public abstract class AircraftController : Unit
+    public abstract class AircraftController : Unit, IVelocityProvider
 	{
         private KamikazeController _kamikazeController;
 
@@ -21,10 +21,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
-		protected virtual float MaxPatrollingVelocity { get { return maxVelocityInMPerS; } }
+        protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
         protected float EffectiveMaxVelocityInMPerS { get { return BoostMultiplier * maxVelocityInMPerS; } }
+        public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
 
-		public override void StaticInitialise()
+        public override void StaticInitialise()
         {
             base.StaticInitialise();
 
@@ -41,7 +42,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _boostableGroup.AddBoostProvidersList(_factoryProvider.BoostProvidersManager.AircraftBoostProviders);
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
-			PatrollingMovementController = _movementControllerFactory.CreatePatrollingMovementController(rigidBody, MaxPatrollingVelocity, GetPatrolPoints());
+			PatrollingMovementController 
+                = _movementControllerFactory.CreatePatrollingMovementController(
+                    rigidBody, 
+                    maxVelocityProvider: this,
+                    patrolPoints: GetPatrolPoints());
 
 			SwitchMovementControllers(DummyMovementController);
 		}
@@ -89,7 +94,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
 
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
-            SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, maxVelocityInMPerS, cruiserTarget));
+            SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget));
 
             Faction = Helper.GetOppositeFaction(target.Faction);
 

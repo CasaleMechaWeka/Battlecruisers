@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
@@ -17,8 +18,14 @@ namespace BattleCruisers.Projectiles
 
 		public ITarget Target { get; private set; }
 
-		public void Initialise(NukeStats nukeStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier, ITarget target, 
-			IMovementControllerFactory movementControllerFactory, IFlightPointsProvider flightPointsProvider)
+		public void Initialise(
+            NukeStats nukeStats, 
+            Vector2 initialVelocityInMPerS, 
+            ITargetFilter targetFilter, 
+            IDamageApplier damageApplier, 
+            ITarget target, 
+			IMovementControllerFactory movementControllerFactory, 
+            IFlightPointsProvider flightPointsProvider)
 		{
 			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter, damageApplier);
 
@@ -31,8 +38,16 @@ namespace BattleCruisers.Projectiles
 
 		public void Launch()
 		{
-			_movementController = _movementControllerFactory.CreateRocketMovementController(
-				_rigidBody, _nukeStats.MaxVelocityInMPerS, this, _nukeStats.CruisingAltitudeInM, _flightPointsProvider);
+            IVelocityProvider maxVelocityProvider = _movementControllerFactory.CreateStaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
+			ITargetProvider targetProvider = this;
+
+			_movementController 
+                = _movementControllerFactory.CreateRocketMovementController(
+                    _rigidBody, 
+                    maxVelocityProvider, 
+                    targetProvider, 
+                    _nukeStats.CruisingAltitudeInM, 
+                    _flightPointsProvider);
 		}
 	}
 }

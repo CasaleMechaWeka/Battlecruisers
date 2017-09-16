@@ -52,7 +52,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		protected override float MaxPatrollingVelocity { get { return maxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
+		protected override float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
 
 		public override void StaticInitialise()
 		{
@@ -71,7 +71,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnInitialised();
 
-			_figherMovementController = _movementControllerFactory.CreateFighterMovementController(rigidBody, maxVelocityInMPerS, this, _aircraftProvider.FighterSafeZone);
+			_figherMovementController 
+                = _movementControllerFactory.CreateFighterMovementController(
+                    rigidBody, 
+                    maxVelocityProvider: this,
+                    targetProvider: this, 
+                    safeZone: _aircraftProvider.FighterSafeZone);
 		}
 
 		protected override void OnBuildableCompleted()
