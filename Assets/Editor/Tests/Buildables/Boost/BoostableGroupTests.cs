@@ -122,6 +122,15 @@ namespace BattleCruisers.Tests.Buildables.Boost
 		#endregion BoostProviders
 
         [Test]
+        public void BoostConsumer_BoostChanged_FiresEvent()
+        {
+            int changeCount = 0;
+            _group.BoostChanged += (sender, e) => changeCount++;
+            _consumer.BoostChanged += Raise.Event();
+            Assert.AreEqual(1, changeCount);
+        }
+
+        [Test]
         public void CleanUp_RemovesBoostConsumerFromAllBoostProviders()
         {
 			_group.AddBoostProvidersList(_providers1);
