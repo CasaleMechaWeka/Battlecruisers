@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Boost
 {
     /// <summary>
-    /// Consumers boost producer(s).  Simply provides the cumulative boost
+    /// Consumes boost producer(s).  Simply provides the cumulative boost
     /// of all boost providers.
     /// </summary>
     public class BoostConsumer : IBoostConsumer
