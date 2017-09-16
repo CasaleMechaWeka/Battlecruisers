@@ -98,7 +98,7 @@ namespace BattleCruisers.Cruisers.Slots
 					return transform.position + (transform.up * verticalChange);
 
 				default:
-					throw new InvalidProgramException();
+                    throw new ArgumentException("Invalid slot direction");
 			}
 		}
 
