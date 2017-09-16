@@ -16,5 +16,10 @@
         {
             return new BoostProvider(boostMultiplier);
         }
+
+        public IBoostable CreateBoostable()
+        {
+            return new Boostable();
+        }
     }
 }

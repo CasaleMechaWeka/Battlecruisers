@@ -5,5 +5,6 @@
         IBoostConsumer CreateBoostConsumer();
         IBoostProvider CreateBoostProvider(float boostMultiplier);
         IBoostableGroup CreateBoostableGroup();
-    }
+        IBoostable CreateBoostable();
+	}
 }
