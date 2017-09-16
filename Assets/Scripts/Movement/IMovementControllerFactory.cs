@@ -25,6 +25,7 @@ namespace BattleCruisers.Movement
 
         // Velocity => Providers
         IVelocityProvider CreateStaticVelocityProvider(float velocityInMPerS);
+        IVelocityProvider CreateMultiplyingVelocityProvider(IVelocityProvider providerToWrap, float multiplier);
 
         // Rotation
 		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);

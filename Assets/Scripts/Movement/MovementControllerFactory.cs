@@ -51,6 +51,11 @@ namespace BattleCruisers.Movement
 		{
             return new StaticVelocityProvider(velocityInMPerS);
 		}
+
+		public IVelocityProvider CreateMultiplyingVelocityProvider(IVelocityProvider providerToWrap, float multiplier)
+		{
+            return new MultiplyingVelocityProvider(providerToWrap, multiplier);
+		}
         #endregion Providers
 
         public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
