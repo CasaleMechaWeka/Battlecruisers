@@ -7,7 +7,9 @@ namespace BattleCruisers.Buildables.Boost
 {
     public class BoostableGroup : IBoostableGroup
 	{
+		private readonly IBoostConsumer _boostConsumer;
         private readonly IList<IBoostable> _boostables;
+        private bool _isCleanedUp;
 
         // Need multiple boost provider lists.  Eg:
         // 1. List of local boosters for building
@@ -15,25 +17,23 @@ namespace BattleCruisers.Buildables.Boost
         //      that improves all turrets).
         private readonly IList<IObservableCollection<IBoostProvider>> _boostProviders;
 
-        // FELIX  Make this private?  And not injected?
-		public IBoostConsumer BoostConsumer { get; private set; }
-
-        public BoostableGroup(IBoostConsumer boostConsumer)
+        public BoostableGroup(IBoostFactory boostFactory)
         {
-            Assert.IsNotNull(boostConsumer);
+            Assert.IsNotNull(boostFactory);
 
-            BoostConsumer = boostConsumer;
+            _boostConsumer = boostFactory.CreateBoostConsumer();
             _boostables = new List<IBoostable>();
             _boostProviders = new List<IObservableCollection<IBoostProvider>>();
+            _isCleanedUp = false;
 
-            BoostConsumer.BoostChanged += _boostConsumer_BoostChanged;
+            _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
         }
 
         private void _boostConsumer_BoostChanged(object sender, EventArgs e)
         {
             foreach (IBoostable boostable in _boostables)
             {
-                boostable.BoostMultiplier = BoostConsumer.CumulativeBoost;
+                boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
             }
         }
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Boost
             Assert.IsFalse(_boostables.Contains(boostable), "Not allowed to add duplicates, tsk tsk tsk");
 
             _boostables.Add(boostable);
-            boostable.BoostMultiplier = BoostConsumer.CumulativeBoost;
+            boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
         }
 		
 		public bool RemoveBoostable(IBoostable boostable)
@@ -58,7 +58,7 @@ namespace BattleCruisers.Buildables.Boost
 
             foreach (IBoostProvider provider in boostProviders.Items)
             {
-                provider.AddBoostConsumer(BoostConsumer);
+                provider.AddBoostConsumer(_boostConsumer);
             }
 
             boostProviders.Changed += BoostProviders_Changed;
@@ -69,32 +69,32 @@ namespace BattleCruisers.Buildables.Boost
 			switch (e.Type)
 			{
 				case ChangeType.Add:
-					e.Item.AddBoostConsumer(BoostConsumer);
+					e.Item.AddBoostConsumer(_boostConsumer);
 					break;
 
 				case ChangeType.Remove:
-					e.Item.RemoveBoostConsumer(BoostConsumer);
+					e.Item.RemoveBoostConsumer(_boostConsumer);
 					break;
 			}
 		}
 
 		public void CleanUp()
 		{
-            Assert.IsNotNull(BoostConsumer, "CleanUp() should only be called once.");
+            Assert.IsFalse(_isCleanedUp, "CleanUp() should only be called once.");
 
             foreach (IObservableCollection<IBoostProvider> boostProviders in _boostProviders)
             {
                 foreach (IBoostProvider provider in boostProviders.Items)
                 {
-                    provider.RemoveBoostConsumer(BoostConsumer);
+                    provider.RemoveBoostConsumer(_boostConsumer);
                 }
 
                 boostProviders.Changed -= BoostProviders_Changed;
 			}
 
-			BoostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+			_boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
 
-            BoostConsumer = null;
+            _isCleanedUp = true;
 		}
     }
 }

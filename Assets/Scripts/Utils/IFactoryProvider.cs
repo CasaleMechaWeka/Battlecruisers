@@ -19,5 +19,6 @@ namespace BattleCruisers.Utils
 		IAircraftProvider AircraftProvider { get; }
 		IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IBoostProvidersManager BoostProvidersManager { get; }
+        IBoostFactory BoostFactory { get; }
 	}
 }

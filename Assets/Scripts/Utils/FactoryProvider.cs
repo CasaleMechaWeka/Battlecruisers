@@ -20,8 +20,9 @@ namespace BattleCruisers.Utils
 		public IAircraftProvider AircraftProvider { get; private set; }
 		public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; } 
         public IBoostProvidersManager BoostProvidersManager { get; private set; }
+        public IBoostFactory BoostFactory { get; private set; }
 
-		public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
+        public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);
@@ -31,6 +32,7 @@ namespace BattleCruisers.Utils
 			AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position);
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostProvidersManager = new BoostProvidersManager();
+            BoostFactory = new BoostFactory();
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace BattleCruisers.Tests.Buildables.Boost
         private IBoostable _boostable1, _boostable2;
         private IObservableCollection<IBoostProvider> _providers1, _providers2;
         private IBoostProvider _provider1, _provider2;
+        private IBoostFactory _factory;
 
 		[SetUp]
 		public void SetuUp()
@@ -20,7 +21,10 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _consumer = Substitute.For<IBoostConsumer>();
             _consumer.CumulativeBoost.Returns(1.17f);
 
-            _group = new BoostableGroup(_consumer);
+            _factory = Substitute.For<IBoostFactory>();
+            _factory.CreateBoostConsumer().Returns(_consumer);
+
+            _group = new BoostableGroup(_factory);
 			
             _boostable1 = Substitute.For<IBoostable>();
 			_boostable2 = Substitute.For<IBoostable>();
@@ -35,12 +39,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
-
-        [Test]
-        public void BoostableConsumer_ReturnsConsumer()
-        {
-            Assert.AreSame(_consumer, _group.BoostConsumer);
-        }
 
         #region Boostables
         [Test]
