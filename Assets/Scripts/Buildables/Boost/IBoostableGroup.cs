@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Boost
 {
@@ -10,7 +11,9 @@ namespace BattleCruisers.Buildables.Boost
     /// </summary>
     public interface IBoostableGroup
     {
-        void AddBoostable(IBoostable boostable);
+		event EventHandler BoostChanged;
+
+		void AddBoostable(IBoostable boostable);
         bool RemoveBoostable(IBoostable boostable);
 
         void AddBoostProvidersList(IObservableCollection<IBoostProvider> boostProviders);

@@ -17,6 +17,8 @@ namespace BattleCruisers.Buildables.Boost
         //      that improves all turrets).
         private readonly IList<IObservableCollection<IBoostProvider>> _boostProviders;
 
+        public event EventHandler BoostChanged;
+
         public BoostableGroup(IBoostFactory boostFactory)
         {
             Assert.IsNotNull(boostFactory);
@@ -34,6 +36,11 @@ namespace BattleCruisers.Buildables.Boost
             foreach (IBoostable boostable in _boostables)
             {
                 boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
+            }
+
+            if (BoostChanged != null)
+            {
+                BoostChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
