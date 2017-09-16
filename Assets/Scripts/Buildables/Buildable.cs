@@ -316,7 +316,5 @@ namespace BattleCruisers.Buildables
         }
 
 		public virtual void InitiateDelete() { }
-
-        protected virtual void OnBoostChanged() { }
 	}
 }
