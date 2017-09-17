@@ -7,7 +7,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
-    public class RocketLauncherTestGod : CameraToggleTestGod
+    public class OffensiveTurretTestGod : CameraToggleTestGod
 	{
 		protected override void OnStart()
 		{
@@ -21,14 +21,14 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
 
 			// Setup rocket launcher
-			TurretController rocketLauncher = FindObjectOfType<TurretController>();
+            TurretController turret = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
 			};
 			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
-            helper.InitialiseBuilding(rocketLauncher, Faction.Reds, targetsFactory: targetsFactory);
-			rocketLauncher.StartConstruction();
+            helper.InitialiseBuilding(turret, Faction.Reds, targetsFactory: targetsFactory);
+			turret.StartConstruction();
 		}
 	}
 }
