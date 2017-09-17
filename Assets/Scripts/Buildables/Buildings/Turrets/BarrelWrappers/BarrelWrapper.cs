@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         // FELIX
 		private TurretStats TurretStats { get { return _barrelController.TurretStats; } }
 
-        public Renderer[] Renderers { get { return _barrelController.Renderers; } }
+        public IList<Renderer> Renderers { get { return _barrelController.Renderers; } }
 		public Vector2 Position { get { return transform.position; } }
 
         public ITarget Target 
