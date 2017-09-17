@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 			_barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
 
-            _boostableGroup.AddBoostable(_barrelWrapper.TurretStats);
+            _boostableGroup.AddBoostable(_barrelWrapper);
 		}
 
 		protected override void OnBuildableCompleted()

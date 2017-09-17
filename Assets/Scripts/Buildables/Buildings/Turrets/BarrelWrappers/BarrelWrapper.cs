@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -27,6 +28,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         { 
             get { return _barrelController.Target; }
             set { _barrelController.Target = value; }
+        }
+
+        public float BoostMultiplier
+        {
+            get { return TurretStats.BoostMultiplier; }
+            set { TurretStats.BoostMultiplier = value; }
         }
 
         public virtual void StaticInitialise()
