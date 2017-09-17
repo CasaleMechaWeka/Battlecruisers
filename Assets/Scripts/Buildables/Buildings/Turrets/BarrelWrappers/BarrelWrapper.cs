@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -14,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
-        protected BarrelController _barrelController;
+        private BarrelController _barrelController;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
