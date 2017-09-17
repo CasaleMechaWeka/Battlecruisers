@@ -14,22 +14,26 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     /// FELIX  Take accuracy into consideration.  Perhaps in AngleCalculator?
     /// </summary>
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer
-	{
-		protected IFireIntervalManager _fireIntervalManager;
-		
-		protected ITargetFilter _targetFilter;
-		protected IAngleCalculator _angleCalculator;
-		protected IRotationMovementController _rotationMovementController;
+    {
+        protected IFireIntervalManager _fireIntervalManager;
 
-		public ITarget Target { get; set; }
-		protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
+        protected ITargetFilter _targetFilter;
+        protected IAngleCalculator _angleCalculator;
+        protected IRotationMovementController _rotationMovementController;
 
-		public virtual TurretStats TurretStats { get; protected set; }
-		private bool IsInitialised { get { return _targetFilter != null; } }
+        public ITarget Target { get; set; }
+        protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
+
+        public virtual TurretStats TurretStats { get; protected set; }
+        private bool IsInitialised { get { return _targetFilter != null; } }
+        public Renderer[] Renderers { get; private set; }
 
 		public virtual void StaticInitialise()
 		{
-			// Turret stats
+            Renderers = GetComponentsInChildren<Renderer>();
+            Assert.IsTrue(Renderers.Length != 0);
+
+            // Turret stats
 			TurretStats = gameObject.GetComponent<TurretStats>();
 			Assert.IsNotNull(TurretStats);
 			TurretStats.Initialise();

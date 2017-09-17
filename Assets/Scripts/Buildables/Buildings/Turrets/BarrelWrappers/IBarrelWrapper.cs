@@ -11,6 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 	{
         TurretStats TurretStats { get; }
         Vector2 Position { get; }
+        Renderer[] Renderers { get; }
 
 		void StaticInitialise();
         void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities);
