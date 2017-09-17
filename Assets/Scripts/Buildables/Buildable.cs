@@ -51,15 +51,18 @@ namespace BattleCruisers.Buildables
 		public float BuildProgress { get; private set; }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
+		public SlotType SlotType { get { return slotType; } }
+		protected abstract HealthBarController HealthBarController { get; }
+		public IBoostable BuildProgressBoostable { get; private set; }
+        public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
 
-		Vector2 IBuildable.Position
+		Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
+
+        Vector2 IBuildable.Position
         {
             get { return transform.position; }
             set { transform.position = value; }
         }
-
-        Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
-        public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
 
 		private IDroneConsumer _droneConsumer;
 		public IDroneConsumer DroneConsumer 
@@ -100,12 +103,6 @@ namespace BattleCruisers.Buildables
 				return _inGameRenderers;
 			}
 		}
-
-        public SlotType SlotType { get { return slotType; } }
-
-        protected abstract HealthBarController HealthBarController { get; }
-
-        public IBoostable BuildProgressBoostable { get; private set; }
 
 		#region IComparableItem
 		Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
