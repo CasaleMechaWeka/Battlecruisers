@@ -88,7 +88,8 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
 				StaticPrefabKeys.Buildings.NukeLauncher,
 				StaticPrefabKeys.Buildings.Ultralisk,
-                StaticPrefabKeys.Buildings.KamikazeSignal
+				StaticPrefabKeys.Buildings.KamikazeSignal,
+                StaticPrefabKeys.Buildings.Broadsides
 			};
 		}
 
