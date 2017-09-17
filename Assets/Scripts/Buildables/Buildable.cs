@@ -6,7 +6,6 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
-using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
@@ -27,7 +26,6 @@ namespace BattleCruisers.Buildables
 		protected IUIManager _uiManager;
 		protected ICruiser _parentCruiser;
 		protected ICruiser _enemyCruiser;
-		protected IPrefabFactory _prefabFactory;
 		protected IDroneManager _droneManager;
 		protected IDroneConsumerProvider _droneConsumerProvider;
 		protected ITargetsFactory _targetsFactory;
@@ -163,7 +161,6 @@ namespace BattleCruisers.Buildables
 			_aircraftProvider = factoryProvider.AircraftProvider;
 
 			_factoryProvider = factoryProvider;
-			_prefabFactory = _factoryProvider.PrefabFactory;
 			_targetsFactory = _factoryProvider.TargetsFactory;
 			_angleCalculatorFactory = _factoryProvider.AngleCalculatorFactory;
 			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
