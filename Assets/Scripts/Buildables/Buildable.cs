@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -22,27 +20,26 @@ namespace BattleCruisers.Buildables
 	{
 		private float _buildProgressInDroneSeconds;
 		private float _buildTimeInDroneSeconds;
-
-		protected IUIManager _uiManager;
-		protected ICruiser _parentCruiser;
-		protected ICruiser _enemyCruiser;
-		protected IDroneManager _droneManager;
-		protected IDroneConsumerProvider _droneConsumerProvider;
-		protected ITargetsFactory _targetsFactory;
-		protected IMovementControllerFactory _movementControllerFactory;
-		protected IAircraftProvider _aircraftProvider;
-		protected IFactoryProvider _factoryProvider;
-		protected IBoostableGroup _boostableGroup;
-
-		public string buildableName;
-		public string description;
-		public int numOfDronesRequired;
-		public float buildTimeInS;
-		public SlotType slotType;
-
 		private TextMesh _textMesh;
-		protected BuildableProgressController _buildableProgress;
 		private HealthBarController _healthBar;
+
+        protected IUIManager _uiManager;
+        protected ICruiser _parentCruiser;
+        protected ICruiser _enemyCruiser;
+        protected IDroneManager _droneManager;
+        protected IDroneConsumerProvider _droneConsumerProvider;
+        protected ITargetsFactory _targetsFactory;
+        protected IMovementControllerFactory _movementControllerFactory;
+        protected IAircraftProvider _aircraftProvider;
+        protected IFactoryProvider _factoryProvider;
+        protected IBoostableGroup _boostableGroup;
+        protected BuildableProgressController _buildableProgress;
+
+        public string buildableName;
+        public string description;
+        public int numOfDronesRequired;
+        public float buildTimeInS;
+        public SlotType slotType;
 
         private const float MAX_BUILD_PROGRESS = 1;
         // FELIX  TEMP
@@ -108,9 +105,6 @@ namespace BattleCruisers.Buildables
 
         protected abstract HealthBarController HealthBarController { get; }
 
-        private float _healthGainperDroneS;
-        public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
-
         public IBoostable BuildProgressBoostable { get; private set; }
 
 		#region IComparableItem
@@ -166,7 +160,7 @@ namespace BattleCruisers.Buildables
 			BuildableState = BuildableState.NotStarted;
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
-            _healthGainperDroneS = _buildTimeInDroneSeconds / maxHealth;
+            HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 		}

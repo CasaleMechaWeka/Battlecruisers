@@ -48,9 +48,6 @@ namespace BattleCruisers.Cruisers
         private FogOfWar _fog;
         public IFogOfWar Fog { get { return _fog; } }
 
-        // This seems to be a good approximtion :)
-        public override float HealthGainPerDroneS { get { return maxHealth; } }
-
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
