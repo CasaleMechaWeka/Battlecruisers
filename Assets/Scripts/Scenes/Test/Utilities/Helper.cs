@@ -50,7 +50,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            Direction parentCruiserDirection = Direction.Right,
+            IBoostFactory boostFactory = null,
+			IBoostProvidersManager boostProvidersManager = null,
+			Direction parentCruiserDirection = Direction.Right,
 			ISlot parentSlot = null)
         {
             BuildableInitialisationArgs args
@@ -67,6 +69,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleCalculatorFactory,
                     targetPositionPredictorFactory,
                     flightPointsProviderFactory,
+                    boostFactory,
+                    boostProvidersManager,
                     parentCruiserDirection);
 
             InitialiseBuilding(building, args, parentSlot);
@@ -99,6 +103,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IAngleCalculatorFactory angleCalculatorFactory = null,
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            IBoostFactory boostFactory = null,
+            IBoostProvidersManager boostProvidersManager = null,
             Direction parentCruiserDirection = Direction.Right)
 		{
 			BuildableInitialisationArgs args
@@ -115,6 +121,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					angleCalculatorFactory,
 					targetPositionPredictorFactory,
 					flightPointsProviderFactory,
+                    boostFactory,
+                    boostProvidersManager,
 					parentCruiserDirection);
 
             InitialiseUnit(unit, args);
@@ -201,7 +209,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IAngleCalculatorFactory angleCalculatorFactory,
 			ITargetPositionPredictorFactory targetPositionControllerFactory,
 			IAircraftProvider aircraftProvider,
-			IFlightPointsProviderFactory flightPointsProviderFactory)
+			IFlightPointsProviderFactory flightPointsProviderFactory,
+            IBoostFactory boostFactory,
+            IBoostProvidersManager boostProvidersManager)
 		{
 			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -212,6 +222,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
 			factoryProvider.AircraftProvider.Returns(aircraftProvider);
 			factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
+            factoryProvider.BoostFactory.Returns(boostFactory);
+            factoryProvider.BoostProvidersManager.Returns(boostProvidersManager);
 
 			return factoryProvider;
 		}

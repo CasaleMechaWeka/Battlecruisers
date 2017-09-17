@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -35,6 +36,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            IBoostFactory boostFactory = null,
+            IBoostProvidersManager boostProvidersManager = null,
             Direction parentCruiserDirection = Direction.Right)
         {
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
@@ -51,7 +54,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleCalculatorFactory,
                     targetPositionPredictorFactory,
                     aircraftProvider ?? helper.CreateAircraftProvider(),
-                    flightPointsProviderFactory ?? new FlightPointsProviderFactory());
+                    flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
+                    boostFactory ?? new BoostFactory(),
+                    boostProvidersManager ?? new BoostProvidersManager());
         }
     }
 }
