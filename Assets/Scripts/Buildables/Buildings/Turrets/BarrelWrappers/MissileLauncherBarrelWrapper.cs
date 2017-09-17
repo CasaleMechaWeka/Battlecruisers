@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
@@ -7,19 +8,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 	{
         protected override float DesiredAngleInDegrees { get { return 90; } }
 
-        protected override void InitialiseBarrelController(BarrelController barrelController)
+        protected override void InitialiseBarrelController(BarrelController barrel)
 		{
-            MissileBarrelController missileBarrel = barrelController.Parse<MissileBarrelController>();
+            MissileBarrelController missileBarrel = barrel.Parse<MissileBarrelController>();
 
 			missileBarrel.Initialise(
                 CreateTargetFilter(),
 				CreateAngleCalculator(),
-				CreateRotationMovementController(),
+                CreateRotationMovementController(barrel),
 				_factoryProvider.MovementControllerFactory,
 				_factoryProvider.TargetPositionPredictorFactory);
 		}
 
-        protected override Movement.Rotation.IRotationMovementController CreateRotationMovementController()
+        protected override IRotationMovementController CreateRotationMovementController(BarrelController barrel)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }

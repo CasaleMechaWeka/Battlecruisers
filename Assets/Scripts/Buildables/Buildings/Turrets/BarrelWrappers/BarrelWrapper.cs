@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -13,56 +13,72 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
-        private BarrelController _barrelController;
+        private BarrelController[] _barrels;
+		private ITargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
-        private ITargetProcessorWrapper _targetProcessorWrapper;
 
-        // FELIX
-		private TurretStats TurretStats { get { return _barrelController.TurretStats; } }
+        public Vector2 Position { get { return transform.position; } }
+        public float DamagePerS { get; private set; }
+        public float RangeInM { get; private set; }
 
-        public IList<Renderer> Renderers { get { return _barrelController.Renderers; } }
-		public Vector2 Position { get { return transform.position; } }
+        private List<Renderer> _renderers;
+        public IList<Renderer> Renderers { get { return _renderers; } }
 
+		private ITarget _target;
         public ITarget Target 
         { 
-            get { return _barrelController.Target; }
-            set { _barrelController.Target = value; }
-        }
-
-        public float BoostMultiplier
-        {
-            get { return TurretStats.BoostMultiplier; }
-            set { TurretStats.BoostMultiplier = value; }
-        }
-
-        // FELIX
-        public float DamagePerS
-        {
-            get
+            get { return _target; }
+            set 
             {
-                return TurretStats.DamagePerS;
+                _target = value;
+
+                foreach (BarrelController barrel in _barrels)
+                {
+                    barrel.Target = _target;
+                }
             }
         }
 
-		// FELIX
-		public float RangeInM
+        private float _boostMultiplier;
+        public float BoostMultiplier
         {
-            get
+            get { return _boostMultiplier; }
+            set
             {
-                return TurretStats.rangeInM;
+                _boostMultiplier = value;
+
+				foreach (BarrelController barrel in _barrels)
+                {
+                    barrel.TurretStats.BoostMultiplier = _boostMultiplier;
+                }
             }
         }
 
         public virtual void StaticInitialise()
         {
-            _barrelController = gameObject.GetComponentInChildren<BarrelController>();
-            Assert.IsNotNull(_barrelController);
-            _barrelController.StaticInitialise();
+            _renderers = new List<Renderer>();
+
+            InitialiseBarrels();
+
+            DamagePerS = _barrels.Sum(barrel => barrel.TurretStats.DamagePerS);
+            RangeInM = _barrels.Max(barrel => barrel.TurretStats.rangeInM);
 
             _targetProcessorWrapper = gameObject.GetComponentInChildren<ITargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
+        }
+
+        private void InitialiseBarrels()
+        {
+            _barrels = gameObject.GetComponentsInChildren<BarrelController>();
+            Assert.IsTrue(_barrels.Length != 0);
+
+            foreach (BarrelController barrel in _barrels)
+            {
+                barrel.StaticInitialise();
+                _renderers.AddRange(barrel.Renderers);
+            }
         }
 
         public void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
@@ -73,16 +89,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _enemyFaction = enemyFaction;
             _attackCapabilities = attackCapabilities;
 
-            InitialiseBarrelController(_barrelController);
+			foreach (BarrelController barrel in _barrels)
+            {
+                InitialiseBarrelController(barrel);
+            }
         }
 
-        protected virtual void InitialiseBarrelController(BarrelController barrelController)
+        protected virtual void InitialiseBarrelController(BarrelController barrel)
         {
-			barrelController
+			barrel
 				.Initialise(
                     CreateTargetFilter(), 
 					CreateAngleCalculator(), 
-					CreateRotationMovementController());
+                    CreateRotationMovementController(barrel));
         }
 
         public void StartAttackingTargets()
@@ -91,7 +110,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 _factoryProvider.TargetsFactory,
                 this,
                 _enemyFaction,
-                TurretStats.rangeInM,
+                RangeInM,
                 _attackCapabilities);
         }
 
@@ -102,10 +121,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected abstract IAngleCalculator CreateAngleCalculator();
 
-        protected virtual IRotationMovementController CreateRotationMovementController()
+        protected virtual IRotationMovementController CreateRotationMovementController(BarrelController barrel)
         {
-            return _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
-                _barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
+            return 
+                _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
+                    barrel.TurretStats.turretRotateSpeedInDegrees, 
+                    barrel.transform);
         }
 
         public void Dispose()

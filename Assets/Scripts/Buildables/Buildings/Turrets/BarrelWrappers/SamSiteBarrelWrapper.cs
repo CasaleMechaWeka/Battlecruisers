@@ -6,15 +6,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class SamSiteBarrelWrapper : DirectFireBarrelWrapper
 	{
-		protected override void InitialiseBarrelController(BarrelController barrelController)
+        protected override void InitialiseBarrelController(BarrelController barrel)
         {
-            SamSiteBarrelController samSiteBarrel = barrelController.Parse<SamSiteBarrelController>();
+            SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
 
             IExactMatchTargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
 			samSiteBarrel.Initialise(
                 targetFilter, 
                 CreateAngleCalculator(), 
-                CreateRotationMovementController(),
+                CreateRotationMovementController(barrel),
                 _factoryProvider.MovementControllerFactory,
                 _factoryProvider.TargetPositionPredictorFactory);
         }
