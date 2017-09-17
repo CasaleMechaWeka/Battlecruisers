@@ -31,7 +31,6 @@ namespace BattleCruisers.Buildables
 		protected ITargetsFactory _targetsFactory;
 		protected IMovementControllerFactory _movementControllerFactory;
 		protected IAircraftProvider _aircraftProvider;
-		protected IAngleCalculatorFactory _angleCalculatorFactory;
 		protected ITargetPositionPredictorFactory _targetPositionPredictorFactory;
 		protected IFactoryProvider _factoryProvider;
 		protected IBoostableGroup _boostableGroup;
@@ -162,7 +161,6 @@ namespace BattleCruisers.Buildables
 
 			_factoryProvider = factoryProvider;
 			_targetsFactory = _factoryProvider.TargetsFactory;
-			_angleCalculatorFactory = _factoryProvider.AngleCalculatorFactory;
 			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
 			_targetPositionPredictorFactory = _factoryProvider.TargetPositionPredictorFactory;
 
