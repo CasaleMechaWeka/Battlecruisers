@@ -24,27 +24,34 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
-        public virtual TurretStats TurretStats { get; protected set; }
+        public virtual TurretStats TurretStats { get; private set; }
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
 
 		public virtual void StaticInitialise()
-		{
+        {
             Renderers = GetComponentsInChildren<Renderer>();
+            TurretStats = SetupTurretStats();
+            _fireIntervalManager = SetupFireIntervalManager(TurretStats);
+        }
 
-            // Turret stats
-			TurretStats = gameObject.GetComponent<TurretStats>();
-			Assert.IsNotNull(TurretStats);
-			TurretStats.Initialise();
-
-			// Fire interval manager
+        protected virtual TurretStats SetupTurretStats()
+        {
+            TurretStats turretStats = gameObject.GetComponent<TurretStats>();
+            Assert.IsNotNull(turretStats);
+            turretStats.Initialise();
+            return turretStats;
+        }
+		
+		protected virtual IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
+		{
 			FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
 			Assert.IsNotNull(fireIntervalManager);
-			fireIntervalManager.Initialise(TurretStats);
-			_fireIntervalManager = fireIntervalManager;
+			fireIntervalManager.Initialise(turretStats);
+			return fireIntervalManager;
 		}
 
-		public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
+        public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
 			_targetFilter = targetFilter;
 			_angleCalculator = angleCalculator;

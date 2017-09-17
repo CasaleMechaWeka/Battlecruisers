@@ -11,28 +11,37 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class LaserBarrelController : BarrelController
 	{
+        private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
 		public override void StaticInitialise()
 		{
-			// Turret stats
-			LaserTurretStats laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
-			Assert.IsNotNull(laserTurretStats);
-			laserTurretStats.Initialise();
-			TurretStats = laserTurretStats;
+            _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
+			Assert.IsNotNull(_laserTurretStats);
 
-			// Fire interval manager
-			LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
-            Assert.IsNotNull(fireIntervalManager);
-            IDurationProvider waitingDurationProvider = laserTurretStats;
-            IDurationProvider firingDurationProvider = new DummyDurationProvider(laserTurretStats.laserDurationInS);
-            fireIntervalManager.Initialise(waitingDurationProvider, firingDurationProvider);
-			_fireIntervalManager = fireIntervalManager;
+            base.StaticInitialise();
 
 			// Laser emitter
 			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
 			Assert.IsNotNull(_laserEmitter);
 		}
+
+		protected override TurretStats SetupTurretStats()
+        {
+			_laserTurretStats.Initialise();
+            return _laserTurretStats;
+        }
+
+		protected override IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
+        {
+			LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
+			Assert.IsNotNull(fireIntervalManager);
+			
+            IDurationProvider waitingDurationProvider = _laserTurretStats;
+			IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
+			fireIntervalManager.Initialise(waitingDurationProvider, firingDurationProvider);
+			return fireIntervalManager;
+        }
 		
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
