@@ -8,7 +8,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
     public class AntiShipTurretTestsGod : MonoBehaviour 
 	{
-		void Start () 
+		void Start()
 		{
 			Helper helper = new Helper();
 
