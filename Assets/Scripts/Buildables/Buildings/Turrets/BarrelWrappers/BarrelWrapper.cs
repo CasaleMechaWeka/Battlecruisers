@@ -20,7 +20,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected IList<TargetType> _attackCapabilities;
         private ITargetProcessorWrapper _targetProcessorWrapper;
 
-		public TurretStats TurretStats { get { return _barrelController.TurretStats; } }
+        // FELIX
+		private TurretStats TurretStats { get { return _barrelController.TurretStats; } }
+
         public Renderer[] Renderers { get { return _barrelController.Renderers; } }
 		public Vector2 Position { get { return transform.position; } }
 
@@ -34,6 +36,24 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             get { return TurretStats.BoostMultiplier; }
             set { TurretStats.BoostMultiplier = value; }
+        }
+
+        // FELIX
+        public float DamagePerS
+        {
+            get
+            {
+                return TurretStats.DamagePerS;
+            }
+        }
+
+		// FELIX
+		public float RangeInM
+        {
+            get
+            {
+                return TurretStats.rangeInM;
+            }
         }
 
         public virtual void StaticInitialise()

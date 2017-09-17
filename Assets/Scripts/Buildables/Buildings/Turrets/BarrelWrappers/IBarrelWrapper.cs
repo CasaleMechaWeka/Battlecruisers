@@ -10,7 +10,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public interface IBarrelWrapper : ITargetConsumer, IDisposable, IBoostable
 	{
-        TurretStats TurretStats { get; }
+        float DamagePerS { get; }
+        float RangeInM { get; }
         Vector2 Position { get; }
         Renderer[] Renderers { get; }
 

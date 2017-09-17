@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public List<TargetType> attackCapabilities;
 
-		public override float Damage { get { return _barrelWrapper.TurretStats.DamagePerS; } }
+		public override float Damage { get { return _barrelWrapper.DamagePerS; } }
 
 		public override void StaticInitialise()
 		{

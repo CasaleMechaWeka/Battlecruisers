@@ -66,7 +66,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.StaticInitialise();
             }
 
-			_damage = _turrets.Sum(turret => turret.TurretStats.DamagePerS);
+			_damage = _turrets.Sum(turret => turret.DamagePerS);
 		}
 
         protected abstract IList<IBarrelWrapper> GetTurrets();
@@ -184,7 +184,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         // range has to be less than the longest range barrel.
         protected float FindEnemyDetectionRange(IBarrelWrapper longestRangeBarrel)
         {
-            return longestRangeBarrel.TurretStats.rangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
+            return longestRangeBarrel.RangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
         }
 	}
 }
