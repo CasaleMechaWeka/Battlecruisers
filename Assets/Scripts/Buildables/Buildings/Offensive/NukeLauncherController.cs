@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -88,15 +89,14 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_nukeMissile.Launch();
 		}
 
-		protected override void EnableRenderers(bool enabled)
-		{
-            // Do NOT call base method, because unlike most buildables we do not
-            // want to show our base sprite.  The base sprite is simply there to 
-            // for the loadout screen.
-
-			_spinner.Renderer.enabled = enabled;
-			leftSiloHalf.Renderer.enabled = enabled;
-			rightSiloHalf.Renderer.enabled = enabled;
-		}
+        protected override IList<Renderer> GetInGameRenderers()
+        {
+            return new List<Renderer>()
+            {
+                _spinner.Renderer,
+                leftSiloHalf.Renderer,
+                rightSiloHalf.Renderer
+            };
+        }
 	}
 }

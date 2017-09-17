@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -11,6 +12,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -54,7 +56,6 @@ namespace BattleCruisers.Buildables
 		public BuildableState BuildableState { get; private set; }
 		public virtual float Damage { get { return 0; } }
 		public float BuildProgress { get; private set; }
-        public string Name { get { return buildableName; } }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
 
@@ -64,44 +65,8 @@ namespace BattleCruisers.Buildables
             set { transform.position = value; }
         }
 
-        Quaternion IBuildable.Rotation
-        {
-            set { transform.rotation = value; }
-        }
-
-		public virtual Vector3 Size 
-		{ 
-			get 
-			{ 
-				return Renderer.bounds.size; 
-			} 
-		}
-
-		protected Renderer _renderer;
-		protected virtual Renderer Renderer
-		{
-			get
-			{
-				if (_renderer == null)
-				{
-					_renderer = GetComponent<Renderer>();
-				}
-				return _renderer;
-			}
-		}
-
-		protected Sprite _sprite;
-		public virtual Sprite Sprite
-		{
-			get
-			{
-				if (_sprite == null)
-				{
-					_sprite = GetComponent<SpriteRenderer>().sprite;
-				}
-				return _sprite;
-			}
-		}
+        Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
+        public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
 
 		private IDroneConsumer _droneConsumer;
 		public IDroneConsumer DroneConsumer 
@@ -124,8 +89,24 @@ namespace BattleCruisers.Buildables
 				}
 			}
 		}
-
-        public string Description { get { return description; } }
+		
+        private IList<Renderer> _inGameRenderers;
+		private IList<Renderer> InGameRenderers
+		{
+			// Lazily initialise so that the StaticInitialise() (constructor
+			// equivalent) of this class and all child classes has completed.
+			// Ie, cannot call GetInGameRenderers() from Buildable.StaticInitialise()
+			// because child implementations of GetInGameRenderers() may rely
+			// on their StaticInitialise() having run already.
+			get
+			{
+				if (_inGameRenderers == null)
+				{
+					_inGameRenderers = GetInGameRenderers();
+				}
+				return _inGameRenderers;
+			}
+		}
 
         public SlotType SlotType { get { return slotType; } }
 
@@ -135,9 +116,15 @@ namespace BattleCruisers.Buildables
         public override float HealthGainPerDroneS { get { return _healthGainperDroneS; } }
 
         public IBoostable BuildProgressBoostable { get; private set; }
-        #endregion Properties
 
-        public event EventHandler StartedConstruction;
+		#region IComparableItem
+		Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
+		string IComparableItem.Description { get { return description; } }
+		string IComparableItem.Name { get { return buildableName; } }
+		#endregion IComparableItem
+		#endregion Properties
+
+		public event EventHandler StartedConstruction;
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 
@@ -145,17 +132,24 @@ namespace BattleCruisers.Buildables
 		{
 			base.StaticInitialise();
 
-			_textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-			Assert.IsNotNull(_textMesh);
+            _textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+            Assert.IsNotNull(_textMesh);
 
-			_buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
-			Assert.IsNotNull(_buildableProgress);
-			_buildableProgress.Initialise();
+            _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
+            Assert.IsNotNull(_buildableProgress);
+            _buildableProgress.Initialise();
 
             _healthBar = HealthBarController;
-			Assert.IsNotNull(_healthBar);
-			_healthBar.Initialise(this, followDamagable: true);
-		}
+            Assert.IsNotNull(_healthBar);
+            _healthBar.Initialise(this, followDamagable: true);
+        }
+
+        protected virtual IList<Renderer> GetInGameRenderers()
+        {
+			Renderer renderer = GetComponent<Renderer>();
+			Assert.IsNotNull(renderer);
+            return new List<Renderer>() { renderer };
+        }
 
 		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
@@ -267,9 +261,12 @@ namespace BattleCruisers.Buildables
             RepairCommand.EmitCanExecuteChanged();
 		}
 
-		protected virtual void EnableRenderers(bool enabled)
+		private void EnableRenderers(bool enabled)
 		{
-			Renderer.enabled = enabled;
+            foreach (Renderer renderer in InGameRenderers)
+            {
+				renderer.enabled = enabled;
+            }
 		}
 
 		// All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains

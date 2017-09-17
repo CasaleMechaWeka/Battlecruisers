@@ -31,7 +31,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public virtual void StaticInitialise()
 		{
             Renderers = GetComponentsInChildren<Renderer>();
-            Assert.IsTrue(Renderers.Length != 0);
 
             // Turret stats
 			TurretStats = gameObject.GetComponent<TurretStats>();

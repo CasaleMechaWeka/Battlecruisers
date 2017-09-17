@@ -1,15 +1,12 @@
-﻿using BattleCruisers.Fetchers;
+﻿using System;
 using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables
 {
-	public class BuildableProgressController : MonoBehaviour
+    public class BuildableProgressController : MonoBehaviour
 	{
 		private Buildable _buildable;
 		private Image _fillableImage;

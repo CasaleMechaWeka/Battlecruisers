@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -14,8 +15,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public List<TargetType> attackCapabilities;
 
-        protected override Renderer Renderer { get { return _turretBaseRenderer; } }
-        public override Sprite Sprite { get { return _buildableProgress.FillableImageSprite; } }
 		public override float Damage { get { return _barrelWrapper.TurretStats.DamagePerS; } }
 
 		public override void StaticInitialise()
@@ -51,14 +50,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper.StartAttackingTargets();
         }
 
-		protected override void EnableRenderers(bool enabled)
-		{
-			_turretBaseRenderer.enabled = enabled;
-
-            foreach (Renderer renderer in _barrelWrapper.Renderers)
-            {
-                renderer.enabled = enabled;
-            }
-		}
+        protected override IList<Renderer> GetInGameRenderers()
+        {
+            IList<Renderer> renderers = _barrelWrapper.Renderers.ToList();
+            renderers.Add(_turretBaseRenderer);
+            return renderers;
+        }
     }
 }
