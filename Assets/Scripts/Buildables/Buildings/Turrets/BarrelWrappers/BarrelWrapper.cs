@@ -74,12 +74,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _enemyFaction = enemyFaction;
             _attackCapabilities = attackCapabilities;
 
-            InitialiseBarrelController();
+            InitialiseBarrelController(_barrelController);
         }
 
-        protected virtual void InitialiseBarrelController()
+        protected virtual void InitialiseBarrelController(BarrelController barrelController)
         {
-			_barrelController
+			barrelController
 				.Initialise(
                     CreateTargetFilter(), 
 					CreateAngleCalculator(), 
