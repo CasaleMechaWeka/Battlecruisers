@@ -14,30 +14,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public List<TargetType> attackCapabilities;
 
-		protected override Renderer Renderer
-		{
-			get
-			{
-				if (_renderer == null)
-				{
-					_renderer = _turretBase.GetComponent<Renderer>();
-				}
-				return _renderer;
-			}
-		}
-
-		public override Sprite Sprite
-		{
-			get
-			{
-				if (_sprite == null)
-				{
-					_sprite = _buildableProgress.FillableImageSprite;
-				}
-				return _sprite;
-			}
-		}
-
+        protected override Renderer Renderer { get { return _turretBaseRenderer; } }
+        public override Sprite Sprite { get { return _buildableProgress.FillableImageSprite; } }
 		public override float Damage { get { return _barrelWrapper.TurretStats.DamagePerS; } }
 
 		public override void StaticInitialise()
