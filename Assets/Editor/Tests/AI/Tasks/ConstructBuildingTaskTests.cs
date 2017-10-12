@@ -85,7 +85,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
 			_cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(false);
             _deferrer
-                .WhenForAnyArgs(deferrer => deferrer.DeferToFrameEnd(null))
+                .WhenForAnyArgs(deferrer => deferrer.Defer(null))
                 .Do(callInfo =>
                 {
 	                Assert.IsTrue(callInfo.Args().Length == 1);

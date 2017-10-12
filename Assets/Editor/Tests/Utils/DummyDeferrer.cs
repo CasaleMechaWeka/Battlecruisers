@@ -5,7 +5,7 @@ namespace BattleCruisers.Tests
 {
     public class DummyDeferrer : IDeferrer
     {
-        public void DeferToFrameEnd(Action action)
+        public void Defer(Action action)
         {
             action.Invoke();
         }
