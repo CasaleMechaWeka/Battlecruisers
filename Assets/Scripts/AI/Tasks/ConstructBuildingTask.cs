@@ -50,7 +50,7 @@ namespace BattleCruisers.AI.Tasks
                 // Cruiser has no available slot for this building.  Task is completed.
                 // Defer to frame end to allow this callstack to unravel.  This means InProgressState.OnCompleted
                 // is called (good) isntead of InitialState.OnCompleted() being called (bad).
-                _deferrer.DeferToFrameEnd(EmitCompletedEvent);
+                _deferrer.Defer(EmitCompletedEvent);
             }
         }
 

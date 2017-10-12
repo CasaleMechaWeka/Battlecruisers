@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-		public Deferrer deferrer;
+		public IDeferrer deferrer;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
 

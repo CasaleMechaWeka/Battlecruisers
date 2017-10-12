@@ -118,7 +118,7 @@ namespace BattleCruisers.Buildables.Repairables
 
                     // Defer, as this may bring the repairable to full health, which 
                     // sets its DroneConsumer to null, which modifies this enumerable :)
-                    _deferrer.DeferToFrameEnd(() => repairable.RepairCommand.Execute(healthGained));
+                    _deferrer.Defer(() => repairable.RepairCommand.Execute(healthGained));
                 }
             }
         }

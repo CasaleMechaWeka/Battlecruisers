@@ -5,14 +5,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Threading
 {
-    public class Deferrer : MonoBehaviour, IDeferrer
+    public class FrameEndDeferrer : MonoBehaviour, IDeferrer
 	{
-		public void DeferToFrameEnd(Action action)
+        public void Defer(Action action)
 		{
-            StartCoroutine(CreateEnumerator(action));
+            StartCoroutine(CreateEnumeratorForFrameEnd(action));
 		}
 
-        private IEnumerator CreateEnumerator(Action action)
+        private IEnumerator CreateEnumeratorForFrameEnd(Action action)
 		{
 			Assert.IsNotNull(action);
 
