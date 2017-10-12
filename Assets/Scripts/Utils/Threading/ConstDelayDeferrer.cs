@@ -9,7 +9,7 @@ namespace BattleCruisers.Utils.Threading
 	{
         private readonly float _delayInS;
 
-        private ConstDelayDeferrer(float delayInMs)
+        public ConstDelayDeferrer(float delayInMs)
         {
 			Assert.IsTrue(delayInMs > 0);
             _delayInS = delayInMs / Constants.MS_PER_S;
