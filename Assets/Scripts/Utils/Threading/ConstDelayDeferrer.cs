@@ -7,9 +7,9 @@ namespace BattleCruisers.Utils.Threading
 {
 	public class ConstDelayDeferrer : MonoBehaviour, IDeferrer
 	{
-        private readonly float _delayInS;
+        private float _delayInS;
 
-        public ConstDelayDeferrer(float delayInMs)
+        public void StaticInitialise(float delayInMs)
         {
 			Assert.IsTrue(delayInMs > 0);
             _delayInS = delayInMs / Constants.MS_PER_S;

@@ -11,7 +11,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		public override void StaticInitialise()
         {
             base.StaticInitialise();
-            _deferrer = new ConstDelayDeferrer(delayInMs);
+
+            ConstDelayDeferrer deferrer = gameObject.AddComponent<ConstDelayDeferrer>();
+            deferrer.StaticInitialise(delayInMs);
+            _deferrer = deferrer;
         }
 
         protected override void Fire(float angleInDegrees)
@@ -20,4 +23,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 	}
 }
-
