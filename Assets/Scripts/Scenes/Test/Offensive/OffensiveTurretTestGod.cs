@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 			target.StartConstruction();
 
 
-			// Setup rocket launcher
+			// Setup turret
             TurretController turret = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
