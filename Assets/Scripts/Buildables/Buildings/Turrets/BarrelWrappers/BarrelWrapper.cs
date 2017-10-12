@@ -89,13 +89,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _enemyFaction = enemyFaction;
             _attackCapabilities = attackCapabilities;
 
+            // Shared by all barrels
+            ITargetFilter targetFilter = CreateTargetFilter();
+            IAngleCalculator angleCalculator = CreateAngleCalculator();
+
 			foreach (BarrelController barrel in _barrels)
             {
-                InitialiseBarrelController(barrel);
+                InitialiseBarrelController(barrel, targetFilter, angleCalculator);
             }
         }
 
-        protected virtual void InitialiseBarrelController(BarrelController barrel)
+        protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
 			barrel
 				.Initialise(
