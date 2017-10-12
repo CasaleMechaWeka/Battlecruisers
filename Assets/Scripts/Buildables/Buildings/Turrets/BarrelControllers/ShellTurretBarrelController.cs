@@ -8,9 +8,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
+    /// <summary>
+    /// Supports mutliple shell spawners (barrels).  The turret stats damage
+    /// is spread accross the barrels (ie, if there are 2 barrels, each barrel
+    /// receives half the turret stats' damage).
+    /// </summary>
     public class ShellTurretBarrelController : BarrelController
 	{
         private ShellSpawner[] _shellSpawners;
+        private float _damagePerBarrel;
 
 		public ProjectileController shellPrefab;
 
@@ -23,13 +29,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
 			Assert.IsNotNull(_shellSpawners);
             Assert.IsTrue(_shellSpawners.Length != 0);
+
+            _damagePerBarrel = TurretStats.damage / _shellSpawners.Length;
 		}
 
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
-			ShellStats shellStats = new ShellStats(shellPrefab, TurretStats.damage, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
+            ShellStats shellStats = new ShellStats(shellPrefab, _damagePerBarrel, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
