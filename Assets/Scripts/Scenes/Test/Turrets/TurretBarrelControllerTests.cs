@@ -1,35 +1,10 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using NSubstitute;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class TurretBarrelControllerTests : MonoBehaviour 
+    public class TurretBarrelControllerTests : BarrelControllerTestGod 
 	{
-		public GameObject targetGameObject;
-
-		void Start()
-		{
-			ITarget target = Substitute.For<ITarget>();
-			Vector2 targetPosition = targetGameObject.transform.position;
-			target.Position.Returns(targetPosition);
-
-			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
-			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
-
-            BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
-			foreach (BarrelController barrel in turretBarrels)
-			{
-				barrel.StaticInitialise();
-				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
-				barrel.Target = target;
-				barrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
-			}
-		}
+        protected override IAngleCalculator AngleCalculator { get { return new AngleCalculator(new TargetPositionPredictorFactory()); } }
 	}
 }
