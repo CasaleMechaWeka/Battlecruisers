@@ -1,13 +1,9 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-	public abstract class ProjectileSpawner : MonoBehaviour
+    public abstract class ProjectileSpawner : MonoBehaviour
 	{
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
 		{
