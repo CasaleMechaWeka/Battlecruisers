@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void SetupBlockingUnitDetection()
         {
-            // Enemy detection for stopping (gnore aircraft for stopping)
+            // Enemy detection for stopping (ignore aircraft for stopping)
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             enemyDetector.Initialise(EnemyDetectionRangeInM);
