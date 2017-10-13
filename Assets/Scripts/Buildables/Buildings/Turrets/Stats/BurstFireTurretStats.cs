@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         public int burstSize;
         public float burstFireRatePerS;
 
-        private const int MIN_BURST_SIZE = 3;
+        private const int MIN_BURST_SIZE = 2;
 
         public override float DamagePerS
         {

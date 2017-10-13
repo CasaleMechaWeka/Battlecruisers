@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
@@ -31,8 +32,10 @@ namespace BattleCruisers.Scenes.Test.Naval
 
             foreach (ArchonBattleshipController battleship in battleships)
             {
-                Faction faction = GetBattleshipFaction(battleship.transform.position);
-                helper.InitialiseUnit(battleship, faction);
+                Vector3 position = battleship.transform.position;
+                Faction faction = GetBattleshipFaction(position);
+                Direction direction = GetBattleshipDirection(position);
+                helper.InitialiseUnit(battleship, faction, parentCruiserDirection: direction);
                 battleship.StartConstruction();
 			}
         }
@@ -55,6 +58,11 @@ namespace BattleCruisers.Scenes.Test.Naval
         private Faction GetBattleshipFaction(Vector3 unitPosition)
         {
             return unitPosition.x > 0 ? _rightBattleshipFaction : _leftBattleshipFaction;
+        }
+
+        private Direction GetBattleshipDirection(Vector3 unitPosition)
+        {
+            return unitPosition.x > 0 ? Direction.Left : Direction.Right;
         }
 
         private List<Vector2> GetPatrolPoints(Vector3 aircraftPosition)
