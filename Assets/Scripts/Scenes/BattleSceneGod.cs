@@ -37,7 +37,6 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-		public IDeferrer deferrer;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -46,6 +45,7 @@ namespace BattleCruisers.Scenes
 			Assert.raiseExceptions = true;
 			Time.timeScale = 1;
 
+            IDeferrer deferrer = GetComponent<IDeferrer>();
 
 			Helper.AssertIsNotNull(uiManager, uiFactory, buildMenuController, buildableDetailsController, 
                 modalMenuController, cameraController, playerCruiserHealthBar, aiCruiserHealthBar, deferrer);
