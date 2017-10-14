@@ -166,5 +166,10 @@ namespace BattleCruisers.Buildables.Repairables
             repairable.Destroyed -= Repairable_Destroyed;
             repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
         }
+
+        public IDroneConsumer GetDroneConsumer(IRepairable repairable)
+        {
+            return _repairableToDroneConsumer.ContainsKey(repairable) ? _repairableToDroneConsumer[repairable] : null;
+        }
     }
 }
