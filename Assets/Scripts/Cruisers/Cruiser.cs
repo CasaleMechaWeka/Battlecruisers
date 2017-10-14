@@ -22,17 +22,16 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
 		private ICruiser _enemyCruiser;
 		private SpriteRenderer _renderer;
-        private RepairManager _repairManager;
 
-		public int numOfDrones;
-		public float yAdjustmentInM;
+        public int numOfDrones;
+        public float yAdjustmentInM;
         public string description;
-		
-		// ITarget
-		public override TargetType TargetType { get { return TargetType.Cruiser; } }
-		
-		// IComparableItem
-		public string Description { get { return description; } }
+        
+        // ITarget
+        public override TargetType TargetType { get { return TargetType.Cruiser; } }
+        
+        // IComparableItem
+        public string Description { get { return description; } }
         public string Name { get { return name; } }
 
         // ICruiser
@@ -44,9 +43,10 @@ namespace BattleCruisers.Cruisers
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public Sprite Sprite { get { return _renderer.sprite; } }
         public ISlotWrapper SlotWrapper { get; private set; }
-		public IFactoryProvider FactoryProvider { get; private set; }
+        public IFactoryProvider FactoryProvider { get; private set; }
         private FogOfWar _fog;
         public IFogOfWar Fog { get { return _fog; } }
+		public IRepairManager RepairManager { get; private set; }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
@@ -83,10 +83,11 @@ namespace BattleCruisers.Cruisers
             DroneConsumerProvider = droneConsumerProvider;
             FactoryProvider = factoryProvider;
             Direction = facingDirection;
-            _repairManager = repairManager;
+			
+            repairManager.Initialise(this);
+            RepairManager = repairManager;
 
             _healthBarController.Initialise(this);
-            _repairManager.Initialise(this);
             _fog.Initialise(shouldShowFog);
 		}
 
@@ -165,7 +166,7 @@ namespace BattleCruisers.Cruisers
 
         void Update()
         {
-            _repairManager.Repair(Time.deltaTime);
+            RepairManager.Repair(Time.deltaTime);
         }
     }
 }
