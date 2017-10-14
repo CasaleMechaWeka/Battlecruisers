@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
             // Anti ship turret
-            _directFireAntiSea = transform.Find("DirectFireAntiSea").gameObject.GetComponent<IBarrelWrapper>();
+            _directFireAntiSea = transform.Find("GravityAffectedAntiSea").gameObject.GetComponent<IBarrelWrapper>();
             Assert.IsNotNull(_directFireAntiSea);
             turrets.Add(_directFireAntiSea);
 
