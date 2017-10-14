@@ -116,10 +116,11 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // AI
-            ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
-            IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
-            aiManager.CreateAI(levelInfo);
+            // FELIX  TEMP
+            //// AI
+            //ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
+            //IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
+            //aiManager.CreateAI(levelInfo);
 		}
 
 		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)

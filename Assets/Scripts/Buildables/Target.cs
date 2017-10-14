@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,8 +20,10 @@ namespace BattleCruisers.Buildables
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
         public Vector2 Position { get { return gameObject.transform.position; } }
 
-		// Seems to be an okay approximation (for cruisers at least)
-		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
+        // FELIX  TEMP
+        // Seems to be an okay approximation (for cruisers at least)
+        private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.0001f;
+		//private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
@@ -63,13 +66,21 @@ namespace BattleCruisers.Buildables
 
         public float HealthGainPerDroneS { get; protected set; }
 
+        public ITextMesh NumOfRepairDronesText { get; private set; }
+
         public virtual void StaticInitialise()
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
+            NumOfRepairDronesText = StaticInitialise_GetRepairDroneNumText();
 		}
+
+        protected virtual ITextMesh StaticInitialise_GetRepairDroneNumText()
+        {
+            return null;
+        }
 
 		protected virtual void OnFullyRepaired() { }
 

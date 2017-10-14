@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,7 +21,7 @@ namespace BattleCruisers.Buildables
 	{
 		private float _buildProgressInDroneSeconds;
 		private float _buildTimeInDroneSeconds;
-		private TextMesh _textMesh;
+        private TextMesh _numOfDronesText;
 		private HealthBarController _healthBar;
 
         protected IUIManager _uiManager;
@@ -119,9 +120,6 @@ namespace BattleCruisers.Buildables
 		{
 			base.StaticInitialise();
 
-            _textMesh = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-            Assert.IsNotNull(_textMesh);
-
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
@@ -129,6 +127,16 @@ namespace BattleCruisers.Buildables
             _healthBar = HealthBarController;
             Assert.IsNotNull(_healthBar);
             _healthBar.Initialise(this, followDamagable: true);
+        }
+
+        protected override ITextMesh StaticInitialise_GetRepairDroneNumText()
+        {
+            _numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+            Assert.IsNotNull(_numOfDronesText);
+
+            // Reuse text mesh for showing num of drones while building is 
+            // being built.
+            return new TextMeshWrapper(_numOfDronesText);
         }
 
         protected virtual IList<Renderer> GetInGameRenderers()
@@ -140,7 +148,7 @@ namespace BattleCruisers.Buildables
 
 		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
-            Assert.IsNotNull(_textMesh, "Must call StaticInitialise() before Initialise(...)");
+            Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
 
 			_parentCruiser = parentCruiser;
 			_enemyCruiser = enemyCruiser;
@@ -157,7 +165,11 @@ namespace BattleCruisers.Buildables
 			BuildableState = BuildableState.NotStarted;
 			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
 			_buildProgressInDroneSeconds = 0;
-            HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
+
+            // FELIX  TEMP
+            HealthGainPerDroneS = 0.00001f;
+            //HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
+
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 		}
@@ -166,7 +178,7 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			_textMesh.text = e.NewNumOfDrones.ToString();
+			_numOfDronesText.text = e.NewNumOfDrones.ToString();
 		}
 
 		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)

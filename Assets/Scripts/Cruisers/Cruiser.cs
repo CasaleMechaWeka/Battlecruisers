@@ -10,6 +10,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -68,6 +69,13 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_fog);
         }
 
+        protected override ITextMesh StaticInitialise_GetRepairDroneNumText()
+        {
+            TextMesh numOfRepairDronesText = GetComponentInChildren<TextMesh>(includeInactive: true);
+            Assert.IsNotNull(numOfRepairDronesText);
+            return new TextMeshWrapper(numOfRepairDronesText);
+        }
+
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
             IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
@@ -94,6 +102,9 @@ namespace BattleCruisers.Cruisers
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			Logging.Log(Tags.CRUISER, "OnPointerClick()");
+
+            // FELIX  TEMP
+            TakeDamage(300);
 		}
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
