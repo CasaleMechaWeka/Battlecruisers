@@ -1,16 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-	public abstract class StaticBarrelWrapper : BarrelWrapper
+    public abstract class StaticBarrelWrapper : BarrelWrapper
 	{
         protected abstract float DesiredAngleInDegrees { get; }
 
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
-            Logging.Log(Tags.BARREL_CONTROLLER, "StaticBarrelWrapper.CreateAngleCalculator()  DesiredAngleInDegrees: " + DesiredAngleInDegrees);
-
             return _factoryProvider.AngleCalculatorFactory.CreateStaticAngleCalculator(_factoryProvider.TargetPositionPredictorFactory, DesiredAngleInDegrees);
 		}
 	}
