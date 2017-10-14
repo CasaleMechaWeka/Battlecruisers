@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils.Threading;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -12,9 +13,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             base.StaticInitialise();
 
-            ConstDelayDeferrer deferrer = gameObject.AddComponent<ConstDelayDeferrer>();
-            deferrer.StaticInitialise(delayInMs);
-            _deferrer = deferrer;
+            ConstDelayDeferrer constDelayDeferrer = GetComponent<ConstDelayDeferrer>();
+            Assert.IsNotNull(constDelayDeferrer);
+            constDelayDeferrer.StaticInitialise(delayInMs);
+            _deferrer = constDelayDeferrer;
         }
 
         protected override void Fire(float angleInDegrees)
