@@ -38,21 +38,20 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey Ultralisk { get { return new BuildingKey(BuildingCategory.Ultra, "Ultralisk"); } }
             public static BuildingKey KamikazeSignal { get { return new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal"); } }
             public static BuildingKey Broadsides { get { return new BuildingKey(BuildingCategory.Ultra, "Broadsides"); } }
-			// FELIX  Don't exist yet :/
-			public static BuildingKey ArchonBattleship { get { return new BuildingKey(BuildingCategory.Ultra, "ArchonBattleship"); } }
-		}
+        }
 
-		public static class Units
-		{
-			// Aircraft
-			public static UnitKey Bomber { get { return new UnitKey(UnitCategory.Aircraft, "Bomber"); } }
-			public static UnitKey Fighter { get { return new UnitKey(UnitCategory.Aircraft, "Fighter"); } }
-			public static UnitKey Gunship { get { return new UnitKey(UnitCategory.Aircraft, "Gunship"); } }
+        public static class Units
+        {
+            // Aircraft
+            public static UnitKey Bomber { get { return new UnitKey(UnitCategory.Aircraft, "Bomber"); } }
+            public static UnitKey Fighter { get { return new UnitKey(UnitCategory.Aircraft, "Fighter"); } }
+            public static UnitKey Gunship { get { return new UnitKey(UnitCategory.Aircraft, "Gunship"); } }
 
-			// Ships
-			public static UnitKey AttackBoat { get { return new UnitKey(UnitCategory.Naval, "AttackBoat"); } }
+            // Ships
+            public static UnitKey AttackBoat { get { return new UnitKey(UnitCategory.Naval, "AttackBoat"); } }
             public static UnitKey Frigate { get { return new UnitKey(UnitCategory.Naval, "Frigate"); } }
             public static UnitKey Destroyer { get { return new UnitKey(UnitCategory.Naval, "Destroyer"); } }
+            public static UnitKey ArchonBattleship { get { return new UnitKey(UnitCategory.Naval, "ArchonBattleship"); } }
 		}
 
 		public static class Hulls

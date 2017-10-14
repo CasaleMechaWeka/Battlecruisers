@@ -105,7 +105,8 @@ namespace BattleCruisers.Data.Static
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
 				StaticPrefabKeys.Units.Frigate,
-                StaticPrefabKeys.Units.Destroyer
+                StaticPrefabKeys.Units.Destroyer,
+                StaticPrefabKeys.Units.ArchonBattleship
 			};
 		}
 
@@ -207,19 +208,19 @@ namespace BattleCruisers.Data.Static
 				{ StaticPrefabKeys.Buildings.Ultralisk, 16 },
 				{ StaticPrefabKeys.Buildings.KamikazeSignal, 17 },
 				{ StaticPrefabKeys.Buildings.Broadsides, 18 },
-                { StaticPrefabKeys.Buildings.ArchonBattleship, 20 },
 
 
                 // === Units ===
                 // Aircraft
                 { StaticPrefabKeys.Units.Bomber, 1 },
-				{ StaticPrefabKeys.Units.Gunship, 3 },
+                { StaticPrefabKeys.Units.Gunship, 3 },
                 { StaticPrefabKeys.Units.Fighter, 9 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 2 },
-                { StaticPrefabKeys.Units.Destroyer, 9 }
+                { StaticPrefabKeys.Units.Destroyer, 9 },
+                { StaticPrefabKeys.Units.ArchonBattleship, 20 }
 			};
 		}
 
