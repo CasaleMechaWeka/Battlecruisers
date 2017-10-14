@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             // FELIX  Extract bool expression to method?
             // FELIX  Handle can execute change for repair command :D
             // Toggle repair drone button (should only be visible for player repairables)
-            bool showRepairButton = showDroneRelatedUI && buildable.RepairCommand.CanExecute;
+            bool showRepairButton = buildable.Faction == Faction.Blues && buildable.RepairCommand.CanExecute;
             repairButton.gameObject.SetActive(showRepairButton);
             if (showRepairButton)
             {
