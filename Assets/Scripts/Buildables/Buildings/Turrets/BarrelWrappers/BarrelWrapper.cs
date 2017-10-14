@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
-        private BarrelController[] _barrels;
+        protected BarrelController[] _barrels;
 		private ITargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;

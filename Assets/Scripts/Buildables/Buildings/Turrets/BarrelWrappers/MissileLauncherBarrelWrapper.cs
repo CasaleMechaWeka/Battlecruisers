@@ -3,15 +3,25 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class MissileLauncherBarrelWrapper : StaticBarrelWrapper
-	{
-        protected override float DesiredAngleInDegrees { get { return 90; } }
+    {
+        private float _desiredAngleInDegrees;
+        protected override float DesiredAngleInDegrees { get { return _desiredAngleInDegrees; } }
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            Assert.IsTrue(_barrels.Length != 0);
+			_desiredAngleInDegrees = _barrels[0].transform.eulerAngles.z;
+        }
 
         protected override void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
-		{
+        {
             MissileBarrelController missileBarrel = barrel.Parse<MissileBarrelController>();
 
 			missileBarrel.Initialise(

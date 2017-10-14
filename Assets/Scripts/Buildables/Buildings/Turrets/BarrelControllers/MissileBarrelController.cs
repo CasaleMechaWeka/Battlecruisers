@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
@@ -37,6 +38,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected override void Fire(float angleInDegrees)
 		{
+            Logging.Log(Tags.BARREL_CONTROLLER, "MissileBarrelController.Fire()  angleInDegrees: " + angleInDegrees);
+
             _missileSpawners.Next().SpawnMissile(
                 angleInDegrees,
                 IsSourceMirrored,
