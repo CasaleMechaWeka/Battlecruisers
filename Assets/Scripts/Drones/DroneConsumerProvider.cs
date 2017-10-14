@@ -19,12 +19,17 @@ namespace BattleCruisers.Drones
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
 		{
 			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired));
+            Assert.IsFalse(_droneManager.HasDroneConsumer(droneConsumer));
+
 			_droneManager.AddDroneConsumer(droneConsumer);
 		}
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
 		{
-			_droneManager.RemoveDroneConsumer(droneConsumer);
+            if (_droneManager.HasDroneConsumer(droneConsumer))
+            {
+                _droneManager.RemoveDroneConsumer(droneConsumer);
+			}
 		}
 	}
 }

@@ -87,8 +87,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         public void ToggleRepairButton()
         {
             IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(_item);
-            Assert.IsNotNull(repairDroneConsumer);
-
             _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
         }
 		

@@ -62,20 +62,14 @@ namespace BattleCruisers.Buildables.Repairables
             Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
             IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable];
 
-            if (repairable.RepairCommand.CanExecute
-                && droneConsumer == null)
+            if (repairable.RepairCommand.CanExecute)
             {
-                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
                 _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
-            else if (!repairable.RepairCommand.CanExecute
-                && droneConsumer != null)
+            else
             {
                 _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
-                droneConsumer = null;
             }
-
-            _repairableToDroneConsumer[repairable] = droneConsumer;
         }
 
         private void _cruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
@@ -136,12 +130,11 @@ namespace BattleCruisers.Buildables.Repairables
 
             Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
 
-            IDroneConsumer droneConsumer = null;
+            IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
 
             if (repairable.RepairCommand.CanExecute)
             {
-                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
-                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
+				_droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
 
             _repairableToDroneConsumer.Add(repairable, droneConsumer);
@@ -157,10 +150,7 @@ namespace BattleCruisers.Buildables.Repairables
             Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
 
             IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable];
-            if (droneConsumer != null)
-            {
-                _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
-            }
+            _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
 
             _repairableToDroneConsumer.Remove(repairable);
 
@@ -168,10 +158,10 @@ namespace BattleCruisers.Buildables.Repairables
             repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
         }
 
-        public IDroneConsumer GetDroneConsumer(IRepairable repairable)
-        {
-            Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
-            return _repairableToDroneConsumer[repairable];
-        }
+		public IDroneConsumer GetDroneConsumer(IRepairable repairable)
+		{
+			Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
+			return _repairableToDroneConsumer[repairable];
+		}
     }
 }

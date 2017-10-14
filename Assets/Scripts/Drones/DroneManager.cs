@@ -411,5 +411,10 @@ namespace BattleCruisers.Drones
 		{
 			return _droneConsumers.LastOrDefault();
 		}
-	}
+
+        public bool HasDroneConsumer(IDroneConsumer droneConsumer)
+        {
+            return _droneConsumers.Contains(droneConsumer);
+        }
+    }
 }
