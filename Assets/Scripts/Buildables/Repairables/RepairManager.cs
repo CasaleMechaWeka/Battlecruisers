@@ -9,6 +9,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Repairables
 {
+    /// <summary>
+    /// Keeps track of all repairables (cruiser, buildings).  
+    /// 
+    /// When they become repairable (ie, damaged), creates a drone consumer.
+    /// 
+    /// When they are no longer repairable (ie, fully repaired), releases their
+    /// drone consumer.
+    /// </summary>
     public class RepairManager : IRepairManager
     {
         private readonly IDeferrer _deferrer;
@@ -38,25 +46,6 @@ namespace BattleCruisers.Buildables.Repairables
 
             _cruiser.StartedConstruction += _cruiser_StartedConstruction;
             _cruiser.Destroyed += _cruiser_Destroyed;
-        }
-
-        private void AddRepairable(IRepairable repairable)
-        {
-            Logging.Log(Tags.REPAIR_MANAGER, "AddRepairable(): repairable: " + repairable);
-
-            Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
-
-            IDroneConsumer droneConsumer = null;
-            if (repairable.RepairCommand.CanExecute)
-            {
-                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
-                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
-            }
-
-            _repairableToDroneConsumer.Add(repairable, droneConsumer);
-
-            repairable.Destroyed += Repairable_Destroyed;
-            repairable.RepairCommand.CanExecuteChanged += RepairCommand_CanExecuteChanged;
         }
 
         private void Repairable_Destroyed(object sender, DestroyedEventArgs e)
@@ -128,24 +117,6 @@ namespace BattleCruisers.Buildables.Repairables
             CleanUpCruiser();
         }
 
-		private void RemoveRepairable(IRepairable repairable)
-		{
-			Logging.Log(Tags.REPAIR_MANAGER, "RemoveRepairable(): repairable: " + repairable);
-
-			Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
-
-			IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable];
-			if (droneConsumer != null)
-			{
-				_droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
-			}
-
-			_repairableToDroneConsumer.Remove(repairable);
-
-			repairable.Destroyed -= Repairable_Destroyed;
-			repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
-		}
-
         private void CleanUpCruiser()
         {
             IList<IRepairable> repairables = _repairableToDroneConsumer.Keys.ToList();
@@ -157,6 +128,43 @@ namespace BattleCruisers.Buildables.Repairables
 
             _cruiser.Destroyed -= _cruiser_Destroyed;
             _cruiser.StartedConstruction -= _cruiser_StartedConstruction;
+        }
+
+        private void AddRepairable(IRepairable repairable)
+        {
+            Logging.Log(Tags.REPAIR_MANAGER, "AddRepairable(): repairable: " + repairable);
+
+            Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
+
+            IDroneConsumer droneConsumer = null;
+            if (repairable.RepairCommand.CanExecute)
+            {
+                droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
+                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
+            }
+
+            _repairableToDroneConsumer.Add(repairable, droneConsumer);
+
+            repairable.Destroyed += Repairable_Destroyed;
+            repairable.RepairCommand.CanExecuteChanged += RepairCommand_CanExecuteChanged;
+        }
+
+        private void RemoveRepairable(IRepairable repairable)
+        {
+            Logging.Log(Tags.REPAIR_MANAGER, "RemoveRepairable(): repairable: " + repairable);
+
+            Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
+
+            IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable];
+            if (droneConsumer != null)
+            {
+                _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
+            }
+
+            _repairableToDroneConsumer.Remove(repairable);
+
+            repairable.Destroyed -= Repairable_Destroyed;
+            repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
         }
     }
 }
