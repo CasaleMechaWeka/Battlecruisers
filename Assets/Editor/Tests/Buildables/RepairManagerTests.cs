@@ -221,9 +221,36 @@ namespace BattleCruisers.Tests.Buildables
 
             _droneConsumerProvider.Received().ReleaseDroneConsumer(_droneConsumer);
 		}
-		#endregion RepairCommand_CanExecuteChanged
+        #endregion RepairCommand_CanExecuteChanged
 
-		private void AddRepairableBuilding()
+        #region GetDroneConsumer
+        [Test]
+        public void GetDroneConsumer_IsRepairable_ReturnsDroneConsumer()
+        {
+            AddRepairableCruiser();
+
+            IDroneConsumer droneConsumer = _repairManager.GetDroneConsumer(_cruiser);
+            Assert.AreSame(_droneConsumer, droneConsumer);
+        }
+
+        [Test]
+        public void GetDroneConsumer_IsNotRepairable_ReturnsNull()
+        {
+            AddUnrepairableCruiser();
+
+            IDroneConsumer droneConsumer = _repairManager.GetDroneConsumer(_cruiser);
+            Assert.IsNull(droneConsumer);
+        }
+
+        [Test]
+        public void GetDroneConsumer_NonExistantRepairable_Throws()
+        {
+            AddUnrepairableCruiser();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _repairManager.GetDroneConsumer(_building));
+        }
+        #endregion GetDroneConsumer
+
+        private void AddRepairableBuilding()
         {
             _buildingRepairCommand.CanExecute.Returns(true);
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_building));

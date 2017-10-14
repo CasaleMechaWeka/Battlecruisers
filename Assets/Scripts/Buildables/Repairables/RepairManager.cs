@@ -137,6 +137,7 @@ namespace BattleCruisers.Buildables.Repairables
             Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
 
             IDroneConsumer droneConsumer = null;
+
             if (repairable.RepairCommand.CanExecute)
             {
                 droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
@@ -169,7 +170,8 @@ namespace BattleCruisers.Buildables.Repairables
 
         public IDroneConsumer GetDroneConsumer(IRepairable repairable)
         {
-            return _repairableToDroneConsumer.ContainsKey(repairable) ? _repairableToDroneConsumer[repairable] : null;
+            Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
+            return _repairableToDroneConsumer[repairable];
         }
     }
 }
