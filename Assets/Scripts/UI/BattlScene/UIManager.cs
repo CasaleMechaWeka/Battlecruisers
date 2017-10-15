@@ -136,5 +136,11 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
 		}
-	}
+
+        public void ShowCruiserDetails(ICruiser cruiser)
+        {
+            // FELIX
+            Debug.Log("UIManager.ShowCruiserDetails()");
+        }
+    }
 }

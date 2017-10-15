@@ -104,6 +104,8 @@ namespace BattleCruisers.Cruisers
 		{
 			Logging.Log(Tags.CRUISER, "OnPointerClick()");
 
+            _uiManager.ShowCruiserDetails(this);
+
             // FELIX  TEMP
             TakeDamage(300);
 		}

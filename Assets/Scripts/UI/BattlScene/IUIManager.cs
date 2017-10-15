@@ -16,5 +16,6 @@ namespace BattleCruisers.UI.BattleScene
         void SelectBuildingFromEnemyCruiser(Building building);
         void ShowFactoryUnits(Factory factory);
         void ShowUnitDetails(IUnit unit);
+        void ShowCruiserDetails(ICruiser cruiser);
 	}
 }
