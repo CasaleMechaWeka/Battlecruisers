@@ -38,6 +38,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _repairManager = repairManager;
         }
 
+        // FELIX  Created button controllers for all 3 buttons?
         public void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
         {
             base.ShowItemDetails(buildable);
