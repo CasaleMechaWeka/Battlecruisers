@@ -8,6 +8,8 @@ namespace BattleCruisers.Buildables.Repairables
     {
         private readonly ITextMesh _textMesh;
 
+        private const string FEEDBACK_PREFIX = "R";  // R for "Repair"
+
         public IDroneConsumer DroneConsumer { get; private set; }
 
         public DroneNumFeedback(IDroneConsumer droneConsumer, ITextMesh textMesh)
@@ -22,7 +24,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            _textMesh.Text = e.NewNumOfDrones.ToString();
+            _textMesh.Text = FEEDBACK_PREFIX + e.NewNumOfDrones;
             _textMesh.SetActive(e.NewNumOfDrones != 0);
         }
 
