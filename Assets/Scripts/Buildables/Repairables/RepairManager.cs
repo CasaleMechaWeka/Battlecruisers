@@ -51,11 +51,6 @@ namespace BattleCruisers.Buildables.Repairables
             _cruiser.Destroyed += _cruiser_Destroyed;
         }
 
-        private void Repairable_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            RemoveRepairable(e.DestroyedTarget);
-        }
-
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
             IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
@@ -161,6 +156,11 @@ namespace BattleCruisers.Buildables.Repairables
 
             repairable.Destroyed -= Repairable_Destroyed;
             repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
+        }
+
+        private void Repairable_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            RemoveRepairable(e.DestroyedTarget);
         }
 
 		public IDroneConsumer GetDroneConsumer(IRepairable repairable)
