@@ -618,10 +618,37 @@ namespace BattleCruisers.Tests.Drones
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 5
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 0
 		}
-		#endregion ToggleDroneConsumerFocus()
-	
-		#region Everything
-		[Test]
+        #endregion ToggleDroneConsumerFocus()
+
+        #region HasDroneConsumer
+        [Test]
+        public void HasDroneConsumer_ConsumerAdded_ReturnsTrue()
+        {
+            _droneManager.NumOfDrones = 12;
+            _droneManager.AddDroneConsumer(_droneConsumer1);
+
+            Assert.IsTrue(_droneManager.HasDroneConsumer(_droneConsumer1));
+        }
+
+        [Test]
+        public void HasDroneConsumer_ConsumerNeverAdded_False()
+        {
+            Assert.IsFalse(_droneManager.HasDroneConsumer(_droneConsumer1));
+        }
+
+        [Test]
+        public void HasDroneConsumer_ConsumerRemoved_False()
+        {
+            _droneManager.NumOfDrones = 12;
+            _droneManager.AddDroneConsumer(_droneConsumer1);
+            _droneManager.RemoveDroneConsumer(_droneConsumer1);
+
+            Assert.IsFalse(_droneManager.HasDroneConsumer(_droneConsumer1));
+        }
+        #endregion HasDroneConsumer
+
+        #region Everything
+        [Test]
 		public void Add_Add_Toggle_Add_Remove()
 		{
 			_droneManager.NumOfDrones = 6;
