@@ -69,7 +69,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_fog);
         }
 
-        protected override ITextMesh StaticInitialise_GetRepairDroneNumText()
+        protected override ITextMesh GetRepairDroneNumText()
         {
             TextMesh numOfRepairDronesText = GetComponentInChildren<TextMesh>(includeInactive: true);
             Assert.IsNotNull(numOfRepairDronesText);

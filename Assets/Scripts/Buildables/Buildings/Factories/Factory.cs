@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -59,6 +60,23 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             }
         }
         #endregion Properties
+
+        /// <summary>
+        /// Buildings only become repairable after they are completed.  So buildings
+        /// reuse the text mesh for the number of building drones for the number
+        /// of repairing drones.  
+        /// 
+        /// However, factories use the text mesh even AFTER they finish building,
+        /// to show the number of drones used in constructing units.  Hence, we
+        /// need a different text mesh to show the number of repair drones
+        /// (ie, both text meshes can be visible at the same time).
+        /// </summary>
+        protected override ITextMesh GetRepairDroneNumText()
+        {
+            TextMesh repairDroneNumText = transform.Find("GravityAffectedAntiSea").gameObject.GetComponent<TextMesh>();
+            Assert.IsNotNull(repairDroneNumText);
+            return new TextMeshWrapper(repairDroneNumText);
+        }
 
         protected override void OnClicked()
 		{

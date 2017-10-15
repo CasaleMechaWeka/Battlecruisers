@@ -120,6 +120,9 @@ namespace BattleCruisers.Buildables
 		{
 			base.StaticInitialise();
 
+            _numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+            Assert.IsNotNull(_numOfDronesText);
+
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
@@ -129,13 +132,9 @@ namespace BattleCruisers.Buildables
             _healthBar.Initialise(this, followDamagable: true);
         }
 
-        protected override ITextMesh StaticInitialise_GetRepairDroneNumText()
+		// Reuse text mesh for showing num of drones while building is being built.
+        protected override ITextMesh GetRepairDroneNumText()
         {
-            _numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-            Assert.IsNotNull(_numOfDronesText);
-
-            // Reuse text mesh for showing num of drones while building is 
-            // being built.
             return new TextMeshWrapper(_numOfDronesText);
         }
 

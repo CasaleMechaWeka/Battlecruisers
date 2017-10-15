@@ -66,7 +66,20 @@ namespace BattleCruisers.Buildables
 
         public float HealthGainPerDroneS { get; protected set; }
 
-        public ITextMesh NumOfRepairDronesText { get; private set; }
+        // Lazily initialise so that the StaticInitialise() of all classes in
+        // inheritance tree have completed.
+        private ITextMesh _numOfRepairDronesText;
+        public ITextMesh NumOfRepairDronesText
+        { 
+            get
+            {
+                if (_numOfRepairDronesText == null)
+                {
+                    _numOfRepairDronesText = GetRepairDroneNumText();
+                }
+                return _numOfRepairDronesText;
+            }
+        }
 
         public virtual void StaticInitialise()
 		{
@@ -74,12 +87,11 @@ namespace BattleCruisers.Buildables
 			_attackCapabilities = new List<TargetType>();
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
-            NumOfRepairDronesText = StaticInitialise_GetRepairDroneNumText();
 		}
 
-        protected virtual ITextMesh StaticInitialise_GetRepairDroneNumText()
+        protected virtual ITextMesh GetRepairDroneNumText()
         {
-            return null;
+            return new DummyTextMesh();
         }
 
 		protected virtual void OnFullyRepaired() { }
