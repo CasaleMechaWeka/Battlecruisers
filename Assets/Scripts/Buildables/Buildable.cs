@@ -167,7 +167,7 @@ namespace BattleCruisers.Buildables
 			_buildProgressInDroneSeconds = 0;
 
             // FELIX  TEMP
-            HealthGainPerDroneS = 0.00001f;
+            HealthGainPerDroneS = 1;
             //HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
 
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
