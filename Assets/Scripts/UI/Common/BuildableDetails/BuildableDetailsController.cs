@@ -6,7 +6,6 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -82,8 +81,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         public void ToggleBuildableDrones()
         {
-            Debug.Log("ToggleBuildableDrones");
-
             _droneManager.ToggleDroneConsumerFocus(_item.DroneConsumer);
         }
 
