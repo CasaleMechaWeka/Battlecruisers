@@ -76,6 +76,7 @@ namespace BattleCruisers.Cruisers
             return new TextMeshWrapper(numOfRepairDronesText);
         }
 
+        // FELIX  Simplify parameters, wrap some in a class?
         public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
             IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
