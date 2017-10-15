@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Drones
 {
@@ -18,6 +19,8 @@ namespace BattleCruisers.Drones
 
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
 		{
+            Logging.Log(Tags.DRONE_CONSUMER_PROVIDER, "ActivateDroneConsumer()");
+
 			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired));
             Assert.IsFalse(_droneManager.HasDroneConsumer(droneConsumer));
 
@@ -26,6 +29,8 @@ namespace BattleCruisers.Drones
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
 		{
+            Logging.Log(Tags.DRONE_CONSUMER_PROVIDER, "ReleaseDroneConsumer()");
+
             if (_droneManager.HasDroneConsumer(droneConsumer))
             {
                 _droneManager.RemoveDroneConsumer(droneConsumer);

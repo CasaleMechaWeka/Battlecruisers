@@ -42,10 +42,13 @@ namespace BattleCruisers.Utils
 		public const string AI = "AI";
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
 
+        // Drones
+        public const string DRONES = "Drones";
+		public const string DRONE_CONSUMER_PROVIDER = "DroneConsumerProvider";
+
         // Other
-		public const string CAMERA_CONTROLLER = "CameraController";
-		public const string CRUISER = "Cruiser";
-		public const string DRONES = "Drones";
+        public const string CAMERA_CONTROLLER = "CameraController";
+        public const string CRUISER = "Cruiser";
         public const string LOCAL_BOOSTER = "LocalBooster";
 		public const string MOVEMENT = "Movement";
 		public const string PREDICTORS = "TargetPositionPredictors";
@@ -105,10 +108,13 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.AI, false);
             tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
+            // Drones
+            tagsToActiveness.Add(Tags.DRONES, false);
+            tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
+
             // Other
-			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
-			tagsToActiveness.Add(Tags.CRUISER, false);
-			tagsToActiveness.Add(Tags.DRONES, false);
+            tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
 			tagsToActiveness.Add(Tags.MOVEMENT, false);
 			tagsToActiveness.Add(Tags.PREDICTORS, false);
