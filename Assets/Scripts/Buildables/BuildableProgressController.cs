@@ -19,15 +19,8 @@ namespace BattleCruisers.Buildables
 			_buildable = gameObject.GetComponentInInactiveParent<Buildable>();
 			Assert.IsNotNull(_buildable);
 
-			GameObject fillableImageGameObject = transform.Find("Canvas/FillableImage").gameObject;
-			Assert.IsNotNull(fillableImageGameObject);
-			_fillableImage = fillableImageGameObject.GetComponent<Image>();
-			Assert.IsNotNull(_fillableImage);
-
-			GameObject outlineImageGameObject = transform.Find("Canvas/OutlineImage").gameObject;
-			Assert.IsNotNull(outlineImageGameObject);
-			_outlineImage = outlineImageGameObject.GetComponent<Image>();
-			Assert.IsNotNull(_outlineImage);
+            _fillableImage = transform.FindNamedComponent<Image>("Canvas/FillableImage");
+            _outlineImage = transform.FindNamedComponent<Image>("Canvas/OutlineImage");
 
 			_fillableImage.fillAmount = 0;
 			gameObject.SetActive(false);

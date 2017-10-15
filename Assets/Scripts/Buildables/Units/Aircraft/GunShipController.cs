@@ -55,8 +55,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
 
-            _targetProcessorWrapper = transform.Find("TargetProcessor").gameObject.GetComponent<ProximityTargetProcessorWrapper>();
-            Assert.IsNotNull(_targetProcessorWrapper);
+            _targetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("TargetProcessor");
 
             _isAtCruisingHeight = false;
 		}
