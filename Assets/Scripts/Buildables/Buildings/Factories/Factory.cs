@@ -73,8 +73,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         /// </summary>
         protected override ITextMesh GetRepairDroneNumText()
         {
-            TextMesh repairDroneNumText = transform.Find("GravityAffectedAntiSea").gameObject.GetComponent<TextMesh>();
-            Assert.IsNotNull(repairDroneNumText);
+            TextMesh repairDroneNumText = transform.FindNamedComponent<TextMesh>("RepairDroneNumText");
             return new TextMeshWrapper(repairDroneNumText);
         }
 

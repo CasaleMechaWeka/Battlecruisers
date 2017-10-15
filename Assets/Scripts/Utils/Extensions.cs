@@ -45,5 +45,17 @@ namespace BattleCruisers.Utils
             Assert.IsNotNull(parsedObj);
             return parsedObj;
         }
+
+        public static T FindNamedComponent<T>(this Transform transform, string componentName)
+            where T : class
+        {
+            Transform namedTransform = transform.Find(componentName);
+            Assert.IsNotNull(namedTransform);
+
+            T namedComponent = namedTransform.gameObject.GetComponent<T>();
+            Assert.IsNotNull(namedComponent);
+
+            return namedComponent;
+        }
 	}
 }
