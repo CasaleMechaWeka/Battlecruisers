@@ -57,7 +57,7 @@ namespace BattleCruisers.Buildables.Repairables
         {
             IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
 
-            Logging.Log(Tags.REPAIR_MANAGER, "RepairCommand_CanExecuteChanged() " + repairable);
+            Logging.Log(Tags.REPAIR_MANAGER, "RepairCommand_CanExecuteChanged() " + repairable + "  repairable.RepairCommand.CanExecute: " + repairable.RepairCommand.CanExecute);
 
             Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
             IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable].DroneConsumer;
@@ -94,7 +94,7 @@ namespace BattleCruisers.Buildables.Repairables
                 if (droneConsumer != null
                     && droneConsumer.State != DroneConsumerState.Idle)
                 {
-                    Logging.Log(Tags.REPAIR_MANAGER, "Repair()  About to repair: " + repairable);
+                    Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  About to repair: " + repairable);
 
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS;
@@ -132,14 +132,14 @@ namespace BattleCruisers.Buildables.Repairables
 
             IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
 
+			// FELIX  Inject factory, avoid "new"
+			IDroneNumFeedback droneNumFeedback = new DroneNumFeedback(droneConsumer, repairable.NumOfRepairDronesText);
+			_repairableToDroneConsumer.Add(repairable, droneNumFeedback);
+			
             if (repairable.RepairCommand.CanExecute)
             {
-				_droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
+                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
-
-            // FELIX  Inject factory, avoid "new"
-            IDroneNumFeedback droneNumFeedback = new DroneNumFeedback(droneConsumer, repairable.NumOfRepairDronesText);
-            _repairableToDroneConsumer.Add(repairable, droneNumFeedback);
 
             repairable.Destroyed += Repairable_Destroyed;
             repairable.RepairCommand.CanExecuteChanged += RepairCommand_CanExecuteChanged;
@@ -151,8 +151,9 @@ namespace BattleCruisers.Buildables.Repairables
 
             Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
 
-            IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable].DroneConsumer;
-            _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
+            IDroneNumFeedback droneNumFeedback = _repairableToDroneConsumer[repairable];
+            droneNumFeedback.DisposeManagedState();
+            _droneConsumerProvider.ReleaseDroneConsumer(droneNumFeedback.DroneConsumer);
 
             _repairableToDroneConsumer.Remove(repairable);
 
