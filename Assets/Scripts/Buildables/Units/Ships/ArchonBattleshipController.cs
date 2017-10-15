@@ -27,29 +27,21 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
-            // Anti ship turret
-            _directFireAntiSea = transform.Find("GravityAffectedAntiSea").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_directFireAntiSea);
+            _directFireAntiSea = transform.FindNamedComponent<IBarrelWrapper>("GravityAffectedAntiSea");
             turrets.Add(_directFireAntiSea);
 
-            // Missile launcher front
-            _missileLauncherFront = transform.Find("MissileLauncherFront").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_missileLauncherFront);
+            // Missile launchers
+            _missileLauncherFront = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherFront");
             turrets.Add(_missileLauncherFront);
 
-            // Missile launcher rear
-            _missileLauncherRear = transform.Find("MissileLauncherRear").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_missileLauncherRear);
+            _missileLauncherRear = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherRear");
             turrets.Add(_missileLauncherRear);
 
-            // Anti air turret 1
-			_directFireAntiAir1 = transform.Find("DirectBurstFireAntiAir1").gameObject.GetComponent<IBarrelWrapper>();
-			Assert.IsNotNull(_directFireAntiAir1);
-			turrets.Add(_directFireAntiAir1);
+            // Anti air
+            _directFireAntiAir1 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir1");
+            turrets.Add(_directFireAntiAir1);
 
-            // Anti air turret 2
-            _directFireAntiAir2 = transform.Find("DirectBurstFireAntiAir2").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_directFireAntiAir2);
+            _directFireAntiAir2 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir2");
             turrets.Add(_directFireAntiAir2);
 
             return turrets;
