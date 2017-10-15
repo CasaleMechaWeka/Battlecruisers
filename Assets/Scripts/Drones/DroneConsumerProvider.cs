@@ -9,6 +9,7 @@ namespace BattleCruisers.Drones
 
 		public DroneConsumerProvider(IDroneManager droneManager)
 		{
+            Assert.IsNotNull(droneManager);
 			_droneManager = droneManager;
 		}
 
