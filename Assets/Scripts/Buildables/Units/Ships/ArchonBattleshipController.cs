@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {

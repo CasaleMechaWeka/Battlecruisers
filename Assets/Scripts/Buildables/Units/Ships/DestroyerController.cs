@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -28,28 +27,23 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
             // Anti ship turret
-            _directFireAntiSea = transform.Find("DirectFireAntiSea").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_directFireAntiSea);
+            _directFireAntiSea = transform.FindNamedComponent<IBarrelWrapper>("DirectFireAntiSea");
             turrets.Add(_directFireAntiSea);
 
             // Mortar
-            _mortar = transform.Find("Mortar").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_mortar);
+            _mortar = transform.FindNamedComponent<IBarrelWrapper>("Mortar");
             turrets.Add(_mortar);
 
             // Anti air turret
-            _directFireAntiAir = transform.Find("DirectBurstFireAntiAir").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_directFireAntiAir);
+            _directFireAntiAir = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir");
 			turrets.Add(_directFireAntiAir);
 
             // SAM site
-            _samSite = transform.Find("SamSite").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_samSite);
+            _samSite = transform.FindNamedComponent<IBarrelWrapper>("SamSite");
             turrets.Add(_samSite);
 
             // Missile launcher
-            _missileLauncher = transform.Find("MissileLauncher").gameObject.GetComponent<IBarrelWrapper>();
-            Assert.IsNotNull(_missileLauncher);
+            _missileLauncher = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncher");
             turrets.Add(_missileLauncher);
 
             return turrets;
