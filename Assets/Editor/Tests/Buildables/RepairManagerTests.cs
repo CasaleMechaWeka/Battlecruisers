@@ -45,7 +45,8 @@ namespace BattleCruisers.Tests.Buildables
 
             _repairAmount = DELTA_TIME_IN_S * _droneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S;
 
-            _repairManager = new RepairManager(new DummyDeferrer());
+            // FELIX
+            _repairManager = new RepairManager(new DummyDeferrer(), null);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}

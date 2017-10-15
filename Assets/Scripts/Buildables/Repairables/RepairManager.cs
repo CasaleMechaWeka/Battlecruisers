@@ -20,16 +20,19 @@ namespace BattleCruisers.Buildables.Repairables
     public class RepairManager : IRepairManager
     {
         private readonly IDeferrer _deferrer;
+        private readonly IDroneNumFeedbackFactory _feedbackFactory;
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
         private IDictionary<IRepairable, IDroneNumFeedback> _repairableToDroneConsumer;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
-        public RepairManager(IDeferrer deferrer)
+        public RepairManager(IDeferrer deferrer, IDroneNumFeedbackFactory feedbackFactory)
         {
-            Assert.IsNotNull(deferrer);
+            Helper.AssertIsNotNull(deferrer, feedbackFactory);
+
             _deferrer = deferrer;
+            _feedbackFactory = feedbackFactory;
         }
 
         // Not constructor because of circular dependency between Cruiser and RepairManager
@@ -132,8 +135,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
 
-			// FELIX  Inject factory, avoid "new"
-			IDroneNumFeedback droneNumFeedback = new DroneNumFeedback(droneConsumer, repairable.NumOfRepairDronesText);
+            IDroneNumFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.NumOfRepairDronesText);
 			_repairableToDroneConsumer.Add(repairable, droneNumFeedback);
 			
             if (repairable.RepairCommand.CanExecute)

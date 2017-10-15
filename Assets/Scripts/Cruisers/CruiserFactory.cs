@@ -32,7 +32,8 @@ namespace BattleCruisers.Cruisers
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            RepairManager repairManager = new RepairManager(_deferrer);
+            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
+            RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = facingDirection == Direction.Left;
 
