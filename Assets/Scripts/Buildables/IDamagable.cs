@@ -28,6 +28,7 @@ namespace BattleCruisers.Buildables
 		/// <value><c>true</c> if health is 0; otherwise, <c>false</c>.</value>
 		bool IsDestroyed { get; }
 		float Health { get; }
+        float MaxHealth { get; }
 		GameObject GameObject { get; }
 
 		// When health reaches 0

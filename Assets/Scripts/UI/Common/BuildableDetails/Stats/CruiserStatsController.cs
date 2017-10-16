@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
 		protected override void InternalShowStats(Cruiser item, Cruiser itemToCompareTo)
 		{
-			healthRow.Initialise(HEALTH_LABEL, item.Health, _higherIsBetterComparer.CompareStats(item.Health, itemToCompareTo.Health));
+			healthRow.Initialise(HEALTH_LABEL, item.MaxHealth, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 			droneRow.Initialise(DRONES_LABEL, item.numOfDrones, _higherIsBetterComparer.CompareStats(item.numOfDrones, itemToCompareTo.numOfDrones));
 
 			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);

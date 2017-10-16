@@ -12,6 +12,7 @@ namespace BattleCruisers.Buildables
     {
         public float maxHealth;
 
+        public float MaxHealth { get { return maxHealth; } }
         public bool IsDestroyed { get { return Health == 0; } }
         public Faction Faction { get; protected set; }
         public GameObject GameObject { get { return gameObject; } }

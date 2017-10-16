@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		{
 			droneRow.Initialise(DRONES_LABEL, item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
 			buildTimeRow.Initialise(BUILD_TIME_LABEL, item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
-			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.Health), _higherIsBetterComparer.CompareStats(item.Health, itemToCompareTo.Health));
+			healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 			damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(item.Damage), _higherIsBetterComparer.CompareStats(item.Damage, itemToCompareTo.Damage));
 		}
 	}
