@@ -53,9 +53,6 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			_uiManager.SelectBuilding(this, _parentCruiser);
 			OnClicked();
-
-            // FELIX  TEMP
-            TakeDamage(30);
 		}
 
 		protected virtual void OnClicked() { }

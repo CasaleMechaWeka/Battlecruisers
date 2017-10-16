@@ -21,10 +21,8 @@ namespace BattleCruisers.Buildables
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
         public Vector2 Position { get { return gameObject.transform.position; } }
 
-        // FELIX  TEMP
         // Seems to be an okay approximation (for cruisers at least)
-        private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.0001f;
-		//private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
+		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
         public event EventHandler<HealthChangedEventArgs> HealthChanged;

@@ -102,12 +102,7 @@ namespace BattleCruisers.Cruisers
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			Logging.Log(Tags.CRUISER, "OnPointerClick()");
-
             _uiManager.ShowCruiserDetails(this);
-
-            // FELIX  TEMP
-            TakeDamage(300);
 		}
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
