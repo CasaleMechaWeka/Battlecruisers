@@ -10,23 +10,31 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
     public class UIManager : MonoBehaviour, IUIManager
 	{
 		private Cruiser _playerCruiser, _aiCruiser;
+		private BuildableDetailsController _buildableDetails;
+        private InBattleCruiserDetailsController _cruiserDetails;
 
-		public CameraController cameraController;
-		public BackgroundController backgroundController;
-		public BuildMenuController buildMenuController;
-		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-		public BuildableDetailsController buildableDetails;
+        public CameraController cameraController;
+        public BackgroundController backgroundController;
+        public BuildMenuController buildMenuController;
+        public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
 
 		public void Initialise(Cruiser playerCruiser, Cruiser aiCruiser)
 		{
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
+
+            _buildableDetails = GetComponentInChildren<BuildableDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_buildableDetails);
+
+            _cruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_cruiserDetails);
 
 			playerCruiserHealthBar.gameObject.SetActive(true);
 			aiCruiserHealthBar.gameObject.SetActive(false);
@@ -43,7 +51,8 @@ namespace BattleCruisers.UI.BattleScene
 				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
-					buildableDetails.Hide();
+					_buildableDetails.Hide();
+                    _cruiserDetails.Hide();
 					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
@@ -70,16 +79,19 @@ namespace BattleCruisers.UI.BattleScene
 
 		private void OnBackgroundClicked(object sender, EventArgs e)
 		{
-			buildableDetails.Hide();
+			_buildableDetails.Hide();
+            _cruiserDetails.Hide();
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
 		{
 			Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
-			_playerCruiser.SlotWrapper.UnhighlightSlots();
+			
+            _playerCruiser.SlotWrapper.UnhighlightSlots();
 			_playerCruiser.SlotWrapper.HideAllSlots();
-			buildableDetails.Hide();
+			_buildableDetails.Hide();
+            _cruiserDetails.Hide();
 			buildMenuController.ShowBuildingGroupsMenu();
 		}
 
@@ -95,7 +107,7 @@ namespace BattleCruisers.UI.BattleScene
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
 			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
-			buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
+			_buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)
@@ -116,12 +128,12 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
-			buildableDetails.ShowBuildableDetails(building, allowDelete: true);
+			_buildableDetails.ShowBuildableDetails(building, allowDelete: true);
 		}
 
 		public void SelectBuildingFromEnemyCruiser(Building building)
 		{
-			buildableDetails.ShowBuildableDetails(building, allowDelete: false);
+			_buildableDetails.ShowBuildableDetails(building, allowDelete: false);
 		}
 
 		public void ShowFactoryUnits(Factory factory)
@@ -134,13 +146,12 @@ namespace BattleCruisers.UI.BattleScene
 
 		public void ShowUnitDetails(IUnit unit)
 		{
-			buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
+			_buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
 		}
 
-        public void ShowCruiserDetails(ICruiser cruiser)
+        public void ShowCruiserDetails(Cruiser cruiser)
         {
-            // FELIX
-            Debug.Log("UIManager.ShowCruiserDetails()");
+            _cruiserDetails.ShowCruiserDetails(cruiser);
         }
     }
 }

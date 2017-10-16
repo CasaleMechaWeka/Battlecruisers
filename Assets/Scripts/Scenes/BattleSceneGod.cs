@@ -34,6 +34,7 @@ namespace BattleCruisers.Scenes
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public BuildableDetailsController buildableDetailsController;
+        public InBattleCruiserDetailsController cruiserDetailsController;
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
@@ -103,6 +104,7 @@ namespace BattleCruisers.Scenes
 			// UI
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
             buildableDetailsController.Initialise(spriteFetcher, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            cruiserDetailsController.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
 			uiFactory.Initialise(spriteFetcher, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
