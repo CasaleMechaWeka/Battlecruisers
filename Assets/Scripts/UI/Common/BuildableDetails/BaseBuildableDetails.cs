@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             base.Initialise();
 
 			_spriteFetcher = spriteFetcher;
-			Hide();
 		}
 
 		public override void ShowItemDetails(TItem item, TItem itemToCompareTo = null)

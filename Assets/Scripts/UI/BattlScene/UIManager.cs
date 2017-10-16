@@ -42,6 +42,8 @@ namespace BattleCruisers.UI.BattleScene
 			cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
 			backgroundController.BackgroundClicked += OnBackgroundClicked;
+
+            HideTargetDetails();
 		}
 
 		private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
@@ -51,8 +53,7 @@ namespace BattleCruisers.UI.BattleScene
 				case CameraState.PlayerCruiser:
 					buildMenuController.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
-					_buildableDetails.Hide();
-                    _cruiserDetails.Hide();
+                    HideTargetDetails();
 					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
@@ -79,23 +80,21 @@ namespace BattleCruisers.UI.BattleScene
 
 		private void OnBackgroundClicked(object sender, EventArgs e)
 		{
-			_buildableDetails.Hide();
-            _cruiserDetails.Hide();
+            HideTargetDetails();
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
-		{
-			Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
-			
-            _playerCruiser.SlotWrapper.UnhighlightSlots();
-			_playerCruiser.SlotWrapper.HideAllSlots();
-			_buildableDetails.Hide();
-            _cruiserDetails.Hide();
-			buildMenuController.ShowBuildingGroupsMenu();
-		}
+        {
+            Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 
-		public void SelectBuildingGroup(BuildingCategory buildingCategory)
+            _playerCruiser.SlotWrapper.UnhighlightSlots();
+            _playerCruiser.SlotWrapper.HideAllSlots();
+            HideTargetDetails();
+            buildMenuController.ShowBuildingGroupsMenu();
+        }
+
+        public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 			_playerCruiser.SlotWrapper.ShowAllSlots();
@@ -107,7 +106,7 @@ namespace BattleCruisers.UI.BattleScene
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
 			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
-			_buildableDetails.ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
+            ShowBuildableDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
 		public void SelectBuilding(Building building, ICruiser buildingParent)
@@ -127,13 +126,14 @@ namespace BattleCruisers.UI.BattleScene
 		public void SelectBuildingFromFriendlyCruiser(Building building)
 		{
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
+
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
-			_buildableDetails.ShowBuildableDetails(building, allowDelete: true);
+            ShowBuildableDetails(building, allowDelete: true);
 		}
 
 		public void SelectBuildingFromEnemyCruiser(Building building)
 		{
-			_buildableDetails.ShowBuildableDetails(building, allowDelete: false);
+            ShowBuildableDetails(building, allowDelete: false);
 		}
 
 		public void ShowFactoryUnits(Factory factory)
@@ -146,12 +146,25 @@ namespace BattleCruisers.UI.BattleScene
 
 		public void ShowUnitDetails(IUnit unit)
 		{
-			_buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
+            ShowBuildableDetails(unit, allowDelete: false);
 		}
+
+        private void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
+        {
+            _cruiserDetails.Hide();
+            _buildableDetails.ShowBuildableDetails(buildable, allowDelete);
+        }
 
         public void ShowCruiserDetails(Cruiser cruiser)
         {
+            _buildableDetails.Hide();
             _cruiserDetails.ShowCruiserDetails(cruiser);
+        }
+
+        private void HideTargetDetails()
+        {
+            _buildableDetails.Hide();
+            _cruiserDetails.Hide();
         }
     }
 }

@@ -13,8 +13,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             base.Initialise();
 
             // FELIX
-
-            Hide();
         }
 
         public void ShowCruiserDetails(Cruiser cruiser)
