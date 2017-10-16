@@ -1,25 +1,27 @@
 ﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
+using UnityEngine.Assertions;
 
-// FELIX  Avoid duplicate toggle repair code with buildable details controller
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public class InBattleCruiserDetailsController : CruiserDetailsController
     {
+        private RepairButtonController _repairButton;
+
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
             base.Initialise();
 
-            // FELIX
+            _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
+            Assert.IsNotNull(_repairButton);
+            _repairButton.Initialise(droneManager, repairManager);
         }
 
         public void ShowCruiserDetails(Cruiser cruiser)
         {
             base.ShowItemDetails(cruiser);
-
-            // FELIX
+            _repairButton.Repairable = cruiser;
         }
     }
 }
