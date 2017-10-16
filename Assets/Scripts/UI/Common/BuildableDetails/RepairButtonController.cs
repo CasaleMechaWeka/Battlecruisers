@@ -31,6 +31,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
                 if (_repairable != null)
                 {
                     _repairable.RepairCommand.CanExecuteChanged += RepairCommand_CanExecuteChanged;
+                    UpdateVisibility();
                 }
             }
         }
@@ -58,7 +59,12 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
-            gameObject.SetActive(ShowRepairButton);
+            UpdateVisibility();
+        }
+
+        private void UpdateVisibility()
+        {
+			gameObject.SetActive(ShowRepairButton);
         }
     }
 }
