@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    // FELIX  Avoid duplicate code with ArtilleryBarrelControllerTests
     public class BroadsidesBarrelTestGod : MonoBehaviour
 	{
 		void Start()
