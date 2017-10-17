@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
 {
-    // FELIX  Hmm.  Move finding TargetVelocity logic from BomberController to here?
     public class BomberMovementController : TargetVelocityMovementController, IBomberMovementController
 	{
 		private float _velocitySmoothTime;
