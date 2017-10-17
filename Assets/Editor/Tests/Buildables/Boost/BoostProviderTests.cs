@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Buildables.Boost
 	public class BoostProviderTests
 	{
         private IBoostProvider _provider;
-        private IBoostConsumer _consumer1, _consumer2;
+        private IBoostConsumer _consumer1;
 
 		[SetUp]
 		public void SetuUp()
@@ -16,7 +16,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _provider = new BoostProvider(boostMultiplier: 1.8f);
 
             _consumer1 = Substitute.For<IBoostConsumer>();
-            _consumer2 = Substitute.For<IBoostConsumer>();
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
@@ -41,20 +40,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
 
             _provider.RemoveBoostConsumer(_consumer1);
             _consumer1.Received().RemoveBoostProvider(_provider);
-        }
-
-        [Test]
-        public void Clear_RemovesSelfFromAllConsumers()
-        {
-            _provider.AddBoostConsumer(_consumer1);
-			_consumer1.Received().AddBoostProvider(_provider);
-
-            _provider.AddBoostConsumer(_consumer2);
-			_consumer2.Received().AddBoostProvider(_provider);
-
-            _provider.ClearBoostConsumers();
-			_consumer1.Received().RemoveBoostProvider(_provider);
-			_consumer2.Received().RemoveBoostProvider(_provider);
         }
 	}
 }

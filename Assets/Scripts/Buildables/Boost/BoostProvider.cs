@@ -28,16 +28,5 @@ namespace BattleCruisers.Buildables.Boost
             _boostConsumers.Remove(boostConsumer);
             boostConsumer.RemoveBoostProvider(this);
 		}
-
-        // FELIX  Remove if not used?  Wait until control tower to boost aircraft has been implemented :)
-        public void ClearBoostConsumers()
-        {
-            foreach (IBoostConsumer consumer in _boostConsumers)
-            {
-                consumer.RemoveBoostProvider(this);
-            }
-
-            _boostConsumers.Clear();
-        }
     }
 }
