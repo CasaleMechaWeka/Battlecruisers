@@ -45,6 +45,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _allowDelete = allowDelete;
             buildProgressController.Initialise(_item);
 
+            // FELIX  Handle in delete button controller?  Implement cancelling delete?
+            // Hmm, delete should dismiss details.  Pressing building should cancel delete.
             // Delete buildable button
             deleteButton.gameObject.SetActive(allowDelete);
             if (allowDelete)
