@@ -44,7 +44,8 @@ namespace BattleCruisers.Buildables
 
         private const float MAX_BUILD_PROGRESS = 1;
         // FELIX  TEMP
-        private const float BUILD_CHEAT_MULTIPLIER = 50;
+        private const float BUILD_CHEAT_MULTIPLIER = 10;
+        //private const float BUILD_CHEAT_MULTIPLIER = 50;
 
 		#region Properties
 		public BuildableState BuildableState { get; private set; }
@@ -105,14 +106,16 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
+        public virtual bool IsDroneConsumerFocusable { get { return DroneConsumer != null; } }
+
 		#region IComparableItem
 		Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
 		string IComparableItem.Description { get { return description; } }
 		string IComparableItem.Name { get { return buildableName; } }
-		#endregion IComparableItem
-		#endregion Properties
+        #endregion IComparableItem
+        #endregion Properties
 
-		public event EventHandler StartedConstruction;
+        public event EventHandler StartedConstruction;
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
 

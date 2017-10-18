@@ -42,6 +42,9 @@ namespace BattleCruisers.Buildables.Units
 				return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
             }
         }
+
+        public override bool IsDroneConsumerFocusable { get { return false; } }
+
 		#endregion Properties
 
 		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)

@@ -32,6 +32,7 @@ namespace BattleCruisers.Buildables
 		int NumOfDronesRequired { get; }
 		float BuildTimeInS { get; }
 		IDroneConsumer DroneConsumer { get; }
+        bool IsDroneConsumerFocusable { get; }
 
         float Damage { get; }
         Vector3 Size { get; }
