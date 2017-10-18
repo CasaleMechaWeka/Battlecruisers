@@ -46,7 +46,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             base.ShowItemDetails(buildable);
 
             _allowDelete = allowDelete;
-            buildProgressController.Initialise(_item);
 
             // FELIX  Handle in delete button controller?  Implement cancelling delete?
             // Hmm, delete should dismiss details.  Pressing building should cancel delete.
@@ -57,6 +56,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
                 deleteButton.onClick.AddListener(DeleteBuildable);
             }
 
+            buildProgressController.Buildable = buildable;
             _toggleDronesButton.Buildable = buildable;
             _repairButton.Repairable = buildable;
         }
@@ -76,10 +76,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			{
 				deleteButton.onClick.RemoveListener(DeleteBuildable);
 
+                buildProgressController.Buildable = null;
                 _toggleDronesButton.Buildable = null;
                 _repairButton.Repairable = null;
-
-				buildProgressController.Cleanup();
 			}
 		}
 	}

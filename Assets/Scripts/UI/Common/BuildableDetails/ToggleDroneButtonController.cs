@@ -22,11 +22,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails
                 }
 
                 _buildable = value;
-				UpdateVisibility();
 
                 if (_buildable != null)
                 {
                     _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged += ToggleDroneConsumerFocusCommand_CanExecuteChanged;
+					UpdateVisibility();
                 }
             }
         }
@@ -38,8 +38,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             get 
             {
                 return
-                    _buildable != null
-                    && _buildable.Faction == Faction.Blues
+                    _buildable.Faction == Faction.Blues
                     && _buildable.ToggleDroneConsumerFocusCommand.CanExecute;
             } 
         }
