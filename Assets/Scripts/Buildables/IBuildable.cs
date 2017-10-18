@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
+using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace BattleCruisers.Buildables
 		int NumOfDronesRequired { get; }
 		float BuildTimeInS { get; }
 		IDroneConsumer DroneConsumer { get; }
-        bool IsDroneConsumerFocusable { get; }
+        ICommand ToggleDroneConsumerFocusCommand { get; }
 
         float Damage { get; }
         Vector3 Size { get; }

@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
             _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
             Assert.IsNotNull(_toggleDronesButton);
-            _toggleDronesButton.Initialise(_droneManager);
+            _toggleDronesButton.Initialise();
         }
 
         // FELIX  Created button controllers for all 3 buttons?

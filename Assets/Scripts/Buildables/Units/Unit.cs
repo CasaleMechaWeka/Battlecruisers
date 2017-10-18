@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Units
             }
         }
 
-        public override bool IsDroneConsumerFocusable { get { return false; } }
+        protected override bool IsDroneConsumerFocusable { get { return false; } }
 
 		#endregion Properties
 

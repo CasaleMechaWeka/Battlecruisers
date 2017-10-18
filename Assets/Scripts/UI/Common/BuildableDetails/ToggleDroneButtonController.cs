@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleCruisers.Buildables;
-using BattleCruisers.Drones;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,7 +9,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
     public class ToggleDroneButtonController : MonoBehaviour
     {
         private Button _button;
-        private IDroneManager _droneManager;
 
         private IBuildable _buildable;
         public IBuildable Buildable
@@ -20,15 +18,15 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             {
                 if (_buildable != null)
                 {
-                    _buildable.CompletedBuildable -= Buildable_CompletedBuildable;
+                    _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged -= ToggleDroneConsumerFocusCommand_CanExecuteChanged;
                 }
 
                 _buildable = value;
 				UpdateVisibility();
 
-                if (_buildable != null && _buildable.BuildableState != BuildableState.Completed)
+                if (_buildable != null)
                 {
-                    _buildable.CompletedBuildable += Buildable_CompletedBuildable;
+                    _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged += ToggleDroneConsumerFocusCommand_CanExecuteChanged;
                 }
             }
         }
@@ -42,15 +40,12 @@ namespace BattleCruisers.UI.Common.BuildingDetails
                 return
                     _buildable != null
                     && _buildable.Faction == Faction.Blues
-                    && _buildable.IsDroneConsumerFocusable;
+                    && _buildable.ToggleDroneConsumerFocusCommand.CanExecute;
             } 
         }
 
-        public void Initialise(IDroneManager droneManager)
+        public void Initialise()
         {
-            Assert.IsNotNull(droneManager);
-            _droneManager = droneManager;
-
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
             _button.onClick.AddListener(ToggleDroneButton);
@@ -58,18 +53,17 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         private void ToggleDroneButton()
         {
-            _droneManager.ToggleDroneConsumerFocus(Buildable.DroneConsumer);
-        }
-
-        private void Buildable_CompletedBuildable(object sender, EventArgs e)
-        {
-            _buildable.CompletedBuildable -= Buildable_CompletedBuildable;
-            UpdateVisibility();
+            _buildable.ToggleDroneConsumerFocusCommand.Execute();
         }
         
         private void UpdateVisibility()
         {
             gameObject.SetActive(ShowToggleDroneButton);
+        }
+
+        private void ToggleDroneConsumerFocusCommand_CanExecuteChanged(object sender, EventArgs e)
+        {
+            UpdateVisibility();
         }
     }
 }

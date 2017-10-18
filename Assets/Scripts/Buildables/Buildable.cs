@@ -9,6 +9,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
@@ -79,6 +80,7 @@ namespace BattleCruisers.Buildables
 				}
 
 				_droneConsumer = value;
+                ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
 
 				if (_droneConsumer != null)
 				{
@@ -106,7 +108,9 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-        public virtual bool IsDroneConsumerFocusable { get { return DroneConsumer != null; } }
+        protected virtual bool IsDroneConsumerFocusable { get { return DroneConsumer != null; } }
+
+        public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
 
 		#region IComparableItem
 		Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
@@ -133,6 +137,8 @@ namespace BattleCruisers.Buildables
             _healthBar = HealthBarController;
             Assert.IsNotNull(_healthBar);
             _healthBar.Initialise(this, followDamagable: true);
+
+            ToggleDroneConsumerFocusCommand = new Command(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
         }
 
 		// Reuse text mesh for showing num of drones while building is being built.
@@ -309,5 +315,10 @@ namespace BattleCruisers.Buildables
         }
 
 		public virtual void InitiateDelete() { }
+
+        private void ToggleDroneConsumerFocusCommandExecute()
+        {
+            _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+        }
 	}
 }
