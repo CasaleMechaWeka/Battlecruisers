@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
@@ -16,10 +15,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         private IDroneManager _droneManager;
         private bool _allowDelete;
         private RepairButtonController _repairButton;
+        private ToggleDroneButtonController _toggleDronesButton;
 		
 		public BuildableStatsController buildableStatsController;
 		public Button deleteButton;
-		public Button toggleDroneButton;
 		public BuildableProgressBarController buildProgressController;
 
         protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }
@@ -35,6 +34,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
             _repairButton.Initialise(_droneManager, repairManager);
+
+            _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
+            Assert.IsNotNull(_toggleDronesButton);
+            _toggleDronesButton.Initialise(_droneManager);
         }
 
         // FELIX  Created button controllers for all 3 buttons?
@@ -54,15 +57,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
                 deleteButton.onClick.AddListener(DeleteBuildable);
             }
 
-            // Toggle drone button (should only be visible for player buildings)
-            bool showDroneRelatedUI = buildable.DroneConsumer != null && buildable.Faction == Faction.Blues;
-            toggleDroneButton.gameObject.SetActive(showDroneRelatedUI);
-            if (showDroneRelatedUI)
-            {
-                toggleDroneButton.onClick.AddListener(ToggleBuildableDrones);
-                _item.CompletedBuildable += Buildable_CompletedBuildable;
-            }
-
+            _toggleDronesButton.Buildable = buildable;
             _repairButton.Repairable = buildable;
         }
 
@@ -75,25 +70,13 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             Hide();
         }
 
-        public void ToggleBuildableDrones()
-        {
-            _droneManager.ToggleDroneConsumerFocus(_item.DroneConsumer);
-        }
-
-        private void Buildable_CompletedBuildable(object sender, EventArgs e)
-        {
-            _item.CompletedBuildable -= Buildable_CompletedBuildable;
-            toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
-            toggleDroneButton.gameObject.SetActive(false);
-        }
-
         protected override void CleanUp()
 		{
 			if (_item != null)
 			{
 				deleteButton.onClick.RemoveListener(DeleteBuildable);
-				toggleDroneButton.onClick.RemoveListener(ToggleBuildableDrones);
 
+                _toggleDronesButton.Buildable = null;
                 _repairButton.Repairable = null;
 
 				buildProgressController.Cleanup();
