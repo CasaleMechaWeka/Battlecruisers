@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         }
 
         // Only show repair button for user repairables, not opponent repairables
-        private bool ShowRepairButton { get { return _repairable.Faction == Faction.Blues && _repairable.RepairCommand.CanExecute; } }
+        private bool ShowRepairButton { get { return Repairable.Faction == Faction.Blues && Repairable.RepairCommand.CanExecute; } }
 
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         private void ToggleRepairButton()
         {
-            IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(_repairable);
+            IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
             _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
         }
 
