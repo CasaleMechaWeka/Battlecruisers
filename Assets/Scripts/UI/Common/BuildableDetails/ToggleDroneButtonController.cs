@@ -33,18 +33,16 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             }
         }
 
-        // FELIX  Units should never have toggle button :/
         // FELIX  Units should never show number of drones text mesh :/
-        // FELIX  Factory should still be toggleable while producing units!
-        // Should only be visible for player buildings, not AI buildings
+        // Should only be visible for player buildables, not AI buildables
         private bool ShowToggleDroneButton 
         { 
             get 
-            { 
-                return 
+            {
+                return
                     _buildable != null
-                    && _buildable.Faction == Faction.Blues 
-                    && _buildable.DroneConsumer != null; 
+                    && _buildable.Faction == Faction.Blues
+                    && _buildable.IsDroneConsumerFocusable;
             } 
         }
 
