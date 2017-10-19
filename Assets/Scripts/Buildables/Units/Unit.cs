@@ -6,11 +6,10 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public abstract class Unit : Buildable, IUnit, IPointerClickHandler
+    public abstract class Unit : Buildable, IUnit
 	{
 		public UnitCategory category;
 
@@ -64,8 +63,9 @@ namespace BattleCruisers.Buildables.Units
 
 		protected virtual void OnFixedUpdate() { }
 
-		public void OnPointerClick(PointerEventData eventData)
+		protected override void OnClicked()
 		{
+            base.OnClicked();
 			_uiManager.ShowUnitDetails(this);
 		}
 

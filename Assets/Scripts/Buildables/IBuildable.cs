@@ -51,6 +51,7 @@ namespace BattleCruisers.Buildables
 
         void StaticInitialise();
 		void StartConstruction();
-		void InitiateDelete();
+        void InitiateDelete();
+        void CancelDelete();
 	}
 }

@@ -15,15 +15,17 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Buildable : Target, IBuildable
-	{
-		private float _buildProgressInDroneSeconds;
-		private float _buildTimeInDroneSeconds;
+    public abstract class Buildable : Target, IBuildable, IPointerClickHandler
+    {
+        private float _buildProgressInDroneSeconds;
+        private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
-		private HealthBarController _healthBar;
+        private HealthBarController _healthBar;
+        private bool _isDeleting;
 
         protected IUIManager _uiManager;
         protected ICruiser _parentCruiser;
@@ -43,23 +45,24 @@ namespace BattleCruisers.Buildables
         public float buildTimeInS;
         public SlotType slotType;
 
+        private const float DELETE_DELAY_IN_S = 3;
         private const float MAX_BUILD_PROGRESS = 1;
         // FELIX  TEMP
         private const float BUILD_CHEAT_MULTIPLIER = 10;
         //private const float BUILD_CHEAT_MULTIPLIER = 50;
 
-		#region Properties
-		public BuildableState BuildableState { get; private set; }
-		public virtual float Damage { get { return 0; } }
-		public float BuildProgress { get; private set; }
+        #region Properties
+        public BuildableState BuildableState { get; private set; }
+        public virtual float Damage { get { return 0; } }
+        public float BuildProgress { get; private set; }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
-		public SlotType SlotType { get { return slotType; } }
-		protected abstract HealthBarController HealthBarController { get; }
-		public IBoostable BuildProgressBoostable { get; private set; }
+        public SlotType SlotType { get { return slotType; } }
+        protected abstract HealthBarController HealthBarController { get; }
+        public IBoostable BuildProgressBoostable { get; private set; }
         public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
 
-		Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
+        Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
 
         Vector2 IBuildable.Position
         {
@@ -67,66 +70,66 @@ namespace BattleCruisers.Buildables
             set { transform.position = value; }
         }
 
-		private IDroneConsumer _droneConsumer;
-		public IDroneConsumer DroneConsumer 
-		{ 
-			get { return _droneConsumer; }
-			protected set
-			{
-				if (_droneConsumer != null)
-				{
-					_droneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
-					_droneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
-				}
+        private IDroneConsumer _droneConsumer;
+        public IDroneConsumer DroneConsumer
+        {
+            get { return _droneConsumer; }
+            protected set
+            {
+                if (_droneConsumer != null)
+                {
+                    _droneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
+                    _droneConsumer.DroneStateChanged -= DroneConsumer_DroneStateChanged;
+                }
 
-				_droneConsumer = value;
+                _droneConsumer = value;
                 ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
 
-				if (_droneConsumer != null)
-				{
-					_droneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
-					_droneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
-				}
-			}
-		}
-		
+                if (_droneConsumer != null)
+                {
+                    _droneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
+                    _droneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
+                }
+            }
+        }
+
         private IList<Renderer> _inGameRenderers;
-		private IList<Renderer> InGameRenderers
-		{
-			// Lazily initialise so that the StaticInitialise() (constructor
-			// equivalent) of this class and all child classes has completed.
-			// Ie, cannot call GetInGameRenderers() from Buildable.StaticInitialise()
-			// because child implementations of GetInGameRenderers() may rely
-			// on their StaticInitialise() having run already.
-			get
-			{
-				if (_inGameRenderers == null)
-				{
-					_inGameRenderers = GetInGameRenderers();
-				}
-				return _inGameRenderers;
-			}
-		}
+        private IList<Renderer> InGameRenderers
+        {
+            // Lazily initialise so that the StaticInitialise() (constructor
+            // equivalent) of this class and all child classes has completed.
+            // Ie, cannot call GetInGameRenderers() from Buildable.StaticInitialise()
+            // because child implementations of GetInGameRenderers() may rely
+            // on their StaticInitialise() having run already.
+            get
+            {
+                if (_inGameRenderers == null)
+                {
+                    _inGameRenderers = GetInGameRenderers();
+                }
+                return _inGameRenderers;
+            }
+        }
 
         protected virtual bool IsDroneConsumerFocusable { get { return DroneConsumer != null; } }
 
         public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
 
-		#region IComparableItem
-		Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
-		string IComparableItem.Description { get { return description; } }
-		string IComparableItem.Name { get { return buildableName; } }
+        #region IComparableItem
+        Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
+        string IComparableItem.Description { get { return description; } }
+        string IComparableItem.Name { get { return buildableName; } }
         #endregion IComparableItem
         #endregion Properties
 
         public event EventHandler StartedConstruction;
-		public event EventHandler CompletedBuildable;
-		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
+        public event EventHandler CompletedBuildable;
+        public event EventHandler<BuildProgressEventArgs> BuildableProgress;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-		public override void StaticInitialise()
-		{
-			base.StaticInitialise();
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
@@ -141,9 +144,11 @@ namespace BattleCruisers.Buildables
             _numOfDronesText = gameObject.GetComponentInChildren<NumOfDronesTextController>(includeInactive: true);
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
+
+            _isDeleting = false;
         }
 
-		// Reuse text mesh for showing num of drones while building is being built.
+        // Reuse text mesh for showing num of drones while building is being built.
         protected override ITextMesh GetRepairDroneNumText()
         {
             return _numOfDronesText.NumOfDronesText;
@@ -151,179 +156,204 @@ namespace BattleCruisers.Buildables
 
         protected virtual IList<Renderer> GetInGameRenderers()
         {
-			Renderer renderer = GetComponent<Renderer>();
-			Assert.IsNotNull(renderer);
+            Renderer renderer = GetComponent<Renderer>();
+            Assert.IsNotNull(renderer);
             return new List<Renderer>() { renderer };
         }
 
-		protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
-		{
+        protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
+        {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
 
-			_parentCruiser = parentCruiser;
-			_enemyCruiser = enemyCruiser;
-			_droneManager = _parentCruiser.DroneManager;
-			_droneConsumerProvider = _parentCruiser.DroneConsumerProvider;
-			_uiManager = uiManager;
-			_aircraftProvider = factoryProvider.AircraftProvider;
+            _parentCruiser = parentCruiser;
+            _enemyCruiser = enemyCruiser;
+            _droneManager = _parentCruiser.DroneManager;
+            _droneConsumerProvider = _parentCruiser.DroneConsumerProvider;
+            _uiManager = uiManager;
+            _aircraftProvider = factoryProvider.AircraftProvider;
 
-			_factoryProvider = factoryProvider;
-			_targetsFactory = _factoryProvider.TargetsFactory;
-			_movementControllerFactory = _factoryProvider.MovementControllerFactory;
+            _factoryProvider = factoryProvider;
+            _targetsFactory = _factoryProvider.TargetsFactory;
+            _movementControllerFactory = _factoryProvider.MovementControllerFactory;
 
-			Faction = _parentCruiser.Faction;
-			BuildableState = BuildableState.NotStarted;
-			_buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-			_buildProgressInDroneSeconds = 0;
+            Faction = _parentCruiser.Faction;
+            BuildableState = BuildableState.NotStarted;
+            _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+            _buildProgressInDroneSeconds = 0;
 
             HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
 
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-		}
+        }
 
-		protected virtual void OnInitialised() { }
+        protected virtual void OnInitialised() { }
 
-		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
-		{
+        private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+        {
             if (DroneNumChanged != null)
             {
                 DroneNumChanged.Invoke(this, e);
             }
-		}
+        }
 
-		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
-		{
-			if (BuildableState != BuildableState.Completed)
-			{
-				if (e.OldState == DroneConsumerState.Idle)
-				{
-					BuildableState = BuildableState.InProgress;
-				}
-				else if (e.NewState == DroneConsumerState.Idle)
-				{
-					BuildableState = BuildableState.Paused;
-				}
-			}
-		}
+        private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
+        {
+            if (BuildableState != BuildableState.Completed)
+            {
+                if (e.OldState == DroneConsumerState.Idle)
+                {
+                    BuildableState = BuildableState.InProgress;
+                }
+                else if (e.NewState == DroneConsumerState.Idle)
+                {
+                    BuildableState = BuildableState.Paused;
+                }
+            }
+        }
 
-		public void StartConstruction()
-		{
+        public void StartConstruction()
+        {
             SetupDroneConsumer(numOfDronesRequired);
 
-			EnableRenderers(false);
+            EnableRenderers(false);
 
             if (DroneConsumer.State != DroneConsumerState.Idle)
             {
                 BuildableState = BuildableState.InProgress;
-			}
+            }
 
-			if (StartedConstruction != null)
-			{
-				StartedConstruction.Invoke(this, EventArgs.Empty);
-			}
-		}
+            if (StartedConstruction != null)
+            {
+                StartedConstruction.Invoke(this, EventArgs.Empty);
+            }
+        }
 
-		void Update()
-		{
-			if (BuildableState == BuildableState.InProgress)
-			{
-				Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
+        void Update()
+        {
+            if (BuildableState == BuildableState.InProgress)
+            {
+                Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
                 _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
 
-				if (BuildableProgress != null)
-				{
-					BuildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
+                if (BuildableProgress != null)
+                {
+                    BuildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
                     if (BuildProgress > MAX_BUILD_PROGRESS)
-					{
+                    {
                         BuildProgress = MAX_BUILD_PROGRESS;
-					}
+                    }
 
-					BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
-				}
+                    BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
+                }
 
-				if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)
-				{
-					OnBuildableCompleted();
-				}
-			}
+                if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)
+                {
+                    OnBuildableCompleted();
+                }
+            }
 
-			OnUpdate();
-		}
+            OnUpdate();
+        }
 
-		protected virtual void OnUpdate() { }
+        protected virtual void OnUpdate() { }
 
-		protected virtual void OnBuildableCompleted()
-		{
-			CleanUpDroneConsumer();
+        protected virtual void OnBuildableCompleted()
+        {
+            CleanUpDroneConsumer();
 
-			EnableRenderers(true);
-			BuildableState = BuildableState.Completed;
+            EnableRenderers(true);
+            BuildableState = BuildableState.Completed;
 
-			if (CompletedBuildable != null)
-			{
-				CompletedBuildable.Invoke(this, EventArgs.Empty);
-			}
+            if (CompletedBuildable != null)
+            {
+                CompletedBuildable.Invoke(this, EventArgs.Empty);
+            }
 
             RepairCommand.EmitCanExecuteChanged();
-		}
+        }
 
-		private void EnableRenderers(bool enabled)
-		{
+        private void EnableRenderers(bool enabled)
+        {
             foreach (Renderer renderer in InGameRenderers)
             {
-				renderer.enabled = enabled;
+                renderer.enabled = enabled;
             }
-		}
+        }
 
-		// All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
-		// both the target and the health bar.  Hence destroy wrapper, so health bar
-		// gets destroyed at the same time as the target.
-		protected override void InternalDestroy()
-		{
-			Assert.IsNotNull(transform.parent);
-			Destroy(transform.parent.gameObject);
-		}
+        // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
+        // both the target and the health bar.  Hence destroy wrapper, so health bar
+        // gets destroyed at the same time as the target.
+        protected override void InternalDestroy()
+        {
+            Assert.IsNotNull(transform.parent);
+            Destroy(transform.parent.gameObject);
+        }
 
-		protected override void OnDestroyed()
-		{
-			base.OnDestroyed();
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
 
-			if (DroneConsumer != null)
-			{
-				CleanUpDroneConsumer();
-			}
+            if (DroneConsumer != null)
+            {
+                CleanUpDroneConsumer();
+            }
 
             _boostableGroup.CleanUp();
-		}
+        }
 
-		protected void SetupDroneConsumer(int numOfDrones)
-		{
-			Assert.IsNull(DroneConsumer);
+        protected void SetupDroneConsumer(int numOfDrones)
+        {
+            Assert.IsNull(DroneConsumer);
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones, isHighPriority: true);
-			_droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
-		}
+            _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+        }
 
 
-		protected void CleanUpDroneConsumer()
-		{
+        protected void CleanUpDroneConsumer()
+        {
             Assert.IsNotNull(DroneConsumer);
-			_droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-			DroneConsumer = null;
-		}
+            _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+            DroneConsumer = null;
+        }
 
         protected override bool CanRepairCommandExecute()
         {
             return
                 base.CanRepairCommandExecute()
-                && BuildableState == BuildableState.Completed;       
+                && BuildableState == BuildableState.Completed;
         }
 
-		public virtual void InitiateDelete() { }
 
         private void ToggleDroneConsumerFocusCommandExecute()
         {
             _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
         }
-	}
+
+        public void InitiateDelete()
+        {
+            Invoke("Destroy", DELETE_DELAY_IN_S);
+            _isDeleting = true;
+        }
+
+        public void CancelDelete()
+        {
+            CancelInvoke("Destroy");
+            _isDeleting = false;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_isDeleting)
+            {
+                CancelDelete();
+            }
+            else
+            {
+				OnClicked();
+            }
+        }
+
+        protected virtual void OnClicked() { }
+    }
 }

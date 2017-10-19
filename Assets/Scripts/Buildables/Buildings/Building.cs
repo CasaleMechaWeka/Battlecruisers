@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -49,23 +48,10 @@ namespace BattleCruisers.Buildables.Buildings
             OnInitialised();
 		}
 
-		public void OnPointerClick(PointerEventData eventData)
-		{
-			_uiManager.SelectBuilding(this, _parentCruiser);
-			OnClicked();
-		}
-
-		protected virtual void OnClicked() { }
-
-		public override void InitiateDelete()
-		{
-			Destroy();
-		}
-
-		public void CancelDelete()
-		{
-            // FELIX  Implement and use :)
-			throw new NotImplementedException();
-		}
+        protected override void OnClicked()
+        {
+            base.OnClicked();
+            _uiManager.SelectBuilding(this, _parentCruiser);
+        }
 	}
 }
