@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables
 	{
 		private float _buildProgressInDroneSeconds;
 		private float _buildTimeInDroneSeconds;
-        private TextMesh _numOfDronesText;
+        private ITextMesh _numOfDronesText;
 		private HealthBarController _healthBar;
 
         protected IUIManager _uiManager;
@@ -127,8 +127,9 @@ namespace BattleCruisers.Buildables
 		{
 			base.StaticInitialise();
 
-            _numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-            Assert.IsNotNull(_numOfDronesText);
+            TextMesh numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
+            Assert.IsNotNull(numOfDronesText);
+            _numOfDronesText = new TextMeshWrapper(numOfDronesText);
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
@@ -144,7 +145,7 @@ namespace BattleCruisers.Buildables
 		// Reuse text mesh for showing num of drones while building is being built.
         protected override ITextMesh GetRepairDroneNumText()
         {
-            return new TextMeshWrapper(_numOfDronesText);
+            return _numOfDronesText;
         }
 
         protected virtual IList<Renderer> GetInGameRenderers()
@@ -184,7 +185,7 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			_numOfDronesText.text = e.NewNumOfDrones.ToString();
+			_numOfDronesText.Text = e.NewNumOfDrones.ToString();
 		}
 
 		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
