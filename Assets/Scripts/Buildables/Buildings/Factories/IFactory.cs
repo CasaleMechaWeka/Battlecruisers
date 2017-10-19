@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
@@ -13,6 +12,5 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
 		event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
-		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 	}
 }

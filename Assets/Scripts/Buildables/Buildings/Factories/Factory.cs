@@ -20,7 +20,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
-        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         #region Properties
         private IBuildableWrapper<IUnit> _unitWrapper;
@@ -199,15 +198,5 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
-
-        protected override void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
-        {
-            base.DroneConsumer_DroneNumChanged(sender, e);
-
-            if (DroneNumChanged != null)
-            {
-                DroneNumChanged.Invoke(this, e);
-            }
-        }
 	}
 }

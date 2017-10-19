@@ -47,6 +47,7 @@ namespace BattleCruisers.Buildables
 		event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
+        event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise();
 		void StartConstruction();

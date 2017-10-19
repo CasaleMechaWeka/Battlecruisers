@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables
 	{
 		private float _buildProgressInDroneSeconds;
 		private float _buildTimeInDroneSeconds;
-        private ITextMesh _numOfDronesText;
+        private NumOfDronesTextController _numOfDronesText;
 		private HealthBarController _healthBar;
 
         protected IUIManager _uiManager;
@@ -122,14 +122,11 @@ namespace BattleCruisers.Buildables
         public event EventHandler StartedConstruction;
 		public event EventHandler CompletedBuildable;
 		public event EventHandler<BuildProgressEventArgs> BuildableProgress;
+        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
-
-            TextMesh numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
-            Assert.IsNotNull(numOfDronesText);
-            _numOfDronesText = new TextMeshWrapper(numOfDronesText);
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
@@ -140,12 +137,16 @@ namespace BattleCruisers.Buildables
             _healthBar.Initialise(this, followDamagable: true);
 
             ToggleDroneConsumerFocusCommand = new Command(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
+
+            _numOfDronesText = gameObject.GetComponentInChildren<NumOfDronesTextController>(includeInactive: true);
+            Assert.IsNotNull(_numOfDronesText);
+            _numOfDronesText.Initialise(this);
         }
 
 		// Reuse text mesh for showing num of drones while building is being built.
         protected override ITextMesh GetRepairDroneNumText()
         {
-            return _numOfDronesText;
+            return _numOfDronesText.NumOfDronesText;
         }
 
         protected virtual IList<Renderer> GetInGameRenderers()
@@ -183,9 +184,12 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void OnInitialised() { }
 
-		protected virtual void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
+		private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
 		{
-			_numOfDronesText.Text = e.NewNumOfDrones.ToString();
+            if (DroneNumChanged != null)
+            {
+                DroneNumChanged.Invoke(this, e);
+            }
 		}
 
 		private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
