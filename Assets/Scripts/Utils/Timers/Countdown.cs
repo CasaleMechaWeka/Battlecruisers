@@ -4,22 +4,17 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
 {
-    /// <summary>
-    /// Disables itself by setting the game object to inactive.  Hence, must have
-    /// it's own game object, otherwise everything else on the game object will
-    /// be disabled as well.
-    /// </summary>
-    public class Countdown : MonoBehaviour, ICountdown
+    public class Countdown : ICountdown
     {
         private float _timeElapsedInS;
 		private int _timeElapsedInFullS;
         private int _durationInS;
         private Action _onCompletion;
+        private bool _countdownInProgress;
 
         public event EventHandler<CountdownEventArgs> OnSecondPassed;
 
-        // Avoid conflict with MonoBehaviour.Start
-        void ICountdown.Start(int durationInS, Action onCompletion)
+        public void Start(int durationInS, Action onCompletion)
         {
             Assert.IsTrue(durationInS > 0);
 			Assert.IsNotNull(onCompletion);
@@ -29,17 +24,19 @@ namespace BattleCruisers.Utils.Timers
             _timeElapsedInS = 0;
             _timeElapsedInFullS = 0;
 
-            gameObject.SetActive(true);
+            _countdownInProgress = true;
         }
 
         public void Cancel()
         {
-            gameObject.SetActive(false);
+            _countdownInProgress = false;
         }
 
-        void Update()
+        public void OnUpdate(float timeInS)
         {
-            _timeElapsedInS += Time.deltaTime;
+            Assert.IsTrue(_countdownInProgress);
+
+            _timeElapsedInS += timeInS;
 
             // Emit event if a full second has passed
             int timeElapsedInFullS = Mathf.FloorToInt(_timeElapsedInS);
@@ -59,7 +56,7 @@ namespace BattleCruisers.Utils.Timers
             if (_timeElapsedInS >= _durationInS)
             {
                 _onCompletion.Invoke();
-                gameObject.SetActive(false);
+                _countdownInProgress = false;
             }
         }
     }

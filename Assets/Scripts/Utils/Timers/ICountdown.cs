@@ -18,5 +18,6 @@ namespace BattleCruisers.Utils.Timers
 
         void Start(int durationInS, Action onCompletion);
         void Cancel();
+        void OnUpdate(float timeInS);
     }
 }
