@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-	public class BackButtonController : MonoBehaviour 
+    public class BackButtonController : MonoBehaviour 
 	{
 		public void Initialize(UIManager uiManager)
 		{
