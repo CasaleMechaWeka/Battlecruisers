@@ -18,7 +18,8 @@ namespace BattleCruisers.Utils.Timers
 
         public event EventHandler<CountdownEventArgs> OnSecondPassed;
 
-        public void Start(int durationInS, Action onCompletion)
+        // Avoid conflict with MonoBehaviour.Start
+        void ICountdown.Start(int durationInS, Action onCompletion)
         {
             Assert.IsTrue(durationInS > 0);
 			Assert.IsNotNull(onCompletion);
