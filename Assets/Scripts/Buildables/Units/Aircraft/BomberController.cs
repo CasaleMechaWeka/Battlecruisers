@@ -12,7 +12,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    // FELIX  Switch back to PatrollingMovementController once we run out of targets?
     public class BomberController : AircraftController, ITargetConsumer
 	{
 		private bool _haveDroppedBombOnRun;

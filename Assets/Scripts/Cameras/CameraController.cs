@@ -153,8 +153,8 @@ namespace BattleCruisers.Cameras
 			return isRightOrthographicSize;
 		}
 
-        // FELIX  Adapt for IPad :P
-		private void HandleUserInput()
+        // IPAD:  Adapt input for IPad :P
+        private void HandleUserInput()
         {
             bool inZoom = HandleZoom();
             bool inDrag = HandleDrag();

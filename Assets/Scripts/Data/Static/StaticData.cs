@@ -110,15 +110,19 @@ namespace BattleCruisers.Data.Static
 			};
 		}
 
-		// FELIX  For final game, don't add ALL the prefabs :D
-		// NOTE:  Do NOT share key objects between Loadout and GameModel, otherwise
-		// both will share the same object.  In that case if the Loadout deletes one of its
-		// buildings the building will also be deleted from the GameModel.
-		private GameModel CreateInitialGameModel()
-		{
-			Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
+        /// <summary>
+        /// Creates the initial game model.
+        /// 
+        /// NOTE:  Do NOT share key objects between Loadout and GameModel, otherwise
+        /// both will share the same object.  In that case if the Loadout deletes one of its
+        /// buildings the building will also be deleted from the GameModel.
+        /// </summary>
+        private GameModel CreateInitialGameModel()
+        {
+			// FELIX  TEMP  For final game, don't add ALL the prefabs :D
+            Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
-            // FELIX  TEMP  Only unlock first level for real game :P
+            // FELIX  TEMP  For final game only unlock first level :P
 			int numOfLevelsCompleted = 20;
 			//int numOfLevelsCompleted = 0;
 

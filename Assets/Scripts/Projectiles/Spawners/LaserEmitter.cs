@@ -68,7 +68,6 @@ namespace BattleCruisers.Projectiles.Spawners
 			_lineRenderer.enabled = false;
 		}
 
-		// FELIX  Also return RaycastHit2D, so can make laser impact effect on impact point?
 		private ITarget GetTarget(RaycastHit2D[] results, int numOfResults)
 		{
 			for (int i = 0; i < numOfResults; i++)

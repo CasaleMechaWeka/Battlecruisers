@@ -118,7 +118,7 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // FELIX  TEMP
+            // FELIX  TEMP  Disable AI
             //// AI
             //ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
             //IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
@@ -140,7 +140,7 @@ namespace BattleCruisers.Scenes
 
 		void Update()
 		{
-			// FELIX  Adapt for IPad :P
+            // IPAD:  Adapt input for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
 				modalMenuController.ShowMenu(OnModalMenuDismissed);
