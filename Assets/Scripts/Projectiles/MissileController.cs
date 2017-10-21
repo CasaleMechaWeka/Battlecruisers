@@ -33,7 +33,6 @@ namespace BattleCruisers.Projectiles
 			target.Destroyed += Target_Destroyed;
 		}
 
-		// FELIX  Don't instantly destroy missile, let it go until some maximum range/time
 		private void Target_Destroyed(object sender, DestroyedEventArgs e)
 		{
 			CleanUp();

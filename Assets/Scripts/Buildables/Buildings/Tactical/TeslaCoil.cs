@@ -57,7 +57,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		{
 			base.OnUpdate();
 
-			// FELIX  Don't insta-destroy rockets with no feedback, draw some cool lighting (somehow) ?
 			if (Target != null && _fireIntervalManager.ShouldFire())
 			{
 				Target.TakeDamage(_teslaCoilStats.damage);

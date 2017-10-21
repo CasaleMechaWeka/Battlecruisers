@@ -2,9 +2,6 @@
 
 namespace BattleCruisers.Data
 {
-    // FELIX  Eventually add:
-    // + Loot given on accomplishment
-    // + Level specific graphics (ie, background image, lighting perhaps?)
     public class Level : ILevel
     {
 		public int Num { get; private set; }

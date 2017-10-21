@@ -31,7 +31,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             }
         }
 
-        // FELIX  Units should never show number of drones text mesh :/
         // Should only be visible for player buildables, not AI buildables
         private bool ShowToggleDroneButton 
         { 

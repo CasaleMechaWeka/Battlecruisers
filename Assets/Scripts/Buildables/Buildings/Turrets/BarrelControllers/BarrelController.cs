@@ -10,9 +10,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    /// <summary>
-    /// FELIX  Take accuracy into consideration.  Perhaps in AngleCalculator?
-    /// </summary>
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer
     {
         protected IFireIntervalManager _fireIntervalManager;

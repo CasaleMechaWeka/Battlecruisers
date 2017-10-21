@@ -118,7 +118,7 @@ namespace BattleCruisers.Data.Static
 		{
 			Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
-			// FELIX  TEMP  Unlock all levels :)
+            // FELIX  TEMP  Only unlock first level for real game :P
 			int numOfLevelsCompleted = 20;
 			//int numOfLevelsCompleted = 0;
 
@@ -131,7 +131,6 @@ namespace BattleCruisers.Data.Static
 				AllUnitKeys());
 		}
 
-        // FELIX  Create 4th set :)
 		private IList<ILevel> CreateLevels()
 		{
 			return new List<ILevel>()
