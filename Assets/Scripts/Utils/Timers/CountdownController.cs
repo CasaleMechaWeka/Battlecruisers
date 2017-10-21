@@ -12,6 +12,8 @@ namespace BattleCruisers.Utils.Timers
 
         public int durationInS;
 
+        public bool IsInProgress { get { return gameObject.activeSelf; } }
+
         public void Initialise()
         {
             _countdownText = GetComponent<TextMesh>();
