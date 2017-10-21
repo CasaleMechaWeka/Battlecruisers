@@ -57,7 +57,6 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.OnBuildableCompleted();
 
-			// FELIX  Spinner is never visible :(
 			_spinner.StartRotating();
 			_spinner.StopRotating();
 			_spinner.Renderer.enabled = false;
