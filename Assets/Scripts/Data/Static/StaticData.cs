@@ -119,10 +119,10 @@ namespace BattleCruisers.Data.Static
         /// </summary>
         private GameModel CreateInitialGameModel()
         {
-			// FELIX  TEMP  For final game, don't add ALL the prefabs :D
+			// TEMP  For final game, don't add ALL the prefabs :D
             Loadout playerLoadout = new Loadout(AllHullKeys()[4], AllBuildingKeys(), AllUnitKeys());
 
-            // FELIX  TEMP  For final game only unlock first level :P
+            // TEMP  For final game only unlock first level :P
 			int numOfLevelsCompleted = 20;
 			//int numOfLevelsCompleted = 0;
 

@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene
 
 		void Update()
 		{
-			// FELIX  Adapt for IPad :P
+			// IPAD  Adapt for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
 				DismissMenu(UserAction.Dismissed);

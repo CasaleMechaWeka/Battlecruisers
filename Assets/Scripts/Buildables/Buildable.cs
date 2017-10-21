@@ -47,7 +47,7 @@ namespace BattleCruisers.Buildables
 
         private const float DELETE_DELAY_IN_S = 3;
         private const float MAX_BUILD_PROGRESS = 1;
-        // FELIX  TEMP  Build cheat multiplier
+        // TEMP  Build cheat multiplier
         private const float BUILD_CHEAT_MULTIPLIER = 10;
         //private const float BUILD_CHEAT_MULTIPLIER = 50;
 

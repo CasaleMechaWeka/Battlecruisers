@@ -19,6 +19,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
+// === Tag keys :D ===
+// FELIX    => Code todo
+// TEMP     => Temporary for testing
+// IPAD     => Update for IPad (usualy input related)
 namespace BattleCruisers.Scenes
 {
     /// <summary>
@@ -52,7 +56,7 @@ namespace BattleCruisers.Scenes
                 modalMenuController, cameraController, playerCruiserHealthBar, aiCruiserHealthBar, deferrer);
 
 
-			// FELIX  TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
+			// TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
 			if (ApplicationModel.SelectedLevel == -1)
 			{
 				ApplicationModel.SelectedLevel = 1;
@@ -118,7 +122,7 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // FELIX  TEMP  Disable AI
+            // TEMP  Disable AI
             //// AI
             //ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
             //IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
@@ -146,7 +150,7 @@ namespace BattleCruisers.Scenes
 				modalMenuController.ShowMenu(OnModalMenuDismissed);
 				PauseGame();
 			}
-			// FELIX  TEMP  Insta win :P
+			// TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W))
 			{
 				_aiCruiser.TakeDamage(_aiCruiser.Health);
