@@ -12,6 +12,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Buildables
         private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
         private HealthBarController _healthBar;
-        private bool _isDeleting;
+        private CountdownController _deleteCountdown;
 
         protected IUIManager _uiManager;
         protected ICruiser _parentCruiser;
@@ -145,7 +146,10 @@ namespace BattleCruisers.Buildables
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
 
-            _isDeleting = false;
+            // FELIX  Modify, once all prefabs have a countdown :)
+            _deleteCountdown = gameObject.GetComponentInChildren<CountdownController>(includeInactive: true);
+            //Assert.IsNotNull(_deleteCountdown);
+            _deleteCountdown.Initialise();
         }
 
         // Reuse text mesh for showing num of drones while building is being built.
@@ -332,19 +336,17 @@ namespace BattleCruisers.Buildables
 
         public void InitiateDelete()
         {
-            Invoke("Destroy", DELETE_DELAY_IN_S);
-            _isDeleting = true;
+            _deleteCountdown.Begin(Destroy);
         }
 
         public void CancelDelete()
         {
-            CancelInvoke("Destroy");
-            _isDeleting = false;
+            _deleteCountdown.Cancel();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_isDeleting)
+            if (_deleteCountdown.IsInProgress)
             {
                 CancelDelete();
             }

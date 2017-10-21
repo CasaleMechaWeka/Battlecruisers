@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test
 
 		void Start() 
 		{
-            Helper helper = new Helper(numOfDrones: 2);
+            Helper helper = new Helper(numOfDrones: 20);
 			
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
@@ -22,6 +22,7 @@ namespace BattleCruisers.Scenes.Test
             foreach (IBuilding building in buildings)
             {
                 helper.InitialiseBuilding(building, targetsFactory: targetsFactory, enemyCruiser: enemyCruiser);
+                building.CompletedBuildable += (sender, e) => building.InitiateDelete();
                 building.StartConstruction();
             }
 		}
