@@ -13,7 +13,6 @@ namespace BattleCruisers.Movement.Velocity
 		private Vector2 _velocity;
 
 		protected readonly Rigidbody2D _rigidBody;
-		protected readonly IVelocityProvider _maxVelocityProvider;
 
 		private const float VELOCITY_EQUALITY_MARGIN = 0.1f;
 		protected const float MAX_VELOCITY_SMOOTH_TIME = 1;
@@ -25,12 +24,10 @@ namespace BattleCruisers.Movement.Velocity
 		}
 
         public TargetVelocityMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
+            : base(maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);
-            Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
-
 			_rigidBody = rigidBody;
-			_maxVelocityProvider = maxVelocityProvider;
 		}
 
         public override void AdjustVelocity()

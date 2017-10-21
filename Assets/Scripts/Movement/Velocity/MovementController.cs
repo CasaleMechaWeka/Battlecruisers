@@ -1,14 +1,24 @@
-﻿using BattleCruisers.Buildables.Units;
-using System;
+﻿using System;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity.Providers;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-	public abstract class MovementController : IMovementController
+    public abstract class MovementController : IMovementController
 	{
+        protected readonly IVelocityProvider _maxVelocityProvider;
+
 		public abstract Vector2 Velocity { get; set; } 
 
 		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
+
+        public MovementController(IVelocityProvider maxVelocityProvider)
+        {
+            Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
+            _maxVelocityProvider = maxVelocityProvider;
+        }
 
         public virtual void Activate() { }
 

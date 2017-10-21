@@ -9,8 +9,6 @@ namespace BattleCruisers.Movement.Velocity
     public class PatrollingMovementController : MovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
-        // FELIX  Move to parent class?
-        private readonly IVelocityProvider _maxVelocityProvider;
 		private readonly IList<IPatrolPoint> _patrolPoints;
 
 		private Vector2 _patrollingVelocity;
@@ -27,13 +25,12 @@ namespace BattleCruisers.Movement.Velocity
 		}
 
         public PatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
+            : base(maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);
-            Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
 			Assert.IsTrue(patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
 
 			_rigidBody = rigidBody;
-			_maxVelocityProvider = maxVelocityProvider;
 			_patrolPoints = patrolPoints;
 
 			_targetPatrolPoint = patrolPoints[0];
