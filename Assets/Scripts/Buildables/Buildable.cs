@@ -26,7 +26,6 @@ namespace BattleCruisers.Buildables
         private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
         private HealthBarController _healthBar;
-        private CountdownController _deleteCountdown;
 
         protected IUIManager _uiManager;
         protected ICruiser _parentCruiser;
@@ -116,6 +115,19 @@ namespace BattleCruisers.Buildables
 
         public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
 
+        private CountdownController _deleteCountdown;
+        private CountdownController DeleteCountdown
+        {
+            get
+            {
+                if (_deleteCountdown == null)
+                {
+                    _deleteCountdown = _factoryProvider.PrefabFactory.CreateDeleteCountdown(transform);
+                }
+                return _deleteCountdown;
+            }
+        }
+
         #region IComparableItem
         Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
         string IComparableItem.Description { get { return description; } }
@@ -145,11 +157,6 @@ namespace BattleCruisers.Buildables
             _numOfDronesText = gameObject.GetComponentInChildren<NumOfDronesTextController>(includeInactive: true);
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
-
-            // FELIX  Modify, once all prefabs have a countdown :)
-            _deleteCountdown = gameObject.GetComponentInChildren<CountdownController>(includeInactive: true);
-            //Assert.IsNotNull(_deleteCountdown);
-            _deleteCountdown.Initialise();
         }
 
         // Reuse text mesh for showing num of drones while building is being built.
@@ -336,17 +343,17 @@ namespace BattleCruisers.Buildables
 
         public void InitiateDelete()
         {
-            _deleteCountdown.Begin(Destroy);
+            DeleteCountdown.Begin(Destroy);
         }
 
         public void CancelDelete()
         {
-            _deleteCountdown.Cancel();
+            DeleteCountdown.Cancel();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_deleteCountdown.IsInProgress)
+            if (DeleteCountdown.IsInProgress)
             {
                 CancelDelete();
             }

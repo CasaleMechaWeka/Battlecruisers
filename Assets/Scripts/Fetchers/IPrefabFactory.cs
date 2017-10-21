@@ -3,6 +3,8 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Timers;
+using UnityEngine;
 
 namespace BattleCruisers.Fetchers
 {
@@ -16,5 +18,7 @@ namespace BattleCruisers.Fetchers
 
 		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
+
+        CountdownController CreateDeleteCountdown(Transform parent);
 	}
 }

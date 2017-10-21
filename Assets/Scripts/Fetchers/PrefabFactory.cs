@@ -3,6 +3,8 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Timers;
 using UnityEngine;
 
 namespace BattleCruisers.Fetchers
@@ -36,20 +38,6 @@ namespace BattleCruisers.Fetchers
             return CreateBuildable(unitWrapperPrefab.UnityObject);
 		}
 
-		public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
-		{
-            Cruiser cruiser = _prefabFetcher.GetPrefab<Cruiser>(hullKey);
-			cruiser.StaticInitialise();
-			return cruiser;
-		}
-
-		public Cruiser CreateCruiser(Cruiser cruiserPrefab)
-		{
-            Cruiser cruiser = Object.Instantiate(cruiserPrefab);
-			cruiser.StaticInitialise();
-			return cruiser;
-		}
-
 		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : class, IBuildable
 		{
 			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
@@ -66,5 +54,28 @@ namespace BattleCruisers.Fetchers
 			buildableWrapper.Buildable.StaticInitialise();
 			return buildableWrapper.Buildable;
 		}
-	}
+
+        public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
+        {
+            Cruiser cruiser = _prefabFetcher.GetPrefab<Cruiser>(hullKey);
+            cruiser.StaticInitialise();
+            return cruiser;
+        }
+
+        public Cruiser CreateCruiser(Cruiser cruiserPrefab)
+        {
+            Cruiser cruiser = Object.Instantiate(cruiserPrefab);
+            cruiser.StaticInitialise();
+            return cruiser;
+        }
+
+        public CountdownController CreateDeleteCountdown(Transform parent)
+        {
+            CountdownController countdownPrefab = _prefabFetcher.GetPrefab<CountdownController>(StaticPrefabKeys.UI.DeleteCountdown);
+            CountdownController newCountdown = Object.Instantiate(countdownPrefab);
+            newCountdown.transform.SetParent(parent, worldPositionStays: false);
+            newCountdown.Initialise();
+            return newCountdown;
+        }
+    }
 }

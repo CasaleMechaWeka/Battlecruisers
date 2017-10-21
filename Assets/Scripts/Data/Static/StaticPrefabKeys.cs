@@ -65,5 +65,10 @@ namespace BattleCruisers.Data.Static
 			public static HullKey Rockjaw { get { return new HullKey("Rockjaw"); } }
 			public static HullKey Trident { get { return new HullKey("Trident"); } }
 		}
+
+        public static class UI
+        {
+            public static UIKey DeleteCountdown { get { return new UIKey("DeleteCountdown"); } }
+        }
 	}
 }
