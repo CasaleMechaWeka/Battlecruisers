@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX  Remove SternTop & BowTop slots?
     public enum SlotType
 	{
-		None, SternTop, SternBottom, BowTop, BowBottom, Platform, Deck, Utility, Mast
+        None, Utility, Stern, Mast, Bow, Platform, Deck
 	}
 
     public interface ISlot
