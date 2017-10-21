@@ -23,11 +23,6 @@ namespace BattleCruisers.Tests.AI.Drones
 		{
             _strategy = Substitute.For<IDroneFocusingStrategy>();
 
-            // FELIX  Remove!
-			//_strategy.EvaluateWhenUnitStarted.Returns(true);
-			//_strategy.EvaluateWhenBuildingStarted.Returns(true);
-            //_strategy.ForceInProgressBuildingToFocused.Returns(false);
-
             _droneManager = Substitute.For<IDroneManager>();
             _droneManager.NumOfDrones = 12;
 			_aiCruiser = Substitute.For<ICruiserController>();
