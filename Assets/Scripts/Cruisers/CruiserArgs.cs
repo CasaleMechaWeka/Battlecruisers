@@ -25,6 +25,8 @@ namespace BattleCruisers.Cruisers
             IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider,
             IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
         {
+            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
+
             Faction = faction;
             EnemyCruiser = enemyCruiser;
             HealthBarController = healthBarController;

@@ -37,8 +37,10 @@ namespace BattleCruisers.Cruisers
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = facingDirection == Direction.Left;
 
-            cruiser.Initialise(faction, enemyCruiser, healthBar, _uiManager, droneManager,
+            ICruiserArgs cruiserArgs = new CruiserArgs(faction, enemyCruiser, healthBar, _uiManager, droneManager,
                 droneConsumerProvider, factoryProvider, facingDirection, repairManager, shouldShowFog);
+
+            cruiser.Initialise(cruiserArgs);
         }
 	}
 }

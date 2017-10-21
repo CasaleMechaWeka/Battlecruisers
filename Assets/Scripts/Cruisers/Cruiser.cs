@@ -76,28 +76,23 @@ namespace BattleCruisers.Cruisers
             return new TextMeshWrapper(numOfRepairDronesText);
         }
 
-        // FELIX  Simplify parameters, wrap some in a class?
-        public void Initialise(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
-            IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider, 
-            IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
+        public void Initialise(ICruiserArgs args)
         {
-            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
-
-            Faction = faction;
-            _enemyCruiser = enemyCruiser;
-            _healthBarController = healthBarController;
-            _uiManager = uiManager;
-            DroneManager = droneManager;
+            Faction = args.Faction;
+            _enemyCruiser = args.EnemyCruiser;
+            _healthBarController = args.HealthBarController;
+            _uiManager = args.UiManager;
+            DroneManager = args.DroneManager;
             DroneManager.NumOfDrones = numOfDrones;
-            DroneConsumerProvider = droneConsumerProvider;
-            FactoryProvider = factoryProvider;
-            Direction = facingDirection;
+            DroneConsumerProvider = args.DroneConsumerProvider;
+            FactoryProvider = args.FactoryProvider;
+            Direction = args.FacingDirection;
 			
-            repairManager.Initialise(this);
-            RepairManager = repairManager;
+            args.RepairManager.Initialise(this);
+            RepairManager = args.RepairManager;
 
             _healthBarController.Initialise(this);
-            _fog.Initialise(shouldShowFog);
+            _fog.Initialise(args.ShouldShowFog);
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
