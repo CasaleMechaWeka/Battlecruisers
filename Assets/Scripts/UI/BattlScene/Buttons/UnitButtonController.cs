@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class UnitButtonController : BuildableButtonController
 	{
 		private IBuildableWrapper<IUnit> _unitWrapper;
-		private Factory _factory;
+		private IFactory _factory;
 
 		public void Initialize(IBuildableWrapper<IUnit> unitWrapper, IDroneManager droneManager, UIManager uiManager)
 		{
@@ -20,8 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public override void OnPresenting(object activationParameter)
 		{
-            // FELIX  Use IFactory?
-			_factory = activationParameter.Parse<Factory>();
+			_factory = activationParameter.Parse<IFactory>();
 
 			if (_factory.BuildableState != BuildableState.Completed)
 			{
