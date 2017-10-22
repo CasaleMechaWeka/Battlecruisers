@@ -1,10 +1,4 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Projectiles.Stats.TEMP
+﻿namespace BattleCruisers.Projectiles.TEMP
 {
-    public class NukeStats : CruisingProjectileStats<NukeController>
-    {
-        // FELIX  Move to wrapper?
-        public Vector2 InitialVelocity { get { return new Vector2(0, 0); } }
-    }
+    public class NukeStats : CruisingProjectileStats<NukeController> { }
 }
