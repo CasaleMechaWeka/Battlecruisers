@@ -13,13 +13,13 @@ namespace BattleCruisers.Projectiles
     public class NukeController : ProjectileController, ITargetProvider
 	{
 		private IMovementControllerFactory _movementControllerFactory;
-		private NukeStatsWrapper _nukeStats;
+		private INukeStats _nukeStats;
 		private IFlightPointsProvider _flightPointsProvider;
 
 		public ITarget Target { get; private set; }
 
 		public void Initialise(
-            NukeStatsWrapper nukeStats, 
+            INukeStats nukeStats, 
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             IDamageApplier damageApplier, 

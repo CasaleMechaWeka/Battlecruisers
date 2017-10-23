@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,8 +14,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
     public class NukeLauncherController : Building
 	{
 		private NukeSpinner _spinner;
-		private NukeController _nukeMissile;
-		private NukeStats _nukeMissileStats;
+		private INukeStats _nukeStats;
+        private NukeController _launchedNuke;
 
 		public SiloHalfController leftSiloHalf, rightSiloHalf;
 		public NukeController nukeMissilePrefab;
@@ -29,9 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			base.StaticInitialise();
 
-			Assert.IsNotNull(leftSiloHalf);
-			Assert.IsNotNull(rightSiloHalf);
-			Assert.IsNotNull(nukeMissilePrefab);
+            Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
 			leftSiloHalf.StaticInitialise();
 			rightSiloHalf.StaticInitialise();
@@ -40,7 +39,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(_spinner);
 			_spinner.StaticInitialise();
 
-            _nukeMissileStats = new NukeStats(nukePrefab: nukeMissilePrefab, damage: 20000, maxVelocityInMPerS: 10, cruisingAltitudeInM: 30, damageRadiusInM: 10);
+            // FELIX  Check works when inactive :/
+            _nukeStats = GetComponent<INukeStats>();
+            Assert.IsNotNull(_nukeStats);
 		}
 
 		protected override void OnInitialised()
@@ -71,21 +72,21 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		private void CreateNuke()
 		{
-			_nukeMissile = Instantiate(nukeMissilePrefab);
-			_nukeMissile.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
+			_launchedNuke = Instantiate(nukeMissilePrefab);
+			_launchedNuke.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
             ITargetFilter damageTargetFilter = _factoryProvider.TargetsFactory.CreateDummyTargetFilter(isMatchResult: true);
-			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeMissileStats.Damage, _nukeMissileStats.DamageRadiusInM, damageTargetFilter);
+			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeStats.Damage, _nukeStats.DamageRadiusInM, damageTargetFilter);
             IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
-			_nukeMissile.Initialise(_nukeMissileStats, _nukeMissileStats.InitialVelocity, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+            _launchedNuke.Initialise(_nukeStats, _nukeStats.InitialVelocity, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
 		{
 			leftSiloHalf.ReachedDesiredAngle -= SiloHalf_ReachedDesiredAngle;
-			_nukeMissile.Launch();
+			_launchedNuke.Launch();
 		}
 
         protected override IList<Renderer> GetInGameRenderers()

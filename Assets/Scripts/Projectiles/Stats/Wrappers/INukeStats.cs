@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Projectiles.Stats.Wrappers
 {
-    public interface INukeProjectileStats : ICruisingProjectileStats
+    public interface INukeStats : ICruisingProjectileStats
     {
         Vector2 InitialVelocity { get; }
     }
