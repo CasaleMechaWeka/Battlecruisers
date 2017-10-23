@@ -80,7 +80,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeStats.Damage, _nukeStats.DamageRadiusInM, damageTargetFilter);
             IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
-            _launchedNuke.Initialise(_nukeStats, _nukeStats.InitialVelocity, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+            _launchedNuke.Initialise(_nukeStats, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
