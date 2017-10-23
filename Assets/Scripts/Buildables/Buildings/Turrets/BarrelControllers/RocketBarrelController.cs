@@ -1,15 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
-using Temp = BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -17,27 +15,35 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
 		private Faction _faction;
+        private ICruisingProjectileStats _rocketStats;
 
-		public RocketController rocketPrefab;
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
 
-		private const float ROCKET_CRUISING_ALTITUDE_IN_M = 25;
+            _rocketStats = _projectileStats as ICruisingProjectileStats;
+            Assert.IsNotNull(_rocketStats);
 
-		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController,
-			IMovementControllerFactory movementControllerFactory, Faction faction, IFlightPointsProvider flightPointsProvider)
+            RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
+            Assert.IsTrue(rocketSpawners.Length != 0);
+            _rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
+        }
+
+		public void Initialise(
+            ITargetFilter targetFilter, 
+            IAngleCalculator angleCalculator, 
+            IRotationMovementController rotationMovementController,
+			IMovementControllerFactory movementControllerFactory, 
+            Faction faction, 
+            IFlightPointsProvider flightPointsProvider)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
-			Assert.IsNotNull(rocketPrefab);
 			_faction = faction;
 
-			RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
-			Assert.IsTrue(rocketSpawners.Length != 0);
-			_rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
-
-			RocketStats rocketStats = new RocketStats(rocketPrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS, ROCKET_CRUISING_ALTITUDE_IN_M);
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-				rocketSpawner.Initialise(rocketStats, movementControllerFactory, flightPointsProvider);
+				rocketSpawner.Initialise(_rocketStats, movementControllerFactory, flightPointsProvider);
 			}
 		}
 

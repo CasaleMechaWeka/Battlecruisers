@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles
 		public ITarget Target { get; private set; }
 
 		public void Initialise(
-            CruisingProjectileStatsWrapper rocketStats, 
+            ICruisingProjectileStats rocketStats, 
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             ITarget target, 

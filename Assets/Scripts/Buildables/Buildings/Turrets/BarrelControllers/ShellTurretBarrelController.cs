@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
@@ -18,30 +16,24 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private ShellSpawner[] _shellSpawners;
         private float _damagePerBarrel;
 
-        // FELIX  Move shellPrefab to spawner
-
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 
-			Assert.IsNotNull(shellPrefab);
-			
 			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
 			Assert.IsNotNull(_shellSpawners);
             Assert.IsTrue(_shellSpawners.Length != 0);
 
-            _damagePerBarrel = TurretStats.damage / _shellSpawners.Length;
+            _damagePerBarrel = _projectileStats.Damage / _shellSpawners.Length;
 		}
 
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
-            ShellStats shellStats = new ShellStats(shellPrefab, _damagePerBarrel, TurretStats.ignoreGravity, TurretStats.bulletVelocityInMPerS);
-
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(shellStats, targetFilter);
+                spawner.Initialise(_projectileStats, targetFilter);
             }
 		}
 

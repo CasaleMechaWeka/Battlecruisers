@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -10,11 +11,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    // FELIX  Avoid duplicate projectile stats code
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer
     {
+        protected IProjectileStats _projectileStats;
         protected IFireIntervalManager _fireIntervalManager;
-
         protected ITargetFilter _targetFilter;
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
@@ -22,13 +22,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
-        public virtual TurretStats TurretStats { get; private set; }
+        public TurretStats TurretStats { get; private set; }
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
 
 		public virtual void StaticInitialise()
         {
             Renderers = GetComponentsInChildren<Renderer>();
+            Assert.IsTrue(Renderers.Length != 0);
+
+            // FELIX  Check this finds inactive projectile stats?
+            _projectileStats = GetComponent<IProjectileStats>();
+            Assert.IsNotNull(_projectileStats);
+
             TurretStats = SetupTurretStats();
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
         }

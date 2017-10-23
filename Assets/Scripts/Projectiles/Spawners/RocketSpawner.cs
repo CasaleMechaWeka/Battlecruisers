@@ -10,14 +10,14 @@ namespace BattleCruisers.Projectiles.Spawners
 {
     public class RocketSpawner : ProjectileSpawner
 	{
-        private CruisingProjectileStatsWrapper _rocketStats;
+        private ICruisingProjectileStats _rocketStats;
 		private IMovementControllerFactory _movementControllerFactory;
 		private IFlightPointsProvider _flightPointsProvider;
 
         public RocketController rocketPrefab;
         protected override ProjectileController ProjectilePrefab { get { return rocketPrefab; } }
 
-        public void Initialise(CruisingProjectileStatsWrapper rocketStats, IMovementControllerFactory movementControllerFactory, IFlightPointsProvider flightPointsProvider)
+        public void Initialise(ICruisingProjectileStats rocketStats, IMovementControllerFactory movementControllerFactory, IFlightPointsProvider flightPointsProvider)
 		{
             base.Initialise(rocketStats);
 
