@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Projectiles.Stats
 {
-    public abstract class CruisingProjectileStats : ProjectileStats
+    public class CruisingProjectileStats : ProjectileStats
     {
         public float cruisingAltitudeInM;
 
