@@ -1,16 +1,18 @@
-﻿using BattleCruisers.Projectiles.Stats;
+﻿using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
     public abstract class BaseShellSpawner : ProjectileSpawner
 	{
-		protected ShellStats _shellStats;
 		protected ITargetFilter _targetFilter;
 
-		public void Initialise(ShellStats shellStats, ITargetFilter targetFilter)
+        public void Initialise(IProjectileStats projectileStats, ITargetFilter targetFilter)
 		{
-			_shellStats = shellStats;
+            base.Initialise(projectileStats);
+
+            Assert.IsNotNull(targetFilter);
 			_targetFilter = targetFilter;
 		}
 	}

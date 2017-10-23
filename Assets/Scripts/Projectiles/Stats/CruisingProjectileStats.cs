@@ -1,13 +1,14 @@
-﻿namespace BattleCruisers.Projectiles.Stats
-{
-    public class CruisingProjectileStats<TPrefab> : ProjectileStats<TPrefab> where TPrefab : ProjectileController
-	{
-		public float CruisingAltitudeInM { get; private set; }
+﻿using UnityEngine.Assertions;
 
-        public CruisingProjectileStats(TPrefab projectilePrefab, float damage, float maxVelocityInMPerS, float cruisingAltitudeInM, float damageRadiusInM = 0)
-            : base(projectilePrefab, damage, maxVelocityInMPerS, ignoreGravity: true, damageRadiusInM: damageRadiusInM)
-		{
-			CruisingAltitudeInM = cruisingAltitudeInM;
-		}
-	}
+namespace BattleCruisers.Projectiles.Stats
+{
+    public abstract class CruisingProjectileStats : ProjectileStats
+    {
+        public float cruisingAltitudeInM;
+
+        protected override void OnAwake()
+        {
+            Assert.IsTrue(cruisingAltitudeInM > 0);
+        }
+    }
 }

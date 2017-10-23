@@ -1,23 +1,32 @@
-﻿namespace BattleCruisers.Projectiles.Stats
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Projectiles.Stats
 {
-    public abstract class ProjectileStats<TPrefab> : IProjectileStats where TPrefab : ProjectileController
+    // Extends MonoBehaviour so can be set in Unity inspector
+    public abstract class ProjectileStats : MonoBehaviour
     {
-		protected virtual float InitialVelocityMultiplier { get { return 1; } }
+        public float damage;
+        public float maxVelocityInMPerS;
+        public float initialVelocityMultiplier;
+        public bool ignoreGravity;
+        public bool hasAreaOfEffectDamage;
+        public float damageRadiusInM;
 
-        public TPrefab ProjectilePrefab { get; private set; }
-        public float Damage { get; private set; }
-        public float MaxVelocityInMPerS { get; private set; }
-        public float InitialVelocityInMPerS { get { return MaxVelocityInMPerS * InitialVelocityMultiplier; } }
-        public bool IgnoreGravity { get; private set; }
-        public float DamageRadiusInM { get; private set; }
+        void Awake()
+        {
+            Assert.IsTrue(damage > 0);
+            Assert.IsTrue(maxVelocityInMPerS > 0);
+            Assert.IsTrue(initialVelocityMultiplier >= 0);
 
-        public ProjectileStats(TPrefab projectilePrefab, float damage, float maxVelocityInMPerS, bool ignoreGravity, float damageRadiusInM = 0)
-		{
-            ProjectilePrefab = projectilePrefab;
-			Damage = damage;
-			MaxVelocityInMPerS = maxVelocityInMPerS;
-			IgnoreGravity = ignoreGravity;
-            DamageRadiusInM = damageRadiusInM;
-		}
+            if (hasAreaOfEffectDamage)
+            {
+                Assert.IsTrue(damageRadiusInM > 0);
+            }
+
+            OnAwake();
+        }
+
+        protected virtual void OnAwake() { }
 	}
 }

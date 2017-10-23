@@ -1,8 +1,7 @@
-﻿namespace BattleCruisers.Projectiles.TEMP.Wrappers
+﻿namespace BattleCruisers.Projectiles.Stats.Wrappers
 {
-    public interface IProjectileStats<TPrefab> where TPrefab : ProjectileController
+    public interface IProjectileStats
     {
-        TPrefab ProjectilePrefab { get; }
         float Damage { get; }
         float MaxVelocityInMPerS { get; }
         bool IgnoreGravity { get; }

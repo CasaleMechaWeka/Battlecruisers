@@ -4,11 +4,14 @@ namespace BattleCruisers.Projectiles.Spawners
 {
     public class BombSpawner : BaseShellSpawner
 	{
+        public ProjectileController bombPrefab;
+        protected override ProjectileController ProjectilePrefab { get { return bombPrefab; } }
+
 		public void SpawnShell(float currentXVelocityInMPers)
 		{
-            ProjectileController shell = Instantiate(_shellStats.ProjectilePrefab, transform.position, new Quaternion());
+            ProjectileController shell = Instantiate(bombPrefab, transform.position, new Quaternion());
 			Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-			shell.Initialise(_shellStats, shellVelocity, _targetFilter);
+            shell.Initialise(_projectileStats, shellVelocity, _targetFilter);
 		}
 	}
 }

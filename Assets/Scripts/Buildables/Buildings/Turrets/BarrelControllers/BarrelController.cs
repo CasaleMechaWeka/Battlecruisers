@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
+    // FELIX  Avoid duplicate projectile stats code
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer
     {
         protected IFireIntervalManager _fireIntervalManager;

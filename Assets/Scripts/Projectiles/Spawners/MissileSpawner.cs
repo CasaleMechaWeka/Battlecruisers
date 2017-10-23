@@ -1,30 +1,36 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
     public class MissileSpawner : ProjectileSpawner
 	{
-		private MissileStats _missileStats;
 		private IMovementControllerFactory _movementControllerFactory;
 		private ITargetPositionPredictorFactory _targetPositionPredictorFactory;
 
-		public void Initialise(MissileStats missileStats, IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+        public MissileController missilePrefab;
+        protected override ProjectileController ProjectilePrefab { get { return missilePrefab; } }
+
+        public void Initialise(IProjectileStats missileStats, IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
-			_missileStats = missileStats;
+            base.Initialise(missileStats);
+
+            Helper.AssertIsNotNull(movementControllerFactory, targetPositionPredictorFactory);
+
 			_movementControllerFactory = movementControllerFactory;
 			_targetPositionPredictorFactory = targetPositionPredictorFactory;
 		}
 
 		public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{
-            MissileController missile = Instantiate(_missileStats.ProjectilePrefab, transform.position, new Quaternion());
-			Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _missileStats.InitialVelocityInMPerS);
-			missile.Initialise(_missileStats, missileVelocity, targetFilter, target, _movementControllerFactory, _targetPositionPredictorFactory);
+            MissileController missile = Instantiate(missilePrefab, transform.position, new Quaternion());
+            Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
+            missile.Initialise(_projectileStats, missileVelocity, targetFilter, target, _movementControllerFactory, _targetPositionPredictorFactory);
 		}
 	}
 }

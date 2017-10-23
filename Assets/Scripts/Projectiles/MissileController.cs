@@ -2,7 +2,7 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles
 	{
 		public  ITarget Target { get; private set; }
 
-		public void Initialise(MissileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
+		public void Initialise(IProjectileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			base.Initialise(missileStats, initialVelocityInMPerS, targetFilter);

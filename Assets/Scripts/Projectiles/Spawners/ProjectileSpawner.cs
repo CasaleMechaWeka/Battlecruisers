@@ -1,10 +1,23 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
     public abstract class ProjectileSpawner : MonoBehaviour
 	{
+        protected IProjectileStats _projectileStats;
+        protected abstract ProjectileController ProjectilePrefab { get; }
+
+        public void Initialise(IProjectileStats projectileStats)
+        {
+            Assert.IsNotNull(projectileStats);
+            _projectileStats = projectileStats;
+
+            Assert.IsNotNull(ProjectilePrefab);
+        }
+
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
 		{
 			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;

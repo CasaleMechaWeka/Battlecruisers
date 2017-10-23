@@ -1,10 +1,9 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
@@ -14,13 +13,13 @@ namespace BattleCruisers.Projectiles
     public class NukeController : ProjectileController, ITargetProvider
 	{
 		private IMovementControllerFactory _movementControllerFactory;
-		private NukeStats _nukeStats;
+		private NukeStatsWrapper _nukeStats;
 		private IFlightPointsProvider _flightPointsProvider;
 
 		public ITarget Target { get; private set; }
 
 		public void Initialise(
-            NukeStats nukeStats, 
+            NukeStatsWrapper nukeStats, 
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             IDamageApplier damageApplier, 

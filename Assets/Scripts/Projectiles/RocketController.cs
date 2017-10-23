@@ -2,7 +2,7 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles
 		public ITarget Target { get; private set; }
 
 		public void Initialise(
-            RocketStats rocketStats, 
+            CruisingProjectileStatsWrapper rocketStats, 
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             ITarget target, 

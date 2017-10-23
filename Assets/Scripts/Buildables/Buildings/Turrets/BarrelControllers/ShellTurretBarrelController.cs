@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private ShellSpawner[] _shellSpawners;
         private float _damagePerBarrel;
 
-		public ProjectileController shellPrefab;
+        // FELIX  Move shellPrefab to spawner
 
 		public override void StaticInitialise()
 		{

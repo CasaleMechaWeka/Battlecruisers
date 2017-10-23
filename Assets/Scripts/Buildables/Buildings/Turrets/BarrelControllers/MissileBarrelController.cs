@@ -5,6 +5,7 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -14,9 +15,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class MissileBarrelController : BarrelController
 	{
+        private MissileStatsWrapper _missileStats;
         private ICircularList<MissileSpawner> _missileSpawners;
 
 		public MissileController missilePrefab;
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            MissileStats stats = GetComponent<MissileStats>();
+            Assert.IsNotNull(stats);
+            _missileStats = new MissileStatsWrapper(stats);
+        }
 
 		public void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController,
 			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
@@ -29,10 +40,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			Assert.IsTrue(missileSpawners.Length != 0);
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
 
-			MissileStats missileStats = new MissileStats(missilePrefab, TurretStats.damage, TurretStats.bulletVelocityInMPerS);
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)
             {
-                missileSpawner.Initialise(missileStats, movementControllerFactory, targetPositionPredictorFactory);
+                missileSpawner.Initialise(_missileStats, movementControllerFactory, targetPositionPredictorFactory);
 			}
 		}
 
