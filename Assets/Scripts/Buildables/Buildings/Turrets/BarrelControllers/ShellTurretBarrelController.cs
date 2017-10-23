@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class ShellTurretBarrelController : BarrelController
 	{
         private ShellSpawner[] _shellSpawners;
-        private float _damagePerBarrel;
 
 		public override void StaticInitialise()
 		{
@@ -23,8 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
 			Assert.IsNotNull(_shellSpawners);
             Assert.IsTrue(_shellSpawners.Length != 0);
-
-            _damagePerBarrel = _projectileStats.Damage / _shellSpawners.Length;
 		}
 
 		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
