@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -14,13 +13,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class BomberController : AircraftController, ITargetConsumer
 	{
-		private bool _haveDroppedBombOnRun;
-		private ITargetProcessor _targetProcessor;
 		private BombSpawner _bombSpawner;
-		private IBomberMovementController _bomberMovementControler;
-		private bool _isAtCruisingHeight;
+        private IProjectileStats _bombStats;
+        private ITargetProcessor _targetProcessor;
+        private IBomberMovementController _bomberMovementControler;
+		private bool _haveDroppedBombOnRun;
+        private bool _isAtCruisingHeight;
 
-		public BomberStats bomberStats;
 		public float cruisingAltitudeInM;
 
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
@@ -42,7 +41,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{ 
 			get 
 			{ 
-				return bomberStats.damage * AVERAGE_FIRE_RATE_PER_S;
+                return _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
 			} 
 		}
 		#endregion Properties
@@ -51,27 +50,28 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.StaticInitialise();
 
-			Assert.IsNotNull(bomberStats);
-			
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;
+
 			_attackCapabilities.Add(TargetType.Cruiser);
 			_attackCapabilities.Add(TargetType.Buildings);
 			
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
+
+            // FELIX  Check works on inactive :/
+            _bombStats = GetComponent<IProjectileStats>();
+            Assert.IsNotNull(_bombStats);
 		}
 
 		protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
-			bool ignoreGravity = false;
-			ShellStats shellStats = new ShellStats(bomberStats.bombPrefab, bomberStats.damage, ignoreGravity, maxVelocityInMPerS);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 
-			_bombSpawner.Initialise(shellStats, targetFilter);
+            _bombSpawner.Initialise(_bombStats, targetFilter);
 
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
 		}
