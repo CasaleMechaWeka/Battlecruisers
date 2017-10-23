@@ -6,7 +6,6 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
@@ -20,14 +19,13 @@ namespace BattleCruisers.Projectiles
 
 		public void Initialise(
             INukeStats nukeStats, 
-            Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             IDamageApplier damageApplier, 
             ITarget target, 
 			IMovementControllerFactory movementControllerFactory, 
             IFlightPointsProvider flightPointsProvider)
 		{
-			base.Initialise(nukeStats, initialVelocityInMPerS, targetFilter, damageApplier);
+            base.Initialise(nukeStats, nukeStats.InitialVelocity, targetFilter, damageApplier);
 
 			_movementControllerFactory = movementControllerFactory;
 			_nukeStats = nukeStats;
