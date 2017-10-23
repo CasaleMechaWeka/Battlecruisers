@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
@@ -25,6 +26,9 @@ namespace BattleCruisers.Projectiles.Spawners
 
 			_movementControllerFactory = movementControllerFactory;
 			_flightPointsProvider = flightPointsProvider;
+
+            Assert.IsNotNull(rocketStats);
+            _rocketStats = rocketStats;
 		}
 
 		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter, Faction faction)
