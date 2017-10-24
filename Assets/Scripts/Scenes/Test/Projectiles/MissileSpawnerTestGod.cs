@@ -3,6 +3,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -36,14 +37,8 @@ namespace BattleCruisers.Scenes.Test
 				Target = _target
 			};
 
-            IProjectileStats missileStats
-                = new ProjectileStatsWrapper(
-                    damage: 50,
-                    maxVelocityInMPerS: 20,
-                    ignoreGravity: true,
-                    hasAreaOfEffectDamage: false,
-                    damageRadiusInM: 0,
-                    initialVelocityMultiplier: 0.5f);
+            ProjectileStats stats = GetComponent<ProjectileStats>();
+            IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
 
 			_missileSpawner.Initialise(missileStats, new MovementControllerFactory(null, null), new TargetPositionPredictorFactory());
 

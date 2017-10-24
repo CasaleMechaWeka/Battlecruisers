@@ -3,6 +3,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -27,15 +28,9 @@ namespace BattleCruisers.Scenes.Test
 			{
 				Target = target
 			};
-            INukeStats nukeStats
-                = new NukeStatsWrapper(
-                    damage: 50,
-                    maxVelocityInMPerS: 10,
-                    ignoreGravity: true,
-                    hasAreaOfEffectDamage: true,
-                    damageRadiusInM: 10,
-                    initialVelocityMultiplier: 1,
-                    cruisingAltitudeInM: 30);
+
+            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
+            INukeStats nukeStats = new NukeStatsWrapper(stats);
             
 			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
 			IFlightPointsProvider nukeFlightPointsProvider = new NukeFlightPointsProvider();

@@ -10,29 +10,14 @@
         public float DamageRadiusInM { get; private set; }
         public float InitialVelocityInMPerS { get; private set; }
 
-        public ProjectileStatsWrapper(ProjectileStats stats) : this(
-            stats.damage,
-            stats.maxVelocityInMPerS,
-            stats.ignoreGravity,
-            stats.hasAreaOfEffectDamage,
-            stats.damageRadiusInM,
-            stats.initialVelocityMultiplier)
-        { }
-
-        public ProjectileStatsWrapper(
-            float damage,
-            float maxVelocityInMPerS,
-            bool ignoreGravity,
-            bool hasAreaOfEffectDamage,
-            float damageRadiusInM,
-            float initialVelocityMultiplier)
+        public ProjectileStatsWrapper(ProjectileStats stats)
         {
-            Damage = damage;
-            MaxVelocityInMPerS = maxVelocityInMPerS;
-            IgnoreGravity = ignoreGravity;
-            HasAreaOfEffectDamage = hasAreaOfEffectDamage;
-            DamageRadiusInM = damageRadiusInM;
-            InitialVelocityInMPerS = MaxVelocityInMPerS * initialVelocityMultiplier;
+            Damage = stats.damage;
+            MaxVelocityInMPerS = stats.maxVelocityInMPerS;
+            IgnoreGravity = stats.ignoreGravity;
+            HasAreaOfEffectDamage = stats.hasAreaOfEffectDamage;
+            DamageRadiusInM = stats.damageRadiusInM;
+            InitialVelocityInMPerS = MaxVelocityInMPerS * stats.initialVelocityMultiplier;
         }
     }
 }
