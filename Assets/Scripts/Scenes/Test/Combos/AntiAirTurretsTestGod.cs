@@ -18,12 +18,14 @@ namespace BattleCruisers.Scenes.Test.Factories
 		{
 			Helper helper = new Helper();
    
+
             // Initialise prefab
 			unitPrefab.Initialise();
             TestAircraftController aircraft = (TestAircraftController)unitPrefab.Buildable;
             aircraft.maxHealth = 30;
             aircraft.maxVelocityInMPerS = 8;
 			aircraft.patrolPoints = patrolPoints;
+            aircraft.StaticInitialise();
 
 
             // Initialise air factory
@@ -31,6 +33,7 @@ namespace BattleCruisers.Scenes.Test.Factories
             helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
             factory.CompletedBuildable += Factory_CompletedBuildable;
             factory.StartConstruction();
+
 
             // Initialise turrets
             TurretController[] turrets = FindObjectsOfType<TurretController>();
