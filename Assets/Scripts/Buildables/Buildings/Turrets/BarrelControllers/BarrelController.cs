@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -31,10 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Renderers = GetComponentsInChildren<Renderer>();
             Assert.IsTrue(Renderers.Length != 0);
 
-            // FELIX  Check this finds inactive projectile stats?
-            _projectileStats = GetComponent<IProjectileStats>();
-            Assert.IsNotNull(_projectileStats);
-
+            _projectileStats = GetProjectileStats();
             TurretStats = SetupTurretStats();
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
         }
@@ -45,6 +43,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(turretStats);
             turretStats.Initialise();
             return turretStats;
+        }
+
+        protected virtual IProjectileStats GetProjectileStats()
+        {
+            // FELIX  Check this finds inactive projectile stats?
+            ProjectileStats projectileStats = GetComponent<ProjectileStats>();
+            //IProjectileStats projectileStats = GetComponentInChildren<IProjectileStats>(includeInactive: true);
+            Assert.IsNotNull(projectileStats);
+            return new ProjectileStatsWrapper(projectileStats);
         }
 		
 		protected virtual IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)

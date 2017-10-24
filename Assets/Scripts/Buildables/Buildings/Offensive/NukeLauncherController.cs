@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -40,8 +41,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_spinner.StaticInitialise();
 
             // FELIX  Check works when inactive :/
-            _nukeStats = GetComponent<INukeStats>();
-            Assert.IsNotNull(_nukeStats);
+            CruisingProjectileStats nukeStats = GetComponent<CruisingProjectileStats>();
+			Assert.IsNotNull(nukeStats);
+            _nukeStats = new NukeStatsWrapper(nukeStats);
 		}
 
 		protected override void OnInitialised()

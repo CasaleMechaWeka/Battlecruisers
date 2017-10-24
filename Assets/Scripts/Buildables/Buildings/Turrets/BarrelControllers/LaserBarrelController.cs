@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -25,6 +26,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
 			Assert.IsNotNull(_laserEmitter);
 		}
+
+        protected override IProjectileStats GetProjectileStats()
+        {
+            return null;
+        }
 
 		protected override TurretStats SetupTurretStats()
         {

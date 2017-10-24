@@ -3,6 +3,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -21,12 +22,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             base.StaticInitialise();
 
-            _rocketStats = _projectileStats as ICruisingProjectileStats;
-            Assert.IsNotNull(_rocketStats);
-
             RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
             Assert.IsTrue(rocketSpawners.Length != 0);
             _rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
+        }
+
+        protected override IProjectileStats GetProjectileStats()
+        {
+            CruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
+			Assert.IsNotNull(rocketStats);
+            _rocketStats = new CruisingProjectileStatsWrapper(rocketStats);
+            return _rocketStats;
         }
 
 		public void Initialise(
