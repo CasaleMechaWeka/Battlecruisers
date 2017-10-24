@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Move to Stats namespace :/
-namespace BattleCruisers.Projectiles
+namespace BattleCruisers.Projectiles.Stats
 {
 	public class BomberStats : MonoBehaviour
 	{
