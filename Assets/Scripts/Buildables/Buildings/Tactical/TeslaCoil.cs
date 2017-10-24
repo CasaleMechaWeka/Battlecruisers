@@ -27,6 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 			_teslaCoilStats = gameObject.GetComponent<BasicTurretStats>();
 			Assert.IsNotNull(_teslaCoilStats);
+            _teslaCoilStats.Initialise();
 
 			_rocketDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(_rocketDetector);
