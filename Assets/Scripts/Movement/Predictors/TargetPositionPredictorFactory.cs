@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace BattleCruisers.Movement.Predictors
+﻿namespace BattleCruisers.Movement.Predictors
 {
-	public interface ITargetPositionPredictorFactory
+    public interface ITargetPositionPredictorFactory
 	{
 		ITargetPositionPredictor CreateLinearPredictor();
 		ITargetPositionPredictor CreateMortarPredictor();
