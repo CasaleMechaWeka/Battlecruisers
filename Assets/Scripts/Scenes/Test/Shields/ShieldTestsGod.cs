@@ -12,13 +12,19 @@ namespace BattleCruisers.Scenes.Test.Shields
 {
     public class ShieldTestsGod : MonoBehaviour 
 	{
-		public ShieldController shield;
-		public BarrelController turret;
-
 		void Start () 
 		{
+            // Setup shield
+            ShieldStats shieldStats = FindObjectOfType<ShieldStats>();
+            shieldStats.BoostMultiplier = 1;
+            ShieldController shield = FindObjectOfType<ShieldController>();
+            shield.StaticInitialise();
 			shield.Initialise(Faction.Reds);
-			turret.StaticInitialise();
+
+
+            // Setup turret
+            BarrelController turret = FindObjectOfType<BarrelController>();
+            turret.StaticInitialise();
 
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
