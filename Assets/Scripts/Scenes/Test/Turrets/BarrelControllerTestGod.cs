@@ -27,9 +27,10 @@ namespace BattleCruisers.Scenes.Test
             foreach (BarrelController barrel in turretBarrels)
 			{
 				barrel.StaticInitialise();
-				IRotationMovementController rotationMovementController = new RotationMovementController(AngleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
+                IAngleCalculator angleCalculator = AngleCalculator;
+				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-				barrel.Initialise(targetFilter, AngleCalculator, rotationMovementController);
+				barrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
 			}
 		}
 	}
