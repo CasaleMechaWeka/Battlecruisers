@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -60,7 +61,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_bombSpawner);
 
             // FELIX  Check works on inactive :/
-            _bombStats = GetComponent<IProjectileStats>();
+            ProjectileStats stats = GetComponent<ProjectileStats>();
+            _bombStats = new ProjectileStatsWrapper(stats);
             Assert.IsNotNull(_bombStats);
 		}
 
