@@ -29,8 +29,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public virtual void StaticInitialise()
         {
+            // Usually > 0, but can be 0 (invisible barrel controller for fighters)
             Renderers = GetComponentsInChildren<Renderer>();
-            Assert.IsTrue(Renderers.Length != 0);
 
             _projectileStats = GetProjectileStats();
             TurretStats = SetupTurretStats();
