@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
 			{
 				Target = target
 			};
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
+            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
 			helper.InitialiseBuilding(railgun, Faction.Blues, targetsFactory: targetsFactory);
 			railgun.StartConstruction();
 		}
