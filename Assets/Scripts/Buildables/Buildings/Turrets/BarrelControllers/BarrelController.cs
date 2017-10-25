@@ -79,7 +79,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-				float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, TurretStats.bulletVelocityInMPerS, currentAngleInRadians);
+                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
 				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
