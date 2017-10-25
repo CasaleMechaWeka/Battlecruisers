@@ -24,11 +24,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(_laserEmitter);
         }
 
-        protected override IProjectileStats GetProjectileStats()
-        {
-            return null;
-        }
-
         protected override TurretStats SetupTurretStats()
         {
             _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
