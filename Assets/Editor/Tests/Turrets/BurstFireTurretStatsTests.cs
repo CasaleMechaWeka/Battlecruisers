@@ -24,9 +24,6 @@ namespace BattleCruisers.Tests.Turrets
 
 			// Additional fields required to stop assets from failing
 			_turretStats.accuracy = 1;
-			_turretStats.damage = 10;
-			_turretStats.bulletVelocityInMPerS = 18;
-			_turretStats.ignoreGravity = true;
 			_turretStats.rangeInM = 20;
 			_turretStats.turretRotateSpeedInDegrees = 45;
 
