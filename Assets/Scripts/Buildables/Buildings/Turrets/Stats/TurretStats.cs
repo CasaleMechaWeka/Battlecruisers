@@ -5,8 +5,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     public class TurretStats : BasicTurretStats
 	{
 		public float accuracy;
-		public float bulletVelocityInMPerS;
-		public bool ignoreGravity;
 		public float turretRotateSpeedInDegrees;
 
 		public virtual bool IsInBurst { get { return false; } }
@@ -16,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             base.Initialise();
 
 			Assert.IsTrue(accuracy >= 0 && accuracy <= 1);
-			Assert.IsTrue(bulletVelocityInMPerS > 0);
 			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
 		}
 	}

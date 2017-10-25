@@ -17,16 +17,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         private const int MIN_BURST_SIZE = 2;
 
-        public override float DamagePerS
-        {
-            get
-            {
-                float cycleDamage = burstSize * damage;
-                float cycleTime = (1 / EffectiveFireRatePerS) + burstSize * (1 / burstFireRatePerS);
-                return cycleDamage / cycleTime;
-            }
-        }
-
         private int _queryIndex;
         private int QueryIndex
         {

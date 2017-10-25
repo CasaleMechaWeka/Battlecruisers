@@ -4,7 +4,5 @@
 	{
 		public float damagePerS;
 		public float laserDurationInS;
-
-		public override float DamagePerS { get { return damagePerS; } }
 	}
 }
