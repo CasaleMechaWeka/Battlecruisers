@@ -40,7 +40,6 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(_spinner);
 			_spinner.StaticInitialise();
 
-            // FELIX  Check works when inactive :/
             CruisingProjectileStats nukeStats = GetComponent<CruisingProjectileStats>();
 			Assert.IsNotNull(nukeStats);
             _nukeStats = new NukeStatsWrapper(nukeStats);

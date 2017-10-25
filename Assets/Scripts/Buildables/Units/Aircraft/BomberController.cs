@@ -60,7 +60,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
 
-            // FELIX  Check works on inactive :/
             ProjectileStats stats = GetComponent<ProjectileStats>();
             _bombStats = new ProjectileStatsWrapper(stats);
             Assert.IsNotNull(_bombStats);

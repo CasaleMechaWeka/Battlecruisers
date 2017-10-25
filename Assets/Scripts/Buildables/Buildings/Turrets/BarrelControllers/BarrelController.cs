@@ -47,9 +47,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected virtual IProjectileStats GetProjectileStats()
         {
-            // FELIX  Check this finds inactive projectile stats?
             ProjectileStats projectileStats = GetComponent<ProjectileStats>();
-            //IProjectileStats projectileStats = GetComponentInChildren<IProjectileStats>(includeInactive: true);
             Assert.IsNotNull(projectileStats);
             return new ProjectileStatsWrapper(projectileStats);
         }
