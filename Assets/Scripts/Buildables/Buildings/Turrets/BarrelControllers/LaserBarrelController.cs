@@ -17,11 +17,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public override void StaticInitialise()
 		{
-            // FELIX  This is shite that it has to happen before base.SI() :(
-            _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
-			_laserTurretStats.Initialise();
-            Assert.IsNotNull(_laserTurretStats);
-
             base.StaticInitialise();
 
             // Laser emitter
@@ -36,6 +31,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override TurretStats SetupTurretStats()
         {
+            _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
+            Assert.IsNotNull(_laserTurretStats);
+            _laserTurretStats.Initialise();
             return _laserTurretStats;
         }
 
