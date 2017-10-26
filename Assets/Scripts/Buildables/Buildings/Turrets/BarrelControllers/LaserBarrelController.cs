@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -15,6 +14,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
+        private float _damagePerS;
+        public override float DamagePerS { get { return _damagePerS; } }
+
 		public override void StaticInitialise()
 		{
             base.StaticInitialise();
@@ -22,6 +24,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // Laser emitter
             _laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
             Assert.IsNotNull(_laserEmitter);
+
+            // Damage per s
+            float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
+            float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
+            _damagePerS = cycleDamage / cycleLength;
         }
 
         protected override TurretStats SetupTurretStats()

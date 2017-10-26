@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         // Laziliy initialise, because requires StaticInitialise of this and all
         // child classes to complete first.
         private float _damagePerS;
-        public float DamagePerS
+        public virtual float DamagePerS
         {
             get
             {
