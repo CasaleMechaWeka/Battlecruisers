@@ -50,6 +50,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
+        private float _meanFireRatePerS;
+        public override float MeanFireRatePerS { get { return FireRatePerS; } }
+
 		public override void Initialise()
 		{
 			base.Initialise();
@@ -58,6 +61,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(burstFireRatePerS > 0);
 
 			_shortDurationInS = 1 / burstFireRatePerS;
+
+            float cycleTime = (1 / FireRatePerS) + burstSize * (1 / burstFireRatePerS);
+            _meanFireRatePerS = cycleTime / burstSize;
 
             QueryIndex = 0;
 		}

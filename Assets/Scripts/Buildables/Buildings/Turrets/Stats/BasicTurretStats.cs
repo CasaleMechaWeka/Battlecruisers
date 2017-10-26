@@ -5,10 +5,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public class BasicTurretStats : MonoBehaviour, IDurationProvider, IBoostable
+    public class BasicTurretStats : MonoBehaviour, IBasicTurretStats, IDurationProvider, IBoostable
 	{
 		public float fireRatePerS;
+        public float FireRatePerS { get { return fireRatePerS; } }
+        public virtual float MeanFireRatePerS { get { return FireRatePerS; } }
+
 		public float rangeInM;
+        public float RangeInM { get { return rangeInM; } }
 
         private const float DEFAULT_FIRE_RATE_MULTIPLIER = 1;
 
