@@ -26,9 +26,25 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
+        protected virtual int NumOfBarrels { get { return 1; } }
 
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
+
+        // Laziliy initialise, because requires StaticInitialise of this and all
+        // child classes to complete first.
+        private float _damagePerS;
+        public float DamagePerS
+        {
+            get
+            {
+                if (_damagePerS == default(float))
+                {
+                    _damagePerS = NumOfBarrels * _projectileStats.Damage * _turretStats.MeanFireRatePerS;
+                }
+                return _damagePerS;
+            }
+        }
 
         public float BoostMultiplier
         {

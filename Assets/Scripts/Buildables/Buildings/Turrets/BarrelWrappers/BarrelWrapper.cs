@@ -62,8 +62,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             InitialiseBarrels();
 
-            // FELIX
-            //DamagePerS = _barrels.Sum(barrel => barrel.TurretStats.DamagePerS);
+            DamagePerS = _barrels.Sum(barrel => barrel.DamagePerS);
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
 
             _targetProcessorWrapper = gameObject.GetComponentInChildren<ITargetProcessorWrapper>();

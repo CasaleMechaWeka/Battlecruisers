@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
         private ShellSpawner[] _shellSpawners;
 
+        protected override int NumOfBarrels { get { return _shellSpawners.Length; } }
+
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
