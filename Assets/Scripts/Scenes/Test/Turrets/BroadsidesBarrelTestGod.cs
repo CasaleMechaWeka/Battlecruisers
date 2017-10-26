@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
 
             BarrelController doubleBarrel = FindObjectOfType<BarrelController>();
 			doubleBarrel.StaticInitialise();
-			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, doubleBarrel.TurretStats.turretRotateSpeedInDegrees, doubleBarrel.transform);
+			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, doubleBarrel.TurretStats.TurretRotateSpeedInDegrees, doubleBarrel.transform);
 			doubleBarrel.Target = target;
 			doubleBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
 		}

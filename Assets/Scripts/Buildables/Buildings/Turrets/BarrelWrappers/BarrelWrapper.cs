@@ -51,7 +51,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
 				foreach (BarrelController barrel in _barrels)
                 {
-                    barrel.TurretStats.BoostMultiplier = _boostMultiplier;
+                    barrel.BoostMultiplier = _boostMultiplier;
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             // FELIX
             //DamagePerS = _barrels.Sum(barrel => barrel.TurretStats.DamagePerS);
-            RangeInM = _barrels.Max(barrel => barrel.TurretStats.rangeInM);
+            RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
 
             _targetProcessorWrapper = gameObject.GetComponentInChildren<ITargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
@@ -130,7 +130,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             return 
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
-                    barrel.TurretStats.turretRotateSpeedInDegrees, 
+                    barrel.TurretStats.TurretRotateSpeedInDegrees, 
                     barrel.transform);
         }
 

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Rotation;
@@ -12,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public abstract class BarrelController : MonoBehaviour, ITargetConsumer
+    public abstract class BarrelController : MonoBehaviour, ITargetConsumer, IBoostable
     {
         protected IProjectileStats _projectileStats;
         protected IFireIntervalManager _fireIntervalManager;
@@ -20,21 +21,29 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
 
+        protected TurretStats _turretStats;
+        public ITurretStats TurretStats { get { return _turretStats; } }
+
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
 
-        public TurretStats TurretStats { get; private set; }
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
 
-		public virtual void StaticInitialise()
+        public float BoostMultiplier
+        {
+            get { return _turretStats.BoostMultiplier; }
+            set { _turretStats.BoostMultiplier = value; }
+        }
+
+        public virtual void StaticInitialise()
         {
             // Usually > 0, but can be 0 (invisible barrel controller for fighters)
             Renderers = GetComponentsInChildren<Renderer>();
 
             _projectileStats = GetProjectileStats();
-            TurretStats = SetupTurretStats();
-            _fireIntervalManager = SetupFireIntervalManager(TurretStats);
+            _turretStats = SetupTurretStats();
+            _fireIntervalManager = SetupFireIntervalManager(_turretStats);
         }
 
         protected virtual TurretStats SetupTurretStats()
@@ -88,13 +97,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					_rotationMovementController.AdjustRotation(desiredAngleInDegrees);
 				}
 
-				if ((isOnTarget || TurretStats.IsInBurst)
+				if ((isOnTarget || _turretStats.IsInBurst)
 				    && _fireIntervalManager.ShouldFire())
 				{
 					// Burst fires happen even if we are no longer on target, so we may miss
 					// the target in this case.  Hence use the actual angle our turret barrel
 					// is at, instead of the perfect desired angle.
-					float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
 					Fire(fireAngle);
                     _fireIntervalManager.OnFired();

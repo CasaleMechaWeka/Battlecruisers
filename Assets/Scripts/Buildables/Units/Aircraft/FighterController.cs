@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			IAngleCalculator angleCalculator = _factoryProvider.AngleCalculatorFactory.CreateLeadingAngleCalcultor(_factoryProvider.TargetPositionPredictorFactory);
-            IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.turretRotateSpeedInDegrees, _barrelController.transform);
+            IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform);
 			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			SetupTargetDetection();
@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_exactMatchTargetFilter = _targetsFactory.CreateExactMatchTargetFilter();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
-			shootableEnemyDetector.Initialise(_barrelController.TurretStats.rangeInM);
+			shootableEnemyDetector.Initialise(_barrelController.TurretStats.RangeInM);
 			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();

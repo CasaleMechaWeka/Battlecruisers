@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
 			Vector2 targetPosition = targetGameObject.transform.position;
 			target.Position.Returns(targetPosition);
 			barrel.Target = target;
-			IRotationMovementController rotationMovementController = new RotationMovementController(_angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
+			IRotationMovementController rotationMovementController = new RotationMovementController(_angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 			barrel.Initialise(_targetFilter, _angleCalculator, rotationMovementController);
 		}
 	}

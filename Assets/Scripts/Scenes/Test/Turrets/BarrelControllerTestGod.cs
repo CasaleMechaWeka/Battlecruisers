@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
 			{
 				barrel.StaticInitialise();
                 IAngleCalculator angleCalculator = AngleCalculator;
-				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.turretRotateSpeedInDegrees, barrel.transform);
+				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
 				barrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
 			}
