@@ -13,8 +13,13 @@ namespace BattleCruisers.Projectiles
 	{
 		public  ITarget Target { get; private set; }
 
-		public void Initialise(IProjectileStats missileStats, Vector2 initialVelocityInMPerS, ITargetFilter targetFilter, ITarget target, 
-			IMovementControllerFactory movementControllerFactory, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public void Initialise(
+            IProjectileStats missileStats, 
+            Vector2 initialVelocityInMPerS, 
+            ITargetFilter targetFilter, 
+            ITarget target, 
+			IMovementControllerFactory movementControllerFactory, 
+            ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			base.Initialise(missileStats, initialVelocityInMPerS, targetFilter);
 
