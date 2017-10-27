@@ -20,7 +20,6 @@ namespace BattleCruisers.Projectiles
 		protected IMovementController _movementController;
 
         // FELIX  Use projectile stats to create damage applier :)
-        // FELIX  Use projectileStats.InitialseVelocity?  (float => Vector2 ?)
         public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier = null)
 		{
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
