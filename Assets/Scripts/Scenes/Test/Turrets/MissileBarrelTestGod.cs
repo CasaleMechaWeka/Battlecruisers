@@ -3,14 +3,10 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using NSubstitute;
 using UnityEngine;
-using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
@@ -32,18 +28,11 @@ namespace BattleCruisers.Scenes.Test.Turrets
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, targetTypes);
             IAngleCalculator angleCalculator = new StaticAngleCalculator(targetPositionPredictorFactory: null, desiredAngleInDegrees: 90);
             IRotationMovementController rotationMovementController = new DummyRotationMovementController();
-            IAngleCalculatorFactory angleCalculatorFactory = new AngleCalculatorFactory();
-            ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
-            IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory);
-
-            // FELIX  Use BuildableInitialisationArgs?
-            BCUtils.IFactoryProvider factoryProvider = Substitute.For<BCUtils.IFactoryProvider>();
-            factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
-            factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionPredictorFactory);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
             MissileBarrelController missileBarrel = FindObjectOfType<MissileBarrelController>();
             missileBarrel.StaticInitialise();
-            missileBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+            missileBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
             missileBarrel.Target = target;
 	    }
 	}
