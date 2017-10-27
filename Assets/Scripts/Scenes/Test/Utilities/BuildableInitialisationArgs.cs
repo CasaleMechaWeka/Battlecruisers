@@ -47,11 +47,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             angleCalculatorFactory = angleCalculatorFactory ?? new AngleCalculatorFactory();
             targetPositionPredictorFactory = targetPositionPredictorFactory ?? new TargetPositionPredictorFactory();
+            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
 
             FactoryProvider
                 = CreateFactoryProvider(
                     prefabFactory ?? new PrefabFactory(new PrefabFetcher()),
-                    targetsFactory ?? new TargetsFactory(EnemyCruiser),
+                    targetsFactory,
                     movementControllerFactory ?? new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory),
                     angleCalculatorFactory,
                     targetPositionPredictorFactory,
