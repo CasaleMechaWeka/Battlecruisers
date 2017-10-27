@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Movement;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -20,21 +18,22 @@ namespace BattleCruisers.Scenes.Test
 			AirFactory target = FindObjectOfType<AirFactory>();
             helper.InitialiseBuilding(target);
 
-			// Setup rocket
-			RocketController rocket = FindObjectOfType<RocketController>();
+			
+            // Setup rocket
+            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
+            ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
+            
+            Vector2 initialVelocity = new Vector2(0, 5);
 
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
 				Target = target
 			};
+			
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
-            ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
-            
-			Vector2 initialVelocity = new Vector2(0, 5);
-			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
-
-			rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, movementControllerFactory, Faction.Blues, new RocketFlightPointsProvider());
+			RocketController rocket = FindObjectOfType<RocketController>();
+            rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, args.FactoryProvider, Faction.Blues);
 		}
 	}
 }

@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -25,14 +24,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IExactMatchTargetFilter targetFilter, 
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
-			IMovementControllerFactory movementControllerFactory, 
-            ITargetPositionPredictorFactory targetPositionPredictorFactory)
+            IFactoryProvider factoryProvider)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
 			_exactMatchTargetFilter = targetFilter;
 
-            _missileSpawner.Initialise(_projectileStats, movementControllerFactory, targetPositionPredictorFactory);
+            _missileSpawner.Initialise(_projectileStats, factoryProvider);
 		}
 
 		protected override void Fire(float angleInDegrees)

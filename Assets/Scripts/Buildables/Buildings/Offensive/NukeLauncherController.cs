@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -77,11 +75,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_launchedNuke.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-            ITargetFilter damageTargetFilter = _factoryProvider.TargetsFactory.CreateDummyTargetFilter(isMatchResult: true);
-			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(_nukeStats.Damage, _nukeStats.DamageRadiusInM, damageTargetFilter);
-            IFlightPointsProvider flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
-
-            _launchedNuke.Initialise(_nukeStats, targetFilter, damageApplier, _enemyCruiser, _movementControllerFactory, flightPointsProvider);
+            _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)

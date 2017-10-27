@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -39,8 +37,9 @@ namespace BattleCruisers.Scenes.Test
 
             ProjectileStats stats = GetComponent<ProjectileStats>();
             IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
+			BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-			_missileSpawner.Initialise(missileStats, new MovementControllerFactory(null, null), new TargetPositionPredictorFactory());
+            _missileSpawner.Initialise(missileStats, args.FactoryProvider);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

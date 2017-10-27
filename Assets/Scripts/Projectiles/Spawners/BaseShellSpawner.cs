@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
@@ -8,9 +9,9 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
 		protected ITargetFilter _targetFilter;
 
-        public void Initialise(IProjectileStats projectileStats, ITargetFilter targetFilter)
+        public void Initialise(IProjectileStats projectileStats, ITargetFilter targetFilter, IDamageApplierFactory damageApplierFactory)
 		{
-            base.Initialise(projectileStats);
+            base.Initialise(projectileStats, damageApplierFactory);
 
             Assert.IsNotNull(targetFilter);
 			_targetFilter = targetFilter;

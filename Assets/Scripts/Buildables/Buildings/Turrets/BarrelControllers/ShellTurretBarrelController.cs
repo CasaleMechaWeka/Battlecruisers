@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
@@ -26,13 +27,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsTrue(_shellSpawners.Length != 0);
 		}
 
-		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
+		public void Initialise(
+            ITargetFilter targetFilter,
+            IAngleCalculator angleCalculator,
+            IRotationMovementController rotationMovementController,
+            IDamageApplierFactory damageApplierFactory)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(_projectileStats, targetFilter);
+                spawner.Initialise(_projectileStats, targetFilter, damageApplierFactory);
             }
 		}
 

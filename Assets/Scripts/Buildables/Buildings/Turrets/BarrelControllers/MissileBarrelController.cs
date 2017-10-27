@@ -1,6 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -27,14 +25,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ITargetFilter targetFilter, 
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
-			IMovementControllerFactory movementControllerFactory, 
-            ITargetPositionPredictorFactory targetPositionPredictorFactory)
+            IFactoryProvider factoryProvider)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)
             {
-                missileSpawner.Initialise(_projectileStats, movementControllerFactory, targetPositionPredictorFactory);
+                missileSpawner.Initialise(_projectileStats, factoryProvider);
 			}
 		}
 

@@ -1,7 +1,7 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
@@ -10,12 +10,14 @@ namespace BattleCruisers.Projectiles.Spawners
         protected IProjectileStats _projectileStats;
         protected abstract ProjectileController ProjectilePrefab { get; }
 
-        public void Initialise(IProjectileStats projectileStats)
-        {
-            Assert.IsNotNull(projectileStats);
-            _projectileStats = projectileStats;
+        protected IDamageApplierFactory _damageApplierFactory;
 
-            Assert.IsNotNull(ProjectilePrefab);
+        public void Initialise(IProjectileStats projectileStats, IDamageApplierFactory damageApplierFactory)
+        {
+            Helper.AssertIsNotNull(ProjectilePrefab, projectileStats, damageApplierFactory);
+
+            _projectileStats = projectileStats;
+            _damageApplierFactory = damageApplierFactory;
         }
 
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 
@@ -20,5 +21,6 @@ namespace BattleCruisers.Utils
 		IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IBoostProvidersManager BoostProvidersManager { get; }
         IBoostFactory BoostFactory { get; }
+        IDamageApplierFactory DamageApplierFactory { get; }
 	}
 }

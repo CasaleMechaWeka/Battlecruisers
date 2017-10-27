@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Movement;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
@@ -39,8 +37,9 @@ namespace BattleCruisers.Scenes.Test
 
             CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
             ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
-			
-			_rocketSpawner.Initialise(rocketStats, new MovementControllerFactory(null, null), new RocketFlightPointsProvider());
+			BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
+
+            _rocketSpawner.Initialise(rocketStats, args.FactoryProvider);
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
 		}

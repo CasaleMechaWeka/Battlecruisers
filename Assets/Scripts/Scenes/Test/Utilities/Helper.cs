@@ -12,6 +12,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -19,7 +20,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.Utils;
 using NSubstitute;
 using UnityEngine;
 
@@ -52,6 +52,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
 			IBoostProvidersManager boostProvidersManager = null,
+            IDamageApplierFactory damageApplierFactory = null,
 			Direction parentCruiserDirection = Direction.Right,
 			ISlot parentSlot = null)
         {
@@ -71,6 +72,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory,
                     boostFactory,
                     boostProvidersManager,
+                    damageApplierFactory,
                     parentCruiserDirection);
 
             InitialiseBuilding(building, args, parentSlot);
@@ -105,6 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
             IBoostProvidersManager boostProvidersManager = null,
+            IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right)
 		{
 			BuildableInitialisationArgs args
@@ -123,6 +126,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					flightPointsProviderFactory,
                     boostFactory,
                     boostProvidersManager,
+                    damageApplierFactory,
 					parentCruiserDirection);
 
             InitialiseUnit(unit, args);
@@ -200,32 +204,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
 			return targetsFactory;
-		}
-
-		public IFactoryProvider CreateFactoryProvider(
-			IPrefabFactory prefabFactory, 
-			ITargetsFactory targetsFactory, 
-			IMovementControllerFactory movementControllerFactory,
-			IAngleCalculatorFactory angleCalculatorFactory,
-			ITargetPositionPredictorFactory targetPositionControllerFactory,
-			IAircraftProvider aircraftProvider,
-			IFlightPointsProviderFactory flightPointsProviderFactory,
-            IBoostFactory boostFactory,
-            IBoostProvidersManager boostProvidersManager)
-		{
-			IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
-
-			factoryProvider.PrefabFactory.Returns(prefabFactory);
-			factoryProvider.TargetsFactory.Returns(targetsFactory);
-			factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
-			factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
-			factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
-			factoryProvider.AircraftProvider.Returns(aircraftProvider);
-			factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
-            factoryProvider.BoostFactory.Returns(boostFactory);
-            factoryProvider.BoostProvidersManager.Returns(boostProvidersManager);
-
-			return factoryProvider;
 		}
 
 		public IAircraftProvider CreateAircraftProvider(

@@ -11,7 +11,6 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         private readonly ITargetFilter _targetFilter;
         private readonly LayerMask _targetLayerMask;
 
-
         public AreaOfEffectDamageApplier(float damage, float radiusInM, ITargetFilter targetFilter, LayerMask targetLayerMask = default(LayerMask))
         {
             _damage = damage;

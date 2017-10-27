@@ -26,8 +26,12 @@ namespace BattleCruisers.Cruisers
             _deferrer = deferrer;
         }
 
-        public void InitialiseCruiser(Cruiser cruiser, ICruiser enemyCruiser,
-             HealthBarController healthBar, Faction faction, Direction facingDirection)
+        public void InitialiseCruiser(
+            Cruiser cruiser, 
+            ICruiser enemyCruiser,
+            HealthBarController healthBar, 
+            Faction faction, 
+            Direction facingDirection)
         {
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser);
             IDroneManager droneManager = new DroneManager();
@@ -37,8 +41,18 @@ namespace BattleCruisers.Cruisers
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = facingDirection == Direction.Left;
 
-            ICruiserArgs cruiserArgs = new CruiserArgs(faction, enemyCruiser, healthBar, _uiManager, droneManager,
-                droneConsumerProvider, factoryProvider, facingDirection, repairManager, shouldShowFog);
+            ICruiserArgs cruiserArgs 
+                = new CruiserArgs(
+                    faction, 
+                    enemyCruiser, 
+                    healthBar, 
+                    _uiManager, 
+                    droneManager,
+                    droneConsumerProvider, 
+                    factoryProvider, 
+                    facingDirection, 
+                    repairManager, 
+                    shouldShowFog);
 
             cruiser.Initialise(cruiserArgs);
         }

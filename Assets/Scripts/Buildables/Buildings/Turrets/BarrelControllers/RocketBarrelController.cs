@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
@@ -39,9 +37,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ITargetFilter targetFilter, 
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
-			IMovementControllerFactory movementControllerFactory, 
-            Faction faction, 
-            IFlightPointsProvider flightPointsProvider)
+			IFactoryProvider factoryProvider,
+            Faction faction)
 		{
 			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
 
@@ -49,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-				rocketSpawner.Initialise(_rocketStats, movementControllerFactory, flightPointsProvider);
+                rocketSpawner.Initialise(_rocketStats, factoryProvider);
 			}
 		}
 

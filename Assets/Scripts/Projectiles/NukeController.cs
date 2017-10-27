@@ -1,11 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Projectiles
 {
@@ -18,18 +18,16 @@ namespace BattleCruisers.Projectiles
 		public ITarget Target { get; private set; }
 
 		public void Initialise(
-            INukeStats nukeStats, 
-            ITargetFilter targetFilter, 
-            IDamageApplier damageApplier, 
-            ITarget target, 
-			IMovementControllerFactory movementControllerFactory, 
-            IFlightPointsProvider flightPointsProvider)
+            INukeStats nukeStats,
+            ITargetFilter targetFilter,
+            ITarget target,
+            IFactoryProvider factoryProvider)
 		{
-            base.Initialise(nukeStats, nukeStats.InitialVelocity, targetFilter, damageApplier);
+            base.Initialise(nukeStats, nukeStats.InitialVelocity, targetFilter, factoryProvider.DamageApplierFactory);
 
-			_movementControllerFactory = movementControllerFactory;
+            _movementControllerFactory = factoryProvider.MovementControllerFactory;
 			_nukeStats = nukeStats;
-			_flightPointsProvider = flightPointsProvider;
+            _flightPointsProvider = factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
 			Target = target;
 		}

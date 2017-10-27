@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;

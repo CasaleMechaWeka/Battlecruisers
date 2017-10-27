@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -19,9 +18,10 @@ namespace BattleCruisers.Projectiles
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
 
-        // FELIX  Use projectile stats to create damage applier :)
-        public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter, IDamageApplier damageApplier = null)
+        public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter, IDamageApplierFactory damageApplierFactory)
 		{
+            Helper.AssertIsNotNull(projectileStats, targetFilter, damageApplierFactory);
+
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
@@ -30,12 +30,16 @@ namespace BattleCruisers.Projectiles
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
 
-            _damageApplier = damageApplier;
-            if (_damageApplier == null)
-            {
-                _damageApplier = new SingleDamageApplier(projectileStats.Damage);
-            }
+            _damageApplier = CreateDamageApplier(damageApplierFactory);
 		}
+
+        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)
+        {
+            return
+                _projectileStats.HasAreaOfEffectDamage ?
+                damageApplierFactory.CreateAreaOfDamageApplier(_projectileStats) :
+                damageApplierFactory.CreateSingleDamageApplier(_projectileStats);
+        }
 
 		void FixedUpdate()
 		{

@@ -13,12 +13,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             IExactMatchTargetFilter exatMatchTargetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
 
-			samSiteBarrel.Initialise(
-                exatMatchTargetFilter, 
-                angleCalculator, 
+            samSiteBarrel.Initialise(
+                exatMatchTargetFilter,
+                angleCalculator,
                 CreateRotationMovementController(barrel),
-                _factoryProvider.MovementControllerFactory,
-                _factoryProvider.TargetPositionPredictorFactory);
+                _factoryProvider);
         }
 	}
 }

@@ -24,12 +24,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             MissileBarrelController missileBarrel = barrel.Parse<MissileBarrelController>();
 
-			missileBarrel.Initialise(
+            missileBarrel.Initialise(
                 targetFilter,
                 angleCalculator,
                 CreateRotationMovementController(barrel),
-				_factoryProvider.MovementControllerFactory,
-				_factoryProvider.TargetPositionPredictorFactory);
+                _factoryProvider);
 		}
 
         protected override IRotationMovementController CreateRotationMovementController(BarrelController barrel)

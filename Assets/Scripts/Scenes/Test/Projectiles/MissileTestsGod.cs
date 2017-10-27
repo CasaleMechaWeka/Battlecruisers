@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
@@ -21,15 +20,14 @@ namespace BattleCruisers.Scenes.Test
 
             ProjectileStats stats = GetComponent<ProjectileStats>();
             IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
-
 			Vector2 initialVelocity = new Vector2(5, 5);
-			IMovementControllerFactory movementControllerFactory = new MovementControllerFactory(null, null);
-			ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
             MissileController[] missiles = FindObjectsOfType<MissileController>();
-			foreach (MissileController missile in missiles)
+
+            foreach (MissileController missile in missiles)
 			{
-				missile.Initialise(missileStats, initialVelocity, targetFilter, target, movementControllerFactory, targetPositionPredictorFactory);
+                missile.Initialise(missileStats, initialVelocity, targetFilter, target, args.FactoryProvider);
 			}
 		}
 	}

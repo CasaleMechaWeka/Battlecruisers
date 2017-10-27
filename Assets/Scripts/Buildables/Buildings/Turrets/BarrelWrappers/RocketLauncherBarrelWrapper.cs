@@ -18,9 +18,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     targetFilter,
                     angleCalculator,
                     CreateRotationMovementController(barrel),
-                    _factoryProvider.MovementControllerFactory,
-                    _enemyFaction,
-                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
+                    _factoryProvider,
+                    _enemyFaction);
         }
     }
 }
