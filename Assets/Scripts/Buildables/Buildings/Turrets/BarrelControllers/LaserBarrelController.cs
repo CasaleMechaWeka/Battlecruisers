@@ -14,8 +14,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
-        private float _damagePerS;
-        public override float DamagePerS { get { return _damagePerS; } }
+        // Unity does not support child classes with the same private field
+        // names as a parent calss, if extending MonoBehaviour.  Hence, cannot
+        // use _damagePerS.
+        private float _laserDamagePerS;
+        public override float DamagePerS { get { return _laserDamagePerS; } }
 
 		public override void StaticInitialise()
 		{
@@ -28,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // Damage per s
             float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
             float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
-            _damagePerS = cycleDamage / cycleLength;
+            _laserDamagePerS = cycleDamage / cycleLength;
         }
 
         protected override TurretStats SetupTurretStats()
