@@ -51,7 +51,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         }
 
         private float _meanFireRatePerS;
-        public override float MeanFireRatePerS { get { return FireRatePerS; } }
+        public override float MeanFireRatePerS { get { return _meanFireRatePerS; } }
 
 		public override void Initialise()
 		{
