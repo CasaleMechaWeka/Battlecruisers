@@ -6,6 +6,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 
@@ -23,6 +24,7 @@ namespace BattleCruisers.Utils
         public IBoostProvidersManager BoostProvidersManager { get; private set; }
         public IBoostFactory BoostFactory { get; private set; }
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
+        public IExplosionFactory ExplosionFactory { get; private set; }
 
         public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
@@ -36,6 +38,7 @@ namespace BattleCruisers.Utils
             BoostProvidersManager = new BoostProvidersManager();
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
+            ExplosionFactory = new ExplosionFactory(PrefabFactory);
 		}
 	}
 }
