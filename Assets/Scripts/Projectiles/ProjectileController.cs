@@ -30,6 +30,8 @@ namespace BattleCruisers.Projectiles
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
 
+            AdjustGameObjectDirection();
+
             _damageApplier = CreateDamageApplier(damageApplierFactory);
 		}
 
@@ -44,15 +46,14 @@ namespace BattleCruisers.Projectiles
 		void FixedUpdate()
 		{
 			if (_movementController != null)
-			{
-				_movementController.AdjustVelocity();
-				
-				// Adjust game object to point in direction it's travelling
-				transform.right = _rigidBody.velocity;
-			}
-		}
+            {
+                _movementController.AdjustVelocity();
 
-		void OnTriggerEnter2D(Collider2D collider)
+                AdjustGameObjectDirection();
+            }
+        }
+
+        void OnTriggerEnter2D(Collider2D collider)
 		{
 			Logging.Log(Tags.SHELLS, "ProjectileController.OnTriggerEnter2D()");
 
@@ -69,5 +70,10 @@ namespace BattleCruisers.Projectiles
 		{
 			Destroy(gameObject);
 		}
+
+        private void AdjustGameObjectDirection()
+        {
+            transform.right = _rigidBody.velocity;
+        }
 	}
 }
