@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
         {
             Explosion explosion = FindObjectOfType<Explosion>();
             explosion.Initialise(radiusInM: 2, durationInS: 1);
-            explosion.Show();
+            explosion.Show(explosion.transform.position);
         }
     }
 }

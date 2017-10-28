@@ -1,13 +1,15 @@
-﻿namespace BattleCruisers.Projectiles.Explosions
+﻿using UnityEngine;
+
+namespace BattleCruisers.Projectiles.Explosions
 {
     /// <summary>
     /// Null object
     /// </summary>
     public class DummyExplosion : IExplosion
     {
-        public void Show()
+        public void Show(Vector3 position)
         {
-            // Emtpy
+			// Emtpy
         }
     }
 }

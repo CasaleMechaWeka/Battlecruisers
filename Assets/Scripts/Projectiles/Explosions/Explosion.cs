@@ -36,9 +36,11 @@ namespace BattleCruisers.Projectiles.Explosions
             return rectTransfrom.sizeDelta.x / transform.localScale.x;
         }
 
-        public void Show()
+        public void Show(Vector3 position)
         {
+            transform.position = position;
             gameObject.SetActive(true);
+
             Destroy(gameObject, _durationInS);
         }
     }

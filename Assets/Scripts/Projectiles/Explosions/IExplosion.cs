@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.Projectiles.Explosions
+﻿using UnityEngine;
+
+namespace BattleCruisers.Projectiles.Explosions
 {
     public interface IExplosion
     {
-        void Show();
+        void Show(Vector3 position);
     }
 }

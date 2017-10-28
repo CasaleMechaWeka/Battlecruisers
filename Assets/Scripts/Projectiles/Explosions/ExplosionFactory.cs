@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Fetchers;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Explosions
@@ -21,9 +20,9 @@ namespace BattleCruisers.Projectiles.Explosions
             return new DummyExplosion();
         }
 
-        public IExplosion CreateExplosion(Transform parent, float radiusInM, float durationInS = DEFAULT_EXPLOSION_DURATION_IN_S)
+        public IExplosion CreateExplosion(float radiusInM, float durationInS = DEFAULT_EXPLOSION_DURATION_IN_S)
         {
-            Explosion explosion = _prefabFactory.CreateExplosion(parent);
+            Explosion explosion = _prefabFactory.CreateExplosion();
             explosion.Initialise(radiusInM, durationInS);
             return explosion;
         }

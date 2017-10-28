@@ -54,7 +54,7 @@ namespace BattleCruisers.Projectiles
         {
             return
                 _projectileStats.HasAreaOfEffectDamage ?
-                explosionFactory.CreateExplosion(gameObject.transform, _projectileStats.DamageRadiusInM) :
+                explosionFactory.CreateExplosion(_projectileStats.DamageRadiusInM) :
                 explosionFactory.CreateDummyExplosion();
         }
 
@@ -84,9 +84,7 @@ namespace BattleCruisers.Projectiles
 
         protected virtual void DestroyProjectile()
         {
-            _explosion.Show();
-
-			// FELIX  Check this does not destroy the explosion, as this is the explosion's parent :/
+            _explosion.Show(transform.position);
 			Destroy(gameObject);
 		}
 

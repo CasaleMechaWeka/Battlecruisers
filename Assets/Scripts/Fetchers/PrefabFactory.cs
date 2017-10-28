@@ -70,7 +70,6 @@ namespace BattleCruisers.Fetchers
             return cruiser;
         }
 
-        // FELIX  Avoid duplicate code dude :P  (With CreateExplosion() :) )
         public CountdownController CreateDeleteCountdown(Transform parent)
         {
             CountdownController countdownPrefab = _prefabFetcher.GetPrefab<CountdownController>(StaticPrefabKeys.UI.DeleteCountdown);
@@ -80,11 +79,10 @@ namespace BattleCruisers.Fetchers
             return newCountdown;
         }
 
-        public Explosion CreateExplosion(Transform parent)
+        public Explosion CreateExplosion()
         {
             Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.Explosion);
             Explosion newExplosion = Object.Instantiate(explosionPrefab);
-            newExplosion.transform.SetParent(parent, worldPositionStays: false);
             return newExplosion;
         }
     }
