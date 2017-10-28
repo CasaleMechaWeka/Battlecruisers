@@ -8,6 +8,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
@@ -40,7 +41,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostFactory boostFactory = null,
             IBoostProvidersManager boostProvidersManager = null,
             IDamageApplierFactory damageApplierFactory = null,
-            Direction parentCruiserDirection = Direction.Right)
+            Direction parentCruiserDirection = Direction.Right,
+            IExplosionFactory explosionFactory = null)
         {
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
@@ -48,10 +50,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             angleCalculatorFactory = angleCalculatorFactory ?? new AngleCalculatorFactory();
             targetPositionPredictorFactory = targetPositionPredictorFactory ?? new TargetPositionPredictorFactory();
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
+            prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
 
             FactoryProvider
                 = CreateFactoryProvider(
-                    prefabFactory ?? new PrefabFactory(new PrefabFetcher()),
+                    prefabFactory,
                     targetsFactory,
                     movementControllerFactory ?? new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory),
                     angleCalculatorFactory,
@@ -60,7 +63,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory ?? new BoostFactory(),
                     boostProvidersManager ?? new BoostProvidersManager(),
-                    damageApplierFactory ?? new DamageApplierFactory(targetsFactory));
+                    damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
+                    explosionFactory ?? new ExplosionFactory(prefabFactory));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -73,7 +77,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
             IBoostProvidersManager boostProvidersManager,
-            IDamageApplierFactory damageApplierFactory)
+            IDamageApplierFactory damageApplierFactory,
+            IExplosionFactory explosionFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -87,6 +92,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.BoostProvidersManager.Returns(boostProvidersManager);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
+            factoryProvider.ExplosionFactory.Returns(explosionFactory);
 
             return factoryProvider;
         }

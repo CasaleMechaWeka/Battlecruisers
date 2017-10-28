@@ -13,6 +13,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -39,22 +40,23 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void InitialiseBuilding(
             IBuilding building,
-			Faction faction = Faction.Blues,
+            Faction faction = Faction.Blues,
             IUIManager uiManager = null,
-			ICruiser parentCruiser = null,
+            ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
-			IAircraftProvider aircraftProvider = null,
+            IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
-			ITargetsFactory targetsFactory = null,
+            ITargetsFactory targetsFactory = null,
             IMovementControllerFactory movementControllerFactory = null,
-			IAngleCalculatorFactory angleCalculatorFactory = null,
+            IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
-			IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
-			IBoostProvidersManager boostProvidersManager = null,
+            IBoostProvidersManager boostProvidersManager = null,
             IDamageApplierFactory damageApplierFactory = null,
-			Direction parentCruiserDirection = Direction.Right,
-			ISlot parentSlot = null)
+            Direction parentCruiserDirection = Direction.Right,
+            ISlot parentSlot = null,
+            IExplosionFactory explosionFactory = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -108,7 +110,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostFactory boostFactory = null,
             IBoostProvidersManager boostProvidersManager = null,
             IDamageApplierFactory damageApplierFactory = null,
-            Direction parentCruiserDirection = Direction.Right)
+            Direction parentCruiserDirection = Direction.Right,
+            IExplosionFactory explosionFactory = null)
 		{
 			BuildableInitialisationArgs args
 				= new BuildableInitialisationArgs(
@@ -127,7 +130,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostFactory,
                     boostProvidersManager,
                     damageApplierFactory,
-					parentCruiserDirection);
+					parentCruiserDirection,
+                    explosionFactory);
 
             InitialiseUnit(unit, args);
 		}
