@@ -16,7 +16,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public void Initialise(ICruisingProjectileStats rocketStats, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(rocketStats, factoryProvider.DamageApplierFactory);
+            base.Initialise(rocketStats, factoryProvider);
 
             _rocketStats = rocketStats;
             _factoryProvider = factoryProvider;

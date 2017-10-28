@@ -13,9 +13,9 @@ namespace BattleCruisers.Projectiles.Spawners
         public MissileController missilePrefab;
         protected override ProjectileController ProjectilePrefab { get { return missilePrefab; } }
 
-        public void Initialise(IProjectileStats missileStats, IFactoryProvider factoryProvider)
+        public override void Initialise(IProjectileStats missileStats, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(missileStats, factoryProvider.DamageApplierFactory);
+            base.Initialise(missileStats, factoryProvider);
 
             _factoryProvider = factoryProvider;
 		}

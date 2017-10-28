@@ -11,7 +11,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
             ProjectileController shell = Instantiate(bombPrefab, transform.position, new Quaternion());
 			Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-            shell.Initialise(_projectileStats, shellVelocity, _targetFilter, _damageApplierFactory);
+            shell.Initialise(_projectileStats, shellVelocity, _targetFilter, _damageApplierFactory, _explosionFactory);
 		}
 	}
 }
