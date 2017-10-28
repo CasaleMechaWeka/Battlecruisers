@@ -38,13 +38,13 @@ namespace BattleCruisers.Projectiles
 
 		private void Target_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			CleanUp();
+			DestroyProjectile();
 		}
 
-		protected override void CleanUp()
+		protected override void DestroyProjectile()
 		{
 			Target.Destroyed -= Target_Destroyed;
-			base.CleanUp();
+			base.DestroyProjectile();
 		}
 	}
 }

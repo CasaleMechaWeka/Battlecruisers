@@ -4,6 +4,11 @@ namespace BattleCruisers.Projectiles.Explosions
 {
     public interface IExplosionFactory
     {
-        void CreateExplosion(Transform parent, float radiusInM, float durationInS);
+        IExplosion CreateDummyExplosion();
+
+        IExplosion CreateExplosion(
+            Transform parent, 
+            float radiusInM, 
+            float durationInS = ExplosionFactory.DEFAULT_EXPLOSION_DURATION_IN_S);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -14,13 +15,19 @@ namespace BattleCruisers.Projectiles
         private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
+        private IExplosion _explosion;
 
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
 
-        public void Initialise(IProjectileStats projectileStats, Vector2 velocityInMPerS, ITargetFilter targetFilter, IDamageApplierFactory damageApplierFactory)
+        public void Initialise(
+            IProjectileStats projectileStats, 
+            Vector2 velocityInMPerS, 
+            ITargetFilter targetFilter, 
+            IDamageApplierFactory damageApplierFactory,
+            IExplosionFactory explosionFactory)
 		{
-            Helper.AssertIsNotNull(projectileStats, targetFilter, damageApplierFactory);
+            Helper.AssertIsNotNull(projectileStats, targetFilter, damageApplierFactory, explosionFactory);
 
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
@@ -33,6 +40,7 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(damageApplierFactory);
+            _explosion = CreateExplosion(explosionFactory);
 		}
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)
@@ -41,6 +49,14 @@ namespace BattleCruisers.Projectiles
                 _projectileStats.HasAreaOfEffectDamage ?
                 damageApplierFactory.CreateAreaOfDamageApplier(_projectileStats) :
                 damageApplierFactory.CreateSingleDamageApplier(_projectileStats);
+        }
+
+        private IExplosion CreateExplosion(IExplosionFactory explosionFactory)
+        {
+            return
+                _projectileStats.HasAreaOfEffectDamage ?
+                explosionFactory.CreateExplosion(gameObject.transform, _projectileStats.DamageRadiusInM) :
+                explosionFactory.CreateDummyExplosion();
         }
 
 		void FixedUpdate()
@@ -62,12 +78,16 @@ namespace BattleCruisers.Projectiles
 			if (target != null && _targetFilter.IsMatch(target))
 			{
                 _damageApplier.ApplyDamage(target);
-				CleanUp();
-			}
-		}
 
-		protected virtual void CleanUp()
-		{
+                DestroyProjectile();
+            }
+        }
+
+        protected virtual void DestroyProjectile()
+        {
+            _explosion.Show();
+
+			// FELIX  Check this does not destroy the explosion, as this is the explosion's parent :/
 			Destroy(gameObject);
 		}
 

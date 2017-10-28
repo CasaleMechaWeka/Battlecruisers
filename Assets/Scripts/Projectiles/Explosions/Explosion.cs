@@ -8,33 +8,38 @@ namespace BattleCruisers.Projectiles.Explosions
     /// Explosion scaled by default to have a radius of 1 meter.  Adjust transform
     /// scale linearly to achieve desired radius.
     /// </summary>
-    public class Explosion : MonoBehaviour
+    public class Explosion : MonoBehaviour, IExplosion
     {
-        private float _radiusToScaleRatio;
+        private float _durationInS;
 
-        public void StaticInitailise()
+        public void Initialise(float radiusInM, float durationInS)
+        {
+            Assert.IsTrue(radiusInM > 0);
+            Assert.IsTrue(durationInS > 0);
+
+            _durationInS = durationInS;
+
+            float radiusToScaleRatio = FindRadiusToScaleRatio();
+            float newScale = radiusInM / radiusToScaleRatio;
+            transform.localScale = new Vector3(newScale, newScale, 1);
+
+            gameObject.SetActive(false);
+        }
+
+        private float FindRadiusToScaleRatio()
         {
             RectTransform rectTransfrom = transform.Parse<RectTransform>();
 
             Assert.AreEqual(rectTransfrom.sizeDelta.x, rectTransfrom.sizeDelta.y);
             Assert.AreEqual(transform.localScale.x, transform.localScale.y);
 
-            _radiusToScaleRatio = rectTransfrom.sizeDelta.x / transform.localScale.x;
-
-            gameObject.SetActive(false);
+            return rectTransfrom.sizeDelta.x / transform.localScale.x;
         }
 
-        public void Show(float radiusInM, float durationInS)
+        public void Show()
         {
-            Assert.IsTrue(radiusInM > 0);
-            Assert.IsTrue(durationInS > 0);
-
-            float newScale = radiusInM / _radiusToScaleRatio;
-            transform.localScale = new Vector3(newScale, newScale, 1);
-
             gameObject.SetActive(true);
-
-            Destroy(gameObject, durationInS);
+            Destroy(gameObject, _durationInS);
         }
     }
 }

@@ -85,7 +85,6 @@ namespace BattleCruisers.Fetchers
             Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.Explosion);
             Explosion newExplosion = Object.Instantiate(explosionPrefab);
             newExplosion.transform.SetParent(parent, worldPositionStays: false);
-            newExplosion.StaticInitailise();
             return newExplosion;
         }
     }
