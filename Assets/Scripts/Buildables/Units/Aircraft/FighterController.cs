@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private IMovementController _figherMovementController;
-        private ShellTurretBarrelController _barrelController;
+        private BarrelController _barrelController;
 
 		// Detects enemies that come within following range
 		public CircleTargetDetector followableEnemyDetector;
@@ -62,7 +62,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			
 			_attackCapabilities.Add(TargetType.Aircraft);
 
-            _barrelController = gameObject.GetComponentInChildren<ShellTurretBarrelController>();
+            _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
 		}
@@ -87,7 +87,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			IAngleCalculator angleCalculator = _factoryProvider.AngleCalculatorFactory.CreateLeadingAngleCalcultor(_factoryProvider.TargetPositionPredictorFactory);
             IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform);
-            _barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController, _factoryProvider.DamageApplierFactory);
+            _barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController, _factoryProvider);
 
 			SetupTargetDetection();
 		}

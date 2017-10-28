@@ -7,6 +7,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
+    // FELIX  Use BarrelController instead where possible (to reference ShellTurretBarrelController)
+
     /// <summary>
     /// Supports mutliple shell spawners (barrels).  The turret stats damage
     /// is spread accross the barrels (ie, if there are 2 barrels, each barrel

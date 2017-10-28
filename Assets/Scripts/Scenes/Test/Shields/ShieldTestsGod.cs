@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
@@ -30,7 +31,9 @@ namespace BattleCruisers.Scenes.Test.Shields
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
 			IAngleCalculator angleCalculator = new AngleCalculator(new TargetPositionPredictorFactory());
 			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, turret.TurretStats.TurretRotateSpeedInDegrees, turret.transform);
-			turret.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
+
+            turret.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
 			turret.Target = shield;
 		}
 	}

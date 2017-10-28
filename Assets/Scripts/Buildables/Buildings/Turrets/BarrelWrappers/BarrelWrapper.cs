@@ -103,9 +103,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
 			barrel
 				.Initialise(
-                    CreateTargetFilter(), 
-					CreateAngleCalculator(), 
-                    CreateRotationMovementController(barrel));
+                    CreateTargetFilter(),
+                    CreateAngleCalculator(),
+                    CreateRotationMovementController(barrel),
+                    _factoryProvider);
         }
 
         public void StartAttackingTargets()

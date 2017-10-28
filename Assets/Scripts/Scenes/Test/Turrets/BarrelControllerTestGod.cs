@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            ShellTurretBarrelController[] turretBarrels = FindObjectsOfType<ShellTurretBarrelController>();
+            BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
 
             foreach (ShellTurretBarrelController barrel in turretBarrels)
 			{
@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test
                 IAngleCalculator angleCalculator = AngleCalculator;
 				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-                barrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider.DamageApplierFactory);
+                barrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
 			}
 		}
 	}

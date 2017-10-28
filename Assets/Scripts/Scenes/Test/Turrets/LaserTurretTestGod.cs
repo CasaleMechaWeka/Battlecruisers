@@ -21,8 +21,9 @@ namespace BattleCruisers.Scenes.Test.Turrets
             ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
             IAngleCalculator angleCalculator = new AngleCalculator(targetPositionPredictorFactory);
             IRotationMovementController rotationMovementController = new DummyRotationMovementController(isOnTarget: true);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            laserBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            laserBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
             
 
             // Setup target

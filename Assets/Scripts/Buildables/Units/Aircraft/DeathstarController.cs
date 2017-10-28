@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class DeathstarController : AircraftController
 	{
-		private LaserBarrelController _barrelController;
+		private BarrelController _barrelController;
 		private ITargetDetector _targetDetector;
 		private ITargetProcessor _targetProcessor;
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 			IAngleCalculator angleCalculator = _factoryProvider.AngleCalculatorFactory.CreateLeadingAngleCalcultor(_factoryProvider.TargetPositionPredictorFactory);
 			IRotationMovementController rotationMovementController = _movementControllerFactory.CreateDummyRotationMovementController();
-			_barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            _barrelController.Initialise(targetFilter, angleCalculator, rotationMovementController, _factoryProvider);
 			
 			// Target detection
 			ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
