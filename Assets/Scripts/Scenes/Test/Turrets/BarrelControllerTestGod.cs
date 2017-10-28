@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test
 
             BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
 
-            foreach (ShellTurretBarrelController barrel in turretBarrels)
+            foreach (BarrelController barrel in turretBarrels)
 			{
 				barrel.StaticInitialise();
                 IAngleCalculator angleCalculator = AngleCalculator;
