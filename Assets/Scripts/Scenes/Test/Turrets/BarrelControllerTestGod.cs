@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using UnityEngine;
@@ -22,15 +23,17 @@ namespace BattleCruisers.Scenes.Test
 
 			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
 
-			BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            foreach (BarrelController barrel in turretBarrels)
+            ShellTurretBarrelController[] turretBarrels = FindObjectsOfType<ShellTurretBarrelController>();
+
+            foreach (ShellTurretBarrelController barrel in turretBarrels)
 			{
 				barrel.StaticInitialise();
                 IAngleCalculator angleCalculator = AngleCalculator;
 				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-				barrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
+                barrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider.DamageApplierFactory);
 			}
 		}
 	}
