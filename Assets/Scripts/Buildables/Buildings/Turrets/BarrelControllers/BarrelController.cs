@@ -85,8 +85,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return fireIntervalManager;
 		}
 
-        public virtual void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
+        public virtual void Initialise(
+            ITargetFilter targetFilter, 
+            IAngleCalculator angleCalculator, 
+            IRotationMovementController rotationMovementController,
+            IFactoryProvider factoryProvider)
 		{
+            Helper.AssertIsNotNull(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+
 			_targetFilter = targetFilter;
 			_angleCalculator = angleCalculator;
 			_rotationMovementController = rotationMovementController;

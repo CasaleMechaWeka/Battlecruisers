@@ -53,9 +53,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return fireIntervalManager;
         }
 		
-		public override void Initialise(ITargetFilter targetFilter, IAngleCalculator angleCalculator, IRotationMovementController rotationMovementController)
+		public override void Initialise(
+            ITargetFilter targetFilter, 
+            IAngleCalculator angleCalculator, 
+            IRotationMovementController rotationMovementController,
+            IFactoryProvider factoryProvider)
 		{
-			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
             _laserEmitter.Initialise(targetFilter, _laserTurretStats.damagePerS);
 		}
 

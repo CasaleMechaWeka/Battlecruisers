@@ -21,13 +21,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
         }
 
-		public void Initialise(
+		public override void Initialise(
             ITargetFilter targetFilter, 
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
             IFactoryProvider factoryProvider)
 		{
-			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
 
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)
             {

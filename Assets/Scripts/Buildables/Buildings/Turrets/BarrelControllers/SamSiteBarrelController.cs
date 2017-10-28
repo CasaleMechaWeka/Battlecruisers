@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IRotationMovementController rotationMovementController,
             IFactoryProvider factoryProvider)
 		{
-			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
 
 			_exactMatchTargetFilter = targetFilter;
 

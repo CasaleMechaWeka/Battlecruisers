@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			IFactoryProvider factoryProvider,
             Faction faction)
 		{
-			base.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
 
 			_faction = faction;
 
