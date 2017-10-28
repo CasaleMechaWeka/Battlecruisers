@@ -70,5 +70,10 @@ namespace BattleCruisers.Data.Static
         {
             public static UIKey DeleteCountdown { get { return new UIKey("DeleteCountdown"); } }
         }
+
+        public static class Explosions
+        {
+            public static ExplosionKey Explosion { get { return new ExplosionKey("Explosion"); } }
+        }
 	}
 }

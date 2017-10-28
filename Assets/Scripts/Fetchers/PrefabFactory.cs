@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 
@@ -76,6 +77,16 @@ namespace BattleCruisers.Fetchers
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
             newCountdown.Initialise();
             return newCountdown;
+        }
+
+        public Explosion CreateExplosion(Transform parent, float radiusInM, float durationInS)
+        {
+            Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.Explosion);
+            Explosion newExplosion = Object.Instantiate(explosionPrefab);
+            newExplosion.transform.SetParent(parent, worldPositionStays: false);
+            newExplosion.StaticInitailise();
+            newExplosion.Show(radiusInM, durationInS);
+            return newExplosion;
         }
     }
 }

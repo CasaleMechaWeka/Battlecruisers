@@ -26,6 +26,9 @@ namespace BattleCruisers.Projectiles.Explosions
 
         public void Show(float radiusInM, float durationInS)
         {
+            Assert.IsTrue(radiusInM > 0);
+            Assert.IsTrue(durationInS > 0);
+
             float newScale = radiusInM / _radiusToScaleRatio;
             transform.localScale = new Vector3(newScale, newScale, 1);
 

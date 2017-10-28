@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 
@@ -20,5 +21,7 @@ namespace BattleCruisers.Fetchers
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 
         CountdownController CreateDeleteCountdown(Transform parent);
+
+        Explosion CreateExplosion(Transform parent, float radiusInM, float durationInS);
 	}
 }
