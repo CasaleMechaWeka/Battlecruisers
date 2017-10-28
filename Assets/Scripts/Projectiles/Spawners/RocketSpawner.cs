@@ -9,7 +9,6 @@ namespace BattleCruisers.Projectiles.Spawners
     public class RocketSpawner : ProjectileSpawner
 	{
         private ICruisingProjectileStats _rocketStats;
-        private IFactoryProvider _factoryProvider;
 
         public RocketController rocketPrefab;
         protected override ProjectileController ProjectilePrefab { get { return rocketPrefab; } }
@@ -19,7 +18,6 @@ namespace BattleCruisers.Projectiles.Spawners
             base.Initialise(rocketStats, factoryProvider);
 
             _rocketStats = rocketStats;
-            _factoryProvider = factoryProvider;
 		}
 
 		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter, Faction faction)

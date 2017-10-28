@@ -28,7 +28,7 @@ namespace BattleCruisers.Projectiles
             IFactoryProvider factoryProvider, 
             Faction faction)
 		{
-            base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter, factoryProvider.DamageApplierFactory);
+            base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter, factoryProvider);
 
 			Target = target;
 

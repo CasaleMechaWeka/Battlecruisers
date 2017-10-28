@@ -24,10 +24,9 @@ namespace BattleCruisers.Projectiles
             IProjectileStats projectileStats, 
             Vector2 velocityInMPerS, 
             ITargetFilter targetFilter, 
-            IDamageApplierFactory damageApplierFactory,
-            IExplosionFactory explosionFactory)
+            IFactoryProvider factoryProvider)
 		{
-            Helper.AssertIsNotNull(projectileStats, targetFilter, damageApplierFactory, explosionFactory);
+            Helper.AssertIsNotNull(projectileStats, targetFilter, factoryProvider);
 
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
@@ -39,8 +38,8 @@ namespace BattleCruisers.Projectiles
 
             AdjustGameObjectDirection();
 
-            _damageApplier = CreateDamageApplier(damageApplierFactory);
-            _explosion = CreateExplosion(explosionFactory);
+            _damageApplier = CreateDamageApplier(factoryProvider.DamageApplierFactory);
+            _explosion = CreateExplosion(factoryProvider.ExplosionFactory);
 		}
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)

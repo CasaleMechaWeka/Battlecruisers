@@ -11,16 +11,14 @@ namespace BattleCruisers.Projectiles.Spawners
         protected IProjectileStats _projectileStats;
         protected abstract ProjectileController ProjectilePrefab { get; }
 
-        protected IDamageApplierFactory _damageApplierFactory;
-        protected IExplosionFactory _explosionFactory;
+        protected IFactoryProvider _factoryProvider;
 
-        public virtual void Initialise(IProjectileStats projectileStats, IFactoryProvider factoryProvider)
+        public void Initialise(IProjectileStats projectileStats, IFactoryProvider factoryProvider)
         {
             Helper.AssertIsNotNull(ProjectilePrefab, projectileStats, factoryProvider);
 
             _projectileStats = projectileStats;
-            _damageApplierFactory = factoryProvider.DamageApplierFactory;
-            _explosionFactory = factoryProvider.ExplosionFactory;
+            _factoryProvider = factoryProvider;
         }
 
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)

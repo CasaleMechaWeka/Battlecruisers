@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles
             ITarget target,
             IFactoryProvider factoryProvider)
 		{
-            base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider.DamageApplierFactory);
+            base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider);
 
 			Target = target;
 

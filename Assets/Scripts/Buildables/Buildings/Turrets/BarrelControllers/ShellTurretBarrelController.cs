@@ -37,7 +37,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(_projectileStats, targetFilter, factoryProvider.DamageApplierFactory);
+                spawner.Initialise(_projectileStats, targetFilter, factoryProvider);
             }
 		}
 
