@@ -20,14 +20,18 @@ namespace BattleCruisers.Projectiles.Explosions
             Assert.AreEqual(transform.localScale.x, transform.localScale.y);
 
             _radiusToScaleRatio = rectTransfrom.sizeDelta.x / transform.localScale.x;
+
+            gameObject.SetActive(false);
         }
 
         public void Show(float radiusInM, float durationInS)
         {
-            // FELIX  Use duration to fade/disappear
-
             float newScale = radiusInM / _radiusToScaleRatio;
             transform.localScale = new Vector3(newScale, newScale, 1);
+
+            gameObject.SetActive(true);
+
+            Destroy(gameObject, durationInS);
         }
     }
 }
