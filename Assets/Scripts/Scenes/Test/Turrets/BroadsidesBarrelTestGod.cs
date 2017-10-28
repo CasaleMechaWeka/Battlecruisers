@@ -26,11 +26,12 @@ namespace BattleCruisers.Scenes.Test
                 Target = target
             };
 
-            BarrelController doubleBarrel = FindObjectOfType<BarrelController>();
+            ShellTurretBarrelController doubleBarrel = FindObjectOfType<ShellTurretBarrelController>();
 			doubleBarrel.StaticInitialise();
 			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, doubleBarrel.TurretStats.TurretRotateSpeedInDegrees, doubleBarrel.transform);
 			doubleBarrel.Target = target;
-			doubleBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
+            doubleBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider.DamageApplierFactory);
 		}
 	}
 }
