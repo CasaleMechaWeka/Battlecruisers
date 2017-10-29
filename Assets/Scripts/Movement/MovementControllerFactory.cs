@@ -83,7 +83,7 @@ namespace BattleCruisers.Movement
         #region Rotation
         public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalcultor(_targetPositionPredictionFactory);
+			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalculator();
 			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
 		}
 

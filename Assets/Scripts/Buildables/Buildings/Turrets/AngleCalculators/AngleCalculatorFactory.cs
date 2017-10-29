@@ -2,17 +2,17 @@
 {
     public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
-		public IAngleCalculator CreateAngleCalcultor()
+		public IAngleCalculator CreateAngleCalculator()
 		{
 			return new AngleCalculator();
 		}
 
-		public IAngleCalculator CreateArtilleryAngleCalcultor()
+		public IAngleCalculator CreateArtilleryAngleCalculator()
 		{
 			return new ArtilleryAngleCalculator();
 		}
 
-		public IAngleCalculator CreateMortarAngleCalcultor()
+		public IAngleCalculator CreateMortarAngleCalculator()
 		{
 			return new MortarAngleCalculator();
 		}

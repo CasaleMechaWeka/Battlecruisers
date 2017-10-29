@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test
 		void Start()
 		{
             _targetPositionPredictor = new DummyTargetPositionpredictor();
-			_angleCalculator = new LeadingAngleCalculator(new TargetPositionPredictorFactory());
+            _angleCalculator = new AngleCalculator();
 			_targetFilter = Substitute.For<ITargetFilter>();
             _helper = new Helper();
 

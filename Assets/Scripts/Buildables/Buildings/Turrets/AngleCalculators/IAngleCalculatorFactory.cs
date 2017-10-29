@@ -2,9 +2,9 @@
 {
     public interface IAngleCalculatorFactory
 	{
-		IAngleCalculator CreateAngleCalcultor();
-		IAngleCalculator CreateArtilleryAngleCalcultor();
-		IAngleCalculator CreateMortarAngleCalcultor();
+		IAngleCalculator CreateAngleCalculator();
+		IAngleCalculator CreateArtilleryAngleCalculator();
+		IAngleCalculator CreateMortarAngleCalculator();
 		IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees);
 	}
 }

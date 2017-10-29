@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, targetTypes);
             ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
-            IAngleCalculator angleCalculator = new StaticAngleCalculator(targetPositionPredictorFactory: null, desiredAngleInDegrees: 90);
+            IAngleCalculator angleCalculator = new StaticAngleCalculator(desiredAngleInDegrees: 90);
             IRotationMovementController rotationMovementController = new DummyRotationMovementController();
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 

@@ -116,9 +116,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
                 Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(transform.position, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
-                // FELIX  Use predictedTargetPosition
-
-                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
+                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
 
 				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
@@ -134,6 +132,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					// the target in this case.  Hence use the actual angle our turret barrel
 					// is at, instead of the perfect desired angle.
 					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+
+                    // FELIX  Adjust accuracy
 
 					Fire(fireAngle);
                     _fireIntervalManager.OnFired();

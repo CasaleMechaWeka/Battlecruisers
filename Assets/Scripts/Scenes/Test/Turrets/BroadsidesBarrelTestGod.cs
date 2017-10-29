@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test
 
             // Initialise double barrel
             ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
-			IAngleCalculator angleCalculator = new ArtilleryAngleCalculator(new TargetPositionPredictorFactory());
+			IAngleCalculator angleCalculator = new ArtilleryAngleCalculator();
             IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
             {
                 Target = target

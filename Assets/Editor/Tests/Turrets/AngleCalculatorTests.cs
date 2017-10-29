@@ -1,34 +1,27 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Utils;
-using NSubstitute;
-using System;
-using UnityEngine;
-using UnityEditor;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace BattleCruisers.Tests.Turrets
 {
-	public class AngleCalculatorTests 
+    public class AngleCalculatorTests 
 	{
 		private IAngleCalculator _angleCalculator;
-		private ITarget _target;
+        private Vector2 _targetPosition;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			_angleCalculator = new AngleCalculator(targetPositionPredictorFactory: null);
-			
-			_target = Substitute.For<ITarget>();
-			_target.Position.Returns(new Vector2());
-			_target.Velocity.Returns(new Vector2());
+			_angleCalculator = new AngleCalculator();
+            _targetPosition = new Vector2(0, 0);
 		}
 
 		#region FindDesiredAngle
 		[Test]
 		public void FindDesiredAngle_SourceIsTarget_Throws()
 		{
-			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(_target.Position, _target, isSourceMirrored: false, projectileVelocityInMPerS: -1, currentAngleInRadians: 0));
+            Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(_targetPosition, _targetPosition, isSourceMirrored: false, projectileVelocityInMPerS: -1));
 		}
 
 		#region Same axis
@@ -150,7 +143,7 @@ namespace BattleCruisers.Tests.Turrets
 
 		private void TestFindDesiredAngle(Vector2 source, bool isSourceMirrored, float expectedAngleInDegrees)
 		{
-			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _target, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1, currentAngleInRadians: 0);
+			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1);
 			Assert.AreEqual(expectedAngleInDegrees, angleInDegrees);
 		}
 		#endregion FindDesiredAngle

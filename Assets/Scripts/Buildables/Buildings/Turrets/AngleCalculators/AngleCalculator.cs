@@ -103,6 +103,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			return desiredAngleInDegrees;
 		}
 
+
+        // FELIX  Move to different class, and separate from IAngleCalculator interface.
+        // Only used by RotationMovementController.
 		/// <returns>
 		/// 1 if it is shorter to rotate anti-clockwise, -1 if it is shorter to rotate clockwise, 
 		/// 0 if the desired angle is the same as the current angle.
