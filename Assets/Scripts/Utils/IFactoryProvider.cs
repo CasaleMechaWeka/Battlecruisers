@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Fetchers;
@@ -24,5 +25,6 @@ namespace BattleCruisers.Utils
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IExplosionFactory ExplosionFactory { get; }
+        IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
 	}
 }
