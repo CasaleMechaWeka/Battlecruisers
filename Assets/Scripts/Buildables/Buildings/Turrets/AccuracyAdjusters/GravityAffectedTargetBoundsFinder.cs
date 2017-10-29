@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -20,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         ///         min:  9.5, 0
         ///         max:  10.5, 0
 		/// </summary>
-        public ITargetBounds FindTargetBounds(Vector2 sourcePosition, Vector2 targetPosition)
+        public IRange<Vector2> FindTargetBounds(Vector2 sourcePosition, Vector2 targetPosition)
         {
             Assert.IsTrue(sourcePosition.x != targetPosition.x);
 
@@ -39,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                 maxPosition = new Vector2(targetPosition.x - TARGET_MARGIN_X_IN_M, targetPosition.y);
             }
 
-            return new TargetBounds(minPosition, maxPosition);
+            return new Range<Vector2>(minPosition, maxPosition);
         }
     }
 }
