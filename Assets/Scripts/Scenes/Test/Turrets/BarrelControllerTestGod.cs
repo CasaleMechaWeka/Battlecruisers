@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Scenes.Test
 
 			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
 
+            ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
             BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
@@ -33,7 +35,7 @@ namespace BattleCruisers.Scenes.Test
                 IAngleCalculator angleCalculator = AngleCalculator;
 				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-                barrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
+                barrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
 			}
 		}
 	}

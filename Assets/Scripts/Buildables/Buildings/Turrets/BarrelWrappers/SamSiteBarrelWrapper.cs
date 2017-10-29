@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             samSiteBarrel.Initialise(
                 exatMatchTargetFilter,
+                CreateTargetPositionPredictor(),
                 angleCalculator,
                 CreateRotationMovementController(barrel),
                 _factoryProvider);

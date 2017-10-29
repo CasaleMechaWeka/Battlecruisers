@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             rocketBarrel
                 .Initialise(
                     targetFilter,
+                    CreateTargetPositionPredictor(),
                     angleCalculator,
                     CreateRotationMovementController(barrel),
                     _factoryProvider,

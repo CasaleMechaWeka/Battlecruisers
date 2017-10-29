@@ -13,6 +13,7 @@ namespace BattleCruisers.Scenes.Test
     public class BurstFireTestsGod : MonoBehaviour 
 	{
 		private ITargetFilter _targetFilter;
+        private ITargetPositionPredictor _targetPositionPredictor;
 		private IAngleCalculator _angleCalculator;
         private Helper _helper;
         public BarrelController barrel1, barrel2, barrel3;
@@ -20,6 +21,7 @@ namespace BattleCruisers.Scenes.Test
 
 		void Start()
 		{
+            _targetPositionPredictor = new DummyTargetPositionpredictor();
 			_angleCalculator = new LeadingAngleCalculator(new TargetPositionPredictorFactory());
 			_targetFilter = Substitute.For<ITargetFilter>();
             _helper = new Helper();
@@ -41,7 +43,7 @@ namespace BattleCruisers.Scenes.Test
             IRotationMovementController rotationMovementController = new RotationMovementController(_angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(_helper);
 
-            barrel.Initialise(_targetFilter, _angleCalculator, rotationMovementController, args.FactoryProvider);
+            barrel.Initialise(_targetFilter, _targetPositionPredictor, _angleCalculator, rotationMovementController, args.FactoryProvider);
 		}
 	}
 }

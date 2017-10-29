@@ -19,11 +19,12 @@ namespace BattleCruisers.Scenes.Test.Turrets
 
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             ITargetPositionPredictorFactory targetPositionPredictorFactory = new TargetPositionPredictorFactory();
+            ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
             IAngleCalculator angleCalculator = new AngleCalculator(targetPositionPredictorFactory);
             IRotationMovementController rotationMovementController = new DummyRotationMovementController(isOnTarget: true);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            laserBarrel.Initialise(targetFilter, angleCalculator, rotationMovementController, args.FactoryProvider);
+            laserBarrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
             
 
             // Setup target

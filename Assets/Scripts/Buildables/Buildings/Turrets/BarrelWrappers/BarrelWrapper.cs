@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -101,9 +102,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
-			barrel
-				.Initialise(
+            barrel
+                .Initialise(
                     CreateTargetFilter(),
+                    CreateTargetPositionPredictor(),
                     CreateAngleCalculator(),
                     CreateRotationMovementController(barrel),
                     _factoryProvider);
@@ -122,6 +124,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected ITargetFilter CreateTargetFilter()
         {
             return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, _attackCapabilities);
+        }
+
+        protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()
+        {
+            return _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor();
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator();
