@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -14,13 +13,11 @@ namespace BattleCruisers.Movement
 {
     public class MovementControllerFactory : IMovementControllerFactory
 	{
-		private readonly IAngleCalculatorFactory _angleCalculatorFactory;
-		private readonly ITargetPositionPredictorFactory _targetPositionPredictionFactory;
+        private readonly IRotationHelper _rotationHelper;
 
-		public MovementControllerFactory(IAngleCalculatorFactory angleCalculatorFactory, ITargetPositionPredictorFactory targetPositionPredictionFactory)
+		public MovementControllerFactory()
 		{
-			_angleCalculatorFactory = angleCalculatorFactory;
-			_targetPositionPredictionFactory = targetPositionPredictionFactory;
+            _rotationHelper = new RotationHelper();
 		}
 
         #region Velocity
@@ -83,8 +80,7 @@ namespace BattleCruisers.Movement
         #region Rotation
         public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
-			IAngleCalculator angleCalculator = _angleCalculatorFactory.CreateAngleCalculator();
-			return new RotationMovementController(angleCalculator, rotateSpeedInDegreesPerS, transform);
+            return new RotationMovementController(_rotationHelper, rotateSpeedInDegreesPerS, transform);
 		}
 
 		public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)

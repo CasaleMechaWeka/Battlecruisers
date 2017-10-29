@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,21 +6,20 @@ namespace BattleCruisers.Movement.Rotation
 {
     public class RotationMovementController : IRotationMovementController
 	{
-		private readonly float _rotateSpeedInDegreesPerS;
-		private readonly IAngleCalculator _angleCalculator;
-		private readonly Transform _transform;
+		private readonly IRotationHelper _rotationHelper;
+        private readonly float _rotateSpeedInDegreesPerS;
+        private readonly Transform _transform;
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-		public RotationMovementController(IAngleCalculator angleCalculator, float rotateSpeedInDegreesPerS, Transform transform)
+        public RotationMovementController(IRotationHelper rotationHelper, float rotateSpeedInDegreesPerS, Transform transform)
 		{
-			Assert.IsNotNull(angleCalculator);
-			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
-			Assert.IsNotNull(transform);
+            Helper.AssertIsNotNull(rotationHelper, transform);
+            Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
 
-			_angleCalculator = angleCalculator;
-			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
-			_transform = transform;
+			_rotationHelper = rotationHelper;
+            _rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
+            _transform = transform;
 		}
 
 		public bool IsOnTarget(float desiredAngleInDegrees)
@@ -34,7 +33,7 @@ namespace BattleCruisers.Movement.Rotation
 		{
 			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			float directionMultiplier = _angleCalculator.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
+            float directionMultiplier = _rotationHelper.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 
 			float rotationIncrement = Time.deltaTime * _rotateSpeedInDegreesPerS;
 			if (rotationIncrement > differenceInDegrees)

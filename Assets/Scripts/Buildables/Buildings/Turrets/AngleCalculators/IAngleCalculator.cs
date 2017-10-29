@@ -8,6 +8,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         // Otherwise I would use optional parameters.
         // https://forum.unity3d.com/threads/script-can-use-namespace-or-optional-parameters-but-not-both.164563/
         float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored, float projectileVelocityInMPerS);
-		float FindDirectionMultiplier(float currentAngleInRadians, float desiredAngleInDegrees);
 	}
 }

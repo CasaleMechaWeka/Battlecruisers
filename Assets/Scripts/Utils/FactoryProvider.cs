@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils
 			TargetsFactory = new TargetsFactory(enemyCruiser);
 			AngleCalculatorFactory = new AngleCalculatorFactory();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
-			MovementControllerFactory = new MovementControllerFactory(AngleCalculatorFactory, TargetPositionPredictorFactory);
+			MovementControllerFactory = new MovementControllerFactory();
 			AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position);
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostProvidersManager = new BoostProvidersManager();

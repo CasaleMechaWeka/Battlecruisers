@@ -47,8 +47,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
-            angleCalculatorFactory = angleCalculatorFactory ?? new AngleCalculatorFactory();
-            targetPositionPredictorFactory = targetPositionPredictorFactory ?? new TargetPositionPredictorFactory();
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
 
@@ -56,9 +54,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 = CreateFactoryProvider(
                     prefabFactory,
                     targetsFactory,
-                    movementControllerFactory ?? new MovementControllerFactory(angleCalculatorFactory, targetPositionPredictorFactory),
-                    angleCalculatorFactory,
-                    targetPositionPredictorFactory,
+                    movementControllerFactory ?? new MovementControllerFactory(),
+                    angleCalculatorFactory ?? new AngleCalculatorFactory(),
+                    targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory ?? new BoostFactory(),

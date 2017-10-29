@@ -30,8 +30,9 @@ namespace BattleCruisers.Scenes.Test.Shields
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
             ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
+            IRotationHelper rotationHelper = new RotationHelper();
 			IAngleCalculator angleCalculator = new AngleCalculator();
-			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, turret.TurretStats.TurretRotateSpeedInDegrees, turret.transform);
+            IRotationMovementController rotationMovementController = new RotationMovementController(rotationHelper, turret.TurretStats.TurretRotateSpeedInDegrees, turret.transform);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
             turret.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);

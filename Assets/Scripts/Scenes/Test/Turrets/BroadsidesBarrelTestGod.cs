@@ -22,6 +22,7 @@ namespace BattleCruisers.Scenes.Test
             // Initialise double barrel
             ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
 			IAngleCalculator angleCalculator = new ArtilleryAngleCalculator();
+            IRotationHelper rotationHelper = new RotationHelper();
             IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
             {
                 Target = target
@@ -29,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
 
             BarrelController doubleBarrel = FindObjectOfType<BarrelController>();
 			doubleBarrel.StaticInitialise();
-			IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, doubleBarrel.TurretStats.TurretRotateSpeedInDegrees, doubleBarrel.transform);
+            IRotationMovementController rotationMovementController = new RotationMovementController(rotationHelper, doubleBarrel.TurretStats.TurretRotateSpeedInDegrees, doubleBarrel.transform);
 			doubleBarrel.Target = target;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             doubleBarrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);

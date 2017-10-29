@@ -23,6 +23,7 @@ namespace BattleCruisers.Scenes.Test
 			target.Position.Returns(targetPosition);
 
 			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
+            IRotationHelper rotationHelper = new RotationHelper();
 
             ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
@@ -33,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
 			{
 				barrel.StaticInitialise();
                 IAngleCalculator angleCalculator = AngleCalculator;
-				IRotationMovementController rotationMovementController = new RotationMovementController(angleCalculator, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
+                IRotationMovementController rotationMovementController = new RotationMovementController(rotationHelper, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
                 barrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
 			}
