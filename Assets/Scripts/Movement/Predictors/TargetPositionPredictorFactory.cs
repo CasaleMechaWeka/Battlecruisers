@@ -2,13 +2,19 @@
 {
     public interface ITargetPositionPredictorFactory
 	{
-		ITargetPositionPredictor CreateLinearPredictor();
-		ITargetPositionPredictor CreateMortarPredictor();
+		ITargetPositionPredictor CreateDummyPredictor();
+        ITargetPositionPredictor CreateLinearPredictor();
+        ITargetPositionPredictor CreateMortarPredictor();
 	}
 
 	public class TargetPositionPredictorFactory : ITargetPositionPredictorFactory
 	{
-		public ITargetPositionPredictor CreateLinearPredictor()
+        public ITargetPositionPredictor CreateDummyPredictor()
+        {
+            return new DummyTargetPositionpredictor();
+        }
+
+        public ITargetPositionPredictor CreateLinearPredictor()
 		{
 			return new LinearTargetPositionPredictor();
 		}
