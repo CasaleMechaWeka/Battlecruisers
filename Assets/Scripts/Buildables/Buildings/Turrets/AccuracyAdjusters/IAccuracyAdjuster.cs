@@ -4,6 +4,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public interface IAccuracyAdjuster
     {
-        float FindAngleInDegrees(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored);
+        float FindAngleInDegrees(float idealFireAngle, Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored);
     }
 }

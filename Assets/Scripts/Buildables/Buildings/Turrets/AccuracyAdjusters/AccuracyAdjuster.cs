@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             _accuracy = accuracy;
         }
 
-        public float FindAngleInDegrees(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
+        public float FindAngleInDegrees(float idealFireAngle, Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
         {
             IRange<Vector2> onTargetBounds = _boundsFinder.FindTargetBounds(sourcePosition, targetPosition);
 
