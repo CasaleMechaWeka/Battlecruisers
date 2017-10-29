@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
@@ -18,6 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IProjectileStats _projectileStats;
         protected IFireIntervalManager _fireIntervalManager;
         protected ITargetFilter _targetFilter;
+        protected ITargetPositionPredictor _targetPositionPredictor;
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
 
@@ -87,13 +89,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public virtual void Initialise(
             ITargetFilter targetFilter, 
+            ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
             IFactoryProvider factoryProvider)
 		{
-            Helper.AssertIsNotNull(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+            Helper.AssertIsNotNull(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
 
 			_targetFilter = targetFilter;
+            _targetPositionPredictor = targetPositionPredictor;
 			_angleCalculator = angleCalculator;
 			_rotationMovementController = rotationMovementController;
 		}
@@ -110,6 +114,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+                Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(transform.position, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
+
+                // FELIX  Use predictedTargetPosition
+
                 float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, Target, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
 				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);

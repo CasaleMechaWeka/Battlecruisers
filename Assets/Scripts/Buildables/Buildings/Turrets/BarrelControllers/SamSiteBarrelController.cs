@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -22,11 +23,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public void Initialise(
             IExactMatchTargetFilter targetFilter, 
+            ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
             IFactoryProvider factoryProvider)
 		{
-            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
 
 			_exactMatchTargetFilter = targetFilter;
 

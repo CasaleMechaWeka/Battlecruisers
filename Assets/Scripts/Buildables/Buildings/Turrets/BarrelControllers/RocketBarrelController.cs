@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -35,12 +36,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public void Initialise(
             ITargetFilter targetFilter, 
+            ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
 			IFactoryProvider factoryProvider,
             Faction faction)
 		{
-            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
 
 			_faction = faction;
 

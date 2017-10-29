@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -55,11 +56,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		
 		public override void Initialise(
             ITargetFilter targetFilter, 
+            ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator, 
             IRotationMovementController rotationMovementController,
             IFactoryProvider factoryProvider)
 		{
-            base.Initialise(targetFilter, angleCalculator, rotationMovementController, factoryProvider);
+            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
             _laserEmitter.Initialise(targetFilter, _laserTurretStats.damagePerS);
 		}
 
