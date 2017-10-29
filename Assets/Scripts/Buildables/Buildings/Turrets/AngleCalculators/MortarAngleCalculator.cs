@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -16,12 +15,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
-
-		public MortarAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(targetPositionPredictorFactory) 
-		{ 
-			_targetPositionPredictor = _targetPositionPredictorFactory.CreateMortarPredictor();
-		}
 
 		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed, float projectileVelocityInMPerS)
 		{

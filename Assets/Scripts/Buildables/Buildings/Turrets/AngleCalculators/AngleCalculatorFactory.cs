@@ -1,32 +1,25 @@
-﻿using BattleCruisers.Movement.Predictors;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
-		public IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateAngleCalcultor()
 		{
-			return new AngleCalculator(targetPositionPredictorFactory);
+			return new AngleCalculator();
 		}
 
-		public IAngleCalculator CreateArtilleryAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateArtilleryAngleCalcultor()
 		{
-			return new ArtilleryAngleCalculator(targetPositionPredictorFactory);
+			return new ArtilleryAngleCalculator();
 		}
 
-		public IAngleCalculator CreateMortarAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateMortarAngleCalcultor()
 		{
-			return new MortarAngleCalculator(targetPositionPredictorFactory);
+			return new MortarAngleCalculator();
 		}
 
-		public IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
 		{
-			return new LeadingAngleCalculator(targetPositionPredictorFactory);
-		}
-
-		public IAngleCalculator CreateStaticAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory, float desiredAngleInDegrees)
-		{
-			return new StaticAngleCalculator(targetPositionPredictorFactory, desiredAngleInDegrees);
+			return new StaticAngleCalculator(desiredAngleInDegrees);
 		}
 	}
 }

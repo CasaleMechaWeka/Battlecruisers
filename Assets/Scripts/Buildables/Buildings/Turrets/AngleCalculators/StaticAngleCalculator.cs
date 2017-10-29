@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Movement.Predictors;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
@@ -7,8 +6,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		private readonly float _desiredAngleInDegrees;
 
-		public StaticAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory, float desiredAngleInDegrees)
-			: base(targetPositionPredictorFactory) 
+		public StaticAngleCalculator(float desiredAngleInDegrees)
 		{ 
 			_desiredAngleInDegrees = desiredAngleInDegrees;
 		}

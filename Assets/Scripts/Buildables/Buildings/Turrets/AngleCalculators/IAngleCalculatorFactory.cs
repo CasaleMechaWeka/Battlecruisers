@@ -1,14 +1,10 @@
-﻿using BattleCruisers.Movement.Predictors;
-using System;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-	public interface IAngleCalculatorFactory
+    public interface IAngleCalculatorFactory
 	{
-		IAngleCalculator CreateAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateArtilleryAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateMortarAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateLeadingAngleCalcultor(ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IAngleCalculator CreateStaticAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory, float desiredAngleInDegrees);
+		IAngleCalculator CreateAngleCalcultor();
+		IAngleCalculator CreateArtilleryAngleCalcultor();
+		IAngleCalculator CreateMortarAngleCalcultor();
+		IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees);
 	}
 }

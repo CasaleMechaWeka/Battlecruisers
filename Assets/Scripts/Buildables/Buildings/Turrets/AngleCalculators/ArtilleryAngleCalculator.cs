@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -15,9 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     public class ArtilleryAngleCalculator : AngleCalculator
 	{
 		protected override bool MustFaceTarget { get { return true; } }
-
-		public ArtilleryAngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory)
-			: base(targetPositionPredictorFactory) { }
 
 		protected override float CalculateDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{

@@ -1,40 +1,22 @@
 ﻿using System;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class AngleCalculator : IAngleCalculator
 	{
-		protected readonly ITargetPositionPredictorFactory _targetPositionPredictorFactory;
-		protected ITargetPositionPredictor _targetPositionPredictor;
-
 		protected virtual bool LeadsTarget { get { return false; } }
 		protected virtual bool MustFaceTarget { get { return false; } }
 
-		public AngleCalculator(ITargetPositionPredictorFactory targetPositionPredictorFactory)
+        public float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{
-			_targetPositionPredictorFactory = targetPositionPredictorFactory;
-		}
-
-		public float FindDesiredAngle(Vector2 source, ITarget target, bool isSourceMirrored, float projectileVelocityInMPerS, float currentAngleInRadians)
-		{
-			Vector2 targetPosition = target.Position;
-
 			if (MustFaceTarget)
 			{
-				CheckSourceIsFacingTarget(source, targetPosition, isSourceMirrored);
+				CheckSourceIsFacingTarget(sourcePosition, targetPosition, isSourceMirrored);
 			}
 
-			if (LeadsTarget)
-			{
-				Assert.IsNotNull(_targetPositionPredictor);
-				targetPosition = _targetPositionPredictor.PredictTargetPosition(source, target, projectileVelocityInMPerS, currentAngleInRadians);
-			}
-
-			return CalculateDesiredAngle(source, targetPosition, isSourceMirrored, projectileVelocityInMPerS);
+			return CalculateDesiredAngle(sourcePosition, targetPosition, isSourceMirrored, projectileVelocityInMPerS);
 		}
 
 		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target, bool isSourceMirrored)
