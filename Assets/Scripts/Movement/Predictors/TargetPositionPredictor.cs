@@ -1,16 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
-using System;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Predictors
 {
-	public interface ITargetPositionPredictor
-	{
-		Vector2 PredictTargetPosition(Vector2 sourcePosition, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians);
-	}
-
-	public abstract class TargetPositionPredictor : ITargetPositionPredictor
+    public abstract class TargetPositionPredictor : ITargetPositionPredictor
 	{
 		public Vector2 PredictTargetPosition(Vector2 sourcePosition, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
