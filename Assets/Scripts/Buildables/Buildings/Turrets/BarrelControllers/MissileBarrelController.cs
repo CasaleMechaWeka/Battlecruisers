@@ -1,8 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
@@ -22,18 +18,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
         }
 
-		public override void Initialise(
-            ITargetFilter targetFilter, 
-            ITargetPositionPredictor targetPositionPredictor,
-            IAngleCalculator angleCalculator, 
-            IRotationMovementController rotationMovementController,
-            IFactoryProvider factoryProvider)
+        public override void Initialise(IBarrelControllerArgs args)
 		{
-            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
+            base.Initialise(args);
 
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)
             {
-                missileSpawner.Initialise(_projectileStats, factoryProvider);
+                missileSpawner.Initialise(_projectileStats, args.FactoryProvider);
 			}
 		}
 

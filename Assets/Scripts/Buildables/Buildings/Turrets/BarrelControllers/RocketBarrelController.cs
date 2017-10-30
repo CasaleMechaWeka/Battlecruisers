@@ -1,10 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles.Spawners;
+﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
@@ -34,21 +30,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _rocketStats;
         }
 
-		public void Initialise(
-            ITargetFilter targetFilter, 
-            ITargetPositionPredictor targetPositionPredictor,
-            IAngleCalculator angleCalculator, 
-            IRotationMovementController rotationMovementController,
-			IFactoryProvider factoryProvider,
-            Faction faction)
+		public void Initialise(IBarrelControllerArgs args, Faction faction)
 		{
-            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
+            base.Initialise(args);
 
 			_faction = faction;
 
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-                rocketSpawner.Initialise(_rocketStats, factoryProvider);
+                rocketSpawner.Initialise(_rocketStats, args.FactoryProvider);
 			}
 		}
 

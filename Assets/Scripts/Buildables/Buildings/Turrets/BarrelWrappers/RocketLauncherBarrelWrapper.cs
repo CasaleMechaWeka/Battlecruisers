@@ -11,16 +11,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
-            RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();
-
-            rocketBarrel
-                .Initialise(
+            IBarrelControllerArgs args
+                = new BarrelControllerArgs(
                     targetFilter,
                     CreateTargetPositionPredictor(),
                     angleCalculator,
+                    CreateAccuracyAdjuster(),
                     CreateRotationMovementController(barrel),
-                    _factoryProvider,
-                    _enemyFaction);
+                    _factoryProvider);
+
+			RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();
+            rocketBarrel.Initialise(args, _enemyFaction);
         }
     }
 }

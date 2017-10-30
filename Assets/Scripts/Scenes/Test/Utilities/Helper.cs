@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
@@ -12,6 +14,7 @@ using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -21,6 +24,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.Utils;
 using NSubstitute;
 using UnityEngine;
 
@@ -298,5 +302,24 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			return parentSlot;
 		}
+
+        public IBarrelControllerArgs CreateBarrelControllerArgs(
+            BarrelController barrel,
+            ITargetFilter targetFilter = null,
+            ITargetPositionPredictor targetPositionPredictor = null,
+            IAngleCalculator angleCalculator = null,
+            IAccuracyAdjuster accuracyAdjuster = null,
+            IRotationMovementController rotationMovementController = null,
+            IFactoryProvider factoryProvider = null)
+        {
+            return
+                new BarrelControllerArgs(
+                    targetFilter ?? Substitute.For<ITargetFilter>(),
+                    targetPositionPredictor ?? new DummyTargetPositionpredictor(),
+                    angleCalculator ?? new AngleCalculator(),
+                    accuracyAdjuster ?? new DummyAccuracyAdjuster(),
+                    rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
+                    factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider);
+        }
 	}
 }

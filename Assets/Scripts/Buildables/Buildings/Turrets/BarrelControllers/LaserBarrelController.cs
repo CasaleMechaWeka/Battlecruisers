@@ -1,10 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -54,15 +50,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return fireIntervalManager;
         }
 		
-		public override void Initialise(
-            ITargetFilter targetFilter, 
-            ITargetPositionPredictor targetPositionPredictor,
-            IAngleCalculator angleCalculator, 
-            IRotationMovementController rotationMovementController,
-            IFactoryProvider factoryProvider)
+        public override void Initialise(IBarrelControllerArgs args)
 		{
-            base.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
-            _laserEmitter.Initialise(targetFilter, _laserTurretStats.damagePerS);
+            base.Initialise(args);
+            _laserEmitter.Initialise(args.TargetFilter, _laserTurretStats.damagePerS);
 		}
 
 		protected override void Fire(float angleInDegrees)

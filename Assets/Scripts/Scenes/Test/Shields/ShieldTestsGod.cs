@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
@@ -29,13 +26,14 @@ namespace BattleCruisers.Scenes.Test.Shields
 
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
-            ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
-            IRotationHelper rotationHelper = new RotationHelper();
-			IAngleCalculator angleCalculator = new AngleCalculator();
-            IRotationMovementController rotationMovementController = new RotationMovementController(rotationHelper, turret.TurretStats.TurretRotateSpeedInDegrees, turret.transform);
-            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
-            turret.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
+            IBarrelControllerArgs barrelControllerArgs
+                = new Helper()
+                    .CreateBarrelControllerArgs(
+                    turret,
+                    targetFilter);
+
+            turret.Initialise(barrelControllerArgs);
 			turret.Target = shield;
 		}
 	}

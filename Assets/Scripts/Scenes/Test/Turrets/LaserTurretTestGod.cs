@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -13,22 +11,25 @@ namespace BattleCruisers.Scenes.Test.Turrets
     {
 	    void Start () 
         {
+            Helper helper = new Helper();
+
+
             // Setup laser barrel
             LaserBarrelController laserBarrel = FindObjectOfType<LaserBarrelController>();
             laserBarrel.StaticInitialise();
 
-            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
-            ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
-            IAngleCalculator angleCalculator = new AngleCalculator();
-            IRotationMovementController rotationMovementController = new DummyRotationMovementController(isOnTarget: true);
-            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
+            IBarrelControllerArgs barrelControllerArgs
+                = helper.CreateBarrelControllerArgs(
+                    laserBarrel,
+                    targetFilter: new DummyTargetFilter(isMatchResult: true),
+                    rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
-            laserBarrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
+            laserBarrel.Initialise(barrelControllerArgs);
             
 
             // Setup target
             AirFactory airFactory = FindObjectOfType<AirFactory>();
-            new Helper().InitialiseBuilding(airFactory);
+            helper.InitialiseBuilding(airFactory);
             airFactory.Destroyed += (sender, e) => laserBarrel.Target = null;
 			laserBarrel.Target = airFactory;
 	    }

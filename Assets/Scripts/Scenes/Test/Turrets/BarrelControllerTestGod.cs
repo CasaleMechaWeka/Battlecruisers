@@ -1,10 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using UnityEngine;
 
@@ -18,25 +15,23 @@ namespace BattleCruisers.Scenes.Test
 
 		void Start()
 		{
+            Helper helper = new Helper();
+
 			ITarget target = Substitute.For<ITarget>();
 			Vector2 targetPosition = targetGameObject.transform.position;
 			target.Position.Returns(targetPosition);
-
-			ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
-            IRotationHelper rotationHelper = new RotationHelper();
-
-            ITargetPositionPredictor targetPositionPredictor = new DummyTargetPositionpredictor();
-            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
             BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
 
             foreach (BarrelController barrel in turretBarrels)
 			{
 				barrel.StaticInitialise();
-                IAngleCalculator angleCalculator = AngleCalculator;
-                IRotationMovementController rotationMovementController = new RotationMovementController(rotationHelper, barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform);
 				barrel.Target = target;
-                barrel.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, args.FactoryProvider);
+
+                IBarrelControllerArgs barrelControllerArgs
+                    = helper.CreateBarrelControllerArgs(barrel, angleCalculator: AngleCalculator);
+
+                barrel.Initialise(barrelControllerArgs);
 			}
 		}
 	}

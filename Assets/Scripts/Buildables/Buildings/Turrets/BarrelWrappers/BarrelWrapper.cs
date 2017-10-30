@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Predictors;
@@ -102,13 +103,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
-            barrel
-                .Initialise(
-                    CreateTargetFilter(),
+            IBarrelControllerArgs args
+                = new BarrelControllerArgs(
+                    targetFilter,
                     CreateTargetPositionPredictor(),
-                    CreateAngleCalculator(),
+                    angleCalculator,
+                    CreateAccuracyAdjuster(),
                     CreateRotationMovementController(barrel),
                     _factoryProvider);
+
+            barrel.Initialise(args);
         }
 
         public void StartAttackingTargets()
@@ -139,6 +143,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
                     barrel.TurretStats.TurretRotateSpeedInDegrees, 
                     barrel.transform);
+        }
+
+        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster()
+        {
+            // Default to 100% accuracy
+            return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();
         }
 
         public void Dispose()

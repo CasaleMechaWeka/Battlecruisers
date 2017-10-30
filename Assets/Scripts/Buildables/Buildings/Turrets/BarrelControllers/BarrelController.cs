@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -22,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected ITargetPositionPredictor _targetPositionPredictor;
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
+        private IAccuracyAdjuster _accuracyAdjuster;
 
         protected TurretStats _turretStats;
         public ITurretStats TurretStats { get { return _turretStats; } }
@@ -87,19 +89,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return fireIntervalManager;
 		}
 
-        public virtual void Initialise(
-            ITargetFilter targetFilter, 
-            ITargetPositionPredictor targetPositionPredictor,
-            IAngleCalculator angleCalculator, 
-            IRotationMovementController rotationMovementController,
-            IFactoryProvider factoryProvider)
+        public virtual void Initialise(IBarrelControllerArgs args)
 		{
-            Helper.AssertIsNotNull(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, factoryProvider);
+            Assert.IsNotNull(args);
 
-			_targetFilter = targetFilter;
-            _targetPositionPredictor = targetPositionPredictor;
-			_angleCalculator = angleCalculator;
-			_rotationMovementController = rotationMovementController;
+            _targetFilter = args.TargetFilter;
+            _targetPositionPredictor = args.TargetPositionPredictor;
+			_angleCalculator = args.AngleCalculator;
+			_rotationMovementController = args.RotationMovementController;
+            _accuracyAdjuster = args.AccuracyAdjuster;
 		}
 
 		void FixedUpdate()

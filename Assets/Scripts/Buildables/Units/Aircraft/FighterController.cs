@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -85,12 +82,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
-            ITargetPositionPredictor targetPositionPredictor = _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor();
-            IAngleCalculator angleCalculator = _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator();
-            IRotationMovementController rotationMovementController = _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform);
 
-            _barrelController.Initialise(targetFilter, targetPositionPredictor, angleCalculator, rotationMovementController, _factoryProvider);
+            IBarrelControllerArgs args
+                = new BarrelControllerArgs(
+                    _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities),
+                    _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
+                    _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
+                    _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
+                    _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
+                    _factoryProvider);
+
+            _barrelController.Initialise(args);
 
 			SetupTargetDetection();
 		}

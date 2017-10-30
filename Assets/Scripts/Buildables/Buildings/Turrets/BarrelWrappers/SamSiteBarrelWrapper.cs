@@ -9,16 +9,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 	{
         protected override void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
-            SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
-
             IExactMatchTargetFilter exatMatchTargetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
 
-            samSiteBarrel.Initialise(
-                exatMatchTargetFilter,
-                CreateTargetPositionPredictor(),
-                angleCalculator,
-                CreateRotationMovementController(barrel),
-                _factoryProvider);
+            IBarrelControllerArgs args
+                = new BarrelControllerArgs(
+                    exatMatchTargetFilter,
+                    CreateTargetPositionPredictor(),
+                    angleCalculator,
+                    CreateAccuracyAdjuster(),
+                    CreateRotationMovementController(barrel),
+                    _factoryProvider);
+
+			SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
+            samSiteBarrel.Initialise(exatMatchTargetFilter, args);
         }
 	}
 }
