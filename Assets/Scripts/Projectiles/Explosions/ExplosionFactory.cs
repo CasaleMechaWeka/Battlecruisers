@@ -7,7 +7,7 @@ namespace BattleCruisers.Projectiles.Explosions
     {
         private readonly IPrefabFactory _prefabFactory;
 
-        public const float DEFAULT_EXPLOSION_DURATION_IN_S = 0.5f;
+        public const float DEFAULT_EXPLOSION_DURATION_IN_S = 0.25f;
 
         public ExplosionFactory(IPrefabFactory prefabFactory)
         {
