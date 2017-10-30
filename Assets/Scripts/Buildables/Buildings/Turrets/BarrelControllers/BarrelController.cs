@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					// is at, instead of the perfect desired angle.
 					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
-                    // FELIX  Adjust accuracy
+                    fireAngle = _angleCalculator.FindDesiredAngle(transform.position, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
 
 					Fire(fireAngle);
                     _fireIntervalManager.OnFired();
