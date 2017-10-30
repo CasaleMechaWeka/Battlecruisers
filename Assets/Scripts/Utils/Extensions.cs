@@ -57,5 +57,11 @@ namespace BattleCruisers.Utils
 
             return namedComponent;
         }
+
+        public static T Middle<T>(this IList<T> list)
+        {
+            Assert.IsTrue(list.Count != 0);
+            return list[list.Count / 2];
+        }
 	}
 }

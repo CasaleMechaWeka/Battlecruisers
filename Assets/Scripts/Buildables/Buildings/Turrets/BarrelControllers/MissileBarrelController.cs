@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -8,6 +9,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class MissileBarrelController : BarrelController
 	{
         private ICircularList<MissileSpawner> _missileSpawners;
+
+        protected override Vector3 ProjectileSpawnerPosition { get { return _missileSpawners.Items.Middle().transform.position; } }
 
         public override void StaticInitialise()
         {

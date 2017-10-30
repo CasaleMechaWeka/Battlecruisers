@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Utils.DataStrctures
 {
-	public interface ICircularList<T>
+    public interface ICircularList<T>
 	{
 		T Next();
 		ReadOnlyCollection<T> Items { get; }

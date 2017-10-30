@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -8,6 +9,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawner _missileSpawner;
+
+        protected override Vector3 ProjectileSpawnerPosition { get { return _missileSpawner.transform.position; } }
 
         public override void StaticInitialise()
         {

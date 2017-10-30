@@ -56,6 +56,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             set { _turretStats.BoostMultiplier = value; }
         }
 
+        protected abstract Vector3 ProjectileSpawnerPosition { get; }
+
         public virtual void StaticInitialise()
         {
             // Usually > 0, but can be 0 (invisible barrel controller for fighters)
@@ -112,9 +114,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
 				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-                Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(transform.position, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
+                Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
-                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(transform.position, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
 
 				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
@@ -131,7 +133,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					// is at, instead of the perfect desired angle.
 					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
-                    fireAngle = _angleCalculator.FindDesiredAngle(transform.position, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+                    fireAngle = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
 
 					Fire(fireAngle);
                     _fireIntervalManager.OnFired();

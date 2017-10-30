@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -14,7 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override int NumOfBarrels { get { return _shellSpawners.Length; } }
 
-		public override void StaticInitialise()
+        protected override Vector3 ProjectileSpawnerPosition { get { return _shellSpawners.Middle().transform.position; } }
+
+        public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 

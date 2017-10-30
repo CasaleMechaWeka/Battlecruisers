@@ -3,6 +3,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -12,6 +13,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private ICircularList<RocketSpawner> _rocketSpawners;
 		private Faction _faction;
         private ICruisingProjectileStats _rocketStats;
+
+        protected override Vector3 ProjectileSpawnerPosition { get { return _rocketSpawners.Items.Middle().transform.position; } }
 
         public override void StaticInitialise()
         {
