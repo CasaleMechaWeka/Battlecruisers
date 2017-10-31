@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return _factoryProvider.AngleCalculatorFactory.CreateArtilleryAngleCalculator();
 		}
 		
-        // FELIX  Avoid duplicate code with MortarFireBarrelWrapper.  Parent class :)
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
         {
             return 
