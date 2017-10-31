@@ -19,6 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                 new AccuracyAdjuster(
                     new GravityAffectedTargetBoundsFinder(),
                     angleCalculator,
+                    new LinearRangeFinder(),
                     new RandomGenerator(),
                     projectileVelocityInMPerS,
                     accuracy);

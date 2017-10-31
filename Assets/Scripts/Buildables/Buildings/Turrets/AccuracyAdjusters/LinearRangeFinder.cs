@@ -5,6 +5,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class LinearRangeFinder : IAngleRangeFinder
     {
+        /// <returns>
+        /// The possible range of fire angles.  Includes the given on target range,
+        /// with an error margin either side.
+        /// </returns>
         public IRange<float> FindFireAngleRange(IRange<float> onTargetRange, float accuracy)
         {
             Assert.IsTrue(onTargetRange.Max > onTargetRange.Min);
