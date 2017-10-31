@@ -10,5 +10,19 @@
             Min = min;
             Max = max;
         }
+
+        public override bool Equals(object obj)
+        {
+            Range<T> other = obj as Range<T>;
+            return
+                other != null
+                && other.Min.Equals(Min)
+                && other.Max.Equals(Max);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Min, Max);
+        }
     }
 }
