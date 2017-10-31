@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     exatMatchTargetFilter,
                     CreateTargetPositionPredictor(),
                     angleCalculator,
-                    CreateAccuracyAdjuster(),
+                    CreateAccuracyAdjuster(angleCalculator, barrel),
                     CreateRotationMovementController(barrel),
                     _factoryProvider);
 

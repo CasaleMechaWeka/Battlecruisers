@@ -108,7 +108,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     targetFilter,
                     CreateTargetPositionPredictor(),
                     angleCalculator,
-                    CreateAccuracyAdjuster(),
+                    CreateAccuracyAdjuster(angleCalculator, barrel),
                     CreateRotationMovementController(barrel),
                     _factoryProvider);
 
@@ -145,7 +145,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     barrel.transform);
         }
 
-        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster()
+        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
         {
             // Default to 100% accuracy
             return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();

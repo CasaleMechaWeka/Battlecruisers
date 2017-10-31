@@ -21,10 +21,11 @@ namespace BattleCruisers.Utils
 		public const string FACTORY = "Factory";
 
 		// Projectiles
-		public const string ANGLE_CALCULATORS = "AngleCalculators";
-		public const string BARREL_CONTROLLER = "BarrelController";
-		public const string SHELL_SPAWNER = "ShellSpawner";
-		public const string SHELLS = "Shells";
+		public const string ACCURACY_ADJUSTERS = "AccuraryAdjusters";
+        public const string ANGLE_CALCULATORS = "AngleCalculators";
+        public const string BARREL_CONTROLLER = "BarrelController";
+        public const string SHELL_SPAWNER = "ShellSpawner";
+        public const string SHELLS = "Shells";
 
 		// Targets
 		public const string TARGET = "Target";
@@ -87,6 +88,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.FACTORY, false);
 
 			// Projectiles
+            tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
 			tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
 			tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);

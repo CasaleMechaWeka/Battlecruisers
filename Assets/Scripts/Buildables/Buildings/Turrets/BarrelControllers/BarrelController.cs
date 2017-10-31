@@ -17,13 +17,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer, IBoostable
     {
-        protected IProjectileStats _projectileStats;
         protected IFireIntervalManager _fireIntervalManager;
         protected ITargetFilter _targetFilter;
         protected ITargetPositionPredictor _targetPositionPredictor;
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
         private IAccuracyAdjuster _accuracyAdjuster;
+		
+        protected IProjectileStats _projectileStats;
+        public IProjectileStats ProjectileStats { get { return _projectileStats; } }
 
         protected TurretStats _turretStats;
         public ITurretStats TurretStats { get { return _turretStats; } }
@@ -133,7 +135,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 					// is at, instead of the perfect desired angle.
 					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
 
-                    fireAngle = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+                    fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
 
 					Fire(fireAngle);
                     _fireIntervalManager.OnFired();

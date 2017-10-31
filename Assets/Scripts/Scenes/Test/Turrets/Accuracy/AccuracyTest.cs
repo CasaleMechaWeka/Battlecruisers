@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -10,15 +11,14 @@ namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
 {
     public class AccuracyTest : MonoBehaviour
     {
-        public float accuracy;
-
         public Camera Camera { get; private set; }
 
         public void Initialise()
         {
             // Show accuracy
+            ITurretStats stats = GetComponentInChildren<ITurretStats>();
             TextMesh accuracyText = GetComponentInChildren<TextMesh>();
-            accuracyText.text = accuracy * 100 + "%";
+            accuracyText.text = stats.Accuracy * 100 + "%";
 
 
             // Hide camera

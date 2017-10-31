@@ -60,7 +60,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
-            IExplosionFactory explosionFactory = null)
+            IExplosionFactory explosionFactory = null,
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -79,7 +80,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostFactory,
                     boostProvidersManager,
                     damageApplierFactory,
-                    parentCruiserDirection);
+                    parentCruiserDirection,
+                    explosionFactory,
+                    accuracyAdjusterFactory);
 
             InitialiseBuilding(building, args, parentSlot);
         }
@@ -115,7 +118,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostProvidersManager boostProvidersManager = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            IExplosionFactory explosionFactory = null)
+            IExplosionFactory explosionFactory = null,
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = null)
 		{
 			BuildableInitialisationArgs args
 				= new BuildableInitialisationArgs(
@@ -135,7 +139,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostProvidersManager,
                     damageApplierFactory,
 					parentCruiserDirection,
-                    explosionFactory);
+                    explosionFactory,
+                    accuracyAdjusterFactory);
 
             InitialiseUnit(unit, args);
 		}
