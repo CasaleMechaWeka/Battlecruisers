@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
+namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders
 {
     public interface ITargetBoundsFinder
     {

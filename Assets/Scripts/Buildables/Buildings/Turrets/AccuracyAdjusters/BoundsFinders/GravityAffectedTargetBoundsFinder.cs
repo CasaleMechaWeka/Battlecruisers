@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
+namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders
 {
     public class GravityAffectedTargetBoundsFinder : ITargetBoundsFinder
     {
