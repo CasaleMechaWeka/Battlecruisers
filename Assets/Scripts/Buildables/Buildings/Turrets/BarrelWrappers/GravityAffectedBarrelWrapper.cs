@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
         {
             return 
-                _factoryProvider.AccuracyAdjusterFactory.CreateGravityAffectedProjectileAdjuster(
+                _factoryProvider.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
                     angleCalculator, 
                     barrel.ProjectileStats.MaxVelocityInMPerS, 
                     barrel.TurretStats.Accuracy);

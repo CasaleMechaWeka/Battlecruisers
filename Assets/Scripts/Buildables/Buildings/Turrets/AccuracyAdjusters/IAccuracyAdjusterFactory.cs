@@ -6,7 +6,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
     {
         IAccuracyAdjuster CreateDummyAdjuster();
 
-        IAccuracyAdjuster CreateGravityAffectedProjectileAdjuster(
+        IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(
+            IAngleCalculator angleCalculator,
+            float projectileVelocityInMPerS,
+            float accuracy);
+
+        IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(
             IAngleCalculator angleCalculator,
             float projectileVelocityInMPerS,
             float accuracy);
