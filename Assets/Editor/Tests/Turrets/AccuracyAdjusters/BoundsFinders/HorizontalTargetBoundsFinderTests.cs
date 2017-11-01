@@ -4,9 +4,9 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
+namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters.BoundsFinders
 {
-    public class GravityAffectedTargetBoundsFinderTests
+    public class HorizontalTargetBoundsFinderTests
     {
         private ITargetBoundsFinder _boundsFinder;
         private Vector2 _leftCruiserPosition, _rightCruiserPosition;
