@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityEngine;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _boundsFinder = new GravityAffectedTargetBoundsFinder(targetXMarginInM: 1);
+            _boundsFinder = new HorizontalTargetBoundsFinder(targetXMarginInM: 1);
 
             _leftCruiserPosition = new Vector2(-35, 0);
             _rightCruiserPosition = new Vector2(35, 0);

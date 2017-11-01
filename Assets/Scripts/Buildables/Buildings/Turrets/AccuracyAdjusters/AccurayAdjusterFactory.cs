@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -19,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         {
             return
                 new AccuracyAdjuster(
-                    new GravityAffectedTargetBoundsFinder(TARGET_X_MARGIN_IN_M),
+                    new HorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M),
                     angleCalculator,
                     new LinearRangeFinder(),
                     new RandomGenerator(),

@@ -4,18 +4,22 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders
 {
-    public class GravityAffectedTargetBoundsFinder : ITargetBoundsFinder
+    public abstract class TargetBoundsFinder : ITargetBoundsFinder
     {
         private readonly float _targetXMarginInM;
+        private readonly float _targetYMarginInM;
 
-        public GravityAffectedTargetBoundsFinder(float targetXMarginInM)
+        public TargetBoundsFinder(float targetXMarginInM, float targetYMarginInM)
         {
-            Assert.IsTrue(targetXMarginInM > 0);
+            Assert.IsTrue(targetXMarginInM > 0 || targetYMarginInM > 0);
+
             _targetXMarginInM = targetXMarginInM;
+            _targetYMarginInM = targetYMarginInM;
         }
 
-		/// <summary>
-        /// NOTE:  Ignores position y values.
+        /// <summary>
+        /// x margin: 0.5
+        /// y margin: 1
         /// 
         /// Eg:
         /// Input:
@@ -24,9 +28,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFi
         /// 
         /// Output:
         ///     ITargetBounds
-        ///         min:  9.5, 0
-        ///         max:  10.5, 0
-		/// </summary>
+        ///         min:  9.5, -1
+        ///         max:  10.5, 1
+        /// </summary>
         public IRange<Vector2> FindTargetBounds(Vector2 sourcePosition, Vector2 targetPosition)
         {
             Assert.IsTrue(sourcePosition.x != targetPosition.x);
@@ -36,14 +40,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFi
             if (sourcePosition.x < targetPosition.x)
             {
                 // Firing left to right
-                minPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y);
-                maxPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y);
+                minPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y - _targetYMarginInM);
+                maxPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y + _targetYMarginInM);
             }
             else
             {
                 // Firing right to left
-                minPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y);
-                maxPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y);
+                minPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y - _targetYMarginInM);
+                maxPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y + _targetYMarginInM);
             }
 
             return new Range<Vector2>(minPosition, maxPosition);
