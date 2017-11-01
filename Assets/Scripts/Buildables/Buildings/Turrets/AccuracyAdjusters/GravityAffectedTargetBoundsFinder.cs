@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class GravityAffectedTargetBoundsFinder : ITargetBoundsFinder
     {
-        private const float TARGET_MARGIN_X_IN_M = 0.5f;
+        private const float TARGET_MARGIN_X_IN_M = 1;
 
 		/// <summary>
         /// NOTE:  Ignores position y values.
