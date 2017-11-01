@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
@@ -38,7 +40,12 @@ namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
             
 			AccuracyTest[] tests = FindObjectsOfType<AccuracyTest>();
 
-            foreach (AccuracyTest test in tests)
+            IList<AccuracyTest> orderedTests =
+                tests
+                    .OrderBy(test => test.gameObject.GetComponentInChildren<ITurretStats>().Accuracy)
+                    .ToList();
+
+            foreach (AccuracyTest test in orderedTests)
             {
                 test.Initialise();
                 cameras.Add(test.Camera);
