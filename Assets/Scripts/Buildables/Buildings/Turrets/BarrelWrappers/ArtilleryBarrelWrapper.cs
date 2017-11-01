@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    public class GravityAffectedBarrelWrapper : BarrelWrapper
+    public class ArtilleryBarrelWrapper : BarrelWrapper
 	{
 		protected override IAngleCalculator CreateAngleCalculator()
 		{
