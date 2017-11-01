@@ -6,7 +6,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class GravityAffectedTargetBoundsFinder : ITargetBoundsFinder
     {
-        private const float TARGET_MARGIN_X_IN_M = 1;
+        private readonly float _targetXMarginInM;
+
+        public GravityAffectedTargetBoundsFinder(float targetXMarginInM)
+        {
+            Assert.IsTrue(targetXMarginInM > 0);
+            _targetXMarginInM = targetXMarginInM;
+        }
 
 		/// <summary>
         /// NOTE:  Ignores position y values.
@@ -30,14 +36,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             if (sourcePosition.x < targetPosition.x)
             {
                 // Firing left to right
-                minPosition = new Vector2(targetPosition.x - TARGET_MARGIN_X_IN_M, targetPosition.y);
-                maxPosition = new Vector2(targetPosition.x + TARGET_MARGIN_X_IN_M, targetPosition.y);
+                minPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y);
+                maxPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y);
             }
             else
             {
                 // Firing right to left
-                minPosition = new Vector2(targetPosition.x + TARGET_MARGIN_X_IN_M, targetPosition.y);
-                maxPosition = new Vector2(targetPosition.x - TARGET_MARGIN_X_IN_M, targetPosition.y);
+                minPosition = new Vector2(targetPosition.x + _targetXMarginInM, targetPosition.y);
+                maxPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y);
             }
 
             return new Range<Vector2>(minPosition, maxPosition);

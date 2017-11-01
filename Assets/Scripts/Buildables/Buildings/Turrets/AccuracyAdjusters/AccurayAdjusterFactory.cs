@@ -5,6 +5,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class AccuracyAdjusterFactory : IAccuracyAdjusterFactory
     {
+        private const float TARGET_X_MARGIN_IN_M = 1;
+
         public IAccuracyAdjuster CreateDummyAdjuster()
         {
             return new DummyAccuracyAdjuster();
@@ -17,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         {
             return
                 new AccuracyAdjuster(
-                    new GravityAffectedTargetBoundsFinder(),
+                    new GravityAffectedTargetBoundsFinder(TARGET_X_MARGIN_IN_M),
                     angleCalculator,
                     new LinearRangeFinder(),
                     new RandomGenerator(),
