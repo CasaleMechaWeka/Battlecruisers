@@ -45,7 +45,6 @@ namespace BattleCruisers.Buildables
         public float buildTimeInS;
         public SlotType slotType;
 
-        private const float DELETE_DELAY_IN_S = 3;
         private const float MAX_BUILD_PROGRESS = 1;
         // TEMP  Build cheat multiplier
         private const float BUILD_CHEAT_MULTIPLIER = 10;
