@@ -6,8 +6,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class AccuracyAdjusterFactory : IAccuracyAdjusterFactory
     {
-        private const float TARGET_X_MARGIN_IN_M = 1;
-        private const float TARGET_Y_MARGIN_IN_M = 1;
+        private const float TARGET_X_MARGIN_IN_M = 0.75f;
+        private const float TARGET_Y_MARGIN_IN_M = 0.75f;
 
         public IAccuracyAdjuster CreateDummyAdjuster()
         {
