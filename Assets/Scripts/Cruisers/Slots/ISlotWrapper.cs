@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace BattleCruisers.Cruisers.Slots
+﻿namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotWrapper
 	{
