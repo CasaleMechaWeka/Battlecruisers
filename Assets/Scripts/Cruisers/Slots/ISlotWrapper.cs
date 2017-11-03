@@ -11,6 +11,6 @@ namespace BattleCruisers.Cruisers.Slots
         void HideAllSlots();
         void HighlightAvailableSlots(SlotType slotType);
         void UnhighlightSlots();
-        ISlot GetSlot(IBuilding building);
+        void HighlightBuildingSlot(IBuilding building);
 	}
 }

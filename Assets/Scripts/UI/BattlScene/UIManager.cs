@@ -14,6 +14,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
+    // FELIX  Test???
+    // 1. Turn everything into interfaces O_o
+    // 2. Seprate from MonoBehaviour :P
     public class UIManager : MonoBehaviour, IUIManager
 	{
 		private Cruiser _playerCruiser, _aiCruiser;
@@ -128,6 +131,7 @@ namespace BattleCruisers.UI.BattleScene
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
 
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
+            _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
             ShowBuildableDetails(building, allowDelete: true);
 		}
 

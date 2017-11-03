@@ -19,6 +19,7 @@ namespace BattleCruisers.Cruisers.Slots
         bool IsActive { set; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
+        bool IsVisible { set; }
 
         /// <summary>
         /// Slots are ordered via their index, from the crusier front (low

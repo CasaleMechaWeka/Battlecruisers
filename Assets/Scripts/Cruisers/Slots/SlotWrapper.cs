@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -10,7 +11,29 @@ namespace BattleCruisers.Cruisers.Slots
 		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
 
-        private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
+		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
+
+		private ISlot _highlightedSlot;
+        private ISlot HighlightedSlot
+        {
+            get { return _highlightedSlot; }
+            set
+            {
+                if (_highlightedSlot != null)
+                {
+                    _highlightedSlot.IsActive = false;
+                    _highlightedSlot.IsVisible = false;
+                }
+
+                _highlightedSlot = value;
+
+                if (_highlightedSlot != null)
+                {
+                    _highlightedSlot.IsActive = true;
+                    _highlightedSlot.IsVisible = true;
+                }
+            }
+        }
 
         public void Initialise(ICruiser parentCruiser)
 		{
@@ -72,13 +95,24 @@ namespace BattleCruisers.Cruisers.Slots
 
 		public void ShowAllSlots()
 		{
-            gameObject.SetActive(true);
+            SetSlotVisibility(isVisible: true);
 		}
 
 		public void HideAllSlots()
 		{
-            gameObject.SetActive(false);
+            SetSlotVisibility(isVisible: false);
 		}
+
+        private void SetSlotVisibility(bool isVisible)
+        {
+            foreach (IList<ISlot> slots in _slots.Values)
+            {
+                foreach (ISlot slot in slots)
+                {
+                    slot.IsVisible = isVisible;
+                }
+            }
+        }
 
 		// Only highlight one slot type at a time
 		public void HighlightAvailableSlots(SlotType slotType)
@@ -126,8 +160,14 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			return _slots[slotType].Count;
 		}
-
-        public ISlot GetSlot(IBuilding building)
+		
+        public void HighlightBuildingSlot(IBuilding building)
+        {
+            HighlightedSlot = GetSlot(building);
+            Assert.IsNotNull(HighlightedSlot);
+        }
+        
+        private ISlot GetSlot(IBuilding building)
         {
             return _slots[building.SlotType].FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
         }

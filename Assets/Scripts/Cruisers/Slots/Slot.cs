@@ -25,6 +25,10 @@ namespace BattleCruisers.Cruisers.Slots
         public bool IsFree { get { return Building == null; } }
         public SlotType Type { get { return type; } }
         public Vector2 Position { get { return gameObject.transform.position; } }
+        public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
+        public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
+        public float Index { get { return index; } }
+        public bool IsVisible { set { gameObject.SetActive(value); } }
 
         private IBuilding _building;
         public IBuilding Building
@@ -55,10 +59,6 @@ namespace BattleCruisers.Cruisers.Slots
                 }
             }
         }
-
-        public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
-        public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
-        public float Index { get { return index; } }
 
         public static Color DEFAULT_COLOUR = Color.yellow;
 		public static Color ACTIVE_COLOUR = Color.green;
