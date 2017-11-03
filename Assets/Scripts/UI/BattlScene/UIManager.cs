@@ -60,9 +60,11 @@ namespace BattleCruisers.UI.BattleScene
 					playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
-				case CameraState.AiCruiser:
+                case CameraState.AiCruiser:
+                    _aiCruiser.SlotWrapper.UnhighlightSlots();
+                    HideTargetDetails();
 					aiCruiserHealthBar.gameObject.SetActive(false);
-					break;
+                    break;
 			}
 		}
 
@@ -85,6 +87,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
             HideTargetDetails();
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
+            _aiCruiser.SlotWrapper.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
@@ -137,6 +140,7 @@ namespace BattleCruisers.UI.BattleScene
 
 		public void SelectBuildingFromEnemyCruiser(Building building)
 		{
+            _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
             ShowBuildableDetails(building, allowDelete: false);
 		}
 
