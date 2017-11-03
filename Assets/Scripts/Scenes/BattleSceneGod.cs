@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -121,11 +122,10 @@ namespace BattleCruisers.Scenes
 			cameraController.Initialise(_playerCruiser, _aiCruiser);
 
 
-            // TEMP  Disable AI
-            //// AI
-            //ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
-            //IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
-            //aiManager.CreateAI(levelInfo);
+            // AI
+            ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
+            IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
+            aiManager.CreateAI(levelInfo);
 		}
 
 		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
