@@ -42,6 +42,7 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
 		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
+        public BackgroundController backgroundController;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -52,8 +53,17 @@ namespace BattleCruisers.Scenes
 
             IDeferrer deferrer = GetComponent<IDeferrer>();
 
-			Helper.AssertIsNotNull(uiManager, uiFactory, buildMenuController, buildableDetailsController, 
-                modalMenuController, cameraController, playerCruiserHealthBar, aiCruiserHealthBar, deferrer);
+			Helper.AssertIsNotNull(
+                uiManager, 
+                uiFactory, 
+                buildMenuController, 
+                buildableDetailsController, 
+                modalMenuController, 
+                cameraController, 
+                playerCruiserHealthBar, 
+                aiCruiserHealthBar,
+                backgroundController,
+                deferrer);
 
 
 			// TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -92,7 +102,7 @@ namespace BattleCruisers.Scenes
 
 
 			// UIManager
-			uiManager.Initialise(_playerCruiser, _aiCruiser);
+            uiManager.Initialise(_playerCruiser, _aiCruiser, cameraController, buildMenuController, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
 
 
             // Initialise player cruiser

@@ -16,22 +16,37 @@ namespace BattleCruisers.UI.BattleScene
 {
     // FELIX  Test???
     // 1. Turn everything into interfaces O_o
-    // 2. Seprate from MonoBehaviour :P
+    // 2. Seprate from MonoBehaviour :P  Don't even need to be MonoBehaviour if
+    // I inject EVERYTHING form BattleSceneGod??
     public class UIManager : MonoBehaviour, IUIManager
 	{
-		private Cruiser _playerCruiser, _aiCruiser;
+        // FELIX  Interface!
+		private ICruiser _playerCruiser, _aiCruiser;
+        private ICameraController _cameraController;
+        private BuildMenuController _buildMenuController;
+        private HealthBarController _playerCruiserHealthBar, _aiCruiserHealthBar;
 		private BuildableDetailsController _buildableDetails;
-        private InBattleCruiserDetailsController _cruiserDetails;
+		private InBattleCruiserDetailsController _cruiserDetails;
+        private BackgroundController _backgroundController;
 
-        public CameraController cameraController;
-        public BackgroundController backgroundController;
-        public BuildMenuController buildMenuController;
-        public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
-
-		public void Initialise(Cruiser playerCruiser, Cruiser aiCruiser)
+        public void Initialise(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            ICameraController cameraController,
+            BuildMenuController buildMenuController,
+            HealthBarController playerCruiserHealthBar,
+            HealthBarController aiCruiserHealthBar,
+            BackgroundController backgroundController)
 		{
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenuController, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
+
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
+            _cameraController = cameraController;
+            _buildMenuController = buildMenuController;
+            _playerCruiserHealthBar = playerCruiserHealthBar;
+            _aiCruiserHealthBar = aiCruiserHealthBar;
+            _backgroundController = backgroundController;
 
             _buildableDetails = GetComponentInChildren<BuildableDetailsController>(includeInactive: true);
             Assert.IsNotNull(_buildableDetails);
@@ -39,12 +54,12 @@ namespace BattleCruisers.UI.BattleScene
             _cruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
 
-			playerCruiserHealthBar.gameObject.SetActive(true);
-			aiCruiserHealthBar.gameObject.SetActive(false);
+			_playerCruiserHealthBar.gameObject.SetActive(true);
+			_aiCruiserHealthBar.gameObject.SetActive(false);
 			
-			cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
-			cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
-			backgroundController.BackgroundClicked += OnBackgroundClicked;
+			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
+			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
+			_backgroundController.BackgroundClicked += OnBackgroundClicked;
 
             HideTargetDetails();
 		}
@@ -54,16 +69,16 @@ namespace BattleCruisers.UI.BattleScene
 			switch (e.Origin)
 			{
 				case CameraState.PlayerCruiser:
-					buildMenuController.HideBuildMenu();
+					_buildMenuController.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
                     HideTargetDetails();
-					playerCruiserHealthBar.gameObject.SetActive(false);
+					_playerCruiserHealthBar.gameObject.SetActive(false);
 					break;
 
                 case CameraState.AiCruiser:
                     _aiCruiser.SlotWrapper.UnhighlightSlots();
                     HideTargetDetails();
-					aiCruiserHealthBar.gameObject.SetActive(false);
+					_aiCruiserHealthBar.gameObject.SetActive(false);
                     break;
 			}
 		}
@@ -73,12 +88,12 @@ namespace BattleCruisers.UI.BattleScene
 			switch (e.Destination)
 			{
 				case CameraState.PlayerCruiser:
-					buildMenuController.ShowBuildMenu();
-					playerCruiserHealthBar.gameObject.SetActive(true);
+					_buildMenuController.ShowBuildMenu();
+					_playerCruiserHealthBar.gameObject.SetActive(true);
 					break;
 
 				case CameraState.AiCruiser:
-					aiCruiserHealthBar.gameObject.SetActive(true);
+					_aiCruiserHealthBar.gameObject.SetActive(true);
 					break;
 			}
 		}
@@ -97,14 +112,14 @@ namespace BattleCruisers.UI.BattleScene
             _playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HideAllSlots();
             HideTargetDetails();
-            buildMenuController.ShowBuildingGroupsMenu();
+            _buildMenuController.ShowBuildingGroupsMenu();
         }
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 			_playerCruiser.SlotWrapper.ShowAllSlots();
-			buildMenuController.ShowBuildingGroupMenu(buildingCategory);
+			_buildMenuController.ShowBuildingGroupMenu(buildingCategory);
 		}
 
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
@@ -118,12 +133,12 @@ namespace BattleCruisers.UI.BattleScene
 		public void SelectBuilding(Building building, ICruiser buildingParent)
 		{
 			if (ReferenceEquals(buildingParent, _playerCruiser)
-				&& cameraController.State == CameraState.PlayerCruiser)
+				&& _cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
 			else if (ReferenceEquals(buildingParent, _aiCruiser)
-				&& cameraController.State == CameraState.AiCruiser)
+				&& _cameraController.State == CameraState.AiCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);
 			}
@@ -146,9 +161,9 @@ namespace BattleCruisers.UI.BattleScene
 
 		public void ShowFactoryUnits(Factory factory)
 		{
-			if (cameraController.State == CameraState.PlayerCruiser)
+			if (_cameraController.State == CameraState.PlayerCruiser)
 			{
-				buildMenuController.ShowUnitsMenu(factory);
+				_buildMenuController.ShowUnitsMenu(factory);
 			}
 		}
 
