@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class UnitsMenuController : Presentable
 	{
-		private UIManager _uiManager;
+		private IUIManager _uiManager;
 		private Factory _factory;
 
 		public void Initialize(
-			UIManager uiManager,
+			IUIManager uiManager,
 			IUIFactory uiFactory,
 			IList<IBuildableWrapper<IUnit>> units)
 		{

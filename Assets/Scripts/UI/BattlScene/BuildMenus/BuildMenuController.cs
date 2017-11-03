@@ -4,6 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,21 +12,28 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenuController : MonoBehaviour
 	{
-		private Presentable _homePanel;
-		private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
-		private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
-		private Presentable _currentPanel;
+		private IUIManager _uiManager;
+        private IUIFactory _uiFactory;
 		private IList<IBuildingGroup> _buildingGroups;
+        private Presentable _homePanel;
+        private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
+        private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
+        private Presentable _currentPanel;
 
-		public UIFactory uiFactory;
-		public UIManager uiManager;
-
-		public void Initialise(IList<IBuildingGroup> buildingGroups, IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
+		public void Initialise(
+			IUIManager uiManager,
+            IUIFactory uiFactory,
+            IList<IBuildingGroup> buildingGroups, 
+            IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
 		{
+            Helper.AssertIsNotNull(uiManager, uiFactory, buildingGroups, units);
+
+            _uiManager = uiManager;
+            _uiFactory = uiFactory;
 			_buildingGroups = buildingGroups;
 
 			// Create main menu panel
-			GameObject homePanelGameObject = uiFactory.CreatePanel(isActive: true);
+			GameObject homePanelGameObject = _uiFactory.CreatePanel(isActive: true);
 			_homePanel = homePanelGameObject.AddComponent<Presentable>();
 			_currentPanel = _homePanel;
 			_homePanel.Initialize();
@@ -39,12 +47,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			{
 				// Create category button
 				IBuildingGroup buildingGroup = _buildingGroups[i];
-				uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
+				_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
 
 				// Create category panel
-				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
+				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
-				buildingsMenu.Initialize(uiFactory, buildingGroup.Buildings);
+				buildingsMenu.Initialize(_uiFactory, buildingGroup.Buildings);
 				_buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
 			}
 
@@ -53,9 +61,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 			foreach (UnitCategory unitCategory in units.Keys)
 			{
-				GameObject panelGameObject = uiFactory.CreatePanel(isActive: false);
+				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				UnitsMenuController unitsMenu = panelGameObject.AddComponent<UnitsMenuController>();
-				unitsMenu.Initialize(uiManager, uiFactory, units[unitCategory]);
+				unitsMenu.Initialize(_uiManager, _uiFactory, units[unitCategory]);
 				_unitGroupPanels[unitCategory] = unitsMenu;
 			}
 		}

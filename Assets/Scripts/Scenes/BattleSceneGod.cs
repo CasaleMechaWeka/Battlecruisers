@@ -115,7 +115,7 @@ namespace BattleCruisers.Scenes
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);
 			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
-			buildMenuController.Initialise(buildingGroups, units);
+            buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units);
 
 
 			// Camera controller
