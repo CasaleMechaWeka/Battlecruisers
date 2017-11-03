@@ -22,13 +22,14 @@ namespace BattleCruisers.Cruisers.Slots
         public float index;
         public bool mirrorBuilding;
 
-        public bool IsFree { get { return _building == null; } }
+        public bool IsFree { get { return Building == null; } }
         public SlotType Type { get { return type; } }
         public Vector2 Position { get { return gameObject.transform.position; } }
 
         private IBuilding _building;
         public IBuilding Building
         {
+            get { return _building; }
             set
             {
                 Assert.IsNotNull(value);
@@ -110,8 +111,8 @@ namespace BattleCruisers.Cruisers.Slots
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
-			_building.Destroyed -= OnBuildingDestroyed;
-			_building = null;
+			Building.Destroyed -= OnBuildingDestroyed;
+			Building = null;
 		}
 	}
 }

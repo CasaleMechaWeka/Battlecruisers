@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables.Buildings;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
@@ -125,5 +126,10 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			return _slots[slotType].Count;
 		}
+
+        public ISlot GetSlot(IBuilding building)
+        {
+            return _slots[building.SlotType].FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
+        }
     }
 }

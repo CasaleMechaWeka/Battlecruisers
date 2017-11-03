@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Cruisers.Slots
+﻿using BattleCruisers.Buildables.Buildings;
+
+namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotWrapper
 	{
@@ -9,5 +11,6 @@
         void HideAllSlots();
         void HighlightAvailableSlots(SlotType slotType);
         void UnhighlightSlots();
+        ISlot GetSlot(IBuilding building);
 	}
 }

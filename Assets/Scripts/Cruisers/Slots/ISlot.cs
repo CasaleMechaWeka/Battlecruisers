@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Slots
         bool IsFree { get; }
         SlotType Type { get; }
         bool IsActive { set; }
-        IBuilding Building { set; }
+        IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
 
         /// <summary>
