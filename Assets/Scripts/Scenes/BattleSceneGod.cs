@@ -109,7 +109,7 @@ namespace BattleCruisers.Scenes
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
             buildableDetailsController.Initialise(spriteFetcher, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             cruiserDetailsController.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
-			uiFactory.Initialise(spriteFetcher, _playerCruiser.DroneManager);
+            uiFactory.Initialise(uiManager, spriteFetcher, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);

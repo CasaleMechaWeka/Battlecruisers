@@ -4,33 +4,37 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
+        private IUIManager _uiManager;
+        private ISpriteFetcher _spriteFetcher;
+        private IDroneManager _droneManager;
 		private Canvas _canvas;
-		private ISpriteFetcher _spriteFetcher;
-		private IDroneManager _droneManager;
 
-		public UIManager uiManager;
+		// FELIX  Create keys and use prefab fetcher :D
 		public GameObject panelPrefab;
 		public Button buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
-		void Awake()
-		{
-			_canvas = GetComponent<Canvas>();
-		}
+        public void Initialise(IUIManager uiManager, ISpriteFetcher spriteFetcher, IDroneManager droneManager)
+        {
+            Helper.AssertIsNotNull(uiManager, spriteFetcher, droneManager);
 
-		public void Initialise(ISpriteFetcher spriteFetcher, IDroneManager droneManager)
-		{
-			_spriteFetcher = spriteFetcher;
-			_droneManager = droneManager;
+            _uiManager = uiManager;
+            _spriteFetcher = spriteFetcher;
+            _droneManager = droneManager;
+			
+            _canvas = GetComponent<Canvas>();
+            Assert.IsNotNull(_canvas);
 		}
 
 		public GameObject CreatePanel(bool isActive)
@@ -47,7 +51,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button button = Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<BuildingCategoryButton>().Initialize(buildingGroup, uiManager);
+			button.GetComponent<BuildingCategoryButton>().Initialize(buildingGroup, _uiManager);
 			return button;
 		}
 
@@ -57,7 +61,7 @@ namespace BattleCruisers.UI.BattleScene
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			Sprite slotSprite = _spriteFetcher.GetSlotSprite(buildingWrapper.Buildable.SlotType);
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-			controller.Initialize(buildingWrapper, uiManager, _droneManager, slotSprite);
+			controller.Initialize(buildingWrapper, _uiManager, _droneManager, slotSprite);
 			return controller;
 		}
 
@@ -66,7 +70,7 @@ namespace BattleCruisers.UI.BattleScene
 			Button button = Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-			controller.Initialize(unitWrapper, _droneManager, uiManager);
+			controller.Initialize(unitWrapper, _droneManager, _uiManager);
 			return controller;
 		}
 
@@ -74,7 +78,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button backButton = Instantiate(backButtonPrefab);
 			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			backButton.GetComponent<BackButtonController>().Initialize(uiManager);
+			backButton.GetComponent<BackButtonController>().Initialize(_uiManager);
 			return backButton;
 		}
 	}

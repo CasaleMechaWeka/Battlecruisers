@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingCategoryButton : MonoBehaviour 
 	{
-		public void Initialize(IBuildingGroup buildingGroup, UIManager uiManager)
+		public void Initialize(IBuildingGroup buildingGroup, IUIManager uiManager)
 		{
 			Button button = GetComponent<Button>();
 			button.GetComponentInChildren<Text>().text = buildingGroup.BuildingGroupName;
