@@ -101,6 +101,7 @@ namespace BattleCruisers.Cruisers.Slots
 		public void HideAllSlots()
 		{
             SetSlotVisibility(isVisible: false);
+            HighlightedSlot = null;
 		}
 
         private void SetSlotVisibility(bool isVisible)
@@ -120,6 +121,7 @@ namespace BattleCruisers.Cruisers.Slots
 			if (_highlightedSlotType != slotType)
 			{
 				UnhighlightSlots();
+
 				_highlightedSlotType = slotType;
 
 				foreach (ISlot slot in _slots[slotType])
@@ -139,6 +141,8 @@ namespace BattleCruisers.Cruisers.Slots
 				UnhighlightSlots((SlotType)_highlightedSlotType);
 				_highlightedSlotType = null;
 			}
+
+            HighlightedSlot = null;
 		}
 
 		private void UnhighlightSlots(SlotType slotType)
