@@ -6,7 +6,11 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
 	public interface ITargetProcessorWrapper : IDisposable
 	{
-        void StartProvidingTargets(ITargetsFactory targetsFactory, ITargetConsumer targetConsumer,
-            Faction enemyFaction, float detectionRangeInM, IList<TargetType> attackCapabilities);
+        void StartProvidingTargets(
+            ITargetsFactory targetsFactory, 
+            ITargetConsumer targetConsumer,
+            Faction enemyFaction, 
+            float detectionRangeInM, 
+            IList<TargetType> attackCapabilities);
 	}
 }

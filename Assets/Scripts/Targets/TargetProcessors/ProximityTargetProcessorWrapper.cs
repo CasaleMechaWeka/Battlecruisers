@@ -16,8 +16,12 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         private bool IsInitialised { get { return _targetProcessor != null; } }
 
-        public void StartProvidingTargets(ITargetsFactory targetsFactory, ITargetConsumer targetConsumer, 
-            Faction enemyFaction, float detectionRangeInM, IList<TargetType> attackCapabilities)
+        public void StartProvidingTargets(
+            ITargetsFactory targetsFactory, 
+            ITargetConsumer targetConsumer, 
+            Faction enemyFaction, 
+            float detectionRangeInM, 
+            IList<TargetType> attackCapabilities)
 		{
 			CircleTargetDetector enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(enemyDetector);
