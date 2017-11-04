@@ -34,6 +34,7 @@ namespace BattleCruisers.Cruisers
         // IComparableItem
         public string Description { get { return description; } }
         public string Name { get { return name; } }
+		public Sprite Sprite { get { return _renderer.sprite; } }
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
@@ -42,12 +43,12 @@ namespace BattleCruisers.Cruisers
         public Direction Direction { get; private set; }
         public Vector2 Size { get { return _renderer.bounds.size; } }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
-        public Sprite Sprite { get { return _renderer.sprite; } }
         public ISlotWrapper SlotWrapper { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
         private FogOfWar _fog;
         public IFogOfWar Fog { get { return _fog; } }
 		public IRepairManager RepairManager { get; private set; }
+        public int NumOfDrones { get { return numOfDrones; } }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;

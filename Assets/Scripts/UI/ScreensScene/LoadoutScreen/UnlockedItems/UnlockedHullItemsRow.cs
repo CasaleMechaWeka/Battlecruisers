@@ -1,23 +1,21 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-	public class UnlockedHullItemsRow : UnlockedItemsRow<Cruiser>
+    public class UnlockedHullItemsRow : UnlockedItemsRow<ICruiser>
 	{
-		private Cruiser _loadoutCruiser;
+		private ICruiser _loadoutCruiser;
 
-		public void Initialise(HullItemsRow hullsRow, IUIFactory uiFactory, IList<Cruiser> unlockedCruisers, 
-			Cruiser loadoutCruiser, CruiserDetailsManager detailsManager)
+		public void Initialise(
+            HullItemsRow hullsRow, 
+            IUIFactory uiFactory, 
+            IList<ICruiser> unlockedCruisers, 
+			ICruiser loadoutCruiser, 
+            CruiserDetailsManager detailsManager)
 		{
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 
@@ -26,13 +24,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 			base.Initialise(uiFactory, unlockedCruisers, hullsRow, detailsManager);
 		}
 
-		protected override UnlockedItem<Cruiser> CreateUnlockedItem(Cruiser item, HorizontalOrVerticalLayoutGroup itemParent)
+		protected override UnlockedItem<ICruiser> CreateUnlockedItem(ICruiser item, HorizontalOrVerticalLayoutGroup itemParent)
 		{
 			bool isInLoadout = object.ReferenceEquals(_loadoutCruiser, item);
 			return _uiFactory.CreateUnlockedHull(layoutGroup, _itemsRow, item, isInLoadout);
 		}
 
-		public void UpdateSelectedHull(Cruiser selectedCruiser)
+		public void UpdateSelectedHull(ICruiser selectedCruiser)
 		{
 			foreach (UnlockedHullItem unlockedHullButton in _unlockedItemButtons)
 			{

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class InBattleCruiserDetailsController : CruiserDetailsController
+    public class InBattleCruiserDetailsController : CruiserDetailsController, IInBattleCruiserDetails
     {
         private RepairButtonController _repairButton;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _repairButton.Initialise(droneManager, repairManager);
         }
 
-        public void ShowCruiserDetails(Cruiser cruiser)
+        public void ShowCruiserDetails(ICruiser cruiser)
         {
             base.ShowItemDetails(cruiser);
             _repairButton.Repairable = cruiser;

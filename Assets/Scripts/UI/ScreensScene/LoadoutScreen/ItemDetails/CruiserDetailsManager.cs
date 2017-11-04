@@ -3,7 +3,7 @@ using BattleCruisers.UI.Common.BuildingDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public class CruiserDetailsManager : ItemDetailsManager<Cruiser>
+    public class CruiserDetailsManager : ItemDetailsManager<ICruiser>
 	{
 		public CruiserDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 

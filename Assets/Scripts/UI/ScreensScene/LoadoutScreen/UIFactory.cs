@@ -39,11 +39,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return unlockedBuilding;
 		}
 
-		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<Cruiser> hullsRow, Cruiser cruiser, bool isInLoadout)
+		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout)
 		{
 			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
 			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-			IUnlockedItemState<Cruiser> initialState = new DefaultState<Cruiser>(hullsRow, unlockedHull);
+			IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
 			unlockedHull.Initialise(initialState, cruiser, isInLoadout);
 			return unlockedHull;
 		}

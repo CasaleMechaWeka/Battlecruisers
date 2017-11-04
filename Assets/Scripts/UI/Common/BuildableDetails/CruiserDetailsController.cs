@@ -3,9 +3,9 @@ using BattleCruisers.UI.Common.BuildingDetails.Stats;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class CruiserDetailsController : ItemDetails<Cruiser>
+    public class CruiserDetailsController : ItemDetails<ICruiser>
 	{
-        protected override StatsController<Cruiser> StatsController { get { return cruiserStatsController; } }
+        protected override StatsController<ICruiser> StatsController { get { return cruiserStatsController; } }
 		
         public CruiserStatsController cruiserStatsController;
     }

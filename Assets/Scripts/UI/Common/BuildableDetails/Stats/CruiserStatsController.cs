@@ -3,7 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-    public class CruiserStatsController : StatsController<Cruiser>
+    public class CruiserStatsController : StatsController<ICruiser>
 	{
 		public StatsRowNumberController healthRow, droneRow, platformSlotsRow, deckSlotsRow, utilitySlotsRow, mastSlotsRow;
 
@@ -12,10 +12,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		private const string UTILITY_SLOTS = "Utility Slots";
 		private const string MAST_SLOTS = "Mast Slots";
 
-		protected override void InternalShowStats(Cruiser item, Cruiser itemToCompareTo)
+		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
 		{
 			healthRow.Initialise(HEALTH_LABEL, item.MaxHealth, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
-			droneRow.Initialise(DRONES_LABEL, item.numOfDrones, _higherIsBetterComparer.CompareStats(item.numOfDrones, itemToCompareTo.numOfDrones));
+			droneRow.Initialise(DRONES_LABEL, item.NumOfDrones, _higherIsBetterComparer.CompareStats(item.NumOfDrones, itemToCompareTo.NumOfDrones));
 
 			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);
 			platformSlotsRow.Initialise(PLATFORM_SLOTS, platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Platform)));

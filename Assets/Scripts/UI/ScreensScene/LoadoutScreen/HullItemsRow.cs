@@ -9,34 +9,39 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class HullItemsRow : ItemsRow<Cruiser>
+    public class HullItemsRow : ItemsRow<ICruiser>
 	{
 		private readonly LoadoutHullItem _loadoutHull;
 		private readonly UnlockedHullItemsRow _unlockedHullsRow;
-		private readonly IDictionary<Cruiser, HullKey> _hullToKey;
+		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
-		public HullItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, LoadoutHullItem loadoutHull, 
-			UnlockedHullItemsRow unlockedHullsRow, CruiserDetailsManager cruiserDetailsManager)
+		public HullItemsRow(
+            IGameModel gameModel, 
+            IPrefabFactory prefabFactory, 
+            IUIFactory uiFactory, 
+            LoadoutHullItem loadoutHull, 
+			UnlockedHullItemsRow unlockedHullsRow, 
+            CruiserDetailsManager cruiserDetailsManager)
 			: base(gameModel, prefabFactory)
 		{
 			_loadoutHull = loadoutHull;
 			_unlockedHullsRow = unlockedHullsRow;
 
-			_hullToKey = new Dictionary<Cruiser, HullKey>();
+			_hullToKey = new Dictionary<ICruiser, HullKey>();
 
 			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
 			_loadoutHull.Initialise(loadoutCruiser, cruiserDetailsManager);
 			_unlockedHullsRow.Initialise(this, uiFactory, GetUnlockedHullPrefabs(), loadoutCruiser, cruiserDetailsManager);
 		}
 
-		private IList<Cruiser> GetUnlockedHullPrefabs()
+		private IList<ICruiser> GetUnlockedHullPrefabs()
 		{
 			IList<HullKey> hullKeys = _gameModel.UnlockedHulls;
-			IList<Cruiser> prefabs = new List<Cruiser>();
+			IList<ICruiser> prefabs = new List<ICruiser>();
 
 			foreach (HullKey hullKey in hullKeys)
 			{
-				Cruiser hull = _prefabFactory.GetCruiserPrefab(hullKey);
+				ICruiser hull = _prefabFactory.GetCruiserPrefab(hullKey);
 				prefabs.Add(hull);
 				_hullToKey.Add(hull, hullKey);
 			}
@@ -44,9 +49,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return prefabs;
 		}
 
-		public override bool SelectUnlockedItem(UnlockedItem<Cruiser> hullItem)
+		public override bool SelectUnlockedItem(UnlockedItem<ICruiser> hullItem)
 		{
-			Cruiser hull = hullItem.Item;
+			ICruiser hull = hullItem.Item;
 			_gameModel.PlayerLoadout.Hull = _hullToKey[hull];
 			
 			// Update UI

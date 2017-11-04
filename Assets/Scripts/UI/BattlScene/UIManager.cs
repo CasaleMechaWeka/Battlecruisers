@@ -12,19 +12,17 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Test???
-    // 1. Turn everything into interfaces O_o
-    // 2. Seprate from MonoBehaviour :P  Don't even need to be MonoBehaviour if
-    // I inject EVERYTHING form BattleSceneGod??
+    // FELIX  NEXT
+    // 1. Don't extend MonoBehaviour
+    // 2. Test :)
     public class UIManager : MonoBehaviour, IUIManager
 	{
-        // FELIX  Interface!
 		private ICruiser _playerCruiser, _aiCruiser;
         private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
         private IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
         private IBuildableDetails _buildableDetails;
-		private InBattleCruiserDetailsController _cruiserDetails;
+        private IInBattleCruiserDetails _cruiserDetails;
         private IClickable _background;
 
         public void Initialise(
@@ -36,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene
             IGameObject playerCruiserHealthBar,
             IGameObject aiCruiserHealthBar,
             IBuildableDetails buildableDetails,
-            InBattleCruiserDetailsController cruiserDetails)
+            IInBattleCruiserDetails cruiserDetails)
 		{
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, 
                 background, playerCruiserHealthBar, aiCruiserHealthBar, buildableDetails, cruiserDetails);
