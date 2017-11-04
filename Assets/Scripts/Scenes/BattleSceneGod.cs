@@ -109,8 +109,6 @@ namespace BattleCruisers.Scenes
                     cameraController,
                     buildMenuController,
                     backgroundController,
-                    buildMenuCanvas.PlayerCruiserHealthBar,
-                    buildMenuCanvas.AiCruiserHealthBar,
                     detailsManager);
 
 
@@ -135,6 +133,8 @@ namespace BattleCruisers.Scenes
 			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units);
+
+            uiManager.InitialUI();
 
 
 			// Camera controller

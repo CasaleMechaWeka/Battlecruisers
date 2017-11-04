@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.BattleScene
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
-        private readonly IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
         private readonly IBuildableDetailsManager _detailsManager;
         private readonly IClickable _background;
 
@@ -26,31 +25,35 @@ namespace BattleCruisers.UI.BattleScene
             ICameraController cameraController,
             IBuildMenu buildMenu,
             IClickable background,
-            IGameObject playerCruiserHealthBar,
-            IGameObject aiCruiserHealthBar,
             IBuildableDetailsManager detailsManager)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, 
-                background, playerCruiserHealthBar, aiCruiserHealthBar, detailsManager);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, background, detailsManager);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
             _cameraController = cameraController;
             _buildMenu = buildMenu;
             _background = background;
-            _playerCruiserHealthBar = playerCruiserHealthBar;
-            _aiCruiserHealthBar = aiCruiserHealthBar;
             _detailsManager = detailsManager;
-
-			_playerCruiserHealthBar.IsVisible = true;
-			_aiCruiserHealthBar.IsVisible = false;
-			
+   			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
 			_background.Clicked += OnBackgroundClicked;
 
-            _detailsManager.HideDetails();
-		}
+        }
+
+        /// <summary>
+        /// Not in constructor because of circular dependency between UIManager
+        /// and cruisers.  Hence need to wait until both the UIManager and
+        /// cruisers are setup before executing this method.
+        /// </summary>
+        public void InitialUI()
+        {
+            _playerCruiser.HealthBar.IsVisible = true;
+            _aiCruiser.HealthBar.IsVisible = false;
+
+			_detailsManager.HideDetails();
+        }
 
 		private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
 		{
@@ -60,13 +63,13 @@ namespace BattleCruisers.UI.BattleScene
 					_buildMenu.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
                     _detailsManager.HideDetails();
-					_playerCruiserHealthBar.IsVisible = false;
+					_playerCruiser.HealthBar.IsVisible = false;
 					break;
 
                 case CameraState.AiCruiser:
                     _aiCruiser.SlotWrapper.UnhighlightSlots();
                     _detailsManager.HideDetails();
-					_aiCruiserHealthBar.IsVisible = false;
+					_aiCruiser.HealthBar.IsVisible = false;
                     break;
 			}
 		}
@@ -77,11 +80,11 @@ namespace BattleCruisers.UI.BattleScene
 			{
 				case CameraState.PlayerCruiser:
 					_buildMenu.ShowBuildMenu();
-                    _playerCruiserHealthBar.IsVisible = true;
+                    _playerCruiser.HealthBar.IsVisible = true;
 					break;
 
 				case CameraState.AiCruiser:
-					_aiCruiserHealthBar.IsVisible = true;
+					_aiCruiser.HealthBar.IsVisible = true;
 					break;
 			}
 		}
