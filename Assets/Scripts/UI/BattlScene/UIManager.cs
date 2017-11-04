@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.BattleScene
         private IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
 		private BuildableDetailsController _buildableDetails;
 		private InBattleCruiserDetailsController _cruiserDetails;
-        private BackgroundController _backgroundController;
+        private IClickable _background;
 
         public void Initialise(
             ICruiser playerCruiser,
@@ -35,9 +35,9 @@ namespace BattleCruisers.UI.BattleScene
             IBuildMenu buildMenu,
             IGameObject playerCruiserHealthBar,
             IGameObject aiCruiserHealthBar,
-            BackgroundController backgroundController)
+            IClickable background)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, playerCruiserHealthBar, aiCruiserHealthBar, background);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene
             _buildMenu = buildMenu;
             _playerCruiserHealthBar = playerCruiserHealthBar;
             _aiCruiserHealthBar = aiCruiserHealthBar;
-            _backgroundController = backgroundController;
+            _background = background;
 
             _buildableDetails = GetComponentInChildren<BuildableDetailsController>(includeInactive: true);
             Assert.IsNotNull(_buildableDetails);
@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene
 			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
-			_backgroundController.BackgroundClicked += OnBackgroundClicked;
+			_background.Clicked += OnBackgroundClicked;
 
             HideTargetDetails();
 		}
