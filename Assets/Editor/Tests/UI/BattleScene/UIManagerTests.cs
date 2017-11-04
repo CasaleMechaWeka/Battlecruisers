@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Cameras;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
@@ -109,5 +111,52 @@ namespace BattleCruisers.Tests.UI.BattleScene
             Assert.IsTrue(_aiCruiser.HealthBar.IsVisible);
         }
         #endregion Camera transitions
+
+        [Test]
+        public void BackgroundClicked()
+        {
+            _background.Clicked += Raise.Event();
+
+            _detailsManager.Received().HideDetails();
+            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
+        }
+
+        [Test]
+        public void ShowBuildingGroups()
+        {
+            _uiManager.ShowBuildingGroups();
+
+            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _playerCruiser.SlotWrapper.Received().HideAllSlots();
+            _detailsManager.Received().HideDetails();
+            _buildMenu.Received().ShowBuildingGroupsMenu();
+        }
+
+        [Test]
+        public void SelectBuildingGroup()
+        {
+            BuildingCategory buildingCategory = BuildingCategory.Ultra;
+            _uiManager.SelectBuildingGroup(buildingCategory);
+
+            _playerCruiser.SlotWrapper.Received().ShowAllSlots();
+            _buildMenu.Received().ShowBuildingGroupMenu(buildingCategory);
+        }
+
+        [Test]
+        public void SelectBuildingFromMenu()
+        {
+            IBuilding building = Substitute.For<IBuilding>();
+            building.SlotType.Returns(SlotType.Platform);
+
+            IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
+            buildingWrapper.Buildable.Returns(building);
+
+            _uiManager.SelectBuildingFromMenu(buildingWrapper);
+
+            Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
+            _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
+            _detailsManager.Received().ShowDetails(buildingWrapper.Buildable, allowDelete: false);
+        }
     }
 }
