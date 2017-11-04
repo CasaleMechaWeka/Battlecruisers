@@ -49,6 +49,7 @@ namespace BattleCruisers.Cruisers
         public IFogOfWar Fog { get { return _fog; } }
 		public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones { get { return numOfDrones; } }
+        public IGameObject HealthBar { get { return _healthBarController; } }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
