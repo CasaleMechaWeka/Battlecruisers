@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class BuildMenuCanvasController : MonoBehaviour
+    public class BuildMenuCanvasController : MonoBehaviour, IBuildMenuCanvasController
     {
         public BuildableDetailsController BuildableDetails { get; private set; }
         public InBattleCruiserDetailsController CruiserDetails { get; private set; }

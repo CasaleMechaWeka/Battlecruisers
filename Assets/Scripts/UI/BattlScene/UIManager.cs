@@ -9,7 +9,6 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
@@ -33,25 +32,21 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser aiCruiser,
             ICameraController cameraController,
             IBuildMenu buildMenu,
-            IGameObject playerCruiserHealthBar,
-            IGameObject aiCruiserHealthBar,
-            IClickable background)
+            IClickable background,
+            IBuildMenuCanvasController buildMenuCanvas)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, playerCruiserHealthBar, aiCruiserHealthBar, background);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, background, buildMenuCanvas);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
             _cameraController = cameraController;
             _buildMenu = buildMenu;
-            _playerCruiserHealthBar = playerCruiserHealthBar;
-            _aiCruiserHealthBar = aiCruiserHealthBar;
             _background = background;
 
-            _buildableDetails = GetComponentInChildren<BuildableDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_buildableDetails);
-
-            _cruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_cruiserDetails);
+            _playerCruiserHealthBar = buildMenuCanvas.PlayerCruiserHealthBar;
+            _aiCruiserHealthBar = buildMenuCanvas.AiCruiserHealthBar;
+            _buildableDetails = buildMenuCanvas.BuildableDetails;
+            _cruiserDetails = buildMenuCanvas.CruiserDetails;
 
 			_playerCruiserHealthBar.IsVisible = true;
 			_aiCruiserHealthBar.IsVisible = false;

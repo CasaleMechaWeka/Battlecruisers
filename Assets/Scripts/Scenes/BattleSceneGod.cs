@@ -11,8 +11,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -34,14 +32,12 @@ namespace BattleCruisers.Scenes
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
 
+        public BuildMenuCanvasController buildMenuCanvas;
 		public UIManager uiManager;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
-		public BuildableDetailsController buildableDetailsController;
-        public InBattleCruiserDetailsController cruiserDetailsController;
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
-		public HealthBarController playerCruiserHealthBar, aiCruiserHealthBar;
         public BackgroundController backgroundController;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
@@ -57,11 +53,9 @@ namespace BattleCruisers.Scenes
                 uiManager, 
                 uiFactory, 
                 buildMenuController, 
-                buildableDetailsController, 
+                buildMenuCanvas, 
                 modalMenuController, 
                 cameraController, 
-                playerCruiserHealthBar, 
-                aiCruiserHealthBar,
                 backgroundController,
                 deferrer);
 
@@ -101,24 +95,25 @@ namespace BattleCruisers.Scenes
 			_aiCruiser.transform.rotation = rotation;
 
 
-			// UIManager
-            uiManager.Initialise(_playerCruiser, _aiCruiser, cameraController, buildMenuController, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
+            // UIManager
+            buildMenuCanvas.Initialise();
+            uiManager.Initialise(_playerCruiser, _aiCruiser, cameraController, buildMenuController, backgroundController, buildMenuCanvas);
 
 
             // Initialise player cruiser
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, playerCruiserHealthBar, Faction.Blues, Direction.Right);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, Faction.Blues, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, aiCruiserHealthBar, Faction.Reds, Direction.Left);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, Faction.Reds, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
 			// UI
 			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-            buildableDetailsController.Initialise(spriteFetcher, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
-            cruiserDetailsController.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            buildMenuCanvas.BuildableDetails.Initialise(spriteFetcher, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            buildMenuCanvas.CruiserDetails.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
             uiFactory.Initialise(uiManager, spriteFetcher, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
