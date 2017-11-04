@@ -106,6 +106,7 @@ namespace BattleCruisers.UI.BattleScene
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
+
 			_playerCruiser.SlotWrapper.ShowAllSlots();
 			_buildMenu.ShowBuildingGroupMenu(buildingCategory);
 		}
@@ -113,12 +114,13 @@ namespace BattleCruisers.UI.BattleScene
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
-			_playerCruiser.SelectedBuildingPrefab = buildingWrapper;
+			
+            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
 			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
-		public void SelectBuilding(Building building, ICruiser buildingParent)
+		public void SelectBuilding(IBuilding building, ICruiser buildingParent)
 		{
 			if (ReferenceEquals(buildingParent, _playerCruiser)
 				&& _cameraController.State == CameraState.PlayerCruiser)
@@ -132,7 +134,7 @@ namespace BattleCruisers.UI.BattleScene
 			}
 		}
 
-		public void SelectBuildingFromFriendlyCruiser(Building building)
+		public void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
 			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
 
@@ -141,13 +143,13 @@ namespace BattleCruisers.UI.BattleScene
             _detailsManager.ShowDetails(building, allowDelete: true);
 		}
 
-		public void SelectBuildingFromEnemyCruiser(Building building)
+		public void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
             _detailsManager.ShowDetails(building, allowDelete: false);
 		}
 
-		public void ShowFactoryUnits(Factory factory)
+		public void ShowFactoryUnits(IFactory factory)
 		{
 			if (_cameraController.State == CameraState.PlayerCruiser)
 			{
@@ -160,7 +162,7 @@ namespace BattleCruisers.UI.BattleScene
             _detailsManager.ShowDetails(unit);
 		}
 
-        public void ShowCruiserDetails(Cruiser cruiser)
+        public void ShowCruiserDetails(ICruiser cruiser)
         {
             _detailsManager.ShowDetails(cruiser);
         }
