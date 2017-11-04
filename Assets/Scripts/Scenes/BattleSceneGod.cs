@@ -97,7 +97,17 @@ namespace BattleCruisers.Scenes
 
             // UIManager
             buildMenuCanvas.Initialise();
-            uiManager.Initialise(_playerCruiser, _aiCruiser, cameraController, buildMenuController, backgroundController, buildMenuCanvas);
+            uiManager
+                .Initialise(
+                    _playerCruiser,
+                    _aiCruiser,
+                    cameraController,
+                    buildMenuController,
+                    backgroundController,
+                    buildMenuCanvas.PlayerCruiserHealthBar,
+                    buildMenuCanvas.AiCruiserHealthBar,
+                    buildMenuCanvas.BuildableDetails,
+                    buildMenuCanvas.CruiserDetails);
 
 
             // Initialise player cruiser

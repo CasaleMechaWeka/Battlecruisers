@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class BuildableDetailsController : BaseBuildableDetails<IBuildable>
+    public class BuildableDetailsController : BaseBuildableDetails<IBuildable>, IBuildableDetails
     {
         private IDroneManager _droneManager;
         private RepairButtonController _repairButton;
