@@ -41,10 +41,15 @@ namespace BattleCruisers.Data
 			if (_serializer.DoesSavedGameExist())
 			{
 				GameModel = _serializer.LoadGame();
-			}
-			else
-			{
-				GameModel = StaticData.InitialGameModel;
+            }
+            else
+            {
+                // First time run
+                GameModel = StaticData.InitialGameModel;
+                SaveGame();
+				
+                SettingsManager.AIDifficulty = Difficulty.Normal;
+                SettingsManager.Save();
 			}
 		}
 
