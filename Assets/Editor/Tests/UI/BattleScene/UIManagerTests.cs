@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
@@ -23,6 +25,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IClickable _background;
 
         private IBuilding _building;
+        private IFactory _factory;
 
         [SetUp]
         public void SetuUp()
@@ -47,6 +50,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _building = Substitute.For<IBuilding>();
             _building.SlotType.Returns(SlotType.Platform);
+
+            _factory = Substitute.For<IFactory>();
         }
 
         private ICruiser CreateMockCruiser()
@@ -219,5 +224,42 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
         #endregion SelectBuilding()
+
+        [Test]
+        public void ShowFactoryUnits_AtPlayerCruiser_ShowsDetails()
+        {
+            _cameraController.State.Returns(CameraState.PlayerCruiser);
+
+            _uiManager.ShowFactoryUnits(_factory);
+
+            _buildMenu.Received().ShowUnitsMenu(_factory);
+        }
+
+        [Test]
+        public void ShowFactoryUnits_NotAtPlayerCruiser_DoesNothing()
+        {
+            _cameraController.State.Returns(CameraState.Overview);
+
+            _uiManager.ShowFactoryUnits(_factory);
+
+            _buildMenu.DidNotReceive().ShowUnitsMenu(_factory);
+        }
+
+        [Test]
+        public void ShowUnitDetails()
+        {
+            IUnit unit = Substitute.For<IUnit>();
+
+            _uiManager.ShowUnitDetails(unit);
+
+            _detailsManager.Received().ShowDetails(unit);
+        }
+
+        [Test]
+        public void ShowCruiserDetails()
+        {
+            _uiManager.ShowCruiserDetails(_playerCruiser);
+            _detailsManager.Received().ShowDetails(_playerCruiser);
+        }
     }
 }
