@@ -63,6 +63,9 @@ namespace BattleCruisers.AI
 
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
+                case Difficulty.Sandbox:
+                    // Create no AI :)
+                    break;
                 case Difficulty.Normal:
                     aiFactory.CreateBasicAI(levelInfo);
                     break;
