@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.BattleScene
         private IDroneManager _droneManager;
 		private Canvas _canvas;
 
-		// FELIX  Create keys and use prefab fetcher :D
 		public GameObject panelPrefab;
 		public Button buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
