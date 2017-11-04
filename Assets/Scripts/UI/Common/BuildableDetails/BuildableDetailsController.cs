@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Common.BuildingDetails.Buttons;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;

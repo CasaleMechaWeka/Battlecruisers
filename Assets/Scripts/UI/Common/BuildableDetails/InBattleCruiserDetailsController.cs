@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Drones;
+using BattleCruisers.UI.Common.BuildingDetails.Buttons;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
