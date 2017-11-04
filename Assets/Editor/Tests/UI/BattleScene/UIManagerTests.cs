@@ -22,6 +22,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IBuildableDetailsManager _detailsManager;
         private IClickable _background;
 
+        private IBuilding _building;
+
         [SetUp]
         public void SetuUp()
         {
@@ -42,6 +44,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
                     _buildMenu,
                     _background,
                     _detailsManager);
+
+            _building = Substitute.For<IBuilding>();
+            _building.SlotType.Returns(SlotType.Platform);
         }
 
         private ICruiser CreateMockCruiser()
@@ -146,11 +151,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
         [Test]
         public void SelectBuildingFromMenu()
         {
-            IBuilding building = Substitute.For<IBuilding>();
-            building.SlotType.Returns(SlotType.Platform);
-
             IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
-            buildingWrapper.Buildable.Returns(building);
+            buildingWrapper.Buildable.Returns(_building);
 
             _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
@@ -158,5 +160,64 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable, allowDelete: false);
         }
+
+        #region SelectBuilding()
+        [Test]
+        public void SelectBuilding_ParentIsPlayerCruiser_CameraAtPlayerCruiser_ShowsDetails()
+        {
+            _cameraController.State.Returns(CameraState.PlayerCruiser);
+
+            _uiManager.SelectBuilding(_building, _playerCruiser);
+
+            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _detailsManager.Received().ShowDetails(_building, allowDelete: true);
+        }
+
+        [Test]
+        public void SelectBuilding_ParentIsNotPlayerCruiser_DoesNothing()
+        {
+            _uiManager.SelectBuilding(_building, _aiCruiser);
+            _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
+        }
+
+        [Test]
+        public void SelectBuilding_ParentIsPlayerCruiser_CameraNotAtPlayerCruiser_DoesNothing()
+        {
+            _cameraController.State.Returns(CameraState.Overview);
+
+            _uiManager.SelectBuilding(_building, _playerCruiser);
+
+            _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
+        }
+
+        [Test]
+        public void SelectBuilding_ParentIsAiCruiser_CameraAtAiCruiser_ShowsDetails()
+        {
+            _cameraController.State.Returns(CameraState.AiCruiser);
+
+            _uiManager.SelectBuilding(_building, _aiCruiser);
+
+            _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _detailsManager.Received().ShowDetails(_building, allowDelete: false);
+        }
+
+        [Test]
+        public void SelectBuilding_ParentIsNotAiCruiser_DoesNothing()
+        {
+            _uiManager.SelectBuilding(_building, _playerCruiser);
+            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
+        }
+
+        [Test]
+        public void SelectBuilding_ParentIsAiCruiser_CameraNotAtAiCruiser_DoesNothing()
+        {
+            _cameraController.State.Returns(CameraState.Overview);
+
+            _uiManager.SelectBuilding(_building, _aiCruiser);
+
+            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
+        }
+        #endregion SelectBuilding()
     }
 }
