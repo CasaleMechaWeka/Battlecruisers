@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    public abstract class BaseProgressBarController : MonoBehaviour
+    public abstract class BaseProgressBarController : MonoBehaviourWrapper
 	{
 		private float _outlineWidth;
 

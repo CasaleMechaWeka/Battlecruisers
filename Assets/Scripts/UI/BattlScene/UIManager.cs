@@ -6,7 +6,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -24,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene
 		private ICruiser _playerCruiser, _aiCruiser;
         private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
-        private HealthBarController _playerCruiserHealthBar, _aiCruiserHealthBar;
+        private IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
 		private BuildableDetailsController _buildableDetails;
 		private InBattleCruiserDetailsController _cruiserDetails;
         private BackgroundController _backgroundController;
@@ -34,8 +33,8 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser aiCruiser,
             ICameraController cameraController,
             IBuildMenu buildMenu,
-            HealthBarController playerCruiserHealthBar,
-            HealthBarController aiCruiserHealthBar,
+            IGameObject playerCruiserHealthBar,
+            IGameObject aiCruiserHealthBar,
             BackgroundController backgroundController)
 		{
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
@@ -54,8 +53,8 @@ namespace BattleCruisers.UI.BattleScene
             _cruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
 
-			_playerCruiserHealthBar.gameObject.SetActive(true);
-			_aiCruiserHealthBar.gameObject.SetActive(false);
+			_playerCruiserHealthBar.IsVisible = true;
+			_aiCruiserHealthBar.IsVisible = false;
 			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
@@ -72,13 +71,13 @@ namespace BattleCruisers.UI.BattleScene
 					_buildMenu.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
                     HideTargetDetails();
-					_playerCruiserHealthBar.gameObject.SetActive(false);
+					_playerCruiserHealthBar.IsVisible = false;
 					break;
 
                 case CameraState.AiCruiser:
                     _aiCruiser.SlotWrapper.UnhighlightSlots();
                     HideTargetDetails();
-					_aiCruiserHealthBar.gameObject.SetActive(false);
+					_aiCruiserHealthBar.IsVisible = false;
                     break;
 			}
 		}
@@ -89,11 +88,11 @@ namespace BattleCruisers.UI.BattleScene
 			{
 				case CameraState.PlayerCruiser:
 					_buildMenu.ShowBuildMenu();
-					_playerCruiserHealthBar.gameObject.SetActive(true);
+                    _playerCruiserHealthBar.IsVisible = true;
 					break;
 
 				case CameraState.AiCruiser:
-					_aiCruiserHealthBar.gameObject.SetActive(true);
+					_aiCruiserHealthBar.IsVisible = true;
 					break;
 			}
 		}
