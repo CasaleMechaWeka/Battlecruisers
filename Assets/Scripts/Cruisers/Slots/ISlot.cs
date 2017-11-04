@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils.DataStrctures;
-using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -11,15 +10,13 @@ namespace BattleCruisers.Cruisers.Slots
         None, Utility, Stern, Mast, Bow, Platform, Deck
 	}
 
-    public interface ISlot
+    public interface ISlot : IGameObject
     {
-        Vector2 Position { get; }
         bool IsFree { get; }
         SlotType Type { get; }
         bool IsActive { set; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
-        bool IsVisible { set; }
 
         /// <summary>
         /// Slots are ordered via their index, from the crusier front (low
