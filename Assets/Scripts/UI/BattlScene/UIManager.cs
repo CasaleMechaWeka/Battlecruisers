@@ -137,16 +137,14 @@ namespace BattleCruisers.UI.BattleScene
 			}
 		}
 
-		public void SelectBuildingFromFriendlyCruiser(IBuilding building)
+		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
-			Logging.Log(Tags.UI_MANAGER, "SelectBuildingFromFriendlyCruiser()");
-
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
             _detailsManager.ShowDetails(building, allowDelete: true);
 		}
 
-		public void SelectBuildingFromEnemyCruiser(IBuilding building)
+		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
             _detailsManager.ShowDetails(building, allowDelete: false);

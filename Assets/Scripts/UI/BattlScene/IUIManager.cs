@@ -13,8 +13,6 @@ namespace BattleCruisers.UI.BattleScene
         void SelectBuildingGroup(BuildingCategory buildingCategory);
         void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper);
         void SelectBuilding(IBuilding building, ICruiser buildingParent);
-        void SelectBuildingFromFriendlyCruiser(IBuilding building);
-        void SelectBuildingFromEnemyCruiser(IBuilding building);
         void ShowFactoryUnits(IFactory factory);
         void ShowUnitDetails(IUnit unit);
         void ShowCruiserDetails(ICruiser cruiser);
