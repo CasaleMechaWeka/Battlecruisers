@@ -33,7 +33,6 @@ namespace BattleCruisers.Scenes
 		private Cruiser _playerCruiser, _aiCruiser;
 
         public BuildMenuCanvasController buildMenuCanvas;
-		public UIManager uiManager;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
@@ -50,7 +49,6 @@ namespace BattleCruisers.Scenes
             IDeferrer deferrer = GetComponent<IDeferrer>();
 
 			Helper.AssertIsNotNull(
-                uiManager, 
                 uiFactory, 
                 buildMenuController, 
                 buildMenuCanvas, 
@@ -76,7 +74,7 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
-            ICruiserFactory cruiserFactory = new CruiserFactory(uiManager, prefabFactory, deferrer);
+            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer);
 
 
 			// Instantiate player cruiser
@@ -97,8 +95,8 @@ namespace BattleCruisers.Scenes
 
             // UIManager
             buildMenuCanvas.Initialise();
-            uiManager
-                .Initialise(
+            IUIManager uiManager 
+                = new UIManager(
                     _playerCruiser,
                     _aiCruiser,
                     cameraController,
@@ -111,12 +109,12 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, Faction.Blues, Direction.Right);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, uiManager, Faction.Blues, Direction.Right);
 			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, Faction.Reds, Direction.Left);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, uiManager, Faction.Reds, Direction.Left);
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

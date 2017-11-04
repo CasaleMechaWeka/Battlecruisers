@@ -8,24 +8,20 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  NEXT
-    // 1. Don't extend MonoBehaviour
-    // 2. Test :)
-    public class UIManager : MonoBehaviour, IUIManager
+    public class UIManager : IUIManager
 	{
-		private ICruiser _playerCruiser, _aiCruiser;
-        private ICameraController _cameraController;
-        private IBuildMenu _buildMenu;
-        private IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
-        private IBuildableDetails _buildableDetails;
-        private IInBattleCruiserDetails _cruiserDetails;
-        private IClickable _background;
+		private readonly ICruiser _playerCruiser, _aiCruiser;
+        private readonly ICameraController _cameraController;
+        private readonly IBuildMenu _buildMenu;
+        private readonly IGameObject _playerCruiserHealthBar, _aiCruiserHealthBar;
+        private readonly IBuildableDetails _buildableDetails;
+        private readonly IInBattleCruiserDetails _cruiserDetails;
+        private readonly IClickable _background;
 
-        public void Initialise(
+        public UIManager(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,

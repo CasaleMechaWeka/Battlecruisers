@@ -13,15 +13,13 @@ namespace BattleCruisers.Cruisers
 {
 	public class CruiserFactory : ICruiserFactory
 	{
-        private readonly IUIManager _uiManager;
         private readonly IPrefabFactory _prefabFactory;
 		private readonly IDeferrer _deferrer;
 
-		public CruiserFactory(IUIManager uiManager, IPrefabFactory prefabFactory, IDeferrer deferrer)
+		public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(uiManager, prefabFactory, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, deferrer);
             
-            _uiManager = uiManager;
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
         }
@@ -30,6 +28,7 @@ namespace BattleCruisers.Cruisers
             Cruiser cruiser, 
             ICruiser enemyCruiser,
             HealthBarController healthBar, 
+            IUIManager uiManager,
             Faction faction, 
             Direction facingDirection)
         {
@@ -46,7 +45,7 @@ namespace BattleCruisers.Cruisers
                     faction, 
                     enemyCruiser, 
                     healthBar, 
-                    _uiManager, 
+                    uiManager, 
                     droneManager,
                     droneConsumerProvider, 
                     factoryProvider, 
