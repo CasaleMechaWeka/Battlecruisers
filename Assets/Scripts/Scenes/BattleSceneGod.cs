@@ -11,6 +11,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -95,6 +96,12 @@ namespace BattleCruisers.Scenes
 
             // UIManager
             buildMenuCanvas.Initialise();
+
+            IBuildableDetailsManager detailsManager 
+                = new BuildableDetailsManager(
+                    buildMenuCanvas.BuildableDetails, 
+                    buildMenuCanvas.CruiserDetails);
+
             IUIManager uiManager 
                 = new UIManager(
                     _playerCruiser,
@@ -104,8 +111,7 @@ namespace BattleCruisers.Scenes
                     backgroundController,
                     buildMenuCanvas.PlayerCruiserHealthBar,
                     buildMenuCanvas.AiCruiserHealthBar,
-                    buildMenuCanvas.BuildableDetails,
-                    buildMenuCanvas.CruiserDetails);
+                    detailsManager);
 
 
             // Initialise player cruiser
