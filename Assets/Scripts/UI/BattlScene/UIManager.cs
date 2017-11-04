@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene
         // FELIX  Interface!
 		private ICruiser _playerCruiser, _aiCruiser;
         private ICameraController _cameraController;
-        private BuildMenuController _buildMenuController;
+        private IBuildMenu _buildMenu;
         private HealthBarController _playerCruiserHealthBar, _aiCruiserHealthBar;
 		private BuildableDetailsController _buildableDetails;
 		private InBattleCruiserDetailsController _cruiserDetails;
@@ -33,17 +33,17 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,
-            BuildMenuController buildMenuController,
+            IBuildMenu buildMenu,
             HealthBarController playerCruiserHealthBar,
             HealthBarController aiCruiserHealthBar,
             BackgroundController backgroundController)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenuController, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, playerCruiserHealthBar, aiCruiserHealthBar, backgroundController);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
             _cameraController = cameraController;
-            _buildMenuController = buildMenuController;
+            _buildMenu = buildMenu;
             _playerCruiserHealthBar = playerCruiserHealthBar;
             _aiCruiserHealthBar = aiCruiserHealthBar;
             _backgroundController = backgroundController;
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene
 			switch (e.Origin)
 			{
 				case CameraState.PlayerCruiser:
-					_buildMenuController.HideBuildMenu();
+					_buildMenu.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
                     HideTargetDetails();
 					_playerCruiserHealthBar.gameObject.SetActive(false);
@@ -88,7 +88,7 @@ namespace BattleCruisers.UI.BattleScene
 			switch (e.Destination)
 			{
 				case CameraState.PlayerCruiser:
-					_buildMenuController.ShowBuildMenu();
+					_buildMenu.ShowBuildMenu();
 					_playerCruiserHealthBar.gameObject.SetActive(true);
 					break;
 
@@ -112,14 +112,14 @@ namespace BattleCruisers.UI.BattleScene
             _playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HideAllSlots();
             HideTargetDetails();
-            _buildMenuController.ShowBuildingGroupsMenu();
+            _buildMenu.ShowBuildingGroupsMenu();
         }
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 			_playerCruiser.SlotWrapper.ShowAllSlots();
-			_buildMenuController.ShowBuildingGroupMenu(buildingCategory);
+			_buildMenu.ShowBuildingGroupMenu(buildingCategory);
 		}
 
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
@@ -163,7 +163,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			if (_cameraController.State == CameraState.PlayerCruiser)
 			{
-				_buildMenuController.ShowUnitsMenu(factory);
+				_buildMenu.ShowUnitsMenu(factory);
 			}
 		}
 

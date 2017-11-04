@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildMenuController : MonoBehaviour
+    public class BuildMenuController : MonoBehaviour, IBuildMenu
 	{
 		private IUIManager _uiManager;
         private IUIFactory _uiFactory;
@@ -95,7 +95,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			ChangePanel(panel);
 		}
 
-		public void ShowUnitsMenu(Factory factory)
+		public void ShowUnitsMenu(IFactory factory)
 		{
 			if (!_unitGroupPanels.ContainsKey(factory.UnitCategory))
 			{
