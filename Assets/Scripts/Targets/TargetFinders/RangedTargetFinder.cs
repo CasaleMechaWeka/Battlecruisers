@@ -28,6 +28,8 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			_enemyDetector.OnEntered += OnEnemyEntered;
 			_enemyDetector.OnExited += OnEnemyExited;
+
+            _enemyDetector.StartDetecting();
 		}
 
 		private void OnEnemyEntered(object sender, TargetEventArgs args)

@@ -35,6 +35,9 @@ namespace BattleCruisers.Targets.TargetFinders
 
             _minRangeDetector.OnEntered += OnTargetLost;
             _minRangeDetector.OnExited += OnTargetFound;
+
+            _maxRangeDetector.StartDetecting();
+            _minRangeDetector.StartDetecting();
         }
 
         private void OnTargetFound(object sender, TargetEventArgs args)
