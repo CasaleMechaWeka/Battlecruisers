@@ -4,16 +4,22 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
+    /// <summary>
+    /// Target zone is a circle.  Targets are found as they enter this circle
+    /// and lost as they exit.
+    /// </summary>
     public class RangedTargetFinder : ITargetFinder
 	{
-		private ITargetDetector _enemyDetector;
-		private ITargetFilter _targetFilter;
+		private readonly ITargetDetector _enemyDetector;
+		private readonly ITargetFilter _targetFilter;
 
 		public event EventHandler<TargetEventArgs> TargetFound;
 		public event EventHandler<TargetEventArgs> TargetLost;
 
 		public RangedTargetFinder(ITargetDetector enemyDetector, ITargetFilter targetFilter)
 		{
+            Helper.AssertIsNotNull(enemyDetector, targetFilter);
+
 			_enemyDetector = enemyDetector;
 			_targetFilter = targetFilter;
 		}
@@ -48,7 +54,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			_enemyDetector.OnEntered -= OnEnemyEntered;
 			_enemyDetector.OnExited -= OnEnemyExited;
-			_enemyDetector = null;
 		}
 	}
 }
