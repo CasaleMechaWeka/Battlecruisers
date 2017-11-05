@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostProvidersManager ?? new BoostProvidersManager(),
                     damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
                     explosionFactory ?? new ExplosionFactory(prefabFactory),
-                    accuracyAdjusterFactory ?? new AccuracyAdjusterFactory());
+                    accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster());
         }
 
         private IFactoryProvider CreateFactoryProvider(

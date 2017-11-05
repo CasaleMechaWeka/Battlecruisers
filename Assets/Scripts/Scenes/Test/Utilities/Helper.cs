@@ -326,5 +326,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider);
         }
+
+        public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
+        {
+			IAccuracyAdjusterFactory factory = Substitute.For<IAccuracyAdjusterFactory>();
+
+            IAccuracyAdjuster dummyAccuracyAdjuster = new DummyAccuracyAdjuster();
+
+            factory.CreateVerticalImpactProjectileAdjuster(null, 0, 0).ReturnsForAnyArgs(dummyAccuracyAdjuster);
+            factory.CreateHorizontalImpactProjectileAdjuster(null, 0, 0).ReturnsForAnyArgs(dummyAccuracyAdjuster);
+
+            return factory;
+        }
 	}
 }

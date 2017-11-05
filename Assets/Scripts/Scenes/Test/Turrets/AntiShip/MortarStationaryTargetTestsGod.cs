@@ -1,33 +1,18 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class MortarStationaryTargetTestsGod : MonoBehaviour 
-	{
-		void Start () 
-		{
-			Helper helper = new Helper();
-
-
-			// Setup target
-			TestAircraftController target = FindObjectOfType<TestAircraftController>();
-            target.PatrolPoints = new List<Vector2>() { new Vector2(0, 0), new Vector2(0, -0.01f) };
-			target.SetTargetType(TargetType.Ships);  // So mortars will attack this
-            helper.InitialiseUnit(target, Faction.Blues);
-			target.StartConstruction();
-
-
-			// Setup mortars
-            TurretController[] mortars = FindObjectsOfType<TurretController>();
-			foreach (TurretController mortar in mortars)
-			{
-                helper.InitialiseBuilding(mortar, Faction.Reds);
-				mortar.StartConstruction();
-			}
-		}
-	}
+    public class MortarStationaryTargetTestsGod : MortarTestGod
+    {
+        protected override List<Vector2> TargetPatrolPoints
+        {
+            get
+            {
+                // Aircraft is never stationary, so provide very cloase patorl points
+                // to mimic a stationary target.
+                return new List<Vector2>() { new Vector2(0, 0), new Vector2(0, -0.01f) };
+            }
+        }
+    }
 }
