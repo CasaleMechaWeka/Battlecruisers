@@ -4,6 +4,7 @@
     {
         float FireRatePerS { get; }
         float RangeInM { get; }
+        float MinRangeInM { get; }
         float MeanFireRatePerS { get; }
     }
 }
