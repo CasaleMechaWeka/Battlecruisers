@@ -98,6 +98,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
             _enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
             _enemyStoppingTargetProcessor.AddTargetConsumer(this);
+            _enemyStoppingTargetProcessor.StartProcessingTargets();
+
 
             // Friend detection for stopping
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };

@@ -52,6 +52,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 			_targetProcessor.AddTargetConsumer(this);
+            _targetProcessor.StartProcessingTargets();
 		}
 
 		protected override void OnUpdate()

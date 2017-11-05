@@ -77,6 +77,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
 			_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
 			_targetProcessor.AddTargetConsumer(_barrelController);
+            _targetProcessor.StartProcessingTargets();
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

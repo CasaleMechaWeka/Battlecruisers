@@ -119,6 +119,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetRanker followableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(_followableTargetFinder, followableTargetRanker);
 			_followableTargetProcessor.AddTargetConsumer(this);
+            _followableTargetProcessor.StartProcessingTargets();
 
 
 			// Detect shootable enemies
