@@ -17,8 +17,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
-        // FELIX  Rename.  Is not for turret barrel.  Is for detecting targets to follow.
-        private ITargetProcessorWrapper _targetProcessorWrapper;
+        private ITargetProcessorWrapper _followingTargetProcessor;
 		private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
@@ -56,7 +55,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
 
-            _targetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("TargetProcessor");
+            _followingTargetProcessor = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
 
             _isAtCruisingHeight = false;
 		}
@@ -87,14 +86,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetConsumer targetConsumer = this;
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            _targetProcessorWrapper
+            _followingTargetProcessor
                 .Initialise(
                     _factoryProvider.TargetsFactory,
                     targetConsumer,
                     enemyFaction,
                     enemyFollowRangeInM,
                     AttackCapabilities);
-            _targetProcessorWrapper.StartProvidingTargets();
+            _followingTargetProcessor.StartProvidingTargets();
 
 			// Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
@@ -162,8 +161,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            _targetProcessorWrapper.Dispose();
-            _targetProcessorWrapper = null;
+            _followingTargetProcessor.Dispose();
+            _followingTargetProcessor = null;
 
             _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
             _inRangeTargetFinder.Dispose();
