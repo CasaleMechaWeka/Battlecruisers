@@ -6,6 +6,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
 	public interface ITargetProcessorWrapper : IDisposable
 	{
+        // FELIX  Remove!  Should not be in interface :(
         void Initialise(
             ITargetsFactory targetsFactory, 
             ITargetConsumer targetConsumer,
