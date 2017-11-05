@@ -32,9 +32,9 @@ namespace BattleCruisers.Targets
 			return new RangedTargetFinder(targetDetector, targetFilter);
 		}
 
-        public ITargetFinder CreateMinRangeTargetFinder(ITargetDetector minRangeTargetDetector, ITargetDetector maxRangeTargetDetector, ITargetFilter targetFilter)
+        public ITargetFinder CreateMinRangeTargetFinder(ITargetDetector maxRangeTargetDetector, ITargetDetector minRangeTargetDetector, ITargetFilter targetFilter)
         {
-            return new MinRangeTargetFinder(minRangeTargetDetector, maxRangeTargetDetector, targetFilter);
+            return new MinRangeTargetFinder(maxRangeTargetDetector, minRangeTargetDetector, targetFilter);
         }
         #endregion TargetFinders
 
