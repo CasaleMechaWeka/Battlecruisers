@@ -7,6 +7,8 @@ namespace BattleCruisers.Targets.TargetProcessors
     /// </summary>
     public interface ITargetProcessor : IDisposable
 	{
+        void StartProcessingTargets();
+
 		/// <exception cref="ArgumentException">If the target consumer is already added.</exception>
 		void AddTargetConsumer(ITargetConsumer targetConsumer);
 

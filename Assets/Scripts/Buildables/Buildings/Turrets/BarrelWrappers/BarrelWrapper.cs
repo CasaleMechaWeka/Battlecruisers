@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
         protected BarrelController[] _barrels;
-		private ITargetProcessorWrapper _targetProcessorWrapper;
+		private TargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
@@ -67,7 +67,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             DamagePerS = _barrels.Sum(barrel => barrel.DamagePerS);
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
 
-            _targetProcessorWrapper = gameObject.GetComponentInChildren<ITargetProcessorWrapper>();
+            _targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
         }
 
@@ -99,6 +99,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             {
                 InitialiseBarrelController(barrel, targetFilter, angleCalculator);
             }
+
+            _targetProcessorWrapper
+                .Initialise(
+                    _factoryProvider.TargetsFactory,
+                    this,
+                    _enemyFaction,
+                    RangeInM,
+                    _attackCapabilities);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
@@ -117,12 +125,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void StartAttackingTargets()
         {
-            _targetProcessorWrapper.StartProvidingTargets(
-                _factoryProvider.TargetsFactory,
-                this,
-                _enemyFaction,
-                RangeInM,
-                _attackCapabilities);
+            _targetProcessorWrapper.StartProvidingTargets();
         }
 
         protected ITargetFilter CreateTargetFilter()

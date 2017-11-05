@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
+        // FELIX  Rename.  Is not for turret barrel.  Is for detecting targets to follow.
         private ITargetProcessorWrapper _targetProcessorWrapper;
 		private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
@@ -68,12 +69,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             IVelocityProvider inRangeVelocityProvider
                 = _movementControllerFactory.CreateMultiplyingVelocityProvider(
-                providerToWrap: this,
-                multiplier: WITHTIN_RANGE_MULTIPLIER);
+                    providerToWrap: this,
+                    multiplier: WITHTIN_RANGE_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
+
+
 		}
 
 		protected override void OnBuildableCompleted()
@@ -85,12 +88,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
             _targetProcessorWrapper
-                .StartProvidingTargets(
+                .Initialise(
                     _factoryProvider.TargetsFactory,
                     targetConsumer,
                     enemyFaction,
                     enemyFollowRangeInM,
                     AttackCapabilities);
+            _targetProcessorWrapper.StartProvidingTargets();
 
 			// Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);

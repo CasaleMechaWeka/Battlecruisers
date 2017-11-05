@@ -32,9 +32,12 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 			_targetFinder.TargetFound += TargetFinder_TargetFound;
 			_targetFinder.TargetLost += TargetFinder_TargetLost;
+        }
 
+        public void StartProcessingTargets()
+        {
 			_targetFinder.StartFindingTargets();
-		}
+        }
 
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
@@ -132,5 +135,5 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetFinder.TargetLost -= TargetFinder_TargetLost;
 			_targetFinder = null;
 		}
-	}
+    }
 }
