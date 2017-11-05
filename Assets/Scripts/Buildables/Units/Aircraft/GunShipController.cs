@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
-        private ITargetProcessorWrapper _followingTargetProcessor;
+        private TargetProcessorWrapper _followingTargetProcessor;
 		private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
