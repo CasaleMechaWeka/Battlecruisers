@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
+        private float _minRangeInM;
+
         protected BarrelController[] _barrels;
 		private TargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
@@ -66,6 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             DamagePerS = _barrels.Sum(barrel => barrel.DamagePerS);
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
+            _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
 
             _targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
             Assert.IsNotNull(_targetProcessorWrapper);
@@ -106,7 +109,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     this,
                     _enemyFaction,
                     _attackCapabilities,
-                    RangeInM);
+                    RangeInM,
+                    _minRangeInM);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
