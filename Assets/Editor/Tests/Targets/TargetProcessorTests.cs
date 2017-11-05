@@ -29,7 +29,9 @@ namespace BattleCruisers.Tests.Targets
 			_target3 = Substitute.For<ITarget>();
 
 			_targetProcessor = new TargetProcessor(_targetFinder, _targetRanker);
-			_targetFinder.Received(1).StartFindingTargets();
+
+            _targetProcessor.StartProcessingTargets();
+            _targetFinder.Received().StartFindingTargets();
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
