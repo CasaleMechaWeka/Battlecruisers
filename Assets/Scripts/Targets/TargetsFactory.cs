@@ -31,6 +31,11 @@ namespace BattleCruisers.Targets
 		{
 			return new RangedTargetFinder(targetDetector, targetFilter);
 		}
+
+        public ITargetFinder CreateMinRangeTargetFinder(ITargetDetector minRangeTargetDetector, ITargetDetector maxRangeTargetDetector, ITargetFilter targetFilter)
+        {
+            return new MinRangeTargetFinder(minRangeTargetDetector, maxRangeTargetDetector, targetFilter);
+        }
         #endregion TargetFinders
 
         #region TargetTrackers
@@ -77,6 +82,6 @@ namespace BattleCruisers.Targets
 		{
             return new StaticTargetProvider(target);
 		}
-		#endregion TargetProviders
-	}
+        #endregion TargetProviders
+    }
 }

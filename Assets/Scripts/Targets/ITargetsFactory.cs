@@ -16,7 +16,8 @@ namespace BattleCruisers.Targets
 		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker);
 
 		// Finders
-		ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
+        ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
+        ITargetFinder CreateMinRangeTargetFinder(ITargetDetector minRangeTargetDetector, ITargetDetector maxRangeTargetDetector, ITargetFilter targetFilter);
 
         // Trackers
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);
