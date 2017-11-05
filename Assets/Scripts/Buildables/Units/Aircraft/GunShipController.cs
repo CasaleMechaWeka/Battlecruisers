@@ -74,8 +74,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _barrelWrapper.Initialise(_factoryProvider, enemyFaction, AttackCapabilities);
-
-
 		}
 
 		protected override void OnBuildableCompleted()
