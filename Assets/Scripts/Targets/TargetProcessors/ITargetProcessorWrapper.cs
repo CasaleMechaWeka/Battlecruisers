@@ -10,8 +10,9 @@ namespace BattleCruisers.Targets.TargetProcessors
             ITargetsFactory targetsFactory, 
             ITargetConsumer targetConsumer,
             Faction enemyFaction, 
-            float detectionRangeInM, 
-            IList<TargetType> attackCapabilities);
+			IList<TargetType> attackCapabilities,
+            float detectionRangeInM,
+            float minRangeInM = 0);
 
         void StartProvidingTargets();
 	}

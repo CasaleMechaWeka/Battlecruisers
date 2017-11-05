@@ -105,8 +105,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _factoryProvider.TargetsFactory,
                     this,
                     _enemyFaction,
-                    RangeInM,
-                    _attackCapabilities);
+                    _attackCapabilities,
+                    RangeInM);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)

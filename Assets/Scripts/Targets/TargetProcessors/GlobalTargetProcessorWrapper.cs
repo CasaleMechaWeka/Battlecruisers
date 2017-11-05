@@ -8,8 +8,9 @@ namespace BattleCruisers.Targets.TargetProcessors
         protected override ITargetProcessor CreateTargetProcessor(
             ITargetsFactory targetsFactory,
             Faction enemyFaction,
+			IList<TargetType> attackCapabilities,
             float detectionRangeInM,
-            IList<TargetType> attackCapabilities)
+            float minRangeInM)
         {
             return targetsFactory.OffensiveBuildableTargetProcessor;
         }

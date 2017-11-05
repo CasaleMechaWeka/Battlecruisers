@@ -91,8 +91,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.TargetsFactory,
                     targetConsumer,
                     enemyFaction,
-                    enemyFollowRangeInM,
-                    AttackCapabilities);
+                    AttackCapabilities,
+                    enemyFollowRangeInM);
             _followingTargetProcessor.StartProvidingTargets();
 
 			// Create target tracker => For keeping track of in range targets

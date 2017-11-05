@@ -16,22 +16,24 @@ namespace BattleCruisers.Targets.TargetProcessors
             ITargetsFactory targetsFactory,
             ITargetConsumer targetConsumer,
             Faction enemyFaction,
+            IList<TargetType> attackCapabilities,
             float detectionRangeInM,
-            IList<TargetType> attackCapabilities)
+            float minRangeInM = 0)
         {
             Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
 
             _targetConsumer = targetConsumer;
 
-            _targetProcessor = CreateTargetProcessor(targetsFactory, enemyFaction, detectionRangeInM, attackCapabilities);
+            _targetProcessor = CreateTargetProcessor(targetsFactory, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
             _targetProcessor.AddTargetConsumer(_targetConsumer);
         }
 
         protected abstract ITargetProcessor CreateTargetProcessor(
             ITargetsFactory targetsFactory,
             Faction enemyFaction,
+            IList<TargetType> attackCapabilities,
             float detectionRangeInM,
-            IList<TargetType> attackCapabilities);
+            float minRangeInM);
 
         public void StartProvidingTargets()
         {
