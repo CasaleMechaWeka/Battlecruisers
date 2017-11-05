@@ -1,15 +1,12 @@
-﻿using BattleCruisers.Targets.TargetFinders;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEditor;
-using BattleCruisers.Buildables;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets
 {
-	public class RangedTargetFinderTests 
+    public class RangedTargetFinderTests 
 	{
 		private ITargetFinder _targetFinder;
 		private ITargetDetector _enemyDetector;
