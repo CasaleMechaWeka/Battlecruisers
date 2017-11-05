@@ -11,6 +11,15 @@ namespace BattleCruisers.Targets.TargetFinders
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
 
+
+        public virtual void StartDetecting()
+        {
+            // Emtpy.  Means that we will try to emit events BEFORE this method
+            // is called.  Ie, we may miss targets that are within our detection
+            // area because we detected them before anyone started listening to
+            // our events.
+        }
+
 		void OnTriggerEnter2D(Collider2D collider)
 		{
 			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerEnter2D()  collider id: " + collider.GetInstanceID());
@@ -39,5 +48,5 @@ namespace BattleCruisers.Targets.TargetFinders
             Assert.IsNotNull(target, "Should only collide with game objects that have a ITarget component.");
 			return target;
 		}
-	}
+    }
 }
