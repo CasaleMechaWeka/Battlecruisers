@@ -49,9 +49,6 @@ namespace BattleCruisers.UI.BattleScene
         /// </summary>
         public void InitialUI()
         {
-            _playerCruiser.HealthBar.IsVisible = true;
-            _aiCruiser.HealthBar.IsVisible = false;
-
 			_detailsManager.HideDetails();
         }
 
