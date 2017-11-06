@@ -132,6 +132,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
 			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(_shootableTargetFinder, shootableTargetRanker);
 			_shootableTargetProcessor.AddTargetConsumer(_barrelController);
+            _shootableTargetProcessor.StartProcessingTargets();
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
