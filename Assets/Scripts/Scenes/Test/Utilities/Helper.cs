@@ -335,6 +335,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             factory.CreateVerticalImpactProjectileAdjuster(null, 0, 0).ReturnsForAnyArgs(dummyAccuracyAdjuster);
             factory.CreateHorizontalImpactProjectileAdjuster(null, 0, 0).ReturnsForAnyArgs(dummyAccuracyAdjuster);
+            factory.CreateDummyAdjuster().ReturnsForAnyArgs(dummyAccuracyAdjuster);
 
             return factory;
         }
