@@ -28,6 +28,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected ITargetProcessor _enemyStoppingTargetProcessor;
         private IList<IBarrelWrapper> _turrets;
 
+        private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
+
 		public CircleTargetDetector enemyDetector, friendDetector;
 
         protected abstract float EnemyDetectionRangeInM { get; }
@@ -48,6 +50,14 @@ namespace BattleCruisers.Buildables.Units.Ships
                 }
 
                 _blockingEnemyTarget = value;
+            }
+        }
+
+        private float FriendDetectionRangeInM
+        {
+            get
+            {
+                return FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
             }
         }
 
@@ -89,9 +99,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void SetupBlockingUnitDetection()
         {
             // Enemy detection for stopping (ignore aircraft for stopping)
+			enemyDetector.Initialise(EnemyDetectionRangeInM);
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            enemyDetector.Initialise(EnemyDetectionRangeInM);
             ITargetFilter enemyDetectionFilter = _targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
             _enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
@@ -102,6 +112,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 
             // Friend detection for stopping
+            friendDetector.Initialise(FriendDetectionRangeInM);
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
             ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, blockingFriendlyTypes);
             _friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
