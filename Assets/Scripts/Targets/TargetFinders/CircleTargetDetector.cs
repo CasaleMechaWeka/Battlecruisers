@@ -8,8 +8,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		private CircleCollider2D _circleCollider;
         private float _radiusInM;
 
-        // FELIX  Do not allow default parameter (I think :P )
-		public void Initialise(float radiusInM = -1)
+		public void Initialise(float radiusInM)
 		{
             _radiusInM = radiusInM;
 
@@ -19,10 +18,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
         public override void StartDetecting()
         {
-			if (_radiusInM != -1)
-			{
-				_circleCollider.radius = _radiusInM;
-			}
+			_circleCollider.radius = _radiusInM;
         }
 	}
 }
