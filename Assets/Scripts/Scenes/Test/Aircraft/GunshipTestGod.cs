@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
             // Setup gunship
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
-            GunshipController gunship = FindObjectOfType<GunshipController>();
+            GunShipController gunship = FindObjectOfType<GunShipController>();
             helper.InitialiseUnit(gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left);
             gunship.StartConstruction();
 
