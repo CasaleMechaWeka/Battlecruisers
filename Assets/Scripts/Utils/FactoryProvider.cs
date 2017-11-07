@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Utils
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
         public IExplosionFactory ExplosionFactory { get; private set; }
         public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; private set; }
+        public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; private set; }
 
         public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
 		{
@@ -42,6 +44,7 @@ namespace BattleCruisers.Utils
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
             ExplosionFactory = new ExplosionFactory(PrefabFactory);
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();
+            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 		}
 	}
 }
