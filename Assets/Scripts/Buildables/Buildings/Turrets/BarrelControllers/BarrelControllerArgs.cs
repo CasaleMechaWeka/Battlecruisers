@@ -33,8 +33,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 angleCalculator, 
                 accuracyAdjuster, 
                 rotationMovementController, 
-                factoryProvider,
-                targetPositionPredictor);
+                targetPositionValidator,
+                factoryProvider);
 
             TargetFilter = targetFilter;
             TargetPositionPredictor = targetPositionPredictor;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AccuracyAdjuster = accuracyAdjuster;
             RotationMovementController = rotationMovementController;
             FactoryProvider = factoryProvider;
-            TargetPositionPredictor = targetPositionPredictor;
+            TargetPositionValidator = targetPositionValidator;
         }
     }
 }

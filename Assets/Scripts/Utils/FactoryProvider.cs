@@ -44,7 +44,7 @@ namespace BattleCruisers.Utils
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
             ExplosionFactory = new ExplosionFactory(PrefabFactory);
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();
-            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
+            TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
 		}
 	}
 }
