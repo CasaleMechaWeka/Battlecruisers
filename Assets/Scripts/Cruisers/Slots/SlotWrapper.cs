@@ -38,7 +38,6 @@ namespace BattleCruisers.Cruisers.Slots
         public void Initialise(ICruiser parentCruiser)
 		{
             SetupSlots(parentCruiser);
-			HideAllSlots();
 		}
 
 		private void SetupSlots(ICruiser parentCruiser)

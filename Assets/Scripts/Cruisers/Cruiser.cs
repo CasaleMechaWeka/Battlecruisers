@@ -95,6 +95,8 @@ namespace BattleCruisers.Cruisers
 
             _healthBarController.Initialise(this);
             _fog.Initialise(args.ShouldShowFog);
+
+            SlotWrapper.HideAllSlots();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
