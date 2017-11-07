@@ -14,5 +14,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 		{
             return _factoryProvider.AngleCalculatorFactory.CreateMortarAngleCalculator();
 		}
+
+        protected override PositionValidators.ITargetPositionValidator CreatePositionValidator()
+        {
+            return _factoryProvider.TargetPositionValidatorFactory.CreateFacingMinRangeValidator(_minRangeInM);
+        }
 	}
 }

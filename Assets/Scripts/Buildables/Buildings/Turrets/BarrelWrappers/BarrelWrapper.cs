@@ -3,6 +3,7 @@ using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -15,13 +16,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
-        private float _minRangeInM;
-
         protected BarrelController[] _barrels;
-		private TargetProcessorWrapper _targetProcessorWrapper;
+        private TargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
+		protected float _minRangeInM;
 
         public Vector2 Position { get { return transform.position; } }
         public float DamagePerS { get; private set; }
@@ -156,6 +156,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             // Default to 100% accuracy
             return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();
+        }
+
+        protected virtual ITargetPositionValidator CreatePositionValidator()
+        {
+            // Default to all positions being valid
+            return _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator();
         }
 
         public void Dispose()
