@@ -136,7 +136,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
             Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
-            if (!_targetPositionValidator.IsValid(Target.Position, ProjectileSpawnerPosition, IsSourceMirrored))
+            if (!_targetPositionValidator.IsValid(predictedTargetPosition, ProjectileSpawnerPosition, IsSourceMirrored))
             {
                 // Target position is invalid
                 return false;
