@@ -3,7 +3,7 @@
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     /// <summary>
-    /// Null object.
+    /// Null object
     /// </summary>
     public class DummyAccuracyAdjuster : IAccuracyAdjuster
     {
