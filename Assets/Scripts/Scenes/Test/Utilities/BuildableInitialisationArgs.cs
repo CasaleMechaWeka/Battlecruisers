@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
@@ -44,7 +45,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IExplosionFactory explosionFactory = null,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = null)
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
+            ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
         {
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
@@ -65,7 +67,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostProvidersManager ?? new BoostProvidersManager(),
                     damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
                     explosionFactory ?? new ExplosionFactory(prefabFactory),
-                    accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster());
+                    accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
+                    targetPositionValidatorFactory ?? new TargetPositionValidatorFactory());
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -80,7 +83,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostProvidersManager boostProvidersManager,
             IDamageApplierFactory damageApplierFactory,
             IExplosionFactory explosionFactory,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory)
+            IAccuracyAdjusterFactory accuracyAdjusterFactory,
+            ITargetPositionValidatorFactory targetPositionValidatorFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -96,6 +100,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.ExplosionFactory.Returns(explosionFactory);
             factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
+            factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
 
             return factoryProvider;
         }

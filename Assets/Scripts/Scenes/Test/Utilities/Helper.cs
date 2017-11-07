@@ -62,7 +62,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IExplosionFactory explosionFactory = null,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = null)
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
+            ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -83,7 +84,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     damageApplierFactory,
                     parentCruiserDirection,
                     explosionFactory,
-                    accuracyAdjusterFactory);
+                    accuracyAdjusterFactory,
+                    targetPositionValidatorFactory);
 
             InitialiseBuilding(building, args, parentSlot);
         }
