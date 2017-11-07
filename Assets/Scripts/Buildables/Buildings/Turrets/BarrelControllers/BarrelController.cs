@@ -125,7 +125,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         /// <returns><c>true</c>, if successfully fired, <c>false</c> otherwise.</returns>
         private bool TryFire()
         {
-            if (Target == null && Target.IsDestroyed)
+            if (Target == null || Target.IsDestroyed)
             {
                 // No alive target to shoot
                 return false;
