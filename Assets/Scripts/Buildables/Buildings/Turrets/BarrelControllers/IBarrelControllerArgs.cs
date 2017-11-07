@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         IAngleCalculator AngleCalculator { get; }
         IAccuracyAdjuster AccuracyAdjuster { get; }
         IRotationMovementController RotationMovementController { get; }
+        ITargetPositionValidator TargetPositionValidator { get; }
         IFactoryProvider FactoryProvider { get; }
     }
 }

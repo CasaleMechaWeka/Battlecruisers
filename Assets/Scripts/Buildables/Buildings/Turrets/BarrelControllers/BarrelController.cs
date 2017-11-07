@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IAngleCalculator _angleCalculator;
         protected IRotationMovementController _rotationMovementController;
         private IAccuracyAdjuster _accuracyAdjuster;
+        private ITargetPositionValidator _targetPositionValidator;
 		
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
@@ -102,6 +104,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_angleCalculator = args.AngleCalculator;
 			_rotationMovementController = args.RotationMovementController;
             _accuracyAdjuster = args.AccuracyAdjuster;
+            _targetPositionValidator = args.TargetPositionValidator;
 		}
 
 		void FixedUpdate()

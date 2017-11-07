@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     angleCalculator,
                     CreateAccuracyAdjuster(angleCalculator, barrel),
                     CreateRotationMovementController(barrel),
+                    CreatePositionValidator(),
                     _factoryProvider);
 
 			SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
