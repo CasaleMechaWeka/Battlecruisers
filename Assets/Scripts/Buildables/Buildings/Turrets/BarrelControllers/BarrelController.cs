@@ -108,53 +108,70 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		}
 
 		void FixedUpdate()
-		{
-			if (!IsInitialised)
-			{
-				return;
-			}
+        {
+            if (!IsInitialised)
+            {
+                return;
+            }
 
-			if (Target != null && !Target.IsDestroyed)
-			{
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
+            bool wasFireSuccessful = TryFire();
 
-				float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-                Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
+            if (!wasFireSuccessful)
+            {
+                CeaseFire();
+            }
+        }
 
-                float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+        /// <returns><c>true</c>, if successfully fired, <c>false</c> otherwise.</returns>
+        private bool TryFire()
+        {
+            if (Target == null && Target.IsDestroyed)
+            {
+                // No alive target to shoot
+                return false;
+            }
 
-				bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
+            Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
-				if (!isOnTarget)
-				{
-					_rotationMovementController.AdjustRotation(desiredAngleInDegrees);
-				}
+            float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
 
-				if ((isOnTarget || _turretStats.IsInBurst)
-				    && _fireIntervalManager.ShouldFire())
-				{
-					// Burst fires happen even if we are no longer on target, so we may miss
-					// the target in this case.  Hence use the actual angle our turret barrel
-					// is at, instead of the perfect desired angle.
-					float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+            if (!_targetPositionValidator.IsValid(Target.Position, ProjectileSpawnerPosition, IsSourceMirrored))
+            {
+                // Target position is invalid
+                return false;
+            }
 
-                    fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
+            float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
 
-					Fire(fireAngle);
-                    _fireIntervalManager.OnFired();
-				}
-				else
-				{
-					CeaseFire();
-				}
-			}
-			else
-			{
-				CeaseFire();
-			}
-		}
+            bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
-		protected abstract void Fire(float angleInDegrees);
+            if (!isOnTarget)
+            {
+                _rotationMovementController.AdjustRotation(desiredAngleInDegrees);
+            }
+
+            if ((!isOnTarget && !_turretStats.IsInBurst)
+                || !_fireIntervalManager.ShouldFire())
+            {
+                // Not on target or haven't waited fire interval
+                return false;
+            }
+
+            // Burst fires happen even if we are no longer on target, so we may miss
+            // the target in this case.  Hence use the actual angle our turret barrel
+            // is at, instead of the perfect desired angle.
+            float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+
+            fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
+
+            Fire(fireAngle);
+            _fireIntervalManager.OnFired();
+
+            return true;
+        }
+
+        protected abstract void Fire(float angleInDegrees);
 
 		protected virtual void CeaseFire() { }
 	}
