@@ -67,5 +67,12 @@ namespace BattleCruisers.Utils
 
             return rotation;
         }
+
+        public static bool IsFacingTarget(Vector2 target, Vector2 source, bool isSourceMirrored)
+        {
+            return
+                isSourceMirrored && target.x < source.x
+                || !isSourceMirrored && target.x > source.x;
+        }
 	}
 }

@@ -11,26 +11,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
         public float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{
-			if (MustFaceTarget)
+            if (MustFaceTarget && !Helper.IsFacingTarget(targetPosition, sourcePosition, isSourceMirrored))
 			{
-				CheckSourceIsFacingTarget(sourcePosition, targetPosition, isSourceMirrored);
-			}
+                throw new ArgumentException("Source does not face target :(  source: " + sourcePosition + "  target: " + targetPosition + "  isSourceMirrored: " + isSourceMirrored);
+            }
 
-			return CalculateDesiredAngle(sourcePosition, targetPosition, isSourceMirrored, projectileVelocityInMPerS);
-		}
-
-		private void CheckSourceIsFacingTarget(Vector2 source, Vector2 target, bool isSourceMirrored)
-		{
-			if (isSourceMirrored && target.x >= source.x)
-			{
-				throw new ArgumentException("Source faces left, but target is to the right");
-			}
-
-			if (!isSourceMirrored && target.x <= source.x)
-			{
-				throw new ArgumentException("Source faces right, but target is to the left");
-			}
-		}
+            return CalculateDesiredAngle(sourcePosition, targetPosition, isSourceMirrored, projectileVelocityInMPerS);
+        }
 
 		/// <summary>
 		/// Assumes shells are NOT affected by gravity
