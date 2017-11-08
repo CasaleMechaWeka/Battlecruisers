@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Fetchers;
@@ -28,5 +29,6 @@ namespace BattleCruisers.Utils
         IExplosionFactory ExplosionFactory { get; }
         IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
+        IAngleLimiterFactory AngleLimiterFactory { get; } 
     }
 }
