@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
@@ -163,6 +164,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             // Default to all positions being valid
             return _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator();
+        }
+
+        protected virtual IAngleLimiter CreateAngleLimiter()
+        {
+            // Default to allowing all angles
+            return _factoryProvider.AngleLimiterFactory.CreateDummyLimiter();
         }
 
         public void Dispose()

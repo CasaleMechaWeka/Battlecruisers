@@ -24,5 +24,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 			SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
             samSiteBarrel.Initialise(exatMatchTargetFilter, args);
         }
+
+        protected override AngleLimiters.IAngleLimiter CreateAngleLimiter()
+        {
+            return _factoryProvider.AngleLimiterFactory.CreateAntiAirLimiter();
+        }
 	}
 }
