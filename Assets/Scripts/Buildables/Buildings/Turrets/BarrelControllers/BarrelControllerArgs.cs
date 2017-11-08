@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public IRotationMovementController RotationMovementController { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
+        public IAngleLimiter AngleLimiter { get; private set; }
 
         public BarrelControllerArgs(
             ITargetFilter targetFilter,
@@ -25,6 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
 			ITargetPositionValidator targetPositionValidator,
+            IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider)
         {
             Helper.AssertIsNotNull(
@@ -34,6 +37,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 accuracyAdjuster, 
                 rotationMovementController, 
                 targetPositionValidator,
+                angleLimiter,
                 factoryProvider);
 
             TargetFilter = targetFilter;
@@ -42,6 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AccuracyAdjuster = accuracyAdjuster;
             RotationMovementController = rotationMovementController;
             FactoryProvider = factoryProvider;
+            AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
         }
     }

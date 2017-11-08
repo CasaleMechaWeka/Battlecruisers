@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IRotationMovementController _rotationMovementController;
         private IAccuracyAdjuster _accuracyAdjuster;
         private ITargetPositionValidator _targetPositionValidator;
+        private IAngleLimiter _angleLimiter;
 		
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
@@ -105,6 +107,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_rotationMovementController = args.RotationMovementController;
             _accuracyAdjuster = args.AccuracyAdjuster;
             _targetPositionValidator = args.TargetPositionValidator;
+            _angleLimiter = args.AngleLimiter;
 		}
 
 		void FixedUpdate()
@@ -146,9 +149,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
 
+            float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
+
             if (!isOnTarget)
             {
-                _rotationMovementController.AdjustRotation(desiredAngleInDegrees);
+                _rotationMovementController.AdjustRotation(limitedDesiredAngle);
             }
 
             if ((!isOnTarget && !_turretStats.IsInBurst)
@@ -161,7 +166,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // Burst fires happen even if we are no longer on target, so we may miss
             // the target in this case.  Hence use the actual angle our turret barrel
             // is at, instead of the perfect desired angle.
-            float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : desiredAngleInDegrees;
+            float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : limitedDesiredAngle;
 
             fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
 

@@ -124,6 +124,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     CreateAccuracyAdjuster(angleCalculator, barrel),
                     CreateRotationMovementController(barrel),
                     CreatePositionValidator(),
+                    CreateAngleLimiter(),
                     _factoryProvider);
 
             barrel.Initialise(args);

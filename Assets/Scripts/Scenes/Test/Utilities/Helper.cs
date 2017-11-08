@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units;
@@ -319,6 +320,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAccuracyAdjuster accuracyAdjuster = null,
             IRotationMovementController rotationMovementController = null,
             ITargetPositionValidator targetPositionValidator = null,
+            IAngleLimiter angleLimiter = null,
             IFactoryProvider factoryProvider = null)
         {
             return
@@ -329,6 +331,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
                     rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
                     targetPositionValidator ?? new DummyPositionValidator(),
+                    angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider);
         }
 
