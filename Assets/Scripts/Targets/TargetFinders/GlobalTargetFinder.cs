@@ -18,6 +18,7 @@ namespace BattleCruisers.Targets.TargetFinders
     public class GlobalTargetFinder : ITargetFinder
 	{
 		private ICruiser _enemyCruiser;
+        private bool _isFindingTargets;
 
 		private const float BUILD_PROGRESS_CONSIDERED_TARGET = 0.5f;
 
@@ -27,12 +28,17 @@ namespace BattleCruisers.Targets.TargetFinders
 		public GlobalTargetFinder(ICruiser enemyCruiser)
 		{
 			_enemyCruiser = enemyCruiser;
+            _isFindingTargets = false;
 		}
 
 		public void StartFindingTargets()
 		{
-			_enemyCruiser.StartedConstruction += EnemyCruiser_StartedConstruction;
-			InvokeTargetFoundEvent(_enemyCruiser);
+            if (!_isFindingTargets)
+            {
+                _enemyCruiser.StartedConstruction += EnemyCruiser_StartedConstruction;
+                InvokeTargetFoundEvent(_enemyCruiser);
+                _isFindingTargets = true;
+			}
 		}
 
 		private void EnemyCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
