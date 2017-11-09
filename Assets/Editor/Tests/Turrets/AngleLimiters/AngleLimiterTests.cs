@@ -7,24 +7,25 @@ namespace BattleCruisers.Tests.Turrets.AngleLimiters
     public class AngleLimiterTests
     {
         private IAngleLimiter _limiter;
-        private float _minAngleInDegrees, _maxAngleInDegrees;
+        private float _minNonNegativeAngle, _maxAngleInDegrees;
 
         [SetUp]
         public void SetuUp()
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _minAngleInDegrees = 12;
-            _maxAngleInDegrees = 90;
+            float minAngleInDegrees = -45;
+            _minNonNegativeAngle = minAngleInDegrees + 360;
+            _maxAngleInDegrees = 45;
 
-            _limiter = new AngleLimiter(_minAngleInDegrees, _maxAngleInDegrees);
+            _limiter = new AngleLimiter(minAngleInDegrees, _maxAngleInDegrees);
         }
 
         [Test]
         public void MinAngle_ReturnsSame()
         {
-            float limitedAngle = _limiter.LimitAngle(_minAngleInDegrees);
-            Assert.AreEqual(_minAngleInDegrees, limitedAngle);
+            float limitedAngle = _limiter.LimitAngle(_minNonNegativeAngle);
+            Assert.AreEqual(_minNonNegativeAngle, limitedAngle);
         }
 
         [Test]
@@ -35,9 +36,17 @@ namespace BattleCruisers.Tests.Turrets.AngleLimiters
         }
 
         [Test]
-        public void AngleWithinLimi_ReturnsSame()
+        public void AngleWithinLimit_CloseToMin_ReturnsSame()
         {
-            float inLimitAngle = _minAngleInDegrees + 3;
+            float inLimitAngle = _minNonNegativeAngle + 1;
+            float limitedAngle = _limiter.LimitAngle(inLimitAngle);
+            Assert.AreEqual(inLimitAngle, limitedAngle);
+        }
+
+        [Test]
+        public void AngleWithinLimit_CloseToMax_ReturnsSame()
+        {
+            float inLimitAngle = _maxAngleInDegrees - 1;
             float limitedAngle = _limiter.LimitAngle(inLimitAngle);
             Assert.AreEqual(inLimitAngle, limitedAngle);
         }
@@ -45,8 +54,8 @@ namespace BattleCruisers.Tests.Turrets.AngleLimiters
         [Test]
         public void TooSmallAngle_ReturnsMinAngle()
         {
-            float limitedAngle = _limiter.LimitAngle(_minAngleInDegrees - 1);
-            Assert.AreEqual(_minAngleInDegrees, limitedAngle);
+            float limitedAngle = _limiter.LimitAngle(_minNonNegativeAngle - 1);
+            Assert.AreEqual(_minNonNegativeAngle, limitedAngle);
         }
 
         [Test]
