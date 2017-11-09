@@ -14,17 +14,13 @@ namespace BattleCruisers.Scenes.Test.Aircraft
     public class KamikazeTestGod : MonoBehaviour
 	{
         private KamikazeSignal _kamikazeSignal;
-        private IFactory _target;
-        private AircraftController[] _aircraft;
-
-		public List<Vector2> bomberPatrolPoints;
 
 		void Start()
 		{
 			Helper helper = new Helper();
 			
             // Setup target
-			_target = FindObjectOfType<Factory>();
+            IFactory _target = FindObjectOfType<Factory>();
             helper.InitialiseBuilding(_target);
 			_target.StartConstruction();
 
@@ -42,8 +38,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             aaTurret.StartConstruction();
 
             // Setup aircraft
-            _aircraft = FindObjectsOfType<AircraftController>();
-            foreach (AircraftController aircraft in _aircraft)
+            AircraftController[] aircraftList = FindObjectsOfType<AircraftController>();
+            foreach (AircraftController aircraft in aircraftList)
             {
                 helper.InitialiseUnit(aircraft);
                 aircraft.StartConstruction();
