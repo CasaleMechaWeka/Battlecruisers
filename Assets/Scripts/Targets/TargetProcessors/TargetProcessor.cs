@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound");
-			Assert.IsFalse(_targets.Contains(e.Target));
+            Assert.IsFalse(_targets.Contains(e.Target), "Already found target previously: " + e.Target);
 
             if (e.Target.IsDestroyed)
             {
