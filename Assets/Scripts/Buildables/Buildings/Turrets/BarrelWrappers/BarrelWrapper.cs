@@ -169,8 +169,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual IAngleLimiter CreateAngleLimiter()
         {
-            // Default to allowing all angles
-            return _factoryProvider.AngleLimiterFactory.CreateDummyLimiter();
+            return _factoryProvider.AngleLimiterFactory.CreateFacingLimiter();
         }
 
         public void Dispose()

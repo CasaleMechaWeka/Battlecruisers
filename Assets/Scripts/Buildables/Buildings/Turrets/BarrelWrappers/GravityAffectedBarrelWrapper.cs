@@ -22,10 +22,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     barrel.ProjectileStats.MaxVelocityInMPerS, 
                     barrel.TurretStats.Accuracy);
         }
-
-        protected override AngleLimiters.IAngleLimiter CreateAngleLimiter()
-        {
-            return _factoryProvider.AngleLimiterFactory.CreateFacingLimiter();
-        }
 	}
 }

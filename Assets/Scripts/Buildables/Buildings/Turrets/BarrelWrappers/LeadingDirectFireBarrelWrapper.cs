@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
@@ -18,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 			return _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator();
 		}
 
-        protected override AngleLimiters.IAngleLimiter CreateAngleLimiter()
+        protected override IAngleLimiter CreateAngleLimiter()
         {
             return _factoryProvider.AngleLimiterFactory.CreateAntiAirLimiter();
         }
