@@ -91,8 +91,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
                     _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
-                    // FELIX  Fighter angle limiter :D
-                    _factoryProvider.AngleLimiterFactory.CreateDummyLimiter(),
+                    _factoryProvider.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider);
 
             _barrelController.Initialise(args);
