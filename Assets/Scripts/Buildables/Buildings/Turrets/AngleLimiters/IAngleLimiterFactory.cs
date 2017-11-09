@@ -5,5 +5,6 @@
         IAngleLimiter CreateDummyLimiter();
         IAngleLimiter CreateFacingLimiter();
         IAngleLimiter CreateAntiAirLimiter();
+        IAngleLimiter CreateFighterLimiter();
     }
 }

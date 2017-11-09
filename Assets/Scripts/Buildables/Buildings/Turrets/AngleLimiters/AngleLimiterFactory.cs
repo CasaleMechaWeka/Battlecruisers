@@ -16,5 +16,10 @@
         {
             return new AntiAirAngleLimiter();
         }
+
+        public IAngleLimiter CreateFighterLimiter()
+        {
+            return new FighterAngleLimiter();
+        }
     }
 }
