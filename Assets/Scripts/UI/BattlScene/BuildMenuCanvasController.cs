@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,11 +21,8 @@ namespace BattleCruisers.UI.BattleScene
             CruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(CruiserDetails);
 
-            PlayerCruiserHealthBar = GetComponentInChildren<HealthBarController>(includeInactive: true);
-            Assert.IsNotNull(PlayerCruiserHealthBar);
-
-            AiCruiserHealthBar = GetComponentInChildren<HealthBarController>(includeInactive: true);
-            Assert.IsNotNull(AiCruiserHealthBar);
+            PlayerCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("PlayerCruiserHealthBar");
+            AiCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("AiCruiserHealthBar");
         }
     }
 }
