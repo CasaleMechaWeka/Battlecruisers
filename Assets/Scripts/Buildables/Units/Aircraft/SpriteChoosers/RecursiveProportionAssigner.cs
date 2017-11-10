@@ -24,9 +24,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         private readonly IList<float> _cutoffs;
 
 		private const int MIN_NUM_OF_OPTIONS = 1;
-        private const float DEFAULT_BASE_CUTOFF = 0.67f;
         private const int MIN_BASE_CUTOFF = 0;
-        private const int MAX_BASE_CUTOFF = 12;
+        private const int MAX_BASE_CUTOFF = 1;
+        private const int MIN_PROPORTION = 0;
+        private const int MAX_PROPORTION = 1;
+		
+        public const float DEFAULT_BASE_CUTOFF = 0.67f;
 
         public RecursiveProportionAssigner(int numOfOptions, float baseCutoff = DEFAULT_BASE_CUTOFF)
         {
@@ -47,6 +50,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 
         public int Assign(float proportion)
         {
+            Assert.IsTrue(proportion >= MIN_PROPORTION);
+            Assert.IsTrue(proportion <= MAX_PROPORTION);
+
             for (int i = 0; i < _cutoffs.Count; ++i)
             {
                 float cutoff = _cutoffs[i];
