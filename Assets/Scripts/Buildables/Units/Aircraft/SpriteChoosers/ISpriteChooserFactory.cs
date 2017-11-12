@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
+﻿using BattleCruisers.Movement.Velocity.Providers;
+
+namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public interface ISpriteChooserFactory
     {
-        ISpriteChooser CreateBomberSpriteChooser(float maxVelocityInMPerS);
+        ISpriteChooser CreateBomberSpriteChooser(IVelocityProvider maxVelocityProvider);
     }
 }

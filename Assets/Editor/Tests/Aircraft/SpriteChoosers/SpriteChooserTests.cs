@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils.UIWrappers;
 using NSubstitute;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         private IAssigner _assigner;
         private IList<ISpriteWrapper> _sprites;
         private ISpriteWrapper _sprite;
-        private float _maxVelocityInMPerS;
+        private IVelocityProvider _maxVelocityProvider;
 
         [SetUp]
         public void SetuUp()
@@ -33,9 +34,10 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
    
             _assignerFactory.CreateRecursiveProportionAssigner(_sprites.Count).Returns(_assigner);
 
-            _maxVelocityInMPerS = 5;
+            _maxVelocityProvider = Substitute.For<IVelocityProvider>();
+            _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityInMPerS);
+            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider);
             _assignerFactory.Received().CreateRecursiveProportionAssigner(_sprites.Count);
         }
 
@@ -51,7 +53,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         {
             Vector2 velocity = new Vector2(5, 0);
 
-            float proportion = velocity.magnitude / _maxVelocityInMPerS;
+            float proportion = velocity.magnitude / _maxVelocityProvider.VelocityInMPerS;
             int invalidIndex = _sprites.Count;
 
             _assigner.Assign(proportion).Returns(invalidIndex);
@@ -64,7 +66,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         {
             Vector2 velocity = new Vector2(5, 0);
 
-            float proportion = velocity.magnitude / _maxVelocityInMPerS;
+            float proportion = velocity.magnitude / _maxVelocityProvider.VelocityInMPerS;
             int validIndex = 0;
 
             _assigner.Assign(proportion).Returns(validIndex);
