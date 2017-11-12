@@ -122,11 +122,11 @@ namespace BattleCruisers.Scenes
 			_aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
-			// UI
-			ISpriteFetcher spriteFetcher = new SpriteFetcher();
-            buildMenuCanvas.BuildableDetails.Initialise(spriteFetcher, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            // UI
+            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
+            buildMenuCanvas.BuildableDetails.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             buildMenuCanvas.CruiserDetails.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
-            uiFactory.Initialise(uiManager, spriteFetcher, _playerCruiser.DroneManager);
+            uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);

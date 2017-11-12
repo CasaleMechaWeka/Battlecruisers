@@ -1,21 +1,23 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Fetchers;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public abstract class BaseBuildableDetails<TItem> : ItemDetails<TItem> where TItem : class, IBuildable
 	{
-		private ISpriteFetcher _spriteFetcher;
+        private ISpriteProvider _spriteProvider;
 
         public Image slotImage;
 		
-		public void Initialise(ISpriteFetcher spriteFetcher)
+        public void Initialise(ISpriteProvider spriteProvider)
 		{
             base.Initialise();
 
-			_spriteFetcher = spriteFetcher;
+            Assert.IsNotNull(spriteProvider);
+            _spriteProvider = spriteProvider;
 		}
 
 		public override void ShowItemDetails(TItem item, TItem itemToCompareTo = null)
@@ -25,7 +27,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 			bool hasSlot = _item.SlotType != SlotType.None;
 			if (hasSlot)
 			{
-				slotImage.sprite = _spriteFetcher.GetSlotSprite(_item.SlotType);
+                slotImage.sprite = _spriteProvider.GetSlotSprite(_item.SlotType).Sprite;
 			}
 			slotImage.gameObject.SetActive(hasSlot);
 		}

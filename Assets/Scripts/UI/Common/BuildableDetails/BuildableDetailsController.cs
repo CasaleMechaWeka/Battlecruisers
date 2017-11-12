@@ -24,9 +24,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }
 		
-        public void Initialise(ISpriteFetcher spriteFetcher, IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager)
         {
-            base.Initialise(spriteFetcher);
+            base.Initialise(spriteProvider);
 
             Helper.AssertIsNotNull(droneManager, repairManager);
 

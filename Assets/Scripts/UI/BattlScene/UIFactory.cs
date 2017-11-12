@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene
 	public class UIFactory : MonoBehaviour, IUIFactory
 	{
         private IUIManager _uiManager;
-        private ISpriteFetcher _spriteFetcher;
+        private ISpriteProvider _spriteProvider;
         private IDroneManager _droneManager;
 		private Canvas _canvas;
 
@@ -24,12 +24,12 @@ namespace BattleCruisers.UI.BattleScene
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
-        public void Initialise(IUIManager uiManager, ISpriteFetcher spriteFetcher, IDroneManager droneManager)
+        public void Initialise(IUIManager uiManager, ISpriteProvider spriteProvider, IDroneManager droneManager)
         {
-            Helper.AssertIsNotNull(uiManager, spriteFetcher, droneManager);
+            Helper.AssertIsNotNull(uiManager, spriteProvider, droneManager);
 
             _uiManager = uiManager;
-            _spriteFetcher = spriteFetcher;
+            _spriteProvider = spriteProvider;
             _droneManager = droneManager;
 			
             _canvas = GetComponent<Canvas>();
@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button button = Instantiate(buildingButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			Sprite slotSprite = _spriteFetcher.GetSlotSprite(buildingWrapper.Buildable.SlotType);
+            Sprite slotSprite = _spriteProvider.GetSlotSprite(buildingWrapper.Buildable.SlotType).Sprite;
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
 			controller.Initialize(buildingWrapper, _uiManager, _droneManager, slotSprite);
 			return controller;

@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 
 		public void Initialise()
 		{
-			ISpriteFetcher spriteFetcher = new SpriteFetcher();
+            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
 			
-			singleItemDetails.Initialise(spriteFetcher);
-			leftComparableItemDetails.Initialise(spriteFetcher);
-			rightComparableItemDetails.Initialise(spriteFetcher);
+			singleItemDetails.Initialise(spriteProvider);
+			leftComparableItemDetails.Initialise(spriteProvider);
+			rightComparableItemDetails.Initialise(spriteProvider);
 
 			Initialise(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails);
 		}

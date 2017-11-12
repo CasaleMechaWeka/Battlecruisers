@@ -1,10 +1,9 @@
-﻿using BattleCruisers.Cruisers.Slots;
-using UnityEngine;
+﻿using BattleCruisers.Utils.UIWrappers;
 
 namespace BattleCruisers.Fetchers
 {
     public interface ISpriteFetcher
 	{
-		Sprite GetSlotSprite(SlotType slotType);
+		ISpriteWrapper GetSprite(string spritePath);
 	}
 }
