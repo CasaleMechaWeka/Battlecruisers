@@ -1,0 +1,35 @@
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using UnityEngine;
+
+namespace BattleCruisers.Scenes.Test.Aircraft
+{
+    public class BombingSpriteChooserTestGod : MonoBehaviour
+    {
+        public List<Vector2> patrolPoints;
+
+        void Start()
+        {
+            Helper helper = new Helper();
+
+            AirFactory factory = FindObjectOfType<AirFactory>();
+            helper.InitialiseBuilding(factory, Faction.Blues);
+
+            IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
+            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
+
+            BomberController bomber = FindObjectOfType<BomberController>();
+            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
+            helper.InitialiseUnit(bomber, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+            bomber.StartConstruction();
+        }
+    }
+}
