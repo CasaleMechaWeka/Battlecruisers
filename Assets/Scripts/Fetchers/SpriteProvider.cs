@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers.Slots;
+﻿using System.Collections.Generic;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,10 @@ namespace BattleCruisers.Fetchers
 
         private const string SLOT_SPRITES_BASE_PATH = "Sprites/Slots/";
         private const string SLOT_SPRITE_NAME_PREFIX = "slot-";
+
+        private const string AIRCRAFT_SPRITES_BASE_PATH = "Sprites/Buildables/Units/Aircraft/";
+        private const string BOMBER_SPRITE_NAME_PREFIX = "bomber-";
+        private const int NUM_OF_BOMBER_SPRITES = 8;
 
         public SpriteProvider(ISpriteFetcher spriteFetcher)
         {
@@ -27,6 +32,33 @@ namespace BattleCruisers.Fetchers
         private string GetSlotFilePath(SlotType slotType)
         {
             return SLOT_SPRITES_BASE_PATH + SLOT_SPRITE_NAME_PREFIX + slotType.ToString().ToLower();
+        }
+
+        /// <returns>
+        /// A list of bomber sprites, with the first sprite being the least turned
+        /// (side on view, no wings showing) and the last sprite being the most
+        /// turned (top view, both wings fully showing).
+        /// </returns>
+        public IList<ISpriteWrapper> GetBomberSprites()
+        {
+            IList<ISpriteWrapper> bomberSprites = new List<ISpriteWrapper>(NUM_OF_BOMBER_SPRITES);
+
+            // Retrieve in reverse order, because the sprites are provided in
+            // most turned to least turned, whereas we want to return least
+            // turend to most turned.
+            for (int i = NUM_OF_BOMBER_SPRITES - 1; i > 0; --i)
+            {
+                string spritePath = GetBomberFilePath(i);
+                ISpriteWrapper sprite = _spriteFetcher.GetSprite(spritePath);
+                bomberSprites.Add(sprite);
+            }
+
+            return bomberSprites;
+        }
+
+        private string GetBomberFilePath(int spriteIndex)
+        {
+            return AIRCRAFT_SPRITES_BASE_PATH + BOMBER_SPRITE_NAME_PREFIX + spriteIndex;
         }
     }
 }
