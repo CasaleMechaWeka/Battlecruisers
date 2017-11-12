@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -20,6 +21,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IBomberMovementController _bomberMovementControler;
 		private bool _haveDroppedBombOnRun;
         private bool _isAtCruisingHeight;
+        private ISpriteChooser _spriteChooser;
 
 		public float cruisingAltitudeInM;
 
@@ -75,6 +77,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombSpawner.Initialise(_bombStats, targetFilter, _factoryProvider);
 
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+
+            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -86,6 +90,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
             _targetProcessor.StartProcessingTargets();
+
+            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooser(this);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
@@ -108,6 +114,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
 				TryBombTarget();
 			}
+
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
 		}
 
 		private void TryBombTarget()

@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private KamikazeController _kamikazeController;
 		private IBoostable _velocityBoostable;
+        protected SpriteRenderer _spriteRenderer;
 
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
@@ -35,6 +36,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);
             Assert.IsFalse(IsInKamikazeMode);
+
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
+            Assert.IsNotNull(_spriteRenderer);
         }
 
 		protected override void OnInitialised()
