@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.UIWrappers;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public interface ISpriteChooser
     {
-        Sprite ChooseSprite(Vector2 velocity);
+        ISpriteWrapper ChooseSprite(Vector2 velocity);
     }
 }
