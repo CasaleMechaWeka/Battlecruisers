@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
@@ -30,5 +31,6 @@ namespace BattleCruisers.Utils
         IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
         IAngleLimiterFactory AngleLimiterFactory { get; } 
+        ISpriteChooserFactory SpriteChooserFactory { get; }
     }
 }

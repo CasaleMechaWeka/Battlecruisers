@@ -75,7 +75,8 @@ namespace BattleCruisers.Scenes
 
 			// Common setup
 			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
-            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer);
+            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
+            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
 
 
 			// Instantiate player cruiser
@@ -123,7 +124,6 @@ namespace BattleCruisers.Scenes
 
 
             // UI
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             buildMenuCanvas.BuildableDetails.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             buildMenuCanvas.CruiserDetails.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
             uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);

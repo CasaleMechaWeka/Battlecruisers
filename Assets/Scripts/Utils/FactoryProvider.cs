@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -31,9 +32,16 @@ namespace BattleCruisers.Utils
         public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; private set; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; private set; }
         public IAngleLimiterFactory AngleLimiterFactory { get; private set; }
+        public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
 
-        public FactoryProvider(IPrefabFactory prefabFactory, ICruiser friendlyCruiser, ICruiser enemyCruiser)
+        public FactoryProvider(
+            IPrefabFactory prefabFactory, 
+            ICruiser friendlyCruiser, 
+            ICruiser enemyCruiser, 
+            ISpriteProvider spriteProvider)
 		{
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider);
+
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);
 			AngleCalculatorFactory = new AngleCalculatorFactory();
@@ -48,6 +56,10 @@ namespace BattleCruisers.Utils
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();
             TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
             AngleLimiterFactory = new AngleLimiterFactory();
+            SpriteChooserFactory
+                = new SpriteChooserFactory(
+                    new AssignerFactory(),
+                    spriteProvider);
 		}
 	}
 }

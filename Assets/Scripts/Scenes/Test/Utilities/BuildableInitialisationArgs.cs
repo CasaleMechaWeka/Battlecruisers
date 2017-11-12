@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Movement;
@@ -48,7 +49,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IExplosionFactory explosionFactory = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
-            IAngleLimiterFactory angleLimiterFactory = null)
+            IAngleLimiterFactory angleLimiterFactory = null,
+            ISpriteChooserFactory spriteChooserFactory = null)
         {
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
@@ -71,7 +73,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     explosionFactory ?? new ExplosionFactory(prefabFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
-                    angleLimiterFactory ?? new AngleLimiterFactory());
+                    angleLimiterFactory ?? new AngleLimiterFactory(),
+                    spriteChooserFactory ?? 
+                        new SpriteChooserFactory(
+                            new AssignerFactory(), 
+                            new SpriteProvider(new SpriteFetcher())));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -88,7 +94,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IExplosionFactory explosionFactory,
             IAccuracyAdjusterFactory accuracyAdjusterFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
-            IAngleLimiterFactory angleLimiterFactory)
+            IAngleLimiterFactory angleLimiterFactory,
+            ISpriteChooserFactory spriteChooserFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -106,6 +113,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
             factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
+            factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
 
             return factoryProvider;
         }

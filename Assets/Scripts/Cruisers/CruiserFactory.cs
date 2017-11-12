@@ -15,13 +15,15 @@ namespace BattleCruisers.Cruisers
 	{
         private readonly IPrefabFactory _prefabFactory;
 		private readonly IDeferrer _deferrer;
+        private readonly ISpriteProvider _spriteProvider;
 
-		public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer)
+        public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer, ISpriteProvider spriteProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, spriteProvider);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+            _spriteProvider = spriteProvider;
         }
 
         public void InitialiseCruiser(
@@ -32,7 +34,9 @@ namespace BattleCruisers.Cruisers
             Faction faction, 
             Direction facingDirection)
         {
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, healthBar, uiManager);
+
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
