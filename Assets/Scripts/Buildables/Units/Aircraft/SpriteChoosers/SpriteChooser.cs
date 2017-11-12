@@ -27,7 +27,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         public ISpriteWrapper ChooseSprite(Vector2 velocity)
         {
             float magnitude = velocity.magnitude;
-            Assert.IsTrue(magnitude <= _maxVelocityProvider.VelocityInMPerS);
+
+            if (magnitude > _maxVelocityProvider.VelocityInMPerS)
+            {
+                magnitude = _maxVelocityProvider.VelocityInMPerS;
+            }
 
             float proportion = magnitude / _maxVelocityProvider.VelocityInMPerS;
             int spriteIndex = _assigner.Assign(proportion);
