@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             float proportion = magnitude / _maxVelocityInMPerS;
             int spriteIndex = _assigner.Assign(proportion);
 
-            Assert.IsTrue(spriteIndex < _sprites.Count);
+            Assert.IsTrue(spriteIndex < _sprites.Count && spriteIndex >= 0);
             return _sprites[spriteIndex];
         }
     }
