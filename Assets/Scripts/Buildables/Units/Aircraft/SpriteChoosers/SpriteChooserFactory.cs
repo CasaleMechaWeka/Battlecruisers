@@ -3,6 +3,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
@@ -23,6 +24,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         {
             IList<ISpriteWrapper> bomberSprites = _spriteProvider.GetBomberSprites();
             return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider);
+        }
+
+        public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)
+        {
+            return new DummySpriteChooser(sprite);
         }
     }
 }
