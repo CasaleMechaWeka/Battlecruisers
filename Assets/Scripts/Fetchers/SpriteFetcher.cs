@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 
@@ -17,5 +19,15 @@ namespace BattleCruisers.Fetchers
 
             return new SpriteWrapper(sprite);
         }
+		
+        public IList<ISpriteWrapper> GetMultiSprites(string spritePath)
+		{
+            Sprite[] sprites = Resources.LoadAll<Sprite>(spritePath);
+
+            return
+                sprites
+                    .Select(sprite => (ISpriteWrapper)new SpriteWrapper(sprite))
+                    .ToList();
+		}
 	}
 }

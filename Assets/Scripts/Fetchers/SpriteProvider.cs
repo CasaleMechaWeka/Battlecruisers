@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine.Assertions;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Fetchers
         private const string SLOT_SPRITE_NAME_PREFIX = "slot-";
 
         private const string AIRCRAFT_SPRITES_BASE_PATH = "Sprites/Buildables/Units/Aircraft/";
-        private const string BOMBER_SPRITE_NAME_PREFIX = "bomber-";
+        private const string BOMBER_SPRITE_NAME = "bomber";
         private const int NUM_OF_BOMBER_SPRITES = 8;
 
         public SpriteProvider(ISpriteFetcher spriteFetcher)
@@ -41,24 +42,22 @@ namespace BattleCruisers.Fetchers
         /// </returns>
         public IList<ISpriteWrapper> GetBomberSprites()
         {
-            IList<ISpriteWrapper> bomberSprites = new List<ISpriteWrapper>(NUM_OF_BOMBER_SPRITES);
+            string spritePath = GetBomberFilePath();
+            IList<ISpriteWrapper> bomberSprites = _spriteFetcher.GetMultiSprites(spritePath);
+            Assert.AreEqual(NUM_OF_BOMBER_SPRITES, bomberSprites.Count);
 
-            // Retrieve in reverse order, because the sprites are provided in
+            // Reverse order, because the sprites are provided in
             // most turned to least turned, whereas we want to return least
             // turend to most turned.
-            for (int i = NUM_OF_BOMBER_SPRITES - 1; i > 0; --i)
-            {
-                string spritePath = GetBomberFilePath(i);
-                ISpriteWrapper sprite = _spriteFetcher.GetSprite(spritePath);
-                bomberSprites.Add(sprite);
-            }
-
-            return bomberSprites;
+            return 
+                bomberSprites
+                    .Reverse()
+                    .ToList();
         }
 
-        private string GetBomberFilePath(int spriteIndex)
+        private string GetBomberFilePath()
         {
-            return AIRCRAFT_SPRITES_BASE_PATH + BOMBER_SPRITE_NAME_PREFIX + spriteIndex;
+            return AIRCRAFT_SPRITES_BASE_PATH + BOMBER_SPRITE_NAME;
         }
     }
 }
