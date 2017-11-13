@@ -12,6 +12,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         private readonly IAssignerFactory _assignerFactory;
         private readonly ISpriteProvider _spriteProvider;
 
+        private const float BOMBER_ASSIGNER_BASE_CUTOFF = 0.9f;
+
         public SpriteChooserFactory(IAssignerFactory assignerFactory, ISpriteProvider spriteProvider)
         {
             Helper.AssertIsNotNull(assignerFactory, spriteProvider);
@@ -23,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         public ISpriteChooser CreateBomberSpriteChooser(IVelocityProvider maxVelocityProvider)
         {
             IList<ISpriteWrapper> bomberSprites = _spriteProvider.GetBomberSprites();
-            return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider);
+            return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider, BOMBER_ASSIGNER_BASE_CUTOFF);
         }
 
         public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)

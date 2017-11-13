@@ -13,7 +13,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         private readonly IList<ISpriteWrapper> _sprites;
         private readonly IVelocityProvider _maxVelocityProvider;
 
-        public SpriteChooser(IAssignerFactory assignerFactory, IList<ISpriteWrapper> sprites, IVelocityProvider maxVelocityProvider)
+        public SpriteChooser(
+            IAssignerFactory assignerFactory,
+            IList<ISpriteWrapper> sprites,
+            IVelocityProvider maxVelocityProvider,
+            float assignerBaseCutoff)
         {
             Helper.AssertIsNotNull(assignerFactory, sprites, maxVelocityProvider);
             Assert.IsTrue(sprites.Count > 0);
@@ -21,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             _sprites = sprites;
             _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = assignerFactory.CreateRecursiveProportionAssigner(sprites.Count);
+            _assigner = assignerFactory.CreateRecursiveProportionAssigner(sprites.Count, assignerBaseCutoff);
         }
 
         public ISpriteWrapper ChooseSprite(Vector2 velocity)

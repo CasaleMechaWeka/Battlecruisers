@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
             _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider);
+            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider, assignerBaseCutoff: 0.5f);
             _assignerFactory.Received().CreateRecursiveProportionAssigner(_sprites.Count);
         }
 
