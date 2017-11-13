@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Fetchers
 {
-    // FELIX  Test :)
     public class SpriteProvider : ISpriteProvider
     {
         private readonly ISpriteFetcher _spriteFetcher;
