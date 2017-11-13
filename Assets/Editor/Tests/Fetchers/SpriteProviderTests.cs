@@ -14,9 +14,10 @@ namespace BattleCruisers.Tests.Fetchers
         private ISpriteProvider _provider;
         private ISpriteFetcher _fetcher;
         private ISpriteWrapper _slotSprite;
-        private IList<ISpriteWrapper> _bomberSprites;
+        private IList<ISpriteWrapper> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;
+        private const int NUM_OF_FIGHTER_SPRITES = 7;
 
         [SetUp]
         public void SetuUp()
@@ -25,15 +26,23 @@ namespace BattleCruisers.Tests.Fetchers
 
             _fetcher = Substitute.For<ISpriteFetcher>();
             _provider = new SpriteProvider(_fetcher);
-			
+
             _slotSprite = Substitute.For<ISpriteWrapper>();
 
-            _bomberSprites = new List<ISpriteWrapper>();
+            _bomberSprites = CreateSprites(NUM_OF_BOMBER_SPRITES);
+            _fighterSprites = CreateSprites(NUM_OF_FIGHTER_SPRITES);
+        }
 
-            for (int i = 0; i < NUM_OF_BOMBER_SPRITES; ++i)
+        private IList<ISpriteWrapper> CreateSprites(int numOfSprites)
+        {
+            IList<ISpriteWrapper> sprites = new List<ISpriteWrapper>();
+
+            for (int i = 0; i < numOfSprites; ++i)
             {
-                _bomberSprites.Add(Substitute.For<ISpriteWrapper>());
+                sprites.Add(Substitute.For<ISpriteWrapper>());
             }
+
+            return sprites;
         }
 
         [Test]
@@ -68,6 +77,28 @@ namespace BattleCruisers.Tests.Fetchers
             _fetcher.GetMultiSprites(bomberSpritesPath).Returns(_bomberSprites);
 
             Assert.Throws<UnityAsserts.AssertionException>(() => _provider.GetBomberSprites());
+        }
+
+        [Test]
+        public void GetFighterSprites_ReversesList()
+        {
+            string fighterSpritesPath = "Sprites/Buildables/Units/Aircraft/fighter";
+            _fetcher.GetMultiSprites(fighterSpritesPath).Returns(_fighterSprites);
+
+            IList<ISpriteWrapper> expectedSprites = _fighterSprites.Reverse().ToList();
+            IList<ISpriteWrapper> fighterSprites = _provider.GetFighterSprites();
+
+            Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, fighterSprites));
+        }
+
+        [Test]
+        public void GetFighterSprites_InvalidNumberOfSprites_Throws()
+        {
+            string fighterSpritesPath = "Sprites/Buildables/Units/Aircraft/fighter";
+            _fighterSprites.RemoveAt(0);
+            _fetcher.GetMultiSprites(fighterSpritesPath).Returns(_fighterSprites);
+
+            Assert.Throws<UnityAsserts.AssertionException>(() => _provider.GetFighterSprites());
         }
     }
 }
