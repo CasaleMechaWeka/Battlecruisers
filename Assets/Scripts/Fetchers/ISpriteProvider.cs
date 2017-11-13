@@ -8,5 +8,6 @@ namespace BattleCruisers.Fetchers
     {
         ISpriteWrapper GetSlotSprite(SlotType slotType);
         IList<ISpriteWrapper> GetBomberSprites();
+        IList<ISpriteWrapper> GetFighterSprites();
     }
 }
