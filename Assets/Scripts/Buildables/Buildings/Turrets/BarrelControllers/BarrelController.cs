@@ -168,6 +168,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // is at, instead of the perfect desired angle.
             float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : limitedDesiredAngle;
 
+            Logging.Log(Tags.BARREL_CONTROLLER, "TryFire()  fireAngle: " + fireAngle + "  transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
+
             fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
 
             Fire(fireAngle);

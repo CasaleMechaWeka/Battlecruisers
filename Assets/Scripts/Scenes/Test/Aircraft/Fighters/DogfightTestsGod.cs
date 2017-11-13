@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
@@ -7,17 +8,17 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
     public class DogfightTestsGod : MonoBehaviour 
 	{
-		public FighterController fighter1, fighter2;
+        public FighterController rightFighter, leftFighter;
 
 		void Start() 
 		{
 			Helper helper = new Helper();
 
-            helper.InitialiseUnit(fighter1, faction: Faction.Reds);
-			fighter1.StartConstruction();
+            helper.InitialiseUnit(rightFighter, faction: Faction.Reds, parentCruiserDirection: Direction.Left);
+			rightFighter.StartConstruction();
 
-            helper.InitialiseUnit(fighter2, faction: Faction.Blues);
-			fighter2.StartConstruction();
+            helper.InitialiseUnit(leftFighter, faction: Faction.Blues, parentCruiserDirection: Direction.Right);
+			leftFighter.StartConstruction();
 		}
 	}
 }

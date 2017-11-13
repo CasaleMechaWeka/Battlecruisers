@@ -2,6 +2,7 @@
 {
     public interface IAngleCalculatorFactory
 	{
+        IAngleHelper CreateAngleHelper();
 		IAngleCalculator CreateAngleCalculator();
 		IAngleCalculator CreateArtilleryAngleCalculator();
 		IAngleCalculator CreateMortarAngleCalculator();

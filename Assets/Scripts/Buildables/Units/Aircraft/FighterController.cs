@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
@@ -7,6 +8,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
@@ -18,6 +20,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private IMovementController _figherMovementController;
         private BarrelController _barrelController;
+        private IAngleHelper _angleHelper;
 
 		// Detects enemies that come within following range
 		public CircleTargetDetector followableEnemyDetector;
@@ -76,6 +79,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     maxVelocityProvider: this,
                     targetProvider: this, 
                     safeZone: _aircraftProvider.FighterSafeZone);
+
+            _angleHelper = _factoryProvider.AngleCalculatorFactory.CreateAngleHelper();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -148,15 +153,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
-
-			// Adjust game object to point in direction it's travelling
-			transform.right = Velocity;
+            FaceVelocityDirection();
 		}
 
-		protected override void OnDirectionChange()
-		{
-			// Turn off parent class behaviour of mirroring accross y-axis
-		}
+        private void FaceVelocityDirection()
+        {
+            if (Velocity != Vector2.zero)
+            {
+                float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
+
+                Quaternion rotation = gameObject.transform.rotation;
+                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
+                gameObject.transform.rotation = rotation;
+            }
+        }
 
 		protected override void OnDestroyed()
 		{

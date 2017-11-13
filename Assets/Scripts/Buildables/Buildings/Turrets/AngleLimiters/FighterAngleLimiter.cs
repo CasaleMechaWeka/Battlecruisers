@@ -3,7 +3,7 @@
     public class FighterAngleLimiter : AngleLimiter
     {
         public FighterAngleLimiter()
-            : base(minAngle: -45, maxAngle: 45)
+            : base(minAngle: -30, maxAngle: 30)
         {
         }
     }
