@@ -15,6 +15,8 @@ namespace BattleCruisers.Movement
 	{
         private readonly IRotationHelper _rotationHelper;
 
+        public const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
+
 		public MovementControllerFactory()
 		{
             _rotationHelper = new RotationHelper();
@@ -56,9 +58,13 @@ namespace BattleCruisers.Movement
 		}
         #endregion Providers
 
-        public IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
+        public IMovementController CreatePatrollingMovementController(
+            Rigidbody2D rigidBody, 
+            IVelocityProvider maxVelocityProvider, 
+            IList<IPatrolPoint> patrolPoints, 
+            float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
 		{
-            return new PatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints);
+            return new PatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints, positionEqualityMarginInM);
 		}
 
 		public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)

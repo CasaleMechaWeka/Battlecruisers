@@ -30,6 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
         protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * maxVelocityInMPerS; } }
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
+        protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
 
         public override void StaticInitialise()
         {
@@ -57,7 +58,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = _movementControllerFactory.CreatePatrollingMovementController(
                     rigidBody, 
                     maxVelocityProvider: this,
-                    patrolPoints: GetPatrolPoints());
+                    patrolPoints: GetPatrolPoints(),
+                    positionEqualityMarginInM: PositionEqualityMarginInM);
 
 			SwitchMovementControllers(DummyMovementController);
 

@@ -13,7 +13,8 @@ namespace BattleCruisers.Movement
     public interface IMovementControllerFactory
 	{
         // Velocity
-		IMovementController CreatePatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints);
+        IMovementController CreatePatrollingMovementController(
+            Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints, float positionEqualityMarginInM = MovementControllerFactory.DEFAULT_POSITION_EQUALITY_MARGIN_IN_M);
 		IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
         FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
 		IMovementController CreateDummyMovementController();

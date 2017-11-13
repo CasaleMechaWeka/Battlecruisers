@@ -15,7 +15,6 @@ namespace BattleCruisers.Movement.Velocity
 		private Vector2 _patrollingVelocity;
 		private IPatrolPoint _targetPatrolPoint;
 
-        private const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
         private const float MIN_POSITION_EQUALITY_MARGIN_IN_M = 0.1f;
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 		private const float MIN_NUM_OF_PATROL_POINTS = 2;
@@ -30,7 +29,7 @@ namespace BattleCruisers.Movement.Velocity
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
             IList<IPatrolPoint> patrolPoints,
-            float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
+            float positionEqualityMarginInM)
             : base(maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);

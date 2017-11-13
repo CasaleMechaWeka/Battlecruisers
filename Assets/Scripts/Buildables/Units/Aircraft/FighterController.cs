@@ -51,6 +51,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 
 		protected override float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
+        protected override float PositionEqualityMarginInM { get { return 2; } }
 
 		public override void StaticInitialise()
 		{
