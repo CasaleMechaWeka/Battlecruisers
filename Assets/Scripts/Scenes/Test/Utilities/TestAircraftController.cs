@@ -51,6 +51,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			{
 				SwitchMovementControllers(DummyMovementController);
 			}
+
+            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooser(this);
 		}
 
 		public void SetTargetType(TargetType targetType)
