@@ -32,20 +32,14 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 				_sprite
 			};
    
-            _assignerFactory.CreateRecursiveProportionAssigner(_sprites.Count).Returns(_assigner);
+			float assignerBaseCutoff = 0.5f;
+            _assignerFactory.CreateRecursiveProportionAssigner(_sprites.Count, assignerBaseCutoff).Returns(_assigner);
 
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
             _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider, assignerBaseCutoff: 0.5f);
-            _assignerFactory.Received().CreateRecursiveProportionAssigner(_sprites.Count);
-        }
-
-        [Test]
-        public void ChooseSprite_TooHighVelocity_Throws()
-        {
-            Vector2 velocity = new Vector2(5.1f, 0);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _chooser.ChooseSprite(velocity));
+            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider, assignerBaseCutoff);
+            _assignerFactory.Received().CreateRecursiveProportionAssigner(_sprites.Count, assignerBaseCutoff);
         }
 
         [Test]
@@ -67,6 +61,20 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
             Vector2 velocity = new Vector2(5, 0);
 
             float proportion = velocity.magnitude / _maxVelocityProvider.VelocityInMPerS;
+            int validIndex = 0;
+
+            _assigner.Assign(proportion).Returns(validIndex);
+
+            ISpriteWrapper spriteReturned = _chooser.ChooseSprite(velocity);
+            Assert.AreSame(_sprite, spriteReturned);
+        }
+
+        [Test]
+        public void ChooseSprite_TooHighVelocity_CapsVelocity()
+        {
+            Vector2 velocity = new Vector2(5.1f, 0);
+
+            float proportion = 1;
             int validIndex = 0;
 
             _assigner.Assign(proportion).Returns(validIndex);
