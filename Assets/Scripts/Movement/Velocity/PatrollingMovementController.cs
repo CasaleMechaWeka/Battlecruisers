@@ -10,11 +10,13 @@ namespace BattleCruisers.Movement.Velocity
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly IList<IPatrolPoint> _patrolPoints;
+        private readonly float _positionEqualityMarginInM;
 
 		private Vector2 _patrollingVelocity;
 		private IPatrolPoint _targetPatrolPoint;
 
-		private const float POSITION_EQUALITY_MARGIN = 0.1f;
+        private const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
+        private const float MIN_POSITION_EQUALITY_MARGIN_IN_M = 0.1f;
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 		private const float MIN_NUM_OF_PATROL_POINTS = 2;
 
@@ -24,14 +26,20 @@ namespace BattleCruisers.Movement.Velocity
 			set { _patrollingVelocity = value; }
 		}
 
-        public PatrollingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints)
+        public PatrollingMovementController(
+            Rigidbody2D rigidBody,
+            IVelocityProvider maxVelocityProvider,
+            IList<IPatrolPoint> patrolPoints,
+            float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
             : base(maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);
 			Assert.IsTrue(patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
+            Assert.IsTrue(positionEqualityMarginInM >= MIN_POSITION_EQUALITY_MARGIN_IN_M);
 
 			_rigidBody = rigidBody;
 			_patrolPoints = patrolPoints;
+            _positionEqualityMarginInM = positionEqualityMarginInM;
 
 			_targetPatrolPoint = patrolPoints[0];
 		}
@@ -41,7 +49,7 @@ namespace BattleCruisers.Movement.Velocity
             Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, 
                 "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");
 
-			bool isInPosition = Vector2.Distance(_rigidBody.transform.position, _targetPatrolPoint.Position) <= POSITION_EQUALITY_MARGIN;
+            bool isInPosition = Vector2.Distance(_rigidBody.transform.position, _targetPatrolPoint.Position) <= _positionEqualityMarginInM;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
