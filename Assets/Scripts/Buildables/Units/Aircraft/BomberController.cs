@@ -21,7 +21,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IBomberMovementController _bomberMovementControler;
 		private bool _haveDroppedBombOnRun;
         private bool _isAtCruisingHeight;
-        private ISpriteChooser _spriteChooser;
 
 		public float cruisingAltitudeInM;
 
@@ -77,8 +76,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombSpawner.Initialise(_bombStats, targetFilter, _factoryProvider);
 
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
-
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
 		}
 		
 		protected override void OnBuildableCompleted()
@@ -114,8 +111,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
 				TryBombTarget();
 			}
-
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
 		}
 
 		private void TryBombTarget()

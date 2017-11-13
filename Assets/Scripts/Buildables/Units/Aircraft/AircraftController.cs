@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -16,7 +17,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private KamikazeController _kamikazeController;
 		private IBoostable _velocityBoostable;
-        protected SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
+        protected ISpriteChooser _spriteChooser;
 
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
@@ -58,6 +60,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     patrolPoints: GetPatrolPoints());
 
 			SwitchMovementControllers(DummyMovementController);
+
+            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -80,6 +84,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
+
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
 		}
 
 		protected void SwitchMovementControllers(IMovementController newMovementController)
