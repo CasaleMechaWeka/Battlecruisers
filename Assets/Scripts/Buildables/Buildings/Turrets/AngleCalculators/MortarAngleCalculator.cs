@@ -13,7 +13,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 	{
 		private const float MAX_ANGLE_IN_DEGREES = 85;
 
-		protected override bool LeadsTarget { get { return true; } }
+        public MortarAngleCalculator(IAngleHelper angleHelper) 
+            : base(angleHelper)
+        {
+        }
+
+        protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
 
 		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed, float projectileVelocityInMPerS)

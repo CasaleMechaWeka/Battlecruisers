@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
                 = helper.CreateBarrelControllerArgs(
                     doubleBarrel,
                     targetFilter: new ExactMatchTargetFilter() { Target = target },
-                    angleCalculator: new ArtilleryAngleCalculator());
+                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper()));
 
             doubleBarrel.Initialise(barrelControllerArgs);
 		}

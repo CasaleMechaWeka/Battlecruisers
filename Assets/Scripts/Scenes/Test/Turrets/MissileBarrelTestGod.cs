@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
                 = helper.CreateBarrelControllerArgs(
                     missileBarrel, 
                     targetFilter: targetFilter,
-                    angleCalculator: new StaticAngleCalculator(desiredAngleInDegrees: 90));
+                    angleCalculator: new StaticAngleCalculator(new AngleHelper(), desiredAngleInDegrees: 90));
 
             missileBarrel.Initialise(barrelControllerArgs);
 	    }

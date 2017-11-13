@@ -327,7 +327,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 new BarrelControllerArgs(
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionpredictor(),
-                    angleCalculator ?? new AngleCalculator(),
+                    angleCalculator ?? new AngleCalculator(new AngleHelper()),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
                     rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
                     targetPositionValidator ?? new DummyPositionValidator(),

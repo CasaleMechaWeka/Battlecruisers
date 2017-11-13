@@ -4,6 +4,6 @@ namespace BattleCruisers.Scenes.Test
 {
     public class ArtilleryBarrelControllerTests : BarrelControllerTestGod
 	{
-        protected override IAngleCalculator AngleCalculator { get { return new ArtilleryAngleCalculator(); } }
+        protected override IAngleCalculator AngleCalculator { get { return new ArtilleryAngleCalculator(new AngleHelper()); } }
 	}
 }

@@ -2,29 +2,36 @@
 {
     public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
+        private readonly IAngleHelper _angleHelper;
+
+        public AngleCalculatorFactory()
+        {
+            _angleHelper = new AngleHelper();
+        }
+
         public IAngleHelper CreateAngleHelper()
         {
-            return new AngleHelper();
+            return _angleHelper;
         }
 		
         public IAngleCalculator CreateAngleCalculator()
         {
-            return new AngleCalculator();
+            return new AngleCalculator(_angleHelper);
         }
 
         public IAngleCalculator CreateArtilleryAngleCalculator()
 		{
-			return new ArtilleryAngleCalculator();
+            return new ArtilleryAngleCalculator(_angleHelper);
 		}
 
 		public IAngleCalculator CreateMortarAngleCalculator()
 		{
-			return new MortarAngleCalculator();
+            return new MortarAngleCalculator(_angleHelper);
 		}
 
 		public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
 		{
-			return new StaticAngleCalculator(desiredAngleInDegrees);
+            return new StaticAngleCalculator(_angleHelper, desiredAngleInDegrees);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -8,12 +9,14 @@ namespace BattleCruisers.Tests.Turrets
     public class AngleCalculatorTests
     {
         private IAngleCalculator _angleCalculator;
+        private IAngleHelper _angleHelper;
         private Vector2 _targetPosition;
 
         [SetUp]
         public void TestSetup()
         {
-            _angleCalculator = new AngleCalculator();
+            _angleHelper = Substitute.For<IAngleHelper>();
+            _angleCalculator = new AngleCalculator(_angleHelper);
             _targetPosition = new Vector2(0, 0);
         }
 

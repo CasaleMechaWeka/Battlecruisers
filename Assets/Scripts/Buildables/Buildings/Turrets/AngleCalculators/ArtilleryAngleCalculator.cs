@@ -13,7 +13,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// </summary>
     public class ArtilleryAngleCalculator : AngleCalculator
 	{
-		protected override bool MustFaceTarget { get { return true; } }
+        public ArtilleryAngleCalculator(IAngleHelper angleHelper) 
+            : base(angleHelper)
+        {
+        }
+
+        protected override bool MustFaceTarget { get { return true; } }
 
 		protected override float CalculateDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored, float projectileVelocityInMPerS)
 		{
