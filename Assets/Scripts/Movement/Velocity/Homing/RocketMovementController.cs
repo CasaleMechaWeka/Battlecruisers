@@ -23,7 +23,12 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.25f;
 
-		public RocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
+		public RocketMovementController(
+            Rigidbody2D rigidBody, 
+            IVelocityProvider maxVelocityProvider, 
+            ITargetProvider targetProvider, 
+            float cruisingAltitudeInM, 
+            IFlightPointsProvider flightPointsProvider)
             : base(rigidBody, maxVelocityProvider, targetProvider) 
 		{ 
 			Assert.IsTrue(cruisingAltitudeInM > rigidBody.position.y);
