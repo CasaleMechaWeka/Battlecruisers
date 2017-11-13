@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    // FELIX  Move tests from AngleCalculator to AngleHelper?
     public class AngleHelper : IAngleHelper
     {
         public float FindAngle(Vector2 velocity, bool isSourceMirrored)

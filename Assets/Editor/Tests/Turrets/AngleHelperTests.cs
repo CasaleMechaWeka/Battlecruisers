@@ -1,29 +1,28 @@
-﻿using System;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using NSubstitute;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using NUnit.Framework;
 using UnityEngine;
+using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Turrets
 {
-    public class AngleCalculatorTests
+    public class AngleHelperTests
     {
-        private IAngleCalculator _angleCalculator;
         private IAngleHelper _angleHelper;
         private Vector2 _targetPosition;
 
         [SetUp]
         public void TestSetup()
         {
-            _angleHelper = Substitute.For<IAngleHelper>();
-            _angleCalculator = new AngleCalculator(_angleHelper);
+            UnityAsserts.Assert.raiseExceptions = true;
+
+            _angleHelper = new AngleHelper();
             _targetPosition = new Vector2(0, 0);
         }
 
         [Test]
         public void FindDesiredAngle_SourceIsTarget_Throws()
         {
-            Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(_targetPosition, _targetPosition, isSourceMirrored: false, projectileVelocityInMPerS: -1));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _angleHelper.FindAngle(_targetPosition, _targetPosition, isSourceMirrored: false));
         }
 
         #region Same axis
@@ -145,7 +144,7 @@ namespace BattleCruisers.Tests.Turrets
 
         private void TestFindDesiredAngle(Vector2 source, bool isSourceMirrored, float expectedAngleInDegrees)
         {
-            float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: isSourceMirrored, projectileVelocityInMPerS: -1);
+            float angleInDegrees = _angleHelper.FindAngle(source, _targetPosition, isSourceMirrored: isSourceMirrored);
             Assert.AreEqual(expectedAngleInDegrees, angleInDegrees);
         }
     }
