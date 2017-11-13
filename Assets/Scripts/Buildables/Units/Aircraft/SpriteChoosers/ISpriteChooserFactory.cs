@@ -6,6 +6,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
     public interface ISpriteChooserFactory
     {
         ISpriteChooser CreateBomberSpriteChooser(IVelocityProvider maxVelocityProvider);
+        ISpriteChooser CreateFighterSpriteChooser(IVelocityProvider maxVelocityProvider);
         ISpriteChooser CreateDummySpriteChooser(Sprite sprite);
     }
 }
