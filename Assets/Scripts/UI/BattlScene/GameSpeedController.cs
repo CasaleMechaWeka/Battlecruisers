@@ -13,13 +13,15 @@ namespace BattleCruisers.UI.BattleScene
         private const float MIN_GAME_SPEED = 0.125f;
         private const float SPEED_CHANGE_FACTOR = 2;
 
+        private const string SPEED_PREFIX = "x";
+
         private float GameSpeed
         {
             get { return Time.timeScale; }
             set
             {
                 Time.timeScale = value;
-                _gameSpeedText.text = value.ToString();
+                _gameSpeedText.text = SPEED_PREFIX + value.ToString();
             }
         }
 
