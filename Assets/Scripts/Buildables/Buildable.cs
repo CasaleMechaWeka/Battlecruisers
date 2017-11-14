@@ -48,7 +48,8 @@ namespace BattleCruisers.Buildables
         private const float MAX_BUILD_PROGRESS = 1;
         // TEMP  Build cheat multiplier
         //private const float BUILD_CHEAT_MULTIPLIER = 10;
-        private const float BUILD_CHEAT_MULTIPLIER = 50;
+        //private const float BUILD_CHEAT_MULTIPLIER = 50;
+        private const float BUILD_CHEAT_MULTIPLIER = 2;
 
         #region Properties
         public BuildableState BuildableState { get; private set; }
