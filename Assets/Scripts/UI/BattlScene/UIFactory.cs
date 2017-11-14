@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			GameObject panel = Instantiate(panelPrefab);
 			panel.SetActive(isActive);
-			panel.transform.SetParent(_canvas.transform);
+            panel.transform.SetParent(_canvas.transform, worldPositionStays: false);
 			RectTransform rectTransform = panel.GetComponent<RectTransform>();
 			rectTransform.anchoredPosition = new Vector2(-25, 25);
 			return panel;

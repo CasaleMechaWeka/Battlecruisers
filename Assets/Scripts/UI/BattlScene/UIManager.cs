@@ -39,7 +39,6 @@ namespace BattleCruisers.UI.BattleScene
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
 			_background.Clicked += OnBackgroundClicked;
-
         }
 
         /// <summary>
