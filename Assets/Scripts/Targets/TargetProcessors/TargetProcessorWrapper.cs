@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -9,6 +10,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         private ITargetConsumer _targetConsumer;
         private ITargetProcessor _targetProcessor;
+        private bool _isProvidingTargets;
 
         private bool IsInitialised { get { return _targetProcessor != null; } }
 
@@ -25,7 +27,8 @@ namespace BattleCruisers.Targets.TargetProcessors
             _targetConsumer = targetConsumer;
 
             _targetProcessor = CreateTargetProcessor(targetsFactory, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
-            _targetProcessor.AddTargetConsumer(_targetConsumer);
+
+            _isProvidingTargets = false;
         }
 
         protected abstract ITargetProcessor CreateTargetProcessor(
@@ -37,6 +40,10 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public void StartProvidingTargets()
         {
+            Assert.IsFalse(_isProvidingTargets);
+            _isProvidingTargets = true;
+
+			_targetProcessor.AddTargetConsumer(_targetConsumer);
             _targetProcessor.StartProcessingTargets();
         }
 		
