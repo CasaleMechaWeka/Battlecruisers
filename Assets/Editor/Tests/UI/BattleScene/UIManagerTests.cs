@@ -71,10 +71,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
         public void InitialUI()
         {
             _uiManager.InitialUI();
-
-            Assert.IsTrue(_playerCruiser.HealthBar.IsVisible);
-            Assert.IsFalse(_aiCruiser.HealthBar.IsVisible);
-
             _detailsManager.Received().HideDetails();
         }
 
