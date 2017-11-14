@@ -34,14 +34,20 @@ namespace BattleCruisers.Cruisers.Slots
             get { return _building; }
             set
             {
-                Assert.IsNotNull(value);
-                Assert.IsNull(_building);
+                if (_building != null)
+                {
+                    Assert.IsNull(value);
+                    _building.Destroyed -= OnBuildingDestroyed;
+                }
 
                 _building = value;
 
-                _building.Position = FindSpawnPosition(_building);
-                _building.Rotation = FindBuildingRotation();
-                _building.Destroyed += OnBuildingDestroyed;
+                if (_building != null)
+                {
+                    _building.Position = FindSpawnPosition(_building);
+                    _building.Rotation = FindBuildingRotation();
+                    _building.Destroyed += OnBuildingDestroyed;
+				}
             }
         }
 
@@ -109,7 +115,6 @@ namespace BattleCruisers.Cruisers.Slots
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
-			Building.Destroyed -= OnBuildingDestroyed;
 			Building = null;
 		}
 	}
