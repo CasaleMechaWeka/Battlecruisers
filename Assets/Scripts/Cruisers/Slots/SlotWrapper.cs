@@ -21,7 +21,7 @@ namespace BattleCruisers.Cruisers.Slots
             {
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.IsActive = false;
+                    _highlightedSlot.UnhighlightSlot();
                     _highlightedSlot.IsVisible = false;
                 }
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers.Slots
 
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.IsActive = true;
+                    _highlightedSlot.HighlightSlot();
                     _highlightedSlot.IsVisible = true;
                 }
             }
@@ -127,7 +127,7 @@ namespace BattleCruisers.Cruisers.Slots
 				{
 					if (slot.IsFree)
 					{
-						slot.IsActive = true;
+                        slot.HighlightSlot();
 					}
 				}
 			}
@@ -148,7 +148,7 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			foreach (ISlot slot in _slots[slotType])
 			{
-				slot.IsActive = false;
+                slot.UnhighlightSlot();
 			}
 		}
 

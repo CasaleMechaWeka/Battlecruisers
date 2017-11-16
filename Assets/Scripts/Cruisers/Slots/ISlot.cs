@@ -14,7 +14,6 @@ namespace BattleCruisers.Cruisers.Slots
     {
         bool IsFree { get; }
         SlotType Type { get; }
-        bool IsActive { set; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
 
@@ -32,5 +31,8 @@ namespace BattleCruisers.Cruisers.Slots
 		/// will only have one neighbour.
         /// </summary>
         ReadOnlyCollection<ISlot> NeighbouringSlots { get; }
+
+        void HighlightSlot();
+        void UnhighlightSlot();
 	}
 }

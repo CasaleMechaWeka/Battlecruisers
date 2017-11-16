@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots.States;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private SpriteRenderer _renderer;
         private ICruiser _parentCruiser;
+        private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
 
         public SlotType type;
         public Direction direction;
@@ -27,6 +29,17 @@ namespace BattleCruisers.Cruisers.Slots
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
         public float Index { get { return index; } }
+		
+        private ISlotState _currentState;
+        private ISlotState CurrentState
+        {
+            get { return _currentState; }
+            set
+            {
+                _currentState = value;
+                _renderer.color = _currentState.Colour;
+            }
+        }
 
         private IBuilding _building;
         public IBuilding Building
@@ -51,43 +64,28 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        private bool _isActive;
-        public bool IsActive
-        {
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    _renderer.color = _isActive ? ACTIVE_COLOUR : DEFAULT_COLOUR;
-                }
-            }
-        }
-
-        public static Color DEFAULT_COLOUR = Color.yellow;
-		public static Color ACTIVE_COLOUR = Color.green;
-
 		public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = new ReadOnlyCollection<ISlot>(neighbouringSlots);
-			_isActive = false;
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
-			_renderer.color = DEFAULT_COLOUR;
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
+
+            _defaultState = new DefaultState();
+            _highlightedFullState = new HighlightedFullState();
+            _highlightedEmptyState = new HighlightedEmptyState(_parentCruiser, this);
+
+            CurrentState = _defaultState;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			if (_isActive)
-			{
-				_parentCruiser.ConstructSelectedBuilding(this);
-			}
+            CurrentState.OnClick();
 		}
 
 		private Vector3 FindSpawnPosition(IBuilding building)
@@ -117,5 +115,15 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			Building = null;
 		}
-	}
+
+        public void HighlightSlot()
+        {
+            CurrentState = IsFree ? _highlightedEmptyState : _highlightedFullState;
+        }
+
+        public void UnhighlightSlot()
+        {
+            CurrentState = _defaultState;
+        }
+    }
 }
