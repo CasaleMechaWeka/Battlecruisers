@@ -10,6 +10,7 @@ namespace BattleCruisers.Cruisers.Slots
 	{
 		private IDictionary<SlotType, List<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
+        private bool _areMultipleSlotsVisible;
 
 		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
@@ -22,7 +23,11 @@ namespace BattleCruisers.Cruisers.Slots
                 if (_highlightedSlot != null)
                 {
                     _highlightedSlot.UnhighlightSlot();
-                    _highlightedSlot.IsVisible = false;
+
+                    if (!_areMultipleSlotsVisible)
+                    {
+                        _highlightedSlot.IsVisible = false;
+					}
                 }
 
                 _highlightedSlot = value;
@@ -38,6 +43,8 @@ namespace BattleCruisers.Cruisers.Slots
         public void Initialise(ICruiser parentCruiser)
 		{
             SetupSlots(parentCruiser);
+
+            _areMultipleSlotsVisible = false;
 		}
 
 		private void SetupSlots(ICruiser parentCruiser)
@@ -95,12 +102,14 @@ namespace BattleCruisers.Cruisers.Slots
 		public void ShowAllSlots()
 		{
             SetSlotVisibility(isVisible: true);
+            _areMultipleSlotsVisible = true;
 		}
 
 		public void HideAllSlots()
 		{
             SetSlotVisibility(isVisible: false);
             HighlightedSlot = null;
+            _areMultipleSlotsVisible = false;
 		}
 
         private void SetSlotVisibility(bool isVisible)
