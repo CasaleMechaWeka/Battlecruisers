@@ -59,6 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public void Save()
 		{
 			_dataProvider.SaveGame();
+            _screensSceneGod.GoToHomeScreen();
 		}
 	}
 }
