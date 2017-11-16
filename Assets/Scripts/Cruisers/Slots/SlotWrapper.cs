@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
+    // FELIX  Create tests (separate form MonoBehaviour, similar to what I did for UIManager :) )
     public class SlotWrapper : MonoBehaviour, ISlotWrapper
 	{
 		private IDictionary<SlotType, List<ISlot>> _slots;
