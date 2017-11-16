@@ -62,6 +62,7 @@ namespace BattleCruisers.Cruisers.Slots
                 IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots);
                 SortSlotsByType(slot);
+                slot.BuildingDestroyed += Slot_BuildingDestroyed;
             }
         }
 
@@ -182,6 +183,28 @@ namespace BattleCruisers.Cruisers.Slots
         private ISlot GetSlot(IBuilding building)
         {
             return _slots[building.SlotType].FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
+        }
+
+        private void Slot_BuildingDestroyed(object sender, SlotBuildingDestroyedEventArgs e)
+        {
+            if (_areMultipleSlotsVisible)
+            {
+				e.BuildingParent.IsVisible = true;
+
+                if (_highlightedSlotType != null && _highlightedSlotType == e.BuildingParent.Type)
+                {
+                    e.BuildingParent.HighlightSlot();
+                }
+                else
+                {
+                    e.BuildingParent.UnhighlightSlot();
+                }
+            }
+            else
+            {
+                e.BuildingParent.UnhighlightSlot();
+                e.BuildingParent.IsVisible = false;
+            }
         }
     }
 }

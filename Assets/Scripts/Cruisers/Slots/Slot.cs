@@ -64,7 +64,9 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-		public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
+        public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
+
+        public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
@@ -114,6 +116,11 @@ namespace BattleCruisers.Cruisers.Slots
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
 			Building = null;
+
+            if (BuildingDestroyed != null)
+            {
+                BuildingDestroyed.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
+            }
 		}
 
         public void HighlightSlot()

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils.DataStrctures;
@@ -9,6 +10,16 @@ namespace BattleCruisers.Cruisers.Slots
 	{
         None, Utility, Stern, Mast, Bow, Platform, Deck
 	}
+
+    public class SlotBuildingDestroyedEventArgs : EventArgs
+    {
+        public ISlot BuildingParent { get; private set; }
+
+        public SlotBuildingDestroyedEventArgs(ISlot buildingParent)
+        {
+            BuildingParent = buildingParent;
+        }
+    }
 
     public interface ISlot : IGameObject
     {
@@ -31,6 +42,8 @@ namespace BattleCruisers.Cruisers.Slots
 		/// will only have one neighbour.
         /// </summary>
         ReadOnlyCollection<ISlot> NeighbouringSlots { get; }
+
+        event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
 
         void HighlightSlot();
         void UnhighlightSlot();
