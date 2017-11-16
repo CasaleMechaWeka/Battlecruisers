@@ -62,10 +62,9 @@ namespace BattleCruisers.Cruisers
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-			SlotWrapper slotWrapper = GetComponentInChildren<SlotWrapper>(includeInactive: true);
-			Assert.IsNotNull(slotWrapper);
-            slotWrapper.Initialise(parentCruiser: this);
-			SlotWrapper = slotWrapper;
+			SlotWrapperController slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
+            Assert.IsNotNull(slotWrapperController);
+            SlotWrapper = slotWrapperController.Initialise(parentCruiser: this);
 
             _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);

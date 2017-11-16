@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
-using UnityEngine;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
     // FELIX  Create tests (separate form MonoBehaviour, similar to what I did for UIManager :) )
-    public class SlotWrapper : MonoBehaviour, ISlotWrapper
+    public class SlotWrapper : ISlotWrapper
 	{
-		private IDictionary<SlotType, List<ISlot>> _slots;
+		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
 		private SlotType? _highlightedSlotType;
         private bool _areMultipleSlotsVisible;
 
@@ -41,21 +41,17 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public void Initialise(ICruiser parentCruiser)
+        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots)
 		{
-            SetupSlots(parentCruiser);
+            Helper.AssertIsNotNull(parentCruiser, slots);
 
             _areMultipleSlotsVisible = false;
-		}
 
-		private void SetupSlots(ICruiser parentCruiser)
-		{
-			_slots = new Dictionary<SlotType, List<ISlot>>();
+            _slots = new Dictionary<SlotType, IList<ISlot>>();
 
-            List<ISlot> slots = GetComponentsInChildren<ISlot>(includeInactive: true).ToList();
-
-			// Sort slots by position (cruiser front to cruiser rear)
-			slots.Sort((slot1, slot2) => slot1.Index.CompareTo(slot2.Index));
+            // FELIX  Check sort still works (build AS, should be at front for AI)
+            // Sort slots by position (cruiser front to cruiser rear)
+            slots.OrderBy(slot => slot.Index);
 
             for (int i = 0; i < slots.Count; ++i)
             {
@@ -166,8 +162,8 @@ namespace BattleCruisers.Cruisers.Slots
 		public ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true)
 		{
             return preferFromFront ?
-                _slots[slotType].Find(slot => slot.IsFree) :
-                _slots[slotType].FindLast(slot => slot.IsFree);
+                _slots[slotType].First(slot => slot.IsFree) :
+                _slots[slotType].Last(slot => slot.IsFree);
 		}
 
 		public int GetSlotCount(SlotType slotType)
