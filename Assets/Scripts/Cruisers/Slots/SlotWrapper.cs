@@ -52,14 +52,14 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			_slots = new Dictionary<SlotType, List<ISlot>>();
 
-            List<Slot> slots = GetComponentsInChildren<Slot>(includeInactive: true).ToList();
+            List<ISlot> slots = GetComponentsInChildren<ISlot>(includeInactive: true).ToList();
 
 			// Sort slots by position (cruiser front to cruiser rear)
 			slots.Sort((slot1, slot2) => slot1.Index.CompareTo(slot2.Index));
 
             for (int i = 0; i < slots.Count; ++i)
             {
-                Slot slot = slots[i];
+                ISlot slot = slots[i];
                 IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots);
                 SortSlotsByType(slot);
@@ -67,7 +67,7 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        private IList<ISlot> FindSlotNeighbours(IList<Slot> slots, int slotIndex)
+        private IList<ISlot> FindSlotNeighbours(IList<ISlot> slots, int slotIndex)
         {
 			IList<ISlot> neighbouringSlots = new List<ISlot>(DEFAULT_NUM_OF_NEIGHBOURS);
 			
