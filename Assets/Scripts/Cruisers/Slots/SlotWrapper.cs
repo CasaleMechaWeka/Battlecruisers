@@ -51,7 +51,10 @@ namespace BattleCruisers.Cruisers.Slots
 
             // FELIX  Check sort still works (build AS, should be at front for AI)
             // Sort slots by position (cruiser front to cruiser rear)
-            slots.OrderBy(slot => slot.Index);
+            slots 
+                = slots
+                    .OrderBy(slot => slot.Index)
+                    .ToList();
 
             for (int i = 0; i < slots.Count; ++i)
             {
