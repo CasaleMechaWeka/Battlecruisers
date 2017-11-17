@@ -8,6 +8,7 @@
     public interface ISettingsManager
     {
         Difficulty AIDifficulty { get; set; }
+        int ZoomSpeed { get; set; }
 
         void Save();
     }

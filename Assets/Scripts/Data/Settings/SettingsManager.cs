@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
 {
@@ -7,8 +8,13 @@ namespace BattleCruisers.Data.Settings
     {
         private static class Keys
         {
-            public static string Difficulty = "Difficulty";
+            public const string Difficulty = "Difficulty";
+            public const string ZoomSpeed = "ZoomSpeed";
         }
+
+        private const int DEFAULT_ZOOM_SPEED = 5;
+        private const int MIN_ZOOM_SPEED = 1;
+        private const int MAX_ZOOM_SPEED = 9;
 
         public Difficulty AIDifficulty
         {
@@ -19,6 +25,21 @@ namespace BattleCruisers.Data.Settings
             set
             {
                 PlayerPrefs.SetString(Keys.Difficulty, value.ToString());
+            }
+        }
+
+        public int ZoomSpeed
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(Keys.ZoomSpeed);
+            }
+
+            set
+            {
+                Assert.IsTrue(value >= MIN_ZOOM_SPEED);
+                Assert.IsTrue(value <= MAX_ZOOM_SPEED);
+                PlayerPrefs.SetInt(Keys.ZoomSpeed, value);
             }
         }
 
@@ -33,6 +54,8 @@ namespace BattleCruisers.Data.Settings
         private void CreateSettings()
         {
             AIDifficulty = Difficulty.Normal;
+            ZoomSpeed = DEFAULT_ZOOM_SPEED;
+
             Save();
         }
 
