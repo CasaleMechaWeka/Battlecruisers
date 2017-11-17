@@ -13,8 +13,8 @@ namespace BattleCruisers.Data.Settings
         }
 
         private const int DEFAULT_ZOOM_SPEED = 5;
-        private const int MIN_ZOOM_SPEED = 1;
-        private const int MAX_ZOOM_SPEED = 9;
+        public const int MIN_ZOOM_SPEED = 1;
+        public const int MAX_ZOOM_SPEED = 9;
 
         public Difficulty AIDifficulty
         {

@@ -11,9 +11,9 @@ namespace BattleCruisers.UI.ScreensScene
     {
         private ISettingsManager _settingsManager;
         private IList<Difficulty> _difficulties;
+        private Dropdown _difficultyDropdown;
+        private Slider _zoomSpeedSlider;
 
-		public Dropdown difficultyDropdown;
-		
 		public void Initialise(IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
 		{
 			base.Initialise(screensSceneGod);
@@ -21,10 +21,17 @@ namespace BattleCruisers.UI.ScreensScene
             Assert.IsNotNull(settingsManager);
             _settingsManager = settingsManager;
 
-            SetupDropdown();
+            _difficultyDropdown = GetComponentInChildren<Dropdown>(includeInactive: true);
+            Assert.IsNotNull(_difficultyDropdown);
+
+            _zoomSpeedSlider = GetComponentInChildren<Slider>(includeInactive: true);
+            Assert.IsNotNull(_zoomSpeedSlider);
+
+            SetupDifficultyDropdown();
+            SetupZoomSpeedSlider();
 		}
 
-        private void SetupDropdown()
+        private void SetupDifficultyDropdown()
         {
             List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
             _difficulties = new List<Difficulty>();
@@ -45,14 +52,24 @@ namespace BattleCruisers.UI.ScreensScene
                 }
             }
 
-            difficultyDropdown.AddOptions(options);
-            difficultyDropdown.value = currentIndex;
+            _difficultyDropdown.AddOptions(options);
+            _difficultyDropdown.value = currentIndex;
+        }
+
+        private void SetupZoomSpeedSlider()
+        {
+            _zoomSpeedSlider.wholeNumbers = true;
+            _zoomSpeedSlider.value = _settingsManager.ZoomSpeed;
+            _zoomSpeedSlider.minValue = SettingsManager.MIN_ZOOM_SPEED;
+            _zoomSpeedSlider.maxValue = SettingsManager.MAX_ZOOM_SPEED;
         }
 
         public void Save()
         {
-            Assert.IsTrue(difficultyDropdown.value < _difficulties.Count);
-            _settingsManager.AIDifficulty = _difficulties[difficultyDropdown.value];
+            Assert.IsTrue(_difficultyDropdown.value < _difficulties.Count);
+            _settingsManager.AIDifficulty = _difficulties[_difficultyDropdown.value];
+
+            _settingsManager.ZoomSpeed = (int)_zoomSpeedSlider.value;
 
             _settingsManager.Save();
 
