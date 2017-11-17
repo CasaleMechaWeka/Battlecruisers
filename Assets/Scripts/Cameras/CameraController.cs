@@ -29,7 +29,7 @@ namespace BattleCruisers.Cameras
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
-		private const float ZOOM_SPEED = 0.5f;
+		private const float ZOOM_SPEED = 1;
 
         // Dragging
         private const int DRAGGING_MOUSE_BUTTON_INDEX = 1;  // Primary mouse button
