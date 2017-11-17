@@ -48,7 +48,6 @@ namespace BattleCruisers.Cruisers.Slots
 
             _slots = new Dictionary<SlotType, IList<ISlot>>();
 
-            // FELIX  Check sort still works (build AS, should be at front for AI)
             // Sort slots by position (cruiser front to cruiser rear)
             slots 
                 = slots
