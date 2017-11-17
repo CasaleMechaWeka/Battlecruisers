@@ -58,10 +58,9 @@ namespace BattleCruisers.UI.ScreensScene
 
         private void SetupZoomSpeedSlider()
         {
-            _zoomSpeedSlider.wholeNumbers = true;
-            _zoomSpeedSlider.value = _settingsManager.ZoomSpeed;
             _zoomSpeedSlider.minValue = SettingsManager.MIN_ZOOM_SPEED;
             _zoomSpeedSlider.maxValue = SettingsManager.MAX_ZOOM_SPEED;
+			_zoomSpeedSlider.value = _settingsManager.ZoomSpeed;
         }
 
         public void Save()
@@ -69,7 +68,7 @@ namespace BattleCruisers.UI.ScreensScene
             Assert.IsTrue(_difficultyDropdown.value < _difficulties.Count);
             _settingsManager.AIDifficulty = _difficulties[_difficultyDropdown.value];
 
-            _settingsManager.ZoomSpeed = (int)_zoomSpeedSlider.value;
+            _settingsManager.ZoomSpeed = _zoomSpeedSlider.value;
 
             _settingsManager.Save();
 

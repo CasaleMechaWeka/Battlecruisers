@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,7 +14,8 @@ namespace BattleCruisers.Cameras
         private ICameraCalculator _cameraCalculator;
         private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget, _playerInputTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
-		private float _cameraOrthographicSizeChangeVelocity = 0;
+		private float _cameraOrthographicSizeChangeVelocity;
+        private ISettingsManager _settingsManager;
 
         // Dragging
 		private bool _inDrag;
@@ -29,7 +31,6 @@ namespace BattleCruisers.Cameras
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
-		private const float ZOOM_SPEED = 1;
 
         // Dragging
         private const int DRAGGING_MOUSE_BUTTON_INDEX = 1;  // Primary mouse button
@@ -41,10 +42,16 @@ namespace BattleCruisers.Cameras
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
-		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser)
+		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, ISettingsManager settingsManager)
 		{
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager);
+           
+            _settingsManager = settingsManager;
+
 			_camera = GetComponent<Camera>();
 			Assert.IsNotNull(_camera);
+
+            _cameraOrthographicSizeChangeVelocity = 0;
 
 			_cameraState = CameraState.Overview;
 
@@ -182,7 +189,7 @@ namespace BattleCruisers.Cameras
             {
                 inZoom = true;
 
-                _camera.orthographicSize -= ZOOM_SPEED * yScrollDelta;
+                _camera.orthographicSize -= _settingsManager.ZoomSpeed * yScrollDelta;
 
                 if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
                 {

@@ -12,9 +12,9 @@ namespace BattleCruisers.Data.Settings
             public const string ZoomSpeed = "ZoomSpeed";
         }
 
-        private const int DEFAULT_ZOOM_SPEED = 5;
-        public const int MIN_ZOOM_SPEED = 1;
-        public const int MAX_ZOOM_SPEED = 9;
+        private const float DEFAULT_ZOOM_SPEED = 2;
+        public const float MIN_ZOOM_SPEED = 0.1f;
+        public const float MAX_ZOOM_SPEED = 3.9f;
 
         public Difficulty AIDifficulty
         {
@@ -28,18 +28,18 @@ namespace BattleCruisers.Data.Settings
             }
         }
 
-        public int ZoomSpeed
+        public float ZoomSpeed
         {
             get
             {
-                return PlayerPrefs.GetInt(Keys.ZoomSpeed);
+                return PlayerPrefs.GetFloat(Keys.ZoomSpeed);
             }
 
             set
             {
                 Assert.IsTrue(value >= MIN_ZOOM_SPEED);
                 Assert.IsTrue(value <= MAX_ZOOM_SPEED);
-                PlayerPrefs.SetInt(Keys.ZoomSpeed, value);
+                PlayerPrefs.SetFloat(Keys.ZoomSpeed, value);
             }
         }
 
