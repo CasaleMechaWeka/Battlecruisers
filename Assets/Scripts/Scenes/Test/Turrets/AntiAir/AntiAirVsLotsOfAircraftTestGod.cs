@@ -7,9 +7,9 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Factories
+namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
 {
-	public class AntiAirTurretsTestGod : MonoBehaviour
+    public class AntiAirVsLotsOfAircraftTestGod : MonoBehaviour
 	{
 		public UnitWrapper unitPrefab;
 		public List<Vector2> patrolPoints;
