@@ -19,6 +19,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
 			Helper helper = new Helper();
    
 
+            // FELIX  Use prefab factory?  Current way modifies prefab :/
             // Initialise prefab
 			unitPrefab.Initialise();
             TestAircraftController aircraft = (TestAircraftController)unitPrefab.Buildable;
