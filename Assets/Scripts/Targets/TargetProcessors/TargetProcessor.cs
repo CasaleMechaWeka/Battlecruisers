@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
@@ -123,7 +124,10 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		private void AssignTarget(ITarget target)
 		{
-			foreach (ITargetConsumer consumer in _targetConsumers)
+            // PERF
+            // Copy list to avoid Add-/Remove- TargetConsumer during this method 
+            // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
+			foreach (ITargetConsumer consumer in _targetConsumers.ToList())
 			{
 				consumer.Target = target;
 			}

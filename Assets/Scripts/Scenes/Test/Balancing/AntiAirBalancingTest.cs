@@ -4,12 +4,12 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -17,7 +17,6 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class AntiAirBalancingTest : MonoBehaviour, ITargetConsumer
-
     {
         private TestUtils.Helper _helper;
         private IPrefabFactory _prefabFactory;
@@ -25,6 +24,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private int _numOfAntiAirBuildings;
         private IPrefabKey _bomberKey;
         private IFactory _airFactory;
+        private IList<ITarget> _completedBombers;
 
         public int numOfBomberDrones;
         public int numOfAntiAirTurrets;
@@ -42,8 +42,20 @@ namespace BattleCruisers.Scenes.Test.Balancing
             {
                 if (value == null)
                 {
-                    // Bombers have destroyed all targets => Stop producing bombers
-                    _airFactory.UnitWrapper = null;
+                    // Bombers have destroyed all targets :D
+					
+                    // Stop producing bombers
+					_airFactory.UnitWrapper = null;
+
+                    // Destroy all bombers (because they cannot handle not 
+                    // having targets, means the game is won)
+                    foreach (ITarget target in _completedBombers)
+                    {
+                        if (!target.IsDestroyed)
+                        {
+                            target.Destroy();
+                        }
+                    }
                 }
             }
         }
@@ -60,6 +72,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _helper = new TestUtils.Helper(numOfDrones: numOfBomberDrones);
             _prefabFactory = prefabFactory;
             _antiAirBuildings = new List<ITarget>(_numOfAntiAirBuildings);
+            _completedBombers = new List<ITarget>();
 
 
             // Show test case details
@@ -125,9 +138,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     aircraftProvider: aircraftProvider,
                     targetsFactory: targetsFactory);
 
-            factory.CompletedBuildable += (sender, e) =>
+            factory.CompletedBuildable += (sender, eventArgs) =>
             {
-                ((Factory)sender).UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_bomberKey);
+                factory.UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_bomberKey);
+                factory.CompletedBuildingUnit += (s, e) => _completedBombers.Add(e.Buildable);
             };
             factory.StartConstruction();
 
