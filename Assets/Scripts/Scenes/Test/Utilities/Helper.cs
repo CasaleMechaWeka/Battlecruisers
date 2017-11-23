@@ -225,6 +225,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public ITargetsFactory CreateBomberTargetsFactory(IList<ITarget> targets)
         {
+            // For bomber
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
             ITargetRanker targetRanker = new EqualTargetRanker();
             ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
@@ -238,8 +239,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            
+            // For bomber
             targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
             targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
+
+            // For bomb damage applier
+            targetsFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
+
             return targetsFactory;
         }
 
