@@ -223,6 +223,26 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return targetsFactory;
 		}
 
+        public ITargetsFactory CreateBomberTargetsFactory(IList<ITarget> targets)
+        {
+            ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
+            ITargetRanker targetRanker = new EqualTargetRanker();
+            ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
+
+            foreach (ITarget target in targets)
+            {
+                target.Destroyed += (sender, e) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(target));
+                targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target));
+            }
+
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+
+            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
+            targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
+            return targetsFactory;
+        }
+
 		public IAircraftProvider CreateAircraftProvider(
 			IList<Vector2> bomberPatrolPoints = null,
             IList<Vector2> gunshipPatrolPoints = null,
