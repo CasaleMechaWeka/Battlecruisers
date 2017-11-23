@@ -16,13 +16,15 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public class AntiAirBalancingTest : MonoBehaviour
+    public class AntiAirBalancingTest : MonoBehaviour, ITargetConsumer
+
     {
         private TestUtils.Helper _helper;
         private IPrefabFactory _prefabFactory;
         private IList<ITarget> _antiAirBuildings;
         private int _numOfAntiAirBuildings;
         private IPrefabKey _bomberKey;
+        private IFactory _airFactory;
 
         public int numOfBomberDrones;
         public int numOfAntiAirTurrets;
@@ -33,6 +35,18 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
 
         public Camera Camera { get; private set; }
+
+        public ITarget Target
+        {
+            set
+            {
+                if (value == null)
+                {
+                    // Bombers have destroyed all targets => Stop producing bombers
+                    _airFactory.UnitWrapper = null;
+                }
+            }
+        }
 
         public void Initialise(IPrefabFactory prefabFactory, IPrefabKey bomberKey, IPrefabKey antiAirKey, IPrefabKey samSiteKey)
         {
@@ -88,16 +102,20 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             if (_antiAirBuildings.Count == _numOfAntiAirBuildings)
             {
-                CreateAirFactory();
+                _airFactory = CreateAirFactory();
             }
         }
 
-        private void CreateAirFactory()
+        private IFactory CreateAirFactory()
         {
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
             ITargetsFactory targetsFactory = _helper.CreateBomberTargetsFactory(_antiAirBuildings);
+
+            // So we know when (if) the bombers manage to destroy all targets
+            targetsFactory.BomberTargetProcessor.AddTargetConsumer(this);
+            targetsFactory.BomberTargetProcessor.StartProcessingTargets();
 
             _helper
                 .InitialiseBuilding(
@@ -112,6 +130,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
                 ((Factory)sender).UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_bomberKey);
             };
             factory.StartConstruction();
+
+            return factory;
         }
 
         private IList<Vector2> GetBomberPatrolPoints(Vector2 factoryPosition, float bomberCruisingAltitudeInM)
