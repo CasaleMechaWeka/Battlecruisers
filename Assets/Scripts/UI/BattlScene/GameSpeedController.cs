@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         private Text _gameSpeedText;
 
-        private const float MAX_GAME_SPEED = 8;
+        private const float MAX_GAME_SPEED = 16;
         private const float MIN_GAME_SPEED = 0.125f;
         private const float SPEED_CHANGE_FACTOR = 2;
 
