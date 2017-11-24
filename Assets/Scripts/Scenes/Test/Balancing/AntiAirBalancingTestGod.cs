@@ -9,7 +9,6 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test.Balancing
 {
     // FELIX  Avoid duplicate code with AntiAirBalancingTestGod :)
-    // FELIX  Speed control
     public class AntiAirBalancingTestGod : MonoBehaviour
     {
         private ICircularList<Camera> _cameras;

@@ -86,7 +86,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
 
             // Create anti air buildings
-            int currentOffsetInM = CreateBuildings(antiAirKey, numOfAntiAirTurrets, ANTI_AIR_BUILDINGS_OFFSET_IN_M);
+            int originalOffsetInM = (int)transform.position.x + ANTI_AIR_BUILDINGS_OFFSET_IN_M;
+            int currentOffsetInM = CreateBuildings(antiAirKey, numOfAntiAirTurrets, originalOffsetInM);
             CreateBuildings(samSiteKey, numOfSamSites, currentOffsetInM);
         }
 
