@@ -9,7 +9,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -25,6 +25,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private IPrefabKey _bomberKey;
         private IFactory _airFactory;
         private IList<ITarget> _completedBombers;
+        private ITextMesh _deadBomberCountText;
 
         public int numOfBomberDrones;
         public int numOfAntiAirTurrets;
@@ -76,7 +77,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
 
             // Show test case details
-            TextMesh detailsText = GetComponentInChildren<TextMesh>();
+            TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
             detailsText.text = "Drones: " + numOfBomberDrones + "  AA: " + numOfAntiAirTurrets + "  SS: " + numOfSamSites;
 
 
