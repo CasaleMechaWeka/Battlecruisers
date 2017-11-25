@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Targets;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private IPrefabKey _bomberKey;
         private IFactory _airFactory;
         private IList<ITarget> _completedBombers;
-        private ITextMesh _deadBomberCountText;
+        private ITextMesh _bomberKillCountText;
 
         public int numOfBomberDrones;
         public int numOfAntiAirTurrets;
@@ -34,8 +35,20 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private const int ANTI_AIR_BUILDINGS_OFFSET_IN_M = 15;
         private const int ANTI_AIR_BUILDINGS_GAP_IN_M = 2;
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
+        private const string BOMBER_KILL_COUNT_PREFIX = "Dead bombers: ";
 
         public Camera Camera { get; private set; }
+
+        private int _bomberKillCount;
+        private int BomberKillCount
+        {
+            get { return _bomberKillCount; }
+            set
+            {
+                _bomberKillCount = value;
+                _bomberKillCountText.Text = BOMBER_KILL_COUNT_PREFIX + _bomberKillCount;
+            }
+        }
 
         public ITarget Target
         {
@@ -48,6 +61,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     // Stop producing bombers
 					_airFactory.UnitWrapper = null;
 
+                    int currentBomberKillCount = BomberKillCount;
+
                     // Destroy all bombers (because they cannot handle not 
                     // having targets, means the game is won)
                     foreach (ITarget target in _completedBombers)
@@ -57,6 +72,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
                             target.Destroy();
                         }
                     }
+
+                    // Do NOT count bombers destroyed programmatically at scenario end
+                    // towards the kill count.
+                    BomberKillCount = currentBomberKillCount;
                 }
             }
         }
@@ -74,6 +93,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _prefabFactory = prefabFactory;
             _antiAirBuildings = new List<ITarget>(_numOfAntiAirBuildings);
             _completedBombers = new List<ITarget>();
+
+
+            TextMesh bomberKillCountText = transform.FindNamedComponent<TextMesh>("BomberKillCountText");
+            _bomberKillCountText = new TextMeshWrapper(bomberKillCountText);
+            BomberKillCount = 0;
 
 
             // Show test case details
@@ -143,11 +167,22 @@ namespace BattleCruisers.Scenes.Test.Balancing
             factory.CompletedBuildable += (sender, eventArgs) =>
             {
                 factory.UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_bomberKey);
-                factory.CompletedBuildingUnit += (s, e) => _completedBombers.Add(e.Buildable);
+                factory.CompletedBuildingUnit += Factory_CompletedBomber;
             };
             factory.StartConstruction();
 
             return factory;
+        }
+
+        private void Factory_CompletedBomber(object sender, CompletedConstructionEventArgs e)
+        {
+            _completedBombers.Add(e.Buildable);
+            e.Buildable.Destroyed += Bomber_Destroyed;
+        }
+
+        private void Bomber_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            BomberKillCount++;
         }
 
         private IList<Vector2> GetBomberPatrolPoints(Vector2 factoryPosition, float bomberCruisingAltitudeInM)
