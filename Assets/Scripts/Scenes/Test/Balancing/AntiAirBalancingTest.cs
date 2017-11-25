@@ -26,7 +26,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private IPrefabKey _bomberKey;
         private IFactory _airFactory;
         private IList<ITarget> _completedBombers;
-        private ITextMesh _bomberKillCountText;
+        private ITextMesh _bomberKillCountText, _bomberCostText;
+        private float _bomberCostInDroneS;
 
         public int numOfBomberDrones;
         public int numOfAntiAirTurrets;
@@ -36,6 +37,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private const int ANTI_AIR_BUILDINGS_GAP_IN_M = 2;
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
         private const string BOMBER_KILL_COUNT_PREFIX = "Dead bombers: ";
+        private const string BOMBER_COST_PREFIX = "Bomber cost (drone seconds): ";
+        private const string ANTI_AIR_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
 
         public Camera Camera { get; private set; }
 
@@ -47,6 +50,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             {
                 _bomberKillCount = value;
                 _bomberKillCountText.Text = BOMBER_KILL_COUNT_PREFIX + _bomberKillCount;
+                _bomberCostText.Text = BOMBER_COST_PREFIX + (_bomberKillCount * _bomberCostInDroneS);
             }
         }
 
@@ -93,16 +97,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _prefabFactory = prefabFactory;
             _antiAirBuildings = new List<ITarget>(_numOfAntiAirBuildings);
             _completedBombers = new List<ITarget>();
+            _bomberCostInDroneS = FindUnitCost(_bomberKey);
 
 
-            TextMesh bomberKillCountText = transform.FindNamedComponent<TextMesh>("BomberKillCountText");
-            _bomberKillCountText = new TextMeshWrapper(bomberKillCountText);
-            BomberKillCount = 0;
-
-
-            // Show test case details
-            TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
-            detailsText.text = "Drones: " + numOfBomberDrones + "  AA: " + numOfAntiAirTurrets + "  SS: " + numOfSamSites;
+            SetupTexts(antiAirKey, samSiteKey);
 
 
             // Hide camera
@@ -114,6 +112,41 @@ namespace BattleCruisers.Scenes.Test.Balancing
             int originalOffsetInM = (int)transform.position.x + ANTI_AIR_BUILDINGS_OFFSET_IN_M;
             int currentOffsetInM = CreateBuildings(antiAirKey, numOfAntiAirTurrets, originalOffsetInM);
             CreateBuildings(samSiteKey, numOfSamSites, currentOffsetInM);
+        }
+
+        private void SetupTexts(IPrefabKey antiAirKey, IPrefabKey samSiteKey)
+        {
+            // Show test case details
+            TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
+            detailsText.text = "Drones: " + numOfBomberDrones + "  AA: " + numOfAntiAirTurrets + "  SS: " + numOfSamSites;
+
+            // Anti air building cost
+            TextMesh buildingCostText = transform.FindNamedComponent<TextMesh>("BuildingDroneSecSpentText");
+            int buildingCost
+                = FindBuildingCost(antiAirKey, numOfAntiAirTurrets)
+                + FindBuildingCost(samSiteKey, numOfSamSites);
+            buildingCostText.text = ANTI_AIR_BUILDINGS_COST_PREFIX + buildingCost;
+
+            // Bomber cost
+            TextMesh bomberCostText = transform.FindNamedComponent<TextMesh>("BomberDroneSecSpentText");
+            _bomberCostText = new TextMeshWrapper(bomberCostText);
+
+			// Bomber kill count
+			TextMesh bomberKillCountText = transform.FindNamedComponent<TextMesh>("BomberKillCountText");
+            _bomberKillCountText = new TextMeshWrapper(bomberKillCountText);
+			BomberKillCount = 0;
+        }
+
+        private int FindBuildingCost(IPrefabKey buildingKey, int numOfBuildings)
+        {
+            IBuildableWrapper<IBuilding> building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            return building.Buildable.NumOfDronesRequired * (int)building.Buildable.BuildTimeInS * numOfBuildings;
+        }
+
+        private float FindUnitCost(IPrefabKey unitKey)
+        {
+            IBuildableWrapper<IUnit> unit = _prefabFactory.GetUnitWrapperPrefab(unitKey);
+            return unit.Buildable.NumOfDronesRequired * unit.Buildable.BuildTimeInS;
         }
 
         /// <returns>Cumulative building offset.</returns>
