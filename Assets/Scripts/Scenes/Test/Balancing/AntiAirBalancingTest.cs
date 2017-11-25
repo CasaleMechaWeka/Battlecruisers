@@ -123,9 +123,13 @@ namespace BattleCruisers.Scenes.Test.Balancing
             {
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
                 IBuilding building = _prefabFactory.CreateBuilding(buildingWrapper);
-                _helper.InitialiseBuilding(building, Faction.Reds);
+                _helper.InitialiseBuilding(building, Faction.Reds, parentCruiserDirection: Direction.Left);
 
                 building.Position = new Vector2(currentOffsetInM, 0);
+
+                // Mirror building, so it is facing left
+                building.Rotation = Helper.MirrorAccrossYAxis(building.Rotation);
+
                 currentOffsetInM += ANTI_AIR_BUILDINGS_GAP_IN_M;
                 building.CompletedBuildable += Building_CompletedBuildable;
                 building.StartConstruction();

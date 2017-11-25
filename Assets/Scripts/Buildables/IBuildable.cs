@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables
         SlotType SlotType { get; }
   
         new Vector2 Position { get; set; }
-        Quaternion Rotation { set; }
+        Quaternion Rotation { get; set; }
 
         IBoostable BuildProgressBoostable { get; }
 

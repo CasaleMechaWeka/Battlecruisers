@@ -62,7 +62,11 @@ namespace BattleCruisers.Buildables
         public IBoostable BuildProgressBoostable { get; private set; }
         public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
 
-        Quaternion IBuildable.Rotation { set { transform.rotation = value; } }
+        Quaternion IBuildable.Rotation 
+        {
+            get { return transform.rotation; }
+            set { transform.rotation = value; } 
+        }
 
         Vector2 IBuildable.Position
         {
