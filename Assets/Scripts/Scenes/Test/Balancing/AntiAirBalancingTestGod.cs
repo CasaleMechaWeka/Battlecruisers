@@ -7,6 +7,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
     {
         protected override IPrefabKey UnitKey { get { return StaticPrefabKeys.Units.Bomber; } }
         protected override IPrefabKey BasicDefenceBuildingKey { get { return StaticPrefabKeys.Buildings.AntiAirTurret; } }
-        protected override IPrefabKey AdvancedDefenceBuildingKey { get { return StaticPrefabKeys.Buildings.SamSite; }}
+        protected override IPrefabKey AdvancedDefenceBuildingKey { get { return StaticPrefabKeys.Buildings.SamSite; } }
    }
 }

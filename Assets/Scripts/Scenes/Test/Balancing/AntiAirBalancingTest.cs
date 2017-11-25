@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
-            ITargetsFactory targetsFactory = _helper.CreateBomberTargetsFactory(_defenceBuildings);
+            ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(_defenceBuildings);
 
             // So we know when (if) the bombers manage to destroy all targets
             targetsFactory.BomberTargetProcessor.AddTargetConsumer(this);

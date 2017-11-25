@@ -223,9 +223,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return targetsFactory;
 		}
 
-        public ITargetsFactory CreateBomberTargetsFactory(IList<ITarget> targets)
+        /// <summary>
+        /// Target processors assign all the provided targets.  The targets are lost
+        /// as they are destroyed.
+        /// </summary>
+        public ITargetsFactory CreateTargetsFactory(IList<ITarget> targets)
         {
-            // For bomber
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
             ITargetRanker targetRanker = new EqualTargetRanker();
             ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
@@ -237,15 +240,18 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
 
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+            IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
 
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             
-            // For bomber
             targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
             targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
-
-            // For bomb damage applier
             targetsFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
+            targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
+            targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
+            targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
 
             return targetsFactory;
         }
