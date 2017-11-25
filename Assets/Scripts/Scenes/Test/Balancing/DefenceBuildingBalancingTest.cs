@@ -97,11 +97,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
                 + FindBuildingCost(samSiteKey, numOfAdvancedDefenceBuildings);
             buildingCostText.text = DEFENCE_BUILDINGS_COST_PREFIX + buildingCost;
 
-            // Bomber cost
+            // Unit cost
             TextMesh unitCostText = transform.FindNamedComponent<TextMesh>("UnitCostText");
             _totalUnitsCostText = new TextMeshWrapper(unitCostText);
 
-			// Bomber kill count
+			// Unit kill count
             TextMesh uniKillCountText = transform.FindNamedComponent<TextMesh>("UnitKillCountText");
             _unitKillCountText = new TextMeshWrapper(uniKillCountText);
 			UnitKillCount = 0;
