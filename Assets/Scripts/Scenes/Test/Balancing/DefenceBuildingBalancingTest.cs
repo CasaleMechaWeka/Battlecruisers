@@ -91,21 +91,19 @@ namespace BattleCruisers.Scenes.Test.Balancing
             detailsText.text = "Drones: " + numOfUnitDrones + "  AA: " + numOfBasicDefenceBuildings + "  SS: " + numOfAdvancedDefenceBuildings;
 
             // Anti air building cost
-            TextMesh buildingCostText = transform.FindNamedComponent<TextMesh>("BuildingDroneSecSpentText");
+            TextMesh buildingCostText = transform.FindNamedComponent<TextMesh>("BuildingCostText");
             int buildingCost
                 = FindBuildingCost(antiAirKey, numOfBasicDefenceBuildings)
                 + FindBuildingCost(samSiteKey, numOfAdvancedDefenceBuildings);
             buildingCostText.text = DEFENCE_BUILDINGS_COST_PREFIX + buildingCost;
 
             // Bomber cost
-            // FELIX  Rename UI element
-            TextMesh bomberCostText = transform.FindNamedComponent<TextMesh>("BomberDroneSecSpentText");
-            _totalUnitsCostText = new TextMeshWrapper(bomberCostText);
+            TextMesh unitCostText = transform.FindNamedComponent<TextMesh>("UnitCostText");
+            _totalUnitsCostText = new TextMeshWrapper(unitCostText);
 
 			// Bomber kill count
-            // FELIX  Rename UI element
-			TextMesh bomberKillCountText = transform.FindNamedComponent<TextMesh>("BomberKillCountText");
-            _unitKillCountText = new TextMeshWrapper(bomberKillCountText);
+            TextMesh uniKillCountText = transform.FindNamedComponent<TextMesh>("UnitKillCountText");
+            _unitKillCountText = new TextMeshWrapper(uniKillCountText);
 			UnitKillCount = 0;
         }
 
