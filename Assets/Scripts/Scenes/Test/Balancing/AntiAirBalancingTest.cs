@@ -8,30 +8,17 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public class AntiAirBalancingTest : DefenceBuildingBalancingTest, ITargetConsumer
+    public class AntiAirBalancingTest : DefenceBuildingBalancingTest
     {
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
 
-        public ITarget Target
-        {
-            set
-            {
-                if (value == null)
-                {
-                    OnAllDefenceBuildingsDestroyed();
-                }
-            }
-        }
-
-        protected override IFactory CreateFactory()
+        protected override IFactory CreateFactory(IList<ITarget> defenceBuildings)
         {
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
-            ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(_defenceBuildings);
+            ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(defenceBuildings);
 
-            // So we know when (if) the bombers manage to destroy all targets
-            targetsFactory.BomberTargetProcessor.AddTargetConsumer(this);
             targetsFactory.BomberTargetProcessor.StartProcessingTargets();
 
             _helper

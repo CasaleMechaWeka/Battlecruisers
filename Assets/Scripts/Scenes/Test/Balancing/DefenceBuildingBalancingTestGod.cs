@@ -43,16 +43,16 @@ namespace BattleCruisers.Scenes.Test.Balancing
                 overviewCamera
             };
 
-            AntiAirBalancingTest[] tests = FindObjectsOfType<AntiAirBalancingTest>();
+            DefenceBuildingBalancingTest[] tests = FindObjectsOfType<DefenceBuildingBalancingTest>();
 
-            IList<AntiAirBalancingTest> orderedTests =
+            IList<DefenceBuildingBalancingTest> orderedTests =
                 tests
                     .OrderBy(test => test.gameObject.transform.position.x)
                     .ToList();
 
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
-            foreach (AntiAirBalancingTest test in orderedTests)
+            foreach (DefenceBuildingBalancingTest test in orderedTests)
             {
                 test.Initialise(prefabFactory, UnitKey, BasicDefenceBuildingKey, AdvancedDefenceBuildingKey);
                 cameras.Add(test.Camera);

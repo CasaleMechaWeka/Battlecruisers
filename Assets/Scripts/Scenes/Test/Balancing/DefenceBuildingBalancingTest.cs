@@ -23,10 +23,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private IList<ITarget> _completedOffensiveUnits;
         private ITextMesh _unitKillCountText, _totalUnitsCostText;
         private float _unitCostInDroneS;
-		
+		private IList<ITarget> _defenceBuildings;
+        private int _numOfDefenceBuildngsDestroyed;
+
         protected TestUtils.Helper _helper;
-		protected IPrefabFactory _prefabFactory;
-		protected IList<ITarget> _defenceBuildings;
+        protected IPrefabFactory _prefabFactory;
 
         public int numOfUnitDrones;
         public int numOfBasicDefenceBuildings;
@@ -68,6 +69,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _unitCostInDroneS = FindUnitCost(_offensiveUnitKey);
+            _numOfDefenceBuildngsDestroyed = 0;
 
 
             SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
@@ -135,6 +137,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
                 currentOffsetInM += DEFENCE_BUILDINGS_GAP_IN_M;
                 building.CompletedBuildable += Building_CompletedBuildable;
+				building.Destroyed += Building_Destroyed;
                 building.StartConstruction();
             }
 
@@ -148,7 +151,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             if (_defenceBuildings.Count == _numOfDefenceBuildings)
             {
-                _offensiveFactory = CreateFactory();
+                _offensiveFactory = CreateFactory(_defenceBuildings);
 
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
@@ -159,7 +162,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
         }
 
-        protected abstract IFactory CreateFactory();
+        protected abstract IFactory CreateFactory(IList<ITarget> defenceBuildings);
 
         private void Factory_CompletedUnit(object sender, CompletedConstructionEventArgs e)
         {
@@ -170,6 +173,16 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
         {
             UnitKillCount++;
+        }
+
+        private void Building_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            _numOfDefenceBuildngsDestroyed++;
+
+            if (_numOfDefenceBuildngsDestroyed == _numOfDefenceBuildings)
+            {
+                OnAllDefenceBuildingsDestroyed();
+            }
         }
 
         protected void OnAllDefenceBuildingsDestroyed()
