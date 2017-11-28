@@ -3,7 +3,7 @@ using System.Linq;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test
 {
     public abstract class MultiCameraTestGod<TTest> : MonoBehaviour where TTest : MonoBehaviour, ITestScenario
     {
@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected virtual void Initialise() { }
 
-        protected abstract ITestScenario InitialiseScenario(TTest scenario);
+        protected abstract void InitialiseScenario(TTest scenario);
 
         public void ToggleCamera()
         {

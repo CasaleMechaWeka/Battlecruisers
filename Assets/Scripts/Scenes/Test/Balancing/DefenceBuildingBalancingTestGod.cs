@@ -1,71 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
-using BattleCruisers.Utils.DataStrctures;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public abstract class DefenceBuildingBalancingTestGod : MonoBehaviour
+    public abstract class DefenceBuildingBalancingTestGod : MultiCameraTestGod<DefenceBuildingBalancingTest>
     {
-        private ICircularList<Camera> _cameras;
-
-        public Camera overviewCamera;
+        private IPrefabFactory _prefabFactory;
 
         protected abstract IPrefabKey UnitKey { get; }
         protected abstract IPrefabKey BasicDefenceBuildingKey { get; }
         protected abstract IPrefabKey AdvancedDefenceBuildingKey { get; }
 
-        private Camera _currentCamera;
-        private Camera CurrentCamera
+        protected override void Initialise()
         {
-            set
-            {
-                if (_currentCamera != null)
-                {
-                    _currentCamera.enabled = false;
-                }
-
-                _currentCamera = value;
-
-                if (_currentCamera != null)
-                {
-                    _currentCamera.enabled = true;
-                }
-            }
+            _prefabFactory = new PrefabFactory(new PrefabFetcher());
         }
 
-        void Start()
+        protected override void InitialiseScenario(DefenceBuildingBalancingTest scenario)
         {
-            IList<Camera> cameras = new List<Camera>()
-            {
-                overviewCamera
-            };
-
-            DefenceBuildingBalancingTest[] tests = FindObjectsOfType<DefenceBuildingBalancingTest>();
-
-            IList<DefenceBuildingBalancingTest> orderedTests =
-                tests
-                    .OrderBy(test => test.gameObject.transform.position.x)
-                    .ToList();
-
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
-
-            foreach (DefenceBuildingBalancingTest test in orderedTests)
-            {
-                test.Initialise(prefabFactory, UnitKey, BasicDefenceBuildingKey, AdvancedDefenceBuildingKey);
-                cameras.Add(test.Camera);
-            }
-
-            _cameras = new CircularList<Camera>(cameras);
-
-            ToggleCamera();
-        }
-
-        public void ToggleCamera()
-        {
-            CurrentCamera = _cameras.Next();
+            scenario.Initialise(_prefabFactory, UnitKey, BasicDefenceBuildingKey, AdvancedDefenceBuildingKey);
         }
     }
 }
