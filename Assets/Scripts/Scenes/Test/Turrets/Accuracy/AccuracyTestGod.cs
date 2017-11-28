@@ -6,5 +6,10 @@
         {
             scenario.Initialise();
         }
+
+        protected override float OrderBy(AccuracyTest scenario)
+        {
+            return -scenario.gameObject.transform.position.y;
+        }
     }
 }

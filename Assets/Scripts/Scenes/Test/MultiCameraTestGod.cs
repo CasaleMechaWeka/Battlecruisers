@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.Test
 
             IList<TTest> orderedTests =
                 tests
-                    .OrderBy(test => test.gameObject.transform.position.x)
+                    .OrderBy(test => OrderBy(test))
                     .ToList();
 
             foreach (TTest test in orderedTests)
@@ -60,6 +60,11 @@ namespace BattleCruisers.Scenes.Test
         protected virtual void Initialise() { }
 
         protected abstract void InitialiseScenario(TTest scenario);
+
+        protected virtual float OrderBy(TTest scenario)
+        {
+            return scenario.gameObject.transform.position.x;
+        }
 
         public void ToggleCamera()
         {
