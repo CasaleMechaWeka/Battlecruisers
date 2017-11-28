@@ -86,6 +86,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             CreateBuildings(advancedDefenceBuildingKey, numOfAdvancedDefenceBuildings, currentOffsetInM);
         }
 
+        // FELIX  Make naming generic, could be AntiAir of AntiSea :)
         private void SetupTexts(IPrefabKey antiAirKey, IPrefabKey samSiteKey)
         {
             // Show test case details
@@ -158,6 +159,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     _offensiveFactory.UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey);
                     _offensiveFactory.CompletedBuildingUnit += Factory_CompletedUnit;
                 };
+
                 _offensiveFactory.StartConstruction();
             }
         }
