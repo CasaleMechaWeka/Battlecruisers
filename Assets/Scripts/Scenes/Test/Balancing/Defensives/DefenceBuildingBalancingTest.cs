@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
     public abstract class DefenceBuildingBalancingTest : MonoBehaviour, ITestScenario
     {

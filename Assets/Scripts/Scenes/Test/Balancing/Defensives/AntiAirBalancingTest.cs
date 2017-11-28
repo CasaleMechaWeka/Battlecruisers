@@ -6,7 +6,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Targets;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
     public class AntiAirBalancingTest : DefenceBuildingBalancingTest
     {

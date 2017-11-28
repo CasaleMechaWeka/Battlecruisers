@@ -3,7 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
     public class AntiSeaBalancingTest : DefenceBuildingBalancingTest
     {
