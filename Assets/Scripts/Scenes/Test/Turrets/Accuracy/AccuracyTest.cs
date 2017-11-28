@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
 {
-    public class AccuracyTest : MonoBehaviour
+    public class AccuracyTest : MonoBehaviour, ITestScenario
     {
         public Camera Camera { get; private set; }
 

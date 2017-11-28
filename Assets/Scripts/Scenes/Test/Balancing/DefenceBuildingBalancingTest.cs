@@ -15,7 +15,7 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public abstract class DefenceBuildingBalancingTest : MonoBehaviour
+    public abstract class DefenceBuildingBalancingTest : MonoBehaviour, ITestScenario
     {
         private int _numOfDefenceBuildings;
         private IPrefabKey _offensiveUnitKey;
