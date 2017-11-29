@@ -97,6 +97,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 factory.CompletedBuildingUnit += Factory_CompletedUnit;
 			};
 
+            factory.Destroyed += (sender, e) => OnScenarioComplete();
+
             factory.StartConstruction();
         }
 
@@ -144,20 +146,26 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         protected void OnScenarioComplete()
         {
             // Stop producing units
-            _leftFactory.UnitWrapper = null;
-            _rightFactory.UnitWrapper = null;
+            if (!_leftFactory.IsDestroyed)
+            {
+                _leftFactory.UnitWrapper = null;
+			}
+            if (!_rightFactory.IsDestroyed)
+            {
+                _rightFactory.UnitWrapper = null;
+			}
 
             //int currentUnitKillCount = UnitKillCount;
 
-            //// Destroy all units (because behaviour is undefined they have no more
-            //// targets, means the game is won).
-            //foreach (ITarget target in _completedShips)
-            //{
-            //    if (!target.IsDestroyed)
-            //    {
-            //        target.Destroy();
-            //    }
-            //}
+            // Destroy all units (because behaviour is undefined they have no more
+            // targets, means the game is won).
+            foreach (ITarget target in _completedShips)
+            {
+                if (!target.IsDestroyed)
+                {
+                    target.Destroy();
+                }
+            }
 
             //// Do NOT count units destroyed programmatically at scenario end
             //// towards the kill count.

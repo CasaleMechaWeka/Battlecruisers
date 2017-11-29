@@ -181,6 +181,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		private void DestroyUnitUnderConstruction()
 		{
 			if (_unitUnderConstruction != null
+                && !_unitUnderConstruction.IsDestroyed
                 && _unitUnderConstruction.BuildableState != BuildableState.Completed)
 			{
 				_unitUnderConstruction.Destroy();
