@@ -17,7 +17,7 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
     // FELIX  Avoid duplicate code with:  FactoryTestGod & DefenceBuildingBalancingTest
-    public abstract class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
+    public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IPrefabKey _leftShipKey, _rightShipKey;
         private IFactory _leftFactory, _rightFactory;
