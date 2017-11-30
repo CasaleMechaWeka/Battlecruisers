@@ -63,5 +63,16 @@ namespace BattleCruisers.Utils
             Assert.IsTrue(list.Count != 0);
             return list[list.Count / 2];
         }
+
+        public static string GetFileName(this string path, string deliminator = "/")
+        {
+            int index = path.LastIndexOf(deliminator);
+
+            return
+                index == -1 || index == path.Length - 1 ?
+                path :
+                path.Substring(index + 1);
+
+        }
 	}
 }

@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    // FELIX  Avoid duplicate code with:  FactoryTestGod & DefenceBuildingBalancingTest
     public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IFactory _leftFactory, _rightFactory;
@@ -28,24 +24,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         public int numOfDrones;
 
-        // FELIX  Update
-        private const string UNIT_KILL_COUNT_PREFIX = "Dead units: ";
-        private const string UNIT_COST_PREFIX = "Unit cost (drone seconds): ";
-        private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
-
         public Camera Camera { get; private set; }
-
-        //private int _unitKillCount;
-        //private int UnitKillCount
-        //{
-        //    get { return _unitKillCount; }
-        //    set
-        //    {
-        //        _unitKillCount = value;
-        //        _unitKillCountText.Text = UNIT_KILL_COUNT_PREFIX + _unitKillCount;
-        //        _totalUnitsCostText.Text = UNIT_COST_PREFIX + (_unitKillCount * _unitCostInDroneS);
-        //    }
-        //}
 
         public void Initialise(IPrefabFactory prefabFactory, IPrefabKey leftShipKey, IPrefabKey rightShipKey)
         {
@@ -56,6 +35,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 			_prefabFactory = prefabFactory;
             _helper = new TestUtils.Helper(numOfDrones: numOfDrones);
             _completedShips = new List<ITarget>();
+
+            ShowScenarioDetails(leftShipKey, rightShipKey);
 
             IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
             IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
@@ -79,6 +60,12 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
             Camera.enabled = false;
+        }
+
+        private void ShowScenarioDetails(IPrefabKey leftShipKey, IPrefabKey rightShipKey)
+        {
+            TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
+            detailsText.text = "Drones: " + numOfDrones + "  " + leftShipKey.PrefabPath.GetFileName() + " vs " + rightShipKey.PrefabPath.GetFileName();
         }
 
         private IKillCountController InitialiseKillCount(string componentName, IBuildable buildable)
@@ -105,29 +92,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
-        }
-
-        private void SetupTexts(IPrefabKey antiAirKey, IPrefabKey samSiteKey)
-        {
-            //// Show test case details
-            //TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
-            //detailsText.text = "Drones: " + numOfDrones + "  AA: " + numOfBasicDefenceBuildings + "  SS: " + numOfAdvancedDefenceBuildings;
-
-            //// Anti air building cost
-            //TextMesh buildingCostText = transform.FindNamedComponent<TextMesh>("BuildingCostText");
-            //int buildingCost
-            //    = FindBuildingCost(antiAirKey, numOfBasicDefenceBuildings)
-            //    + FindBuildingCost(samSiteKey, numOfAdvancedDefenceBuildings);
-            //buildingCostText.text = DEFENCE_BUILDINGS_COST_PREFIX + buildingCost;
-
-            //// Unit cost
-            //TextMesh unitCostText = transform.FindNamedComponent<TextMesh>("UnitCostText");
-            //_totalUnitsCostText = new TextMeshWrapper(unitCostText);
-
-            //// Unit kill count
-            //TextMesh uniKillCountText = transform.FindNamedComponent<TextMesh>("UnitKillCountText");
-            //_unitKillCountText = new TextMeshWrapper(uniKillCountText);
-            //UnitKillCount = 0;
         }
 
         private float FindUnitCost(IPrefabKey unitKey)
