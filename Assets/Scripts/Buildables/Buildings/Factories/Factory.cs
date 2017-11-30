@@ -17,6 +17,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public abstract UnitCategory UnitCategory { get; }
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
+        // FELIX  Use or delete :)
+        private const float POST_UNIT_DESTRUCTION_DELAY_IN_S = 1.5f;
 
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
@@ -132,6 +134,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
+            _unitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
             _boostableGroup.AddBoostable(_unitUnderConstruction.BuildProgressBoostable);
 
@@ -162,8 +165,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             CleanUpUnitUnderConstruction();
 		}
-		
-		public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority)
+
+        private void UnitUnderConstruction_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            CleanUpUnitUnderConstruction();
+        }
+
+        public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority)
 		{
 			Assert.IsNotNull(DroneConsumer);
 			Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired);
@@ -193,6 +201,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             _boostableGroup.RemoveBoostable(_unitUnderConstruction.BuildProgressBoostable);
 			_unitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
+            _unitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
 			_unitUnderConstruction = null;
 		}
 
