@@ -34,6 +34,7 @@ namespace BattleCruisers.Buildables
 		float BuildTimeInS { get; }
 		IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
+        float CostInDroneS { get; }
 
         float Damage { get; }
         Vector3 Size { get; }

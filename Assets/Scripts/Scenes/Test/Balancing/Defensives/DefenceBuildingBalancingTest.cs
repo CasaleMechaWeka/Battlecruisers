@@ -113,13 +113,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private int FindBuildingCost(IPrefabKey buildingKey, int numOfBuildings)
         {
             IBuildableWrapper<IBuilding> building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
-            return building.Buildable.NumOfDronesRequired * (int)building.Buildable.BuildTimeInS * numOfBuildings;
+            return (int)building.Buildable.CostInDroneS * numOfBuildings;
         }
 
         private float FindUnitCost(IPrefabKey unitKey)
         {
             IBuildableWrapper<IUnit> unit = _prefabFactory.GetUnitWrapperPrefab(unitKey);
-            return unit.Buildable.NumOfDronesRequired * unit.Buildable.BuildTimeInS;
+            return unit.Buildable.CostInDroneS;
         }
 
         /// <returns>Cumulative building offset.</returns>

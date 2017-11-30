@@ -61,6 +61,7 @@ namespace BattleCruisers.Buildables
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
         public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
+        public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
 
         Quaternion IBuildable.Rotation 
         {

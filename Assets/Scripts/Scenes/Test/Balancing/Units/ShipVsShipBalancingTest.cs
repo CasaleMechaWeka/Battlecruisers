@@ -19,9 +19,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     // FELIX  Avoid duplicate code with:  FactoryTestGod & DefenceBuildingBalancingTest
     public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
     {
-        private IPrefabKey _leftShipKey, _rightShipKey;
         private IFactory _leftFactory, _rightFactory;
-        private ITextMesh _leftShipKillCountText, _totalLeftShipCostText, _rightShipKillCountText, _totalRightShipCostText;
+        private IKillCountController _leftKillCount, _rightKillCount;
 		private IList<ITarget> _completedShips;
 
         protected TestUtils.Helper _helper;
@@ -54,19 +53,18 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Assert.IsTrue(numOfDrones > 0);
 
 
-            _leftShipKey = leftShipKey;
-            _rightShipKey = rightShipKey;
-
+			_prefabFactory = prefabFactory;
             _helper = new TestUtils.Helper(numOfDrones: numOfDrones);
-            _prefabFactory = prefabFactory;
             _completedShips = new List<ITarget>();
 
+            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
+            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
 
-            // FELIX
-            //SetupTexts(rightShipKey, advancedDefenceBuildingKey);
+            InitialiseKillCount("LeftShipsKillCount", leftUnit.Buildable);
+            InitialiseKillCount("RightShipsKillCount", rightUnit.Buildable);
 
 
-            // FELIX
+            // Initlialise factories
             IFactory[] factories = GetComponentsInChildren<IFactory>();
             Assert.IsTrue(factories.Length == 2);
             factories = factories.OrderBy(factory => factory.Position.x).ToArray();
@@ -74,8 +72,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _leftFactory = factories[0];
             _rightFactory = factories[1];
 
-            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, _leftShipKey);
-            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, _rightShipKey);
+            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit);
+            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit);
 
 
             // Hide camera
@@ -83,7 +81,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Camera.enabled = false;
         }
 
-        private void InitialiseFactory(IFactory factory, Faction faction, Direction facingDirection, IPrefabKey unitKey)
+        private IKillCountController InitialiseKillCount(string componentName, IBuildable buildable)
+        {
+            KillCountController killCount = transform.FindNamedComponent<KillCountController>(componentName);
+            killCount.Initialise((int)buildable.CostInDroneS);
+            return killCount;
+        }
+
+        private void InitialiseFactory(IFactory factory, Faction faction, Direction facingDirection, IBuildableWrapper<IUnit> unitWrapper)
         {
             _helper
                 .InitialiseBuilding(
@@ -93,7 +98,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             factory.CompletedBuildable += (sender, e) =>
 			{
-                factory.UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(unitKey);
+                factory.UnitWrapper = unitWrapper;
                 factory.CompletedBuildingUnit += Factory_CompletedUnit;
 			};
 
