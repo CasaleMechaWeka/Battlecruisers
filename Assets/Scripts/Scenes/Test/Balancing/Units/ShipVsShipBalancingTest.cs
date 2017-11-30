@@ -168,7 +168,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 _rightFactory.UnitWrapper = null;
 			}
 
-            //int currentUnitKillCount = UnitKillCount;
+            int currentLeftKillCount = _leftKillCount.KillCount;
+            int currentRightKillCount = _rightKillCount.KillCount;
 
             // Destroy all units (because behaviour is undefined they have no more
             // targets, means the game is won).
@@ -180,9 +181,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 }
             }
 
-            //// Do NOT count units destroyed programmatically at scenario end
-            //// towards the kill count.
-            //UnitKillCount = currentUnitKillCount;
+            // Do NOT count units destroyed programmatically at scenario end
+            // towards the kill count.
+            _leftKillCount.KillCount = currentLeftKillCount;
+            _rightKillCount.KillCount = currentRightKillCount;
         }
     }
 }
