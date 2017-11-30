@@ -3,7 +3,6 @@ using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
@@ -46,8 +45,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
             IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
 
-            _leftKillCount = InitialiseKillCount("LeftShipsKillCount", leftUnit.Buildable);
-            _rightKillCount = InitialiseKillCount("RightShipsKillCount", rightUnit.Buildable);
+            _leftKillCount = InitialiseKillCount("LeftShipsKillCount", rightUnit.Buildable);
+            _rightKillCount = InitialiseKillCount("RightShipsKillCount", leftUnit.Buildable);
 
 
             // Initlialise factories
@@ -61,8 +60,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             float leftFactoryWaitTime = FindFactoryWaitTimeInS(leftUnit.Buildable, rightUnit.Buildable);
             float rightFactoryWaitTime = FindFactoryWaitTimeInS(rightUnit.Buildable, leftUnit.Buildable);
 
-            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime);
-            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime);
+            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime, _rightKillCount);
+            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime, _leftKillCount);
 
 
             // Hide camera
@@ -76,10 +75,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             detailsText.text = "Drones: " + numOfDrones + "  " + leftShipKey.PrefabPath.GetFileName() + " vs " + rightShipKey.PrefabPath.GetFileName();
         }
 
-        private IKillCountController InitialiseKillCount(string componentName, IBuildable buildable)
+        private IKillCountController InitialiseKillCount(string componentName, IBuildable enemyBuildable)
         {
             KillCountController killCount = transform.FindNamedComponent<KillCountController>(componentName);
-            killCount.Initialise((int)buildable.CostInDroneS);
+            killCount.Initialise((int)enemyBuildable.CostInDroneS);
             return killCount;
         }
 
@@ -109,7 +108,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Faction faction,
             Direction facingDirection,
             IBuildableWrapper<IUnit> unitWrapper,
-            float waitTimeInS)
+            float waitTimeInS, 
+            IKillCountController killCounter)
         {
             _helper
                 .InitialiseBuilding(
@@ -117,38 +117,23 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     faction,
                     parentCruiserDirection: facingDirection);
 
-            factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS);
+            factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS, killCounter);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
         }
 
-        private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS)
+        private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS, IKillCountController killCounter)
         {
             _deferrer.Defer(() => factory.UnitWrapper = unitToBuild, waitTimeInS);
 
-            // FELIX  Use method, pevent reference check in method below?
-			factory.CompletedBuildingUnit += Factory_CompletedUnit;
+            factory.CompletedBuildingUnit += (sender, e) => OnFactoryCompletedUnit(e.Buildable, killCounter);
         }
 
-        private void Factory_CompletedUnit(object sender, CompletedConstructionEventArgs e)
+        private void OnFactoryCompletedUnit(IBuildable completedUnit, IKillCountController killCounter)
         {
-            IFactory factory = sender.Parse<IFactory>();
-
-            _completedShips.Add(e.Buildable);
-
-            e.Buildable.Destroyed += (destroyedShip, eventArgs) => 
-            {
-                // If left factory produced unit that was killed, right side gets the kill
-                if (ReferenceEquals(factory, _leftFactory))
-                {
-                    _rightKillCount.KillCount++;
-                }
-                else
-                {
-                    _leftKillCount.KillCount++;
-                }
-            };
+            _completedShips.Add(completedUnit);
+            completedUnit.Destroyed += (sender, e) => killCounter.KillCount++;
         }
 
         protected void OnScenarioComplete()
