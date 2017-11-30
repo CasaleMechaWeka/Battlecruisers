@@ -172,7 +172,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority)
 		{
 			Assert.IsNotNull(DroneConsumer);
-			Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired);
+            Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired, "DroneConsumer.NumOfDronesRequired: " + DroneConsumer.NumOfDronesRequired + " != " + numOfDronesRequired);
 			return DroneConsumer;
 		}
 
@@ -191,7 +191,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 && _unitUnderConstruction.BuildableState != BuildableState.Completed)
 			{
 				_unitUnderConstruction.Destroy();
-				CleanUpUnitUnderConstruction();
 			}
 		}
 
