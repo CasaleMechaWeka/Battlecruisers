@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables
 {
     public abstract class Buildable : Target, IBuildable, IPointerClickHandler
     {
-        private float _buildProgressInDroneSeconds;
+        private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
         private HealthBarController _healthBar;
@@ -46,6 +46,7 @@ namespace BattleCruisers.Buildables
         public SlotType slotType;
 
         private const float MAX_BUILD_PROGRESS = 1;
+        private const float INITIAL_HEALTH = 1;
         // TEMP  Build cheat multiplier
         //private const float BUILD_CHEAT_MULTIPLIER = 10;
         //private const float BUILD_CHEAT_MULTIPLIER = 50;
@@ -195,7 +196,7 @@ namespace BattleCruisers.Buildables
             Faction = _parentCruiser.Faction;
             BuildableState = BuildableState.NotStarted;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-            _buildProgressInDroneSeconds = 0;
+            _cumulativeBuildProgressInDroneS = 0;
 
             HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
 
@@ -230,6 +231,8 @@ namespace BattleCruisers.Buildables
 
         public void StartConstruction()
         {
+            Health = INITIAL_HEALTH;
+
             SetupDroneConsumer(numOfDronesRequired);
 
             EnableRenderers(false);
@@ -250,20 +253,28 @@ namespace BattleCruisers.Buildables
             if (BuildableState == BuildableState.InProgress)
             {
                 Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
-                _buildProgressInDroneSeconds += DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
+
+                // Find build progress
+                float buildProgressInDroneS = DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
+                _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
+
+				BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
+
+                if (BuildProgress > MAX_BUILD_PROGRESS)
+				{
+					BuildProgress = MAX_BUILD_PROGRESS;
+				}
+
+                // Increase health with build progress
+                float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
+                Health += buildProgressIncrement * MaxHealth;
 
                 if (BuildableProgress != null)
                 {
-                    BuildProgress = _buildProgressInDroneSeconds / _buildTimeInDroneSeconds;
-                    if (BuildProgress > MAX_BUILD_PROGRESS)
-                    {
-                        BuildProgress = MAX_BUILD_PROGRESS;
-                    }
-
                     BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
                 }
 
-                if (_buildProgressInDroneSeconds >= _buildTimeInDroneSeconds)
+                if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
                 {
                     OnBuildableCompleted();
                 }

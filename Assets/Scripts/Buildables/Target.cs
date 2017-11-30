@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables
         public float Health
         {
             get { return _health; }
-            private set
+            protected set
             {
                 if (value >= maxHealth)
                 {
@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables
 
                 if (HealthChanged != null)
                 {
-                    Logging.Log(Tags.TARGET, "HealthChanged  " + this);
+                    Logging.Log(Tags.TARGET, "HealthChanged  " + this + "  " + _health);
                     HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
                 }
             }
