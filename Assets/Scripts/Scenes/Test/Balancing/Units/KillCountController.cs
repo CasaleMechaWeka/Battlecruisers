@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             TextMesh killCountText = transform.FindNamedComponent<TextMesh>("KillCountText");
             _killCountText = new TextMeshWrapper(killCountText);
 
-            TextMesh costText = transform.FindNamedComponent<TextMesh>("KillCountText");
+            TextMesh costText = transform.FindNamedComponent<TextMesh>("CostText");
             _costText = new TextMeshWrapper(costText);
         }
     }
