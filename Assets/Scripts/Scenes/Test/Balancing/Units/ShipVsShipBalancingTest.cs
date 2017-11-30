@@ -60,8 +60,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
             IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
 
-            InitialiseKillCount("LeftShipsKillCount", leftUnit.Buildable);
-            InitialiseKillCount("RightShipsKillCount", rightUnit.Buildable);
+            _leftKillCount = InitialiseKillCount("LeftShipsKillCount", leftUnit.Buildable);
+            _rightKillCount = InitialiseKillCount("RightShipsKillCount", rightUnit.Buildable);
 
 
             // Initlialise factories
@@ -138,14 +138,22 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         private void Factory_CompletedUnit(object sender, CompletedConstructionEventArgs e)
         {
-            _completedShips.Add(e.Buildable);
-            e.Buildable.Destroyed += Ship_Destroyed;
-        }
+            IFactory factory = sender.Parse<IFactory>();
 
-        private void Ship_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            // FELIX
-            //UnitKillCount++;
+            _completedShips.Add(e.Buildable);
+
+            e.Buildable.Destroyed += (destroyedShip, eventArgs) => 
+            {
+                // If left factory produced unit that was killed, right side gets the kill
+                if (ReferenceEquals(factory, _leftFactory))
+                {
+                    _rightKillCount.KillCount++;
+                }
+                else
+                {
+                    _leftKillCount.KillCount++;
+                }
+            };
         }
 
         protected void OnScenarioComplete()

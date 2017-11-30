@@ -2,6 +2,6 @@
 {
     public interface IKillCountController
     {
-        int KillCount { set; }
+        int KillCount { get; set; }
     }
 }
