@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -18,6 +19,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private IFactory _leftFactory, _rightFactory;
         private IKillCountController _leftKillCount, _rightKillCount;
 		private IList<ITarget> _completedShips;
+        private VariableDelayDeferrer _deferrer;
 
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
@@ -36,6 +38,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _helper = new TestUtils.Helper(numOfDrones: numOfDrones);
             _completedShips = new List<ITarget>();
 
+            _deferrer = GetComponent<VariableDelayDeferrer>();
+            Assert.IsNotNull(_deferrer);
+
             ShowScenarioDetails(leftShipKey, rightShipKey);
 
             IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
@@ -53,8 +58,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _leftFactory = factories[0];
             _rightFactory = factories[1];
 
-            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit);
-            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit);
+            float leftFactoryWaitTime = FindFactoryWaitTimeInS(leftUnit.Buildable, rightUnit.Buildable);
+            float rightFactoryWaitTime = FindFactoryWaitTimeInS(rightUnit.Buildable, leftUnit.Buildable);
+
+            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime);
+            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime);
 
 
             // Hide camera
@@ -75,7 +83,33 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             return killCount;
         }
 
-        private void InitialiseFactory(IFactory factory, Faction faction, Direction facingDirection, IBuildableWrapper<IUnit> unitWrapper)
+        /// <summary>
+        /// We want the first unit of each factory to be completed at the same time.
+        /// That is to prevent a cheaper unit from completing quickly, and destroying
+        /// the more expensive unit before it is even finished!  Hence, delay the
+        /// cheaper unit's factory.
+        /// </summary>
+        private float FindFactoryWaitTimeInS(IBuildable ownUnit, IBuildable otherUnit)
+        {
+            if (ownUnit.CostInDroneS >= otherUnit.CostInDroneS)
+            {
+                // More expensive unit => No wait time
+                return 0;
+            }
+            else
+            {
+                // Cheaper unit => Have some wait time
+                float waitTimeInDroneS = otherUnit.CostInDroneS - ownUnit.CostInDroneS;
+                return waitTimeInDroneS / numOfDrones / Buildable.BUILD_CHEAT_MULTIPLIER;
+            }
+        }
+
+        private void InitialiseFactory(
+            IFactory factory,
+            Faction faction,
+            Direction facingDirection,
+            IBuildableWrapper<IUnit> unitWrapper,
+            float waitTimeInS)
         {
             _helper
                 .InitialiseBuilding(
@@ -83,21 +117,18 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     faction,
                     parentCruiserDirection: facingDirection);
 
-            factory.CompletedBuildable += (sender, e) =>
-			{
-                factory.UnitWrapper = unitWrapper;
-                factory.CompletedBuildingUnit += Factory_CompletedUnit;
-			};
-
+            factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
         }
 
-        private float FindUnitCost(IPrefabKey unitKey)
+        private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS)
         {
-            IBuildableWrapper<IUnit> unit = _prefabFactory.GetUnitWrapperPrefab(unitKey);
-            return unit.Buildable.NumOfDronesRequired * unit.Buildable.BuildTimeInS;
+            _deferrer.Defer(() => factory.UnitWrapper = unitToBuild, waitTimeInS);
+
+            // FELIX  Use method, pevent reference check in method below?
+			factory.CompletedBuildingUnit += Factory_CompletedUnit;
         }
 
         private void Factory_CompletedUnit(object sender, CompletedConstructionEventArgs e)

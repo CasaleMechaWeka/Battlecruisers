@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables
         // TEMP  Build cheat multiplier
         //private const float BUILD_CHEAT_MULTIPLIER = 10;
         //private const float BUILD_CHEAT_MULTIPLIER = 50;
-        private const float BUILD_CHEAT_MULTIPLIER = 2;
+        public const float BUILD_CHEAT_MULTIPLIER = 2;
 
         #region Properties
         public BuildableState BuildableState { get; private set; }
