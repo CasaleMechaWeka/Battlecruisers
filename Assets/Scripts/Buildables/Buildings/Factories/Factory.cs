@@ -17,8 +17,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public abstract UnitCategory UnitCategory { get; }
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
-        // FELIX  Use or delete :)
-        private const float POST_UNIT_DESTRUCTION_DELAY_IN_S = 1.5f;
 
 		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
