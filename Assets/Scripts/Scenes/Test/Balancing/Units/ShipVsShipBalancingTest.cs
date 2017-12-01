@@ -13,7 +13,7 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
+    public abstract class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IFactory _leftFactory, _rightFactory;
         private IKillCountController _leftKillCount, _rightKillCount;
@@ -25,11 +25,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         public int numOfDrones;
 
+        protected abstract IPrefabKey LeftShipKey { get; }
+        protected abstract IPrefabKey RightShipKey { get; }
+
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory, IPrefabKey leftShipKey, IPrefabKey rightShipKey)
+        public void Initialise(IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(prefabFactory, leftShipKey, rightShipKey);
+            Assert.IsNotNull(prefabFactory);
             Assert.IsTrue(numOfDrones > 0);
 
 
@@ -40,10 +43,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _deferrer = GetComponent<VariableDelayDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            ShowScenarioDetails(leftShipKey, rightShipKey);
+            ShowScenarioDetails(LeftShipKey, RightShipKey);
 
-            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
-            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
+            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(LeftShipKey);
+            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(RightShipKey);
 
             _leftKillCount = InitialiseKillCount("LeftShipsKillCount", rightUnit.Buildable);
             _rightKillCount = InitialiseKillCount("RightShipsKillCount", leftUnit.Buildable);
