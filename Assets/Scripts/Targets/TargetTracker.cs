@@ -30,7 +30,7 @@ namespace BattleCruisers.Targets
 
         private void _targetFinder_TargetFound(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound()");
+            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound() " + e.Target);
 
             Assert.IsFalse(_targets.Contains(e.Target));
             _targets.Add(e.Target);
@@ -39,7 +39,7 @@ namespace BattleCruisers.Targets
 
         private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-			Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost()");
+            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost() " + e.Target);
 
 			Assert.IsTrue(_targets.Contains(e.Target));
             _targets.Remove(e.Target);
