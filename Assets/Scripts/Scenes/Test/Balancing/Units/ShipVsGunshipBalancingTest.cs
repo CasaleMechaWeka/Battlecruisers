@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
@@ -17,6 +18,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private IFactory _navalFactory, _airFactory;
         private IKillCountController _aircraftKillCount, _shipsKillCount;
         private IList<ITarget> _completedUnits;
+
+        private const int GUNSHIP_CRUISING_ALTITUDE_IN_M = 10;
 
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
@@ -80,17 +83,30 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             IBuildableWrapper<IUnit> unitWrapper,
             IKillCountController killCounter)
         {
+            IList<Vector2> gunshipPatrolPoints = GetGunshipPatrolPoints(factory.Position, GUNSHIP_CRUISING_ALTITUDE_IN_M);
+            IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
+
             _helper
                 .InitialiseBuilding(
                     factory,
                     faction,
-                    parentCruiserDirection: facingDirection);
+                    parentCruiserDirection: facingDirection,
+                    aircraftProvider: aircraftProvider);
 
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, killCounter);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
         }
+
+        private IList<Vector2> GetGunshipPatrolPoints(Vector2 factoryPosition, float cruisingAltitudeInM)
+        {
+            return new List<Vector2>()
+            {
+                new Vector2(factoryPosition.x, cruisingAltitudeInM),
+                new Vector2(0, cruisingAltitudeInM)
+            };
+        } 
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, IKillCountController killCounter)
         {
