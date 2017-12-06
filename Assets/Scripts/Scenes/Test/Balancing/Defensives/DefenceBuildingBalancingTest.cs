@@ -22,7 +22,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private IFactory _offensiveFactory;
         private IList<ITarget> _completedOffensiveUnits;
         private IKillCountController _unitKillCount;
-        private float _unitCostInDroneS;
 		private IList<ITarget> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
 
@@ -54,7 +53,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             _prefabFactory = prefabFactory;
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
-            _unitCostInDroneS = FindUnitCost(_offensiveUnitKey);
             _numOfDefenceBuildngsDestroyed = 0;
 
 
