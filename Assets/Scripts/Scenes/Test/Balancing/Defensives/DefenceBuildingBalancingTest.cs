@@ -7,8 +7,8 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private IPrefabKey _offensiveUnitKey;
         private IFactory _offensiveFactory;
         private IList<ITarget> _completedOffensiveUnits;
-        private ITextMesh _unitKillCountText, _totalUnitsCostText;
+        private IKillCountController _unitKillCount;
         private float _unitCostInDroneS;
 		private IList<ITarget> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
@@ -36,23 +36,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         protected const int DEFENCE_BUILDINGS_OFFSET_IN_M = 15;
         private const int DEFENCE_BUILDINGS_GAP_IN_M = 2;
 
-        private const string UNIT_KILL_COUNT_PREFIX = "Dead units: ";
-        private const string UNIT_COST_PREFIX = "Unit cost (drone seconds): ";
         private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
 		
         public Camera Camera { get; private set; }
-
-        private int _unitKillCount;
-        private int UnitKillCount
-        {
-            get { return _unitKillCount; }
-            set
-            {
-                _unitKillCount = value;
-                _unitKillCountText.Text = UNIT_KILL_COUNT_PREFIX + _unitKillCount;
-                _totalUnitsCostText.Text = UNIT_COST_PREFIX + (_unitKillCount * _unitCostInDroneS);
-            }
-        }
 
         public void Initialise(IPrefabFactory prefabFactory, IPrefabKey unitKey, IPrefabKey basicDefenceBuildingKey, IPrefabKey advancedDefenceBuildingKey)
         {
@@ -73,6 +59,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
 
             SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
+
+
+            KillCountController killCount = transform.FindNamedComponent<KillCountController>("UnitKillCount");
+            killCount.Initialise((int)FindUnitCost(unitKey));
+            _unitKillCount = killCount;
 
 
             // Hide camera
@@ -98,15 +89,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                 = FindBuildingCost(basicDefenceKey, numOfBasicDefenceBuildings)
                 + FindBuildingCost(advancedDefenceKey, numOfAdvancedDefenceBuildings);
             buildingCostText.text = DEFENCE_BUILDINGS_COST_PREFIX + buildingCost;
-
-            // Unit cost
-            TextMesh unitCostText = transform.FindNamedComponent<TextMesh>("UnitCostText");
-            _totalUnitsCostText = new TextMeshWrapper(unitCostText);
-
-			// Unit kill count
-            TextMesh uniKillCountText = transform.FindNamedComponent<TextMesh>("UnitKillCountText");
-            _unitKillCountText = new TextMeshWrapper(uniKillCountText);
-			UnitKillCount = 0;
         }
 
         private int FindBuildingCost(IPrefabKey buildingKey, int numOfBuildings)
@@ -173,7 +155,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
         {
-            UnitKillCount++;
+            _unitKillCount.KillCount++;
         }
 
         private void Building_Destroyed(object sender, DestroyedEventArgs e)
@@ -191,7 +173,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             // Stop producing units
             _offensiveFactory.UnitWrapper = null;
 
-            int currentUnitKillCount = UnitKillCount;
+            int currentUnitKillCount = _unitKillCount.KillCount;
 
             // Destroy all units (because behaviour is undefined they have no more
             // targets, means the game is won).
@@ -205,7 +187,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             // Do NOT count units destroyed programmatically at scenario end
             // towards the kill count.
-            UnitKillCount = currentUnitKillCount;
+            _unitKillCount.KillCount = currentUnitKillCount;
         }
     }
 }

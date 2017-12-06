@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    // FELIX  Use in defence building balancing tests :)
     public class KillCountController : MonoBehaviour, IKillCountController
     {
         private int _targetCostInDroneS;
