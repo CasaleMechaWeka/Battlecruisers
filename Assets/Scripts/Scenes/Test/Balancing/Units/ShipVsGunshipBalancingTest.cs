@@ -20,6 +20,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private IList<ITarget> _completedUnits;
 
         private const int GUNSHIP_CRUISING_ALTITUDE_IN_M = 10;
+        private const int GUNSHIP_PATROLLING_RANGE_IN_M = 25;
 
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
@@ -104,7 +105,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             return new List<Vector2>()
             {
                 new Vector2(factoryPosition.x, cruisingAltitudeInM),
-                new Vector2(0, cruisingAltitudeInM)
+                new Vector2(factoryPosition.x - GUNSHIP_PATROLLING_RANGE_IN_M, cruisingAltitudeInM)
             };
         } 
 

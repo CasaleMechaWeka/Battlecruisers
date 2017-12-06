@@ -2,6 +2,6 @@
 {
     public interface IRotationHelper
     {
-        float FindDirectionMultiplier(float currentAngleInRadians, float desiredAngleInDegrees);
+        float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees);
     }
 }
