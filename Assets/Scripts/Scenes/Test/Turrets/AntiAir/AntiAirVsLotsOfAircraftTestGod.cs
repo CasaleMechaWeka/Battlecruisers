@@ -12,21 +12,15 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
     public class AntiAirVsLotsOfAircraftTestGod : MonoBehaviour
 	{
 		public UnitWrapper unitPrefab;
-		public List<Vector2> patrolPoints;
 
 		void Start()
 		{
 			Helper helper = new Helper();
    
 
-            // FELIX  Use prefab factory?  Current way modifies prefab :/
             // Initialise prefab
 			unitPrefab.Initialise();
-            TestAircraftController aircraft = (TestAircraftController)unitPrefab.Buildable;
-            aircraft.maxHealth = 30;
-            aircraft.maxVelocityInMPerS = 8;
-			aircraft.patrolPoints = patrolPoints;
-            aircraft.StaticInitialise();
+            unitPrefab.Buildable.StaticInitialise();
 
 
             // Initialise air factory
