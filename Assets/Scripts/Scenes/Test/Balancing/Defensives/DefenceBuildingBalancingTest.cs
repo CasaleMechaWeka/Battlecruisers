@@ -86,18 +86,17 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             CreateBuildings(advancedDefenceBuildingKey, numOfAdvancedDefenceBuildings, currentOffsetInM);
         }
 
-        // FELIX  Make naming generic, could be AntiAir of AntiSea :)
-        private void SetupTexts(IPrefabKey antiAirKey, IPrefabKey samSiteKey)
+        private void SetupTexts(IPrefabKey basicDefenceKey, IPrefabKey advancedDefenceKey)
         {
             // Show test case details
             TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
             detailsText.text = "Drones: " + numOfUnitDrones + "  AA: " + numOfBasicDefenceBuildings + "  SS: " + numOfAdvancedDefenceBuildings;
 
-            // Anti air building cost
+            // Defence building cost
             TextMesh buildingCostText = transform.FindNamedComponent<TextMesh>("BuildingCostText");
             int buildingCost
-                = FindBuildingCost(antiAirKey, numOfBasicDefenceBuildings)
-                + FindBuildingCost(samSiteKey, numOfAdvancedDefenceBuildings);
+                = FindBuildingCost(basicDefenceKey, numOfBasicDefenceBuildings)
+                + FindBuildingCost(advancedDefenceKey, numOfAdvancedDefenceBuildings);
             buildingCostText.text = DEFENCE_BUILDINGS_COST_PREFIX + buildingCost;
 
             // Unit cost
