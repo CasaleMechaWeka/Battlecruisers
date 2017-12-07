@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
             // FELIX  Create shields
             IBuildableSpawner shieldSpawner = new BuildingSpawner(prefabFactory, helper);
             Vector2 shieldSpawnPosition = new Vector2(transform.position.x + OFFSET_FROM_CENTRE_IN_M, 0);
-            shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShips, Direction.Left, shieldSpawnPosition);
+            shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShields, Direction.Left, shieldSpawnPosition);
 
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
