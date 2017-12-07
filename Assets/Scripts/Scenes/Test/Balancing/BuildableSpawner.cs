@@ -37,20 +37,18 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             for (int i = 0; i < numOfBuildables; ++i)
             {
-                IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildableKey);
-                IBuilding building = _prefabFactory.CreateBuilding(buildingWrapper);
-                _helper.InitialiseBuilding(building, faction, parentCruiserDirection: Direction.Left);
+                IBuildable buildable = SpawnBuildable(buildableKey, faction, facingDirection);
 
-                building.Position = spawnPosition;
-                spawnPosition = IncrementSpawnPosition(spawnPosition, building, facingDirection);
+                buildable.Position = spawnPosition;
+                spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, facingDirection);
 
                 // Mirror building
                 if (facingDirection == Direction.Left)
                 {
-                    building.Rotation = Helper.MirrorAccrossYAxis(building.Rotation);
+                    buildable.Rotation = Helper.MirrorAccrossYAxis(buildable.Rotation);
                 }
 
-                building.StartConstruction();
+                buildable.StartConstruction();
             }
         }
 
