@@ -15,9 +15,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
     {
         private IList<ITarget> _ships;
 
-        protected TestUtils.Helper _helper;
-        protected IPrefabFactory _prefabFactory;
-
         private const int OFFSET_FROM_CENTRE_IN_M = 10;
 
         public int numOfShields;
@@ -27,14 +24,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory)
+        public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
-            Assert.IsNotNull(prefabFactory);
+            Helper.AssertIsNotNull(prefabFactory, helper);
             Assert.IsTrue(numOfShields > 0);
             Assert.IsTrue(numOfShips > 0);
 
-            _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper();
+            // FELIX  Use!
             _ships = new List<ITarget>();
 
             ShowScenarioDetails(ShipKey);
@@ -43,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
             // FELIX  Create ships
 
             // FELIX  Create shields
-            IBuildableSpawner shieldSpawner = new BuildingSpawner(_prefabFactory, _helper);
+            IBuildableSpawner shieldSpawner = new BuildingSpawner(prefabFactory, helper);
             Vector2 shieldSpawnPosition = new Vector2(transform.position.x + OFFSET_FROM_CENTRE_IN_M, 0);
             shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShips, Direction.Left, shieldSpawnPosition);
 
