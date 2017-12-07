@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private IList<ITarget> _completedUnits;
 
         private const int GUNSHIP_CRUISING_ALTITUDE_IN_M = 10;
-        private const int GUNSHIP_PATROLLING_RANGE_IN_M = 25;
+        private const int GUNSHIP_PATROLLING_RANGE_IN_M = 20;
 
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
