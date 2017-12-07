@@ -56,7 +56,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 
         protected void OnScenarioComplete()
         {
-            // Destroy all units (because behaviour is undefined they have no more
+            // Destroy all units (because behaviour is undefined if they have no more
             // targets, means the game is won).
             foreach (ITarget target in _ships)
             {
