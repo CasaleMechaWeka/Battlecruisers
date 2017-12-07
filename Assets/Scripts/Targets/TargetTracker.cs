@@ -32,18 +32,26 @@ namespace BattleCruisers.Targets
         {
             Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound() " + e.Target);
 
-            Assert.IsFalse(_targets.Contains(e.Target));
-            _targets.Add(e.Target);
-            EmitTargetsChangedEvent();
+            // Should always be the case but defensive programming because rarely it is 
+            // NOT the case :(
+            if (!_targets.Contains(e.Target))
+            {
+                _targets.Add(e.Target);
+                EmitTargetsChangedEvent();
+			}
         }
 
         private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
         {
             Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost() " + e.Target);
 
-			Assert.IsTrue(_targets.Contains(e.Target));
-            _targets.Remove(e.Target);
-            EmitTargetsChangedEvent();
+            // Should always be the case but defensive programming because rarely it is 
+            // NOT the case :(
+			if (_targets.Contains(e.Target))
+            {
+                _targets.Remove(e.Target);
+                EmitTargetsChangedEvent();
+			}
         }
 
         private void EmitTargetsChangedEvent()
