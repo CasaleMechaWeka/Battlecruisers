@@ -26,7 +26,12 @@ namespace BattleCruisers.Scenes.Test.Balancing
         }
 
         // FELIX  Take on building completed/started callback :)
-        public void SpawnBuildables(IPrefabKey buildableKey, int numOfBuildables, Direction facingDirection, Vector2 spawnPosition)
+        public void SpawnBuildables(
+            IPrefabKey buildableKey, 
+            int numOfBuildables, 
+            Faction faction, 
+            Direction facingDirection, 
+            Vector2 spawnPosition)
         {
             Assert.IsTrue(facingDirection == Direction.Left || facingDirection == Direction.Right);
 
@@ -34,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             {
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildableKey);
                 IBuilding building = _prefabFactory.CreateBuilding(buildingWrapper);
-                _helper.InitialiseBuilding(building, Faction.Reds, parentCruiserDirection: Direction.Left);
+                _helper.InitialiseBuilding(building, faction, parentCruiserDirection: Direction.Left);
 
                 building.Position = spawnPosition;
                 spawnPosition = IncrementSpawnPosition(spawnPosition, building, facingDirection);
@@ -49,7 +54,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
         }
 
-        protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, Direction facingDirection);
+        protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, Faction faction, Direction facingDirection);
 
         private Vector2 IncrementSpawnPosition(Vector2 currentPosition, IBuildable buildable, Direction facingDirection)
         {

@@ -15,11 +15,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
         {
         }
 
-        protected override IBuildable SpawnBuildable(IPrefabKey buildableKey, Direction facingDirection)
+        protected override IBuildable SpawnBuildable(IPrefabKey buildableKey, Faction faction, Direction facingDirection)
         {
             IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildableKey);
             IBuilding building = _prefabFactory.CreateBuilding(buildingWrapper);
-            _helper.InitialiseBuilding(building, Faction.Reds, parentCruiserDirection: facingDirection);
+            _helper.InitialiseBuilding(building, faction, parentCruiserDirection: facingDirection);
             return building;
         }
     }
