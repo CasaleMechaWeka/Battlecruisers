@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
     {
         private IList<ITarget> _ships;
 
-        private const int OFFSET_FROM_CENTRE_IN_M = 10;
+        private const int OFFSET_FROM_CENTRE_IN_M = 15;
 
         public int numOfShields;
         public int numOfShips;
