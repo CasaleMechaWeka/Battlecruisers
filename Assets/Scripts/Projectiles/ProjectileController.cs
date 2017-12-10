@@ -76,7 +76,7 @@ namespace BattleCruisers.Projectiles
 
 			if (target != null && _targetFilter.IsMatch(target))
 			{
-                _damageApplier.ApplyDamage(target);
+                _damageApplier.ApplyDamage(target, transform.position);
 
                 DestroyProjectile();
             }

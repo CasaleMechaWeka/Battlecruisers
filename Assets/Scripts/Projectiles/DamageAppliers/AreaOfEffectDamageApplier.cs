@@ -19,17 +19,17 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             _targetLayerMask = targetLayerMask;
         }
 
-        public void ApplyDamage(ITarget baseTarget)
+        public void ApplyDamage(ITarget baseTarget, Vector2 collisionPoint)
         {
             Collider2D[] colliders;
 
             if (_targetLayerMask == default(LayerMask))
             {
-				colliders = Physics2D.OverlapCircleAll(baseTarget.Position, _radiusInM);
+                colliders = Physics2D.OverlapCircleAll(collisionPoint, _radiusInM);
             }
             else
             {
-                colliders = Physics2D.OverlapCircleAll(baseTarget.Position, _radiusInM, _targetLayerMask);
+                colliders = Physics2D.OverlapCircleAll(collisionPoint, _radiusInM, _targetLayerMask);
 			}
 
             foreach (Collider2D collider in colliders)

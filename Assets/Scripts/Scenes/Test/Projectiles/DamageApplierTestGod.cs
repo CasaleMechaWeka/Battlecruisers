@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
 			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter);
-            damageApplier.ApplyDamage(baseTarget);
+            damageApplier.ApplyDamage(baseTarget, baseTarget.Position);
 	    }
     }
 }

@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !target.IsDestroyed
                 && !_parentAircraft.IsDestroyed)
 			{
-				_damageApplier.ApplyDamage(target);
+                _damageApplier.ApplyDamage(target, transform.position);
                 _parentAircraft.Destroy();
 			}
 		}
