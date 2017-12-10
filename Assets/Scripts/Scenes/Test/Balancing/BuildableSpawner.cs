@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         private const float SPACING_MULTIPLIER = 1.2f;
 
-        public BuildableSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper)
+        protected BuildableSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
             Helper.AssertIsNotNull(prefabFactory, helper);
 
@@ -25,8 +25,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _helper = helper;
         }
 
-        // FELIX  Take on building completed/started callback :)
-        public void SpawnBuildables(
+        public IList<IBuildable> SpawnBuildables(
             IPrefabKey buildableKey, 
             int numOfBuildables, 
             Faction faction, 
@@ -35,9 +34,12 @@ namespace BattleCruisers.Scenes.Test.Balancing
         {
             Assert.IsTrue(facingDirection == Direction.Left || facingDirection == Direction.Right);
 
+            IList<IBuildable> buildables = new List<IBuildable>(numOfBuildables);
+
             for (int i = 0; i < numOfBuildables; ++i)
             {
                 IBuildable buildable = SpawnBuildable(buildableKey, faction, facingDirection);
+				buildable.StartConstruction();
 
                 buildable.Position = spawnPosition;
                 spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, facingDirection);
@@ -48,8 +50,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     buildable.Rotation = Helper.MirrorAccrossYAxis(buildable.Rotation);
                 }
 
-                buildable.StartConstruction();
+                buildables.Add(buildable);
             }
+
+            return buildables;
         }
 
         protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, Faction faction, Direction facingDirection);

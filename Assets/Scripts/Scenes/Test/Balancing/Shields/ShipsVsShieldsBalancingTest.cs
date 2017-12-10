@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 {
     public abstract class ShipsVsShieldsBalancingTest : MonoBehaviour, ITestScenario
     {
-        private IList<ITarget> _ships;
+        private IList<IBuildable> _ships, _aliveShields;
 
         private const int OFFSET_FROM_CENTRE_IN_M = 15;
 
@@ -30,9 +30,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
             Assert.IsTrue(numOfShields > 0);
             Assert.IsTrue(numOfShips > 0);
 
-            // FELIX  Use!
-            _ships = new List<ITarget>();
-
             ShowScenarioDetails(ShipKey);
 
             // FELIX  Avoid duplicate code with DefenceBuildingBalancingTest (CreateBuildings())
@@ -40,12 +37,17 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
             // Create ships
             IBuildableSpawner shipSpawner = new UnitSpawner(prefabFactory, helper);
             Vector2 shipSpawnPosition = new Vector2(transform.position.x - OFFSET_FROM_CENTRE_IN_M, 0);
-            shipSpawner.SpawnBuildables(ShipKey, numOfShips, Faction.Blues, Direction.Right, shipSpawnPosition);
+            _ships = shipSpawner.SpawnBuildables(ShipKey, numOfShips, Faction.Blues, Direction.Right, shipSpawnPosition);
 
             // Create shields
             IBuildableSpawner shieldSpawner = new BuildingSpawner(prefabFactory, helper);
             Vector2 shieldSpawnPosition = new Vector2(transform.position.x + OFFSET_FROM_CENTRE_IN_M, 0);
-            shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShields, Faction.Reds, Direction.Left, shieldSpawnPosition);
+            _aliveShields = shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShields, Faction.Reds, Direction.Left, shieldSpawnPosition);
+
+            foreach (IBuildable shield in _aliveShields)
+            {
+                shield.Destroyed += Shield_Destroyed;
+            }
 
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
@@ -56,6 +58,17 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
         {
             TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
             detailsText.text = "Shields: " + numOfShields + "  " + numOfShips + "x" + shipKey.PrefabPath.GetFileName();
+        }
+
+        private void Shield_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            IBuildable destroyedShield = e.DestroyedTarget.Parse<IBuildable>();
+            _aliveShields.Remove(destroyedShield);
+
+            if (_aliveShields.Count == 0)
+            {
+                OnScenarioComplete();
+            }
         }
 
         protected void OnScenarioComplete()
