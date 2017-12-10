@@ -54,6 +54,7 @@ namespace BattleCruisers.Utils
 		public const string MOVEMENT = "Movement";
 		public const string PREDICTORS = "TargetPositionPredictors";
         public const string REPAIR_MANAGER = "RepairManager";
+        public const string GENERIC = "Generic";
 	}
 	
 	public static class Logging
@@ -121,9 +122,15 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.MOVEMENT, false);
 			tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
+            tagsToActiveness.Add(Tags.GENERIC, true);
 
 			return tagsToActiveness;
 		}
+
+        public static void Log(string message)
+        {
+            Log(Tags.GENERIC, message);
+        }
 
 		public static void Log(string tag, string message)
 		{
