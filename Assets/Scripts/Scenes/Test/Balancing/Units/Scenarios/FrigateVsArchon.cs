@@ -1,8 +1,7 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 
-// FELIX  Update namespace to reflect folder structure
-namespace BattleCruisers.Scenes.Test.Balancing.Units
+namespace BattleCruisers.Scenes.Test.Balancing.Units.Scenarios
 {
     public class FrigateVsArchon: ShipVsShipBalancingTest
     {
