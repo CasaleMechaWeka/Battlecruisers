@@ -7,7 +7,6 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    // FELIX  Use in DefenceBuildingBalancingTest :)
     public class BuildingSpawner : BuildableSpawner
     {
         public BuildingSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper) 

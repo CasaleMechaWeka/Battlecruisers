@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
@@ -33,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         public int numOfAdvancedDefenceBuildings;
 
         protected const int DEFENCE_BUILDINGS_OFFSET_IN_M = 15;
-        private const int DEFENCE_BUILDINGS_GAP_IN_M = 2;
+        private const int DEFENCE_BUILDINGS_GROUP_GAP_IN_M = 1;
 
         private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
 		
@@ -49,14 +50,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             _offensiveUnitKey = unitKey;
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
-            _helper = new TestUtils.Helper(numOfDrones: numOfUnitDrones);
+            _helper = new TestUtils.Helper(numOfUnitDrones);
             _prefabFactory = prefabFactory;
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _numOfDefenceBuildngsDestroyed = 0;
-
-
-            SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
 
 
             KillCountController killCount = transform.FindNamedComponent<KillCountController>("UnitKillCount");
@@ -69,10 +67,40 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             Camera.enabled = false;
 
 
-            // Create defence buildings
-            int originalOffsetInM = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
-            int currentOffsetInM = CreateBuildings(basicDefenceBuildingKey, numOfBasicDefenceBuildings, originalOffsetInM);
-            CreateBuildings(advancedDefenceBuildingKey, numOfAdvancedDefenceBuildings, currentOffsetInM);
+			SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
+            CreateDefenceBuildings(basicDefenceBuildingKey, advancedDefenceBuildingKey);
+        }
+
+        private void CreateDefenceBuildings(IPrefabKey basicDefenceBuildingKey, IPrefabKey advancedDefenceBuildingKey)
+        {
+            IBuildableSpawner buildingSpawner = new BuildingSpawner(_prefabFactory, _helper);
+
+            int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
+            Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);
+            IList<IBuildable> basicDefenceBuildings
+                = buildingSpawner.SpawnBuildables(
+                    basicDefenceBuildingKey,
+                    numOfBasicDefenceBuildings,
+                    Faction.Reds,
+                    Direction.Left,
+                    basicBuildingsSpawnPos);
+
+            float advancedBuildingsXPos = basicDefenceBuildings.Last().Position.x;
+            Vector2 advancedBuildingsSpawnPosition = new Vector2(advancedBuildingsXPos + DEFENCE_BUILDINGS_GROUP_GAP_IN_M, 0);
+            IList<IBuildable> advancedDefenceBuildings =
+                buildingSpawner.SpawnBuildables(
+                    advancedDefenceBuildingKey,
+                    numOfAdvancedDefenceBuildings,
+                    Faction.Reds,
+                    Direction.Left,
+                    advancedBuildingsSpawnPosition);
+
+            IEnumerable<IBuildable> allDefenceBuildings = basicDefenceBuildings.Concat(advancedDefenceBuildings);
+            foreach (IBuildable defenceBuilding in allDefenceBuildings)
+            {
+                defenceBuilding.CompletedBuildable += Building_CompletedBuildable;
+                defenceBuilding.Destroyed += Building_Destroyed;
+            }            
         }
 
         private void SetupTexts(IPrefabKey basicDefenceKey, IPrefabKey advancedDefenceKey)
@@ -99,29 +127,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         {
             IBuildableWrapper<IUnit> unit = _prefabFactory.GetUnitWrapperPrefab(unitKey);
             return unit.Buildable.CostInDroneS;
-        }
-
-        /// <returns>Cumulative building offset.</returns>
-        private int CreateBuildings(IPrefabKey buildingKey, int numOfBuildings, int currentOffsetInM)
-        {
-            for (int i = 0; i < numOfBuildings; ++i)
-            {
-                IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
-                IBuilding building = _prefabFactory.CreateBuilding(buildingWrapper);
-                _helper.InitialiseBuilding(building, Faction.Reds, parentCruiserDirection: Direction.Left);
-
-                building.Position = new Vector2(currentOffsetInM, 0);
-
-                // Mirror building, so it is facing left
-                building.Rotation = Helper.MirrorAccrossYAxis(building.Rotation);
-
-                currentOffsetInM += DEFENCE_BUILDINGS_GAP_IN_M;
-                building.CompletedBuildable += Building_CompletedBuildable;
-				building.Destroyed += Building_Destroyed;
-                building.StartConstruction();
-            }
-
-            return currentOffsetInM;
         }
 
         private void Building_CompletedBuildable(object sender, EventArgs e)

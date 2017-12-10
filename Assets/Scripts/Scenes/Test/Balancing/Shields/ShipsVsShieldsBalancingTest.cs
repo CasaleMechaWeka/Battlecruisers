@@ -34,8 +34,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 
             ShowScenarioDetails(ShipKey);
 
-            // FELIX  Avoid duplicate code with DefenceBuildingBalancingTest (CreateBuildings())
-
             // Create ships
             IBuildableSpawner shipSpawner = new UnitSpawner(prefabFactory, helper);
             Vector2 shipSpawnPosition = new Vector2(transform.position.x - OFFSET_FROM_CENTRE_IN_M, 0);
