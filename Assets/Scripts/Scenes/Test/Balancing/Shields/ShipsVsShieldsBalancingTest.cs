@@ -5,6 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
     public abstract class ShipsVsShieldsBalancingTest : MonoBehaviour, ITestScenario
     {
         private IList<IBuildable> _ships, _aliveShields;
+        private TimerController _timer;
 
         private const int OFFSET_FROM_CENTRE_IN_M = 15;
 
@@ -52,6 +54,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
             Camera.enabled = false;
+
+            // Start timer
+            _timer = GetComponentInChildren<TimerController>();
+            _timer.Initialise("Time Elapsed: ", "s");
+            _timer.Begin();
         }
 
         private void ShowScenarioDetails(IPrefabKey shipKey)
@@ -73,6 +80,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 
         protected void OnScenarioComplete()
         {
+            _timer.Stop();
+
             // Destroy all units (because behaviour is undefined if they have no more
             // targets, means the game is won).
             foreach (ITarget target in _ships)

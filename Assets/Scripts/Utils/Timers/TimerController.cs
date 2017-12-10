@@ -5,14 +5,28 @@ namespace BattleCruisers.Utils.Timers
 {
     public class TimerController : MonoBehaviour
     {
+        private string _prefix, _suffix;
         private TextMesh _timerText;
         private ITimer _timer;
 
-        public void Initialise()
+        private int TimeElapsed
         {
+            set
+            {
+                _timerText.text = _prefix + value + _suffix;
+            }
+        }
+
+        public void Initialise(string prefix, string suffix)
+        {
+            Helper.AssertIsNotNull(prefix, suffix);
+
+            _prefix = prefix;
+            _suffix = suffix;
+
             _timerText = GetComponent<TextMesh>();
             Assert.IsNotNull(_timerText);
-            _timerText.text = "0";
+            TimeElapsed = 0;
 
             _timer = new Timer();
             _timer.OnSecondPassed += _timer_OnSecondPassed;
@@ -20,10 +34,10 @@ namespace BattleCruisers.Utils.Timers
 
         private void _timer_OnSecondPassed(object sender, TimerEventArgs e)
         {
-            _timerText.text = e.SecondsElapsed.ToString();
+            TimeElapsed = e.SecondsElapsed;
         }
 
-        public void Start()
+        public void Begin()
         {
             _timer.Start();
         }
