@@ -9,8 +9,10 @@ namespace BattleCruisers.Utils.Timers
         private int _timeElapsedInFullS;
         private bool _timerStarted;
 
-		public event EventHandler<TimerEventArgs> OnSecondPassed;
+        public event EventHandler<TimerEventArgs> OnSecondPassed;
 
+        public bool IsRunning { get { return _timerStarted; } }
+		
         public Timer()
         {
             _timerStarted = false;

@@ -14,6 +14,8 @@ namespace BattleCruisers.Utils.Timers
 
     public interface ITimer
     {
+        bool IsRunning { get; }
+
         event EventHandler<TimerEventArgs> OnSecondPassed;
 
         void Start();

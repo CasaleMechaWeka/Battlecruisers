@@ -17,6 +17,8 @@ namespace BattleCruisers.Utils.Timers
             }
         }
 
+        public bool IsRunning { get { return _timer.IsRunning; } }
+
         public void Initialise(string prefix, string suffix)
         {
             Helper.AssertIsNotNull(prefix, suffix);
