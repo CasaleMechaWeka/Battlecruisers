@@ -13,6 +13,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             int numOfBuildables, 
             Faction faction, 
             Direction facingDirection, 
-            Vector2 spawnPosition);
+            Vector2 spawnPosition,
+            float spacingMultiplier = BuildableSpawner.DEFAULT_SPACING_MULTIPLIER);
     }
 }

@@ -17,12 +17,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
         private IList<IBuildable> _ships, _aliveShields;
         private TimerController _timer;
 
-        private const int OFFSET_FROM_CENTRE_IN_M = 15;
+        protected const int SHIELD_OFFSET_FROM_CENTRE_IN_M = 15;
 
         public int numOfShields;
         public int numOfShips;
 
         protected abstract IPrefabKey ShipKey { get; }
+        protected virtual float ShipOffsetInM { get { return SHIELD_OFFSET_FROM_CENTRE_IN_M; } }
 
         public Camera Camera { get; private set; }
 
@@ -36,13 +37,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Shields
 
             // Create ships
             IBuildableSpawner shipSpawner = new UnitSpawner(prefabFactory, helper);
-            Vector2 shipSpawnPosition = new Vector2(transform.position.x - OFFSET_FROM_CENTRE_IN_M, 0);
+            Vector2 shipSpawnPosition = new Vector2(transform.position.x - ShipOffsetInM, transform.position.y);
             _ships = shipSpawner.SpawnBuildables(ShipKey, numOfShips, Faction.Blues, Direction.Right, shipSpawnPosition);
 
             // Create shields
             IBuildableSpawner shieldSpawner = new BuildingSpawner(prefabFactory, helper);
-            Vector2 shieldSpawnPosition = new Vector2(transform.position.x + OFFSET_FROM_CENTRE_IN_M, 0);
-            _aliveShields = shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShields, Faction.Reds, Direction.Left, shieldSpawnPosition);
+            Vector2 shieldSpawnPosition = new Vector2(transform.position.x + SHIELD_OFFSET_FROM_CENTRE_IN_M, transform.position.y);
+            float spacingMultiplier = 5;  // So area of effect only damages one shield at a time
+            _aliveShields = shieldSpawner.SpawnBuildables(StaticPrefabKeys.Buildings.ShieldGenerator, numOfShields, Faction.Reds, Direction.Left, shieldSpawnPosition, spacingMultiplier);
 
             foreach (IBuildable shield in _aliveShields)
             {

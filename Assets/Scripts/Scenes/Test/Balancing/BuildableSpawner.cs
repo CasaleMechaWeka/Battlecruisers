@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         protected readonly IPrefabFactory _prefabFactory;
         protected readonly TestUtils.Helper _helper;
 
-        private const float SPACING_MULTIPLIER = 1.2f;
+        public const float DEFAULT_SPACING_MULTIPLIER = 1.2f;
 
         protected BuildableSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
@@ -30,7 +30,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
             int numOfBuildables, 
             Faction faction, 
             Direction facingDirection, 
-            Vector2 spawnPosition)
+            Vector2 spawnPosition,
+            float spacingMultiplier = DEFAULT_SPACING_MULTIPLIER)
         {
             Assert.IsTrue(facingDirection == Direction.Left || facingDirection == Direction.Right);
 
@@ -42,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 				buildable.StartConstruction();
 
                 buildable.Position = spawnPosition;
-                spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, facingDirection);
+                spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, facingDirection, spacingMultiplier);
 
                 // Mirror building
                 if (facingDirection == Direction.Left)
@@ -58,9 +59,9 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, Faction faction, Direction facingDirection);
 
-        private Vector2 IncrementSpawnPosition(Vector2 currentPosition, IBuildable buildable, Direction facingDirection)
+        private Vector2 IncrementSpawnPosition(Vector2 currentPosition, IBuildable buildable, Direction facingDirection, float spacingMultiplier)
         {
-            float incrementInM = buildable.Size.x * SPACING_MULTIPLIER;
+            float incrementInM = buildable.Size.x * spacingMultiplier;
             float directionMultiplier = facingDirection == Direction.Right ? -1 : 1;
             return new Vector2(currentPosition.x + directionMultiplier * incrementInM, currentPosition.y);
         }
