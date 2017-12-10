@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
-namespace BattleCruisers.Scenes.Test.Balancing.Shields
+namespace BattleCruisers.Scenes.Test.Balancing
 {
     public abstract class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
     {
