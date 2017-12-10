@@ -193,8 +193,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 		}
 
 		// Enemy detector is in ship center, but longest range barrel may be behind
-		// ship center.  Want to only stop once barrel is in range, so enemy detection 
-        // range has to be less than the longest range barrel.
+		// ship center.  Want to only stop once barrel is in range, so make enemy 
+        // detection range be less than the longest range barrel.
         protected float FindEnemyDetectionRange(IBarrelWrapper longestRangeBarrel)
         {
             return longestRangeBarrel.RangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));

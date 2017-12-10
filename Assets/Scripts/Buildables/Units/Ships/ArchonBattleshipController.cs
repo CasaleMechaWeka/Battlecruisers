@@ -12,6 +12,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             get
             {
+                // Rear missile launcher and direct fire anti sea will both also be in range.
                 return _missileLauncherFront.RangeInM;
             }
         }
