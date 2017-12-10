@@ -10,7 +10,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         event EventHandler BuildablesDestroyed;
 
-        void SpawnBuildables();
         void DestroyAllBuildables();
     }
 }
