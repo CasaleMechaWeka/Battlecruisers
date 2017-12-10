@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Spawners
 {
     public interface IBuildableSpawner
     {

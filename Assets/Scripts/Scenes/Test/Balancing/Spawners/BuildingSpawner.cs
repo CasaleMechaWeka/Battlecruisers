@@ -5,7 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Spawners
 {
     public class BuildingSpawner : BuildableSpawner
     {
