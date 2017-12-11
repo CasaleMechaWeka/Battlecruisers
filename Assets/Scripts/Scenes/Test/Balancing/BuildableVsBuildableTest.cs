@@ -1,56 +1,47 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
-using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public abstract class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
+    public class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
     {
-        private IList<IBuildable> _leftBuildables, _rightBuildables;
+        private IBuildableGroup _leftGroup, _rightGroup;
         private TimerController _timer;
 
         protected const int DEFAULT_OFFSET_FROM_CENTRE_IN_M = 15;
 
-        public int numOfLeftBuildable;
-        public int numOfRightBuildable;
+        public int leftOffsetInM;
+        public int rightOffsetInM;
 
         private bool IsScenarioOver { get { return !_timer.IsRunning; } }
 
-        protected virtual float LeftOffsetInM { get { return DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
-        protected virtual float RightOffsetInM { get { return DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
-
-        protected abstract IPrefabKey LeftBuildableKey { get; }
-        protected abstract IPrefabKey RightBuildableKey { get; }
+        private float LeftOffsetInM { get { return leftOffsetInM != default(int) ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
+        private float RightOffsetInM { get { return rightOffsetInM != default(int) ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
 
         public Camera Camera { get; private set; }
 
         public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
             Helper.AssertIsNotNull(prefabFactory, helper);
-            Assert.IsTrue(numOfLeftBuildable > 0);
-            Assert.IsTrue(numOfRightBuildable > 0);
 
-            ShowScenarioDetails(LeftBuildableKey, RightBuildableKey);
+            // Create left buildable group
+            BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
+            Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
+            _leftGroup = leftGroupController.Initialise(prefabFactory, helper, Faction.Blues, Direction.Right, leftSpawnPosition);
+            _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
-            // Create left hand buildables
-            _leftBuildables = CreateLeftHandBuildables(LeftBuildableKey);
-            foreach (IBuildable leftBuildable in _leftBuildables)
-            {
-                leftBuildable.Destroyed += (sender, e) => BuildableDestroyed(_leftBuildables, leftBuildable);
-            }
+            // Create right buildable group
+            BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
+            Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
+            _rightGroup = rightGroupController.Initialise(prefabFactory, helper, Faction.Reds, Direction.Left, rightSpawnPosition);
+            _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
-            // Create right hand buildables
-            _rightBuildables = CreateRightHandBuildables(RightBuildableKey);
-            foreach (IBuildable rightBuildable in _rightBuildables)
-            {
-                rightBuildable.Destroyed += (sender, e) => BuildableDestroyed(_rightBuildables, rightBuildable);
-            }
+            ShowScenarioDetails();
 
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
@@ -62,24 +53,12 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _timer.Begin();
         }
 
-        protected abstract IList<IBuildable> CreateLeftHandBuildables(IPrefabKey buildableKey);
-        protected abstract IList<IBuildable> CreateRightHandBuildables(IPrefabKey buildableKey);
-
-        private void ShowScenarioDetails(IPrefabKey leftBuildableKey, IPrefabKey rightBuildableKey)
+        private void ShowScenarioDetails()
         {
             TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
-            detailsText.text = leftBuildableKey.PrefabPath.GetFileName() + ": " + numOfLeftBuildable + " vs " + rightBuildableKey.PrefabPath.GetFileName() + ": " + numOfRightBuildable;
-        }
-
-        private void BuildableDestroyed(IList<IBuildable> remainingBuildables, IBuildable destroyedBuildable)
-        {
-            Assert.IsTrue(remainingBuildables.Contains(destroyedBuildable));
-            remainingBuildables.Remove(destroyedBuildable);
-
-            if (remainingBuildables.Count == 0)
-            {
-                OnScenarioComplete();
-            }
+            detailsText.text 
+                = _leftGroup.BuildableKey.PrefabPath.GetFileName() + ": " + _leftGroup.NumOfBuildables 
+                + " vs " + _rightGroup.BuildableKey.PrefabPath.GetFileName() + ": " + _rightGroup.NumOfBuildables;
         }
 
         protected void OnScenarioComplete()
@@ -93,13 +72,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             // Destroy all units (because behaviour is undefined if they have no more
             // targets, means the game is won).
-            foreach (ITarget target in _leftBuildables)
-            {
-                if (!target.IsDestroyed)
-                {
-                    target.Destroy();
-                }
-            }
+            _leftGroup.DestroyAllBuildables();
+            _rightGroup.DestroyAllBuildables();
         }
     }
 }
