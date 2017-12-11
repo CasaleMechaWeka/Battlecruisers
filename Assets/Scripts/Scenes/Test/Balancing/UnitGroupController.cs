@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             Vector2 spawnPosition)
         {
             IPrefabKey buildableKey = StaticPrefabKeyHelper.GetPrefabKey(prefabKeyName);
-            return new UnitGroup(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition);
+            return new UnitGroup(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition, SpacingMultiplier);
         }
     }
 }

@@ -29,7 +29,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
             TestUtils.Helper helper,
             Faction faction,
             Direction facingDirection,
-            Vector2 spawnPosition)
+            Vector2 spawnPosition,
+            float spacingMultiplier)
         {
             Helper.AssertIsNotNull(buildableKey, prefabFactory, helper);
             Assert.IsTrue(numOfBuildables > 0);
@@ -39,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 			
             IBuildableSpawner spawner = CreateSpawner(prefabFactory, helper);
 			
-            _aliveBuildables = spawner.SpawnBuildables(BuildableKey, NumOfBuildables, faction, facingDirection, spawnPosition);
+            _aliveBuildables = spawner.SpawnBuildables(BuildableKey, NumOfBuildables, faction, facingDirection, spawnPosition, spacingMultiplier);
 
 			foreach (IBuildable buildable in _aliveBuildables)
 			{

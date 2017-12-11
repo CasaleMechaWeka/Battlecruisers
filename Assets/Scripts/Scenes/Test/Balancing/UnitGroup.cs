@@ -10,8 +10,16 @@ namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class UnitGroup : BuildableGroup
     {
-        public UnitGroup(IPrefabKey buildableKey, int numOfBuildables, IPrefabFactory prefabFactory, Helper helper, Faction faction, Direction facingDirection, Vector2 spawnPosition) 
-            : base(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition)
+        public UnitGroup(
+            IPrefabKey buildableKey, 
+            int numOfBuildables, 
+            IPrefabFactory prefabFactory, 
+            Helper helper, 
+            Faction faction, 
+            Direction facingDirection, 
+            Vector2 spawnPosition,
+            float spacingMultiplier) 
+            : base(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition, spacingMultiplier)
         {
         }
 
