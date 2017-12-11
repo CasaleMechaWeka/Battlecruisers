@@ -5,7 +5,7 @@ using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public abstract class BuildableGroupController : MonoBehaviour 
     {

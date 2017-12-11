@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public abstract class BuildableGroup : IBuildableGroup
     {

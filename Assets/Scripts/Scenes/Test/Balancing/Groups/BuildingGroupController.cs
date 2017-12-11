@@ -5,7 +5,7 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public class BuildingGroupController : BuildableGroupController
     {

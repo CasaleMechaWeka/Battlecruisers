@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public interface IBuildableGroup
     {

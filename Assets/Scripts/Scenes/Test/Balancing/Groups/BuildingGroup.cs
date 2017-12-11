@@ -6,18 +6,18 @@ using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Balancing
+namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
-    public class UnitGroup : BuildableGroup
+    public class BuildingGroup : BuildableGroup
     {
-        public UnitGroup(
+        public BuildingGroup(
             IPrefabKey buildableKey, 
             int numOfBuildables, 
             IPrefabFactory prefabFactory, 
             Helper helper, 
             Faction faction, 
             Direction facingDirection, 
-            Vector2 spawnPosition,
+            Vector2 spawnPosition, 
             float spacingMultiplier) 
             : base(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition, spacingMultiplier)
         {
@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected override IBuildableSpawner CreateSpawner(IPrefabFactory prefabFactory, Helper helper)
         {
-            return new UnitSpawner(prefabFactory, helper);
+            return new BuildingSpawner(prefabFactory, helper);
         }
     }
 }
