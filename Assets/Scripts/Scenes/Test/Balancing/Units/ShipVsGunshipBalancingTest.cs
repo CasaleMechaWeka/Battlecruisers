@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,7 +14,7 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    public abstract class ShipVsGunshipBalancingTest : MonoBehaviour, ITestScenario
+    public class ShipVsGunshipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IFactory _navalFactory, _airFactory;
         private IKillCountController _aircraftKillCount, _shipsKillCount;
@@ -26,8 +27,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         protected IPrefabFactory _prefabFactory;
 
         public int numOfDrones;
-
-        protected abstract IPrefabKey ShipKey { get; }
+        public PrefabKeyName shipPrefabKeyName;
 
         public Camera Camera { get; private set; }
 
@@ -42,9 +42,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _completedUnits = new List<ITarget>();
 
             IPrefabKey gunshipKey = StaticPrefabKeys.Units.Gunship;
-            ShowScenarioDetails(ShipKey, gunshipKey);
+            IPrefabKey shipKey = StaticPrefabKeyHelper.GetPrefabKey(shipPrefabKeyName);
 
-            IBuildableWrapper<IUnit> ship = _prefabFactory.GetUnitWrapperPrefab(ShipKey);
+            ShowScenarioDetails(shipKey, gunshipKey);
+
+            IBuildableWrapper<IUnit> ship = _prefabFactory.GetUnitWrapperPrefab(shipKey);
             IBuildableWrapper<IUnit> gunship = _prefabFactory.GetUnitWrapperPrefab(gunshipKey);
 
             _aircraftKillCount = InitialiseKillCount("ShipsKillCount", gunship.Buildable);
