@@ -7,12 +7,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public class UnitGroupController : MonoBehaviour 
+    public class UnitGroupController : BuildableGroupController
     {
-        public PrefabKeyName prefabKeyName;
-        public int numOfBuildables;
-
-        public IBuildableGroup Initialise(
+        public override IBuildableGroup Initialise(
             IPrefabFactory prefabFactory,
             Helper helper,
             Faction faction,
