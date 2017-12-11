@@ -27,6 +27,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
 
@@ -230,8 +231,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public ITargetsFactory CreateTargetsFactory(IList<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-            ITargetRanker targetRanker = new EqualTargetRanker();
-            ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
 
             foreach (ITarget target in targets)
             {
@@ -239,11 +238,39 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target));
             }
 
+            return CreateTargetsFactory(targetFinder);
+        }
+
+        /// <summary>
+        /// Use IObservableCollection so that targets do not need to be known right now.
+        /// Targets can be added later, once they are know, and the target finder
+        /// will emit appropriate target found events.
+        /// </summary>
+        public ITargetsFactory CreateTargetsFactory(IObservableCollection<ITarget> targets)
+        {
+            ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
+
+            targets.Changed += (sender, e) =>
+            {
+                if (e.Type == ChangeType.Add)
+                {
+                    e.Item.Destroyed += (target, args) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(e.Item));
+                    targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(e.Item));
+                }                    
+            };
+
+            return CreateTargetsFactory(targetFinder);
+        }
+
+        private ITargetsFactory CreateTargetsFactory(ITargetFinder targetFinder)
+        {
+            ITargetRanker targetRanker = new EqualTargetRanker();
+            ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
 
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-            
+
             targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
             targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetsFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
