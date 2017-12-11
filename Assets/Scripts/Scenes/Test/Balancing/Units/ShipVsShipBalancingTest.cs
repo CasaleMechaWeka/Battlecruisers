@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -13,7 +14,7 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    public abstract class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
+    public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IFactory _leftFactory, _rightFactory;
         private IKillCountController _leftKillCount, _rightKillCount;
@@ -24,9 +25,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         protected IPrefabFactory _prefabFactory;
 
         public int numOfDrones;
-
-        protected abstract IPrefabKey LeftShipKey { get; }
-        protected abstract IPrefabKey RightShipKey { get; }
+        public PrefabKeyName leftShipKeyName, rightShipKeyName;
 
         public Camera Camera { get; private set; }
 
@@ -43,10 +42,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _deferrer = GetComponent<VariableDelayDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            ShowScenarioDetails(LeftShipKey, RightShipKey);
+            IPrefabKey leftShipKey = StaticPrefabKeyHelper.GetPrefabKey(leftShipKeyName);
+            IPrefabKey rightShipKey = StaticPrefabKeyHelper.GetPrefabKey(rightShipKeyName);
 
-            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(LeftShipKey);
-            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(RightShipKey);
+            ShowScenarioDetails(leftShipKey, rightShipKey);
+
+            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
+            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
 
             _leftKillCount = InitialiseKillCount("LeftShipsKillCount", rightUnit.Buildable);
             _rightKillCount = InitialiseKillCount("RightShipsKillCount", leftUnit.Buildable);
