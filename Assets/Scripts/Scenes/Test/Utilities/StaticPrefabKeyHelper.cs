@@ -73,10 +73,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             switch (keyType)
             {
-                case "Buildings":
+                case "Building":
                     return GetPrefabKey(typeof(StaticPrefabKeys.Buildings), keyName);
 
-                case "Units":
+                case "Unit":
                     return GetPrefabKey(typeof(StaticPrefabKeys.Units), keyName);
 
                 default:
@@ -88,7 +88,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             return
                 (IPrefabKey)type
-                    .GetProperty("AirFactory")
+                    .GetProperty(keyName)
                     .GetValue(obj: null, index: null);
         }
     }
