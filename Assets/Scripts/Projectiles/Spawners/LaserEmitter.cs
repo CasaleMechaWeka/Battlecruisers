@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		private ITargetFilter _targetFilter;
 		private float _damagePerS;
 
-		public LayerMask unitsLayerMask;
+		public LayerMask unitsLayerMask, shieldsLayerMask;
 
 		private const int NUM_OF_COLLIDERS_TO_RAYCAST = 25;
 
@@ -25,7 +25,8 @@ namespace BattleCruisers.Projectiles.Spawners
 			_contactFilter = new ContactFilter2D() 
 			{
 				useLayerMask = true,
-				layerMask = unitsLayerMask
+				layerMask = unitsLayerMask.value | shieldsLayerMask.value,
+                useTriggers = true
 			};
 		}
 
@@ -78,8 +79,8 @@ namespace BattleCruisers.Projectiles.Spawners
 				ITarget target = result.collider.gameObject.GetComponent<ITarget>();
 				
 				if (target != null && _targetFilter.IsMatch(target))
-				{
-					return target;
+                {
+                    return target;
 				}
 			}
 
