@@ -216,10 +216,18 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
-			targetsFactory.CreateTargetFilter(Faction.Reds, new List<TargetType>()).ReturnsForAnyArgs(targetFilter);
-			targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-			targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
             targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
+			
+            if (targetFilter != null)
+            {
+                targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
+			}
+            else
+            {
+                SetupCreateTargetFilter(targetsFactory);
+            }
 
 			return targetsFactory;
 		}
@@ -277,7 +285,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
 
-            targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
             targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetsFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
             targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
@@ -286,7 +293,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
 
+            SetupCreateTargetFilter(targetsFactory);
+
             return targetsFactory;
+        }
+
+        private void SetupCreateTargetFilter(ITargetsFactory targetsFactory)
+        {
+            targetsFactory
+                .CreateTargetFilter(default(Faction), null)
+                .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
 
 		public IAircraftProvider CreateAircraftProvider(

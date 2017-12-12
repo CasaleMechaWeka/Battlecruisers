@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -24,11 +23,7 @@ namespace BattleCruisers.Scenes.Test
 
 			// Setup railgun
             IBuilding railgun = FindObjectOfType<TurretController>();
-			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = target
-			};
-            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
+            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject);
 			helper.InitialiseBuilding(railgun, Faction.Blues, targetsFactory: targetsFactory);
 			railgun.StartConstruction();
 		}
