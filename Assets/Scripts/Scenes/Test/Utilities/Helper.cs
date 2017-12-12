@@ -231,14 +231,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public ITargetsFactory CreateTargetsFactory(IList<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
+			
+            ITargetsFactory targetsFactory = CreateTargetsFactory(targetFinder);
 
+            // Emit target found events AFTER targets factory (target processor) is created
             foreach (ITarget target in targets)
             {
                 target.Destroyed += (sender, e) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(target));
                 targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target));
             }
 
-            return CreateTargetsFactory(targetFinder);
+            return targetsFactory;
         }
 
         /// <summary>
@@ -250,6 +253,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
+            ITargetsFactory targetsFactory = CreateTargetsFactory(targetFinder);
+
+            // Emit target found events AFTER targets factory (target processor) is created
             targets.Changed += (sender, e) =>
             {
                 if (e.Type == ChangeType.Add)
@@ -259,7 +265,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 }                    
             };
 
-            return CreateTargetsFactory(targetFinder);
+            return targetsFactory;
         }
 
         private ITargetsFactory CreateTargetsFactory(ITargetFinder targetFinder)
