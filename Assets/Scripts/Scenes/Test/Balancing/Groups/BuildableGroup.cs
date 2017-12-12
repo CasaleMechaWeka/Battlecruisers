@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
@@ -19,6 +20,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
 
         public IPrefabKey BuildableKey { get; private set; }
         public int NumOfBuildables { get; private set; }
+        public ReadOnlyCollection<IBuildable> Buildables { get; private set; }
 
         public event EventHandler BuildablesDestroyed;
 
@@ -46,6 +48,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
 			{
 				buildable.Destroyed += Buildable_Destroyed;
 			}
+
+            Buildables = new ReadOnlyCollection<IBuildable>(_aliveBuildables);
         }
 
         protected abstract IBuildableSpawner CreateSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper);
