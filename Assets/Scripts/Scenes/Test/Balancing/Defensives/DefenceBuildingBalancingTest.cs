@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     Direction.Left,
                     basicBuildingsSpawnPos);
 
-            float advancedBuildingsXPos = basicDefenceBuildings.Last().Position.x;
+            float advancedBuildingsXPos = basicDefenceBuildings.Count != 0 ? basicDefenceBuildings.Last().Position.x : basicBuildingsXPos;
             Vector2 advancedBuildingsSpawnPosition = new Vector2(advancedBuildingsXPos + DEFENCE_BUILDINGS_GROUP_GAP_IN_M, 0);
             IList<IBuildable> advancedDefenceBuildings =
                 buildingSpawner.SpawnBuildables(
