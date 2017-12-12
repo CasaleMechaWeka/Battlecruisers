@@ -33,14 +33,14 @@ namespace BattleCruisers.Scenes.Test.Balancing
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = new TestUtils.BuildableInitialisationArgs(helper, Faction.Blues, parentCruiserDirection: Direction.Right);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateInitialisationArgs(helper, Faction.Blues, Direction.Right);
             _leftGroup = leftGroupController.Initialise(prefabFactory, helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = new TestUtils.BuildableInitialisationArgs(helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateInitialisationArgs(helper, Faction.Reds, Direction.Left);
             _rightGroup = rightGroupController.Initialise(prefabFactory, helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
@@ -54,6 +54,15 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _timer = GetComponentInChildren<TimerController>();
             _timer.Initialise("Time Elapsed: ", "s");
             _timer.Begin();
+
+            OnInitialised();
+        }
+
+        protected virtual void OnInitialised() { }
+
+        protected virtual TestUtils.BuildableInitialisationArgs CreateInitialisationArgs(TestUtils.Helper helper, Faction faction, Direction facingDirection)
+        {
+            return new TestUtils.BuildableInitialisationArgs(helper, faction, parentCruiserDirection: facingDirection);
         }
 
         private void ShowScenarioDetails()
