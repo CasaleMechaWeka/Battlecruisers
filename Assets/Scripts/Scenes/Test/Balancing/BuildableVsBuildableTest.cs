@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
     {
-        private IBuildableGroup _leftGroup, _rightGroup;
+        protected IBuildableGroup _leftGroup, _rightGroup;
         private TimerController _timer;
 
         protected const int DEFAULT_OFFSET_FROM_CENTRE_IN_M = 15;
@@ -33,14 +33,14 @@ namespace BattleCruisers.Scenes.Test.Balancing
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateInitialisationArgs(helper, Faction.Blues, Direction.Right);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(helper);
             _leftGroup = leftGroupController.Initialise(prefabFactory, helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateInitialisationArgs(helper, Faction.Reds, Direction.Left);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(helper);
             _rightGroup = rightGroupController.Initialise(prefabFactory, helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
@@ -60,9 +60,14 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected virtual void OnInitialised() { }
 
-        protected virtual TestUtils.BuildableInitialisationArgs CreateInitialisationArgs(TestUtils.Helper helper, Faction faction, Direction facingDirection)
+        protected virtual TestUtils.BuildableInitialisationArgs CreateLeftGroupArgs(TestUtils.Helper helper)
         {
-            return new TestUtils.BuildableInitialisationArgs(helper, faction, parentCruiserDirection: facingDirection);
+            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Blues, parentCruiserDirection: Direction.Right);
+        }
+
+        protected virtual TestUtils.BuildableInitialisationArgs CreateRightGroupArgs(TestUtils.Helper helper)
+        {
+            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Reds, parentCruiserDirection: Direction.Left);
         }
 
         private void ShowScenarioDetails()
