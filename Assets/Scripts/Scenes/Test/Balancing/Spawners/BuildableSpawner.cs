@@ -28,25 +28,25 @@ namespace BattleCruisers.Scenes.Test.Balancing.Spawners
         public IList<IBuildable> SpawnBuildables(
             IPrefabKey buildableKey, 
             int numOfBuildables, 
-            Faction faction, 
-            Direction facingDirection, 
+            TestUtils.BuildableInitialisationArgs args,
             Vector2 spawnPosition,
             float spacingMultiplier = DEFAULT_SPACING_MULTIPLIER)
         {
-            Assert.IsTrue(facingDirection == Direction.Left || facingDirection == Direction.Right);
+            Assert.IsTrue(args.ParentCruiserFacingDirection == Direction.Left 
+                || args.ParentCruiserFacingDirection == Direction.Right);
 
             IList<IBuildable> buildables = new List<IBuildable>(numOfBuildables);
 
             for (int i = 0; i < numOfBuildables; ++i)
             {
-                IBuildable buildable = SpawnBuildable(buildableKey, faction, facingDirection);
+                IBuildable buildable = SpawnBuildable(buildableKey, args);
 				buildable.StartConstruction();
 
                 buildable.Position = spawnPosition;
-                spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, facingDirection, spacingMultiplier);
+                spawnPosition = IncrementSpawnPosition(spawnPosition, buildable, args.ParentCruiserFacingDirection, spacingMultiplier);
 
                 // Mirror building
-                if (facingDirection == Direction.Left)
+                if (args.ParentCruiserFacingDirection == Direction.Left)
                 {
                     buildable.Rotation = Helper.MirrorAccrossYAxis(buildable.Rotation);
                 }
@@ -57,7 +57,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Spawners
             return buildables;
         }
 
-        protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, Faction faction, Direction facingDirection);
+        protected abstract IBuildable SpawnBuildable(IPrefabKey buildableKey, TestUtils.BuildableInitialisationArgs initialisationArgs);
 
         private Vector2 IncrementSpawnPosition(Vector2 currentPosition, IBuildable buildable, Direction facingDirection, float spacingMultiplier)
         {

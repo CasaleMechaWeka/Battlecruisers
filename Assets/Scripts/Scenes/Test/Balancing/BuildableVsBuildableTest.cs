@@ -33,13 +33,15 @@ namespace BattleCruisers.Scenes.Test.Balancing
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            _leftGroup = leftGroupController.Initialise(prefabFactory, helper, Faction.Blues, Direction.Right, leftSpawnPosition);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = new TestUtils.BuildableInitialisationArgs(helper, Faction.Blues, parentCruiserDirection: Direction.Right);
+            _leftGroup = leftGroupController.Initialise(prefabFactory, helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            _rightGroup = rightGroupController.Initialise(prefabFactory, helper, Faction.Reds, Direction.Left, rightSpawnPosition);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = new TestUtils.BuildableInitialisationArgs(helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+            _rightGroup = rightGroupController.Initialise(prefabFactory, helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             ShowScenarioDetails();

@@ -79,23 +79,25 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
             Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);
+            TestUtils.BuildableInitialisationArgs basicBuildingsArgs = new TestUtils.BuildableInitialisationArgs(_helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+
             IList<IBuildable> basicDefenceBuildings
                 = buildingSpawner.SpawnBuildables(
                     basicDefenceBuildingKey,
                     numOfBasicDefenceBuildings,
-                    Faction.Reds,
-                    Direction.Left,
+				    basicBuildingsArgs,
                     basicBuildingsSpawnPos,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
             float advancedBuildingsXPos = basicDefenceBuildings.Count != 0 ? basicDefenceBuildings.Last().Position.x : basicBuildingsXPos;
             Vector2 advancedBuildingsSpawnPosition = new Vector2(advancedBuildingsXPos + DEFENCE_BUILDINGS_GROUP_GAP_IN_M, 0);
+            TestUtils.BuildableInitialisationArgs advancedBuildingsArgs = new TestUtils.BuildableInitialisationArgs(_helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+
             IList<IBuildable> advancedDefenceBuildings =
                 buildingSpawner.SpawnBuildables(
                     advancedDefenceBuildingKey,
                     numOfAdvancedDefenceBuildings,
-                    Faction.Reds,
-                    Direction.Left,
+					advancedBuildingsArgs,
                     advancedBuildingsSpawnPosition,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 

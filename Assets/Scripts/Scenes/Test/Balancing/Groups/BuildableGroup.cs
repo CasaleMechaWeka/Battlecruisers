@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
@@ -29,12 +28,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             int numOfBuildables, 
             IPrefabFactory prefabFactory, 
             TestUtils.Helper helper,
-            Faction faction,
-            Direction facingDirection,
+            TestUtils.BuildableInitialisationArgs args,
             Vector2 spawnPosition,
             float spacingMultiplier)
         {
-            Helper.AssertIsNotNull(buildableKey, prefabFactory, helper);
+            Helper.AssertIsNotNull(buildableKey, prefabFactory, helper, args);
             Assert.IsTrue(numOfBuildables > 0);
 
             BuildableKey = buildableKey;
@@ -42,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
 			
             IBuildableSpawner spawner = CreateSpawner(prefabFactory, helper);
 			
-            _aliveBuildables = spawner.SpawnBuildables(BuildableKey, NumOfBuildables, faction, facingDirection, spawnPosition, spacingMultiplier);
+            _aliveBuildables = spawner.SpawnBuildables(BuildableKey, NumOfBuildables, args, spawnPosition, spacingMultiplier);
 
 			foreach (IBuildable buildable in _aliveBuildables)
 			{

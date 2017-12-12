@@ -28,6 +28,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public ICruiser ParentCruiser { get; private set; }
         public ICruiser EnemyCruiser { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
+        public Direction ParentCruiserFacingDirection { get; private set; }
 
         public BuildableInitialisationArgs(
             Helper helper,
@@ -52,7 +53,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAngleLimiterFactory angleLimiterFactory = null,
             ISpriteChooserFactory spriteChooserFactory = null)
         {
-            ParentCruiser = parentCruiser ?? helper.CreateCruiser(parentCruiserDirection, faction);
+            ParentCruiserFacingDirection = parentCruiserDirection;
+            ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);

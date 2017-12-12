@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -15,11 +13,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             int numOfBuildables, 
             IPrefabFactory prefabFactory, 
             Helper helper, 
-            Faction faction, 
-            Direction facingDirection, 
+            BuildableInitialisationArgs args,
             Vector2 spawnPosition, 
             float spacingMultiplier) 
-            : base(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition, spacingMultiplier)
+            : base(buildableKey, numOfBuildables, prefabFactory, helper, args, spawnPosition, spacingMultiplier)
         {
         }
 

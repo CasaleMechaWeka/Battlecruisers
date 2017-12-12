@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
@@ -9,15 +7,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public class BuildingGroupController : BuildableGroupController
     {
-        public override IBuildableGroup Initialise(
+        protected override IBuildableGroup CreateGroup(
+            IPrefabKey buildableKey,
             IPrefabFactory prefabFactory,
             Helper helper,
-            Faction faction,
-            Direction facingDirection,
+            BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
-            IPrefabKey buildableKey = StaticPrefabKeyHelper.GetPrefabKey(prefabKeyName);
-            return new BuildingGroup(buildableKey, numOfBuildables, prefabFactory, helper, faction, facingDirection, spawnPosition, SpacingMultiplier);
+            return new BuildingGroup(buildableKey, numOfBuildables, prefabFactory, helper, args, spawnPosition, spacingMultiplier);
         }
     }
 }
