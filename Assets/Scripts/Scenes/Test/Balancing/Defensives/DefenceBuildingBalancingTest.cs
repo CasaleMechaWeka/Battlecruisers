@@ -36,6 +36,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         protected const int DEFENCE_BUILDINGS_OFFSET_IN_M = 15;
         private const int DEFENCE_BUILDINGS_GROUP_GAP_IN_M = 1;
+        private const float DEFENCE_BUILDING_SPACING_MULTIPLIER = 4;
 
         private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
 		
@@ -84,7 +85,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     numOfBasicDefenceBuildings,
                     Faction.Reds,
                     Direction.Left,
-                    basicBuildingsSpawnPos);
+                    basicBuildingsSpawnPos,
+                    DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
             float advancedBuildingsXPos = basicDefenceBuildings.Count != 0 ? basicDefenceBuildings.Last().Position.x : basicBuildingsXPos;
             Vector2 advancedBuildingsSpawnPosition = new Vector2(advancedBuildingsXPos + DEFENCE_BUILDINGS_GROUP_GAP_IN_M, 0);
@@ -94,7 +96,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     numOfAdvancedDefenceBuildings,
                     Faction.Reds,
                     Direction.Left,
-                    advancedBuildingsSpawnPosition);
+                    advancedBuildingsSpawnPosition,
+                    DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
             IEnumerable<IBuildable> allDefenceBuildings = basicDefenceBuildings.Concat(advancedDefenceBuildings);
             foreach (IBuildable defenceBuilding in allDefenceBuildings)
