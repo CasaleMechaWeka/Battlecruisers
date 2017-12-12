@@ -43,16 +43,16 @@ namespace BattleCruisers.Projectiles.Spawners
 			RaycastHit2D[] results = new RaycastHit2D[NUM_OF_COLLIDERS_TO_RAYCAST];
 			int numOfResults = Physics2D.Raycast(transform.position, laserDirection, _contactFilter, results);
 			
-			ITarget target = GetTarget(results, numOfResults);
+            ILaserCollision collision = GetTarget(results, numOfResults);
 			
-			if (target != null)
+			if (collision != null)
 			{
 				_lineRenderer.enabled = true;
 				_lineRenderer.SetPosition(0, transform.position);
-				_lineRenderer.SetPosition(1, target.Position);
+                _lineRenderer.SetPosition(1, collision.CollisionPoint);
 
 				float damage = Time.deltaTime * _damagePerS;
-				target.TakeDamage(damage);
+                collision.Target.TakeDamage(damage);
 			}
 		}
 
@@ -64,27 +64,27 @@ namespace BattleCruisers.Projectiles.Spawners
 			return new Vector2(xComponent, yComponent);
 		}
 
+        private ILaserCollision GetTarget(RaycastHit2D[] results, int numOfResults)
+        {
+            for (int i = 0; i < numOfResults; i++)
+            {
+                RaycastHit2D result = results[i];
+                Assert.IsNotNull(result.collider);
+
+                ITarget target = result.collider.gameObject.GetComponent<ITarget>();
+
+                if (target != null && _targetFilter.IsMatch(target))
+                {
+                    return new LaserCollision(target, result.point);
+                }
+            }
+
+            return null;
+        }
+
 		public void StopLaser()
 		{
 			_lineRenderer.enabled = false;
-		}
-
-		private ITarget GetTarget(RaycastHit2D[] results, int numOfResults)
-		{
-			for (int i = 0; i < numOfResults; i++)
-			{
-				RaycastHit2D result = results[i];
-				Assert.IsNotNull(result.collider);
-				
-				ITarget target = result.collider.gameObject.GetComponent<ITarget>();
-				
-				if (target != null && _targetFilter.IsMatch(target))
-                {
-                    return target;
-				}
-			}
-
-			return null;
 		}
 	}
 }
