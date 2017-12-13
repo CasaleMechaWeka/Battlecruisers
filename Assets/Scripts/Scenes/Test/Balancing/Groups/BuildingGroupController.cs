@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
-            return new BuildingGroup(buildableKey, numOfBuildables, prefabFactory, helper, args, spawnPosition, spacingMultiplier);
+            return new BuildingGroup(buildableKey, numOfBuildables, prefabFactory, helper, args, spawnPosition, SpacingMultiplier);
         }
     }
 }
