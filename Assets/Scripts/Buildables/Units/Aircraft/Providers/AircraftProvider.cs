@@ -29,13 +29,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 			float minX, maxX;
 
-			if (parentCruiserPosition.x < 0)
+            if (parentCruiserPosition.x < enemyCruiserPosition.x)
 			{
+                // Enemy is to the right
 				minX = parentCruiserPosition.x - SAFE_ZONE_PARENT_CRUISER_OVERLAP;
 				maxX = enemyCruiserPosition.x - SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
 			}
 			else
 			{
+                // Enemy is to the left
 				minX = enemyCruiserPosition.x + SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
 				maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
 			}
