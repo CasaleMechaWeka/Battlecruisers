@@ -21,8 +21,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _haveDroppedBombOnRun;
         private bool _isAtCruisingHeight;
 
-		public float cruisingAltitudeInM;
-
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 

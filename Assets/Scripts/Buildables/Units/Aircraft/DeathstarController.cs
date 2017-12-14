@@ -19,7 +19,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private ITargetDetector _targetDetector;
 		private ITargetProcessor _targetProcessor;
 
-		public float cruisingAltitudeInM;
 		public RotatingController leftWing, rightWing;
 
 		private const float LEFT_WING_TARGET_ANGLE_IN_DEGREES = 270;

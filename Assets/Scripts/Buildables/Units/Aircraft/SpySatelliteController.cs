@@ -6,8 +6,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SpySatelliteController : AircraftController
     {
-        public float cruisingAltitudeInM;
-
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
 			IList<Vector2> patrolPositions = _aircraftProvider.FindSpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);

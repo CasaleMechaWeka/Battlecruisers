@@ -20,6 +20,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private SpriteRenderer _spriteRenderer;
         protected ISpriteChooser _spriteChooser;
 
+        public float cruisingAltitudeInM;
+
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
         protected IMovementController PatrollingMovementController { get; private set; }

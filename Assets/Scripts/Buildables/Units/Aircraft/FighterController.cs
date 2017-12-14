@@ -28,7 +28,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		public CircleTargetDetector shootableEnemyDetector;
 
 		public float enemyFollowDetectionRangeInM;
-		public float cruisingAltitudeInM;
 
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
