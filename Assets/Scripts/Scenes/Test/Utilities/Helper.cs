@@ -288,21 +288,38 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetsFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
             targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-            targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-            targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
             targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
 
             SetupCreateTargetFilter(targetsFactory);
+            SetupCreateRangedTargetFinder(targetsFactory);
+            SetupCreateTargetProcessor(targetsFactory);
 
             return targetsFactory;
         }
 
+        // Copy real TargetsFactory behaviour
         private void SetupCreateTargetFilter(ITargetsFactory targetsFactory)
         {
             targetsFactory
                 .CreateTargetFilter(default(Faction), null)
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
+        }
+
+        // Copy real TargetsFactory behaviour
+        private void SetupCreateRangedTargetFinder(ITargetsFactory targetsFactory)
+        {
+            targetsFactory
+                .CreateRangedTargetFinder(null, null)
+                .ReturnsForAnyArgs(arg => new RangedTargetFinder((ITargetDetector)arg.Args()[0], (ITargetFilter)arg.Args()[1]));
+        }
+
+        // Copy real TargetsFactory behaviour
+        private void SetupCreateTargetProcessor(ITargetsFactory targetsFactory)
+        {
+            targetsFactory
+                .CreateTargetProcessor(null, null)
+                .ReturnsForAnyArgs(arg => new TargetProcessor((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
         }
 
 		public IAircraftProvider CreateAircraftProvider(

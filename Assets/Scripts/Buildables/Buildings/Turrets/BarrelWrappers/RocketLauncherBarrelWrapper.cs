@@ -22,8 +22,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     CreateAngleLimiter(),
                     _factoryProvider);
 
+            Faction ownFaction = Helper.GetOppositeFaction(_enemyFaction);
 			RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();
-            rocketBarrel.Initialise(args, _enemyFaction);
+            rocketBarrel.Initialise(args, ownFaction);
         }
     }
 }
