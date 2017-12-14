@@ -14,18 +14,18 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    public class ShipVsShipBalancingTest : MonoBehaviour, ITestScenario
+    public class FactoryVsFactoryTest : MonoBehaviour, ITestScenario
     {
         private IFactory _leftFactory, _rightFactory;
         private IKillCountController _leftKillCount, _rightKillCount;
-		private IList<ITarget> _completedShips;
+        private IList<ITarget> _completedUnits;
         private VariableDelayDeferrer _deferrer;
 
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
 
         public int numOfDrones;
-        public PrefabKeyName leftShipKeyName, rightShipKeyName;
+        public PrefabKeyName leftUnitKeyName, rightUnitKeyName;
 
         public Camera Camera { get; private set; }
 
@@ -37,21 +37,21 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
 			_prefabFactory = prefabFactory;
             _helper = new TestUtils.Helper(numOfDrones: numOfDrones);
-            _completedShips = new List<ITarget>();
+            _completedUnits = new List<ITarget>();
 
             _deferrer = GetComponent<VariableDelayDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            IPrefabKey leftShipKey = StaticPrefabKeyHelper.GetPrefabKey(leftShipKeyName);
-            IPrefabKey rightShipKey = StaticPrefabKeyHelper.GetPrefabKey(rightShipKeyName);
+            IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey(leftUnitKeyName);
+            IPrefabKey rightUnitKey = StaticPrefabKeyHelper.GetPrefabKey(rightUnitKeyName);
 
-            ShowScenarioDetails(leftShipKey, rightShipKey);
+            ShowScenarioDetails(leftUnitKey, rightUnitKey);
 
-            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftShipKey);
-            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightShipKey);
+            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftUnitKey);
+            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightUnitKey);
 
-            _leftKillCount = InitialiseKillCount("LeftShipsKillCount", rightUnit.Buildable);
-            _rightKillCount = InitialiseKillCount("RightShipsKillCount", leftUnit.Buildable);
+            _leftKillCount = InitialiseKillCount("LeftFactoryKillCount", rightUnit.Buildable);
+            _rightKillCount = InitialiseKillCount("RightFactoryKillCount", leftUnit.Buildable);
 
 
             // Initlialise factories
@@ -74,10 +74,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Camera.enabled = false;
         }
 
-        private void ShowScenarioDetails(IPrefabKey leftShipKey, IPrefabKey rightShipKey)
+        private void ShowScenarioDetails(IPrefabKey leftUnitKey, IPrefabKey rightUnitKey)
         {
             TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
-            detailsText.text = "Drones: " + numOfDrones + "  " + leftShipKey.PrefabPath.GetFileName() + " vs " + rightShipKey.PrefabPath.GetFileName();
+            detailsText.text = "Drones: " + numOfDrones + "  " + leftUnitKey.PrefabPath.GetFileName() + " vs " + rightUnitKey.PrefabPath.GetFileName();
         }
 
         private IKillCountController InitialiseKillCount(string componentName, IBuildable enemyBuildable)
@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         private void OnFactoryCompletedUnit(IBuildable completedUnit, IKillCountController killCounter)
         {
-            _completedShips.Add(completedUnit);
+            _completedUnits.Add(completedUnit);
             completedUnit.Destroyed += (sender, e) => killCounter.KillCount++;
         }
 
@@ -158,7 +158,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             // Destroy all units (because behaviour is undefined they have no more
             // targets, means the game is won).
-            foreach (ITarget target in _completedShips)
+            foreach (ITarget target in _completedUnits)
             {
                 if (!target.IsDestroyed)
                 {

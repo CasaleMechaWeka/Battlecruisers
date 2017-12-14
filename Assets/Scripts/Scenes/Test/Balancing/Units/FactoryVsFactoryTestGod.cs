@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    public class ShipVsShipBalancingTestGod : MultiCameraTestGod<ShipVsShipBalancingTest>
+    public class FactoryVsFactoryTestGod : MultiCameraTestGod<FactoryVsFactoryTest>
     {
         private IPrefabFactory _prefabFactory;
 
@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _prefabFactory = new PrefabFactory(new PrefabFetcher());
         }
 
-        protected override void InitialiseScenario(ShipVsShipBalancingTest scenario)
+        protected override void InitialiseScenario(FactoryVsFactoryTest scenario)
         {
             scenario.Initialise(_prefabFactory);
         }
