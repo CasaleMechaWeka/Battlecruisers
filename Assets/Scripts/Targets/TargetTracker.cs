@@ -33,7 +33,7 @@ namespace BattleCruisers.Targets
             Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound() " + e.Target);
 
             // Should always be the case but defensive programming because rarely it is 
-            // NOT the case :(
+            // NOT the case :/
             if (!_targets.Contains(e.Target))
             {
                 _targets.Add(e.Target);
@@ -46,7 +46,7 @@ namespace BattleCruisers.Targets
             Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost() " + e.Target);
 
             // Should always be the case but defensive programming because rarely it is 
-            // NOT the case :(
+            // NOT the case :/
 			if (_targets.Contains(e.Target))
             {
                 _targets.Remove(e.Target);
