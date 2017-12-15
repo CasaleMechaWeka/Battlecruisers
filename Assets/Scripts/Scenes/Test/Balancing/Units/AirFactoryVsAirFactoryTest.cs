@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
@@ -11,30 +13,42 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         protected override BuildableInitialisationArgs CreateFactoryArgs(Faction faction, Direction facingDirection)
         {
             IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
+            ITargetsFactory targetsFactory = CreateTargetsFactory(facingDirection);
+
             return 
                 new BuildableInitialisationArgs(
                     _helper, 
                     faction, 
                     parentCruiserDirection: facingDirection, 
-                    aircraftProvider: aircraftProvider);
+                    aircraftProvider: aircraftProvider,
+                    targetsFactory: targetsFactory);
         }
 
         private IAircraftProvider CreateAircraftProvider(Direction facingDirection)
         {
-			if (facingDirection == Direction.Right)
-			{
-                // Left hand factory
-                return new AircraftProvider(parentCruiserPosition: _leftFactory.Position, enemyCruiserPosition: _rightFactory.Position);
-			}
-			else if (facingDirection == Direction.Left)
-			{
-				// Right hand factory
-                return new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position);
-			}
-			else
-			{
-				throw new ArgumentException();
-			}
+            return
+                IsLeftHandFactory(facingDirection) ?
+                new AircraftProvider(parentCruiserPosition: _leftFactory.Position, enemyCruiserPosition: _rightFactory.Position) :
+				new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position);
+        }
+
+        private ITargetsFactory CreateTargetsFactory(Direction facingDirection)
+        {
+            ITarget bomberTarget = IsLeftHandFactory(facingDirection) ? _rightFactory : _leftFactory;
+            return _helper.CreateTargetsFactory(new List<ITarget> { bomberTarget });
+        }
+
+        private bool IsLeftHandFactory(Direction facingDirection)
+        {
+            switch (facingDirection)
+            {
+                case Direction.Left: 
+                    return false;
+                case Direction.Right:
+                    return true;
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }
