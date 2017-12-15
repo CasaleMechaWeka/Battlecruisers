@@ -42,6 +42,16 @@ namespace BattleCruisers.Tests.AI.Drones
 		}
 
 		#region FocusOnNonFactoryDroneConsumer
+        [Test]
+        public void FocusOnNonFactoryDroneConsumer_DroneConsumerIsNull_DoesNothing()
+        {
+            _factory.DroneConsumer.Returns((IDroneConsumer)null);
+
+            TriggerFocusOnNonFactoryDroneConsumer();
+
+            _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
+        }
+
 		[Test]
 		public void FocusOnNonFactoryDroneConsumer_FactoryIdle_DoesNothing()
         {
