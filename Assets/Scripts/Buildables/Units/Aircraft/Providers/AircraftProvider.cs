@@ -17,7 +17,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float DEATHSTAR_PATROL_MARGIN = 5;
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
         private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
-        private const float GUNSHIP_TURN_AROUND_POINT_X = 0;
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
 
         private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
@@ -69,11 +68,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		{
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
+            float gunshipTurnAroundPointX = (_parentCruiserPosition.x + _enemyCruiserPosition.x) / 2;
 
 			return new List<Vector2>()
 			{
 				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
-                new Vector2(GUNSHIP_TURN_AROUND_POINT_X, cruisingAltitudeInM)
+                new Vector2(gunshipTurnAroundPointX, cruisingAltitudeInM)
 			};
 		}
 
