@@ -14,6 +14,8 @@ namespace BattleCruisers.UI.Common
 			
             _command = command;
             _command.CanExecuteChanged += (sender, e) => UpdateVisibility();
+
+            UpdateVisibility();
         }
 
         public void Execute()
