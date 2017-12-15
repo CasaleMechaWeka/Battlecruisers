@@ -88,7 +88,7 @@ namespace BattleCruisers.AI.Drones
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
 			
-            if (_completedFactories.Any(SelectIdleFactory))
+            if (_completedFactories.Any(SelectFactoryUsingDrones))
             {
                 IBuildable AffordableBuilding = GetNonFocusedAffordableBuilding();
 
@@ -114,10 +114,11 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        private bool SelectIdleFactory(IFactory factory)
+        private bool SelectFactoryUsingDrones(IFactory factory)
         {
             return 
                 !factory.IsDestroyed
+                && factory.DroneConsumer != null
                 && factory.DroneConsumer.State != DroneConsumerState.Idle;
         }
 
