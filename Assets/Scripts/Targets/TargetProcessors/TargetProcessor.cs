@@ -43,7 +43,13 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound");
-            Assert.IsFalse(_targets.Contains(e.Target), "Already found target previously: " + e.Target);
+
+            if (_targets.Contains(e.Target))
+            {
+				// Should never be the case but defensive programming because rarely it IS
+				// the case :/
+                return;
+            }
 
             if (e.Target.IsDestroyed)
             {
