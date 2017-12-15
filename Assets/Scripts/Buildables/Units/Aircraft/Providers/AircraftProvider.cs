@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         private const float GUNSHIP_TURN_AROUND_POINT_X = 0;
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
 
+        private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
 		public SafeZone FighterSafeZone { get; private set; }
 
 		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition)
@@ -29,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 			float minX, maxX;
 
-            if (parentCruiserPosition.x < enemyCruiserPosition.x)
+            if (IsEnemyToTheRight)
 			{
                 // Enemy is to the right
 				minX = parentCruiserPosition.x - SAFE_ZONE_PARENT_CRUISER_OVERLAP;
@@ -51,10 +52,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
 		{
-			float parentCruiserPatrolPointAdjustmentX = _parentCruiserPosition.x < 0 ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
+            float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
 
-			float enemyCruiserPatrolPointAdjustmentX = _enemyCruiserPosition.x < 0 ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
+            float enemyCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float enemyCruiserpatrolPointX = _enemyCruiserPosition.x + enemyCruiserPatrolPointAdjustmentX;
 
 			return new List<Vector2>() 
@@ -66,7 +67,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM)
 		{
-            float parentCruiserPatrolPointAdjustmentX = _parentCruiserPosition.x < 0 ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
+            float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
 
 			return new List<Vector2>()
@@ -78,17 +79,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
+            float parentCruiserPatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN : FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN;
+            float middlePatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN : FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN;
+
 			return new List<Vector2>() 
 			{
-				new Vector2(FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN, cruisingAltitudeInM),
-				new Vector2(FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN, cruisingAltitudeInM)
+                new Vector2(parentCruiserPatrolPoint, cruisingAltitudeInM),
+                new Vector2(middlePatrolPoint, cruisingAltitudeInM)
 			};
 		}
 		
 		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
 		{
-			float furtherEnemyCruiserPatrolPointAdjustemntX = _enemyCruiserPosition.x > 0 ? DEATHSTAR_PATROL_MARGIN : -DEATHSTAR_PATROL_MARGIN;
-			float closerEnemyCruiserPatrolPointAdjustemntX = _enemyCruiserPosition.x > 0 ? -DEATHSTAR_PATROL_MARGIN : DEATHSTAR_PATROL_MARGIN;
+            float furtherEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? DEATHSTAR_PATROL_MARGIN : -DEATHSTAR_PATROL_MARGIN;
+            float closerEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? -DEATHSTAR_PATROL_MARGIN : DEATHSTAR_PATROL_MARGIN;
 
 			return new List<Vector2>() 
 			{
@@ -101,8 +105,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
         public IList<Vector2> FindSpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM)
         {
-            float closerToEnemyCruiserPatrolPointX = _enemyCruiserPosition.x > 0 ? SPY_SATELLITE_PATROL_MARGIN : -SPY_SATELLITE_PATROL_MARGIN;
-            float closerToFriendlyCruiserPatrolPointX = _enemyCruiserPosition.x > 0 ? -SPY_SATELLITE_PATROL_MARGIN : SPY_SATELLITE_PATROL_MARGIN;
+            float closerToEnemyCruiserPatrolPointX = IsEnemyToTheRight ? SPY_SATELLITE_PATROL_MARGIN : -SPY_SATELLITE_PATROL_MARGIN;
+            float closerToFriendlyCruiserPatrolPointX = IsEnemyToTheRight ? -SPY_SATELLITE_PATROL_MARGIN : SPY_SATELLITE_PATROL_MARGIN;
 
             return new List<Vector2>()
             {
