@@ -1,35 +1,15 @@
 ﻿using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public class KamikazeBalancingTest : BuildableVsBuildableTest
+    public class KamikazeBalancingTest : AircraftVsShieldsTest
     {
         private KamikazeSignal _kamikazeSignal;
-
-        // FELIX  Merge with DeathstarVsShield?  Identical code :/
-        // Create aircraft provider for aircraft
-        protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition)
-        {
-            Vector2 shieldSpawnPosition = new Vector2(spawnPosition.x + LeftOffsetInM + RightOffsetInM, spawnPosition.y);
-            IAircraftProvider aircraftProvider
-                = new AircraftProvider(parentCruiserPosition: spawnPosition, enemyCruiserPosition: shieldSpawnPosition);
-
-            return
-                new BuildableInitialisationArgs(
-                    helper,
-                    Faction.Blues,
-                    parentCruiserDirection: Direction.Right,
-                    aircraftProvider: aircraftProvider);
-        }
 
         protected override void OnInitialised()
         {

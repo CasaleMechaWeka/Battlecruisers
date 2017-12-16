@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
-    public class DeathstarVsShieldsTest : BuildableVsBuildableTest
+    public class AircraftVsShieldsTest : BuildableVsBuildableTest
     {
-        // Create aircraft provider for deathstar
+        // Create aircraft provider for aircraft
         protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition)
         {
             Vector2 shieldSpawnPosition = new Vector2(spawnPosition.x + LeftOffsetInM + RightOffsetInM, spawnPosition.y);
