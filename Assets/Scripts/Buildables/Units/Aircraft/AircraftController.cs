@@ -131,6 +131,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(target.Faction, targetTypes);
+
+            // FELIX  Multiply max health.
+            // FELIX  Area of effect damage?
             IDamageApplier damageApplier = new SingleDamageApplier(maxHealth);
 
             _kamikazeController.Initialise(this, targetFilter, damageApplier);

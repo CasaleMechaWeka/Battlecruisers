@@ -6,7 +6,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
     public class BuildableVsBuildableTestGod : MultiCameraTestGod<BuildableVsBuildableTest>
     {
         private IPrefabFactory _prefabFactory;
-        private TestUtils.Helper _helper;
+        protected TestUtils.Helper _helper;
 
         protected override void Initialise()
         {

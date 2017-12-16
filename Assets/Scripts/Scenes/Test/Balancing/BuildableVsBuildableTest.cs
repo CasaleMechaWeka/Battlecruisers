@@ -11,8 +11,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
     {
+		private TimerController _timer;
+
         protected IBuildableGroup _leftGroup, _rightGroup;
-        private TimerController _timer;
+        protected TestUtils.Helper _helper;
 
         protected const int DEFAULT_OFFSET_FROM_CENTRE_IN_M = 15;
 
@@ -29,19 +31,20 @@ namespace BattleCruisers.Scenes.Test.Balancing
         public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
             Helper.AssertIsNotNull(prefabFactory, helper);
+            _helper = helper;
 
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(helper, leftSpawnPosition);
-            _leftGroup = leftGroupController.Initialise(prefabFactory, helper, leftGroupArgs, leftSpawnPosition);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition);
+            _leftGroup = leftGroupController.Initialise(prefabFactory, _helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(helper, rightSpawnPosition);
-            _rightGroup = rightGroupController.Initialise(prefabFactory, helper, rightGroupArgs, rightSpawnPosition);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition);
+            _rightGroup = rightGroupController.Initialise(prefabFactory, _helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             ShowScenarioDetails();
