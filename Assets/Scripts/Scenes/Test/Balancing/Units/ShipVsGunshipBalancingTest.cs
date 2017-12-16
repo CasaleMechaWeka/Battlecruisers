@@ -14,7 +14,6 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
-    // FELIX  Avoid duplicate code wioth FactoryVsFactoryTest?
     public class ShipVsGunshipBalancingTest : MonoBehaviour, ITestScenario
     {
         private IFactory _navalFactory, _airFactory;
