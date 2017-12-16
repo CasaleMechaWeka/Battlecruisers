@@ -4,7 +4,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 {
     public interface IDamageApplierFactory
     {
-        IDamageApplier CreateSingleDamageApplier(IProjectileStats projectileStats);
-        IDamageApplier CreateAreaOfDamageApplier(IProjectileStats projectileStats);
+        IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats);
+        IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats);
     }
 }

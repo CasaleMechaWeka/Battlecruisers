@@ -15,16 +15,16 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             _targetsFactory = targetsFactory;
         }
 
-        public IDamageApplier CreateSingleDamageApplier(IProjectileStats projectileStats)
+        public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)
         {
-            return new SingleDamageApplier(projectileStats.Damage);
+            return new SingleDamageApplier(damageStats.Damage);
         }
 
-        public IDamageApplier CreateAreaOfDamageApplier(IProjectileStats projectileStats)
+        public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
             // All ITargets are susceptible to area of effect damage
             ITargetFilter damageTargetFilter = _targetsFactory.CreateDummyTargetFilter(isMatchResult: true);
-            return new AreaOfEffectDamageApplier(projectileStats.Damage, projectileStats.DamageRadiusInM, damageTargetFilter);
+            return new AreaOfEffectDamageApplier(damageStats.Damage, damageStats.DamageRadiusInM, damageTargetFilter);
         }
     }
 }

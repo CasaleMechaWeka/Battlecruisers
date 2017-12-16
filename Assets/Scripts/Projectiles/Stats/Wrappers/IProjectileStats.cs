@@ -1,12 +1,10 @@
 ﻿namespace BattleCruisers.Projectiles.Stats.Wrappers
 {
-    public interface IProjectileStats
+    public interface IProjectileStats : IDamageStats
     {
-        float Damage { get; }
         float MaxVelocityInMPerS { get; }
         bool IgnoreGravity { get; }
         bool HasAreaOfEffectDamage { get; }
-        float DamageRadiusInM { get; }
         float InitialVelocityInMPerS { get; }
     }
 }
