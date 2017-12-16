@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -21,6 +22,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected ISpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
+
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1.5f;
 
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
@@ -132,9 +135,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(target.Faction, targetTypes);
 
-            // FELIX  Multiply max health.
-            // FELIX  Area of effect damage?
-            IDamageApplier damageApplier = new SingleDamageApplier(maxHealth);
+            IDamageStats kamikazeDamageStats 
+                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                    damage: maxHealth * KAMIKAZE_DAMAGE_MULTIPLIER, 
+                    damageRadiusInM: Size.magnitude / 2);
+            IDamageApplier damageApplier = _factoryProvider.DamageApplierFactory.CreateAreaOfDamageApplier(kamikazeDamageStats);
 
             _kamikazeController.Initialise(this, targetFilter, damageApplier);
             _kamikazeController.gameObject.SetActive(true);

@@ -14,6 +14,11 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             Assert.IsNotNull(targetsFactory);
             _targetsFactory = targetsFactory;
         }
+		
+		public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
+		{
+            return new DamageStats(damage, damageRadiusInM);
+		}
 
         public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)
         {
