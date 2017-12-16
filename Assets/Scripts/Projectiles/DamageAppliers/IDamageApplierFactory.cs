@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 
 namespace BattleCruisers.Projectiles.DamageAppliers
 {
@@ -7,5 +8,6 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         IDamageStats CreateDamageStats(float damage, float damageRadiusInM);
         IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats);
         IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats);
+        IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction);
     }
 }

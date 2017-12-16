@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
@@ -25,10 +26,23 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             return new SingleDamageApplier(damageStats.Damage);
         }
 
+		/// <summary>
+        /// All ITargets are susceptible to area of effect damage, 
+        /// regardless of faction (ie, friendly fire is on :) ).
+        /// </summary>
         public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
-            // All ITargets are susceptible to area of effect damage
             ITargetFilter damageTargetFilter = _targetsFactory.CreateDummyTargetFilter(isMatchResult: true);
+            return new AreaOfEffectDamageApplier(damageStats.Damage, damageStats.DamageRadiusInM, damageTargetFilter);
+        }
+
+        /// <summary>
+        /// Only targets that match the given "enemyFaction" are damaged.
+        /// Ie, friendly fire is off :).
+        /// </summary>
+        public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
+        {
+            ITargetFilter damageTargetFilter = _targetsFactory.CreateTargetFilter(enemyFaction);
             return new AreaOfEffectDamageApplier(damageStats.Damage, damageStats.DamageRadiusInM, damageTargetFilter);
         }
     }
