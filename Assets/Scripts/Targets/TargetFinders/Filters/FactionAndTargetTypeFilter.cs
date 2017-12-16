@@ -1,24 +1,22 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-    public class FactionAndTargetTypeFilter : ITargetFilter
+    public class FactionAndTargetTypeFilter : FactionTargetFilter
 	{
-		private readonly Faction _factionToDetect;
         private readonly IList<TargetType> _targetTypes;
 
-		public FactionAndTargetTypeFilter(Faction faction, IList<TargetType> targetTypes)
+        public FactionAndTargetTypeFilter(Faction factionToDetect, IList<TargetType> targetTypes)
+            : base(factionToDetect)
 		{
-			_factionToDetect = faction;
 			_targetTypes = targetTypes;
 		}
 
-		public virtual bool IsMatch(ITarget target)
+		public override bool IsMatch(ITarget target)
 		{
-			Logging.Log(Tags.TARGET_FILTER, string.Format("target.Faction: {0}  _factionToDetect: {1}  target.TargetType: {2}", target.Faction, _factionToDetect, target.TargetType));
-			return target.Faction == _factionToDetect
+			return 
+                base.IsMatch(target)
 				&& _targetTypes.Contains(target.TargetType);
 		}
 	}
