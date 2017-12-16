@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
@@ -31,11 +32,10 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 
 
             // Setup damage applier
-            float damage = 50;
-            float radiusInM = 5;
+            IDamageStats damageStats = new DamageStats(damage: 50, damageRadiusInM: 5);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+            IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
 
-			IDamageApplier damageApplier = new AreaOfEffectDamageApplier(damage, radiusInM, targetFilter);
             damageApplier.ApplyDamage(baseTarget, baseTarget.Position);
 	    }
     }

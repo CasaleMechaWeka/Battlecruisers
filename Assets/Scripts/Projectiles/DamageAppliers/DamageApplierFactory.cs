@@ -33,7 +33,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
             ITargetFilter damageTargetFilter = _targetsFactory.CreateDummyTargetFilter(isMatchResult: true);
-            return new AreaOfEffectDamageApplier(damageStats.Damage, damageStats.DamageRadiusInM, damageTargetFilter);
+            return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
         {
             ITargetFilter damageTargetFilter = _targetsFactory.CreateTargetFilter(enemyFaction);
-            return new AreaOfEffectDamageApplier(damageStats.Damage, damageStats.DamageRadiusInM, damageTargetFilter);
+            return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
     }
 }

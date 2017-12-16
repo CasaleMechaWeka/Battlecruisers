@@ -1,21 +1,22 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.DamageAppliers
 {
     public class AreaOfEffectDamageApplier : IDamageApplier
     {
-        private readonly float _damage;
-        private readonly float _radiusInM;
+        private readonly IDamageStats _damageStats;
         private readonly ITargetFilter _targetFilter;
         private readonly LayerMask _targetLayerMask;
 
-        // FELIX  Take IDamageStats
-        public AreaOfEffectDamageApplier(float damage, float radiusInM, ITargetFilter targetFilter, LayerMask targetLayerMask = default(LayerMask))
+        public AreaOfEffectDamageApplier(IDamageStats damageStats, ITargetFilter targetFilter, LayerMask targetLayerMask = default(LayerMask))
         {
-            _damage = damage;
-            _radiusInM = radiusInM;
+            Helper.AssertIsNotNull(damageStats, targetFilter);
+
+            _damageStats = damageStats;
             _targetFilter = targetFilter;
             _targetLayerMask = targetLayerMask;
         }
@@ -26,11 +27,11 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
             if (_targetLayerMask == default(LayerMask))
             {
-                colliders = Physics2D.OverlapCircleAll(collisionPoint, _radiusInM);
+                colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM);
             }
             else
             {
-                colliders = Physics2D.OverlapCircleAll(collisionPoint, _radiusInM, _targetLayerMask);
+                colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM, _targetLayerMask);
 			}
 
             foreach (Collider2D collider in colliders)
@@ -39,7 +40,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
                 if (target != null && _targetFilter.IsMatch(target))
                 {
-                    target.TakeDamage(_damage);
+                    target.TakeDamage(_damageStats.Damage);
                 }
             }
 		}
