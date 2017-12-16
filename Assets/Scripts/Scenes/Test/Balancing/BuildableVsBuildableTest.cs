@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         public int leftOffsetInM;
         public int rightOffsetInM;
 
-        private bool IsScenarioOver { get { return !_timer.IsRunning; } }
+        private bool _isScenarioOver;
 
         protected float LeftOffsetInM { get { return leftOffsetInM != default(int) ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
         protected float RightOffsetInM { get { return rightOffsetInM != default(int) ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
@@ -32,6 +32,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         {
             Helper.AssertIsNotNull(prefabFactory, helper);
             _helper = helper;
+            _isScenarioOver = false;
 
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
@@ -55,8 +56,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             // Start timer
             _timer = GetComponentInChildren<TimerController>();
-            _timer.Initialise("Time Elapsed: ", "s");
-            _timer.Begin();
+            if (_timer != null)
+            {
+                _timer.Initialise("Time Elapsed: ", "s");
+                _timer.Begin();
+			}
 
             OnInitialised();
         }
@@ -83,12 +87,17 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected void OnScenarioComplete()
         {
-            if (IsScenarioOver)
+            if (_isScenarioOver)
             {
                 return;
             }
-         
-            _timer.Stop();
+
+            _isScenarioOver = true;
+
+            if (_timer != null)
+            {
+				_timer.Stop();
+            }
 
             // Destroy all units (because behaviour is undefined if they have no more
             // targets, means the game is won).
