@@ -46,6 +46,11 @@ namespace BattleCruisers.Targets
         #endregion TargetTrackers
 
         #region TargetFilters
+        public ITargetFilter CreateTargetFilter(Faction faction)
+        {
+            return new FactionTargetFilter(faction);
+        }
+
         public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
 		{
             return new FactionAndTargetTypeFilter(faction, targetTypes);

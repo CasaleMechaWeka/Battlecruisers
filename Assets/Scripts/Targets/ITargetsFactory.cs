@@ -23,6 +23,7 @@ namespace BattleCruisers.Targets
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);
 
 		// Filters
+        ITargetFilter CreateTargetFilter(Faction faction);
 		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         ITargetFilter CreateDummyTargetFilter(bool isMatchResult);
 		IExactMatchTargetFilter CreateExactMatchTargetFilter();
