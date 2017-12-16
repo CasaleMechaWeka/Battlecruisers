@@ -139,7 +139,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = _factoryProvider.DamageApplierFactory.CreateDamageStats(
                     damage: maxHealth * KAMIKAZE_DAMAGE_MULTIPLIER, 
                     damageRadiusInM: Size.magnitude / 2);
-            IDamageApplier damageApplier = _factoryProvider.DamageApplierFactory.CreateAreaOfDamageApplier(kamikazeDamageStats);
+            IDamageApplier damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
 
             _kamikazeController.Initialise(this, targetFilter, damageApplier);
             _kamikazeController.gameObject.SetActive(true);
