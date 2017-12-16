@@ -112,6 +112,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
 
+            if (IsInKamikazeMode)
+            {
+                // Already in kamikaze mode, no need to do anything again :)
+                return;
+            }
+
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
             SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget));
 
