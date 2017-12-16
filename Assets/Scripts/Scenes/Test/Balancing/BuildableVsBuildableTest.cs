@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         protected float LeftOffsetInM { get { return leftOffsetInM != default(int) ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
         protected float RightOffsetInM { get { return rightOffsetInM != default(int) ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
 
-        public Camera Camera { get; private set; }
+        public Camera Camera { get; protected set; }
 
         public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
