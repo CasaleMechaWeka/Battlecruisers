@@ -1,14 +1,11 @@
-﻿using BattleCruisers.Utils;
+﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 namespace BattleCruisers.Tests.Aircraft
 {
-	public class AircraftProviderTests
+    public class AircraftProviderTests
 	{
 		private IAircraftProvider _playerAircraftProvider, _aiAircraftProvider;
 		private Vector2 _playerCruiserPosition, _aiCruiserPosition;
