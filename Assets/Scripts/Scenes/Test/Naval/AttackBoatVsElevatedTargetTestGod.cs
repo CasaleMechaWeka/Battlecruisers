@@ -7,7 +7,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
+namespace BattleCruisers.Scenes.Test.Naval
 {
     public class AttackBoatVsElevatedTargetTestGod : MonoBehaviour 
 	{
