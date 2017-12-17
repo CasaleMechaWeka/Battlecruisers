@@ -109,10 +109,17 @@ namespace BattleCruisers.Tests.Targets
 		}
 
 		[Test]
-		public void DoubleFindSameTarget_Throws()
+		public void DoubleFindSameTarget_OnlyAssignsFirstTime()
 		{
+            _targetProcessor.AddTargetConsumer(_targetConsumer);
+
 			InvokeTargetFound(_target1);
-			Assert.Throws<UnityAsserts.AssertionException>(() => InvokeTargetFound(_target1));
+            _targetConsumer.Received().Target = _target1;
+
+            _targetConsumer.ClearReceivedCalls();
+
+			InvokeTargetFound(_target1);
+            _targetConsumer.DidNotReceive().Target = _target1;
 		}
 
 		[Test]
