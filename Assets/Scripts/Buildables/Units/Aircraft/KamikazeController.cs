@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IUnit _parentAircraft;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
+        private IExplosion _explosion;
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1.5f;
 
@@ -26,9 +28,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             IDamageStats kamikazeDamageStats
                 = factoryProvider.DamageApplierFactory.CreateDamageStats(
-                damage: parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER,
-                damageRadiusInM: parentAircraft.Size.magnitude / 2);
+                    damage: parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER,
+                    damageRadiusInM: parentAircraft.Size.x);
             _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
+
+            _explosion = factoryProvider.ExplosionFactory.CreateExplosion(kamikazeDamageStats.DamageRadiusInM);
         }
 
 		void OnTriggerEnter2D(Collider2D collider)
@@ -41,6 +45,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !_parentAircraft.IsDestroyed)
 			{
                 _damageApplier.ApplyDamage(target, transform.position);
+                _explosion.Show(_parentAircraft.Position);
                 _parentAircraft.Destroy();
 			}
 		}
