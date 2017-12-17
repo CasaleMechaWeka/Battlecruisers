@@ -1,55 +1,13 @@
-﻿using System;
-using BattleCruisers.Utils;
-using UnityEngine;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    /// <summary>
-    /// Assumes:
-    /// 1. Shells ARE affected by gravity
-    /// 2. Target is in facing direction of source
-    /// </summary>
-    public class MortarAngleCalculator : AngleCalculator
-	{
-		private const float MAX_ANGLE_IN_DEGREES = 85;
+    public class MortarAngleCalculator : GravityAffectedAngleCalculator
+    {
+		// Choose larger angle, because we want the mortar to fire in a high arc instead of a flat arc.
+		protected override bool UseLargerAngle { get { return true; } }
 
         public MortarAngleCalculator(IAngleHelper angleHelper) 
             : base(angleHelper)
         {
         }
-
-        protected override bool LeadsTarget { get { return true; } }
-		protected override bool MustFaceTarget { get { return true; } }
-
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed, float projectileVelocityInMPerS)
-		{
-			float distanceInM = Math.Abs(source.x - targetPosition.x);
-			float targetAltitude = targetPosition.y - source.y;
-
-			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
-			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
-
-			if (squareRootArg < 0)
-			{
-				throw new ArgumentException("Out of range :/");
-			}
-
-			float denominator = Constants.GRAVITY * distanceInM;
-			float firstAngleInRadians = Mathf.Atan((velocitySquared + Mathf.Sqrt(squareRootArg)) / denominator);
-			float secondAngleInRadians = Mathf.Atan((velocitySquared - Mathf.Sqrt(squareRootArg)) / denominator);
-
-			// Choose larger angle, because we want the mortar to fire high instead of flat
-			float angleInRadians = Mathf.Max(firstAngleInRadians, secondAngleInRadians);
-			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
-
-			if (angleInDegrees > MAX_ANGLE_IN_DEGREES)
-			{
-				angleInDegrees = MAX_ANGLE_IN_DEGREES;
-			}
-
-			Logging.Log(Tags.ANGLE_CALCULATORS, "MortarAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");
-
-			return angleInDegrees;
-		}
-	}
+    }
 }
