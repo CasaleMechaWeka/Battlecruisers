@@ -19,8 +19,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         private readonly float _projectileVelocityInMPerS;
         private readonly float _accuracy;
 
-        private const float MIN_ACCURACY = 0;
-        private const float MAX_ACCURACY = 1;
+        public const float MIN_ACCURACY = 0;
+        public const float MAX_ACCURACY = 1;
 
         public AccuracyAdjuster(
             ITargetBoundsFinder boundsFinder,

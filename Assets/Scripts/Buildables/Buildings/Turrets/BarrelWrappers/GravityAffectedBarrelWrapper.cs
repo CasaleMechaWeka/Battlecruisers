@@ -16,11 +16,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 		
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
         {
-            return 
-                _factoryProvider.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
-                    angleCalculator, 
-                    barrel.ProjectileStats.MaxVelocityInMPerS, 
-                    barrel.TurretStats.Accuracy);
+            if (barrel.TurretStats.Accuracy >= AccuracyAdjuster.MAX_ACCURACY)
+            {
+                return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();
+            }
+            else
+            {
+                return
+                    _factoryProvider.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
+                        angleCalculator,
+                        barrel.ProjectileStats.MaxVelocityInMPerS,
+                        barrel.TurretStats.Accuracy);
+            }
         }
 	}
 }
