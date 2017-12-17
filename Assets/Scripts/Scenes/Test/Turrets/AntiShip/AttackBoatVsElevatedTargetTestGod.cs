@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class ElevatedAntiShipTurretTestGod : MonoBehaviour 
+    public class AttackBoatVsElevatedTargetTestGod : MonoBehaviour 
 	{
 		void Start()
 		{
