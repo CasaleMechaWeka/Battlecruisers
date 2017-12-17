@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !target.IsDestroyed
                 && !_parentAircraft.IsDestroyed)
 			{
-                _damageApplier.ApplyDamage(target, transform.position);
+                _damageApplier.ApplyDamage(target, _parentAircraft.Position);
                 _explosion.Show(_parentAircraft.Position);
                 _parentAircraft.Destroy();
 			}
