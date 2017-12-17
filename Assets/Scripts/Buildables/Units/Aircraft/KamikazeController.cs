@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Projectiles.DamageAppliers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -11,13 +13,22 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
 
-        public void Initialise(IUnit parentAircraft, ITargetFilter targetFilter, IDamageApplier damageApplier)
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1.5f;
+
+        public void Initialise(IUnit parentAircraft, IFactoryProvider factoryProvider, ITarget target)
         {
-            Helper.AssertIsNotNull(parentAircraft, targetFilter, damageApplier);
+            Helper.AssertIsNotNull(parentAircraft, factoryProvider);
 
             _parentAircraft = parentAircraft;
-            _targetFilter = targetFilter;
-			_damageApplier = damageApplier;
+
+            List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
+            _targetFilter = factoryProvider.TargetsFactory.CreateTargetFilter(target.Faction, targetTypes);
+
+            IDamageStats kamikazeDamageStats
+                = factoryProvider.DamageApplierFactory.CreateDamageStats(
+                damage: parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER,
+                damageRadiusInM: parentAircraft.Size.magnitude / 2);
+            _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
         }
 
 		void OnTriggerEnter2D(Collider2D collider)

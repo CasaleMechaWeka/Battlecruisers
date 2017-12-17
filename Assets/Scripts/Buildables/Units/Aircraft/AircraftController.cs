@@ -4,10 +4,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,8 +19,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected ISpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
-
-        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1.5f;
 
         protected IMovementController ActiveMovementController { get; private set; }
         protected IMovementController DummyMovementController { get; private set; }
@@ -132,16 +127,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			gameObject.SetActive(false);
 			gameObject.SetActive(true);
 
-            IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(target.Faction, targetTypes);
-
-            IDamageStats kamikazeDamageStats 
-                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
-                    damage: maxHealth * KAMIKAZE_DAMAGE_MULTIPLIER, 
-                    damageRadiusInM: Size.magnitude / 2);
-            IDamageApplier damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
-
-            _kamikazeController.Initialise(this, targetFilter, damageApplier);
+            _kamikazeController.Initialise(this, _factoryProvider, target);
             _kamikazeController.gameObject.SetActive(true);
 
             OnKamikaze();
