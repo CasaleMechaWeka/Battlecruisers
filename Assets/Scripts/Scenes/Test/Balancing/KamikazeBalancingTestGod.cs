@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
+﻿using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -23,9 +22,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected override void InitialiseScenario(BuildableVsBuildableTest scenario)
         {
-            KamikazeBalancingTest kamkazeTest = scenario.Parse<KamikazeBalancingTest>();
-            kamkazeTest.StaticInitialise();
-
             _deferrer.Defer(() => base.InitialiseScenario(scenario), _cumulativeDelayInS);
 
             _cumulativeDelayInS += scenarioDelayInS;

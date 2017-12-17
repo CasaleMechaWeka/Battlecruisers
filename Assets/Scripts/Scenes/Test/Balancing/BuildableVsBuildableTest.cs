@@ -26,7 +26,22 @@ namespace BattleCruisers.Scenes.Test.Balancing
         protected float LeftOffsetInM { get { return leftOffsetInM != default(int) ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
         protected float RightOffsetInM { get { return rightOffsetInM != default(int) ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
 
-        public Camera Camera { get; protected set; }
+        // Lazily initialise, so camera can be accessed even if scenario 
+        // initialisation is delayed (kamikaze balancing tests)
+        private Camera _camera;
+        public Camera Camera 
+        { 
+            get
+            {
+                if (_camera == null)
+                {
+                    _camera = GetComponentInChildren<Camera>();
+                    _camera.enabled = false;
+                }
+
+                return _camera;
+            }
+        }
 
         public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
         {
@@ -49,10 +64,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             ShowScenarioDetails();
-
-            // Hide camera
-            Camera = GetComponentInChildren<Camera>();
-            Camera.enabled = false;
 
             // Start timer
             _timer = GetComponentInChildren<TimerController>();

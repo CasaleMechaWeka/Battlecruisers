@@ -3,7 +3,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Cruisers;
 using NSubstitute;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -11,12 +10,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
     public class KamikazeBalancingTest : AircraftVsShieldsTest
     {
         private KamikazeSignal _kamikazeSignal;
-
-        public void StaticInitialise()
-        {
-            // Because normal initialise (where we get the camera) is staggered
-            Camera = GetComponentInChildren<Camera>();
-        }
 
         protected override void OnInitialised()
         {
