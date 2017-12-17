@@ -7,17 +7,17 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class AttackBoatController : ShipController
 	{
-		private IBarrelWrapper _directFireAntiSea;
+		private IBarrelWrapper _antiSeaTurret;
 
-        protected override float EnemyDetectionRangeInM { get { return _directFireAntiSea.RangeInM; } }
+        protected override float EnemyDetectionRangeInM { get { return _antiSeaTurret.RangeInM; } }
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
-			_directFireAntiSea = gameObject.GetComponentInChildren<IBarrelWrapper>();
-			Assert.IsNotNull(_directFireAntiSea);
-			turrets.Add(_directFireAntiSea);
+            _antiSeaTurret = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_antiSeaTurret);
+			turrets.Add(_antiSeaTurret);
 
             return turrets;
         }
@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _directFireAntiSea.Initialise(_factoryProvider, enemyFaction, _attackCapabilities);
+            _antiSeaTurret.Initialise(_factoryProvider, enemyFaction, _attackCapabilities);
 		}
 	}
 }
