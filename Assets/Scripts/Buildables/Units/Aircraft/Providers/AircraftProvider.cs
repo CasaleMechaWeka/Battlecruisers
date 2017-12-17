@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
 
-            float enemyCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
+            float enemyCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? -BOMBER_PATROL_MARGIN : BOMBER_PATROL_MARGIN;
 			float enemyCruiserpatrolPointX = _enemyCruiserPosition.x + enemyCruiserPatrolPointAdjustmentX;
 
 			return new List<Vector2>() 
