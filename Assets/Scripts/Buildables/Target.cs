@@ -26,6 +26,7 @@ namespace BattleCruisers.Buildables
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
+        public event EventHandler<DamagedEventArgs> Damaged;
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
@@ -133,6 +134,12 @@ namespace BattleCruisers.Buildables
             {
 	            Health -= damageAmount;
 	            OnTakeDamage();
+
+                if (Damaged != null)
+                {
+                    // FELIX  Pass real damage source ITArget :/
+                    Damaged.Invoke(this, new DamagedEventArgs(damageSource: null));
+                }
 			}
 
             if (wasFullHealth)
