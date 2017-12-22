@@ -95,9 +95,9 @@ namespace BattleCruisers.Targets
             return new StaticTargetProvider(target);
 		}
 
-        public ITargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, Faction enemyFaction, ITargetFilter targetValidator)
+        public ITargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {
-            return new ShipBlockingEnemyProvider(this, enemyDetector, enemyFaction, targetValidator);
+            return new ShipBlockingEnemyProvider(this, enemyDetector, parentUnit);
         }
 
         public ITargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)

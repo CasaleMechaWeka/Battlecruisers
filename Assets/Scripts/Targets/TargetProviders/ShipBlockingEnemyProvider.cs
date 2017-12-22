@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -9,9 +10,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
+    // FELIX  Test!
     public class ShipBlockingEnemyProvider : ITargetProvider, ITargetConsumer
     {
-        private readonly ITargetFilter _targetValidator;
+        private readonly ITargetFilter _isInFrontFilter;
 
         private ITarget _target;
         public ITarget Target 
@@ -23,18 +25,19 @@ namespace BattleCruisers.Targets.TargetProviders
 
                 if (_target != null)
                 {
-                    Assert.IsTrue(_targetValidator.IsMatch(_target));
+                    Assert.IsTrue(_isInFrontFilter.IsMatch(_target));
 				}
             }
         }
 
-        public ShipBlockingEnemyProvider(ITargetsFactory targetsFactory, ITargetDetector enemyDetector, Faction enemyFaction, ITargetFilter targetValidator)
+        public ShipBlockingEnemyProvider(ITargetsFactory targetsFactory, ITargetDetector enemyDetector, IUnit parentUnit)
         {
-            Helper.AssertIsNotNull(targetsFactory, enemyDetector, targetValidator);
+            Helper.AssertIsNotNull(targetsFactory, enemyDetector, parentUnit);
 
-            _targetValidator = targetValidator;
+            _isInFrontFilter = targetsFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
+            Faction enemyFaction = Helper.GetOppositeFaction(parentUnit.Faction);
             ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
             ITargetFinder enemyFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 

@@ -2,7 +2,6 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -20,10 +19,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     public abstract class ShipController : Unit
 	{
 		private int _directionMultiplier;
-		private ITargetFinder _friendFinder;
         private IList<IBarrelWrapper> _turrets;
-        // FELIX  Make local field
-        private ITargetFilter _targetInFrontFilter;
         private ITargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
@@ -81,13 +77,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void SetupBlockingUnitDetection()
         {
-            // FELIX  Move into blocking enemy provider
-            _targetInFrontFilter = _targetsFactory.CreateTargetInFrontFilter(this);
-
             // Detect blocking enemies
             enemyDetector.Initialise(EnemyDetectionRangeInM);
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, enemyFaction, _targetInFrontFilter);
+            _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, this);
 
             // Friend detection for stopping
             friendDetector.Initialise(FriendDetectionRangeInM);
