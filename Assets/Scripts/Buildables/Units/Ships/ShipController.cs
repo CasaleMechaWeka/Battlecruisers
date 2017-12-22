@@ -6,7 +6,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -21,12 +20,11 @@ namespace BattleCruisers.Buildables.Units.Ships
     public abstract class ShipController : Unit
 	{
 		private int _directionMultiplier;
-		private ITarget _blockingFriendlyUnit;
 		private ITargetFinder _friendFinder;
         private IList<IBarrelWrapper> _turrets;
         // FELIX  Make local field
         private ITargetFilter _targetInFrontFilter;
-        private ITargetProvider _blockingEnemyProvider;
+        private ITargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
 
@@ -83,6 +81,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void SetupBlockingUnitDetection()
         {
+            // FELIX  Move into blocking enemy provider
             _targetInFrontFilter = _targetsFactory.CreateTargetInFrontFilter(this);
 
             // Detect blocking enemies
@@ -91,16 +90,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, enemyFaction, _targetInFrontFilter);
 
             // Friend detection for stopping
-            // FELIX  Keep this line :P
             friendDetector.Initialise(FriendDetectionRangeInM);
-
-
-            IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, blockingFriendlyTypes);
-            _friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
-            _friendFinder.TargetFound += OnFriendFound;
-            _friendFinder.TargetLost += OnFriendLost;
-            _friendFinder.StartFindingTargets();
+            _blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this);
         }
 
         protected override void OnFixedUpdate()
@@ -112,50 +103,17 @@ namespace BattleCruisers.Buildables.Units.Ships
 				if (rigidBody.velocity.x == 0)
 				{
                     if (_blockingEnemyProvider.Target == null
-						&& _blockingFriendlyUnit == null)
+                        && _blockingFriendlyProvider.Target == null)
 					{
 						StartMoving();
 					}
 				}
                 else if (_blockingEnemyProvider.Target != null
-					 || _blockingFriendlyUnit != null)
+                    || _blockingFriendlyProvider.Target != null)
 				{
 					StopMoving();
 				}
 			}
-		}
-
-        private void OnFriendFound(object sender, TargetEventArgs args)
-		{
-			Logging.Log(Tags.ATTACK_BOAT, "OnFriendFound()");
-
-			if (IsObjectInFront(args.Target))
-			{
-				_blockingFriendlyUnit = args.Target;
-			}
-		}
-
-		private void OnFriendLost(object sender, TargetEventArgs args)
-		{
-			Logging.Log(Tags.ATTACK_BOAT, "OnFriendLost()");
-
-			if (IsObjectInFront(args.Target))
-			{
-				Assert.IsTrue(_blockingFriendlyUnit != null);
-
-				if (object.ReferenceEquals(_blockingFriendlyUnit, args.Target))
-				{
-					_blockingFriendlyUnit = null;
-				}
-			}
-		}
-
-		private bool IsObjectInFront(ITarget target)
-		{
-			return (FacingDirection == Direction.Right
-					&& target.Position.x > transform.position.x)
-				|| (FacingDirection == Direction.Left
-					&& target.Position.x < transform.position.x);
 		}
 
 		private void StartMoving()
