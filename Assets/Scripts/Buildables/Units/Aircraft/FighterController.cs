@@ -7,6 +7,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

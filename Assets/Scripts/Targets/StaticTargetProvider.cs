@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetProviders;
 
 namespace BattleCruisers.Targets
 {

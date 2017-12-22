@@ -1,6 +1,6 @@
 ﻿using System;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProviders;
 using UnityEngine;
 using UnityEngine.Assertions;
 

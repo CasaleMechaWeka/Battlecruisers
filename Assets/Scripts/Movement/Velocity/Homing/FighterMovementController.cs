@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProviders;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity.Homing

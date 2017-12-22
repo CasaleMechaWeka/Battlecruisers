@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.TargetProviders
 {
 	public interface ITargetProvider
 	{

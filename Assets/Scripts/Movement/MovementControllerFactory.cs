@@ -6,7 +6,7 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProviders;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -24,8 +24,11 @@ namespace BattleCruisers.Movement
 
         #region Velocity
         #region Homing
-        public IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, 
-			ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+        public IMovementController CreateMissileMovementController(
+            Rigidbody2D rigidBody, 
+            IVelocityProvider maxVelocityProvider, 
+			ITargetProvider targetProvider, 
+            ITargetPositionPredictorFactory targetPositionPredictorFactory)
 		{
 			return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
 		}

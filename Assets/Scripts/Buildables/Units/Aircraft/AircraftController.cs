@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
