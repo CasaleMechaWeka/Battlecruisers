@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Targets
         ITargetFilter CreateTargetFilter(Faction faction);
 		ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         ITargetFilter CreateDummyTargetFilter(bool isMatchResult);
+        ITargetFilter CreateTargetInFrontFilter(IUnit source);
 		IExactMatchTargetFilter CreateExactMatchTargetFilter();
 		IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
 

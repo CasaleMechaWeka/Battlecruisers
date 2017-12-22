@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -73,6 +74,11 @@ namespace BattleCruisers.Targets
         public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
         {
             return new DummyTargetFilter(isMatchResult);
+        }
+
+        public ITargetFilter CreateTargetInFrontFilter(IUnit source)
+        {
+            return new TargetInFrontFilter(source);
         }
 		#endregion TargetFilters
 
