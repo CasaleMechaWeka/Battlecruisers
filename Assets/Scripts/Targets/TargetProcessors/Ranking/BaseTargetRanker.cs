@@ -1,15 +1,13 @@
-﻿using BattleCruisers.Buildables;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
-	/// <summary>
-	/// Prioritise targets by target value.
-	/// </summary>
-	public class BaseTargetRanker : ITargetRanker
+    /// <summary>
+    /// Prioritise targets by target value.
+    /// </summary>
+    public class BaseTargetRanker : ITargetRanker
 	{
 		protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 
