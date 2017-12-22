@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,12 +18,15 @@ namespace BattleCruisers.Buildables.Units.Ships
     /// 3. Boat will only stop to fight enemies.  Either this boat is destroyed, or the
     ///     enemy, in which case this boat will continue moving.
     /// </summary>
-    public abstract class ShipController : Unit, ITargetConsumer
+    public abstract class ShipController : Unit
 	{
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
 		private ITargetFinder _friendFinder;
         private IList<IBarrelWrapper> _turrets;
+        // FELIX  Make local field
+        private ITargetFilter _targetInFrontFilter;
+        private ITargetProvider _blockingEnemyProvider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
 
@@ -36,21 +37,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 		private float _damage;
 		public sealed override float Damage { get { return _damage; } }
-
-        private ITarget _blockingEnemyTarget;
-        public ITarget Target 
-        { 
-            private get { return _blockingEnemyTarget; }
-            set
-            {
-                if (value != null)
-                {
-                    Assert.IsTrue(IsObjectInFront(value));
-                }
-
-                _blockingEnemyTarget = value;
-            }
-        }
 
         private float FriendDetectionRangeInM
         {
@@ -97,21 +83,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void SetupBlockingUnitDetection()
         {
-            // Enemy detection for stopping (ignore aircraft for stopping)
-            // FELIX  Keep this :P
+            _targetInFrontFilter = _targetsFactory.CreateTargetInFrontFilter(this);
+
+            // Detect blocking enemies
             enemyDetector.Initialise(EnemyDetectionRangeInM);
-
-
-            IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter enemyDetectionFilter = _targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
-            ITargetFinder _enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
-
-            ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-            ITargetProcessor _enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
-            _enemyStoppingTargetProcessor.AddTargetConsumer(this);
-            _enemyStoppingTargetProcessor.StartProcessingTargets();
-
+			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, enemyFaction, _targetInFrontFilter);
 
             // Friend detection for stopping
             friendDetector.Initialise(FriendDetectionRangeInM);
@@ -131,13 +108,13 @@ namespace BattleCruisers.Buildables.Units.Ships
 			{
 				if (rigidBody.velocity.x == 0)
 				{
-					if (Target == null
+                    if (_blockingEnemyProvider.Target == null
 						&& _blockingFriendlyUnit == null)
 					{
 						StartMoving();
 					}
 				}
-				else if (Target != null
+                else if (_blockingEnemyProvider.Target != null
 					 || _blockingFriendlyUnit != null)
 				{
 					StopMoving();

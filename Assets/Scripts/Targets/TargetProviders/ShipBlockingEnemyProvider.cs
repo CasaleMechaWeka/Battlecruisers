@@ -40,8 +40,6 @@ namespace BattleCruisers.Targets.TargetProviders
             ITargetProcessor targetProcessor = targetsFactory.CreateTargetProcessor(enemyFinder, targetRanker);
             targetProcessor.AddTargetConsumer(this);
             targetProcessor.StartProcessingTargets();
-
-            targetProcessor.Dispose();
         }
     }
 }
