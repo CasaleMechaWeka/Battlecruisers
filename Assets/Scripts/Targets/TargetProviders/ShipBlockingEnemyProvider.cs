@@ -4,15 +4,33 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
     public class ShipBlockingEnemyProvider : ITargetProvider, ITargetConsumer
     {
-        public ITarget Target { get; set; }
+        private readonly ITargetFilter _targetValidator;
 
-        public ShipBlockingEnemyProvider(ITargetsFactory targetsFactory, ITargetDetector enemyDetector, Faction enemyFaction)
+        private ITarget _target;
+        public ITarget Target 
+        { 
+            get { return _target; }
+            set
+            {
+                _target = value;
+
+                if (_target != null)
+                {
+                    Assert.IsTrue(_targetValidator.IsMatch(_target));
+				}
+            }
+        }
+
+        public ShipBlockingEnemyProvider(ITargetsFactory targetsFactory, ITargetDetector enemyDetector, Faction enemyFaction, ITargetFilter targetValidator)
         {
+            _targetValidator = targetValidator;
+
             // Enemy detection for stopping (ignore aircraft)
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
