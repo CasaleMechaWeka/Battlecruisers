@@ -99,6 +99,11 @@ namespace BattleCruisers.Targets
         {
             return new ShipBlockingEnemyProvider(this, enemyDetector, enemyFaction, targetValidator);
         }
+
+        public ITargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
+        {
+            return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
+        }
         #endregion TargetProviders
     }
 }

@@ -38,5 +38,6 @@ namespace BattleCruisers.Targets
         // Providers
         ITargetProvider CreateStaticTargetProvider(ITarget target);
         ITargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, Faction enemyFaction, ITargetFilter targetValidator);
+        ITargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
 	}
 }
