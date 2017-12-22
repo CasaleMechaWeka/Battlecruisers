@@ -50,11 +50,6 @@ namespace BattleCruisers.Targets.TargetProviders
             }
         }
 
-        private void UpdateHighestPriorityTarget()
-        {
-            _highestPriorityTarget = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
-        }
-
         private void _parentDamagable_Damaged(object sender, DamagedEventArgs e)
         {
             if (e.DamageSource != null)
@@ -65,10 +60,15 @@ namespace BattleCruisers.Targets.TargetProviders
                 {
                     _attackingTarget = new RankedTarget(newRank, e.DamageSource);
                     UpdateHighestPriorityTarget();
-				}
+                }
             }
         }
 
+		private void UpdateHighestPriorityTarget()
+		{
+			_highestPriorityTarget = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
+		}
+		
         public void DisposeManagedState()
         {
             _parentDamagable.Damaged -= _parentDamagable_Damaged;
