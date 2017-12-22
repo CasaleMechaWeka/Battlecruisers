@@ -23,10 +23,10 @@ namespace BattleCruisers.Buildables.Units
 		public override Vector2 Velocity { get { return rigidBody.velocity; } }
 
 		private Direction _facingDirection;
-		protected Direction FacingDirection
+		public Direction FacingDirection
 		{
 			get { return _facingDirection; }
-			set
+            protected set
 			{
 				_facingDirection = value;
 				OnDirectionChange();
