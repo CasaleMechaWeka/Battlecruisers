@@ -88,6 +88,11 @@ namespace BattleCruisers.Targets
 		{
             return new StaticTargetProvider(target);
 		}
+
+        public ITargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, Faction enemyFaction)
+        {
+            return new ShipBlockingEnemyProvider(this, enemyDetector, enemyFaction);
+        }
         #endregion TargetProviders
     }
 }
