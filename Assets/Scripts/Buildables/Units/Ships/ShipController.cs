@@ -90,8 +90,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 		{
 			base.OnFixedUpdate();
 
-			if (BuildableState == BuildableState.Completed)
-			{
+            if (BuildableState == BuildableState.Completed)
+            {
+                // FELIX  Make flipping event based!!!  Then don't need to check every flipping frame :D
 				if (rigidBody.velocity.x == 0)
 				{
                     if (_blockingEnemyProvider.Target == null
