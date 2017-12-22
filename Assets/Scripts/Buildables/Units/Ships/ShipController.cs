@@ -24,8 +24,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
 		private int _directionMultiplier;
 		private ITarget _blockingFriendlyUnit;
-		private ITargetFinder _enemyFinder, _friendFinder;
-        protected ITargetProcessor _enemyStoppingTargetProcessor;
+		private ITargetFinder _friendFinder;
         private IList<IBarrelWrapper> _turrets;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
@@ -99,14 +98,17 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void SetupBlockingUnitDetection()
         {
             // Enemy detection for stopping (ignore aircraft for stopping)
-			enemyDetector.Initialise(EnemyDetectionRangeInM);
+            // FELIX  Keep this :P
+            enemyDetector.Initialise(EnemyDetectionRangeInM);
+
+
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter enemyDetectionFilter = _targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
-            _enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            ITargetFinder _enemyFinder = _targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = _targetsFactory.CreateEqualTargetRanker();
-            _enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
+            ITargetProcessor _enemyStoppingTargetProcessor = _targetsFactory.CreateTargetProcessor(_enemyFinder, targetRanker);
             _enemyStoppingTargetProcessor.AddTargetConsumer(this);
             _enemyStoppingTargetProcessor.StartProcessingTargets();
 
