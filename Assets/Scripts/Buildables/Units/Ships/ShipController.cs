@@ -91,7 +91,10 @@ namespace BattleCruisers.Buildables.Units.Ships
             _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, enemyFaction, _targetInFrontFilter);
 
             // Friend detection for stopping
+            // FELIX  Keep this line :P
             friendDetector.Initialise(FriendDetectionRangeInM);
+
+
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
             ITargetFilter friendFilter = _targetsFactory.CreateTargetFilter(Faction, blockingFriendlyTypes);
             _friendFinder = _targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
