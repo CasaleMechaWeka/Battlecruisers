@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProviders;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.TargetProviders
 {
     public class StaticTargetProvider : ITargetProvider
     {
