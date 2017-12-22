@@ -2,9 +2,6 @@
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-    // FELIX  Move to own interface
-    public interface IExactMatchTargetFilter : ITargetFilter, ITargetConsumer { }
-
 	public class ExactMatchTargetFilter : IExactMatchTargetFilter
 	{
 		public ITarget Target { private get; set; }
