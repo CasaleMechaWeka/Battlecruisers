@@ -13,6 +13,7 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 
 		private const int TARGET_VALUE_MULTIPLIER = 10;
 		private const int DEFAULT_ATTACK_CAPABILITY_BONUS = 0;
+        public const int MIN_TARGET_RANK = 0;
 
 		public BaseTargetRanker()
 		{
