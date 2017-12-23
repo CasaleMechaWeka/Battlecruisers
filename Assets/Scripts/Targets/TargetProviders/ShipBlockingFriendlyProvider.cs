@@ -9,11 +9,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Targets.TargetProviders
 {
     // FELIX  Test!
-    public class ShipBlockingFriendlyProvider : ITargetProvider
+    public class ShipBlockingFriendlyProvider : BroadcastingTargetProvider
     {
         private readonly ITargetFilter _isInFrontFilter;
-
-        public ITarget Target { get; private set; }
 
         public ShipBlockingFriendlyProvider(
 			ITargetsFactory targetsFactory, 

@@ -11,22 +11,20 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Targets.TargetProviders
 {
     // FELIX  Test!
-    public class ShipBlockingEnemyProvider : ITargetProvider, ITargetConsumer
+    public class ShipBlockingEnemyProvider : BroadcastingTargetProvider, ITargetConsumer
     {
         private readonly ITargetFilter _isInFrontFilter;
 
-        private ITarget _target;
-        public ITarget Target 
-        { 
-            get { return _target; }
+        ITarget ITargetConsumer.Target
+        {
             set
             {
-                _target = value;
-
-                if (_target != null)
+                if (value != null)
                 {
-                    Assert.IsTrue(_isInFrontFilter.IsMatch(_target));
-				}
+                    Assert.IsTrue(_isInFrontFilter.IsMatch(value));
+                }
+
+                Target = value;
             }
         }
 

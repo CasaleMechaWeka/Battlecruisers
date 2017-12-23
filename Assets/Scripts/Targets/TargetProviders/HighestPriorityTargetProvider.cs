@@ -10,7 +10,7 @@ namespace BattleCruisers.Targets.TargetProviders
     ///     via the ITargetConsumer.Target property).
     /// B) Attacking the parent damagable
     /// </summary>
-    public class HighestPriorityTargetProvider : IHighestPriorityTargetProvider
+    public class HighestPriorityTargetProvider : BroadcastingTargetProvider, IHighestPriorityTargetProvider
     {
         private readonly ITargetRanker _targetRanker;
         private readonly IDamagable _parentDamagable;
@@ -31,12 +31,8 @@ namespace BattleCruisers.Targets.TargetProviders
             _attackingTarget = nullTarget;
             _inRangeTarget = nullTarget;
 
-            _highestPriorityTarget = null;
+            Target = null;
         }
-
-        // Overall highest priority target
-        private ITarget _highestPriorityTarget;
-        ITarget ITargetProvider.Target { get { return _highestPriorityTarget; } }
 
         // Highest priority in range target
         private IRankedTarget _inRangeTarget;
@@ -66,7 +62,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
 		private void UpdateHighestPriorityTarget()
 		{
-			_highestPriorityTarget = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
+            Target = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
 		}
 		
         public void DisposeManagedState()
