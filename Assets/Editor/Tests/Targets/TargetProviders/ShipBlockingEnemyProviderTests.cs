@@ -1,0 +1,79 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetProviders;
+using NSubstitute;
+using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
+
+namespace BattleCruisers.Tests.Targets.TargetProviders
+{
+    public class ShipBlockingEnemyProviderTests
+    {
+        private ShipBlockingEnemyProvider _targetProvider;
+        private ITargetConsumer _asTargetConsumer;
+        private ITargetFilter _isInFrontFilter;
+        private ITarget _target;
+
+        [SetUp]
+        public void SetuUp()
+        {
+            UnityAsserts.Assert.raiseExceptions = true;
+
+            _isInFrontFilter = Substitute.For<ITargetFilter>();
+            _target = Substitute.For<ITarget>();
+
+            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            ITargetDetector enemyDetector = Substitute.For<ITargetDetector>();
+            ITargetFilter enemyFilter = Substitute.For<ITargetFilter>();
+            ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
+            ITargetRanker enemyRanker = Substitute.For<ITargetRanker>();
+			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
+            IUnit parentUnit = Substitute.For<IUnit>();
+
+            targetsFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
+            targetsFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
+            targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
+            targetsFactory.CreateEqualTargetRanker().Returns(enemyRanker);
+            targetsFactory.CreateTargetProcessor(enemyFinder, enemyRanker).Returns(targetProcessor);
+
+            _targetProvider = new ShipBlockingEnemyProvider(targetsFactory, enemyDetector, parentUnit);
+            _asTargetConsumer = _targetProvider;
+
+            targetProcessor.Received().AddTargetConsumer(_targetProvider);
+            targetProcessor.Received().StartProcessingTargets();
+        }
+
+        [Test]
+        public void Constructor_TargetIsNull()
+        {
+            Assert.IsNull(_targetProvider.Target);
+        }
+
+        [Test]
+        public void TargetAssigned_IsNotInFront_Throws()
+        {
+            _isInFrontFilter.IsMatch(_target).Returns(false);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _asTargetConsumer.Target = _target);
+        }
+
+        [Test]
+        public void TargetAssigned_Null_DoesNotCheckIsInFront()
+        {
+            _asTargetConsumer.Target = null;
+            _isInFrontFilter.DidNotReceive().IsMatch(target: null);
+        }
+
+        [Test]
+        public void TargetAssigned_UpdatesProvidedTarget()
+        {
+            _isInFrontFilter.IsMatch(_target).Returns(true);
+            _asTargetConsumer.Target = _target;
+            Assert.AreSame(_target, _targetProvider.Target);
+        }
+    }
+}
