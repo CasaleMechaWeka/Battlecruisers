@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
@@ -22,7 +23,10 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
 		private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
-        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider, _highPriorityTargetProvider;
+        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private IHighestPriorityTargetProvider _highPriorityTarget;
+        private ITargetProvider _highestPriorityTargetProvider;
+        private TargetProcessorWrapper _targetProcessorWrapper;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 1.4f;
@@ -77,6 +81,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
 
 			_damage = _turrets.Sum(turret => turret.DamagePerS);
+
+            _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
 		}
 
         protected abstract IList<IBarrelWrapper> GetTurrets();
@@ -92,10 +98,27 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 turret.StartAttackingTargets();
             }
-			
+
             SetupBlockingUnitDetection();
+			SetupTargetProcessorWrapper();
 			
             UpdateVelocity();
+        }
+
+        private void SetupTargetProcessorWrapper()
+        {
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+
+            _targetProcessorWrapper
+                .Initialise(
+                    _factoryProvider.TargetsFactory,
+                    _highPriorityTarget,
+                    enemyFaction,
+                    _attackCapabilities,
+                    OptimalArmamentRangeInM,
+                    minRangeInM: 0);
+
+            _targetProcessorWrapper.StartProvidingTargets();
         }
 
         private void SetupBlockingUnitDetection()
@@ -113,8 +136,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             // High priority target provider, for detecting targets that are attacking
             // us but are currently out of range.
             ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
-            _highPriorityTargetProvider = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
-            _highPriorityTargetProvider.TargetChanged += (sender, e) => UpdateVelocity();
+            _highPriorityTarget = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
+            _highestPriorityTargetProvider = _highPriorityTarget;
+            _highPriorityTarget.TargetChanged += (sender, e) => UpdateVelocity();
         }
 
         private void UpdateVelocity()
@@ -125,14 +149,14 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
-                    && _highPriorityTargetProvider.Target == null)
+                    && _highestPriorityTargetProvider.Target == null)
                 {
                     StartMoving();
                 }
             }
             else if (_blockingEnemyProvider.Target != null
                 || _blockingFriendlyProvider.Target != null
-                || _highPriorityTargetProvider.Target != null)
+                || _highestPriorityTargetProvider.Target != null)
             {
                 StopMoving();
             }
