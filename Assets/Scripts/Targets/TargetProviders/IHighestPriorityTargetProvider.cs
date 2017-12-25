@@ -2,5 +2,5 @@
 
 namespace BattleCruisers.Targets.TargetProviders
 {
-    public interface IHighestPriorityTargetProvider : ITargetProvider, ITargetConsumer, IManagedDisposable { }
+    public interface IHighestPriorityTargetProvider : IBroadCastingTargetProvider, ITargetConsumer, IManagedDisposable { }
 }

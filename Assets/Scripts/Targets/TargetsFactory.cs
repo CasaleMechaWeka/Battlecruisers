@@ -110,7 +110,7 @@ namespace BattleCruisers.Targets
             return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
         }
 
-        public IBroadCastingTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable)
+        public IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable)
         {
             return new HighestPriorityTargetProvider(targetRanker, parentDamagable);
         }
