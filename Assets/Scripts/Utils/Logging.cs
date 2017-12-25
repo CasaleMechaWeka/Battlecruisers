@@ -14,7 +14,7 @@ namespace BattleCruisers.Utils
 	{
 		// Units
 		public const string AIRCRAFT = "Aircraft";
-		public const string ATTACK_BOAT = "AttackBoat";
+		public const string SHIPS = "Ships";
 
 		// Buildings
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
@@ -83,7 +83,7 @@ namespace BattleCruisers.Utils
 
 			// Units
 			tagsToActiveness.Add(Tags.AIRCRAFT, false);
-			tagsToActiveness.Add(Tags.ATTACK_BOAT, false);
+			tagsToActiveness.Add(Tags.SHIPS, false);
 
 			// Buildings
 			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);

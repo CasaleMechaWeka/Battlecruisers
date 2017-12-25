@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private IHighestPriorityTargetProvider _highPriorityTarget;
         private ITargetProvider _highestPriorityTargetProvider;
-        private TargetProcessorWrapper _targetProcessorWrapper;
+        private ShipTargetProcessorWrapper _targetProcessorWrapper;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 1.4f;
@@ -82,7 +82,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 			_damage = _turrets.Sum(turret => turret.DamagePerS);
 
-            _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
+            _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
 		}
 
         protected abstract IList<IBarrelWrapper> GetTurrets();
@@ -139,15 +139,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             _highPriorityTarget = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
             _highestPriorityTargetProvider = _highPriorityTarget;
             _highPriorityTarget.TargetChanged += (sender, e) => UpdateVelocity();
-        }
-
-        protected override void OnFixedUpdate() 
-        { 
-            // Check if we have come within range of our high priority target
-            if (!IsStationary && _highestPriorityTargetProvider.Target != null)
-            {
-                UpdateVelocity();
-            }
+            _highPriorityTarget.NewInRangeTarget += (sender, e) => UpdateVelocity();
         }
 
         private void UpdateVelocity()
@@ -175,19 +167,25 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private bool IsHighestPriorityTargetWithinRange()
         {
+
             Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
-            return Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position) <= OptimalArmamentRangeInM;
+            float distanceCenterToCenter = Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position);
+            float distanceCenterToEdge = distanceCenterToCenter - _highestPriorityTargetProvider.Target.Size.x / 2;
+
+            Logging.Log(Tags.SHIPS, "Distance: " + distanceCenterToEdge + "  Range: " + OptimalArmamentRangeInM);
+
+            return distanceCenterToEdge <= OptimalArmamentRangeInM;
         }
 
 		private void StartMoving()
 		{
-			Logging.Log(Tags.ATTACK_BOAT, "StartMoving()");
+			Logging.Log(Tags.SHIPS, "StartMoving()");
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
 		}
 
 		private void StopMoving()
 		{
-			Logging.Log(Tags.ATTACK_BOAT, "StopMoving()");
+			Logging.Log(Tags.SHIPS, "StopMoving()");
 			rigidBody.velocity = new Vector2(0, 0);
 		}
 

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 
@@ -45,8 +46,16 @@ namespace BattleCruisers.Targets.TargetProviders
                 int targetRank = value != null ? _targetRanker.RankTarget(value) : BaseTargetRanker.MIN_TARGET_RANK;
                 _inRangeTarget = new RankedTarget(targetRank, value);
                 UpdateHighestPriorityTarget();
+
+                // FELIX  Update tests
+                if (NewInRangeTarget != null)
+                {
+                    NewInRangeTarget.Invoke(this, EventArgs.Empty);
+                }
             }
         }
+
+        public event EventHandler NewInRangeTarget;
 
         private void _parentDamagable_Damaged(object sender, DamagedEventArgs e)
         {
@@ -74,6 +83,11 @@ namespace BattleCruisers.Targets.TargetProviders
         public void DisposeManagedState()
         {
             _parentDamagable.Damaged -= _parentDamagable_Damaged;
+        }
+
+        void IManagedDisposable.DisposeManagedState()
+        {
+            throw new NotImplementedException();
         }
     }
 }
