@@ -8,6 +8,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
+    /// <summary>
+    /// Provides a friendly target encountered right in front of the parent unit.
+    /// This means the parent unit should stop moving, to not run into the blocking
+    /// friendly unit.
+    /// 
+    /// NOTE:
+    /// + Assumes not more than one friendly unit will be detected in front of the
+    /// parent unit at a time (should hold true for ships :) ).
+    /// </summary>
     public class ShipBlockingFriendlyProvider : BroadcastingTargetProvider
     {
         private readonly ITargetFilter _isInFrontFilter;

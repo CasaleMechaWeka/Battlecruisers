@@ -10,6 +10,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
+    /// <summary>
+    /// Simply passes wraps a target processor that detects blocking enemy targets.
+    /// 
+    /// NOTE:
+    /// + Assumes all blocking targets will be in front of the parent unit
+    /// (should hold true for ships :) ).
+    /// </summary>
     public class ShipBlockingEnemyProvider : BroadcastingTargetProvider, ITargetConsumer
     {
         private readonly ITargetFilter _isInFrontFilter;
