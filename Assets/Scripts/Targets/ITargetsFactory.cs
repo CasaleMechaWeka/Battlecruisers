@@ -39,5 +39,6 @@ namespace BattleCruisers.Targets
         ITargetProvider CreateStaticTargetProvider(ITarget target);
         IBroadCastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit);
         IBroadCastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
+        IBroadCastingTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable);
 	}
 }
