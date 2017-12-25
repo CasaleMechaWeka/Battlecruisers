@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -21,23 +22,40 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
 		private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
-        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider, _highPriorityTargetProvider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
+        private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 1.4f;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
-        protected abstract float EnemyDetectionRangeInM { get; }
-		public override TargetType TargetType { get { return TargetType.Ships; } }
+        public override TargetType TargetType { get { return TargetType.Ships; } }
 
-		private float _damage;
-		public sealed override float Damage { get { return _damage; } }
+        /// <summary>
+        /// Optimal range for ship to do the most damage, while staying out of
+        /// range of defence buildings.
+        /// 
+        /// Usually this will simply be the range of the ship's longest ranged turret,
+        /// but can be less if we want multiple of the ships turrets to be in range.
+        /// </summary>
+        protected abstract float OptimalArmamentRangeInM { get; }
+
+        private float _damage;
+        public sealed override float Damage { get { return _damage; } }
 
         private float FriendDetectionRangeInM
         {
             get
             {
                 return FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
+            }
+        }
+
+		private float EnemyDetectionRangeInM
+        {
+            get
+            {
+                return ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
             }
         }
 
@@ -91,6 +109,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             friendDetector.Initialise(FriendDetectionRangeInM);
             _blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this);
             _blockingFriendlyProvider.TargetChanged += (sender, e) => UpdateVelocity();
+
+            // High priority target provider, for detecting targets that are attacking
+            // us but are currently out of range.
+            ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
+            _highPriorityTargetProvider = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
+            _highPriorityTargetProvider.TargetChanged += (sender, e) => UpdateVelocity();
         }
 
         private void UpdateVelocity()
@@ -100,13 +124,15 @@ namespace BattleCruisers.Buildables.Units.Ships
             if (IsStationary)
             {
                 if (_blockingEnemyProvider.Target == null
-                    && _blockingFriendlyProvider.Target == null)
+                    && _blockingFriendlyProvider.Target == null
+                    && _highPriorityTargetProvider.Target == null)
                 {
                     StartMoving();
                 }
             }
             else if (_blockingEnemyProvider.Target != null
-                || _blockingFriendlyProvider.Target != null)
+                || _blockingFriendlyProvider.Target != null
+                || _highPriorityTargetProvider.Target != null)
             {
                 StopMoving();
             }
@@ -124,10 +150,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 			rigidBody.velocity = new Vector2(0, 0);
 		}
 
-		// Enemy detector is in ship center, but longest range barrel may be behind
-		// ship center.  Want to only stop once barrel is in range, so make enemy 
-        // detection range be less than the longest range barrel.
-        protected float FindEnemyDetectionRange(IBarrelWrapper longestRangeBarrel)
+        /// <summary>
+		/// Enemy detector is in ship center, but longest range barrel may be behind
+		/// ship center.  Want to only stop once barrel is in range, so make optimal 
+		/// armament range be less than the longest range barrel.
+        protected float FindOptimalArmamentRangeInM(IBarrelWrapper longestRangeBarrel)
         {
             return longestRangeBarrel.RangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
         }

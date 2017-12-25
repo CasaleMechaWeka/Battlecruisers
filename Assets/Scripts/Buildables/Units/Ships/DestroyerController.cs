@@ -9,14 +9,14 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite, _missileLauncher;
 
         private float _enemyDectionRangeInM;
-        protected override float EnemyDetectionRangeInM { get { return _enemyDectionRangeInM; } }
+        protected override float OptimalArmamentRangeInM { get { return _enemyDectionRangeInM; } }
 
         public override void StaticInitialise()
         {
             base.StaticInitialise();
 
             _attackCapabilities.Add(TargetType.Aircraft);
-            _enemyDectionRangeInM = FindEnemyDetectionRange();
+            _enemyDectionRangeInM = FindOptimalArmamentRangeInM();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// + Stay out of range of mortars
         /// + But go close enough for more than one destroyer to attack
         /// </summary>
-        private float FindEnemyDetectionRange()
+        private float FindOptimalArmamentRangeInM()
         {
             // This is the range at which an enemy mortar will be able to attack :)
             return _mortar.RangeInM + Size.x / 2;
