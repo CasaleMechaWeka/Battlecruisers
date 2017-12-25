@@ -41,7 +41,7 @@ namespace BattleCruisers.Cruisers
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
-        public Vector2 Size { get { return _renderer.bounds.size; } }
+        public override Vector2 Size { get { return _renderer.bounds.size; } }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public ISlotWrapper SlotWrapper { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }

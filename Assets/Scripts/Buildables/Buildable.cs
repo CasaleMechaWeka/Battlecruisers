@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables
         public SlotType SlotType { get { return slotType; } }
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
-        public Vector3 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
+        public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
 
         Quaternion IBuildable.Rotation 

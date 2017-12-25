@@ -35,15 +35,12 @@ namespace BattleCruisers.Buildables
 		IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
-
         float Damage { get; }
-        Vector3 Size { get; }
         SlotType SlotType { get; }
+		IBoostable BuildProgressBoostable { get; }
   
         new Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }
-
-        IBoostable BuildProgressBoostable { get; }
 
 		event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;

@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables
         public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
         public Vector2 Position { get { return gameObject.transform.position; } }
+        public abstract Vector2 Size { get; }
 
         // Seems to be an okay approximation (for cruisers at least)
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;

@@ -21,12 +21,18 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		public IShieldStats Stats { get; private set; } 
 		public override TargetType TargetType { get { return TargetType.Buildings; } }
 
+        private Vector2 _size;
+        public override Vector2 Size { get { return _size; } }
+
         public override void StaticInitialise()
         {
             base.StaticInitialise();
 
             Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);
+
+            float diameter = 2 * Stats.ShieldRadiusInM;
+            _size = new Vector2(diameter, diameter); 
         }
 
 		public void Initialise(Faction faction)

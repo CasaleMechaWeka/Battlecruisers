@@ -11,12 +11,16 @@ namespace BattleCruisers.Projectiles
 		public override TargetType TargetType { get { return TargetType.Rocket; } }
 		public override Vector2 Velocity { get { return _rigidBody.velocity; } }
 
-        public void Initialise(Faction faction, Rigidbody2D rigidBody)
+        private Vector2 _size;
+        public override Vector2 Size { get { return _size; } }
+
+        public void Initialise(Faction faction, Rigidbody2D rigidBody, Vector2 size)
 		{
 			StaticInitialise();
 
 			Faction = faction;
 			_rigidBody = rigidBody;
+            _size = size;
 		}
 
 		// All RocketTarget gameObjects are wrapped by a RocketController gameObject.

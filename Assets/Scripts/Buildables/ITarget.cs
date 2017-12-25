@@ -30,5 +30,6 @@ namespace BattleCruisers.Buildables
 		List<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
 		Vector2 Position { get; }
+        Vector2 Size { get; }
 	}
 }
