@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables
 	}
 
 	/// <summary>
-	/// Used for prioritising targets.  Can become a lot more fine graind :)
+	/// Used for prioritising targets, so do NOT change order!
 	/// </summary>
 	public enum TargetValue
 	{
