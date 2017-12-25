@@ -47,7 +47,6 @@ namespace BattleCruisers.Targets.TargetProviders
                 _inRangeTarget = new RankedTarget(targetRank, value);
                 UpdateHighestPriorityTarget();
 
-                // FELIX  Update tests
                 if (NewInRangeTarget != null)
                 {
                     NewInRangeTarget.Invoke(this, EventArgs.Empty);

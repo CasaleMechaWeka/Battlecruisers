@@ -49,6 +49,17 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 
         #region In range target
         [Test]
+        public void NewInRangeTarget_EmitsEvents()
+        {
+            int eventCount = 0;
+            _highestPriorityTargetProvider.NewInRangeTarget += (sender, e) => eventCount++;
+
+            _targetConsumer.Target = null;
+
+            Assert.AreEqual(1, eventCount);
+        }
+
+        [Test]
         public void NullInRangeTarget_DoesNothing()
         {
             _targetConsumer.Target = null;
