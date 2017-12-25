@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -35,11 +36,12 @@ namespace BattleCruisers.Scenes.Test
 				Target = _target
 			};
 
+			ITarget parent = Substitute.For<ITarget>();
             CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
             ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
-			BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-            _rocketSpawner.Initialise(rocketStats, args.FactoryProvider);
+            _rocketSpawner.Initialise(parent, rocketStats, args.FactoryProvider);
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
 		}

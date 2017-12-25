@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
             MissileController missile = Instantiate(missilePrefab, transform.position, new Quaternion());
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            missile.Initialise(_projectileStats, missileVelocity, targetFilter, target, _factoryProvider);
+            missile.Initialise(_projectileStats, missileVelocity, targetFilter, target, _factoryProvider, _parent);
 		}
 	}
 }

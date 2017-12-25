@@ -70,7 +70,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _movementControllerFactory.CreateDummyRotationMovementController(),
                     _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.AngleLimiterFactory.CreateDummyLimiter(),
-                    _factoryProvider);
+                    _factoryProvider,
+                    parent: this);
 
             _barrelController.Initialise(args);
 			

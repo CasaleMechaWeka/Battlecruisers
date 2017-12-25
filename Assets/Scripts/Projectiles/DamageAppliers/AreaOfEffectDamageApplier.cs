@@ -21,7 +21,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             _targetLayerMask = targetLayerMask;
         }
 
-        public void ApplyDamage(ITarget baseTarget, Vector2 collisionPoint)
+        public void ApplyDamage(ITarget baseTarget, Vector2 collisionPoint, ITarget damageSource)
         {
             Collider2D[] colliders;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
                 if (target != null && _targetFilter.IsMatch(target))
                 {
-                    target.TakeDamage(_damageStats.Damage);
+                    target.TakeDamage(_damageStats.Damage, damageSource);
                 }
             }
 		}

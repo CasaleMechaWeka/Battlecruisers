@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-                rocketSpawner.Initialise(_rocketStats, args.FactoryProvider);
+                rocketSpawner.Initialise(args.Parent, _rocketStats, args.FactoryProvider);
 			}
 		}
 

@@ -17,9 +17,10 @@ namespace BattleCruisers.Projectiles
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             ITarget target,
-            IFactoryProvider factoryProvider)
+            IFactoryProvider factoryProvider,
+            ITarget parent)
 		{
-            base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider);
+            base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider, parent);
 
 			Target = target;
 

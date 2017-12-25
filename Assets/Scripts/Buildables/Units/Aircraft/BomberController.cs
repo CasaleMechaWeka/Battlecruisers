@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
 
-            _bombSpawner.Initialise(_bombStats, targetFilter, _factoryProvider);
+            _bombSpawner.Initialise(this, _bombStats, targetFilter, _factoryProvider);
 
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
 		}

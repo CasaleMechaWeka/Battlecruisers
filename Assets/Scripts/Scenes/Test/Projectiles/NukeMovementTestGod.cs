@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -31,7 +33,9 @@ namespace BattleCruisers.Scenes.Test
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-            nuke.Initialise(nukeStats, targetFilter, target, args.FactoryProvider);
+			ITarget parent = Substitute.For<ITarget>();
+
+            nuke.Initialise(nukeStats, targetFilter, target, args.FactoryProvider, parent);
 			nuke.Launch();
 		}
 	}

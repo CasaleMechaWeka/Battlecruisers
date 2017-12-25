@@ -16,6 +16,7 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private IExplosion _explosion;
+        private ITarget _parent;
 
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
@@ -24,15 +25,17 @@ namespace BattleCruisers.Projectiles
             IProjectileStats projectileStats, 
             Vector2 velocityInMPerS, 
             ITargetFilter targetFilter, 
-            IFactoryProvider factoryProvider)
+            IFactoryProvider factoryProvider,
+            ITarget parent)
 		{
-            Helper.AssertIsNotNull(projectileStats, targetFilter, factoryProvider);
+            Helper.AssertIsNotNull(projectileStats, targetFilter, factoryProvider, parent);
 
 			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
+            _parent = parent;
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
 
@@ -76,7 +79,7 @@ namespace BattleCruisers.Projectiles
 
 			if (target != null && _targetFilter.IsMatch(target))
 			{
-                _damageApplier.ApplyDamage(target, transform.position);
+                _damageApplier.ApplyDamage(target, transform.position, damageSource: _parent);
 
                 DestroyProjectile();
             }

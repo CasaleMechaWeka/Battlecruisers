@@ -13,9 +13,9 @@ namespace BattleCruisers.Projectiles.Spawners
         public RocketController rocketPrefab;
         protected override ProjectileController ProjectilePrefab { get { return rocketPrefab; } }
 
-        public void Initialise(ICruisingProjectileStats rocketStats, IFactoryProvider factoryProvider)
+        public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(rocketStats, factoryProvider);
+            base.Initialise(parent, rocketStats, factoryProvider);
 
             _rocketStats = rocketStats;
 		}
@@ -24,7 +24,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
             RocketController rocket = Instantiate(rocketPrefab, transform.position, new Quaternion());
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            rocket.Initialise(_rocketStats, rocketVelocity, targetFilter, target, _factoryProvider, faction);
+            rocket.Initialise(_rocketStats, rocketVelocity, targetFilter, target, _factoryProvider, _parent, faction);
 		}
 	}
 }

@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables
         // When health reaches 0
         event EventHandler<DestroyedEventArgs> Destroyed;
 
-		void TakeDamage(float damageAmount);
+		void TakeDamage(float damageAmount, ITarget damageSource);
 		void Destroy();
 	}
 }

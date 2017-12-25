@@ -98,7 +98,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
                     _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.AngleLimiterFactory.CreateFighterLimiter(),
-                    _factoryProvider);
+                    _factoryProvider,
+                    parent: this);
 
             _barrelController.Initialise(args);
 

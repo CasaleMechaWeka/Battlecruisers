@@ -48,11 +48,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
 			IList<TargetType> nonAirTargets = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            _directFireAntiSea.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
-            _mortar.Initialise(_factoryProvider, enemyFaction, nonAirTargets);
+            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, nonAirTargets);
+            _mortar.Initialise(this, _factoryProvider, enemyFaction, nonAirTargets);
 
             IList<TargetType> airTargets = new List<TargetType>() { TargetType.Aircraft };
-            _directFireAntiAir.Initialise(_factoryProvider, enemyFaction, airTargets);
+            _directFireAntiAir.Initialise(this, _factoryProvider, enemyFaction, airTargets);
 		}
 	}
 }

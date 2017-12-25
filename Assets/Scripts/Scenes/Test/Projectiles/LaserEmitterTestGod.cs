@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -114,7 +115,8 @@ namespace BattleCruisers.Scenes.Test
         {
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
-            laserEmitter.Initialise(targetFilter, damagePerS: 100);
+            ITarget parent = Substitute.For<ITarget>();
+            laserEmitter.Initialise(targetFilter, damagePerS: 100, parent: parent);
         }
 
         private void SetupMovingTarget(TestAircraftController movingTarget, bool isSourceMirrored)

@@ -12,9 +12,9 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 			_damage = damage;
 		}
 
-        public void ApplyDamage(ITarget target, Vector2 collisionPoint)
+        public void ApplyDamage(ITarget target, Vector2 collisionPoint, ITarget damageSource)
 		{
-			target.TakeDamage(_damage);
+            target.TakeDamage(_damage, damageSource);
 		}
 	}
 }

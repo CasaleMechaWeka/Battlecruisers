@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(_projectileStats, args.TargetFilter, args.FactoryProvider);
+                spawner.Initialise(args.Parent, _projectileStats, args.TargetFilter, args.FactoryProvider);
             }
 		}
 

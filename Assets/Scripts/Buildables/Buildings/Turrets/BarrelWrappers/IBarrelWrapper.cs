@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         IList<Renderer> Renderers { get; }
 
 		void StaticInitialise();
-        void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities);
+        void Initialise(ITarget parent, IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities);
         void StartAttackingTargets();
 	}
 }

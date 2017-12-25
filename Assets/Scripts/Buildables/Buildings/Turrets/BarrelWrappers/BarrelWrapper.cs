@@ -87,9 +87,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        public void Initialise(IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
+        public void Initialise(ITarget parent, IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
         {
-            Helper.AssertIsNotNull(factoryProvider, enemyFaction, attackCapabilities);
+            Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction, attackCapabilities);
 
             _factoryProvider = factoryProvider;
             _enemyFaction = enemyFaction;
@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
 			foreach (BarrelController barrel in _barrels)
             {
-                InitialiseBarrelController(barrel, targetFilter, angleCalculator);
+                InitialiseBarrelController(barrel, parent, targetFilter, angleCalculator);
             }
 
             _targetProcessorWrapper
@@ -114,7 +114,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _minRangeInM);
         }
 
-        protected virtual void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+        protected virtual void InitialiseBarrelController(
+            BarrelController barrel, 
+            ITarget parent, 
+            ITargetFilter targetFilter, 
+            IAngleCalculator angleCalculator)
         {
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
@@ -125,7 +129,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     CreateRotationMovementController(barrel),
                     CreatePositionValidator(),
                     CreateAngleLimiter(),
-                    _factoryProvider);
+                    _factoryProvider,
+                    parent);
 
             barrel.Initialise(args);
         }

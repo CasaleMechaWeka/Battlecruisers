@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,7 @@ namespace BattleCruisers.Projectiles.Spawners
 		private ContactFilter2D _contactFilter;
 		private ITargetFilter _targetFilter;
 		private float _damagePerS;
+        private ITarget _parent;
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -30,10 +32,14 @@ namespace BattleCruisers.Projectiles.Spawners
 			};
 		}
 
-		public void Initialise(ITargetFilter targetFilter, float damagePerS)
+        public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent)
 		{
+            Helper.AssertIsNotNull(targetFilter, parent);
+            Assert.IsTrue(damagePerS > 0);
+
 			_targetFilter = targetFilter;
 			_damagePerS = damagePerS;
+            _parent = parent;
 		}
 
 		public void FireLaser(float angleInDegrees, bool isSourceMirrored)
@@ -52,7 +58,7 @@ namespace BattleCruisers.Projectiles.Spawners
                 _lineRenderer.SetPosition(1, collision.CollisionPoint);
 
 				float damage = Time.deltaTime * _damagePerS;
-                collision.Target.TakeDamage(damage);
+                collision.Target.TakeDamage(damage, _parent);
 			}
 		}
 

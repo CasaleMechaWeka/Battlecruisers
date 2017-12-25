@@ -19,6 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public IFactoryProvider FactoryProvider { get; private set; }
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
         public IAngleLimiter AngleLimiter { get; private set; }
+        public ITarget Parent { get; private set; }
 
         public BarrelControllerArgs(
             ITargetFilter targetFilter,
@@ -28,7 +29,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IRotationMovementController rotationMovementController,
 			ITargetPositionValidator targetPositionValidator,
             IAngleLimiter angleLimiter,
-            IFactoryProvider factoryProvider)
+            IFactoryProvider factoryProvider,
+            ITarget parent)
         {
             Helper.AssertIsNotNull(
                 targetFilter, 
@@ -38,7 +40,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 rotationMovementController, 
                 targetPositionValidator,
                 angleLimiter,
-                factoryProvider);
+                factoryProvider,
+                parent);
 
             TargetFilter = targetFilter;
             TargetPositionPredictor = targetPositionPredictor;
@@ -48,6 +51,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             FactoryProvider = factoryProvider;
             AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
+            Parent = parent;
         }
     }
 }

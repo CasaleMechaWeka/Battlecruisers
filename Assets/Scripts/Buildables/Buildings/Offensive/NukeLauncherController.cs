@@ -75,7 +75,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_launchedNuke.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-            _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider);
+            _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider, this);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)

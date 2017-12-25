@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     {
         protected override float DesiredAngleInDegrees { get { return 60; } }
 
-        protected override void InitialiseBarrelController(BarrelController barrel, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+        protected override void InitialiseBarrelController(BarrelController barrel, ITarget parent, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
         {
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
@@ -20,7 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     CreateRotationMovementController(barrel),
                     CreatePositionValidator(),
                     CreateAngleLimiter(),
-                    _factoryProvider);
+                    _factoryProvider,
+                    parent);
 
             Faction ownFaction = Helper.GetOppositeFaction(_enemyFaction);
 			RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();

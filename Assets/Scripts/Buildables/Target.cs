@@ -124,7 +124,7 @@ namespace BattleCruisers.Buildables
 			}
 		}
 
-		public void TakeDamage(float damageAmount)
+        public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
             bool wasFullHealth = IsFullHealth;
 
@@ -137,8 +137,7 @@ namespace BattleCruisers.Buildables
 
                 if (Damaged != null)
                 {
-                    // FELIX  Pass real damage source ITArget :/
-                    Damaged.Invoke(this, new DamagedEventArgs(damageSource: null));
+                    Damaged.Invoke(this, new DamagedEventArgs(damageSource));
                 }
 			}
 

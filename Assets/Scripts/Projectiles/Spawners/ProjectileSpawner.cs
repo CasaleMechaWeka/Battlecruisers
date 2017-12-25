@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -6,15 +7,17 @@ namespace BattleCruisers.Projectiles.Spawners
 {
     public abstract class ProjectileSpawner : MonoBehaviour
 	{
+        protected ITarget _parent;
         protected IProjectileStats _projectileStats;
         protected abstract ProjectileController ProjectilePrefab { get; }
 
         protected IFactoryProvider _factoryProvider;
 
-        public void Initialise(IProjectileStats projectileStats, IFactoryProvider factoryProvider)
+        public void Initialise(ITarget parent, IProjectileStats projectileStats, IFactoryProvider factoryProvider)
         {
-            Helper.AssertIsNotNull(ProjectilePrefab, projectileStats, factoryProvider);
+            Helper.AssertIsNotNull(ProjectilePrefab, parent,projectileStats, factoryProvider);
 
+            _parent = parent;
             _projectileStats = projectileStats;
             _factoryProvider = factoryProvider;
         }

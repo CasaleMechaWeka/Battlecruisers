@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 			if (Target != null && _fireIntervalManager.ShouldFire())
 			{
-                Target.TakeDamage(_teslaCoilStats.Damage);
+                Target.TakeDamage(_teslaCoilStats.Damage, damageSource: this);
                 _fireIntervalManager.OnFired();
 			}
 		}

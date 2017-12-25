@@ -4,6 +4,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -22,12 +23,13 @@ namespace BattleCruisers.Scenes.Test
             IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
 			Vector2 initialVelocity = new Vector2(5, 5);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
+            ITarget parent = Substitute.For<ITarget>();
 
             MissileController[] missiles = FindObjectsOfType<MissileController>();
 
             foreach (MissileController missile in missiles)
 			{
-                missile.Initialise(missileStats, initialVelocity, targetFilter, target, args.FactoryProvider);
+                missile.Initialise(missileStats, initialVelocity, targetFilter, target, args.FactoryProvider, parent);
 			}
 		}
 	}

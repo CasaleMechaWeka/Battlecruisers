@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -35,11 +37,12 @@ namespace BattleCruisers.Scenes.Test
 				Target = _target
 			};
 
+			ITarget parent = Substitute.For<ITarget>();
             ProjectileStats stats = GetComponent<ProjectileStats>();
             IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
-			BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-            _missileSpawner.Initialise(missileStats, args.FactoryProvider);
+            _missileSpawner.Initialise(parent, missileStats, args.FactoryProvider);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

@@ -21,9 +21,10 @@ namespace BattleCruisers.Projectiles
             INukeStats nukeStats,
             ITargetFilter targetFilter,
             ITarget target,
-            IFactoryProvider factoryProvider)
+            IFactoryProvider factoryProvider,
+            ITarget parent)
 		{
-            base.Initialise(nukeStats, nukeStats.InitialVelocity, targetFilter, factoryProvider);
+            base.Initialise(nukeStats, nukeStats.InitialVelocity, targetFilter, factoryProvider, parent);
 
             _movementControllerFactory = factoryProvider.MovementControllerFactory;
 			_nukeStats = nukeStats;

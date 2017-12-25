@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -32,8 +33,10 @@ namespace BattleCruisers.Scenes.Test
 			
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
+            ITarget parent = Substitute.For<ITarget>();
+
 			RocketController rocket = FindObjectOfType<RocketController>();
-            rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, args.FactoryProvider, Faction.Blues);
+            rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, args.FactoryProvider, parent, Faction.Blues);
 		}
 	}
 }

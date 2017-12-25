@@ -172,7 +172,7 @@ namespace BattleCruisers.Scenes
 			// TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W))
 			{
-				_aiCruiser.TakeDamage(_aiCruiser.Health);
+                _aiCruiser.TakeDamage(_aiCruiser.Health, damageSource: _playerCruiser);
 			}
 		}
 

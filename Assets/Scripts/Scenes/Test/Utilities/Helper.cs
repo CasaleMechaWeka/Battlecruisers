@@ -420,7 +420,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRotationMovementController rotationMovementController = null,
             ITargetPositionValidator targetPositionValidator = null,
             IAngleLimiter angleLimiter = null,
-            IFactoryProvider factoryProvider = null)
+            IFactoryProvider factoryProvider = null,
+            ITarget parent = null)
         {
             return
                 new BarrelControllerArgs(
@@ -431,7 +432,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
-                    factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider);
+                    factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
+                    parent: parent ?? Substitute.For<ITarget>());
         }
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
