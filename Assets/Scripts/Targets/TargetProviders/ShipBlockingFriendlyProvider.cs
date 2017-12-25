@@ -34,7 +34,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
         private void OnFriendFound(object sender, TargetEventArgs args)
         {
-            Logging.Log(Tags.ATTACK_BOAT, "OnFriendFound()");
+            Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendFound()");
 
             if (_isInFrontFilter.IsMatch(args.Target))
             {
@@ -44,7 +44,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
         private void OnFriendLost(object sender, TargetEventArgs args)
         {
-            Logging.Log(Tags.ATTACK_BOAT, "OnFriendLost()");
+            Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendLost()");
 
             if (_isInFrontFilter.IsMatch(args.Target))
             {
