@@ -87,6 +87,11 @@ namespace BattleCruisers.Targets
 		{
 			return new EqualTargetRanker();
 		}
+
+        public ITargetRanker CreateShipTargetRanker()
+        {
+            return new ShipTargetRanker();
+        }
         #endregion TargetRankers
 
         #region TargetProviders
