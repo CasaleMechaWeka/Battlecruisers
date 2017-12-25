@@ -26,10 +26,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 			ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, attackCapabilities);
 			_targetFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
-			// Create target processor
-			ITargetRanker targetRanker = targetsFactory.CreateEqualTargetRanker();
+            // Create target processor
+            ITargetRanker targetRanker = CreateTargetRanker(targetsFactory);
 			return targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 		}
+
+        protected virtual ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        {
+            return targetsFactory.CreateEqualTargetRanker();
+        }
 
         protected override void CleanUp()
         {
