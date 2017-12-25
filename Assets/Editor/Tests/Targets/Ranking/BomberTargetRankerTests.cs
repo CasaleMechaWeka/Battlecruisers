@@ -1,19 +1,14 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using System.Collections.Generic;
-using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEditor;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.Ranking
 {
-	/// <summary>
-	/// Note:  Targets are ranked in ascending priority.
-	/// </summary>
-	public class BomberTargetRankerTests : BaseTargetRankerTests
+    /// <summary>
+    /// Note:  Targets are ranked in ascending priority.
+    /// </summary>
+    public class BomberTargetRankerTests : BaseTargetRankerTests
 	{
 		[SetUp]
 		public override void SetuUp()
