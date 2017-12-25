@@ -40,6 +40,8 @@ namespace BattleCruisers.Targets.TargetProviders
         { 
             set 
             {
+                Logging.Log(Tags.TARGET_PROVIDERS, "Assigned target: " + value);
+
                 int targetRank = value != null ? _targetRanker.RankTarget(value) : BaseTargetRanker.MIN_TARGET_RANK;
                 _inRangeTarget = new RankedTarget(targetRank, value);
                 UpdateHighestPriorityTarget();
@@ -48,6 +50,8 @@ namespace BattleCruisers.Targets.TargetProviders
 
         private void _parentDamagable_Damaged(object sender, DamagedEventArgs e)
         {
+            Logging.Log(Tags.TARGET_PROVIDERS, "Parent damaged by: " + e.DamageSource);
+
             if (e.DamageSource != null)
             {
                 int newRank = _targetRanker.RankTarget(e.DamageSource);
@@ -63,6 +67,8 @@ namespace BattleCruisers.Targets.TargetProviders
 		private void UpdateHighestPriorityTarget()
 		{
             Target = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
+
+            Logging.Log(Tags.TARGET_PROVIDERS, "Highest priority target: " + Target);
 		}
 		
         public void DisposeManagedState()
