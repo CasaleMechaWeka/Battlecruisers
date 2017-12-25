@@ -30,9 +30,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
             ITargetDetector friendDetector = Substitute.For<ITargetDetector>();
             ITargetFilter friendFilter = Substitute.For<ITargetFilter>();
-
             IUnit parentUnit = Substitute.For<IUnit>();
-            parentUnit.Faction.Returns(Faction.Blues);
 
             targetsFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             targetsFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(friendFilter);
