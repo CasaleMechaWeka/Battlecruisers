@@ -19,13 +19,13 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		[Test]
 		public void LowValueAntiAir_TrumpsHighValue()
 		{
-			ITarget lowValueAnitAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
+            ITarget lowValueAntiAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitAir, highValue });
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiAir, highValue });
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAnitAir });
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAntiAir });
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
@@ -33,13 +33,13 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		[Test]
 		public void LowValueAntiCruiser_TrumpsHighValue()
 		{
-			ITarget lowValueAnitCruiser = CreateMockTarget(TargetValue.Low, TargetType.Cruiser);
+            ITarget lowValueAntiCruiser = CreateMockTarget(TargetValue.Low, TargetType.Cruiser);
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitCruiser, highValue });
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiCruiser, highValue });
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAnitCruiser });
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAntiCruiser });
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
@@ -47,13 +47,13 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		[Test]
 		public void LowValueAntiAir_TrumpsHighValueAntiCruiser()
 		{
-			ITarget lowValueAnitAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
+            ITarget lowValueAntiAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
 			ITarget highValueAntiCruiser = CreateMockTarget(TargetValue.High, TargetType.Cruiser);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAnitAir, highValueAntiCruiser });
+			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiAir, highValueAntiCruiser });
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValueAntiCruiser, lowValueAnitAir });
+			_expectedOrder = new List<ITarget>(new ITarget[] { highValueAntiCruiser, lowValueAntiAir });
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
