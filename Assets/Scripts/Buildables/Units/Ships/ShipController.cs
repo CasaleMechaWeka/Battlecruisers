@@ -141,6 +141,15 @@ namespace BattleCruisers.Buildables.Units.Ships
             _highPriorityTarget.TargetChanged += (sender, e) => UpdateVelocity();
         }
 
+        protected override void OnFixedUpdate() 
+        { 
+            // Check if we have come within range of our high priority target
+            if (!IsStationary && _highestPriorityTargetProvider.Target != null)
+            {
+                UpdateVelocity();
+            }
+        }
+
         private void UpdateVelocity()
         {
             Assert.IsTrue(BuildableState == BuildableState.Completed);
@@ -149,17 +158,25 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
-                    && _highestPriorityTargetProvider.Target == null)
+                    && (_highestPriorityTargetProvider.Target == null
+                        || !IsHighestPriorityTargetWithinRange()))
                 {
                     StartMoving();
                 }
             }
             else if (_blockingEnemyProvider.Target != null
                 || _blockingFriendlyProvider.Target != null
-                || _highestPriorityTargetProvider.Target != null)
+                || (_highestPriorityTargetProvider.Target != null
+                    && IsHighestPriorityTargetWithinRange()))
             {
                 StopMoving();
             }
+        }
+
+        private bool IsHighestPriorityTargetWithinRange()
+        {
+            Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
+            return Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position) <= OptimalArmamentRangeInM;
         }
 
 		private void StartMoving()
