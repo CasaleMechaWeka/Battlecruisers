@@ -28,13 +28,18 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             _targetConsumer = targetConsumer;
 
-            ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
-            Assert.IsNotNull(targetRankerWrapper);
-            ITargetRanker targetRanker = targetRankerWrapper.CreateTargetRanker(targetsFactory);
+            ITargetRanker targetRanker = CreateTargetRanker(targetsFactory);
 
             _targetProcessor = CreateTargetProcessor(targetsFactory, targetRanker, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
 
             _isProvidingTargets = false;
+        }
+
+        protected virtual ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        {
+			ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
+			Assert.IsNotNull(targetRankerWrapper);
+			return targetRankerWrapper.CreateTargetRanker(targetsFactory);
         }
 
         protected abstract ITargetProcessor CreateTargetProcessor(
