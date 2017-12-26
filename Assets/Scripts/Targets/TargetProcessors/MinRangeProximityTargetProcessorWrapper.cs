@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
+    // FELIX Extend ProximityTargetProcessorWrapper :)
     public class MinRangeProximityTargetProcessorWrapper : TargetProcessorWrapper
     {
         private ITargetFinder _targetFinder;
