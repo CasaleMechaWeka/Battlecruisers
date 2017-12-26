@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private IHighestPriorityTargetProvider _highPriorityTarget;
         private ITargetProvider _highestPriorityTargetProvider;
-        private ShipTargetProcessorWrapper _targetProcessorWrapper;
+        private TargetProcessorWrapper _targetProcessorWrapper;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 1.4f;
@@ -82,7 +82,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 			_damage = _turrets.Sum(turret => turret.DamagePerS);
 
-            _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
+            _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
 		}
 
         protected abstract IList<IBarrelWrapper> GetTurrets();
