@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetProcessors.Ranking.Wrappers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,13 +28,18 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             _targetConsumer = targetConsumer;
 
-            _targetProcessor = CreateTargetProcessor(targetsFactory, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
+            ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
+            Assert.IsNotNull(targetRankerWrapper);
+            ITargetRanker targetRanker = targetRankerWrapper.CreateTargetRanker(targetsFactory);
+
+            _targetProcessor = CreateTargetProcessor(targetsFactory, targetRanker, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
 
             _isProvidingTargets = false;
         }
 
         protected abstract ITargetProcessor CreateTargetProcessor(
             ITargetsFactory targetsFactory,
+            ITargetRanker targetRanker,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float detectionRangeInM,

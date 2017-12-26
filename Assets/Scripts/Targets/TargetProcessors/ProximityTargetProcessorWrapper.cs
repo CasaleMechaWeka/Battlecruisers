@@ -13,6 +13,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected override ITargetProcessor CreateTargetProcessor(
             ITargetsFactory targetsFactory, 
+            ITargetRanker targetRanker,
             Faction enemyFaction, 
 			IList<TargetType> attackCapabilities,
             float detectionRangeInM, 
@@ -27,14 +28,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             // Create target processor
-            ITargetRanker targetRanker = CreateTargetRanker(targetsFactory);
 			return targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 		}
-
-        protected virtual ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
-        {
-            return targetsFactory.CreateEqualTargetRanker();
-        }
 
         protected override void CleanUp()
         {

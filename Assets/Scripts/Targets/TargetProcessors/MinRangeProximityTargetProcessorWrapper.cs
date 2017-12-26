@@ -15,6 +15,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected override ITargetProcessor CreateTargetProcessor(
             ITargetsFactory targetsFactory, 
+            ITargetRanker targetRanker,
             Faction enemyFaction, 
             IList<TargetType> attackCapabilities, 
             float maxRangeInM, 
@@ -33,7 +34,6 @@ namespace BattleCruisers.Targets.TargetProcessors
             _targetFinder = targetsFactory.CreateMinRangeTargetFinder(maxRangeDetector, minRangeDetector, enemyDetectionFilter);
 
             // Start processing targets
-            ITargetRanker targetRanker = targetsFactory.CreateEqualTargetRanker();
             return targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
         }
 
