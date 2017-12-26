@@ -21,7 +21,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             ITargetConsumer targetConsumer,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
-            float detectionRangeInM,
+            float maxRangeInM,
             float minRangeInM = 0)
         {
             Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
@@ -30,7 +30,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             ITargetRanker targetRanker = CreateTargetRanker(targetsFactory);
 
-            _targetProcessor = CreateTargetProcessor(targetsFactory, targetRanker, enemyFaction, attackCapabilities, detectionRangeInM, minRangeInM);
+            _targetProcessor = CreateTargetProcessor(targetsFactory, targetRanker, enemyFaction, attackCapabilities, maxRangeInM, minRangeInM);
 
             _isProvidingTargets = false;
         }
@@ -47,7 +47,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             ITargetRanker targetRanker,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
-            float detectionRangeInM,
+            float maxRangeInM,
             float minRangeInM);
 
         public void StartProvidingTargets()
