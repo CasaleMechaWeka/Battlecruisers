@@ -1,16 +1,12 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    // FELIX Extend ProximityTargetProcessorWrapper :)
-    public class MinRangeProximityTargetProcessorWrapper : TargetProcessorWrapper
+    public class MinRangeProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper
     {
-        private ITargetFinder _targetFinder;
-
-        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
+        protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
 			CircleTargetDetector maxRangeDetector = transform.FindNamedComponent<CircleTargetDetector>("MaxRangeDetector");
             maxRangeDetector.Initialise(args.MaxRangeInM);
@@ -20,16 +16,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             // Create target finder
             ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-            _targetFinder = args.TargetsFactory.CreateMinRangeTargetFinder(maxRangeDetector, minRangeDetector, enemyDetectionFilter);
-
-            // Start processing targets
-            return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
-        }
-
-        protected override void CleanUp()
-        {
-            base.CleanUp();
-            _targetFinder.Dispose();
+            return args.TargetsFactory.CreateMinRangeTargetFinder(maxRangeDetector, minRangeDetector, enemyDetectionFilter);
         }
     }
 }

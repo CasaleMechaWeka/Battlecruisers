@@ -11,17 +11,21 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
 		{
+
+            _targetFinder = CreateTargetFinder(args);
+            return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+        }
+
+        protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
+        {
 			CircleTargetDetector enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(enemyDetector);
-
-            // Create target finder
-            enemyDetector.Initialise(args.MaxRangeInM);
+			
+			// Create target finder
+			enemyDetector.Initialise(args.MaxRangeInM);
 			ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-			_targetFinder = args.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
-
-            // Create target processor
-			return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
-		}
+			return args.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+        }
 
         protected override void CleanUp()
         {
