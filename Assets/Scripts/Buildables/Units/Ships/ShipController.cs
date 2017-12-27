@@ -109,15 +109,15 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            _targetProcessorWrapper
-                .Initialise(
+            ITargetProcessorArgs args 
+                = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
                     _highPriorityTarget,
                     enemyFaction,
                     _attackCapabilities,
-                    OptimalArmamentRangeInM,
-                    minRangeInM: 0);
+                    OptimalArmamentRangeInM);
 
+			_targetProcessorWrapper.Initialise(args);
             _targetProcessorWrapper.StartProvidingTargets();
         }
 

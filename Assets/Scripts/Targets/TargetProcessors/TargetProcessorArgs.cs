@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -22,6 +23,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             float minRangeInM = 0)
         {
             Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
+            Assert.IsTrue(maxRangeInM > minRangeInM);
 
             TargetsFactory = targetsFactory;
             TargetConsumer = targetConsumer;

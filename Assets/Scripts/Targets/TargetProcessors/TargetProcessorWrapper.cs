@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+﻿using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProcessors.Ranking.Wrappers;
-using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,23 +13,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         private bool IsInitialised { get { return _targetProcessor != null; } }
 
-        public void Initialise(
-            ITargetsFactory targetsFactory,
-            ITargetConsumer targetConsumer,
-            Faction enemyFaction,
-            IList<TargetType> attackCapabilities,
-            float maxRangeInM,
-            float minRangeInM = 0)
+        public void Initialise(ITargetProcessorArgs args)
         {
-            Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
+            Assert.IsNotNull(args);
 
-            _targetConsumer = targetConsumer;
+            _targetConsumer = args.TargetConsumer;
+			_isProvidingTargets = false;
 
-            ITargetRanker targetRanker = CreateTargetRanker(targetsFactory);
-
-            _targetProcessor = CreateTargetProcessor(targetsFactory, targetRanker, enemyFaction, attackCapabilities, maxRangeInM, minRangeInM);
-
-            _isProvidingTargets = false;
+            ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
+            _targetProcessor = CreateTargetProcessor(args, targetRanker);
         }
 
         protected virtual ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
@@ -42,13 +31,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 			return targetRankerWrapper.CreateTargetRanker(targetsFactory);
         }
 
-        protected abstract ITargetProcessor CreateTargetProcessor(
-            ITargetsFactory targetsFactory,
-            ITargetRanker targetRanker,
-            Faction enemyFaction,
-            IList<TargetType> attackCapabilities,
-            float maxRangeInM,
-            float minRangeInM);
+        protected abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker);
 
         public void StartProvidingTargets()
         {

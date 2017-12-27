@@ -104,14 +104,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 InitialiseBarrelController(barrel, parent, targetFilter, angleCalculator);
             }
 
-            _targetProcessorWrapper
-                .Initialise(
+            ITargetProcessorArgs args
+                = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
                     this,
                     _enemyFaction,
                     _attackCapabilities,
                     RangeInM,
                     _minRangeInM);
+
+            _targetProcessorWrapper.Initialise(args);
         }
 
         protected virtual void InitialiseBarrelController(

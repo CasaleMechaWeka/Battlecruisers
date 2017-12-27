@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetFinders;
+﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using UnityEngine.Assertions;
@@ -11,24 +9,18 @@ namespace BattleCruisers.Targets.TargetProcessors
 	{
 		private ITargetFinder _targetFinder;
 
-        protected override ITargetProcessor CreateTargetProcessor(
-            ITargetsFactory targetsFactory, 
-            ITargetRanker targetRanker,
-            Faction enemyFaction, 
-			IList<TargetType> attackCapabilities,
-            float maxRangeInM, 
-            float minRangeInM)
+        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
 		{
 			CircleTargetDetector enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
 			Assert.IsNotNull(enemyDetector);
 
             // Create target finder
-            enemyDetector.Initialise(maxRangeInM);
-			ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, attackCapabilities);
-			_targetFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            enemyDetector.Initialise(args.MaxRangeInM);
+			ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+			_targetFinder = args.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             // Create target processor
-			return targetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+			return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
 		}
 
         protected override void CleanUp()

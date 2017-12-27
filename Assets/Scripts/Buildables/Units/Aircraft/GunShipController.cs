@@ -82,13 +82,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetConsumer targetConsumer = this;
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            _followingTargetProcessor
-                .Initialise(
+            ITargetProcessorArgs args
+                = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
                     targetConsumer,
                     enemyFaction,
                     AttackCapabilities,
                     enemyFollowRangeInM);
+
+            _followingTargetProcessor.Initialise(args);
             _followingTargetProcessor.StartProvidingTargets();
 
 			// Create target tracker => For keeping track of in range targets

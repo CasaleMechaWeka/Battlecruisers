@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+﻿using BattleCruisers.Targets.TargetProcessors.Ranking;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -12,15 +10,9 @@ namespace BattleCruisers.Targets.TargetProcessors
             return null;
         }
 
-        protected override ITargetProcessor CreateTargetProcessor(
-            ITargetsFactory targetsFactory,
-            ITargetRanker targetRanker,
-            Faction enemyFaction,
-			IList<TargetType> attackCapabilities,
-            float detectionRangeInM,
-            float minRangeInM)
+        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
         {
-            return targetsFactory.OffensiveBuildableTargetProcessor;
+            return args.TargetsFactory.OffensiveBuildableTargetProcessor;
         }
     }
 }
