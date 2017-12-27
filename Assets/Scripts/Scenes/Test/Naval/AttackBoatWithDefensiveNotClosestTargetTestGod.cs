@@ -15,14 +15,20 @@ namespace BattleCruisers.Scenes.Test.Naval
 		{
 			Helper helper = new Helper();
 
-            TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Reds);
-            turret.StartConstruction();
+            // Turrets
+            TurretController[] turrets = FindObjectsOfType<TurretController>();
+            foreach (TurretController turret in turrets)
+            {
+                helper.InitialiseBuilding(turret, Faction.Reds);
+                turret.StartConstruction();
+			}
 
+            // Fake cruiser
             IBuilding blockingCruiserImitiation = FindObjectOfType<NavalFactory>();
             helper.InitialiseBuilding(blockingCruiserImitiation, Faction.Reds);
             blockingCruiserImitiation.StartConstruction();
 
+            // Attack boat
             AttackBoatController boat = FindObjectOfType<AttackBoatController>();
             helper.InitialiseUnit(boat, Faction.Blues);
 			boat.StartConstruction();
