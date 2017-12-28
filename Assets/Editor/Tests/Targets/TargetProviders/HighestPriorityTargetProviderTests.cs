@@ -134,6 +134,18 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             NewAttackingTarget(_attackingTarget2, _highRank);
             Assert.AreSame(_attackingTarget2, _targetProvider.Target);
         }
+
+        [Test]
+        public void AttackingTarget_Destroyed_UpdatesOverallTarget()
+        {
+            // Attacking target
+            NewAttackingTarget(_attackingTarget, _lowRank);
+            Assert.AreSame(_attackingTarget, _targetProvider.Target);
+
+            // Target destroyed
+            _attackingTarget.Destroyed += Raise.EventWith(_attackingTarget, new DestroyedEventArgs(_attackingTarget));
+            Assert.IsNull(_targetProvider.Target);
+        }
         #endregion Attacking target
 
         #region Combination of in range and attacking targets
