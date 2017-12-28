@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private TargetProcessorWrapper _targetProcessorWrapper;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
-        private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 1.4f;
+        private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
