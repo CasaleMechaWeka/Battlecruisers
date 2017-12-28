@@ -15,9 +15,25 @@ namespace BattleCruisers.Targets.TargetProviders
     {
         private readonly ITargetRanker _targetRanker;
         private readonly IDamagable _parentDamagable;
+        private readonly IRankedTarget _nullTarget;
 
         // Highest priority target that is attacking our parent
         private IRankedTarget _attackingTarget;
+        private IRankedTarget AttackingTarget
+        {
+            get { return _attackingTarget; }
+            set
+            {
+                _attackingTarget = value;
+
+                if (_attackingTarget.Target != null)
+                {
+                    _attackingTarget.Target.Destroyed += AttackingTarget_Destroyed;
+				}
+
+                UpdateHighestPriorityTarget();
+            }
+        }
 
         public HighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable)
         {
@@ -28,9 +44,9 @@ namespace BattleCruisers.Targets.TargetProviders
 
             _parentDamagable.Damaged += _parentDamagable_Damaged;
 
-            IRankedTarget nullTarget = new RankedTarget(BaseTargetRanker.MIN_TARGET_RANK, target: null);
-            _attackingTarget = nullTarget;
-            _inRangeTarget = nullTarget;
+            _nullTarget = new RankedTarget(BaseTargetRanker.MIN_TARGET_RANK, target: null);
+            _attackingTarget = _nullTarget;
+            _inRangeTarget = _nullTarget;
 
             Target = null;
         }
@@ -64,29 +80,35 @@ namespace BattleCruisers.Targets.TargetProviders
             {
                 int newRank = _targetRanker.RankTarget(e.DamageSource);
 
-                if (newRank > _attackingTarget.Rank)
+                if (newRank > AttackingTarget.Rank)
                 {
-                    _attackingTarget = new RankedTarget(newRank, e.DamageSource);
-                    UpdateHighestPriorityTarget();
+                    AttackingTarget = new RankedTarget(newRank, e.DamageSource);
                 }
             }
         }
 
 		private void UpdateHighestPriorityTarget()
 		{
-            Target = _attackingTarget.Rank > _inRangeTarget.Rank ? _attackingTarget.Target : _inRangeTarget.Target;
+            Target = AttackingTarget.Rank > _inRangeTarget.Rank ? AttackingTarget.Target : _inRangeTarget.Target;
 
             Logging.Log(Tags.TARGET_PROVIDERS, "Highest priority target: " + Target);
 		}
-		
+
+        private void AttackingTarget_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            e.DestroyedTarget.Destroyed -= AttackingTarget_Destroyed;
+
+            if (ReferenceEquals(AttackingTarget.Target, e.DestroyedTarget))
+            {
+                // Destroyed attacking target was highest priority attacking target
+                AttackingTarget = _nullTarget;
+                UpdateHighestPriorityTarget();
+            }
+        }
+
         public void DisposeManagedState()
         {
             _parentDamagable.Damaged -= _parentDamagable_Damaged;
-        }
-
-        void IManagedDisposable.DisposeManagedState()
-        {
-            throw new NotImplementedException();
         }
     }
 }
