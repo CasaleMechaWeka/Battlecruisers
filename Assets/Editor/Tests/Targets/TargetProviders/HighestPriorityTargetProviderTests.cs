@@ -105,6 +105,17 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         }
 
         [Test]
+        public void DestroyedAttackingTarget_DoesNothing()
+        {
+            _attackingTarget.IsDestroyed.Returns(true);
+
+            _parentDamagable.Damaged += Raise.EventWith(_parentDamagable, new DamagedEventArgs(_attackingTarget));
+
+            _targetRanker.DidNotReceiveWithAnyArgs().RankTarget(default(ITarget));
+            Assert.IsNull(_targetProvider.Target);
+        }
+
+        [Test]
         public void FirstAttackingTarget_BecomesOverallTarget()
         {
             NewAttackingTarget(_attackingTarget, _lowRank);

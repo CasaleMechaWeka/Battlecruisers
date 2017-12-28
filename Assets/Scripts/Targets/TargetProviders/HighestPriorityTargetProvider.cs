@@ -76,7 +76,7 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Logging.Log(Tags.TARGET_PROVIDERS, "Parent damaged by: " + e.DamageSource);
 
-            if (e.DamageSource != null)
+            if (e.DamageSource != null && !e.DamageSource.IsDestroyed)
             {
                 int newRank = _targetRanker.RankTarget(e.DamageSource);
 
@@ -102,7 +102,6 @@ namespace BattleCruisers.Targets.TargetProviders
             {
                 // Destroyed attacking target was highest priority attacking target
                 AttackingTarget = _nullTarget;
-                UpdateHighestPriorityTarget();
             }
         }
 
