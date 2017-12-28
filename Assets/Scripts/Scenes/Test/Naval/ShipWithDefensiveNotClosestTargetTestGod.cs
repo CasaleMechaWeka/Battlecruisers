@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
-    // FELIX  Avoid duplicate code with:  Frigate vs Defensive not close enough, & then AB vs Elevated target
     public class ShipWithDefensiveNotClosestTargetTestGod : MonoBehaviour 
 	{
 		void Start()
@@ -28,10 +27,15 @@ namespace BattleCruisers.Scenes.Test.Naval
             helper.InitialiseBuilding(blockingCruiserImitiation, Faction.Reds);
             blockingCruiserImitiation.StartConstruction();
 
-            // Attack boat
+            // Ship
             ShipController boat = FindObjectOfType<ShipController>();
-            helper.InitialiseUnit(boat, Faction.Blues);
-			boat.StartConstruction();
-		}
+            InitialiseBoat(helper, boat, turrets);
+            boat.StartConstruction();
+        }
+
+        protected virtual void InitialiseBoat(Helper helper, ShipController boat, TurretController[] turrets)
+        {
+			helper.InitialiseUnit(boat, Faction.Blues);
+        }
 	}
 }
