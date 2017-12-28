@@ -167,7 +167,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private bool IsHighestPriorityTargetWithinRange()
         {
-
             Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
             float distanceCenterToCenter = Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position);
             float distanceCenterToEdge = distanceCenterToCenter - _highestPriorityTargetProvider.Target.Size.x / 2;
