@@ -103,7 +103,15 @@ namespace BattleCruisers.Data.Static
                 // Don't want AI to try and build a kamikaze signal as an ultra,
                 // as it is only effective if there are a certain number of planes.
                 // Simpler to make the AI only build ultras that are always effective.
-                StaticPrefabKeys.Buildings.KamikazeSignal
+                StaticPrefabKeys.Buildings.KamikazeSignal,
+
+                // Don't want AI to try and build an ultralisk as an ultra,
+                // because it is only super effective if building something else
+                // afterwards (other offensives, ultras, or units).  As the AI's
+                // strategy may be to win with a fast ultra (after which the AI
+                // may do nothing), again only let the AI build ultras that
+                // are always effective.
+                StaticPrefabKeys.Buildings.Ultralisk
             };
         }
 
