@@ -120,7 +120,7 @@ namespace BattleCruisers.AI.BuildOrders
                     return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
 					
 				case OffensiveType.Ultras:
-                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo);
+                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, _staticData.AIBannedUltrakeys);
 					
 				default:
 					throw new ArgumentException();
