@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
     public class InfiniteBuildOrderTests
 	{
         private ILevelInfo _levelInfo;
-		private IList<IPrefabKey> _availableBuildings;
+		private IList<IPrefabKey> _availableBuildings, _bannedBuildings;
         private BuildingCategory _buildingCategory;
         private IPrefabKey _constructableKey, _notConstructableKey;
 
@@ -22,6 +22,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 			UnityAsserts.Assert.raiseExceptions = true;
 
             _availableBuildings = new List<IPrefabKey>();
+            _bannedBuildings = new List<IPrefabKey>();
             _buildingCategory = BuildingCategory.Ultra;
 			_constructableKey = Substitute.For<IPrefabKey>();
 			_notConstructableKey = Substitute.For<IPrefabKey>();
@@ -35,14 +36,23 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		[Test]
 		public void Constructor_NoAvailableBuildngs_Throws()
 		{
-            Assert.Throws<UnityAsserts.AssertionException>(() => new InfiniteBuildOrder(_buildingCategory, _levelInfo));
+            Assert.Throws<UnityAsserts.AssertionException>(() => new InfiniteBuildOrder(_buildingCategory, _levelInfo, _bannedBuildings));
 		}
+
+        [Test]
+        public void Constructor_NoAvailableNonBannedBuildngs_Throws()
+        {
+            _availableBuildings.Add(_constructableKey);
+            _bannedBuildings.Add(_constructableKey);
+
+            Assert.Throws<UnityAsserts.AssertionException>(() => new InfiniteBuildOrder(_buildingCategory, _levelInfo, _bannedBuildings));
+        }
 
         [Test]
         public void MoveNext_NoConstructableBuilding_CurrentIsNull()
         {
             _availableBuildings.Add(_notConstructableKey);
-            IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo);
+            IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo, _bannedBuildings);
 
             bool hasKey = buildOrder.MoveNext();
 
@@ -54,7 +64,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		public void MoveNext_ConstructableBuilding_CurrentIsBuilding()
 		{
             _availableBuildings.Add(_constructableKey);
-			IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo);
+            IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo, _bannedBuildings);
 
 			bool hasKey = buildOrder.MoveNext();
 
@@ -67,7 +77,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
         {
             _availableBuildings.Add(_constructableKey);
             _availableBuildings.Add(_notConstructableKey);
-            IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo);
+            IDynamicBuildOrder buildOrder = new InfiniteBuildOrder(_buildingCategory, _levelInfo, _bannedBuildings);
 
             bool hasKey = buildOrder.MoveNext();
 

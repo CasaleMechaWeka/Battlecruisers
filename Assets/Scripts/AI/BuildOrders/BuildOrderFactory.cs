@@ -181,11 +181,15 @@ namespace BattleCruisers.AI.BuildOrders
                     size);
         }
 
-        private IDynamicBuildOrder CreateDynamicBuildOrder(BuildingCategory buildingCategory, int size, ILevelInfo levelInfo)
+        private IDynamicBuildOrder CreateDynamicBuildOrder(
+            BuildingCategory buildingCategory, 
+            int size, 
+            ILevelInfo levelInfo,
+            IList<IPrefabKey> bannedBuildings = null)
         {
             return
                 new FiniteBuildOrder(
-                    new InfiniteBuildOrder(buildingCategory, levelInfo),
+                    new InfiniteBuildOrder(buildingCategory, levelInfo, bannedBuildings),
                     size);
         }
     }

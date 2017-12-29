@@ -16,7 +16,8 @@ namespace BattleCruisers.AI.BuildOrders
 
         public InfiniteBuildOrder(
             BuildingCategory buildingCategory, 
-            ILevelInfo levelInfo)
+            ILevelInfo levelInfo,
+            IList<IPrefabKey> bannedBuildings)
 		{
             Assert.IsNotNull(levelInfo);
 
@@ -24,7 +25,23 @@ namespace BattleCruisers.AI.BuildOrders
 
             _availableBuildings = _levelInfo.GetAvailableBuildings(buildingCategory);
             Assert.IsTrue(_availableBuildings.Count != 0);
+
+            RemoveBuildingsToIgnore(bannedBuildings);
+            Assert.IsTrue(_availableBuildings.Count != 0);
 		}
+
+        private void RemoveBuildingsToIgnore(IList<IPrefabKey> bannedBuildings)
+        {
+            if (bannedBuildings == null)
+            {
+                return;
+            }
+
+            foreach (IPrefabKey bannedBuilding in bannedBuildings)
+            {
+                _availableBuildings.Remove(bannedBuilding);
+            }
+        }
 
         public bool MoveNext()
         {
