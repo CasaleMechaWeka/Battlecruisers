@@ -6,6 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class BuildingDetailsManager : ItemDetailsManager<IBuilding>
 	{
+        // FELIX  Initialise programmatically?
 		public ComparableBuildingDetailsController singleItemDetails, leftComparableItemDetails, rightComparableItemDetails;
 
 		public void Initialise()
