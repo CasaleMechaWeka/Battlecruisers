@@ -16,8 +16,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private readonly UnlockedBuildingItemsRow _unlockedRow;
 		private readonly IDictionary<IBuilding, BuildingKey> _buildingToKey;
 
-		public BuildingItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory, IUIFactory uiFactory, BuildingCategory buildingCategory, 
-			LoadoutBuildingItemsRow loadoutRow, UnlockedBuildingItemsRow unlockedRow, BuildingDetailsManager detailsManager)
+		public BuildingItemsRow(
+            IGameModel gameModel, 
+            IPrefabFactory prefabFactory, 
+            IUIFactory uiFactory, 
+            BuildingCategory buildingCategory, 
+			LoadoutBuildingItemsRow loadoutRow, 
+            UnlockedBuildingItemsRow unlockedRow, 
+            BuildingDetailsManager detailsManager)
 			: base(gameModel, prefabFactory)
 		{
 			_buildingCategory = buildingCategory;
