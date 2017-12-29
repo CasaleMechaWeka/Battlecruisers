@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -19,11 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 
 		public void Initialise(IUIFactory uiFactory, IList<IBuilding> buildings, IItemDetailsManager<IBuilding> detailsManager)
 		{
-			Assert.IsNotNull(layoutGroup);
+            Helper.AssertIsNotNull(uiFactory, buildings, detailsManager, layoutGroup);
 			Assert.IsTrue(buildings.Count <= MAX_NUM_OF_ITEMS);
-			Assert.IsNotNull(uiFactory);
-			Assert.IsNotNull(detailsManager);
-			Assert.IsNotNull(buildings);
 
 			_uiFactory = uiFactory;
 			_detailsManager = detailsManager;
