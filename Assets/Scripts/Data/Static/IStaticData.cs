@@ -19,6 +19,8 @@ namespace BattleCruisers.Data.Static
         GameModel InitialGameModel { get; }
         IList<ILevel> Levels { get; }
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
+        ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys{ get; }
+
         bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum);
         IList<IPrefabKey> GetAvailableUnits(UnitCategory category, int levelNum);
 		IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum);

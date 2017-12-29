@@ -20,8 +20,9 @@ namespace BattleCruisers.Data.Static
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
 		public ReadOnlyCollection<IPrefabKey> BuildingKeys { get; private set; }
+        public ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys { get; private set; }
 
-		public StaticData()
+        public StaticData()
 		{
 			InitialGameModel = CreateInitialGameModel();
 			Levels = CreateLevels();
@@ -39,6 +40,8 @@ namespace BattleCruisers.Data.Static
             _buildableToUnlockedLevel = CreateAvailabilityMap();
 
             _strategies = new LevelStrategies();
+
+            AIBannedUltrakeys = new ReadOnlyCollection<IPrefabKey>(CreateAIBannedUltraKeys());
 		}
 
 		private List<HullKey> AllHullKeys()
@@ -92,6 +95,17 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.Broadsides
 			};
 		}
+
+        private IList<IPrefabKey> CreateAIBannedUltraKeys()
+        {
+            return new List<IPrefabKey>()
+            {
+                // Don't want AI to try and build a kamikaze signal as an ultra,
+                // as it is only effective if there are a certain number of planes.
+                // Simpler to make the AI only build ultras that are always effective.
+                StaticPrefabKeys.Buildings.KamikazeSignal
+            };
+        }
 
 		private List<UnitKey> AllUnitKeys()
 		{
