@@ -100,8 +100,8 @@ namespace BattleCruisers.AI.BuildOrders
 				navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
 			}
 
-			// All non-naval requests require platform slots, so need to split the available
-			// platform slots between these requests.
+            // All non-naval requests (offensives or non-banned ultras) require platform slots, 
+            // so need to split the available platform slots between these requests.
 			IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
 		}
