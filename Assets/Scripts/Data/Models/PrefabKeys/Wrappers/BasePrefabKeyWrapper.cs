@@ -35,7 +35,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 		
         public IPrefabKey Key { get; private set; }
 
-        public BasePrefabKeyWrapper()
+        protected BasePrefabKeyWrapper()
         {
             _haveAskedBuildOrder = false;
             _hasKey = false;
