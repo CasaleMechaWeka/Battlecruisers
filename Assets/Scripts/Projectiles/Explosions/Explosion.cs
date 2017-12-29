@@ -8,11 +8,11 @@ namespace BattleCruisers.Projectiles.Explosions
     /// Explosion scaled by default to have a radius of 1 meter.  Adjust transform
     /// scale linearly to achieve desired radius.
     /// </summary>
-    public class Explosion : MonoBehaviour, IExplosion
+    public abstract class Explosion : MonoBehaviour, IExplosion
     {
-        private float _durationInS;
+        protected float _durationInS;
 
-        public void Initialise(float radiusInM, float durationInS)
+        public virtual void Initialise(float radiusInM, float durationInS)
         {
             Assert.IsTrue(radiusInM > 0);
             Assert.IsTrue(durationInS > 0);
@@ -41,7 +41,9 @@ namespace BattleCruisers.Projectiles.Explosions
             transform.position = position;
             gameObject.SetActive(true);
 
-            Destroy(gameObject, _durationInS);
+            OnShow();
         }
+
+        protected virtual void OnShow() { }
     }
 }
