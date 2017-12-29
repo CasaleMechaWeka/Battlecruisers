@@ -73,7 +73,7 @@ namespace BattleCruisers.Data.Static
 
         public static class Explosions
         {
-            public static ExplosionKey Explosion { get { return new ExplosionKey("Explosion"); } }
+            public static ExplosionKey Explosion { get { return new ExplosionKey("FragExplosion"); } }
         }
 	}
 }

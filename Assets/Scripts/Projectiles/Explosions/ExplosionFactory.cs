@@ -7,6 +7,7 @@ namespace BattleCruisers.Projectiles.Explosions
     {
         private readonly IPrefabFactory _prefabFactory;
 
+        private const float DAMAGE_RADIUS_TO_EXPLOSION_RADIUS_MULTIPLIER = 2;
         public const float DEFAULT_EXPLOSION_DURATION_IN_S = 0.25f;
 
         public ExplosionFactory(IPrefabFactory prefabFactory)
@@ -20,10 +21,13 @@ namespace BattleCruisers.Projectiles.Explosions
             return new DummyExplosion();
         }
 
-        public IExplosion CreateExplosion(float radiusInM, float durationInS = DEFAULT_EXPLOSION_DURATION_IN_S)
+        public IExplosion CreateExplosion(float damageRadiusInM, float durationInS = DEFAULT_EXPLOSION_DURATION_IN_S)
         {
             Explosion explosion = _prefabFactory.CreateExplosion();
-            explosion.Initialise(radiusInM, durationInS);
+
+            float explosionRadiusInM = damageRadiusInM * DAMAGE_RADIUS_TO_EXPLOSION_RADIUS_MULTIPLIER;
+            explosion.Initialise(explosionRadiusInM, durationInS);
+
             return explosion;
         }
     }
