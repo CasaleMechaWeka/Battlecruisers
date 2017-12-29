@@ -17,7 +17,7 @@ namespace BattleCruisers.Projectiles.Explosions
 
         protected override void OnShow()
         {
-            _animator.StartPlayback();
+            _animator.Play(stateNameHash: 0);
         }
 
         public void OnAnimationCompleted()
