@@ -5,8 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
 	public class LoadoutBuildingItem : LoadoutItem<IBuilding>
 	{
-        // FELIX  Perhaps use interface as parameter instead of BuildingDetailsManager?  (Also for IUnit counterpart)
-		public void Initialise(IBuilding building, BuildingDetailsManager buildingDetailsManager)
+        public void Initialise(IBuilding building, IItemDetailsManager<IBuilding> buildingDetailsManager)
 		{
 			InternalInitialise(building, buildingDetailsManager);
 		}

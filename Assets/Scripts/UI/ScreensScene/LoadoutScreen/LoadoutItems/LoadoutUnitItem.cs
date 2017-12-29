@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 {
     public class LoadoutUnitItem : LoadoutItem<IUnit>
 	{
-        public void Initialise(IUnit building, UnitDetailsManager unitDetailsManager)
+        public void Initialise(IUnit building, IItemDetailsManager<IUnit> unitDetailsManager)
 		{
 			InternalInitialise(building, unitDetailsManager);
 		}
