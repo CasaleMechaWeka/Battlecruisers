@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		protected readonly IGameModel _gameModel;
 		protected readonly IPrefabFactory _prefabFactory;
 
-		public ItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory)
+        protected ItemsRow(IGameModel gameModel, IPrefabFactory prefabFactory)
 		{
 			_gameModel = gameModel;
 			_prefabFactory = prefabFactory;
