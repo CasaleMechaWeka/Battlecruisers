@@ -9,6 +9,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
+    // FELIX  Abstract parent class to avoid duplicate code with IUnit version
     public class BuildingItemsRow : ItemsRow<IBuilding>
 	{
 		private readonly BuildingCategory _buildingCategory;
@@ -91,13 +92,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private void AddBuildingToLoadout(IBuilding building)
 		{
 			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);
-			_loadoutRow.AddBuilding(building);
+            _loadoutRow.AddBuildable(building);
 		}
 
 		private void RemoveBuildingFromLoadout(IBuilding building)
 		{
 			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
-			_loadoutRow.RemoveBuilding(building);
+			_loadoutRow.RemoveBuildable(building);
 		}
 	}
 }
