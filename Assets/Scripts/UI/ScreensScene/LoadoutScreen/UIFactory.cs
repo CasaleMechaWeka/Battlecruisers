@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,15 +15,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private BuildingDetailsManager _buildableDetailsManager;
 
 		public LoadoutBuildingItem loadoutBuildingItemPrefab;
+        public LoadoutUnitItem loadoutUnitItemPrefab;
 		public UnlockedBuildingItem unlockedBuildableItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
 
 		public void Initialise(BuildingDetailsManager buildableDetailsManager)
 		{
+            Helper.AssertIsNotNull(loadoutBuildingItemPrefab, loadoutUnitItemPrefab, unlockedBuildableItemPrefab, unlockedHullItemPrefab);
+
 			_buildableDetailsManager = buildableDetailsManager;
 		}
 
-		public LoadoutBuildingItem CreateLoadoutItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding)
+		public LoadoutBuildingItem CreateLoadoutBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding)
 		{
 			LoadoutBuildingItem loadoutItem = Instantiate(loadoutBuildingItemPrefab);
 			loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
@@ -30,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 			return loadoutItem;
 		}
 
-		public UnlockedBuildingItem CreateUnlockedBuildableItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
+		public UnlockedBuildingItem CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
 		{
 			UnlockedBuildingItem unlockedBuilding = Instantiate(unlockedBuildableItemPrefab);
 			unlockedBuilding.transform.SetParent(itemRow.transform, worldPositionStays: false);

@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
     {
         protected override LoadoutItem<IBuilding> CreateItem(IBuilding item)
         {
-            return _uiFactory.CreateLoadoutItem(layoutGroup, item);
+            return _uiFactory.CreateLoadoutBuildingItem(layoutGroup, item);
         }
     }
 }
