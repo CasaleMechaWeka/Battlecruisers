@@ -11,7 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         LoadoutItem<IBuilding> CreateLoadoutBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding);
         LoadoutItem<IUnit> CreateLoadoutUnitItem(HorizontalOrVerticalLayoutGroup itemRow, IUnit itemUnit);
-        UnlockedBuildingItem CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isBuildingInLoadout);
+        UnlockedItem<IBuilding> CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isBuildingInLoadout);
+        UnlockedItem<IUnit> CreateUnlockedUnitItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IUnit> itemsRow, IUnit itemUnit, bool isUnitInLoadout);
         UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout);
     }
 }

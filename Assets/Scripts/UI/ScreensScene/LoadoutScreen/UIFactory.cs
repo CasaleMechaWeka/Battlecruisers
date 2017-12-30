@@ -19,7 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public LoadoutBuildingItem loadoutBuildingItemPrefab;
         public LoadoutUnitItem loadoutUnitItemPrefab;
-		public UnlockedBuildingItem unlockedBuildableItemPrefab;
+        public UnlockedBuildingItem unlockedBuildingItemPrefab;
+        public UnlockedUnitItem unlockedUnitItemPrefab;
 		public UnlockedHullItem unlockedHullItemPrefab;
 
         public void Initialise(
@@ -31,7 +32,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 unitDetailsManager, 
                 loadoutBuildingItemPrefab, 
                 loadoutUnitItemPrefab, 
-                unlockedBuildableItemPrefab, 
+                unlockedBuildingItemPrefab, 
+                unlockedUnitItemPrefab,
                 unlockedHullItemPrefab);
 
 			_buildingDetailsManager = buildingDetailsManager;
@@ -61,22 +63,38 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             return loadoutItem;
         }
 
-		public UnlockedBuildingItem CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
+        public UnlockedItem<IBuilding> CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
 		{
-			UnlockedBuildingItem unlockedBuilding = Instantiate(unlockedBuildableItemPrefab);
-			unlockedBuilding.transform.SetParent(itemRow.transform, worldPositionStays: false);
-			IUnlockedItemState<IBuilding> initialState = new DefaultState<IBuilding>(itemsRow, unlockedBuilding);
-			unlockedBuilding.Initialise(initialState, itemBuilding, isInLoadout);
-			return unlockedBuilding;
+            return CreateUnlockedBuildableItem(unlockedBuildingItemPrefab, itemRow, itemsRow, itemBuilding, isInLoadout);
+		}
+		
+		public UnlockedItem<IUnit> CreateUnlockedUnitItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IUnit> itemsRow, IUnit itemUnit, bool isUnitInLoadout)
+		{
+            return CreateUnlockedBuildableItem(unlockedUnitItemPrefab, itemRow, itemsRow, itemUnit, isUnitInLoadout);
 		}
 
-		public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout)
-		{
-			UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
-			unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-			IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
-			unlockedHull.Initialise(initialState, cruiser, isInLoadout);
-			return unlockedHull;
-		}
+        public UnlockedItem<TBuildable> CreateUnlockedBuildableItem<TBuildable>(
+            UnlockedItem<TBuildable> itemPrefab,
+            HorizontalOrVerticalLayoutGroup itemRow, 
+            IItemsRow<TBuildable> itemsRow, 
+            TBuildable itemBuildable, 
+            bool isInLoadout)
+                where TBuildable : IBuildable
+        {
+            UnlockedItem<TBuildable> unlockedBuildable = Instantiate(itemPrefab);
+            unlockedBuildable.transform.SetParent(itemRow.transform, worldPositionStays: false);
+            IUnlockedItemState<TBuildable> initialState = new DefaultState<TBuildable>(itemsRow, unlockedBuildable);
+            unlockedBuildable.Initialise(initialState, itemBuildable, isInLoadout);
+            return unlockedBuildable;
+        }
+
+        public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout)
+        {
+            UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
+            unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
+            IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
+            unlockedHull.Initialise(initialState, cruiser, isInLoadout);
+            return unlockedHull;
+        }
     }
 }
