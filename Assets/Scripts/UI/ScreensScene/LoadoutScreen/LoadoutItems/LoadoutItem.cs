@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			}
 		}
 
-		protected void InternalInitialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager)
+		public void Initialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager)
 		{
 			Item = item;
 			_itemDetailsManager = itemDetailsManager;
