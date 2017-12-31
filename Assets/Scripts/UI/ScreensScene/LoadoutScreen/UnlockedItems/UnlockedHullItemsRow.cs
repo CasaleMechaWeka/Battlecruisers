@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
             IUIFactory uiFactory, 
             IList<ICruiser> unlockedCruisers, 
 			ICruiser loadoutCruiser, 
-            CruiserDetailsManager detailsManager)
+            IItemDetailsManager<ICruiser> detailsManager)
 		{
 			Assert.IsTrue(unlockedCruisers.Count > 0);
 

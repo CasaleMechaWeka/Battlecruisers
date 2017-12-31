@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
@@ -43,15 +45,23 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
 
-			// Initialise hull row
-			new HullItemsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+            // Hulls row
+            IItemsRow<ICruiser> hullsRow = new HullItemsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+            hullsRow.SetupUI();
 
-			// Initialise building rows
-			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Factory, factoriesRow, unlockedFactoriesRow, buildingDetailsManager);
-			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Defence, defensivesRow, unlockedDefensivesRow, buildingDetailsManager);
-			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Offence, offensivesRow, unlockedOffensivesRow, buildingDetailsManager);
-			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Tactical, tacticalsRow, unlockedTacticalsRow, buildingDetailsManager);
-			new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, BuildingCategory.Ultra, ultrasRow, unlockedUltrasRow, buildingDetailsManager);
+			// Building rows
+            IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
+            {
+				new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, factoriesRow, unlockedFactoriesRow, buildingDetailsManager, BuildingCategory.Factory),
+				new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, defensivesRow, unlockedDefensivesRow, buildingDetailsManager, BuildingCategory.Defence),
+				new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, offensivesRow, unlockedOffensivesRow, buildingDetailsManager, BuildingCategory.Offence),
+				new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, tacticalsRow, unlockedTacticalsRow, buildingDetailsManager, BuildingCategory.Tactical),
+				new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, ultrasRow, unlockedUltrasRow, buildingDetailsManager, BuildingCategory.Ultra)
+            };
+            foreach (IItemsRow<IBuilding> buildingsRow in buildingsRows)
+            {
+                buildingsRow.SetupUI();
+            }
 		}
 
 		public void GoToHomeScreen()

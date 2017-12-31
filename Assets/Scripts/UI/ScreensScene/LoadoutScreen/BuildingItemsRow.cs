@@ -9,96 +9,46 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    // FELIX  Abstract parent class to avoid duplicate code with IUnit version
-    public class BuildingItemsRow : ItemsRow<IBuilding>
-	{
-		private readonly BuildingCategory _buildingCategory;
-		private readonly LoadoutBuildingItemsRow _loadoutRow;
-		private readonly UnlockedBuildingItemsRow _unlockedRow;
-		private readonly IDictionary<IBuilding, BuildingKey> _buildingToKey;
+    public class BuildingItemsRow : BuildableItemsRow<IBuilding, BuildingKey>
+    {
+        private readonly BuildingCategory _buildingCategory;
 
-		public BuildingItemsRow(
+        public BuildingItemsRow(
             IGameModel gameModel, 
             IPrefabFactory prefabFactory, 
             IUIFactory uiFactory, 
-            BuildingCategory buildingCategory, 
-			LoadoutBuildingItemsRow loadoutRow, 
-            UnlockedBuildingItemsRow unlockedRow, 
-            BuildingDetailsManager detailsManager)
-			: base(gameModel, prefabFactory)
+            LoadoutBuildableItemsRow<IBuilding> loadoutRow, 
+            UnlockedBuildableItemsRow<IBuilding> unlockedRow, 
+            IItemDetailsManager<IBuilding> detailsManager,
+            BuildingCategory buildingCategory) 
+            : base(gameModel, prefabFactory, uiFactory, loadoutRow, unlockedRow, detailsManager)
+        {
+            _buildingCategory = buildingCategory;
+        }
+
+        protected override IList<IBuilding> GetLoadoutBuildablePrefabs()
+        {
+            return GetBuildablePrefabs(_gameModel.PlayerLoadout.GetBuildings(_buildingCategory), addToDictionary: false);
+        }
+
+        protected override IList<IBuilding> GetUnlockedBuildingPrefabs()
+        {
+            return GetBuildablePrefabs(_gameModel.GetUnlockedBuildings(_buildingCategory), addToDictionary: true);
+        }
+
+		protected override IBuilding GetBuildablePrefab(BuildingKey prefabKey)
 		{
-			_buildingCategory = buildingCategory;
-			_loadoutRow = loadoutRow;
-			_unlockedRow = unlockedRow;
-
-			_buildingToKey = new Dictionary<IBuilding, BuildingKey>();
-
-			IList<IBuilding> loadoutBuildings = GetLoadoutBuildingPrefabs(_buildingCategory);
-			_loadoutRow.Initialise(uiFactory, loadoutBuildings, detailsManager);
-			IList<IBuilding> unlockedBuildings = GetUnlockedBuildingPrefabs(_buildingCategory);
-			_unlockedRow.Initialise(this, uiFactory, unlockedBuildings, loadoutBuildings, detailsManager);
+            return _prefabFactory.GetBuildingWrapperPrefab(prefabKey).Buildable;
 		}
+		
+        protected override void AddToLoadoutModel(BuildingKey buildableKey)
+        {
+            _gameModel.PlayerLoadout.AddBuilding(buildableKey);
+        }
 
-		private IList<IBuilding> GetLoadoutBuildingPrefabs(BuildingCategory buildingCategory)
-		{
-			return GetBuildingPrefabs(_gameModel.PlayerLoadout.GetBuildings(buildingCategory), addToDictionary: false);
-		}
-
-		private IList<IBuilding> GetUnlockedBuildingPrefabs(BuildingCategory buildingCategory)
-		{
-			return GetBuildingPrefabs(_gameModel.GetUnlockedBuildings(buildingCategory), addToDictionary: true);
-		}
-
-		private IList<IBuilding> GetBuildingPrefabs(IList<BuildingKey> buildingKeys, bool addToDictionary)
-		{
-			IList<IBuilding> prefabs = new List<IBuilding>();
-
-			foreach (BuildingKey key in buildingKeys)
-			{
-                IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(key).Buildable;
-				prefabs.Add(building);
-
-				if (addToDictionary)
-				{
-					_buildingToKey.Add(building, key);
-				}
-			}
-
-			return prefabs;
-		}
-
-		public override bool SelectUnlockedItem(UnlockedItem<IBuilding> buildableItem)
-		{
-			bool isItemInLoadout = false;
-
-			if (buildableItem.IsItemInLoadout)
-			{
-				RemoveBuildingFromLoadout(buildableItem.Item);
-			}
-			else if (CanAddBuilding())
-			{
-				AddBuildingToLoadout(buildableItem.Item);
-				isItemInLoadout = true;
-			}
-
-			return isItemInLoadout;
-		}
-
-		private bool CanAddBuilding()
-		{
-			return _loadoutRow.CanAddBuilding();
-		}
-
-		private void AddBuildingToLoadout(IBuilding building)
-		{
-			_gameModel.PlayerLoadout.AddBuilding(_buildingToKey[building]);
-            _loadoutRow.AddBuildable(building);
-		}
-
-		private void RemoveBuildingFromLoadout(IBuilding building)
-		{
-			_gameModel.PlayerLoadout.RemoveBuilding(_buildingToKey[building]);
-			_loadoutRow.RemoveBuildable(building);
-		}
-	}
+        protected override void RemoveFromLoadoutModel(BuildingKey buildableKey)
+        {
+            _gameModel.PlayerLoadout.RemoveBuilding(buildableKey);
+        }
+    }
 }

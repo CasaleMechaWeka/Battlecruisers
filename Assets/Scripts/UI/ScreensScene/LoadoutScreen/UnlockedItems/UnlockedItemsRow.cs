@@ -28,6 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
 
+            // FELIX  NEXT  Create SetupUI(), as child initialise method has not yet completed.
 			CreateUnockedItemButtons(unlockedItems);
 		}
 

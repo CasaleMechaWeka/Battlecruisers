@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			}
 		}
 
-		public bool CanAddBuilding()
+		public bool CanAddBuildable()
 		{
 			return _buildableToLoadoutItem.Count < MAX_NUM_OF_ITEMS;
 		}

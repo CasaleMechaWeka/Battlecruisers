@@ -6,13 +6,14 @@ using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class HullItemsRow : ItemsRow<ICruiser>
 	{
 		private readonly LoadoutHullItem _loadoutHull;
-		private readonly UnlockedHullItemsRow _unlockedHullsRow;
+        private readonly UnlockedHullItemsRow _unlockedHullsRow;
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
 		public HullItemsRow(
@@ -20,19 +21,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IPrefabFactory prefabFactory, 
             IUIFactory uiFactory, 
             LoadoutHullItem loadoutHull, 
-			UnlockedHullItemsRow unlockedHullsRow, 
-            CruiserDetailsManager cruiserDetailsManager)
-			: base(gameModel, prefabFactory)
+            UnlockedHullItemsRow unlockedHullsRow, 
+            IItemDetailsManager<ICruiser> cruiserDetailsManager)
+            : base(gameModel, prefabFactory, uiFactory, cruiserDetailsManager)
 		{
+            Helper.AssertIsNotNull(loadoutHull, unlockedHullsRow);
+
 			_loadoutHull = loadoutHull;
-			_unlockedHullsRow = unlockedHullsRow;
+            _unlockedHullsRow = unlockedHullsRow;
 
 			_hullToKey = new Dictionary<ICruiser, HullKey>();
+        }
 
+        public override void SetupUI()
+        {
 			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
-			_loadoutHull.Initialise(loadoutCruiser, cruiserDetailsManager);
-			_unlockedHullsRow.Initialise(this, uiFactory, GetUnlockedHullPrefabs(), loadoutCruiser, cruiserDetailsManager);
-		}
+            _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
+			
+            _unlockedHullsRow.Initialise(this, _uiFactory, GetUnlockedHullPrefabs(), loadoutCruiser, _detailsManager);
+        }
 
 		private IList<ICruiser> GetUnlockedHullPrefabs()
 		{

@@ -5,27 +5,21 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-    public class UnlockedBuildingItemsRow : UnlockedItemsRow<IBuilding>
+    public class UnlockedBuildingItemsRow : UnlockedBuildableItemsRow<IBuilding>
 	{
-		private IList<IBuilding> _loadoutBuildings;
-
-		public void Initialise(
-            BuildingItemsRow itemsRow, 
+		public override void Initialise(
+            IItemsRow<IBuilding> itemsRow, 
             IUIFactory uiFactory, 
-            IList<IBuilding> unlockedBuildings, 
-			IList<IBuilding> loadoutBuildings, 
-            BuildingDetailsManager detailsManager)
+            IList<IBuilding> unlockedBuildables, 
+			IList<IBuilding> loadoutBuildables, 
+            IItemDetailsManager<IBuilding> detailsManager)
 		{
-			_uiFactory = uiFactory;
-			_loadoutBuildings = loadoutBuildings;
-
-			base.Initialise(uiFactory, unlockedBuildings, itemsRow, detailsManager);
+            base.Initialise(itemsRow, uiFactory, unlockedBuildables, loadoutBuildables, detailsManager);
 		}
 
-		protected override UnlockedItem<IBuilding> CreateUnlockedItem(IBuilding item, HorizontalOrVerticalLayoutGroup itemParent)
-		{
-			bool isBuildingInLoadout = _loadoutBuildings.Contains(item);
-			return _uiFactory.CreateUnlockedBuildingItem(layoutGroup, _itemsRow, item, isBuildingInLoadout);
-		}
-	}
+        protected override UnlockedItem<IBuilding> CreateUnlockedItem(IBuilding item, HorizontalOrVerticalLayoutGroup itemParent, bool isInLoadout)
+        {
+            return _uiFactory.CreateUnlockedBuildingItem(layoutGroup, _itemsRow, item, isInLoadout);
+        }
+    }
 }
