@@ -4,6 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Sorting;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
@@ -16,11 +17,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		public void Initialize(
 			IUIManager uiManager,
 			IUIFactory uiFactory,
-			IList<IBuildableWrapper<IUnit>> units)
+			IList<IBuildableWrapper<IUnit>> units,
+            IBuildableSorter<IUnit> sorter)
 		{
 			base.Initialize();
 
+            Helper.AssertIsNotNull(uiManager, uiFactory, units, sorter);
+
 			_uiManager = uiManager;
+
+            units = sorter.Sort(units);
 
 			// Create unit buttons
 			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();

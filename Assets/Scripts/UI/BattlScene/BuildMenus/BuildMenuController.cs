@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Sorting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,9 +25,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			IUIManager uiManager,
             IUIFactory uiFactory,
             IList<IBuildingGroup> buildingGroups, 
-            IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units)
+            IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
+            IBuildableSorterFactory sorterFactory)
 		{
-            Helper.AssertIsNotNull(uiManager, uiFactory, buildingGroups, units);
+            Helper.AssertIsNotNull(uiManager, uiFactory, buildingGroups, units, sorterFactory);
 
             _uiManager = uiManager;
             _uiFactory = uiFactory;
@@ -40,6 +42,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 			// Create building category buttons
 			HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
+            IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
 
 			_buildingGroupPanels = new Dictionary<BuildingCategory, Presentable>(_buildingGroups.Count);
 
@@ -52,18 +55,19 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				// Create category panel
 				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
-				buildingsMenu.Initialize(_uiFactory, buildingGroup.Buildings);
+                buildingsMenu.Initialize(_uiFactory, buildingGroup.Buildings, buildingSorter);
 				_buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
 			}
 
-			// Create menu UI for units
+            // Create menu UI for units
+            IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
 			_unitGroupPanels = new Dictionary<UnitCategory, Presentable>();
 
 			foreach (UnitCategory unitCategory in units.Keys)
 			{
 				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				UnitsMenuController unitsMenu = panelGameObject.AddComponent<UnitsMenuController>();
-				unitsMenu.Initialize(_uiManager, _uiFactory, units[unitCategory]);
+                unitsMenu.Initialize(_uiManager, _uiFactory, units[unitCategory], unitSorter);
 				_unitGroupPanels[unitCategory] = unitsMenu;
 			}
 		}

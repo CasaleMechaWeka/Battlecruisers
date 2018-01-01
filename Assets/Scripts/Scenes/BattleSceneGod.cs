@@ -13,6 +13,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -133,7 +134,8 @@ namespace BattleCruisers.Scenes
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);
 			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
-            buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units);
+            IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
+            buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units, sorterFactory);
 
             uiManager.InitialUI();
 
