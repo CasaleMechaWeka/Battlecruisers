@@ -10,7 +10,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models
 {
-    // FELIX  Create tests!
     [Serializable]
 	public class Loadout : ILoadout
 	{
