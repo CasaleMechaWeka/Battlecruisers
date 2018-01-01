@@ -15,21 +15,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         private IList<TBuildable> _buildables;
         private IItemDetailsManager<TBuildable> _detailsManager;
         private IDictionary<TBuildable, LoadoutItem<TBuildable>> _buildableToLoadoutItem;
+        protected HorizontalLayoutGroup _layoutGroup;
 
-		private const int MAX_NUM_OF_ITEMS = 5;
-
-        // FELIX  Assign programmatically?
-		public HorizontalLayoutGroup layoutGroup;
+        private const int MAX_NUM_OF_ITEMS = 5;
 
         public void Initialise(IUIFactory uiFactory, IList<TBuildable> buildables, IItemDetailsManager<TBuildable> detailsManager)
 		{
-            Helper.AssertIsNotNull(uiFactory, buildables, detailsManager, layoutGroup);
+            Helper.AssertIsNotNull(uiFactory, buildables, detailsManager);
 			Assert.IsTrue(buildables.Count <= MAX_NUM_OF_ITEMS);
 
 			_uiFactory = uiFactory;
             _buildables = buildables;
 			_detailsManager = detailsManager;
             _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
+
+            _layoutGroup = GetComponent<HorizontalLayoutGroup>();
+            Assert.IsNotNull(_layoutGroup);
 
             _detailsManager.StateChanged += _detailsManager_StateChanged;
         }
