@@ -10,13 +10,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void Initialise(IUnlockedItemsRowArgs<ICruiser> args, ICruiser loadoutCruiser)
 		{
+			base.Initialise(args);
 
             Assert.IsTrue(args.UnlockedItems.Count > 0);
 
             _loadoutCruiser = loadoutCruiser;
-
-            // FELIX  Move to start of method.  Should be ok sue to SetupUI() :)
-			base.Initialise(args);
 		}
 
 		protected override UnlockedItem<ICruiser> CreateUnlockedItem(ICruiser item, HorizontalOrVerticalLayoutGroup itemParent)
