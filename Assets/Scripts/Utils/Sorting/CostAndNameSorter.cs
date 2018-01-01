@@ -6,10 +6,11 @@ namespace BattleCruisers.Utils.Sorting
 {
     /// <summary>
     /// Ordery by:
-    /// 1. Drone number (descending)
-    /// 2. Then by name
+    /// 1. [Cost part 1]  Drone number (descending)
+    /// 2. [Cost part 2]  Build time in seconds
+    /// 3. Name
     /// </summary>
-    public class DroneAndNameSorter<TBuildable> : IBuildableSorter<TBuildable> 
+    public class CostAndNameSorter<TBuildable> : IBuildableSorter<TBuildable> 
         where TBuildable : class, IBuildable
     {
         public IList<IBuildableWrapper<TBuildable>> Sort(IList<IBuildableWrapper<TBuildable>> buildables)
@@ -17,6 +18,7 @@ namespace BattleCruisers.Utils.Sorting
             return
                 buildables
                     .OrderBy(wrapper => wrapper.Buildable.NumOfDronesRequired)
+                    .ThenBy(wrapper => wrapper.Buildable.BuildTimeInS)
                     .ThenBy(wrapper => wrapper.Buildable.Name)
                     .ToList();
         }

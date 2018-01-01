@@ -7,12 +7,12 @@ namespace BattleCruisers.Utils.Sorting
     {
         public IBuildableSorter<IBuilding> CreateBuildingSorter()
         {
-            return new DroneAndNameSorter<IBuilding>();
+            return new CostAndNameSorter<IBuilding>();
         }
 
         public IBuildableSorter<IUnit> CreateUnitSorter()
         {
-            return new DroneAndNameSorter<IUnit>();
+            return new CostAndNameSorter<IUnit>();
         }
     }
 }
