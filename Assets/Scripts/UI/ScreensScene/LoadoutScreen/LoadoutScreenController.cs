@@ -8,7 +8,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -31,9 +31,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            // FELIX  Null check everything
-			Assert.IsNotNull(dataProvider);
-			Assert.IsNotNull(prefabFactory);
+            Helper.AssertIsNotNull(
+                uiFactory,
+                loadoutHullItem,
+                unlockedHullsRow,
+                factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow,
+                unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow, unlockedUltrasRow,
+                buildingDetailsManager,
+                unitDetailsManager,
+                cruiserDetailsManager,
+                dataProvider, 
+                prefabFactory);
 
 			_dataProvider = dataProvider;
 			_gameModel = _dataProvider.GameModel;
