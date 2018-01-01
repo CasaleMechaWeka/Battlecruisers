@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             IList<TItem> loadoutBuildables = GetLoadoutBuildablePrefabs();
 			_loadoutRow.Initialise(_uiFactory, loadoutBuildables, _detailsManager);
-            // FELIX  Call SetupUI()
+            _loadoutRow.SetupUI();
 
             IList<TItem> unlockedBuildables = GetUnlockedBuildingPrefabs();
 			_unlockedRow.Initialise(this, _uiFactory, unlockedBuildables, loadoutBuildables, _detailsManager);

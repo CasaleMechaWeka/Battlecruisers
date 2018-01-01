@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
     public abstract class LoadoutBuildableItemsRow<TBuildable> : MonoBehaviour where TBuildable : IBuildable
 	{
 		protected IUIFactory _uiFactory;
+        private IList<TBuildable> _buildables;
         private IItemDetailsManager<TBuildable> _detailsManager;
         private IDictionary<TBuildable, LoadoutItem<TBuildable>> _buildableToLoadoutItem;
 
@@ -26,17 +27,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			Assert.IsTrue(buildables.Count <= MAX_NUM_OF_ITEMS);
 
 			_uiFactory = uiFactory;
+            _buildables = buildables;
 			_detailsManager = detailsManager;
             _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
 
-            // FELIX  Separate into SetupUI() :)
-            foreach (TBuildable buildable in buildables)
+            _detailsManager.StateChanged += _detailsManager_StateChanged;
+        }
+
+        public void SetupUI()
+        {
+			foreach (TBuildable buildable in _buildables)
 			{
 				CreateLoadoutItem(buildable);
 			}
-
-			_detailsManager.StateChanged += _detailsManager_StateChanged;
-		}
+        }
 
         private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TBuildable> e)
 		{
