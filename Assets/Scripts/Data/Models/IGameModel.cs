@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data.Models
@@ -20,5 +21,6 @@ namespace BattleCruisers.Data.Models
         void AddUnlockedUnit(UnitKey unit);
 
         IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
+        IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);
     }
 }

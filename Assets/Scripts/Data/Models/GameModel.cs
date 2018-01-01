@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -109,6 +110,11 @@ namespace BattleCruisers.Data.Models
 		{
 			return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
 		}
+
+        public IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory)
+        {
+            return _unlockedUnits.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
+        }
 
 		public override bool Equals(object obj)
 		{
