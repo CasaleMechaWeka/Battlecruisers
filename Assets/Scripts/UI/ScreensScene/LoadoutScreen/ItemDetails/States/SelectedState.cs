@@ -1,9 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using System;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
-	public class SelectedState<TItem> : BaseState<TItem> where TItem : IComparableItem
+    public class SelectedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
 		private IItem<TItem> _selectedItem;
 

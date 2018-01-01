@@ -7,8 +7,9 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

@@ -3,16 +3,17 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-	public class UIFactory : MonoBehaviour, IUIFactory
+    public class UIFactory : MonoBehaviour, IUIFactory
 	{
         private IItemDetailsManager<IBuilding> _buildingDetailsManager;
         private IItemDetailsManager<IUnit> _unitDetailsManager;

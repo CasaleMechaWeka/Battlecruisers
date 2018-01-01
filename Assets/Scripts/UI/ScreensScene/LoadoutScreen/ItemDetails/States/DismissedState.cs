@@ -1,9 +1,9 @@
-﻿using BattleCruisers.Buildables;
-using System;
+﻿using System;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
-	public class DismissedState<TItem> : BaseState<TItem> where TItem : IComparableItem
+    public class DismissedState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
 		public DismissedState(IItemDetailsManager<TItem> itemsDetailsManager)
 			: base(itemsDetailsManager) { }

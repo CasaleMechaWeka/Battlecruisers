@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

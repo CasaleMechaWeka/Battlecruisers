@@ -8,7 +8,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;

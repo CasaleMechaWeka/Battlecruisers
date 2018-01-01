@@ -1,9 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using System;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
-	public class ReadyToCompareState<TItem> : BaseState<TItem> where TItem : IComparableItem
+    public class ReadyToCompareState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
 		private IItem<TItem> _itemToCompare;
 

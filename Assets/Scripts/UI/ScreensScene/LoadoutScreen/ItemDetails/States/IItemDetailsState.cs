@@ -1,10 +1,8 @@
-﻿using System;
-using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
-	public interface IItemDetailsState<TItem> where TItem : IComparableItem
+    public interface IItemDetailsState<TItem> where TItem : IComparableItem
 	{
 		bool IsInReadyToCompareState { get; }
 

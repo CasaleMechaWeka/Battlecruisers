@@ -10,7 +10,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.UIWrappers;

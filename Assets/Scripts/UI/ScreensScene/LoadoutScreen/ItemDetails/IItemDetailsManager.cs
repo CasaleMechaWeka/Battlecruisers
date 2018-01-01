@@ -1,17 +1,10 @@
-﻿using BattleCruisers.Fetchers;
-using BattleCruisers.UI.Common.BuildingDetails;
+﻿using System;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-	public class StateChangedEventArgs<TItem> : EventArgs where TItem : IComparableItem
+    public class StateChangedEventArgs<TItem> : EventArgs where TItem : IComparableItem
 	{
 		public IItemDetailsState<TItem> NewState { get; private set; }
 

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
