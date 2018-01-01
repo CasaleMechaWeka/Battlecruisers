@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
@@ -14,14 +11,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         private readonly BuildingCategory _buildingCategory;
 
         public BuildingItemsRow(
-            IGameModel gameModel, 
-            IPrefabFactory prefabFactory, 
-            IUIFactory uiFactory, 
+            ItemsRowArgs<IBuilding> args,
             LoadoutBuildableItemsRow<IBuilding> loadoutRow, 
             UnlockedBuildableItemsRow<IBuilding> unlockedRow, 
-            IItemDetailsManager<IBuilding> detailsManager,
             BuildingCategory buildingCategory) 
-            : base(gameModel, prefabFactory, uiFactory, loadoutRow, unlockedRow, detailsManager)
+            : base(args, loadoutRow, unlockedRow)
         {
             _buildingCategory = buildingCategory;
         }

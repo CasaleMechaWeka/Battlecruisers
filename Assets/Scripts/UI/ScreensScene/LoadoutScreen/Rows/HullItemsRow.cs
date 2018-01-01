@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils;
@@ -17,13 +14,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
 		public HullItemsRow(
-            IGameModel gameModel, 
-            IPrefabFactory prefabFactory, 
-            IUIFactory uiFactory, 
+            ItemsRowArgs<ICruiser> args,
             LoadoutHullItem loadoutHull, 
-            UnlockedHullItemsRow unlockedHullsRow, 
-            IItemDetailsManager<ICruiser> cruiserDetailsManager)
-            : base(gameModel, prefabFactory, uiFactory, cruiserDetailsManager)
+            UnlockedHullItemsRow unlockedHullsRow)
+            : base(args)
 		{
             Helper.AssertIsNotNull(loadoutHull, unlockedHullsRow);
 

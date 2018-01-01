@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
@@ -19,14 +16,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         // FELIX  Common with HullItemsRow...  Move to parent?
         private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
 
-		protected BuildableItemsRow(
-            IGameModel gameModel, 
-            IPrefabFactory prefabFactory, 
-            IUIFactory uiFactory, 
+        protected BuildableItemsRow(
+            ItemsRowArgs<TItem> args,
             LoadoutBuildableItemsRow<TItem> loadoutRow, 
-            UnlockedBuildableItemsRow<TItem> unlockedRow, 
-            IItemDetailsManager<TItem> detailsManager)
-            : base(gameModel, prefabFactory, uiFactory, detailsManager)
+            UnlockedBuildableItemsRow<TItem> unlockedRow)
+            : base(args)
 		{
 			_loadoutRow = loadoutRow;
 			_unlockedRow = unlockedRow;

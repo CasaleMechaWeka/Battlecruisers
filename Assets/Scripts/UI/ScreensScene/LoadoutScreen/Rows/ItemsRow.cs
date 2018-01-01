@@ -2,7 +2,7 @@
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
-using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
@@ -13,19 +13,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         protected readonly IUIFactory _uiFactory;
         protected readonly IItemDetailsManager<TItem> _detailsManager;
 
-        // FELIX  Wrapper class for args?  Reduce all classes constructor size :)
-        protected ItemsRow(
-            IGameModel gameModel, 
-            IPrefabFactory prefabFactory,
-            IUIFactory uiFactory, 
-            IItemDetailsManager<TItem> detailsManager)
+        protected ItemsRow(ItemsRowArgs<TItem> args)
 		{
-            Helper.AssertIsNotNull(gameModel, prefabFactory, uiFactory, detailsManager);
+            Assert.IsNotNull(args);
 
-			_gameModel = gameModel;
-			_prefabFactory = prefabFactory;
-            _uiFactory = uiFactory;
-            _detailsManager = detailsManager;
+			_gameModel = args.GameModel;
+            _prefabFactory = args.PrefabFactory;
+            _uiFactory = args.UIFactory;
+            _detailsManager = args.DetailsManager;
 		}
 
         public abstract void SetupUI();

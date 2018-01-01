@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
@@ -14,14 +11,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         private readonly UnitCategory _unitCategory;
 
         public UnitItemsRow(
-            IGameModel gameModel, 
-            IPrefabFactory prefabFactory, 
-            IUIFactory uiFactory, 
+            ItemsRowArgs<IUnit> args,
             LoadoutBuildableItemsRow<IUnit> loadoutRow, 
             UnlockedBuildableItemsRow<IUnit> unlockedRow, 
-            IItemDetailsManager<IUnit> detailsManager,
             UnitCategory unitCategory) 
-            : base(gameModel, prefabFactory, uiFactory, loadoutRow, unlockedRow, detailsManager)
+            : base(args, loadoutRow, unlockedRow)
         {
             _unitCategory = unitCategory;
         }

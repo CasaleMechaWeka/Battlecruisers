@@ -75,19 +75,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void SetupHullsRow()
         {
-            IItemsRow<ICruiser> hullsRow = new HullItemsRow(_gameModel, _prefabFactory, uiFactory, loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+            ItemsRowArgs<ICruiser> args = new ItemsRowArgs<ICruiser>(_gameModel, _prefabFactory, uiFactory, cruiserDetailsManager);
+            IItemsRow<ICruiser> hullsRow = new HullItemsRow(args, loadoutHullItem, unlockedHullsRow);
             hullsRow.SetupUI();
         }
 
         private void SetupBuildingRows()
         {
+            ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_gameModel, _prefabFactory, uiFactory, buildingDetailsManager);
+
             IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
             {
-                new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, factoriesRow, unlockedFactoriesRow, buildingDetailsManager, BuildingCategory.Factory),
-                new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, defensivesRow, unlockedDefensivesRow, buildingDetailsManager, BuildingCategory.Defence),
-                new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, offensivesRow, unlockedOffensivesRow, buildingDetailsManager, BuildingCategory.Offence),
-                new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, tacticalsRow, unlockedTacticalsRow, buildingDetailsManager, BuildingCategory.Tactical),
-                new BuildingItemsRow(_gameModel, _prefabFactory, uiFactory, ultrasRow, unlockedUltrasRow, buildingDetailsManager, BuildingCategory.Ultra)
+                new BuildingItemsRow(args, factoriesRow, unlockedFactoriesRow, BuildingCategory.Factory),
+                new BuildingItemsRow(args, defensivesRow, unlockedDefensivesRow, BuildingCategory.Defence),
+                new BuildingItemsRow(args, offensivesRow, unlockedOffensivesRow, BuildingCategory.Offence),
+                new BuildingItemsRow(args, tacticalsRow, unlockedTacticalsRow, BuildingCategory.Tactical),
+                new BuildingItemsRow(args, ultrasRow, unlockedUltrasRow, BuildingCategory.Ultra)
             };
             foreach (IItemsRow<IBuilding> buildingsRow in buildingsRows)
             {
@@ -97,10 +100,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void SetupUnitRows()
         {
+            ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_gameModel, _prefabFactory, uiFactory, unitDetailsManager);
+
             IList<IItemsRow<IUnit>> unitsRows = new List<IItemsRow<IUnit>>()
             {
-                new UnitItemsRow(_gameModel, _prefabFactory, uiFactory, shipsRow, unlockedShipsRow, unitDetailsManager, UnitCategory.Naval),
-                new UnitItemsRow(_gameModel, _prefabFactory, uiFactory, aircraftRow, unlockedAircraftRow, unitDetailsManager, UnitCategory.Aircraft)
+                new UnitItemsRow(args, shipsRow, unlockedShipsRow, UnitCategory.Naval),
+                new UnitItemsRow(args, aircraftRow, unlockedAircraftRow, UnitCategory.Aircraft)
             };
             foreach (IItemsRow<IUnit> unitsRow in unitsRows)
             {
