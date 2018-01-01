@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    // FELIX  Interface?
     public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
