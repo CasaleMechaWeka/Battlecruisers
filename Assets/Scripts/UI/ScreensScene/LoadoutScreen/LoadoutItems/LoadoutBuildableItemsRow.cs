@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.LoadoutItems
 			_detailsManager = detailsManager;
             _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
 
+            // FELIX  Separate into SetupUI() :)
             foreach (TBuildable buildable in buildables)
 			{
 				CreateLoadoutItem(buildable);

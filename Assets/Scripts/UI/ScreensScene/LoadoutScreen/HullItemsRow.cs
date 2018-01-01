@@ -39,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 			
             _unlockedHullsRow.Initialise(this, _uiFactory, GetUnlockedHullPrefabs(), loadoutCruiser, _detailsManager);
+            _unlockedHullsRow.SetupUI();
         }
 
 		private IList<ICruiser> GetUnlockedHullPrefabs()

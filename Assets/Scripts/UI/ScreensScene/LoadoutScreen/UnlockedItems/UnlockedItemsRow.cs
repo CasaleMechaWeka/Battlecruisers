@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems.States;
+using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
+    // FELIX  Interface?
     public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
 		protected IItemsRow<TItem> _itemsRow;
 		private IItemDetailsManager<TItem> _detailsManager;
+        private IList<TItem> _unlockedItems;
 		protected IList<UnlockedItem<TItem>> _unlockedItemButtons;
 
 		public HorizontalLayoutGroup layoutGroup;
@@ -19,18 +21,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 
 		public void Initialise(IUIFactory uiFactory, IList<TItem> unlockedItems, IItemsRow<TItem> itemsRow, IItemDetailsManager<TItem> detailsManager)
 		{
-			Assert.IsNotNull(layoutGroup);
-			Assert.IsNotNull(scrollViewContent);
+            Helper.AssertIsNotNull(
+                layoutGroup, 
+                scrollViewContent, 
+                uiFactory, 
+                unlockedItems,
+                itemsRow, 
+                detailsManager);
 
 			_uiFactory = uiFactory;
+            _unlockedItems = unlockedItems;
 			_itemsRow = itemsRow;
 			_detailsManager = detailsManager;
 
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
+        }
 
-            // FELIX  NEXT  Create SetupUI(), as child initialise method has not yet completed.
-			CreateUnockedItemButtons(unlockedItems);
-		}
+        public void SetupUI()
+        {
+			CreateUnockedItemButtons(_unlockedItems);
+        }
 
 		private void CreateUnockedItemButtons(IList<TItem> unlockedItems)
 		{
