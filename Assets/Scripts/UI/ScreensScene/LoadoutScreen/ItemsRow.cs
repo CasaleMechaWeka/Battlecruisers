@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected readonly IUIFactory _uiFactory;
         protected readonly IItemDetailsManager<TItem> _detailsManager;
 
+        // FELIX  Wrapper class for args?  Reduce all classes constructor size :)
         protected ItemsRow(
             IGameModel gameModel, 
             IPrefabFactory prefabFactory,
