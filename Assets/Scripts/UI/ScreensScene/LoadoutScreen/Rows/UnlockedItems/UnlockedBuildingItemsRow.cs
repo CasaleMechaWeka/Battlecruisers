@@ -1,20 +1,15 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
     public class UnlockedBuildingItemsRow : UnlockedBuildableItemsRow<IBuilding>
 	{
-		public override void Initialise(
-            IItemsRow<IBuilding> itemsRow, 
-            IUIFactory uiFactory, 
-            IList<IBuilding> unlockedBuildables, 
-			IList<IBuilding> loadoutBuildables, 
-            IItemDetailsManager<IBuilding> detailsManager)
+        // FELIX  Remove method?
+        public override void Initialise(IUnlockedItemsRowArgs<IBuilding> args, IList<IBuilding> loadoutBuildables)
 		{
-            base.Initialise(itemsRow, uiFactory, unlockedBuildables, loadoutBuildables, detailsManager);
+            base.Initialise(args, loadoutBuildables);
 		}
 
         protected override UnlockedItem<IBuilding> CreateUnlockedItem(IBuilding item, HorizontalOrVerticalLayoutGroup itemParent, bool isInLoadout)

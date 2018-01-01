@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -10,14 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 	{
         private IList<TItem> _loadoutBuildables;
 
-		public virtual void Initialise(
-            IItemsRow<TItem> itemsRow, 
-            IUIFactory uiFactory, 
-            IList<TItem> unlockedBuildables, 
-            IList<TItem> loadoutBuildables, 
-            IItemDetailsManager<TItem> detailsManager)
+        public virtual void Initialise(IUnlockedItemsRowArgs<TItem> args, IList<TItem> loadoutBuildables)
 		{
-            base.Initialise(uiFactory, unlockedBuildables, itemsRow, detailsManager);
+            base.Initialise(args);
 
             Assert.IsNotNull(loadoutBuildables);
             _loadoutBuildables = loadoutBuildables;

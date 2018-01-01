@@ -11,28 +11,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
     public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
-		protected IItemsRow<TItem> _itemsRow;
-		private IItemDetailsManager<TItem> _detailsManager;
-        private IList<TItem> _unlockedItems;
+		private IList<TItem> _unlockedItems;
+        protected IItemsRow<TItem> _itemsRow;
+        private IItemDetailsManager<TItem> _detailsManager;
 		protected IList<UnlockedItem<TItem>> _unlockedItemButtons;
 
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-		public void Initialise(IUIFactory uiFactory, IList<TItem> unlockedItems, IItemsRow<TItem> itemsRow, IItemDetailsManager<TItem> detailsManager)
+        public void Initialise(IUnlockedItemsRowArgs<TItem> args)
 		{
-            Helper.AssertIsNotNull(
-                layoutGroup, 
-                scrollViewContent, 
-                uiFactory, 
-                unlockedItems,
-                itemsRow, 
-                detailsManager);
+            Helper.AssertIsNotNull(layoutGroup, scrollViewContent, args); 
 
-			_uiFactory = uiFactory;
-            _unlockedItems = unlockedItems;
-			_itemsRow = itemsRow;
-			_detailsManager = detailsManager;
+			_uiFactory = args.UIFactory;
+            _unlockedItems = args.UnlockedItems;
+			_itemsRow = args.ItemsRow;
+			_detailsManager = args.DetailsManager;
 
 			_detailsManager.StateChanged += _detailsManager_StateChanged;
         }

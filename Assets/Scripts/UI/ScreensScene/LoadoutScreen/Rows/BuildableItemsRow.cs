@@ -34,8 +34,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 			_loadoutRow.Initialise(_uiFactory, loadoutBuildables, _detailsManager);
             _loadoutRow.SetupUI();
 
-            IList<TItem> unlockedBuildables = GetUnlockedBuildingPrefabs();
-			_unlockedRow.Initialise(this, _uiFactory, unlockedBuildables, loadoutBuildables, _detailsManager);
+            IUnlockedItemsRowArgs<TItem> args = new UnlockedItemsRowArgs<TItem>(_uiFactory, GetUnlockedBuildingPrefabs(), this, _detailsManager);
+			_unlockedRow.Initialise(args, loadoutBuildables);
             _unlockedRow.SetupUI();
         }
 

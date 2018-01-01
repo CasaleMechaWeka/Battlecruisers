@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+﻿using BattleCruisers.Cruisers;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -10,18 +8,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 	{
 		private ICruiser _loadoutCruiser;
 
-		public void Initialise(
-            HullItemsRow hullsRow, 
-            IUIFactory uiFactory, 
-            IList<ICruiser> unlockedCruisers, 
-			ICruiser loadoutCruiser, 
-            IItemDetailsManager<ICruiser> detailsManager)
+        public void Initialise(IUnlockedItemsRowArgs<ICruiser> args, ICruiser loadoutCruiser)
 		{
-			Assert.IsTrue(unlockedCruisers.Count > 0);
 
-			_loadoutCruiser = loadoutCruiser;
+            Assert.IsTrue(args.UnlockedItems.Count > 0);
 
-			base.Initialise(uiFactory, unlockedCruisers, hullsRow, detailsManager);
+            _loadoutCruiser = loadoutCruiser;
+
+            // FELIX  Move to start of method.  Should be ok sue to SetupUI() :)
+			base.Initialise(args);
 		}
 
 		protected override UnlockedItem<ICruiser> CreateUnlockedItem(ICruiser item, HorizontalOrVerticalLayoutGroup itemParent)
