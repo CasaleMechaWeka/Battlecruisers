@@ -5,9 +5,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public class ComparableUnitDetailsController : ComparableBuildableDetailsController<IUnit>
 	{
+		public UnitStatsController unitStatsController;
         protected override StatsController<IUnit> StatsController { get { return unitStatsController; } }
-
-        // FELIX  Can be assigned programmatically?
-        public UnitStatsController unitStatsController;
 	}
 }
