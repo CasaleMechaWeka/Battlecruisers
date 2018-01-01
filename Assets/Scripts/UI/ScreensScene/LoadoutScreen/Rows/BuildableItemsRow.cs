@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         private readonly LoadoutBuildableItemsRow<TItem> _loadoutRow;
         private readonly UnlockedBuildableItemsRow<TItem> _unlockedRow;
 
-        // FELIX  Common with HullItemsRow...  Move to parent?
         private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
 
         protected BuildableItemsRow(
