@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 
 		public virtual bool IsInReadyToCompareState { get { return false; } }
 
-		public BaseState(IItemDetailsManager<TItem> itemDetailsManager)
+        protected BaseState(IItemDetailsManager<TItem> itemDetailsManager)
 		{
 			_itemDetailsManager = itemDetailsManager;
 		}
