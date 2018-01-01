@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models
 {
+    // FELIX  Create tests!
     [Serializable]
 	public class Loadout : ILoadout
 	{
@@ -60,9 +61,21 @@ namespace BattleCruisers.Data.Models
 
 		public void RemoveBuilding(BuildingKey buildingToRemove)
 		{
-			Assert.IsTrue(_buildings.Contains(buildingToRemove));
-			_buildings.Remove(buildingToRemove);
+			bool removedSuccessfully = _buildings.Remove(buildingToRemove);
+            Assert.IsTrue(removedSuccessfully);
 		}
+
+        public void AddUnit(UnitKey unitToAdd)
+        {
+            Assert.IsFalse(_units.Contains(unitToAdd));
+            _units.Add(unitToAdd);
+        }
+
+        public void RemoveUnit(UnitKey unitToRemove)
+        {
+            bool removedSuccessfully = _units.Remove(unitToRemove);
+            Assert.IsTrue(removedSuccessfully);
+        }
 
 		public override bool Equals(object obj)
 		{
@@ -78,5 +91,5 @@ namespace BattleCruisers.Data.Models
 		{
 			return this.GetHashCode(_hull, _buildings, _units);
 		}
-	}
+    }
 }
