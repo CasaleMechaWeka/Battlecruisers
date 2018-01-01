@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.UnlockedItems
 {
-    public class UnlockeUnitItemsRow : UnlockedBuildableItemsRow<IUnit>
+    public class UnlockedUnitItemsRow : UnlockedBuildableItemsRow<IUnit>
 	{
         // FELIX  Create arg wrapper class?  Reduce constructor size :P
 		public override void Initialise(
