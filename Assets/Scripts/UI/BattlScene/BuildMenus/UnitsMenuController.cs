@@ -5,11 +5,12 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class UnitsMenuController : Presentable
+    public class UnitsMenuController : BuildablesMenuController<IUnit>
 	{
 		private IUIManager _uiManager;
 		private Factory _factory;
@@ -20,25 +21,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			IList<IBuildableWrapper<IUnit>> units,
             IBuildableSorter<IUnit> sorter)
 		{
-			base.Initialize();
+            base.Initialize(uiFactory, units, sorter);
 
-            Helper.AssertIsNotNull(uiManager, uiFactory, units, sorter);
-
+            Assert.IsNotNull(uiManager);
 			_uiManager = uiManager;
-
-            units = sorter.Sort(units);
-
-			// Create unit buttons
-			HorizontalLayoutGroup buttonGroup = GetComponent<HorizontalLayoutGroup>();
-
-			for (int i = 0; i < units.Count; ++i)
-			{
-				IPresentable presentable = uiFactory.CreateUnitButton(buttonGroup, units[i]);
-				_childPresentables.Add(presentable);
-			}
-
-			uiFactory.CreateBackButton(buttonGroup);
 		}
+
+        protected override IPresentable CreateBuildableButton(IUIFactory uiFactory, HorizontalLayoutGroup buttonParent, IBuildableWrapper<IUnit> buildable)
+        {
+            return uiFactory.CreateUnitButton(buttonParent, buildable);
+        }
 
 		public override void OnPresenting(object activationParameter)
 		{
@@ -60,5 +52,5 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			_factory.Destroyed -= _factory_Destroyed;
 			_factory = null;
 		}
-	}
+    }
 }
