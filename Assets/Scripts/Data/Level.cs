@@ -7,12 +7,14 @@ namespace BattleCruisers.Data
 		public int Num { get; private set; }
         public string Name { get; private set; }
         public IPrefabKey Hull { get; private set; }
+        public string SkyMaterialName { get; private set; }
 
-        public Level(int num, string name, IPrefabKey hull)
+        public Level(int num, string name, IPrefabKey hull, string skyMaterialName)
 		{
 			Num = num;
             Name = name;
             Hull = hull;
+            SkyMaterialName = skyMaterialName;
 		}
 	}
 }

@@ -142,8 +142,7 @@ namespace BattleCruisers.Scenes
 
             // Camera controller
             IMaterialFetcher materialFetcher = new MaterialFetcher();
-            // FELIX  Choose material dependent on level :P
-            Material skyboxMaterial = materialFetcher.GetMaterial("SkyboxSunset");
+            Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
             cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial);
 
 

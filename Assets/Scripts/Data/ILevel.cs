@@ -7,5 +7,6 @@ namespace BattleCruisers.Data
         int Num { get; }
         string Name { get; }
         IPrefabKey Hull { get; }
+        string SkyMaterialName { get; }
     }
 }

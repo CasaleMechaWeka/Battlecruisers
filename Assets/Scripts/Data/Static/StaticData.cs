@@ -162,31 +162,31 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-				new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor),
-				new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
-				new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor),
-				new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw),
-				new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark),
-				new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw),
-				new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw),
+                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.Blue),
+                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.BlueDeep),
+                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.SunsetCloudy),
+                new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.White),
+                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Sunset),
+                new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.BlueCloudy),
+                new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.SunsetWeirdClouds),
 
                 // Set 2
-                new Level(8, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle),
-                new Level(9, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark),
-                new Level(10, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Hammerhead),
-                new Level(11, "Battle of Watercress", StaticPrefabKeys.Hulls.Eagle),
-                new Level(12, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead),
-                new Level(13, "Dunspock", StaticPrefabKeys.Hulls.Eagle),
-                new Level(14, "Gallient Flippery", StaticPrefabKeys.Hulls.Hammerhead),
+                new Level(8, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.SunsetCloudy),
+                new Level(9, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.White),
+                new Level(10, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.BlueDeep),
+                new Level(11, "Battle of Watercress", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.SunsetWeirdClouds),
+                new Level(12, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.Blue),
+                new Level(13, "Dunspock", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.BlueCloudy),
+                new Level(14, "Gallient Flippery", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.Sunset),
 
                 // Set 3
-                new Level(15, "Sprawl Brawl", StaticPrefabKeys.Hulls.Longbow),
-                new Level(16, "Fisticuffs", StaticPrefabKeys.Hulls.Hammerhead),
-                new Level(17, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Megalodon),
-                new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow),
-                new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle),
-                new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon),
-                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon),
+                new Level(15, "Sprawl Brawl", StaticPrefabKeys.Hulls.Longbow, SkyMaterials.BlueCloudy),
+                new Level(16, "Fisticuffs", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.SunsetWeirdClouds),
+                new Level(17, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.White),
+                new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow, SkyMaterials.Sunset),
+                new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.Blue),
+                new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.SunsetCloudy),
+                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.BlueDeep)
 			};
 		}
 
