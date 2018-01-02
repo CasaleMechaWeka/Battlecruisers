@@ -42,14 +42,18 @@ namespace BattleCruisers.Cameras
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
-		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, ISettingsManager settingsManager)
+		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, ISettingsManager settingsManager, Material skyboxMaterial)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager);
-           
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial);
+
             _settingsManager = settingsManager;
 
-			_camera = GetComponent<Camera>();
-			Assert.IsNotNull(_camera);
+            _camera = GetComponent<Camera>();
+            Assert.IsNotNull(_camera);
+			
+            Skybox skybox = GetComponent<Skybox>();
+			Assert.IsNotNull(skybox);
+			skybox.material = skyboxMaterial;
 
             _cameraOrthographicSizeChangeVelocity = 0;
 

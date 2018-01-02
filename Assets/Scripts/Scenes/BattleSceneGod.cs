@@ -140,8 +140,11 @@ namespace BattleCruisers.Scenes
             uiManager.InitialUI();
 
 
-			// Camera controller
-            cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager);
+            // Camera controller
+            IMaterialFetcher materialFetcher = new MaterialFetcher();
+            // FELIX  Choose material dependent on level :P
+            Material skyboxMaterial = materialFetcher.GetMaterial("SkyboxSunset");
+            cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial);
 
 
             // AI
