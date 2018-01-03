@@ -127,8 +127,8 @@ namespace BattleCruisers.Tests.Aircraft
 
             IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
 
-            Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude + 1.5f)));     // -5 + 5 + 1.5
-            Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude + 1.5f)));    // 40 - 5 + 1.5
+            Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude + 1.5f)));     // -5 + 5
+            Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude + 1.5f)));    // 40 - 5
         }
 
 		private void AssertAreSafeZonesEqual(SafeZone expected, SafeZone actual)
