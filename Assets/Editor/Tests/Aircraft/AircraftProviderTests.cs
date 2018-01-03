@@ -120,6 +120,17 @@ namespace BattleCruisers.Tests.Aircraft
 			Assert.IsTrue(patrolPoints[3] == new Vector2(-25, _deathstarAltitude));	// -30 + 5
 		}
 
+        [Test]
+        public void UsesRandomisedCruisingAltitude()
+        {
+            _random.RangeFromCenter(default(float), default(float)).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]) + 1.5f);
+
+            IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+
+            Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude + 1.5f)));     // -5 + 5 + 1.5
+            Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude + 1.5f)));    // 40 - 5 + 1.5
+        }
+
 		private void AssertAreSafeZonesEqual(SafeZone expected, SafeZone actual)
 		{
 			Assert.AreEqual(expected.MinX, actual.MinX);
