@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Tests.Aircraft
 {
@@ -10,6 +12,7 @@ namespace BattleCruisers.Tests.Aircraft
 		private IAircraftProvider _playerAircraftProvider, _aiAircraftProvider;
 		private Vector2 _playerCruiserPosition, _aiCruiserPosition;
 		private float _bomberAltitude, _fighterAltitude, _deathstarAltitude;
+        private BCUtils.IRandomGenerator _random;
 
 		[SetUp]
 		public void TestSetup()
@@ -17,8 +20,12 @@ namespace BattleCruisers.Tests.Aircraft
 			_playerCruiserPosition = new Vector2(-30, 0);
 			_aiCruiserPosition = new Vector2(30, 0);
 
-			_playerAircraftProvider = new AircraftProvider(_playerCruiserPosition, _aiCruiserPosition);
-			_aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition);
+			// Just return center provided, without any randomisation (ie, do not fuzz cruising altitude)
+            _random = Substitute.For<BCUtils.IRandomGenerator>();
+            _random.RangeFromCenter(default(float), default(float)).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]));
+
+            _playerAircraftProvider = new AircraftProvider(_playerCruiserPosition, _aiCruiserPosition, _random);
+            _aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition, _random);
 
 			_bomberAltitude = 15;
 			_fighterAltitude = 20;

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Offensive;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Satellites
 {
@@ -16,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Satellites
 
             Vector2 parentCruiserPosition = launcher.transform.position;
             Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
 
             Helper helper = new Helper(numOfDrones);
             helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);

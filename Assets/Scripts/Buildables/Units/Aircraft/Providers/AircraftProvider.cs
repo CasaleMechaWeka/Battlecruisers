@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
     public class AircraftProvider : IAircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
+        private readonly IRandomGenerator _random;
 
 		private const float SAFE_ZONE_PARENT_CRUISER_OVERLAP = 10;
 		private const float SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE = 25;
@@ -18,14 +21,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
         private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
+        private const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
         private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
 		public SafeZone FighterSafeZone { get; private set; }
 
-		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition)
+		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)
 		{
 			_parentCruiserPosition = parentCruiserPosition;
 			_enemyCruiserPosition = enemyCruiserPosition;
+
+            Assert.IsNotNull(random);
+            _random = random;
 
 			float minX, maxX;
 
@@ -51,6 +58,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
 		{
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
 
@@ -66,6 +75,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM)
 		{
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
             float gunshipTurnAroundPointX = (_parentCruiserPosition.x + _enemyCruiserPosition.x) / 2;
@@ -79,6 +90,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+
             float parentCruiserPatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN : FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN;
             float middlePatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MaxX - FIGHTER_PATROL_MARGIN : FighterSafeZone.MinX + FIGHTER_PATROL_MARGIN;
 
@@ -114,6 +127,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
                 new Vector2(closerToEnemyCruiserPatrolPointX, cruisingAltitudeInM),
                 new Vector2(closerToFriendlyCruiserPatrolPointX, cruisingAltitudeInM)
             };
+        }
+
+        /// <summary>
+		/// Randomise cruising altitude slightly, to avoid all planes
+		/// flying at exactly the same height :P
+		/// </summary>
+        private float FuzzCruisingAltitude(float crusingAltitudeInM)
+        {
+            return _random.RangeFromCenter(crusingAltitudeInM, CRUISING_ALTITUDE_ERROR_MARGIN_IN_M); 
         }
 	}
 }
