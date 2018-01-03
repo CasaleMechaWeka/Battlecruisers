@@ -38,6 +38,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 			if (_targetFilter.IsMatch(args.Target) && TargetFound != null)
 			{
+                Logging.Log(Tags.TARGET_FINDER, "Is Match!");
+
 				TargetFound.Invoke(this, args);
 			}
 		}
@@ -48,7 +50,9 @@ namespace BattleCruisers.Targets.TargetFinders
 
 			if (_targetFilter.IsMatch(args.Target) && TargetLost != null)
 			{
-				TargetLost.Invoke(this, args);
+                Logging.Log(Tags.TARGET_FINDER, "Is Match!");
+				
+                TargetLost.Invoke(this, args);
 			}
 		}
 

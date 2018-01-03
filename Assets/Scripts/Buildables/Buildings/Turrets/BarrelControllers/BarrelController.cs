@@ -142,6 +142,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             if (!_targetPositionValidator.IsValid(predictedTargetPosition, ProjectileSpawnerPosition, IsSourceMirrored))
             {
                 // Target position is invalid
+                Logging.Verbose(Tags.BARREL_CONTROLLER, "Target position is invalid");
                 return false;
             }
 
@@ -160,6 +161,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 || !_fireIntervalManager.ShouldFire())
             {
                 // Not on target or haven't waited fire interval
+                Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target or haven't waited fire interval");
                 return false;
             }
 
