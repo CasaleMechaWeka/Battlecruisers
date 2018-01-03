@@ -14,13 +14,17 @@ namespace BattleCruisers.Projectiles
         private Vector2 _size;
         public override Vector2 Size { get { return _size; } }
 
-        public void Initialise(Faction faction, Rigidbody2D rigidBody, Vector2 size)
+        public void Initialise(Faction faction, Rigidbody2D rigidBody)
 		{
 			StaticInitialise();
 
 			Faction = faction;
 			_rigidBody = rigidBody;
-            _size = size;
+
+            SpriteRenderer rocketRenderer = GetComponent<SpriteRenderer>();
+            Assert.IsNotNull(rocketRenderer);
+
+            _size = rocketRenderer.bounds.size;
 		}
 
 		// All RocketTarget gameObjects are wrapped by a RocketController gameObject.

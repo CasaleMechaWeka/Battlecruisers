@@ -47,10 +47,7 @@ namespace BattleCruisers.Projectiles
 			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
 			Assert.IsNotNull(rocketTarget);
 
-            SpriteRenderer rocketRenderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(rocketRenderer);
-
-            rocketTarget.Initialise(faction, _rigidBody, rocketRenderer.bounds.size);
+            rocketTarget.Initialise(faction, _rigidBody);
 		}
 	}
 }
