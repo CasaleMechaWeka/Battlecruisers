@@ -9,8 +9,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class TurretController : Building
 	{
-		private GameObject _turretBase;
-		private Renderer _turretBaseRenderer;
 		protected IBarrelWrapper _barrelWrapper;
 
 		public List<TargetType> attackCapabilities;
@@ -21,10 +19,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 		{
 			base.StaticInitialise();
 
-			_turretBase = transform.Find("Base").gameObject;
-			_turretBaseRenderer = _turretBase.GetComponent<Renderer>();
-			Assert.IsNotNull(_turretBaseRenderer);
-			
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
@@ -53,8 +47,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected override IList<Renderer> GetInGameRenderers()
         {
             IList<Renderer> renderers = _barrelWrapper.Renderers.ToList();
-            renderers.Add(_turretBaseRenderer);
+            renderers.Add(GetBaseRenderer());
             return renderers;
+        }
+
+        protected virtual Renderer GetBaseRenderer()
+        {
+			GameObject turretBase = transform.Find("Base").gameObject;
+            Renderer turretBaseRenderer = turretBase.GetComponent<Renderer>();
+			Assert.IsNotNull(turretBaseRenderer);
+            return turretBaseRenderer;
         }
     }
 }

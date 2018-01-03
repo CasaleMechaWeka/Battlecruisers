@@ -173,9 +173,9 @@ namespace BattleCruisers.Buildables
 
         protected virtual IList<Renderer> GetInGameRenderers()
         {
-            Renderer renderer = GetComponent<Renderer>();
-            Assert.IsNotNull(renderer);
-            return new List<Renderer>() { renderer };
+            Renderer mainRenderer = GetComponent<Renderer>();
+            Assert.IsNotNull(mainRenderer);
+            return new List<Renderer>() { mainRenderer };
         }
 
         protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
