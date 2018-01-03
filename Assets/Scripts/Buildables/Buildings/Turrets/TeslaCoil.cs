@@ -1,10 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Tactical
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    // FELIX  Move to turrets folder :/
     public class TeslaCoil : TurretController
 	{
         protected override Renderer GetBaseRenderer()
