@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public enum SlotType
 	{
-        None, Utility, Stern, Mast, Bow, Platform, Deck
+        None, Utility, Mast, Bow, Platform, Deck
 	}
 
     public class SlotBuildingDestroyedEventArgs : EventArgs
