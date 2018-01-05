@@ -1,10 +1,9 @@
-﻿﻿using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 
 namespace BattleCruisers.Data.Static
 {
-	public static class StaticBuildOrders
+    public static class StaticBuildOrders
 	{
         public static class Adaptive
         {
@@ -258,16 +257,5 @@ namespace BattleCruisers.Data.Static
 				}
 			}
         }
-
-		public static IList<IPrefabKey> AntiRocketLauncher
-		{
-			get
-			{
-				return new List<IPrefabKey>()
-				{
-                    StaticPrefabKeys.Buildings.TeslaCoil
-				};
-			}
-		}
 	}
 }
