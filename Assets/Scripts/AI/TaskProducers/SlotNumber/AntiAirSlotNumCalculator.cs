@@ -2,11 +2,12 @@
 {
 	public class AntiAirSlotNumCalculator : SlotNumCalculator
 	{
-		public AntiAirSlotNumCalculator(int numOfSlots)
-			: base(numOfSlots,
-			slotsForNoThreat: 0,
-			slotsForLowThreat: 2,
-			slotsForHighThreat: 4)
+		public AntiAirSlotNumCalculator(int roofSlotNum)
+			: base(
+                roofSlotNum,
+    			slotsForNoThreat: 0,
+    			slotsForLowThreat: 2,
+    			slotsForHighThreat: 4)
 		{
 		}
 	}
