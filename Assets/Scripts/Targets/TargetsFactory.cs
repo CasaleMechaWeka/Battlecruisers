@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -115,5 +117,10 @@ namespace BattleCruisers.Targets
             return new HighestPriorityTargetProvider(targetRanker, parentDamagable);
         }
         #endregion TargetProviders
+		
+		public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
+		{
+            return new ShipRangeHelper(ship);
+		}
     }
 }

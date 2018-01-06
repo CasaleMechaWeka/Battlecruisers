@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Ships;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -41,5 +43,8 @@ namespace BattleCruisers.Targets
         IBroadCastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit);
         IBroadCastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
         IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable);
+
+        // Helpers
+        ITargetRangeHelper CreateShipRangeHelper(IShip ship);
 	}
 }
