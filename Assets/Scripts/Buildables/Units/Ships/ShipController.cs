@@ -31,6 +31,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
+        // Frigate would have optimal range of 18.63 but target was at 18.6305.
+        // Hence provide a tiny bit of leeway, so target is counted as in range.
+        private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
@@ -176,10 +179,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
             float distanceCenterToCenter = Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position);
             float distanceCenterToEdge = distanceCenterToCenter - _highestPriorityTargetProvider.Target.Size.x / 2;
+            float adjustedDistanceToTarget = distanceCenterToEdge - IN_RANGE_LEEWAY_IN_M;
 
-            Logging.Log(Tags.SHIPS, "Distance: " + distanceCenterToEdge + "  Range: " + OptimalArmamentRangeInM);
+            Logging.Log(Tags.SHIPS, "Distance: " + adjustedDistanceToTarget + "  Range: " + OptimalArmamentRangeInM);
 
-            return distanceCenterToEdge <= OptimalArmamentRangeInM;
+            return adjustedDistanceToTarget <= OptimalArmamentRangeInM;
         }
 
 		private void StartMoving()
@@ -193,15 +197,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 			Logging.Log(Tags.SHIPS, "StopMoving()");
 			rigidBody.velocity = new Vector2(0, 0);
 		}
-
-        /// <summary>
-		/// Enemy detector is in ship center, but longest range barrel may be behind
-		/// ship center.  Want to only stop once barrel is in range, so make optimal 
-		/// armament range be less than the longest range barrel.
-        protected float FindOptimalArmamentRangeInM(IBarrelWrapper longestRangeBarrel)
-        {
-            return longestRangeBarrel.RangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
-        }
 
         protected override void OnDestroyed()
         {

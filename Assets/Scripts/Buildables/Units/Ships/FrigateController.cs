@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -8,11 +9,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
+        // FELIX  Use private backing field (like in Destroyer), to avoid always evaluationg method
         protected override float OptimalArmamentRangeInM
 		{
 			get
 			{
-				return FindOptimalArmamentRangeInM(_mortar);
+				return FindOptimalArmamentRangeInM();
 			}
 		}
 
@@ -20,6 +22,15 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise();
             _attackCapabilities.Add(TargetType.Aircraft);
+        }
+
+        /// <summary>
+        /// Enemy detector is in ship center, but longest range barrel (mortar) is behind
+        /// ship center.  Want to only stop once barrel is in range, so make optimal 
+        /// armament range be less than the longest range barrel.
+        private float FindOptimalArmamentRangeInM()
+        {
+            return _mortar.RangeInM - (Mathf.Abs(transform.position.x - _mortar.Position.x));
         }
 
         protected override IList<IBarrelWrapper> GetTurrets()
