@@ -57,7 +57,7 @@ namespace BattleCruisers.Movement.Deciders
 			_highestPriorityTargetProvider = _highPriorityTarget;
             _highestPriorityTargetConsumer = _highPriorityTarget;
 
-            UpdateVelocity();
+            DecideMovement();
         }
 
         private IBroadCastingTargetProvider SetupBlockingEnemyDetection(ITargetDetector enemyDetector)
@@ -87,10 +87,10 @@ namespace BattleCruisers.Movement.Deciders
 
         private void OnTargetChanged(object sender, EventArgs args)
         {
-            UpdateVelocity();
+            DecideMovement();
         }
 
-        private void UpdateVelocity()
+        private void DecideMovement()
         {
             if (!_ship.IsMoving)
             {
