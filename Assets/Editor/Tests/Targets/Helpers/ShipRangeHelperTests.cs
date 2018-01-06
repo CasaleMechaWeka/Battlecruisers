@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests
+namespace BattleCruisers.Tests.Targets.Helpers
 {
     public class ShipRangeHelperTests
     {
