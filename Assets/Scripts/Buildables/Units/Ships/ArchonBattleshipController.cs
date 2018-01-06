@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
         private IBarrelWrapper _directFireAntiSea, _directFireAntiAir1, _directFireAntiAir2, _missileLauncherFront, _missileLauncherRear;
 
-        protected override float OptimalArmamentRangeInM
+        public override float OptimalArmamentRangeInM
         {
             get
             {

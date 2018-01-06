@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
         private float _optimalArmamentRangeInM;
-        protected override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
+        public override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
 
         public override void StaticInitialise()
         {

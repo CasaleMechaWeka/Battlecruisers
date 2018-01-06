@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     /// 3. Boat will only stop to fight enemies (or to avoid bumping into friendlies).
     ///     Either this boat is destroyed, or the enemy, in which case this boat will continue moving.
     /// </summary>
-    public abstract class ShipController : Unit
+    public abstract class ShipController : Unit, IShip
 	{
 		private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// Usually this will simply be the range of the ship's longest ranged turret,
         /// but can be less if we want multiple of the ships turrets to be in range.
         /// </summary>
-        protected abstract float OptimalArmamentRangeInM { get; }
+        public abstract float OptimalArmamentRangeInM { get; }
 
         private float _damage;
         public sealed override float Damage { get { return _damage; } }
@@ -67,7 +67,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        private bool IsStationary { get { return rigidBody.velocity.x == 0; } }
+        public bool IsMoving { get { return rigidBody.velocity.x != 0; } }
 
         public override void StaticInitialise()
 		{
@@ -155,7 +155,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             Assert.IsTrue(BuildableState == BuildableState.Completed);
 
-            if (IsStationary)
+            if (!IsMoving)
             {
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
@@ -186,13 +186,13 @@ namespace BattleCruisers.Buildables.Units.Ships
             return adjustedDistanceToTarget <= OptimalArmamentRangeInM;
         }
 
-		private void StartMoving()
+		public void StartMoving()
 		{
 			Logging.Log(Tags.SHIPS, "StartMoving()");
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
 		}
 
-		private void StopMoving()
+		public void StopMoving()
 		{
 			Logging.Log(Tags.SHIPS, "StopMoving()");
 			rigidBody.velocity = new Vector2(0, 0);
