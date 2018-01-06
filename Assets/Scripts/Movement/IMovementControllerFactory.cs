@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Ships;
+using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
 using UnityEngine;
 
@@ -14,7 +18,10 @@ namespace BattleCruisers.Movement
 	{
         // Velocity
         IMovementController CreatePatrollingMovementController(
-            Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IList<IPatrolPoint> patrolPoints, float positionEqualityMarginInM = MovementControllerFactory.DEFAULT_POSITION_EQUALITY_MARGIN_IN_M);
+            Rigidbody2D rigidBody, 
+            IVelocityProvider maxVelocityProvider, 
+            IList<IPatrolPoint> patrolPoints, 
+            float positionEqualityMarginInM = MovementControllerFactory.DEFAULT_POSITION_EQUALITY_MARGIN_IN_M);
 		IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
         FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
 		IMovementController CreateDummyMovementController();
@@ -34,5 +41,8 @@ namespace BattleCruisers.Movement
 		IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);
 		IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
 		IConstantRotationController CreateDummyConstantRotationController();
+
+        // Deciers
+        IMovementDecider CreateShipMovementDecider(IShip ship, ITargetsFactory targetsFactory, ITargetDetector enemyDetector, ITargetDetector friendDetector);
 	}
 }
