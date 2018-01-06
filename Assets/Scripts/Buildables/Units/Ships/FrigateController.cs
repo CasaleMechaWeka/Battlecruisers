@@ -9,19 +9,15 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
-        // FELIX  Use private backing field (like in Destroyer), to avoid always evaluationg method
-        protected override float OptimalArmamentRangeInM
-		{
-			get
-			{
-				return FindOptimalArmamentRangeInM();
-			}
-		}
+        private float _optimalArmamentRangeInM;
+        protected override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
 
         public override void StaticInitialise()
         {
             base.StaticInitialise();
+
             _attackCapabilities.Add(TargetType.Aircraft);
+            _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 
         /// <summary>

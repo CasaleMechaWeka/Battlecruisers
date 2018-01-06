@@ -8,15 +8,15 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite, _missileLauncher;
 
-        private float _enemyDectionRangeInM;
-        protected override float OptimalArmamentRangeInM { get { return _enemyDectionRangeInM; } }
+        private float _optimalArmamentRangeInM;
+        protected override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
 
         public override void StaticInitialise()
         {
             base.StaticInitialise();
 
             _attackCapabilities.Add(TargetType.Aircraft);
-            _enemyDectionRangeInM = FindOptimalArmamentRangeInM();
+            _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 
         /// <summary>
