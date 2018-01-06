@@ -2,12 +2,11 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
-using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Deciders
 {
@@ -25,6 +24,7 @@ namespace BattleCruisers.Movement.Deciders
     {
         private readonly IShip _ship;
         private readonly ITargetsFactory _targetsFactory;
+        private readonly ITargetRangeHelper _rangeHelper;
         private readonly IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly IHighestPriorityTargetProvider _highPriorityTarget;
         private readonly ITargetProvider _highestPriorityTargetProvider;
@@ -47,6 +47,7 @@ namespace BattleCruisers.Movement.Deciders
             _ship = ship;
             _targetsFactory = targetsFactory;
 
+            _rangeHelper = _targetsFactory.CreateShipRangeHelper(_ship);
             _blockingEnemyProvider = SetupBlockingEnemyDetection(enemyDetector);
             _blockingFriendlyProvider = SetupBlockingFriendDetection(friendDetector);
 
@@ -96,7 +97,7 @@ namespace BattleCruisers.Movement.Deciders
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
                     && (_highestPriorityTargetProvider.Target == null
-                        || !IsHighestPriorityTargetWithinRange()))
+                        || !IsHighestPriorityTargetInRange()))
                 {
                     _ship.StartMoving();
                 }
@@ -104,23 +105,15 @@ namespace BattleCruisers.Movement.Deciders
             else if (_blockingEnemyProvider.Target != null
                 || _blockingFriendlyProvider.Target != null
                 || (_highestPriorityTargetProvider.Target != null
-                    && IsHighestPriorityTargetWithinRange()))
+                    && IsHighestPriorityTargetInRange()))
             {
                 _ship.StopMoving();
             }
         }
 
-        // FELIX  This logic should be in it's own class
-        private bool IsHighestPriorityTargetWithinRange()
+        private bool IsHighestPriorityTargetInRange()
         {
-            Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
-            float distanceCenterToCenter = Vector2.Distance(_highestPriorityTargetProvider.Target.Position, _ship.Position);
-            float distanceCenterToEdge = distanceCenterToCenter - _highestPriorityTargetProvider.Target.Size.x / 2;
-            float adjustedDistanceToTarget = distanceCenterToEdge - IN_RANGE_LEEWAY_IN_M;
-
-            Logging.Log(Tags.SHIPS, "Distance: " + adjustedDistanceToTarget + "  Range: " + _ship.OptimalArmamentRangeInM);
-
-            return adjustedDistanceToTarget <= _ship.OptimalArmamentRangeInM;
+            return _rangeHelper.IsTargetInRange(_highestPriorityTargetProvider.Target);
         }
 
         public void DisposeManagedState()
