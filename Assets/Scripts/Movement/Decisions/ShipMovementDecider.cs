@@ -55,6 +55,8 @@ namespace BattleCruisers.Movement.Deciders
             _highPriorityTarget = SetupHighestPriorityTargetProvider();
 			_highestPriorityTargetProvider = _highPriorityTarget;
             _highestPriorityTargetConsumer = _highPriorityTarget;
+
+            UpdateVelocity();
         }
 
         private IBroadCastingTargetProvider SetupBlockingEnemyDetection(ITargetDetector enemyDetector)

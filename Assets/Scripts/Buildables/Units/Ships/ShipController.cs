@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -24,16 +21,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
 		private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
-        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
-        private IHighestPriorityTargetProvider _highPriorityTarget;
-        private ITargetProvider _highestPriorityTargetProvider;
         private TargetProcessorWrapper _targetProcessorWrapper;
+        private IMovementDecider _movementDecider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
-        // Frigate would have optimal range of 18.63 but target was at 18.6305.
-        // Hence provide a tiny bit of leeway, so target is counted as in range.
-        private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
 
 		public CircleTargetDetector enemyDetector, friendDetector;
 
@@ -103,10 +95,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.StartAttackingTargets();
             }
 
-            SetupBlockingUnitDetection();
+            _movementDecider = SetupMovementDecider();
 			SetupTargetProcessorWrapper();
-			
-            UpdateVelocity();
         }
 
         private void SetupTargetProcessorWrapper()
@@ -116,7 +106,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
-                    _highPriorityTarget,
+                    _movementDecider,
                     enemyFaction,
                     _attackCapabilities,
                     OptimalArmamentRangeInM);
@@ -125,65 +115,17 @@ namespace BattleCruisers.Buildables.Units.Ships
             _targetProcessorWrapper.StartProvidingTargets();
         }
 
-        private void SetupBlockingUnitDetection()
+        private IMovementDecider SetupMovementDecider()
         {
-            // Detect blocking enemies
             enemyDetector.Initialise(EnemyDetectionRangeInM);
-            _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, this);
-            _blockingEnemyProvider.TargetChanged += OnTargetChanged;
-
-            // Friend detection for stopping
             friendDetector.Initialise(FriendDetectionRangeInM);
-            _blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this);
-            _blockingFriendlyProvider.TargetChanged += OnTargetChanged;
 
-            // High priority target provider, for detecting targets that are attacking
-            // us but are currently out of range.
-            ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
-            _highPriorityTarget = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
-            _highestPriorityTargetProvider = _highPriorityTarget;
-            _highPriorityTarget.TargetChanged += OnTargetChanged;
-            _highPriorityTarget.NewInRangeTarget += OnTargetChanged;
-        }
-
-        private void OnTargetChanged(object sender, EventArgs args)
-        {
-            UpdateVelocity();
-        }
-
-        private void UpdateVelocity()
-        {
-            Assert.IsTrue(BuildableState == BuildableState.Completed);
-
-            if (!IsMoving)
-            {
-                if (_blockingEnemyProvider.Target == null
-                    && _blockingFriendlyProvider.Target == null
-                    && (_highestPriorityTargetProvider.Target == null
-                        || !IsHighestPriorityTargetWithinRange()))
-                {
-                    StartMoving();
-                }
-            }
-            else if (_blockingEnemyProvider.Target != null
-                || _blockingFriendlyProvider.Target != null
-                || (_highestPriorityTargetProvider.Target != null
-                    && IsHighestPriorityTargetWithinRange()))
-            {
-                StopMoving();
-            }
-        }
-
-        private bool IsHighestPriorityTargetWithinRange()
-        {
-            Assert.IsTrue(_highestPriorityTargetProvider.Target != null);
-            float distanceCenterToCenter = Vector2.Distance(_highestPriorityTargetProvider.Target.Position, Position);
-            float distanceCenterToEdge = distanceCenterToCenter - _highestPriorityTargetProvider.Target.Size.x / 2;
-            float adjustedDistanceToTarget = distanceCenterToEdge - IN_RANGE_LEEWAY_IN_M;
-
-            Logging.Log(Tags.SHIPS, "Distance: " + adjustedDistanceToTarget + "  Range: " + OptimalArmamentRangeInM);
-
-            return adjustedDistanceToTarget <= OptimalArmamentRangeInM;
+            return
+                _movementControllerFactory.CreateShipMovementDecider(
+                    this,
+                    _targetsFactory,
+                    enemyDetector,
+                    friendDetector);
         }
 
 		public void StartMoving()
@@ -200,15 +142,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void OnDestroyed()
         {
+			if (_movementDecider != null)
+			{
+				_movementDecider.DisposeManagedState();
+			}
             base.OnDestroyed();
-
-            if (BuildableState == BuildableState.Completed)
-            {
-                _blockingEnemyProvider.TargetChanged -= OnTargetChanged;
-                _blockingFriendlyProvider.TargetChanged -= OnTargetChanged;
-                _highPriorityTarget.TargetChanged -= OnTargetChanged;
-                _highPriorityTarget.NewInRangeTarget -= OnTargetChanged;
-            }
-        }
+		}
 	}
 }
