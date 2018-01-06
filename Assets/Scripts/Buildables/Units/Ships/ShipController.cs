@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Targets.TargetFinders;
@@ -126,20 +127,25 @@ namespace BattleCruisers.Buildables.Units.Ships
             // Detect blocking enemies
             enemyDetector.Initialise(EnemyDetectionRangeInM);
             _blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, this);
-            _blockingEnemyProvider.TargetChanged += (sender, e) => UpdateVelocity();
+            _blockingEnemyProvider.TargetChanged += OnTargetChanged;
 
             // Friend detection for stopping
             friendDetector.Initialise(FriendDetectionRangeInM);
             _blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this);
-            _blockingFriendlyProvider.TargetChanged += (sender, e) => UpdateVelocity();
+            _blockingFriendlyProvider.TargetChanged += OnTargetChanged;
 
             // High priority target provider, for detecting targets that are attacking
             // us but are currently out of range.
             ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
             _highPriorityTarget = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, this);
             _highestPriorityTargetProvider = _highPriorityTarget;
-            _highPriorityTarget.TargetChanged += (sender, e) => UpdateVelocity();
-            _highPriorityTarget.NewInRangeTarget += (sender, e) => UpdateVelocity();
+            _highPriorityTarget.TargetChanged += OnTargetChanged;
+            _highPriorityTarget.NewInRangeTarget += OnTargetChanged;
+        }
+
+        private void OnTargetChanged(object sender, EventArgs args)
+        {
+            UpdateVelocity();
         }
 
         private void UpdateVelocity()
@@ -195,6 +201,19 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected float FindOptimalArmamentRangeInM(IBarrelWrapper longestRangeBarrel)
         {
             return longestRangeBarrel.RangeInM - (Mathf.Abs(transform.position.x - longestRangeBarrel.Position.x));
+        }
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+
+            if (BuildableState == BuildableState.Completed)
+            {
+                _blockingEnemyProvider.TargetChanged -= OnTargetChanged;
+                _blockingFriendlyProvider.TargetChanged -= OnTargetChanged;
+                _highPriorityTarget.TargetChanged -= OnTargetChanged;
+                _highPriorityTarget.NewInRangeTarget -= OnTargetChanged;
+            }
         }
 	}
 }
