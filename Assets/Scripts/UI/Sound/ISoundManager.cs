@@ -4,6 +4,6 @@ namespace BattleCruisers.UI.Sound
 {
     public interface ISoundManager
     {
-        void PlaySound(string soundName, Vector2 position);
+        void PlaySound(ISoundKey soundKey, Vector2 position);
     }
 }

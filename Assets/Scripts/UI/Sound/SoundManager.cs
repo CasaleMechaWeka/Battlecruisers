@@ -18,9 +18,9 @@ namespace BattleCruisers.UI.Sound
             _soundPlayer = soundPlayer;
         }
 
-        public void PlaySound(string soundName, Vector2 position)
+        public void PlaySound(ISoundKey soundKey, Vector2 position)
         {
-            IAudioClipWrapper sound = _soundFetcher.GetSound(soundName);
+            IAudioClipWrapper sound = _soundFetcher.GetSound(soundKey);
             _soundPlayer.PlaySound(sound, position);
         }
     }

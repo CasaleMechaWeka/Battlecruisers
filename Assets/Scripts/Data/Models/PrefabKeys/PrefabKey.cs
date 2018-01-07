@@ -28,7 +28,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
 			}
 		}
 
-		public PrefabKey(string prefabName)
+        protected PrefabKey(string prefabName)
 		{
 			_prefabName = prefabName;
 		}

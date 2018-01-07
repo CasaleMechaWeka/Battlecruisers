@@ -29,12 +29,12 @@ namespace BattleCruisers.Tests.UI.Sound
         public void PlaySound()
         {
             IAudioClipWrapper audioClip = Substitute.For<IAudioClipWrapper>();
+            ISoundKey soundKey = Substitute.For<ISoundKey>();
             Vector2 soundPosition = new Vector2(2, 3);
-            string soundName = "legit as sound";
 
-            _soundFetcher.GetSound(soundName).Returns(audioClip);
+            _soundFetcher.GetSound(soundKey).Returns(audioClip);
 
-            _soundManager.PlaySound(soundName, soundPosition);
+            _soundManager.PlaySound(soundKey, soundPosition);
 
             _soundPlayer.Received().PlaySound(audioClip, soundPosition);
         }

@@ -1,5 +1,9 @@
 ﻿namespace BattleCruisers.UI.Sound
 {
+    /// <summary>
+    /// Types match the folder names in Resource/Sounds/ !
+    /// Hence, do not change :P
+    /// </summary>
     public enum SoundType
     {
         Deaths, Engines, Explosions, Firing

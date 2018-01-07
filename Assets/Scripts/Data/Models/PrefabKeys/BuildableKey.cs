@@ -30,7 +30,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
 			}
 		}
 
-		public BuildableKey(string prefabFileName, BuildableType buildableType)
+        protected BuildableKey(string prefabFileName, BuildableType buildableType)
 			: base(prefabFileName)
 		{
 			_buildableType = buildableType;
