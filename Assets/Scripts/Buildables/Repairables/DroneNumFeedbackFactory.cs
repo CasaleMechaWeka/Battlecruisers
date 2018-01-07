@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Drones;
+﻿using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.UIWrappers;
 
 namespace BattleCruisers.Buildables.Repairables

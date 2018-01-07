@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Drones

@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.Cruisers

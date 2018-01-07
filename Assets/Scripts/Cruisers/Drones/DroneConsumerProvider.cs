@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Drones
+namespace BattleCruisers.Cruisers.Drones
 {
 	public class DroneConsumerProvider : IDroneConsumerProvider
 	{

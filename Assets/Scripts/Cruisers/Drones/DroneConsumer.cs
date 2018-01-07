@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Drones
+namespace BattleCruisers.Cruisers.Drones
 {
 	public class DroneConsumer : IDroneConsumer
 	{

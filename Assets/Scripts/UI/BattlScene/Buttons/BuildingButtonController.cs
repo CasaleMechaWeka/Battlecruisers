@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using UnityEngine;
 using UnityEngine.UI;
 

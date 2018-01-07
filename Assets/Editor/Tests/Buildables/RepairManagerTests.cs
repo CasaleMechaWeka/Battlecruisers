@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.UIWrappers;
 using NSubstitute;
 using NUnit.Framework;

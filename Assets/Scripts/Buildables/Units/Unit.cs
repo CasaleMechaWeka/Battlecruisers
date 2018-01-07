@@ -1,6 +1,6 @@
 ﻿using System;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;

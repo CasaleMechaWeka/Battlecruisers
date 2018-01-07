@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;

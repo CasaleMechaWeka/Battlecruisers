@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails.Buttons;

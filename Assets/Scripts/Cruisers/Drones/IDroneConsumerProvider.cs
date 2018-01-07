@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Drones
+﻿namespace BattleCruisers.Cruisers.Drones
 {
     public interface IDroneConsumerProvider
     {

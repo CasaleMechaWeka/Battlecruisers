@@ -2,7 +2,7 @@
 using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

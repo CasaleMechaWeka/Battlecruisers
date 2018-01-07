@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 

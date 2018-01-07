@@ -2,7 +2,7 @@
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
 

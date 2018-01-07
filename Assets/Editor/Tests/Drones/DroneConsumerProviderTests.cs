@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Drones;
+﻿using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

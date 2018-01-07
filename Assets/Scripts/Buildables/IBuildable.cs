@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine;

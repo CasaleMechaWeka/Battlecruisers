@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
 

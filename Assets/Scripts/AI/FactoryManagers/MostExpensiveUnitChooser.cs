@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Drones
+namespace BattleCruisers.Cruisers.Drones
 {
     /// <summary>
     /// Only one drone consumer (DC) can be focused at a time (focused 

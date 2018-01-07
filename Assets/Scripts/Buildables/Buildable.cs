@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
