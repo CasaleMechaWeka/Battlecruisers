@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Sounds
 {
+    // FELIX  Delete this and the corresponding test scene (as soon as I have a better sound test scene :) )
     public class SoundsTestGod : MonoBehaviour
     {
         //public AudioClip audioClip;
