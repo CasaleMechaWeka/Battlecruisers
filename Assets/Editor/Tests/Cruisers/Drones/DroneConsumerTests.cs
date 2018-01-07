@@ -2,7 +2,7 @@
 using BattleCruisers.Cruisers.Drones;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Drones
+namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneConsumerTests 
 	{

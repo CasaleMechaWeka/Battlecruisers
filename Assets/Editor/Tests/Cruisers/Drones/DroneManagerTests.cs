@@ -3,7 +3,7 @@ using BattleCruisers.Cruisers.Drones;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Drones
+namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneManagerTests 
 	{
