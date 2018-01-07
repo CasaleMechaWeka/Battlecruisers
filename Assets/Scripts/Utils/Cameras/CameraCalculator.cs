@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using UnityEngine;
 
-namespace BattleCruisers.Cameras
+namespace BattleCruisers.Utils.Cameras
 {
 	public class CameraCalculator : ICameraCalculator
 	{

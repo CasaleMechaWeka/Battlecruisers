@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Cameras
+namespace BattleCruisers.Utils.Cameras
 {
     public enum CameraState
     {

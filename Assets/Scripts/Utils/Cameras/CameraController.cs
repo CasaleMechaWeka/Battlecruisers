@@ -6,7 +6,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Cameras
+namespace BattleCruisers.Utils.Cameras
 {
 	public class CameraController : MonoBehaviour, ICameraController
 	{
