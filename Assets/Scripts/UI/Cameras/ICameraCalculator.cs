@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.Utils.Cameras
+namespace BattleCruisers.UI.Cameras
 {
     public interface ICameraCalculator
     {

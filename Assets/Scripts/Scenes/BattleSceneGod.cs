@@ -4,7 +4,7 @@ using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Utils.Cameras;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Utils.Cameras
+namespace BattleCruisers.UI.Cameras
 {
     public interface ICameraTarget
     {

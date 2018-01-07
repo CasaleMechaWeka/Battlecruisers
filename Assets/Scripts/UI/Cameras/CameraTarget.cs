@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils.Cameras
+namespace BattleCruisers.UI.Cameras
 {
 	public class CameraTarget : ICameraTarget
 	{
