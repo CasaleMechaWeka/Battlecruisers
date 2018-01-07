@@ -7,7 +7,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Fetchers
+namespace BattleCruisers.Tests.Utils.Fetchers
 {
     public class SpriteProviderTests
     {
