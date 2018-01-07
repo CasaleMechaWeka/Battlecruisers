@@ -5,7 +5,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 

@@ -5,7 +5,7 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers

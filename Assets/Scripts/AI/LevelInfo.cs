@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI

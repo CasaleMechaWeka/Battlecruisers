@@ -8,7 +8,7 @@ using BattleCruisers.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildingDetails;

@@ -6,7 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;

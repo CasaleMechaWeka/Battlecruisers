@@ -2,7 +2,7 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils.UIWrappers;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public interface ISpriteProvider
     {

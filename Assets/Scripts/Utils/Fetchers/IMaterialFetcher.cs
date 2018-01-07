@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public interface IMaterialFetcher
     {

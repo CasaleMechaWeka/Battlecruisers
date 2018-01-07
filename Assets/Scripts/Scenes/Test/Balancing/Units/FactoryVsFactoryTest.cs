@@ -4,7 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;

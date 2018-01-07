@@ -2,7 +2,7 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFetcher
 	{

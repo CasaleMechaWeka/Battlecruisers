@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public class MaterialFetcher : IMaterialFetcher
     {

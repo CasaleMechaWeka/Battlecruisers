@@ -7,7 +7,7 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

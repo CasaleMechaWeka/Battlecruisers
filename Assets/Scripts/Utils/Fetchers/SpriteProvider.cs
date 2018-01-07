@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public class SpriteProvider : ISpriteProvider
     {

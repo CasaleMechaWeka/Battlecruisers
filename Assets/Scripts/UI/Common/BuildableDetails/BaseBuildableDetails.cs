@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI.Tasks

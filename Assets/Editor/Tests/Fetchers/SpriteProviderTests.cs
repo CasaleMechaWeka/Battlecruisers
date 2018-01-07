@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.UIWrappers;
 using NSubstitute;
 using NUnit.Framework;

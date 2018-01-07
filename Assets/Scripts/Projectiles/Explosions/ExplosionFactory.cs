@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Fetchers;
+﻿using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Explosions

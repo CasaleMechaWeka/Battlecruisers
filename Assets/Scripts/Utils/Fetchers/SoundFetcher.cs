@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 
-namespace BattleCruisers.Fetchers
+namespace BattleCruisers.Utils.Fetchers
 {
     public class SoundFetcher : ISoundFetcher
     {

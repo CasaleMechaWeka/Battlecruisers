@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Fetchers;
+﻿using BattleCruisers.Utils.Fetchers;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing

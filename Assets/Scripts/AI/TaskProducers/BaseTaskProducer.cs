@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers

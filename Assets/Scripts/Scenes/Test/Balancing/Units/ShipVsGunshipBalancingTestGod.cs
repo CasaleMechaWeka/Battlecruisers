@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Fetchers;
+﻿using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
