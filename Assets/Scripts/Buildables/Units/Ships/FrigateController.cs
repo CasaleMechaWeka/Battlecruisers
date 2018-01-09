@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -20,6 +22,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 
+		protected override ISoundKey GetEngineSoundKey()
+		{
+			return SoundKeys.Engines.Frigate;
+		}
+		
         /// <summary>
         /// Enemy detector is in ship center, but longest range barrel (mortar) is behind
         /// ship center.  Want to only stop once barrel is in range, so make optimal 

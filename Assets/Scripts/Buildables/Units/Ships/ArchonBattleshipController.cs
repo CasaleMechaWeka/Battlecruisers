@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Units.Ships
@@ -22,6 +24,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.StaticInitialise();
             _attackCapabilities.Add(TargetType.Aircraft);
         }
+		
+		protected override ISoundKey GetEngineSoundKey()
+		{
+			return SoundKeys.Engines.Archon;
+		}
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

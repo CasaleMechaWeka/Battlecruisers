@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SpySatelliteController : AircraftController
     {
+        protected override ISoundKey GetEngineSoundKey()
+        {
+            // TEMP  Use satellite sound once we have it :)
+            return SoundKeys.Engines.Bomber;
+        }
+
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
 			IList<Vector2> patrolPositions = _aircraftProvider.FindSpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);

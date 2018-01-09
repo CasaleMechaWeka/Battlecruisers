@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Units.Ships
@@ -19,6 +21,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 
+		protected override ISoundKey GetEngineSoundKey()
+		{
+			return SoundKeys.Engines.Destroyer;
+		}
+		
         /// <summary>
         /// Want to:
         /// + Stay out of range of mortars

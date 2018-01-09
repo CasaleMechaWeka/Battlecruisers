@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -6,6 +7,7 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -62,6 +64,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombStats = new ProjectileStatsWrapper(stats);
             Assert.IsNotNull(_bombStats);
 		}
+
+        protected override ISoundKey GetEngineSoundKey()
+        {
+            return SoundKeys.Engines.Bomber;
+        }
 
 		protected override void OnInitialised()
 		{

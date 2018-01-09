@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -42,6 +44,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				}
 			}
 		}
+
+        protected override ISoundKey GetEngineSoundKey()
+        {
+            return SoundKeys.Engines.Gunship;
+        }
 
 		protected override void OnBuildableCompleted()
 		{

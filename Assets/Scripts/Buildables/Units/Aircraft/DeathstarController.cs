@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -42,6 +44,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
 			Assert.IsNotNull(_targetDetector);
 		}
+
+        protected override ISoundKey GetEngineSoundKey()
+        {
+            // TEMP  Use satellite sound once we have it :)
+            return SoundKeys.Engines.Bomber;
+        }
 
 		protected override void OnInitialised()
 		{

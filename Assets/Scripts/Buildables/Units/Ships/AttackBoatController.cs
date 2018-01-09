@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -11,13 +13,18 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override float OptimalArmamentRangeInM { get { return _antiSeaTurret.RangeInM; } }
 
+		protected override ISoundKey GetEngineSoundKey()
+		{
+			return SoundKeys.Engines.AtatckBoat;
+		}
+		
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
             _antiSeaTurret = gameObject.GetComponentInChildren<IBarrelWrapper>();
-			Assert.IsNotNull(_antiSeaTurret);
-			turrets.Add(_antiSeaTurret);
+            Assert.IsNotNull(_antiSeaTurret);
+            turrets.Add(_antiSeaTurret);
 
             return turrets;
         }

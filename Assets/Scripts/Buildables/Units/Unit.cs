@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,6 +12,8 @@ namespace BattleCruisers.Buildables.Units
 {
     public abstract class Unit : Buildable, IUnit
 	{
+        private ISoundKey _engineSoundKey;
+
 		public UnitCategory category;
 
 		public float maxVelocityInMPerS;
@@ -43,7 +46,6 @@ namespace BattleCruisers.Buildables.Units
         }
 
         protected override bool IsDroneConsumerFocusable { get { return false; } }
-
 		#endregion Properties
 
 		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -55,6 +57,15 @@ namespace BattleCruisers.Buildables.Units
 
             OnInitialised();
         }
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+            _engineSoundKey = GetEngineSoundKey();
+        }
+
+        // Not a getter so that child classes don't all have to cache their sound keys.
+        protected abstract ISoundKey GetEngineSoundKey();
 
 		void FixedUpdate()
 		{
