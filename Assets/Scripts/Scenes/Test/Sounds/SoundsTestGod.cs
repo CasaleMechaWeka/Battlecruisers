@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Sounds
@@ -6,32 +9,22 @@ namespace BattleCruisers.Scenes.Test.Sounds
     // FELIX  Delete this and the corresponding test scene (as soon as I have a better sound test scene :) )
     public class SoundsTestGod : MonoBehaviour
     {
-        //public AudioClip audioClip;
-
         void Start()
         {
-            string mp3File = "AA-machine-gun";
-            string wavFile = "archon-engine-seamless-loop";
+            SoundFetcher fetcher = new SoundFetcher();
 
-            //AudioClip mp3Audio = GetAudio(mp3File);
-            //AudioSource.PlayClipAtPoint(mp3Audio, default(Vector3));
+            ISoundKey mp3Key = SoundKeys.Firing.AntiAir;
+            ISoundKey wavKey = SoundKeys.Engines.Archon;
 
-            AudioClip wavAudio = GetAudio(wavFile);
-            AudioSource.PlayClipAtPoint(wavAudio, default(Vector3));
+            //IAudioClipWrapper audioClip = fetcher.GetSound(mp3Key);
+            IAudioClipWrapper audioClip = fetcher.GetSound(wavKey);
 
-            //AudioSource.PlayClipAtPoint(audioClip, default(Vector3));
-        }
+            //AudioSource.PlayClipAtPoint(audioClip.AudioClip, default(Vector3));
 
-        private AudioClip GetAudio(string audioName)
-        {
-            AudioClip audioClip = Resources.Load<AudioClip>("Sounds/" + audioName);
-
-            if (audioClip == null)
-            {
-                throw new ArgumentException("Invalid audio name: " + audioName);
-            }
-
-            return audioClip;
+            AudioSource source = GetComponent<AudioSource>();
+            source.clip = audioClip.AudioClip;
+            source.loop = true;
+            source.Play();
         }
     }
 }
