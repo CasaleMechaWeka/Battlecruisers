@@ -5,6 +5,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Buildables.Units
 {
     public abstract class Unit : Buildable, IUnit
 	{
-        private ISoundKey _engineSoundKey;
+        private IAudioClipWrapper _engineAudioClip;
 
 		public UnitCategory category;
 
@@ -46,6 +47,8 @@ namespace BattleCruisers.Buildables.Units
         }
 
         protected override bool IsDroneConsumerFocusable { get { return false; } }
+
+        protected abstract ISoundKey EngineSoundKey { get; }
 		#endregion Properties
 
 		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -55,19 +58,24 @@ namespace BattleCruisers.Buildables.Units
             Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = _parentCruiser.Direction;
 
+            _engineAudioClip = _factoryProvider.SoundFetcher.GetSound(EngineSoundKey);
+
             OnInitialised();
         }
 
-        public override void StaticInitialise()
+        protected override void OnBuildableCompleted()
         {
-            base.StaticInitialise();
-            _engineSoundKey = GetEngineSoundKey();
+            base.OnBuildableCompleted();
+            PlayEngineSound();
         }
 
-        // Not a getter so that child classes don't all have to cache their sound keys.
-        protected abstract ISoundKey GetEngineSoundKey();
+        private void PlayEngineSound()
+        {
+            _audioSource.AudioClip = _engineAudioClip;
+			_audioSource.Play();
+        }
 
-		void FixedUpdate()
+        void FixedUpdate()
 		{
 			OnFixedUpdate();
 		}
@@ -108,5 +116,11 @@ namespace BattleCruisers.Buildables.Units
 			// Cannot repair units :)
 			return false;
 		}
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            _audioSource.Stop();
+        }
     }
 }

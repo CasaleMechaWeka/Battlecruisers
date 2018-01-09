@@ -43,6 +43,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Gunship; } }
+
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
@@ -59,11 +61,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _isAtCruisingHeight = false;
 		}
-
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            return SoundKeys.Engines.Gunship;
-        }
 
 		protected override void OnInitialised()
 		{

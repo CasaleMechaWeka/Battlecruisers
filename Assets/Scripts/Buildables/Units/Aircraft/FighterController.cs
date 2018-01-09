@@ -57,8 +57,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
         protected override float PositionEqualityMarginInM { get { return 2; } }
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Fighter; } }
 
-		public override void StaticInitialise()
+        public override void StaticInitialise()
 		{
 			base.StaticInitialise();
 
@@ -70,11 +71,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
 		}
-
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            return SoundKeys.Engines.Fighter;
-        }
 
 		protected override void OnInitialised()
 		{

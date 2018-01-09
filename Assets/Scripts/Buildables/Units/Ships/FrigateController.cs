@@ -14,6 +14,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
 
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Frigate; } }
+
         public override void StaticInitialise()
         {
             base.StaticInitialise();
@@ -21,11 +23,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             _attackCapabilities.Add(TargetType.Aircraft);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
-
-		protected override ISoundKey GetEngineSoundKey()
-		{
-			return SoundKeys.Engines.Frigate;
-		}
 		
         /// <summary>
         /// Enemy detector is in ship center, but longest range barrel (mortar) is behind

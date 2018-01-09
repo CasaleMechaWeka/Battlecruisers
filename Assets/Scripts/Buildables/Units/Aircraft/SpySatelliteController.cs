@@ -8,11 +8,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SpySatelliteController : AircraftController
     {
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            // TEMP  Use satellite sound once we have it :)
-            return SoundKeys.Engines.Bomber;
-        }
+		// TEMP  Use satellite sound once we have it :)
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {

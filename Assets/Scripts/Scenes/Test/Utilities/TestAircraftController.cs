@@ -27,6 +27,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		}
 
 		public override TargetType TargetType { get { return _targetType; } }
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Gunship; } }
 
 		private bool _useDummyMovementController = false; 
 		public bool UseDummyMovementController
@@ -44,11 +45,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				}
 			}
 		}
-
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            return SoundKeys.Engines.Gunship;
-        }
 
 		protected override void OnBuildableCompleted()
 		{

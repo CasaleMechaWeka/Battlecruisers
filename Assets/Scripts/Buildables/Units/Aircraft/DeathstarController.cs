@@ -27,6 +27,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
 
+        // TEMP  Use satellite sound once we have it :)
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
+
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
@@ -44,12 +47,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
 			Assert.IsNotNull(_targetDetector);
 		}
-
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            // TEMP  Use satellite sound once we have it :)
-            return SoundKeys.Engines.Bomber;
-        }
 
 		protected override void OnInitialised()
 		{

@@ -45,6 +45,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 return _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
 			} 
 		}
+
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
 		#endregion Properties
 
 		public override void StaticInitialise()
@@ -64,11 +66,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombStats = new ProjectileStatsWrapper(stats);
             Assert.IsNotNull(_bombStats);
 		}
-
-        protected override ISoundKey GetEngineSoundKey()
-        {
-            return SoundKeys.Engines.Bomber;
-        }
 
 		protected override void OnInitialised()
 		{

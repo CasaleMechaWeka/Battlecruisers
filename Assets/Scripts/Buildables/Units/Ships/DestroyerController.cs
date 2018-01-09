@@ -12,6 +12,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
+		
+        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Destroyer; } }
 
         public override void StaticInitialise()
         {
@@ -21,11 +23,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 
-		protected override ISoundKey GetEngineSoundKey()
-		{
-			return SoundKeys.Engines.Destroyer;
-		}
-		
         /// <summary>
         /// Want to:
         /// + Stay out of range of mortars
