@@ -1,12 +1,42 @@
-﻿namespace BattleCruisers.Data.Static
+﻿using BattleCruisers.UI.Sound;
+
+namespace BattleCruisers.Data.Static
 {
     public static class SoundKeys
     {
+        public static class Deaths
+        {
+            public static ISoundKey Aircraft { get { return new SoundKey(SoundType.Deaths, "aircraft"); } }
+            public static ISoundKey Ship { get { return new SoundKey(SoundType.Deaths, "ship"); } }
+        }
+
         public static class Engines
         {
-            // FELIX  NEXT
             // Ships
-            public static ISoundKey Archon { get { return new SoundKey(); } }
+			public static ISoundKey AtatckBoat{ get { return new SoundKey(SoundType.Engines, "attack-boat"); } }
+			public static ISoundKey Frigate { get { return new SoundKey(SoundType.Engines, "frigate"); } }
+			public static ISoundKey Destroyer { get { return new SoundKey(SoundType.Engines, "destroyer"); } }
+            public static ISoundKey Archon { get { return new SoundKey(SoundType.Engines, "archon"); } }
+
+            // Aircraft
+            public static ISoundKey Bomber { get { return new SoundKey(SoundType.Engines, "bomber"); } }
+            public static ISoundKey Gunship { get { return new SoundKey(SoundType.Engines, "gunship"); } }
+            public static ISoundKey Fighter { get { return new SoundKey(SoundType.Engines, "fighter"); } }
+        }
+
+        public static class Firing
+        {
+            public static ISoundKey AntiAir { get { return new SoundKey(SoundType.Firing, "anti-air"); } }
+            public static ISoundKey Artillery { get { return new SoundKey(SoundType.Firing, "artillery"); } }
+            public static ISoundKey Broadsides { get { return new SoundKey(SoundType.Firing, "broadsides"); } }
+			public static ISoundKey BigCannon { get { return new SoundKey(SoundType.Firing, "big-cannon"); } }
+            public static ISoundKey Laser { get { return new SoundKey(SoundType.Firing, "laser"); } }
+        }
+
+        public static class Explosions
+        {
+            public static ISoundKey Bomb { get { return new SoundKey(SoundType.Explosions, "bomb"); } }
+            public static ISoundKey Default { get { return new SoundKey(SoundType.Explosions, "default"); } }
         }
     }
 }
