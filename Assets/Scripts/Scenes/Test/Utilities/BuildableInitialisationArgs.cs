@@ -51,6 +51,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
+			ISoundFetcher soundFetcher = null,
             ISpriteChooserFactory spriteChooserFactory = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
@@ -76,6 +77,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
+                    soundFetcher ?? new SoundFetcher(),
                     spriteChooserFactory ?? 
                         new SpriteChooserFactory(
                             new AssignerFactory(), 
@@ -97,6 +99,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAccuracyAdjusterFactory accuracyAdjusterFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
+            ISoundFetcher soundFetcher,
             ISpriteChooserFactory spriteChooserFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
@@ -115,6 +118,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
             factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
+            factoryProvider.SoundFetcher.Returns(soundFetcher);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
 
             return factoryProvider;
