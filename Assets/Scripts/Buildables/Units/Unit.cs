@@ -72,7 +72,7 @@ namespace BattleCruisers.Buildables.Units
         private void PlayEngineSound()
         {
             _audioSource.AudioClip = _engineAudioClip;
-			_audioSource.Play();
+            _audioSource.Play(loop: true);
         }
 
         void FixedUpdate()
