@@ -33,6 +33,7 @@ namespace BattleCruisers.Utils
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; private set; }
         public IAngleLimiterFactory AngleLimiterFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
+        public ISoundFetcher SoundFetcher { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -56,6 +57,7 @@ namespace BattleCruisers.Utils
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();
             TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
             AngleLimiterFactory = new AngleLimiterFactory();
+            SoundFetcher = new SoundFetcher();
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),

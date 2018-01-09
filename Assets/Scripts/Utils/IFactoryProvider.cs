@@ -32,5 +32,6 @@ namespace BattleCruisers.Utils
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
         IAngleLimiterFactory AngleLimiterFactory { get; } 
         ISpriteChooserFactory SpriteChooserFactory { get; }
+        ISoundFetcher SoundFetcher { get; }
     }
 }
