@@ -10,6 +10,8 @@ namespace BattleCruisers.Buildables
 {
     public abstract class Target : MonoBehaviour, ITarget
     {
+        protected IAudioSourceWrapper _audioSource;
+
         public float maxHealth;
 
         public float MaxHealth { get { return maxHealth; } }
@@ -88,6 +90,10 @@ namespace BattleCruisers.Buildables
 			_attackCapabilities = new List<TargetType>();
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(audioSource);
+            _audioSource = new AudioSourceWrapper(audioSource);
 		}
 
         protected virtual ITextMesh GetRepairDroneNumText()
