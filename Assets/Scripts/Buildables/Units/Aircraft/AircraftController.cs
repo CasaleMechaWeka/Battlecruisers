@@ -14,8 +14,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public abstract class AircraftController : Unit, IVelocityProvider
 	{
         private KamikazeController _kamikazeController;
-		private IBoostable _velocityBoostable;
-        private SpriteRenderer _spriteRenderer;
+		private SpriteRenderer _spriteRenderer;
+        private IBoostable _velocityBoostable;
         protected ISpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
@@ -105,7 +105,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController.Activate();
 		}
 
-        public void Kamikaze(ITarget target)
+        public void Kamikaze(ITarget kamikazeTarget)
         {
 			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
@@ -116,21 +116,30 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 return;
             }
 
-            ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(target);
+            ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(kamikazeTarget);
             SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget));
 
-            Faction = Helper.GetOppositeFaction(target.Faction);
+            UpdateFaction(kamikazeTarget);
+
+            OnKamikaze();
+        }
+
+        private void UpdateFaction(ITarget kamikazeTarget)
+        {
+			Faction = Helper.GetOppositeFaction(kamikazeTarget.Faction);
 
 			// Make our collider be lost and refound by all target detectors.
-            // Means target detectors that we are already in range of can 
-            // re-evaluate whether we are a target, as our faction has just changed.
+			// Means target detectors that we are already in range of can 
+			// re-evaluate whether we are a target, as our faction has just changed.
 			gameObject.SetActive(false);
 			gameObject.SetActive(true);
 
-            _kamikazeController.Initialise(this, _factoryProvider, target);
-            _kamikazeController.gameObject.SetActive(true);
+            // Restart engine sound, which gets paused when we set the game
+            // object to inactive.
+            PlayEngineSound();
 
-            OnKamikaze();
+			_kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
+			_kamikazeController.gameObject.SetActive(true);
         }
 
         protected virtual void OnKamikaze() { }
