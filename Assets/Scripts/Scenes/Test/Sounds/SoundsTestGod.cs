@@ -9,6 +9,8 @@ namespace BattleCruisers.Scenes.Test.Sounds
     // FELIX  Delete this and the corresponding test scene (as soon as I have a better sound test scene :) )
     public class SoundsTestGod : MonoBehaviour
     {
+        private AudioSource _source;
+
         void Start()
         {
             SoundFetcher fetcher = new SoundFetcher();
@@ -21,10 +23,24 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             //AudioSource.PlayClipAtPoint(audioClip.AudioClip, default(Vector3));
 
-            AudioSource source = GetComponent<AudioSource>();
-            source.clip = audioClip.AudioClip;
-            source.loop = true;
-            source.Play();
+            _source = GetComponent<AudioSource>();
+            _source.clip = audioClip.AudioClip;
+            _source.loop = true;
+            _source.Play();
+        }
+
+        public void ToggleSound()
+        {
+            if (_source.isPlaying)
+            {
+                _source.Pause();
+                //gameObject.SetActive(false);
+            }
+            else
+            {
+                //gameObject.SetActive(true);
+                _source.UnPause();
+            }
         }
     }
 }
