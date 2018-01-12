@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
         private const float MIN_MIN_ANGLE = -180;
         private const float MAX_MAX_ANGLE = 180;
 
-		private const float MIN_DESIRED_ANGLE_IN_DEGREES = 0;
+		private const float MIN_DESIRED_ANGLE_IN_DEGREES = -360;
         private const float MAX_DESIRED_ANGLE_IN_DEGREES = 360;
 
         public AngleLimiter(float minAngle, float maxAngle)
