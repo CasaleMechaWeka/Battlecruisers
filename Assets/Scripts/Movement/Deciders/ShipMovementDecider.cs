@@ -18,7 +18,7 @@ namespace BattleCruisers.Movement.Deciders
     /// 2. Blocking enemy
     /// 3. Have in range target, and no higher priority target is attacking us.
     /// 
-    /// Otherwise ships starts moving.
+    /// Otherwise ship starts moving.
     /// </summary>
     public class ShipMovementDecider : IMovementDecider
     {
