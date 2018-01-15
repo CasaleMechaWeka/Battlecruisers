@@ -103,12 +103,16 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
+            // Do not want to stop ship from moving if it encounters aircraft
+            IList<TargetType> targetProcessorTargetTypes = _attackCapabilities.ToList();
+            targetProcessorTargetTypes.Remove(TargetType.Aircraft);
+
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
                     _movementDecider,
                     enemyFaction,
-                    _attackCapabilities,
+                    targetProcessorTargetTypes,
                     OptimalArmamentRangeInM);
 
 			_targetProcessorWrapper.Initialise(args);
