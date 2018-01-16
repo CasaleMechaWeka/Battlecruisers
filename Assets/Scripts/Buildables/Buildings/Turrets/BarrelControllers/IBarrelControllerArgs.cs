@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -20,5 +21,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         IAngleLimiter AngleLimiter { get; }
         IFactoryProvider FactoryProvider { get; }
         ITarget Parent { get; }
+        ISoundKey SpawnerSoundKey { get; }
     }
 }

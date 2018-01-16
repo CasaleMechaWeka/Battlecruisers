@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Targets;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -15,7 +16,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         IList<Renderer> Renderers { get; }
 
 		void StaticInitialise();
-        void Initialise(ITarget parent, IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities);
+
+        void Initialise(
+            ITarget parent, 
+            IFactoryProvider factoryProvider, 
+            Faction enemyFaction, 
+            IList<TargetType> attackCapabilities,
+            ISoundKey spawnerSoundKey = null);
+
         void StartAttackingTargets();
 	}
 }

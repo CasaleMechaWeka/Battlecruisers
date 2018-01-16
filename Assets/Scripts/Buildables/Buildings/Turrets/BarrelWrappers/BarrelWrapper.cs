@@ -9,6 +9,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -87,7 +88,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        public void Initialise(ITarget parent, IFactoryProvider factoryProvider, Faction enemyFaction, IList<TargetType> attackCapabilities)
+        public void Initialise(
+            ITarget parent, 
+            IFactoryProvider factoryProvider, 
+            Faction enemyFaction, 
+            IList<TargetType> attackCapabilities,
+            ISoundKey spawnerSoundKey = null)
         {
             Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction, attackCapabilities);
 
@@ -101,7 +107,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator);
+                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, spawnerSoundKey);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -121,7 +127,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             BarrelController barrel,
             ITarget parent, 
             ITargetFilter targetFilter,
-            IAngleCalculator angleCalculator)
+            IAngleCalculator angleCalculator,
+            ISoundKey spawnerSoundKey)
         {
             return new BarrelControllerArgs(
                 targetFilter,
@@ -132,7 +139,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreatePositionValidator(),
                 CreateAngleLimiter(),
                 _factoryProvider,
-                parent);
+                parent,
+                spawnerSoundKey);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)

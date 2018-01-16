@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsTrue(_shellSpawners.Length != 0);
 		}
 
-		public override void Initialise(IBarrelControllerArgs args)
+        public override void Initialise(IBarrelControllerArgs args)
 		{
             base.Initialise(args);
 
@@ -35,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(spawnerArgs, args.TargetFilter);
+                spawner.Initialise(spawnerArgs, args.TargetFilter, args.SpawnerSoundKey);
             }
 		}
 

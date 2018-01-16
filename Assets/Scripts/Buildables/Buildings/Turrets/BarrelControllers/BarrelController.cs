@@ -11,6 +11,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IAccuracyAdjuster _accuracyAdjuster;
         private ITargetPositionValidator _targetPositionValidator;
         private IAngleLimiter _angleLimiter;
+        private ISoundKey _spawnerSoundKey;
 		
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
@@ -108,6 +110,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _accuracyAdjuster = args.AccuracyAdjuster;
             _targetPositionValidator = args.TargetPositionValidator;
             _angleLimiter = args.AngleLimiter;
+            _spawnerSoundKey = args.SpawnerSoundKey;
 		}
 
 		void FixedUpdate()

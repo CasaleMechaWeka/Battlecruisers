@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -20,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
         public IAngleLimiter AngleLimiter { get; private set; }
         public ITarget Parent { get; private set; }
+        public ISoundKey SpawnerSoundKey { get; private set; }
 
         public BarrelControllerArgs(
             ITargetFilter targetFilter,
@@ -30,7 +32,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			ITargetPositionValidator targetPositionValidator,
             IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
-            ITarget parent)
+            ITarget parent,
+            ISoundKey spawnerSoundKey = null)
         {
             Helper.AssertIsNotNull(
                 targetFilter, 
@@ -52,6 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
             Parent = parent;
+            SpawnerSoundKey = spawnerSoundKey;
         }
     }
 }

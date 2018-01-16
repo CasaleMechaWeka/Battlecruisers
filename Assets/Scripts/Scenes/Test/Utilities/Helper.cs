@@ -30,6 +30,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using UnityEngine;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -421,7 +423,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidator targetPositionValidator = null,
             IAngleLimiter angleLimiter = null,
             IFactoryProvider factoryProvider = null,
-            ITarget parent = null)
+            ITarget parent = null,
+            ISoundKey spawnerSoundKey = null)
         {
             return
                 new BarrelControllerArgs(
@@ -433,7 +436,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
-                    parent ?? Substitute.For<ITarget>());
+                    parent ?? Substitute.For<ITarget>(),
+                    spawnerSoundKey ?? SoundKeys.Firing.BigCannon);
         }
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()

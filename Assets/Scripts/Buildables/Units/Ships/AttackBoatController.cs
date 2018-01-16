@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _antiSeaTurret.Initialise(this, _factoryProvider, enemyFaction, _attackCapabilities);
+            _antiSeaTurret.Initialise(this, _factoryProvider, enemyFaction, _attackCapabilities, SoundKeys.Firing.BigCannon);
 		}
 	}
 }

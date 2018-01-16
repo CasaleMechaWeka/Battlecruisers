@@ -75,7 +75,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, AttackCapabilities);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, AttackCapabilities, SoundKeys.Firing.BigCannon);
 		}
 
 		protected override void OnBuildableCompleted()
