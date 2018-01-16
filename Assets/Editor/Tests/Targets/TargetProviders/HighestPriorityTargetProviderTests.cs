@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using NSubstitute;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         private ITargetConsumer _targetConsumer;
 
         private ITargetRanker _targetRanker;
+        private ITargetFilter _targetFilter;
         private IDamagable _parentDamagable;
         private ITarget _inRangeTarget, _inRangeTarget2, _attackingTarget, _attackingTarget2;
         private int _lowRank, _highRank;
@@ -25,6 +27,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             UnityAsserts.Assert.raiseExceptions = true;
 
             _targetRanker = Substitute.For<ITargetRanker>();
+            _targetFilter = Substitute.For<ITargetFilter>();
             _parentDamagable = Substitute.For<IDamagable>();
 
             _inRangeTarget = Substitute.For<ITarget>();
@@ -36,8 +39,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _lowRank = 1;
             _highRank = 2;
 
-            // FELIX
-            _highestPriorityTargetProvider = new HighestPriorityTargetProvider(_targetRanker, null, _parentDamagable);
+            _highestPriorityTargetProvider = new HighestPriorityTargetProvider(_targetRanker, _targetFilter, _parentDamagable);
             _targetProvider = _highestPriorityTargetProvider;
             _targetConsumer = _highestPriorityTargetProvider;
         }
@@ -112,6 +114,19 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 
             _parentDamagable.Damaged += Raise.EventWith(_parentDamagable, new DamagedEventArgs(_attackingTarget));
 
+            _targetRanker.DidNotReceiveWithAnyArgs().RankTarget(default(ITarget));
+            Assert.IsNull(_targetProvider.Target);
+        }
+
+        [Test]
+        public void NonMatchingFilterTarget_DoesNothing()
+        {
+            _attackingTarget.IsDestroyed.Returns(false);
+            _targetFilter.IsMatch(_attackingTarget).Returns(false);
+
+            _parentDamagable.Damaged += Raise.EventWith(_parentDamagable, new DamagedEventArgs(_attackingTarget));
+
+            _targetFilter.Received().IsMatch(_attackingTarget);
             _targetRanker.DidNotReceiveWithAnyArgs().RankTarget(default(ITarget));
             Assert.IsNull(_targetProvider.Target);
         }
@@ -219,6 +234,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 
         private void NewAttackingTarget(ITarget target, int rank)
         {
+            _targetFilter.IsMatch(target).Returns(true);
             _targetRanker.RankTarget(target).Returns(rank);
             _parentDamagable.Damaged += Raise.EventWith(_parentDamagable, new DamagedEventArgs(target));
             _targetRanker.Received().RankTarget(target);
