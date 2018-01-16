@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -8,24 +7,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class SamSiteBarrelWrapper : DirectFireBarrelWrapper
 	{
-        protected override void InitialiseBarrelController(BarrelController barrel, ITarget parent, ITargetFilter targetFilter, IAngleCalculator angleCalculator)
+        protected override void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
         {
-            IExactMatchTargetFilter exatMatchTargetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
-
-            IBarrelControllerArgs args
-                = new BarrelControllerArgs(
-                    exatMatchTargetFilter,
-                    CreateTargetPositionPredictor(),
-                    angleCalculator,
-                    CreateAccuracyAdjuster(angleCalculator, barrel),
-                    CreateRotationMovementController(barrel),
-                    CreatePositionValidator(),
-                    CreateAngleLimiter(),
-                    _factoryProvider,
-                    parent);
-
+            IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
 			SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
             samSiteBarrel.Initialise(exatMatchTargetFilter, args);
+        }
+
+        protected override ITargetFilter CreateTargetFilter()
+        {
+            return _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter();
         }
 
         protected override IAngleLimiter CreateAngleLimiter()

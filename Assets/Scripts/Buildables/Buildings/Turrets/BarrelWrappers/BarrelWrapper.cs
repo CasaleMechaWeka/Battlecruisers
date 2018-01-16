@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected IList<TargetType> _attackCapabilities;
-		protected float _minRangeInM;
+        protected float _minRangeInM;
 
         public Vector2 Position { get { return transform.position; } }
         public float DamagePerS { get; private set; }
@@ -31,11 +31,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private List<Renderer> _renderers;
         public IList<Renderer> Renderers { get { return _renderers; } }
 
-		private ITarget _target;
-        public ITarget Target 
-        { 
+        private ITarget _target;
+        public ITarget Target
+        {
             get { return _target; }
-            set 
+            set
             {
                 _target = value;
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             {
                 _boostMultiplier = value;
 
-				foreach (BarrelController barrel in _barrels)
+                foreach (BarrelController barrel in _barrels)
                 {
                     barrel.BoostMultiplier = _boostMultiplier;
                 }
@@ -99,9 +99,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator();
 
-			foreach (BarrelController barrel in _barrels)
+            foreach (BarrelController barrel in _barrels)
             {
-                InitialiseBarrelController(barrel, parent, targetFilter, angleCalculator);
+                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator);
+                InitialiseBarrelController(barrel, barrelArgs);
             }
 
             ITargetProcessorArgs args
@@ -116,24 +117,26 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _targetProcessorWrapper.Initialise(args);
         }
 
-        protected virtual void InitialiseBarrelController(
-            BarrelController barrel, 
+        private IBarrelControllerArgs CreateBarrelControllerArgs(
+            BarrelController barrel,
             ITarget parent, 
-            ITargetFilter targetFilter, 
+            ITargetFilter targetFilter,
             IAngleCalculator angleCalculator)
         {
-            IBarrelControllerArgs args
-                = new BarrelControllerArgs(
-                    targetFilter,
-                    CreateTargetPositionPredictor(),
-                    angleCalculator,
-                    CreateAccuracyAdjuster(angleCalculator, barrel),
-                    CreateRotationMovementController(barrel),
-                    CreatePositionValidator(),
-                    CreateAngleLimiter(),
-                    _factoryProvider,
-                    parent);
+            return new BarrelControllerArgs(
+                targetFilter,
+                CreateTargetPositionPredictor(),
+                angleCalculator,
+                CreateAccuracyAdjuster(angleCalculator, barrel),
+                CreateRotationMovementController(barrel),
+                CreatePositionValidator(),
+                CreateAngleLimiter(),
+                _factoryProvider,
+                parent);
+        }
 
+        protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
+        {
             barrel.Initialise(args);
         }
 
@@ -142,7 +145,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _targetProcessorWrapper.StartProvidingTargets();
         }
 
-        protected ITargetFilter CreateTargetFilter()
+        protected virtual ITargetFilter CreateTargetFilter()
         {
             return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, _attackCapabilities);
         }
