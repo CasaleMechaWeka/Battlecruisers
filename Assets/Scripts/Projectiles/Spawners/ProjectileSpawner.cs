@@ -13,13 +13,13 @@ namespace BattleCruisers.Projectiles.Spawners
 
         protected abstract ProjectileController ProjectilePrefab { get; }
 
-        public void Initialise(ITarget parent, IProjectileStats projectileStats, IFactoryProvider factoryProvider)
+        public void Initialise(IProjectileSpawnerArgs args)
         {
-            Helper.AssertIsNotNull(ProjectilePrefab, parent,projectileStats, factoryProvider);
+            Helper.AssertIsNotNull(ProjectilePrefab, args);
 
-            _parent = parent;
-            _projectileStats = projectileStats;
-            _factoryProvider = factoryProvider;
+            _parent = args.Parent;
+            _projectileStats = args.ProjectileStats;
+            _factoryProvider = args.FactoryProvider;
         }
 
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)

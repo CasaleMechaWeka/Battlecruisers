@@ -15,7 +15,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(parent, rocketStats, factoryProvider);
+            base.Initialise(new ProjectileSpawnerArgs(parent, rocketStats, factoryProvider));
 
             _rocketStats = rocketStats;
 		}

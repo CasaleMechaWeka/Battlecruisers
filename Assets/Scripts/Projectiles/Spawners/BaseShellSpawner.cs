@@ -1,7 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Projectiles.Stats.Wrappers;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
@@ -10,13 +7,9 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
 		protected ITargetFilter _targetFilter;
 
-        public void Initialise(
-            ITarget parent,
-            IProjectileStats projectileStats, 
-            ITargetFilter targetFilter, 
-            IFactoryProvider factoryProvider)
+        public void Initialise(IProjectileSpawnerArgs args, ITargetFilter targetFilter)
 		{
-            base.Initialise(parent, projectileStats, factoryProvider);
+            base.Initialise(args);
 
             Assert.IsNotNull(targetFilter);
 			_targetFilter = targetFilter;

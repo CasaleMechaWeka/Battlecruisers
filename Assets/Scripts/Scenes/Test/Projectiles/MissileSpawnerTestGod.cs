@@ -41,8 +41,9 @@ namespace BattleCruisers.Scenes.Test
             ProjectileStats stats = GetComponent<ProjectileStats>();
             IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, missileStats, args.FactoryProvider);
 
-            _missileSpawner.Initialise(parent, missileStats, args.FactoryProvider);
+            _missileSpawner.Initialise(spawnerArgs);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

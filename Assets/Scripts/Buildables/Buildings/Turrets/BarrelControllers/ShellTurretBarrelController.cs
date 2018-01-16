@@ -31,9 +31,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
             base.Initialise(args);
 
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, args.FactoryProvider);
+
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.Initialise(args.Parent, _projectileStats, args.TargetFilter, args.FactoryProvider);
+                spawner.Initialise(spawnerArgs, args.TargetFilter);
             }
 		}
 

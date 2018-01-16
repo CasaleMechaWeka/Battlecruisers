@@ -25,8 +25,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             base.Initialise(args);
 
 			_exactMatchTargetFilter = targetFilter;
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, args.FactoryProvider);
 
-            _missileSpawner.Initialise(args.Parent, _projectileStats, args.FactoryProvider);
+            _missileSpawner.Initialise(spawnerArgs);
 		}
 
 		protected override void Fire(float angleInDegrees)
