@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,7 +14,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
 		public List<TargetType> attackCapabilities;
 
-		public override float Damage { get { return _barrelWrapper.DamagePerS; } }
+        // By default have null (no) sound
+        protected virtual ISoundKey FiringSound { get { return null; } }
+        public override float Damage { get { return _barrelWrapper.DamagePerS; } }
 
 		public override void StaticInitialise()
 		{
@@ -33,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-			_barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, AttackCapabilities);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, AttackCapabilities, FiringSound);
 
             _boostableGroup.AddBoostable(_barrelWrapper);
 		}
