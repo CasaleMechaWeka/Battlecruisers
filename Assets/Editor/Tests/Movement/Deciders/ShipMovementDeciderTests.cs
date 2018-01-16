@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using NSubstitute;
@@ -32,6 +34,11 @@ namespace BattleCruisers.Tests.Movement.Deciders
 
             _ship = Substitute.For<IShip>();
             _ship.IsMoving.Returns(false);
+            IList<TargetType> attackCapabilities = new List<TargetType>()
+            {
+                TargetType.Buildings
+            };
+            _ship.AttackCapabilities.Returns(attackCapabilities);
 
             ITargetDetector enemyDetector = Substitute.For<ITargetDetector>();
             ITargetDetector friendDetector = Substitute.For<ITargetDetector>();
@@ -50,9 +57,11 @@ namespace BattleCruisers.Tests.Movement.Deciders
             ITargetRanker shipRanker = Substitute.For<ITargetRanker>();
             _targetsFactory.CreateShipTargetRanker().Returns(shipRanker);
 
+            ITargetFilter attackingTargetFilter = Substitute.For<ITargetFilter>();
+            _targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(attackingTargetFilter);
+
             _highPriorityTarget = Substitute.For<IHighestPriorityTargetProvider>();
-            // FELIX
-            _targetsFactory.CreateHighestPriorityTargetProvider(shipRanker, null, _ship).Returns(_highPriorityTarget);
+            _targetsFactory.CreateHighestPriorityTargetProvider(shipRanker, attackingTargetFilter, _ship).Returns(_highPriorityTarget);
 
             _highestPriorityTargetConsumer = _highPriorityTarget;
             _highestPriorityTargetProvider = _highPriorityTarget;
