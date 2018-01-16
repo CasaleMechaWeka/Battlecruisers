@@ -7,6 +7,9 @@ namespace BattleCruisers.Utils.UIWrappers
     {
         private readonly AudioSource _audioSource;
 
+        private const float MAX_BLEND = 1;
+        private const float MIN_BLEND = 0;
+
         public IAudioClipWrapper AudioClip
         {
             set
@@ -21,8 +24,9 @@ namespace BattleCruisers.Utils.UIWrappers
             _audioSource = audioSource;
         }
 
-        public void Play(bool loop = false)
+        public void Play(bool isSpatial = true, bool loop = false)
         {
+            _audioSource.spatialBlend = isSpatial ? MAX_BLEND : MIN_BLEND;
             _audioSource.loop = loop;
             _audioSource.Play();
         }
