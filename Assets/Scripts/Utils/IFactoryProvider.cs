@@ -12,6 +12,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Utils
 {
@@ -33,5 +34,6 @@ namespace BattleCruisers.Utils
         IAngleLimiterFactory AngleLimiterFactory { get; } 
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ISoundFetcher SoundFetcher { get; }
+        ISoundManager SoundManager { get; }
     }
 }

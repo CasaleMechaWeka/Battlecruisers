@@ -13,6 +13,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Utils
 {
@@ -34,6 +35,7 @@ namespace BattleCruisers.Utils
         public IAngleLimiterFactory AngleLimiterFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
         public ISoundFetcher SoundFetcher { get; private set; }
+        public ISoundManager SoundManager { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -58,6 +60,7 @@ namespace BattleCruisers.Utils
             TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
             AngleLimiterFactory = new AngleLimiterFactory();
             SoundFetcher = new SoundFetcher();
+            SoundManager = new SoundManager(SoundFetcher, new SoundPlayer());
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),

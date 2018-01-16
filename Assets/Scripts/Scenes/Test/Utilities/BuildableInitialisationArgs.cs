@@ -19,6 +19,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 using NSubstitute;
 using BcUtils = BattleCruisers.Utils;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -52,6 +53,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
 			ISoundFetcher soundFetcher = null,
+            ISoundManager soundManager = null,
             ISpriteChooserFactory spriteChooserFactory = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
@@ -60,6 +62,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
+            soundFetcher = soundFetcher ?? new SoundFetcher();
 
             FactoryProvider
                 = CreateFactoryProvider(
@@ -77,7 +80,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
-                    soundFetcher ?? new SoundFetcher(),
+				    soundFetcher,
+                    soundManager ?? new SoundManager(soundFetcher, new SoundPlayer()),
+
                     spriteChooserFactory ?? 
                         new SpriteChooserFactory(
                             new AssignerFactory(), 
@@ -100,6 +105,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
+            ISoundManager soundManager,
             ISpriteChooserFactory spriteChooserFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
@@ -119,6 +125,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             factoryProvider.SoundFetcher.Returns(soundFetcher);
+            factoryProvider.SoundManager.Returns(soundManager);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
 
             return factoryProvider;
