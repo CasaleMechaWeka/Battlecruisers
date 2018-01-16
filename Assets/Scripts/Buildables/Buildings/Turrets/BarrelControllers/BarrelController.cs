@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IAccuracyAdjuster _accuracyAdjuster;
         private ITargetPositionValidator _targetPositionValidator;
         private IAngleLimiter _angleLimiter;
-        private ISoundKey _spawnerSoundKey;
+        private ISoundKey _firingSound;
 		
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _accuracyAdjuster = args.AccuracyAdjuster;
             _targetPositionValidator = args.TargetPositionValidator;
             _angleLimiter = args.AngleLimiter;
-            _spawnerSoundKey = args.SpawnerSoundKey;
+            _firingSound = args.SpawnerSoundKey;
 		}
 
 		void FixedUpdate()

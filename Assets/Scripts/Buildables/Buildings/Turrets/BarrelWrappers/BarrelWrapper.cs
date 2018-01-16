@@ -93,7 +93,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
             IList<TargetType> attackCapabilities,
-            ISoundKey spawnerSoundKey = null)
+            ISoundKey firingSound = null)
         {
             Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction, attackCapabilities);
 
@@ -107,7 +107,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, spawnerSoundKey);
+                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, firingSound);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -128,7 +128,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            ISoundKey spawnerSoundKey)
+            ISoundKey firingSound)
         {
             return new BarrelControllerArgs(
                 targetFilter,
@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreateAngleLimiter(),
                 _factoryProvider,
                 parent,
-                spawnerSoundKey);
+                firingSound);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)

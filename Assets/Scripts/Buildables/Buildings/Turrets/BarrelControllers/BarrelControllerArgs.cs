@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
             ITarget parent,
-            ISoundKey spawnerSoundKey = null)
+            ISoundKey firingSound = null)
         {
             Helper.AssertIsNotNull(
                 targetFilter, 
@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
             Parent = parent;
-            SpawnerSoundKey = spawnerSoundKey;
+            SpawnerSoundKey = firingSound;
         }
     }
 }

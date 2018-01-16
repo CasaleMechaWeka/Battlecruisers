@@ -424,7 +424,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAngleLimiter angleLimiter = null,
             IFactoryProvider factoryProvider = null,
             ITarget parent = null,
-            ISoundKey spawnerSoundKey = null)
+            ISoundKey firingSound = null)
         {
             return
                 new BarrelControllerArgs(
@@ -437,7 +437,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
                     parent ?? Substitute.For<ITarget>(),
-                    spawnerSoundKey ?? SoundKeys.Firing.BigCannon);
+                    firingSound ?? SoundKeys.Firing.BigCannon);
         }
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()

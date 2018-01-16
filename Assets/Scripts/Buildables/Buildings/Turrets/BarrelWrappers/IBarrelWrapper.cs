@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
             IList<TargetType> attackCapabilities,
-            ISoundKey spawnerSoundKey = null);
+            ISoundKey firingSound = null);
 
         void StartAttackingTargets();
 	}
