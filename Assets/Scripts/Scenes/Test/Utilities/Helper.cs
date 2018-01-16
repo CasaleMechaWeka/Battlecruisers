@@ -433,7 +433,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
-                    parent: parent ?? Substitute.For<ITarget>());
+                    parent ?? Substitute.For<ITarget>());
         }
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
