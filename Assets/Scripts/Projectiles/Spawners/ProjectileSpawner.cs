@@ -9,9 +9,9 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
-        protected abstract ProjectileController ProjectilePrefab { get; }
+		protected IFactoryProvider _factoryProvider;
 
-        protected IFactoryProvider _factoryProvider;
+        protected abstract ProjectileController ProjectilePrefab { get; }
 
         public void Initialise(ITarget parent, IProjectileStats projectileStats, IFactoryProvider factoryProvider)
         {
