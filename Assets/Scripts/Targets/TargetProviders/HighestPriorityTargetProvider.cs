@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Utils;
 
@@ -14,6 +15,7 @@ namespace BattleCruisers.Targets.TargetProviders
     public class HighestPriorityTargetProvider : BroadcastingTargetProvider, IHighestPriorityTargetProvider
     {
         private readonly ITargetRanker _targetRanker;
+        private readonly ITargetFilter _attackingTargetFilter;
         private readonly IDamagable _parentDamagable;
         private readonly IRankedTarget _nullTarget;
 
@@ -35,11 +37,12 @@ namespace BattleCruisers.Targets.TargetProviders
             }
         }
 
-        public HighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable)
+        public HighestPriorityTargetProvider(ITargetRanker targetRanker, ITargetFilter attackingTargetFilter, IDamagable parentDamagable)
         {
-            Helper.AssertIsNotNull(targetRanker, parentDamagable);
+            Helper.AssertIsNotNull(targetRanker, attackingTargetFilter, parentDamagable);
 
             _targetRanker = targetRanker;
+            _attackingTargetFilter = attackingTargetFilter;
             _parentDamagable = parentDamagable;
 
             _parentDamagable.Damaged += _parentDamagable_Damaged;
@@ -76,7 +79,9 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Logging.Log(Tags.TARGET_PROVIDERS, "Parent damaged by: " + e.DamageSource);
 
-            if (e.DamageSource != null && !e.DamageSource.IsDestroyed)
+            if (e.DamageSource != null 
+                && !e.DamageSource.IsDestroyed
+                && _attackingTargetFilter.IsMatch(e.DamageSource))
             {
                 int newRank = _targetRanker.RankTarget(e.DamageSource);
 

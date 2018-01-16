@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets
         ITargetProvider CreateStaticTargetProvider(ITarget target);
         IBroadCastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit);
         IBroadCastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
-        IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, IDamagable parentDamagable);
+        IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, ITargetFilter attackingTargetFilter, IDamagable parentDamagable);
 
         // Helpers
         ITargetRangeHelper CreateShipRangeHelper(IShip ship);

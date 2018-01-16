@@ -51,7 +51,8 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _targetsFactory.CreateShipTargetRanker().Returns(shipRanker);
 
             _highPriorityTarget = Substitute.For<IHighestPriorityTargetProvider>();
-            _targetsFactory.CreateHighestPriorityTargetProvider(shipRanker, _ship).Returns(_highPriorityTarget);
+            // FELIX
+            _targetsFactory.CreateHighestPriorityTargetProvider(shipRanker, null, _ship).Returns(_highPriorityTarget);
 
             _highestPriorityTargetConsumer = _highPriorityTarget;
             _highestPriorityTargetProvider = _highPriorityTarget;

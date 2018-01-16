@@ -36,7 +36,8 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _lowRank = 1;
             _highRank = 2;
 
-            _highestPriorityTargetProvider = new HighestPriorityTargetProvider(_targetRanker, _parentDamagable);
+            // FELIX
+            _highestPriorityTargetProvider = new HighestPriorityTargetProvider(_targetRanker, null, _parentDamagable);
             _targetProvider = _highestPriorityTargetProvider;
             _targetConsumer = _highestPriorityTargetProvider;
         }

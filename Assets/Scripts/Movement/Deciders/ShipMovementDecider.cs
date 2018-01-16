@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
@@ -77,12 +80,26 @@ namespace BattleCruisers.Movement.Deciders
         private IHighestPriorityTargetProvider SetupHighestPriorityTargetProvider()
         {
             ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
-            IHighestPriorityTargetProvider highPriorityTarget = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, _ship);
+            ITargetFilter attackingTargetFilter = CreateAttackingTargetFilter();
+            
+            IHighestPriorityTargetProvider highPriorityTarget 
+                = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, attackingTargetFilter, _ship);
 
             highPriorityTarget.TargetChanged += OnTargetChanged;
             highPriorityTarget.NewInRangeTarget += OnTargetChanged;
 
             return highPriorityTarget;
+        }
+
+        private ITargetFilter CreateAttackingTargetFilter()
+        {
+			Faction enemyFaction = Helper.GetOppositeFaction(_ship.Faction);
+
+            // Do not want to stop for aircraft, even if they are attacking us
+            IList<TargetType> validTargetTypes = _ship.AttackCapabilities.ToList();
+            validTargetTypes.Remove(TargetType.Aircraft);
+
+            return _targetsFactory.CreateTargetFilter(enemyFaction, validTargetTypes);
         }
 
         private void OnTargetChanged(object sender, EventArgs args)
