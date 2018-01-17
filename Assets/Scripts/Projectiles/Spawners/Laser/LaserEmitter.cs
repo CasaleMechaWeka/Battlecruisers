@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Spawners
+namespace BattleCruisers.Projectiles.Spawners.Laser
 {
     public class LaserEmitter : MonoBehaviour 
 	{

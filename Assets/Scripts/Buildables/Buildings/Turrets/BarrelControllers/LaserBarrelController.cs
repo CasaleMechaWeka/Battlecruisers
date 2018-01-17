@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

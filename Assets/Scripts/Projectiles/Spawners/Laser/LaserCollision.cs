@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using UnityEngine;
 
-namespace BattleCruisers.Projectiles.Spawners
+namespace BattleCruisers.Projectiles.Spawners.Laser
 {
     public class LaserCollision : ILaserCollision
     {
