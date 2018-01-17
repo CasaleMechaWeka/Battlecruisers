@@ -3,7 +3,7 @@ using BattleCruisers.Utils.UIWrappers;
 
 namespace BattleCruisers.Projectiles.Spawners.Laser
 {
-    public class LaserSoundPlayer : IManagedDisposable
+    public class LaserSoundPlayer : ILaserSoundPlayer
     {
         private readonly ILaserRenderer _laserRenderer;
         private readonly IAudioSourceWrapper _audioSource;
