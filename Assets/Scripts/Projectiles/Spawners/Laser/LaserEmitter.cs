@@ -8,7 +8,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 {
     public class LaserEmitter : MonoBehaviour 
 	{
-		private LineRenderer _lineRenderer;
+        private ILaserRenderer _laserRenderer;
 		private ContactFilter2D _contactFilter;
 		private ITargetFilter _targetFilter;
 		private float _damagePerS;
@@ -20,9 +20,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
 		void Awake() 
 		{
-			_lineRenderer = GetComponent<LineRenderer>();
-			Assert.IsNotNull(_lineRenderer);
-			_lineRenderer.positionCount = 2;
+            LineRenderer lineRenderer = GetComponent<LineRenderer>();
+            _laserRenderer = new LaserRenderer(lineRenderer);
 
 			_contactFilter = new ContactFilter2D() 
 			{
@@ -53,9 +52,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 			
 			if (collision != null)
 			{
-				_lineRenderer.enabled = true;
-				_lineRenderer.SetPosition(0, transform.position);
-                _lineRenderer.SetPosition(1, collision.CollisionPoint);
+                _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
 
 				float damage = Time.deltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
@@ -90,7 +87,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
 		public void StopLaser()
 		{
-			_lineRenderer.enabled = false;
+            _laserRenderer.HideLaser();
 		}
 	}
 }
