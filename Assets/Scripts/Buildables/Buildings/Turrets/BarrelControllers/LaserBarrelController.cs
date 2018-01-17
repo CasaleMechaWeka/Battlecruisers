@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public override void Initialise(IBarrelControllerArgs args)
 		{
             base.Initialise(args);
-            _laserEmitter.Initialise(args.TargetFilter, _laserTurretStats.damagePerS, args.Parent);
+            _laserEmitter.Initialise(args.TargetFilter, _laserTurretStats.damagePerS, args.Parent, args.FactoryProvider.SoundFetcher);
 		}
 
 		protected override void Fire(float angleInDegrees)

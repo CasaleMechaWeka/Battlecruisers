@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using UnityEngine;
 
@@ -40,6 +41,7 @@ namespace BattleCruisers.Scenes.Test
 	{
 		private Helper _helper;
 		private Faction _enemyFaction;
+		private ISoundFetcher _soundFetcher;
         private IList<LaserTest<IBuilding>> _stationaryTargets;
         private IList<LaserTest<IUnit>> _movingTargets;
 
@@ -52,6 +54,7 @@ namespace BattleCruisers.Scenes.Test
 			_helper = new Helper();
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
+            _soundFetcher = new SoundFetcher();
 
 
 			// Stationary targets
@@ -116,7 +119,7 @@ namespace BattleCruisers.Scenes.Test
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
             ITarget parent = Substitute.For<ITarget>();
-            laserEmitter.Initialise(targetFilter, damagePerS: 100, parent: parent);
+            laserEmitter.Initialise(targetFilter, damagePerS: 100, parent: parent, soundFetcher: _soundFetcher);
         }
 
         private void SetupMovingTarget(TestAircraftController movingTarget, bool isSourceMirrored)

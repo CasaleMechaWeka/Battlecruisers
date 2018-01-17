@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,25 +12,29 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 	{
         private ILaserRenderer _laserRenderer;
         private ILaserCollisionDetector _collisionDetector;
+        private IAudioSourceWrapper _audioSource;
+        private ILaserSoundPlayer _laserSoundPlayer;
 		private float _damagePerS;
         private ITarget _parent;
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
-		private const int NUM_OF_COLLIDERS_TO_RAYCAST = 25;
-
 		void Awake() 
 		{
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
-		}
 
-        public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent)
-		{
-            Helper.AssertIsNotNull(targetFilter, parent);
+            AudioSource audioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(audioSource);
+			_audioSource = new AudioSourceWrapper(audioSource);
+        }
+
+        public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent, ISoundFetcher soundFetcher)
+        {
+            Helper.AssertIsNotNull(targetFilter, parent, soundFetcher);
             Assert.IsTrue(damagePerS > 0);
 
-			_damagePerS = damagePerS;
+            _damagePerS = damagePerS;
             _parent = parent;
 
             ContactFilter2D contactFilter = new ContactFilter2D()
@@ -38,6 +44,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
                 useTriggers = true
             };
             _collisionDetector = new LaserCollisionDetector(contactFilter, targetFilter);
+
+            _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource, soundFetcher);
 		}
 
 		public void FireLaser(float angleInDegrees, bool isSourceMirrored)
