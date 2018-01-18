@@ -58,8 +58,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
 
             SetupHullsRow();
-            SetupBuildingRows();
-            SetupUnitRows();
+            // FELIX
+            //SetupBuildingRows();
+            //SetupUnitRows();
         }
 
         private void SetupHullsRow()
