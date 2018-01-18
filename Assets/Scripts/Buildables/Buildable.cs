@@ -17,6 +17,8 @@ using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables
 {
@@ -63,6 +65,7 @@ namespace BattleCruisers.Buildables
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
+        protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
 
         Quaternion IBuildable.Rotation 
         {
@@ -327,6 +330,8 @@ namespace BattleCruisers.Buildables
             }
 
             _boostableGroup.CleanUp();
+
+            _factoryProvider.SoundManager.PlaySound(DeathSoundKey, transform.position);
         }
 
         protected void SetupDroneConsumer(int numOfDrones)
