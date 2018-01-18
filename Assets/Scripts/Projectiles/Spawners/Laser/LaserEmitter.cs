@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners.Laser
 {
-    public class LaserEmitter : MonoBehaviour 
+    public class LaserEmitter : MonoBehaviour, IManagedDisposable
 	{
         private ILaserRenderer _laserRenderer;
         private ILaserCollisionDetector _collisionDetector;
@@ -65,5 +65,10 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		{
             _laserRenderer.HideLaser();
 		}
-	}
+
+        public void DisposeManagedState()
+        {
+            _laserSoundPlayer.DisposeManagedState();
+        }
+    }
 }
