@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -31,6 +33,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * maxVelocityInMPerS; } }
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
         protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Aircraft; } }
 
         public override void StaticInitialise()
         {

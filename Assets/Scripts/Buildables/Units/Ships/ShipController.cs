@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -30,6 +32,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 		public CircleTargetDetector enemyDetector, friendDetector;
 
         public override TargetType TargetType { get { return TargetType.Ships; } }
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
