@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
@@ -13,9 +12,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         public BuildingItemsRow(
             ItemsRowArgs<IBuilding> args,
             LoadoutBuildableItemsRow<IBuilding> loadoutRow, 
-            UnlockedBuildableItemsRow<IBuilding> unlockedRow, 
             BuildingCategory buildingCategory) 
-            : base(args, loadoutRow, unlockedRow)
+            : base(args, loadoutRow)
         {
             _buildingCategory = buildingCategory;
         }

@@ -29,34 +29,23 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         // Buildings
         public LoadoutBuildingItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
-        public UnlockedBuildingItemsRow unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow, unlockedUltrasRow;
         public BuildingDetailsManager buildingDetailsManager;
 
         // Units
         public LoadoutUnitItemsRow shipsRow, aircraftRow;
-        public UnlockedUnitItemsRow unlockedShipsRow, unlockedAircraftRow;
         public UnitDetailsManager unitDetailsManager;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(
-                uiFactory,
-                dataProvider,
-                prefabFactory,
-                // Hulls
-                loadoutHullItem,
-                unlockedHullsRow,
-                cruiserDetailsManager,
-                // Buildings
-                factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow,
-                unlockedFactoriesRow, unlockedDefensivesRow, unlockedOffensivesRow, unlockedTacticalsRow, unlockedUltrasRow,
-                buildingDetailsManager,
-                // Units
-                shipsRow, aircraftRow,
-                unlockedShipsRow, unlockedAircraftRow,
-                unitDetailsManager);
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory);
+            // Hulls
+            Helper.AssertIsNotNull(loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+            // Buildings
+            Helper.AssertIsNotNull(factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow, buildingDetailsManager);
+            // Units
+            Helper.AssertIsNotNull(shipsRow, aircraftRow, unitDetailsManager);
 
             _dataProvider = dataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -86,11 +75,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
             {
-                new BuildingItemsRow(args, factoriesRow, unlockedFactoriesRow, BuildingCategory.Factory),
-                new BuildingItemsRow(args, defensivesRow, unlockedDefensivesRow, BuildingCategory.Defence),
-                new BuildingItemsRow(args, offensivesRow, unlockedOffensivesRow, BuildingCategory.Offence),
-                new BuildingItemsRow(args, tacticalsRow, unlockedTacticalsRow, BuildingCategory.Tactical),
-                new BuildingItemsRow(args, ultrasRow, unlockedUltrasRow, BuildingCategory.Ultra)
+                new BuildingItemsRow(args, factoriesRow, BuildingCategory.Factory),
+                new BuildingItemsRow(args, defensivesRow, BuildingCategory.Defence),
+                new BuildingItemsRow(args, offensivesRow, BuildingCategory.Offence),
+                new BuildingItemsRow(args, tacticalsRow, BuildingCategory.Tactical),
+                new BuildingItemsRow(args, ultrasRow, BuildingCategory.Ultra)
             };
             foreach (IItemsRow<IBuilding> buildingsRow in buildingsRows)
             {
@@ -104,8 +93,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             IList<IItemsRow<IUnit>> unitsRows = new List<IItemsRow<IUnit>>()
             {
-                new UnitItemsRow(args, shipsRow, unlockedShipsRow, UnitCategory.Naval),
-                new UnitItemsRow(args, aircraftRow, unlockedAircraftRow, UnitCategory.Aircraft)
+                new UnitItemsRow(args, shipsRow, UnitCategory.Naval),
+                new UnitItemsRow(args, aircraftRow, UnitCategory.Aircraft)
             };
             foreach (IItemsRow<IUnit> unitsRow in unitsRows)
             {

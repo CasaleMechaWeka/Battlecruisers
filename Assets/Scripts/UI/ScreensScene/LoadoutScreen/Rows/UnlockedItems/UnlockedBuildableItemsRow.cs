@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
+    /// <summary>
+    /// Currently unused, but leaving here in case functionality is resurrected :)
+    /// </summary>
     public abstract class UnlockedBuildableItemsRow<TItem> : UnlockedItemsRow<TItem> where TItem : IBuildable
 	{
         private IList<TItem> _loadoutBuildables;

@@ -6,24 +6,23 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
+    /// <summary>
+    /// Have methods for adding/removing buildables from loadout, even though this
+    /// functionality has been removed from the UI.  Leave the methods in case
+    /// this functionality is ever resurrected :)
+    /// </summary>
     public abstract class BuildableItemsRow<TItem, TPrefabKey> : ItemsRow<TItem> 
         where TItem : IBuildable 
         where TPrefabKey : IPrefabKey
 	{
         private readonly LoadoutBuildableItemsRow<TItem> _loadoutRow;
-        private readonly UnlockedBuildableItemsRow<TItem> _unlockedRow;
 
         private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
 
-        protected BuildableItemsRow(
-            ItemsRowArgs<TItem> args,
-            LoadoutBuildableItemsRow<TItem> loadoutRow, 
-            UnlockedBuildableItemsRow<TItem> unlockedRow)
+        protected BuildableItemsRow(ItemsRowArgs<TItem> args, LoadoutBuildableItemsRow<TItem> loadoutRow)
             : base(args)
 		{
 			_loadoutRow = loadoutRow;
-			_unlockedRow = unlockedRow;
-
             _buildableToKey = new Dictionary<TItem, TPrefabKey>();
         }
 
@@ -32,10 +31,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             IList<TItem> loadoutBuildables = GetLoadoutBuildablePrefabs();
 			_loadoutRow.Initialise(_uiFactory, loadoutBuildables, _detailsManager);
             _loadoutRow.SetupUI();
-
-            IUnlockedItemsRowArgs<TItem> args = new UnlockedItemsRowArgs<TItem>(_uiFactory, GetUnlockedBuildingPrefabs(), this, _detailsManager);
-			_unlockedRow.Initialise(args, loadoutBuildables);
-            _unlockedRow.SetupUI();
         }
 
         protected abstract IList<TItem> GetLoadoutBuildablePrefabs();
