@@ -4,6 +4,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -17,9 +18,13 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _damageApplier;
         private IExplosion _explosion;
         private ITarget _parent;
+        private ISoundManager _soundManager;
 
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
+
+        // By default have no impact sound
+        protected virtual ISoundKey ImpactSoundKey { get { return null; } }
 
         public void Initialise(
             IProjectileStats projectileStats, 
@@ -36,6 +41,7 @@ namespace BattleCruisers.Projectiles
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
             _parent = parent;
+            _soundManager = factoryProvider.SoundManager;
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
 
@@ -88,6 +94,12 @@ namespace BattleCruisers.Projectiles
         protected virtual void DestroyProjectile()
         {
             _explosion.Show(transform.position);
+
+            if (ImpactSoundKey != null)
+            {
+                _soundManager.PlaySound(ImpactSoundKey, transform.position);
+            }
+
 			Destroy(gameObject);
 		}
 
