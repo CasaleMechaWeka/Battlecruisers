@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 
@@ -19,30 +17,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IPrefabFactory _prefabFactory;
 
 		public UIFactory uiFactory;
-
-        // Hulls
         public HullsRowWrapper hullsRow;
         public CruiserDetailsManager cruiserDetailsManager;
-
-        // Buildings
-        public LoadoutBuildingItemsRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
         public BuildingDetailsManager buildingDetailsManager;
-
-        // Units
-        public LoadoutUnitItemsRow shipsRow, aircraftRow;
         public UnitDetailsManager unitDetailsManager;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory);
-            // Hulls
-            Helper.AssertIsNotNull(hullsRow, cruiserDetailsManager);
-            // Buildings
-            Helper.AssertIsNotNull(defensivesRow, offensivesRow, tacticalsRow, ultrasRow, buildingDetailsManager);
-            // Units
-            Helper.AssertIsNotNull(shipsRow, aircraftRow, unitDetailsManager);
+            // General
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, hullsRow);
+            // Item details managers
+            Helper.AssertIsNotNull(cruiserDetailsManager, buildingDetailsManager, unitDetailsManager);
 
             _dataProvider = dataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -50,16 +37,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             buildingDetailsManager.Initialise();
             unitDetailsManager.Initialise();
+			cruiserDetailsManager.Initialise();
 
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
 
-            // Hulls
-            cruiserDetailsManager.Initialise();
-            hullsRow.Initialise(dataProvider.GameModel, prefabFactory, uiFactory, cruiserDetailsManager);
-
-            // FELIX
+            SetupHullsRow();
             SetupBuildingRows();
-            //SetupUnitRows();
+            SetupUnitRows();
+        }
+
+        private void SetupHullsRow()
+        {
+            hullsRow.Initialise(_gameModel, _prefabFactory, uiFactory, cruiserDetailsManager);
         }
 
         private void SetupBuildingRows()
@@ -72,34 +61,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 buildingRow.Initialise(args);
             }
-
-            IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
-            {
-                // FELIX
-                //new BuildingItemsRow(args, factoriesRow, BuildingCategory.Factory),
-                //new BuildingItemsRow(args, defensivesRow, BuildingCategory.Defence),
-                //new BuildingItemsRow(args, offensivesRow, BuildingCategory.Offence),
-                //new BuildingItemsRow(args, tacticalsRow, BuildingCategory.Tactical),
-                //new BuildingItemsRow(args, ultrasRow, BuildingCategory.Ultra)
-            };
-            foreach (IItemsRow<IBuilding> buildingsRow in buildingsRows)
-            {
-                buildingsRow.SetupUI();
-            }
         }
 
         private void SetupUnitRows()
         {
             ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_gameModel, _prefabFactory, uiFactory, unitDetailsManager);
 
-            IList<IItemsRow<IUnit>> unitsRows = new List<IItemsRow<IUnit>>()
+            UnitsRowWrapper[] unitRows = GetComponentsInChildren<UnitsRowWrapper>();
+
+            foreach (UnitsRowWrapper unitRow in unitRows)
             {
-                new UnitItemsRow(args, shipsRow, UnitCategory.Naval),
-                new UnitItemsRow(args, aircraftRow, UnitCategory.Aircraft)
-            };
-            foreach (IItemsRow<IUnit> unitsRow in unitsRows)
-            {
-                unitsRow.SetupUI();
+                unitRow.Initialise(args);
             }
         }
 
