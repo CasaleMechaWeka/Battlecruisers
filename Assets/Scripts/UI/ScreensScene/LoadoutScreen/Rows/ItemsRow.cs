@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         protected readonly IUIFactory _uiFactory;
         protected readonly IItemDetailsManager<TItem> _detailsManager;
 
-        protected ItemsRow(ItemsRowArgs<TItem> args)
+        protected ItemsRow(IItemsRowArgs<TItem> args)
 		{
             Assert.IsNotNull(args);
 

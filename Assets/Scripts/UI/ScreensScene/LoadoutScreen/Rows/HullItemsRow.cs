@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
 		public HullItemsRow(
-            ItemsRowArgs<ICruiser> args,
+            IItemsRowArgs<ICruiser> args,
             LoadoutHullItem loadoutHull, 
             UnlockedHullItemsRow unlockedHullsRow)
             : base(args)

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         private readonly UnitCategory _unitCategory;
 
         public UnitItemsRow(
-            ItemsRowArgs<IUnit> args,
+            IItemsRowArgs<IUnit> args,
             LoadoutBuildableItemsRow<IUnit> loadoutRow, 
             UnitCategory unitCategory) 
             : base(args, loadoutRow)

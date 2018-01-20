@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
 
-        protected BuildableItemsRow(ItemsRowArgs<TItem> args, LoadoutBuildableItemsRow<TItem> loadoutRow)
+        protected BuildableItemsRow(IItemsRowArgs<TItem> args, LoadoutBuildableItemsRow<TItem> loadoutRow)
             : base(args)
 		{
 			_loadoutRow = loadoutRow;
