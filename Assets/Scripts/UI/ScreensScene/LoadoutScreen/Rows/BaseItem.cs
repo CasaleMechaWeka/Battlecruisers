@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     public abstract class BaseItem<TItem> : MonoBehaviour, IItem<TItem> where TItem : IComparableItem
 	{
-		public class Colors
+		public static class Colors
 		{
 			public readonly static Color ENABLED = Color.green;
 			public readonly static Color DEFAULT = Color.clear;
