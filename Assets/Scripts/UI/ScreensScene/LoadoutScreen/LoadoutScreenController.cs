@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             hullsRow.Initialise(dataProvider.GameModel, prefabFactory, uiFactory, cruiserDetailsManager);
 
             // FELIX
-            //SetupBuildingRows();
+            SetupBuildingRows();
             //SetupUnitRows();
         }
 
@@ -68,11 +68,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
             {
+                // FELIX
                 new BuildingItemsRow(args, factoriesRow, BuildingCategory.Factory),
-                new BuildingItemsRow(args, defensivesRow, BuildingCategory.Defence),
-                new BuildingItemsRow(args, offensivesRow, BuildingCategory.Offence),
-                new BuildingItemsRow(args, tacticalsRow, BuildingCategory.Tactical),
-                new BuildingItemsRow(args, ultrasRow, BuildingCategory.Ultra)
+                //new BuildingItemsRow(args, defensivesRow, BuildingCategory.Defence),
+                //new BuildingItemsRow(args, offensivesRow, BuildingCategory.Offence),
+                //new BuildingItemsRow(args, tacticalsRow, BuildingCategory.Tactical),
+                //new BuildingItemsRow(args, ultrasRow, BuildingCategory.Ultra)
             };
             foreach (IItemsRow<IBuilding> buildingsRow in buildingsRows)
             {
