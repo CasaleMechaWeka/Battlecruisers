@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CruiserDetailsManager cruiserDetailsManager;
 
         // Buildings
-        public LoadoutBuildingItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
+        public LoadoutBuildingItemsRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
         public BuildingDetailsManager buildingDetailsManager;
 
         // Units
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             // Hulls
             Helper.AssertIsNotNull(hullsRow, cruiserDetailsManager);
             // Buildings
-            Helper.AssertIsNotNull(factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow, buildingDetailsManager);
+            Helper.AssertIsNotNull(defensivesRow, offensivesRow, tacticalsRow, ultrasRow, buildingDetailsManager);
             // Units
             Helper.AssertIsNotNull(shipsRow, aircraftRow, unitDetailsManager);
 
@@ -66,10 +66,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_gameModel, _prefabFactory, uiFactory, buildingDetailsManager);
 
+            BuildingsRowWrapper[] buildingRows = GetComponentsInChildren<BuildingsRowWrapper>();
+
+            foreach (BuildingsRowWrapper buildingRow in buildingRows)
+            {
+                buildingRow.Initialise(args);
+            }
+
             IList<IItemsRow<IBuilding>> buildingsRows = new List<IItemsRow<IBuilding>>()
             {
                 // FELIX
-                new BuildingItemsRow(args, factoriesRow, BuildingCategory.Factory),
+                //new BuildingItemsRow(args, factoriesRow, BuildingCategory.Factory),
                 //new BuildingItemsRow(args, defensivesRow, BuildingCategory.Defence),
                 //new BuildingItemsRow(args, offensivesRow, BuildingCategory.Offence),
                 //new BuildingItemsRow(args, tacticalsRow, BuildingCategory.Tactical),
