@@ -13,10 +13,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             Assert.IsNotNull(args);
 
-            LoadoutBuildingItemsRow ladoutRow = GetComponentInChildren<LoadoutBuildingItemsRow>();
-            Assert.IsNotNull(ladoutRow);
+            LoadoutBuildingItemsRow loadoutRow = GetComponentInChildren<LoadoutBuildingItemsRow>();
+            Assert.IsNotNull(loadoutRow);
 
-            IItemsRow<IBuilding> buildingsRow = new BuildingItemsRow(args, ladoutRow, category);
+            IItemsRow<IBuilding> buildingsRow = new BuildingItemsRow(args, loadoutRow, category);
             buildingsRow.SetupUI();
         }
     }
