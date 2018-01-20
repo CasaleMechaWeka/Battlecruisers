@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -23,9 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		public UIFactory uiFactory;
 
         // Hulls
-		public LoadoutHullItem loadoutHullItem;
-		public UnlockedHullItemsRow unlockedHullsRow;
-		public CruiserDetailsManager cruiserDetailsManager;
+        public HullsRowWrapper hullsRow;
+        public CruiserDetailsManager cruiserDetailsManager;
 
         // Buildings
         public LoadoutBuildingItemsRow factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
@@ -41,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory);
             // Hulls
-            Helper.AssertIsNotNull(loadoutHullItem, unlockedHullsRow, cruiserDetailsManager);
+            Helper.AssertIsNotNull(hullsRow, cruiserDetailsManager);
             // Buildings
             Helper.AssertIsNotNull(factoriesRow, defensivesRow, offensivesRow, tacticalsRow, ultrasRow, buildingDetailsManager);
             // Units
@@ -53,21 +50,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             buildingDetailsManager.Initialise();
             unitDetailsManager.Initialise();
-            cruiserDetailsManager.Initialise();
 
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
 
-            SetupHullsRow();
+            // Hulls
+            cruiserDetailsManager.Initialise();
+            hullsRow.Initialise(dataProvider.GameModel, prefabFactory, uiFactory, cruiserDetailsManager);
+
             // FELIX
             //SetupBuildingRows();
             //SetupUnitRows();
-        }
-
-        private void SetupHullsRow()
-        {
-            ItemsRowArgs<ICruiser> args = new ItemsRowArgs<ICruiser>(_gameModel, _prefabFactory, uiFactory, cruiserDetailsManager);
-            IItemsRow<ICruiser> hullsRow = new HullItemsRow(args, loadoutHullItem, unlockedHullsRow);
-            hullsRow.SetupUI();
         }
 
         private void SetupBuildingRows()
