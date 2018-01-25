@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		public static class Colors
 		{
 			public readonly static Color ENABLED = Color.green;
-			public readonly static Color DEFAULT = Color.clear;
+            public readonly static Color DEFAULT = Color.grey;
 		}
 
 		public Image itemImage;
