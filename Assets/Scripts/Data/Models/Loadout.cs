@@ -80,7 +80,7 @@ namespace BattleCruisers.Data.Models
 		{
 			Loadout other = obj as Loadout;
 			return other != null
-				&& object.ReferenceEquals(Hull, other.Hull)
+				&& ReferenceEquals(Hull, other.Hull)
 					|| (Hull != null && Hull.Equals(other.Hull))
 				&& Enumerable.SequenceEqual(_buildings, other._buildings)
 				&& Enumerable.SequenceEqual(_units, other._units);

@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 	{
 		public void OnNewHullSelected(ICruiser selectedCruiser)
 		{
-			IsItemInLoadout = object.ReferenceEquals(selectedCruiser, Item);
+			IsItemInLoadout = ReferenceEquals(selectedCruiser, Item);
 		}
 	}
 }

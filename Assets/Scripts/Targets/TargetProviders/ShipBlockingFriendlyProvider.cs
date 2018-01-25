@@ -58,7 +58,7 @@ namespace BattleCruisers.Targets.TargetProviders
             {
                 Assert.IsTrue(Target != null);
 
-                if (object.ReferenceEquals(Target, args.Target))
+                if (ReferenceEquals(Target, args.Target))
                 {
                     Target = null;
                 }

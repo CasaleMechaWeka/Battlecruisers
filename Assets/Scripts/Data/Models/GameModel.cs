@@ -122,9 +122,9 @@ namespace BattleCruisers.Data.Models
 
 			return other != null
 				&& other.NumOfLevelsCompleted == NumOfLevelsCompleted
-				&& object.ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
+				&& ReferenceEquals(PlayerLoadout, other.PlayerLoadout)
 					|| (PlayerLoadout != null && PlayerLoadout.Equals(other.PlayerLoadout))
-				&& object.ReferenceEquals(LastBattleResult, other.LastBattleResult)
+				&& ReferenceEquals(LastBattleResult, other.LastBattleResult)
 					|| (LastBattleResult != null && LastBattleResult.Equals(other.LastBattleResult))
 				&& Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
 				&& Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)

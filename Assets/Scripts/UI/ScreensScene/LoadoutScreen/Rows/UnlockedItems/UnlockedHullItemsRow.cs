@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
 		protected override UnlockedItem<ICruiser> CreateUnlockedItem(ICruiser item, HorizontalOrVerticalLayoutGroup itemParent)
 		{
-			bool isInLoadout = object.ReferenceEquals(_loadoutCruiser, item);
+			bool isInLoadout = ReferenceEquals(_loadoutCruiser, item);
 			return _uiFactory.CreateUnlockedHull(layoutGroup, _itemsRow, item, isInLoadout);
 		}
 

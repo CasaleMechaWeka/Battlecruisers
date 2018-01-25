@@ -8,7 +8,7 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 
 		public virtual bool IsMatch(ITarget target)
 		{
-			return object.ReferenceEquals(Target, target);
+			return ReferenceEquals(Target, target);
 		}
 	}
 }
