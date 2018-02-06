@@ -76,6 +76,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
             _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider, this);
+
+            // Make nuke face upwards (rotation is set in Initialise() above)
+            _launchedNuke.transform.eulerAngles = new Vector3(0, 0, 90);
 		}
 
 		private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
