@@ -12,12 +12,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
-        // Unity does not support child classes with the same private field
-        // names as a parent calss, if extending MonoBehaviour.  Hence, cannot
-        // use _damagePerS.
-        private float _laserDamagePerS;
-        public override float DamagePerS { get { return _laserDamagePerS; } }
-
         protected override Vector3 ProjectileSpawnerPosition { get { return _laserEmitter.transform.position; } }
 
         public override void StaticInitialise()
@@ -27,11 +21,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // Laser emitter
             _laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
             Assert.IsNotNull(_laserEmitter);
-
-            // Damage per s
-            float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
-            float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
-            _laserDamagePerS = cycleDamage / cycleLength;
         }
 
         protected override TurretStats SetupTurretStats()
@@ -42,17 +31,27 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _laserTurretStats;
         }
 
-		protected override IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
+        protected override IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
         {
-			LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
-			Assert.IsNotNull(fireIntervalManager);
-			
+            LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
+            Assert.IsNotNull(fireIntervalManager);
+            
             IDurationProvider waitingDurationProvider = _laserTurretStats;
-			IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
-			fireIntervalManager.Initialise(waitingDurationProvider, firingDurationProvider);
-			return fireIntervalManager;
+            IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
+            fireIntervalManager.Initialise(waitingDurationProvider, firingDurationProvider);
+            return fireIntervalManager;
         }
-		
+        
+        protected override IDamage FindDamageStats()
+        {
+			// Damage per s
+			float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
+			float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
+            float damagePerS = cycleDamage / cycleLength;
+
+            return new Damage(damagePerS, _turretStats.AttackCapabilities);
+        }
+
         public override void Initialise(IBarrelControllerArgs args)
 		{
             base.Initialise(args);

@@ -42,20 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
 
-        // Laziliy initialise, because requires StaticInitialise of this and all
-        // child classes to complete first.
-        private float _damagePerS;
-        public virtual float DamagePerS
-        {
-            get
-            {
-                if (_damagePerS == default(float))
-                {
-                    _damagePerS = NumOfBarrels * _projectileStats.Damage * _turretStats.MeanFireRatePerS;
-                }
-                return _damagePerS;
-            }
-        }
+        public IDamage Damage { get; private set; }
 
         public float BoostMultiplier
         {
@@ -73,7 +60,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _projectileStats = GetProjectileStats();
             _turretStats = SetupTurretStats();
             _fireIntervalManager = SetupFireIntervalManager(_turretStats);
+            Damage = FindDamageStats();
         }
+		
+		protected virtual IProjectileStats GetProjectileStats()
+		{
+			ProjectileStats projectileStats = GetComponent<ProjectileStats>();
+			Assert.IsNotNull(projectileStats);
+			return new ProjectileStatsWrapper(projectileStats);
+		}
 
         protected virtual TurretStats SetupTurretStats()
         {
@@ -81,13 +76,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(turretStats);
             turretStats.Initialise();
             return turretStats;
-        }
-
-        protected virtual IProjectileStats GetProjectileStats()
-        {
-            ProjectileStats projectileStats = GetComponent<ProjectileStats>();
-            Assert.IsNotNull(projectileStats);
-            return new ProjectileStatsWrapper(projectileStats);
         }
 		
 		protected virtual IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
@@ -97,6 +85,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			fireIntervalManager.Initialise(turretStats);
 			return fireIntervalManager;
 		}
+
+        protected virtual IDamage FindDamageStats()
+        {
+            float damagePerS = NumOfBarrels * _projectileStats.Damage * _turretStats.MeanFireRatePerS;
+            return new Damage(damagePerS, _turretStats.AttackCapabilities);
+        }
 
         public virtual void Initialise(IBarrelControllerArgs args)
 		{
