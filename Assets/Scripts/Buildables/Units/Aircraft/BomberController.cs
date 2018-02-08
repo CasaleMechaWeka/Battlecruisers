@@ -38,13 +38,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		public override float Damage 
-		{ 
-			get 
-			{ 
-                return _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-			} 
-		}
+        // FELIX
+		//public override float Damage 
+		//{ 
+		//	get 
+		//	{ 
+  //              return _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
+		//	} 
+		//}
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
 		#endregion Properties

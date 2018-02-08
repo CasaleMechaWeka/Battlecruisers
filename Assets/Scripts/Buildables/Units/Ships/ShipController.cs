@@ -43,9 +43,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// </summary>
         public abstract float OptimalArmamentRangeInM { get; }
 
-        private float _damage;
-        public sealed override float Damage { get { return _damage; } }
-
         private float FriendDetectionRangeInM
         {
             get
@@ -79,7 +76,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.StaticInitialise();
             }
 
-			_damage = _turrets.Sum(turret => turret.DamagePerS);
+            // FELIX
+			//_damage = _turrets.Sum(turret => turret.DamagePerS);
 
             _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
 		}

@@ -16,7 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound { get { return null; } }
-        public override float Damage { get { return _barrelWrapper.DamagePerS; } }
+
+        // FELIX
+        //public override float Damage { get { return _barrelWrapper.DamagePerS; } }
 
 		public override void StaticInitialise()
 		{

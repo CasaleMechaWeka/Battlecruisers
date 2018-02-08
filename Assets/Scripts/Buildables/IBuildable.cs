@@ -5,6 +5,9 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine;
+using System.Collections.Generic;
+using BattleCruisers.Projectiles.Stats.Wrappers;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables
 {
@@ -35,7 +38,7 @@ namespace BattleCruisers.Buildables
 		IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
-        float Damage { get; }
+        ReadOnlyCollection<IDamageStats> DamageStats { get; }
         SlotType SlotType { get; }
 		IBoostable BuildProgressBoostable { get; }
   

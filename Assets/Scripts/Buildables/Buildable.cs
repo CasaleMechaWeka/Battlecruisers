@@ -19,6 +19,8 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Projectiles.Stats.Wrappers;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables
 {
@@ -56,7 +58,6 @@ namespace BattleCruisers.Buildables
 
         #region Properties
         public BuildableState BuildableState { get; private set; }
-        public virtual float Damage { get { return 0; } }
         public float BuildProgress { get; private set; }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
@@ -66,6 +67,9 @@ namespace BattleCruisers.Buildables
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
+
+        private IList<IDamageStats> _damageStats;
+        public ReadOnlyCollection<IDamageStats> DamageStats { get; private set; }
 
         Quaternion IBuildable.Rotation 
         {
@@ -166,6 +170,9 @@ namespace BattleCruisers.Buildables
             _numOfDronesText = gameObject.GetComponentInChildren<NumOfDronesTextController>(includeInactive: true);
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
+
+            _damageStats = new List<IDamageStats>();
+            this.DamageStats = new ReadOnlyCollection<IDamageStats>(_damageStats);
         }
 
         // Reuse text mesh for showing num of drones while building is being built.

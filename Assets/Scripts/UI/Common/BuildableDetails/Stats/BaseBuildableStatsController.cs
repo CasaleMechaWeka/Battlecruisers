@@ -29,7 +29,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 			_dronesRow.Initialise(DRONES_LABEL, item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
 			_buildTimeRow.Initialise(BUILD_TIME_LABEL, item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
 			_healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
-			_damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(item.Damage), _higherIsBetterComparer.CompareStats(item.Damage, itemToCompareTo.Damage));
+            // FELIX
+			//_damageRow.Initialise(DAMAGE_LABEL, _valueToStarsConverter.DamageValueToStars(item.Damage), _higherIsBetterComparer.CompareStats(item.Damage, itemToCompareTo.Damage));
 		}
 	}
 }
