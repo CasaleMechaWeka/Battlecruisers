@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _spriteProvider = spriteProvider;
 		}
 
+        // FELIX  Buildable should not expose slot type.  Building only.  Create sub classes (Building/Unit) to handle this.
 		public override void ShowItemDetails(TItem item, TItem itemToCompareTo = null)
 		{
             base.ShowItemDetails(item, itemToCompareTo);
