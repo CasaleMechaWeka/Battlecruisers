@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public interface IDamageStats
+    public interface IDamage
     {
         float DamagePerS { get; }
         IList<TargetType> AttackCapabilities { get; }
