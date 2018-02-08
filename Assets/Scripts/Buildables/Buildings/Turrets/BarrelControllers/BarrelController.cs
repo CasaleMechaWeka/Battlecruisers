@@ -17,6 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
+    // FELIX Create interface???
     public abstract class BarrelController : MonoBehaviour, ITargetConsumer, IBoostable
     {
         protected IFireIntervalManager _fireIntervalManager;
