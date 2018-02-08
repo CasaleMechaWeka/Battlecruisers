@@ -21,6 +21,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using System.Collections.ObjectModel;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Buildables
 {
@@ -68,8 +69,8 @@ namespace BattleCruisers.Buildables
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
 
-        private IList<IDamageStats> _damageStats;
-        public ReadOnlyCollection<IDamageStats> DamageStats { get; private set; }
+        private IList<IDamage> _damageStats;
+        public ReadOnlyCollection<IDamage> DamageStats { get; private set; }
 
         Quaternion IBuildable.Rotation 
         {
@@ -171,8 +172,8 @@ namespace BattleCruisers.Buildables
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
 
-            _damageStats = new List<IDamageStats>();
-            this.DamageStats = new ReadOnlyCollection<IDamageStats>(_damageStats);
+            _damageStats = new List<IDamage>();
+            this.DamageStats = new ReadOnlyCollection<IDamage>(_damageStats);
         }
 
         // Reuse text mesh for showing num of drones while building is being built.
