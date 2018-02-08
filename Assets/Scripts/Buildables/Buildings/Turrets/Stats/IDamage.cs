@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
+    // FELIX  Rename please :(
     public interface IDamage
     {
         float DamagePerS { get; }

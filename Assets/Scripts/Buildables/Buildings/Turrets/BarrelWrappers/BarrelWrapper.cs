@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected float _minRangeInM;
 
         public Vector2 Position { get { return transform.position; } }
-        public float DamagePerS { get; private set; }
+        public IDamage Damage { get; private set; }
         public float RangeInM { get; private set; }
 
         private List<Renderer> _renderers;
@@ -68,8 +69,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             InitialiseBarrels();
 
-            // FELIX
-            //DamagePerS = _barrels.Sum(barrel => barrel.DamagePerS);
+            Damage = SumBarrelDamage();
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
             _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
 
@@ -86,6 +86,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             {
                 barrel.StaticInitialise();
                 _renderers.AddRange(barrel.Renderers);
+            }
+        }
+
+        private IDamage SumBarrelDamage()
+        {
+            if (_barrels.Length == 1)
+            {
+                return _barrels[0].Damage;
+            }
+            else
+            {
+                float totalDamagePerS = _barrels.Sum(barrel => barrel.Damage.DamagePerS);
+                return new Damage(totalDamagePerS, _barrels[0].Damage.AttackCapabilities);
             }
         }
 

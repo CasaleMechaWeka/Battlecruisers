@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -10,9 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public interface IBarrelWrapper : ITargetConsumer, IDisposable, IBoostable
 	{
-        // FELIX  Replace with Damage class :)
-        float DamagePerS { get; }
-
+        IDamage Damage { get; }
         float RangeInM { get; }
         Vector2 Position { get; }
         IList<Renderer> Renderers { get; }
