@@ -12,6 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		protected IBarrelWrapper _barrelWrapper;
 
+        // FELIX  Duplicated in _barrelWrapper.DamageStats.AttackCapabilities :/  Remove!
 		public List<TargetType> attackCapabilities;
 
         // By default have null (no) sound
