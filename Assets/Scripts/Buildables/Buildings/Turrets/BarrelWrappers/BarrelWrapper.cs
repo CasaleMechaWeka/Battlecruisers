@@ -23,7 +23,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private TargetProcessorWrapper _targetProcessorWrapper;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
-        protected IList<TargetType> _attackCapabilities;
         protected float _minRangeInM;
 
         public Vector2 Position { get { return transform.position; } }
@@ -106,14 +105,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
-            IList<TargetType> attackCapabilities,
             ISoundKey firingSound = null)
         {
-            Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction, attackCapabilities);
+            Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction);
 
             _factoryProvider = factoryProvider;
             _enemyFaction = enemyFaction;
-            _attackCapabilities = attackCapabilities;
 
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
@@ -130,7 +127,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _factoryProvider.TargetsFactory,
                     this,
                     _enemyFaction,
-                    _attackCapabilities,
+                    Damage.AttackCapabilities,
                     RangeInM,
                     _minRangeInM);
 
@@ -169,7 +166,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, _attackCapabilities);
+            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, Damage.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

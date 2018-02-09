@@ -33,7 +33,9 @@ namespace BattleCruisers.Buildables
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
+        // FELIX  User IList
         protected List<TargetType> _attackCapabilities;
+        // FELIX   Make readonly
         public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
 
         private float _health;

@@ -57,14 +57,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            IList<TargetType> nonAirTargets = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, nonAirTargets, SoundKeys.Firing.BigCannon);
-            _missileLauncherFront.Initialise(this, _factoryProvider, enemyFaction, nonAirTargets);
-            _missileLauncherRear.Initialise(this, _factoryProvider, enemyFaction, nonAirTargets);
-
-            IList<TargetType> airTargets = new List<TargetType>() { TargetType.Aircraft };
-            _directFireAntiAir1.Initialise(this, _factoryProvider, enemyFaction, airTargets, SoundKeys.Firing.AntiAir);
-            _directFireAntiAir2.Initialise(this, _factoryProvider, enemyFaction, airTargets, SoundKeys.Firing.AntiAir);
+            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
+            _missileLauncherFront.Initialise(this, _factoryProvider, enemyFaction);
+            _missileLauncherRear.Initialise(this, _factoryProvider, enemyFaction);
+            _directFireAntiAir1.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.AntiAir);
+            _directFireAntiAir2.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.AntiAir);
         }
     }
 }

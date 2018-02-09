@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
-            IList<TargetType> attackCapabilities,
             ISoundKey firingSound = null);
 
         void StartAttackingTargets();
