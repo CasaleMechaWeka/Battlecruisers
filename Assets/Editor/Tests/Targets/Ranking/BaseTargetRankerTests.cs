@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using NSubstitute;
@@ -41,7 +42,7 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		{
 			ITarget target = Substitute.For<ITarget>();
 			target.TargetValue.Returns(targetValue);
-			target.AttackCapabilities.Returns(new List<TargetType>(attackCapabilities));
+			target.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(attackCapabilities));
 			return target;
 		}
 

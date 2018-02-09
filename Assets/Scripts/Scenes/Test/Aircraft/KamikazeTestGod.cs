@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			enemyCruiser.GameObject.Returns(_target.GameObject);
-			enemyCruiser.AttackCapabilities.Returns(new List<TargetType>());
+            enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
             
 			// Setup kamikaze signal
 			_kamikazeSignal = FindObjectOfType<KamikazeSignal>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
@@ -33,10 +34,8 @@ namespace BattleCruisers.Buildables
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
-        // FELIX  User IList
         protected List<TargetType> _attackCapabilities;
-        // FELIX   Make readonly
-        public virtual List<TargetType> AttackCapabilities { get { return _attackCapabilities; } }
+        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
 
         private float _health;
         public float Health
@@ -90,6 +89,7 @@ namespace BattleCruisers.Buildables
 		{
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
+            AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
