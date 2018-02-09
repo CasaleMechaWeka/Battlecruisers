@@ -42,7 +42,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }
 
-        public IDamage Damage { get; private set; }
+        // Initialise lazily, because requires child class StaticInitialise()s to have completed.
+        private IDamage _damage;
+        public IDamage Damage
+        {
+            get
+            {
+                if (_damage == null)
+                {
+                    _damage = FindDamageStats();
+                }
+                return _damage;
+            }
+        }
 
         public float BoostMultiplier
         {
@@ -60,7 +72,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _projectileStats = GetProjectileStats();
             _turretStats = SetupTurretStats();
             _fireIntervalManager = SetupFireIntervalManager(_turretStats);
-            Damage = FindDamageStats();
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
