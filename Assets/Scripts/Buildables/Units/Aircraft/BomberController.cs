@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
@@ -38,15 +39,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-        // FELIX
-		//public override float Damage 
-		//{ 
-		//	get 
-		//	{ 
-  //              return _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-		//	} 
-		//}
-
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
 		#endregion Properties
 
@@ -66,6 +58,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ProjectileStats stats = GetComponent<ProjectileStats>();
             _bombStats = new ProjectileStatsWrapper(stats);
             Assert.IsNotNull(_bombStats);
+
+            float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
+            _damageStats.Add(new Damage(damagePerS, AttackCapabilities));
 		}
 
 		protected override void OnInitialised()

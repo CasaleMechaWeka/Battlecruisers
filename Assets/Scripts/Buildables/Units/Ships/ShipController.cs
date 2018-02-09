@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.TargetFinders;
@@ -62,25 +63,48 @@ namespace BattleCruisers.Buildables.Units.Ships
         public bool IsMoving { get { return rigidBody.velocity.x != 0; } }
 
         public override void StaticInitialise()
-		{
-			base.StaticInitialise();
+        {
+            base.StaticInitialise();
 
-			_attackCapabilities.Add(TargetType.Ships);
-			_attackCapabilities.Add(TargetType.Cruiser);
-			_attackCapabilities.Add(TargetType.Buildings);
+            _attackCapabilities.Add(TargetType.Ships);
+            _attackCapabilities.Add(TargetType.Cruiser);
+            _attackCapabilities.Add(TargetType.Buildings);
 
             _turrets = GetTurrets();
 
-			foreach (IBarrelWrapper turret in _turrets)
+            foreach (IBarrelWrapper turret in _turrets)
             {
                 turret.StaticInitialise();
             }
 
-            // FELIX
-			//_damage = _turrets.Sum(turret => turret.DamagePerS);
+            FindDamageStats();
 
             _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
-		}
+        }
+
+        private void FindDamageStats()
+        {
+            IList<IDamage> antiAirDamageStats = GetDamageStats(TargetType.Aircraft);
+            if (antiAirDamageStats.Count != 0)
+            {
+                _damageStats.Add(new Damage(antiAirDamageStats));
+            }
+
+            IList<IDamage> antiSeaDamageStats = GetDamageStats(TargetType.Ships);
+            if (antiSeaDamageStats.Count != 0)
+            {
+                _damageStats.Add(new Damage(antiSeaDamageStats));
+            }
+        }
+
+        private IList<IDamage> GetDamageStats(TargetType attackCapability)
+        {
+            return
+                _turrets
+                    .Where(turret => turret.Damage.AttackCapabilities.Contains(attackCapability))
+                    .Select(turret => turret.Damage)
+                    .ToList();
+        }
 
         protected abstract IList<IBarrelWrapper> GetTurrets();
 

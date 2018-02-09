@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -47,7 +48,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             // Anti air turret
             _directFireAntiAir = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir");
-			turrets.Add(_directFireAntiAir);
+            turrets.Add(_directFireAntiAir);
 
             return turrets;
 		}

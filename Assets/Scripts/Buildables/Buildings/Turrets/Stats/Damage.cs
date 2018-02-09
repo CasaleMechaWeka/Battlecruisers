@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
@@ -15,6 +16,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
             DamagePerS = damagePerS;
             AttackCapabilities = attackCapabilities;
+        }
+
+        public Damage(IList<IDamage> damageStats)
+        {
+            Assert.IsTrue(damageStats.Count > 0);
+            DamagePerS = damageStats.Sum(damageStat => damageStat.DamagePerS);
+            AttackCapabilities = damageStats[0].AttackCapabilities;
         }
     }
 }
