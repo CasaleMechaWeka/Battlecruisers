@@ -35,6 +35,8 @@ namespace BattleCruisers.Buildables
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
         protected List<TargetType> _attackCapabilities;
+        // FELIX  Duplicates IBuildable.DamageStats :/  Somehow get rid of this?  Or at least a smart way of
+        // assigning this AttackCapabilities automatically from DamageStats.
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
 
         private float _health;
