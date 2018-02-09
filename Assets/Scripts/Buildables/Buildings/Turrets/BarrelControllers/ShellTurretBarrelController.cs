@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
