@@ -10,9 +10,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
 		{
 			healthRow.Initialise(item.MaxHealth, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
-            // FELIX  Remove.  All cruisers should start with 4 drones.  Raptor has extra, but that should be in description!
-            // Makes more sense, as other bonuses will be described in description, not have their own stats row.
-			droneRow.Initialise(item.NumOfDrones, _higherIsBetterComparer.CompareStats(item.NumOfDrones, itemToCompareTo.NumOfDrones));
 
 			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);
 			platformSlotsRow.Initialise(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Platform)));
