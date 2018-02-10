@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
@@ -9,7 +8,6 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -17,8 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    // FELIX Create interface???
-    public abstract class BarrelController : MonoBehaviour, ITargetConsumer, IBoostable
+    public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
         protected IFireIntervalManager _fireIntervalManager;
         protected ITargetFilter _targetFilter;
