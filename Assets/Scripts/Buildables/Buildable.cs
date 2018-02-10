@@ -62,7 +62,10 @@ namespace BattleCruisers.Buildables
         public float BuildProgress { get; private set; }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
+
+        // FELIX  Move up to Building class :)
         public SlotType SlotType { get { return slotType; } }
+
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
