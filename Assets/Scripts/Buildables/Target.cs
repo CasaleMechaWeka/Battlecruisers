@@ -34,12 +34,14 @@ namespace BattleCruisers.Buildables
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
-        // FELIX  Convert to ISet (HashSet)  Need later version of .Net, so wait for Unity download to complete :)
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
         protected void AddAttackCapability(TargetType attackCapability)
         {
-            _attackCapabilities.Add(attackCapability);
+            if (!_attackCapabilities.Contains(attackCapability))
+            {
+                _attackCapabilities.Add(attackCapability);
+			}
         }
 
         private float _health;
