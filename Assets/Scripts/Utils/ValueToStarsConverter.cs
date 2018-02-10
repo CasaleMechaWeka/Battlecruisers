@@ -13,6 +13,7 @@
 			return ValueToStars((int)health, HEALTH_STAR_THRESHOLDS);
 		}
 
+        // FELIX  Tailor to target type (Ie, 5 stars for anti cruiser will obviously be more than 5 stars for anti air).
 		public int DamageValueToStars(float damagePerS)
 		{
 			return ValueToStars((int)damagePerS, DAMAGE_STAR_THRESHOLDS);
