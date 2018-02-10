@@ -14,9 +14,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         private RepairButtonController _repairButton;
         private ToggleDroneButtonController _toggleDronesButton;
         private DeleteButtonController _deleteButton;
-
-        // FELIX  Retrieve programmatically
-		public BuildableProgressBarController buildProgressController;
+        private BuildableProgressBarController _buildProgressController;
 
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
@@ -37,13 +35,16 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
             _deleteButton.Initialise(this);
+
+            _buildProgressController = GetComponentInChildren<BuildableProgressBarController>(includeInactive: true);
+            Assert.IsNotNull(_buildProgressController);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable, bool allowDelete)
         {
             base.ShowItemDetails(buildable);
 
-            buildProgressController.Buildable = buildable;
+            _buildProgressController.Buildable = buildable;
             _toggleDronesButton.Buildable = buildable;
             _repairButton.Repairable = buildable;
 
@@ -55,7 +56,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		{
 			if (_item != null)
 			{
-                buildProgressController.Buildable = null;
+                _buildProgressController.Buildable = null;
                 _toggleDronesButton.Buildable = null;
                 _repairButton.Repairable = null;
                 _deleteButton.Buildable = null;
