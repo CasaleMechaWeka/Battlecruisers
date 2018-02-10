@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         private DeleteButtonController _deleteButton;
 		
 		public BuildableStatsController buildableStatsController;
-		public Button deleteButton;
 		public BuildableProgressBarController buildProgressController;
 
         protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }

@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 		
         protected TItem _item;
 
+        // FELIX  Retrieve programmatically???
         public Text itemName;
         public Text itemDescription;
         public Image itemImage;
