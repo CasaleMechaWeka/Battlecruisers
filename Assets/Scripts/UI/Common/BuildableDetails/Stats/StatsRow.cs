@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	public abstract class StatsRow : MonoBehaviour
+    public abstract class StatsRow : MonoBehaviour
 	{
 		public Text rowLabel;
 		public Image comparisonFeedbackBackground;

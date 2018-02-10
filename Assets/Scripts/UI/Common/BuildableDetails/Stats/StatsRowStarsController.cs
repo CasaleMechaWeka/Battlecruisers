@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	public class StatsRowStarsController : StatsRow
+    public class StatsRowStarsController : StatsRow
 	{
 		public Image[] stars;
 
 		private const int MIN_RATING = 0;
 		private const int MAX_RATING = 5;
 
+        // FELIX  Do not pass stat name, set in inspector!
 		public void Initialise(string statName, int statRating, ComparisonResult comparisonResult)
 		{
 			base.Iniitalise(statName, comparisonResult);
