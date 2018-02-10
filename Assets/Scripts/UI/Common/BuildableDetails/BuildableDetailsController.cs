@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails.Buttons;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
@@ -11,7 +10,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class BuildableDetailsController : BaseBuildableDetails<IBuildable>, IBuildableDetails
+    public abstract class BuildableDetailsController : ItemDetails<IBuildable>, IBuildableDetails
     {
         private IDroneManager _droneManager;
         private RepairButtonController _repairButton;
@@ -24,9 +23,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }
 		
-        public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
-            base.Initialise(spriteProvider);
+            base.Initialise();
 
             Helper.AssertIsNotNull(droneManager, repairManager);
 
@@ -45,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _deleteButton.Initialise(this);
         }
 
-        public void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
+        public virtual void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
         {
             base.ShowItemDetails(buildable);
 

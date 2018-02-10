@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class ComparableBuildableDetailsController<TBuildable> : BaseBuildableDetails<TBuildable>, IPointerClickHandler
+    public abstract class ComparableBuildableDetailsController<TBuildable> : ItemDetails<TBuildable>, IPointerClickHandler
         where TBuildable : class, IBuildable
 	{
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
