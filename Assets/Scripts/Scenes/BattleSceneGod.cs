@@ -98,11 +98,11 @@ namespace BattleCruisers.Scenes
 
 
             // UIManager
-            buildMenuCanvas.Initialise();
+            buildMenuCanvas.StaticInitialise();
 
             IBuildableDetailsManager detailsManager 
                 = new BuildableDetailsManager(
-                    buildMenuCanvas.BuildindgDetails, 
+                    buildMenuCanvas.BuildingDetails, 
                     buildMenuCanvas.CruiserDetails);
 
             IUIManager uiManager 
@@ -126,10 +126,7 @@ namespace BattleCruisers.Scenes
 
 
             // UI
-            // FELIX  Have StaticInitialise & Initialise for buildMenuCanvas, have it setup the details :)
-            buildMenuCanvas.BuildindgDetails.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
-            buildMenuCanvas.UnitDetails.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
-            buildMenuCanvas.CruiserDetails.Initialise(_playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            buildMenuCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
