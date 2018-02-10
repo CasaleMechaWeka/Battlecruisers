@@ -1,25 +1,22 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.Common.BuildingDetails.Buttons;
 using BattleCruisers.UI.Common.BuildingDetails.Stats;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public class ComparableBuildingDetailsController : ComparableBuildableDetailsController<IBuilding>
 	{
-        private ISpriteProvider _spriteProvider;
-        private Image _slotImage;
+        private SlotTypeController _slotType;
 
         public void Initialise(ISpriteProvider spriteProvider)
         {
             base.Initialise();
 
-            Assert.IsNotNull(spriteProvider);
-            _spriteProvider = spriteProvider;
-
-            _slotImage = transform.FindNamedComponent<Image>("SlotType");
+            _slotType = GetComponentInChildren<SlotTypeController>();
+            Assert.IsNotNull(_slotType);
+            _slotType.Initialise(spriteProvider);
         }
 
         protected override StatsController<IBuilding> GetStatsController()
@@ -30,8 +27,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         public override void ShowItemDetails(IBuilding item, IBuilding itemToCompareTo = null)
         {
             base.ShowItemDetails(item, itemToCompareTo);
-
-            _slotImage.sprite = _spriteProvider.GetSlotSprite(_item.SlotType).Sprite;
+            _slotType.SlotType = item.SlotType;
         }
     }
 }
