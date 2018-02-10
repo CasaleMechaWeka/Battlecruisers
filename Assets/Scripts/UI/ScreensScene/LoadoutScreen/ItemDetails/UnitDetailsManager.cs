@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
@@ -9,8 +8,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
     {
         public void Initialise()
         {
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-
             ComparableUnitDetailsController singleItemDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("SingleItemDetails");
             singleItemDetails.Initialise();
 
