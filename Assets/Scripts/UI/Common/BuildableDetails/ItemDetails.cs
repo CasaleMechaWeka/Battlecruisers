@@ -22,8 +22,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _itemName = transform.FindNamedComponent<Text>("ItemName");
             _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
-            _statsController = GetStatsController();
 
+            _statsController = GetStatsController();
+            Assert.IsNotNull(_statsController);
             _statsController.Initialise();
         }
 

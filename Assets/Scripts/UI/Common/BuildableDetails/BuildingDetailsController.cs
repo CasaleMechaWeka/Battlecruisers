@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         protected override StatsController<IBuilding> GetStatsController()
         {
-            return GetComponent<BuildingStatsController>();
+            return GetComponentInChildren<BuildingStatsController>();
         }
 
         // FELIX  Avoid dulpicate code with ComparableBuildingDetailsController.  Perhaps a SlotTypeController?
