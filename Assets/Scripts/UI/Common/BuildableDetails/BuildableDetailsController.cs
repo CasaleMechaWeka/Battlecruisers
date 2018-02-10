@@ -3,10 +3,8 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails.Buttons;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
@@ -16,12 +14,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         private RepairButtonController _repairButton;
         private ToggleDroneButtonController _toggleDronesButton;
         private DeleteButtonController _deleteButton;
-		
-		public BuildableStatsController buildableStatsController;
+
+        // FELIX  Retrieve programmatically
 		public BuildableProgressBarController buildProgressController;
 
-        protected override StatsController<IBuildable> StatsController { get { return buildableStatsController; } }
-		
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
             base.Initialise();

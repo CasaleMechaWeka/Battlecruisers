@@ -12,8 +12,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 	{
 		private Text _itemName, _itemDescription;
 		private Image _itemImage;
-		
-        protected abstract StatsController<TItem> StatsController { get; }
+        private StatsController<TItem> _statsController;
         
         protected TItem _item;
 
@@ -22,8 +21,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _itemName = transform.FindNamedComponent<Text>("ItemName");
             _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            _statsController = transform.FindNamedComponent<StatsController<TItem>>("StatsController");
 
-            StatsController.Initialise();
+            _statsController.Initialise();
         }
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default(TItem))
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
             _item = item;
 			
-            StatsController.ShowStats(item, itemToCompareTo);
+            _statsController.ShowStats(item, itemToCompareTo);
             _itemName.text = item.Name;
             _itemDescription.text = item.Description;
             _itemImage.sprite = item.Sprite;
