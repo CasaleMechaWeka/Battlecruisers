@@ -20,7 +20,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise();
 
-            _attackCapabilities.Add(TargetType.Aircraft);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 		

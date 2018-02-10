@@ -48,9 +48,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;
-
-			_attackCapabilities.Add(TargetType.Cruiser);
-			_attackCapabilities.Add(TargetType.Buildings);
 			
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
@@ -60,7 +57,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.IsNotNull(_bombStats);
 
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-            AddDamageStats(new Damage(damagePerS, AttackCapabilities));
+            IList<TargetType> attackCapabilities = new List<TargetType>()
+            {
+                TargetType.Cruiser,
+                TargetType.Buildings
+            };
+            AddDamageStats(new Damage(damagePerS, attackCapabilities));
 		}
 
 		protected override void OnInitialised()
@@ -68,7 +70,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, _factoryProvider);
 
             _bombSpawner.Initialise(spawnerArgs, targetFilter);

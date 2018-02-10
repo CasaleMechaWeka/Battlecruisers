@@ -20,12 +20,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         }
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Archon; } }
-
-        public override void StaticInitialise()
-        {
-            base.StaticInitialise();
-            _attackCapabilities.Add(TargetType.Aircraft);
-        }
 		
         protected override IList<IBarrelWrapper> GetTurrets()
         {

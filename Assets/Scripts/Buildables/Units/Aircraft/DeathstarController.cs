@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			// Barrel controller
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, _attackCapabilities);
+            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
 
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
