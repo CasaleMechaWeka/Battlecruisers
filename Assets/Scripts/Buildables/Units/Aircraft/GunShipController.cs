@@ -49,14 +49,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.StaticInitialise();
 
-			Assert.IsNotNull(hoverRangeEnemyDetector);
-
-            _attackCapabilities.Add(TargetType.Ships);
+            Assert.IsNotNull(hoverRangeEnemyDetector);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
-            _damageStats.Add(_barrelWrapper.Damage);
+            AddDamageStats(_barrelWrapper.Damage);
 
             _followingTargetProcessor = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
 

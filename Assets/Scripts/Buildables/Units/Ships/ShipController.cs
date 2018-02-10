@@ -66,10 +66,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise();
 
-            _attackCapabilities.Add(TargetType.Ships);
-            _attackCapabilities.Add(TargetType.Cruiser);
-            _attackCapabilities.Add(TargetType.Buildings);
-
             _turrets = GetTurrets();
 
             foreach (IBarrelWrapper turret in _turrets)
@@ -87,13 +83,13 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<IDamage> antiAirDamageStats = GetDamageStats(TargetType.Aircraft);
             if (antiAirDamageStats.Count != 0)
             {
-                _damageStats.Add(new Damage(antiAirDamageStats));
+                AddDamageStats(new Damage(antiAirDamageStats));
             }
 
             IList<IDamage> antiSeaDamageStats = GetDamageStats(TargetType.Ships);
             if (antiSeaDamageStats.Count != 0)
             {
-                _damageStats.Add(new Damage(antiSeaDamageStats));
+                AddDamageStats(new Damage(antiSeaDamageStats));
             }
         }
 

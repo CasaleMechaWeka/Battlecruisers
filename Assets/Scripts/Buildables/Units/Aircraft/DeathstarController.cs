@@ -33,14 +33,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		public override void StaticInitialise()
 		{
 			base.StaticInitialise();
+
             Helper.AssertIsNotNull(leftWing, rightWing);
 
 			_barrelController = gameObject.GetComponentInChildren<LaserBarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
-
-            _damageStats.Add(_barrelController.Damage);
-            _attackCapabilities.AddRange(_barrelController.Damage.AttackCapabilities);
+            AddDamageStats(_barrelController.Damage);
 
 			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
 			Assert.IsNotNull(_targetDetector);

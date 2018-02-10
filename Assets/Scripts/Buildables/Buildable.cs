@@ -69,8 +69,7 @@ namespace BattleCruisers.Buildables
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
 
-        // FELIX  Make private
-        protected IList<IDamage> _damageStats;
+        private IList<IDamage> _damageStats;
         public ReadOnlyCollection<IDamage> DamageStats { get; private set; }
 
         Quaternion IBuildable.Rotation 

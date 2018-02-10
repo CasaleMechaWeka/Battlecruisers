@@ -60,7 +60,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.IsNotNull(_bombStats);
 
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-            _damageStats.Add(new Damage(damagePerS, AttackCapabilities));
+            AddDamageStats(new Damage(damagePerS, AttackCapabilities));
 		}
 
 		protected override void OnInitialised()

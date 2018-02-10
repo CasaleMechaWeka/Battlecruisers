@@ -65,12 +65,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsNotNull(followableEnemyDetector);
 			
-			_attackCapabilities.Add(TargetType.Aircraft);
-
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
-            _damageStats.Add(_barrelController.Damage);
+            AddDamageStats(_barrelController.Damage);
 		}
 
 		protected override void OnInitialised()

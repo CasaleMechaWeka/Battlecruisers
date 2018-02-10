@@ -12,9 +12,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		protected IBarrelWrapper _barrelWrapper;
 
-        // FELIX  Duplicated in _barrelWrapper.DamageStats.AttackCapabilities :/  Remove!
-		public List<TargetType> attackCapabilities;
-
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound { get { return null; } }
 
@@ -25,11 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
-			_damageStats.Add(_barrelWrapper.Damage);
-
-            Assert.IsNotNull(attackCapabilities);
-            Assert.IsTrue(attackCapabilities.Count != 0);
-            _attackCapabilities.AddRange(attackCapabilities);
+            AddDamageStats(_barrelWrapper.Damage);
 		}
 
 		protected override void OnInitialised()
