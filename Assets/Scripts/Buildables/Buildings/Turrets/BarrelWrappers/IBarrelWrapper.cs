@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public interface IBarrelWrapper : ITargetConsumer, IDisposable, IBoostable
 	{
-        IDamage Damage { get; }
+        IDamageCapability DamageCapability { get; }
         float RangeInM { get; }
         Vector2 Position { get; }
         IList<Renderer> Renderers { get; }

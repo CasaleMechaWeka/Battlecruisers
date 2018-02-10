@@ -80,25 +80,25 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void FindDamageStats()
         {
-            IList<IDamage> antiAirDamageStats = GetDamageStats(TargetType.Aircraft);
-            if (antiAirDamageStats.Count != 0)
+            IList<IDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(TargetType.Aircraft);
+            if (antiAirDamageCapabilities.Count != 0)
             {
-                AddDamageStats(new Damage(antiAirDamageStats));
+                AddDamageStats(new DamageCapability(antiAirDamageCapabilities));
             }
 
-            IList<IDamage> antiSeaDamageStats = GetDamageStats(TargetType.Ships);
-            if (antiSeaDamageStats.Count != 0)
+            IList<IDamageCapability> antiSeaDamageCapabilities = GetDamageCapabilities(TargetType.Ships);
+            if (antiSeaDamageCapabilities.Count != 0)
             {
-                AddDamageStats(new Damage(antiSeaDamageStats));
+                AddDamageStats(new DamageCapability(antiSeaDamageCapabilities));
             }
         }
 
-        private IList<IDamage> GetDamageStats(TargetType attackCapability)
+        private IList<IDamageCapability> GetDamageCapabilities(TargetType attackCapability)
         {
             return
                 _turrets
-                    .Where(turret => turret.Damage.AttackCapabilities.Contains(attackCapability))
-                    .Select(turret => turret.Damage)
+                    .Where(turret => turret.DamageCapability.AttackCapabilities.Contains(attackCapability))
+                    .Select(turret => turret.DamageCapability)
                     .ToList();
         }
 

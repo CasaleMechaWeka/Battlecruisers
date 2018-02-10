@@ -42,14 +42,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return fireIntervalManager;
         }
         
-        protected override IDamage FindDamageStats()
+        protected override IDamageCapability FindDamageCapabilities()
         {
 			// Damage per s
 			float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
 			float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
             float damagePerS = cycleDamage / cycleLength;
 
-            return new Damage(damagePerS, _turretStats.AttackCapabilities);
+            return new DamageCapability(damagePerS, _turretStats.AttackCapabilities);
         }
 
         public override void Initialise(IBarrelControllerArgs args)

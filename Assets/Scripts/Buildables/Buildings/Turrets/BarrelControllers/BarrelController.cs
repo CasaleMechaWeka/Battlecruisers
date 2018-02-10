@@ -43,16 +43,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public Renderer[] Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
-        private IDamage _damage;
-        public IDamage Damage
+        private IDamageCapability _damageCapability;
+        public IDamageCapability DamageCapability
         {
             get
             {
-                if (_damage == null)
+                if (_damageCapability == null)
                 {
-                    _damage = FindDamageStats();
+                    _damageCapability = FindDamageCapabilities();
                 }
-                return _damage;
+                return _damageCapability;
             }
         }
 
@@ -97,10 +97,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return fireIntervalManager;
 		}
 
-        protected virtual IDamage FindDamageStats()
+        protected virtual IDamageCapability FindDamageCapabilities()
         {
             float damagePerS = NumOfBarrels * _projectileStats.Damage * _turretStats.MeanFireRatePerS;
-            return new Damage(damagePerS, _turretStats.AttackCapabilities);
+            return new DamageCapability(damagePerS, _turretStats.AttackCapabilities);
         }
 
         public virtual void Initialise(IBarrelControllerArgs args)

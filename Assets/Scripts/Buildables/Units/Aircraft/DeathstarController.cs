@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_barrelController = gameObject.GetComponentInChildren<LaserBarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
-            AddDamageStats(_barrelController.Damage);
+            AddDamageStats(_barrelController.DamageCapability);
 
 			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
 			Assert.IsNotNull(_targetDetector);

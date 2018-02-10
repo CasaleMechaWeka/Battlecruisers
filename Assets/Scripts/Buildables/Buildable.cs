@@ -69,8 +69,8 @@ namespace BattleCruisers.Buildables
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
 
-        private IList<IDamage> _damageStats;
-        public ReadOnlyCollection<IDamage> DamageStats { get; private set; }
+        private IList<IDamageCapability> _damageCapabilities;
+        public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
 
         Quaternion IBuildable.Rotation 
         {
@@ -172,20 +172,20 @@ namespace BattleCruisers.Buildables
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
 
-            _damageStats = new List<IDamage>();
-            this.DamageStats = new ReadOnlyCollection<IDamage>(_damageStats);
+            _damageCapabilities = new List<IDamageCapability>();
+            this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
         }
 
-        protected void AddDamageStats(IDamage statsToAdd)
+        protected void AddDamageStats(IDamageCapability statsToAdd)
         {
-            Assert.IsFalse(_damageStats.Contains(statsToAdd));
-            _damageStats.Add(statsToAdd);
+            Assert.IsFalse(_damageCapabilities.Contains(statsToAdd));
+            _damageCapabilities.Add(statsToAdd);
             UpdateAttackCapabilities();
         }
 
         private void UpdateAttackCapabilities()
         {
-            foreach (IDamage damageStat in _damageStats)
+            foreach (IDamageCapability damageStat in _damageCapabilities)
             {
                 foreach (TargetType attackCapability in damageStat.AttackCapabilities)
                 {

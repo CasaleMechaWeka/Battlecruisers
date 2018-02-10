@@ -64,11 +64,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
         {
             float damagePerS = 0;
 
-            foreach (IDamage damageStat in item.DamageStats)
+            foreach (IDamageCapability damageCapability in item.DamageCapabilities)
             {
-                if (damageStat.AttackCapabilities.Contains(targetType))
+                if (damageCapability.AttackCapabilities.Contains(targetType))
                 {
-                    damagePerS = damageStat.DamagePerS;
+                    damagePerS = damageCapability.DamagePerS;
                     break;
                 }
             }

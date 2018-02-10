@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
-            AddDamageStats(_barrelController.Damage);
+            AddDamageStats(_barrelController.DamageCapability);
 		}
 
 		protected override void OnInitialised()

@@ -37,7 +37,7 @@ namespace BattleCruisers.Buildables
 		IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
-        ReadOnlyCollection<IDamage> DamageStats { get; }
+        ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
         SlotType SlotType { get; }
 		IBoostable BuildProgressBoostable { get; }
   

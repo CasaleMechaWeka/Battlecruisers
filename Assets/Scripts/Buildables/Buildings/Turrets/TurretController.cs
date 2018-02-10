@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
-            AddDamageStats(_barrelWrapper.Damage);
+            AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
 		protected override void OnInitialised()

@@ -62,7 +62,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 TargetType.Cruiser,
                 TargetType.Buildings
             };
-            AddDamageStats(new Damage(damagePerS, attackCapabilities));
+            AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
 		}
 
 		protected override void OnInitialised()

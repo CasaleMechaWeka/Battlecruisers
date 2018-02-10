@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
-            AddDamageStats(_barrelWrapper.Damage);
+            AddDamageStats(_barrelWrapper.DamageCapability);
 
             _followingTargetProcessor = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
 

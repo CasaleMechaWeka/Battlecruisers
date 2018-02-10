@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public class Damage : IDamage
+    public class DamageCapability : IDamageCapability
     {
         public float DamagePerS { get; private set; }
         public IList<TargetType> AttackCapabilities { get; private set; }
 
-        public Damage(float damagePerS, IList<TargetType> attackCapabilities)
+        public DamageCapability(float damagePerS, IList<TargetType> attackCapabilities)
         {
             Assert.IsTrue(damagePerS > 0);
             Assert.IsTrue(attackCapabilities.Count > 0);
@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             AttackCapabilities = attackCapabilities;
         }
 
-        public Damage(IList<IDamage> damageStats)
+        public DamageCapability(IList<IDamageCapability> damageStats)
         {
             Assert.IsTrue(damageStats.Count > 0);
             DamagePerS = damageStats.Sum(damageStat => damageStat.DamagePerS);

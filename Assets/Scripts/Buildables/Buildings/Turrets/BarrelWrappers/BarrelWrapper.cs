@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected float _minRangeInM;
 
         public Vector2 Position { get { return transform.position; } }
-        public IDamage Damage { get; private set; }
+        public IDamageCapability DamageCapability { get; private set; }
         public float RangeInM { get; private set; }
 
         private List<Renderer> _renderers;
@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             InitialiseBarrels();
 
-            Damage = SumBarrelDamage();
+            DamageCapability = SumBarrelDamage();
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
             _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
 
@@ -88,16 +88,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        private IDamage SumBarrelDamage()
+        private IDamageCapability SumBarrelDamage()
         {
             if (_barrels.Length == 1)
             {
-                return _barrels[0].Damage;
+                return _barrels[0].DamageCapability;
             }
             else
             {
-                float totalDamagePerS = _barrels.Sum(barrel => barrel.Damage.DamagePerS);
-                return new Damage(totalDamagePerS, _barrels[0].Damage.AttackCapabilities);
+                float totalDamagePerS = _barrels.Sum(barrel => barrel.DamageCapability.DamagePerS);
+                return new DamageCapability(totalDamagePerS, _barrels[0].DamageCapability.AttackCapabilities);
             }
         }
 
@@ -127,7 +127,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _factoryProvider.TargetsFactory,
                     this,
                     _enemyFaction,
-                    Damage.AttackCapabilities,
+                    DamageCapability.AttackCapabilities,
                     RangeInM,
                     _minRangeInM);
 
@@ -166,7 +166,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, Damage.AttackCapabilities);
+            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()
