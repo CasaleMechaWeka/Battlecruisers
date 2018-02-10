@@ -10,10 +10,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		private const int MIN_RATING = 0;
 		private const int MAX_RATING = 5;
 
-        // FELIX  Do not pass stat name, set in inspector!
-		public void Initialise(string statName, int statRating, ComparisonResult comparisonResult)
+		public void Initialise(int statRating, ComparisonResult comparisonResult)
 		{
-			base.Iniitalise(statName, comparisonResult);
+			base.Iniitalise(comparisonResult);
 
 			Assert.IsTrue(stars.Length == MAX_RATING);
 

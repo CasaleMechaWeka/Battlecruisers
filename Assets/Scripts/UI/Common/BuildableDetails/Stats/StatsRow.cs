@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
     public abstract class StatsRow : MonoBehaviour
 	{
-		public Text rowLabel;
-		public Image comparisonFeedbackBackground;
+        private Image _comparisonFeedbackBackground;
 
-		public void Iniitalise(string statName, ComparisonResult comparisonResult)
+		public void Iniitalise(ComparisonResult comparisonResult)
 		{
-			rowLabel.text = statName;
-			comparisonFeedbackBackground.color = comparisonResult.Color;
+            _comparisonFeedbackBackground = GetComponent<Image>();
+            Assert.IsNotNull(_comparisonFeedbackBackground);
+			_comparisonFeedbackBackground.color = comparisonResult.Color;
 		}
 	}
 }
-

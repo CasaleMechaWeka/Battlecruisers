@@ -1,27 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
-	public class StatsRowNumberController : StatsRow
+    public class StatsRowNumberController : StatsRow
 	{
 		public Text rowValue;
 		
-		public void Initialise(string label, int value, ComparisonResult comparisonResult)
+		public void Initialise(int value, ComparisonResult comparisonResult)
 		{
-			Initialise(label, value.ToString(), comparisonResult);
+			Initialise(value.ToString(), comparisonResult);
 		}
 
-		public void Initialise(string label, float value, ComparisonResult comparisonResult)
+		public void Initialise(float value, ComparisonResult comparisonResult)
 		{
-			Initialise(label, value.ToString(), comparisonResult);
+			Initialise(value.ToString(), comparisonResult);
 		}
 
-		public void Initialise(string label, string value, ComparisonResult comparisonResult)
+		public void Initialise(string value, ComparisonResult comparisonResult)
 		{
-			base.Iniitalise(label, comparisonResult);
+			base.Iniitalise(comparisonResult);
 			rowValue.text = value;
 		}
 	}

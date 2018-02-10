@@ -9,8 +9,6 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
         private StatsRowNumberController _dronesRow, _buildTimeRow;
         private StatsRowStarsController _healthRow, _antiShipDamageRow, _antiAirDamageRow, _antiCruiserDamageRow;
 
-		private const string DAMAGE_LABEL = "Damage";
-		private const string BUILD_TIME_LABEL = "BuildTime";
 		private const string BUILD_TIME_SUFFIX = "s";
 
         public override void Initialise()
@@ -27,9 +25,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
 		{
-			_dronesRow.Initialise(DRONES_LABEL, item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
-			_buildTimeRow.Initialise(BUILD_TIME_LABEL, item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
-			_healthRow.Initialise(HEALTH_LABEL, _valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+			_dronesRow.Initialise(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+			_buildTimeRow.Initialise(item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
+			_healthRow.Initialise(_valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(_antiAirDamageRow, GetAntiAirDamage(item));
             ShowDamageStat(_antiShipDamageRow, GetAntiShipDamage(item));
