@@ -69,6 +69,7 @@ namespace BattleCruisers.Buildables
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
 
+        // FELIX  Make private
         protected IList<IDamage> _damageStats;
         public ReadOnlyCollection<IDamage> DamageStats { get; private set; }
 
@@ -174,6 +175,28 @@ namespace BattleCruisers.Buildables
 
             _damageStats = new List<IDamage>();
             this.DamageStats = new ReadOnlyCollection<IDamage>(_damageStats);
+        }
+
+        protected void AddDamageStats(IDamage statsToAdd)
+        {
+            Assert.IsFalse(_damageStats.Contains(statsToAdd));
+            _damageStats.Add(statsToAdd);
+            UpdateAttackCapabilities();
+        }
+
+        private void UpdateAttackCapabilities()
+        {
+            foreach (IDamage damageStat in _damageStats)
+            {
+                foreach (TargetType attackCapability in damageStat.AttackCapabilities)
+                {
+                    // FELIX  Once attack capabilities are a set, can avoid this check :)
+                    if (!_attackCapabilities.Contains(attackCapability))
+                    {
+                        _attackCapabilities.Add(attackCapability);
+                    }
+                }
+            }
         }
 
         // Reuse text mesh for showing num of drones while building is being built.
