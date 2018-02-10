@@ -5,7 +5,8 @@ namespace BattleCruisers.UI.BattleScene
 {
     public interface IBuildMenuCanvasController
     {
-        BuildableDetailsController BuildableDetails { get; }
+        BuildingDetailsController BuildindgDetails { get; }
+        UnitDetailsController UnitDetails { get; }
         InBattleCruiserDetailsController CruiserDetails { get; }
         HealthBarController PlayerCruiserHealthBar { get; }
         HealthBarController AiCruiserHealthBar { get; }

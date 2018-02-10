@@ -8,15 +8,19 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class BuildMenuCanvasController : MonoBehaviour, IBuildMenuCanvasController
     {
-        public BuildableDetailsController BuildableDetails { get; private set; }
+        public BuildingDetailsController BuildindgDetails { get; private set; }
+        public UnitDetailsController UnitDetails { get; private set; }
         public InBattleCruiserDetailsController CruiserDetails { get; private set; }
         public HealthBarController PlayerCruiserHealthBar { get; private set; }
         public HealthBarController AiCruiserHealthBar { get; private set; }
 
         public void Initialise()
         {
-            BuildableDetails = GetComponentInChildren<BuildableDetailsController>(includeInactive: true);
-            Assert.IsNotNull(BuildableDetails);
+            BuildindgDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
+            Assert.IsNotNull(BuildindgDetails);
+
+            UnitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
+            Assert.IsNotNull(UnitDetails);
 
             CruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(CruiserDetails);
