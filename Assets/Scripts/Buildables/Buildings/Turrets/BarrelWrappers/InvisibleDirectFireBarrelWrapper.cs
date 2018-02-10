@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class InvisibleDirectFireBarrelWrapper : DirectFireBarrelWrapper
     {
-        protected override IRotationMovementController CreateRotationMovementController(BarrelController barrel)
+        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }

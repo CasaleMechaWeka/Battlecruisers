@@ -35,6 +35,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
         protected virtual int NumOfBarrels { get { return 1; } }
+        public Transform Transform { get { return transform; } }
+
 
         private bool IsInitialised { get { return _targetFilter != null; } }
         public Renderer[] Renderers { get; private set; }

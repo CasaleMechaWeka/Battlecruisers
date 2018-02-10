@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             {
                 _target = value;
 
-                foreach (BarrelController barrel in _barrels)
+                foreach (IBarrelController barrel in _barrels)
                 {
                     barrel.Target = _target;
                 }
@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             {
                 _boostMultiplier = value;
 
-                foreach (BarrelController barrel in _barrels)
+                foreach (IBarrelController barrel in _barrels)
                 {
                     barrel.BoostMultiplier = _boostMultiplier;
                 }
@@ -135,7 +135,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         }
 
         private IBarrelControllerArgs CreateBarrelControllerArgs(
-            BarrelController barrel,
+            IBarrelController barrel,
             ITarget parent, 
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
@@ -176,15 +176,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected abstract IAngleCalculator CreateAngleCalculator();
 
-        protected virtual IRotationMovementController CreateRotationMovementController(BarrelController barrel)
+        protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
         {
             return 
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
                     barrel.TurretStats.TurretRotateSpeedInDegrees, 
-                    barrel.transform);
+                    barrel.Transform);
         }
 
-        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
+        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             // Default to 100% accuracy
             return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();

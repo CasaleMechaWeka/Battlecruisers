@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 			_desiredAngleInDegrees = _barrels[0].transform.eulerAngles.z;
         }
 
-        protected override IRotationMovementController CreateRotationMovementController(BarrelController barrel)
+        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }

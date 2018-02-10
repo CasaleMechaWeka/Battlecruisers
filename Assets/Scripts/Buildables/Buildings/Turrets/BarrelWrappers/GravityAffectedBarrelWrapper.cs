@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return _factoryProvider.AngleCalculatorFactory.CreateArtilleryAngleCalculator();
 		}
 		
-        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, BarrelController barrel)
+        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             if (barrel.TurretStats.Accuracy >= AccuracyAdjuster.MAX_ACCURACY)
             {
