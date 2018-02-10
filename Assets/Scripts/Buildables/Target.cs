@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
-        // FELIX  Convert to ISet (HashSet)
+        // FELIX  Convert to ISet (HashSet)  Need later version of .Net, so wait for Unity download to complete :)
         // FELIX  Make private and create method for adding?  To restrict?  Hm...
         protected List<TargetType> _attackCapabilities;
         // FELIX  Duplicates IBuildable.DamageStats :/  Somehow get rid of this?  Or at least a smart way of
