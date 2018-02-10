@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
@@ -19,6 +20,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _spriteProvider = spriteProvider;
 
             _slotImage = transform.FindNamedComponent<Image>("SlotType");
+        }
+
+        protected override StatsController<IBuilding> GetStatsController()
+        {
+            return GetComponent<BuildingStatsController>();
         }
 		
         public override void ShowItemDetails(IBuilding item, IBuilding itemToCompareTo = null)

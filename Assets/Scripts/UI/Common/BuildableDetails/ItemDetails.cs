@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem> where TItem : class, ITarget, IComparableItem
+    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem>, IHidable
+        where TItem : class, ITarget, IComparableItem
 	{
 		private Text _itemName, _itemDescription;
 		private Image _itemImage;
@@ -21,10 +22,12 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _itemName = transform.FindNamedComponent<Text>("ItemName");
             _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
-            _statsController = transform.FindNamedComponent<StatsController<TItem>>("StatsController");
+            _statsController = GetStatsController();
 
             _statsController.Initialise();
         }
+
+        protected abstract StatsController<TItem> GetStatsController();
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default(TItem))
         {

@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class BuildableDetailsController : ItemDetails<IBuildable>, IBuildableDetails
+    public abstract class BuildableDetailsController<TItem> : ItemDetails<TItem>, IBuildableDetails<TItem> where TItem : class, IBuildable
     {
         private IDroneManager _droneManager;
         private RepairButtonController _repairButton;
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _deleteButton.Initialise(this);
         }
 
-        public virtual void ShowBuildableDetails(IBuildable buildable, bool allowDelete)
+        public virtual void ShowBuildableDetails(TItem buildable, bool allowDelete)
         {
             base.ShowItemDetails(buildable);
 

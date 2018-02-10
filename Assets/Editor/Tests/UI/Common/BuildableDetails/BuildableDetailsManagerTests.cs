@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Common.BuildingDetails;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,7 +12,8 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
     public class BuildableDetailsManagerTests
     {
         private IBuildableDetailsManager _detailsManager;
-        private IBuildableDetails _buildableDetails;
+        private IBuildableDetails<IBuilding> _buildingDetails;
+        private IBuildableDetails<IUnit> _unitDetails;
         private IInBattleCruiserDetails _cruiserDetails;
         private IBuilding _building;
         private IUnit _unit;
@@ -22,10 +24,16 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _buildableDetails = Substitute.For<IBuildableDetails>();
+            _buildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();
+            _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             _cruiserDetails = Substitute.For<IInBattleCruiserDetails>();
 
-            _detailsManager = new BuildableDetailsManager(_buildableDetails, _cruiserDetails);
+            IBuildMenuCanvasController buildMenuCanvas = Substitute.For<IBuildMenuCanvasController>();
+            buildMenuCanvas.BuildingDetails.Returns(_buildingDetails);
+            buildMenuCanvas.UnitDetails.Returns(_unitDetails);
+            buildMenuCanvas.CruiserDetails.Returns(_cruiserDetails);
+
+            _detailsManager = new BuildableDetailsManager(buildMenuCanvas);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();
@@ -49,8 +57,8 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.ShowDetails(_unit);
 
-            _cruiserDetails.Received().Hide();
-            _buildableDetails.Received().ShowBuildableDetails(_unit, allowDelete: false);
+            AllDetails_ReceivedHide();
+            _unitDetails.Received().ShowBuildableDetails(_unit, allowDelete: false);
         }
 
         [Test]
@@ -58,7 +66,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.ShowDetails(_cruiser);
 
-            _buildableDetails.Received().Hide();
+            AllDetails_ReceivedHide();
             _cruiserDetails.Received().ShowCruiserDetails(_cruiser);
         }
 
@@ -66,17 +74,22 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         public void Hide()
         {
             _detailsManager.HideDetails();
-
-            _buildableDetails.Received().Hide();
-            _cruiserDetails.Received().Hide();
+            AllDetails_ReceivedHide();
         }
 
         private void ShowBuildingDetails(bool allowDelete)
         {
             _detailsManager.ShowDetails(_building, allowDelete);
 
-            _cruiserDetails.Received().Hide();
-            _buildableDetails.Received().ShowBuildableDetails(_building, allowDelete);
+            AllDetails_ReceivedHide();
+            _buildingDetails.Received().ShowBuildableDetails(_building, allowDelete);
+        }
+
+        private void AllDetails_ReceivedHide()
+        {
+            _buildingDetails.Received().Hide();
+            _unitDetails.Received().Hide();
+            _cruiserDetails.Received().Hide();            
         }
     }
 }

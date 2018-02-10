@@ -100,10 +100,7 @@ namespace BattleCruisers.Scenes
             // UIManager
             buildMenuCanvas.StaticInitialise();
 
-            IBuildableDetailsManager detailsManager 
-                = new BuildableDetailsManager(
-                    buildMenuCanvas.BuildingDetails, 
-                    buildMenuCanvas.CruiserDetails);
+            IBuildableDetailsManager detailsManager = new BuildableDetailsManager(buildMenuCanvas);
 
             IUIManager uiManager 
                 = new UIManager(

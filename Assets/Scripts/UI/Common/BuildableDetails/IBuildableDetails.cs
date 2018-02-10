@@ -2,8 +2,8 @@
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public interface IBuildableDetails : IComparableItemDetails<IBuildable>
+    public interface IBuildableDetails<TItem> : IComparableItemDetails<TItem> where TItem : IBuildable
     {
-        void ShowBuildableDetails(IBuildable buildable, bool allowDelete);
+        void ShowBuildableDetails(TItem buildable, bool allowDelete);
     }
 }

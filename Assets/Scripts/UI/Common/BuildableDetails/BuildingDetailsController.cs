@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Buildables.Repairables;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
@@ -7,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class BuildingDetailsController : BuildableDetailsController
+    public class BuildingDetailsController : BuildableDetailsController<IBuilding>
     {
         private ISpriteProvider _spriteProvider;
         private Image _slotImage;
@@ -22,9 +24,14 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _slotImage = transform.FindNamedComponent<Image>("SlotType");
         }
 
+        protected override StatsController<IBuilding> GetStatsController()
+        {
+            return GetComponent<BuildingStatsController>();
+        }
+
         // FELIX  Avoid dulpicate code with ComparableBuildingDetailsController.  Perhaps a SlotTypeController?
         // Handles:  SlotImage and spriteProvider
-        public override void ShowBuildableDetails(Buildables.IBuildable buildable, bool allowDelete)
+        public override void ShowBuildableDetails(IBuilding buildable, bool allowDelete)
         {
             base.ShowBuildableDetails(buildable, allowDelete);
 

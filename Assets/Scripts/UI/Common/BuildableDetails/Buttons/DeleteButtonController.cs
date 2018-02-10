@@ -8,11 +8,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Buttons
     public class DeleteButtonController : MonoBehaviour
     {
         private Button _button;
-		private BuildableDetailsController _details;
+        private IHidable _details;
 
 		public IBuildable Buildable { private get; set; }
 
-        public void Initialise(BuildableDetailsController details)
+        public void Initialise(IHidable details)
         {
             Assert.IsNotNull(details);
             _details = details;

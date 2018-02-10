@@ -1,44 +1,48 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public class BuildableDetailsManager : IBuildableDetailsManager
     {
-        private readonly IBuildableDetails _buildableDetails;
+        private readonly IBuildableDetails<IBuilding> _buildingDetails;
+        private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly IInBattleCruiserDetails _cruiserDetails;
 
-        public BuildableDetailsManager(IBuildableDetails buildableDetails, IInBattleCruiserDetails cruiserDetails)
+        public BuildableDetailsManager(IBuildMenuCanvasController buildMenuCanvas)
         {
-            Helper.AssertIsNotNull(buildableDetails, cruiserDetails);
+            Helper.AssertIsNotNull(buildMenuCanvas);
 
-            _buildableDetails = buildableDetails;
-            _cruiserDetails = cruiserDetails;
+            _buildingDetails = buildMenuCanvas.BuildingDetails;
+            _unitDetails = buildMenuCanvas.UnitDetails;
+            _cruiserDetails = buildMenuCanvas.CruiserDetails;
         }
 
         public void ShowDetails(IBuilding building, bool allowDelete)
         {
-            _cruiserDetails.Hide();
-            _buildableDetails.ShowBuildableDetails(building, allowDelete);
+            HideDetails();
+            _buildingDetails.ShowBuildableDetails(building, allowDelete);
         }
 
         public void ShowDetails(IUnit unit)
         {
-            _cruiserDetails.Hide();
-            _buildableDetails.ShowBuildableDetails(unit, allowDelete: false);
+            HideDetails();
+            _unitDetails.ShowBuildableDetails(unit, allowDelete: false);
         }
 
         public void ShowDetails(ICruiser cruiser)
         {
-            _buildableDetails.Hide();
+            HideDetails();
             _cruiserDetails.ShowCruiserDetails(cruiser);
         }
 		
         public void HideDetails()
         {
-            _buildableDetails.Hide();
+            _buildingDetails.Hide();
+            _unitDetails.Hide();
             _cruiserDetails.Hide();
         }
     }
