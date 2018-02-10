@@ -35,9 +35,12 @@ namespace BattleCruisers.Buildables
         private bool IsFullHealth { get { return Health == maxHealth; } }
 
         // FELIX  Convert to ISet (HashSet)  Need later version of .Net, so wait for Unity download to complete :)
-        // FELIX  Make private and create method for adding?  To restrict?  Hm...
-        protected List<TargetType> _attackCapabilities;
+        private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
+        protected void AddAttackCapability(TargetType attackCapability)
+        {
+            _attackCapabilities.Add(attackCapability);
+        }
 
         private float _health;
         public float Health

@@ -189,11 +189,7 @@ namespace BattleCruisers.Buildables
             {
                 foreach (TargetType attackCapability in damageStat.AttackCapabilities)
                 {
-                    // FELIX  Once attack capabilities are a set, can avoid this check :)
-                    if (!_attackCapabilities.Contains(attackCapability))
-                    {
-                        _attackCapabilities.Add(attackCapability);
-                    }
+                    AddAttackCapability(attackCapability);
                 }
             }
         }
