@@ -9,7 +9,15 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public enum SlotType
 	{
-        None, Utility, Mast, Bow, Platform, Deck
+        // Explicitly set integner values, because the Unity inspector binds
+        // to the interger values.  So now, if I decide to get fid of a slot
+        // type (yet again), I don't need to adjust every single prefab 
+        // that has a slot type field.  Thanks Manya!
+        Utility = 1, 
+        Mast = 2, 
+        Bow = 3, 
+        Platform = 4, 
+        Deck = 5
 	}
 
     public class SlotBuildingDestroyedEventArgs : EventArgs
