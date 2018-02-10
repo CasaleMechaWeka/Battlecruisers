@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine;
@@ -38,7 +37,6 @@ namespace BattleCruisers.Buildables
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
-        SlotType SlotType { get; }
 		IBoostable BuildProgressBoostable { get; }
   
         new Vector2 Position { get; set; }

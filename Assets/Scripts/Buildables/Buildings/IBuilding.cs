@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings
         BuildingCategory Category { get; }
 		float CustomOffsetProportion { get; }
         bool PreferCruiserFront { get; }
+        SlotType SlotType { get; }
 
         void Initialise(
             ICruiser parentCruiser, 

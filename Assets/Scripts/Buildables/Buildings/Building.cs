@@ -21,6 +21,9 @@ namespace BattleCruisers.Buildables.Buildings
         public BuildingCategory Category { get { return category; } }
 		public float CustomOffsetProportion { get { return customOffsetProportion; } }
         public bool PreferCruiserFront { get { return preferCruiserFront; } }
+		
+        public SlotType slotType;
+        public SlotType SlotType { get { return slotType; } }
 
 		protected override HealthBarController HealthBarController
 		{

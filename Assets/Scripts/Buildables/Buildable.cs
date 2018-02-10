@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Projectiles.Stats.Wrappers;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Buildables
 {
@@ -48,7 +47,6 @@ namespace BattleCruisers.Buildables
         public string description;
         public int numOfDronesRequired;
         public float buildTimeInS;
-        public SlotType slotType;
 
         private const float MAX_BUILD_PROGRESS = 1;
         private const float INITIAL_HEALTH = 1;
@@ -62,10 +60,6 @@ namespace BattleCruisers.Buildables
         public float BuildProgress { get; private set; }
         public int NumOfDronesRequired { get { return numOfDronesRequired; } }
         public float BuildTimeInS { get { return buildTimeInS; } }
-
-        // FELIX  Move up to Building class :)
-        public SlotType SlotType { get { return slotType; } }
-
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
