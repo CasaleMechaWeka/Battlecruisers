@@ -27,13 +27,14 @@ namespace BattleCruisers.Cruisers
         public int numOfDrones;
         public float yAdjustmentInM;
         public string description;
+        public string cruiserName;
         
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
         
         // IComparableItem
         public string Description { get { return description; } }
-        public string Name { get { return name; } }
+        public string Name { get { return cruiserName; } }
 		public Sprite Sprite { get { return _renderer.sprite; } }
 
         // ICruiser
