@@ -2,11 +2,12 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Common.BuildingDetails.Buttons;
+using BattleCruisers.UI.Common.BuildingDetails.Stats;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class InBattleCruiserDetailsController : CruiserDetailsController, IInBattleCruiserDetails
+    public class InBattleCruiserDetailsController : ItemDetails<ICruiser>, IInBattleCruiserDetails
     {
         private RepairButtonController _repairButton;
 
@@ -17,6 +18,11 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
             _repairButton.Initialise(droneManager, repairManager);
+        }
+
+        protected override StatsController<ICruiser> GetStatsController()
+        {
+            return GetComponentInChildren<CruiserStatsController>();
         }
 
         public void ShowCruiserDetails(ICruiser cruiser)
