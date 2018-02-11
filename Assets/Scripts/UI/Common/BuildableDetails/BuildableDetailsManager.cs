@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
     {
         private readonly IBuildableDetails<IBuilding> _buildingDetails;
         private readonly IBuildableDetails<IUnit> _unitDetails;
-        private readonly IInBattleCruiserDetails _cruiserDetails;
+        private readonly ICruiserDetails _cruiserDetails;
 
         public BuildableDetailsManager(IBuildMenuCanvasController buildMenuCanvas)
         {

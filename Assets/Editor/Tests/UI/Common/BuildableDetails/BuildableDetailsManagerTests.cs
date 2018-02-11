@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         private IBuildableDetailsManager _detailsManager;
         private IBuildableDetails<IBuilding> _buildingDetails;
         private IBuildableDetails<IUnit> _unitDetails;
-        private IInBattleCruiserDetails _cruiserDetails;
+        private ICruiserDetails _cruiserDetails;
         private IBuilding _building;
         private IUnit _unit;
         private ICruiser _cruiser;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 
             _buildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();
             _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
-            _cruiserDetails = Substitute.For<IInBattleCruiserDetails>();
+            _cruiserDetails = Substitute.For<ICruiserDetails>();
 
             IBuildMenuCanvasController buildMenuCanvas = Substitute.For<IBuildMenuCanvasController>();
             buildMenuCanvas.BuildingDetails.Returns(_buildingDetails);

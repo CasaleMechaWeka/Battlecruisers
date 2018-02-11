@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         public BuildingDetailsController BuildingDetails { get; private set; }
         public UnitDetailsController UnitDetails { get; private set; }
-        public InBattleCruiserDetailsController CruiserDetails { get; private set; }
+        public CruiserDetailsController CruiserDetails { get; private set; }
         public HealthBarController PlayerCruiserHealthBar { get; private set; }
         public HealthBarController AiCruiserHealthBar { get; private set; }
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene
             UnitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
             Assert.IsNotNull(UnitDetails);
 
-            CruiserDetails = GetComponentInChildren<InBattleCruiserDetailsController>(includeInactive: true);
+            CruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(CruiserDetails);
 
             PlayerCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("PlayerCruiserHealthBar");

@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         BuildingDetailsController BuildingDetails { get; }
         UnitDetailsController UnitDetails { get; }
-        InBattleCruiserDetailsController CruiserDetails { get; }
+        CruiserDetailsController CruiserDetails { get; }
         HealthBarController PlayerCruiserHealthBar { get; }
         HealthBarController AiCruiserHealthBar { get; }
     }

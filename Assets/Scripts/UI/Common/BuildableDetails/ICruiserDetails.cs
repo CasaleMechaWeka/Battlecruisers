@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public interface IInBattleCruiserDetails : IComparableItemDetails<ICruiser>
+    public interface ICruiserDetails : IComparableItemDetails<ICruiser>
     {
         void ShowCruiserDetails(ICruiser cruiser);
     }
