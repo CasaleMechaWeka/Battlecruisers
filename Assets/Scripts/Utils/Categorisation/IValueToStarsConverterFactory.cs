@@ -1,7 +1,6 @@
 ﻿namespace BattleCruisers.Utils.Categorisation
 {
-    // FELIX  Rename to stars :P
-    public interface IValueToStarConverterFactory
+    public interface IValueToStarsConverterFactory
     {
         IValueToStarsConverter CreateUnitMovementSpeedConverter();
 
