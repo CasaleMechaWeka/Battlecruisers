@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public abstract class ComparableBuildableDetailsController<TBuildable> : ItemDetails<TBuildable>, IPointerClickHandler
-        where TBuildable : class, IBuildable
+    public abstract class ComparableItemDetails<TItem> : ItemDetails<TItem>, IPointerClickHandler
+        where TItem : class, ITarget, IComparableItem
 	{
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
 		{

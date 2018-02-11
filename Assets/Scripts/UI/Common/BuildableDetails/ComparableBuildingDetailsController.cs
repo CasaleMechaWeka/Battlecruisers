@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public class ComparableBuildingDetailsController : ComparableBuildableDetailsController<IBuilding>
+    public class ComparableBuildingDetailsController : ComparableItemDetails<IBuilding>
 	{
         private SlotTypeController _slotType;
 
