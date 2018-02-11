@@ -6,16 +6,22 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
     public abstract class StatsController<T> : MonoBehaviour where T : class, ITarget
 	{
-		protected ValueToStarsConverter _valueToStarsConverter;
+        protected IValueToStarsConverter _unitMovementSpeedConverter;
+		protected IValueToStarsConverter _buildableHealthConverter, _cruiserHealthConverter;
+        protected IValueToStarsConverter _antiAirDamageConverter, _antiShipDamageConverter, _antiCruiserConverter;
 		protected IStatsComparer _higherIsBetterComparer, _lowerIsBetterComparer;
-
-		protected const string HEALTH_LABEL = "Health";
-		protected const string DRONES_LABEL = "Drones";
 
 		public virtual void Initialise()
 		{
-            // FELIX  Use factory!  And use all the value converters :D
-			//_valueToStarsConverter = new ValueToStarsConverter();
+            IValueToStarConverterFactory converterFactory = new ValueToStarConverterFactory();
+
+            _unitMovementSpeedConverter = converterFactory.CreateUnitMovementSpeedConverter();
+            _buildableHealthConverter = converterFactory.CreateBuildableHealthConverter();
+            _cruiserHealthConverter = converterFactory.CreateCruiserHealthConverter();
+            _antiAirDamageConverter = converterFactory.CreateAntiAirDamageConverter();
+            _antiShipDamageConverter = converterFactory.CreateAntiShipDamageConverter();
+            _antiCruiserConverter = converterFactory.CreateAntiCruiserDamageConverter();
+
 			_higherIsBetterComparer = new HigherIsBetterComparer();
 			_lowerIsBetterComparer = new LowerIsBetterComparer();
 		}

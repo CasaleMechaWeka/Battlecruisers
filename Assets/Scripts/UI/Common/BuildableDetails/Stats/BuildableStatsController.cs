@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Categorisation;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
@@ -27,23 +28,21 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		{
 			_dronesRow.Initialise(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
 			_buildTimeRow.Initialise(item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
-            // FELIX
-			//_healthRow.Initialise(_valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+            _healthRow.Initialise(_cruiserHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
-            ShowDamageStat(_antiAirDamageRow, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo));
-            ShowDamageStat(_antiShipDamageRow, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo));
-            ShowDamageStat(_antiCruiserDamageRow, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo));
+            ShowDamageStat(_antiAirDamageRow, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
+            ShowDamageStat(_antiShipDamageRow, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
+            ShowDamageStat(_antiCruiserDamageRow, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
         }
 
-        private void ShowDamageStat(StatsRowStarsController damageStatsRow, float damagePerS, float comparingItemDamagePerS)
+        private void ShowDamageStat(StatsRowStarsController damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
         {
             bool shouldShowRow = damagePerS > 0;
             damageStatsRow.gameObject.SetActive(shouldShowRow);
 
             if (shouldShowRow)
             {
-                // FELIX
-                //damageStatsRow.Initialise(_valueToStarsConverter.DamageValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
+                damageStatsRow.Initialise(converter.ConvertValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
 
