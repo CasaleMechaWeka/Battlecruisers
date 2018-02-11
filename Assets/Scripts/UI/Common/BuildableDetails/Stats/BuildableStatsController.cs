@@ -27,7 +27,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 		{
 			_dronesRow.Initialise(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
 			_buildTimeRow.Initialise(item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
-			_healthRow.Initialise(_valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+            // FELIX
+			//_healthRow.Initialise(_valueToStarsConverter.HealthValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(_antiAirDamageRow, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo));
             ShowDamageStat(_antiShipDamageRow, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo));
@@ -41,7 +42,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
             if (shouldShowRow)
             {
-                damageStatsRow.Initialise(_valueToStarsConverter.DamageValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
+                // FELIX
+                //damageStatsRow.Initialise(_valueToStarsConverter.DamageValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
 

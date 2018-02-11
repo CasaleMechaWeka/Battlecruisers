@@ -14,7 +14,8 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
 		public virtual void Initialise()
 		{
-			_valueToStarsConverter = new ValueToStarsConverter();
+            // FELIX  Use factory!  And use all the value converters :D
+			//_valueToStarsConverter = new ValueToStarsConverter();
 			_higherIsBetterComparer = new HigherIsBetterComparer();
 			_lowerIsBetterComparer = new LowerIsBetterComparer();
 		}
