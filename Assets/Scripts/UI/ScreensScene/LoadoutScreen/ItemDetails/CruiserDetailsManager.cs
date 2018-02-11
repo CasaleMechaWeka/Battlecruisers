@@ -8,13 +8,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 	{
 		public void Initialise()
 		{
-            CruiserDetailsController singleItemDetails = transform.FindNamedComponent<CruiserDetailsController>("SingleItemDetails");
+            CruiserDetailsController singleItemDetails = transform.FindNamedComponent<CruiserDetailsController>("SingleCruiserDetails");
             singleItemDetails.Initialise();
 
-            CruiserDetailsController leftComparableItemDetails = transform.FindNamedComponent<CruiserDetailsController>("LeftItemDetails");
+            CruiserDetailsController leftComparableItemDetails = transform.FindNamedComponent<CruiserDetailsController>("LeftCruiserDetails");
             leftComparableItemDetails.Initialise();
 
-            CruiserDetailsController rightComparableItemDetails = transform.FindNamedComponent<CruiserDetailsController>("RightItemDetails");
+            CruiserDetailsController rightComparableItemDetails = transform.FindNamedComponent<CruiserDetailsController>("RightCruiserDetails");
             rightComparableItemDetails.Initialise();
 
 			Initialise(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails);
