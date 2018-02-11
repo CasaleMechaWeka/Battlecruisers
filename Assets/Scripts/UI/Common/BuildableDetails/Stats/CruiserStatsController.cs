@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
 		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
 		{
+            // FELIX  Health row should be stars, like buildables health :)
 			_healthRow.Initialise(item.MaxHealth, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
 			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);
