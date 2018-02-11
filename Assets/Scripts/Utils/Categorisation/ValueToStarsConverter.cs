@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Utils
+﻿namespace BattleCruisers.Utils.Categorisation
 {
     public class ValueToStarsConverter
 	{

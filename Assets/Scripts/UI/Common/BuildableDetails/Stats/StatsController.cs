@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Categorisation;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
