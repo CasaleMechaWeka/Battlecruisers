@@ -2,16 +2,15 @@
 
 namespace BattleCruisers.Utils.Categorisation
 {
-    // FELIX  Test :D
     // FELIX  Factory :)
     public abstract class ValueToStarsConverter : IValueToStarsConverter
 	{
-        private readonly int[] _categoryThresholds;
+        private readonly float[] _categoryThresholds;
 
 		private const int MIN_NUM_OF_STARS = 0;
 		private const int MAX_NUM_OF_STARS = 5;
 
-        protected ValueToStarsConverter(int[] categoryThresholds)
+        protected ValueToStarsConverter(float[] categoryThresholds)
         {
             Assert.IsNotNull(categoryThresholds);
             Assert.IsTrue(categoryThresholds.Length == MAX_NUM_OF_STARS);
