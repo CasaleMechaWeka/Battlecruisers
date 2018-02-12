@@ -33,7 +33,10 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			base.OnDestroyed();
 
-			_satellite.Destroy();
+            if (BuildableState == BuildableState.Completed)
+            {
+                _satellite.Destroy();
+			}
 		}
 	}
 }
