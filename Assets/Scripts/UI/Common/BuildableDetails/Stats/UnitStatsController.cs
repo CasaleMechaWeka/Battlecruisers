@@ -1,14 +1,24 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
 	{
-        // Although some units (eg: ships) can attack both other ships and cruiser, do not
-        // want to show this damage twice.  Hence, do not show anti cruiser damage.
+        // For units that can attack both ships and the cruiser (ships),
+        // just show their ship damage.
         protected override float GetAntiCruiserDamage(IUnit item)
         {
-            return 0;
+            if (item.AttackCapabilities.Contains(TargetType.Ships))
+            {
+                // Eg:  Ships (Attack boat, frigate, etc)
+                return 0;
+            }
+            else
+            {
+                // Eg:  Bomber
+                return base.GetAntiCruiserDamage(item);
+            }
         }
 	}
 }
