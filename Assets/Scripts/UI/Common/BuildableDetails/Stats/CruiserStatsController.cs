@@ -6,13 +6,14 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 {
     public class CruiserStatsController : StatsController<ICruiser>
 	{
-        private StatsRowNumberController _healthRow, _platformSlotsRow, _deckSlotsRow, _utilitySlotsRow, _mastSlotsRow;
+        private StatsRowStarsController _healthRow;
+        private StatsRowNumberController _platformSlotsRow, _deckSlotsRow, _utilitySlotsRow, _mastSlotsRow;
 
         public override void Initialise()
         {
             base.Initialise();
 
-            _healthRow = transform.FindNamedComponent<StatsRowNumberController>("HealthRow");
+            _healthRow = transform.FindNamedComponent<StatsRowStarsController>("HealthRow");
             _platformSlotsRow = transform.FindNamedComponent<StatsRowNumberController>("PlatformSlotsRow");
             _deckSlotsRow = transform.FindNamedComponent<StatsRowNumberController>("DeckSlotsRow");
             _utilitySlotsRow = transform.FindNamedComponent<StatsRowNumberController>("UtilitySlotsRow");
@@ -21,8 +22,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails.Stats
 
 		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
 		{
-            // FELIX  Health row should be stars, like buildables health :)
-			_healthRow.Initialise(item.MaxHealth, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+            _healthRow.Initialise(_cruiserHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
 			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);
 			_platformSlotsRow.Initialise(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Platform)));
