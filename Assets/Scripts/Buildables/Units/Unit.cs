@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units
 		public UnitCategory category;
 
 		public float maxVelocityInMPerS;
+        public float MaxVelocityInMPerS { get { return maxVelocityInMPerS; } }
 
 		public Rigidbody2D rigidBody;
 

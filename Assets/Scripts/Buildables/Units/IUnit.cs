@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Units
 		UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }
         Direction FacingDirection { get; }
+        float MaxVelocityInMPerS { get; }
 
 		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
 	}
