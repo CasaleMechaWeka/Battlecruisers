@@ -45,9 +45,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Gunship; } }
 
-		public override void StaticInitialise()
+        protected override void OnStaticInitialised()
 		{
-			base.StaticInitialise();
+            base.OnStaticInitialised();
 
             Assert.IsNotNull(hoverRangeEnemyDetector);
 

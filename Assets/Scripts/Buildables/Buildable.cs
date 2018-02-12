@@ -150,9 +150,9 @@ namespace BattleCruisers.Buildables
         public event EventHandler<BuildProgressEventArgs> BuildableProgress;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);

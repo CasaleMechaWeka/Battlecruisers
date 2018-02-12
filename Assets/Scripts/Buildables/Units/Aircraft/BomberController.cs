@@ -42,9 +42,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
 		#endregion Properties
 
-		public override void StaticInitialise()
+        protected override void OnStaticInitialised()
 		{
-			base.StaticInitialise();
+            base.OnStaticInitialised();
 
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;

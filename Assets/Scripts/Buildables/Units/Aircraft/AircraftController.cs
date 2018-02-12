@@ -35,9 +35,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Aircraft; } }
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);

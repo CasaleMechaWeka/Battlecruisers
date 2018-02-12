@@ -59,9 +59,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override float PositionEqualityMarginInM { get { return 2; } }
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Fighter; } }
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
 		{
-			base.StaticInitialise();
+            base.OnStaticInitialised();
 
 			Assert.IsNotNull(followableEnemyDetector);
 			

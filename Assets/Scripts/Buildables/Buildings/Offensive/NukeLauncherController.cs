@@ -25,9 +25,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		public override TargetValue TargetValue { get { return TargetValue.High; } }
 		
-		public override void StaticInitialise()
+        protected override void OnStaticInitialised()
 		{
-			base.StaticInitialise();
+            base.OnStaticInitialised();
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 

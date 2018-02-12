@@ -15,9 +15,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 		
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Destroyer; } }
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }

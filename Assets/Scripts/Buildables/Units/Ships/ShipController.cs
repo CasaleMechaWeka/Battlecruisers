@@ -62,9 +62,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public bool IsMoving { get { return rigidBody.velocity.x != 0; } }
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             _turrets = GetTurrets();
 

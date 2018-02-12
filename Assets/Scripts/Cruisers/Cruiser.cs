@@ -56,9 +56,9 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
 		{
-			base.StaticInitialise();
+            base.OnStaticInitialised();
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);

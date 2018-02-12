@@ -8,9 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
 		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
-		public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);

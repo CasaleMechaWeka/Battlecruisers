@@ -24,9 +24,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private Vector2 _size;
         public override Vector2 Size { get { return _size; } }
 
-        public override void StaticInitialise()
+        protected override void OnStaticInitialised()
         {
-            base.StaticInitialise();
+            base.OnStaticInitialised();
 
             Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);

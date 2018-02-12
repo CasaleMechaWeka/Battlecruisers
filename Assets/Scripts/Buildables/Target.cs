@@ -93,7 +93,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public virtual void StaticInitialise()
+        public void StaticInitialise()
 		{
             if (_isInitialised)
             {
@@ -110,7 +110,11 @@ namespace BattleCruisers.Buildables
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
             _audioSource = new AudioSourceWrapper(audioSource);
-		}
+
+            OnStaticInitialised();
+        }
+
+        protected virtual void OnStaticInitialised() { }
 
         protected virtual ITextMesh GetRepairDroneNumText()
         {
