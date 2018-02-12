@@ -63,7 +63,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			_shortDurationInS = 1 / burstFireRatePerS;
 
             float cycleTime = (1 / FireRatePerS) + burstSize * (1 / burstFireRatePerS);
-            _meanFireRatePerS = cycleTime / burstSize;
+            _meanFireRatePerS = burstSize / cycleTime;
 
             QueryIndex = 0;
 		}
