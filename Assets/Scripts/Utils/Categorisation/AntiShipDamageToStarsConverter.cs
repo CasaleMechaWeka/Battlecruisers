@@ -6,7 +6,7 @@
         {
             1,
             24,     // Mortar
-            73,     // Frigate
+            50,     // Railgun
             87,     // Destroyer
             119     // Archon
         };
