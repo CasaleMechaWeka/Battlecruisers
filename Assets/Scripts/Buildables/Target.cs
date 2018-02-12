@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables
 {
     public abstract class Target : MonoBehaviour, ITarget
     {
-        private bool _isInitialised;
         protected IAudioSourceWrapper _audioSource;
 
         public float maxHealth;
@@ -95,12 +94,6 @@ namespace BattleCruisers.Buildables
 
         public void StaticInitialise()
 		{
-            if (_isInitialised)
-            {
-                return;
-            }
-
-            _isInitialised = true;
 			_health = maxHealth;
 			_attackCapabilities = new List<TargetType>();
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
