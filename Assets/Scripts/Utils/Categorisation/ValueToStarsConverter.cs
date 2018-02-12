@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Utils.Categorisation
 {
-    // FELIX  Factory :)
     public abstract class ValueToStarsConverter : IValueToStarsConverter
 	{
         private readonly float[] _categoryThresholds;
