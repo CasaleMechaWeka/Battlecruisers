@@ -5,10 +5,10 @@
         private static readonly float[] CATEGORY_THRESHOLDS =
         {
             1,
-            22.5f,  // Anti-air turret
-            25,     // Fighter
-            33.75f, // Destroyer
-            45      // Archon
+            15,     // Fighter
+            25,     // Destroyer
+            32,     // Archon
+            50      // No buildables achieve this :P
         };
 
         public AntiAirDamageToStarsConverter() : base(CATEGORY_THRESHOLDS)

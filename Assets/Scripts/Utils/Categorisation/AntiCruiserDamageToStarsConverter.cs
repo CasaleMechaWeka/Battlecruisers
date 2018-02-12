@@ -5,7 +5,7 @@
         private static readonly float[] CATEGORY_THRESHOLDS =
         {
             1,
-            45, // Rocket launcher
+            41, // Rocket launcher
             50, // Artillery
             90, // Broadsides
             200 // Nuke

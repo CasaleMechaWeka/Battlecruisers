@@ -6,9 +6,9 @@
         {
             1,
             24,     // Mortar
-            40,     // Gunship
-            80,     // Destroyer
-            125     // Archon
+            73,     // Frigate
+            87,     // Destroyer
+            119     // Archon
         };
 
         public AntiShipDamageToStarsConverter() : base(CATEGORY_THRESHOLDS)
