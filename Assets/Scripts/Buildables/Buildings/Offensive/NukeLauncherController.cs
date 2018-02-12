@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
@@ -41,6 +42,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             CruisingProjectileStats nukeStats = GetComponent<CruisingProjectileStats>();
 			Assert.IsNotNull(nukeStats);
             _nukeStats = new NukeStatsWrapper(nukeStats);
+            AddAttackCapability(TargetType.Cruiser);
+            AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
 		}
 
 		protected override void OnInitialised()
