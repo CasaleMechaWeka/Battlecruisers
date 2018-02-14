@@ -154,6 +154,8 @@ namespace BattleCruisers.Data.Static
 			// TEMP  For final game, don't add ALL the prefabs :D
             Loadout playerLoadout = new Loadout(AllHullKeys().Last(), AllBuildingKeys(), AllUnitKeys());
 
+            // FELIX  NEXT  Create initial loadout :)
+
             // TEMP  For final game only unlock first level :P
 			int numOfLevelsCompleted = 20;
 			//int numOfLevelsCompleted = 0;
@@ -322,8 +324,11 @@ namespace BattleCruisers.Data.Static
             Assert.IsTrue(availabilityLevelNum >= MIN_AVAILABILITY_LEVEL_NUM);
             Assert.IsTrue(availabilityLevelNum <= Levels.Count + 1);
 
-            // FELIX
-            return null;
+            return
+                new Loot(
+                    buildingKey: GetBuildingsFirstAvailableIn(availabilityLevelNum).FirstOrDefault(),
+                    unitKey: GetUnitsFirstAvailableIn(availabilityLevelNum).FirstOrDefault(),
+                    hullKey: GetHullFirstAvailableIn(availabilityLevelNum));
         }
 
         private IList<IPrefabKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
