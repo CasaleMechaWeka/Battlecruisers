@@ -157,6 +157,11 @@ namespace BattleCruisers.Data.Static
 				AllUnitKeys());
 		}
 
+        private HullKey GetInitialHull()
+        {
+            return StaticPrefabKeys.Hulls.Trident;
+        }
+
 		private IList<ILevel> CreateLevels()
 		{
 			return new List<ILevel>()
@@ -206,7 +211,7 @@ namespace BattleCruisers.Data.Static
                 // Factories
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
 				{ StaticPrefabKeys.Buildings.NavalFactory, 1 },
-				{ StaticPrefabKeys.Buildings.DroneStation, 5 },
+				{ StaticPrefabKeys.Buildings.DroneStation, 1 },
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 5 },
