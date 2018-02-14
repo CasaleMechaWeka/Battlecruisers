@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static
 {
+    // FELIX  Create tests!
     public class StaticData : IStaticData
 	{
         private readonly IDictionary<IPrefabKey, int> _buildingToUnlockedLevel;
@@ -325,6 +326,37 @@ namespace BattleCruisers.Data.Static
             return null;
         }
 
+        private IList<IPrefabKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
+        {
+            return GetBuildablesFirstAvailableIn(_unitToUnlockedLevel, levelFirstAvailableIn);
+        }
+
+        private IList<IPrefabKey> GetBuildingsFirstAvailableIn(int levelFirstAvailableIn)
+        {
+            return GetBuildablesFirstAvailableIn(_buildingToUnlockedLevel, levelFirstAvailableIn);
+        }
+
+		/// <summary>
+		/// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
+		/// (ie, the starting level, where we have multiple buildables available).
+		/// </summary>
+		private IList<IPrefabKey> GetBuildablesFirstAvailableIn(IDictionary<IPrefabKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+		{
+			return
+				buildableToUnlockedLevel
+					.Where(buildableToLevel => buildableToLevel.Value == levelFirstAvailableIn)
+					.Select(buildableToLevel => buildableToLevel.Key)
+					.ToList();
+		}
+
+        private IPrefabKey GetHullFirstAvailableIn(int levelFirstAvailableIn)
+        {
+            return
+                _hullToUnlockedLevel
+                    .FirstOrDefault(hullToLevel => hullToLevel.Value == levelFirstAvailableIn)
+                    .Key;
+        }
+		
         public bool IsUnitAvailable(IPrefabKey unitKey, int levelNum)
         {
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
