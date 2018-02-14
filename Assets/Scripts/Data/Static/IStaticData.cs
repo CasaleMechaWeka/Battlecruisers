@@ -21,9 +21,14 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
         ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys{ get; }
 
-        bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum);
+		bool IsUnitAvailable(IPrefabKey unitKey, int levelNum);
         IList<IPrefabKey> GetAvailableUnits(UnitCategory category, int levelNum);
+
+		bool IsBuildingAvailable(IPrefabKey buildingKey, int levelNum);
 		IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
+
+        ILoot GetLevelLoot(int levelCompleted);
+
         IStrategy GetAdaptiveStrategy(int levelNum);
         IStrategy GetBasicStrategy(int levelNum);
 	}

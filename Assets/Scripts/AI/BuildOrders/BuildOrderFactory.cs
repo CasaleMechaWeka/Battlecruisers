@@ -155,7 +155,7 @@ namespace BattleCruisers.AI.BuildOrders
 		
         public bool IsAntiRocketBuildOrderAvailable(int levelNum)
         {
-            return _staticData.IsBuildableAvailable(StaticPrefabKeys.Buildings.TeslaCoil, levelNum);
+            return _staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.TeslaCoil, levelNum);
         }
 
         public IDynamicBuildOrder CreateAntiRocketBuildOrder()
@@ -165,7 +165,7 @@ namespace BattleCruisers.AI.BuildOrders
 		
 		public bool IsAntiStealthBuildOrderAvailable(int levelNum)
 		{
-            return _staticData.IsBuildableAvailable(StaticPrefabKeys.Buildings.SpySatelliteLauncher, levelNum);
+            return _staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.SpySatelliteLauncher, levelNum);
 		}
 
         public IDynamicBuildOrder CreateAntiStealthBuildOrder()

@@ -38,7 +38,7 @@ namespace BattleCruisers.AI
 			IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
 			return
-				_staticData.IsBuildableAvailable(buildingKey, LevelNum)
+                _staticData.IsBuildingAvailable(buildingKey, LevelNum)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
 		}
 

@@ -12,10 +12,16 @@ namespace BattleCruisers.Data.Static
 {
     public class StaticData : IStaticData
 	{
-		private readonly IDictionary<IPrefabKey, int> _buildableToUnlockedLevel;
+        private readonly IDictionary<IPrefabKey, int> _buildingToUnlockedLevel;
+        private readonly IDictionary<IPrefabKey, int> _unitToUnlockedLevel;
+        private readonly IDictionary<IPrefabKey, int> _hullToUnlockedLevel;
+
         private readonly IList<BuildingKey> _allBuildings;
         private readonly IList<UnitKey> _allUnits;
+        private readonly IList<HullKey> _allHulls;
         private readonly ILevelStrategies _strategies;
+
+        private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
 
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
@@ -36,8 +42,11 @@ namespace BattleCruisers.Data.Static
 			BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 
             _allUnits = AllUnitKeys();
+            _allHulls = AllHullKeys();
 
-            _buildableToUnlockedLevel = CreateAvailabilityMap();
+            _buildingToUnlockedLevel = CreateBuildingAvailabilityMap();
+            _unitToUnlockedLevel = CreateUnitAvailabilityMap();
+            _hullToUnlockedLevel = CreateHullAvailabilityMap();
 
             _strategies = new LevelStrategies();
 
@@ -195,52 +204,47 @@ namespace BattleCruisers.Data.Static
 			};
 		}
 
-		public bool IsBuildableAvailable(IPrefabKey buildableKey, int levelNum)
-		{
-			Assert.IsTrue(_buildableToUnlockedLevel.ContainsKey(buildableKey));
-
-			int levelBuildableIsAvaible = _buildableToUnlockedLevel[buildableKey];
-			return levelNum >= levelBuildableIsAvaible;
-		}
-
-		private IDictionary<IPrefabKey, int> CreateAvailabilityMap()
-		{
-			return new Dictionary<IPrefabKey, int>()
-			{
-                // === Buildings ===
+        private IDictionary<IPrefabKey, int> CreateBuildingAvailabilityMap()
+        {
+            return new Dictionary<IPrefabKey, int>()
+            {
                 // Factories
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
-				{ StaticPrefabKeys.Buildings.NavalFactory, 1 },
-				{ StaticPrefabKeys.Buildings.DroneStation, 1 },
+                { StaticPrefabKeys.Buildings.NavalFactory, 1 },
+                { StaticPrefabKeys.Buildings.DroneStation, 1 },
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 5 },
-				{ StaticPrefabKeys.Buildings.LocalBooster, 10 },
-				{ StaticPrefabKeys.Buildings.ControlTower, 11 },
-				{ StaticPrefabKeys.Buildings.StealthGenerator, 14 },
+                { StaticPrefabKeys.Buildings.LocalBooster, 10 },
+                { StaticPrefabKeys.Buildings.ControlTower, 11 },
+                { StaticPrefabKeys.Buildings.StealthGenerator, 14 },
                 { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 14 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
-				{ StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
-				{ StaticPrefabKeys.Buildings.Mortar, 2 },
-				{ StaticPrefabKeys.Buildings.SamSite, 3 },
-				{ StaticPrefabKeys.Buildings.TeslaCoil, 13 },
+                { StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
+                { StaticPrefabKeys.Buildings.Mortar, 2 },
+                { StaticPrefabKeys.Buildings.SamSite, 3 },
+                { StaticPrefabKeys.Buildings.TeslaCoil, 13 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
-				{ StaticPrefabKeys.Buildings.RocketLauncher, 13 },
-				{ StaticPrefabKeys.Buildings.Railgun, 7 },
+                { StaticPrefabKeys.Buildings.RocketLauncher, 13 },
+                { StaticPrefabKeys.Buildings.Railgun, 7 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 8 },
-				{ StaticPrefabKeys.Buildings.NukeLauncher, 15 },
-				{ StaticPrefabKeys.Buildings.Ultralisk, 16 },
-				{ StaticPrefabKeys.Buildings.KamikazeSignal, 17 },
-				{ StaticPrefabKeys.Buildings.Broadsides, 18 },
+                { StaticPrefabKeys.Buildings.NukeLauncher, 15 },
+                { StaticPrefabKeys.Buildings.Ultralisk, 16 },
+                { StaticPrefabKeys.Buildings.KamikazeSignal, 17 },
+                { StaticPrefabKeys.Buildings.Broadsides, 18 }
+            };
+        }
 
-
-                // === Units ===
+        private IDictionary<IPrefabKey, int> CreateUnitAvailabilityMap()
+        {
+            return new Dictionary<IPrefabKey, int>()
+            {
                 // Aircraft
                 { StaticPrefabKeys.Units.Bomber, 1 },
                 { StaticPrefabKeys.Units.Gunship, 3 },
@@ -251,14 +255,29 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Frigate, 2 },
                 { StaticPrefabKeys.Units.Destroyer, 9 },
                 { StaticPrefabKeys.Units.ArchonBattleship, 20 }
-			};
-		}
+            };
+        }
+
+        private IDictionary<IPrefabKey, int> CreateHullAvailabilityMap()
+        {
+            return new Dictionary<IPrefabKey, int>()
+            {
+                { StaticPrefabKeys.Hulls.Trident, 1 },
+                { StaticPrefabKeys.Hulls.Raptor, 4 },
+                { StaticPrefabKeys.Hulls.Bullshark, 6 },
+                { StaticPrefabKeys.Hulls.Rockjaw, 8 },
+                { StaticPrefabKeys.Hulls.Eagle, 12 },
+                { StaticPrefabKeys.Hulls.Hammerhead, 15 },
+                { StaticPrefabKeys.Hulls.Longbow, 19 },
+                { StaticPrefabKeys.Hulls.Megalodon, 21 }
+            };
+        }
 
         public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
         {
             return 
                 _allBuildings
-	                .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildableAvailable(buildingKey, levelNum))
+                    .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildingAvailable(buildingKey, levelNum))
 	                .Select(buildingKey => (IPrefabKey)buildingKey)
 	                .ToList();
         }
@@ -267,7 +286,7 @@ namespace BattleCruisers.Data.Static
         {
             return
                 _allUnits
-                    .Where(unitKey => unitKey.UnitCategory == category && IsBuildableAvailable(unitKey, levelNum))
+                    .Where(unitKey => unitKey.UnitCategory == category && IsUnitAvailable(unitKey, levelNum))
                     .Select(unitKey => (IPrefabKey)unitKey)
                     .ToList();
         }
@@ -286,6 +305,40 @@ namespace BattleCruisers.Data.Static
             Assert.IsTrue(levelIndex < _strategies.BasicStrategies.Count);
 
             return _strategies.BasicStrategies[levelIndex];
+        }
+
+        /// <summary>
+        /// Availability level number:  The first level that prefab is available.
+        /// Loot level number (level completed):  The level that unlocks the prefab when you complete
+        /// it successfully.
+        /// 
+        /// Availability level number = loot level number + 1
+        /// </summary>
+        public ILoot GetLevelLoot(int levelCompleted)
+        {
+            int availabilityLevelNum = levelCompleted + 1;
+
+            Assert.IsTrue(availabilityLevelNum >= MIN_AVAILABILITY_LEVEL_NUM);
+            Assert.IsTrue(availabilityLevelNum <= Levels.Count + 1);
+
+            // FELIX
+            return null;
+        }
+
+        public bool IsUnitAvailable(IPrefabKey unitKey, int levelNum)
+        {
+            Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
+
+            int firstLevelUnitIsAvailableIn = _unitToUnlockedLevel[unitKey];
+            return levelNum >= firstLevelUnitIsAvailableIn;
+        }
+
+        public bool IsBuildingAvailable(IPrefabKey buildingKey, int levelNum)
+        {
+            Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
+
+            int firstlevelBuildingIsAvailableIn = _buildingToUnlockedLevel[buildingKey];
+            return levelNum >= firstlevelBuildingIsAvailableIn;
         }
     }
 }

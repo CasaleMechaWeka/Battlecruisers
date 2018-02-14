@@ -44,16 +44,16 @@ namespace BattleCruisers.AI.FactoryManagers
 
         public IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo)
         {
-            Assert.IsTrue(_staticData.IsBuildableAvailable(DEFAULT_PLANE_KEY, levelInfo.LevelNum),"Default plane should always be available.");
+            Assert.IsTrue(_staticData.IsUnitAvailable(DEFAULT_PLANE_KEY, levelInfo.LevelNum),"Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
 
             IBuildableWrapper<IUnit> antiAirPlane =
-                _staticData.IsBuildableAvailable(ANTI_AIR_PLANE_KEY, levelInfo.LevelNum) ?
+                _staticData.IsUnitAvailable(ANTI_AIR_PLANE_KEY, levelInfo.LevelNum) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IBuildableWrapper<IUnit> antiNavalPlane =
-                _staticData.IsBuildableAvailable(ANTI_NAVAL_PLANE_KEY, levelInfo.LevelNum) ?
+                _staticData.IsUnitAvailable(ANTI_NAVAL_PLANE_KEY, levelInfo.LevelNum) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 
