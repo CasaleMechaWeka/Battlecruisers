@@ -151,19 +151,20 @@ namespace BattleCruisers.Data.Static
         /// </summary>
         private GameModel CreateInitialGameModel()
         {
-			// TEMP  For final game, don't add ALL the prefabs :D
-            Loadout playerLoadout = new Loadout(AllHullKeys().Last(), AllBuildingKeys(), AllUnitKeys());
-
-            // FELIX  NEXT  Create initial loadout :)
+            // TEMP  For final game, don't add ALL the prefabs :D
+            //Loadout playerLoadout = new Loadout(AllHullKeys().Last(), AllBuildingKeys(), AllUnitKeys());
+            Loadout playerLoadout = new Loadout(GetInitialHull(), GetInitialBuildings(), GetInitialUnits());
 
             // TEMP  For final game only unlock first level :P
-			int numOfLevelsCompleted = 20;
-			//int numOfLevelsCompleted = 0;
+			//int numOfLevelsCompleted = 20;
+			int numOfLevelsCompleted = 0;
+
+            BattleResult lastBattleResult = null;
 
 			return new GameModel(
                 numOfLevelsCompleted,
 				playerLoadout,
-				null,
+                lastBattleResult,
 				AllHullKeys(),
 				AllBuildingKeys(),
 				AllUnitKeys());
@@ -172,6 +173,22 @@ namespace BattleCruisers.Data.Static
         private HullKey GetInitialHull()
         {
             return StaticPrefabKeys.Hulls.Trident;
+        }
+
+        private List<BuildingKey> GetInitialBuildings()
+        {
+            return
+                GetBuildingsFirstAvailableIn(levelFirstAvailableIn: 1)
+                    .Select(prefabKey => (BuildingKey)prefabKey)
+                    .ToList();
+        }
+
+        private List<UnitKey> GetInitialUnits()
+        {
+            return
+                GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1)
+                    .Select(prefabKey => (UnitKey)prefabKey)
+                    .ToList();
         }
 
 		private IList<ILevel> CreateLevels()
@@ -345,7 +362,7 @@ namespace BattleCruisers.Data.Static
 		/// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
 		/// (ie, the starting level, where we have multiple buildables available).
 		/// </summary>
-		private IList<IPrefabKey> GetBuildablesFirstAvailableIn(IDictionary<IPrefabKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        private IList<IPrefabKey> GetBuildablesFirstAvailableIn(IDictionary<IPrefabKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
 		{
 			return
 				buildableToUnlockedLevel
