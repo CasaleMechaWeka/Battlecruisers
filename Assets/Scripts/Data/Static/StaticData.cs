@@ -143,29 +143,32 @@ namespace BattleCruisers.Data.Static
         /// <summary>
         /// Creates the initial game model.
         /// 
-        /// NOTE:  Do NOT share key objects between Loadout and GameModel, otherwise
-        /// both will share the same object.  In that case if the Loadout deletes one of its
+        /// NOTE:  Do NOT share key list objects between Loadout and GameModel, otherwise
+        /// both will share the same list.  In that case if the Loadout deletes one of its
         /// buildings the building will also be deleted from the GameModel.
         /// </summary>
         private GameModel CreateInitialGameModel()
         {
             // TEMP  For final game, don't add ALL the prefabs :D
             //Loadout playerLoadout = new Loadout(AllHullKeys().Last(), AllBuildingKeys(), AllUnitKeys());
-            Loadout playerLoadout = new Loadout(GetInitialHull(), GetInitialBuildings(), GetInitialUnits());
+            HullKey initialHull = GetInitialHull();
+            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
 
             // TEMP  For final game only unlock first level :P
 			//int numOfLevelsCompleted = 20;
 			int numOfLevelsCompleted = 0;
 
-            BattleResult lastBattleResult = null;
-
-			return new GameModel(
+            return new GameModel(
                 numOfLevelsCompleted,
-				playerLoadout,
-                lastBattleResult,
-				AllHullKeys(),
-				AllBuildingKeys(),
-				AllUnitKeys());
+                playerLoadout,
+                lastBattleResult: null,
+                unlockedHulls: new List<HullKey>() { initialHull },
+                unlockedBuildings: GetInitialBuildings(),
+                unlockedUnits: GetInitialUnits());
+                // TEMP  Do not unlock all hulls & buildables at teh game start :P
+				//AllHullKeys(),
+				//AllBuildingKeys(),
+				//AllUnitKeys());
 		}
 
         private HullKey GetInitialHull()
