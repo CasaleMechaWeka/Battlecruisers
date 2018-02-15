@@ -31,16 +31,13 @@ namespace BattleCruisers.Data.Static
 
         public StaticData()
 		{
-			InitialGameModel = CreateInitialGameModel();
-			Levels = CreateLevels();
-
             _allBuildings = AllBuildingKeys();
 
-			IList<IPrefabKey> allBuildings =
+            IList<IPrefabKey> allBuildings =
                 _allBuildings
-				.Select(buildingKey => (IPrefabKey)buildingKey)
-				.ToList();
-			BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
+                .Select(buildingKey => (IPrefabKey)buildingKey)
+                .ToList();
+            BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 
             _allUnits = AllUnitKeys();
             _allHulls = AllHullKeys();
@@ -52,6 +49,9 @@ namespace BattleCruisers.Data.Static
             _strategies = new LevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<IPrefabKey>(CreateAIBannedUltraKeys());
+			
+            InitialGameModel = CreateInitialGameModel();
+			Levels = CreateLevels();
 		}
 
 		private List<HullKey> AllHullKeys()
