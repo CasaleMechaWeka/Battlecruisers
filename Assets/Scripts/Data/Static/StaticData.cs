@@ -19,7 +19,6 @@ namespace BattleCruisers.Data.Static
 
         private readonly IList<BuildingKey> _allBuildings;
         private readonly IList<UnitKey> _allUnits;
-        private readonly IList<HullKey> _allHulls;
         private readonly ILevelStrategies _strategies;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
@@ -40,7 +39,6 @@ namespace BattleCruisers.Data.Static
             BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
 
             _allUnits = AllUnitKeys();
-            _allHulls = AllHullKeys();
 
             _buildingToUnlockedLevel = CreateBuildingAvailabilityMap();
             _unitToUnlockedLevel = CreateUnitAvailabilityMap();
