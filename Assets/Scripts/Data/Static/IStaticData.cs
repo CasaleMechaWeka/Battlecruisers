@@ -17,6 +17,7 @@ namespace BattleCruisers.Data.Static
     public interface IStaticData
     {
         GameModel InitialGameModel { get; }
+        // FELIX  Change to ReadOnlyCollection
         IList<ILevel> Levels { get; }
         ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
         ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys{ get; }
