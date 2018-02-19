@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Movement.Deciders;
@@ -38,7 +39,8 @@ namespace BattleCruisers.Tests.Movement.Deciders
             {
                 TargetType.Buildings
             };
-            _ship.AttackCapabilities.Returns(attackCapabilities);
+            ReadOnlyCollection<TargetType> readonlyAttackCapabilities = new ReadOnlyCollection<TargetType>(attackCapabilities);
+            _ship.AttackCapabilities.Returns(readonlyAttackCapabilities);
 
             ITargetDetector enemyDetector = Substitute.For<ITargetDetector>();
             ITargetDetector friendDetector = Substitute.For<ITargetDetector>();

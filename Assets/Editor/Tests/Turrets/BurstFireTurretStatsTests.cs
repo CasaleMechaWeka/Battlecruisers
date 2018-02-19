@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -29,6 +31,11 @@ namespace BattleCruisers.Tests.Turrets
 
 			_expectedLongInterval = 1 / _turretStats.fireRatePerS;
 			_expectedBurstInterval = 1 / _turretStats.burstFireRatePerS;
+
+            _turretStats.attackCapabilities = new List<TargetType>()
+            {
+                TargetType.Aircraft
+            };
 
             _turretStats.Initialise();
 		}
