@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Repairables;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildingDetails;
@@ -11,22 +13,28 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class BuildMenuCanvasController : MonoBehaviour, IBuildMenuCanvasController
     {
-        public BuildingDetailsController BuildingDetails { get; private set; }
-        public UnitDetailsController UnitDetails { get; private set; }
-        public CruiserDetailsController CruiserDetails { get; private set; }
-        public HealthBarController PlayerCruiserHealthBar { get; private set; }
-        public HealthBarController AiCruiserHealthBar { get; private set; }
+		public HealthBarController PlayerCruiserHealthBar { get; private set; }
+		public HealthBarController AiCruiserHealthBar { get; private set; }
+
+        private BuildingDetailsController _buildingDetails;
+        public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
+
+        private UnitDetailsController _unitDetails;
+        public IBuildableDetails<IUnit> UnitDetails { get { return _unitDetails; } }
+
+        private CruiserDetailsController _cruiserDetails;
+        public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
 
         public void StaticInitialise()
         {
-            BuildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
-            Assert.IsNotNull(BuildingDetails);
+            _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_buildingDetails);
 
-            UnitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
-            Assert.IsNotNull(UnitDetails);
+            _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_unitDetails);
 
-            CruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
-            Assert.IsNotNull(CruiserDetails);
+            _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_cruiserDetails);
 
             PlayerCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("PlayerCruiserHealthBar");
             AiCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("AiCruiserHealthBar");
@@ -34,9 +42,9 @@ namespace BattleCruisers.UI.BattleScene
 
         public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager)
         {
-            BuildingDetails.Initialise(spriteProvider, droneManager, repairManager);
-            UnitDetails.Initialise(droneManager, repairManager);
-            CruiserDetails.Initialise(droneManager, repairManager);
+            _buildingDetails.Initialise(spriteProvider, droneManager, repairManager);
+            _unitDetails.Initialise(droneManager, repairManager);
+            _cruiserDetails.Initialise(droneManager, repairManager);
         }
     }
 }
