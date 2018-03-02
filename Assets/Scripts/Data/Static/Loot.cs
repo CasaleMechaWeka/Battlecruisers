@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Data.Static
 {
@@ -16,6 +17,22 @@ namespace BattleCruisers.Data.Static
             BuildingKey = buildingKey;
             UnitKey = unitKey;
             HullKey = hullKey;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Loot other = obj as Loot;
+
+            return
+                other != null
+                && BuildingKey.SmartEquals(other.BuildingKey)
+                && UnitKey.SmartEquals(other.UnitKey)
+                && HullKey.SmartEquals(other.HullKey);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(BuildingKey, UnitKey, HullKey);
         }
     }
 }
