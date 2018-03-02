@@ -2,12 +2,19 @@
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils.Fetchers;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
     public abstract class LootItem<TItem> : ILootItem where TItem : IComparableItem
     {
         public IPrefabKey ItemKey { get; private set; }
+
+        protected LootItem(IPrefabKey itemKey)
+        {
+            Assert.IsNotNull(itemKey);
+            ItemKey = itemKey;
+        }
 
         public void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsControllers itemDetailsControllers)
         {
