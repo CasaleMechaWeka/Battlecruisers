@@ -79,9 +79,9 @@ namespace BattleCruisers.Data.Models
 		public override bool Equals(object obj)
 		{
 			Loadout other = obj as Loadout;
+
 			return other != null
-				&& ReferenceEquals(Hull, other.Hull)
-					|| (Hull != null && Hull.Equals(other.Hull))
+                && Hull.SmartEquals(other.Hull)
 				&& Enumerable.SequenceEqual(_buildings, other._buildings)
 				&& Enumerable.SequenceEqual(_units, other._units);
 		}
