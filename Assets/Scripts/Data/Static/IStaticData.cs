@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static.LevelLoot;
 
 namespace BattleCruisers.Data.Static
 {

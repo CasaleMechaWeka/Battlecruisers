@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Data.Static
+namespace BattleCruisers.Data.Static.LevelLoot
 {
     public interface ILoot
     {

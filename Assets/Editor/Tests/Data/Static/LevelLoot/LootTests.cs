@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.LevelLoot;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Data.Static
+namespace BattleCruisers.Tests.Data.Static.LevelLoot
 {
     public class LootTests
     {

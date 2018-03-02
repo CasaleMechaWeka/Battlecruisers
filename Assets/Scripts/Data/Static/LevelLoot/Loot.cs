@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.Data.Static
+namespace BattleCruisers.Data.Static.LevelLoot
 {
     public class Loot : ILoot
     {
