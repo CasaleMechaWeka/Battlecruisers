@@ -72,7 +72,14 @@ namespace BattleCruisers.Utils
                 index == -1 || index == path.Length - 1 ?
                 path :
                 path.Substring(index + 1);
+        }
 
+        // FELIX  Use everywhere!
+        public static bool SmartEquals(this object original, object other)
+        {
+            return
+                ReferenceEquals(original, other)
+                || (original != null && original.Equals(other));
         }
 	}
 }
