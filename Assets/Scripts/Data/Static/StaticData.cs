@@ -345,9 +345,9 @@ namespace BattleCruisers.Data.Static
 
             return
                 new Loot(
-                    buildingKey: GetBuildingsFirstAvailableIn(availabilityLevelNum).FirstOrDefault(),
-                    unitKey: GetUnitsFirstAvailableIn(availabilityLevelNum).FirstOrDefault(),
-                    hullKey: GetHullFirstAvailableIn(availabilityLevelNum));
+                    hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
+                    unitKeys: GetUnitsFirstAvailableIn(availabilityLevelNum),
+                    buildingKeys: GetBuildingsFirstAvailableIn(availabilityLevelNum));
         }
 
         private IList<IPrefabKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
@@ -373,12 +373,13 @@ namespace BattleCruisers.Data.Static
 					.ToList();
 		}
 
-        private IPrefabKey GetHullFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<IPrefabKey> GetHullsFirstAvailableIn(int levelFirstAvailableIn)
         {
             return
                 _hullToUnlockedLevel
-                    .FirstOrDefault(hullToLevel => hullToLevel.Value == levelFirstAvailableIn)
-                    .Key;
+                    .Where(hullToLevel => hullToLevel.Value == levelFirstAvailableIn)
+                    .Select(hullToLevel => hullToLevel.Key)
+                    .ToList();
         }
 		
         public bool IsUnitAvailable(IPrefabKey unitKey, int levelNum)

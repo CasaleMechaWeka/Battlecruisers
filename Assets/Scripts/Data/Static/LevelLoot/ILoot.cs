@@ -1,11 +1,9 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
     public interface ILoot
     {
-        IPrefabKey BuildingKey { get; }
-        IPrefabKey UnitKey { get; }
-        IPrefabKey HullKey { get; }
+        ReadOnlyCollection<ILootItem> Items { get; }
     }
 }

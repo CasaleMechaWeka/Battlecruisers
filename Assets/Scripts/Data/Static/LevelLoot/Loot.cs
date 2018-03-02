@@ -1,22 +1,40 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
     public class Loot : ILoot
     {
-        public IPrefabKey BuildingKey { get; private set; }
-        public IPrefabKey UnitKey { get; private set; }
-        public IPrefabKey HullKey { get; private set; }
+        public ReadOnlyCollection<ILootItem> Items { get; private set; }
 
         public Loot(
-            IPrefabKey buildingKey = null,
-            IPrefabKey unitKey = null,
-            IPrefabKey hullKey = null)
+			IList<IPrefabKey> hullKeys,
+			IList<IPrefabKey> unitKeys,
+            IList<IPrefabKey> buildingKeys)
         {
-            BuildingKey = buildingKey;
-            UnitKey = unitKey;
-            HullKey = hullKey;
+            Helper.AssertIsNotNull(hullKeys, unitKeys, buildingKeys);
+
+            IList<ILootItem> lootItems = new List<ILootItem>();
+
+            foreach (IPrefabKey hullKey in hullKeys)
+            {
+                lootItems.Add(new HullLootItem(hullKey));
+            }
+
+            foreach (IPrefabKey unitKey in unitKeys)
+            {
+                lootItems.Add(new UnitLootItem(unitKey));
+            }
+
+            foreach (IPrefabKey buildingKey in buildingKeys)
+            {
+                lootItems.Add(new BuildingLootItem(buildingKey));
+            }
+
+            Items = new ReadOnlyCollection<ILootItem>(lootItems);
         }
 
         public override bool Equals(object obj)
@@ -25,14 +43,12 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
             return
                 other != null
-                && BuildingKey.SmartEquals(other.BuildingKey)
-                && UnitKey.SmartEquals(other.UnitKey)
-                && HullKey.SmartEquals(other.HullKey);
+                && Enumerable.SequenceEqual(Items, other.Items);
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(BuildingKey, UnitKey, HullKey);
+            return this.GetHashCode(Items);
         }
     }
 }
