@@ -50,6 +50,7 @@ namespace BattleCruisers.Data.Models
             set { _lastBattleResult = value; }
 		}
 
+        // FELIX  Initialise in constructor, to avoid new copy at every property access!
 		public ReadOnlyCollection<HullKey> UnlockedHulls { get { return _unlockedHulls.AsReadOnly(); } }
 		public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get { return _unlockedBuildings.AsReadOnly(); } }
 		public ReadOnlyCollection<UnitKey> UnlockedUnits { get { return _unlockedUnits.AsReadOnly(); } }
