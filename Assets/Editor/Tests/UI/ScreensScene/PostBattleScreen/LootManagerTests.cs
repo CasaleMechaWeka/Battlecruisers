@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static.LevelLoot;
@@ -21,6 +22,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
         private ILoot _unlockedLoot;
         private IList<ILootItem> _lootItems;
+        private ILootItem _item1, _item2;
 
         [SetUp]
         public void SetuUp()
@@ -41,6 +43,9 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
             _dataProvider.StaticData.GetLevelLoot(default(int)).ReturnsForAnyArgs(_unlockedLoot);
+
+            _item1 = Substitute.For<ILootItem>();
+            _item2 = Substitute.For<ILootItem>();
         }
 
         #region ShouldShowLoot
@@ -88,6 +93,50 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
             Assert.AreEqual(levelCompleted, _dataProvider.GameModel.NumOfLevelsCompleted);
         }
+
+        [Test]
+        public void UnlockLoot_UnlocksLootItems()
+        {
+            // FELIX
+        }
+
+        [Test]
+        public void UnlockLoot_ShowLoot_InvalidItemCount_Throws()
+        {
+            // Should only ever have <= 2 loot items, not 3
+            _lootItems.Add(_item1);
+            _lootItems.Add(_item1);
+            _lootItems.Add(_item1);
+
+            Assert.Throws<ArgumentException>(TriggerUnlock);
+        }
+
+        [Test]
+        public void UnlockLoot_ShowLoot_SingleItem()
+        {
+            _lootItems.Add(_item1);
+
+            TriggerUnlock();
+
+            _item1.Received().ShowItemDetails(_prefabFactory, _middleDetailsGroup);
+        }
+
+        [Test]
+        public void UnlockLoot_ShowLoot_TwoItems()
+        {
+            _lootItems.Add(_item1);
+            _lootItems.Add(_item2);
+
+            TriggerUnlock();
+
+            _item1.Received().ShowItemDetails(_prefabFactory, _leftDetailsGroup);
+            _item2.Received().ShowItemDetails(_prefabFactory, _rightDetailsGroup);
+        }
         #endregion UnlockLoot
+
+        private void TriggerUnlock()
+        {
+            UnlockLoot_UnlocksLevel();
+        }
     }
 }
