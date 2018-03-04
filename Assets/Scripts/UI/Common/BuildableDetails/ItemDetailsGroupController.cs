@@ -19,16 +19,19 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             Assert.IsNotNull(buildingDetails);
             buildingDetails.Initialise(spriteProvider);
             BuildingDetails = buildingDetails;
+            BuildingDetails.Hide();
 
             ComparableUnitDetailsController unitDetails = GetComponentInChildren<ComparableUnitDetailsController>();
             Assert.IsNotNull(unitDetails);
             unitDetails.Initialise();
             UnitDetails = unitDetails;
+            UnitDetails.Hide();
 
             ComparableCruiserDetailsController cruiserDetails = GetComponentInChildren<ComparableCruiserDetailsController>();
             Assert.IsNotNull(cruiserDetails);
             cruiserDetails.Initialise();
             HullDetails = cruiserDetails;
+            HullDetails.Hide();
         }
     }
 }
