@@ -8,7 +8,7 @@ namespace BattleCruisers.Data
     public interface IDataProvider
     {
         IList<ILevel> Levels { get; }
-        GameModel GameModel { get; }
+        IGameModel GameModel { get; }
         int NumOfLevelsUnlocked { get; }
         IStaticData StaticData { get; }
         ISettingsManager SettingsManager { get; }

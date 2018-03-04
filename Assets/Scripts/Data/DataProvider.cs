@@ -14,8 +14,10 @@ namespace BattleCruisers.Data
 		
         public IStaticData StaticData { get; private set; }
 		public IList<ILevel> Levels { get { return StaticData.Levels; } }
-		public GameModel GameModel { get; private set; }
-		public ISettingsManager SettingsManager { get; private set; }
+        public ISettingsManager SettingsManager { get; private set; }
+
+        private readonly GameModel _gameModel;
+        public IGameModel GameModel { get { return _gameModel; } }
 
 		public int NumOfLevelsUnlocked
 		{
@@ -40,12 +42,12 @@ namespace BattleCruisers.Data
 
 			if (_serializer.DoesSavedGameExist())
 			{
-				GameModel = _serializer.LoadGame();
+                _gameModel = _serializer.LoadGame();
             }
             else
             {
                 // First time run
-                GameModel = StaticData.InitialGameModel;
+                _gameModel = StaticData.InitialGameModel;
                 SaveGame();
 				
                 SettingsManager.AIDifficulty = Difficulty.Normal;
@@ -61,7 +63,7 @@ namespace BattleCruisers.Data
 
 		public void SaveGame()
 		{
-			_serializer.SaveGame(GameModel);
+            _serializer.SaveGame(_gameModel);
 		}
 	}
 }
