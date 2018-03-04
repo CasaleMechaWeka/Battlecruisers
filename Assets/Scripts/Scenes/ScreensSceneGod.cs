@@ -1,17 +1,18 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
-	public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
+    public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		private PrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;

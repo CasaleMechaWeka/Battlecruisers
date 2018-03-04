@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene
+namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleScreenController : ScreenController
 	{
