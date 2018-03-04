@@ -35,7 +35,7 @@ namespace BattleCruisers.Data.Models
 		public int NumOfLevelsCompleted 
 		{ 
 			get { return _numOfLevelsCompleted; }
-			private set { _numOfLevelsCompleted = value; }
+			set { _numOfLevelsCompleted = value; }
 		}
 
 		public Loadout PlayerLoadout
@@ -47,18 +47,7 @@ namespace BattleCruisers.Data.Models
 		public BattleResult LastBattleResult
 		{
 			get { return _lastBattleResult; }
-			set 
-			{ 
-				_lastBattleResult = value; 
-
-				if (_lastBattleResult != null &&
-					_lastBattleResult.WasVictory && 
-					_lastBattleResult.LevelNum > NumOfLevelsCompleted)
-				{
-					Assert.AreEqual(_lastBattleResult.LevelNum - 1, NumOfLevelsCompleted);
-					NumOfLevelsCompleted = _lastBattleResult.LevelNum;
-				}
-			}
+            set { _lastBattleResult = value; }
 		}
 
 		public ReadOnlyCollection<HullKey> UnlockedHulls { get { return _unlockedHulls.AsReadOnly(); } }
