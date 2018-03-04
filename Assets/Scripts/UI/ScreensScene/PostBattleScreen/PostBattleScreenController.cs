@@ -41,9 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			
             _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
-            ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-            nextButton.Initialise(nextCommand);
-
             unlockedItemSection.SetActive(BattleResult.WasVictory);
 
             if (BattleResult.WasVictory)
@@ -58,7 +55,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             else
             {
                 title.text = LOSS_TITLE;
-			}
+            }
+			
+            // Initialise AFTER loot manager potentially unlocks loot and next levels
+			ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
+			nextButton.Initialise(nextCommand);
 		}
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory, ISpriteProvider spriteProvider)
