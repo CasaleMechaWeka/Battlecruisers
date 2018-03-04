@@ -14,13 +14,13 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
         public void Initialise()
         {
-            BuildingDetails = GetComponent<IComparableItemDetails<IBuilding>>();
+            BuildingDetails = GetComponentInChildren<IComparableItemDetails<IBuilding>>();
             Assert.IsNotNull(BuildingDetails);
 
-            UnitDetails = GetComponent<IComparableItemDetails<IUnit>>();
+            UnitDetails = GetComponentInChildren<IComparableItemDetails<IUnit>>();
             Assert.IsNotNull(UnitDetails);
 
-            HullDetails = GetComponent<IComparableItemDetails<ICruiser>>();
+            HullDetails = GetComponentInChildren<IComparableItemDetails<ICruiser>>();
             Assert.IsNotNull(HullDetails);
         }
     }

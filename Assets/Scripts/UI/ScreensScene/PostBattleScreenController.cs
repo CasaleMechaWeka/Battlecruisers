@@ -2,6 +2,8 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -13,6 +15,9 @@ namespace BattleCruisers.UI.ScreensScene
 		private BattleResult _battleResult;
 		private int _numOfLevelsUnlocked;
 
+        private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
+
+        // FELIX  Initialise programmatically
 		public Text title;
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
@@ -26,8 +31,10 @@ namespace BattleCruisers.UI.ScreensScene
 
 			Assert.IsNotNull(battleResult);
 
-			_battleResult = battleResult;
-			_numOfLevelsUnlocked = numOfLevelsUnlocked;
+            _battleResult = battleResult;
+            _numOfLevelsUnlocked = numOfLevelsUnlocked;
+			
+			StaticInitialise();
 
             ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
             nextButton.Initialise(nextCommand);
@@ -42,6 +49,20 @@ namespace BattleCruisers.UI.ScreensScene
 				unlockedItemSection.SetActive(false);
 			}
 		}
+
+        private void StaticInitialise()
+        {
+            _middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
+            _leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
+            _rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+        }
+
+        private IItemDetailsGroup InitialiseGroup(string componentPath)
+        {
+            ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
+            detailsGroup.Initialise();
+            return detailsGroup;
+        }
 
 		public void Retry()
 		{
