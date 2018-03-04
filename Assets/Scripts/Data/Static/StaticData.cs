@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static
 {
-    // FELIX  Create tests!
     public class StaticData : IStaticData
 	{
         private readonly IDictionary<IPrefabKey, int> _buildingToUnlockedLevel;
