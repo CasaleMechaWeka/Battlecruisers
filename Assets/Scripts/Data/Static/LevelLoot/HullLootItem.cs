@@ -5,15 +5,15 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
-    public class HullLootItem : LootItem<ICruiser>
+    public class HullLootItem : LootItem<ICruiser, HullKey>
     {
-        public HullLootItem(IPrefabKey itemKey) : base(itemKey)
+        public HullLootItem(HullKey itemKey) : base(itemKey)
         {
         }
 
         protected override ICruiser GetItem(IPrefabFactory prefabFactory)
         {
-            return prefabFactory.GetCruiserPrefab(ItemKey);
+            return prefabFactory.GetCruiserPrefab(_itemKey);
         }
 
         protected override IComparableItemDetails<ICruiser> GetItemDetails(IItemDetailsGroup itemDetailsControllers)

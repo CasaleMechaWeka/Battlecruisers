@@ -7,14 +7,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
-    public abstract class LootItem<TItem> : ILootItem where TItem : IComparableItem
+    public abstract class LootItem<TItem, TKey> : ILootItem 
+        where TItem : IComparableItem
+        where TKey : class, IPrefabKey
     {
-        public IPrefabKey ItemKey { get; private set; }
+        protected readonly TKey _itemKey;
 
-        protected LootItem(IPrefabKey itemKey)
+        protected LootItem(TKey itemKey)
         {
             Assert.IsNotNull(itemKey);
-            ItemKey = itemKey;
+            _itemKey = itemKey;
         }
 
         public void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers)
@@ -31,16 +33,16 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         public override bool Equals(object obj)
         {
-            LootItem<TItem> other = obj as LootItem<TItem>;
+            LootItem<TItem, TKey> other = obj as LootItem<TItem, TKey>;
 
             return
                 other != null
-                && ItemKey.SmartEquals(other.ItemKey);
+                && _itemKey.SmartEquals(other._itemKey);
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(ItemKey);
+            return this.GetHashCode(_itemKey);
         }
     }
 }

@@ -11,25 +11,25 @@ namespace BattleCruisers.Data.Static.LevelLoot
         public ReadOnlyCollection<ILootItem> Items { get; private set; }
 
         public Loot(
-			IList<IPrefabKey> hullKeys,
-			IList<IPrefabKey> unitKeys,
-            IList<IPrefabKey> buildingKeys)
+            IList<HullKey> hullKeys,
+            IList<UnitKey> unitKeys,
+            IList<BuildingKey> buildingKeys)
         {
             Helper.AssertIsNotNull(hullKeys, unitKeys, buildingKeys);
 
             IList<ILootItem> lootItems = new List<ILootItem>();
 
-            foreach (IPrefabKey hullKey in hullKeys)
+            foreach (HullKey hullKey in hullKeys)
             {
                 lootItems.Add(new HullLootItem(hullKey));
             }
 
-            foreach (IPrefabKey unitKey in unitKeys)
+            foreach (UnitKey unitKey in unitKeys)
             {
                 lootItems.Add(new UnitLootItem(unitKey));
             }
 
-            foreach (IPrefabKey buildingKey in buildingKeys)
+            foreach (BuildingKey buildingKey in buildingKeys)
             {
                 lootItems.Add(new BuildingLootItem(buildingKey));
             }

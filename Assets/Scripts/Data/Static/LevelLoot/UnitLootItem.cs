@@ -5,15 +5,15 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
-    public class UnitLootItem : LootItem<IUnit>
+    public class UnitLootItem : LootItem<IUnit, UnitKey>
     {
-        public UnitLootItem(IPrefabKey itemKey) : base(itemKey)
+        public UnitLootItem(UnitKey itemKey) : base(itemKey)
         {
         }
 
         protected override IUnit GetItem(IPrefabFactory prefabFactory)
         {
-            return prefabFactory.GetUnitWrapperPrefab(ItemKey).Buildable;
+            return prefabFactory.GetUnitWrapperPrefab(_itemKey).Buildable;
         }
 
         protected override IComparableItemDetails<IUnit> GetItemDetails(IItemDetailsGroup itemDetailsControllers)
