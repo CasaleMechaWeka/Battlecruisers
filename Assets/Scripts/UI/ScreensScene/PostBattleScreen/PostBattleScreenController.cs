@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		private BattleResult _battleResult;
 		private int _numOfLevelsUnlocked;
 
+        // FELIX  Remove, simply passed along :)
         private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         // FELIX  Initialise programmatically
