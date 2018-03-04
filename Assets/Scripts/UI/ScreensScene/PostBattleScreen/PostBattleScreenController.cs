@@ -41,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			
             _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
-
             if (BattleResult.WasVictory)
             {
                 title.text = VICTORY_TITLE;
