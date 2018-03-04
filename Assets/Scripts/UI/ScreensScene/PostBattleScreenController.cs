@@ -44,14 +44,20 @@ namespace BattleCruisers.UI.ScreensScene
             ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
             nextButton.Initialise(nextCommand);
 
-			if (_battleResult.WasVictory)
-			{
-				title.text = VICTORY_TITLE;
-			}
-			else
-			{
-				title.text = LOSS_TITLE;
-				unlockedItemSection.SetActive(false);
+            unlockedItemSection.SetActive(_battleResult.WasVictory);
+
+            if (_battleResult.WasVictory)
+            {
+                title.text = VICTORY_TITLE;
+
+                // FELIX  Only show if first time level completed :P
+                // 1. Show loot
+                // 2. Add loot to unlocked items in GameModel
+                // 3. Add loot to player loadout
+            }
+            else
+            {
+                title.text = LOSS_TITLE;
 			}
 		}
 
