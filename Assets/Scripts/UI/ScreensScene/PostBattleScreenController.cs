@@ -4,6 +4,7 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -25,16 +26,20 @@ namespace BattleCruisers.UI.ScreensScene
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
 
-		public void Initialise(BattleResult battleResult, ScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
+		public void Initialise(
+            BattleResult battleResult, 
+            ScreensSceneGod screensSceneGod, 
+            int numOfLevelsUnlocked, 
+            ISpriteProvider spriteProvider)
 		{
 			base.Initialise(screensSceneGod);
 
-			Assert.IsNotNull(battleResult);
+            Helper.AssertIsNotNull(battleResult, spriteProvider);
 
             _battleResult = battleResult;
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
 			
-			StaticInitialise();
+            InitialiseDetailGroups(spriteProvider);
 
             ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
             nextButton.Initialise(nextCommand);
@@ -50,17 +55,17 @@ namespace BattleCruisers.UI.ScreensScene
 			}
 		}
 
-        private void StaticInitialise()
+        private void InitialiseDetailGroups(ISpriteProvider spriteProvider)
         {
-            _middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
-            _leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
-            _rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+            _middleDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
+            _leftDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
+            _rightDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
         }
 
-        private IItemDetailsGroup InitialiseGroup(string componentPath)
+        private IItemDetailsGroup InitialiseGroup(ISpriteProvider spriteProvider, string componentPath)
         {
             ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
-            detailsGroup.Initialise();
+            detailsGroup.Initialise(spriteProvider);
             return detailsGroup;
         }
 

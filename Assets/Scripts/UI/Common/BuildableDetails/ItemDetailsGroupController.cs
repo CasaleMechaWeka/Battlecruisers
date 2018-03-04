@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,16 +13,22 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         public IComparableItemDetails<IUnit> UnitDetails { get; private set; }
         public IComparableItemDetails<ICruiser> HullDetails { get; private set; }
 
-        public void Initialise()
+        public void Initialise(ISpriteProvider spriteProvider)
         {
-            BuildingDetails = GetComponentInChildren<IComparableItemDetails<IBuilding>>();
-            Assert.IsNotNull(BuildingDetails);
+            ComparableBuildingDetailsController buildingDetails = GetComponentInChildren<ComparableBuildingDetailsController>();
+            Assert.IsNotNull(buildingDetails);
+            buildingDetails.Initialise(spriteProvider);
+            BuildingDetails = buildingDetails;
 
-            UnitDetails = GetComponentInChildren<IComparableItemDetails<IUnit>>();
-            Assert.IsNotNull(UnitDetails);
+            ComparableUnitDetailsController unitDetails = GetComponentInChildren<ComparableUnitDetailsController>();
+            Assert.IsNotNull(unitDetails);
+            unitDetails.Initialise();
+            UnitDetails = unitDetails;
 
-            HullDetails = GetComponentInChildren<IComparableItemDetails<ICruiser>>();
-            Assert.IsNotNull(HullDetails);
+            ComparableCruiserDetailsController cruiserDetails = GetComponentInChildren<ComparableCruiserDetailsController>();
+            Assert.IsNotNull(cruiserDetails);
+            cruiserDetails.Initialise();
+            HullDetails = cruiserDetails;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes
             if (ApplicationModel.ShowPostBattleScreen)
             {
                 ApplicationModel.ShowPostBattleScreen = false;
-                postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked);
+                postBattleScreen.Initialise(_gameModel.LastBattleResult, this, _dataProvider.NumOfLevelsUnlocked, _spriteProvider);
                 GoToScreen(postBattleScreen);
             }
             else
