@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
@@ -27,5 +28,19 @@ namespace BattleCruisers.Data.Static.LevelLoot
         protected abstract TItem GetItem(IPrefabFactory prefabFactory);
 
         protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsControllers itemDetailsControllers);
+
+        public override bool Equals(object obj)
+        {
+            LootItem<TItem> other = obj as LootItem<TItem>;
+
+            return
+                other != null
+                && ItemKey.SmartEquals(other.ItemKey);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(ItemKey);
+        }
     }
 }
