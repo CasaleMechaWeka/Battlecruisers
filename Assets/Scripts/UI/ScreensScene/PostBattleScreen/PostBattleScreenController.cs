@@ -41,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			
             _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
-            unlockedItemSection.SetActive(BattleResult.WasVictory);
 
             if (BattleResult.WasVictory)
             {
@@ -49,6 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                 {
+					unlockedItemSection.SetActive(true);
                     _lootManager.UnlockLoot(BattleResult.LevelNum);
                 }
             }
