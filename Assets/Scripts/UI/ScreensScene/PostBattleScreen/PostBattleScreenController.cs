@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
@@ -13,11 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleScreenController : ScreenController
 	{
-		private BattleResult _battleResult;
-		private int _numOfLevelsUnlocked;
-
-        // FELIX  Remove, simply passed along :)
-        private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
+        private IDataProvider _dataProvider;
+        private ILootManager _lootManager;
 
         // FELIX  Initialise programmatically
 		public Text title;
@@ -27,27 +25,28 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
 
+        private BattleResult BattleResult { get { return _dataProvider.GameModel.LastBattleResult; } }
+
 		public void Initialise(
-            BattleResult battleResult, 
             ScreensSceneGod screensSceneGod, 
-            int numOfLevelsUnlocked, 
+            IDataProvider dataProvider,
+            IPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider)
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(battleResult, spriteProvider);
+            Helper.AssertIsNotNull(dataProvider, dataProvider.GameModel.LastBattleResult, prefabFactory, spriteProvider);
 
-            _battleResult = battleResult;
-            _numOfLevelsUnlocked = numOfLevelsUnlocked;
+            _dataProvider = dataProvider;
 			
-            InitialiseDetailGroups(spriteProvider);
+            _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
             ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
             nextButton.Initialise(nextCommand);
 
-            unlockedItemSection.SetActive(_battleResult.WasVictory);
+            unlockedItemSection.SetActive(BattleResult.WasVictory);
 
-            if (_battleResult.WasVictory)
+            if (BattleResult.WasVictory)
             {
                 title.text = VICTORY_TITLE;
 
@@ -62,11 +61,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			}
 		}
 
-        private void InitialiseDetailGroups(ISpriteProvider spriteProvider)
+        private ILootManager CreateLootManager(IPrefabFactory prefabFactory, ISpriteProvider spriteProvider)
         {
-            _middleDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
-            _leftDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
-            _rightDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+            IItemDetailsGroup middleDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
+            IItemDetailsGroup leftDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
+            IItemDetailsGroup rightDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+
+            return new LootManager(_dataProvider, prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
         }
 
         private IItemDetailsGroup InitialiseGroup(ISpriteProvider spriteProvider, string componentPath)
@@ -78,7 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public void Retry()
 		{
-			_screensSceneGod.LoadLevel(_battleResult.LevelNum);
+			_screensSceneGod.LoadLevel(BattleResult.LevelNum);
 		}
 
 		public void GoToLoadoutScreen()
@@ -88,14 +89,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private void NextCommandExecute()
 		{
-			int nextLevelNum = _battleResult.LevelNum + 1;
-			Assert.IsTrue(nextLevelNum <= _numOfLevelsUnlocked);
+			int nextLevelNum = BattleResult.LevelNum + 1;
+            Assert.IsTrue(nextLevelNum <= _dataProvider.NumOfLevelsUnlocked);
 			_screensSceneGod.LoadLevel(nextLevelNum);
 		}
 
         private bool CanNextCommandExecute()
         {
-            return _battleResult.LevelNum + 1 <= _numOfLevelsUnlocked;
+            return BattleResult.LevelNum + 1 <= _dataProvider.NumOfLevelsUnlocked;
         }
 
 		public void GoToHomeScreen()
