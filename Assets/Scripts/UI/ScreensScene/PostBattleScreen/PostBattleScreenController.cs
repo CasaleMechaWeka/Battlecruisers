@@ -50,10 +50,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 title.text = VICTORY_TITLE;
 
-                // FELIX  Only show if first time level completed :P
-                // 1. Show loot
-                // 2. Add loot to unlocked items in GameModel
-                // 3. Add loot to player loadout
+                if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
+                {
+                    _lootManager.UnlockLoot(BattleResult.LevelNum);
+                }
             }
             else
             {
