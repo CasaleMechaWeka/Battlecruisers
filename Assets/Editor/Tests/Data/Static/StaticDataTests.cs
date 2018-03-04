@@ -1,5 +1,11 @@
-﻿using BattleCruisers.Data.Models;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.LevelLoot;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -49,10 +55,174 @@ namespace BattleCruisers.Tests.Data.Static
             Assert.AreEqual(2, _staticData.AIBannedUltrakeys.Count);
         }
 
+        #region IsUnitAvailable
         [Test]
-        public void IsUnitAvailable()
+        public void IsUnitAvailable_NonUnitKey_Throws()
         {
-            // FELIX  NEXT
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsUnitAvailable(StaticPrefabKeys.Buildings.AirFactory, levelNum: 1));
+        }
+
+        [Test]
+        public void IsUnitAvailable_True()
+        {
+            Assert.IsTrue(_staticData.IsUnitAvailable(StaticPrefabKeys.Units.AttackBoat, levelNum: 1));
+        }
+
+        [Test]
+        public void IsUnitAvailable_False()
+        {
+            Assert.IsFalse(_staticData.IsUnitAvailable(StaticPrefabKeys.Units.Frigate, levelNum: 1));
+        }
+        #endregion IsUnitAvailable
+
+        #region IsBuildingAvailable
+        [Test]
+        public void IsBuildingAvailable_NonBuildingKey_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsBuildingAvailable(StaticPrefabKeys.Units.AttackBoat, levelNum: 1));
+        }
+
+        [Test]
+        public void IsBuildingAvailable_True()
+        {
+            Assert.IsTrue(_staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.AirFactory, levelNum: 1));
+        }
+
+        [Test]
+        public void IsBuildingAvailable_False()
+        {
+            Assert.IsFalse(_staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.Railgun, levelNum: 1));
+        }
+        #endregion IsBuildingAvailable
+
+        [Test]
+        public void GetAvailableUnits()
+        {
+            Assert.AreEqual(1, _staticData.GetAvailableUnits(UnitCategory.Aircraft, levelNum: 1).Count);
+            Assert.AreEqual(1, _staticData.GetAvailableUnits(UnitCategory.Naval, levelNum: 1).Count);
+            Assert.AreEqual(0, _staticData.GetAvailableUnits(UnitCategory.Untouchable, levelNum: 1).Count);
+        }
+
+        [Test]
+        public void GetAvailableBuildings()
+        {
+            Assert.AreEqual(2, _staticData.GetAvailableBuildings(BuildingCategory.Defence, levelNum: 1).Count);
+            Assert.AreEqual(3, _staticData.GetAvailableBuildings(BuildingCategory.Factory, levelNum: 1).Count);
+            Assert.AreEqual(1, _staticData.GetAvailableBuildings(BuildingCategory.Offence, levelNum: 1).Count);
+            Assert.AreEqual(0, _staticData.GetAvailableBuildings(BuildingCategory.Tactical, levelNum: 1).Count);
+            Assert.AreEqual(0, _staticData.GetAvailableBuildings(BuildingCategory.Ultra, levelNum: 1).Count);
+        }
+
+        #region GetLevelLoot
+        [Test]
+        public void GetLevelLoot_TooSmallLevelNum_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.GetLevelLoot(levelCompleted: 0));
+        }
+
+        [Test]
+        public void GetLevelLoot_TooLargeLevelNum_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.GetLevelLoot(levelCompleted: 22));
+        }
+
+        [Test]
+        public void GetLevelLoot_Unit()
+        {
+            // Archon
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 19);
+            ILoot expectedLoot = CreateLoot(unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.ArchonBattleship });
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_2Units()
+        {
+            // Fighter, destroyer
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 8);
+            ILoot expectedLoot = CreateLoot(unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.Fighter, StaticPrefabKeys.Units.Destroyer});
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_Building()
+        {
+            // Shield
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 4);
+            ILoot expectedLoot = CreateLoot(buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.ShieldGenerator});
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_2Buildings()
+        {
+            // Stealth generator, spy satellite launcher
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 13);
+            ILoot expectedLoot = CreateLoot(buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher});
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_Hull()
+        {
+            // Raptor
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 3);
+            ILoot expectedLoot = CreateLoot(hullKeys: new IPrefabKey[] { StaticPrefabKeys.Hulls.Raptor});
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_UnitAndBuilding()
+        {
+            // Mortar, frigate
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 1);
+            ILoot expectedLoot 
+                = CreateLoot(
+                    unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.Frigate },
+                    buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.Mortar});
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_BuildingAndHull()
+        {
+            // Rockjaw, deathstar
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 7);
+            ILoot expectedLoot
+                = CreateLoot(
+                    hullKeys: new IPrefabKey[] { StaticPrefabKeys.Hulls.Rockjaw },
+                    buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.DeathstarLauncher });
+
+            Assert.AreEqual(expectedLoot, actualLoot);
+        }
+
+        [Test]
+        public void GetLevelLoot_NoneMoreThan2LootItems()
+        {
+            foreach (ILevel level in _staticData.Levels)
+            {
+                ILoot loot = _staticData.GetLevelLoot(level.Num);
+                Assert.IsTrue(loot.Items.Count <= 2);
+            }
+        }
+        #endregion GetLevelLoot
+
+        private ILoot CreateLoot(
+            IList<IPrefabKey> hullKeys = null,
+            IList<IPrefabKey> unitKeys = null,
+            IList<IPrefabKey> buildingKeys = null)
+        {
+            return
+                new Loot(
+                    hullKeys ?? new List<IPrefabKey>(),
+                    unitKeys ?? new List<IPrefabKey>(),
+                    buildingKeys ?? new List<IPrefabKey>());
         }
     }
 }
