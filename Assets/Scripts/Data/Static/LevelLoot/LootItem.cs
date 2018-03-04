@@ -17,7 +17,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
             ItemKey = itemKey;
         }
 
-        public void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsControllers itemDetailsControllers)
+        public void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers)
         {
             TItem item = GetItem(prefabFactory);
             IComparableItemDetails<TItem> itemDetails = GetItemDetails(itemDetailsControllers);
@@ -27,7 +27,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         protected abstract TItem GetItem(IPrefabFactory prefabFactory);
 
-        protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsControllers itemDetailsControllers);
+        protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsGroup itemDetailsControllers);
 
         public override bool Equals(object obj)
         {

@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
-    public interface IItemDetailsControllers
+    public interface IItemDetailsGroup
     {
         IComparableItemDetails<IBuilding> BuildingDetails { get; }
         IComparableItemDetails<IUnit> UnitDetails { get; }
