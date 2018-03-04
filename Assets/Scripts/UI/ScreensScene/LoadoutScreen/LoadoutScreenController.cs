@@ -22,12 +22,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public BuildingDetailsManager buildingDetailsManager;
         public UnitDetailsManager unitDetailsManager;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialise(
+            IScreensSceneGod screensSceneGod, 
+            IDataProvider dataProvider, 
+            IPrefabFactory prefabFactory, 
+            ISpriteProvider spriteProvider)
         {
             base.Initialise(screensSceneGod);
 
             // General
-            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, hullsRow);
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, hullsRow);
             // Item details managers
             Helper.AssertIsNotNull(cruiserDetailsManager, buildingDetailsManager, unitDetailsManager);
 
@@ -35,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _gameModel = _dataProvider.GameModel;
             _prefabFactory = prefabFactory;
 
-            buildingDetailsManager.Initialise();
+            buildingDetailsManager.Initialise(spriteProvider);
             unitDetailsManager.Initialise();
 			cruiserDetailsManager.Initialise();
 

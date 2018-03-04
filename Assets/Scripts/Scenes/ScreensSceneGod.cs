@@ -17,6 +17,7 @@ namespace BattleCruisers.Scenes
 		private ScreenController _currentScreen;
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
+        private ISpriteProvider _spriteProvider;
 
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
@@ -31,6 +32,7 @@ namespace BattleCruisers.Scenes
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
+            _spriteProvider = new SpriteProvider(new SpriteFetcher());
 
 
             // TEMP  For showing PostBattleScreen :)
@@ -43,7 +45,7 @@ namespace BattleCruisers.Scenes
 
             levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked, lastPlayedLevel);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
-			loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
+            loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 

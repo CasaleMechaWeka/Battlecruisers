@@ -7,10 +7,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class BuildingDetailsManager : ItemDetailsManager<IBuilding>
     {
-        public void Initialise()
+        public void Initialise(ISpriteProvider spriteProvider)
         {
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-
             ComparableBuildingDetailsController singleItemDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("SingleItemDetails");
             singleItemDetails.Initialise(spriteProvider);
 
