@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.BuildOrders
     {
         private readonly IEnumerator<IPrefabKeyWrapper> _baseBuildOrder;
 
-        public IPrefabKey Current { get; private set; }
+        public BuildingKey Current { get; private set; }
 
         public StrategyBuildOrder(IList<IPrefabKeyWrapper> baseBuildOrder)
         {

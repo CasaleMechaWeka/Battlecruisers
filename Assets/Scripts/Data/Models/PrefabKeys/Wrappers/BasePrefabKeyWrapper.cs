@@ -33,7 +33,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
             }
         }
 		
-        public IPrefabKey Key { get; private set; }
+        public BuildingKey Key { get; private set; }
 
         protected BasePrefabKeyWrapper()
         {

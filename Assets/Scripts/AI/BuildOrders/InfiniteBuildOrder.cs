@@ -10,14 +10,14 @@ namespace BattleCruisers.AI.BuildOrders
     public class InfiniteBuildOrder : IDynamicBuildOrder
 	{
         private readonly ILevelInfo _levelInfo;
-        private readonly IList<IPrefabKey> _availableBuildings;
+        private readonly IList<BuildingKey> _availableBuildings;
 
-        public IPrefabKey Current { get; private set; }
+        public BuildingKey Current { get; private set; }
 
         public InfiniteBuildOrder(
             BuildingCategory buildingCategory, 
             ILevelInfo levelInfo,
-            IList<IPrefabKey> bannedBuildings)
+            IList<BuildingKey> bannedBuildings)
 		{
             Assert.IsNotNull(levelInfo);
 
@@ -30,14 +30,14 @@ namespace BattleCruisers.AI.BuildOrders
             Assert.IsTrue(_availableBuildings.Count != 0);
 		}
 
-        private void RemoveBuildingsToIgnore(IList<IPrefabKey> bannedBuildings)
+        private void RemoveBuildingsToIgnore(IList<BuildingKey> bannedBuildings)
         {
             if (bannedBuildings == null)
             {
                 return;
             }
 
-            foreach (IPrefabKey bannedBuilding in bannedBuildings)
+            foreach (BuildingKey bannedBuilding in bannedBuildings)
             {
                 _availableBuildings.Remove(bannedBuilding);
             }

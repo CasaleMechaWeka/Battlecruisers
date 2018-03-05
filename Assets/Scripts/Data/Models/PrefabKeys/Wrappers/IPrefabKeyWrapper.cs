@@ -5,7 +5,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
     public interface IPrefabKeyWrapper
     {
         bool HasKey { get; }
-        IPrefabKey Key { get; }
+        BuildingKey Key { get; }
 
         void Initialise(IBuildOrders buildOrders);
     }

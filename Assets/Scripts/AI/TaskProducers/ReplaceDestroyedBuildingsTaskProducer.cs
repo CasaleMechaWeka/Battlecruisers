@@ -11,14 +11,14 @@ namespace BattleCruisers.AI.TaskProducers
 {
     public class ReplaceDestroyedBuildingsTaskProducer : BaseTaskProducer
     {
-        private readonly IDictionary<string, IPrefabKey> _buildingNamesToKeys;
+        private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
 
         public ReplaceDestroyedBuildingsTaskProducer(
             ITaskList tasks, 
             ICruiserController cruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
-            IList<IPrefabKey> buildingKeys)
+            IList<BuildingKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
             _buildingNamesToKeys = CreateMap(buildingKeys);
@@ -26,11 +26,11 @@ namespace BattleCruisers.AI.TaskProducers
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
         }
 
-        private IDictionary<string, IPrefabKey> CreateMap(IList<IPrefabKey> buildingKeys)
+        private IDictionary<string, BuildingKey> CreateMap(IList<BuildingKey> buildingKeys)
         {
-            IDictionary<string, IPrefabKey> buildingNamesToKeys = new Dictionary<string, IPrefabKey>();
+            IDictionary<string, BuildingKey> buildingNamesToKeys = new Dictionary<string, BuildingKey>();
 
-            foreach (IPrefabKey key in buildingKeys)
+            foreach (BuildingKey key in buildingKeys)
             {
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
                 Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.Name));

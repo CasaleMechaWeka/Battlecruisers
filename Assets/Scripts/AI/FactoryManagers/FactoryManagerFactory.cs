@@ -17,9 +17,9 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly IPrefabFactory _prefabFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 
-		private static IPrefabKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
-        private static IPrefabKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
-		private static IPrefabKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
+        private readonly static UnitKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
+        private readonly static UnitKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
+        private readonly static UnitKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
 
 		public FactoryManagerFactory(IStaticData staticData, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {
@@ -32,7 +32,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         public IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo)
         {
-            IList<IPrefabKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelInfo.LevelNum);
+            IList<UnitKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelInfo.LevelNum);
             IList<IBuildableWrapper<IUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))

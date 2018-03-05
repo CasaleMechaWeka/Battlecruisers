@@ -11,7 +11,7 @@ namespace BattleCruisers.AI
         ICruiserController AICruiser { get; }
         ICruiserController PlayerCruiser { get; }
 
-		bool CanConstructBuilding(IPrefabKey buildingKey);
-		IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category);
+        bool CanConstructBuilding(BuildingKey buildingKey);
+        IList<BuildingKey> GetAvailableBuildings(BuildingCategory category);
 	}
 }

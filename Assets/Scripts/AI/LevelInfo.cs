@@ -33,7 +33,7 @@ namespace BattleCruisers.AI
             LevelNum = levelNum;
         }
 
-        public bool CanConstructBuilding(IPrefabKey buildingKey)
+        public bool CanConstructBuilding(BuildingKey buildingKey)
 		{
 			IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.AI
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
 		}
 
-		public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category)
+        public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category)
 		{
 			return _staticData.GetAvailableBuildings(category, LevelNum);
 		}

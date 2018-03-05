@@ -20,14 +20,14 @@ namespace BattleCruisers.Data.Static
         GameModel InitialGameModel { get; }
         // FELIX  Change to ReadOnlyCollection
         IList<ILevel> Levels { get; }
-        ReadOnlyCollection<IPrefabKey> BuildingKeys { get; }
-        ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys{ get; }
+        ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
+        ReadOnlyCollection<BuildingKey> AIBannedUltrakeys{ get; }
 
-		bool IsUnitAvailable(IPrefabKey unitKey, int levelNum);
-        IList<IPrefabKey> GetAvailableUnits(UnitCategory category, int levelNum);
+        bool IsUnitAvailable(UnitKey unitKey, int levelNum);
+        IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum);
 
-		bool IsBuildingAvailable(IPrefabKey buildingKey, int levelNum);
-		IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
+        bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum);
+        IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
 
         ILoot GetLevelLoot(int levelCompleted);
 

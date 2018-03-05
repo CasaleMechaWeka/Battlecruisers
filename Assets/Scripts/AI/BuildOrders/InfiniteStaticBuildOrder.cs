@@ -4,9 +4,9 @@ namespace BattleCruisers.AI.BuildOrders
 {
     public class InfiniteStaticBuildOrder : IDynamicBuildOrder
 	{
-		public IPrefabKey Current { get; private set; }
+        public BuildingKey Current { get; private set; }
 
-        public InfiniteStaticBuildOrder(IPrefabKey buildingKey)
+        public InfiniteStaticBuildOrder(BuildingKey buildingKey)
 		{
 			Current = buildingKey;
 		}

@@ -12,16 +12,16 @@ namespace BattleCruisers.AI.BuildOrders
     /// </summary>
     public class AntiUnitBuildOrder : IDynamicBuildOrder
     {
-        private readonly IPrefabKey _basicDefenceKey, _advancedDefenceKey;
+        private readonly BuildingKey _basicDefenceKey, _advancedDefenceKey;
         private readonly ILevelInfo _levelInfo;
 		private readonly int _numOfSlotsToUse;
         private int _numOfSlotsUsed;
 
-        public IPrefabKey Current { get; private set; }
+        public BuildingKey Current { get; private set; }
 
         public AntiUnitBuildOrder(
-            IPrefabKey basicDefenceKey,
-            IPrefabKey advancedDefenceKey,
+            BuildingKey basicDefenceKey,
+            BuildingKey advancedDefenceKey,
 			ILevelInfo levelInfo,
             int numOfSlotsToUse)
         {

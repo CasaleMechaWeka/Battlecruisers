@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly int _size;
         private int _index;
 
-        public IPrefabKey Current { get; private set; }
+        public BuildingKey Current { get; private set; }
 
 		public FiniteBuildOrder(IDynamicBuildOrder infiniteBuildOrder, int size)
 		{

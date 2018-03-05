@@ -13,8 +13,8 @@ namespace BattleCruisers.Data.Static
 {
     public class StaticData : IStaticData
 	{
-        private readonly IDictionary<IPrefabKey, int> _buildingToUnlockedLevel;
-        private readonly IDictionary<IPrefabKey, int> _unitToUnlockedLevel;
+        private readonly IDictionary<BuildingKey, int> _buildingToUnlockedLevel;
+        private readonly IDictionary<UnitKey, int> _unitToUnlockedLevel;
         private readonly IDictionary<IPrefabKey, int> _hullToUnlockedLevel;
 
         private readonly IList<BuildingKey> _allBuildings;
@@ -25,18 +25,12 @@ namespace BattleCruisers.Data.Static
 
 		public GameModel InitialGameModel { get; private set; }
 		public IList<ILevel> Levels { get; private set; }
-		public ReadOnlyCollection<IPrefabKey> BuildingKeys { get; private set; }
-        public ReadOnlyCollection<IPrefabKey> AIBannedUltrakeys { get; private set; }
+        public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
+        public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
 
         public StaticData()
 		{
-            _allBuildings = AllBuildingKeys();
-
-            IList<IPrefabKey> allBuildings =
-                _allBuildings
-                .Select(buildingKey => (IPrefabKey)buildingKey)
-                .ToList();
-            BuildingKeys = new ReadOnlyCollection<IPrefabKey>(allBuildings);
+            BuildingKeys = new ReadOnlyCollection<BuildingKey>(_allBuildings);
 
             _allUnits = AllUnitKeys();
 
@@ -46,7 +40,7 @@ namespace BattleCruisers.Data.Static
 
             _strategies = new LevelStrategies();
 
-            AIBannedUltrakeys = new ReadOnlyCollection<IPrefabKey>(CreateAIBannedUltraKeys());
+            AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
 			
             InitialGameModel = CreateInitialGameModel();
 			Levels = CreateLevels();
@@ -104,9 +98,9 @@ namespace BattleCruisers.Data.Static
 			};
 		}
 
-        private IList<IPrefabKey> CreateAIBannedUltraKeys()
+        private IList<BuildingKey> CreateAIBannedUltraKeys()
         {
-            return new List<IPrefabKey>()
+            return new List<BuildingKey>()
             {
                 // Don't want AI to try and build a kamikaze signal as an ultra,
                 // as it is only effective if there are a certain number of planes.
@@ -225,9 +219,9 @@ namespace BattleCruisers.Data.Static
 			};
 		}
 
-        private IDictionary<IPrefabKey, int> CreateBuildingAvailabilityMap()
+        private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()
         {
-            return new Dictionary<IPrefabKey, int>()
+            return new Dictionary<BuildingKey, int>()
             {
                 // Factories
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
@@ -262,9 +256,9 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        private IDictionary<IPrefabKey, int> CreateUnitAvailabilityMap()
+        private IDictionary<UnitKey, int> CreateUnitAvailabilityMap()
         {
-            return new Dictionary<IPrefabKey, int>()
+            return new Dictionary<UnitKey, int>()
             {
                 // Aircraft
                 { StaticPrefabKeys.Units.Bomber, 1 },
@@ -294,21 +288,19 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        public IList<IPrefabKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
+        public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
         {
             return 
                 _allBuildings
                     .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildingAvailable(buildingKey, levelNum))
-	                .Select(buildingKey => (IPrefabKey)buildingKey)
 	                .ToList();
         }
 
-        public IList<IPrefabKey> GetAvailableUnits(UnitCategory category, int levelNum)
+        public IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum)
         {
             return
                 _allUnits
                     .Where(unitKey => unitKey.UnitCategory == category && IsUnitAvailable(unitKey, levelNum))
-                    .Select(unitKey => (IPrefabKey)unitKey)
                     .ToList();
         }
 
@@ -344,18 +336,19 @@ namespace BattleCruisers.Data.Static
 
             return
                 new Loot(
-                    hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
+                    // FELIX
+                    hullKeys: new HullKey[] { },
+                    //hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
                     unitKeys: GetUnitsFirstAvailableIn(availabilityLevelNum),
                     buildingKeys: GetBuildingsFirstAvailableIn(availabilityLevelNum));
         }
 
-        // FELIX Change to UnitKey!
-        private IList<IPrefabKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<UnitKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
         {
             return GetBuildablesFirstAvailableIn(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        private IList<IPrefabKey> GetBuildingsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<BuildingKey> GetBuildingsFirstAvailableIn(int levelFirstAvailableIn)
         {
             return GetBuildablesFirstAvailableIn(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
@@ -364,7 +357,8 @@ namespace BattleCruisers.Data.Static
 		/// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
 		/// (ie, the starting level, where we have multiple buildables available).
 		/// </summary>
-        private IList<IPrefabKey> GetBuildablesFirstAvailableIn(IDictionary<IPrefabKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        private IList<TKey> GetBuildablesFirstAvailableIn<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+            where TKey : IPrefabKey
 		{
 			return
 				buildableToUnlockedLevel
@@ -382,7 +376,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 		
-        public bool IsUnitAvailable(IPrefabKey unitKey, int levelNum)
+        public bool IsUnitAvailable(UnitKey unitKey, int levelNum)
         {
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
 
@@ -390,7 +384,7 @@ namespace BattleCruisers.Data.Static
             return levelNum >= firstLevelUnitIsAvailableIn;
         }
 
-        public bool IsBuildingAvailable(IPrefabKey buildingKey, int levelNum)
+        public bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum)
         {
             Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
 

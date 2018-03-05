@@ -173,7 +173,7 @@ namespace BattleCruisers.AI.BuildOrders
             return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.SpySatelliteLauncher, size: 1);
         }
 
-        private IDynamicBuildOrder CreateStaticBuildOrder(IPrefabKey buildingKey, int size)
+        private IDynamicBuildOrder CreateStaticBuildOrder(BuildingKey buildingKey, int size)
         {
             return
                 new FiniteBuildOrder(
@@ -185,7 +185,7 @@ namespace BattleCruisers.AI.BuildOrders
             BuildingCategory buildingCategory, 
             int size, 
             ILevelInfo levelInfo,
-            IList<IPrefabKey> bannedBuildings = null)
+            IList<BuildingKey> bannedBuildings = null)
         {
             return
                 new FiniteBuildOrder(

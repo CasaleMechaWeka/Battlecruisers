@@ -9,11 +9,10 @@ namespace BattleCruisers.AI.BuildOrders
     public interface IDynamicBuildOrder
     {
         /// <summary>
-        /// Gets the prefab key.  If the last MoveNext() call retruned false,
+        /// Gets the prefab key.  If the last MoveNext() call returned false,
         /// will return null (unlike IEnumerator, where the behaviour is undefined).
         /// </summary>
-        IPrefabKey Current { get; }
-
+        BuildingKey Current { get; }
 
         /// <summary>
         /// Returns true while the build order has a valid Current.  Returns
