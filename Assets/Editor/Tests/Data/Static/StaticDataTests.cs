@@ -57,9 +57,10 @@ namespace BattleCruisers.Tests.Data.Static
 
         #region IsUnitAvailable
         [Test]
-        public void IsUnitAvailable_NonUnitKey_Throws()
+        public void IsUnitAvailable_NonExistantUnitKey_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsUnitAvailable(StaticPrefabKeys.Buildings.AirFactory, levelNum: 1));
+            UnitKey bogusKey = new UnitKey(UnitCategory.Aircraft, "Breckenridge");
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsUnitAvailable(bogusKey, levelNum: 1));
         }
 
         [Test]
@@ -77,9 +78,10 @@ namespace BattleCruisers.Tests.Data.Static
 
         #region IsBuildingAvailable
         [Test]
-        public void IsBuildingAvailable_NonBuildingKey_Throws()
+        public void IsBuildingAvailable_NonExistantBuildingKey_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsBuildingAvailable(StaticPrefabKeys.Units.AttackBoat, levelNum: 1));
+            BuildingKey bogusKey = new BuildingKey(BuildingCategory.Ultra, "Veil");
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsBuildingAvailable(bogusKey, levelNum: 1));
         }
 
         [Test]
@@ -131,7 +133,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Archon
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 19);
-            ILoot expectedLoot = CreateLoot(unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.ArchonBattleship });
+            ILoot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.ArchonBattleship });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -141,7 +143,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Fighter, destroyer
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 8);
-            ILoot expectedLoot = CreateLoot(unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.Fighter, StaticPrefabKeys.Units.Destroyer});
+            ILoot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Fighter, StaticPrefabKeys.Units.Destroyer});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -151,7 +153,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Shield
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 4);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.ShieldGenerator});
+            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -161,7 +163,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Stealth generator, spy satellite launcher
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 13);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher});
+            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -171,7 +173,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Raptor
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 3);
-            ILoot expectedLoot = CreateLoot(hullKeys: new IPrefabKey[] { StaticPrefabKeys.Hulls.Raptor});
+            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -183,8 +185,8 @@ namespace BattleCruisers.Tests.Data.Static
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 1);
             ILoot expectedLoot 
                 = CreateLoot(
-                    unitKeys: new IPrefabKey[] { StaticPrefabKeys.Units.Frigate },
-                    buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.Mortar});
+                    unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Frigate },
+                    buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.Mortar});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -196,8 +198,8 @@ namespace BattleCruisers.Tests.Data.Static
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 7);
             ILoot expectedLoot
                 = CreateLoot(
-                    hullKeys: new IPrefabKey[] { StaticPrefabKeys.Hulls.Rockjaw },
-                    buildingKeys: new IPrefabKey[] { StaticPrefabKeys.Buildings.DeathstarLauncher });
+                    hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Rockjaw },
+                    buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.DeathstarLauncher });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -214,15 +216,15 @@ namespace BattleCruisers.Tests.Data.Static
         #endregion GetLevelLoot
 
         private ILoot CreateLoot(
-            IList<IPrefabKey> hullKeys = null,
-            IList<IPrefabKey> unitKeys = null,
-            IList<IPrefabKey> buildingKeys = null)
+            IList<HullKey> hullKeys = null,
+            IList<UnitKey> unitKeys = null,
+            IList<BuildingKey> buildingKeys = null)
         {
             return
                 new Loot(
-                    hullKeys ?? new List<IPrefabKey>(),
-                    unitKeys ?? new List<IPrefabKey>(),
-                    buildingKeys ?? new List<IPrefabKey>());
+                    hullKeys ?? new List<HullKey>(),
+                    unitKeys ?? new List<UnitKey>(),
+                    buildingKeys ?? new List<BuildingKey>());
         }
     }
 }

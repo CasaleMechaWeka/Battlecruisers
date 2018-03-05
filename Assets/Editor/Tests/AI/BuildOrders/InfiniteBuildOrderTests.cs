@@ -12,20 +12,20 @@ namespace BattleCruisers.Tests.AI.BuildOrders
     public class InfiniteBuildOrderTests
 	{
         private ILevelInfo _levelInfo;
-		private IList<IPrefabKey> _availableBuildings, _bannedBuildings;
+        private IList<BuildingKey> _availableBuildings, _bannedBuildings;
         private BuildingCategory _buildingCategory;
-        private IPrefabKey _constructableKey, _notConstructableKey;
+        private BuildingKey _constructableKey, _notConstructableKey;
 
 		[SetUp]
 		public void SetuUp()
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
 
-            _availableBuildings = new List<IPrefabKey>();
-            _bannedBuildings = new List<IPrefabKey>();
+            _availableBuildings = new List<BuildingKey>();
+            _bannedBuildings = new List<BuildingKey>();
             _buildingCategory = BuildingCategory.Ultra;
-			_constructableKey = Substitute.For<IPrefabKey>();
-			_notConstructableKey = Substitute.For<IPrefabKey>();
+            _constructableKey = new BuildingKey(BuildingCategory.Defence, "Park");
+            _notConstructableKey = new BuildingKey(BuildingCategory.Offence, "City");
 
             _levelInfo = Substitute.For<ILevelInfo>();
             _levelInfo.GetAvailableBuildings(_buildingCategory).Returns(_availableBuildings);

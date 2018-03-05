@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.AI;
 using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
     public class AntiUnitBuildOrderTests
 	{
         private IDynamicBuildOrder _buildOrder;
-		private IPrefabKey _basicDefenceKey, _advancedDefenceKey;
+        private BuildingKey _basicDefenceKey, _advancedDefenceKey;
         private ILevelInfo _levelInfo;
 
 		[SetUp]
@@ -19,8 +20,8 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
 
-			_basicDefenceKey = Substitute.For<IPrefabKey>();
-            _advancedDefenceKey = Substitute.For<IPrefabKey>();
+            _basicDefenceKey = new BuildingKey(BuildingCategory.Defence, "Kasper");
+            _advancedDefenceKey = new BuildingKey(BuildingCategory.Defence, "Seppel");
             _levelInfo = Substitute.For<ILevelInfo>();
 
             _buildOrder
