@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils.Fetchers;
@@ -19,6 +20,11 @@ namespace BattleCruisers.Data.Static.LevelLoot
         protected override IComparableItemDetails<ICruiser> GetItemDetails(IItemDetailsGroup itemDetailsControllers)
         {
             return itemDetailsControllers.HullDetails;
+        }
+
+        public override void UnlockItem(IGameModel gameModel)
+        {
+            gameModel.AddUnlockedHull(_itemKey);
         }
     }
 }

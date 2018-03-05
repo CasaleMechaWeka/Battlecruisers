@@ -1,11 +1,17 @@
-﻿using BattleCruisers.UI.Common.BuildingDetails;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
     public interface ILootItem
     {
-		// FELIX  Probably need to have method for adding newly unlocked item to GameModel and player Loadout.
+        /// <summary>
+        /// Adds the item represented by this class to:
+        /// 1. The game model's unlocked buildings/units/hulls
+        /// 2. The player's loadout (if not a hull)
+        /// </summary>
+        void UnlockItem(IGameModel gameModel);
 
         void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers);
     }

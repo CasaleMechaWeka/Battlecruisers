@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils.Fetchers;
@@ -19,6 +20,12 @@ namespace BattleCruisers.Data.Static.LevelLoot
         protected override IComparableItemDetails<IBuilding> GetItemDetails(IItemDetailsGroup itemDetailsControllers)
         {
             return itemDetailsControllers.BuildingDetails;
+        }
+
+        public override void UnlockItem(IGameModel gameModel)
+        {
+            gameModel.AddUnlockedBuilding(_itemKey);
+            gameModel.PlayerLoadout.AddBuilding(_itemKey);
         }
     }
 }

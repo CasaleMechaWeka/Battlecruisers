@@ -61,7 +61,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private void UnlockLootItems(ILoot unlockedLoot)
         {
-            // FELIX
+            foreach (ILootItem lootItem in unlockedLoot.Items)
+            {
+                lootItem.UnlockItem(_dataProvider.GameModel);
+            }
         }
 
         private void ShowLoot(ILoot unlockedLoot)

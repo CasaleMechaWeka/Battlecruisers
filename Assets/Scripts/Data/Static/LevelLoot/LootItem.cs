@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
@@ -30,6 +31,8 @@ namespace BattleCruisers.Data.Static.LevelLoot
         protected abstract TItem GetItem(IPrefabFactory prefabFactory);
 
         protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsGroup itemDetailsControllers);
+
+        public abstract void UnlockItem(IGameModel gameModel);
 
         public override bool Equals(object obj)
         {
