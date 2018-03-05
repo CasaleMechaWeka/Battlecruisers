@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.Static
 	{
         private readonly IDictionary<BuildingKey, int> _buildingToUnlockedLevel;
         private readonly IDictionary<UnitKey, int> _unitToUnlockedLevel;
-        private readonly IDictionary<IPrefabKey, int> _hullToUnlockedLevel;
+        private readonly IDictionary<HullKey, int> _hullToUnlockedLevel;
 
         private readonly IList<BuildingKey> _allBuildings;
         private readonly IList<UnitKey> _allUnits;
@@ -30,6 +30,7 @@ namespace BattleCruisers.Data.Static
 
         public StaticData()
 		{
+            _allBuildings = AllBuildingKeys();
             BuildingKeys = new ReadOnlyCollection<BuildingKey>(_allBuildings);
 
             _allUnits = AllUnitKeys();
@@ -273,9 +274,9 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        private IDictionary<IPrefabKey, int> CreateHullAvailabilityMap()
+        private IDictionary<HullKey, int> CreateHullAvailabilityMap()
         {
-            return new Dictionary<IPrefabKey, int>()
+            return new Dictionary<HullKey, int>()
             {
                 { StaticPrefabKeys.Hulls.Trident, 1 },
                 { StaticPrefabKeys.Hulls.Raptor, 4 },
@@ -336,9 +337,7 @@ namespace BattleCruisers.Data.Static
 
             return
                 new Loot(
-                    // FELIX
-                    hullKeys: new HullKey[] { },
-                    //hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
+                    hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
                     unitKeys: GetUnitsFirstAvailableIn(availabilityLevelNum),
                     buildingKeys: GetBuildingsFirstAvailableIn(availabilityLevelNum));
         }
@@ -367,7 +366,7 @@ namespace BattleCruisers.Data.Static
 					.ToList();
 		}
 
-        private IList<IPrefabKey> GetHullsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<HullKey> GetHullsFirstAvailableIn(int levelFirstAvailableIn)
         {
             return
                 _hullToUnlockedLevel
