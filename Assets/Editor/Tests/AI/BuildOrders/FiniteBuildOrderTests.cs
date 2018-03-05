@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,14 +10,14 @@ namespace BattleCruisers.Tests.AI.BuildOrders
     public class FiniteBuildOrderTests
 	{
 		private IDynamicBuildOrder _finiteBuildOrder, _infiniteBuildOrder;
-        private IPrefabKey _key;
+        private BuildingKey _key;
 
         [SetUp]
 		public void SetuUp()
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
 
-            _key = Substitute.For<IPrefabKey>();
+            _key = new BuildingKey(BuildingCategory.Tactical, "Zauberer");
             _infiniteBuildOrder = Substitute.For<IDynamicBuildOrder>();
             _infiniteBuildOrder.Current.Returns(_key);
             _infiniteBuildOrder.MoveNext().Returns(true);

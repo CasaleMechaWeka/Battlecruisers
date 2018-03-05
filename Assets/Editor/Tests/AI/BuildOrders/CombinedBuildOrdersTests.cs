@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,17 +11,17 @@ namespace BattleCruisers.Tests.AI.BuildOrders
     public class CombinedBuildOrdersTests
 	{
         private IDynamicBuildOrder _comboBuildOrder, _buildOrder1, _buildOrder2;
-        private IPrefabKey _key1, _key2;
+        private BuildingKey _key1, _key2;
 
 		[SetUp]
 		public void SetuUp()
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
 
-            _key1 = Substitute.For<IPrefabKey>();
+            _key1 = new BuildingKey(BuildingCategory.Tactical, "Raeuber");
             _buildOrder1 = CreateBuildOrder(_key1);
 
-            _key2 = Substitute.For<IPrefabKey>();
+            _key2 = new BuildingKey(BuildingCategory.Tactical, "Hotzenplotz");
             _buildOrder2 = CreateBuildOrder(_key2);
 
             _comboBuildOrder = new CombinedBuildOrders(new List<IDynamicBuildOrder>() { _buildOrder1, _buildOrder2 });

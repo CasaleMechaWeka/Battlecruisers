@@ -4,6 +4,7 @@ using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -24,7 +25,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IDynamicBuildOrder _buildOrder;
         private IThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
-        private IPrefabKey _buildingKey;
+        private BuildingKey _buildingKey;
         private ITask _task;
 
 		[SetUp]
@@ -46,7 +47,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
 
-            _buildingKey = Substitute.For<IPrefabKey>();
+            _buildingKey = new BuildingKey(BuildingCategory.Tactical, "Zwackelmann");
             _buildOrder = Substitute.For<IDynamicBuildOrder>();
             _buildOrder.Current.Returns(_buildingKey);
             _buildOrder.MoveNext().Returns(true);

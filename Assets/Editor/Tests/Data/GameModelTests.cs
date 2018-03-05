@@ -44,7 +44,6 @@ namespace BattleCruisers.Tests.Data
 		}
 		#endregion AddUnlockedHull
 
-
 		#region AddUnlockedBuilding
 		[Test]
 		public void AddUnlockedBuilding()
@@ -78,50 +77,5 @@ namespace BattleCruisers.Tests.Data
 			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddUnlockedUnit(_unit));
 		}
 		#endregion AddUnlockedUnit
-
-		#region LastBattleResult
-		[Test]
-		public void LastBattleResult_Victory_Updates_NumOfLevelsCompleted()
-		{
-			int numOfLevelsCompleted = _gameModel.NumOfLevelsCompleted;
-			int levelNumJustCompleted = numOfLevelsCompleted + 1;
-			BattleResult victoryResult = new BattleResult(levelNumJustCompleted, wasVictory: true);
-			_gameModel.LastBattleResult = victoryResult;
-
-			Assert.AreEqual(numOfLevelsCompleted + 1, _gameModel.NumOfLevelsCompleted);
-		}
-
-		[Test]
-		public void LastBattleResult_Victory_DoesNotUpdate_NumOfLevelsCompeleted_IfNotLatestLevel()
-		{
-			int numOfLevelsCompleted = _gameModel.NumOfLevelsCompleted;
-			int notLatelstLevel = numOfLevelsCompleted;
-			BattleResult victoryResult = new BattleResult(notLatelstLevel, wasVictory: true);
-			_gameModel.LastBattleResult = victoryResult;
-
-			Assert.AreEqual(numOfLevelsCompleted, _gameModel.NumOfLevelsCompleted);
-		}
-
-		[Test]
-		public void LastBattleResult_Loss_DoesNotUpdate_NumOfLevelsCompleted()
-		{
-			int numOfLevelsCompleted = _gameModel.NumOfLevelsCompleted;
-			int levelNumJustCompleted = numOfLevelsCompleted + 1;
-			BattleResult victoryResult = new BattleResult(levelNumJustCompleted, wasVictory: false);
-			_gameModel.LastBattleResult = victoryResult;
-
-			Assert.AreEqual(numOfLevelsCompleted, _gameModel.NumOfLevelsCompleted);
-		}
-
-		[Test]
-		public void LastBattleResult_LevelCompletedMoreThanOneAhead_Throws()
-		{
-			int numOfLevelsCompleted = _gameModel.NumOfLevelsCompleted;
-			int levelNumJustCompleted = numOfLevelsCompleted + 2;
-			BattleResult victoryResult = new BattleResult(levelNumJustCompleted, wasVictory: true);
-
-			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.LastBattleResult = victoryResult);
-		}
-		#endregion LastBattleResult
 	}
 }

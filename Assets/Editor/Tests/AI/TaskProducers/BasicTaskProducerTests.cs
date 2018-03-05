@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IDynamicBuildOrder _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
-        private IPrefabKey _platformBuildingKey, _deckBuildingKey;
+        private BuildingKey _platformBuildingKey, _deckBuildingKey;
         private ITask _platformBuildingTask, _deckBuildingTask;
 
         [SetUp]
@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _platformSlotBuilding.SlotType.Returns(SlotType.Platform);
             _platformSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _platformSlotBuildingWrapper.Buildable.Returns(_platformSlotBuilding);
-            _platformBuildingKey = Substitute.For<IPrefabKey>();
+            _platformBuildingKey = new BuildingKey(BuildingCategory.Ultra, "Kaffeemuehle");
             _prefabFactory.GetBuildingWrapperPrefab(_platformBuildingKey).Returns(_platformSlotBuildingWrapper);
             _platformBuildingTask = Substitute.For<ITask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _platformBuildingKey).Returns(_platformBuildingTask);
@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckSlotBuilding.SlotType.Returns(SlotType.Deck);
             _deckSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _deckSlotBuildingWrapper.Buildable.Returns(_deckSlotBuilding);
-            _deckBuildingKey = Substitute.For<IPrefabKey>();
+            _deckBuildingKey = new BuildingKey(BuildingCategory.Tactical, "Hirsch");
             _prefabFactory.GetBuildingWrapperPrefab(_deckBuildingKey).Returns(_deckSlotBuildingWrapper);
             _deckBuildingTask = Substitute.For<ITask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _deckBuildingKey).Returns(_deckBuildingTask);
