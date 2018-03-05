@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
-    // FELIX  Test :)
     public class LootManager : ILootManager
     {
         private readonly IDataProvider _dataProvider;

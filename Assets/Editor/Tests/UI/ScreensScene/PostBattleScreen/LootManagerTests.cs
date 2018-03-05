@@ -97,7 +97,13 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         [Test]
         public void UnlockLoot_UnlocksLootItems()
         {
-            // FELIX
+            _lootItems.Add(_item1);
+            _lootItems.Add(_item2);
+
+            TriggerUnlock();
+
+            _item1.Received().UnlockItem(_dataProvider.GameModel);
+            _item2.Received().UnlockItem(_dataProvider.GameModel);
         }
 
         [Test]
