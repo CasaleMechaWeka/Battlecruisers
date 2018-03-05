@@ -8,6 +8,8 @@ namespace BattleCruisers.UI.ScreensScene
 	{ 
 		protected IScreensSceneGod _screensSceneGod;
 
+        public bool IsInitialised { get { return _screensSceneGod != null; } }
+
 		protected void Initialise(IScreensSceneGod screensSceneGod)
 		{
 			Assert.IsNotNull(screensSceneGod);

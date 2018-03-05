@@ -41,35 +41,47 @@ namespace BattleCruisers.Scenes
 			ApplicationModel.ShowPostBattleScreen = true;
 
 
-            BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
-            int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
-
-            levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked, lastPlayedLevel);
 			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
-            loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 
             if (ApplicationModel.ShowPostBattleScreen)
             {
-                ApplicationModel.ShowPostBattleScreen = false;
-                postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
-                GoToScreen(postBattleScreen);
+				ApplicationModel.ShowPostBattleScreen = false;
+    
+                GoToPostBattleScreen();
             }
             else
             {
                 GoToHomeScreen();
             }
-			
-			
-			// TEMP  Go to specific screen :)
-			//GoToSettingsScreen();
-			//GoToLevelsScreen();
+            
+            
+            // TEMP  Go to specific screen :)
+            //GoToSettingsScreen();
+            //GoToLevelsScreen();
             //GoToLoadoutScreen();
-		}
-		
+        }
+        
+        private void GoToPostBattleScreen()
+        {
+            Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
+            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+
+            GoToScreen(postBattleScreen);
+        }
+
 		public void GoToLevelsScreen()
 		{
+            // Laziliy initalise, because post battle screen can change the number of levels unlocked
+            if (!levelsScreen.IsInitialised)
+            {
+                BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
+                int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
+
+                levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked, lastPlayedLevel);
+            }
+
 			GoToScreen(levelsScreen);
 		}
 
@@ -80,6 +92,12 @@ namespace BattleCruisers.Scenes
 
 		public void GoToLoadoutScreen()
 		{
+            // Laziliy initalise, because post battle screen can change the loadout
+            if (!loadoutScreen.IsInitialised)
+            {
+                loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+            }
+
 			GoToScreen(loadoutScreen);
 		}
 
