@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Cameras
 			_camera = camera;
 		}
 
-		// height = 2 * orthographi size
+		// height = 2 * orthographic size
 		// width = height * aspect ratio
 		public float FindCameraOrthographicSize(ICruiser cruiser)
 		{
