@@ -1,14 +1,19 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.Commands;
+using BattleCruisers.UI.Common;
+using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // TEMP:  For end game, allow chaging speed from settings OR simply lock game speed :)
     public class GameSpeedController : MonoBehaviour
     {
         private Text _gameSpeedText;
+        private ICommand _increaseSpeedCommand, _decreaseSpeedCommand;
+        private ButtonController _increaseSpeedButton, _decreaseSpeedButton;
 
+        // TEMP:  For end game, limit max speed to x4?
         private const float MAX_GAME_SPEED = 32;
         private const float MIN_GAME_SPEED = 0.125f;
         private const float SPEED_CHANGE_FACTOR = 2;
@@ -22,6 +27,9 @@ namespace BattleCruisers.UI.BattleScene
             {
                 Time.timeScale = value;
                 _gameSpeedText.text = SPEED_PREFIX + value.ToString();
+
+                _increaseSpeedCommand.EmitCanExecuteChanged();
+                _decreaseSpeedCommand.EmitCanExecuteChanged();
             }
         }
 
@@ -29,6 +37,14 @@ namespace BattleCruisers.UI.BattleScene
         {
             _gameSpeedText = GetComponent<Text>();
             Assert.IsNotNull(_gameSpeedText);
+
+            _increaseSpeedCommand = new Command(IncreaseSpeedCommandExecute, CanIncreaseSpeedCommandExecute);
+            _increaseSpeedButton = transform.FindNamedComponent<ButtonController>("IncreaseSpeedButton");
+            _increaseSpeedButton.Initialise(_increaseSpeedCommand);
+
+            _decreaseSpeedCommand = new Command(DecreaseSpeedCommandExecute, CanDecreaseSpeedCommandExecute);
+            _decreaseSpeedButton = transform.FindNamedComponent<ButtonController>("DecreaseSpeedButton");
+            _decreaseSpeedButton.Initialise(_decreaseSpeedCommand);
         }
 
         void Update()
@@ -36,19 +52,33 @@ namespace BattleCruisers.UI.BattleScene
             // Increase game speed
             if (Input.GetKeyUp(KeyCode.Equals))
             {
-                if (GameSpeed < MAX_GAME_SPEED)
-                {
-                    GameSpeed *= SPEED_CHANGE_FACTOR;
-                }
+                _increaseSpeedCommand.ExecuteIfPossible();
             }
             // Reduce game speed
             else if (Input.GetKeyUp(KeyCode.Minus))
             {
-                if (GameSpeed > MIN_GAME_SPEED)
-                {
-                    GameSpeed /= SPEED_CHANGE_FACTOR;
-                }
+                _decreaseSpeedCommand.ExecuteIfPossible();
             }
+        }
+
+        private bool CanIncreaseSpeedCommandExecute()
+        {
+            return GameSpeed < MAX_GAME_SPEED;
+        }
+
+        private void IncreaseSpeedCommandExecute()
+        {
+            GameSpeed *= SPEED_CHANGE_FACTOR;
+        }
+
+        private bool CanDecreaseSpeedCommandExecute()
+        {
+            return GameSpeed > MIN_GAME_SPEED;
+        }
+
+        private void DecreaseSpeedCommandExecute()
+        {
+            GameSpeed /= SPEED_CHANGE_FACTOR;
         }
     }
 }
