@@ -24,7 +24,7 @@ namespace BattleCruisers.Data.Static
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
 
 		public GameModel InitialGameModel { get; private set; }
-		public IList<ILevel> Levels { get; private set; }
+        public ReadOnlyCollection<ILevel> Levels { get; private set; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Data.Static
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
 			
             InitialGameModel = CreateInitialGameModel();
-			Levels = CreateLevels();
+            Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
 		}
 
 		private List<HullKey> AllHullKeys()
