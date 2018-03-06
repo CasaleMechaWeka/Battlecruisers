@@ -20,5 +20,13 @@ namespace BattleCruisers.UI.Commands
             Assert.IsTrue(CanExecute);
             _action.Invoke();
         }
-	}
+
+        public void ExecuteIfPossible()
+        {
+            if (CanExecute)
+            {
+                _action.Invoke();
+            }
+        }
+    }
 }

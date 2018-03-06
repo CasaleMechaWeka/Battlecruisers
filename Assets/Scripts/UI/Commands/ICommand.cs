@@ -3,5 +3,6 @@
     public interface ICommand : ICommandBase
     {
         void Execute();
+        void ExecuteIfPossible();
     }
 }
