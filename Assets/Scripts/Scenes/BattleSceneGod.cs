@@ -166,8 +166,7 @@ namespace BattleCruisers.Scenes
             // IPAD:  Adapt input for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
-				modalMenuController.ShowMenu(OnModalMenuDismissed);
-				PauseGame();
+                ShowModalMenu();
 			}
 			// TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W))
@@ -175,6 +174,12 @@ namespace BattleCruisers.Scenes
                 _aiCruiser.TakeDamage(_aiCruiser.Health, damageSource: _playerCruiser);
 			}
 		}
+
+        public void ShowModalMenu()
+        {
+            modalMenuController.ShowMenu(OnModalMenuDismissed);
+            PauseGame();
+        }
 
 		private void OnModalMenuDismissed(UserAction userAction)
 		{
