@@ -17,7 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private IDataProvider _dataProvider;
         private ILootManager _lootManager;
 
-        // FELIX  Initialise programmatically
 		public Text title;
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
