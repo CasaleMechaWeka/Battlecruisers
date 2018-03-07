@@ -9,8 +9,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         public Vector2 Size { get; private set; }
 
-        public void Initialise(float horizontalMovementSpeedInMPerS, float disappearLineInM, float reappearLineInM)
+        public void Initialise(ICloudStats cloudStats)
         {
+            Assert.IsNotNull(cloudStats);
+
             SpriteRenderer renderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(renderer);
             Size = renderer.size;

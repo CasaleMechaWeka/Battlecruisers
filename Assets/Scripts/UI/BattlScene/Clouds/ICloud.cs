@@ -6,6 +6,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         Vector2 Size { get; }
 
-        void Initialise(float horizontalMovementSpeedInMPerS, float disappearLineInM, float reappearLineInM);
+        void Initialise(ICloudStats cloudStats);
     }
 }
