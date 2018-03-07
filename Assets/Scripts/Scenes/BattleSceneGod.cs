@@ -173,7 +173,10 @@ namespace BattleCruisers.Scenes
 
             // FELIX  Get cloud generation stats from level :)
             Rect cloudSpawnArea = new Rect(-80, 10, 160, 50);
-            ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Slow);
+            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.Low, CloudMovementSpeed.Slow);
+            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.Medium, CloudMovementSpeed.Slow);
+            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Slow);
+            ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Fast);
 
             ICloudGenerator cloudGenerator = new CloudGenerator(cloudFactory);
             cloudGenerator.GenerateClouds(generationStats);

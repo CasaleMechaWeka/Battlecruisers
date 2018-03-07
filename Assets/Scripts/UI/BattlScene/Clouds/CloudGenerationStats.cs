@@ -34,12 +34,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             switch (density)
             {
                 case CloudDensity.High:
-                    return 0.5f;
+                    return 2;
                 case CloudDensity.Medium:
-                    return 0.25f;
+                    return 1.5f;
                 case CloudDensity.Low:
                 default:
-                    return 0.1f;
+                    return 0.75f;
             }
         }
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             switch (movementSpeed)
             {
                 case CloudMovementSpeed.Fast:
-                    return 1;
+                    return 0.75f;
                 case CloudMovementSpeed.Slow:
                 default:
                     return 0.5f;
