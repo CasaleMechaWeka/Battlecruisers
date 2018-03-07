@@ -5,10 +5,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     public class CloudGenerationStats : ICloudGenerationStats
     {
         /// <summary>
-        /// This is how the cloud area should be set:
+        /// For example, to put clouds in this area:
         /// 
         /// x: -80 -> 80
         /// y:  25 -> 60
+        /// 
+        /// Create Rect like this:
         /// 
         /// Rect cloudArea = new Rect(-80, 25, 160, 35);
         /// </summary>

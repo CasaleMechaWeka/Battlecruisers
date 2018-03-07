@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using BattleCruisers.UI.BattleScene.Clouds;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -45,56 +46,56 @@ namespace BattleCruisers.Scenes
 		private const int CRUISER_OFFSET_IN_M = 35;
 
 		void Awake()
-		{
-			Assert.raiseExceptions = true;
-			Time.timeScale = 1;
+        {
+            Assert.raiseExceptions = true;
+            Time.timeScale = 1;
 
             IDeferrer deferrer = GetComponent<IDeferrer>();
 
-			Helper.AssertIsNotNull(
-                uiFactory, 
-                buildMenuController, 
-                buildMenuCanvas, 
-                modalMenuController, 
-                cameraController, 
+            Helper.AssertIsNotNull(
+                uiFactory,
+                buildMenuController,
+                buildMenuCanvas,
+                modalMenuController,
+                cameraController,
                 backgroundController,
                 deferrer);
 
 
-			// TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
-			if (ApplicationModel.SelectedLevel == -1)
-			{
-				ApplicationModel.SelectedLevel = 1;
-			}
+            // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
+            if (ApplicationModel.SelectedLevel == -1)
+            {
+                ApplicationModel.SelectedLevel = 1;
+            }
 
 
-			_dataProvider = ApplicationModel.DataProvider;
-			_currentLevelNum = ApplicationModel.SelectedLevel;
+            _dataProvider = ApplicationModel.DataProvider;
+            _currentLevelNum = ApplicationModel.SelectedLevel;
 
-			ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
-			ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
+            ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
 
 
-			// Common setup
-			IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            // Common setup
+            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
 
 
-			// Instantiate player cruiser
-			Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
-			_playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
-			_playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, _playerCruiser.YAdjustmentInM, 0);
+            // Instantiate player cruiser
+            Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
+            _playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
+            _playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, _playerCruiser.YAdjustmentInM, 0);
 
 
-			// Instantiate AI cruiser
-			Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
-			_aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
+            // Instantiate AI cruiser
+            Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
+            _aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 
-			_aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
-			Quaternion rotation = _aiCruiser.transform.rotation;
-			rotation.eulerAngles = new Vector3(0, 180, 0);
-			_aiCruiser.transform.rotation = rotation;
+            _aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
+            Quaternion rotation = _aiCruiser.transform.rotation;
+            rotation.eulerAngles = new Vector3(0, 180, 0);
+            _aiCruiser.transform.rotation = rotation;
 
 
             // UIManager
@@ -102,7 +103,7 @@ namespace BattleCruisers.Scenes
 
             IBuildableDetailsManager detailsManager = new BuildableDetailsManager(buildMenuCanvas);
 
-            IUIManager uiManager 
+            IUIManager uiManager
                 = new UIManager(
                     _playerCruiser,
                     _aiCruiser,
@@ -114,12 +115,12 @@ namespace BattleCruisers.Scenes
 
             // Initialise player cruiser
             cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, uiManager, Faction.Blues, Direction.Right);
-			_playerCruiser.Destroyed += PlayerCruiser_Destroyed;
+            _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
             cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, uiManager, Faction.Reds, Direction.Left);
-			_aiCruiser.Destroyed += AiCruiser_Destroyed;
+            _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
             // UI
@@ -128,7 +129,7 @@ namespace BattleCruisers.Scenes
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);
-			IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
+            IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
             buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units, sorterFactory);
@@ -146,9 +147,12 @@ namespace BattleCruisers.Scenes
             ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
             IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
             aiManager.CreateAI(levelInfo);
-		}
 
-		private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
+
+            GenerateClouds();
+        }
+
+        private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
 		{
 			PauseGame();
 			CompleteBattleAsLoss();
@@ -160,6 +164,20 @@ namespace BattleCruisers.Scenes
 			BattleResult victoryResult = new BattleResult(_currentLevelNum, wasVictory: true);
 			CompleteBattle(victoryResult);
 		}
+
+        private void GenerateClouds()
+        {
+			CloudFactory cloudFactory = GetComponent<CloudFactory>();
+			Assert.IsNotNull(cloudFactory);
+			cloudFactory.Initialise();
+
+            // FELIX  Get cloud generation stats from level :)
+            Rect cloudSpawnArea = new Rect(-80, 15, 160, 45);
+            ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Slow);
+
+            ICloudGenerator cloudGenerator = new CloudGenerator(cloudFactory);
+            cloudGenerator.GenerateClouds(generationStats);
+        }
 
 		void Update()
 		{
