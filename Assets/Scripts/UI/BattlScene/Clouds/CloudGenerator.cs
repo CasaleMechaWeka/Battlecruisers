@@ -13,12 +13,31 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             _cloudFactory = cloudFactory;
         }
 
-        public void GenerateClouds(
-            Rect cloudArea, 
-            CloudDensity density = CloudDensity.Medium, 
-            CloudMovementSpeed movementSpeed = CloudMovementSpeed.Slow)
+        public void GenerateClouds(ICloudGenerationStats generationStats)
         {
-            throw new System.NotImplementedException();
+            float totalArea = generationStats.CloudSpawnArea.width * generationStats.CloudSpawnArea.height;
+            float targetArea = totalArea * generationStats.CloudDensityAsFraction;
+            float areaUsed = 0;
+
+            ICloudStats cloudStats = new CloudStats(generationStats);
+
+            while (areaUsed < targetArea)
+            {
+                Vector2 spawnPosition = FindSpawnPosition(generationStats.CloudSpawnArea);
+                ICloud newCloud = _cloudFactory.CreateCloud(spawnPosition);
+                newCloud.Initialise(cloudStats);
+
+                float cloudArea = newCloud.Size.x * newCloud.Size.y;
+                areaUsed += cloudArea;
+            }
+        }
+
+        private Vector2 FindSpawnPosition(Rect spawnArea)
+        {
+            float xPos = Random.Range(spawnArea.xMin, spawnArea.xMax);
+            float yPos = Random.Range(spawnArea.yMin, spawnArea.yMax);
+
+            return new Vector2(xPos, yPos);
         }
     }
 }
