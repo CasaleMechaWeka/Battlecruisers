@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.BattleScene.Clouds;
 
 namespace BattleCruisers.Data
 {
@@ -8,5 +9,6 @@ namespace BattleCruisers.Data
         string Name { get; }
         IPrefabKey Hull { get; }
         string SkyMaterialName { get; }
+        ICloudGenerationStats CloudStats { get; }
     }
 }
