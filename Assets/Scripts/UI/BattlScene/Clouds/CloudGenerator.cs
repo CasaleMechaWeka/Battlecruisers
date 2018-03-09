@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             float targetArea = totalArea * generationStats.CloudDensityAsFraction;
             float areaUsed = 0;
 
-            ICloudStats cloudStats = new CloudStats(generationStats);
+            ICloudStats cloudStats = _cloudFactory.CreateCloudStats(generationStats);
 
             while (areaUsed < targetArea)
             {

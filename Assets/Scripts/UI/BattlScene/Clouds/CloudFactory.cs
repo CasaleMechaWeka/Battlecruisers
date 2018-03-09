@@ -20,5 +20,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             CloudController cloudToCreate = cloudPrefabs.Shuffle().First();
             return Instantiate(cloudToCreate, spawnPosition, new Quaternion());
         }
+
+        public ICloudStats CreateCloudStats(ICloudGenerationStats generationStats)
+        {
+            return new CloudStats(generationStats);
+        }
     }
 }
