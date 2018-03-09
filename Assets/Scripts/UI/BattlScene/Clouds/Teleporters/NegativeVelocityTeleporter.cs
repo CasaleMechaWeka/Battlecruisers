@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.BattleScene.Clouds
+namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
 {
     /// <summary>
     /// Clouds move right to left.  Teleport clouds to right when they go off
