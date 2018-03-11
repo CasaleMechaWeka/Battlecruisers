@@ -101,7 +101,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
-                    parent: this);
+                    parent: this,
+                    firingSound: SoundKeys.Firing.AntiAir);
 
             _barrelController.Initialise(args);
 
