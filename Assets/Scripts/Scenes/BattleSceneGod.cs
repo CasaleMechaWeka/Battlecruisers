@@ -149,7 +149,7 @@ namespace BattleCruisers.Scenes
             aiManager.CreateAI(levelInfo);
 
 
-            GenerateClouds();
+            GenerateClouds(currentLevel);
         }
 
         private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
@@ -165,21 +165,14 @@ namespace BattleCruisers.Scenes
 			CompleteBattle(victoryResult);
 		}
 
-        private void GenerateClouds()
+        private void GenerateClouds(ILevel level)
         {
 			CloudFactory cloudFactory = GetComponent<CloudFactory>();
 			Assert.IsNotNull(cloudFactory);
 			cloudFactory.Initialise();
 
-            // FELIX  Get cloud generation stats from level :)
-            Rect cloudSpawnArea = new Rect(-80, 10, 160, 50);
-            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.Low, CloudMovementSpeed.Slow);
-            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.Medium, CloudMovementSpeed.Slow);
-            //ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Slow);
-            ICloudGenerationStats generationStats = new CloudGenerationStats(cloudSpawnArea, CloudDensity.High, CloudMovementSpeed.Fast);
-
             ICloudGenerator cloudGenerator = new CloudGenerator(cloudFactory);
-            cloudGenerator.GenerateClouds(generationStats);
+            cloudGenerator.GenerateClouds(level.CloudStats);
         }
 
 		void Update()
