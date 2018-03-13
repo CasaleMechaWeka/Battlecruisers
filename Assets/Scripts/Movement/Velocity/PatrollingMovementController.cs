@@ -65,8 +65,8 @@ namespace BattleCruisers.Movement.Velocity
 				_rigidBody.MovePosition(moveToPosition);
 
                 Logging.Log(Tags.MOVEMENT, 
-                    string.Format("Patrol():  moveToPosition: {0}  targetPosition: {1}  _patrollingVelocity: {2}  _patrollingVelocity.magnitude: {3}  PatrollingVelocity: {4}  _patrollingSmoothTime: {5}  Time.deltaTime: {6}",
-					moveToPosition, _targetPatrolPoint, _patrollingVelocity, _patrollingVelocity.magnitude, _maxVelocityProvider, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
+                    string.Format("PatrollingMovementController.AdjustVelocity():  currentPosition:D {0}  moveToPosition: {1}  targetPosition: {2}  _patrollingVelocity: {3}  _patrollingVelocity.magnitude: {4}  PatrollingVelocity: {5}  _patrollingSmoothTime: {6}  Time.deltaTime: {7}",
+                    _rigidBody.transform.position, moveToPosition, _targetPatrolPoint.Position, _patrollingVelocity, _patrollingVelocity.magnitude, _maxVelocityProvider.VelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}
