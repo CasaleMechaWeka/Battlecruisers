@@ -43,7 +43,14 @@ namespace BattleCruisers.Movement.Velocity
                 Vector2 oldVelocity = Velocity;
 
                 float velocitySmoothTime = FindVelocitySmoothTime();
-                _rigidBody.velocity = Vector2.SmoothDamp(_rigidBody.velocity, desiredVelocity, ref _velocity, velocitySmoothTime, _maxVelocityProvider.VelocityInMPerS, Time.deltaTime);
+                _rigidBody.velocity 
+                    = Vector2.SmoothDamp(
+                        _rigidBody.velocity, 
+                        desiredVelocity, 
+                        ref _velocity, 
+                        velocitySmoothTime, 
+                        _maxVelocityProvider.VelocityInMPerS, 
+                        Time.deltaTime);
 
                 HandleDirectionChange(oldVelocity, Velocity);
             }
