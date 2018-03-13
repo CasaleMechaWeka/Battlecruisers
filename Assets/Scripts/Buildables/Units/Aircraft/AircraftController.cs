@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
+        // FELIX  MaxPatrollingVelocity is never used :/
         protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
         protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * maxVelocityInMPerS; } }
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
