@@ -89,7 +89,7 @@ namespace BattleCruisers.Buildables.Units
 			_uiManager.ShowUnitDetails(this);
 		}
 
-		protected void OnDirectionChange()
+		protected virtual void OnDirectionChange()
 		{
 			int yRotation = FindYRotation(FacingDirection);
 			Quaternion rotation = gameObject.transform.rotation;

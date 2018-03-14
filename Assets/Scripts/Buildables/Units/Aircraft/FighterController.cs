@@ -162,14 +162,45 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void FaceVelocityDirection()
         {
+            // FELIX   This is it O_o
             if (Velocity != Vector2.zero)
             {
                 float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
 
-                Quaternion rotation = gameObject.transform.rotation;
-                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
-                gameObject.transform.rotation = rotation;
+                // FELIX
+                //if (angleInDegrees > 180)
+                //{
+                //    angleInDegrees -= 360;
+                //}
+
+                Debug.Log("rigidBody.rotation: " + rigidBody.rotation + "  angleInDegrees: " + angleInDegrees);
+
+                // FELIX  NEXT  Get figher facing target direction again :/
+                // Having trouble with rigidBody.rotation, as this sets the z property of the Quaternion :/
+
+                // FELIX  Uncomment!
+                //rigidBody.rotation = angleInDegrees;
+
+                Quaternion zRotationAsQuaternion = Quaternion.AngleAxis(angleInDegrees, new Vector3(0, 0, 1));
+                Debug.Log("zRotationAsQuaternion: " + zRotationAsQuaternion);
+
+                rigidBody.rotation = zRotationAsQuaternion.z;
+
+                Debug.Log("rigidBody.rotation: " + rigidBody.rotation);
+
+                //Quaternion rotation = gameObject.transform.rotation;
+                //rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
+                //gameObject.transform.rotation = rotation;
+
             }
+        }
+
+        // FELIX
+        protected override void OnDirectionChange()
+        {
+            base.OnDirectionChange();
+            // Override base class behaviour to avoid mirroring.  Direction
+            // handled in FaceVelocityDirection().
         }
 
 		protected override void OnDestroyed()

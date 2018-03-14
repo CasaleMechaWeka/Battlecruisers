@@ -364,7 +364,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     //new Vector2(0, 1),  
                     // Works as expected for fighter at (-10, 5), but still super slow for fighter at (10, 0)
                     //new Vector2(5, 5),  
-					new Vector2(0, 4)
+					new Vector2(3, 10)
 				};
 			}
 			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
