@@ -339,7 +339,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				bomberPatrolPoints = new List<Vector2>() 
 				{
 					new Vector2(0, 1),
-					new Vector2(0, 2)
+					new Vector2(0, 4)
 				};
 			}
 			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
@@ -349,7 +349,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				gunshipPatrolPoints = new List<Vector2>()
 				{
 					new Vector2(0, 1),
-					new Vector2(0, 2)
+					new Vector2(0, 4)
 				};
 			}
             provider.FindGunshipPatrolPoints(0).ReturnsForAnyArgs(gunshipPatrolPoints);
@@ -358,8 +358,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			{
 				fighterPatrolPoints = new List<Vector2>() 
 				{
-					new Vector2(0, 1),
-					new Vector2(0, 2)
+                    // FELIX
+                    // Super slow patrol for both fighters
+                    new Vector2(0, 0),  
+                    //new Vector2(0, 1),  
+                    // Works as expected for fighter at (-10, 5), but still super slow for fighter at (10, 0)
+                    //new Vector2(5, 5),  
+					new Vector2(0, 4)
 				};
 			}
 			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
@@ -368,10 +373,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			{
 				deathstarPatrolPoints = new List<Vector2>() 
 				{
-					new Vector2(0, 1),
-					new Vector2(0, 2),
-					new Vector2(0, 3),
-					new Vector2(0, 4)
+					new Vector2(0, 10),
+					new Vector2(0, 20),
+					new Vector2(0, 30),
+					new Vector2(0, 40)
 				};
 			}
 			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
@@ -380,9 +385,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             {
                 spySatellitePatrolPoints = new List<Vector2>()
                 {
-					new Vector2(0, 1),
-					new Vector2(0, 2),
-					new Vector2(0, 3)
+					new Vector2(0, 10),
+					new Vector2(0, 20),
+					new Vector2(0, 30)
                 };
             }
             provider.FindSpySatellitePatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
