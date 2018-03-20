@@ -1,0 +1,47 @@
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Scenes.Test.Utilities;
+using NSubstitute;
+using UnityEngine;
+
+namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
+{
+    /// <summary>
+    /// Created because I had an issue where the fighter's patrolling behaviour
+    /// was stuffed :P  Hence have test scene specifically for checking this.
+    /// </summary>
+    public class PatrollingFighterTestGod : MonoBehaviour 
+	{
+		void Start() 
+		{
+			Helper helper = new Helper();
+
+            FighterController fighter = FindObjectOfType<FighterController>();
+            IAircraftProvider provider = CreateAircraftProvider();
+            helper.InitialiseUnit(fighter, aircraftProvider: provider);
+            fighter.StartConstruction();
+		}
+
+        private IAircraftProvider CreateAircraftProvider()
+        {
+            IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+
+            IList<Vector2> fighterPatrolPoints = new List<Vector2>()
+            {
+                new Vector2(-2, 5),
+                new Vector2(2, 5),
+                new Vector2(5, 2),
+                new Vector2(5, -2),
+                new Vector2(2, -5),
+                new Vector2(-2, -5),
+                new Vector2(-5, -2),
+                new Vector2(-5, 2)
+            };
+
+            provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+
+            return provider;
+        }
+	}
+}
