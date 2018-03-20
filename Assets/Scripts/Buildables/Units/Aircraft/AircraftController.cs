@@ -88,9 +88,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            // FELIX
-            Debug.Log("AircraftController.OnFixedUpdate()");
-
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 

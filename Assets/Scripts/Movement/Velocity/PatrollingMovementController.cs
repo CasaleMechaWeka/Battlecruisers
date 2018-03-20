@@ -61,12 +61,17 @@ namespace BattleCruisers.Movement.Velocity
                         DEFAULT_SMOOTH_TIME_IN_S, 
                         _maxVelocityProvider.VelocityInMPerS, 
                         Time.deltaTime);
-                
-				_rigidBody.MovePosition(moveToPosition);
 
-                Logging.Log(Tags.MOVEMENT, 
-                    string.Format("PatrollingMovementController.AdjustVelocity():  currentPosition:D {0}  moveToPosition: {1}  targetPosition: {2}  _patrollingVelocity: {3}  _patrollingVelocity.magnitude: {4}  PatrollingVelocity: {5}  _patrollingSmoothTime: {6}  Time.deltaTime: {7}",
-                    _rigidBody.transform.position, moveToPosition, _targetPatrolPoint.Position, _patrollingVelocity, _patrollingVelocity.magnitude, _maxVelocityProvider.VelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime));
+                // NOTE:  Am not using _rigidBody.MovePosition(), because that reacts weirdly
+                // for fighters when the fighter's rigidBody.transform.rotation is being
+                // excplicitly set (to get the fighter pointing the direction it's travelling).
+                _rigidBody.transform.position = moveToPosition;
+
+                string logMessage 
+                    = string.Format(
+                        "PatrollingMovementController.AdjustVelocity():  currentPosition:D {0}  moveToPosition: {1}  targetPosition: {2}  _patrollingVelocity: {3}  _patrollingVelocity.magnitude: {4}  PatrollingVelocity: {5}  _patrollingSmoothTime: {6}  Time.deltaTime: {7}  _rigidBody.transform.rotation.eulerAngles: {8}",
+                        _rigidBody.transform.position, moveToPosition, _targetPatrolPoint.Position, _patrollingVelocity, _patrollingVelocity.magnitude, _maxVelocityProvider.VelocityInMPerS, DEFAULT_SMOOTH_TIME_IN_S, Time.deltaTime, _rigidBody.transform.rotation.eulerAngles);
+                Logging.Log(Tags.MOVEMENT, logMessage);
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}

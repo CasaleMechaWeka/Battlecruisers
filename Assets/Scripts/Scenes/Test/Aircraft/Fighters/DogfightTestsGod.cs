@@ -17,9 +17,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
             helper.InitialiseUnit(rightFighter, faction: Faction.Reds, parentCruiserDirection: Direction.Left);
 			rightFighter.StartConstruction();
 
-            // FELIX
-   //         helper.InitialiseUnit(leftFighter, faction: Faction.Blues, parentCruiserDirection: Direction.Right);
-			//leftFighter.StartConstruction();
+            helper.InitialiseUnit(leftFighter, faction: Faction.Blues, parentCruiserDirection: Direction.Right);
+			leftFighter.StartConstruction();
 		}
 	}
 }
