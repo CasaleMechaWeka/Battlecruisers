@@ -54,7 +54,7 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; private set; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; private set; }
 
-		public GameModel()
+        public GameModel()
 		{
 			_unlockedHulls = new List<HullKey>();
             UnlockedHulls = _unlockedHulls.AsReadOnly();
@@ -73,13 +73,15 @@ namespace BattleCruisers.Data.Models
 			List<HullKey> unlockedHulls,
 			List<BuildingKey> unlockedBuildings,
 			List<UnitKey> unlockedUnits)
+            : this()
 		{
 			NumOfLevelsCompleted = numOfLevelsCompleted;
 			PlayerLoadout = playerLoadout;
 			LastBattleResult = lastBattleResult;
-			_unlockedHulls = unlockedHulls;
-			_unlockedBuildings = unlockedBuildings;
-			_unlockedUnits = unlockedUnits;
+
+            _unlockedHulls.AddRange(unlockedHulls);
+            _unlockedBuildings.AddRange(unlockedBuildings);
+            _unlockedUnits.AddRange(unlockedUnits);
 		}
 
 		public void AddUnlockedHull(HullKey hull)
