@@ -102,7 +102,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
                     parent: this,
-                    firingSound: SoundKeys.Firing.AntiAir);
+                    firingSound: SoundKeys.Firing.BigCannon);
 
             _barrelController.Initialise(args);
 
