@@ -63,6 +63,11 @@ namespace BattleCruisers.Movement
 		{
             return new MultiplyingVelocityProvider(providerToWrap, multiplier);
 		}
+
+        public IVelocityProvider CreatePatrollingVelocityProvider(IPatrollingVelocityProvider patrollingAircraft)
+        {
+            return new PatrollingVelocityProvider(patrollingAircraft);
+        }
         #endregion Providers
 
         public IMovementController CreatePatrollingMovementController(
