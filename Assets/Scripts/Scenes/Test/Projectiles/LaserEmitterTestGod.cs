@@ -56,7 +56,6 @@ namespace BattleCruisers.Scenes.Test
 			Faction friendlyFaction = Faction.Reds;
             _soundFetcher = new SoundFetcher();
 
-
 			// Stationary targets
 			_stationaryTargets = CreateStationaryTargetTests();
             foreach (LaserTest<IBuilding> test in _stationaryTargets)
@@ -90,7 +89,6 @@ namespace BattleCruisers.Scenes.Test
 
         private IList<LaserTest<IBuilding>> CreateStationaryTargetTests()
         {
-
             IList<LaserTest<IBuilding>> stationaryTargets = new List<LaserTest<IBuilding>>();
 
 			stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
@@ -146,9 +144,9 @@ namespace BattleCruisers.Scenes.Test
 			}
         }
 
-        private static void FireOrCease(LaserStats stats, ITarget target)
+        private static void FireOrCease(LaserStats stats, IBuildable target)
         {
-            if (!target.IsDestroyed)
+            if (target.BuildableState == BuildableState.Completed && !target.IsDestroyed)
             {
                 stats.Laser.FireLaser(stats.AngleInDegrees, stats.IsSourceMirrored);
             }
