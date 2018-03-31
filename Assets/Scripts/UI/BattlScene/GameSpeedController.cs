@@ -14,7 +14,8 @@ namespace BattleCruisers.UI.BattleScene
         private ButtonController _increaseSpeedButton, _decreaseSpeedButton;
 
         // TEMP:  For end game, limit max speed to x4?
-        private const float MAX_GAME_SPEED = 32;
+        private const float MAX_GAME_SPEED = 4;
+        //private const float MAX_GAME_SPEED = 32;
         private const float MIN_GAME_SPEED = 0.125f;
         private const float SPEED_CHANGE_FACTOR = 2;
 
