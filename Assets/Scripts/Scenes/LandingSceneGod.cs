@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes
 {
-    public class SceneNavigator : MonoBehaviour, ISceneNavigator
+    public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         private bool _isInitialised = false;
 
@@ -36,6 +37,9 @@ namespace BattleCruisers.Scenes
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
+
+                // Game starts with the screens scene
+                GoToScene(SceneNames.SCREENS_SCENE);
             }
         }
 
