@@ -17,7 +17,6 @@ using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 using BattleCruisers.UI.BattleScene.Clouds;
 
 // === Tag keys :D ===
@@ -32,6 +31,7 @@ namespace BattleCruisers.Scenes
     /// </summary>
     public class BattleSceneGod : MonoBehaviour
 	{
+        private ISceneNavigator _sceneNavigator;
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
@@ -69,6 +69,7 @@ namespace BattleCruisers.Scenes
             }
 
 
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
             _dataProvider = ApplicationModel.DataProvider;
             _currentLevelNum = ApplicationModel.SelectedLevel;
 
@@ -235,7 +236,7 @@ namespace BattleCruisers.Scenes
 
 			ApplicationModel.ShowPostBattleScreen = true;
 
-			SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
 		}
 
 		private void CleanUp()

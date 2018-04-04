@@ -52,18 +52,19 @@ namespace BattleCruisers.Utils
         // Other
         public const string CAMERA_CONTROLLER = "CameraController";
         public const string CRUISER = "Cruiser";
+		public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
-		public const string MOVEMENT = "Movement";
-		public const string PREDICTORS = "TargetPositionPredictors";
+        public const string MOVEMENT = "Movement";
+        public const string PREDICTORS = "TargetPositionPredictors";
         public const string REPAIR_MANAGER = "RepairManager";
-        public const string GENERIC = "Generic";
+        public const string SCENE_NAVIGATION = "SceneNavigation";
 	}
 	
 	public static class Logging
 	{
 		private const bool LOG_ALL = false;
-		private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-//		private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+		//private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+		private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
 		private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -122,11 +123,14 @@ namespace BattleCruisers.Utils
             // Other
             tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
+			tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
-			tagsToActiveness.Add(Tags.MOVEMENT, false);
-			tagsToActiveness.Add(Tags.PREDICTORS, false);
+            tagsToActiveness.Add(Tags.MOVEMENT, false);
+            tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
-            tagsToActiveness.Add(Tags.GENERIC, true);
+            // FELIX
+            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
+            //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
 
 			return tagsToActiveness;
 		}

@@ -8,7 +8,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
 {
@@ -19,6 +18,7 @@ namespace BattleCruisers.Scenes
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
         private ISpriteProvider _spriteProvider;
+        private ISceneNavigator _sceneNavigator;
 
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
@@ -34,6 +34,7 @@ namespace BattleCruisers.Scenes
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
             _spriteProvider = new SpriteProvider(new SpriteFetcher());
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
 
 
             // TEMP  For showing PostBattleScreen :)
@@ -111,7 +112,7 @@ namespace BattleCruisers.Scenes
 			Assert.IsTrue(levelNum <= _dataProvider.NumOfLevelsUnlocked);
 
 			ApplicationModel.SelectedLevel = levelNum;
-			SceneManager.LoadScene(SceneNames.BATTLE_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
 		}
 
 		private void GoToScreen(ScreenController destinationScreen)
