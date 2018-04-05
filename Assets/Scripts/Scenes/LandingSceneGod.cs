@@ -10,7 +10,6 @@ namespace BattleCruisers.Scenes
     {
         private bool _isInitialised = false;
 
-        // FELIX  Retrieve programmatically
         public Canvas root;
 
 		private bool _isLoadingScene = false;
