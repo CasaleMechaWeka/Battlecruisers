@@ -8,6 +8,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.Cameras;
 
 namespace BattleCruisers.Cruisers
 {
@@ -31,10 +32,11 @@ namespace BattleCruisers.Cruisers
             ICruiser enemyCruiser,
             HealthBarController healthBar, 
             IUIManager uiManager,
+            ICameraController cameraController,
             Faction faction, 
             Direction facingDirection)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, healthBar, uiManager);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, healthBar, uiManager, cameraController);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -55,7 +57,8 @@ namespace BattleCruisers.Cruisers
                     factoryProvider, 
                     facingDirection, 
                     repairManager, 
-                    shouldShowFog);
+                    shouldShowFog,
+                    cameraController);
 
             cruiser.Initialise(cruiserArgs);
         }

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
@@ -20,12 +21,22 @@ namespace BattleCruisers.Cruisers
         public Direction FacingDirection { get; private set; }
         public RepairManager RepairManager { get; private set; }
         public bool ShouldShowFog { get; private set; }
+        public ICameraController CameraController { get; private set; }
 
-        public CruiserArgs(Faction faction, ICruiser enemyCruiser, HealthBarController healthBarController,
-            IUIManager uiManager, IDroneManager droneManager, IDroneConsumerProvider droneConsumerProvider,
-            IFactoryProvider factoryProvider, Direction facingDirection, RepairManager repairManager, bool shouldShowFog)
+        public CruiserArgs(
+            Faction faction, 
+            ICruiser enemyCruiser, 
+            HealthBarController healthBarController,
+            IUIManager uiManager, 
+            IDroneManager droneManager, 
+            IDroneConsumerProvider droneConsumerProvider,
+            IFactoryProvider factoryProvider, 
+            Direction facingDirection, 
+            RepairManager repairManager, 
+            bool shouldShowFog,
+            ICameraController cameraController)
         {
-            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager);
+            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, cameraController);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -37,6 +48,7 @@ namespace BattleCruisers.Cruisers
             FacingDirection = facingDirection;
             RepairManager = repairManager;
             ShouldShowFog = shouldShowFog;
+            CameraController = cameraController;
         }
     }
 }

@@ -115,12 +115,12 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, uiManager, Faction.Blues, Direction.Right);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, uiManager, cameraController, Faction.Blues, Direction.Right);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, uiManager, Faction.Reds, Direction.Left);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, uiManager, cameraController, Faction.Reds, Direction.Left);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

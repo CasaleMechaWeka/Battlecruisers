@@ -14,6 +14,7 @@ using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using BattleCruisers.UI.Cameras;
 
 namespace BattleCruisers.Cruisers
 {
@@ -21,8 +22,9 @@ namespace BattleCruisers.Cruisers
 	{
 		private HealthBarController _healthBarController;
 		private IUIManager _uiManager;
-		private ICruiser _enemyCruiser;
-		private SpriteRenderer _renderer;
+		private ICameraController _cameraController;
+        private ICruiser _enemyCruiser;
+        private SpriteRenderer _renderer;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -84,6 +86,7 @@ namespace BattleCruisers.Cruisers
             _enemyCruiser = args.EnemyCruiser;
             _healthBarController = args.HealthBarController;
             _uiManager = args.UiManager;
+            _cameraController = args.CameraController;
             DroneManager = args.DroneManager;
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
@@ -102,7 +105,22 @@ namespace BattleCruisers.Cruisers
 		public void OnPointerClick(PointerEventData eventData)
 		{
             _uiManager.ShowCruiserDetails(this);
+            FocusOnCruiser();
 		}
+
+        private void FocusOnCruiser()
+        {
+            if (Faction == Faction.Blues)
+            {
+                // Player cruiser
+                _cameraController.FocusOnPlayerCruiser();
+            }
+            else
+            {
+                // AI cruiser
+                _cameraController.FocusOnAiCruiser();
+            }
+        }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
