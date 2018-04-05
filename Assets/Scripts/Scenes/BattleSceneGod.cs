@@ -42,6 +42,7 @@ namespace BattleCruisers.Scenes
 		public ModalMenuController modalMenuController;
 		public CameraController cameraController;
         public BackgroundController backgroundController;
+        public NumOfDronesController numOfDronesController;
 
 		private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -59,6 +60,7 @@ namespace BattleCruisers.Scenes
                 modalMenuController,
                 cameraController,
                 backgroundController,
+                numOfDronesController,
                 deferrer);
 
 
@@ -127,6 +129,7 @@ namespace BattleCruisers.Scenes
             // UI
             buildMenuCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);
+            numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, _playerCruiser.FactoryProvider, buildingGroupFactory);
