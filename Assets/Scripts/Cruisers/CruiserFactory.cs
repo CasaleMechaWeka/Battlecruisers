@@ -1,14 +1,13 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Cruisers
 {
@@ -30,13 +29,12 @@ namespace BattleCruisers.Cruisers
         public void InitialiseCruiser(
             Cruiser cruiser, 
             ICruiser enemyCruiser,
-            HealthBarController healthBar, 
             IUIManager uiManager,
             ICameraController cameraController,
             Faction faction, 
             Direction facingDirection)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, healthBar, uiManager, cameraController);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, cameraController);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -50,7 +48,6 @@ namespace BattleCruisers.Cruisers
                 = new CruiserArgs(
                     faction, 
                     enemyCruiser, 
-                    healthBar, 
                     uiManager, 
                     droneManager,
                     droneConsumerProvider, 

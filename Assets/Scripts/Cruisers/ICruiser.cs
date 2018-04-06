@@ -18,7 +18,6 @@ namespace BattleCruisers.Cruisers
         IFogOfWar Fog { get; }
         IRepairManager RepairManager { get; }
         int NumOfDrones { get; }
-        IGameObject HealthBar { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
     }

@@ -3,24 +3,22 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using BattleCruisers.UI.Cameras;
 
 namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
 	{
-		private HealthBarController _healthBarController;
 		private IUIManager _uiManager;
 		private ICameraController _cameraController;
         private ICruiser _enemyCruiser;
@@ -52,7 +50,6 @@ namespace BattleCruisers.Cruisers
         public IFogOfWar Fog { get { return _fog; } }
 		public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones { get { return numOfDrones; } }
-        public IGameObject HealthBar { get { return _healthBarController; } }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
@@ -84,7 +81,6 @@ namespace BattleCruisers.Cruisers
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
-            _healthBarController = args.HealthBarController;
             _uiManager = args.UiManager;
             _cameraController = args.CameraController;
             DroneManager = args.DroneManager;
@@ -96,7 +92,6 @@ namespace BattleCruisers.Cruisers
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
 
-            _healthBarController.Initialise(this);
             _fog.Initialise(args.ShouldShowFog);
 
             SlotWrapper.HideAllSlots();

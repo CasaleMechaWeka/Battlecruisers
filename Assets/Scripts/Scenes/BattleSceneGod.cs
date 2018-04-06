@@ -37,6 +37,7 @@ namespace BattleCruisers.Scenes
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
 
+        // FELIX  rename field once class is renamed
         public BuildMenuCanvasController buildMenuCanvas;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
@@ -118,13 +119,15 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, buildMenuCanvas.PlayerCruiserHealthBar, uiManager, cameraController, Faction.Blues, Direction.Right);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, cameraController, Faction.Blues, Direction.Right);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
+            buildMenuCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
 
 
             // Initialise AI cruiser
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, buildMenuCanvas.AiCruiserHealthBar, uiManager, cameraController, Faction.Reds, Direction.Left);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, cameraController, Faction.Reds, Direction.Left);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
+            buildMenuCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
 
             // UI

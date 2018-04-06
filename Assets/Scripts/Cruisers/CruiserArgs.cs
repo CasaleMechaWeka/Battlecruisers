@@ -13,7 +13,6 @@ namespace BattleCruisers.Cruisers
     {
         public Faction Faction { get; private set; }
         public ICruiser EnemyCruiser { get; private set; }
-        public HealthBarController HealthBarController { get; private set; }
         public IUIManager UiManager { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
@@ -26,7 +25,6 @@ namespace BattleCruisers.Cruisers
         public CruiserArgs(
             Faction faction, 
             ICruiser enemyCruiser, 
-            HealthBarController healthBarController,
             IUIManager uiManager, 
             IDroneManager droneManager, 
             IDroneConsumerProvider droneConsumerProvider,
@@ -36,11 +34,10 @@ namespace BattleCruisers.Cruisers
             bool shouldShowFog,
             ICameraController cameraController)
         {
-            Helper.AssertIsNotNull(enemyCruiser, healthBarController, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, cameraController);
+            Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, cameraController);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
-            HealthBarController = healthBarController;
             UiManager = uiManager;
             DroneManager = droneManager;
             DroneConsumerProvider = droneConsumerProvider;

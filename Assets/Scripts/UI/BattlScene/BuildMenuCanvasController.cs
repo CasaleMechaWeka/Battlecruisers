@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.Common.BuildingDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -11,11 +11,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
+    // FELIX  Rename to HUDCanvasController
     public class BuildMenuCanvasController : MonoBehaviour, IBuildMenuCanvasController
     {
-		public HealthBarController PlayerCruiserHealthBar { get; private set; }
-		public HealthBarController AiCruiserHealthBar { get; private set; }
-
         private BuildingDetailsController _buildingDetails;
         public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
 
@@ -24,6 +22,9 @@ namespace BattleCruisers.UI.BattleScene
 
         private CruiserDetailsController _cruiserDetails;
         public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
+
+        public CruiserInfoController PlayerCruiserInfo { get; private set; }
+        public CruiserInfoController AICruiserInfo { get; private set;  }
 
         public void StaticInitialise()
         {
@@ -36,8 +37,8 @@ namespace BattleCruisers.UI.BattleScene
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
 
-            PlayerCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("PlayerCruiserHealthBar");
-            AiCruiserHealthBar = transform.FindNamedComponent<HealthBarController>("AiCruiserHealthBar");
+            PlayerCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("PlayerCruiserInfo");
+            AICruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
         }
 
         public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager)

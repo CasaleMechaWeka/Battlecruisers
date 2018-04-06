@@ -59,30 +59,21 @@ namespace BattleCruisers.UI.BattleScene
 					_buildMenu.HideBuildMenu();
 					_playerCruiser.SlotWrapper.HideAllSlots();
                     _detailsManager.HideDetails();
-					_playerCruiser.HealthBar.IsVisible = false;
 					break;
 
                 case CameraState.AiCruiser:
                     _aiCruiser.SlotWrapper.UnhighlightSlots();
                     _detailsManager.HideDetails();
-					_aiCruiser.HealthBar.IsVisible = false;
                     break;
 			}
 		}
 
 		private void OnCameraTransitionCompleted(object sender, CameraTransitionArgs e)
 		{
-			switch (e.Destination)
-			{
-				case CameraState.PlayerCruiser:
-					_buildMenu.ShowBuildMenu();
-                    _playerCruiser.HealthBar.IsVisible = true;
-					break;
-
-				case CameraState.AiCruiser:
-					_aiCruiser.HealthBar.IsVisible = true;
-					break;
-			}
+            if (e.Destination == CameraState.PlayerCruiser)
+            {
+				_buildMenu.ShowBuildMenu();
+            }
 		}
 
 		private void OnBackgroundClicked(object sender, EventArgs e)

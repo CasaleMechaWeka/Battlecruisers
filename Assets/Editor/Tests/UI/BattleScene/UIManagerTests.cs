@@ -2,11 +2,11 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildingDetails;
 using NSubstitute;
 using NUnit.Framework;
@@ -56,12 +56,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
         private ICruiser CreateMockCruiser()
         {
-            IGameObject healthBar = Substitute.For<IGameObject>();
-            ISlotWrapper slotWrapper = Substitute.For<ISlotWrapper>();
-
             ICruiser cruiser = Substitute.For<ICruiser>();
 
-            cruiser.HealthBar.Returns(healthBar);
+			ISlotWrapper slotWrapper = Substitute.For<ISlotWrapper>();
             cruiser.SlotWrapper.Returns(slotWrapper);
 
             return cruiser;
@@ -84,7 +81,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _buildMenu.Received().HideBuildMenu();
             _playerCruiser.SlotWrapper.Received().HideAllSlots();
             _detailsManager.Received().HideDetails();
-            Assert.IsFalse(_playerCruiser.HealthBar.IsVisible);
         }
 
         [Test]
@@ -95,7 +91,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
             _detailsManager.Received().HideDetails();
-            Assert.IsFalse(_aiCruiser.HealthBar.IsVisible);
         }
 
         [Test]
@@ -105,7 +100,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _cameraController.CameraTransitionCompleted += Raise.EventWith(_cameraController, args);
 
             _buildMenu.Received().ShowBuildMenu();
-            Assert.IsTrue(_playerCruiser.HealthBar.IsVisible);
         }
 
         [Test]
@@ -113,8 +107,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
         {
             CameraTransitionArgs args = new CameraTransitionArgs(origin: CameraState.PlayerCruiser, destination: CameraState.AiCruiser);
             _cameraController.CameraTransitionCompleted += Raise.EventWith(_cameraController, args);
-
-            Assert.IsTrue(_aiCruiser.HealthBar.IsVisible);
         }
         #endregion Camera transitions
 

@@ -13,7 +13,6 @@ namespace BattleCruisers.Cruisers
     {
         Faction Faction { get; }
         ICruiser EnemyCruiser { get; }
-        HealthBarController HealthBarController { get; }
         IUIManager UiManager { get; }
         IDroneManager DroneManager { get; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
