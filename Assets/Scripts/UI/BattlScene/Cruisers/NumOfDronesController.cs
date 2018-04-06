@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.Cruisers
 {
     public class NumOfDronesController : MonoBehaviour, IManagedDisposable
     {
