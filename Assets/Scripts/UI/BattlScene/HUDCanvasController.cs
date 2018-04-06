@@ -11,8 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Rename to HUDCanvasController
-    public class BuildMenuCanvasController : MonoBehaviour, IBuildMenuCanvasController
+    public class HUDCanvasController : MonoBehaviour, IHUDCanvasController
     {
         private BuildingDetailsController _buildingDetails;
         public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }

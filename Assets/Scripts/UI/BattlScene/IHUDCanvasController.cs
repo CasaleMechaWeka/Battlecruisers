@@ -5,7 +5,7 @@ using BattleCruisers.UI.Common.BuildingDetails;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public interface IBuildMenuCanvasController
+    public interface IHUDCanvasController
     {
         IBuildableDetails<IBuilding> BuildingDetails { get; }
         IBuildableDetails<IUnit> UnitDetails { get; }

@@ -12,13 +12,13 @@ namespace BattleCruisers.UI.Common.BuildingDetails
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
 
-        public BuildableDetailsManager(IBuildMenuCanvasController buildMenuCanvas)
+        public BuildableDetailsManager(IHUDCanvasController hudCanvas)
         {
-            Helper.AssertIsNotNull(buildMenuCanvas);
+            Helper.AssertIsNotNull(hudCanvas);
 
-            _buildingDetails = buildMenuCanvas.BuildingDetails;
-            _unitDetails = buildMenuCanvas.UnitDetails;
-            _cruiserDetails = buildMenuCanvas.CruiserDetails;
+            _buildingDetails = hudCanvas.BuildingDetails;
+            _unitDetails = hudCanvas.UnitDetails;
+            _cruiserDetails = hudCanvas.CruiserDetails;
         }
 
         public void ShowDetails(IBuilding building, bool allowDelete)

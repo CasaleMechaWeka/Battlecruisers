@@ -28,12 +28,12 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             _cruiserDetails = Substitute.For<ICruiserDetails>();
 
-            IBuildMenuCanvasController buildMenuCanvas = Substitute.For<IBuildMenuCanvasController>();
-            buildMenuCanvas.BuildingDetails.Returns(_buildingDetails);
-            buildMenuCanvas.UnitDetails.Returns(_unitDetails);
-            buildMenuCanvas.CruiserDetails.Returns(_cruiserDetails);
+            IHUDCanvasController hudCanvas = Substitute.For<IHUDCanvasController>();
+            hudCanvas.BuildingDetails.Returns(_buildingDetails);
+            hudCanvas.UnitDetails.Returns(_unitDetails);
+            hudCanvas.CruiserDetails.Returns(_cruiserDetails);
 
-            _detailsManager = new BuildableDetailsManager(buildMenuCanvas);
+            _detailsManager = new BuildableDetailsManager(hudCanvas);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();

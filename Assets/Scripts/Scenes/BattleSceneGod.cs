@@ -37,8 +37,7 @@ namespace BattleCruisers.Scenes
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
 
-        // FELIX  rename field once class is renamed
-        public BuildMenuCanvasController buildMenuCanvas;
+        public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
@@ -58,7 +57,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(
                 uiFactory,
                 buildMenuController,
-                buildMenuCanvas,
+                hudCanvas,
                 modalMenuController,
                 cameraController,
                 backgroundController,
@@ -104,9 +103,9 @@ namespace BattleCruisers.Scenes
 
 
             // UIManager
-            buildMenuCanvas.StaticInitialise();
+            hudCanvas.StaticInitialise();
 
-            IBuildableDetailsManager detailsManager = new BuildableDetailsManager(buildMenuCanvas);
+            IBuildableDetailsManager detailsManager = new BuildableDetailsManager(hudCanvas);
 
             IUIManager uiManager
                 = new UIManager(
@@ -121,17 +120,17 @@ namespace BattleCruisers.Scenes
             // Initialise player cruiser
             cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, cameraController, Faction.Blues, Direction.Right);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
-            buildMenuCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
+            hudCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
 
 
             // Initialise AI cruiser
             cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, cameraController, Faction.Reds, Direction.Left);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
-            buildMenuCanvas.AICruiserInfo.Initialise(_aiCruiser);
+            hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
 
             // UI
-            buildMenuCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
