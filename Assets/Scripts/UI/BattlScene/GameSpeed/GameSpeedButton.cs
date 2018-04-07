@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButton : MonoBehaviour, IIGameSpeedModifier
+    public class GameSpeedButton : MonoBehaviour, IGameSpeedModifier
     {
         private const float MIN_GAME_SPEED = 0.25f;
         private const float MAX_GAME_SPEED = 4;

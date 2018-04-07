@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         }
     }
 
-    public interface IIGameSpeedModifier
+    public interface IGameSpeedModifier
     {
         event EventHandler<GameSpeedChangedEventArgs> GameSpeedChanged;
     }
