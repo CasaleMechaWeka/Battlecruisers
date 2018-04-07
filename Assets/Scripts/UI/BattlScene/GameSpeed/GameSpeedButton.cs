@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButton : MonoBehaviour 
+    public class GameSpeedButton : MonoBehaviour, IIGameSpeedModifier
     {
         private const float MIN_GAME_SPEED = 0.25f;
         private const float MAX_GAME_SPEED = 4;
 
         public float gameSpeed;
 
-    	void Start () 
+        public event EventHandler<GameSpeedChangedEventArgs> GameSpeedChanged;
+
+        void Start () 
         {
             Assert.IsTrue(gameSpeed >= MIN_GAME_SPEED);
             Assert.IsTrue(gameSpeed <= MAX_GAME_SPEED);
@@ -21,6 +22,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public void ChangeGameSpeed()
         {
             Time.timeScale = gameSpeed;
+
+            if (GameSpeedChanged != null)
+            {
+                GameSpeedChanged.Invoke(this, new GameSpeedChangedEventArgs(gameSpeed));
+            }
         }
     }
 }
