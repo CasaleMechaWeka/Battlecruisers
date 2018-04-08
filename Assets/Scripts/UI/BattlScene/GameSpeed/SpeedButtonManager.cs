@@ -7,7 +7,6 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     /// deselects the previously selected speed button when a new button
     /// is selected.
     /// </summary>
-    /// FELIX  Test :D
     public class SpeedButtonManager : ISpeedButtonManager
     {
         private IGameSpeedButton _selectedButton;
