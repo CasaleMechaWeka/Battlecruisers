@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public class GameSpeedButton : MonoBehaviour, IGameSpeedButton
     {
         private ISpeedButtonManager _speedButtonManager;
+        private Image _backgroundImage;
+
+        private static Color SELECTED_COLOR = Color.grey;
+        private static Color DESELECTED_COLOR = Color.clear;
 
         private const float MIN_GAME_SPEED = 0.25f;
         private const float MAX_GAME_SPEED = 4;
@@ -16,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         {
             set
             {
-				// FELIX  Show UI effect :P
+                _backgroundImage.color = value ? SELECTED_COLOR : DESELECTED_COLOR;
             }
         }
 
@@ -27,6 +32,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 			Assert.IsTrue(gameSpeed <= MAX_GAME_SPEED);
 
             _speedButtonManager = speedButtonManager;
+
+            _backgroundImage = GetComponent<Image>();
+            Assert.IsNotNull(_backgroundImage);
+
+            IsSelected = false;
         }
 
         public void ChangeGameSpeed()

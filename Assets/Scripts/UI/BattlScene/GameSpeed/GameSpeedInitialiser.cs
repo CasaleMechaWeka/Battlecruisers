@@ -10,14 +10,14 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 		{
             ISpeedButtonManager speedButtonManager = new SpeedButtonManager();
 
-            GameSpeedButton playButton = transform.FindNamedComponent<GameSpeedButton>("PlayButton");
+            GameSpeedButton playButton = transform.FindNamedComponent<GameSpeedButton>("NormalSpeed");
 
             IList<GameSpeedButton> gameSpeedButtons = new List<GameSpeedButton>()
             {
-                transform.FindNamedComponent<GameSpeedButton>("SlowMotionButton"),
+                transform.FindNamedComponent<GameSpeedButton>("SlowMotion"),
                 playButton,
-                transform.FindNamedComponent<GameSpeedButton>("FastForwardButton"),
-                transform.FindNamedComponent<GameSpeedButton>("DoubleFastForwardButton")
+                transform.FindNamedComponent<GameSpeedButton>("FastForward"),
+                transform.FindNamedComponent<GameSpeedButton>("DoubleFastForward")
             };
 
             foreach (GameSpeedButton speedButton in gameSpeedButtons)
