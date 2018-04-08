@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
@@ -10,18 +8,24 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     {
 		void Start()
 		{
-            Text speedText = GetComponentInChildren<Text>();
-            Assert.IsNotNull(speedText);
+            ISpeedButtonManager speedButtonManager = new SpeedButtonManager();
 
-            IList<IGameSpeedModifier> gameSpeedModifiers = new List<IGameSpeedModifier>()
+            GameSpeedButton playButton = transform.FindNamedComponent<GameSpeedButton>("PlayButton");
+
+            IList<GameSpeedButton> gameSpeedButtons = new List<GameSpeedButton>()
             {
-				transform.FindNamedComponent<IGameSpeedModifier>("SlowMotionButton"),
-				transform.FindNamedComponent<IGameSpeedModifier>("PlayButton"),
-				transform.FindNamedComponent<IGameSpeedModifier>("FastForwardButton"),
-				transform.FindNamedComponent<IGameSpeedModifier>("DoubleFastForwardButton")
+                transform.FindNamedComponent<GameSpeedButton>("SlowMotionButton"),
+                playButton,
+                transform.FindNamedComponent<GameSpeedButton>("FastForwardButton"),
+                transform.FindNamedComponent<GameSpeedButton>("DoubleFastForwardButton")
             };
 
-            new GameSpeedDisplay(speedText, gameSpeedModifiers);
+            foreach (GameSpeedButton speedButton in gameSpeedButtons)
+            {
+                speedButton.Initialise(speedButtonManager);
+            }
+
+            speedButtonManager.SelectButton(playButton);
 		}
 	}
 }
