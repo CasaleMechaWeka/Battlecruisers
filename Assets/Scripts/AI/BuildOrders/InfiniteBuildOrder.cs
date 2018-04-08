@@ -47,7 +47,7 @@ namespace BattleCruisers.AI.BuildOrders
         {
             Current
                 = _availableBuildings
-                    .Where(buildingKey => _levelInfo.CanConstructBuilding(buildingKey))
+                    .Where(_levelInfo.CanConstructBuilding)
                     .Shuffle()
                     .FirstOrDefault();
             
