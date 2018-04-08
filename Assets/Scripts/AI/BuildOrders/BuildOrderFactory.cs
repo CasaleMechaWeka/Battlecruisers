@@ -67,7 +67,7 @@ namespace BattleCruisers.AI.BuildOrders
 				keyWrapper.Initialise(buildOrders);
 			}
 
-            return new StrategyBuildOrder(baseBuildOrder, levelInfo);
+            return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
 		}
 
 		/// <summary>

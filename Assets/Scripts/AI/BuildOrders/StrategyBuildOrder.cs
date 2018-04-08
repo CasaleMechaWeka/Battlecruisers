@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.BuildOrders
 {
-    // FELIX  Create test!
     public class StrategyBuildOrder : IDynamicBuildOrder
     {
         private readonly IEnumerator<IPrefabKeyWrapper> _baseBuildOrder;
@@ -13,11 +12,11 @@ namespace BattleCruisers.AI.BuildOrders
 
         public BuildingKey Current { get; private set; }
 
-        public StrategyBuildOrder(IList<IPrefabKeyWrapper> baseBuildOrder, ILevelInfo levelInfo)
+        public StrategyBuildOrder(IEnumerator<IPrefabKeyWrapper> baseBuildOrder, ILevelInfo levelInfo)
         {
             Helper.AssertIsNotNull(baseBuildOrder, levelInfo);
 
-            _baseBuildOrder = baseBuildOrder.GetEnumerator();
+            _baseBuildOrder = baseBuildOrder;
             _levelInfo = levelInfo;
         }
 
