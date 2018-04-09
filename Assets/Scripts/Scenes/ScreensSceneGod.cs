@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data;
+﻿using System.Collections;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
@@ -96,7 +97,8 @@ namespace BattleCruisers.Scenes
             // Laziliy initalise, because post battle screen can change the loadout
             if (!loadoutScreen.IsInitialised)
             {
-                loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, LandingSceneGod.LoadingScreen);
+                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, LandingSceneGod.LoadingScreen);
+                StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
             }
 
 			GoToScreen(loadoutScreen);

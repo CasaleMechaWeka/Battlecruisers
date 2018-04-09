@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System.Collections;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
@@ -22,16 +23,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public BuildingDetailsManager buildingDetailsManager;
         public UnitDetailsManager unitDetailsManager;
 
-        public void Initialise(
+        public IEnumerator Initialise(
             IScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider, 
             IPrefabFactory prefabFactory, 
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            ILoadingScreen loadingScreen)
         {
             base.Initialise(screensSceneGod);
 
+            Logging.Log("LoadoutScreenController.Initialise()  START");
+
+            yield return null;
+
             // General
-            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, hullsRow);
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, loadingScreen, hullsRow);
             // Item details managers
             Helper.AssertIsNotNull(cruiserDetailsManager, buildingDetailsManager, unitDetailsManager);
 
@@ -39,15 +45,29 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _gameModel = _dataProvider.GameModel;
             _prefabFactory = prefabFactory;
 
+            Logging.Log("LoadoutScreenController.Initialise()  1");
+
             buildingDetailsManager.Initialise(spriteProvider);
             unitDetailsManager.Initialise();
 			cruiserDetailsManager.Initialise();
 
+            Logging.Log("LoadoutScreenController.Initialise()  2");
+
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
+
+            Logging.Log("LoadoutScreenController.Initialise()  3");
 
             SetupHullsRow();
             SetupBuildingRows();
             SetupUnitRows();
+
+            Logging.Log("LoadoutScreenController.Initialise()  4");
+
+            yield return null;
+
+            // FELIX
+            //loadingScreen.IsVisible = false;
+            Logging.Log("LoadoutScreenController.Initialise()  END");
         }
 
         private void SetupHullsRow()
