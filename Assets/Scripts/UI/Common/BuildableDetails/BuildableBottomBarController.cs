@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
                 // If the buildable is not initialised, it does not exist in the
                 // scene yet and this bottom bar does not need to be displayed.
-                IsVisible = buildable.IsInitialised;
+                IsVisible = buildable != null && buildable.IsInitialised;
 
                 _buildProgressController.Buildable = buildable;
                 _toggleDronesButton.Buildable = buildable;
