@@ -15,7 +15,9 @@ namespace BattleCruisers.Cruisers.Drones
     /// </summary>
     public class DroneManager : IDroneManager
 	{
-		private IList<IDroneConsumer> _droneConsumers;
+		private readonly IList<IDroneConsumer> _droneConsumers;
+
+        private const int MIN_NUM_OF_DRONES = 0;
 
 		private int _numOfDrones;
 		public int NumOfDrones
@@ -25,10 +27,7 @@ namespace BattleCruisers.Cruisers.Drones
 			{
 				Logging.Log(Tags.DRONES, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
 
-				if (value < 0)
-				{
-					throw new ArgumentException();
-				}
+                Assert.IsTrue(value >= MIN_NUM_OF_DRONES, string.Format("Invalid num of drones {0}.  Must be at least {1}", value, MIN_NUM_OF_DRONES));
 
 				if (_numOfDrones != value)
 				{
@@ -97,11 +96,8 @@ namespace BattleCruisers.Cruisers.Drones
 		{
 			Logging.Log(Tags.DRONES, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
-			if (!CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired)
-			    || _droneConsumers.Contains(droneConsumer))
-			{
-				throw new ArgumentException();
-			}
+            Assert.IsTrue(CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired), "Not enough drones to support drone consumer :/");
+            Assert.IsFalse(_droneConsumers.Contains(droneConsumer), "Drone consumer has already been added.  Should not be added again!");
 
             if (droneConsumer.IsHighPriority)
             {
@@ -160,11 +156,7 @@ namespace BattleCruisers.Cruisers.Drones
 			Logging.Log(Tags.DRONES, "RemoveDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			bool wasRemoved = _droneConsumers.Remove(droneConsumer);
-
-			if (!wasRemoved)
-			{
-				throw new ArgumentException("Tried to remove consumer that was not first added.");
-			}
+            Assert.IsTrue(wasRemoved, "Tried to remove consumer that was not first added.");
 
 			if (droneConsumer.NumOfDrones != 0)
 			{
@@ -328,8 +320,10 @@ namespace BattleCruisers.Cruisers.Drones
 		/// Frees up the required number of drones for the given drone consumer
 		/// and assigns them to the given drone consumer.
 		/// 
-		/// <returns>Returns the number of spare drones, after the drone consumer's required
-		/// number has been satisfied.</returns>
+		/// <returns>
+        /// Returns the number of spare drones, after the drone consumer's required
+		/// number has been satisfied.
+        /// </returns>
 		private int ProvideRequiredDrones(IDroneConsumer droneConsumer)
 		{
 			int numOfFreeDrones = FreeUpDrones(droneConsumer.NumOfDronesRequired);

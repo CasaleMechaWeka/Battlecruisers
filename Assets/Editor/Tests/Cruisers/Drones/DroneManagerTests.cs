@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Cruisers.Drones;
+﻿using BattleCruisers.Cruisers.Drones;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -41,7 +40,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		[Test]
 		public void NumOfDrones_Set_Invalid_Throws()
 		{
-			Assert.Throws<ArgumentException>(() => _droneManager.NumOfDrones = -1);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _droneManager.NumOfDrones = -1);
 		}
 
 		[Test]
@@ -142,7 +141,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		[Test]
         public void AddDroneConsumer_CannotSupport_Throws()
 		{
-			Assert.Throws<ArgumentException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]
@@ -150,7 +149,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		{
 			_droneManager.NumOfDrones = 1;
 			_droneManager.AddDroneConsumer(_droneConsumer1);
-			Assert.Throws<ArgumentException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]
@@ -307,7 +306,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		[Test]
         public void RemoveDroneConsumer_WasNotAddedFirst_Throws()
 		{
-			Assert.Throws<ArgumentException>(() => _droneManager.RemoveDroneConsumer(_droneConsumer1));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _droneManager.RemoveDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]
