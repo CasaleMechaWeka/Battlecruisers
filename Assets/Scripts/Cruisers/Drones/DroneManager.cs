@@ -20,10 +20,7 @@ namespace BattleCruisers.Cruisers.Drones
 		private int _numOfDrones;
 		public int NumOfDrones
 		{
-			get
-			{
-				return _numOfDrones;
-			}
+			get { return _numOfDrones; }
 			set
 			{
 				Logging.Log(Tags.DRONES, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
@@ -81,15 +78,15 @@ namespace BattleCruisers.Cruisers.Drones
 		/// <summary>
         /// === High Priority Drone Consumer ===
         /// 
-		/// The newly added consumer will always be provided with at least
-		/// its required number of drones.
-		/// 
-		/// Usually the newly added consumer is the highest priority consumer.
-		/// 
-		/// The exception to this is if there is a focused consumer, which has
-		/// enough drones to spare for the newly added consumer AND still be
-		/// focused.  In this case that focused consumer remains the highest
-		/// priority consumer.
+        /// Will be added as the lowest priority high priority consumer.  Ie, the consumer
+        /// will be the last high priority consumer, but will be before the first
+        /// low priority consumer.
+        /// 
+        /// Will only be assigned drones if:
+        /// 1. There is a focused consumer with enough spare drones to cover the
+        ///     new consumer.
+        /// AND
+        /// 2. All higher priority consumers have drones assigned.
         /// 
         /// 
         /// === Low Priority Drone Consumer ===
@@ -116,8 +113,14 @@ namespace BattleCruisers.Cruisers.Drones
             }
         }
 
+        /// <summary>
+        /// Add drone consumer as the lowest high priority consumer.  Ie, the consumer
+        /// will be the last high priority consumer, but will be before the first
+        /// low priority consumer.
+        /// </summary>
         private void AddHighPriorityDroneConsumer(IDroneConsumer droneConsumer)
         {
+            // FELIX  Fix it :D
 			int numOfSpareDrones = ProvideRequiredDrones(droneConsumer);
 
             IDroneConsumer focusedConsumer = GetFocusedConsumer();
