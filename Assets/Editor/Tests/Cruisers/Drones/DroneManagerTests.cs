@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		}
 
 		[Test]
-		public void NumOfDrones_Set_Invalid()
+		public void NumOfDrones_Set_Invalid_Throws()
 		{
 			Assert.Throws<ArgumentException>(() => _droneManager.NumOfDrones = -1);
 		}
@@ -140,13 +140,13 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
 		#region AddDroneConsumer()
 		[Test]
-		public void AddDroneConsumer_CannotSupport()
+        public void AddDroneConsumer_CannotSupport_Throws()
 		{
 			Assert.Throws<ArgumentException>(() => _droneManager.AddDroneConsumer(_droneConsumer1));
 		}
 
 		[Test]
-		public void AddDroneConsumer_DoubleAdd()
+        public void AddDroneConsumer_DoubleAdd_Throws()
 		{
 			_droneManager.NumOfDrones = 1;
 			_droneManager.AddDroneConsumer(_droneConsumer1);
@@ -303,7 +303,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
 		#region RemoveDroneConsumer()
 		[Test]
-		public void RemoveDroneConsumer_WasNotAddedFirst()
+        public void RemoveDroneConsumer_WasNotAddedFirst_Throws()
 		{
 			Assert.Throws<ArgumentException>(() => _droneManager.RemoveDroneConsumer(_droneConsumer1));
 		}
