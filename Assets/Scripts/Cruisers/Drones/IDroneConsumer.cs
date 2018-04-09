@@ -31,13 +31,19 @@ namespace BattleCruisers.Cruisers.Drones
 		}
 	}
 
-	// Building, unit, cruiser.  Anything that needs to be repaired, in which case
-	// NumOfDronesRequired should be 1.
+	/// <summary>
+    /// Used by buildings, units and cruisers.  Anything that needs to be built or repaired.
+    /// </summary>
 	public interface IDroneConsumer
 	{
 		int NumOfDrones { get; set; }
 		int NumOfDronesRequired { get; }
 		DroneConsumerState State { get; }
+
+        /// <summary>
+        /// True for a buildable under construction.
+        /// False for reparing a buildable or a cruiser.
+        /// </summary>
         bool IsHighPriority { get; }
 
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
