@@ -32,8 +32,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             base.Initialise(screensSceneGod);
 
-            Logging.Log("LoadoutScreenController.Initialise()  START");
-
             yield return null;
 
             // General
@@ -45,29 +43,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _gameModel = _dataProvider.GameModel;
             _prefabFactory = prefabFactory;
 
-            Logging.Log("LoadoutScreenController.Initialise()  1");
 
             buildingDetailsManager.Initialise(spriteProvider);
             unitDetailsManager.Initialise();
-			cruiserDetailsManager.Initialise();
-
-            Logging.Log("LoadoutScreenController.Initialise()  2");
+            cruiserDetailsManager.Initialise();
 
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
 
-            Logging.Log("LoadoutScreenController.Initialise()  3");
-
+			yield return null;
             SetupHullsRow();
+
+			yield return null;
             SetupBuildingRows();
+
+			yield return null;
             SetupUnitRows();
-
-            Logging.Log("LoadoutScreenController.Initialise()  4");
-
-            yield return null;
-
-            // FELIX
-            //loadingScreen.IsVisible = false;
-            Logging.Log("LoadoutScreenController.Initialise()  END");
         }
 
         private void SetupHullsRow()
