@@ -38,6 +38,7 @@ namespace BattleCruisers.Buildables
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
 		IBoostable BuildProgressBoostable { get; }
+        bool IsInitialised { get; }
   
         new Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }

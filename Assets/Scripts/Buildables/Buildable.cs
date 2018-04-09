@@ -138,6 +138,8 @@ namespace BattleCruisers.Buildables
             }
         }
 
+        public bool IsInitialised { get { return BuildProgressBoostable != null; } }
+
         #region IComparableItem
         Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
         string IComparableItem.Description { get { return description; } }
