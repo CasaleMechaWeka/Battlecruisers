@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Cruisers;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.UI.BattleScene
 {

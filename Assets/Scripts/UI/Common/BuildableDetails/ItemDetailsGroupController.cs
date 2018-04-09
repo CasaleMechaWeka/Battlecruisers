@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class ItemDetailsGroupController : MonoBehaviour, IItemDetailsGroup
     {

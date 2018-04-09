@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public interface IItemDetailsGroup
     {

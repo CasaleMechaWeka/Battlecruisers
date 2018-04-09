@@ -2,7 +2,7 @@
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public abstract class ComparableItemDetails<TItem> : ItemDetails<TItem>, IPointerClickHandler
         where TItem : class, ITarget, IComparableItem

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;

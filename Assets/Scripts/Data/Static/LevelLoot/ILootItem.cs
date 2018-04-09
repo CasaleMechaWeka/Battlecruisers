@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Data.Static.LevelLoot

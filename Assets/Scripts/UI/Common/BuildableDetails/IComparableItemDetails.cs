@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public interface IComparableItemDetails<TItem> where TItem : IComparableItem
 	{

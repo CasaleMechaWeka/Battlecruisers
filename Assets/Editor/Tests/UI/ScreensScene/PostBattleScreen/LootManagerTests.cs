@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static.LevelLoot;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;

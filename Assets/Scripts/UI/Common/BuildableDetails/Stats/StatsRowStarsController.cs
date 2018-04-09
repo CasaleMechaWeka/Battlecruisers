@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Stats
+namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class StatsRowStarsController : StatsRow
 	{

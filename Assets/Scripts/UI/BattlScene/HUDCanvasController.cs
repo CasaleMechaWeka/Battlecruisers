@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Cruisers;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;

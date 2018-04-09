@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Categorisation;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Stats
+namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
 	{

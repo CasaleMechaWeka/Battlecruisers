@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.Common.BuildingDetails.Buttons;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public abstract class BuildableDetailsController<TItem> : ItemDetails<TItem>, IBuildableDetails<TItem> where TItem : class, IBuildable
     {

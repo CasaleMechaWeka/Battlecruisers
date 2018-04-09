@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.Categorisation;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Stats
+namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public abstract class StatsController<T> : MonoBehaviour where T : class, ITarget
 	{

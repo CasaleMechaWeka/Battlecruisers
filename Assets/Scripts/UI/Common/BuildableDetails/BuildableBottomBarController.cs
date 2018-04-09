@@ -2,13 +2,12 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Common.BuildingDetails.Buttons;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX   Rename namespace to BuildableDetails :/
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class BuildableBottomBarController : MonoBehaviour, IBuildableBottomBar
     {

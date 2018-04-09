@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.Common.BuildingDetails.Buttons;
-using BattleCruisers.UI.Common.BuildingDetails.Stats;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class BuildingDetailsController : BuildableDetailsController<IBuilding>
     {

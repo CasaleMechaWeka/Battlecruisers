@@ -6,7 +6,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene

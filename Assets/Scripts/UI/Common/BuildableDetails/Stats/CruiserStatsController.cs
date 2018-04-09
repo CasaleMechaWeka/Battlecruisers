@@ -2,7 +2,7 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Stats
+namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class CruiserStatsController : StatsController<ICruiser>
 	{

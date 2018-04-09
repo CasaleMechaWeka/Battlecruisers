@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.Common.BuildingDetails
+namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class BuildableDetailsManager : IBuildableDetailsManager
     {

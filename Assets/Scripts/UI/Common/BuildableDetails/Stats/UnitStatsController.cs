@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Stats
+namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
 	{

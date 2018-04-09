@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.Common.BuildingDetails.Buttons
+namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     public class RepairButtonController : MonoBehaviour
     {

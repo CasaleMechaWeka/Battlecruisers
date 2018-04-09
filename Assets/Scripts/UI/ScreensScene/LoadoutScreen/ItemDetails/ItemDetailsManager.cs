@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using UnityEngine;

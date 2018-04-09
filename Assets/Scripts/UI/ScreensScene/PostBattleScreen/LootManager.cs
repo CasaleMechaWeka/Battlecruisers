@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static.LevelLoot;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;

@@ -11,7 +11,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.Common.BuildingDetails;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
