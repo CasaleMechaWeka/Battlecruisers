@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers.Drones
     /// Only one drone consumer (DC) can be focused at a time (focused 
     /// meaning they have more than their required number of drones).
     /// 
-    /// If a DC is focused they are the highest priority DC, and any 
+    /// If a DC is focused they are the highest priority DC and any 
     /// newly available drones will go to them.
     /// </summary>
     public class DroneManager : IDroneManager
@@ -119,9 +119,9 @@ namespace BattleCruisers.Cruisers.Drones
         private void AddHighPriorityDroneConsumer(IDroneConsumer droneConsumer)
         {
 			int numOfSpareDrones = ProvideRequiredDrones(droneConsumer);
-			
-			IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
-			if (focusedConsumer != null && focusedConsumer.State == DroneConsumerState.Focused)
+
+            IDroneConsumer focusedConsumer = GetFocusedConsumer();
+			if (focusedConsumer != null)
 			{
 				// Leave focused consumer as the highest priority consumer
 				_droneConsumers.Insert(_droneConsumers.Count - 1, droneConsumer);
@@ -259,8 +259,8 @@ namespace BattleCruisers.Cruisers.Drones
 		{
 			Assert.IsTrue(_droneConsumers.Count != 0);
 
-			IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
-			if (focusedConsumer.State == DroneConsumerState.Focused)
+            IDroneConsumer focusedConsumer = GetFocusedConsumer();
+			if (focusedConsumer != null)
 			{
 				focusedConsumer.NumOfDrones += numOfSpareDrones;
 				return;
@@ -359,9 +359,9 @@ namespace BattleCruisers.Cruisers.Drones
             if (numOfFreedDrones < numOfDesiredDrones)
 			{
 				// Remove drones from focused consuemr
-				IDroneConsumer focusedConsumer = GetHighestPriorityConsumer();
+                IDroneConsumer focusedConsumer = GetFocusedConsumer();
 
-				if (focusedConsumer.State == DroneConsumerState.Focused)
+				if (focusedConsumer != null)
 				{
 					if (focusedConsumer.NumOfDrones - numOfDesiredDrones > focusedConsumer.NumOfDronesRequired)
 					{
@@ -405,6 +405,19 @@ namespace BattleCruisers.Cruisers.Drones
         {
             int numOfDronesUsed = _droneConsumers.Sum(droneConsumer => droneConsumer.NumOfDrones);
             return NumOfDrones - numOfDronesUsed;
+        }
+
+        private IDroneConsumer GetFocusedConsumer()
+        {
+            IDroneConsumer potentiallyFocusedConsumer = GetHighestPriorityConsumer();
+
+            if (potentiallyFocusedConsumer != null 
+                && potentiallyFocusedConsumer.State == DroneConsumerState.Focused)
+            {
+                return potentiallyFocusedConsumer;
+            }
+
+            return null;
         }
 
 		private IDroneConsumer GetHighestPriorityConsumer()
