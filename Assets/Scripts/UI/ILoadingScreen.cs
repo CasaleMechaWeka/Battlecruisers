@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.UI
+﻿using System.Collections;
+
+namespace BattleCruisers.UI
 {
     public interface ILoadingScreen
     {
-        bool IsVisible { get; set; }
+        IEnumerator PerformLongOperation(IEnumerator longOperation);
     }
 }

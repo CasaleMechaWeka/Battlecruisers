@@ -10,16 +10,18 @@ namespace BattleCruisers.Scenes
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         private bool _isInitialised = false;
-        private ILoadingScreen _loadingScreen;
 
+		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
 
         void Awake()
         {
             if (!_isInitialised)
             {
-                _loadingScreen = GetComponentInChildren<ILoadingScreen>();
-                Assert.IsNotNull(_loadingScreen);
+                LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
+                Assert.IsNotNull(loadingScreen);
+                loadingScreen.Initialise();
+                LoadingScreen = loadingScreen;
 
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
@@ -34,13 +36,18 @@ namespace BattleCruisers.Scenes
 
         public void GoToScene(string sceneName)
         {
-            StartCoroutine(LoadScene(sceneName));
+            // FELIX   Split up confusing line :/
+            StartCoroutine(LoadingScreen.PerformLongOperation(LoadScene(sceneName)));
+
+			// FELIX
+            //StartCoroutine(LoadScene(sceneName));
         }
 
         private IEnumerator LoadScene(string sceneName)
         {
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Start loading:  " + sceneName);
-            _loadingScreen.IsVisible = true;
+            // FELIX
+            //LoadingScreen.IsVisible = true;
 
             AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
 
@@ -49,8 +56,9 @@ namespace BattleCruisers.Scenes
                 Logging.Verbose(Tags.SCENE_NAVIGATION, "LoadScene():  " + sceneName + "  progress: " + loadingScene.progress);
                 yield return null;
             }
-
-            _loadingScreen.IsVisible = false;
+			
+            // FELIX
+            //LoadingScreen.IsVisible = false;
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Finished loading:  " + sceneName);
         }
     }

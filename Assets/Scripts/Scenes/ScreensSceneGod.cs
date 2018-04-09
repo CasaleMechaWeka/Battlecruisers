@@ -96,7 +96,7 @@ namespace BattleCruisers.Scenes
             // Laziliy initalise, because post battle screen can change the loadout
             if (!loadoutScreen.IsInitialised)
             {
-                loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+                loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, LandingSceneGod.LoadingScreen);
             }
 
 			GoToScreen(loadoutScreen);
