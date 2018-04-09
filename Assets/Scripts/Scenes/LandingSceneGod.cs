@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using BattleCruisers.UI;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,19 +10,7 @@ namespace BattleCruisers.Scenes
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         private bool _isInitialised = false;
-
-        public Canvas root;
-
-		private bool _isLoadingScene = false;
-        private bool IsLoadingScene
-        {
-            get { return _isLoadingScene; }
-            set
-            {
-                _isLoadingScene = value;
-                root.gameObject.SetActive(_isLoadingScene);
-            }
-        }
+        private ILoadingScreen _loadingScreen;
 
         public static ISceneNavigator SceneNavigator { get; private set; }
 
@@ -29,7 +18,8 @@ namespace BattleCruisers.Scenes
         {
             if (!_isInitialised)
             {
-                Assert.IsNotNull(root);
+                _loadingScreen = GetComponentInChildren<ILoadingScreen>();
+                Assert.IsNotNull(_loadingScreen);
 
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
@@ -50,9 +40,7 @@ namespace BattleCruisers.Scenes
         private IEnumerator LoadScene(string sceneName)
         {
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Start loading:  " + sceneName);
-            Assert.IsFalse(IsLoadingScene);
-
-            IsLoadingScene = true;
+            _loadingScreen.IsVisible = true;
 
             AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
 
@@ -62,7 +50,7 @@ namespace BattleCruisers.Scenes
                 yield return null;
             }
 
-            IsLoadingScene = false;
+            _loadingScreen.IsVisible = false;
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Finished loading:  " + sceneName);
         }
     }
