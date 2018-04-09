@@ -3,13 +3,16 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Common.BuildingDetails.Buttons;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildingDetails
 {
     public abstract class BuildableDetailsController<TItem> : ItemDetails<TItem>, IBuildableDetails<TItem> where TItem : class, IBuildable
     {
-		private DeleteButtonController _deleteButton;
+        private RectTransform _rectTransform;
+		private float _maxHeight;
+        private DeleteButtonController _deleteButton;
         private BuildableBottomBarController _bottomBar;
 
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
@@ -17,6 +20,10 @@ namespace BattleCruisers.UI.Common.BuildingDetails
             base.Initialise();
 
             Helper.AssertIsNotNull(droneManager, repairManager);
+
+            _rectTransform = transform as RectTransform;
+            Assert.IsNotNull(_rectTransform);
+            _maxHeight = _rectTransform.sizeDelta.y;
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
@@ -33,7 +40,9 @@ namespace BattleCruisers.UI.Common.BuildingDetails
 
             _bottomBar.Buildable = buildable;
 
-            // FELIX  Update height depending on whether bottom bar is visible!
+            // Shrink details panel if bottom bar is invisble
+            float desiredHeight = _bottomBar.IsVisible ? _maxHeight : _maxHeight - _bottomBar.Height;
+            _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, desiredHeight);
 
             _deleteButton.gameObject.SetActive(allowDelete);
             _deleteButton.Buildable = buildable;
