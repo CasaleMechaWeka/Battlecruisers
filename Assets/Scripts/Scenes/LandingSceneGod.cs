@@ -36,18 +36,13 @@ namespace BattleCruisers.Scenes
 
         public void GoToScene(string sceneName)
         {
-            // FELIX   Split up confusing line :/
-            StartCoroutine(LoadingScreen.PerformLongOperation(LoadScene(sceneName)));
-
-			// FELIX
-            //StartCoroutine(LoadScene(sceneName));
+            IEnumerator loadScene = LoadScene(sceneName);
+            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene));
         }
 
         private IEnumerator LoadScene(string sceneName)
         {
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Start loading:  " + sceneName);
-            // FELIX
-            //LoadingScreen.IsVisible = true;
 
             AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
 
@@ -57,8 +52,6 @@ namespace BattleCruisers.Scenes
                 yield return null;
             }
 			
-            // FELIX
-            //LoadingScreen.IsVisible = false;
             Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Finished loading:  " + sceneName);
         }
     }
