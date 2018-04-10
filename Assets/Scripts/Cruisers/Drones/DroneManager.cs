@@ -14,105 +14,118 @@ namespace BattleCruisers.Cruisers.Drones
     /// newly available drones will go to them.
     /// </summary>
     public class DroneManager : IDroneManager
-	{
+    {
         // FELIX  Switch the priority direction :P  Because new consumers are the lowest
         // priority and should be added to end, instead of inserted at start.
         // The first consumer has the lowest priority.  The last consumer
         //  has the highest priority.
-		private readonly IList<IDroneConsumer> _droneConsumers;
+        private readonly IList<IDroneConsumer> _droneConsumers;
 
         private const int MIN_NUM_OF_DRONES = 0;
 
-		private int _numOfDrones;
-		public int NumOfDrones
-		{
-			get { return _numOfDrones; }
-			set
-			{
-				Logging.Log(Tags.DRONES, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
+        private int _numOfDrones;
+        public int NumOfDrones
+        {
+            get { return _numOfDrones; }
+            set
+            {
+                Logging.Log(Tags.DRONES, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
 
                 Assert.IsTrue(value >= MIN_NUM_OF_DRONES, string.Format("Invalid num of drones {0}.  Must be at least {1}", value, MIN_NUM_OF_DRONES));
 
-				if (_numOfDrones != value)
-				{
-					if (_droneConsumers.Count != 0)
-					{
-						if (value > _numOfDrones)
-						{
-							int newDrones = value - _numOfDrones;
-							AssignSpareDrones(newDrones);
-						}
-						else
-						{
-							int numOfLostDrones = _numOfDrones - value;
-							int numOfFreedDrones = FreeUpDrones(numOfLostDrones);
-							int numOfSpareDrones = numOfFreedDrones - numOfLostDrones;
+                if (_numOfDrones != value)
+                {
+                    if (_droneConsumers.Count != 0)
+                    {
+                        if (value > _numOfDrones)
+                        {
+                            int newDrones = value - _numOfDrones;
+                            AssignSpareDrones(newDrones);
+                        }
+                        else
+                        {
+                            int numOfLostDrones = _numOfDrones - value;
+                            int numOfFreedDrones = FreeUpDrones(numOfLostDrones);
+                            int numOfSpareDrones = numOfFreedDrones - numOfLostDrones;
 
-							if (numOfSpareDrones > 0)
-							{
-								AssignSpareDrones(numOfSpareDrones);
-							}
-						}
-					}
+                            if (numOfSpareDrones > 0)
+                            {
+                                AssignSpareDrones(numOfSpareDrones);
+                            }
+                        }
+                    }
 
-					_numOfDrones = value;
+                    _numOfDrones = value;
 
-					if (DroneNumChanged != null)
-					{
+                    if (DroneNumChanged != null)
+                    {
                         DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         public DroneManager()
-		{
-			_droneConsumers = new List<IDroneConsumer>();
-			_numOfDrones = 0;
-		}
+        {
+            _droneConsumers = new List<IDroneConsumer>();
+            _numOfDrones = 0;
+        }
 
-		public bool CanSupportDroneConsumer(int numOfDronesRequired)
-		{
-			return NumOfDrones >= numOfDronesRequired;
-		}
+        public bool CanSupportDroneConsumer(int numOfDronesRequired)
+        {
+            return NumOfDrones >= numOfDronesRequired;
+        }
 
         /// <summary>
         /// Adds the new drone consumer as the lowest priority drone consumer.
         /// 
         /// Will only be assigned drones if:
-        /// 1. All consumers are not idle (ie, either active or focused).
-		/// AND
-        /// 2. There is a focused consumer with enough spare drones to cover the
+        /// 1. It is the only drone consumer
+        /// OR
+        /// 2.  a) All existing consumers are not idle (ie, either active or focused).
+	    ///     AND
+        ///     b) There is a focused consumer with enough spare drones to cover the
         ///     new consumer.
+        /// OR
+        /// 3. All existing consumers are paused (ie, because we can no longer afford them).
         /// </summary>
         public void AddDroneConsumer(IDroneConsumer consumerToAdd)
-		{
-			Logging.Log(Tags.DRONES, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
+        {
+            Logging.Log(Tags.DRONES, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
 
             Assert.IsTrue(CanSupportDroneConsumer(consumerToAdd.NumOfDronesRequired), "Not enough drones to support drone consumer :/");
             Assert.IsFalse(_droneConsumers.Contains(consumerToAdd), "Drone consumer has already been added.  Should not be added again!");
 
-			bool wereAllConsumersNotIdle = AreAllConsumersNotIdle();
+            bool wereAllConsumersNotIdle = AllConsumersAreNotIdle();
             IDroneConsumer focusedConsumer = GetFocusedConsumer();
 
             // Make new consumer have the lowest priority
             _droneConsumers.Insert(0, consumerToAdd);
 
-            if (wereAllConsumersNotIdle
-                && focusedConsumer != null
-                && focusedConsumer.NumOfSpareDrones >= consumerToAdd.NumOfDronesRequired)
+            if (_droneConsumers.Count == 1
+                || (wereAllConsumersNotIdle
+                    && focusedConsumer != null
+                    && focusedConsumer.NumOfSpareDrones >= consumerToAdd.NumOfDronesRequired)
+                || AllConsumersAreIdle())
             {
                 ProvideRequiredDrones(consumerToAdd);
             }
         }
 
-        private bool AreAllConsumersNotIdle()
+        private bool AllConsumersAreNotIdle()
         {
             return
                 _droneConsumers
                     .All(consumer => consumer.State != DroneConsumerState.Idle);
+        }
+
+        private bool AllConsumersAreIdle()
+        {
+            return
+                _droneConsumers
+                    .All(consumer => consumer.State == DroneConsumerState.Idle);
         }
 
 		/// <summary>
@@ -213,6 +226,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// Note:  Should never be called if there are no consumers, because then
 		/// there are no consumers to assign the drones to.
 		/// </summary>
+        /// FELIX  Split method further.  Perhaps each loop into own method?  => 2 extra methods :)
 		private void AssignSpareDrones(int numOfSpareDrones)
 		{
 			Assert.IsTrue(_droneConsumers.Count != 0);
@@ -251,13 +265,23 @@ namespace BattleCruisers.Cruisers.Drones
 				{
 					IDroneConsumer droneConsumer = _droneConsumers[i];
 
-					if (droneConsumer.State == DroneConsumerState.Active
-						|| droneConsumer.State == DroneConsumerState.Focused)
-					{
-						droneConsumer.NumOfDrones += numOfSpareDrones;
-						numOfSpareDrones = 0;
-						break;
-					}
+                    if (droneConsumer.State == DroneConsumerState.Idle)
+                    {
+                        // We do not have enough drones to activate this consumer
+                        Assert.IsTrue(numOfSpareDrones < droneConsumer.NumOfDronesRequired);
+                        continue;
+                    }
+
+                    if (droneConsumer.State == DroneConsumerState.Active)
+                    {
+                        // Adding drones will make this consumer focused, so it
+                        // should have the highest priority.
+                        SetMaxPriority(droneConsumer);
+                    }
+
+					droneConsumer.NumOfDrones += numOfSpareDrones;
+					numOfSpareDrones = 0;
+					break;
 				}
 			}
 		}
