@@ -218,7 +218,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// 
 		/// If there are any spare drones after all consumers have their required
 		/// number of drones, all spare drones are assigned to the highest priority
-		/// consumer.
+		/// non-idle consumer.
 		/// 
 		/// If there are not enough drones for the consumer with the lowest number
 		/// of required drones, NO drones will be assignd to any consumers.
@@ -226,7 +226,6 @@ namespace BattleCruisers.Cruisers.Drones
 		/// Note:  Should never be called if there are no consumers, because then
 		/// there are no consumers to assign the drones to.
 		/// </summary>
-        /// FELIX  Split method further.  Perhaps each loop into own method?  => 2 extra methods :)
 		private void AssignSpareDrones(int numOfSpareDrones)
 		{
 			Assert.IsTrue(_droneConsumers.Count != 0);
@@ -238,53 +237,65 @@ namespace BattleCruisers.Cruisers.Drones
 				return;
 			}
 
-			// Try to ensure all consumers have their required number of drones
-			// Consumer priority:  High => Low
-			for (int i = _droneConsumers.Count - 1; i >= 0; --i)
-			{
-				IDroneConsumer droneConsumer = _droneConsumers[i];
+            numOfSpareDrones = MakeConsumersActive(numOfSpareDrones);
 
-				if (droneConsumer.State == DroneConsumerState.Idle 
-					&& droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
-				{
-					droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
-					numOfSpareDrones -= droneConsumer.NumOfDrones;
-
-					if (numOfSpareDrones == 0)
-					{
-						break;
-					}
-				}
-			}
-
-			// Assign remaining spares to highest priority consumer
 			if (numOfSpareDrones != 0)
 			{
-				// Consumer priority:  High => Low
-				for (int i = _droneConsumers.Count - 1; i >= 0; --i)
-				{
-					IDroneConsumer droneConsumer = _droneConsumers[i];
+				AssignToHighestPriorityNonIdleConsumer(numOfSpareDrones);
+            }
+        }
 
-                    if (droneConsumer.State == DroneConsumerState.Idle)
+        private void AssignToHighestPriorityNonIdleConsumer(int numOfSpareDrones)
+        {
+            // Consumer priority:  High => Low
+            for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+            {
+                IDroneConsumer droneConsumer = _droneConsumers[i];
+
+                if (droneConsumer.State == DroneConsumerState.Idle)
+                {
+                    // We do not have enough drones to activate this consumer
+                    Assert.IsTrue(numOfSpareDrones < droneConsumer.NumOfDronesRequired);
+                    continue;
+                }
+
+                if (droneConsumer.State == DroneConsumerState.Active)
+                {
+                    // Adding drones will make this consumer focused, so it
+                    // should have the highest priority.
+                    SetMaxPriority(droneConsumer);
+                }
+
+                droneConsumer.NumOfDrones += numOfSpareDrones;
+                break;
+            }
+        }
+
+        /// <summary>
+        /// Try to ensure all consumers active (have their required number of drones)
+        /// Consumer priority:  High => Low
+        /// </summary>
+        private int MakeConsumersActive(int numOfSpareDrones)
+        {
+            for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+            {
+                IDroneConsumer droneConsumer = _droneConsumers[i];
+
+                if (droneConsumer.State == DroneConsumerState.Idle
+                    && droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
+                {
+                    droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
+                    numOfSpareDrones -= droneConsumer.NumOfDrones;
+
+                    if (numOfSpareDrones == 0)
                     {
-                        // We do not have enough drones to activate this consumer
-                        Assert.IsTrue(numOfSpareDrones < droneConsumer.NumOfDronesRequired);
-                        continue;
+                        break;
                     }
+                }
+            }
 
-                    if (droneConsumer.State == DroneConsumerState.Active)
-                    {
-                        // Adding drones will make this consumer focused, so it
-                        // should have the highest priority.
-                        SetMaxPriority(droneConsumer);
-                    }
-
-					droneConsumer.NumOfDrones += numOfSpareDrones;
-					numOfSpareDrones = 0;
-					break;
-				}
-			}
-		}
+            return numOfSpareDrones;
+        }
 
 		/// <summary>
 		/// Ensures the given drone consumer has the highest priority, by placing
