@@ -40,7 +40,6 @@ namespace BattleCruisers.Cruisers.Drones
 		}
 
 		public int NumOfDronesRequired { get; set; }
-        // FELIX  Add test caser :D
         public int NumOfSpareDrones { get { return NumOfDrones - NumOfDronesRequired; } }
         public DroneConsumerState State { get; private set; }
 

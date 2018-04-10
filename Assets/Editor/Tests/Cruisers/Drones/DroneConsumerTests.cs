@@ -92,7 +92,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 			_droneConsumer.NumOfDrones = 0;
 
 			Assert.AreEqual(2, _droneStateChangedEmittedCount);
-
 		}
 
 		[Test]
@@ -106,6 +105,18 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
 			Assert.AreEqual(1, _droneStateChangedEmittedCount);
 		}
+
+        [Test]
+        public void NumOfSpareDrones()
+        {
+            Assert.AreEqual(-_droneConsumer.NumOfDronesRequired, _droneConsumer.NumOfSpareDrones);
+
+            _droneConsumer.NumOfDrones = _droneConsumer.NumOfDronesRequired;
+            Assert.AreEqual(0, _droneConsumer.NumOfSpareDrones);
+
+            _droneConsumer.NumOfDrones += 1;
+            Assert.AreEqual(1, _droneConsumer.NumOfSpareDrones);
+        }
 
 		private void OnDroneStateChanged(object sender, DroneStateChangedEventArgs e)
 		{
