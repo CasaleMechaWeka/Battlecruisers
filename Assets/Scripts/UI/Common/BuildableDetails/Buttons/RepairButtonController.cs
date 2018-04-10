@@ -37,7 +37,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         }
 
         // Only show repair button for user repairables, not opponent repairables
-        private bool ShowRepairButton { get { return Repairable.Faction == Faction.Blues && Repairable.RepairCommand.CanExecute; } }
+        private bool ShowRepairButton 
+        { 
+            get 
+            { 
+                return 
+                    Repairable.Faction == Faction.Blues 
+                    && Repairable.RepairCommand.CanExecute; 
+            } 
+        }
 
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
