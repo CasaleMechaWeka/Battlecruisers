@@ -258,12 +258,12 @@ namespace BattleCruisers.Tests.Buildables
         private void AddRepairableBuilding()
         {
             _buildingRepairCommand.CanExecute.Returns(true);
-            _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false).Returns(_buildingDroneConsumer);
+            _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_buildingDroneConsumer);
             _feedbackFactory.CreateFeedback(_buildingDroneConsumer, _numOfRepairDronesText).Returns(_buildingFeedback);
 
             _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_building));
 
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_buildingDroneConsumer, _numOfRepairDronesText);
             _droneConsumerProvider.Received().ActivateDroneConsumer(_buildingDroneConsumer);
 		}
@@ -271,12 +271,12 @@ namespace BattleCruisers.Tests.Buildables
         private void AddCruiser(bool isRepairable = false)
         {
             _cruiserRepairCommand.CanExecute.Returns(isRepairable);
-            _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false).Returns(_cruiserDroneConsumer);
+            _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_cruiserDroneConsumer);
             _feedbackFactory.CreateFeedback(_cruiserDroneConsumer, _numOfRepairDronesText).Returns(_cruiserFeedback);
 			
             _repairManager.Initialise(_cruiser);
 
-            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _numOfRepairDronesText);
 
             // Only activate drone consumer if repairable is currently repairable

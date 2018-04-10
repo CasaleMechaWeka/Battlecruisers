@@ -361,7 +361,7 @@ namespace BattleCruisers.Buildables
         protected void SetupDroneConsumer(int numOfDrones)
         {
             Assert.IsNull(DroneConsumer);
-            DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones, isHighPriority: true);
+            DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
         }
 
