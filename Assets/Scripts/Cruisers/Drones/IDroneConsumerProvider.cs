@@ -2,7 +2,7 @@
 {
     public interface IDroneConsumerProvider
     {
-        IDroneConsumer RequestDroneConsumer(int numOfDronesRequired, bool isHighPriority);
+        IDroneConsumer RequestDroneConsumer(int numOfDronesRequired);
 
         /// <summary>
         /// Activating a drone consumer that cannot be supported (ie, not enough

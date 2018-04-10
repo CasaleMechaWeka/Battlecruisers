@@ -38,13 +38,8 @@ namespace BattleCruisers.Cruisers.Drones
 	{
 		int NumOfDrones { get; set; }
 		int NumOfDronesRequired { get; }
+        int NumOfSpareDrones { get; }
 		DroneConsumerState State { get; }
-
-        /// <summary>
-        /// True for a buildable under construction.
-        /// False for reparing a buildable or a cruiser.
-        /// </summary>
-        bool IsHighPriority { get; }
 
 		event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;

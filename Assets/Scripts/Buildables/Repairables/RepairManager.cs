@@ -12,10 +12,14 @@ namespace BattleCruisers.Buildables.Repairables
     /// <summary>
     /// Keeps track of all repairables (cruiser, buildings).  
     /// 
-    /// When they become repairable (ie, damaged), creates a drone consumer.
+    /// Creates a drone consumer when the repairable is created and holds on to
+    /// this consumer until the repairable is destroyed.
     /// 
-    /// When they are no longer repairable (ie, fully repaired), releases their
-    /// drone consumer.
+    /// When the repairable become repairable (ie, damaged), activates the consumer 
+    /// (adds the consumer to the drone manager).
+    /// 
+    /// When the repairable is no longer repairable (ie, fully repaired), releases 
+    /// their consumer (removes the consumer from the drone manager).
     /// </summary>
     public class RepairManager : IRepairManager
     {
@@ -128,7 +132,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
 
-            IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR, isHighPriority: false);
+            IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
 
             IDroneNumFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.NumOfRepairDronesText);
 			_repairableToDroneConsumer.Add(repairable, droneNumFeedback);
