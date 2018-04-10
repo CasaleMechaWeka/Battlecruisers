@@ -15,10 +15,8 @@ namespace BattleCruisers.Cruisers.Drones
     /// </summary>
     public class DroneManager : IDroneManager
     {
-        // FELIX  Switch the priority direction :P  Because new consumers are the lowest
-        // priority and should be added to end, instead of inserted at start.
-        // The first consumer has the lowest priority.  The last consumer
-        //  has the highest priority.
+        // Consumers are in descending order of priority.  Ie, the first consumer 
+        // has the highest priority and the last consumer has the lowest priority.
         private readonly IList<IDroneConsumer> _droneConsumers;
 
         private const int MIN_NUM_OF_DRONES = 0;
@@ -102,7 +100,7 @@ namespace BattleCruisers.Cruisers.Drones
             IDroneConsumer focusedConsumer = GetFocusedConsumer();
 
             // Make new consumer have the lowest priority
-            _droneConsumers.Insert(0, consumerToAdd);
+            _droneConsumers.Add(consumerToAdd);
 
             if (_droneConsumers.Count == 1
                 || (wereAllConsumersNotIdle
@@ -248,10 +246,8 @@ namespace BattleCruisers.Cruisers.Drones
         private void AssignToHighestPriorityNonIdleConsumer(int numOfSpareDrones)
         {
             // Consumer priority:  High => Low
-            for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+            foreach (IDroneConsumer droneConsumer in _droneConsumers)
             {
-                IDroneConsumer droneConsumer = _droneConsumers[i];
-
                 if (droneConsumer.State == DroneConsumerState.Idle)
                 {
                     // We do not have enough drones to activate this consumer
@@ -273,14 +269,12 @@ namespace BattleCruisers.Cruisers.Drones
 
         /// <summary>
         /// Try to ensure all consumers active (have their required number of drones)
-        /// Consumer priority:  High => Low
         /// </summary>
         private int MakeConsumersActive(int numOfSpareDrones)
         {
-            for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+			// Consumer priority:  High => Low
+            foreach (IDroneConsumer droneConsumer in _droneConsumers)
             {
-                IDroneConsumer droneConsumer = _droneConsumers[i];
-
                 if (droneConsumer.State == DroneConsumerState.Idle
                     && droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
                 {
@@ -303,15 +297,16 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
 		private void SetMaxPriority(IDroneConsumer droneConsumer)
 		{
-			int index = _droneConsumers.IndexOf(droneConsumer);
-			Assert.IsTrue(index != -1);
+            if (GetHighestPriorityConsumer() == droneConsumer)
+            {
+                // Drone consumer is already the highest priority
+                return;
+            }
 
-			if ((index + 1) != _droneConsumers.Count)
-			{
-				// Not highest priority yet, so increase priority!
-				_droneConsumers.RemoveAt(index);
-				_droneConsumers.Add(droneConsumer);
-			}
+            bool wasRemoved = _droneConsumers.Remove(droneConsumer);
+            Assert.IsTrue(wasRemoved);
+
+            _droneConsumers.Insert(0, droneConsumer);
 		}
 
 		/// <summary>
@@ -375,9 +370,10 @@ namespace BattleCruisers.Cruisers.Drones
 				// Remove drones from active consumers (from low => high priority)
                 if (numOfFreedDrones < minDronesToFree)
                 {
-					for (int i = 0; i < _droneConsumers.Count; ++i)
+                    for (int i = _droneConsumers.Count - 1; i >= 0; --i)
 					{
 						IDroneConsumer droneConsumer = _droneConsumers[i];
+
 						numOfFreedDrones += droneConsumer.NumOfDrones;
 						droneConsumer.NumOfDrones = 0;
 
@@ -425,7 +421,7 @@ namespace BattleCruisers.Cruisers.Drones
 
 		private IDroneConsumer GetHighestPriorityConsumer()
 		{
-			return _droneConsumers.LastOrDefault();
+            return _droneConsumers.FirstOrDefault();
 		}
 
         public bool HasDroneConsumer(IDroneConsumer droneConsumer)
