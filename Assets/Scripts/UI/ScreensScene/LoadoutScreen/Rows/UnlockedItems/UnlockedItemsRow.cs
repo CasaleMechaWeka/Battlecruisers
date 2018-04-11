@@ -32,10 +32,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void SetupUI()
         {
-			CreateUnockedItemButtons(_unlockedItems);
+			CreateUnlockedItemButtons(_unlockedItems);
         }
 
-		private void CreateUnockedItemButtons(IList<TItem> unlockedItems)
+        private void CreateUnlockedItemButtons(IList<TItem> unlockedItems)
 		{
 			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
 			float totalWidth = 0;
