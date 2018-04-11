@@ -365,7 +365,6 @@ namespace BattleCruisers.Buildables
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
         }
 
-
         protected void CleanUpDroneConsumer()
         {
             Assert.IsNotNull(DroneConsumer);
@@ -379,7 +378,6 @@ namespace BattleCruisers.Buildables
                 base.CanRepairCommandExecute()
                 && BuildableState == BuildableState.Completed;
         }
-
 
         private void ToggleDroneConsumerFocusCommandExecute()
         {
