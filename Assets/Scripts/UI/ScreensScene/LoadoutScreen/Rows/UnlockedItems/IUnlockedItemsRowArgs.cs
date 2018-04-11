@@ -7,6 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
     {
         IUIFactory UIFactory { get; }
         IList<TItem> UnlockedItems { get; }
+        int NumOfLockedItems { get; }
         IItemsRow<TItem> ItemsRow { get; }
         IItemDetailsManager<TItem> DetailsManager { get; }
     }

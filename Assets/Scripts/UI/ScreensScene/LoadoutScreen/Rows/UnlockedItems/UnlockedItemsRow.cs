@@ -11,6 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 	{
 		protected IUIFactory _uiFactory;
 		private IList<TItem> _unlockedItems;
+        private int _numOfLockedItems;
         protected IItemsRow<TItem> _itemsRow;
         private IItemDetailsManager<TItem> _detailsManager;
 		protected IList<UnlockedItem<TItem>> _unlockedItemButtons;
@@ -24,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
 			_uiFactory = args.UIFactory;
             _unlockedItems = args.UnlockedItems;
+            _numOfLockedItems = args.NumOfLockedItems;
 			_itemsRow = args.ItemsRow;
 			_detailsManager = args.DetailsManager;
 

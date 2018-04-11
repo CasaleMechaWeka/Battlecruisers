@@ -32,7 +32,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 
-            IUnlockedItemsRowArgs<ICruiser> args = new UnlockedItemsRowArgs<ICruiser>(_uiFactory, GetUnlockedHullPrefabs(), this, _detailsManager);
+            // FELIX  Don't hardcode :P
+            int numOfLockedHulls = 0;
+
+            IUnlockedItemsRowArgs<ICruiser> args 
+                = new UnlockedItemsRowArgs<ICruiser>(
+                    _uiFactory, 
+                    GetUnlockedHullPrefabs(), 
+                    numOfLockedHulls, 
+                    this, 
+                    _detailsManager);
+            
             _unlockedHullsRow.Initialise(args, loadoutCruiser);
             _unlockedHullsRow.SetupUI();
         }
