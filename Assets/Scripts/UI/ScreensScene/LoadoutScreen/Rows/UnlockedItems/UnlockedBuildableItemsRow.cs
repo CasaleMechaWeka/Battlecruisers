@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
     /// <summary>
+    /// FELIX  Remove all unused classes, sniff :(  I can find them from git if need be.
     /// Currently unused, but leaving here in case functionality is resurrected :)
     /// </summary>
     public abstract class UnlockedBuildableItemsRow<TItem> : UnlockedItemsRow<TItem> where TItem : IBuildable
