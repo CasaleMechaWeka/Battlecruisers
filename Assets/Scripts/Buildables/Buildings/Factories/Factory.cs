@@ -169,6 +169,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             CleanUpUnitUnderConstruction();
         }
 
+        /// <summary>
+        /// The unit under construction will request a drone consumer.  The factory
+        /// keeps hold of a drone consumer for the current unit, so simply pass
+        /// on the factory's drone consumer.
+        /// </summary>
         public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
 		{
 			Assert.IsNotNull(DroneConsumer);
