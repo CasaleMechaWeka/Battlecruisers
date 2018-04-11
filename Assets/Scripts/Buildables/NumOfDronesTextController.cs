@@ -12,6 +12,9 @@ namespace BattleCruisers.Buildables
     {
         private IBuildable _buildable;
         private ICommand _toggleDroneConsumerFocusCommand;
+
+        private const string DEFAULT_NUM_OF_DRONES = "0";
+
         public ITextMesh NumOfDronesText { get; private set; }
 
         public void Initialise(IBuildable buildable)
@@ -28,6 +31,8 @@ namespace BattleCruisers.Buildables
             TextMesh numOfDronesText = gameObject.GetComponentInChildren<TextMesh>(includeInactive: true);
             Assert.IsNotNull(numOfDronesText);
             NumOfDronesText = new TextMeshWrapper(numOfDronesText);
+
+            NumOfDronesText.Text = DEFAULT_NUM_OF_DRONES;
 
             UpdateVisibility();
         }
