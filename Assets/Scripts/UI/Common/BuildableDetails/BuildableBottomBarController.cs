@@ -43,8 +43,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             Helper.AssertIsNotNull(droneManager, repairManager);
 
-            RectTransform rectTransform = transform as RectTransform;
-            Assert.IsNotNull(rectTransform);
+            RectTransform rectTransform = transform.Parse<RectTransform>();
             Height = rectTransform.sizeDelta.y;
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);

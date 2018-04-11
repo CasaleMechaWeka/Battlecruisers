@@ -21,8 +21,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             Helper.AssertIsNotNull(droneManager, repairManager);
 
-            _rectTransform = transform as RectTransform;
-            Assert.IsNotNull(_rectTransform);
+            _rectTransform = transform.Parse<RectTransform>();
             _maxHeight = _rectTransform.sizeDelta.y;
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
