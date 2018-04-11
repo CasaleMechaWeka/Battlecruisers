@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
@@ -34,11 +36,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void SetupUI()
         {
-			CreateUnlockedItemButtons(_unlockedItems);
+			CreateItemButtons(_unlockedItems);
         }
 
-        private void CreateUnlockedItemButtons(IList<TItem> unlockedItems)
+        // FELIX  Split into smaller methods
+        private void CreateItemButtons(IList<TItem> unlockedItems)
 		{
+            // Create unlocked items
 			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
 			float totalWidth = 0;
 
@@ -49,10 +53,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 				totalWidth += itemButton.Size.x;
 			}
 
-			if (unlockedItems.Count > 0)
-			{
-				totalWidth += (unlockedItems.Count - 1) * layoutGroup.spacing;
-			}
+            // Create locked items
+            for (int i = 0; i < _numOfLockedItems; ++i)
+            {
+                LockedItem lockedItem = CreateLockedItem(layoutGroup);
+                totalWidth += lockedItem.Size.x;
+            }
+
+            int numOfItems = unlockedItems.Count + _numOfLockedItems;
+            Assert.IsTrue(numOfItems > 0);
+            totalWidth += (numOfItems - 1) * layoutGroup.spacing;
 
 			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);
 		}
@@ -73,5 +83,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 		}
 
 		protected abstract UnlockedItem<TItem> CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
+
+        protected abstract LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -30,5 +31,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 				unlockedHullButton.OnNewHullSelected(selectedCruiser);
 			}
 		}
+
+        protected override LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent)
+        {
+            return _uiFactory.CreateLockedHull(itemParent);
+        }
 	}
 }
