@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States;
 using BattleCruisers.Utils;
@@ -96,6 +97,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
             unlockedHull.Initialise(initialState, cruiser, isInLoadout);
             return unlockedHull;
+        }
+
+        public LockedItem CreateLockedHull(HorizontalOrVerticalLayoutGroup itemRow)
+        {
+            // FELIX
+            throw new System.NotImplementedException();
+        }
+
+        public LockedItem CreaetLockedBuildable(HorizontalOrVerticalLayoutGroup itemRow)
+        {
+            // FELIX
+            throw new System.NotImplementedException();
         }
     }
 }
