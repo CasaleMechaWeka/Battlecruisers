@@ -21,9 +21,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public LoadoutBuildingItem loadoutBuildingItemPrefab;
         public LoadoutUnitItem loadoutUnitItemPrefab;
-        public UnlockedBuildingItem unlockedBuildingItemPrefab;
-        public UnlockedUnitItem unlockedUnitItemPrefab;
-		public UnlockedHullItem unlockedHullItemPrefab;
+        public UnlockedHullItem unlockedHullItemPrefab;
+        public LockedItem lockedHullItemPrefab, lockedBuildableItemPrefab;
+
+        // FELIX  Remove :(
+		public UnlockedBuildingItem unlockedBuildingItemPrefab;
+		public UnlockedUnitItem unlockedUnitItemPrefab;
 
         public void Initialise(
             IItemDetailsManager<IBuilding> buildingDetailsManager, 
@@ -36,7 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 loadoutUnitItemPrefab, 
                 unlockedBuildingItemPrefab, 
                 unlockedUnitItemPrefab,
-                unlockedHullItemPrefab);
+                unlockedHullItemPrefab,
+                lockedHullItemPrefab,
+                lockedBuildableItemPrefab);
 
 			_buildingDetailsManager = buildingDetailsManager;
             _unitDetailsManager = unitDetailsManager;
@@ -92,7 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout)
         {
-            UnlockedHullItem unlockedHull = Instantiate<UnlockedHullItem>(unlockedHullItemPrefab);
+            UnlockedHullItem unlockedHull = Instantiate(unlockedHullItemPrefab);
             unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
             IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
             unlockedHull.Initialise(initialState, cruiser, isInLoadout);
@@ -101,14 +106,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public LockedItem CreateLockedHull(HorizontalOrVerticalLayoutGroup itemRow)
         {
-            // FELIX
-            throw new System.NotImplementedException();
+            return CreateLockedItem(itemRow, lockedHullItemPrefab);
         }
 
-        public LockedItem CreaetLockedBuildable(HorizontalOrVerticalLayoutGroup itemRow)
+        public LockedItem CreateLockedBuildable(HorizontalOrVerticalLayoutGroup itemRow)
         {
-            // FELIX
-            throw new System.NotImplementedException();
+            return CreateLockedItem(itemRow, lockedBuildableItemPrefab);
+        }
+		
+        private LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemRow, LockedItem lockedItemPrefab)
+        {
+            LockedItem lockedItem = Instantiate(lockedItemPrefab);
+            lockedItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
+            lockedItem.Initialise();
+            return lockedItem;
         }
     }
 }
