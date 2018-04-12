@@ -27,15 +27,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider, 
             IPrefabFactory prefabFactory, 
-            ISpriteProvider spriteProvider,
-            ILoadingScreen loadingScreen)
+            ISpriteProvider spriteProvider)
         {
             base.Initialise(screensSceneGod);
 
             yield return null;
 
             // General
-            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, loadingScreen, hullsRow);
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, hullsRow);
             // Item details managers
             Helper.AssertIsNotNull(cruiserDetailsManager, buildingDetailsManager, unitDetailsManager);
 

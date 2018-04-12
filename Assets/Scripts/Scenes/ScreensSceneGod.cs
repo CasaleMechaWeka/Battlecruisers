@@ -97,8 +97,19 @@ namespace BattleCruisers.Scenes
             // Laziliy initalise, because post battle screen can change the loadout
             if (!loadoutScreen.IsInitialised)
             {
-                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, LandingSceneGod.LoadingScreen);
-                StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
+                // TEMP  For starting ScreensScene without previous LandingScene.
+                // So I can test the ScreensScene without having to go through
+                // the LandingScene each time :P
+				IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+
+                if (LandingSceneGod.LoadingScreen != null)
+                {
+					StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
+                }
+                else
+                {
+                    StartCoroutine(initialiseLoadout);
+                }
             }
 
 			GoToScreen(loadoutScreen);
