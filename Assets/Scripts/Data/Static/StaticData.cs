@@ -148,24 +148,24 @@ namespace BattleCruisers.Data.Static
         {
             HullKey initialHull = GetInitialHull();
 			// TEMP  For final game, don't add ALL the prefabs :D
-            //Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
-            Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
+            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
+            //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
             // TEMP  For final game only unlock first level :P
-			int numOfLevelsCompleted = 20;
-			//int numOfLevelsCompleted = 0;
+			//int numOfLevelsCompleted = 20;
+			int numOfLevelsCompleted = 0;
 
             return new GameModel(
                 numOfLevelsCompleted,
                 playerLoadout,
                 lastBattleResult: null,
 				// TEMP  Do not unlock all hulls & buildables at teh game start :P
-                //unlockedHulls: new List<HullKey>() { initialHull },
-                //unlockedBuildings: GetInitialBuildings(),
-                //unlockedUnits: GetInitialUnits());
-                unlockedHulls: AllHullKeys(),
-                unlockedBuildings: AllBuildingKeys(),
-                unlockedUnits: AllUnitKeys());
+                unlockedHulls: new List<HullKey>() { initialHull },
+                unlockedBuildings: GetInitialBuildings(),
+                unlockedUnits: GetInitialUnits());
+                //unlockedHulls: AllHullKeys(),
+                //unlockedBuildings: AllBuildingKeys(),
+                //unlockedUnits: AllUnitKeys());
 		}
 
         private HullKey GetInitialHull()
