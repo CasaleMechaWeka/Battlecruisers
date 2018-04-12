@@ -9,7 +9,7 @@ namespace BattleCruisers.Data
     {
         IList<ILevel> Levels { get; }
         IGameModel GameModel { get; }
-        int NumOfLevelsUnlocked { get; }
+        ILockedInformation LockedInfo { get; }
         IStaticData StaticData { get; }
         ISettingsManager SettingsManager { get; }
 

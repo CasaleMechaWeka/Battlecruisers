@@ -89,13 +89,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private void NextCommandExecute()
 		{
 			int nextLevelNum = BattleResult.LevelNum + 1;
-            Assert.IsTrue(nextLevelNum <= _dataProvider.NumOfLevelsUnlocked);
+            Assert.IsTrue(nextLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 			_screensSceneGod.LoadLevel(nextLevelNum);
 		}
 
         private bool CanNextCommandExecute()
         {
-            return BattleResult.LevelNum + 1 <= _dataProvider.NumOfLevelsUnlocked;
+            return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
         }
 
 		public void GoToHomeScreen()

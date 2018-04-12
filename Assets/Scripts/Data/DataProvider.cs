@@ -15,22 +15,10 @@ namespace BattleCruisers.Data
         public IStaticData StaticData { get; private set; }
 		public IList<ILevel> Levels { get { return StaticData.Levels; } }
         public ISettingsManager SettingsManager { get; private set; }
+		public ILockedInformation LockedInfo { get; private set; }
 
         private readonly GameModel _gameModel;
         public IGameModel GameModel { get { return _gameModel; } }
-
-		public int NumOfLevelsUnlocked
-		{
-			get
-			{
-				int numOfLevelsUnlocked = GameModel.NumOfLevelsCompleted + 1;
-				if (numOfLevelsUnlocked > Levels.Count)
-				{
-					numOfLevelsUnlocked = Levels.Count;
-				}
-				return numOfLevelsUnlocked;
-			}
-		}
 
         public DataProvider(IStaticData staticData, ISerializer serializer, ISettingsManager settingsManager)
 		{
@@ -53,6 +41,8 @@ namespace BattleCruisers.Data
                 SettingsManager.AIDifficulty = Difficulty.Normal;
                 SettingsManager.Save();
 			}
+
+            LockedInfo = new LockedInformation(GameModel, StaticData);
 		}
 
 		public ILevel GetLevel(int levelNum)

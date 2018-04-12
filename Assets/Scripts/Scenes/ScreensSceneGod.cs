@@ -81,7 +81,7 @@ namespace BattleCruisers.Scenes
                 BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
                 int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
-                levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.NumOfLevelsUnlocked, lastPlayedLevel);
+                levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
             }
 
 			GoToScreen(levelsScreen);
@@ -122,7 +122,7 @@ namespace BattleCruisers.Scenes
 
 		public void LoadLevel(int levelNum)
 		{
-			Assert.IsTrue(levelNum <= _dataProvider.NumOfLevelsUnlocked);
+            Assert.IsTrue(levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			ApplicationModel.SelectedLevel = levelNum;
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
