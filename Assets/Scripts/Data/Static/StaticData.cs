@@ -27,15 +27,20 @@ namespace BattleCruisers.Data.Static
 
 		public GameModel InitialGameModel { get; private set; }
         public ReadOnlyCollection<ILevel> Levels { get; private set; }
+		public ReadOnlyCollection<HullKey> HullKeys { get; private set; }
+		public ReadOnlyCollection<UnitKey> UnitKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
 
         public StaticData()
 		{
+            HullKeys = AllHullKeys().AsReadOnly();
+
             _allBuildings = AllBuildingKeys();
             BuildingKeys = new ReadOnlyCollection<BuildingKey>(_allBuildings);
 
             _allUnits = AllUnitKeys();
+            UnitKeys = new ReadOnlyCollection<UnitKey>(_allUnits);
 
             _buildingToUnlockedLevel = CreateBuildingAvailabilityMap();
             _unitToUnlockedLevel = CreateUnitAvailabilityMap();

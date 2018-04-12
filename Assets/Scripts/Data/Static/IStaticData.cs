@@ -19,6 +19,8 @@ namespace BattleCruisers.Data.Static
     {
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
+		ReadOnlyCollection<HullKey> HullKeys { get; }
+		ReadOnlyCollection<UnitKey> UnitKeys { get; }
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys{ get; }
 
