@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
@@ -61,12 +62,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void SetupHullsRow()
         {
-            hullsRow.Initialise(_gameModel, _prefabFactory, uiFactory, cruiserDetailsManager);
+            IItemsRowArgs<ICruiser> args = new ItemsRowArgs<ICruiser>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, cruiserDetailsManager);
+            hullsRow.Initialise(args);
         }
 
         private void SetupBuildingRows()
         {
-            ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_gameModel, _prefabFactory, uiFactory, buildingDetailsManager);
+            ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, buildingDetailsManager);
 
             BuildingsRowWrapper[] buildingRows = GetComponentsInChildren<BuildingsRowWrapper>();
 
@@ -78,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void SetupUnitRows()
         {
-            ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_gameModel, _prefabFactory, uiFactory, unitDetailsManager);
+            ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, unitDetailsManager);
 
             UnitsRowWrapper[] unitRows = GetComponentsInChildren<UnitsRowWrapper>();
 
