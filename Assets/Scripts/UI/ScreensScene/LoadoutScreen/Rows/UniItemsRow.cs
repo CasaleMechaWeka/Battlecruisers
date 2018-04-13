@@ -9,6 +9,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         private readonly UnitCategory _unitCategory;
 
+        protected override int NumOfLockedBuildables { get { return _lockedInfo.NumOfLockedUnits(_unitCategory); } }
+
         public UnitItemsRow(
             IItemsRowArgs<IUnit> args,
             LoadoutBuildableItemsRow<IUnit> loadoutRow, 

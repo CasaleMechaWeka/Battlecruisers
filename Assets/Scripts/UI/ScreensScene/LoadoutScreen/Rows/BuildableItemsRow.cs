@@ -7,6 +7,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     /// <summary>
+    /// // FELIX  Remove obsolete methods :(
     /// Have methods for adding/removing buildables from loadout, even though this
     /// functionality has been removed from the UI.  Leave the methods in case
     /// this functionality is ever resurrected :)
@@ -16,8 +17,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         where TPrefabKey : IPrefabKey
 	{
         private readonly LoadoutBuildableItemsRow<TItem> _loadoutRow;
-
         private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
+
+        protected abstract int NumOfLockedBuildables { get; }
 
         protected BuildableItemsRow(IItemsRowArgs<TItem> args, LoadoutBuildableItemsRow<TItem> loadoutRow)
             : base(args)
@@ -29,12 +31,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         public override void SetupUI()
         {
             IList<TItem> loadoutBuildables = GetLoadoutBuildablePrefabs();
-			_loadoutRow.Initialise(_uiFactory, loadoutBuildables, _detailsManager);
+            _loadoutRow.Initialise(_uiFactory, loadoutBuildables, _detailsManager, NumOfLockedBuildables);
             _loadoutRow.SetupUI();
         }
 
         protected abstract IList<TItem> GetLoadoutBuildablePrefabs();
 
+        // FELIX  Rename to Buildable instead of Building
         protected abstract IList<TItem> GetUnlockedBuildingPrefabs();
 
         protected IList<TItem> GetBuildablePrefabs(IList<TPrefabKey> buildableKeys, bool addToDictionary)

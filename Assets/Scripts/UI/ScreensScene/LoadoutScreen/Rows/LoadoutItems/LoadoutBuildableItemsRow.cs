@@ -14,19 +14,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 		protected IUIFactory _uiFactory;
         private IList<TBuildable> _buildables;
         private IItemDetailsManager<TBuildable> _detailsManager;
+        private int _numOfLockedBuildables;
         private IDictionary<TBuildable, LoadoutItem<TBuildable>> _buildableToLoadoutItem;
         protected HorizontalLayoutGroup _layoutGroup;
 
         private const int MAX_NUM_OF_ITEMS = 5;
 
-        public void Initialise(IUIFactory uiFactory, IList<TBuildable> buildables, IItemDetailsManager<TBuildable> detailsManager)
+        public void Initialise(
+            IUIFactory uiFactory, 
+            IList<TBuildable> buildables, 
+            IItemDetailsManager<TBuildable> detailsManager,
+            int numOfLockedBuildables)
 		{
             Helper.AssertIsNotNull(uiFactory, buildables, detailsManager);
-			Assert.IsTrue(buildables.Count <= MAX_NUM_OF_ITEMS);
+            Assert.IsTrue(buildables.Count + numOfLockedBuildables <= MAX_NUM_OF_ITEMS);
 
 			_uiFactory = uiFactory;
             _buildables = buildables;
 			_detailsManager = detailsManager;
+            _numOfLockedBuildables = numOfLockedBuildables;
             _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
 
             _layoutGroup = GetComponent<HorizontalLayoutGroup>();
@@ -37,10 +43,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         public void SetupUI()
         {
+            // Create unlocked items
 			foreach (TBuildable buildable in _buildables)
 			{
 				CreateLoadoutItem(buildable);
 			}
+
+            // Create placeholders for locked items
+            for (int i = 0; i < _numOfLockedBuildables; ++i)
+            {
+                _uiFactory.CreateLockedBuildable(_layoutGroup);
+            }
         }
 
         private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TBuildable> e)
