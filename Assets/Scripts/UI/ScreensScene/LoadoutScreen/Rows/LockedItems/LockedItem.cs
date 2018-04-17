@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems
 {
-	// FELIX  Show question mark :D
     public class LockedItem : MonoBehaviour
     {
         private RectTransform _rectTransform;
