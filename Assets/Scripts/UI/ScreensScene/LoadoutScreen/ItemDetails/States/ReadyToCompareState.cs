@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
     public class ReadyToCompareState<TItem> : BaseState<TItem> where TItem : IComparableItem
 	{
-		private IItem<TItem> _itemToCompare;
+		private readonly IItem<TItem> _itemToCompare;
 
 		public override bool IsInReadyToCompareState { get { return true; } }
 
