@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             return GetBuildablePrefabs(_gameModel.PlayerLoadout.GetUnits(_unitCategory), addToDictionary: false);
         }
 
-        protected override IList<IUnit> GetUnlockedBuildingPrefabs()
+        protected override IList<IUnit> GetUnlockedBuildablePrefabs()
         {
             return GetBuildablePrefabs(_gameModel.GetUnlockedUnits(_unitCategory), addToDictionary: true);
         }

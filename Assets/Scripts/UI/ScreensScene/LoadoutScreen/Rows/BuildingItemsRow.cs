@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             return GetBuildablePrefabs(_gameModel.PlayerLoadout.GetBuildings(_buildingCategory), addToDictionary: false);
         }
 
-        protected override IList<IBuilding> GetUnlockedBuildingPrefabs()
+        protected override IList<IBuilding> GetUnlockedBuildablePrefabs()
         {
             return GetBuildablePrefabs(_gameModel.GetUnlockedBuildings(_buildingCategory), addToDictionary: true);
         }

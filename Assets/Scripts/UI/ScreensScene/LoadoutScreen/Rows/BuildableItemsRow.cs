@@ -37,8 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         protected abstract IList<TItem> GetLoadoutBuildablePrefabs();
 
-        // FELIX  Rename to Buildable instead of Building
-        protected abstract IList<TItem> GetUnlockedBuildingPrefabs();
+        protected abstract IList<TItem> GetUnlockedBuildablePrefabs();
 
         protected IList<TItem> GetBuildablePrefabs(IList<TPrefabKey> buildableKeys, bool addToDictionary)
 		{
