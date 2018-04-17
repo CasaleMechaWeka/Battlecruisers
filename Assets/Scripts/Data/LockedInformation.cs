@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Data
 {
-    // FELIX  Test :D
     public class LockedInformation : ILockedInformation
     {
         private readonly IGameModel _gameModel;
