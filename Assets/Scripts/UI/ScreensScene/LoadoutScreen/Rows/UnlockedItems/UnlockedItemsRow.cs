@@ -39,35 +39,54 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 			CreateItemButtons(_unlockedItems);
         }
 
-        // FELIX  Split into smaller methods
         private void CreateItemButtons(IList<TItem> unlockedItems)
 		{
-            // Create unlocked items
-			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
-			float totalWidth = 0;
+            float unlockedItemsWidth = CreateUnlockedItems(unlockedItems);
+            float lockedItemsWidth = CreatLockedItems();
 
+            float rowWith = FindRowWidth(unlockedItems, unlockedItemsWidth, lockedItemsWidth);
+
+			scrollViewContent.sizeDelta = new Vector2(rowWith, scrollViewContent.sizeDelta.y);
+		}
+		
+		private float CreateUnlockedItems(IList<TItem> unlockedItems)
+		{
+			float width = 0;
+			
+			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
+			
 			foreach (TItem unlockedItem in unlockedItems)
 			{
 				UnlockedItem<TItem> itemButton = CreateUnlockedItem(unlockedItem, layoutGroup);
 				_unlockedItemButtons.Add(itemButton);
-				totalWidth += itemButton.Size.x;
+				width += itemButton.Size.x;
 			}
+			
+			return width;
+		}
 
-            // Create locked items
+        private float CreatLockedItems()
+        {
+            float width = 0;
+
             for (int i = 0; i < _numOfLockedItems; ++i)
             {
                 LockedItem lockedItem = CreateLockedItem(layoutGroup);
-                totalWidth += lockedItem.Size.x;
+                width += lockedItem.Size.x;
             }
 
+            return width;
+        }
+
+        private float FindRowWidth(IList<TItem> unlockedItems, float unlockedItemsWidth, float lockedItemsWidth)
+        {
             int numOfItems = unlockedItems.Count + _numOfLockedItems;
             Assert.IsTrue(numOfItems > 0);
-            totalWidth += (numOfItems - 1) * layoutGroup.spacing;
+            float spacesWidth = (numOfItems - 1) * layoutGroup.spacing;
+            return unlockedItemsWidth + lockedItemsWidth + spacesWidth;
+        }
 
-			scrollViewContent.sizeDelta = new Vector2(totalWidth, scrollViewContent.sizeDelta.y);
-		}
-
-		private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TItem> e)
+        private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TItem> e)
 		{
 			foreach (UnlockedItem<TItem> unlockedItemButton in _unlockedItemButtons)
 			{
