@@ -34,15 +34,5 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		{
             return _prefabFactory.GetBuildingWrapperPrefab(prefabKey).Buildable;
 		}
-		
-        protected override void AddToLoadoutModel(BuildingKey buildableKey)
-        {
-            _gameModel.PlayerLoadout.AddBuilding(buildableKey);
-        }
-
-        protected override void RemoveFromLoadoutModel(BuildingKey buildableKey)
-        {
-            _gameModel.PlayerLoadout.RemoveBuilding(buildableKey);
-        }
     }
 }

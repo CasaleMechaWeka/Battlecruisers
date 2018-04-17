@@ -24,10 +24,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public UnlockedHullItem unlockedHullItemPrefab;
         public LockedItem lockedHullItemPrefab, lockedBuildableItemPrefab;
 
-        // FELIX  Remove :(
-		public UnlockedBuildingItem unlockedBuildingItemPrefab;
-		public UnlockedUnitItem unlockedUnitItemPrefab;
-
         public void Initialise(
             IItemDetailsManager<IBuilding> buildingDetailsManager, 
             IItemDetailsManager<IUnit> unitDetailsManager)
@@ -37,8 +33,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 unitDetailsManager, 
                 loadoutBuildingItemPrefab, 
                 loadoutUnitItemPrefab, 
-                unlockedBuildingItemPrefab, 
-                unlockedUnitItemPrefab,
                 unlockedHullItemPrefab,
                 lockedHullItemPrefab,
                 lockedBuildableItemPrefab);
@@ -69,16 +63,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             loadoutItem.Initialise(itemBuildable, detailsManager);
             return loadoutItem;
         }
-
-        public UnlockedItem<IBuilding> CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isInLoadout)
-		{
-            return CreateUnlockedBuildableItem(unlockedBuildingItemPrefab, itemRow, itemsRow, itemBuilding, isInLoadout);
-		}
-		
-		public UnlockedItem<IUnit> CreateUnlockedUnitItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IUnit> itemsRow, IUnit itemUnit, bool isUnitInLoadout)
-		{
-            return CreateUnlockedBuildableItem(unlockedUnitItemPrefab, itemRow, itemsRow, itemUnit, isUnitInLoadout);
-		}
 
         public UnlockedItem<TBuildable> CreateUnlockedBuildableItem<TBuildable>(
             UnlockedItem<TBuildable> itemPrefab,

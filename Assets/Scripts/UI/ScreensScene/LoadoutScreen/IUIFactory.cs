@@ -21,9 +21,5 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         // Locked items
 		LockedItem CreateLockedHull(HorizontalOrVerticalLayoutGroup itemRow);
         LockedItem CreateLockedBuildable(HorizontalOrVerticalLayoutGroup itemRow);
-
-        // FELIX  Remove, sniff :(
-        UnlockedItem<IBuilding> CreateUnlockedBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IBuilding> itemsRow, IBuilding itemBuilding, bool isBuildingInLoadout);
-        UnlockedItem<IUnit> CreateUnlockedUnitItem(HorizontalOrVerticalLayoutGroup itemRow, IItemsRow<IUnit> itemsRow, IUnit itemUnit, bool isUnitInLoadout);
     }
 }

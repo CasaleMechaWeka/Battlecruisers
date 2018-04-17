@@ -6,12 +6,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    /// <summary>
-    /// // FELIX  Remove obsolete methods :(
-    /// Have methods for adding/removing buildables from loadout, even though this
-    /// functionality has been removed from the UI.  Leave the methods in case
-    /// this functionality is ever resurrected :)
-    /// </summary>
     public abstract class BuildableItemsRow<TItem, TPrefabKey> : ItemsRow<TItem> 
         where TItem : IBuildable 
         where TPrefabKey : IPrefabKey
@@ -61,40 +55,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public override bool SelectUnlockedItem(UnlockedItem<TItem> buildableItem)
 		{
-			bool isItemInLoadout = false;
-
-			if (buildableItem.IsItemInLoadout)
-			{
-                RemoveBuildableFromLoadout(buildableItem.Item);
-			}
-			else if (CanAddBuilding())
-			{
-				AddBuildableToLoadout(buildableItem.Item);
-				isItemInLoadout = true;
-			}
-
-			return isItemInLoadout;
+            // All buildable items are now in the loadout, hence no more selection ligic :/
+            return false;
 		}
-
-		private bool CanAddBuilding()
-		{
-			return _loadoutRow.CanAddBuildable();
-		}
-
-        private void AddBuildableToLoadout(TItem buildable)
-        {
-            _loadoutRow.AddBuildable(buildable);
-            AddToLoadoutModel(_buildableToKey[buildable]);
-        }
-
-        protected abstract void AddToLoadoutModel(TPrefabKey buildableKey);
-
-        private void RemoveBuildableFromLoadout(TItem buildable)
-        {
-            _loadoutRow.RemoveBuildable(buildable);
-            RemoveFromLoadoutModel(_buildableToKey[buildable]);
-        }
-
-        protected abstract void RemoveFromLoadoutModel(TPrefabKey buildableKey);
 	}
 }
