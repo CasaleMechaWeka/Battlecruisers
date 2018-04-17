@@ -22,4 +22,3 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		}
 	}
 }
-

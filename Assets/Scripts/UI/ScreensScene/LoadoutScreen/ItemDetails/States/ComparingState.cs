@@ -8,4 +8,3 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 			: base(itemDetailsManager) { }
 	}
 }
-
