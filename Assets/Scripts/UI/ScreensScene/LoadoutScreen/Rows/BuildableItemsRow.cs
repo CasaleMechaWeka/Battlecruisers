@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public override bool SelectUnlockedItem(UnlockedItem<TItem> buildableItem)
 		{
-            // All buildable items are now in the loadout, hence no more selection ligic :/
+            // All buildable items are now in the loadout, hence no more selection logic :/
             return false;
 		}
 	}
