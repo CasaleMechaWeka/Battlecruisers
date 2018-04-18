@@ -20,5 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 			_itemDetailsManager.CompareItemDetails(_itemToCompare.Item, selectedItem.Item);
 			return new ComparingState<TItem>(_itemDetailsManager);
 		}
+
+        // FELIX  Not dismissable right?  Should throw like DismissedState :)
 	}
 }
