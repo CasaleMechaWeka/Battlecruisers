@@ -11,7 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         where TPrefabKey : IPrefabKey
 	{
         private readonly LoadoutBuildableItemsRow<TItem> _loadoutRow;
-        private readonly IDictionary<TItem, TPrefabKey> _buildableToKey;
 
         protected abstract int NumOfLockedBuildables { get; }
 
@@ -19,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             : base(args)
 		{
 			_loadoutRow = loadoutRow;
-            _buildableToKey = new Dictionary<TItem, TPrefabKey>();
         }
 
         public override void SetupUI()
@@ -31,8 +29,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         protected abstract IList<TItem> GetLoadoutBuildablePrefabs();
 
-        protected abstract IList<TItem> GetUnlockedBuildablePrefabs();
-
         protected IList<TItem> GetBuildablePrefabs(IList<TPrefabKey> buildableKeys, bool addToDictionary)
 		{
             IList<TItem> prefabs = new List<TItem>();
@@ -41,11 +37,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 			{
                 TItem buildable = GetBuildablePrefab(key);
 				prefabs.Add(buildable);
-
-				if (addToDictionary)
-				{
-                    _buildableToKey.Add(buildable, key);
-				}
 			}
 
 			return prefabs;
