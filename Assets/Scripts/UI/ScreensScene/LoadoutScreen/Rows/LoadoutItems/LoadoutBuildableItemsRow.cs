@@ -56,6 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
             }
         }
 
+        // FELIX  Will be replaced :)
         private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TBuildable> e)
 		{
             foreach (LoadoutItem<TBuildable> item in _buildableToLoadoutItem.Values)

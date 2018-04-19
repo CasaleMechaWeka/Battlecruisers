@@ -86,6 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             return unlockedItemsWidth + lockedItemsWidth + spacesWidth;
         }
 
+        // FELIX  Will be replaced :)
         private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TItem> e)
 		{
 			foreach (UnlockedItem<TItem> unlockedItemButton in _unlockedItemButtons)
