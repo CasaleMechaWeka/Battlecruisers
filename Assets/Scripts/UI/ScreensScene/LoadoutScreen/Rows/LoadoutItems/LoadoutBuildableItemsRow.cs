@@ -56,6 +56,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
             }
         }
 
+        private void CreateLoadoutItem(TBuildable buildableToAdd)
+        {
+            Assert.IsFalse(_buildableToLoadoutItem.ContainsKey(buildableToAdd));
+            LoadoutItem<TBuildable> item = CreateItem(buildableToAdd);
+            _buildableToLoadoutItem.Add(buildableToAdd, item);
+        }
+
+        protected abstract LoadoutItem<TBuildable> CreateItem(TBuildable item);
+
         // FELIX  Will be replaced :)
         private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TBuildable> e)
 		{
@@ -63,38 +72,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 			{
 				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? BaseItem<Building>.Colors.ENABLED : BaseItem<Building>.Colors.DEFAULT;
 			}
-		}
-
-		public bool CanAddBuildable()
-		{
-			return _buildableToLoadoutItem.Count < MAX_NUM_OF_ITEMS;
-		}
-
-        public void AddBuildable(TBuildable buildableToAdd)
-		{
-			CreateLoadoutItem(buildableToAdd);
-		}
-
-        public void RemoveBuildable(TBuildable buildableToRemove)
-		{
-			RemoveLoadoutItem(buildableToRemove);
-		}
-		
-        private void CreateLoadoutItem(TBuildable buildableToAdd)
-		{
-			Assert.IsFalse(_buildableToLoadoutItem.ContainsKey(buildableToAdd));
-            LoadoutItem<TBuildable> item = CreateItem(buildableToAdd);
-			_buildableToLoadoutItem.Add(buildableToAdd, item);
-		}
-
-        protected abstract LoadoutItem<TBuildable> CreateItem(TBuildable item);
-
-        private void RemoveLoadoutItem(TBuildable buildableToRemove)
-		{
-			Assert.IsTrue(_buildableToLoadoutItem.ContainsKey(buildableToRemove));
-            LoadoutItem<TBuildable> item = _buildableToLoadoutItem[buildableToRemove];
-			_buildableToLoadoutItem.Remove(buildableToRemove);
-			Destroy(item.gameObject);
 		}
 	}
 }
