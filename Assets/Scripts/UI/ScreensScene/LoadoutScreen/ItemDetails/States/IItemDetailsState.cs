@@ -9,5 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem);
 		IItemDetailsState<TItem> CompareSelectedItem();
 		IItemDetailsState<TItem> Dismiss();
+
+        // FELIX  Add method here, to call right method on IItemManager?  Avoids switch in IItemManager :)
 	}
 }
