@@ -1,0 +1,23 @@
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
+{
+    public abstract class ItemState<TItem> : IItemState<TItem> where TItem : IComparableItem
+	{
+        protected readonly IItem<TItem> _item;
+
+		protected abstract Color BackgroundColour { get; }
+
+        protected ItemState(IItem<TItem> item)
+		{
+            Assert.IsNotNull(item);
+
+			_item = item;
+            _item.BackgroundImage.color = BackgroundColour;
+		}
+
+		public abstract void SelectItem();
+	}
+}

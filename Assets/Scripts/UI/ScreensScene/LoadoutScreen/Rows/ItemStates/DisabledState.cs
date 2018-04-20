@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
-    public class DisabledState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
+    public class DisabledState<TItem> : ItemState<TItem> where TItem : IComparableItem
     {
         protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.DEFAULT; } }
 
-        public DisabledState(UnlockedItem<TItem> item)
+        public DisabledState(IItem<TItem> item)
             : base(item)
         {
         }

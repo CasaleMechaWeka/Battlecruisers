@@ -97,7 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 				}
 				else
 				{
-					unlockedItemButton.State = new DefaultState<TItem>(_itemsRow, unlockedItemButton);
+                    unlockedItemButton.State = new UnlockedItemDefaultState<TItem>(_itemsRow, unlockedItemButton);
 				}
 			}
 		}
