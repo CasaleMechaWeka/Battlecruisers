@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
-    public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : MonoBehaviour 
+    public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : MonoBehaviour, IStatefulUIElement
         where TBuildable : IBuildable
         where TPrefabKey : IPrefabKey
 	{
@@ -100,8 +100,23 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 		{
             foreach (LoadoutItem<TBuildable> item in _buildableToLoadoutItem.Values)
 			{
-				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? BaseItem<Building>.Colors.ENABLED : BaseItem<Building>.Colors.DEFAULT;
+				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? BaseItem<Building>.Colors.HIGHLIGHTED : BaseItem<Building>.Colors.DEFAULT;
 			}
 		}
+
+        public void GoToDefaultState()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GoToHighlightedState()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GoToDisabledState()
+        {
+            throw new System.NotImplementedException();
+        }
 	}
 }
