@@ -7,7 +7,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;

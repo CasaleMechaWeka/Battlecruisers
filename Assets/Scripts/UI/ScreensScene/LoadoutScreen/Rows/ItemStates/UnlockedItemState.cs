@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using UnityEngine;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
     // FELIX  Avoid duplicate code with LoadoutItemState :)
     public abstract class UnlockedItemState<TItem> : IItemState<TItem> where TItem : IComparableItem

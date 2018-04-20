@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using UnityEngine;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
     public class DisabledState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
     {
