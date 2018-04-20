@@ -14,15 +14,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		}
 
 		public Image itemImage;
-		public Image backgroundImage;
 		public Image selectedFeedbackImage;
 
-		public abstract TItem Item { get; protected set; }
+        public Image backgroundImage;
+        public Image BackgroundImage { get { return BackgroundImage; } }
+  
+        public abstract TItem Item { get; protected set; }
 
-		public bool ShowSelectedFeedback
-		{
-			set { selectedFeedbackImage.gameObject.SetActive(value); }
-		}
+        public bool ShowSelectedFeedback
+        {
+            set { selectedFeedbackImage.gameObject.SetActive(value); }
+        }
 
         public void GoToDefaultState()
         {
