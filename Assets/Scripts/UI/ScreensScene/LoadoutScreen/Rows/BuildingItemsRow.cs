@@ -5,6 +5,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
+    // FELIX  Delete :D
     public class BuildingItemsRow : BuildableItemsRow<IBuilding, BuildingKey>
     {
         private readonly BuildingCategory _buildingCategory;
