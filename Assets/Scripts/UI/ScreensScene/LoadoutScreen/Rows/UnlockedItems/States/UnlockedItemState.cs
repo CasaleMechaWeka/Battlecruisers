@@ -3,7 +3,7 @@
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
 {
     // FELIX  Avoid duplicate code with LoadoutItemState :)
-    public abstract class UnlockedItemState<TItem> : IUnlockedItemState<TItem> where TItem : IComparableItem
+    public abstract class UnlockedItemState<TItem> : IItemState<TItem> where TItem : IComparableItem
 	{
 		protected readonly UnlockedItem<TItem> _item;
 

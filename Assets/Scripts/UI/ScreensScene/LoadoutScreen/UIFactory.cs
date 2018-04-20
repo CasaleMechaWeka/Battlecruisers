@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             UnlockedItem<TBuildable> unlockedBuildable = Instantiate(itemPrefab);
             unlockedBuildable.transform.SetParent(itemRow.transform, worldPositionStays: false);
-            IUnlockedItemState<TBuildable> initialState = new DefaultState<TBuildable>(itemsRow, unlockedBuildable);
+            IItemState<TBuildable> initialState = new DefaultState<TBuildable>(itemsRow, unlockedBuildable);
             unlockedBuildable.Initialise(initialState, itemBuildable, isInLoadout);
             return unlockedBuildable;
         }
@@ -83,7 +83,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             UnlockedHullItem unlockedHull = Instantiate(unlockedHullItemPrefab);
             unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-            IUnlockedItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
+            IItemState<ICruiser> initialState = new DefaultState<ICruiser>(hullsRow, unlockedHull);
             unlockedHull.Initialise(initialState, cruiser, isInLoadout);
             return unlockedHull;
         }
