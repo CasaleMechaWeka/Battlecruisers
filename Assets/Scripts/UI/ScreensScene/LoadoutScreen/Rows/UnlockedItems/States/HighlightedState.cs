@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
 {
-    public class ComparisonState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
+    public class HighlightedState<TItem> : UnlockedItemState<TItem> where TItem : IComparableItem
 	{
 		private readonly IItemDetailsManager<TItem> _itemDetailsManager;
 
-		protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.ENABLED; } }
+        protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.HIGHLIGHTED; } }
 
-		public ComparisonState(IItemDetailsManager<TItem> itemDetailsManager, UnlockedItem<TItem> item)
+		public HighlightedState(IItemDetailsManager<TItem> itemDetailsManager, UnlockedItem<TItem> item)
 			: base(item)
 		{
 			_itemDetailsManager = itemDetailsManager;
