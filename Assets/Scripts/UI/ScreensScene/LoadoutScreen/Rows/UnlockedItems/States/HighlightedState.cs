@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
 			_itemDetailsManager = itemDetailsManager;
 		}
 
-		public override void HandleSelection()
+		public override void SelectItem()
 		{
 			_itemDetailsManager.SelectItem(_item);
 		}

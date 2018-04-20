@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
         {
         }
 
-        public override void HandleSelection()
+        public override void SelectItem()
         {
             // Disabled, so do nothing :)
         }

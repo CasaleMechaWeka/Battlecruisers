@@ -15,6 +15,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
 			_item.backgroundImage.color = BackgroundColour;
 		}
 
-		public abstract void HandleSelection();
+		public abstract void SelectItem();
 	}
 }

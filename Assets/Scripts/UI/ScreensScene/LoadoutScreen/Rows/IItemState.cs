@@ -3,6 +3,6 @@
     // FELIX  Create Items namespace?
 	public interface IItemState<TItem> where TItem : IComparableItem
 	{
-		void HandleSelection();
+		void SelectItem();
 	}
 }

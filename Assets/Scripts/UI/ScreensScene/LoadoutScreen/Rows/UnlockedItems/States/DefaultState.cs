@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems.States
 			_itemsRow = itemsRow;
 		}
 
-		public override void HandleSelection()
+		public override void SelectItem()
 		{
 			_item.IsItemInLoadout = _itemsRow.SelectUnlockedItem(_item);
 		}
