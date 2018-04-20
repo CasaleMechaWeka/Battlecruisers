@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		public Image selectedFeedbackImage;
 
         public Image backgroundImage;
-        public Image BackgroundImage { get { return BackgroundImage; } }
+        public Image BackgroundImage { get { return backgroundImage; } }
   
         public abstract TItem Item { get; protected set; }
 
