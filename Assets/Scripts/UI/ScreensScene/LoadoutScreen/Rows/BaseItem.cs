@@ -33,6 +33,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             set { selectedFeedbackImage.gameObject.SetActive(value); }
         }
 
+        public abstract ItemType Type { get; }
+
         public virtual void Initialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager)
         {
             Helper.AssertIsNotNull(item, itemDetailsManager, itemImage, selectedFeedbackImage, BackgroundImage);

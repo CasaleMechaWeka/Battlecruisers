@@ -4,7 +4,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
 	public class UnlockedHullItem : UnlockedItem<ICruiser>
 	{
-		public void OnNewHullSelected(ICruiser selectedCruiser)
+        public override ItemType Type { get { return ItemType.Cruiser; } }
+
+        public void OnNewHullSelected(ICruiser selectedCruiser)
 		{
 			IsItemInLoadout = ReferenceEquals(selectedCruiser, Item);
 		}
