@@ -4,6 +4,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
     public interface IItemDetailsState<TItem> where TItem : IComparableItem
 	{
+        // FELIX  Remove?
 		bool IsInReadyToCompareState { get; }
 
 		IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem);
