@@ -43,7 +43,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _gameModel = _dataProvider.GameModel;
             _prefabFactory = prefabFactory;
 
-
             buildingDetailsManager.Initialise(spriteProvider);
             unitDetailsManager.Initialise();
             cruiserDetailsManager.Initialise();
