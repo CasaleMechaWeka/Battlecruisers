@@ -104,18 +104,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 			}
 		}
 
-        public void GoToDefaultState()
+        public void GoToState(UIState state)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void GoToHighlightedState()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void GoToDisabledState()
-        {
+            // FELIX
             throw new System.NotImplementedException();
         }
 	}

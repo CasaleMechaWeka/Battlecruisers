@@ -92,11 +92,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 			{
 				if (e.NewState.IsInReadyToCompareState)
 				{
-                    unlockedItemButton.GoToHighlightedState();
+                    unlockedItemButton.GoToState(UIState.Highlighted);
 				}
 				else
 				{
-                    unlockedItemButton.GoToDefaultState();
+                    unlockedItemButton.GoToState(UIState.Default);
 				}
 			}
 		}

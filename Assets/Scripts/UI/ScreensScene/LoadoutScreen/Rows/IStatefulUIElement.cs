@@ -1,20 +1,19 @@
 ﻿namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
+    public enum UIState
+    {
+		// The element is clickable but not highlighted.
+        Default,
+		
+        // The element is clickable and highlighted.
+        Highlighted,
+		
+        // The element is not clickable and not highlighted.
+        Disabled
+    }
+
     public interface IStatefulUIElement
     {
-        /// <summary>
-        /// The element is clickable but not highlighted.
-        /// </summary>
-        void GoToDefaultState();
-
-        /// <summary>
-        /// The element is highlighted and clickable.
-        /// </summary>
-        void GoToHighlightedState();
-
-        /// <summary>
-        /// The element is not clickable and not highlighted.
-        /// </summary>
-        void GoToDisabledState();
+        void GoToState(UIState state);
     }
 }

@@ -8,13 +8,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         public override void Initialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager) 
         {
             base.Initialise(item, itemDetailsManager);
-                
-            GoToDefaultState();
+            GoToState(UIState.Default);
         }
 
-        public sealed override void GoToDefaultState()
+        protected override IItemState<TItem> CreateDefaultState()
         {
-            _state = new LoadoutItemDefaultState<TItem>(_itemDetailsManager, this);
+            return new LoadoutItemDefaultState<TItem>(_itemDetailsManager, this);
         }
     }
 }

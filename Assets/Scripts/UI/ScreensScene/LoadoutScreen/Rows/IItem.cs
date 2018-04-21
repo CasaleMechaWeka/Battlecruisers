@@ -2,7 +2,8 @@
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public interface IItem<TItem> where TItem : IComparableItem
+    public interface IItem<TItem> : IStatefulUIElement
+        where TItem : IComparableItem
 	{
 		TItem Item { get; }
 		Image BackgroundImage { get; }

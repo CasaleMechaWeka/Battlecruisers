@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+﻿using System;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -6,8 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public abstract class BaseItem<TItem> : MonoBehaviour, 
-        IStatefulUIElement,    
+    public abstract class BaseItem<TItem> : MonoBehaviour,
         IItem<TItem> where TItem : IComparableItem
 	{
 		public static class Colors
@@ -43,21 +43,32 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _itemDetailsManager = itemDetailsManager;
         }
 
-        public abstract void GoToDefaultState();
-
-        public void GoToHighlightedState()
-        {
-            _state = new HighlightedState<TItem>(_itemDetailsManager, this);
-        }
-
-        public void GoToDisabledState()
-        {
-            _state = new DisabledState<TItem>(this);
-        }
-
         public void SelectItem()
         {
             _state.SelectItem();
         }
+
+        public void GoToState(UIState state)
+        {
+            _state = CreateState(state);
+        }
+
+        private IItemState<TItem> CreateState(UIState state)
+        {
+			switch (state)
+			{
+				case UIState.Default:
+					return CreateDefaultState();
+				case UIState.Highlighted:
+                    return new HighlightedState<TItem>(_itemDetailsManager, this);
+                case UIState.Disabled:
+                    return new DisabledState<TItem>(this);
+                default:
+                    throw new ArgumentException();
+			}
+            
+        }
+
+        protected abstract IItemState<TItem> CreateDefaultState();
 	}
 }

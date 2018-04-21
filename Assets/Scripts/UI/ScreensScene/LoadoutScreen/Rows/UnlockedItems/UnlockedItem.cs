@@ -40,12 +40,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             _rectTransform = transform.Parse<RectTransform>();
             IsItemInLoadout = isInLoadout;
 
-            GoToDefaultState();
+            GoToState(UIState.Default);
         }
 
-        public sealed override void GoToDefaultState()
+        protected override IItemState<TItem> CreateDefaultState()
         {
-            _state = new UnlockedItemDefaultState<TItem>(_itemsRow, this);
+            return new UnlockedItemDefaultState<TItem>(_itemsRow, this);
         }
 	}
 }
