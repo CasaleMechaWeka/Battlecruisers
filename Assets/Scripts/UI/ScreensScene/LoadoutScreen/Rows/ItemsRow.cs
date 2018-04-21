@@ -28,5 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public abstract void SetupUI();
         public abstract bool SelectUnlockedItem(UnlockedItem<TItem> item);
+        public abstract void GoToState(UIState state);
     }
 }

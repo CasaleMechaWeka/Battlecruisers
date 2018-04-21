@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -8,13 +7,13 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public abstract class UnlockedItemsRow<TItem> : MonoBehaviour where TItem : IComparableItem
+    public abstract class UnlockedItemsRow<TItem> : MonoBehaviour, IStatefulUIElement 
+        where TItem : IComparableItem
 	{
 		protected IUIFactory _uiFactory;
 		private IList<TItem> _unlockedItems;
         private int _numOfLockedItems;
         protected IItemsRow<TItem> _itemsRow;
-        private IItemDetailsManager<TItem> _detailsManager;
 		protected IList<UnlockedItem<TItem>> _unlockedItemButtons;
 
 		public HorizontalLayoutGroup layoutGroup;
@@ -28,9 +27,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             _unlockedItems = args.UnlockedItems;
             _numOfLockedItems = args.NumOfLockedItems;
 			_itemsRow = args.ItemsRow;
-			_detailsManager = args.DetailsManager;
-
-			_detailsManager.StateChanged += _detailsManager_StateChanged;
         }
 
         public void SetupUI()
@@ -85,24 +81,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             return unlockedItemsWidth + lockedItemsWidth + spacesWidth;
         }
 
-        // FELIX  Will be replaced :)
-        private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TItem> e)
-		{
-			foreach (UnlockedItem<TItem> unlockedItemButton in _unlockedItemButtons)
-			{
-				if (e.NewState.IsInReadyToCompareState)
-				{
-                    unlockedItemButton.GoToState(UIState.Highlighted);
-				}
-				else
-				{
-                    unlockedItemButton.GoToState(UIState.Default);
-				}
-			}
-		}
-
-		protected abstract UnlockedItem<TItem> CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
+        protected abstract UnlockedItem<TItem> CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
 
         protected abstract LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent);
+
+        public void GoToState(UIState state)
+        {
+			foreach (UnlockedItem<TItem> unlockedItemButton in _unlockedItemButtons)
+			{
+				unlockedItemButton.GoToState(state);
+			}
+        }
 	}
 }

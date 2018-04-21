@@ -70,5 +70,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
 			return true;
 		}
+
+        public override void GoToState(UIState state)
+        {
+            _loadoutHull.GoToState(state);
+            _unlockedHullsRow.GoToState(state);
+        }
 	}
 }

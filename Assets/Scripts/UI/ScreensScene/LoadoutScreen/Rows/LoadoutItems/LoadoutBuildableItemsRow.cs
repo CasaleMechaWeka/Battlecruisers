@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -21,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         protected ILockedInformation _lockedInfo;
         protected IPrefabFactory _prefabFactory;
         protected IUIFactory _uiFactory;
-        private IItemDetailsManager<TBuildable> _detailsManager;
+        // FELIX  Use interface instead of LoadoutItem?
         private IDictionary<TBuildable, LoadoutItem<TBuildable>> _buildableToLoadoutItem;
         protected HorizontalLayoutGroup _layoutGroup;
 
@@ -29,7 +27,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         protected abstract int NumOfLockedBuildables { get; }
 
-        // FELIX  Create subclass/interface, becase we won't need the details manager soon?
         public void Initialise(IItemsRowArgs<TBuildable> args)
 		{
             Helper.AssertIsNotNull(args);
@@ -38,14 +35,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
             _lockedInfo = args.LockedInfo;
             _prefabFactory = args.PrefabFactory;
 			_uiFactory = args.UIFactory;
-			_detailsManager = args.DetailsManager;
             _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
 
             _layoutGroup = GetComponent<HorizontalLayoutGroup>();
             Assert.IsNotNull(_layoutGroup);
-
-            _detailsManager.StateChanged += _detailsManager_StateChanged;
-
         }
 
         // Not in Initialise() because uses abstract members which will only
@@ -95,19 +88,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         protected abstract TBuildable GetBuildablePrefab(TPrefabKey prefabKey);
 
-        // FELIX  Will be replaced :)
-        private void _detailsManager_StateChanged(object sender, StateChangedEventArgs<TBuildable> e)
-		{
-            foreach (LoadoutItem<TBuildable> item in _buildableToLoadoutItem.Values)
-			{
-				item.backgroundImage.color = e.NewState.IsInReadyToCompareState ? BaseItem<Building>.Colors.HIGHLIGHTED : BaseItem<Building>.Colors.DEFAULT;
-			}
-		}
-
         public void GoToState(UIState state)
         {
-            // FELIX
-            throw new System.NotImplementedException();
+			foreach (LoadoutItem<TBuildable> item in _buildableToLoadoutItem.Values)
+            {
+                item.GoToState(state);
+            }
         }
 	}
 }
