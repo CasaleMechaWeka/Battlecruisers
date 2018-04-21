@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             unitDetailsManager.Initialise();
             cruiserDetailsManager.Initialise();
 
-            uiFactory.Initialise(buildingDetailsManager, unitDetailsManager);
+            uiFactory.Initialise(buildingDetailsManager, unitDetailsManager, cruiserDetailsManager);
 
 			yield return null;
             SetupHullsRow();

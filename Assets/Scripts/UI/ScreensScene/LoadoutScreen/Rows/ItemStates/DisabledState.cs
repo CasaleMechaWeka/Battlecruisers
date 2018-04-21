@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {

@@ -7,7 +7,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 	{
         private IItemDetailsManager<IBuilding> _buildingDetailsManager;
         private IItemDetailsManager<IUnit> _unitDetailsManager;
+        private IItemDetailsManager<ICruiser> _cruiserDetailsManager;
 
 		public LoadoutBuildingItem loadoutBuildingItemPrefab;
         public LoadoutUnitItem loadoutUnitItemPrefab;
@@ -26,11 +26,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             IItemDetailsManager<IBuilding> buildingDetailsManager, 
-            IItemDetailsManager<IUnit> unitDetailsManager)
+            IItemDetailsManager<IUnit> unitDetailsManager,
+            IItemDetailsManager<ICruiser> cruiserDetailsManager)
 		{
             Helper.AssertIsNotNull(
                 buildingDetailsManager, 
                 unitDetailsManager, 
+                cruiserDetailsManager,
                 loadoutBuildingItemPrefab, 
                 loadoutUnitItemPrefab, 
                 unlockedHullItemPrefab,
@@ -39,6 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 			_buildingDetailsManager = buildingDetailsManager;
             _unitDetailsManager = unitDetailsManager;
+            _cruiserDetailsManager = cruiserDetailsManager;
 		}
 
         public LoadoutItem<IBuilding> CreateLoadoutBuildingItem(HorizontalOrVerticalLayoutGroup itemRow, IBuilding itemBuilding)
@@ -64,27 +67,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             return loadoutItem;
         }
 
-        public UnlockedItem<TBuildable> CreateUnlockedBuildableItem<TBuildable>(
-            UnlockedItem<TBuildable> itemPrefab,
-            HorizontalOrVerticalLayoutGroup itemRow, 
-            IItemsRow<TBuildable> itemsRow, 
-            TBuildable itemBuildable, 
-            bool isInLoadout)
-                where TBuildable : IBuildable
-        {
-            UnlockedItem<TBuildable> unlockedBuildable = Instantiate(itemPrefab);
-            unlockedBuildable.transform.SetParent(itemRow.transform, worldPositionStays: false);
-            IItemState<TBuildable> initialState = new UnlockedItemDefaultState<TBuildable>(itemsRow, unlockedBuildable);
-            unlockedBuildable.Initialise(initialState, itemBuildable, isInLoadout);
-            return unlockedBuildable;
-        }
-
         public UnlockedHullItem CreateUnlockedHull(HorizontalOrVerticalLayoutGroup hullParent, IItemsRow<ICruiser> hullsRow, ICruiser cruiser, bool isInLoadout)
         {
             UnlockedHullItem unlockedHull = Instantiate(unlockedHullItemPrefab);
             unlockedHull.transform.SetParent(hullParent.transform, worldPositionStays: false);
-            IItemState<ICruiser> initialState = new UnlockedItemDefaultState<ICruiser>(hullsRow, unlockedHull);
-            unlockedHull.Initialise(initialState, cruiser, isInLoadout);
+            unlockedHull.Initialise(cruiser, _cruiserDetailsManager, hullsRow, isInLoadout);
             return unlockedHull;
         }
 

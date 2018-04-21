@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
+using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
@@ -13,32 +16,48 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             public readonly static Color DEFAULT = Color.grey;
 		}
 
-		public Image itemImage;
-		public Image selectedFeedbackImage;
+        protected TItem _item;
+        public TItem Item { get { return _item; } }
+
+        protected IItemDetailsManager<TItem> _itemDetailsManager;
+        protected IItemState<TItem> _state;
+
+        public Image itemImage;
+        public Image selectedFeedbackImage;
 
         public Image backgroundImage;
         public Image BackgroundImage { get { return backgroundImage; } }
-  
-        public abstract TItem Item { get; protected set; }
 
         public bool ShowSelectedFeedback
         {
             set { selectedFeedbackImage.gameObject.SetActive(value); }
         }
 
-        public void GoToDefaultState()
+        public virtual void Initialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager)
         {
-            throw new System.NotImplementedException();
+            Helper.AssertIsNotNull(item, itemDetailsManager, itemImage, selectedFeedbackImage, BackgroundImage);
+
+            _item = item;
+            itemImage.sprite = _item.Sprite;
+
+            _itemDetailsManager = itemDetailsManager;
         }
+
+        public abstract void GoToDefaultState();
 
         public void GoToHighlightedState()
         {
-            throw new System.NotImplementedException();
+            _state = new HighlightedState<TItem>(_itemDetailsManager, this);
         }
 
         public void GoToDisabledState()
         {
-            throw new System.NotImplementedException();
+            _state = new DisabledState<TItem>(this);
+        }
+
+        public void SelectItem()
+        {
+            _state.SelectItem();
         }
 	}
 }

@@ -7,5 +7,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		TItem Item { get; }
 		Image BackgroundImage { get; }
         bool ShowSelectedFeedback { set; }
+        void SelectItem();
 	}
 }

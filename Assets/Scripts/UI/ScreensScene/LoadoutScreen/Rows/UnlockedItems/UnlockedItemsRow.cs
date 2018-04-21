@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -93,11 +92,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 			{
 				if (e.NewState.IsInReadyToCompareState)
 				{
-					unlockedItemButton.State = new HighlightedState<TItem>(_detailsManager, unlockedItemButton);
+                    unlockedItemButton.GoToHighlightedState();
 				}
 				else
 				{
-                    unlockedItemButton.State = new UnlockedItemDefaultState<TItem>(_itemsRow, unlockedItemButton);
+                    unlockedItemButton.GoToDefaultState();
 				}
 			}
 		}

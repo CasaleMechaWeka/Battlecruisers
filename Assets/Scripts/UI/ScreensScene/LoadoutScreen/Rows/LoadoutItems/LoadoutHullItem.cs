@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 	{
 		public void UpdateHull(ICruiser newHull)
 		{
-			Item = newHull;
+			_item = newHull;
 		}
 	}
 }
