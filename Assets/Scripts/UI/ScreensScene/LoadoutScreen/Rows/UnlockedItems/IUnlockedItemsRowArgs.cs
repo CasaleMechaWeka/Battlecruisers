@@ -10,6 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
         int NumOfLockedItems { get; }
         IItemsRow<TItem> ItemsRow { get; }
         // FELIX  Remove?
-        IItemDetailsManager<TItem> DetailsManager { get; }
+        //IItemDetailsManager<TItem> DetailsManager { get; }
     }
 }

@@ -37,8 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
                     _uiFactory, 
                     GetUnlockedHullPrefabs(), 
                     _lockedInfo.NumOfLockedHulls, 
-                    this, 
-                    _detailsManager);
+                    this);
             
             _unlockedHullsRow.Initialise(args, loadoutCruiser);
             _unlockedHullsRow.SetupUI();
