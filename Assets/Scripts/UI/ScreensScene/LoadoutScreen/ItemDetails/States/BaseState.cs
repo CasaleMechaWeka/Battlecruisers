@@ -10,8 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		protected readonly IItemDetailsManager<TItem> _itemDetailsManager;
         protected readonly IItemStateManager _itemStateManager;
 
-		public virtual bool IsInReadyToCompareState { get { return false; } }
-
         protected BaseState(
             IItemDetailsManager<TItem> itemDetailsManager,
             IItemStateManager itemStateManager)
