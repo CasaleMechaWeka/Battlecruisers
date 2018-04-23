@@ -9,6 +9,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         public UnitCategory category;
 
+        public IStatefulUIElement UnitsRow { get; private set; }
+
         public void Initialise(IItemsRowArgs<IUnit> args)
         {
             Assert.IsNotNull(args);
@@ -17,6 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             Assert.IsNotNull(loadoutRow);
             loadoutRow.Initialise(args, category);
             loadoutRow.SetupUI();
+
+            UnitsRow = loadoutRow;
         }
     }
 }

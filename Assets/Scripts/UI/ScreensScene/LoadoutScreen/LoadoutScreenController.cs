@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemStateManager _itemStateManager;
 
 		public UIFactory uiFactory;
-        public HullsRowWrapper hullsRow;
+        public HullsRowWrapper hullsRowWrapper;
         public CruiserDetailsManager cruiserDetailsManager;
         public BuildingDetailsManager buildingDetailsManager;
         public UnitDetailsManager unitDetailsManager;
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             yield return null;
 
             // General
-            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, hullsRow);
+            Helper.AssertIsNotNull(uiFactory, dataProvider, prefabFactory, spriteProvider, hullsRowWrapper);
             // Item details managers
             Helper.AssertIsNotNull(cruiserDetailsManager, buildingDetailsManager, unitDetailsManager);
 
@@ -64,18 +64,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private void SetupHullsRow()
         {
             IItemsRowArgs<ICruiser> args = new ItemsRowArgs<ICruiser>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, cruiserDetailsManager);
-            hullsRow.Initialise(args);
+            hullsRowWrapper.Initialise(args);
+            _itemStateManager.AddItem(hullsRowWrapper.HullsRow, ItemType.Cruiser);
         }
 
         private void SetupBuildingRows()
         {
             ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, buildingDetailsManager);
 
-            BuildingsRowWrapper[] buildingRows = GetComponentsInChildren<BuildingsRowWrapper>();
+            BuildingsRowWrapper[] buildingRowWrappers = GetComponentsInChildren<BuildingsRowWrapper>();
 
-            foreach (BuildingsRowWrapper buildingRow in buildingRows)
+            foreach (BuildingsRowWrapper buildingRowWrapper in buildingRowWrappers)
             {
-                buildingRow.Initialise(args);
+                buildingRowWrapper.Initialise(args);
+                _itemStateManager.AddItem(buildingRowWrapper.BuildingsRow, ItemType.Building);
             }
         }
 
@@ -83,11 +85,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_gameModel, _dataProvider.LockedInfo, _prefabFactory, uiFactory, unitDetailsManager);
 
-            UnitsRowWrapper[] unitRows = GetComponentsInChildren<UnitsRowWrapper>();
+            UnitsRowWrapper[] unitRowWrappers = GetComponentsInChildren<UnitsRowWrapper>();
 
-            foreach (UnitsRowWrapper unitRow in unitRows)
+            foreach (UnitsRowWrapper unitRowWrapper in unitRowWrappers)
             {
-                unitRow.Initialise(args);
+                unitRowWrapper.Initialise(args);
+                _itemStateManager.AddItem(unitRowWrapper.UnitsRow, ItemType.Unit);
             }
         }
 

@@ -8,6 +8,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     public class HullsRowWrapper : MonoBehaviour
     {
+        public IStatefulUIElement HullsRow { get; private set; }
+
         public void Initialise(IItemsRowArgs<ICruiser> args)
         {
             LoadoutHullItem loadoutHullItem = GetComponentInChildren<LoadoutHullItem>();
@@ -18,6 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             IItemsRow<ICruiser> hullsRow = new HullItemsRow(args, loadoutHullItem, unlockedHullsRow);
             hullsRow.SetupUI();
+            HullsRow = hullsRow;
         }
     }
 }
