@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
+        private IItemStateManager _itemStateManager;
 
 		public UIFactory uiFactory;
         public HullsRowWrapper hullsRow;
@@ -42,10 +43,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _dataProvider = dataProvider;
             _gameModel = _dataProvider.GameModel;
             _prefabFactory = prefabFactory;
+            _itemStateManager = new ItemStateManager();
 
-            buildingDetailsManager.Initialise(spriteProvider);
-            unitDetailsManager.Initialise();
-            cruiserDetailsManager.Initialise();
+            buildingDetailsManager.Initialise(spriteProvider, _itemStateManager);
+            unitDetailsManager.Initialise(_itemStateManager);
+            cruiserDetailsManager.Initialise(_itemStateManager);
 
             uiFactory.Initialise(buildingDetailsManager, unitDetailsManager, cruiserDetailsManager);
 

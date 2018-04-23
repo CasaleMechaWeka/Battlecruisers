@@ -6,8 +6,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 	{
 		private readonly IItem<TItem> _selectedItem;
 
-		public SelectedState(IItemDetailsManager<TItem> itemDetailsManager, IItem<TItem> selectedItem)
-			: base(itemDetailsManager)
+		public SelectedState(
+            IItemDetailsManager<TItem> itemDetailsManager, 
+            IItemStateManager itemStateManager,
+            IItem<TItem> selectedItem)
+            : base(itemDetailsManager, itemStateManager)
 		{
 			_selectedItem = selectedItem;
 		}
@@ -16,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		{
 			_itemDetailsManager.HideItemDetails();
 			_selectedItem.ShowSelectedFeedback = true;	
-			return new ReadyToCompareState<TItem>(_itemDetailsManager, _selectedItem);
+            return new ReadyToCompareState<TItem>(_itemDetailsManager, _itemStateManager, _selectedItem);
 		}
 	}
 }

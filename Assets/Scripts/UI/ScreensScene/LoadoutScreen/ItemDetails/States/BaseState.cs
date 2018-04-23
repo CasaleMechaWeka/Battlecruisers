@@ -1,18 +1,25 @@
 ﻿using System;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
     // FELIX  Create test cases for state transitions :)
     public abstract class BaseState<TItem> : IItemDetailsState<TItem> where TItem : IComparableItem
 	{
-		protected IItemDetailsManager<TItem> _itemDetailsManager;
+		protected readonly IItemDetailsManager<TItem> _itemDetailsManager;
+        protected readonly IItemStateManager _itemStateManager;
 
 		public virtual bool IsInReadyToCompareState { get { return false; } }
 
-        protected BaseState(IItemDetailsManager<TItem> itemDetailsManager)
+        protected BaseState(
+            IItemDetailsManager<TItem> itemDetailsManager,
+            IItemStateManager itemStateManager)
 		{
+            Helper.AssertIsNotNull(itemDetailsManager, itemStateManager);
+
 			_itemDetailsManager = itemDetailsManager;
+            _itemStateManager = itemStateManager;
 		}
 
 		public virtual IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem)
@@ -28,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 		public virtual IItemDetailsState<TItem> Dismiss()
 		{
 			_itemDetailsManager.HideItemDetails();
-			return new DismissedState<TItem>(_itemDetailsManager);
+			return new DismissedState<TItem>(_itemDetailsManager, _itemStateManager);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,13 +34,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 		protected void Initialise(
 			IComparableItemDetails<TItem> singleItemDetails,
 			IComparableItemDetails<TItem> leftComparableItemDetails,
-			IComparableItemDetails<TItem> rightComparableItemDetails)
+			IComparableItemDetails<TItem> rightComparableItemDetails,
+            IItemStateManager itemStateManager)
 		{
+            Helper.AssertIsNotNull(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails, itemStateManager);
+
 			_singleItemDetails = singleItemDetails;
 			_leftComparableItemDetails = leftComparableItemDetails;
 			_rightComparableItemDetails = rightComparableItemDetails;
 
-			State = new DismissedState<TItem>(this);
+			State = new DismissedState<TItem>(this, itemStateManager);
 			
 			HideItemDetails();
 		}

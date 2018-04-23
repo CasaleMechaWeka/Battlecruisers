@@ -8,17 +8,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 
 		public override bool IsInReadyToCompareState { get { return true; } }
 
-		public ReadyToCompareState(IItemDetailsManager<TItem> itemDetailsManager, IItem<TItem> itemToCompare)
-			: base(itemDetailsManager)
+		public ReadyToCompareState(
+            IItemDetailsManager<TItem> itemDetailsManager, 
+            IItemStateManager itemStateManager,
+            IItem<TItem> itemToCompare)
+            : base(itemDetailsManager, itemStateManager)
 		{
 			_itemToCompare = itemToCompare;
+            _itemStateManager.HandleDetailsManagerReadyToCompare(_itemToCompare.Type);
 		}
 
 		public override IItemDetailsState<TItem> SelectItem(IItem<TItem> selectedItem)
 		{
 			_itemToCompare.ShowSelectedFeedback = false;
 			_itemDetailsManager.CompareItemDetails(_itemToCompare.Item, selectedItem.Item);
-			return new ComparingState<TItem>(_itemDetailsManager);
+			return new ComparingState<TItem>(_itemDetailsManager, _itemStateManager);
 		}
 
         // FELIX  Not dismissable right?  Should throw like DismissedState :)
