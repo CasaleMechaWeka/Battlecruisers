@@ -1,11 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
