@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+﻿using System;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
@@ -23,6 +24,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 			return new ComparingState<TItem>(_itemDetailsManager, _itemStateManager);
 		}
 
-        // FELIX  Not dismissable right?  Should throw like DismissedState :)
+        public override IItemDetailsState<TItem> Dismiss()
+        {
+            throw new InvalidProgramException();
+        }
 	}
 }
