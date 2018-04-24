@@ -19,8 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         protected ILockedInformation _lockedInfo;
         protected IPrefabFactory _prefabFactory;
         protected IUIFactory _uiFactory;
-        // FELIX  Use interface instead of LoadoutItem?
-        private IDictionary<TBuildable, LoadoutItem<TBuildable>> _buildableToLoadoutItem;
+        private IDictionary<TBuildable, IItem<TBuildable>> _buildableToLoadoutItem;
         protected HorizontalLayoutGroup _layoutGroup;
 
         private const int MAX_NUM_OF_ITEMS = 5;
@@ -35,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
             _lockedInfo = args.LockedInfo;
             _prefabFactory = args.PrefabFactory;
 			_uiFactory = args.UIFactory;
-            _buildableToLoadoutItem = new Dictionary<TBuildable, LoadoutItem<TBuildable>>();
+            _buildableToLoadoutItem = new Dictionary<TBuildable, IItem<TBuildable>>();
 
             _layoutGroup = GetComponent<HorizontalLayoutGroup>();
             Assert.IsNotNull(_layoutGroup);
@@ -67,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         private void CreateLoadoutItem(TBuildable buildableToAdd)
         {
             Assert.IsFalse(_buildableToLoadoutItem.ContainsKey(buildableToAdd));
-            LoadoutItem<TBuildable> item = CreateItem(buildableToAdd);
+            IItem<TBuildable> item = CreateItem(buildableToAdd);
             _buildableToLoadoutItem.Add(buildableToAdd, item);
         }
 
@@ -90,7 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         public void GoToState(UIState state)
         {
-			foreach (LoadoutItem<TBuildable> item in _buildableToLoadoutItem.Values)
+            foreach (IItem<TBuildable> item in _buildableToLoadoutItem.Values)
             {
                 item.GoToState(state);
             }

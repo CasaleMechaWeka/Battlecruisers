@@ -68,7 +68,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
                 default:
                     throw new ArgumentException();
 			}
-            
         }
 
         protected abstract IItemState<TItem> CreateDefaultState();
