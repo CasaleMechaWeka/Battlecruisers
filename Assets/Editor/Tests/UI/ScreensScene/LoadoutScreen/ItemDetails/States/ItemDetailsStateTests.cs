@@ -23,10 +23,9 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.States
 
             _itemsDetailsManager = Substitute.For<IItemDetailsManager<ICruiser>>();
             _itemStateManager = Substitute.For<IItemStateManager>();
+			_selectedItem = Substitute.For<IItem<ICruiser>>();
 
             _itemState = CreateItemState();
-
-            _selectedItem = Substitute.For<IItem<ICruiser>>();
         }
 
         protected abstract IItemDetailsState<ICruiser> CreateItemState();
