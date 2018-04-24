@@ -5,7 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.UI.ScreensScene.LaodoutScreen.Rows
+namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Rows
 {
     public class ItemStateManagerTests
     {
