@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {
-    // FELIX  Create test cases for state transitions :)
     public abstract class BaseState<TItem> : IItemDetailsState<TItem> where TItem : IComparableItem
 	{
 		protected readonly IItemDetailsManager<TItem> _itemDetailsManager;
