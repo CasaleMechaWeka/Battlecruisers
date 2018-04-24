@@ -12,6 +12,14 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.States
         {
             return new DismissedState<ICruiser>(_itemsDetailsManager, _itemStateManager);
         }
+
+        [Test]
+        public void Constructor_CallsItemStateManager()
+        {
+            CreateItemState();
+            _itemStateManager.Received().HandleDetailsManagerDismissed();
+        }
+
         [Test]
         public void SelectItem_ShowsDetails_And_MovesToSelectedState()
         {

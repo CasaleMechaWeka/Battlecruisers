@@ -14,6 +14,13 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.States
         }
 		
         [Test]
+        public void Constructor_CallsItemStateManager()
+        {
+            CreateItemState();
+            _itemStateManager.Received().HandleDetailsManagerComparing();
+        }
+
+        [Test]
 		public void SelectItem_Throws()
         {
             Assert.Throws<InvalidProgramException>(() => _itemState.SelectItem(_selectedItem));
