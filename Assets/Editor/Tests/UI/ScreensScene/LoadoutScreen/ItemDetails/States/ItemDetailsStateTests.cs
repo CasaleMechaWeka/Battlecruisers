@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.States
 
         protected IItemDetailsManager<ICruiser> _itemsDetailsManager;
         protected IItemStateManager _itemStateManager;
-        protected IItem<ICruiser> _selectedItem;
+        protected IItem<ICruiser> _selectedItem, _itemToCompare;
 
         [SetUp]
         public void SetuUp()
@@ -23,7 +23,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.States
 
             _itemsDetailsManager = Substitute.For<IItemDetailsManager<ICruiser>>();
             _itemStateManager = Substitute.For<IItemStateManager>();
-			_selectedItem = Substitute.For<IItem<ICruiser>>();
+            _selectedItem = Substitute.For<IItem<ICruiser>>();
+			_itemToCompare = Substitute.For<IItem<ICruiser>>();
 
             _itemState = CreateItemState();
         }
