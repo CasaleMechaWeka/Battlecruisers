@@ -4,10 +4,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    // FELIX  Test!
     public class ItemStateManager : IItemStateManager
     {
-        private IDictionary<ItemType, IList<IStatefulUIElement>> _typeToItems;
+        private readonly IDictionary<ItemType, IList<IStatefulUIElement>> _typeToItems;
 		
         public ItemStateManager()
         {
