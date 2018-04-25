@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings

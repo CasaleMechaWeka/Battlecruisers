@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.Manager
 {
     public interface IUIManager
 	{

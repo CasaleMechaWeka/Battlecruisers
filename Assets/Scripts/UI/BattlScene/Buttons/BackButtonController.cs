@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.BattleScene.Manager;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons

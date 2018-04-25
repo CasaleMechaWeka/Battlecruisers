@@ -9,7 +9,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.Manager
 {
     public class UIManager : IUIManager
 	{

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 
 namespace BattleCruisers.Cruisers

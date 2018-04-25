@@ -11,9 +11,9 @@ using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -25,13 +25,13 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using UnityEngine;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
