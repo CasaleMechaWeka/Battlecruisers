@@ -68,10 +68,10 @@ namespace BattleCruisers.Buildables
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
 
-        Quaternion IBuildable.Rotation 
+        Quaternion IBuildable.Rotation
         {
             get { return transform.rotation; }
-            set { transform.rotation = value; } 
+            set { transform.rotation = value; }
         }
 
         Vector2 IBuildable.Position
@@ -285,12 +285,12 @@ namespace BattleCruisers.Buildables
                 float buildProgressInDroneS = DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
                 _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
 
-				BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
+                BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
 
                 if (BuildProgress > MAX_BUILD_PROGRESS)
-				{
-					BuildProgress = MAX_BUILD_PROGRESS;
-				}
+                {
+                    BuildProgress = MAX_BUILD_PROGRESS;
+                }
 
                 // Increase health with build progress
                 float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
@@ -402,10 +402,10 @@ namespace BattleCruisers.Buildables
             }
             else
             {
-				OnClicked();
+                OnClicked();
             }
         }
 
-        protected virtual void OnClicked() { }
+        protected abstract void OnClicked();
     }
 }

@@ -53,7 +53,6 @@ namespace BattleCruisers.Buildables.Buildings
 
         protected override void OnClicked()
         {
-            base.OnClicked();
             _uiManager.SelectBuilding(this, _parentCruiser);
         }
 	}

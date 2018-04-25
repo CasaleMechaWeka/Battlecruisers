@@ -85,7 +85,6 @@ namespace BattleCruisers.Buildables.Units
 
 		protected override void OnClicked()
 		{
-            base.OnClicked();
 			_uiManager.ShowUnitDetails(this);
 		}
 
