@@ -11,13 +11,16 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
+    // FELIX  Wrap this UIManager with LimitableUIManager, wraps functionality...  (Otherwise update tests because of IUIManagerPermissions)
+    // FELIX  Would need to invert control with backgroun (Ie, background calls UIManager instead of UIManager listening to event)
     public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
+		private readonly IClickable _background;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IClickable _background;
+        private readonly IUIManagerPermissions _permissions;
 
         public UIManager(
             ICruiser playerCruiser,
@@ -25,9 +28,10 @@ namespace BattleCruisers.UI.BattleScene.Manager
             ICameraController cameraController,
             IBuildMenu buildMenu,
             IClickable background,
-            IBuildableDetailsManager detailsManager)
+            IBuildableDetailsManager detailsManager,
+            IUIManagerPermissions permissions)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, background, detailsManager);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, background, detailsManager, permissions);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
@@ -35,6 +39,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _buildMenu = buildMenu;
             _background = background;
             _detailsManager = detailsManager;
+            _permissions = permissions;
    			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
@@ -78,9 +83,12 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		private void OnBackgroundClicked(object sender, EventArgs e)
 		{
-            _detailsManager.HideDetails();
-			_playerCruiser.SlotWrapper.UnhighlightSlots();
-            _aiCruiser.SlotWrapper.UnhighlightSlots();
+            if (_permissions.CanDismissItemDetails)
+            {
+                _detailsManager.HideDetails();
+                _playerCruiser.SlotWrapper.UnhighlightSlots();
+                _aiCruiser.SlotWrapper.UnhighlightSlots();
+			}
 		}
 
 		public void ShowBuildingGroups()
@@ -112,6 +120,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public void SelectBuilding(IBuilding building, ICruiser buildingParent)
 		{
+            if (!_permissions.CanShowItemDetails)
+            {
+                return;
+            }
+
 			if (ReferenceEquals(buildingParent, _playerCruiser)
 				&& _cameraController.State == CameraState.PlayerCruiser)
 			{
@@ -147,12 +160,18 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public void ShowUnitDetails(IUnit unit)
 		{
-            _detailsManager.ShowDetails(unit);
+            if (_permissions.CanShowItemDetails)
+            {
+                _detailsManager.ShowDetails(unit);
+			}
 		}
 
         public void ShowCruiserDetails(ICruiser cruiser)
         {
-            _detailsManager.ShowDetails(cruiser);
+            if (_permissions.CanShowItemDetails)
+            {
+                _detailsManager.ShowDetails(cruiser);
+			}
         }
     }
 }
