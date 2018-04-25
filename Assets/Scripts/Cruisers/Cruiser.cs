@@ -103,6 +103,7 @@ namespace BattleCruisers.Cruisers
             FocusOnCruiser();
 		}
 
+        // FELIX  Create 2 subclasses (PlayerCruiser, AICruiser), avoid if :)
         private void FocusOnCruiser()
         {
             if (Faction == Faction.Blues)
@@ -138,6 +139,7 @@ namespace BattleCruisers.Cruisers
             building.Destroyed += Building_Destroyed;
 
 			// Only show build menu for player's cruiser
+            // FELIX  Create 2 subclasses (PlayerCruiser, AICruiser), avoid if :)
 			if (Faction == Faction.Blues)
 			{
 				_uiManager.ShowBuildingGroups();
