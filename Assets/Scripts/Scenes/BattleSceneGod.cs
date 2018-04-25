@@ -72,27 +72,32 @@ namespace BattleCruisers.Scenes
             }
 
 
+            // TEMP  Forcing tutorial :)
+            ApplicationModel.IsTutorial = true;
+
+
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _dataProvider = ApplicationModel.DataProvider;
             _currentLevelNum = ApplicationModel.SelectedLevel;
 
-            ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
-            ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
 
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
+            IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
 
 
             // Instantiate player cruiser
+            ILoadout playerLoadout = helper.GetPlayerLoadout();
             Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
             _playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
             _playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, _playerCruiser.YAdjustmentInM, 0);
 
 
             // Instantiate AI cruiser
+			ILevel currentLevel = _dataProvider.GetLevel(_currentLevelNum);
             Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
             _aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
 
@@ -150,13 +155,20 @@ namespace BattleCruisers.Scenes
             cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial);
 
 
-            // AI
-            ILevelInfo levelInfo = new LevelInfo(_aiCruiser, _playerCruiser, _dataProvider.StaticData, prefabFactory, currentLevel.Num);
-            IAIManager aiManager = new AIManager(prefabFactory, deferrer, _dataProvider);
-            aiManager.CreateAI(levelInfo);
-
-
+            helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
+        }
+
+        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IDeferrer deferrer)
+        {
+            if (ApplicationModel.IsTutorial)
+            {
+                return new TutorialHelper(_dataProvider);
+            }
+            else
+            {
+                return new NormalHelper(_dataProvider, prefabFactory, deferrer);
+            }
         }
 
         private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
