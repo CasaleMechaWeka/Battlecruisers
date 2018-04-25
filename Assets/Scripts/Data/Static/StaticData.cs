@@ -164,7 +164,7 @@ namespace BattleCruisers.Data.Static
                 numOfLevelsCompleted,
                 playerLoadout,
                 lastBattleResult: null,
-				// TEMP  Do not unlock all hulls & buildables at teh game start :P
+				// TEMP  Do not unlock all hulls & buildables at the game start :P
                 unlockedHulls: new List<HullKey>() { initialHull },
                 unlockedBuildings: GetInitialBuildings(),
                 unlockedUnits: GetInitialUnits());
