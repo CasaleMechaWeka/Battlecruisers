@@ -15,7 +15,8 @@ namespace BattleCruisers.UI.BattleScene
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;
-        private IBuildableButtonActivenessDecider _activenessDecider;
+        private IBuildableButtonActivenessDecider<IBuildable> _buildableButtonActivenessDecider;
+        private IBuildableButtonActivenessDecider<BuildingCategory> _buildingCategoryButtonActivenessDecider;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -24,14 +25,19 @@ namespace BattleCruisers.UI.BattleScene
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
-        public void Initialise(IUIManager uiManager, ISpriteProvider spriteProvider, IBuildableButtonActivenessDecider activenessDecider)
+        public void Initialise(
+            IUIManager uiManager, 
+            ISpriteProvider spriteProvider, 
+            IBuildableButtonActivenessDecider<IBuildable> buildableButtonActivenessDecider,
+            IBuildableButtonActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider)
         {
-            Helper.AssertIsNotNull(uiManager, spriteProvider, activenessDecider);
+            Helper.AssertIsNotNull(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider);
 
             _uiManager = uiManager;
             _spriteProvider = spriteProvider;
-            _activenessDecider = activenessDecider;
-			
+            _buildableButtonActivenessDecider = buildableButtonActivenessDecider;
+            _buildingCategoryButtonActivenessDecider = buildingCategoryButtonActivenessDecider;
+
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 		}
@@ -50,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button button = Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<BuildingCategoryButton>().Initialise(buildingGroup, _uiManager);
+			button.GetComponent<BuildingCategoryButton>().Initialise(buildingGroup, _uiManager, _buildingCategoryButtonActivenessDecider);
 			return button;
 		}
 
@@ -60,7 +66,7 @@ namespace BattleCruisers.UI.BattleScene
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
             Sprite slotSprite = _spriteProvider.GetSlotSprite(buildingWrapper.Buildable.SlotType).Sprite;
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-            controller.Initialise(buildingWrapper, _uiManager, _activenessDecider, slotSprite);
+            controller.Initialise(buildingWrapper, _uiManager, _buildableButtonActivenessDecider, slotSprite);
 			return controller;
 		}
 
@@ -69,7 +75,7 @@ namespace BattleCruisers.UI.BattleScene
 			Button button = Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-            controller.Initialise(unitWrapper, _uiManager, _activenessDecider);
+            controller.Initialise(unitWrapper, _uiManager, _buildableButtonActivenessDecider);
 			return controller;
 		}
 

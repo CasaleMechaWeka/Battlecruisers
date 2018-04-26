@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     /// according to the drone manager's current number of drones.
     /// </summary>
     /// FELIX  Test :D
-    public class AffordableDecider : IBuildableButtonActivenessDecider
+    public class AffordableDecider : IBuildableButtonActivenessDecider<IBuildable>
     {
         private readonly IDroneManager _droneManager;
 

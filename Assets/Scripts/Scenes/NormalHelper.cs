@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
@@ -43,7 +44,7 @@ namespace BattleCruisers.Scenes
             aiManager.CreateAI(levelInfo);
 		}
 
-        public IBuildableButtonActivenessDecider CreateButtonActivenessDecider(IDroneManager droneManager)
+        public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
         {
             return new AffordableDecider(droneManager);
         }

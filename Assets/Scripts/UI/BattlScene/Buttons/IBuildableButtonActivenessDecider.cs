@@ -1,9 +1,11 @@
 ﻿using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public interface IBuildableButtonActivenessDecider
+    // FELIX  Rename
+    public interface IBuildableButtonActivenessDecider<TButton>
     {
         /// <summary>
         /// Emitted when button activeness may have changed (eg, due to the 
@@ -11,6 +13,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         /// </summary>
         event EventHandler PotentialActivenessChange;
 
-        bool ShouldBeEnabled(IBuildable buildable);
+        bool ShouldBeEnabled(TButton buildable);
     }
 }

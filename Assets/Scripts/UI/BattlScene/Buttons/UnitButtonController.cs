@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _factory;
 
-        public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IBuildableButtonActivenessDecider activenessDecider)
+        public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IBuildableButtonActivenessDecider<IBuildable> activenessDecider)
 		{
             base.Initialise(unitWrapper.Buildable, uiManager, activenessDecider);
 

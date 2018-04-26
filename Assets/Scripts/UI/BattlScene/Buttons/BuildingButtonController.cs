@@ -12,7 +12,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public Image slotImage;
 
-        public void Initialise(IBuildableWrapper<IBuilding> buildingWrapper, IUIManager uiManager, IBuildableButtonActivenessDecider activenessDecider, Sprite slotSprite)
+        public void Initialise(
+            IBuildableWrapper<IBuilding> buildingWrapper, 
+            IUIManager uiManager, 
+            IBuildableButtonActivenessDecider<IBuildable> activenessDecider, 
+            Sprite slotSprite)
 		{
             base.Initialise(buildingWrapper.Buildable, uiManager, activenessDecider);
 			

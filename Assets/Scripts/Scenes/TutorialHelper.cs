@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
@@ -42,7 +43,7 @@ namespace BattleCruisers.Scenes
             // The tutorial has no AI :)
 		}
 
-        public IBuildableButtonActivenessDecider CreateButtonActivenessDecider(IDroneManager droneManager)
+        public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
         {
             return new TutorialDecider(_prefabFactory);
         }
