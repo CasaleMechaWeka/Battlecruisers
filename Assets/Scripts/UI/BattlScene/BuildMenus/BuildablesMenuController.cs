@@ -9,12 +9,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public abstract class BuildablesMenuController<TBuildable> : Presentable
         where TBuildable : class, IBuildable
 	{
-		public void Initialize(
+		public void Initialise(
 			IUIFactory uiFactory,
             IList<IBuildableWrapper<TBuildable>> buildables,
             IBuildableSorter<TBuildable> sorter)
 		{
-			base.Initialize();
+			base.Initialise();
 
             Helper.AssertIsNotNull(uiFactory, buildables, sorter);
 

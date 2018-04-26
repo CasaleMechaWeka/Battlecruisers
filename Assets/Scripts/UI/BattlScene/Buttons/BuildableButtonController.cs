@@ -19,9 +19,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
-		public void Initialize(IBuildable buildable, IDroneManager droneManager, IUIManager uiManager)
+		public void Initialise(IBuildable buildable, IDroneManager droneManager, IUIManager uiManager)
 		{
-			base.Initialize();
+			base.Initialise();
 
             Helper.AssertIsNotNull(buildable, droneManager, uiManager);
 

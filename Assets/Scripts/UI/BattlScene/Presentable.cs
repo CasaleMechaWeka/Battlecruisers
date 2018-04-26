@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene
 		protected bool _isPresented;
 		protected IList<IPresentable> _childPresentables;
 
-		public virtual void Initialize()
+		public virtual void Initialise()
 		{
 			_childPresentables = new List<IPresentable>();
 		}

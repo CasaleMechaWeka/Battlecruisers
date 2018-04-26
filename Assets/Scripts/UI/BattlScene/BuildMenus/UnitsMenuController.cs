@@ -16,13 +16,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		private IUIManager _uiManager;
 		private Factory _factory;
 
-		public void Initialize(
+		public void Initialise(
 			IUIManager uiManager,
 			IUIFactory uiFactory,
 			IList<IBuildableWrapper<IUnit>> units,
             IBuildableSorter<IUnit> sorter)
 		{
-            base.Initialize(uiFactory, units, sorter);
+            base.Initialise(uiFactory, units, sorter);
 
             Assert.IsNotNull(uiManager);
 			_uiManager = uiManager;
