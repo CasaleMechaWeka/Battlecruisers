@@ -1,24 +1,21 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
     // FELIX  Wrap this UIManager with LimitableUIManager, wraps functionality...  (Otherwise update tests because of IUIManagerPermissions)
-    // FELIX  Would need to invert control with backgroun (Ie, background calls UIManager instead of UIManager listening to event)
     public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
-		private readonly IClickable _background;
         private readonly IBuildableDetailsManager _detailsManager;
         private readonly IUIManagerPermissions _permissions;
 
@@ -27,23 +24,20 @@ namespace BattleCruisers.UI.BattleScene.Manager
             ICruiser aiCruiser,
             ICameraController cameraController,
             IBuildMenu buildMenu,
-            IClickable background,
             IBuildableDetailsManager detailsManager,
             IUIManagerPermissions permissions)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, background, detailsManager, permissions);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, detailsManager, permissions);
 
 			_playerCruiser = playerCruiser;
 			_aiCruiser = aiCruiser;
             _cameraController = cameraController;
             _buildMenu = buildMenu;
-            _background = background;
             _detailsManager = detailsManager;
             _permissions = permissions;
    			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
-			_background.Clicked += OnBackgroundClicked;
         }
 
         /// <summary>
@@ -81,7 +75,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             }
 		}
 
-		private void OnBackgroundClicked(object sender, EventArgs e)
+		public void HideItemDetails()
 		{
             if (_permissions.CanDismissItemDetails)
             {

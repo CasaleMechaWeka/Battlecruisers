@@ -16,5 +16,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         void ShowFactoryUnits(IFactory factory);
         void ShowUnitDetails(IUnit unit);
         void ShowCruiserDetails(ICruiser cruiser);
+        void HideItemDetails();
 	}
 }

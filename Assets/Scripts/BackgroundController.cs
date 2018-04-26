@@ -1,19 +1,24 @@
 ﻿using System;
+using BattleCruisers.UI.BattleScene.Manager;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers
 {
-    public class BackgroundController : MonoBehaviour, IPointerClickHandler, IClickable
+    public class BackgroundController : MonoBehaviour, IPointerClickHandler
 	{
-        public event EventHandler Clicked;
+        private IUIManager _uiManager;
+
+        public void Initialise(IUIManager uIManager)
+        {
+            Assert.IsNotNull(uIManager);
+            _uiManager = uIManager;
+        }
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			if (Clicked != null)
-			{
-				Clicked.Invoke(this, EventArgs.Empty);
-			}
+            _uiManager.HideItemDetails();
 		}
 	}
 }
