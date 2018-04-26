@@ -22,7 +22,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
-        private IClickable _background;
 
         private IBuilding _building;
         private IFactory _factory;
@@ -37,16 +36,15 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _cameraController = Substitute.For<ICameraController>();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
-            _background = Substitute.For<IClickable>();
 
-            _uiManager
-                = new UIManager(
+            IManagerArgs managerArgs
+                = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
                     _cameraController,
                     _buildMenu,
-                    _background,
                     _detailsManager);
+            _uiManager = new UIManager(managerArgs);
 
             _building = Substitute.For<IBuilding>();
             _building.SlotType.Returns(SlotType.Platform);
@@ -111,9 +109,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
         #endregion Camera transitions
 
         [Test]
-        public void BackgroundClicked()
+        public void HideItemDetails()
         {
-            _background.Clicked += Raise.Event();
+            _uiManager.HideItemDetails();
 
             _detailsManager.Received().HideDetails();
             _playerCruiser.SlotWrapper.Received().UnhighlightSlots();

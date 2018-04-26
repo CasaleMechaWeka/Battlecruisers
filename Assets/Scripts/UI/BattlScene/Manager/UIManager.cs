@@ -7,34 +7,26 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    // FELIX  Wrap this UIManager with LimitableUIManager, wraps functionality...  (Otherwise update tests because of IUIManagerPermissions)
     public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IUIManagerPermissions _permissions;
 
-        public UIManager(
-            ICruiser playerCruiser,
-            ICruiser aiCruiser,
-            ICameraController cameraController,
-            IBuildMenu buildMenu,
-            IBuildableDetailsManager detailsManager,
-            IUIManagerPermissions permissions)
+        public UIManager(IManagerArgs args)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, detailsManager, permissions);
+            Assert.IsNotNull(args);
 
-			_playerCruiser = playerCruiser;
-			_aiCruiser = aiCruiser;
-            _cameraController = cameraController;
-            _buildMenu = buildMenu;
-            _detailsManager = detailsManager;
-            _permissions = permissions;
+			_playerCruiser = args.PlayerCruiser;
+            _aiCruiser = args.AICruiser;
+            _cameraController = args.CameraController;
+            _buildMenu = args.BuildMenu;
+            _detailsManager = args.DetailsManager;
    			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
@@ -75,14 +67,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
             }
 		}
 
-		public void HideItemDetails()
+		public virtual void HideItemDetails()
 		{
-            if (_permissions.CanDismissItemDetails)
-            {
-                _detailsManager.HideDetails();
-                _playerCruiser.SlotWrapper.UnhighlightSlots();
-                _aiCruiser.SlotWrapper.UnhighlightSlots();
-			}
+            _detailsManager.HideDetails();
+            _playerCruiser.SlotWrapper.UnhighlightSlots();
+            _aiCruiser.SlotWrapper.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
@@ -112,13 +101,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _detailsManager.ShowDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
-		public void SelectBuilding(IBuilding building, ICruiser buildingParent)
+		public virtual void SelectBuilding(IBuilding building, ICruiser buildingParent)
 		{
-            if (!_permissions.CanShowItemDetails)
-            {
-                return;
-            }
-
 			if (ReferenceEquals(buildingParent, _playerCruiser)
 				&& _cameraController.State == CameraState.PlayerCruiser)
 			{
@@ -152,20 +136,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			}
 		}
 
-		public void ShowUnitDetails(IUnit unit)
+		public virtual void ShowUnitDetails(IUnit unit)
 		{
-            if (_permissions.CanShowItemDetails)
-            {
-                _detailsManager.ShowDetails(unit);
-			}
+            _detailsManager.ShowDetails(unit);
 		}
 
-        public void ShowCruiserDetails(ICruiser cruiser)
+        public virtual void ShowCruiserDetails(ICruiser cruiser)
         {
-            if (_permissions.CanShowItemDetails)
-            {
-                _detailsManager.ShowDetails(cruiser);
-			}
+            _detailsManager.ShowDetails(cruiser);
         }
     }
 }
