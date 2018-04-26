@@ -8,6 +8,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -132,9 +133,13 @@ namespace BattleCruisers.Scenes
             hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
 
+            // FELIX  Make IBSHelper provide this :)
+            IBuildableButtonActivenessDecider activenessDecider = new AffordableDecider(_playerCruiser.DroneManager);
+
+
             // UI
             hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
-            uiFactory.Initialise(uiManager, spriteProvider, _playerCruiser.DroneManager);
+            uiFactory.Initialise(uiManager, spriteProvider, activenessDecider);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();

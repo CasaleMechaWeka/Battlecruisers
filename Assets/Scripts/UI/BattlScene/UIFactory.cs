@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
@@ -16,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;
-        private IDroneManager _droneManager;
+        private IBuildableButtonActivenessDecider _activenessDecider;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -25,13 +24,13 @@ namespace BattleCruisers.UI.BattleScene
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
 
-        public void Initialise(IUIManager uiManager, ISpriteProvider spriteProvider, IDroneManager droneManager)
+        public void Initialise(IUIManager uiManager, ISpriteProvider spriteProvider, IBuildableButtonActivenessDecider activenessDecider)
         {
-            Helper.AssertIsNotNull(uiManager, spriteProvider, droneManager);
+            Helper.AssertIsNotNull(uiManager, spriteProvider, activenessDecider);
 
             _uiManager = uiManager;
             _spriteProvider = spriteProvider;
-            _droneManager = droneManager;
+            _activenessDecider = activenessDecider;
 			
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
@@ -61,7 +60,7 @@ namespace BattleCruisers.UI.BattleScene
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
             Sprite slotSprite = _spriteProvider.GetSlotSprite(buildingWrapper.Buildable.SlotType).Sprite;
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-			controller.Initialise(buildingWrapper, _uiManager, _droneManager, slotSprite);
+            controller.Initialise(buildingWrapper, _uiManager, _activenessDecider, slotSprite);
 			return controller;
 		}
 
@@ -70,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene
 			Button button = Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-			controller.Initialise(unitWrapper, _droneManager, _uiManager);
+            controller.Initialise(unitWrapper, _uiManager, _activenessDecider);
 			return controller;
 		}
 

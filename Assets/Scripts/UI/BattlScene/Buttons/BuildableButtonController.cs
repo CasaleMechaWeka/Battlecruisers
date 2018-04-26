@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers.Drones;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -10,8 +10,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public abstract class BuildableButtonController : Presentable
 	{
 		private IBuildable _buildable;
-		private IDroneManager _droneManager;
 		protected IUIManager _uiManager;
+        private IBuildableButtonActivenessDecider _activenessDecider;
 		private Button _button;
 
 		public CanvasGroup canvasGroup;
@@ -19,15 +19,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
-		public void Initialise(IBuildable buildable, IDroneManager droneManager, IUIManager uiManager)
+        public void Initialise(IBuildable buildable, IUIManager uiManager, IBuildableButtonActivenessDecider activenessDecider)
 		{
 			base.Initialise();
 
-            Helper.AssertIsNotNull(buildable, droneManager, uiManager);
+            Helper.AssertIsNotNull(buildable, uiManager, activenessDecider);
 
 			_buildable = buildable;
-			_droneManager = droneManager;
 			_uiManager = uiManager;
+            _activenessDecider = activenessDecider;
 			_button = GetComponent<Button>();
 
             buildableName.text = _buildable.Name;
@@ -35,16 +35,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			buildableImage.sprite = _buildable.Sprite;
 
 			_button.onClick.AddListener(OnClick);
-			_droneManager.DroneNumChanged += DroneManager_DroneNumChanged;
+            _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 		}
 
-		private void DroneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
-		{
+        private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
+        {
 			if (_isPresented)
 			{
 				UpdateButtonActiveness();
 			}
-		}
+        }
 
 		public override void OnPresenting(object activationParameter)
 		{
@@ -68,7 +68,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected virtual bool ShouldBeEnabled()
 		{
-			return _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
+            return _activenessDecider.ShouldBeEnabled(_buildable);
 		}
 
 		protected abstract void OnClick();

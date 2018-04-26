@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 
@@ -12,9 +11,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _factory;
 
-		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IDroneManager droneManager, IUIManager uiManager)
+        public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IBuildableButtonActivenessDecider activenessDecider)
 		{
-			base.Initialise(unitWrapper.Buildable, droneManager, uiManager);
+            base.Initialise(unitWrapper.Buildable, uiManager, activenessDecider);
 
 			_unitWrapper = unitWrapper;
 		}
