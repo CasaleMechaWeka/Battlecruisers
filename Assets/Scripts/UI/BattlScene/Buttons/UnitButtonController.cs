@@ -48,8 +48,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected override bool ShouldBeEnabled()
 		{
-			return _factory.BuildableState == BuildableState.Completed
-				&& base.ShouldBeEnabled();
+            return
+                base.ShouldBeEnabled()
+                && _factory.BuildableState == BuildableState.Completed;
 		}
 
 		protected override void OnClick()
