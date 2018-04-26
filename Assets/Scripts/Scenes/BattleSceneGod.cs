@@ -81,7 +81,6 @@ namespace BattleCruisers.Scenes
             _currentLevelNum = ApplicationModel.SelectedLevel;
 
 
-
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
