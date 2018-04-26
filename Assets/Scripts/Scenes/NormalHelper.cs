@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -21,6 +22,11 @@ namespace BattleCruisers.Scenes
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+        }
+
+        public IUIManager CreateUIManager(IManagerArgs args)
+        {
+            return new UIManager(args);
         }
 
         public ILoadout GetPlayerLoadout()

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.UI.BattleScene.Manager;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes
@@ -13,6 +14,16 @@ namespace BattleCruisers.Scenes
         {
             Assert.IsNotNull(dataProvider);
             _dataProvider = dataProvider;
+        }
+
+        public IUIManager CreateUIManager(IManagerArgs args)
+        {
+            IUIManagerPermissions permissions = new UIManagerPermissions()
+            {
+                CanDismissItemDetails = false,
+                CanShowItemDetails = false
+            };
+            return new LimitableUIManager(args, permissions);
         }
 
         public ILoadout GetPlayerLoadout()

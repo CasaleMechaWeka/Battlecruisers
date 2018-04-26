@@ -88,6 +88,7 @@ namespace BattleCruisers.Scenes
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
 
+
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
             Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
@@ -116,7 +117,7 @@ namespace BattleCruisers.Scenes
                     cameraController,
                     buildMenuController,
                     detailsManager);
-            IUIManager uiManager = new UIManager(managerArgs);
+            IUIManager uiManager = helper.CreateUIManager(managerArgs);
             backgroundController.Initialise(uiManager);
 
 
