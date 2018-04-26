@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class BuildingCategoryButton : MonoBehaviour 
 	{
         private BuildingCategory _buildingCategory;
-        private IBuildableButtonActivenessDecider<BuildingCategory> _activenessDecider;
+        private IActivenessDecider<BuildingCategory> _activenessDecider;
         private CanvasGroup _canvasGroup;
 		private Button _button;
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             IBuildingGroup buildingGroup, 
             IUIManager uiManager, 
-            IBuildableButtonActivenessDecider<BuildingCategory> activenessDecider)
+            IActivenessDecider<BuildingCategory> activenessDecider)
 		{
             Helper.AssertIsNotNull(buildingGroup, uiManager, activenessDecider);
 

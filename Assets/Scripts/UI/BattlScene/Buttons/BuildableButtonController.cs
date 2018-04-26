@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
 		private IBuildable _buildable;
 		protected IUIManager _uiManager;
-        private IBuildableButtonActivenessDecider<IBuildable> _activenessDecider;
+        private IActivenessDecider<IBuildable> _activenessDecider;
 		private Button _button;
 
 		public CanvasGroup canvasGroup;
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
-        public void Initialise(IBuildable buildable, IUIManager uiManager, IBuildableButtonActivenessDecider<IBuildable> activenessDecider)
+        public void Initialise(IBuildable buildable, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
 		{
 			base.Initialise();
 

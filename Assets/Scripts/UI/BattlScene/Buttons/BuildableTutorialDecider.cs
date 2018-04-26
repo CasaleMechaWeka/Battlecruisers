@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // FELIX  Rename :/
     /// <summary>
     /// Deems a buildable button as enabled if the buildable is the currently permitted
     /// building.
@@ -18,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     ///     the tutorial does NOT involve creating any units.
     /// </summary>
     /// FELIX  Test :D
-    public class TutorialDecider : IBuildableButtonActivenessDecider<IBuildable>, IBuildingPermitter
+    public class BuildableTutorialDecider : IActivenessDecider<IBuildable>, IBuildingPermitter
     {
         private readonly IPrefabFactory _prefabFactory;
 
@@ -38,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public event EventHandler PotentialActivenessChange;
 
-        public TutorialDecider(IPrefabFactory prefabFactory)
+        public BuildableTutorialDecider(IPrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
             _prefabFactory = prefabFactory;

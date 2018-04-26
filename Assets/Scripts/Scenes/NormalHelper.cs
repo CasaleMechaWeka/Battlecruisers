@@ -45,12 +45,12 @@ namespace BattleCruisers.Scenes
             aiManager.CreateAI(levelInfo);
 		}
 
-        public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
+        public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
-            return new AffordableDecider(droneManager);
+            return new BuildableAffordableDecider(droneManager);
         }
 
-        public IBuildableButtonActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             // For the real game want to enable all building categories :)
             return new BuildingCategoryStaticDecider(shouldBeEnabled: true);

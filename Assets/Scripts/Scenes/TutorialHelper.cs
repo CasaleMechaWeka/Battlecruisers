@@ -44,12 +44,12 @@ namespace BattleCruisers.Scenes
             // The tutorial has no AI :)
 		}
 
-        public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
+        public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
-            return new TutorialDecider(_prefabFactory);
+            return new BuildableTutorialDecider(_prefabFactory);
         }
 
-        public IBuildableButtonActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             return new BuildingCategoryTutorialDecider();
         }

@@ -14,8 +14,7 @@ namespace BattleCruisers.Scenes
         ILoadout GetPlayerLoadout();
         void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
 
-        // FELIX  Rename
-        IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager);
-        IBuildableButtonActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider();
+        IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager);
+        IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider();
     }
 }
