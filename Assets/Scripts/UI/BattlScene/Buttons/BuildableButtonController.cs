@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -12,9 +11,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildable _buildable;
 		protected IUIManager _uiManager;
         private IActivenessDecider<IBuildable> _activenessDecider;
-		private Button _button;
+        private ButtonWrapper _buttonWrapper;
 
-		public CanvasGroup canvasGroup;
 		public Image buildableImage;
 		public Text buildableName;
 		public Text droneLevel;
@@ -28,13 +26,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			_buildable = buildable;
 			_uiManager = uiManager;
             _activenessDecider = activenessDecider;
-			_button = GetComponent<Button>();
 
             buildableName.text = _buildable.Name;
-			droneLevel.text = _buildable.NumOfDronesRequired.ToString();
-			buildableImage.sprite = _buildable.Sprite;
+            droneLevel.text = _buildable.NumOfDronesRequired.ToString();
+            buildableImage.sprite = _buildable.Sprite;
 
-			_button.onClick.AddListener(OnClick);
+			_buttonWrapper = GetComponent<ButtonWrapper>();
+            _buttonWrapper.Initialise();
+			_buttonWrapper.Button.onClick.AddListener(OnClick);
             _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 		}
 
@@ -54,16 +53,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected void UpdateButtonActiveness()
 		{
-			if (ShouldBeEnabled())
-			{
-				_button.enabled = true;
-				canvasGroup.alpha = Constants.ENABLED_UI_ALPHA;
-			}
-			else
-			{
-				_button.enabled = false;
-				canvasGroup.alpha = Constants.DISABLED_UI_ALPHA;
-			}
+            _buttonWrapper.IsEnabled = ShouldBeEnabled();
 		}
 
 		protected virtual bool ShouldBeEnabled()

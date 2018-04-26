@@ -12,18 +12,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private BuildingCategory _buildingCategory;
         private IActivenessDecider<BuildingCategory> _activenessDecider;
-        private CanvasGroup _canvasGroup;
-		private Button _button;
-
-        // FELIX  Avoid duplicate code with BuildableButtonController :P
-        private bool IsEnabled
-        {
-            set
-            {
-                _button.enabled = value;
-                _canvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
-            }
-        }
+        private ButtonWrapper _buttonWrapper;
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
@@ -36,14 +25,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _activenessDecider = activenessDecider;
 			_activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 
-            _canvasGroup = GetComponent<CanvasGroup>();
-            Assert.IsNotNull(_canvasGroup);
+            _buttonWrapper = GetComponent<ButtonWrapper>();
+            Assert.IsNotNull(_buttonWrapper);
+            _buttonWrapper.Initialise();
+            _buttonWrapper.Button.onClick.AddListener(() => uiManager.SelectBuildingGroup(buildingGroup.BuildingCategory));
 
-            _button = GetComponent<Button>();
-            Assert.IsNotNull(_button);
-            _button.onClick.AddListener(() => uiManager.SelectBuildingGroup(buildingGroup.BuildingCategory));
-
-            Text buttonText = _button.GetComponentInChildren<Text>();
+            Text buttonText = _buttonWrapper.Button.GetComponentInChildren<Text>();
             Assert.IsNotNull(buttonText);
             buttonText.text = buildingGroup.BuildingGroupName;
 
@@ -57,7 +44,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		private void UpdateActiveness()
 		{
-            IsEnabled = _activenessDecider.ShouldBeEnabled(_buildingCategory);
+            _buttonWrapper.IsEnabled = _activenessDecider.ShouldBeEnabled(_buildingCategory);
 		}
 	}
 }
