@@ -133,12 +133,9 @@ namespace BattleCruisers.Scenes
             hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
 
-            // FELIX  Make IBSHelper provide this :)
-            IBuildableButtonActivenessDecider activenessDecider = new AffordableDecider(_playerCruiser.DroneManager);
-
-
             // UI
-            hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+			hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
+            IBuildableButtonActivenessDecider activenessDecider = helper.CreateButtonActivenessDecider(_playerCruiser.DroneManager);
             uiFactory.Initialise(uiManager, spriteProvider, activenessDecider);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
@@ -166,7 +163,7 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
-                return new TutorialHelper(_dataProvider);
+                return new TutorialHelper(_dataProvider, prefabFactory);
             }
             else
             {

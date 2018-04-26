@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -40,5 +42,10 @@ namespace BattleCruisers.Scenes
             IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, _dataProvider);
             aiManager.CreateAI(levelInfo);
 		}
+
+        public IBuildableButtonActivenessDecider CreateButtonActivenessDecider(IDroneManager droneManager)
+        {
+            return new AffordableDecider(droneManager);
+        }
     }
 }
