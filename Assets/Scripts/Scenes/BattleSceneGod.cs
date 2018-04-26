@@ -136,8 +136,7 @@ namespace BattleCruisers.Scenes
             // UI
 			hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager);
             IBuildableButtonActivenessDecider<IBuildable> buildableButtonActivenessDecider = helper.CreateButtonActivenessDecider(_playerCruiser.DroneManager);
-            // FELIX  Get IBSHelper to create decider :)
-            IBuildableButtonActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider = null;
+            IBuildableButtonActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider = helper.CreateCategoryButtonActivenessDecider();
             uiFactory.Initialise(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 

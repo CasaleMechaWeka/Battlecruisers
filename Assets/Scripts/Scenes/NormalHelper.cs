@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
@@ -47,6 +48,12 @@ namespace BattleCruisers.Scenes
         public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
         {
             return new AffordableDecider(droneManager);
+        }
+
+        public IBuildableButtonActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        {
+            // For the real game want to enable all building categories :)
+            return new BuildingCategoryStaticDecider(shouldBeEnabled: true);
         }
     }
 }

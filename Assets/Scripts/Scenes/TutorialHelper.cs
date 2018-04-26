@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
@@ -46,6 +47,11 @@ namespace BattleCruisers.Scenes
         public IBuildableButtonActivenessDecider<IBuildable> CreateButtonActivenessDecider(IDroneManager droneManager)
         {
             return new TutorialDecider(_prefabFactory);
+        }
+
+        public IBuildableButtonActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        {
+            return new BuildingCategoryTutorialDecider();
         }
     }
 }
