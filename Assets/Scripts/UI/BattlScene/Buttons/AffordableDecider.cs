@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     /// Deems a buildable button as enabled if it's buildable can be afforded
     /// according to the drone manager's current number of drones.
     /// </summary>
+    /// FELIX  Test :D
     public class AffordableDecider : IBuildableButtonActivenessDecider
     {
         private readonly IDroneManager _droneManager;
