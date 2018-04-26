@@ -180,18 +180,12 @@ namespace BattleCruisers.Data.Static
 
         private List<BuildingKey> GetInitialBuildings()
         {
-            return
-                GetBuildingsFirstAvailableIn(levelFirstAvailableIn: 1)
-                    .Select(prefabKey => (BuildingKey)prefabKey)
-                    .ToList();
+            return GetBuildingsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
         }
 
         private List<UnitKey> GetInitialUnits()
         {
-            return
-                GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1)
-                    .Select(prefabKey => (UnitKey)prefabKey)
-                    .ToList();
+            return GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
         }
 
 		private IList<ILevel> CreateLevels()
