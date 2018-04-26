@@ -5,8 +5,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingCategoryTutorialDecider : IBuildableButtonActivenessDecider<BuildingCategory>, IBuildingCategoryPermitter
     {
-        private BuildingCategory _permittedCategory;
-        public BuildingCategory PermittedCategory
+        private BuildingCategory? _permittedCategory;
+        public BuildingCategory? PermittedCategory
         {
             set
             {
@@ -20,6 +20,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         public event EventHandler PotentialActivenessChange;
+
+        public BuildingCategoryTutorialDecider()
+        {
+            _permittedCategory = null;
+        }
 
         public bool ShouldBeEnabled(BuildingCategory category)
         {
