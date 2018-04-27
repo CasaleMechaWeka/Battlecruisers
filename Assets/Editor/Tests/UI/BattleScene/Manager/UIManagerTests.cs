@@ -12,7 +12,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.UI.BattleScene
+namespace BattleCruisers.Tests.UI.BattleScene.Manager
 {
     public class UIManagerTests
     {
