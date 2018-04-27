@@ -2,8 +2,8 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
@@ -19,6 +19,6 @@ namespace BattleCruisers.Cruisers
         Direction FacingDirection { get; }
         RepairManager RepairManager { get; }
         bool ShouldShowFog { get; }
-        ICameraController CameraController { get; }
+        ICruiserHelper Helper { get; }
     }
 }

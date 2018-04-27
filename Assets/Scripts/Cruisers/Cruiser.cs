@@ -5,9 +5,9 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
+using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
@@ -20,9 +20,9 @@ namespace BattleCruisers.Cruisers
     public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
 	{
 		private IUIManager _uiManager;
-		private ICameraController _cameraController;
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
+        private ICruiserHelper _helper;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -82,12 +82,12 @@ namespace BattleCruisers.Cruisers
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
-            _cameraController = args.CameraController;
             DroneManager = args.DroneManager;
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
             FactoryProvider = args.FactoryProvider;
             Direction = args.FacingDirection;
+            _helper = args.Helper;
 			
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
@@ -100,23 +100,8 @@ namespace BattleCruisers.Cruisers
 		public void OnPointerClick(PointerEventData eventData)
 		{
             _uiManager.ShowCruiserDetails(this);
-            FocusOnCruiser();
+            _helper.FocusCameraOnCruiser();
 		}
-
-        // FELIX  Create 2 subclasses (PlayerCruiser, AICruiser), avoid if :)
-        private void FocusOnCruiser()
-        {
-            if (Faction == Faction.Blues)
-            {
-                // Player cruiser
-                _cameraController.FocusOnPlayerCruiser();
-            }
-            else
-            {
-                // AI cruiser
-                _cameraController.FocusOnAiCruiser();
-            }
-        }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
@@ -138,12 +123,7 @@ namespace BattleCruisers.Cruisers
 			building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
-			// Only show build menu for player's cruiser
-            // FELIX  Create 2 subclasses (PlayerCruiser, AICruiser), avoid if :)
-			if (Faction == Faction.Blues)
-			{
-				_uiManager.ShowBuildingGroups();
-			}
+            _helper.ShowBuildingGroupButtons();
 
 			building.StartConstruction();
 

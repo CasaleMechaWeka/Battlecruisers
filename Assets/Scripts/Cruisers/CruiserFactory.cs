@@ -31,11 +31,11 @@ namespace BattleCruisers.Cruisers
             Cruiser cruiser, 
             ICruiser enemyCruiser,
             IUIManager uiManager,
-            ICameraController cameraController,
+            ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, cameraController);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -56,7 +56,7 @@ namespace BattleCruisers.Cruisers
                     facingDirection, 
                     repairManager, 
                     shouldShowFog,
-                    cameraController);
+                    helper);
 
             cruiser.Initialise(cruiserArgs);
         }

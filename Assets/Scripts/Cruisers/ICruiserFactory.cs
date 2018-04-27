@@ -12,7 +12,7 @@ namespace BattleCruisers.Cruisers
             Cruiser cruiser, 
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
-            ICameraController cameraController,
+            ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection);
         

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.BattleScene;
@@ -122,13 +123,15 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, cameraController, Faction.Blues, Direction.Right);
+            ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             hudCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
 
 
             // Initialise AI cruiser
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, cameraController, Faction.Reds, Direction.Left);
+            ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
             hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
