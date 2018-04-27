@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // FELIX  Test :D
     public class BuildingCategoryTutorialDecider : IActivenessDecider<BuildingCategory>, IBuildingCategoryPermitter
     {
         private BuildingCategory? _permittedCategory;
