@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
+using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
@@ -58,6 +59,16 @@ namespace BattleCruisers.Cruisers
                     cameraController);
 
             cruiser.Initialise(cruiserArgs);
+        }
+
+        public ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)
+        {
+            return new AICruiserHelper(uiManager, camera);
+        }
+
+        public ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera)
+        {
+            return new PlayerCruiserHelper(uiManager, camera);
         }
 	}
 }

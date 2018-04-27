@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 
@@ -13,6 +14,9 @@ namespace BattleCruisers.Cruisers
             IUIManager uiManager, 
             ICameraController cameraController,
             Faction faction, 
-            Direction facingDirection);       
+            Direction facingDirection);
+        
+		ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera);
+		ICruiserHelper CreateAIHelper(IUIManager uiIManager, ICameraController camera);
     }
 }
