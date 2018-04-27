@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    // FELIX  Test :D
     /// <summary>
     /// Wraps a normal UIManager, and only allows the noraml UIManager methods
     /// to execute if the IUIManagerPermissions allow it.
