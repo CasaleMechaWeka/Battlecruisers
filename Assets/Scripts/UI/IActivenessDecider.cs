@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI
 {
-    // FELIX  Used in two places.  Move up in namespace until both uses are in children namespaces.
     public interface IActivenessDecider<TElement>
     {
         /// <summary>
