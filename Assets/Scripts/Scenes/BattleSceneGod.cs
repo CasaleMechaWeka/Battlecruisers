@@ -110,14 +110,15 @@ namespace BattleCruisers.Scenes
 
             // UIManager
             hudCanvas.StaticInitialise();
-            IBuildableDetailsManager detailsManager = new BuildableDetailsManager(hudCanvas);
             IManagerArgs managerArgs
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
                     cameraController,
                     buildMenuController,
-                    detailsManager);
+                    new BuildableDetailsManager(hudCanvas),
+                // FELIX
+                    null);
             IUIManager uiManager = helper.CreateUIManager(managerArgs);
             backgroundController.Initialise(uiManager);
 

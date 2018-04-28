@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -22,6 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
+        private IActivenessDecider<IBuilding> _buildingDeleteButtonActivenessDecider;
 
         private IBuilding _building;
         private IFactory _factory;
@@ -36,6 +38,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _cameraController = Substitute.For<ICameraController>();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
+            _buildingDeleteButtonActivenessDecider = Substitute.For<IActivenessDecider<IBuilding>>();
 
             IManagerArgs managerArgs
                 = new ManagerArgs(
@@ -43,7 +46,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
                     _aiCruiser,
                     _cameraController,
                     _buildMenu,
-                    _detailsManager);
+                    _detailsManager,
+                    _buildingDeleteButtonActivenessDecider);
             _uiManager = new UIManager(managerArgs);
 
             _building = Substitute.For<IBuilding>();
@@ -157,9 +161,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding_ParentIsPlayerCruiser_CameraAtPlayerCruiser_ShowsDetails()
         {
             _cameraController.State.Returns(CameraState.PlayerCruiser);
+            _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(_building).Returns(true);
 
             _uiManager.SelectBuilding(_building, _playerCruiser);
 
+            _buildingDeleteButtonActivenessDecider.Received().ShouldBeEnabled(_building);
             _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
             _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building, allowDelete: true);
@@ -168,7 +174,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsNotPlayerCruiser_DoesNothing()
         {
+            _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(_building).Returns(false);
+
             _uiManager.SelectBuilding(_building, _aiCruiser);
+
+            _buildingDeleteButtonActivenessDecider.Received().ShouldBeEnabled(_building);
             _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
         }
 

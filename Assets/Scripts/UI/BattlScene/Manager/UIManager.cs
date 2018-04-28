@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
@@ -17,6 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
+        private readonly IActivenessDecider<IBuilding> _buildingDeleteButtonActivenessDecider;
 
         public UIManager(IManagerArgs args)
 		{
@@ -27,6 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _cameraController = args.CameraController;
             _buildMenu = args.BuildMenu;
             _detailsManager = args.DetailsManager;
+            _buildingDeleteButtonActivenessDecider = args.BuildingDeleteButtonActivenessDecider;
    			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
@@ -119,13 +122,15 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            _detailsManager.ShowDetails(building, allowDelete: true);
+            bool allowDelete = _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(building);
+            _detailsManager.ShowDetails(building, allowDelete);
 		}
 
 		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            _detailsManager.ShowDetails(building, allowDelete: false);
+            bool allowDelete = _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(building);
+            _detailsManager.ShowDetails(building, allowDelete);
 		}
 
 		public void ShowFactoryUnits(IFactory factory)
