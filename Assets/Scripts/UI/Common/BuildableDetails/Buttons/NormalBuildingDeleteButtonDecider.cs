@@ -1,12 +1,10 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.BattleScene.Buttons;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    // FELIX  Create tests :P
     public class NormalBuildingDeleteButtonDecider : IActivenessDecider<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
