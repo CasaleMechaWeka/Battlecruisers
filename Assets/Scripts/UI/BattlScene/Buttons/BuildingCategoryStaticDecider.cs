@@ -1,25 +1,12 @@
-﻿using System;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // FELIX  Avoid duplicate code with other static decider :)
-    public class BuildingCategoryStaticDecider : IActivenessDecider<BuildingCategory>
+    public class BuildingCategoryStaticDecider : StaticDecider<BuildingCategory>
     {
-        private readonly bool _shouldBeEnabled;
-		
-        #pragma warning disable 67  // Unused event
-        public event EventHandler PotentialActivenessChange;
-        #pragma warning restore 67  // Unused event
-
-        public BuildingCategoryStaticDecider(bool shouldBeEnabled)
+        public BuildingCategoryStaticDecider(bool shouldBeEnabled) 
+            : base(shouldBeEnabled)
         {
-            _shouldBeEnabled = shouldBeEnabled;
-        }
-
-        public bool ShouldBeEnabled(BuildingCategory category)
-        {
-            return _shouldBeEnabled;
         }
     }
 }
