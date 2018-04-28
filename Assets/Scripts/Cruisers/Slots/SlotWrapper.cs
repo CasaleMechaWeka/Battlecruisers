@@ -9,6 +9,7 @@ namespace BattleCruisers.Cruisers.Slots
     public class SlotWrapper : ISlotWrapper
 	{
 		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
+        private readonly ISlotFilter _highlightableFilter;
 		private SlotType? _highlightedSlotType;
         private bool _areMultipleSlotsVisible;
 
@@ -40,12 +41,12 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots)
+        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots, ISlotFilter slotFilter)
 		{
-            Helper.AssertIsNotNull(parentCruiser, slots);
+            Helper.AssertIsNotNull(parentCruiser, slots, slotFilter);
 
+            _highlightableFilter = slotFilter;
             _areMultipleSlotsVisible = false;
-
             _slots = new Dictionary<SlotType, IList<ISlot>>();
 
             // Sort slots by position (cruiser front to cruiser rear)
@@ -133,7 +134,7 @@ namespace BattleCruisers.Cruisers.Slots
 
 				foreach (ISlot slot in _slots[slotType])
 				{
-					if (slot.IsFree)
+                    if (_highlightableFilter.IsMatch(slot))
 					{
                         slot.HighlightSlot();
 					}

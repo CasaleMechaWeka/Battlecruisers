@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI;
@@ -88,7 +89,8 @@ namespace BattleCruisers.Scenes
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
-
+            // FELIX  Create with IBSHelper :)
+            ISlotFilter slotFilter = null;
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
@@ -124,14 +126,14 @@ namespace BattleCruisers.Scenes
 
             // Initialise player cruiser
             ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right, slotFilter);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             hudCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
 
 
             // Initialise AI cruiser
             ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left, slotFilter);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
             hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 

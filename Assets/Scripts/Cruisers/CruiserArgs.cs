@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BCUtils = BattleCruisers.Utils;
 
@@ -20,6 +21,7 @@ namespace BattleCruisers.Cruisers
         public RepairManager RepairManager { get; private set; }
         public bool ShouldShowFog { get; private set; }
         public ICruiserHelper Helper { get; private set; }
+        public ISlotFilter SlotFilter { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -31,9 +33,10 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection, 
             RepairManager repairManager, 
             bool shouldShowFog,
-            ICruiserHelper helper)
+            ICruiserHelper helper,
+            ISlotFilter slotFilter)
         {
-            BCUtils.Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, helper);
+            BCUtils.Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, helper, slotFilter);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -45,6 +48,7 @@ namespace BattleCruisers.Cruisers
             RepairManager = repairManager;
             ShouldShowFog = shouldShowFog;
             Helper = helper;
+            SlotFilter = slotFilter;
         }
     }
 }

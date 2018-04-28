@@ -12,6 +12,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
     {
         private ISlotWrapper _slotWrapper;
         private ICruiser _parentCruiser;
+		private ISlotFilter _filter;
         private ISlot _frontSlot, _middleSlot, _deckSlot1, _deckSlot2;
         private IBuilding _building;
 
@@ -21,6 +22,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             UnityAsserts.Assert.raiseExceptions = true;
 
             _parentCruiser = Substitute.For<ICruiser>();
+            _filter = Substitute.For<ISlotFilter>();
 
             // Deck2, Deck1, Platform, Bow
             _frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
@@ -37,7 +39,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                 _deckSlot1
             };
 
-            _slotWrapper = new SlotWrapper(_parentCruiser, slots);
+            _slotWrapper = new SlotWrapper(_parentCruiser, slots, _filter);
 
             _building = Substitute.For<IBuilding>();
             SlotType middleSlotType = _middleSlot.Type;
@@ -124,18 +126,24 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
         #region HighlightAvailableSlots
         [Test]
-        public void HighlightAvailableSlots_HighlightsFreeSlots()
+        public void HighlightAvailableSlots_HighlightsMatchingSlots()
         {
-            _middleSlot.IsFree.Returns(true);
+            _filter.IsMatch(_middleSlot).Returns(true);
+
             _slotWrapper.HighlightAvailableSlots(_middleSlot.Type);
+
+            _filter.Received().IsMatch(_middleSlot);
             _middleSlot.Received().HighlightSlot();
         }
 
         [Test]
-        public void HighlightAvailableSlots_DoesNotHighlightsFullSlots()
+        public void HighlightAvailableSlots_DoesNotHighlightsNonMatchingSlots()
         {
-            _middleSlot.IsFree.Returns(false);
+            _filter.IsMatch(_middleSlot).Returns(false);
+
             _slotWrapper.HighlightAvailableSlots(_middleSlot.Type);
+
+            _filter.Received().IsMatch(_middleSlot);
             _middleSlot.DidNotReceive().HighlightSlot();
         }
 
@@ -143,7 +151,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void HighlightAvailableSlots_HighlightHighlightedSlotType_DoesNothing()
         {
             // First highlight
-            _middleSlot.IsFree.Returns(true);
+            _filter.IsMatch(_middleSlot).Returns(true);
             _slotWrapper.HighlightAvailableSlots(_middleSlot.Type);
             _middleSlot.Received().HighlightSlot();
 
@@ -158,12 +166,12 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void HighlightAvailableSlots_UnhighlightsCurrentlyHighlightedSlots_HighlightsFreeSlots()
         {
             // First highlight
-            _middleSlot.IsFree.Returns(true);
+            _filter.IsMatch(_middleSlot).Returns(true);
             _slotWrapper.HighlightAvailableSlots(_middleSlot.Type);
             _middleSlot.Received().HighlightSlot();
 
             // Second highlight, different slot type
-            _frontSlot.IsFree.Returns(true);
+            _filter.IsMatch(_frontSlot).Returns(true);
             _slotWrapper.HighlightAvailableSlots(_frontSlot.Type);
             _middleSlot.Received().UnhighlightSlot();
             _frontSlot.Received().HighlightSlot();

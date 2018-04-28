@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 
@@ -20,5 +21,6 @@ namespace BattleCruisers.Cruisers
         RepairManager RepairManager { get; }
         bool ShouldShowFog { get; }
         ICruiserHelper Helper { get; }
+        ISlotFilter SlotFilter { get; }
     }
 }

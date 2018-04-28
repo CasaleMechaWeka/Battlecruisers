@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
@@ -33,9 +34,10 @@ namespace BattleCruisers.Cruisers
             IUIManager uiManager,
             ICruiserHelper helper,
             Faction faction, 
-            Direction facingDirection)
+            Direction facingDirection,
+            ISlotFilter slotFilter)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, slotFilter);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -45,18 +47,19 @@ namespace BattleCruisers.Cruisers
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = facingDirection == Direction.Left;
 
-            ICruiserArgs cruiserArgs 
+            ICruiserArgs cruiserArgs
                 = new CruiserArgs(
-                    faction, 
-                    enemyCruiser, 
-                    uiManager, 
+                    faction,
+                    enemyCruiser,
+                    uiManager,
                     droneManager,
-                    droneConsumerProvider, 
-                    factoryProvider, 
-                    facingDirection, 
-                    repairManager, 
+                    droneConsumerProvider,
+                    factoryProvider,
+                    facingDirection,
+                    repairManager,
                     shouldShowFog,
-                    helper);
+                    helper,
+                    slotFilter);
 
             cruiser.Initialise(cruiserArgs);
         }

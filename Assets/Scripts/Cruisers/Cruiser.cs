@@ -23,6 +23,7 @@ namespace BattleCruisers.Cruisers
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         private ICruiserHelper _helper;
+        private SlotWrapperController _slotWrapperController;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -62,9 +63,8 @@ namespace BattleCruisers.Cruisers
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-			SlotWrapperController slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
-            Assert.IsNotNull(slotWrapperController);
-            SlotWrapper = slotWrapperController.Initialise(parentCruiser: this);
+            _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
+            Assert.IsNotNull(_slotWrapperController);
 
             _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);
@@ -94,6 +94,8 @@ namespace BattleCruisers.Cruisers
 
             _fog.Initialise(args.ShouldShowFog);
 
+            // FELIX
+            SlotWrapper = _slotWrapperController.Initialise(parentCruiser: this, slotFilter: null);
             SlotWrapper.HideAllSlots();
 		}
 
