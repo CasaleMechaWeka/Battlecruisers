@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
+    // FELIX  Create tests :P
     public class NormalBuildingDeleteButtonDecider : IActivenessDecider<IBuilding>
     {
         private readonly ICruiser _playerCruiser;

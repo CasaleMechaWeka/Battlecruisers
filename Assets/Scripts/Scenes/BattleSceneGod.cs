@@ -117,8 +117,7 @@ namespace BattleCruisers.Scenes
                     cameraController,
                     buildMenuController,
                     new BuildableDetailsManager(hudCanvas),
-                // FELIX
-                    null);
+                    helper.CreateBuildingDeleteButtonActivenessDecider(_playerCruiser));
             IUIManager uiManager = helper.CreateUIManager(managerArgs);
             backgroundController.Initialise(uiManager);
 

@@ -6,6 +6,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 
@@ -52,6 +53,11 @@ namespace BattleCruisers.Scenes
         public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             return new BuildingCategoryTutorialDecider();
+        }
+
+        public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
+        {
+            return new StaticBuildingDeleteButtonDecider(shouldBeEnabled: false);
         }
     }
 }
