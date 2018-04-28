@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
@@ -39,6 +40,7 @@ namespace BattleCruisers.Buildables
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
 		IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
+        ICruiser ParentCruiser { get; }
   
         new Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }

@@ -104,14 +104,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _detailsManager.ShowDetails(buildingWrapper.Buildable, allowDelete: false);
 		}
 
-		public virtual void SelectBuilding(IBuilding building, ICruiser buildingParent)
+		public virtual void SelectBuilding(IBuilding building)
 		{
-			if (ReferenceEquals(buildingParent, _playerCruiser)
+			if (ReferenceEquals(building.ParentCruiser, _playerCruiser)
 				&& _cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else if (ReferenceEquals(buildingParent, _aiCruiser)
+			else if (ReferenceEquals(building.ParentCruiser, _aiCruiser)
 				&& _cameraController.State == CameraState.AiCruiser)
 			{
 				SelectBuildingFromEnemyCruiser(building);

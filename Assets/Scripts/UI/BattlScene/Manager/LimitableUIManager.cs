@@ -28,11 +28,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
             }
         }
 
-        public override void SelectBuilding(IBuilding building, ICruiser buildingParent)
+        public override void SelectBuilding(IBuilding building)
         {
             if (_permissions.CanShowItemDetails)
             {
-                base.SelectBuilding(building, buildingParent);
+                base.SelectBuilding(building);
             }
         }
 

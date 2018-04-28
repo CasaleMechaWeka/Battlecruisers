@@ -31,7 +31,6 @@ namespace BattleCruisers.Buildables
         private HealthBarController _healthBar;
 
         protected IUIManager _uiManager;
-        protected ICruiser _parentCruiser;
         protected ICruiser _enemyCruiser;
         protected IDroneManager _droneManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
@@ -64,6 +63,7 @@ namespace BattleCruisers.Buildables
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
+        public ICruiser ParentCruiser { get; private set; }
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -209,10 +209,10 @@ namespace BattleCruisers.Buildables
         {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
 
-            _parentCruiser = parentCruiser;
+            ParentCruiser = parentCruiser;
             _enemyCruiser = enemyCruiser;
-            _droneManager = _parentCruiser.DroneManager;
-            _droneConsumerProvider = _parentCruiser.DroneConsumerProvider;
+            _droneManager = ParentCruiser.DroneManager;
+            _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             _uiManager = uiManager;
             _aircraftProvider = factoryProvider.AircraftProvider;
 
@@ -220,7 +220,7 @@ namespace BattleCruisers.Buildables
             _targetsFactory = _factoryProvider.TargetsFactory;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
 
-            Faction = _parentCruiser.Faction;
+            Faction = ParentCruiser.Faction;
             BuildableState = BuildableState.NotStarted;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             _cumulativeBuildProgressInDroneS = 0;

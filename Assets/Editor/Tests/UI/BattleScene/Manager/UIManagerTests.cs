@@ -162,8 +162,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             _cameraController.State.Returns(CameraState.PlayerCruiser);
             _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(_building).Returns(true);
+            _building.ParentCruiser.Returns(_playerCruiser);
 
-            _uiManager.SelectBuilding(_building, _playerCruiser);
+            _uiManager.SelectBuilding(_building);
 
             _buildingDeleteButtonActivenessDecider.Received().ShouldBeEnabled(_building);
             _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
@@ -174,11 +175,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsNotPlayerCruiser_DoesNothing()
         {
-            _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(_building).Returns(false);
+            _cameraController.State.Returns(CameraState.PlayerCruiser);
+            _building.ParentCruiser.Returns(_aiCruiser);
 
-            _uiManager.SelectBuilding(_building, _aiCruiser);
+            _uiManager.SelectBuilding(_building);
 
-            _buildingDeleteButtonActivenessDecider.Received().ShouldBeEnabled(_building);
             _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
         }
 
@@ -186,8 +187,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding_ParentIsPlayerCruiser_CameraNotAtPlayerCruiser_DoesNothing()
         {
             _cameraController.State.Returns(CameraState.Overview);
+            _building.ParentCruiser.Returns(_playerCruiser);
 
-            _uiManager.SelectBuilding(_building, _playerCruiser);
+            _uiManager.SelectBuilding(_building);
 
             _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
         }
@@ -196,8 +198,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding_ParentIsAiCruiser_CameraAtAiCruiser_ShowsDetails()
         {
             _cameraController.State.Returns(CameraState.AiCruiser);
+            _building.ParentCruiser.Returns(_aiCruiser);
 
-            _uiManager.SelectBuilding(_building, _aiCruiser);
+            _uiManager.SelectBuilding(_building);
 
             _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building, allowDelete: false);
@@ -206,7 +209,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsNotAiCruiser_DoesNothing()
         {
-            _uiManager.SelectBuilding(_building, _playerCruiser);
+            _building.ParentCruiser.Returns(_playerCruiser);
+            _uiManager.SelectBuilding(_building);
             _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
 
@@ -214,8 +218,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding_ParentIsAiCruiser_CameraNotAtAiCruiser_DoesNothing()
         {
             _cameraController.State.Returns(CameraState.Overview);
+            _building.ParentCruiser.Returns(_aiCruiser);
 
-            _uiManager.SelectBuilding(_building, _aiCruiser);
+            _uiManager.SelectBuilding(_building);
 
             _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
