@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Avoid duplicate code with other static decider :)
     public class BuildingCategoryStaticDecider : IActivenessDecider<BuildingCategory>
     {
         private readonly bool _shouldBeEnabled;
