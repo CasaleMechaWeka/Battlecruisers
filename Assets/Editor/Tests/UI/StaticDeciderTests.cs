@@ -1,23 +1,22 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons
+namespace BattleCruisers.Tests.UI
 {
-    public class BuildingCategoryStaticDeciderTests
+    public class StaticDeciderTests
     {
         [Test]
         public void ShouldBeEnabled_True()
         {
-            IActivenessDecider<BuildingCategory> decider = new BuildingCategoryStaticDecider(shouldBeEnabled: true);
+            IActivenessDecider<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
             Assert.IsTrue(decider.ShouldBeEnabled(BuildingCategory.Ultra));
         }
 
         [Test]
         public void ShouldBeEnabled_False()
         {
-            IActivenessDecider<BuildingCategory> decider = new BuildingCategoryStaticDecider(shouldBeEnabled: false);
+            IActivenessDecider<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: false);
             Assert.IsFalse(decider.ShouldBeEnabled(BuildingCategory.Ultra));
         }
     }

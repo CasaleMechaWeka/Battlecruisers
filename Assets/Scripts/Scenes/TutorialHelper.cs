@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes
 
         public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
-            return new StaticBuildingDeleteButtonDecider(shouldBeEnabled: false);
+            return new StaticDecider<IBuilding>(shouldBeEnabled: false);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace BattleCruisers.Scenes
         public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             // For the real game want to enable all building categories :)
-            return new BuildingCategoryStaticDecider(shouldBeEnabled: true);
+            return new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
         }
 
         public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
