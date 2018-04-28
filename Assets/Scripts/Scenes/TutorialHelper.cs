@@ -2,12 +2,12 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 
@@ -44,6 +44,11 @@ namespace BattleCruisers.Scenes
         public void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             // The tutorial has no AI :)
+		}
+		
+		public ISlotFilter CreateSlotFilter()
+		{
+            return new SpecificSlotFilter();
 		}
 
         public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)

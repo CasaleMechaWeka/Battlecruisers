@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI;
@@ -45,6 +46,11 @@ namespace BattleCruisers.Scenes
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.StaticData, _prefabFactory, currentLevelNum);
             IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, _dataProvider);
             aiManager.CreateAI(levelInfo);
+		}
+		
+		public ISlotFilter CreateSlotFilter()
+		{
+            return new FreeSlotFilter();
 		}
 
         public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)

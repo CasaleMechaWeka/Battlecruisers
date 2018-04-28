@@ -94,8 +94,7 @@ namespace BattleCruisers.Cruisers
 
             _fog.Initialise(args.ShouldShowFog);
 
-            // FELIX
-            SlotWrapper = _slotWrapperController.Initialise(parentCruiser: this, slotFilter: null);
+            SlotWrapper = _slotWrapperController.Initialise(parentCruiser: this, slotFilter: args.SlotFilter);
             SlotWrapper.HideAllSlots();
 		}
 

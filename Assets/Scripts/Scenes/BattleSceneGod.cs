@@ -76,7 +76,7 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  Forcing tutorial :)
-            ApplicationModel.IsTutorial = true;
+            //ApplicationModel.IsTutorial = true;
 
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -89,8 +89,7 @@ namespace BattleCruisers.Scenes
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
-            // FELIX  Create with IBSHelper :)
-            ISlotFilter slotFilter = null;
+            ISlotFilter slotFilter = helper.CreateSlotFilter();
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
