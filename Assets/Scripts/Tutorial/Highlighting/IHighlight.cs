@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Tutorial.Highlighting
+﻿namespace BattleCruisers.Tutorial.Highlighting
 {
     public interface IHighlight
     {
