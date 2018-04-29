@@ -6,11 +6,12 @@ namespace BattleCruisers.Scenes.Test
     {
         public Camera camera;
         public GameObject inGameObject, onCanvasObject;
-        public GameObject inGameHighlight, onCanvasHighlightPrefab;
+        public GameObject inGameHighlightPrefab, onCanvasHighlightPrefab;
 
         void Start()
         {
             Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
+            Instantiate(inGameHighlightPrefab, inGameObject.transform);
         }
 
         void Update()
