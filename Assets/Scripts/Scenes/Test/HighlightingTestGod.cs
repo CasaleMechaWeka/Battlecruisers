@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Tutorial;
+using BattleCruisers.Utils.Threading;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -6,12 +8,23 @@ namespace BattleCruisers.Scenes.Test
     {
         public Camera mainCamera;
         public GameObject inGameObject, onCanvasObject;
-        public GameObject inGameHighlightPrefab, onCanvasHighlightPrefab;
+        public InGameHighlight inGameHighlightPrefab;
+        //, onCanvasHighlightPrefab;
+        public ConstDelayDeferrer deferrer;
 
         void Start()
         {
-            Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
-            Instantiate(inGameHighlightPrefab, inGameObject.transform);
+            deferrer.StaticInitialise(delayInMs: 2000);
+
+            //Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
+
+            SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
+            float radius = renderer.size.x / 2;
+
+            IHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
+            inGameHighlight.Initialise(radius, inGameObject.transform.position);
+
+            deferrer.Defer(() => inGameHighlight.Destroy());
         }
 
         void Update()

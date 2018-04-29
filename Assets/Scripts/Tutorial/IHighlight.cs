@@ -4,7 +4,7 @@ namespace BattleCruisers.Tutorial
 {
     public interface IHighlight
     {
-        void Show(Vector2 size);
+        void Initialise(float radius, Vector2 position);
         void Destroy();
     }
 }
