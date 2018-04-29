@@ -1,6 +1,5 @@
 ﻿namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX  Test
     public class SpecificSlotFilter : ISlotFilter, ISlotPermitter
     {
         public ISlot PermittedSlot { private get; set; }
