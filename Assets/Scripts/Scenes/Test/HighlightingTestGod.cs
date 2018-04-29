@@ -4,7 +4,7 @@ namespace BattleCruisers.Scenes.Test
 {
     public class HighlightingTestGod : MonoBehaviour
     {
-        public Camera camera;
+        public Camera mainCamera;
         public GameObject inGameObject, onCanvasObject;
         public GameObject inGameHighlightPrefab, onCanvasHighlightPrefab;
 
@@ -25,9 +25,9 @@ namespace BattleCruisers.Scenes.Test
         /// </summary>
         private void MoveCamera()
         {
-            Vector3 currentPosition = camera.transform.position;
+            Vector3 currentPosition = mainCamera.transform.position;
             float xPosition = currentPosition.x + Time.deltaTime;
-            camera.transform.position = new Vector3(xPosition, currentPosition.y, currentPosition.z);
+            mainCamera.transform.position = new Vector3(xPosition, currentPosition.y, currentPosition.z);
         }
     }
 }
