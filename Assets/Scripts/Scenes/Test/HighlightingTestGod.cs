@@ -26,10 +26,10 @@ namespace BattleCruisers.Scenes.Test
             RectTransform onCanvasObjTransform = onCanvasObject.transform.Parse<RectTransform>();
             float radius = onCanvasObjTransform.rect.width / 2;
 
-            IHighlight onCanvasHighlight = Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
-            onCanvasHighlight.Initialise(radius, default(Vector2));
+            OnCanvasHighlight onCanvasHighlight = Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
+            onCanvasHighlight.Initialise(radius);
          
-            deferrer.Defer(() => onCanvasHighlight.Destroy());
+            deferrer.Defer(onCanvasHighlight.Destroy);
         }
 
         private void CreateInGameHighlight()
@@ -37,10 +37,10 @@ namespace BattleCruisers.Scenes.Test
             SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
             float radius = renderer.size.x / 2;
 
-            IHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
+            InGameHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
             inGameHighlight.Initialise(radius, inGameObject.transform.position);
 
-            deferrer.Defer(() => inGameHighlight.Destroy());
+            deferrer.Defer(inGameHighlight.Destroy);
         }
 
         void Update()

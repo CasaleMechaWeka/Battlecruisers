@@ -5,13 +5,13 @@ namespace BattleCruisers.Tutorial.Highlighting
 {
     public class InGameHighlight : ScalableCircle, IHighlight
     {
-        public void Initialise(float radius, Vector2 position)
+        public void Initialise(float radiusInM, Vector2 position)
         {
-            base.Initialise(radius);
+            base.Initialise(radiusInM);
             transform.position = position;
         }
 
-		void IHighlight.Destroy()
+		public void Destroy()
 		{
             Destroy(gameObject);
 		}

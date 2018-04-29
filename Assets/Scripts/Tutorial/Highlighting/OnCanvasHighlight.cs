@@ -5,14 +5,14 @@ namespace BattleCruisers.Tutorial.Highlighting
 {
     public class OnCanvasHighlight : MonoBehaviour, IHighlight
     {
-        public void Initialise(float radius, Vector2 position)
+        public void Initialise(float radiusInPixels)
         {
             RectTransform rectTransform = transform.Parse<RectTransform>();
-            float diameter = 2 * radius;
+            float diameter = 2 * radiusInPixels;
             rectTransform.sizeDelta = new Vector2(diameter, diameter);
         }
 
-        void IHighlight.Destroy()
+        public void Destroy()
         {
             Destroy(gameObject);
         }
