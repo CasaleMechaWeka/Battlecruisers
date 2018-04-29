@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
 
-namespace BattleCruisers.Tutorial
+namespace BattleCruisers.Tutorial.Highlighting
 {
     public class OnCanvasHighlight : MonoBehaviour, IHighlight
     {

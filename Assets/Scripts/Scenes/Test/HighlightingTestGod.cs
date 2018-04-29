@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
