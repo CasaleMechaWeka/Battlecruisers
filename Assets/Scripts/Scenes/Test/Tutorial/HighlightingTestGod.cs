@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Tutorial
 {
     public class HighlightingTestGod : MonoBehaviour
     {
