@@ -9,9 +9,8 @@ namespace BattleCruisers.Scenes.Test
     {
         public Camera mainCamera;
         public GameObject inGameObject, onCanvasObject;
-        public InGameHighlight inGameHighlightPrefab;
-        public OnCanvasHighlight onCanvasHighlightPrefab;
         public ConstDelayDeferrer deferrer;
+        public HighlightFactory factory;
 
         void Start()
         {
@@ -26,8 +25,7 @@ namespace BattleCruisers.Scenes.Test
             RectTransform onCanvasObjTransform = onCanvasObject.transform.Parse<RectTransform>();
             float radius = onCanvasObjTransform.rect.width / 2;
 
-            OnCanvasHighlight onCanvasHighlight = Instantiate(onCanvasHighlightPrefab, onCanvasObject.transform);
-            onCanvasHighlight.Initialise(radius);
+            IHighlight onCanvasHighlight = factory.CreateOnCanvasHighlight(radius, onCanvasObject.transform);
          
             deferrer.Defer(onCanvasHighlight.Destroy);
         }
@@ -37,8 +35,7 @@ namespace BattleCruisers.Scenes.Test
             SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
             float radius = renderer.size.x / 2;
 
-            InGameHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
-            inGameHighlight.Initialise(radius, inGameObject.transform.position);
+            IHighlight inGameHighlight = factory.CreateInGameHighlight(radius, inGameObject.transform.position);
 
             deferrer.Defer(inGameHighlight.Destroy);
         }
