@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : MonoBehaviour 
+    public class BuildingCategoryButton : UIElement 
 	{
         private BuildingCategory _buildingCategory;
         private IActivenessDecider<BuildingCategory> _activenessDecider;
@@ -19,6 +19,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IUIManager uiManager, 
             IActivenessDecider<BuildingCategory> activenessDecider)
 		{
+            base.Initialise();
+
             Helper.AssertIsNotNull(buildingGroup, uiManager, activenessDecider);
 
             _buildingCategory = buildingGroup.BuildingCategory;

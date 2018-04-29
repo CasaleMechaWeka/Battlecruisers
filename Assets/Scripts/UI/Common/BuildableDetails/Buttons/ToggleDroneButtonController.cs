@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class ToggleDroneButtonController : MonoBehaviour
+    public class ToggleDroneButtonController : UIElement
     {
         private Button _button;
 
@@ -42,8 +42,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
-        public void Initialise()
+        public override void Initialise()
         {
+            base.Initialise();
+
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
             _button.onClick.AddListener(ToggleDroneButton);

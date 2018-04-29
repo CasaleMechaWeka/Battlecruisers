@@ -13,13 +13,14 @@ namespace BattleCruisers.UI.BattleScene
 		void OnDismissing();
 	}
 
-	public class Presentable : MonoBehaviour, IPresentable
+    public class Presentable : UIElement, IPresentable
 	{
 		protected bool _isPresented;
 		protected IList<IPresentable> _childPresentables;
 
-		public virtual void Initialise()
+		public override void Initialise()
 		{
+            base.Initialise();
 			_childPresentables = new List<IPresentable>();
 		}
 

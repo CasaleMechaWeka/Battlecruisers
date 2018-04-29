@@ -12,7 +12,7 @@ namespace BattleCruisers.UI
         public Vector2 Size { get { return _rectTransform.sizeDelta; } }
         public HighlightableType Type { get { return HighlightableType.OnCanvas; } }
 
-        public void Initialise()
+        public virtual void Initialise()
         {
             _rectTransform = transform.Parse<RectTransform>();
         }

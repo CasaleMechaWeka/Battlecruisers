@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    public class NumOfDronesController : MonoBehaviour, IManagedDisposable
+    public class NumOfDronesController : UIElement, IManagedDisposable
     {
         private IDroneManager _droneManager;
 
@@ -21,6 +21,8 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 
         public void Initialise(IDroneManager droneManager)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(numOfDronesText, droneManager);
 
             _droneManager = droneManager;

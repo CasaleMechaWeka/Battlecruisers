@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedInitialiser : MonoBehaviour
+    public class GameSpeedInitialiser : UIElement
     {
 		void Start()
 		{
+            base.Initialise();
+
             ISpeedButtonManager speedButtonManager = new SpeedButtonManager();
 
             GameSpeedButton playButton = transform.FindNamedComponent<GameSpeedButton>("NormalSpeed");

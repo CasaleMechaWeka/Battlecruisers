@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButton : MonoBehaviour, IGameSpeedButton
+    public class GameSpeedButton : UIElement, IGameSpeedButton
     {
         private ISpeedButtonManager _speedButtonManager;
         private Image _backgroundImage;
@@ -27,6 +27,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         public void Initialise(ISpeedButtonManager speedButtonManager)
         {
+            base.Initialise();
+
             Assert.IsNotNull(speedButtonManager);
 			Assert.IsTrue(gameSpeed >= MIN_GAME_SPEED);
 			Assert.IsTrue(gameSpeed <= MAX_GAME_SPEED);
