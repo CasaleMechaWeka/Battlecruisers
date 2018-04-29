@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Tutorial
+namespace BattleCruisers.Tutorial.Steps
 {
     public interface ITutorialStep
     {
