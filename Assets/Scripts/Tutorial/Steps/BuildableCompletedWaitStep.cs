@@ -1,6 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Tutorial.Steps.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
@@ -11,18 +11,22 @@ namespace BattleCruisers.Tutorial.Steps
     // FELIX  Test :D
     public class BuildableCompletedWaitStep : TutorialStep
     {
-        private readonly IBuildable _buildable;
+        private readonly IProvider<IBuildable> _buildableProvider;
+        private IBuildable _buildable;
 
-        public BuildableCompletedWaitStep(ITutorialStepArgs args, IBuildable buildable)
+        public BuildableCompletedWaitStep(ITutorialStepArgs args, IProvider<IBuildable> buildableProvider)
             : base(args)
         {
-            Assert.IsNotNull(buildable);
-            _buildable = buildable;
+            Assert.IsNotNull(buildableProvider);
+            _buildableProvider = buildableProvider;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
+
+            _buildable = _buildableProvider.Item;
+            Assert.IsNotNull(_buildable);
             _buildable.CompletedBuildable += _buildable_CompletedBuildable;
         }
 

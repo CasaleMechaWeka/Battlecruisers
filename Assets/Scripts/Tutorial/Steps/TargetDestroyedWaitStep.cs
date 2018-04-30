@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Tutorial.Steps.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
@@ -10,18 +11,22 @@ namespace BattleCruisers.Tutorial.Steps
     // FELIX  Test :D
     public class TargetDestroyedWaitStep : TutorialStep
     {
-        private readonly ITarget _target;
+        private readonly IProvider<ITarget> _targetProvider;
+        private ITarget _target;
 
-        public TargetDestroyedWaitStep(ITutorialStepArgs args, ITarget target)
+        public TargetDestroyedWaitStep(ITutorialStepArgs args, IProvider<ITarget> targetProvider)
             : base(args)
         {
-            Assert.IsNotNull(target);
-            _target = target;
+            Assert.IsNotNull(targetProvider);
+            _targetProvider = targetProvider;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
+
+            _target = _targetProvider.Item;
+            Assert.IsNotNull(_target);
             _target.Destroyed += _target_Destroyed;
         }
 
