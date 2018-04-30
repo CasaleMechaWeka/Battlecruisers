@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps
         {
             base.Start(completionCallback);
 
-            _buildable = _buildableProvider.Item;
+            _buildable = _buildableProvider.FindItem();
             Assert.IsNotNull(_buildable);
             _buildable.CompletedBuildable += _buildable_CompletedBuildable;
         }

@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps
         {
             base.Start(completionCallback);
 
-            _target = _targetProvider.Item;
+            _target = _targetProvider.FindItem();
             Assert.IsNotNull(_target);
             _target.Destroyed += _target_Destroyed;
         }

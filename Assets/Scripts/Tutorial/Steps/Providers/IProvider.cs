@@ -9,6 +9,6 @@
     /// </summary>
     public interface IProvider<T>
     {
-        T Item { get; }
+        T FindItem();
     }
 }
