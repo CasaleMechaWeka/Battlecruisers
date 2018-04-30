@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Threading
 {
-    public class VariableDelayDeferrer : MonoBehaviour
+    public class VariableDelayDeferrer : MonoBehaviour, IVariableDelayDeferrer
     {
         public void Defer(Action action, float delayInS)
         {
