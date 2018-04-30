@@ -9,11 +9,11 @@ namespace BattleCruisers.Tutorial.Steps
     /// Completed when the specified buildable completes construction.
     /// </summary>
     // FELIX  Test :D
-    public class BuildableCompletedWait : TutorialStep
+    public class BuildableCompletedWaitStep : TutorialStep
     {
         private readonly IBuildable _buildable;
 
-        public BuildableCompletedWait(ITutorialStepArgs args, IBuildable buildable)
+        public BuildableCompletedWaitStep(ITutorialStepArgs args, IBuildable buildable)
             : base(args)
         {
             Assert.IsNotNull(buildable);

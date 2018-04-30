@@ -8,11 +8,11 @@ namespace BattleCruisers.Tutorial.Steps
     /// Completed when the target is destroyed.
     /// </summary>
     // FELIX  Test :D
-    public class TargetDestroyedWait : TutorialStep
+    public class TargetDestroyedWaitStep : TutorialStep
     {
         private readonly ITarget _target;
 
-        public TargetDestroyedWait(ITutorialStepArgs args, ITarget target)
+        public TargetDestroyedWaitStep(ITutorialStepArgs args, ITarget target)
             : base(args)
         {
             Assert.IsNotNull(target);
