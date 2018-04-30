@@ -19,5 +19,6 @@
     public static class GameObjectTags
     {
         public const string AIRCRAFT = "Aircraft";
+        public const string SHIP = "Ship";
     }
 }
