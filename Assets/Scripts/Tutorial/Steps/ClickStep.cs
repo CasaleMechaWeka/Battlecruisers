@@ -26,13 +26,8 @@ namespace BattleCruisers.Tutorial.Steps
 
         private void _completionClickable_Clicked(object sender, EventArgs e)
         {
+			_completionClickable.Clicked -= _completionClickable_Clicked;
             OnCompleted();
         }
-
-        protected override void OnCompleted()
-        {
-			_completionClickable.Clicked -= _completionClickable_Clicked;
-			base.OnCompleted();
-		}
 	}
 }
