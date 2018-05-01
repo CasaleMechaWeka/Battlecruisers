@@ -4,22 +4,31 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Utils;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialManager : ITutorialManager
+    public class TutorialManager : MonoBehaviour, ITutorialManager
     {
-        private readonly ITutorialStepConsumer _consumer;
+		private IHighlightFactory _highlightFactory;
+        private ITutorialStepConsumer _consumer;
+
+        public TextDisplayer textDisplayer;
 
         public event EventHandler TutorialCompleted;
 
-        public TutorialManager(
-            ITextDisplayer textDisplayer,
-            ICruiser playerCruiser)
+        public void Initialise(ICruiser playerCruiser)
         {
+            // FELIX  Will be passing a whole lot more, so can keep multi assert :P
             Helper.AssertIsNotNull(textDisplayer, playerCruiser);
 
-            IHighlighter highlighter = new Highlighter(new HighlightFactory());
+            textDisplayer.Initialise();
+
+            _highlightFactory = GetComponent<IHighlightFactory>();
+            Assert.IsNotNull(_highlightFactory);
+
+            IHighlighter highlighter = new Highlighter(_highlightFactory);
 
             ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, playerCruiser);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
