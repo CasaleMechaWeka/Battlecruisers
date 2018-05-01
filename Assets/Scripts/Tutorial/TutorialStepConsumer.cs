@@ -1,19 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Tutorial.Steps;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialStepConsumer
+    // FELIX  Test
+    public class TutorialStepConsumer : ITutorialStepConsumer
     {
         private readonly Queue<ITutorialStep> _tutorialSteps;
+		
+		public event EventHandler Completed;
 
         public TutorialStepConsumer(Queue<ITutorialStep> tutorialSteps)
         {
             Assert.IsNotNull(tutorialSteps);
             _tutorialSteps = tutorialSteps;
+        }
 
-            StartNextTask();
+        public void StartConsuming()
+        {
+			StartNextTask();
         }
 
         private void StartNextTask()
@@ -21,6 +28,10 @@ namespace BattleCruisers.Tutorial
             if (_tutorialSteps.Count != 0)
             {
                 _tutorialSteps.Dequeue().Start(StartNextTask);
+            }
+            else if (Completed != null)
+            {
+                Completed.Invoke(this, EventArgs.Empty);
             }
         }
     }
