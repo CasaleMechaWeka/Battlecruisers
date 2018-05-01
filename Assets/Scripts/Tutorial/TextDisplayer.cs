@@ -12,7 +12,9 @@ namespace BattleCruisers.Tutorial.Steps
         {
             _text = GetComponent<Text>();
             Assert.IsNotNull(_text);
+
             _text.text = string.Empty;
+            gameObject.SetActive(true);
         }
 
         public void DisplayText(string textToDisplay)
