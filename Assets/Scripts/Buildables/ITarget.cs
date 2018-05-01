@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Tutorial.Highlighting;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
@@ -22,7 +23,7 @@ namespace BattleCruisers.Buildables
 		Low, Medium, High
 	}
 
-    public interface ITarget : IDamagable, IRepairable
+    public interface ITarget : IDamagable, IRepairable, IHighlightable
 	{
 		Faction Faction { get; }
 		TargetType TargetType { get; }
@@ -30,6 +31,5 @@ namespace BattleCruisers.Buildables
 		ReadOnlyCollection<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
 		Vector2 Position { get; }
-        Vector2 Size { get; }
 	}
 }

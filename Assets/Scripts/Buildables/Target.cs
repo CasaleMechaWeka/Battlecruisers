@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.UIWrappers;
 using UnityEngine;
@@ -23,7 +24,11 @@ namespace BattleCruisers.Buildables
         public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
         public Vector2 Position { get { return gameObject.transform.position; } }
+
+        // IHighlightable
         public abstract Vector2 Size { get; }
+        public Transform Transform { get { return transform; } }
+        public HighlightableType Type { get { return HighlightableType.InGame; } }
 
         // Seems to be an okay approximation (for cruisers at least)
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
