@@ -55,6 +55,7 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
+        public event EventHandler Clicked;
 
         protected override void OnStaticInitialised()
 		{
@@ -102,6 +103,11 @@ namespace BattleCruisers.Cruisers
 		{
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
 		}
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)

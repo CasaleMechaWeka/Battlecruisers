@@ -9,7 +9,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 
 namespace BattleCruisers.Cruisers
 {
-    public interface ICruiser : ICruiserController, ITarget, IComparableItem
+    public interface ICruiser : ICruiserController, ITarget, IComparableItem, IClickable
     {
         IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
