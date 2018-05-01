@@ -8,6 +8,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Tutorial;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -76,7 +77,7 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  Forcing tutorial :)
-            //ApplicationModel.IsTutorial = true;
+            ApplicationModel.IsTutorial = true;
 
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -162,6 +163,9 @@ namespace BattleCruisers.Scenes
 
             helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
+
+
+            StartTutorialIfNecessary();
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IDeferrer deferrer)
@@ -199,6 +203,25 @@ namespace BattleCruisers.Scenes
             cloudGenerator.GenerateClouds(level.CloudStats);
         }
 
+        private void StartTutorialIfNecessary()
+        {
+            if (ApplicationModel.IsTutorial)
+            {
+                TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
+                Assert.IsNotNull(tutorialManager);
+                tutorialManager.Initialise(_playerCruiser);
+
+                tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
+                tutorialManager.StartTutorial();
+            }
+        }
+
+        private void _tutorialManager_TutorialCompleted(object sender, EventArgs e)
+        {
+            // TEMP  Actually want to go to special post battle screen :)
+            InstaWin();
+        }
+
 		void Update()
 		{
             // IPAD:  Adapt input for IPad :P
@@ -209,9 +232,14 @@ namespace BattleCruisers.Scenes
 			// TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W))
 			{
-                _aiCruiser.TakeDamage(_aiCruiser.Health, damageSource: _playerCruiser);
-			}
-		}
+                InstaWin();
+            }
+        }
+
+        private void InstaWin()
+        {
+            _aiCruiser.TakeDamage(_aiCruiser.Health, damageSource: _playerCruiser);
+        }
 
         public void ShowModalMenu()
         {
