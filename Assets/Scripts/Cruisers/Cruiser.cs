@@ -29,12 +29,25 @@ namespace BattleCruisers.Cruisers
         public float yAdjustmentInM;
         public string description;
         public string cruiserName;
-        
+
+        private const float HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M = 2;
+
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
-        
-        // IComparableItem
-        public string Description { get { return description; } }
+
+		// IHighlightable
+        public override float SizeMultiplier { get { return 0.25f; } }
+		public override Vector2 PositionAdjustment
+		{
+			get
+			{
+                float xAdjustment = Direction == Direction.Right ? -HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M : HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M;
+                return new Vector2(xAdjustment, 0);
+			}
+		}
+
+		// IComparableItem
+		public string Description { get { return description; } }
         public string Name { get { return cruiserName; } }
 		public Sprite Sprite { get { return _renderer.sprite; } }
 
