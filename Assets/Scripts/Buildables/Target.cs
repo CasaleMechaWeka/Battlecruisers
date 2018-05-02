@@ -26,8 +26,10 @@ namespace BattleCruisers.Buildables
         public Vector2 Position { get { return gameObject.transform.position; } }
 
         // IHighlightable
+		public Transform Transform { get { return transform; } }
+		public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public abstract Vector2 Size { get; }
-        public Transform Transform { get { return transform; } }
+		public virtual float SizeMultiplier { get { return 1; } }
         public HighlightableType Type { get { return HighlightableType.InGame; } }
 
         // Seems to be an okay approximation (for cruisers at least)
