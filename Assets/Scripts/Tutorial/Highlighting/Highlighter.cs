@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
@@ -30,15 +31,16 @@ namespace BattleCruisers.Tutorial.Highlighting
 
         private IHighlight CreateHighlight(IHighlightable highlightable)
         {
-            float radius = highlightable.Size.x / 2;
+            float radius = highlightable.Size.x / 2 * highlightable.SizeMultiplier;
 
             switch (highlightable.Type)
             {
                 case HighlightableType.InGame:
-                    return _factory.CreateInGameHighlight(radius, highlightable.Transform.position);
+                    Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;
+                    return _factory.CreateInGameHighlight(radius, spawnPosition);
 
                 case HighlightableType.OnCanvas:
-                    return _factory.CreateOnCanvasHighlight(radius, highlightable.Transform);
+                    return _factory.CreateOnCanvasHighlight(radius, highlightable.Transform, highlightable.PositionAdjustment);
                 
                 default:
                     throw new ArgumentException();

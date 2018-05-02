@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             RectTransform onCanvasObjTransform = onCanvasObject.transform.Parse<RectTransform>();
             float radius = onCanvasObjTransform.rect.width / 2;
 
-            IHighlight onCanvasHighlight = factory.CreateOnCanvasHighlight(radius, onCanvasObject.transform);
+            IHighlight onCanvasHighlight = factory.CreateOnCanvasHighlight(radius, onCanvasObject.transform, Vector2.zero);
          
             deferrer.Defer(onCanvasHighlight.Destroy);
         }

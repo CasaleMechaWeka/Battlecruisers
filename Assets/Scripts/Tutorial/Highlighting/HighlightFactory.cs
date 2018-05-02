@@ -14,9 +14,11 @@ namespace BattleCruisers.Tutorial.Highlighting
             return inGameHighlight;
         }
 
-        public IHighlight CreateOnCanvasHighlight(float radiusInPixels, Transform parentTransform)
+        public IHighlight CreateOnCanvasHighlight(float radiusInPixels, Transform parentTransform, Vector2 positionAdjustment)
         {
             OnCanvasHighlight onCanvasHighlight = Instantiate(onCanvasHighlightPrefab, parentTransform);
+            Vector3 currentPosition = onCanvasHighlight.transform.position;
+            onCanvasHighlight.transform.position = new Vector3(currentPosition.x + positionAdjustment.x, currentPosition.y + positionAdjustment.y, currentPosition.z);
             onCanvasHighlight.Initialise(radiusInPixels);
             return onCanvasHighlight;
         }
