@@ -209,7 +209,7 @@ namespace BattleCruisers.Scenes
             {
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
-                tutorialManager.Initialise(_playerCruiser);
+                tutorialManager.Initialise(_playerCruiser, hudCanvas.NavigationButtonsWrapper);
 
                 tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
                 tutorialManager.StartTutorial();

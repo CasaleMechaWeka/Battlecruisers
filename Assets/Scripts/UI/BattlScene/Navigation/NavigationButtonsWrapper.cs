@@ -7,8 +7,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationButtonsWrapper : UIElement, INavigationButtonsWrapper
     {
-        public IHighlightable PlayerCruiserButton { get; private set; }
-        public IHighlightable AICruiserButton { get; private set; }
+        public IButton PlayerCruiserButton { get; private set; }
+        public IButton AICruiserButton { get; private set; }
 
         public void Initialise(ICameraController cameraController)
         {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationButtonController : UIElement, IClickable
+    public class NavigationButtonController : UIElement, IButton
     {
         private Action _navigationAction;
 

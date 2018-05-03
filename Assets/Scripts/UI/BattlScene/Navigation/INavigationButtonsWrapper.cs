@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public interface INavigationButtonsWrapper : IHighlightable
     {
-        IHighlightable PlayerCruiserButton { get; }
-        IHighlightable AICruiserButton { get; }
+        IButton PlayerCruiserButton { get; }
+        IButton AICruiserButton { get; }
     }
 }
