@@ -48,7 +48,11 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
     				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
                     _displayer,
-                    _navigationButtonsWrapper);
+                    _navigationButtonsWrapper.PlayerCruiserButton,
+                    _navigationButtonsWrapper.MidLeftButton,
+                    _navigationButtonsWrapper.OverviewButton,
+                    _navigationButtonsWrapper.MidRightButton,
+                    _navigationButtonsWrapper.AICruiserButton);
             steps.Enqueue(new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton));
 
             // 3. Enemy cruiser
