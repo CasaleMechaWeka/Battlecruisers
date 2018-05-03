@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Cruisers;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -30,6 +31,9 @@ namespace BattleCruisers.UI.BattleScene
         private NavigationButtonsWrapper _navigationButtonWrapper;
         public INavigationButtonsWrapper NavigationButtonsWrapper { get { return _navigationButtonWrapper; } }
 
+        private GameSpeedWrapper _gameSpeedWrapper;
+        public IGameSpeedWrapper GameSpeedWrapper { get { return _gameSpeedWrapper; } }
+
         public void StaticInitialise()
         {
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
@@ -45,6 +49,10 @@ namespace BattleCruisers.UI.BattleScene
             AICruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
 
             _navigationButtonWrapper = GetComponentInChildren<NavigationButtonsWrapper>();
+            Assert.IsNotNull(_navigationButtonWrapper);
+
+            _gameSpeedWrapper = GetComponentInChildren<GameSpeedWrapper>();
+            Assert.IsNotNull(_gameSpeedWrapper);
         }
 
         public void Initialise(
@@ -60,6 +68,7 @@ namespace BattleCruisers.UI.BattleScene
             _cruiserDetails.Initialise(droneManager, repairManager);
 
             _navigationButtonWrapper.Initialise(cameraController);
+            _gameSpeedWrapper.Initialise();
         }
     }
 }
