@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -25,8 +24,10 @@ namespace BattleCruisers.UI.BattleScene
         private CruiserDetailsController _cruiserDetails;
         public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
 
-        public CruiserInfoController PlayerCruiserInfo { get; private set; }
-        public CruiserInfoController AICruiserInfo { get; private set;  }
+        private CruiserInfoController _playerCruiserInfo;
+        public ICruiserInfo PlayerCruiserInfo { get { return _playerCruiserInfo; } }
+
+        private CruiserInfoController _aiCruiserInfo;
 
         private NavigationButtonsWrapper _navigationButtonWrapper;
         public INavigationButtonsWrapper NavigationButtonsWrapper { get { return _navigationButtonWrapper; } }
@@ -45,8 +46,8 @@ namespace BattleCruisers.UI.BattleScene
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
 
-            PlayerCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("PlayerCruiserInfo");
-            AICruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
+            _playerCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("PlayerCruiserInfo");
+            _aiCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
 
             _navigationButtonWrapper = GetComponentInChildren<NavigationButtonsWrapper>();
             Assert.IsNotNull(_navigationButtonWrapper);
@@ -57,15 +58,18 @@ namespace BattleCruisers.UI.BattleScene
 
         public void Initialise(
             ISpriteProvider spriteProvider, 
-            IDroneManager droneManager, 
-            IRepairManager repairManager,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
             ICameraController cameraController)
         {
-            Helper.AssertIsNotNull(spriteProvider, droneManager, repairManager, cameraController);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController);
 
-            _buildingDetails.Initialise(spriteProvider, droneManager, repairManager);
-            _unitDetails.Initialise(droneManager, repairManager);
-            _cruiserDetails.Initialise(droneManager, repairManager);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager);
+            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
+            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
+
+            _playerCruiserInfo.Initialise(playerCruiser);
+            _aiCruiserInfo.Initialise(aiCruiser);
 
             _navigationButtonWrapper.Initialise(cameraController);
             _gameSpeedWrapper.Initialise();

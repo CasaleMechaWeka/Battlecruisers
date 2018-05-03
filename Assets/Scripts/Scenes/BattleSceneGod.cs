@@ -128,18 +128,16 @@ namespace BattleCruisers.Scenes
             ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
             cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right, slotFilter);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
-            hudCanvas.PlayerCruiserInfo.Initialise(_playerCruiser);
 
 
             // Initialise AI cruiser
             ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
             cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left, slotFilter);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
-            hudCanvas.AICruiserInfo.Initialise(_aiCruiser);
 
 
             // UI
-            hudCanvas.Initialise(spriteProvider, _playerCruiser.DroneManager, _playerCruiser.RepairManager, cameraController);
+            hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraController);
             IActivenessDecider<IBuildable> buildableButtonActivenessDecider = helper.CreateBuildableButtonActivenessDecider(_playerCruiser.DroneManager);
             IActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider = helper.CreateCategoryButtonActivenessDecider();
             uiFactory.Initialise(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider);

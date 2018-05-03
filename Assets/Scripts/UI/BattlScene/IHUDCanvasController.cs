@@ -13,9 +13,7 @@ namespace BattleCruisers.UI.BattleScene
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
 
-        CruiserInfoController PlayerCruiserInfo { get; }
-        CruiserInfoController AICruiserInfo { get; }
-
+        ICruiserInfo PlayerCruiserInfo { get; }
         INavigationButtonsWrapper NavigationButtonsWrapper { get; }
         IGameSpeedWrapper GameSpeedWrapper { get; }
     }
