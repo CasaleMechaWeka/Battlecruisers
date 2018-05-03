@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -19,9 +20,9 @@ namespace BattleCruisers.Tutorial
 
         public event EventHandler TutorialCompleted;
 
-        public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, INavigationButtonsWrapper navigationButtonsWrapper)
+        public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, INavigationButtonsWrapper navigationButtonsWrapper, IGameSpeedWrapper gameSpeedWrapper)
         {
-            Helper.AssertIsNotNull(textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper);
+            Helper.AssertIsNotNull(textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper, gameSpeedWrapper);
 
             textDisplayer.Initialise();
 
@@ -30,7 +31,7 @@ namespace BattleCruisers.Tutorial
 
             IHighlighter highlighter = new Highlighter(_highlightFactory);
 
-            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper);
+            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper, gameSpeedWrapper);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
             _consumer = new TutorialStepConsumer(steps);
 
