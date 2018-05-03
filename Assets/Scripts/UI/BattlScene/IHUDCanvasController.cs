@@ -15,6 +15,6 @@ namespace BattleCruisers.UI.BattleScene
         CruiserInfoController PlayerCruiserInfo { get; }
         CruiserInfoController AICruiserInfo { get; }
 
-        NavigationButtonWrapper NavigationButtonWrapper { get; }
+        INavigationButtonsWrapper NavigationButtonsWrapper { get; }
     }
 }

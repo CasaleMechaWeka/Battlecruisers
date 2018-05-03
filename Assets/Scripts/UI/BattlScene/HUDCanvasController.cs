@@ -27,7 +27,8 @@ namespace BattleCruisers.UI.BattleScene
         public CruiserInfoController PlayerCruiserInfo { get; private set; }
         public CruiserInfoController AICruiserInfo { get; private set;  }
 
-        public NavigationButtonWrapper NavigationButtonWrapper { get; private set; }
+        private NavigationButtonsWrapper _navigationButtonWrapper;
+        public INavigationButtonsWrapper NavigationButtonsWrapper { get { return _navigationButtonWrapper; } }
 
         public void StaticInitialise()
         {
@@ -43,7 +44,7 @@ namespace BattleCruisers.UI.BattleScene
             PlayerCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("PlayerCruiserInfo");
             AICruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
 
-            NavigationButtonWrapper = GetComponentInChildren<NavigationButtonWrapper>();
+            _navigationButtonWrapper = GetComponentInChildren<NavigationButtonsWrapper>();
         }
 
         public void Initialise(
@@ -58,7 +59,7 @@ namespace BattleCruisers.UI.BattleScene
             _unitDetails.Initialise(droneManager, repairManager);
             _cruiserDetails.Initialise(droneManager, repairManager);
 
-            NavigationButtonWrapper.Initialise(cameraController);
+            _navigationButtonWrapper.Initialise(cameraController);
         }
     }
 }

@@ -5,9 +5,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationButtonWrapper : UIElement
+    public class NavigationButtonsWrapper : UIElement, INavigationButtonsWrapper
     {
-        public IHighlightable _playerCruiserButton, _aiCruiserButton;
+        public IHighlightable PlayerCruiserButton { get; private set; }
+        public IHighlightable AICruiserButton { get; private set; }
 
         public void Initialise(ICameraController cameraController)
         {
@@ -17,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             NavigationButtonController playerCruiserButton = transform.FindNamedComponent<NavigationButtonController>("PlayerCruiserButton");
             playerCruiserButton.Initialise(cameraController.FocusOnPlayerCruiser);
-            _playerCruiserButton = playerCruiserButton;
+            PlayerCruiserButton = playerCruiserButton;
 
             NavigationButtonController midLeftButton = transform.FindNamedComponent<NavigationButtonController>("MidLeftButton");
             midLeftButton.Initialise(cameraController.ShowMidLeft);
@@ -30,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             NavigationButtonController aiCruiserButton = transform.FindNamedComponent<NavigationButtonController>("AiCruiserButton");
             aiCruiserButton.Initialise(cameraController.FocusOnAiCruiser);
-            _aiCruiserButton = aiCruiserButton;
+            AICruiserButton = aiCruiserButton;
         }
     }
 }
