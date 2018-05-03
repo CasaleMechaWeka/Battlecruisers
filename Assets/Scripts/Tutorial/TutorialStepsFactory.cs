@@ -35,13 +35,13 @@ namespace BattleCruisers.Tutorial
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
             // 1. Your cruiser
-            CreateStep_YourCruiser(steps);
+            steps.Enqueue(CreateStep_YourCruiser());
 
             // 2. Navigation buttons
-            CreateStep_NavigationButtons(steps);
+            steps.Enqueue(CreateStep_NavigationButtons());
 
             // 3. Enemy cruiser
-            CreateStep_EnemyCruiser(steps);
+            steps.Enqueue(CreateStep_EnemyCruiser());
 
             // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
             // 5. Speed controls
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
-        private void CreateStep_YourCruiser(Queue<ITutorialStep> steps)
+        private ITutorialStep CreateStep_YourCruiser()
         {
             ITutorialStepArgs yourCruiserArgs
                 = new TutorialStepArgs(
@@ -62,10 +62,10 @@ namespace BattleCruisers.Tutorial
                     "This is your cruiser",
                     _displayer,
                     _playerCruiser);
-            steps.Enqueue(new ClickStep(yourCruiserArgs, _playerCruiser));
+            return new ClickStep(yourCruiserArgs, _playerCruiser);
         }
 
-		private void CreateStep_NavigationButtons(Queue<ITutorialStep> steps)
+        private ITutorialStep CreateStep_NavigationButtons()
 		{
 			ITutorialStepArgs navigationButtonArgs
 			= new TutorialStepArgs(
@@ -77,10 +77,10 @@ namespace BattleCruisers.Tutorial
 				_navigationButtonsWrapper.OverviewButton,
 				_navigationButtonsWrapper.MidRightButton,
 				_navigationButtonsWrapper.AICruiserButton);
-			steps.Enqueue(new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton));
+			return new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton);
 		}
 
-        private void CreateStep_EnemyCruiser(Queue<ITutorialStep> steps)
+        private ITutorialStep CreateStep_EnemyCruiser()
         {
             ITutorialStepArgs yourCruiserArgs
                 = new TutorialStepArgs(
@@ -88,7 +88,7 @@ namespace BattleCruisers.Tutorial
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _displayer,
                     _aiCruiser);
-            steps.Enqueue(new ClickStep(yourCruiserArgs, _aiCruiser));
+            return new ClickStep(yourCruiserArgs, _aiCruiser);
         }
     }
 }
