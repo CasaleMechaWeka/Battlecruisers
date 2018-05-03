@@ -24,22 +24,23 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // 1. Your cruiser
-            steps.Enqueue(CreateStep_YourCruiser());
+            // TEMP  For end game enable all tutorial steps :)
+            //// 1. Your cruiser
+            //steps.Enqueue(CreateStep_YourCruiser());
 
-            // 2. Navigation buttons
-            steps.Enqueue(CreateStep_NavigationButtons());
+            //// 2. Navigation buttons
+            //steps.Enqueue(CreateStep_NavigationButtons());
 
-            // 3. Enemy cruiser
-            steps.Enqueue(CreateStep_EnemyCruiser());
+            //// 3. Enemy cruiser
+            //steps.Enqueue(CreateStep_EnemyCruiser());
 
-            // 2. Navigation buttons
-            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+            //// 2. Navigation buttons
+            //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-            // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
+            //// TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
 
-            // 5. Speed controls
-            steps.Enqueue(CreateSteps_SpeedControls());
+            //// 5. Speed controls
+            //steps.Enqueue(CreateSteps_SpeedControls());
 
             // 6. Drones
             steps.Enqueue(CreateStep_Drones());
