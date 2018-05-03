@@ -43,8 +43,14 @@ namespace BattleCruisers.Tutorial
             // 3. Enemy cruiser
             steps.Enqueue(CreateStep_EnemyCruiser());
 
+            // 2. Navigation buttons
+            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+
             // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
+
             // 5. Speed controls
+
+
             // 6. Drones
             // 7. Building a building
             // 8. Enemy ship
@@ -89,6 +95,17 @@ namespace BattleCruisers.Tutorial
                     _displayer,
                     _aiCruiser);
             return new ClickStep(yourCruiserArgs, _aiCruiser);
+        }
+
+        private ITutorialStep CreateStep_NavigateToPlayerCruiser()
+        {
+            ITutorialStepArgs navigateToPlayerCruiserArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "Navigate back to your cruiser",
+                    _displayer,
+                    _navigationButtonsWrapper.PlayerCruiserButton);
+            return new ClickStep(navigateToPlayerCruiserArgs, _navigationButtonsWrapper.PlayerCruiserButton);
         }
     }
 }
