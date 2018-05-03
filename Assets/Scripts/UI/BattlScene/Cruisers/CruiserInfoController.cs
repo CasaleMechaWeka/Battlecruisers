@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    public class CruiserInfoController : MonoBehaviour
+    public class CruiserInfoController : MonoBehaviour, ICruiserInfo
     {
         private HealthBarController _cruiserHealthBar;
-        private NumOfDronesController _numOfDrones;
+
+		private NumOfDronesController _numOfDrones;
+        public IButton NumOfDronesButton { get { return _numOfDrones; } }
 
         public void Initialise(ICruiser cruiser)
         {

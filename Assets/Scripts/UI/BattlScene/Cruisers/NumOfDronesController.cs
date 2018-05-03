@@ -1,15 +1,18 @@
-﻿using BattleCruisers.Cruisers.Drones;
+﻿using System;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
-using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    public class NumOfDronesController : UIElement, IManagedDisposable
+    public class NumOfDronesController : UIElement, IManagedDisposable, IButton, IPointerClickHandler
     {
         private IDroneManager _droneManager;
 
         public Text numOfDronesText;
+
+        public event EventHandler Clicked;
 
         private int NumOfDrones
         {
@@ -38,6 +41,14 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
         public void DisposeManagedState()
         {
             _droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
