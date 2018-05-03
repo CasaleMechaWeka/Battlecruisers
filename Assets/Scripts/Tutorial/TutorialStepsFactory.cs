@@ -12,6 +12,7 @@ namespace BattleCruisers.Tutorial
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
+        private readonly ITutorialArgs _tutorialArgs;
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly INavigationButtonsWrapper _navigationButtonsWrapper;
         private readonly IGameSpeedWrapper _gameSpeedWrapper;
@@ -22,6 +23,7 @@ namespace BattleCruisers.Tutorial
 
             _highlighter = highlighter;
             _displayer = displayer;
+            _tutorialArgs = tutorialArgs;
             _playerCruiser = tutorialArgs.PlayerCruiser;
             _aiCruiser = tutorialArgs.AICruiser;
             _navigationButtonsWrapper = tutorialArgs.NavigationButtonsWrapper;
@@ -50,6 +52,8 @@ namespace BattleCruisers.Tutorial
             steps.Enqueue(CreateSteps_SpeedControls());
 
             // 6. Drones
+            steps.Enqueue(CreateStep_Drones());
+
             // 7. Building a building
             // 8. Enemy ship
             // 9. Enemy bomber
@@ -140,6 +144,19 @@ namespace BattleCruisers.Tutorial
             speedControlSteps.Add(new ClickStep(returnToNormalSpeedArgs, _gameSpeedWrapper.PlayButton));
 
             return speedControlSteps;
+        }
+
+        private ITutorialStep CreateStep_Drones()
+        {
+            ITutorialStepArgs dronesArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "Drones are the only resource.  This is how many drones you have.  The " +
+                    "more drones you have the faster your cruiser works and the better " +
+                    "buildings / units you can build.",
+                    _displayer,
+                    _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
+            return new ClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
         }
     }
 }
