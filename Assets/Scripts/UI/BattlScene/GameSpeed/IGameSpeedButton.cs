@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public interface IGameSpeedButton
+    public interface IGameSpeedButton : IButton
     {
         bool IsSelected { set; }
     }

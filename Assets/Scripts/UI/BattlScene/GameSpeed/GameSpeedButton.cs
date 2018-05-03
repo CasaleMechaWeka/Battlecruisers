@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButton : UIElement, IGameSpeedButton
+    public class GameSpeedButton : UIElement, IGameSpeedButton, IPointerClickHandler
     {
         private ISpeedButtonManager _speedButtonManager;
         private Image _backgroundImage;
@@ -16,6 +18,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private const float MAX_GAME_SPEED = 4;
 
         public float gameSpeed;
+
+        public event EventHandler Clicked;
 
         public bool IsSelected
         {
@@ -41,7 +45,17 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             IsSelected = false;
         }
 
-        public void ChangeGameSpeed()
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            ChangeGameSpeed();
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
+        }
+		
+        private void ChangeGameSpeed()
         {
             Time.timeScale = gameSpeed;
             _speedButtonManager.SelectButton(this);
