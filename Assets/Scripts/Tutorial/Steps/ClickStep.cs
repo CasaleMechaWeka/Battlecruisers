@@ -9,24 +9,34 @@ namespace BattleCruisers.Tutorial.Steps
     // FELIX  Test :D
     public class ClickStep : TutorialStep
     {
-        private readonly IClickable _completionClickable;
+        private readonly IClickable[] _completionClickables;
 
-        public ClickStep(ITutorialStepArgs args, IClickable completionClickable)
+        public ClickStep(ITutorialStepArgs args, params IClickable[] completionClickables)
             : base(args)
         {
-            Assert.IsNotNull(completionClickable);
-            _completionClickable = completionClickable;
+            Assert.IsNotNull(completionClickables);
+            Assert.IsTrue(completionClickables.Length > 0);
+
+            _completionClickables = completionClickables;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            _completionClickable.Clicked += _completionClickable_Clicked;
+
+            foreach (IClickable completionClickable in _completionClickables)
+            {
+                completionClickable.Clicked += completionClickable_Clicked;
+			}
         }
 
-        private void _completionClickable_Clicked(object sender, EventArgs e)
+        private void completionClickable_Clicked(object sender, EventArgs e)
         {
-			_completionClickable.Clicked -= _completionClickable_Clicked;
+            foreach (IClickable completionClickable in _completionClickables)
+            {
+                completionClickable.Clicked -= completionClickable_Clicked;
+            }
+
             OnCompleted();
         }
 	}
