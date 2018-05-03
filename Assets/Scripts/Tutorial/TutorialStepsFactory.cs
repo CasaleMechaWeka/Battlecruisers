@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.UI.BattleScene.GameSpeed;
-using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial
@@ -13,9 +10,6 @@ namespace BattleCruisers.Tutorial
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
         private readonly ITutorialArgs _tutorialArgs;
-        private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly INavigationButtonsWrapper _navigationButtonsWrapper;
-        private readonly IGameSpeedWrapper _gameSpeedWrapper;
 
         public TutorialStepsFactory(IHighlighter highlighter, ITextDisplayer displayer, ITutorialArgs tutorialArgs)
         {
@@ -24,10 +18,6 @@ namespace BattleCruisers.Tutorial
             _highlighter = highlighter;
             _displayer = displayer;
             _tutorialArgs = tutorialArgs;
-            _playerCruiser = tutorialArgs.PlayerCruiser;
-            _aiCruiser = tutorialArgs.AICruiser;
-            _navigationButtonsWrapper = tutorialArgs.NavigationButtonsWrapper;
-            _gameSpeedWrapper = tutorialArgs.GameSpeedWrapper;
         }
 
         public Queue<ITutorialStep> CreateTutorialSteps()
@@ -69,8 +59,8 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "This is your cruiser",
                     _displayer,
-                    _playerCruiser);
-            return new ClickStep(yourCruiserArgs, _playerCruiser);
+                    _tutorialArgs.PlayerCruiser);
+            return new ClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
         private ITutorialStep CreateStep_NavigationButtons()
@@ -80,12 +70,12 @@ namespace BattleCruisers.Tutorial
     				_highlighter,
     				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
     				_displayer,
-    				_navigationButtonsWrapper.PlayerCruiserButton,
-    				_navigationButtonsWrapper.MidLeftButton,
-    				_navigationButtonsWrapper.OverviewButton,
-    				_navigationButtonsWrapper.MidRightButton,
-    				_navigationButtonsWrapper.AICruiserButton);
-			return new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton);
+                    _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton,
+                    _tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
+                    _tutorialArgs.NavigationButtonsWrapper.OverviewButton,
+                    _tutorialArgs.NavigationButtonsWrapper.MidRightButton,
+                    _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
+            return new ClickStep(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
 		}
 
         private ITutorialStep CreateStep_EnemyCruiser()
@@ -95,8 +85,8 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _displayer,
-                    _aiCruiser);
-            return new ClickStep(yourCruiserArgs, _aiCruiser);
+                    _tutorialArgs.AICruiser);
+            return new ClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
         }
 
         private ITutorialStep CreateStep_NavigateToPlayerCruiser()
@@ -106,8 +96,8 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "Navigate back to your cruiser",
                     _displayer,
-                    _navigationButtonsWrapper.PlayerCruiserButton);
-            return new ClickStep(navigateToPlayerCruiserArgs, _navigationButtonsWrapper.PlayerCruiserButton);
+                    _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
+            return new ClickStep(navigateToPlayerCruiserArgs, _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
         }
     
         private IList<ITutorialStep> CreateSteps_SpeedControls()
@@ -120,17 +110,17 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "These control the game speed.  Change the game speed!",
                     _displayer,
-                    _gameSpeedWrapper.SlowMotionButton,
-                    _gameSpeedWrapper.PlayButton,
-                    _gameSpeedWrapper.FastForwardButton,
-                    _gameSpeedWrapper.DoubleFastForwardButton);
+                    _tutorialArgs.GameSpeedWrapper.SlowMotionButton,
+                    _tutorialArgs.GameSpeedWrapper.PlayButton,
+                    _tutorialArgs.GameSpeedWrapper.FastForwardButton,
+                    _tutorialArgs.GameSpeedWrapper.DoubleFastForwardButton);
 
             ITutorialStep deviateFromNormalSpeedStep
                 = new ClickStep(
                     deviateFromNormalSpeedArgs, 
-                    _gameSpeedWrapper.SlowMotionButton, 
-                    _gameSpeedWrapper.FastForwardButton, 
-                    _gameSpeedWrapper.DoubleFastForwardButton);
+                    _tutorialArgs.GameSpeedWrapper.SlowMotionButton, 
+                    _tutorialArgs.GameSpeedWrapper.FastForwardButton, 
+                    _tutorialArgs.GameSpeedWrapper.DoubleFastForwardButton);
 
             speedControlSteps.Add(deviateFromNormalSpeedStep);
 
@@ -140,8 +130,8 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "Nice!  Now change it back :D",
                     _displayer,
-                    _gameSpeedWrapper.PlayButton);
-            speedControlSteps.Add(new ClickStep(returnToNormalSpeedArgs, _gameSpeedWrapper.PlayButton));
+                    _tutorialArgs.GameSpeedWrapper.PlayButton);
+            speedControlSteps.Add(new ClickStep(returnToNormalSpeedArgs, _tutorialArgs.GameSpeedWrapper.PlayButton));
 
             return speedControlSteps;
         }
