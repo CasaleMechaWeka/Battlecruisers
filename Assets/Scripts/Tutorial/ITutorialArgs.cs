@@ -1,0 +1,14 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene.GameSpeed;
+using BattleCruisers.UI.BattleScene.Navigation;
+
+namespace BattleCruisers.Tutorial
+{
+    public interface ITutorialArgs
+    {
+        ICruiser PlayerCruiser { get; }
+        ICruiser AICruiser { get; }
+        INavigationButtonsWrapper NavigationButtonsWrapper { get; }
+        IGameSpeedWrapper GameSpeedWrapper { get; }
+    }
+}

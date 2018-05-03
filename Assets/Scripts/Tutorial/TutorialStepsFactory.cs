@@ -16,22 +16,16 @@ namespace BattleCruisers.Tutorial
         private readonly INavigationButtonsWrapper _navigationButtonsWrapper;
         private readonly IGameSpeedWrapper _gameSpeedWrapper;
 
-        public TutorialStepsFactory(
-            IHighlighter highlighter,
-            ITextDisplayer displayer,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser,
-            INavigationButtonsWrapper navigationButtonsWrapper,
-            IGameSpeedWrapper gameSpeedWrapper)
+        public TutorialStepsFactory(IHighlighter highlighter, ITextDisplayer displayer, ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, displayer, playerCruiser, aiCruiser, navigationButtonsWrapper, gameSpeedWrapper);
+            Helper.AssertIsNotNull(highlighter, displayer, tutorialArgs);
 
             _highlighter = highlighter;
             _displayer = displayer;
-            _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
-            _navigationButtonsWrapper = navigationButtonsWrapper;
-            _gameSpeedWrapper = gameSpeedWrapper;
+            _playerCruiser = tutorialArgs.PlayerCruiser;
+            _aiCruiser = tutorialArgs.AICruiser;
+            _navigationButtonsWrapper = tutorialArgs.NavigationButtonsWrapper;
+            _gameSpeedWrapper = tutorialArgs.GameSpeedWrapper;
         }
 
         public Queue<ITutorialStep> CreateTutorialSteps()
