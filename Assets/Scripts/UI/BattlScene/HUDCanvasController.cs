@@ -3,6 +3,8 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Cruisers;
+using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -25,6 +27,8 @@ namespace BattleCruisers.UI.BattleScene
         public CruiserInfoController PlayerCruiserInfo { get; private set; }
         public CruiserInfoController AICruiserInfo { get; private set;  }
 
+        public NavigationButtonWrapper NavigationButtonWrapper { get; private set; }
+
         public void StaticInitialise()
         {
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
@@ -38,13 +42,23 @@ namespace BattleCruisers.UI.BattleScene
 
             PlayerCruiserInfo = transform.FindNamedComponent<CruiserInfoController>("PlayerCruiserInfo");
             AICruiserInfo = transform.FindNamedComponent<CruiserInfoController>("AICruiserInfo");
+
+            NavigationButtonWrapper = GetComponentInChildren<NavigationButtonWrapper>();
         }
 
-        public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(
+            ISpriteProvider spriteProvider, 
+            IDroneManager droneManager, 
+            IRepairManager repairManager,
+            ICameraController cameraController)
         {
+            Helper.AssertIsNotNull(spriteProvider, droneManager, repairManager, cameraController);
+
             _buildingDetails.Initialise(spriteProvider, droneManager, repairManager);
             _unitDetails.Initialise(droneManager, repairManager);
             _cruiserDetails.Initialise(droneManager, repairManager);
+
+            NavigationButtonWrapper.Initialise(cameraController);
         }
     }
 }
