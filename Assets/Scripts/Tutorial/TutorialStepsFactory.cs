@@ -11,20 +11,22 @@ namespace BattleCruisers.Tutorial
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
-        private readonly ICruiser _playerCruiser;
+        private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly INavigationButtonsWrapper _navigationButtonsWrapper;
 
         public TutorialStepsFactory(
             IHighlighter highlighter,
             ITextDisplayer displayer,
             ICruiser playerCruiser,
+            ICruiser aiCruiser,
             INavigationButtonsWrapper navigationButtonsWrapper)
         {
-            Helper.AssertIsNotNull(highlighter, displayer, playerCruiser, navigationButtonsWrapper);
+            Helper.AssertIsNotNull(highlighter, displayer, playerCruiser, aiCruiser, navigationButtonsWrapper);
 
             _highlighter = highlighter;
             _displayer = displayer;
             _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
             _navigationButtonsWrapper = navigationButtonsWrapper;
         }
 
@@ -33,29 +35,14 @@ namespace BattleCruisers.Tutorial
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
             // 1. Your cruiser
-            ITutorialStepArgs yourCruiserArgs
-                = new TutorialStepArgs(
-                    _highlighter,
-                    "This is your cruiser",
-                    _displayer,
-                    _playerCruiser);
-            steps.Enqueue(new ClickStep(yourCruiserArgs, _playerCruiser));
-
+            CreateStep_YourCruiser(steps);
 
             // 2. Navigation buttons
-            ITutorialStepArgs navigationButtonArgs
-                = new TutorialStepArgs(
-                    _highlighter,
-    				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
-                    _displayer,
-                    _navigationButtonsWrapper.PlayerCruiserButton,
-                    _navigationButtonsWrapper.MidLeftButton,
-                    _navigationButtonsWrapper.OverviewButton,
-                    _navigationButtonsWrapper.MidRightButton,
-                    _navigationButtonsWrapper.AICruiserButton);
-            steps.Enqueue(new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton));
+            CreateStep_NavigationButtons(steps);
 
             // 3. Enemy cruiser
+            CreateStep_EnemyCruiser(steps);
+
             // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
             // 5. Speed controls
             // 6. Drones
@@ -65,6 +52,43 @@ namespace BattleCruisers.Tutorial
             // 10. Drone Focus
 
             return steps;
+        }
+
+        private void CreateStep_YourCruiser(Queue<ITutorialStep> steps)
+        {
+            ITutorialStepArgs yourCruiserArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "This is your cruiser",
+                    _displayer,
+                    _playerCruiser);
+            steps.Enqueue(new ClickStep(yourCruiserArgs, _playerCruiser));
+        }
+
+		private void CreateStep_NavigationButtons(Queue<ITutorialStep> steps)
+		{
+			ITutorialStepArgs navigationButtonArgs
+			= new TutorialStepArgs(
+				_highlighter,
+				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
+				_displayer,
+				_navigationButtonsWrapper.PlayerCruiserButton,
+				_navigationButtonsWrapper.MidLeftButton,
+				_navigationButtonsWrapper.OverviewButton,
+				_navigationButtonsWrapper.MidRightButton,
+				_navigationButtonsWrapper.AICruiserButton);
+			steps.Enqueue(new ClickStep(navigationButtonArgs, _navigationButtonsWrapper.AICruiserButton));
+		}
+
+        private void CreateStep_EnemyCruiser(Queue<ITutorialStep> steps)
+        {
+            ITutorialStepArgs yourCruiserArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
+                    _displayer,
+                    _aiCruiser);
+            steps.Enqueue(new ClickStep(yourCruiserArgs, _aiCruiser));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace BattleCruisers.Tutorial
 
         public event EventHandler TutorialCompleted;
 
-        public void Initialise(ICruiser playerCruiser, INavigationButtonsWrapper navigationButtonsWrapper)
+        public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, INavigationButtonsWrapper navigationButtonsWrapper)
         {
-            Helper.AssertIsNotNull(textDisplayer, playerCruiser, navigationButtonsWrapper);
+            Helper.AssertIsNotNull(textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper);
 
             textDisplayer.Initialise();
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tutorial
 
             IHighlighter highlighter = new Highlighter(_highlightFactory);
 
-            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, playerCruiser, navigationButtonsWrapper);
+            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, playerCruiser, aiCruiser, navigationButtonsWrapper);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
             _consumer = new TutorialStepConsumer(steps);
 
