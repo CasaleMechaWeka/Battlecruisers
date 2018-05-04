@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -14,16 +15,24 @@ namespace BattleCruisers.Tutorial
         public INavigationButtonsWrapper NavigationButtonsWrapper { get; private set; }
         public IGameSpeedWrapper GameSpeedWrapper { get; private set; }
         public ICruiserInfo PlayerCruiserInfo { get; private set; }
+        public IBuildingCategoryButtonsPanel CategoryButtonsPanel { get; private set; }
 
-        public TutorialArgs(ICruiser playerCruiser, ICruiser aiCruiser, IHUDCanvasController hudCanvas)
+        public TutorialArgs(
+            ICruiser playerCruiser, 
+            ICruiser aiCruiser, 
+            IHUDCanvasController hudCanvas, 
+            IBuildMenu buildMenu)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenu);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
+
             NavigationButtonsWrapper = hudCanvas.NavigationButtonsWrapper;
             GameSpeedWrapper = hudCanvas.GameSpeedWrapper;
             PlayerCruiserInfo = hudCanvas.PlayerCruiserInfo;
+
+            CategoryButtonsPanel = buildMenu.CategoryButtonsPanel;
         }
     }
 }

@@ -205,7 +205,7 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
-                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas);
+                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
