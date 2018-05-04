@@ -1,18 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public interface IPresentable
-	{
-		// About to be shown
-		void OnPresenting(object activationParameter);
-
-		// About to be hidden
-		void OnDismissing();
-	}
-
     public class Presentable : UIElement, IPresentable
 	{
 		protected bool _isPresented;
