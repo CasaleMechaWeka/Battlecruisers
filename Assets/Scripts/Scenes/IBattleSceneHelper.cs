@@ -19,5 +19,7 @@ namespace BattleCruisers.Scenes
         IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager);
         IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider();
         IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser);
+
+        // FELIX  Create activeness decider for navigation buttons
     }
 }
