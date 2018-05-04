@@ -2,17 +2,20 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : UIElement 
+    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton
 	{
-        private BuildingCategory _buildingCategory;
         private IActivenessDecider<BuildingCategory> _activenessDecider;
         private ButtonWrapper _buttonWrapper;
+        private IUIManager _uiManager;
+
+        public event EventHandler Clicked;
+
+        public BuildingCategory Category { get; private set; }
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
@@ -23,14 +26,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             Helper.AssertIsNotNull(buildingGroup, uiManager, activenessDecider);
 
-            _buildingCategory = buildingGroup.BuildingCategory;
+            _uiManager = uiManager;
+            Category = buildingGroup.BuildingCategory;
             _activenessDecider = activenessDecider;
 			_activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 
             _buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(_buttonWrapper);
             _buttonWrapper.Initialise();
-            _buttonWrapper.Button.onClick.AddListener(() => uiManager.SelectBuildingGroup(buildingGroup.BuildingCategory));
+            _buttonWrapper.Button.onClick.AddListener(HandleClick);
 
             Text buttonText = _buttonWrapper.Button.GetComponentInChildren<Text>();
             Assert.IsNotNull(buttonText);
@@ -46,7 +50,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		private void UpdateActiveness()
 		{
-            _buttonWrapper.IsEnabled = _activenessDecider.ShouldBeEnabled(_buildingCategory);
+            _buttonWrapper.IsEnabled = _activenessDecider.ShouldBeEnabled(Category);
 		}
+
+        private void HandleClick()
+        {
+            _uiManager.SelectBuildingGroup(Category);
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
+        }
 	}
 }
