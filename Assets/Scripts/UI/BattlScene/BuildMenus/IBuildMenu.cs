@@ -5,6 +5,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public interface IBuildMenu
     {
+        IBuildingCategoryButtonsPanel CategoryButtonsPanel { get; }
+
         void HideBuildMenu();
         void ShowBuildMenu();
         void ShowBuildingGroupsMenu();

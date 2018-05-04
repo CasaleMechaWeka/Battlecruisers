@@ -4,6 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
@@ -17,10 +18,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		private IUIManager _uiManager;
         private IUIFactory _uiFactory;
 		private IList<IBuildingGroup> _buildingGroups;
-        private Presentable _homePanel;
         private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
         private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
         private Presentable _currentPanel;
+
+		private HomePanel _homePanel;
+        public IBuildingCategoryButtonsPanel CategoryButtonsPanel { get { return _homePanel; } }
 
 		public void Initialise(
 			IUIManager uiManager,
@@ -37,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 			// Create main menu panel
 			GameObject homePanelGameObject = _uiFactory.CreatePanel(isActive: true);
-			_homePanel = homePanelGameObject.AddComponent<Presentable>();
+            _homePanel = homePanelGameObject.AddComponent<HomePanel>();
 			_currentPanel = _homePanel;
 			_homePanel.Initialise();
 
@@ -51,7 +54,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			{
 				// Create category button
 				IBuildingGroup buildingGroup = _buildingGroups[i];
-				_uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
+                IBuildingCategoryButton categoryButton = _uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
+                _homePanel.AddCategoryButton(categoryButton);
 
 				// Create category panel
 				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);

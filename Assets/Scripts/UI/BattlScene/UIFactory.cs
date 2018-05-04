@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
-		public Button buildingCategoryButtonPrefab;
+        public BuildingCategoryButton buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
 		public Button unitButtonPrefab;
 		public Button backButtonPrefab;
@@ -52,11 +52,11 @@ namespace BattleCruisers.UI.BattleScene
 			return panel;
 		}
 
-        public Button CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup buildingGroup)
+        public IBuildingCategoryButton CreateBuildingCategoryButton(HorizontalLayoutGroup buttonParent, IBuildingGroup buildingGroup)
 		{
-			Button button = Instantiate(buildingCategoryButtonPrefab);
+            BuildingCategoryButton button = Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.GetComponent<BuildingCategoryButton>().Initialise(buildingGroup, _uiManager, _buildingCategoryButtonActivenessDecider);
+			button.Initialise(buildingGroup, _uiManager, _buildingCategoryButtonActivenessDecider);
 			return button;
 		}
 
