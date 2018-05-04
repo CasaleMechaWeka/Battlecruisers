@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
@@ -148,6 +151,27 @@ namespace BattleCruisers.Tutorial
                     _displayer,
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
             return new ClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
+        }
+
+        private IList<ITutorialStep> CreateSteps_BuildDroneStation()
+        {
+            IList<ITutorialStep> buildDroneStationSteps = new List<ITutorialStep>();
+
+            // Select factories building category
+            IBuildingCategoryButton factoriesCategoryButton = _tutorialArgs.CategoryButtonsPanel.GetCategoryButton(BuildingCategory.Factory);
+            Assert.IsNotNull(factoriesCategoryButton);
+
+            ITutorialStepArgs factoriesCategoryArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "To get more drones build a drone station.",
+                    _displayer,
+                factoriesCategoryButton);
+
+            // FELIX  Grab permitter :D
+            buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, null));
+
+            return buildDroneStationSteps;
         }
     }
 }
