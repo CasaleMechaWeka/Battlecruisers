@@ -1,13 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Buttons
 {
+    // FELIX Move to right namespace
     public class BuildableTutorialDeciderTests
     {
         private BuildableTutorialDecider _decider;

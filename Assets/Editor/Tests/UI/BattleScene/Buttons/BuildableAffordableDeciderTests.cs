@@ -1,12 +1,13 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Buttons
 {
+    // FELIX Move to right namespace
     public class BuildableAffordabeDeciderTests
     {
         private IActivenessDecider<IBuildable> _decider;
