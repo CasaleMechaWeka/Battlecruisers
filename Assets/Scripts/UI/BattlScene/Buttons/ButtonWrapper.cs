@@ -14,8 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public Button Button { get; private set; }
 
-        // FELIX  Make private
-        public bool IsEnabled
+        private bool IsEnabled
         {
             set
             {
