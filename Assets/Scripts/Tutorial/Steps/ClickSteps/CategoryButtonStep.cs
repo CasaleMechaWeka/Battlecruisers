@@ -3,8 +3,9 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
+    // FELIX  Test :)
     public class CategoryButtonStep : ClickStep
     {
         private readonly IBuildingCategoryPermitter _permitter;

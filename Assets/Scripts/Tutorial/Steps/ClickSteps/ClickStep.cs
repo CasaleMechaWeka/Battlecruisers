@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     /// <summary>
     /// Completed when the user clicks on a specific element.

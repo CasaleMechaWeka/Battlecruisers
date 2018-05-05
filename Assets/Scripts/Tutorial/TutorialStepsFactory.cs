@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;

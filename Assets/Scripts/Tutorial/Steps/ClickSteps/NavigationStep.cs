@@ -2,7 +2,7 @@
 using BattleCruisers.UI;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     // FELIX  Test :)
     public class NavigationStep : ClickStep
