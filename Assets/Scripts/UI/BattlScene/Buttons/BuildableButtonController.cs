@@ -41,17 +41,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
         {
-			if (_isPresented)
-			{
-				UpdateButtonActiveness();
-			}
-        }
-
-		public override void OnPresenting(object activationParameter)
-		{
-			base.OnPresenting(activationParameter);
 			UpdateButtonActiveness();
-		}
+        }
 
 		protected void UpdateButtonActiveness()
 		{
