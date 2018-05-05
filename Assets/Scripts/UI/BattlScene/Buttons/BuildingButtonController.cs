@@ -26,6 +26,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected override void OnClick()
 		{
+            base.OnClick();
 			_uiManager.SelectBuildingFromMenu(_buildingWrapper);
 		}
 	}

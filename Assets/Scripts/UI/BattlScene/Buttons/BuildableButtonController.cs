@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : Presentable
+    public abstract class BuildableButtonController : Presentable, IBuildableButton
 	{
-		private IBuildable _buildable;
 		protected IUIManager _uiManager;
         private IActivenessDecider<IBuildable> _activenessDecider;
         private ButtonWrapper _buttonWrapper;
@@ -17,19 +16,23 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
+        public event EventHandler Clicked;
+
+        public IBuildable Buildable { get; private set; }
+
         public void Initialise(IBuildable buildable, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
 		{
 			base.Initialise();
 
             Helper.AssertIsNotNull(buildable, uiManager, activenessDecider);
 
-			_buildable = buildable;
+			Buildable = buildable;
 			_uiManager = uiManager;
             _activenessDecider = activenessDecider;
 
-            buildableName.text = _buildable.Name;
-            droneLevel.text = _buildable.NumOfDronesRequired.ToString();
-            buildableImage.sprite = _buildable.Sprite;
+            buildableName.text = Buildable.Name;
+            droneLevel.text = Buildable.NumOfDronesRequired.ToString();
+            buildableImage.sprite = Buildable.Sprite;
 
 			_buttonWrapper = GetComponent<ButtonWrapper>();
             _buttonWrapper.Initialise();
@@ -58,9 +61,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected virtual bool ShouldBeEnabled()
 		{
-            return _activenessDecider.ShouldBeEnabled(_buildable);
+            return _activenessDecider.ShouldBeEnabled(Buildable);
 		}
 
-		protected abstract void OnClick();
+		protected virtual void OnClick()
+        {
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
+        }
 	}
 }

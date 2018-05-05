@@ -55,6 +55,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected override void OnClick()
 		{
+            base.OnClick();
+
 			_factory.UnitWrapper = _unitWrapper;
 			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
