@@ -20,6 +20,6 @@ namespace BattleCruisers.Scenes
         IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider();
         IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser);
 
-        // FELIX  Create activeness decider for navigation buttons & scrolling/zooming with mouse
+        BasicDecider CreateNavigationDecider();
     }
 }

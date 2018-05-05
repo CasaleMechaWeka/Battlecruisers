@@ -68,5 +68,10 @@ namespace BattleCruisers.Scenes
         {
             return new NormalBuildingDeleteButtonDecider(playerCruiser);
         }
+
+        public BasicDecider CreateNavigationDecider()
+        {
+            return new BasicDecider(shouldBeEnabled: true);
+        }
     }
 }

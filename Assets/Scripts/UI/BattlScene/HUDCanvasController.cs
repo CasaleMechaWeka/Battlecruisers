@@ -60,9 +60,10 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider, 
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            ICameraController cameraController)
+            ICameraController cameraController,
+            IActivenessDecider navigationActivenessDecider)
         {
-            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, navigationActivenessDecider);
 
             _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager);
             _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
@@ -71,7 +72,7 @@ namespace BattleCruisers.UI.BattleScene
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);
 
-            _navigationButtonWrapper.Initialise(cameraController);
+            _navigationButtonWrapper.Initialise(cameraController, navigationActivenessDecider);
             _gameSpeedWrapper.Initialise();
         }
     }

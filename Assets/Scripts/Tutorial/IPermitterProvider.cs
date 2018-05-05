@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 
 namespace BattleCruisers.Tutorial
@@ -8,5 +9,6 @@ namespace BattleCruisers.Tutorial
         ISlotPermitter SlotPermitter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        BasicDecider NavigationPermitter { get; }
     }
 }

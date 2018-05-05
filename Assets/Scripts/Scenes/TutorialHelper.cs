@@ -24,6 +24,7 @@ namespace BattleCruisers.Scenes
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
+        public BasicDecider NavigationPermitter { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -34,6 +35,7 @@ namespace BattleCruisers.Scenes
             _slotFilter = new SpecificSlotFilter();
             _buildableDecider = new BuildableTutorialDecider(prefabFactory);
             _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
+            NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
@@ -74,6 +76,11 @@ namespace BattleCruisers.Scenes
         public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
             return new StaticDecider<IBuilding>(shouldBeEnabled: false);
+        }
+
+        public BasicDecider CreateNavigationDecider()
+        {
+            return NavigationPermitter;
         }
     }
 }
