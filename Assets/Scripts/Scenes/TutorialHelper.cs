@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Tutorial;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -13,17 +14,26 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes
 {
-    public class TutorialHelper : IBattleSceneHelper
+    public class TutorialHelper : IBattleSceneHelper, IPermitterProvider
     {
         private readonly IDataProvider _dataProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly SpecificSlotFilter _slotFilter;
+        private readonly BuildableTutorialDecider _buildableDecider;
+        private readonly BuildingCategoryTutorialDecider _buildingCategoryDecider;
+
+        public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
+        public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
+        public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
-            _prefabFactory = prefabFactory;
+
+            _slotFilter = new SpecificSlotFilter();
+            _buildableDecider = new BuildableTutorialDecider(prefabFactory);
+            _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
@@ -48,17 +58,17 @@ namespace BattleCruisers.Scenes
 		
 		public ISlotFilter CreateSlotFilter()
 		{
-            return new SpecificSlotFilter();
+            return _slotFilter;
 		}
 
         public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
-            return new BuildableTutorialDecider(_prefabFactory);
+            return _buildableDecider;
         }
 
         public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
-            return new BuildingCategoryTutorialDecider();
+            return _buildingCategoryDecider;
         }
 
         public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
