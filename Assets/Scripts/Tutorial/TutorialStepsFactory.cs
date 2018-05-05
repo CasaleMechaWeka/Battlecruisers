@@ -49,6 +49,8 @@ namespace BattleCruisers.Tutorial
             steps.Enqueue(CreateStep_Drones());
 
             // 7. Building a building
+            steps.Enqueue(CreateSteps_BuildDroneStation());
+
             // 8. Enemy ship
             // 9. Enemy bomber
             // 10. Drone Focus
@@ -168,8 +170,7 @@ namespace BattleCruisers.Tutorial
                     _displayer,
                 factoriesCategoryButton);
 
-            // FELIX  Grab permitter :D
-            buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, null));
+            buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
 
             return buildDroneStationSteps;
         }

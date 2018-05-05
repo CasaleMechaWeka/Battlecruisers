@@ -40,6 +40,7 @@ namespace BattleCruisers.Scenes
 		private IDataProvider _dataProvider;
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
+        private IPermitterProvider _permitterProvider;
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
@@ -170,7 +171,9 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
-                return new TutorialHelper(_dataProvider, prefabFactory);
+                TutorialHelper helper = new TutorialHelper(_dataProvider, prefabFactory);
+                _permitterProvider = helper;
+                return helper;
             }
             else
             {
@@ -205,7 +208,7 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
-                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController);
+                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController, _permitterProvider);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
