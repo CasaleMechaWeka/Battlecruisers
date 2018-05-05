@@ -35,8 +35,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             buildableImage.sprite = Buildable.Sprite;
 
 			_buttonWrapper = GetComponent<ButtonWrapper>();
-            _buttonWrapper.Initialise();
-			_buttonWrapper.Button.onClick.AddListener(OnClick);
+            _buttonWrapper.Initialise(HandleClick);
             _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 		}
 
@@ -64,7 +63,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             return _activenessDecider.ShouldBeEnabled(Buildable);
 		}
 
-		protected virtual void OnClick()
+		protected virtual void HandleClick()
         {
             if (Clicked != null)
             {

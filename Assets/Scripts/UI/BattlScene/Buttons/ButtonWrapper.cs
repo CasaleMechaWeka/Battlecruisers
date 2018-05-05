@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -20,13 +21,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise()
+        public void Initialise(UnityAction clickHandler)
         {
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
             Button = GetComponent<Button>();
             Assert.IsNotNull(Button);
+            Button.onClick.AddListener(clickHandler);
         }
     }
 }

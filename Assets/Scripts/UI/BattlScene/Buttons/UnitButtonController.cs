@@ -53,9 +53,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 && _factory.BuildableState == BuildableState.Completed;
 		}
 
-		protected override void OnClick()
+		protected override void HandleClick()
 		{
-            base.OnClick();
+            base.HandleClick();
 
 			_factory.UnitWrapper = _unitWrapper;
 			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);

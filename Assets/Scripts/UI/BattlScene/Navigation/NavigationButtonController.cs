@@ -25,8 +25,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             _buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(_buttonWrapper);
-            _buttonWrapper.Initialise();
-            _buttonWrapper.Button.onClick.AddListener(ClickHandler);
+            _buttonWrapper.Initialise(Handleclick);
 
             UpdateActiveness();
         }
@@ -41,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _buttonWrapper.IsEnabled = _activenessDecider.ShouldBeEnabled;
         }
 
-        private void ClickHandler()
+        private void Handleclick()
         {
             _navigationAction.Invoke();
 
