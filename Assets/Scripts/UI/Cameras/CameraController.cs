@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.Cameras
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
 		private float _cameraOrthographicSizeChangeVelocity;
         private ISettingsManager _settingsManager;
+        private IActivenessDecider _navigationDecider;
 
         // Dragging
 		private bool _inDrag;
@@ -42,11 +43,17 @@ namespace BattleCruisers.UI.Cameras
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
-		public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser, ISettingsManager settingsManager, Material skyboxMaterial)
+		public void Initialise(
+            ICruiser playerCruiser, 
+            ICruiser aiCruiser, 
+            ISettingsManager settingsManager, 
+            Material skyboxMaterial,
+            IActivenessDecider navigationDecider)
 		{
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, navigationDecider);
 
             _settingsManager = settingsManager;
+            _navigationDecider = navigationDecider;
 
             _camera = GetComponent<Camera>();
             Assert.IsNotNull(_camera);
@@ -126,7 +133,7 @@ namespace BattleCruisers.UI.Cameras
                     _cameraState = _currentTarget.State;
                 }
             }
-            else
+            else if (_navigationDecider.ShouldBeEnabled)
             {
                 HandleUserInput();
             }
