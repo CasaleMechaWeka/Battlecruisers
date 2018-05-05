@@ -7,7 +7,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Tutorial;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;

@@ -5,7 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 {
     /// <summary>
     /// Deems a buildable button as enabled if the buildable is the currently permitted

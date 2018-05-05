@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps

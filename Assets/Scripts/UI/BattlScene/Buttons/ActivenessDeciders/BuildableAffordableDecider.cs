@@ -3,7 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 {
     /// <summary>
     /// Deems a buildable button as enabled if it's buildable can be afforded

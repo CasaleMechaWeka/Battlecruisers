@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 {
     public class BuildingCategoryTutorialDecider : IActivenessDecider<BuildingCategory>, IBuildingCategoryPermitter
     {
