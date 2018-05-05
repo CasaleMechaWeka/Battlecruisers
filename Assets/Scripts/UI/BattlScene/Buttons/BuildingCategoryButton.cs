@@ -7,15 +7,23 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton
+    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IActivenessDecider
 	{
-        private IActivenessDecider<BuildingCategory> _activenessDecider;
         private ButtonWrapper _buttonWrapper;
         private IUIManager _uiManager;
+        private IActivenessDecider<BuildingCategory> _activenessDecider;
 
         public event EventHandler Clicked;
 
+        public event EventHandler PotentialActivenessChange
+        {
+            add { _activenessDecider.PotentialActivenessChange += value; }
+            remove { _activenessDecider.PotentialActivenessChange -= value; }
+        }
+
         public BuildingCategory Category { get; private set; }
+
+        public bool ShouldBeEnabled { get { return _activenessDecider.ShouldBeEnabled(Category); } }
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
@@ -27,29 +35,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Helper.AssertIsNotNull(buildingGroup, uiManager, activenessDecider);
 
             _uiManager = uiManager;
-            Category = buildingGroup.BuildingCategory;
             _activenessDecider = activenessDecider;
-			_activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
+            Category = buildingGroup.BuildingCategory;
 
             _buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(_buttonWrapper);
-            _buttonWrapper.Initialise(HandleClick);
+            _buttonWrapper.Initialise(HandleClick, this);
 
             Text buttonText = _buttonWrapper.Button.GetComponentInChildren<Text>();
             Assert.IsNotNull(buttonText);
             buttonText.text = buildingGroup.BuildingGroupName;
-
-            UpdateActiveness();
-		}
-
-        private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
-        {
-            UpdateActiveness();
-        }
-
-		private void UpdateActiveness()
-		{
-            _buttonWrapper.IsEnabled = _activenessDecider.ShouldBeEnabled(Category);
 		}
 
         private void HandleClick()

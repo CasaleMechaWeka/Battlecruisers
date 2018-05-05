@@ -11,7 +11,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _factory;
 
-        public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
+		public override bool ShouldBeEnabled
+		{
+			get
+			{
+				return 
+                    base.ShouldBeEnabled
+                    && _factory != null
+                    && _factory.BuildableState == BuildableState.Completed;
+			}
+		}
+
+		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
 		{
             base.Initialise(unitWrapper.Buildable, uiManager, activenessDecider);
 
@@ -35,7 +46,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		private void _factory_CompletedBuildable(object sender, System.EventArgs e)
 		{
-			UpdateButtonActiveness();
+            TriggerActivenessChange();
 		}
 
 		public override void OnDismissing()
@@ -44,13 +55,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 			_factory.CompletedBuildable -= _factory_CompletedBuildable;
 			_factory = null;
-		}
-
-		protected override bool ShouldBeEnabled()
-		{
-            return
-                base.ShouldBeEnabled()
-                && _factory.BuildableState == BuildableState.Completed;
 		}
 
 		protected override void HandleClick()

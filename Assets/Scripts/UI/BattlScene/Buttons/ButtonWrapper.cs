@@ -37,9 +37,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Button = GetComponent<Button>();
             Assert.IsNotNull(Button);
             Button.onClick.AddListener(clickHandler);
+
+            UpdateActiveness();
         }
 
         private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
+        {
+            UpdateActiveness();
+        }
+
+        private void UpdateActiveness()
         {
             IsEnabled = _activenessDecider.ShouldBeEnabled;
         }

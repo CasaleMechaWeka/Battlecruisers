@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : Presentable, IBuildableButton
+    public abstract class BuildableButtonController : Presentable, IBuildableButton, IActivenessDecider
 	{
 		protected IUIManager _uiManager;
         private IActivenessDecider<IBuildable> _activenessDecider;
@@ -17,8 +17,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text droneLevel;
 
         public event EventHandler Clicked;
+        public event EventHandler PotentialActivenessChange;
 
         public IBuildable Buildable { get; private set; }
+
+        public virtual bool ShouldBeEnabled { get { return _activenessDecider.ShouldBeEnabled(Buildable); } }
 
         public void Initialise(IBuildable buildable, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
 		{
@@ -28,31 +31,30 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 			Buildable = buildable;
 			_uiManager = uiManager;
+
             _activenessDecider = activenessDecider;
+            _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
 
             buildableName.text = Buildable.Name;
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             buildableImage.sprite = Buildable.Sprite;
 
 			_buttonWrapper = GetComponent<ButtonWrapper>();
-            _buttonWrapper.Initialise(HandleClick);
-            _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
+            _buttonWrapper.Initialise(HandleClick, this);
 		}
 
         private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
         {
-			UpdateButtonActiveness();
+            TriggerActivenessChange();
         }
 
-		protected void UpdateButtonActiveness()
-		{
-            _buttonWrapper.IsEnabled = ShouldBeEnabled();
-		}
-
-		protected virtual bool ShouldBeEnabled()
-		{
-            return _activenessDecider.ShouldBeEnabled(Buildable);
-		}
+        protected void TriggerActivenessChange()
+        {
+            if (PotentialActivenessChange != null)
+            {
+                PotentialActivenessChange.Invoke(this, EventArgs.Empty);
+            }
+        }
 
 		protected virtual void HandleClick()
         {
