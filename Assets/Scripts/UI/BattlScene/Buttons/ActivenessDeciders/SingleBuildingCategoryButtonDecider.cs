@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 {
+    // FELIX  Delete
     public class SingleBuildingCategoryButtonDecider : IActivenessDecider
     {
         private readonly BuildingCategory _category;
