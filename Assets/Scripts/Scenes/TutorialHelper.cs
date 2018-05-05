@@ -22,8 +22,9 @@ namespace BattleCruisers.Scenes
         private readonly BuildingCategoryTutorialDecider _buildingCategoryDecider;
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
+		public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
+        public IActivenessDecider<IBuildable> BuildingActivenessDecider { get { return _buildableDecider; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
-        public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
         public BasicDecider NavigationPermitter { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)

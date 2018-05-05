@@ -13,10 +13,10 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
         public BuildingButtonStep(
             ITutorialStepArgs args, 
-            IBuildableButton buttonToHighlight,
+            IBuildableButton completionClickable,
             IBuildingPermitter permitter,
             IPrefabKey buildingToAllow) 
-            : base(args, buttonToHighlight)
+            : base(args, completionClickable)
         {
             Assert.IsNotNull(permitter);
 

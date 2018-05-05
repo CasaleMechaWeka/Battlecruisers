@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
@@ -169,6 +172,7 @@ namespace BattleCruisers.Tutorial
         {
             IList<ITutorialStep> buildDroneStationSteps = new List<ITutorialStep>();
 
+
             // Select factories building category
             IBuildingCategoryButton factoriesCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(BuildingCategory.Factory);
             Assert.IsNotNull(factoriesCategoryButton);
@@ -181,6 +185,39 @@ namespace BattleCruisers.Tutorial
                     factoriesCategoryButton);
 
             buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
+
+
+            // Select drone station
+            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = StaticPrefabKeys.Buildings.DroneStation;
+
+            ReadOnlyCollection<IBuildableButton> factoryButtons = _tutorialArgs.BuildMenuButtons.GetBuildableButtons(BuildingCategory.Factory);
+            IBuildableButton droneStationButton 
+                = factoryButtons
+                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.BuildingActivenessDecider.ShouldBeEnabled(button.Buildable));
+            Assert.IsNotNull(droneStationButton);
+
+            string textToDisplay = null;  // Means previous text is displayed
+
+            ITutorialStepArgs droneStationArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    null,
+                    _displayer,
+                    droneStationButton);
+
+            buildDroneStationSteps.Add(
+                new BuildingButtonStep(
+                    droneStationArgs,
+                    droneStationButton,
+                    _tutorialArgs.PermitterProvider.BuildingPermitter,
+                    StaticPrefabKeys.Buildings.DroneStation));
+
+
+            // Select a utility slot
+
+            // Wait for drone station to complete constructions
+
+            // Congrats!  Wait 3 seconds
 
             return buildDroneStationSteps;
         }
