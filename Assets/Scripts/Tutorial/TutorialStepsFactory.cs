@@ -170,7 +170,7 @@ namespace BattleCruisers.Tutorial
             IList<ITutorialStep> buildDroneStationSteps = new List<ITutorialStep>();
 
             // Select factories building category
-            IBuildingCategoryButton factoriesCategoryButton = _tutorialArgs.CategoryButtonsPanel.GetCategoryButton(BuildingCategory.Factory);
+            IBuildingCategoryButton factoriesCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(BuildingCategory.Factory);
             Assert.IsNotNull(factoriesCategoryButton);
 
             ITutorialStepArgs factoriesCategoryArgs
@@ -178,7 +178,7 @@ namespace BattleCruisers.Tutorial
                     _highlighter,
                     "To get more drones build a drone station.",
                     _displayer,
-                factoriesCategoryButton);
+                    factoriesCategoryButton);
 
             buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
 

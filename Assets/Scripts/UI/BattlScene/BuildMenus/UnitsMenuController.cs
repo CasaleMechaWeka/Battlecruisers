@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
@@ -28,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			_uiManager = uiManager;
 		}
 
-        protected override IPresentable CreateBuildableButton(IUIFactory uiFactory, HorizontalLayoutGroup buttonParent, IBuildableWrapper<IUnit> buildable)
+        protected override BuildableButtonController CreateBuildableButton(IUIFactory uiFactory, HorizontalLayoutGroup buttonParent, IBuildableWrapper<IUnit> buildable)
         {
             return uiFactory.CreateUnitButton(buttonParent, buildable);
         }

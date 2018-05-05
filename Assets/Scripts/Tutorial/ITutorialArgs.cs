@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial
         INavigationButtonsWrapper NavigationButtonsWrapper { get; }
         IGameSpeedWrapper GameSpeedWrapper { get; }
         ICruiserInfo PlayerCruiserInfo { get; }
-        IBuildingCategoryButtonsPanel CategoryButtonsPanel { get; }
+        IBuildMenuButtons BuildMenuButtons { get; }
         IPermitterProvider PermitterProvider { get; }
     }
 }

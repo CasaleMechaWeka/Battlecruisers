@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
@@ -9,6 +10,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
@@ -18,12 +20,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		private IUIManager _uiManager;
         private IUIFactory _uiFactory;
 		private IList<IBuildingGroup> _buildingGroups;
-        private IDictionary<BuildingCategory, Presentable> _buildingGroupPanels;
+        private IDictionary<BuildingCategory, BuildingsMenuController> _buildingGroupPanels;
         private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
-        private Presentable _currentPanel;
-
-		private HomePanel _homePanel;
-        public IBuildingCategoryButtonsPanel CategoryButtonsPanel { get { return _homePanel; } }
+        private Presentable _currentPanel, _homePanel;
+        private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
+        private IDictionary<BuildingCategory, ReadOnlyCollection<IBuildableButton>> _categoryToBuildableButtons;
 
 		public void Initialise(
 			IUIManager uiManager,
@@ -37,10 +38,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _uiManager = uiManager;
             _uiFactory = uiFactory;
 			_buildingGroups = buildingGroups;
+            _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
+            _categoryToBuildableButtons = new Dictionary<BuildingCategory, ReadOnlyCollection<IBuildableButton>>();
 
 			// Create main menu panel
 			GameObject homePanelGameObject = _uiFactory.CreatePanel(isActive: true);
-            _homePanel = homePanelGameObject.AddComponent<HomePanel>();
+            _homePanel = homePanelGameObject.AddComponent<Presentable>();
 			_currentPanel = _homePanel;
 			_homePanel.Initialise();
 
@@ -48,20 +51,22 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			HorizontalLayoutGroup homeButtonGroup = _homePanel.GetComponent<HorizontalLayoutGroup>();
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
 
-			_buildingGroupPanels = new Dictionary<BuildingCategory, Presentable>(_buildingGroups.Count);
+            _buildingGroupPanels = new Dictionary<BuildingCategory, BuildingsMenuController>(_buildingGroups.Count);
 
 			for (int i = 0; i < _buildingGroups.Count; ++i)
 			{
 				// Create category button
 				IBuildingGroup buildingGroup = _buildingGroups[i];
                 IBuildingCategoryButton categoryButton = _uiFactory.CreateBuildingCategoryButton(homeButtonGroup, buildingGroup);
-                _homePanel.AddCategoryButton(categoryButton);
+                _categoryToCategoryButtons.Add(categoryButton.Category, categoryButton);
 
 				// Create category panel
 				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
                 buildingsMenu.Initialise(_uiFactory, buildingGroup.Buildings, buildingSorter);
-				_buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
+				
+                _buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
+                _categoryToBuildableButtons.Add(buildingGroup.BuildingCategory, buildingsMenu.BuildableButtons);
 			}
 
             // Create menu UI for units
@@ -134,5 +139,17 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 			return false;
 		}
+
+        public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
+        {
+            Assert.IsTrue(_categoryToCategoryButtons.ContainsKey(category));
+            return _categoryToCategoryButtons[category];
+        }
+
+        public ReadOnlyCollection<IBuildableButton> GetBuildableButtons(BuildingCategory category)
+        {
+            Assert.IsTrue(_categoryToBuildableButtons.ContainsKey(category));
+            return _categoryToBuildableButtons[category];
+        }
 	}
 }

@@ -3,10 +3,8 @@ using BattleCruisers.Buildables.Buildings.Factories;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public interface IBuildMenu
+    public interface IBuildMenu : IBuildMenuButtons
     {
-        IBuildingCategoryButtonsPanel CategoryButtonsPanel { get; }
-
         void HideBuildMenu();
         void ShowBuildMenu();
         void ShowBuildingGroupsMenu();
