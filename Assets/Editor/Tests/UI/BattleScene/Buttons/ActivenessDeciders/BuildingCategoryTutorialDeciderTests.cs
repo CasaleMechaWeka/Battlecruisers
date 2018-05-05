@@ -2,9 +2,8 @@
 using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons
+namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
 {
-    // FELIX Move to right namespace
     public class BuildingCategoryTutorialDeciderTests
     {
         private BuildingCategoryTutorialDecider _decider;

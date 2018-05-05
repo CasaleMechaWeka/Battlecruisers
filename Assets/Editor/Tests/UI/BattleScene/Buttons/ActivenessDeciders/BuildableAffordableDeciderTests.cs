@@ -5,9 +5,8 @@ using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons
+namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
 {
-    // FELIX Move to right namespace
     public class BuildableAffordabeDeciderTests
     {
         private IActivenessDecider<IBuildable> _decider;
