@@ -81,7 +81,12 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.NavigationButtonsWrapper.OverviewButton,
                     _tutorialArgs.NavigationButtonsWrapper.MidRightButton,
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
-            return new ClickStep(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
+            
+            return 
+                new NavigationStep(
+                    navigationButtonArgs, 
+                    _tutorialArgs.PermitterProvider.NavigationPermitter, 
+                    _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
 		}
 
         private ITutorialStep CreateStep_EnemyCruiser()
@@ -103,7 +108,11 @@ namespace BattleCruisers.Tutorial
                     "Navigate back to your cruiser",
                     _displayer,
                     _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
-            return new ClickStep(navigateToPlayerCruiserArgs, _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
+            return 
+                new NavigationStep(
+                    navigateToPlayerCruiserArgs, 
+                    _tutorialArgs.PermitterProvider.NavigationPermitter, 
+                    _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
         }
     
         private IList<ITutorialStep> CreateSteps_SpeedControls()
