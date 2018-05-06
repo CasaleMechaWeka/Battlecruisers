@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.Cruisers.Slots
+﻿using System.Collections.Generic;
+
+namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotPermitter
     {
-        ISlot PermittedSlot { set; }
+        IList<ISlot> PermittedSlots { set; }
     }
 }

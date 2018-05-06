@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes
     public class TutorialHelper : IBattleSceneHelper, IPermitterProvider
     {
         private readonly IDataProvider _dataProvider;
-        private readonly SpecificSlotFilter _slotFilter;
+        private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildableTutorialDecider _buildableDecider;
         private readonly BuildingCategoryTutorialDecider _buildingCategoryDecider;
 
@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes
 
             _dataProvider = dataProvider;
 
-            _slotFilter = new SpecificSlotFilter();
+            _slotFilter = new SpecificSlotsFilter();
             _buildableDecider = new BuildableTutorialDecider(prefabFactory);
             _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
             NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
