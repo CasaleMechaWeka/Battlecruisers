@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
@@ -50,8 +51,8 @@ namespace BattleCruisers.Tutorial
             //// 5. Speed controls
             //steps.Enqueue(CreateSteps_SpeedControls());
 
-            // 6. Drones
-            steps.Enqueue(CreateStep_Drones());
+            //// 6. Drones
+            //steps.Enqueue(CreateStep_Drones());
 
             // 7. Building a building
             steps.Enqueue(CreateSteps_BuildDroneStation());
@@ -208,6 +209,22 @@ namespace BattleCruisers.Tutorial
 
 
             // Select a utility slot
+            IList<ISlot> utilitySlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(SlotType.Utility);
+            ISlot[] utilitySlotsArray = utilitySlots.ToArray();
+
+            ITutorialStepArgs utilitySlotArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    textToDisplay,
+                    _displayer,
+                    utilitySlotsArray);
+
+            buildDroneStationSteps.Add(
+                new SlotsStep(
+                    utilitySlotArgs,
+                    _tutorialArgs.PermitterProvider.SlotPermitter,
+                    utilitySlotsArray));
+
 
             // Wait for drone station to complete constructions
 
