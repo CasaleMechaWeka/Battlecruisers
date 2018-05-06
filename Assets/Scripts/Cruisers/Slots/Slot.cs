@@ -69,7 +69,7 @@ namespace BattleCruisers.Cruisers.Slots
         public Transform Transform { get { return transform; } }
         public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public Vector2 Size { get { return _renderer.size; } }
-        public virtual float SizeMultiplier { get { return 1.3f; } }
+        public virtual float SizeMultiplier { get { return 0.6f; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
