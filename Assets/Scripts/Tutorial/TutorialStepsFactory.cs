@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -227,6 +230,21 @@ namespace BattleCruisers.Tutorial
 
 
             // Wait for drone station to complete constructions
+            IProvider<IBuildable> lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
+            IHighlightablesProvider droneStationProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
+
+            ITutorialStepArgs waitForCompletionArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "Wait for drone station to complete, patience :)",
+                    _displayer,
+                    droneStationProvider);
+
+            buildDroneStationSteps.Add(
+                new BuildableCompletedWaitStep(
+                    waitForCompletionArgs,
+                    lastBuildingStartedProvider));
+
 
             // Congrats!  Wait 3 seconds
 
