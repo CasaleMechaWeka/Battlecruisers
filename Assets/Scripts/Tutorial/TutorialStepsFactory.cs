@@ -201,7 +201,7 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgs droneStationArgs
                 = new TutorialStepArgs(
                     _highlighter,
-                    null,
+                    textToDisplay,
                     _displayer,
                     droneStationButton);
 
