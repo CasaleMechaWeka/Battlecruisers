@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
@@ -188,14 +189,7 @@ namespace BattleCruisers.Tutorial
 
 
             // Select drone station
-            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = StaticPrefabKeys.Buildings.DroneStation;
-
-            ReadOnlyCollection<IBuildableButton> factoryButtons = _tutorialArgs.BuildMenuButtons.GetBuildableButtons(BuildingCategory.Factory);
-            IBuildableButton droneStationButton 
-                = factoryButtons
-                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.BuildingActivenessDecider.ShouldBeEnabled(button.Buildable));
-            Assert.IsNotNull(droneStationButton);
-
+            IBuildableButton droneStationButton = FindBuildableButton(BuildingCategory.Factory, StaticPrefabKeys.Buildings.DroneStation);
             string textToDisplay = null;  // Means previous text is displayed
 
             ITutorialStepArgs droneStationArgs
@@ -220,6 +214,22 @@ namespace BattleCruisers.Tutorial
             // Congrats!  Wait 3 seconds
 
             return buildDroneStationSteps;
+        }
+
+        private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
+        {
+            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = buildingKey;
+
+            ReadOnlyCollection<IBuildableButton> categoryButtons = _tutorialArgs.BuildMenuButtons.GetBuildableButtons(buildingCategory);
+
+            IBuildableButton buildableButton
+                = categoryButtons
+                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.BuildingActivenessDecider.ShouldBeEnabled(button.Buildable));
+
+            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = null;
+
+            Assert.IsNotNull(buildableButton);
+            return buildableButton;
         }
     }
 }
