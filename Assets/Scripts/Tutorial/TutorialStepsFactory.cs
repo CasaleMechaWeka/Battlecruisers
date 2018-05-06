@@ -65,9 +65,11 @@ namespace BattleCruisers.Tutorial
             //steps.Enqueue(CreateStep_Drones());
 
             // 7. Building a building
-            steps.Enqueue(CreateSteps_BuildDroneStation());
+            //steps.Enqueue(CreateSteps_BuildDroneStation());
 
             // 8. Enemy ship
+            steps.Enqueue(CreateSteps_EnemyShipDefence());
+
             // 9. Enemy bomber
             // 10. Drone Focus
 
@@ -190,7 +192,7 @@ namespace BattleCruisers.Tutorial
 
         private IList<ITutorialStep> CreateSteps_EnemyShipDefence()
         {
-            IList<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
+            List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
 
             // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
 
@@ -201,6 +203,14 @@ namespace BattleCruisers.Tutorial
             // Navigate back to player cruiser
 
             // Build anti-ship turret
+            IList<ITutorialStep> buildTurretSteps
+                = CreateSteps_ConstructBuilding(
+                    BuildingCategory.Defence,
+                    StaticPrefabKeys.Buildings.AntiShipTurret,
+                    SlotType.Deck,
+                    "Quick, build an anti-ship turret!",
+                    "anti-ship turret");
+            enemyShipSteps.AddRange(buildTurretSteps);
 
             // FELIX Insta-complete attack boat
 
@@ -211,7 +221,6 @@ namespace BattleCruisers.Tutorial
             return enemyShipSteps;
         }
 
-        // FELIX  Avoid duplicate code with creating drone station :)
         // FELIX  Allow specification of frontmost slot :)
         public IList<ITutorialStep> CreateSteps_ConstructBuilding(
             BuildingCategory buildingCategory, 
