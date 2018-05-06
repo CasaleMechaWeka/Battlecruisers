@@ -93,6 +93,7 @@ namespace BattleCruisers.Scenes
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
             ISlotFilter slotFilter = helper.CreateSlotFilter();
 
+
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
             Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
