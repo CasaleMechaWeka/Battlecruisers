@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.UI
 {
+    // FELIX  Should really be renamed to filter :/
     public interface IActivenessDecider
     {
         /// <summary>
@@ -12,6 +13,7 @@ namespace BattleCruisers.UI
         bool ShouldBeEnabled { get; }
     }
 
+    // FELIX  Should really be renamed to filter :/
     public interface IActivenessDecider<TElement>
     {
         /// <summary>
