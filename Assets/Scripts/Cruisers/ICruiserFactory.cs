@@ -16,7 +16,8 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection,
-            ISlotFilter slotFilter);
+            ISlotFilter highlightableFilter,
+            ISlotFilter clickableFilter);
         
 		ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera);
 		ICruiserHelper CreateAIHelper(IUIManager uiIManager, ICameraController camera);

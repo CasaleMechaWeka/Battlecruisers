@@ -91,7 +91,9 @@ namespace BattleCruisers.Scenes
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
-            ISlotFilter slotFilter = helper.CreateSlotFilter();
+            ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
+            // FELIX  Actually create filter :P
+            ISlotFilter clickableSlotFilter = null;
 
 
             // Instantiate player cruiser
@@ -128,13 +130,13 @@ namespace BattleCruisers.Scenes
 
             // Initialise player cruiser
             ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right, slotFilter);
+            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right, highlightableSlotFilter, clickableSlotFilter);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
             ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left, slotFilter);
+            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left, highlightableSlotFilter, clickableSlotFilter);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

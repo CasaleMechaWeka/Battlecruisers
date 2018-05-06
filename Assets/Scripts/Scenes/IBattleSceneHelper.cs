@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes
         IUIManager CreateUIManager(IManagerArgs args);
         ILoadout GetPlayerLoadout();
         void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
-        ISlotFilter CreateSlotFilter();
+        ISlotFilter CreateHighlightableSlotFilter();
 
         IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager);
         IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider();

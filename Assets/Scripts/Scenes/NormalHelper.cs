@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes
             aiManager.CreateAI(levelInfo);
 		}
 		
-		public ISlotFilter CreateSlotFilter()
+		public ISlotFilter CreateHighlightableSlotFilter()
 		{
             return new FreeSlotFilter();
 		}

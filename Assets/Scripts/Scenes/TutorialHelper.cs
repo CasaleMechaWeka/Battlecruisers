@@ -61,7 +61,7 @@ namespace BattleCruisers.Scenes
             // The tutorial has no AI :)
 		}
 		
-		public ISlotFilter CreateSlotFilter()
+		public ISlotFilter CreateHighlightableSlotFilter()
 		{
             return _slotFilter;
 		}

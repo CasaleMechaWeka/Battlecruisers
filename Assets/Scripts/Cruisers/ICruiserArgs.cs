@@ -21,6 +21,7 @@ namespace BattleCruisers.Cruisers
         RepairManager RepairManager { get; }
         bool ShouldShowFog { get; }
         ICruiserHelper Helper { get; }
-        ISlotFilter SlotFilter { get; }
+        ISlotFilter HighlightableFilter { get; }
+        ISlotFilter ClickableFilter { get; }
     }
 }
