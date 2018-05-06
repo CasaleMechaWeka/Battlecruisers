@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 
@@ -14,5 +16,7 @@ namespace BattleCruisers.Tutorial
         IBuildingPermitter BuildingPermitter { get; }
 
         BasicDecider NavigationPermitter { get; }
+
+        IProvider<IBuildable> CreateLastBuildingStartedProvider(ICruiserController cruiser);
     }
 }

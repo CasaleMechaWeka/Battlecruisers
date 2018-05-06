@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Tutorial;
+using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Scenes
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
         public BasicDecider NavigationPermitter { get; private set; }
         public BasicDecider BackButtonPermitter { get; private set; }
+        public IProvider<IBuildable> LastBuildingStartedProvider { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -89,6 +91,11 @@ namespace BattleCruisers.Scenes
         public BasicDecider CreateBackButtonDecider()
         {
             return BackButtonPermitter;
+        }
+
+        public IProvider<IBuildable> CreateLastBuildingStartedProvider(ICruiserController cruiser)
+        {
+            return new LastBuildingStartedProvider(cruiser);
         }
     }
 }
