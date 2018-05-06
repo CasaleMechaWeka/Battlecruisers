@@ -74,5 +74,10 @@ namespace BattleCruisers.Scenes
         {
             return new BasicDecider(shouldBeEnabled: true);
         }
+
+        public BasicDecider CreateBackButtonDecider()
+        {
+            return new BasicDecider(shouldBeEnabled: true);
+        }
     }
 }

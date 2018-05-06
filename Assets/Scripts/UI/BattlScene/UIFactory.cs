@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.BattleScene
         private ISpriteProvider _spriteProvider;
         private IActivenessDecider<IBuildable> _buildableButtonActivenessDecider;
         private IActivenessDecider<BuildingCategory> _buildingCategoryButtonActivenessDecider;
+        private IActivenessDecider _backButtonDecider;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -29,14 +30,21 @@ namespace BattleCruisers.UI.BattleScene
             IUIManager uiManager, 
             ISpriteProvider spriteProvider, 
             IActivenessDecider<IBuildable> buildableButtonActivenessDecider,
-            IActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider)
+            IActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider,
+            IActivenessDecider backButtonDecider)
         {
-            Helper.AssertIsNotNull(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider);
+            Helper.AssertIsNotNull(
+                uiManager, 
+                spriteProvider, 
+                buildableButtonActivenessDecider, 
+                buildingCategoryButtonActivenessDecider, 
+                backButtonDecider);
 
             _uiManager = uiManager;
             _spriteProvider = spriteProvider;
             _buildableButtonActivenessDecider = buildableButtonActivenessDecider;
             _buildingCategoryButtonActivenessDecider = buildingCategoryButtonActivenessDecider;
+            _backButtonDecider = backButtonDecider;
 
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
@@ -83,7 +91,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button backButton = Instantiate(backButtonPrefab);
 			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			backButton.GetComponent<BackButtonController>().Initialise(_uiManager);
+			backButton.GetComponent<BackButtonController>().Initialise(_uiManager, _backButtonDecider);
 			return backButton;
 		}
 	}

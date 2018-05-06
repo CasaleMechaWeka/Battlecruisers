@@ -1,15 +1,19 @@
 ﻿using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BackButtonController : MonoBehaviour 
 	{
-		public void Initialise(IUIManager uiManager)
+        public void Initialise(IUIManager uiManager, IActivenessDecider activenessDecider)
 		{
-			Button button = GetComponent<Button>();
-			button.onClick.AddListener(() => uiManager.ShowBuildingGroups());
+            Helper.AssertIsNotNull(uiManager, activenessDecider);
+
+            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
+            Assert.IsNotNull(buttonWrapper);
+            buttonWrapper.Initialise(uiManager.ShowBuildingGroups, activenessDecider);
 		}
 	}
 }

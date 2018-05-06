@@ -21,5 +21,6 @@ namespace BattleCruisers.Scenes
         IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser);
 
         BasicDecider CreateNavigationDecider();
+        BasicDecider CreateBackButtonDecider();
     }
 }

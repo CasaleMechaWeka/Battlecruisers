@@ -26,6 +26,7 @@ namespace BattleCruisers.Scenes
         public IActivenessDecider<IBuildable> BuildingActivenessDecider { get { return _buildableDecider; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
         public BasicDecider NavigationPermitter { get; private set; }
+        public BasicDecider BackButtonPermitter { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -37,6 +38,7 @@ namespace BattleCruisers.Scenes
             _buildableDecider = new BuildableTutorialDecider(prefabFactory);
             _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
             NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
+            BackButtonPermitter = new BasicDecider(shouldBeEnabled: false);
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
@@ -82,6 +84,11 @@ namespace BattleCruisers.Scenes
         public BasicDecider CreateNavigationDecider()
         {
             return NavigationPermitter;
+        }
+
+        public BasicDecider CreateBackButtonDecider()
+        {
+            return BackButtonPermitter;
         }
     }
 }
