@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
@@ -277,5 +278,22 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             Assert.AreEqual(2, _slotWrapper.GetSlotCount(SlotType.Deck));
             Assert.AreEqual(1, _slotWrapper.GetSlotCount(_middleSlot.Type));
         }
+
+        #region GetSlotsForType
+        [Test]
+        public void GetSlotsForType_NonExistantType_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotWrapper.GetSlotsForType(SlotType.Utility));
+        }
+
+        [Test]
+        public void GetSlotsForType()
+        {
+            ReadOnlyCollection<ISlot> deckSlots = _slotWrapper.GetSlotsForType(SlotType.Deck);
+            Assert.AreEqual(2, deckSlots.Count);
+            Assert.IsTrue(deckSlots.Contains(_deckSlot1));
+            Assert.IsTrue(deckSlots.Contains(_deckSlot2));
+        }
+        #endregion GetSlotsForType
     }
 }

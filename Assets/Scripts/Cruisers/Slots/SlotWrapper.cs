@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
@@ -204,6 +205,12 @@ namespace BattleCruisers.Cruisers.Slots
                 e.BuildingParent.UnhighlightSlot();
                 e.BuildingParent.IsVisible = false;
             }
+        }
+
+        public ReadOnlyCollection<ISlot> GetSlotsForType(SlotType slotType)
+        {
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+            return new ReadOnlyCollection<ISlot>(_slots[slotType]);
         }
     }
 }
