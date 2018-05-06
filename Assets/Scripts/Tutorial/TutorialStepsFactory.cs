@@ -76,22 +76,15 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateStep_YourCruiser()
         {
-            ITutorialStepArgs yourCruiserArgs
-                = new TutorialStepArgs(
-                    _highlighter,
-                    "This is your cruiser",
-                    _displayer,
-                    _tutorialArgs.PlayerCruiser);
+            ITutorialStepArgs yourCruiserArgs = CreateTutorialStepArgs("This is your cruiser", _tutorialArgs.PlayerCruiser);
             return new ClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
         private ITutorialStep CreateStep_NavigationButtons()
 		{
 			ITutorialStepArgs navigationButtonArgs
-			    = new TutorialStepArgs(
-    				_highlighter,
+                = CreateTutorialStepArgs(
     				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
-    				_displayer,
                     _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton,
                     _tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
                     _tutorialArgs.NavigationButtonsWrapper.OverviewButton,
@@ -108,10 +101,8 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_EnemyCruiser()
         {
             ITutorialStepArgs yourCruiserArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
-                    _displayer,
                     _tutorialArgs.AICruiser);
             return new ClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
         }
@@ -119,10 +110,8 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_NavigateToPlayerCruiser()
         {
             ITutorialStepArgs navigateToPlayerCruiserArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "Navigate back to your cruiser",
-                    _displayer,
                     _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
             return 
                 new NavigationStep(
@@ -137,10 +126,8 @@ namespace BattleCruisers.Tutorial
 
             // Deviate from normal speed
             ITutorialStepArgs deviateFromNormalSpeedArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "These control the game speed.  Change the game speed!",
-                    _displayer,
                     _tutorialArgs.GameSpeedWrapper.SlowMotionButton,
                     _tutorialArgs.GameSpeedWrapper.PlayButton,
                     _tutorialArgs.GameSpeedWrapper.FastForwardButton,
@@ -157,10 +144,8 @@ namespace BattleCruisers.Tutorial
 
             // Return to normal speed
             ITutorialStepArgs returnToNormalSpeedArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "Nice!  Now change it back :D",
-                    _displayer,
                     _tutorialArgs.GameSpeedWrapper.PlayButton);
             speedControlSteps.Add(new ClickStep(returnToNormalSpeedArgs, _tutorialArgs.GameSpeedWrapper.PlayButton));
 
@@ -170,12 +155,10 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_Drones()
         {
             ITutorialStepArgs dronesArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "Drones are the only resource.  This is how many drones you have.  The " +
                     "more drones you have the faster your cruiser works and the better " +
                     "buildings / units you can build.",
-                    _displayer,
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
             return new ClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
         }
@@ -190,10 +173,8 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(factoriesCategoryButton);
 
             ITutorialStepArgs factoriesCategoryArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "To get more drones build a drone station.",
-                    _displayer,
                     factoriesCategoryButton);
 
             buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
@@ -202,13 +183,7 @@ namespace BattleCruisers.Tutorial
             // Select drone station
             IBuildableButton droneStationButton = FindBuildableButton(BuildingCategory.Factory, StaticPrefabKeys.Buildings.DroneStation);
             string textToDisplay = null;  // Means previous text is displayed
-
-            ITutorialStepArgs droneStationArgs
-                = new TutorialStepArgs(
-                    _highlighter,
-                    textToDisplay,
-                    _displayer,
-                    droneStationButton);
+            ITutorialStepArgs droneStationArgs = CreateTutorialStepArgs(textToDisplay, droneStationButton);
 
             buildDroneStationSteps.Add(
                 new BuildingButtonStep(
@@ -221,13 +196,7 @@ namespace BattleCruisers.Tutorial
             // Select a utility slot
             IList<ISlot> utilitySlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(SlotType.Utility);
             ISlot[] utilitySlotsArray = utilitySlots.ToArray();
-
-            ITutorialStepArgs utilitySlotArgs
-                = new TutorialStepArgs(
-                    _highlighter,
-                    textToDisplay,
-                    _displayer,
-                    utilitySlotsArray);
+            ITutorialStepArgs utilitySlotArgs = CreateTutorialStepArgs(textToDisplay, utilitySlotsArray);
 
             buildDroneStationSteps.Add(
                 new SlotsStep(
@@ -241,10 +210,8 @@ namespace BattleCruisers.Tutorial
             IHighlightablesProvider droneStationProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
 
             ITutorialStepArgs waitForCompletionArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "Wait for drone station to complete, patience :)",
-                    _displayer,
                     droneStationProvider);
 
             buildDroneStationSteps.Add(
@@ -255,10 +222,8 @@ namespace BattleCruisers.Tutorial
 
             // Congrats!  Wait 3 seconds
             ITutorialStepArgs droneStationCompletedArgs
-                = new TutorialStepArgs(
-                    _highlighter,
+                = CreateTutorialStepArgs(
                     "Nice!  You have gained 2 drones :D",
-                    _displayer,
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
 
             buildDroneStationSteps.Add(
@@ -287,6 +252,19 @@ namespace BattleCruisers.Tutorial
             return buildableButton;
         }
 
-        // FELIX  Create helper method that creates tutorial setp args, so don't have to pass _highlighter & displayer every time :P
+        private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, params IHighlightable[] elementsToHighlight)
+        {
+            return CreateTutorialStepArgs(textToDisplay, new StaticHighlightableProvider(elementsToHighlight));
+        }
+
+        private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, IHighlightablesProvider highlightablesProvider)
+        {
+            return
+                new TutorialStepArgs(
+                    _highlighter,
+                    textToDisplay,
+                    _displayer,
+                    highlightablesProvider);
+        }
     }
 }

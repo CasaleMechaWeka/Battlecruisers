@@ -15,15 +15,6 @@ namespace BattleCruisers.Tutorial.Steps
             IHighlighter highlighter,
             string textToDisplay,
             ITextDisplayer displayer,
-            params IHighlightable[] elementsToHighlight)
-            : this(highlighter, textToDisplay, displayer, new StaticHighlightableProvider(elementsToHighlight))
-        {
-        }
-
-        public TutorialStepArgs(
-            IHighlighter highlighter,
-            string textToDisplay,
-            ITextDisplayer displayer,
             IHighlightablesProvider highlightablesProvider)
         {
             Helper.AssertIsNotNull(highlighter, displayer, highlightablesProvider);
