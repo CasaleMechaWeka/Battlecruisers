@@ -13,6 +13,7 @@ using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
@@ -21,14 +22,20 @@ namespace BattleCruisers.Tutorial
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
+        private readonly IVariableDelayDeferrer _deferrer;
         private readonly ITutorialArgs _tutorialArgs;
 
-        public TutorialStepsFactory(IHighlighter highlighter, ITextDisplayer displayer, ITutorialArgs tutorialArgs)
+        public TutorialStepsFactory(
+            IHighlighter highlighter, 
+            ITextDisplayer displayer, 
+            IVariableDelayDeferrer deferrer,
+            ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, displayer, tutorialArgs);
+            Helper.AssertIsNotNull(highlighter, displayer, deferrer, tutorialArgs);
 
             _highlighter = highlighter;
             _displayer = displayer;
+            _deferrer = deferrer;
             _tutorialArgs = tutorialArgs;
         }
 
@@ -247,6 +254,19 @@ namespace BattleCruisers.Tutorial
 
 
             // Congrats!  Wait 3 seconds
+            ITutorialStepArgs droneStationCompletedArgs
+                = new TutorialStepArgs(
+                    _highlighter,
+                    "Nice!  You have gained 2 drones :D",
+                    _displayer,
+                    _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
+
+            buildDroneStationSteps.Add(
+                new DelayWaitStep(
+                    droneStationCompletedArgs,
+                    _deferrer,
+                    waitTimeInS: 3));
+
 
             return buildDroneStationSteps;
         }
@@ -266,5 +286,7 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(buildableButton);
             return buildableButton;
         }
+
+        // FELIX  Create helper method that creates tutorial setp args, so don't have to pass _highlighter & displayer every time :P
     }
 }

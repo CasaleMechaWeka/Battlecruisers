@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,7 +11,8 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialManager : MonoBehaviour, ITutorialManager
     {
-		private IHighlightFactory _highlightFactory;
+		private IVariableDelayDeferrer _deferrer;
+        private IHighlightFactory _highlightFactory;
         private ITutorialStepConsumer _consumer;
 
         public TextDisplayer textDisplayer;
@@ -18,16 +21,19 @@ namespace BattleCruisers.Tutorial
 
         public void Initialise(ITutorialArgs tutorialArgs)
         {
-            Assert.IsNotNull(tutorialArgs);
+            Helper.AssertIsNotNull(tutorialArgs, textDisplayer);
 
             textDisplayer.Initialise();
+
+            _deferrer = GetComponent<IVariableDelayDeferrer>();
+            Assert.IsNotNull(_deferrer);
 
             _highlightFactory = GetComponent<IHighlightFactory>();
             Assert.IsNotNull(_highlightFactory);
 
             IHighlighter highlighter = new Highlighter(_highlightFactory);
 
-            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, tutorialArgs);
+            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, _deferrer, tutorialArgs);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
             _consumer = new TutorialStepConsumer(steps);
 
