@@ -1,8 +1,10 @@
-﻿namespace BattleCruisers.Tutorial.Highlighting
+﻿using System.Collections.Generic;
+
+namespace BattleCruisers.Tutorial.Highlighting
 {
     public interface IHighlighter
     {
-        void Highlight(params IHighlightable[] toHighlight);
+        void Highlight(IList<IHighlightable> toHighlight);
         void UnhighlightAll();
     }
 }

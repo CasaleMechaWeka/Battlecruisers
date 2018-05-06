@@ -19,7 +19,7 @@ namespace BattleCruisers.Tutorial.Highlighting
             _highlights = new List<IHighlight>();
         }
 
-        public void Highlight(params IHighlightable[] toHighlight)
+        public void Highlight(IList<IHighlightable> toHighlight)
         {
             Assert.IsTrue(_highlights.Count == 0, "Should only highlight group of IHighlightables at a time.");
 
