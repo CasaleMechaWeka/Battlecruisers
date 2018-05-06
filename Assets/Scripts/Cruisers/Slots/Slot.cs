@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.States;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -64,7 +65,15 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
+        // IHighlightable
+        public Transform Transform { get { return transform; } }
+        public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
+        public Vector2 Size { get { return _renderer.size; } }
+        public virtual float SizeMultiplier { get { return 1.3f; } }
+        public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
+
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
+        public event EventHandler Clicked;
 
         public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
 		{
@@ -88,6 +97,11 @@ namespace BattleCruisers.Cruisers.Slots
 		public void OnPointerClick(PointerEventData eventData)
 		{
             CurrentState.OnClick();
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
 		}
 
 		private Vector3 FindSpawnPosition(IBuilding building)

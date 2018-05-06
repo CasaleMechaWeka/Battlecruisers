@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
     }
 
-    public interface ISlot : IGameObject
+    public interface ISlot : IGameObject, IHighlightable, IClickable
     {
         bool IsFree { get; }
         SlotType Type { get; }
