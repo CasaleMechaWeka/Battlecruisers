@@ -12,7 +12,7 @@ namespace BattleCruisers.UI
 		public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public Vector2 Size { get { return _rectTransform.sizeDelta; } }
 		public virtual float SizeMultiplier { get { return 1.3f; } }
-        public HighlightableType Type { get { return HighlightableType.OnCanvas; } }
+        public HighlightableType HighlightableType { get { return HighlightableType.OnCanvas; } }
 
         public virtual void Initialise()
         {

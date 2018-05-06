@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables
 		public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public abstract Vector2 Size { get; }
 		public virtual float SizeMultiplier { get { return 1; } }
-        public HighlightableType Type { get { return HighlightableType.InGame; } }
+        public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
         // Seems to be an okay approximation (for cruisers at least)
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;

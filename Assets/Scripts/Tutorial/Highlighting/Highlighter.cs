@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial.Highlighting
         {
             float radius = highlightable.Size.x / 2 * highlightable.SizeMultiplier;
 
-            switch (highlightable.Type)
+            switch (highlightable.HighlightableType)
             {
                 case HighlightableType.InGame:
                     Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;

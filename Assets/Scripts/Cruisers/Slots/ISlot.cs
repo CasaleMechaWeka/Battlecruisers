@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Cruisers.Slots

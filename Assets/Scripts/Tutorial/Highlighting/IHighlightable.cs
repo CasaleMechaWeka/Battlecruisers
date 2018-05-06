@@ -13,6 +13,6 @@ namespace BattleCruisers.Tutorial.Highlighting
         Vector2 PositionAdjustment { get; }
         Vector2 Size { get; }
         float SizeMultiplier { get; }
-        HighlightableType Type { get; }
+        HighlightableType HighlightableType { get; }
     }
 }
