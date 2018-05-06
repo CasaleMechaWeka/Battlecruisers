@@ -9,7 +9,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IActivenessDecider
 	{
-        private ButtonWrapper _buttonWrapper;
         private IUIManager _uiManager;
         private IActivenessDecider<BuildingCategory> _activenessDecider;
 
@@ -38,11 +37,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _activenessDecider = activenessDecider;
             Category = buildingGroup.BuildingCategory;
 
-            _buttonWrapper = GetComponent<ButtonWrapper>();
-            Assert.IsNotNull(_buttonWrapper);
-            _buttonWrapper.Initialise(HandleClick, this);
+            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
+            Assert.IsNotNull(buttonWrapper);
+            buttonWrapper.Initialise(HandleClick, this);
 
-            Text buttonText = _buttonWrapper.Button.GetComponentInChildren<Text>();
+            Text buttonText = buttonWrapper.Button.GetComponentInChildren<Text>();
             Assert.IsNotNull(buttonText);
             buttonText.text = buildingGroup.BuildingGroupName;
 		}

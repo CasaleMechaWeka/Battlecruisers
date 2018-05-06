@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
 		protected IUIManager _uiManager;
         private IActivenessDecider<IBuildable> _activenessDecider;
-        private ButtonWrapper _buttonWrapper;
 
 		public Image buildableImage;
 		public Text buildableName;
@@ -39,8 +38,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             buildableImage.sprite = Buildable.Sprite;
 
-			_buttonWrapper = GetComponent<ButtonWrapper>();
-            _buttonWrapper.Initialise(HandleClick, this);
+            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
+            buttonWrapper.Initialise(HandleClick, this);
 		}
 
         private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)

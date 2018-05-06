@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public class NavigationButtonController : UIElement, IButton
     {
         private Action _navigationAction;
-        private ButtonWrapper _buttonWrapper;
 
         public event EventHandler Clicked;
 
@@ -20,9 +19,9 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             _navigationAction = navigationAction;
 
-            _buttonWrapper = GetComponent<ButtonWrapper>();
-            Assert.IsNotNull(_buttonWrapper);
-            _buttonWrapper.Initialise(Handleclick, activenessDecider);
+            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
+            Assert.IsNotNull(buttonWrapper);
+            buttonWrapper.Initialise(Handleclick, activenessDecider);
         }
 
         private void Handleclick()
