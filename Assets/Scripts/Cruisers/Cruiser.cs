@@ -108,7 +108,7 @@ namespace BattleCruisers.Cruisers
 
             _fog.Initialise(args.ShouldShowFog);
 
-            SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter, args.ClickableFilter);
+            SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter);
             SlotWrapper.HideAllSlots();
 		}
 

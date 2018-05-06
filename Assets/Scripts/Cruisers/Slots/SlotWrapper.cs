@@ -42,11 +42,11 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots, ISlotFilter slotFilter, ISlotFilter clickableFilter)
+        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots, ISlotFilter highlightableFilter)
 		{
-            Helper.AssertIsNotNull(parentCruiser, slots, slotFilter, clickableFilter);
+            Helper.AssertIsNotNull(parentCruiser, slots, highlightableFilter);
 
-            _highlightableFilter = slotFilter;
+            _highlightableFilter = highlightableFilter;
             _areMultipleSlotsVisible = false;
             _slots = new Dictionary<SlotType, IList<ISlot>>();
 
@@ -60,7 +60,7 @@ namespace BattleCruisers.Cruisers.Slots
             {
                 ISlot slot = slots[i];
                 IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
-                slot.Initialise(parentCruiser, neighbouringSlots, clickableFilter);
+                slot.Initialise(parentCruiser, neighbouringSlots);
                 SortSlotsByType(slot);
                 slot.BuildingDestroyed += Slot_BuildingDestroyed;
             }

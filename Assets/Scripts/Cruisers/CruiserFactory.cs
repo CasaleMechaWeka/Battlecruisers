@@ -35,10 +35,9 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection,
-            ISlotFilter highlightableFilter,
-            ISlotFilter clickableFilter)
+            ISlotFilter highlightableFilter)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, clickableFilter);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -60,8 +59,7 @@ namespace BattleCruisers.Cruisers
                     repairManager,
                     shouldShowFog,
                     helper,
-                    highlightableFilter,
-                    clickableFilter);
+                    highlightableFilter);
 
             cruiser.Initialise(cruiserArgs);
         }

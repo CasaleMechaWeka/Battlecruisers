@@ -22,6 +22,5 @@ namespace BattleCruisers.Cruisers
         bool ShouldShowFog { get; }
         ICruiserHelper Helper { get; }
         ISlotFilter HighlightableFilter { get; }
-        ISlotFilter ClickableFilter { get; }
     }
 }

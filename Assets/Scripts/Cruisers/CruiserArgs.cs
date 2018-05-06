@@ -22,7 +22,6 @@ namespace BattleCruisers.Cruisers
         public bool ShouldShowFog { get; private set; }
         public ICruiserHelper Helper { get; private set; }
         public ISlotFilter HighlightableFilter { get; private set; }
-        public ISlotFilter ClickableFilter { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -35,10 +34,9 @@ namespace BattleCruisers.Cruisers
             RepairManager repairManager, 
             bool shouldShowFog,
             ICruiserHelper helper,
-            ISlotFilter highlightableFilter,
-            ISlotFilter clickableFilter)
+            ISlotFilter highlightableFilter)
         {
-            BCUtils.Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, helper, highlightableFilter, clickableFilter);
+            BCUtils.Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, helper, highlightableFilter);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;

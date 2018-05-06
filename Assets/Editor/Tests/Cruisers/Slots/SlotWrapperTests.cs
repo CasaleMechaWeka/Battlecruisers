@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
     {
         private ISlotWrapper _slotWrapper;
         private ICruiser _parentCruiser;
-        private ISlotFilter _highlightableFilter, _clickableFilter;
+        private ISlotFilter _highlightableFilter;
         private ISlot _frontSlot, _middleSlot, _deckSlot1, _deckSlot2;
         private IBuilding _building;
 
@@ -24,7 +24,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             _parentCruiser = Substitute.For<ICruiser>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
-            _clickableFilter = Substitute.For<ISlotFilter>();
 
             // Deck2, Deck1, Platform, Bow
             _frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
@@ -41,7 +40,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                 _deckSlot1
             };
 
-            _slotWrapper = new SlotWrapper(_parentCruiser, slots, _highlightableFilter, _clickableFilter);
+            _slotWrapper = new SlotWrapper(_parentCruiser, slots, _highlightableFilter);
 
             _building = Substitute.For<IBuilding>();
             SlotType middleSlotType = _middleSlot.Type;
@@ -64,32 +63,28 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                     neighbours.Contains(_middleSlot)
                     && !neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
-            ),
-            _clickableFilter);
+            ));
 
             _middleSlot.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_frontSlot)
                     && neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
-            ),
-            _clickableFilter);
+            ));
 
             _deckSlot1.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_middleSlot)
                     && neighbours.Contains(_deckSlot2)
                     && !neighbours.Contains(_frontSlot)
-            ),
-            _clickableFilter);
+            ));
 
             _deckSlot2.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_middleSlot)
                     && !neighbours.Contains(_frontSlot)
-            ),
-            _clickableFilter);
+            ));
         }
 
         #region IsSlotAvailable
