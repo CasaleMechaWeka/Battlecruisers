@@ -236,6 +236,29 @@ namespace BattleCruisers.Tutorial
             return buildDroneStationSteps;
         }
 
+        private IList<ITutorialStep> CreateSteps_EnemyShipDefence()
+        {
+            IList<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
+
+            // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
+
+            // Navigate to enemey cruiser
+
+            // Click on attack boat
+
+            // Navigate back to player cruiser
+
+            // Build anti-ship turret
+
+            // FELIX Insta-complete attack boat
+
+            // Wait for anti-ship turret to destroy attack boat
+
+            // Congrats!  Wait 2 seconds
+
+            return enemyShipSteps;
+        }
+
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
         {
             _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = buildingKey;
