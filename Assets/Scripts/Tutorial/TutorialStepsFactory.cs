@@ -11,6 +11,7 @@ using BattleCruisers.Tutorial.Highlighting.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
@@ -109,19 +110,6 @@ namespace BattleCruisers.Tutorial
             return new ClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
         }
 
-        private ITutorialStep CreateStep_NavigateToPlayerCruiser()
-        {
-            ITutorialStepArgs navigateToPlayerCruiserArgs
-                = CreateTutorialStepArgs(
-                    "Navigate back to your cruiser",
-                    _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
-            return 
-                new NavigationStep(
-                    navigateToPlayerCruiserArgs, 
-                    _tutorialArgs.PermitterProvider.NavigationPermitter, 
-                    _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton);
-        }
-    
         private IList<ITutorialStep> CreateSteps_SpeedControls()
         {
             IList<ITutorialStep> speedControlSteps = new List<ITutorialStep>();
@@ -266,6 +254,26 @@ namespace BattleCruisers.Tutorial
             constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
 
             return constructionSteps;
+        }
+
+        private ITutorialStep CreateStep_NavigateToPlayerCruiser()
+        {
+            string textToDisplay = "Navigate back to your cruiser";
+            IButton playerCruiserButton = _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton;
+            return CreateStep_NavigateToCruiser(textToDisplay, playerCruiserButton);
+        }
+
+        private ITutorialStep CreateStep_NavigateToEnemyCruiser()
+        {
+            string textToDisplay = "Navigate to the enemy cruiser";
+            IButton enemyCruiserButton = _tutorialArgs.NavigationButtonsWrapper.AICruiserButton;
+            return CreateStep_NavigateToCruiser(textToDisplay, enemyCruiserButton);
+        }
+
+        private ITutorialStep CreateStep_NavigateToCruiser(string textToDisplay, IButton navigationButton)
+        {
+            ITutorialStepArgs navigateToCruiserArgs = CreateTutorialStepArgs(textToDisplay, navigationButton);
+            return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.PermitterProvider.NavigationPermitter, navigationButton);
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
