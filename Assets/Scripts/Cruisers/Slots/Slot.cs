@@ -19,6 +19,7 @@ namespace BattleCruisers.Cruisers.Slots
         private SpriteRenderer _renderer;
         private ICruiser _parentCruiser;
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
+        private ISlotFilter _clickableFilter;
 
         public SlotType type;
         public Direction direction;
@@ -75,12 +76,14 @@ namespace BattleCruisers.Cruisers.Slots
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
+        public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots, ISlotFilter clickableFilter)
 		{
-            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
+            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, clickableFilter);
 
             _parentCruiser = parentCruiser;
+            // FELIX  Should be passed readonly collection instead of creating here?
             NeighbouringSlots = new ReadOnlyCollection<ISlot>(neighbouringSlots);
+            _clickableFilter = clickableFilter;
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
@@ -96,6 +99,11 @@ namespace BattleCruisers.Cruisers.Slots
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
+            if (!_clickableFilter.IsMatch(this))
+            {
+                return;
+            }
+
             CurrentState.OnClick();
 
             if (Clicked != null)
