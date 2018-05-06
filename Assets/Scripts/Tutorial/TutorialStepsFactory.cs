@@ -165,60 +165,13 @@ namespace BattleCruisers.Tutorial
 
         private IList<ITutorialStep> CreateSteps_BuildDroneStation()
         {
-            IList<ITutorialStep> buildDroneStationSteps = new List<ITutorialStep>();
-
-
-            // Select factories building category
-            IBuildingCategoryButton factoriesCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(BuildingCategory.Factory);
-            Assert.IsNotNull(factoriesCategoryButton);
-
-            ITutorialStepArgs factoriesCategoryArgs
-                = CreateTutorialStepArgs(
+            IList<ITutorialStep> buildDroneStationSteps
+                = CreateSteps_ConstructBuilding(
+                    BuildingCategory.Factory,
+                    StaticPrefabKeys.Buildings.DroneStation,
+                    SlotType.Utility,
                     "To get more drones build a drone station.",
-                    factoriesCategoryButton);
-
-            buildDroneStationSteps.Add(new CategoryButtonStep(factoriesCategoryArgs, factoriesCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
-
-
-            // Select drone station
-            IBuildableButton droneStationButton = FindBuildableButton(BuildingCategory.Factory, StaticPrefabKeys.Buildings.DroneStation);
-            string textToDisplay = null;  // Means previous text is displayed
-            ITutorialStepArgs droneStationArgs = CreateTutorialStepArgs(textToDisplay, droneStationButton);
-
-            buildDroneStationSteps.Add(
-                new BuildingButtonStep(
-                    droneStationArgs,
-                    droneStationButton,
-                    _tutorialArgs.PermitterProvider.BuildingPermitter,
-                    StaticPrefabKeys.Buildings.DroneStation));
-
-
-            // Select a utility slot
-            IList<ISlot> utilitySlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(SlotType.Utility);
-            ISlot[] utilitySlotsArray = utilitySlots.ToArray();
-            ITutorialStepArgs utilitySlotArgs = CreateTutorialStepArgs(textToDisplay, utilitySlotsArray);
-
-            buildDroneStationSteps.Add(
-                new SlotsStep(
-                    utilitySlotArgs,
-                    _tutorialArgs.PermitterProvider.SlotPermitter,
-                    utilitySlotsArray));
-
-
-            // Wait for drone station to complete constructions
-            IProvider<IBuildable> lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
-            IHighlightablesProvider droneStationProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
-
-            ITutorialStepArgs waitForCompletionArgs
-                = CreateTutorialStepArgs(
-                    "Wait for drone station to complete, patience :)",
-                    droneStationProvider);
-
-            buildDroneStationSteps.Add(
-                new BuildableCompletedWaitStep(
-                    waitForCompletionArgs,
-                    lastBuildingStartedProvider));
-
+                    "drone station");
 
             // Congrats!  Wait 3 seconds
             ITutorialStepArgs droneStationCompletedArgs
@@ -231,7 +184,6 @@ namespace BattleCruisers.Tutorial
                     droneStationCompletedArgs,
                     _deferrer,
                     waitTimeInS: 3));
-
 
             return buildDroneStationSteps;
         }
@@ -257,6 +209,62 @@ namespace BattleCruisers.Tutorial
             // Congrats!  Wait 2 seconds
 
             return enemyShipSteps;
+        }
+
+        // FELIX  Avoid duplicate code with creating drone station :)
+        // FELIX  Allow specification of frontmost slot :)
+        public IList<ITutorialStep> CreateSteps_ConstructBuilding(
+            BuildingCategory buildingCategory, 
+            IPrefabKey buildingToConstruct,
+            SlotType buildingSlotType,
+            string constructBuildingInstruction,
+            string buildingName)
+        {
+            IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
+
+
+            // Select building category
+            IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(buildingCategory);
+            Assert.IsNotNull(buildingCategoryButton);
+            ITutorialStepArgs buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
+            constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
+
+
+            // Select building
+            IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct);
+            string textToDisplay = null;  // Means previous text is displayed
+            ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
+
+            constructionSteps.Add(
+                new BuildingButtonStep(
+                    buldingButtonArgs,
+                    buildingButton,
+                    _tutorialArgs.PermitterProvider.BuildingPermitter,
+                    buildingToConstruct));
+
+
+            // Select a utility slot
+            IList<ISlot> buildingSlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(buildingSlotType);
+            ISlot[] buildingSlotsArray = buildingSlots.ToArray();
+            ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, buildingSlotsArray);
+
+            constructionSteps.Add(
+                new SlotsStep(
+                    buildingSlotsArgs,
+                    _tutorialArgs.PermitterProvider.SlotPermitter,
+                    buildingSlotsArray));
+
+
+            // Wait for building to complete construction
+            IProvider<IBuildable> lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
+            IHighlightablesProvider highlightableProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
+			string waitText = "Wait for " + buildingName + " to complete, patience :)";
+
+            ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, highlightableProvider);
+            constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
+
+
+            return constructionSteps;
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
