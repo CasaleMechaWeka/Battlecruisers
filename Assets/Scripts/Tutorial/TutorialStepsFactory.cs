@@ -222,19 +222,16 @@ namespace BattleCruisers.Tutorial
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
-
             // Select building category
             IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
             ITutorialStepArgs buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
 
-
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,
@@ -242,27 +239,22 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.PermitterProvider.BuildingPermitter,
                     buildingToConstruct));
 
-
-            // Select a utility slot
+            // Select a slot
             IList<ISlot> buildingSlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(buildingSlotType);
             ISlot[] buildingSlotsArray = buildingSlots.ToArray();
             ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, buildingSlotsArray);
-
             constructionSteps.Add(
                 new SlotsStep(
                     buildingSlotsArgs,
                     _tutorialArgs.PermitterProvider.SlotPermitter,
                     buildingSlotsArray));
 
-
             // Wait for building to complete construction
             IProvider<IBuildable> lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
             IHighlightablesProvider highlightableProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
 			string waitText = "Wait for " + buildingName + " to complete, patience :)";
-
             ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, highlightableProvider);
             constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
-
 
             return constructionSteps;
         }
