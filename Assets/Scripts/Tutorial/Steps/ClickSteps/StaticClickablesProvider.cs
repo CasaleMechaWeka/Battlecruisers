@@ -3,6 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
+    // FELIX  Test
     public class StaticClickablesProvider : IClickablesProvider
     {
         private readonly IList<IClickable> _clickables;
