@@ -151,6 +151,7 @@ namespace BattleCruisers.Buildables
         public event EventHandler CompletedBuildable;
         public event EventHandler<BuildProgressEventArgs> BuildableProgress;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+        public event EventHandler Clicked;
 
         protected override void OnStaticInitialised()
         {
@@ -403,6 +404,11 @@ namespace BattleCruisers.Buildables
             else
             {
                 OnClicked();
+            }
+			
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
             }
         }
 
