@@ -8,7 +8,6 @@ namespace BattleCruisers.Tutorial.Steps
     /// <summary>
     /// Completed when the specified buildable completes construction.
     /// </summary>
-    // FELIX  Test :D
     public class BuildableCompletedWaitStep : TutorialStep
     {
         private readonly IProvider<IBuildable> _buildableProvider;

@@ -7,7 +7,6 @@ namespace BattleCruisers.Tutorial.Steps
     /// <summary>
     /// Completed when the specified amount of time has passed.
     /// </summary>
-    // FELIX  Test :D
     public class DelayWaitStep : TutorialStep
     {
         private readonly IVariableDelayDeferrer _defferer;

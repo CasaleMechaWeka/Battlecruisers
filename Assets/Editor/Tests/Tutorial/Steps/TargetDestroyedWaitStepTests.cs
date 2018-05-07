@@ -7,23 +7,22 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
 {
-    public class BuildableCompletedWaitStepTests : TutorialStepTestsBase
+    public class TargetDestroyedWaitStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-
-        private IProvider<IBuildable> _buildableProvider;
-        private IBuildable _buildable;
+        private IProvider<ITarget> _targetProvider;
+        private ITarget _target;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _buildable = Substitute.For<IBuildable>();
-            _buildableProvider = Substitute.For<IProvider<IBuildable>>();
-            _buildableProvider.FindItem().Returns(_buildable);
+            _targetProvider = Substitute.For<IProvider<ITarget>>();
+            _target = Substitute.For<ITarget>();
+            _targetProvider.FindItem().Returns(_target);
 
-            _tutorialStep = new BuildableCompletedWaitStep(_args, _buildableProvider);
+            _tutorialStep = new TargetDestroyedWaitStep(_args, _targetProvider);
         }
 
         #region Start
@@ -31,23 +30,23 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         public void Start()
         {
             _tutorialStep.Start(_completionCallback);
-            _buildableProvider.Received().FindItem();
+            _targetProvider.Received().FindItem();
         }
 
         [Test]
-        public void Start_NullBuildableProvided_Throws()
+        public void Start_NullTargetProvided_Throws()
         {
-            _buildableProvider.FindItem().Returns((IBuildable)null);
+            _targetProvider.FindItem().Returns((ITarget)null);
             Assert.Throws<UnityAsserts.AssertionException>(() => _tutorialStep.Start(_completionCallback));
         }
         #endregion Start
 
         [Test]
-        public void BuildableConstructionCompletes_TriggersCompletedCallback()
+        public void TargetDestroyed_TriggersCompletedCallback()
         {
             Start();
 
-            _buildable.CompletedBuildable += Raise.Event();
+            _target.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target));
             Assert.AreEqual(1, _callbackCounter);
         }
     }
