@@ -75,7 +75,6 @@ namespace BattleCruisers.Cruisers.Slots
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        // FELIX  Remove clickable filter :(
         public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
