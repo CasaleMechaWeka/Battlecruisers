@@ -29,6 +29,8 @@ namespace BattleCruisers.Scenes
         public BasicDecider NavigationPermitter { get; private set; }
         public BasicDecider BackButtonPermitter { get; private set; }
         public ILastBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
+        public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
+        public ISingleBuildableProvider SingleShipProvider { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -41,6 +43,8 @@ namespace BattleCruisers.Scenes
             _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
             NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
             BackButtonPermitter = new BasicDecider(shouldBeEnabled: false);
+            SingleAircraftProvider = new SingleBuildableProvider(Tags.AIRCRAFT);
+            SingleShipProvider = new SingleBuildableProvider(Tags.SHIPS);
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
