@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps

@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Providers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps

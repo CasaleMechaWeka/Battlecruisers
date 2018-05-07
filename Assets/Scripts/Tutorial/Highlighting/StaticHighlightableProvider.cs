@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Highlighting.Providers
+namespace BattleCruisers.Tutorial.Highlighting
 {
     // FELIX  Test
     public class StaticHighlightableProvider : IHighlightablesProvider

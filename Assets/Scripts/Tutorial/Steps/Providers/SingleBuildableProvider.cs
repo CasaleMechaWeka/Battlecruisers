@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Providers;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using UnityEngine;
 using UnityEngine.Assertions;

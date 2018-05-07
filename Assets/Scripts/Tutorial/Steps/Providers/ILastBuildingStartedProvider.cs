@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Tutorial.Highlighting.Providers;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
