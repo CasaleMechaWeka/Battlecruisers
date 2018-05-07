@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly BasicDecider _navigationDecider;
 
         public NavigationStep(ITutorialStepArgs args, BasicDecider navigationDecider, params IClickable[] completionClickables)
-            : base(args, completionClickables)
+            : base(args, new StaticClickablesProvider(completionClickables))
         {
             Assert.IsNotNull(navigationDecider);
             _navigationDecider = navigationDecider;

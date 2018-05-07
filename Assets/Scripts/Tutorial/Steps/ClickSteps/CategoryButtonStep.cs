@@ -16,7 +16,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             ITutorialStepArgs args, 
             IBuildingCategoryButton buildingCategoryButton,
             IBuildingCategoryPermitter permitter) 
-            : base(args, buildingCategoryButton)
+            : base(args, new StaticClickablesProvider(buildingCategoryButton))
         {
             Assert.IsNotNull(permitter);
 

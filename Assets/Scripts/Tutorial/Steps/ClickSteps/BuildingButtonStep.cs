@@ -14,10 +14,10 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
         public BuildingButtonStep(
             ITutorialStepArgs args, 
-            IBuildableButton completionClickable,
+            IBuildableButton buildableButton,
             IBuildingPermitter permitter,
             IPrefabKey buildingToAllow) 
-            : base(args, completionClickable)
+            : base(args, new StaticClickablesProvider(buildableButton))
         {
             Assert.IsNotNull(permitter);
 

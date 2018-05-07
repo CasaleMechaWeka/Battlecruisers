@@ -26,6 +26,7 @@ namespace BattleCruisers.Tutorial.Steps
 
         public virtual void Start(Action completionCallback)
         {
+            Assert.IsNull(_completionCallback, "Start(...) should only be called once.");
             Assert.IsNotNull(completionCallback);
             _completionCallback = completionCallback;
 
@@ -39,6 +40,8 @@ namespace BattleCruisers.Tutorial.Steps
 
         protected virtual void OnCompleted()
         {
+            Assert.IsNotNull(_completionCallback, "OnCompleted() should not be called before Start()");
+
             _highlighter.UnhighlightAll();
             _completionCallback.Invoke();
         }

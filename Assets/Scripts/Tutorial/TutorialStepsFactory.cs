@@ -80,7 +80,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_YourCruiser()
         {
             ITutorialStepArgs yourCruiserArgs = CreateTutorialStepArgs("This is your cruiser", _tutorialArgs.PlayerCruiser);
-            return new ClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
+            return CreateClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
         private ITutorialStep CreateStep_NavigationButtons()
@@ -107,7 +107,7 @@ namespace BattleCruisers.Tutorial
                 = CreateTutorialStepArgs(
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _tutorialArgs.AICruiser);
-            return new ClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
+            return CreateClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
         }
 
         private IList<ITutorialStep> CreateSteps_SpeedControls()
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.GameSpeedWrapper.DoubleFastForwardButton);
 
             ITutorialStep deviateFromNormalSpeedStep
-                = new ClickStep(
+                = CreateClickStep(
                     deviateFromNormalSpeedArgs, 
                     _tutorialArgs.GameSpeedWrapper.SlowMotionButton, 
                     _tutorialArgs.GameSpeedWrapper.FastForwardButton, 
@@ -137,7 +137,7 @@ namespace BattleCruisers.Tutorial
                 = CreateTutorialStepArgs(
                     "Nice!  Now change it back :D",
                     _tutorialArgs.GameSpeedWrapper.PlayButton);
-            speedControlSteps.Add(new ClickStep(returnToNormalSpeedArgs, _tutorialArgs.GameSpeedWrapper.PlayButton));
+            speedControlSteps.Add(CreateClickStep(returnToNormalSpeedArgs, _tutorialArgs.GameSpeedWrapper.PlayButton));
 
             return speedControlSteps;
         }
@@ -150,7 +150,7 @@ namespace BattleCruisers.Tutorial
                     "more drones you have the faster your cruiser works and the better " +
                     "buildings / units you can build.",
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
-            return new ClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
+            return CreateClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
         }
 
         private IList<ITutorialStep> CreateSteps_BuildDroneStation()
@@ -305,6 +305,11 @@ namespace BattleCruisers.Tutorial
                     textToDisplay,
                     _displayer,
                     highlightablesProvider);
+        }
+
+        private ITutorialStep CreateClickStep(ITutorialStepArgs args, params IClickable[] completionClickables)
+        {
+            return new ClickStep(args, new StaticClickablesProvider(completionClickables));
         }
     }
 }
