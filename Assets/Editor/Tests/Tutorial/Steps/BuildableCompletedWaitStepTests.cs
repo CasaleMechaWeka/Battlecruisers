@@ -1,0 +1,54 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.Providers;
+using NSubstitute;
+using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
+
+namespace BattleCruisers.Tests.Tutorial.Steps
+{
+    public class BuildableCompletedWaitStepTests : TutorialStepTestsBase
+    {
+        private ITutorialStep _tutorialStep;
+
+        private IProvider<IBuildable> _buildableProvider;
+        private IBuildable _buildable;
+
+        [SetUp]
+        public override void SetuUp()
+        {
+            base.SetuUp();
+
+            _buildable = Substitute.For<IBuildable>();
+            _buildableProvider = Substitute.For<IProvider<IBuildable>>();
+            _buildableProvider.FindItem().Returns(_buildable);
+
+            _tutorialStep = new BuildableCompletedWaitStep(_args, _buildableProvider);
+        }
+
+        #region Start
+        [Test]
+        public void Start()
+        {
+            _tutorialStep.Start(_completionCallback);
+            _buildableProvider.Received().FindItem();
+        }
+
+        [Test]
+        public void Start_NullBuildableProvidedThrows()
+        {
+            _buildableProvider.FindItem().Returns((IBuildable)null);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _tutorialStep.Start(_completionCallback));
+        }
+        #endregion Start
+
+        [Test]
+        public void BuildableConstructionCompletes_TriggersCompletedCallback()
+        {
+            Start();
+
+            _buildable.CompletedBuildable += Raise.Event();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+    }
+}
