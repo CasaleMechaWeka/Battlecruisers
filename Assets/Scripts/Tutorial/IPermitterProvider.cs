@@ -17,6 +17,6 @@ namespace BattleCruisers.Tutorial
 
         BasicDecider NavigationPermitter { get; }
 
-        IProvider<IBuildable> CreateLastBuildingStartedProvider(ICruiserController cruiser);
+        ILastBuildingStartedProvider CreateLastBuildingStartedProvider(ICruiserController cruiser);
     }
 }

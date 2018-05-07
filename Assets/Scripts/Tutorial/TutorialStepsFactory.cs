@@ -185,7 +185,7 @@ namespace BattleCruisers.Tutorial
             // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
 
             // Navigate to enemey cruiser
-            enemyShipSteps.Add(CreateStep_EnemyCruiser());
+            //enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser());
 
             // Click on attack boat
 
@@ -248,10 +248,9 @@ namespace BattleCruisers.Tutorial
                     buildingSlotsArray));
 
             // Wait for building to complete construction
-            IProvider<IBuildable> lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
-            IHighlightablesProvider highlightableProvider = new LastBuildingStartedHighlightableProvider(lastBuildingStartedProvider);
+            ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
 			string waitText = "Wait for " + buildingName + " to complete, patience :)";
-            ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, highlightableProvider);
+            ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
             constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
 
             return constructionSteps;

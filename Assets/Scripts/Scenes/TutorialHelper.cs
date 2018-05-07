@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
         public BasicDecider NavigationPermitter { get; private set; }
         public BasicDecider BackButtonPermitter { get; private set; }
-        public IProvider<IBuildable> LastBuildingStartedProvider { get; private set; }
+        public ILastBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -93,7 +93,7 @@ namespace BattleCruisers.Scenes
             return BackButtonPermitter;
         }
 
-        public IProvider<IBuildable> CreateLastBuildingStartedProvider(ICruiserController cruiser)
+        public ILastBuildingStartedProvider CreateLastBuildingStartedProvider(ICruiserController cruiser)
         {
             return new LastBuildingStartedProvider(cruiser);
         }
