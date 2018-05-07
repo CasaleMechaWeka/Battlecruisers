@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Steps;
+﻿using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -20,40 +17,15 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         }
     }
 
-    public class TutorialStepTests
+    public class TutorialStepTests : TutorialStepTestsBase
     {
         private DummyTutorialStep _tutorialStep;
 
-        private IHighlighter _highlighter;
-        private string _textToDisplay;
-        private ITextDisplayer _displayer;
-        private IHighlightablesProvider _highlightablesProvider;
-        private IList<IHighlightable> _highlightables;
-        private Action _completionCallback;
-        private int _callbackCounter;
-
         [SetUp]
-        public void SetuUp()
+        public override void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
-            _highlighter = Substitute.For<IHighlighter>();
-            _textToDisplay = "Staub";
-            _displayer = Substitute.For<ITextDisplayer>();
-
-            _highlightablesProvider = Substitute.For<IHighlightablesProvider>();
-            _highlightables = new List<IHighlightable>()
-            {
-                Substitute.For<IHighlightable>(),
-                Substitute.For<IHighlightable>()
-            };
-            _highlightablesProvider.FindHighlightables().Returns(_highlightables);
-
-            ITutorialStepArgs args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightablesProvider);
-            _tutorialStep = new DummyTutorialStep(args);
-
-            _completionCallback = () => _callbackCounter++;
-            _callbackCounter = 0;
+            base.SetuUp();
+            _tutorialStep = new DummyTutorialStep(_args);
         }
 
         #region Start
