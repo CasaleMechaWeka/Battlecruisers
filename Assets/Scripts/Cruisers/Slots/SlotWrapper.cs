@@ -59,16 +59,16 @@ namespace BattleCruisers.Cruisers.Slots
             for (int i = 0; i < slots.Count; ++i)
             {
                 ISlot slot = slots[i];
-                IList<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
+                ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots);
                 SortSlotsByType(slot);
                 slot.BuildingDestroyed += Slot_BuildingDestroyed;
             }
         }
 
-        private IList<ISlot> FindSlotNeighbours(IList<ISlot> slots, int slotIndex)
+        private ReadOnlyCollection<ISlot> FindSlotNeighbours(IList<ISlot> slots, int slotIndex)
         {
-			IList<ISlot> neighbouringSlots = new List<ISlot>(DEFAULT_NUM_OF_NEIGHBOURS);
+			List<ISlot> neighbouringSlots = new List<ISlot>(DEFAULT_NUM_OF_NEIGHBOURS);
 			
 			// Add slot to the front
             if (slotIndex != 0)
@@ -82,7 +82,7 @@ namespace BattleCruisers.Cruisers.Slots
                 neighbouringSlots.Add(slots[slotIndex + 1]);
 			}
 
-            return neighbouringSlots;
+            return neighbouringSlots.AsReadOnly();
         }
 
         private void SortSlotsByType(ISlot slot)

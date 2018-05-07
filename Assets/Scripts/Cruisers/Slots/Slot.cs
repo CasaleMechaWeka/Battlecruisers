@@ -75,13 +75,12 @@ namespace BattleCruisers.Cruisers.Slots
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        public void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots)
+        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots)
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
             _parentCruiser = parentCruiser;
-            // FELIX  Should be passed readonly collection instead of creating here?
-            NeighbouringSlots = new ReadOnlyCollection<ISlot>(neighbouringSlots);
+            NeighbouringSlots = neighbouringSlots;
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);

@@ -58,28 +58,28 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void Constructor_SetsUpSlots()
         {
-            _frontSlot.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
+            _frontSlot.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_middleSlot)
                     && !neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
             ));
 
-            _middleSlot.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
+            _middleSlot.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_frontSlot)
                     && neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
             ));
 
-            _deckSlot1.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
+            _deckSlot1.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_middleSlot)
                     && neighbours.Contains(_deckSlot2)
                     && !neighbours.Contains(_frontSlot)
             ));
 
-            _deckSlot2.Received().Initialise(_parentCruiser, Arg.Is<IList<ISlot>>(
+            _deckSlot2.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_middleSlot)

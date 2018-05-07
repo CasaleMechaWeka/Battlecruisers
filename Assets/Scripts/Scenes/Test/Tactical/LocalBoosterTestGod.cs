@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
 			// Setup artillery slot
 			Slot slotToBoost = FindObjectOfType<Slot>();
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
-            slotToBoost.Initialise(parentCruiser, neighbouringSlots: new List<ISlot>());
+            slotToBoost.Initialise(parentCruiser, neighbouringSlots: new ReadOnlyCollection<ISlot>(new List<ISlot>()));
 
 
             // Setup artillery

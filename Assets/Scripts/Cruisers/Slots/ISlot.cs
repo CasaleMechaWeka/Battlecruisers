@@ -55,7 +55,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
 
-        void Initialise(ICruiser parentCruiser, IList<ISlot> neighbouringSlots);
+        void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots);
         void HighlightSlot();
         void UnhighlightSlot();
 	}
