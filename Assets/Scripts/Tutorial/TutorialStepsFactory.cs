@@ -185,6 +185,7 @@ namespace BattleCruisers.Tutorial
             // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
 
             // Navigate to enemey cruiser
+            enemyShipSteps.Add(CreateStep_EnemyCruiser());
 
             // Click on attack boat
 
