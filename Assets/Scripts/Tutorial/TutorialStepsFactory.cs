@@ -188,6 +188,11 @@ namespace BattleCruisers.Tutorial
             //enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser());
 
             // Click on attack boat
+            string textToDisplay = null;
+            ISingleBuildableProvider attackBoatProvider = _tutorialArgs.PermitterProvider.SingleShipProvider;
+            ITutorialStepArgs clickAttackBoatArgs = CreateTutorialStepArgs(textToDisplay, attackBoatProvider);
+			// FELIX  Uncomment, once AI step above is implemented :/
+            //enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
 
             // Navigate back to player cruiser
 
@@ -263,6 +268,7 @@ namespace BattleCruisers.Tutorial
             return CreateStep_NavigateToCruiser(textToDisplay, playerCruiserButton);
         }
 
+        // FELIX  Pass text to display :/  "Uh oh, the enemy is building an attack boat!  Have a look!"
         private ITutorialStep CreateStep_NavigateToEnemyCruiser()
         {
             string textToDisplay = "Navigate to the enemy cruiser";
@@ -309,7 +315,12 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateClickStep(ITutorialStepArgs args, params IClickable[] completionClickables)
         {
-            return new ClickStep(args, new StaticClickablesProvider(completionClickables));
+            return CreateClickStep(args, new StaticClickablesProvider(completionClickables));
+        }
+
+        private ITutorialStep CreateClickStep(ITutorialStepArgs args, IClickablesProvider clickablesProvider)
+        {
+            return new ClickStep(args, clickablesProvider);
         }
     }
 }
