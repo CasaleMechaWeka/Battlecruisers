@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    // FELIX  Test :D
     public abstract class TutorialStep : ITutorialStep
     {
         private readonly IHighlighter _highlighter;
