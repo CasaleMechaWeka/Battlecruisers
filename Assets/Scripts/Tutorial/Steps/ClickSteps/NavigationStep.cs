@@ -19,12 +19,12 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            _navigationDecider.ShouldBeEnabled = true;
+            _navigationDecider.IsMatch = true;
         }
 
         protected override void OnCompleted()
         {
-            _navigationDecider.ShouldBeEnabled = false;
+            _navigationDecider.IsMatch = false;
             base.OnCompleted();
         }
     }

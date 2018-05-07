@@ -2,10 +2,10 @@
 
 namespace BattleCruisers.UI
 {
-    public class BasicDecider : IActivenessDecider
+    public class BasicDecider : IFilter
     {
         private bool _shouldBeEnabled;
-        public bool ShouldBeEnabled
+        public bool IsMatch
         {
             get
             {
@@ -15,18 +15,18 @@ namespace BattleCruisers.UI
             {
                 _shouldBeEnabled = value;
 
-                if (PotentialActivenessChange != null)
+                if (PotentialMatchChange != null)
                 {
-                    PotentialActivenessChange.Invoke(this, EventArgs.Empty);
+                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        public event EventHandler PotentialActivenessChange;
+        public event EventHandler PotentialMatchChange;
 
         public BasicDecider(bool shouldBeEnabled)
         {
-            ShouldBeEnabled = shouldBeEnabled;
+            IsMatch = shouldBeEnabled;
         }
     }
 }

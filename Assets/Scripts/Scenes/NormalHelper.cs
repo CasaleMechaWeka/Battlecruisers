@@ -54,18 +54,18 @@ namespace BattleCruisers.Scenes
             return new FreeSlotFilter();
 		}
 
-        public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
+        public IFilter<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
             return new BuildableAffordableDecider(droneManager);
         }
 
-        public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        public IFilter<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             // For the real game want to enable all building categories :)
             return new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
         }
 
-        public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
+        public IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
             return new NormalBuildingDeleteButtonDecider(playerCruiser);
         }

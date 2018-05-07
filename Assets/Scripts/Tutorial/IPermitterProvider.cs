@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial
     {
 		ISlotPermitter SlotPermitter { get; }
 		IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
-        IActivenessDecider<IBuildable> BuildingActivenessDecider { get; }
+        IFilter<IBuildable> BuildingActivenessDecider { get; }
         IBuildingPermitter BuildingPermitter { get; }
         BasicDecider NavigationPermitter { get; }
         ISingleBuildableProvider SingleAircraftProvider { get; }

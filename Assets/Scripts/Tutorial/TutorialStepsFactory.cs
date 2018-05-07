@@ -287,7 +287,7 @@ namespace BattleCruisers.Tutorial
 
             IBuildableButton buildableButton
                 = categoryButtons
-                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.BuildingActivenessDecider.ShouldBeEnabled(button.Buildable));
+                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.BuildingActivenessDecider.IsMatch(button.Buildable));
 
             _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = null;
 

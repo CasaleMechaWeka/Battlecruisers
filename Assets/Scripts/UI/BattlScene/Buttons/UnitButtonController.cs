@@ -11,18 +11,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _factory;
 
-		public override bool ShouldBeEnabled
+		public override bool IsMatch
 		{
 			get
 			{
 				return 
-                    base.ShouldBeEnabled
+                    base.IsMatch
                     && _factory != null
                     && _factory.BuildableState == BuildableState.Completed;
 			}
 		}
 
-		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IActivenessDecider<IBuildable> activenessDecider)
+		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IFilter<IBuildable> activenessDecider)
 		{
             base.Initialise(unitWrapper.Buildable, uiManager, activenessDecider);
 

@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BackButtonController : MonoBehaviour 
 	{
-        public void Initialise(IUIManager uiManager, IActivenessDecider activenessDecider)
+        public void Initialise(IUIManager uiManager, IFilter activenessDecider)
 		{
             Helper.AssertIsNotNull(uiManager, activenessDecider);
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
 {
     public class BuildableAffordabeDeciderTests
     {
-        private IActivenessDecider<IBuildable> _decider;
+        private IFilter<IBuildable> _decider;
 
         private IDroneManager _droneManager;
         private IBuildable _buildable;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         {
             int eventCounter = 0;
 
-            _decider.PotentialActivenessChange += (sender, e) => eventCounter++;
+            _decider.PotentialMatchChange += (sender, e) => eventCounter++;
 
             _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(newNumOfDrones: 7));
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void ShouldBeEnabled_True()
         {
             _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired).Returns(true);
-            Assert.IsTrue(_decider.ShouldBeEnabled(_buildable));
+            Assert.IsTrue(_decider.IsMatch(_buildable));
             _droneManager.Received().CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
         }
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void ShouldBeEnabled_False()
         {
             _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired).Returns(false);
-            Assert.IsFalse(_decider.ShouldBeEnabled(_buildable));
+            Assert.IsFalse(_decider.IsMatch(_buildable));
             _droneManager.Received().CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
         }
     }

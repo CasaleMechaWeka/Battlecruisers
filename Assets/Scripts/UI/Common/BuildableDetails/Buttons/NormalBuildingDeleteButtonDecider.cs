@@ -5,12 +5,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class NormalBuildingDeleteButtonDecider : IActivenessDecider<IBuilding>
+    public class NormalBuildingDeleteButtonDecider : IFilter<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
 
         #pragma warning disable 67  // Unused event
-        public event EventHandler PotentialActivenessChange;
+        public event EventHandler PotentialMatchChange;
         #pragma warning restore 67  // Unused event
 
         public NormalBuildingDeleteButtonDecider(ICruiser playerCruiser)
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _playerCruiser = playerCruiser;
         }
 
-        public bool ShouldBeEnabled(IBuilding building)
+        public bool IsMatch(IBuilding building)
         {
             return ReferenceEquals(_playerCruiser, building.ParentCruiser);
         }

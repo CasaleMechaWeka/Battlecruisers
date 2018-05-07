@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 {
-    public class BuildingCategoryTutorialDecider : IActivenessDecider<BuildingCategory>, IBuildingCategoryPermitter
+    public class BuildingCategoryTutorialDecider : IFilter<BuildingCategory>, IBuildingCategoryPermitter
     {
         private BuildingCategory? _permittedCategory;
         public BuildingCategory? PermittedCategory
@@ -12,21 +12,21 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
             {
                 _permittedCategory = value;
 
-                if (PotentialActivenessChange != null)
+                if (PotentialMatchChange != null)
                 {
-                    PotentialActivenessChange.Invoke(this, EventArgs.Empty);
+                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        public event EventHandler PotentialActivenessChange;
+        public event EventHandler PotentialMatchChange;
 
         public BuildingCategoryTutorialDecider()
         {
             _permittedCategory = null;
         }
 
-        public bool ShouldBeEnabled(BuildingCategory category)
+        public bool IsMatch(BuildingCategory category)
         {
             return _permittedCategory == category;
         }

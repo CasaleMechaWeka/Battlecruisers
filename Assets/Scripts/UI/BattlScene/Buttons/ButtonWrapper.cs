@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class ButtonWrapper : MonoBehaviour, IButtonWrapper
     {
-        private IActivenessDecider _activenessDecider;
+        private IFilter _activenessDecider;
         private CanvasGroup _canvasGroup;
 
 		public Button Button { get; private set; }
@@ -23,12 +23,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(UnityAction clickHandler, IActivenessDecider activenessDecider)
+        public void Initialise(UnityAction clickHandler, IFilter activenessDecider)
         {
             Helper.AssertIsNotNull(clickHandler, activenessDecider);
 
             _activenessDecider = activenessDecider;
-            _activenessDecider.PotentialActivenessChange += _activenessDecider_PotentialActivenessChange;
+            _activenessDecider.PotentialMatchChange += _activenessDecider_PotentialActivenessChange;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         private void UpdateActiveness()
         {
-            IsEnabled = _activenessDecider.ShouldBeEnabled;
+            IsEnabled = _activenessDecider.IsMatch;
         }
     }
 }

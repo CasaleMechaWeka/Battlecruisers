@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public ICameraController CameraController { get; private set; }
         public IBuildMenu BuildMenu { get; private set; }
         public IBuildableDetailsManager DetailsManager { get; private set; }
-        public IActivenessDecider<IBuilding> BuildingDeleteButtonActivenessDecider { get; private set; }
+        public IFilter<IBuilding> BuildingDeleteButtonActivenessDecider { get; private set; }
 
         public ManagerArgs(
             ICruiser playerCruiser,
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             ICameraController cameraController,
             IBuildMenu buildMenu,
             IBuildableDetailsManager detailsManager,
-            IActivenessDecider<IBuilding> buildingDeleteButtonActivenessDecider)
+            IFilter<IBuilding> buildingDeleteButtonActivenessDecider)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraController, buildMenu, detailsManager, buildingDeleteButtonActivenessDecider);
 

@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IActivenessDecider<IBuilding> _buildingDeleteButtonActivenessDecider;
+        private readonly IFilter<IBuilding> _buildingDeleteButtonActivenessDecider;
 
         public UIManager(IManagerArgs args)
 		{
@@ -122,14 +122,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(building);
+            bool allowDelete = _buildingDeleteButtonActivenessDecider.IsMatch(building);
             _detailsManager.ShowDetails(building, allowDelete);
 		}
 
 		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _buildingDeleteButtonActivenessDecider.ShouldBeEnabled(building);
+            bool allowDelete = _buildingDeleteButtonActivenessDecider.IsMatch(building);
             _detailsManager.ShowDetails(building, allowDelete);
 		}
 

@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
 		public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
-        public IActivenessDecider<IBuildable> BuildingActivenessDecider { get { return _buildableDecider; } }
+        public IFilter<IBuildable> BuildingActivenessDecider { get { return _buildableDecider; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
         public BasicDecider NavigationPermitter { get; private set; }
         public BasicDecider BackButtonPermitter { get; private set; }
@@ -72,17 +72,17 @@ namespace BattleCruisers.Scenes
             return _slotFilter;
 		}
 
-        public IActivenessDecider<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
+        public IFilter<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
             return _buildableDecider;
         }
 
-        public IActivenessDecider<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        public IFilter<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             return _buildingCategoryDecider;
         }
 
-        public IActivenessDecider<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
+        public IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
             return new StaticDecider<IBuilding>(shouldBeEnabled: false);
         }

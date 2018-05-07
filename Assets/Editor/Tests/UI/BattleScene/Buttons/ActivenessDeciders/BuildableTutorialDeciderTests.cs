@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
             _decider = new BuildableTutorialDecider(_prefabFactory);
 
             _eventCounter = 0;
-			_decider.PotentialActivenessChange += (sender, e) => _eventCounter++;
+			_decider.PotentialMatchChange += (sender, e) => _eventCounter++;
             
             _buildableToDecideOn = Substitute.For<IBuildable>();
             _buildableToDecideOn.Name.Returns("Zeit");
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         [Test]
         public void ShouldBeEnabled_False_PermittedBuildingIsNull()
         {
-            Assert.IsFalse(_decider.ShouldBeEnabled(_buildableToDecideOn));
+            Assert.IsFalse(_decider.IsMatch(_buildableToDecideOn));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
             _decider.PermittedBuilding = _permittedBuildingKey;
             _permittedBuilding.Name.Returns("Los");
 
-            Assert.IsFalse(_decider.ShouldBeEnabled(_buildableToDecideOn));
+            Assert.IsFalse(_decider.IsMatch(_buildableToDecideOn));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
             _decider.PermittedBuilding = _permittedBuildingKey;
             _permittedBuilding.Name.Returns("Zeit");
 
-            Assert.IsTrue(_decider.ShouldBeEnabled(_buildableToDecideOn));
+            Assert.IsTrue(_decider.IsMatch(_buildableToDecideOn));
         }
     }
 }

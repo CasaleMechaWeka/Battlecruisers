@@ -9,15 +9,15 @@ namespace BattleCruisers.Tests.UI
         [Test]
         public void ShouldBeEnabled_True()
         {
-            IActivenessDecider<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
-            Assert.IsTrue(decider.ShouldBeEnabled(BuildingCategory.Ultra));
+            IFilter<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
+            Assert.IsTrue(decider.IsMatch(BuildingCategory.Ultra));
         }
 
         [Test]
         public void ShouldBeEnabled_False()
         {
-            IActivenessDecider<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: false);
-            Assert.IsFalse(decider.ShouldBeEnabled(BuildingCategory.Ultra));
+            IFilter<BuildingCategory> decider = new StaticDecider<BuildingCategory>(shouldBeEnabled: false);
+            Assert.IsFalse(decider.IsMatch(BuildingCategory.Ultra));
         }
     }
 }

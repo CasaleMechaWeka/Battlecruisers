@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
     ///     the tutorial does NOT involve creating any units.
     /// </summary>
     /// FELIX  Test :)
-    public class BuildableTutorialDecider : IActivenessDecider<IBuildable>, IBuildingPermitter
+    public class BuildableTutorialDecider : IFilter<IBuildable>, IBuildingPermitter
     {
         private readonly IPrefabFactory _prefabFactory;
 
@@ -28,14 +28,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
             {
                 _permittedBuilding = value != null ? _prefabFactory.GetBuildingWrapperPrefab(value).Buildable : null;
 
-                if (PotentialActivenessChange != null)
+                if (PotentialMatchChange != null)
                 {
-                    PotentialActivenessChange.Invoke(this, EventArgs.Empty);
+                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        public event EventHandler PotentialActivenessChange;
+        public event EventHandler PotentialMatchChange;
 
         public BuildableTutorialDecider(IPrefabFactory prefabFactory)
         {
@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
             _prefabFactory = prefabFactory;
         }
 
-        public bool ShouldBeEnabled(IBuildable buildable)
+        public bool IsMatch(IBuildable buildable)
         {
             return
                 _permittedBuilding != null

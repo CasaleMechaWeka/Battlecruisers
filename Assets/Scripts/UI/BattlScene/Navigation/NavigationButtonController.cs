@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public event EventHandler Clicked;
 
-        public void Initialise(Action navigationAction, IActivenessDecider activenessDecider)
+        public void Initialise(Action navigationAction, IFilter activenessDecider)
         {
             base.Initialise();
 

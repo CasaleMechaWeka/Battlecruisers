@@ -7,27 +7,27 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IActivenessDecider
+    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IFilter
 	{
         private IUIManager _uiManager;
-        private IActivenessDecider<BuildingCategory> _activenessDecider;
+        private IFilter<BuildingCategory> _activenessDecider;
 
         public event EventHandler Clicked;
 
-        public event EventHandler PotentialActivenessChange
+        public event EventHandler PotentialMatchChange
         {
-            add { _activenessDecider.PotentialActivenessChange += value; }
-            remove { _activenessDecider.PotentialActivenessChange -= value; }
+            add { _activenessDecider.PotentialMatchChange += value; }
+            remove { _activenessDecider.PotentialMatchChange -= value; }
         }
 
         public BuildingCategory Category { get; private set; }
 
-        public bool ShouldBeEnabled { get { return _activenessDecider.ShouldBeEnabled(Category); } }
+        public bool IsMatch { get { return _activenessDecider.IsMatch(Category); } }
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
             IUIManager uiManager, 
-            IActivenessDecider<BuildingCategory> activenessDecider)
+            IFilter<BuildingCategory> activenessDecider)
 		{
             base.Initialise();
 

@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,
-            IActivenessDecider navigationActivenessDecider)
+            IFilter navigationActivenessDecider)
         {
             Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, navigationActivenessDecider);
 

@@ -9,11 +9,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
     /// Deems a buildable button as enabled if it's buildable can be afforded
     /// according to the drone manager's current number of drones.
     /// </summary>
-    public class BuildableAffordableDecider : IActivenessDecider<IBuildable>
+    public class BuildableAffordableDecider : IFilter<IBuildable>
     {
         private readonly IDroneManager _droneManager;
 
-		public event EventHandler PotentialActivenessChange;
+		public event EventHandler PotentialMatchChange;
 
         public BuildableAffordableDecider(IDroneManager droneManager)
         {
@@ -25,13 +25,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 
         private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            if (PotentialActivenessChange != null)
+            if (PotentialMatchChange != null)
             {
-                PotentialActivenessChange.Invoke(this, EventArgs.Empty);
+                PotentialMatchChange.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public bool ShouldBeEnabled(IBuildable buildable)
+        public bool IsMatch(IBuildable buildable)
         {
             return _droneManager.CanSupportDroneConsumer(buildable.NumOfDronesRequired);
         }

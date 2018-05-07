@@ -2,12 +2,12 @@
 
 namespace BattleCruisers.UI
 {
-    public class StaticDecider<TElement> : IActivenessDecider<TElement>
+    public class StaticDecider<TElement> : IFilter<TElement>
     {
         private readonly bool _shouldBeEnabled;
 
 #pragma warning disable 67  // Unused event
-        public event EventHandler PotentialActivenessChange;
+        public event EventHandler PotentialMatchChange;
 #pragma warning restore 67  // Unused event
 
         public StaticDecider(bool shouldBeEnabled)
@@ -15,7 +15,7 @@ namespace BattleCruisers.UI
             _shouldBeEnabled = shouldBeEnabled;
         }
 
-        public bool ShouldBeEnabled(TElement element)
+        public bool IsMatch(TElement element)
         {
             return _shouldBeEnabled;
         }

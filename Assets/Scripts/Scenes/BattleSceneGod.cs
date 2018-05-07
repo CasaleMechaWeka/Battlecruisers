@@ -139,11 +139,11 @@ namespace BattleCruisers.Scenes
 
 
             // UI
-            IActivenessDecider navigationDecider = helper.CreateNavigationDecider();
+            IFilter navigationDecider = helper.CreateNavigationDecider();
             hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraController, navigationDecider);
-            IActivenessDecider<IBuildable> buildableButtonActivenessDecider = helper.CreateBuildableButtonActivenessDecider(_playerCruiser.DroneManager);
-            IActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider = helper.CreateCategoryButtonActivenessDecider();
-            IActivenessDecider backButtonDecider = helper.CreateBackButtonDecider();
+            IFilter<IBuildable> buildableButtonActivenessDecider = helper.CreateBuildableButtonActivenessDecider(_playerCruiser.DroneManager);
+            IFilter<BuildingCategory> buildingCategoryButtonActivenessDecider = helper.CreateCategoryButtonActivenessDecider();
+            IFilter backButtonDecider = helper.CreateBackButtonDecider();
             uiFactory.Initialise(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider, backButtonDecider);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 

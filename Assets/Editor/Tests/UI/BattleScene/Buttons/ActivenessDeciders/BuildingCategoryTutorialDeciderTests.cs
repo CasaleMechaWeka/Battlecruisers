@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         {
             int eventCounter = 0;
 
-            _decider.PotentialActivenessChange += (sender, e) => eventCounter++;
+            _decider.PotentialMatchChange += (sender, e) => eventCounter++;
 
             _decider.PermittedCategory = null;
 
@@ -29,21 +29,21 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         [Test]
         public void ShouldBeEnabled_False_NonePermitted()
         {
-            Assert.IsFalse(_decider.ShouldBeEnabled(BuildingCategory.Defence));
+            Assert.IsFalse(_decider.IsMatch(BuildingCategory.Defence));
         }
 
         [Test]
         public void ShouldBeEnabled_False_WrongCategory()
         {
             _decider.PermittedCategory = BuildingCategory.Ultra;
-            Assert.IsFalse(_decider.ShouldBeEnabled(BuildingCategory.Defence));
+            Assert.IsFalse(_decider.IsMatch(BuildingCategory.Defence));
         }
 
         [Test]
         public void ShouldBeEnabled_True()
         {
             _decider.PermittedCategory = BuildingCategory.Ultra;
-            Assert.IsTrue(_decider.ShouldBeEnabled(BuildingCategory.Ultra));
+            Assert.IsTrue(_decider.IsMatch(BuildingCategory.Ultra));
         }
     }
 }

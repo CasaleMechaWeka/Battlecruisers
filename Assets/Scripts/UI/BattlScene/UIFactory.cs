@@ -15,9 +15,9 @@ namespace BattleCruisers.UI.BattleScene
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;
-        private IActivenessDecider<IBuildable> _buildableButtonActivenessDecider;
-        private IActivenessDecider<BuildingCategory> _buildingCategoryButtonActivenessDecider;
-        private IActivenessDecider _backButtonDecider;
+        private IFilter<IBuildable> _buildableButtonActivenessDecider;
+        private IFilter<BuildingCategory> _buildingCategoryButtonActivenessDecider;
+        private IFilter _backButtonDecider;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -29,9 +29,9 @@ namespace BattleCruisers.UI.BattleScene
         public void Initialise(
             IUIManager uiManager, 
             ISpriteProvider spriteProvider, 
-            IActivenessDecider<IBuildable> buildableButtonActivenessDecider,
-            IActivenessDecider<BuildingCategory> buildingCategoryButtonActivenessDecider,
-            IActivenessDecider backButtonDecider)
+            IFilter<IBuildable> buildableButtonActivenessDecider,
+            IFilter<BuildingCategory> buildingCategoryButtonActivenessDecider,
+            IFilter backButtonDecider)
         {
             Helper.AssertIsNotNull(
                 uiManager, 
