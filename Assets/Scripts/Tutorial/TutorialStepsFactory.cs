@@ -185,16 +185,17 @@ namespace BattleCruisers.Tutorial
             // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
 
             // Navigate to enemey cruiser
-            //enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser());
+            enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an attack boat!  Have a look!"));
 
             // Click on attack boat
             string textToDisplay = null;
             ISingleBuildableProvider attackBoatProvider = _tutorialArgs.PermitterProvider.SingleShipProvider;
             ITutorialStepArgs clickAttackBoatArgs = CreateTutorialStepArgs(textToDisplay, attackBoatProvider);
-			// FELIX  Uncomment, once AI step above is implemented :/
+            // FELIX  Uncomment, once AI step above is implemented :/
             //enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
 
             // Navigate back to player cruiser
+            enemyShipSteps.Add(CreateStep_NavigateToPlayerCruiser());
 
             // Build anti-ship turret
             IList<ITutorialStep> buildTurretSteps
@@ -268,10 +269,8 @@ namespace BattleCruisers.Tutorial
             return CreateStep_NavigateToCruiser(textToDisplay, playerCruiserButton);
         }
 
-        // FELIX  Pass text to display :/  "Uh oh, the enemy is building an attack boat!  Have a look!"
-        private ITutorialStep CreateStep_NavigateToEnemyCruiser()
+        private ITutorialStep CreateStep_NavigateToEnemyCruiser(string textToDisplay)
         {
-            string textToDisplay = "Navigate to the enemy cruiser";
             IButton enemyCruiserButton = _tutorialArgs.NavigationButtonsWrapper.AICruiserButton;
             return CreateStep_NavigateToCruiser(textToDisplay, enemyCruiserButton);
         }
