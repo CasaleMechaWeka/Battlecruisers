@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void SetuUp()
         {
             _droneManager = Substitute.For<IDroneManager>();
-            _decider = new BuildableAffordableDecider(_droneManager);
+            _decider = new AffordableBuildableFilter(_droneManager);
 
             _buildable = Substitute.For<IBuildable>();
             _buildable.NumOfDronesRequired.Returns(4);

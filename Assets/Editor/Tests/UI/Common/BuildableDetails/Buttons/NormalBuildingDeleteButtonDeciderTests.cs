@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
             _aiCruiser = Substitute.For<ICruiser>();
             _building = Substitute.For<IBuilding>();
 
-            _decider = new NormalBuildingDeleteButtonDecider(_playerCruiser);
+            _decider = new PlayerCruiserBuildingFilter(_playerCruiser);
         }
 
         [Test]

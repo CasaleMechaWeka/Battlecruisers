@@ -8,7 +8,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -19,8 +19,8 @@ namespace BattleCruisers.Scenes
     {
         private readonly IDataProvider _dataProvider;
         private readonly SpecificSlotsFilter _slotFilter;
-        private readonly BuildableTutorialDecider _buildableDecider;
-        private readonly BuildingCategoryTutorialDecider _buildingCategoryDecider;
+        private readonly BuildingNameFilter _buildableDecider;
+        private readonly BuildingCategoryFilter _buildingCategoryDecider;
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
 		public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
@@ -39,8 +39,8 @@ namespace BattleCruisers.Scenes
             _dataProvider = dataProvider;
 
             _slotFilter = new SpecificSlotsFilter();
-            _buildableDecider = new BuildableTutorialDecider(prefabFactory);
-            _buildingCategoryDecider = new BuildingCategoryTutorialDecider();
+            _buildableDecider = new BuildingNameFilter(prefabFactory);
+            _buildingCategoryDecider = new BuildingCategoryFilter();
             NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
             BackButtonPermitter = new BasicDecider(shouldBeEnabled: false);
             SingleAircraftProvider = new SingleBuildableProvider(Tags.AIRCRAFT);
@@ -84,7 +84,7 @@ namespace BattleCruisers.Scenes
 
         public IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
-            return new StaticDecider<IBuilding>(shouldBeEnabled: false);
+            return new StaticFilter<IBuilding>(isMatch: false);
         }
 
         public BasicDecider CreateNavigationDecider()

@@ -1,17 +1,17 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
 {
     public class BuildingCategoryTutorialDeciderTests
     {
-        private BuildingCategoryTutorialDecider _decider;
+        private BuildingCategoryFilter _decider;
 
         [SetUp]
         public void SetuUp()
         {
-            _decider = new BuildingCategoryTutorialDecider();
+            _decider = new BuildingCategoryFilter();
         }
 
         [Test]

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
+namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
     public interface IBuildingPermitter
     {

@@ -5,19 +5,10 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
+namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    /// <summary>
-    /// Deems a buildable button as enabled if the buildable is the currently permitted
-    /// building.
-    /// 
-    /// Note:
-    /// 1. Only one buildable can be permitted at a time
-    /// 2. Only a building can be permitted (no units).  That is because currently
-    ///     the tutorial does NOT involve creating any units.
-    /// </summary>
     /// FELIX  Test :)
-    public class BuildableTutorialDecider : IFilter<IBuildable>, IBuildingPermitter
+    public class BuildingNameFilter : IFilter<IBuildable>, IBuildingPermitter
     {
         private readonly IPrefabFactory _prefabFactory;
 
@@ -37,12 +28,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 
         public event EventHandler PotentialMatchChange;
 
-        public BuildableTutorialDecider(IPrefabFactory prefabFactory)
+        public BuildingNameFilter(IPrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
             _prefabFactory = prefabFactory;
         }
 
+        /// <summary>
+        /// Note:
+        /// 1. Only one buildable can be permitted at a time
+        /// 2. Only a building can be permitted (no units).  That is because currently
+        ///     the tutorial does NOT involve creating any units.
+        /// </summary>
+        /// <returns><c>true</c>, if the given buildable name matches the permitted building name, <c>false</c> otherwise.</returns>
         public bool IsMatch(IBuildable buildable)
         {
             return

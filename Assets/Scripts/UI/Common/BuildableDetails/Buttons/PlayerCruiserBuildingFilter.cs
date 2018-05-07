@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class NormalBuildingDeleteButtonDecider : IFilter<IBuilding>
+    public class PlayerCruiserBuildingFilter : IFilter<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
 
@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         public event EventHandler PotentialMatchChange;
         #pragma warning restore 67  // Unused event
 
-        public NormalBuildingDeleteButtonDecider(ICruiser playerCruiser)
+        public PlayerCruiserBuildingFilter(ICruiser playerCruiser)
         {
             Assert.IsNotNull(playerCruiser);
             _playerCruiser = playerCruiser;

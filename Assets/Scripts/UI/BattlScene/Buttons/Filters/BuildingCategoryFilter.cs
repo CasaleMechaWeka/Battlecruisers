@@ -1,9 +1,9 @@
 ﻿using System;
 using BattleCruisers.Buildables.Buildings;
 
-namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
+namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class BuildingCategoryTutorialDecider : IFilter<BuildingCategory>, IBuildingCategoryPermitter
+    public class BuildingCategoryFilter : IFilter<BuildingCategory>, IBuildingCategoryPermitter
     {
         private BuildingCategory? _permittedCategory;
         public BuildingCategory? PermittedCategory
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders
 
         public event EventHandler PotentialMatchChange;
 
-        public BuildingCategoryTutorialDecider()
+        public BuildingCategoryFilter()
         {
             _permittedCategory = null;
         }

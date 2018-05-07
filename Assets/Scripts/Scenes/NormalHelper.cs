@@ -8,7 +8,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
-using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
@@ -56,18 +56,18 @@ namespace BattleCruisers.Scenes
 
         public IFilter<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
         {
-            return new BuildableAffordableDecider(droneManager);
+            return new AffordableBuildableFilter(droneManager);
         }
 
         public IFilter<BuildingCategory> CreateCategoryButtonActivenessDecider()
         {
             // For the real game want to enable all building categories :)
-            return new StaticDecider<BuildingCategory>(shouldBeEnabled: true);
+            return new StaticFilter<BuildingCategory>(isMatch: true);
         }
 
         public IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
         {
-            return new NormalBuildingDeleteButtonDecider(playerCruiser);
+            return new PlayerCruiserBuildingFilter(playerCruiser);
         }
 
         public BasicDecider CreateNavigationDecider()

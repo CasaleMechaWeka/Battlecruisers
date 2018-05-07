@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene.Buttons.ActivenessDeciders;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
 {
     public class BuildableTutorialDeciderTests
     {
-        private BuildableTutorialDecider _decider;
+        private BuildingNameFilter _decider;
 
         private IPrefabFactory _prefabFactory;
         private IBuildable _buildableToDecideOn;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void SetuUp()
         {
             _prefabFactory = Substitute.For<IPrefabFactory>();
-            _decider = new BuildableTutorialDecider(_prefabFactory);
+            _decider = new BuildingNameFilter(_prefabFactory);
 
             _eventCounter = 0;
 			_decider.PotentialMatchChange += (sender, e) => _eventCounter++;
