@@ -6,7 +6,6 @@ namespace BattleCruisers.UI
     {
         event EventHandler PotentialMatchChange;
 
-        // FELIX  Change to parameterless method, to indicate that some work may be involved (ie, not just returning stored value)
         bool IsMatch { get; }
     }
 
