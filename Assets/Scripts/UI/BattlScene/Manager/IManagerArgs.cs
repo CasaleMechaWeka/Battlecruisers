@@ -14,6 +14,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         ICameraController CameraController { get; }
         IBuildMenu BuildMenu { get; }
         IBuildableDetailsManager DetailsManager { get; }
-        IFilter<IBuilding> BuildingDeleteButtonActivenessDecider { get; }
+        IFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; }
     }
 }

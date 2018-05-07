@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private readonly ICameraController _cameraController;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IFilter<IBuilding> _buildingDeleteButtonActivenessDecider;
+        private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         public UIManager(IManagerArgs args)
 		{
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _cameraController = args.CameraController;
             _buildMenu = args.BuildMenu;
             _detailsManager = args.DetailsManager;
-            _buildingDeleteButtonActivenessDecider = args.BuildingDeleteButtonActivenessDecider;
+            _shouldBuildingDeleteButtonBeEnabledFilter = args.ShouldBuildingDeleteButtonBeEnabledFilter;
    			
 			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
 			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
@@ -122,14 +122,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			_playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _buildingDeleteButtonActivenessDecider.IsMatch(building);
+            bool allowDelete = _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(building);
             _detailsManager.ShowDetails(building, allowDelete);
 		}
 
 		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _buildingDeleteButtonActivenessDecider.IsMatch(building);
+            bool allowDelete = _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(building);
             _detailsManager.ShowDetails(building, allowDelete);
 		}
 

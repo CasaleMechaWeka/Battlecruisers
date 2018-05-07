@@ -11,17 +11,17 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public event EventHandler Clicked;
 
-        public void Initialise(Action navigationAction, IFilter activenessDecider)
+        public void Initialise(Action navigationAction, IFilter shouldBeEnabledFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(navigationAction, activenessDecider);
+            Helper.AssertIsNotNull(navigationAction, shouldBeEnabledFilter);
 
             _navigationAction = navigationAction;
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(Handleclick, activenessDecider);
+            buttonWrapper.Initialise(Handleclick, shouldBeEnabledFilter);
         }
 
         private void Handleclick()

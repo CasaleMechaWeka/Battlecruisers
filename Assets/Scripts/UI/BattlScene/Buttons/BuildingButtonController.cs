@@ -15,10 +15,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             IBuildableWrapper<IBuilding> buildingWrapper, 
             IUIManager uiManager, 
-            IFilter<IBuildable> activenessDecider, 
+            IFilter<IBuildable> shouldBeEnabledFilter, 
             Sprite slotSprite)
 		{
-            base.Initialise(buildingWrapper.Buildable, uiManager, activenessDecider);
+            base.Initialise(buildingWrapper.Buildable, uiManager, shouldBeEnabledFilter);
 			
 			_buildingWrapper = buildingWrapper;
 			slotImage.sprite = slotSprite;

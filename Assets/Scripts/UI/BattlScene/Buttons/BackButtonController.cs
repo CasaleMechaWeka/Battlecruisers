@@ -7,13 +7,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BackButtonController : MonoBehaviour 
 	{
-        public void Initialise(IUIManager uiManager, IFilter activenessDecider)
+        public void Initialise(IUIManager uiManager, IFilter shouldBeEnabledFilter)
 		{
-            Helper.AssertIsNotNull(uiManager, activenessDecider);
+            Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(uiManager.ShowBuildingGroups, activenessDecider);
+            buttonWrapper.Initialise(uiManager.ShowBuildingGroups, shouldBeEnabledFilter);
 		}
 	}
 }

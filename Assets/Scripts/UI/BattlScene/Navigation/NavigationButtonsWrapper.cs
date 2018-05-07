@@ -11,30 +11,30 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public IButton MidRightButton { get; private set; }
         public IButton AICruiserButton { get; private set; }
 
-        public void Initialise(ICameraController cameraController, IFilter navigationActivenessDecider)
+        public void Initialise(ICameraController cameraController, IFilter shouldNavigationBeEnabledFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(cameraController, navigationActivenessDecider);
+            Helper.AssertIsNotNull(cameraController, shouldNavigationBeEnabledFilter);
 
             NavigationButtonController playerCruiserButton = transform.FindNamedComponent<NavigationButtonController>("PlayerCruiserButton");
-            playerCruiserButton.Initialise(cameraController.FocusOnPlayerCruiser, navigationActivenessDecider);
+            playerCruiserButton.Initialise(cameraController.FocusOnPlayerCruiser, shouldNavigationBeEnabledFilter);
             PlayerCruiserButton = playerCruiserButton;
 
             NavigationButtonController midLeftButton = transform.FindNamedComponent<NavigationButtonController>("MidLeftButton");
-            midLeftButton.Initialise(cameraController.ShowMidLeft, navigationActivenessDecider);
+            midLeftButton.Initialise(cameraController.ShowMidLeft, shouldNavigationBeEnabledFilter);
             MidLeftButton = midLeftButton;
 
             NavigationButtonController overviewButton = transform.FindNamedComponent<NavigationButtonController>("OverviewButton");
-            overviewButton.Initialise(cameraController.ShowFullMapView, navigationActivenessDecider);
+            overviewButton.Initialise(cameraController.ShowFullMapView, shouldNavigationBeEnabledFilter);
             OverviewButton = overviewButton;
 
             NavigationButtonController midRightButton = transform.FindNamedComponent<NavigationButtonController>("MidRightButton");
-            midRightButton.Initialise(cameraController.ShowMidRight, navigationActivenessDecider);
+            midRightButton.Initialise(cameraController.ShowMidRight, shouldNavigationBeEnabledFilter);
             MidRightButton = midRightButton;
 
             NavigationButtonController aiCruiserButton = transform.FindNamedComponent<NavigationButtonController>("AiCruiserButton");
-            aiCruiserButton.Initialise(cameraController.FocusOnAiCruiser, navigationActivenessDecider);
+            aiCruiserButton.Initialise(cameraController.FocusOnAiCruiser, shouldNavigationBeEnabledFilter);
             AICruiserButton = aiCruiserButton;
         }
     }

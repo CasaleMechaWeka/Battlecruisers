@@ -121,7 +121,7 @@ namespace BattleCruisers.Scenes
                     cameraController,
                     buildMenuController,
                     new BuildableDetailsManager(hudCanvas),
-                    helper.CreateBuildingDeleteButtonActivenessDecider(_playerCruiser));
+                    helper.CreateBuildingDeleteButtonFilter(_playerCruiser));
             IUIManager uiManager = helper.CreateUIManager(managerArgs);
             backgroundController.Initialise(uiManager);
 
@@ -139,12 +139,12 @@ namespace BattleCruisers.Scenes
 
 
             // UI
-            IFilter navigationDecider = helper.CreateNavigationDecider();
-            hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraController, navigationDecider);
-            IFilter<IBuildable> buildableButtonActivenessDecider = helper.CreateBuildableButtonActivenessDecider(_playerCruiser.DroneManager);
-            IFilter<BuildingCategory> buildingCategoryButtonActivenessDecider = helper.CreateCategoryButtonActivenessDecider();
-            IFilter backButtonDecider = helper.CreateBackButtonDecider();
-            uiFactory.Initialise(uiManager, spriteProvider, buildableButtonActivenessDecider, buildingCategoryButtonActivenessDecider, backButtonDecider);
+            IFilter shouldNavigationBeEnabledFilter = helper.CreateNavigationFilter();
+            hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraController, shouldNavigationBeEnabledFilter);
+            IFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
+            IFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
+            IFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
+            uiFactory.Initialise(uiManager, spriteProvider, buildableButtonShouldBeEnabledFilter, buildingCategoryButtonShouldBeEnabledFilter, backButtonShouldBeEnabledFilter);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
@@ -160,7 +160,7 @@ namespace BattleCruisers.Scenes
             // Camera controller
             IMaterialFetcher materialFetcher = new MaterialFetcher();
             Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
-            cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, navigationDecider);
+            cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
 
 
             helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);

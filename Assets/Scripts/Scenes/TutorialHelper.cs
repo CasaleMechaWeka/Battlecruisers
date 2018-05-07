@@ -19,15 +19,15 @@ namespace BattleCruisers.Scenes
     {
         private readonly IDataProvider _dataProvider;
         private readonly SpecificSlotsFilter _slotFilter;
-        private readonly BuildingNameFilter _buildableDecider;
-        private readonly BuildingCategoryFilter _buildingCategoryDecider;
+        private readonly BuildingNameFilter _buildingNameFilter;
+        private readonly BuildingCategoryFilter _buildingCategoryFilter;
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
-		public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryDecider; } }
-        public IFilter<IBuildable> BuildingActivenessDecider { get { return _buildableDecider; } }
-        public IBuildingPermitter BuildingPermitter { get { return _buildableDecider; } }
-        public BasicDecider NavigationPermitter { get; private set; }
-        public BasicDecider BackButtonPermitter { get; private set; }
+        public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
+        public IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
+        public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
+        public BasicFilter NavigationPermitter { get; private set; }
+        public BasicFilter BackButtonPermitter { get; private set; }
         public ILastBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
@@ -39,10 +39,10 @@ namespace BattleCruisers.Scenes
             _dataProvider = dataProvider;
 
             _slotFilter = new SpecificSlotsFilter();
-            _buildableDecider = new BuildingNameFilter(prefabFactory);
-            _buildingCategoryDecider = new BuildingCategoryFilter();
-            NavigationPermitter = new BasicDecider(shouldBeEnabled: false);
-            BackButtonPermitter = new BasicDecider(shouldBeEnabled: false);
+            _buildingNameFilter = new BuildingNameFilter(prefabFactory);
+            _buildingCategoryFilter = new BuildingCategoryFilter();
+            NavigationPermitter = new BasicFilter(isMatch: false);
+            BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(Tags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(Tags.SHIPS);
         }
@@ -72,27 +72,27 @@ namespace BattleCruisers.Scenes
             return _slotFilter;
 		}
 
-        public IFilter<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager)
+        public IFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager)
         {
-            return _buildableDecider;
+            return _buildingNameFilter;
         }
 
-        public IFilter<BuildingCategory> CreateCategoryButtonActivenessDecider()
+        public IFilter<BuildingCategory> CreateCategoryButtonFilter()
         {
-            return _buildingCategoryDecider;
+            return _buildingCategoryFilter;
         }
 
-        public IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser)
+        public IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
         {
             return new StaticFilter<IBuilding>(isMatch: false);
         }
 
-        public BasicDecider CreateNavigationDecider()
+        public BasicFilter CreateNavigationFilter()
         {
             return NavigationPermitter;
         }
 
-        public BasicDecider CreateBackButtonDecider()
+        public BasicFilter CreateBackButtonFilter()
         {
             return BackButtonPermitter;
         }

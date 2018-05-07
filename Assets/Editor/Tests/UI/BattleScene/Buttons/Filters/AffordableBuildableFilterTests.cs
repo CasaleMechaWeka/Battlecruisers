@@ -5,11 +5,11 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
+namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
 {
-    public class BuildableAffordabeDeciderTests
+    public class AffordableBuildableFilterTests
     {
-        private IFilter<IBuildable> _decider;
+        private IFilter<IBuildable> _filter;
 
         private IDroneManager _droneManager;
         private IBuildable _buildable;
@@ -18,18 +18,18 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void SetuUp()
         {
             _droneManager = Substitute.For<IDroneManager>();
-            _decider = new AffordableBuildableFilter(_droneManager);
+            _filter = new AffordableBuildableFilter(_droneManager);
 
             _buildable = Substitute.For<IBuildable>();
             _buildable.NumOfDronesRequired.Returns(4);
         }
 
         [Test]
-        public void DroneNumChanged_TriggersPotentialActivenessChange()
+        public void DroneNumChanged_TriggersPotentialMatchChange()
         {
             int eventCounter = 0;
 
-            _decider.PotentialMatchChange += (sender, e) => eventCounter++;
+            _filter.PotentialMatchChange += (sender, e) => eventCounter++;
 
             _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(newNumOfDrones: 7));
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void ShouldBeEnabled_True()
         {
             _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired).Returns(true);
-            Assert.IsTrue(_decider.IsMatch(_buildable));
+            Assert.IsTrue(_filter.IsMatch(_buildable));
             _droneManager.Received().CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
         }
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void ShouldBeEnabled_False()
         {
             _droneManager.CanSupportDroneConsumer(_buildable.NumOfDronesRequired).Returns(false);
-            Assert.IsFalse(_decider.IsMatch(_buildable));
+            Assert.IsFalse(_filter.IsMatch(_buildable));
             _droneManager.Received().CanSupportDroneConsumer(_buildable.NumOfDronesRequired);
         }
     }

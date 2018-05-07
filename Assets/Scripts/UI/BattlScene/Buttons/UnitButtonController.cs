@@ -22,9 +22,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			}
 		}
 
-		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IFilter<IBuildable> activenessDecider)
+		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IFilter<IBuildable> shouldBeEnabledFilter)
 		{
-            base.Initialise(unitWrapper.Buildable, uiManager, activenessDecider);
+            base.Initialise(unitWrapper.Buildable, uiManager, shouldBeEnabledFilter);
 
 			_unitWrapper = unitWrapper;
 		}
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		private void _factory_CompletedBuildable(object sender, System.EventArgs e)
 		{
-            TriggerActivenessChange();
+            TriggerPotentialMatchChange();
 		}
 
 		public override void OnDismissing()

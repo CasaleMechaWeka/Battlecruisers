@@ -2,18 +2,18 @@
 
 namespace BattleCruisers.UI
 {
-    public class BasicDecider : IFilter
+    public class BasicFilter : IFilter
     {
-        private bool _shouldBeEnabled;
+        private bool _isMatch;
         public bool IsMatch
         {
             get
             {
-                return _shouldBeEnabled;
+                return _isMatch;
             }
             set
             {
-                _shouldBeEnabled = value;
+                _isMatch = value;
 
                 if (PotentialMatchChange != null)
                 {
@@ -24,9 +24,9 @@ namespace BattleCruisers.UI
 
         public event EventHandler PotentialMatchChange;
 
-        public BasicDecider(bool shouldBeEnabled)
+        public BasicFilter(bool isMatch)
         {
-            IsMatch = shouldBeEnabled;
+            IsMatch = isMatch;
         }
     }
 }

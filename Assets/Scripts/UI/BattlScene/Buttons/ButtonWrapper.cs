@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class ButtonWrapper : MonoBehaviour, IButtonWrapper
     {
-        private IFilter _activenessDecider;
+        private IFilter _shouldBeEnabledFilter;
         private CanvasGroup _canvasGroup;
 
 		public Button Button { get; private set; }
@@ -23,12 +23,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(UnityAction clickHandler, IFilter activenessDecider)
+        public void Initialise(UnityAction clickHandler, IFilter shouldBeEnabledFilter)
         {
-            Helper.AssertIsNotNull(clickHandler, activenessDecider);
+            Helper.AssertIsNotNull(clickHandler, shouldBeEnabledFilter);
 
-            _activenessDecider = activenessDecider;
-            _activenessDecider.PotentialMatchChange += _activenessDecider_PotentialActivenessChange;
+            _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -37,17 +37,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(Button);
             Button.onClick.AddListener(clickHandler);
 
-            UpdateActiveness();
+            UpdateIsEnabled();
         }
 
-        private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
+        private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
         {
-            UpdateActiveness();
+            UpdateIsEnabled();
         }
 
-        private void UpdateActiveness()
+        private void UpdateIsEnabled()
         {
-            IsEnabled = _activenessDecider.IsMatch;
+            IsEnabled = _shouldBeEnabledFilter.IsMatch;
         }
     }
 }

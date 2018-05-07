@@ -16,11 +16,11 @@ namespace BattleCruisers.Scenes
         void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
 
-        IFilter<IBuildable> CreateBuildableButtonActivenessDecider(IDroneManager droneManager);
-        IFilter<BuildingCategory> CreateCategoryButtonActivenessDecider();
-        IFilter<IBuilding> CreateBuildingDeleteButtonActivenessDecider(ICruiser playerCruiser);
+        IFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
+        IFilter<BuildingCategory> CreateCategoryButtonFilter();
+        IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
 
-        BasicDecider CreateNavigationDecider();
-        BasicDecider CreateBackButtonDecider();
+        BasicFilter CreateNavigationFilter();
+        BasicFilter CreateBackButtonFilter();
     }
 }

@@ -15,9 +15,9 @@ namespace BattleCruisers.UI.BattleScene
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;
-        private IFilter<IBuildable> _buildableButtonActivenessDecider;
-        private IFilter<BuildingCategory> _buildingCategoryButtonActivenessDecider;
-        private IFilter _backButtonDecider;
+        private IFilter<IBuildable> _shouldBuildableButtonBeEnabledFilter;
+        private IFilter<BuildingCategory> _shouldBuildingCategoryButtonBeEnabledFilter;
+        private IFilter _shouldBackButtonBeEnabledFilter;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -29,22 +29,22 @@ namespace BattleCruisers.UI.BattleScene
         public void Initialise(
             IUIManager uiManager, 
             ISpriteProvider spriteProvider, 
-            IFilter<IBuildable> buildableButtonActivenessDecider,
-            IFilter<BuildingCategory> buildingCategoryButtonActivenessDecider,
-            IFilter backButtonDecider)
+            IFilter<IBuildable> shouldBuildableButtonBeEnabledFilter,
+            IFilter<BuildingCategory> shouldBuildingCategoryButtonBeEnabledFilter,
+            IFilter shouldBackButtonBeEnabledFilter)
         {
             Helper.AssertIsNotNull(
                 uiManager, 
                 spriteProvider, 
-                buildableButtonActivenessDecider, 
-                buildingCategoryButtonActivenessDecider, 
-                backButtonDecider);
+                shouldBuildableButtonBeEnabledFilter, 
+                shouldBuildingCategoryButtonBeEnabledFilter, 
+                shouldBackButtonBeEnabledFilter);
 
             _uiManager = uiManager;
             _spriteProvider = spriteProvider;
-            _buildableButtonActivenessDecider = buildableButtonActivenessDecider;
-            _buildingCategoryButtonActivenessDecider = buildingCategoryButtonActivenessDecider;
-            _backButtonDecider = backButtonDecider;
+            _shouldBuildableButtonBeEnabledFilter = shouldBuildableButtonBeEnabledFilter;
+            _shouldBuildingCategoryButtonBeEnabledFilter = shouldBuildingCategoryButtonBeEnabledFilter;
+            _shouldBackButtonBeEnabledFilter = shouldBackButtonBeEnabledFilter;
 
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
             BuildingCategoryButton button = Instantiate(buildingCategoryButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			button.Initialise(buildingGroup, _uiManager, _buildingCategoryButtonActivenessDecider);
+			button.Initialise(buildingGroup, _uiManager, _shouldBuildingCategoryButtonBeEnabledFilter);
 			return button;
 		}
 
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
             Sprite slotSprite = _spriteProvider.GetSlotSprite(buildingWrapper.Buildable.SlotType).Sprite;
 			BuildingButtonController controller = button.GetComponent<BuildingButtonController>();
-            controller.Initialise(buildingWrapper, _uiManager, _buildableButtonActivenessDecider, slotSprite);
+            controller.Initialise(buildingWrapper, _uiManager, _shouldBuildableButtonBeEnabledFilter, slotSprite);
 			return controller;
 		}
 
@@ -83,7 +83,7 @@ namespace BattleCruisers.UI.BattleScene
 			Button button = Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-            controller.Initialise(unitWrapper, _uiManager, _buildableButtonActivenessDecider);
+            controller.Initialise(unitWrapper, _uiManager, _shouldBuildableButtonBeEnabledFilter);
 			return controller;
 		}
 
@@ -91,7 +91,7 @@ namespace BattleCruisers.UI.BattleScene
 		{
 			Button backButton = Instantiate(backButtonPrefab);
 			backButton.transform.SetParent(buttonParent.transform, worldPositionStays: false);
-			backButton.GetComponent<BackButtonController>().Initialise(_uiManager, _backButtonDecider);
+			backButton.GetComponent<BackButtonController>().Initialise(_uiManager, _shouldBackButtonBeEnabledFilter);
 			return backButton;
 		}
 	}

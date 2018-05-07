@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public abstract class BuildableButtonController : Presentable, IBuildableButton, IFilter
 	{
 		protected IUIManager _uiManager;
-        private IFilter<IBuildable> _activenessDecider;
+        private IFilter<IBuildable> _shouldBeEnabledFilter;
 
 		public Image buildableImage;
 		public Text buildableName;
@@ -20,19 +20,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public IBuildable Buildable { get; private set; }
 
-        public virtual bool IsMatch { get { return _activenessDecider.IsMatch(Buildable); } }
+        public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
-        public void Initialise(IBuildable buildable, IUIManager uiManager, IFilter<IBuildable> activenessDecider)
+        public void Initialise(IBuildable buildable, IUIManager uiManager, IFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();
 
-            Helper.AssertIsNotNull(buildable, uiManager, activenessDecider);
+            Helper.AssertIsNotNull(buildable, uiManager, shouldBeEnabledFilter);
 
 			Buildable = buildable;
 			_uiManager = uiManager;
 
-            _activenessDecider = activenessDecider;
-            _activenessDecider.PotentialMatchChange += _activenessDecider_PotentialActivenessChange;
+            _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
 
             buildableName.text = Buildable.Name;
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
@@ -42,12 +42,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             buttonWrapper.Initialise(HandleClick, this);
 		}
 
-        private void _activenessDecider_PotentialActivenessChange(object sender, EventArgs e)
+        private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
         {
-            TriggerActivenessChange();
+            TriggerPotentialMatchChange();
         }
 
-        protected void TriggerActivenessChange()
+        protected void TriggerPotentialMatchChange()
         {
             if (PotentialMatchChange != null)
             {

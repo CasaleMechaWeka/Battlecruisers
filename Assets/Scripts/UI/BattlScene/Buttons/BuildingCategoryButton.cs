@@ -10,31 +10,31 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IFilter
 	{
         private IUIManager _uiManager;
-        private IFilter<BuildingCategory> _activenessDecider;
+        private IFilter<BuildingCategory> _shouldBeEnabledFilter;
 
         public event EventHandler Clicked;
 
         public event EventHandler PotentialMatchChange
         {
-            add { _activenessDecider.PotentialMatchChange += value; }
-            remove { _activenessDecider.PotentialMatchChange -= value; }
+            add { _shouldBeEnabledFilter.PotentialMatchChange += value; }
+            remove { _shouldBeEnabledFilter.PotentialMatchChange -= value; }
         }
 
         public BuildingCategory Category { get; private set; }
 
-        public bool IsMatch { get { return _activenessDecider.IsMatch(Category); } }
+        public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
             IUIManager uiManager, 
-            IFilter<BuildingCategory> activenessDecider)
+            IFilter<BuildingCategory> shouldBeEnabledFilter)
 		{
             base.Initialise();
 
-            Helper.AssertIsNotNull(buildingGroup, uiManager, activenessDecider);
+            Helper.AssertIsNotNull(buildingGroup, uiManager, shouldBeEnabledFilter);
 
             _uiManager = uiManager;
-            _activenessDecider = activenessDecider;
+            _shouldBeEnabledFilter = shouldBeEnabledFilter;
             Category = buildingGroup.BuildingCategory;
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();

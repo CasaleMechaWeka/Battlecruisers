@@ -6,14 +6,14 @@ using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
+namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
 {
-    public class BuildableTutorialDeciderTests
+    public class BuildingNameFilterTests
     {
-        private BuildingNameFilter _decider;
+        private BuildingNameFilter _filter;
 
         private IPrefabFactory _prefabFactory;
-        private IBuildable _buildableToDecideOn;
+        private IBuildable _buildableToFilter;
         private IPrefabKey _permittedBuildingKey;
         private IBuildableWrapper<IBuilding> _permittedBuildingWrapper;
         private IBuilding _permittedBuilding;
@@ -23,13 +23,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         public void SetuUp()
         {
             _prefabFactory = Substitute.For<IPrefabFactory>();
-            _decider = new BuildingNameFilter(_prefabFactory);
+            _filter = new BuildingNameFilter(_prefabFactory);
 
             _eventCounter = 0;
-			_decider.PotentialMatchChange += (sender, e) => _eventCounter++;
+			_filter.PotentialMatchChange += (sender, e) => _eventCounter++;
             
-            _buildableToDecideOn = Substitute.For<IBuildable>();
-            _buildableToDecideOn.Name.Returns("Zeit");
+            _buildableToFilter = Substitute.For<IBuildable>();
+            _buildableToFilter.Name.Returns("Zeit");
             _permittedBuildingKey = Substitute.For<IPrefabKey>();
             _permittedBuilding = Substitute.For<IBuilding>();
 			
@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         [Test]
         public void PermittedBuilding_Set_Null()
         {
-            _decider.PermittedBuilding = null;
+            _filter.PermittedBuilding = null;
 
             Assert.AreEqual(1, _eventCounter);
             _prefabFactory.DidNotReceiveWithAnyArgs().GetBuildingWrapperPrefab(default(IPrefabKey));
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         [Test]
         public void PermittedBuilding_Set_BuildingKey()
         {
-            _decider.PermittedBuilding = _permittedBuildingKey;
+            _filter.PermittedBuilding = _permittedBuildingKey;
 
             Assert.AreEqual(1, _eventCounter);
             _prefabFactory.Received().GetBuildingWrapperPrefab(_permittedBuildingKey);
@@ -59,25 +59,25 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ActivenessDeciders
         [Test]
         public void ShouldBeEnabled_False_PermittedBuildingIsNull()
         {
-            Assert.IsFalse(_decider.IsMatch(_buildableToDecideOn));
+            Assert.IsFalse(_filter.IsMatch(_buildableToFilter));
         }
 
         [Test]
         public void ShouldBeEnabled_False_NotPermittedBuilding()
         {
-            _decider.PermittedBuilding = _permittedBuildingKey;
+            _filter.PermittedBuilding = _permittedBuildingKey;
             _permittedBuilding.Name.Returns("Los");
 
-            Assert.IsFalse(_decider.IsMatch(_buildableToDecideOn));
+            Assert.IsFalse(_filter.IsMatch(_buildableToFilter));
         }
 
         [Test]
         public void ShouldBeEnabled_True()
         {
-            _decider.PermittedBuilding = _permittedBuildingKey;
+            _filter.PermittedBuilding = _permittedBuildingKey;
             _permittedBuilding.Name.Returns("Zeit");
 
-            Assert.IsTrue(_decider.IsMatch(_buildableToDecideOn));
+            Assert.IsTrue(_filter.IsMatch(_buildableToFilter));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
-        private IFilter<IBuilding> _buildingDeleteButtonActivenessDecider;
+        private IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         private IBuilding _building;
         private IFactory _factory;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _cameraController = Substitute.For<ICameraController>();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
-            _buildingDeleteButtonActivenessDecider = Substitute.For<IFilter<IBuilding>>();
+            _shouldBuildingDeleteButtonBeEnabledFilter = Substitute.For<IFilter<IBuilding>>();
 
             IManagerArgs managerArgs
                 = new ManagerArgs(
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
                     _cameraController,
                     _buildMenu,
                     _detailsManager,
-                    _buildingDeleteButtonActivenessDecider);
+                    _shouldBuildingDeleteButtonBeEnabledFilter);
             _uiManager = new UIManager(managerArgs);
 
             _building = Substitute.For<IBuilding>();
@@ -161,12 +161,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding_ParentIsPlayerCruiser_CameraAtPlayerCruiser_ShowsDetails()
         {
             _cameraController.State.Returns(CameraState.PlayerCruiser);
-            _buildingDeleteButtonActivenessDecider.IsMatch(_building).Returns(true);
+            _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(_building).Returns(true);
             _building.ParentCruiser.Returns(_playerCruiser);
 
             _uiManager.SelectBuilding(_building);
 
-            _buildingDeleteButtonActivenessDecider.Received().IsMatch(_building);
+            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
             _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
             _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building, allowDelete: true);
