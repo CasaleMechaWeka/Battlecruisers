@@ -1,0 +1,30 @@
+﻿using BattleCruisers.UI;
+using NUnit.Framework;
+
+namespace BattleCruisers.Tests.UI
+{
+    public class BasicFilterTests
+    {
+        private BasicFilter _filter;
+
+        [SetUp]
+        public void SetuUp()
+        {
+            _filter = new BasicFilter(isMatch: false);
+        }
+
+        [Test]
+        public void ChangeIsMatch_TriggersEvent()
+        {
+            Assert.IsFalse(_filter.IsMatch);
+
+            int eventCounter = 0;
+            _filter.PotentialMatchChange += (sender, e) => eventCounter++;
+
+            _filter.IsMatch = true;
+
+            Assert.IsTrue(_filter.IsMatch);
+            Assert.AreEqual(1, eventCounter);
+        }
+    }
+}
