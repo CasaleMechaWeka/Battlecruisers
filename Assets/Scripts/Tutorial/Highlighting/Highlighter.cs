@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    // FELIX  Test :)
     public class Highlighter : IHighlighter
     {
         private readonly IHighlightFactory _factory;
