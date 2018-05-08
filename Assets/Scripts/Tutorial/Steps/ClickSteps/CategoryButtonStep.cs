@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Test :)
     public class CategoryButtonStep : ClickStep
     {
         private readonly IBuildingCategoryPermitter _permitter;
