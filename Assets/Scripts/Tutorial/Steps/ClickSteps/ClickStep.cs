@@ -7,7 +7,6 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// <summary>
     /// Completed when the user clicks on a specific element.
     /// </summary>
-    // FELIX  Test :D
     public class ClickStep : TutorialStep
     {
         private readonly IClickablesProvider _clickablesProvider;
