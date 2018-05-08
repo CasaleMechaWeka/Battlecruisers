@@ -23,6 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 
             _factory = Substitute.For<IHighlightFactory>();
             _highlighter = new Highlighter(_factory);
+            _highlight = Substitute.For<IHighlight>();
 
             // Highlightable
             _highlightable = Substitute.For<IHighlightable>();
