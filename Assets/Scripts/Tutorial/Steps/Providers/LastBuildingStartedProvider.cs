@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    // FELIX  Test
     public class LastBuildingStartedProvider : ILastBuildingStartedProvider
     {
         private readonly ICruiserController _cruiser;
@@ -27,18 +26,26 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
         public IList<IHighlightable> FindHighlightables()
         {
-            return new List<IHighlightable>()
+            IList<IHighlightable> highlightables = new List<IHighlightable>();
+
+            if (_lastBuildingStarted != null)
             {
-                _lastBuildingStarted
-            };
+                highlightables.Add(_lastBuildingStarted);
+            }
+
+            return highlightables;
         }
 
         public IList<IClickable> FindClickables()
         {
-            return new List<IClickable>()
+            IList<IClickable> clickables = new List<IClickable>();
+
+            if (_lastBuildingStarted != null)
             {
-                _lastBuildingStarted
-            };
+                clickables.Add(_lastBuildingStarted);
+            }
+
+            return clickables;
         }
 
         public IBuildable FindItem()
