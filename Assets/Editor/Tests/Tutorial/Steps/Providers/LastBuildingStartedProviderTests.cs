@@ -24,8 +24,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 
             _buildableProvider = provider;
             _highlightablesProvider = provider;
-            // FELIX
-            //_clickablesProvider = provider;
+            _clickablesProvider = provider;
 
             _building = Substitute.For<IBuildable>();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using NSubstitute;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     public class ClickStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _clickStep;
-        private IClickablesProvider _clickablesProvider;
+        private IListProvider<IClickable> _clickablesProvider;
         private IList<IClickable> _clickables;
         private IClickable _clickable1, _clickable2;
 
@@ -24,8 +25,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             {
                 _clickable1, _clickable2
             };
-            _clickablesProvider = Substitute.For<IClickablesProvider>();
-            _clickablesProvider.FindClickables().Returns(_clickables);
+            _clickablesProvider = Substitute.For<IListProvider<IClickable>>();
+            _clickablesProvider.FindItems().Returns(_clickables);
 
             _clickStep = new ClickStep(_args, _clickablesProvider);
         }
@@ -34,7 +35,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         public void Start()
         {
             _clickStep.Start(_completionCallback);
-            _clickablesProvider.Received().FindClickables();
+            _clickablesProvider.Received().FindItems();
         }
 
         [Test]

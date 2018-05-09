@@ -313,10 +313,10 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateClickStep(ITutorialStepArgs args, params IClickable[] completionClickables)
         {
-            return CreateClickStep(args, new StaticClickablesProvider(completionClickables));
+            return CreateClickStep(args, new StaticListProvider<IClickable>(completionClickables));
         }
 
-        private ITutorialStep CreateClickStep(ITutorialStepArgs args, IClickablesProvider clickablesProvider)
+        private ITutorialStep CreateClickStep(ITutorialStepArgs args, IListProvider<IClickable> clickablesProvider)
         {
             return new ClickStep(args, clickablesProvider);
         }

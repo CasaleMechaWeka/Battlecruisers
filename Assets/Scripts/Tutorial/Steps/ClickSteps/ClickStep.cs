@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
@@ -9,10 +10,10 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// </summary>
     public class ClickStep : TutorialStep
     {
-        private readonly IClickablesProvider _clickablesProvider;
+        private readonly IListProvider<IClickable> _clickablesProvider;
         private IList<IClickable> _completionClickables;
 
-        public ClickStep(ITutorialStepArgs args, IClickablesProvider clickablesProvider)
+        public ClickStep(ITutorialStepArgs args, IListProvider<IClickable> clickablesProvider)
             : base(args)
         {
             Assert.IsNotNull(clickablesProvider);
@@ -23,7 +24,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         {
             base.Start(completionCallback);
 
-            _completionClickables = _clickablesProvider.FindClickables();
+            _completionClickables = _clickablesProvider.FindItems();
 
             foreach (IClickable completionClickable in _completionClickables)
             {

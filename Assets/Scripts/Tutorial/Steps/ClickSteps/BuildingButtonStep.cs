@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using UnityEngine.Assertions;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             IBuildableButton buildableButton,
             IBuildingPermitter permitter,
             IPrefabKey buildingToAllow) 
-            : base(args, new StaticClickablesProvider(buildableButton))
+            : base(args, new StaticListProvider<IClickable>(buildableButton))
         {
             Assert.IsNotNull(permitter);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
@@ -14,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             ITutorialStepArgs args, 
 			ISlotPermitter highlightableSlotPermitter,
             params ISlot[] slots)
-            : base(args, new StaticClickablesProvider(slots))
+            : base(args, new StaticListProvider<IClickable>(slots))
         {
             Assert.IsNotNull(highlightableSlotPermitter);
 

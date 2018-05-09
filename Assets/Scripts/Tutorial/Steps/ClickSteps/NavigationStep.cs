@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI;
 using UnityEngine.Assertions;
 
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly BasicFilter _shouldNavigationBeEnabledFilter;
 
         public NavigationStep(ITutorialStepArgs args, BasicFilter shouldNavigationBeEnabledFilter, params IClickable[] completionClickables)
-            : base(args, new StaticClickablesProvider(completionClickables))
+            : base(args, new StaticListProvider<IClickable>(completionClickables))
         {
             Assert.IsNotNull(shouldNavigationBeEnabledFilter);
             _shouldNavigationBeEnabledFilter = shouldNavigationBeEnabledFilter;
