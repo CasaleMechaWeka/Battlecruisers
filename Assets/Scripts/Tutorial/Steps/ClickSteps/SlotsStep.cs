@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Test :)
     public class SlotsStep : ClickStep
     {
         private readonly IList<ISlot> _slots;
