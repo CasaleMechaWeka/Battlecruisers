@@ -1,6 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables;
-using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps

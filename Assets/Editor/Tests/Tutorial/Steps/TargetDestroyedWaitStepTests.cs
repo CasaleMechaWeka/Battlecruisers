@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.Tutorial.Steps.Providers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
