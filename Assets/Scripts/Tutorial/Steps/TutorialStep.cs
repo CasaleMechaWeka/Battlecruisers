@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly IHighlighter _highlighter;
         private readonly string _textToDisplay;
         private readonly ITextDisplayer _displayer;
-        private readonly IHighlightablesProvider _highlightablesProvider;
+        private readonly IListProvider<IHighlightable> _highlightablesProvider;
         private Action _completionCallback;
 
         protected TutorialStep(ITutorialStepArgs args)
@@ -28,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps
             Assert.IsNotNull(completionCallback);
             _completionCallback = completionCallback;
 
-            _highlighter.Highlight(_highlightablesProvider.FindHighlightables());
+            _highlighter.Highlight(_highlightablesProvider.FindItems());
 
             if (_textToDisplay != null)
             {

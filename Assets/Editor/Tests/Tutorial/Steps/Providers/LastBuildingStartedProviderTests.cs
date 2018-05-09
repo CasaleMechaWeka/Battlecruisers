@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;
 using NSubstitute;
 using NUnit.Framework;
@@ -8,7 +10,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 {
     public class LastBuildingStartedProviderTests
     {
-        private LastBuildingStartedProvider _provider;
+        private IProvider<IBuildable> _buildableProvider;
+        private IListProvider<IHighlightable> _highlightablesProvider;
+        private IListProvider<IClickable> _clickablesProvider;
         private ICruiserController _cruiser;
         private IBuildable _building;
 
@@ -16,7 +20,12 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         public void SetuUp()
         {
             _cruiser = Substitute.For<ICruiserController>();
-            _provider = new LastBuildingStartedProvider(_cruiser);
+            LastBuildingStartedProvider provider = new LastBuildingStartedProvider(_cruiser);
+
+            _buildableProvider = provider;
+            _highlightablesProvider = provider;
+            // FELIX
+            //_clickablesProvider = provider;
 
             _building = Substitute.For<IBuildable>();
         }
@@ -24,9 +33,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void NoBuildingsStarted()
         {
-            Assert.AreEqual(0, _provider.FindHighlightables().Count);
-            Assert.AreEqual(0, _provider.FindClickables().Count);
-			Assert.IsNull(_provider.FindItem());
+            Assert.AreEqual(0, _highlightablesProvider.FindItems().Count);
+            Assert.AreEqual(0, _clickablesProvider.FindItems().Count);
+			Assert.IsNull(_buildableProvider.FindItem());
         }
 
         [Test]
@@ -34,9 +43,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         {
             _cruiser.StartedConstruction += Raise.EventWith(new StartedConstructionEventArgs(_building));
 
-            Assert.IsTrue(_provider.FindHighlightables().Contains(_building));
-            Assert.IsTrue(_provider.FindClickables().Contains(_building));
-            Assert.AreSame(_building, _provider.FindItem());
+            Assert.IsTrue(_highlightablesProvider.FindItems().Contains(_building));
+            Assert.IsTrue(_clickablesProvider.FindItems().Contains(_building));
+            Assert.AreSame(_building, _buildableProvider.FindItem());
         }
     }
 }

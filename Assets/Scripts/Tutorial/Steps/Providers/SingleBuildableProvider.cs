@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -34,7 +35,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             };
 		}
 		
-		public IList<IHighlightable> FindHighlightables()
+        IList<IHighlightable> IListProvider<IHighlightable>.FindItems()
 		{
             return new List<IHighlightable>()
             {

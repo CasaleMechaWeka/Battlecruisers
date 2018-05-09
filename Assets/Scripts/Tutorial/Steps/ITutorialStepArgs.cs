@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 
 namespace BattleCruisers.Tutorial.Steps
 {
@@ -7,6 +8,6 @@ namespace BattleCruisers.Tutorial.Steps
         IHighlighter Highlighter { get; }
         string TextToDisplay { get; }
         ITextDisplayer Displayer { get; }
-		IHighlightablesProvider HighlightablesProvider { get; }
+		IListProvider<IHighlightable> HighlightablesProvider { get; }
     }
 }

@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
@@ -24,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             _lastBuildingStarted = e.Buildable;
         }
 
-        public IList<IHighlightable> FindHighlightables()
+        IList<IHighlightable> IListProvider<IHighlightable>.FindItems()
         {
             IList<IHighlightable> highlightables = new List<IHighlightable>();
 

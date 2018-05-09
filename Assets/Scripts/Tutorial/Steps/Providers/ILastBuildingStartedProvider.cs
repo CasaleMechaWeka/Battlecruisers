@@ -6,7 +6,7 @@ using BattleCruisers.Tutorial.Steps.ClickSteps;
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
     public interface ILastBuildingStartedProvider : 
-        IHighlightablesProvider, 
+        IListProvider<IHighlightable>, 
         IClickablesProvider, 
         IProvider<IBuildable>
     {

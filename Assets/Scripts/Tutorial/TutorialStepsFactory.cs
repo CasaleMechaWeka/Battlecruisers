@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -297,10 +298,10 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, params IHighlightable[] elementsToHighlight)
         {
-            return CreateTutorialStepArgs(textToDisplay, new StaticHighlightableProvider(elementsToHighlight));
+            return CreateTutorialStepArgs(textToDisplay, new StaticListProvider<IHighlightable>(elementsToHighlight));
         }
 
-        private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, IHighlightablesProvider highlightablesProvider)
+        private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, IListProvider<IHighlightable> highlightablesProvider)
         {
             return
                 new TutorialStepArgs(

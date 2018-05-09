@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         {
             _tutorialStep.Start(_completionCallback);
 
-            _highlightablesProvider.Received().FindHighlightables();
+            _highlightablesProvider.Received().FindItems();
             _highlighter.Received().Highlight(_highlightables);
             _displayer.Received().DisplayText(_textToDisplay);
         }
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 
             _tutorialStep.Start(_completionCallback);
 
-            _highlightablesProvider.Received().FindHighlightables();
+            _highlightablesProvider.Received().FindItems();
             _highlighter.Received().Highlight(_highlightables);
             _displayer.DidNotReceiveWithAnyArgs().DisplayText(null);
         }

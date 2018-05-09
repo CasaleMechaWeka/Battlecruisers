@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         protected IHighlighter _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;
-        protected IHighlightablesProvider _highlightablesProvider;
+        protected IListProvider<IHighlightable> _highlightablesProvider;
         protected IList<IHighlightable> _highlightables;
         protected Action _completionCallback;
         protected int _callbackCounter;
@@ -28,13 +29,13 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             _textToDisplay = "Staub";
             _displayer = Substitute.For<ITextDisplayer>();
 
-            _highlightablesProvider = Substitute.For<IHighlightablesProvider>();
+            _highlightablesProvider = Substitute.For<IListProvider<IHighlightable>>();
             _highlightables = new List<IHighlightable>()
             {
                 Substitute.For<IHighlightable>(),
                 Substitute.For<IHighlightable>()
             };
-            _highlightablesProvider.FindHighlightables().Returns(_highlightables);
+            _highlightablesProvider.FindItems().Returns(_highlightables);
 
             _args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightablesProvider);
 
