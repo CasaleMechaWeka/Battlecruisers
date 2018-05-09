@@ -4,8 +4,8 @@
     /// Allows a reference to the provider to be used BEFORE the actual item
     /// the provider will return is available.
     /// </summary>
-    public interface IProvider<T>
+    public interface IProvider<TItem>
     {
-        T FindItem();
+        TItem FindItem();
     }
 }
