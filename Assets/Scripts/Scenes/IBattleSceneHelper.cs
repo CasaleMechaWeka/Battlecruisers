@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
@@ -22,5 +23,8 @@ namespace BattleCruisers.Scenes
 
         BasicFilter CreateNavigationFilter();
         BasicFilter CreateBackButtonFilter();
+
+        IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
+        IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
     }
 }

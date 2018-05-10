@@ -128,15 +128,31 @@ namespace BattleCruisers.Scenes
 
             // Initialise player cruiser
             ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
-            // FELIX  Non-null build progress calculator :P
-            cruiserFactory.InitialiseCruiser(_playerCruiser, _aiCruiser, uiManager, playerHelper, Faction.Blues, Direction.Right, highlightableSlotFilter, null);
+            cruiserFactory
+                .InitialiseCruiser(
+                    _playerCruiser, 
+                    _aiCruiser, 
+                    uiManager, 
+                    playerHelper, 
+                    Faction.Blues, 
+                    Direction.Right, 
+                    highlightableSlotFilter, 
+                    helper.PlayerCruiserBuildProgressCalculator);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
             ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
-            // FELIX  Non-null build progress calculator :P
-            cruiserFactory.InitialiseCruiser(_aiCruiser, _playerCruiser, uiManager, aiHelper, Faction.Reds, Direction.Left, highlightableSlotFilter, null);
+            cruiserFactory
+                .InitialiseCruiser(
+                    _aiCruiser, 
+                    _playerCruiser, 
+                    uiManager, 
+                    aiHelper, 
+                    Faction.Reds, 
+                    Direction.Left, 
+                    highlightableSlotFilter, 
+                    helper.AICruiserBuildProgressCalculator);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

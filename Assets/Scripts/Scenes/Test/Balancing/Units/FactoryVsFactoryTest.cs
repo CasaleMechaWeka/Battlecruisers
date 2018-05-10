@@ -104,7 +104,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             {
                 // Cheaper unit => Have some wait time
                 float waitTimeInDroneS = otherUnit.CostInDroneS - ownUnit.CostInDroneS;
-                return waitTimeInDroneS / numOfDrones / Constants.NORMAL_BUILD_SPEED_MULTIPLIER;
+                return waitTimeInDroneS / numOfDrones / BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER;
             }
         }
 

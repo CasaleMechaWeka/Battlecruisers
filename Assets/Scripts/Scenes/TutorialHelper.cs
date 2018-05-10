@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
@@ -31,6 +32,8 @@ namespace BattleCruisers.Scenes
         public ILastBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
+        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
+        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -45,6 +48,13 @@ namespace BattleCruisers.Scenes
             BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(Tags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(Tags.SHIPS);
+
+			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
+            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
+            IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST_BUILD_SPEED_MULTIPLIER);
+
+            PlayerCruiserBuildProgressCalculator = normalCalculator;
+            AICruiserBuildProgressCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
