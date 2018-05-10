@@ -2,8 +2,6 @@
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Test :)
-
     /// <summary>
     /// Calculates build progress asymptotically, ie, build prgoress never completes.
     /// This is for the tutorial, where we do not want a buildable to complete until

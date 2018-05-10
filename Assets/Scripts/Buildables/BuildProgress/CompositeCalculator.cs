@@ -3,8 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Test :)
-
     /// <summary>
     /// Forwards calculation to the appropriate calculator, depending on what
     /// build speed is set.
