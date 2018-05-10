@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
-    // FELIX  Test
     public class TutorialStepConsumer : ITutorialStepConsumer
     {
         private readonly Queue<ITutorialStep> _tutorialSteps;
