@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -12,37 +13,39 @@ namespace BattleCruisers.AI.Tasks
 {
     public class ConstructBuildingTask : IInternalTask
     {
-        private readonly IPrefabKey _key;
+        private readonly IPrefabKey _buildingToConstruct;
         private readonly IPrefabFactory _prefabFactory;
-        private readonly ICruiserController _cruiser;
+        private readonly ICruiserController _parentCruiser;
         private readonly IDeferrer _deferrer;
 
         private IBuildable _building;
 		
 		public event EventHandler Completed;
 
-        public ConstructBuildingTask(IPrefabKey key, IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer) 
+        public ConstructBuildingTask(IPrefabKey buildingToconstruct, IPrefabFactory prefabFactory, ICruiserController parentCruiser, IDeferrer deferrer) 
         {
-            _key = key;
+            Helper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser, deferrer);
+
+            _buildingToConstruct = buildingToconstruct;
             _prefabFactory = prefabFactory;
-            _cruiser = cruiser;
+            _parentCruiser = parentCruiser;
             _deferrer = deferrer;
         }
 
         public void Start()
         {
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_key);
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
-            Assert.IsTrue(buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _cruiser.DroneManager.NumOfDrones, 
+            Assert.IsTrue(buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _parentCruiser.DroneManager.NumOfDrones, 
                 "Cannot afford to construct building " + buildingWrapperPrefab.Buildable.Name + " need " +
-                buildingWrapperPrefab.Buildable.NumOfDronesRequired + " but only have " + _cruiser.DroneManager.NumOfDrones);
+                buildingWrapperPrefab.Buildable.NumOfDronesRequired + " but only have " + _parentCruiser.DroneManager.NumOfDrones);
 
-            if (_cruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType))
+            if (_parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType))
             {
-                ISlot slot = _cruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.PreferCruiserFront);
+                ISlot slot = _parentCruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.PreferCruiserFront);
 				Assert.IsNotNull(slot);
 				
-                _building = _cruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
+                _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
 				_building.CompletedBuildable += Building_CompletedBuildable;
             }
             else
