@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
@@ -16,7 +17,8 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection,
-            ISlotFilter highlightableFilter);
+            ISlotFilter highlightableFilter,
+            IBuildProgressCalculator buildProgressCalculator);
         
 		ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera);
 		ICruiserHelper CreateAIHelper(IUIManager uiIManager, ICameraController camera);

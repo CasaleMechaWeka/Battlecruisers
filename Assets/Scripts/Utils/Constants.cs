@@ -8,6 +8,8 @@
 
 		public const float DISABLED_UI_ALPHA = 0.5f;
 		public const float ENABLED_UI_ALPHA = 1.0f;
+
+        public const float BUILD_SPEED_BALANCING_MULTIPLIER = 2;
 	}
 
 	public static class SceneNames

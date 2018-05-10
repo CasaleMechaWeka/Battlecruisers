@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
@@ -22,5 +23,6 @@ namespace BattleCruisers.Cruisers
         bool ShouldShowFog { get; }
         ICruiserHelper Helper { get; }
         ISlotFilter HighlightableFilter { get; }
+        IBuildProgressCalculator BuildProgressCalculator { get; }
     }
 }

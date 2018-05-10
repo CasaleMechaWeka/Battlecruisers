@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
@@ -35,9 +36,10 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection,
-            ISlotFilter highlightableFilter)
+            ISlotFilter highlightableFilter,
+            IBuildProgressCalculator buildProgressCalculator)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator);
 
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
@@ -59,7 +61,8 @@ namespace BattleCruisers.Cruisers
                     repairManager,
                     shouldShowFog,
                     helper,
-                    highlightableFilter);
+                    highlightableFilter,
+                    buildProgressCalculator);
 
             cruiser.Initialise(cruiserArgs);
         }

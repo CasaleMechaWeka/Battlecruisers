@@ -49,10 +49,6 @@ namespace BattleCruisers.Buildables
 
         private const float MAX_BUILD_PROGRESS = 1;
         private const float INITIAL_HEALTH = 1;
-        // TEMP  Build cheat multiplier
-        //private const float BUILD_CHEAT_MULTIPLIER = 10;
-        //private const float BUILD_CHEAT_MULTIPLIER = 50;
-        public const float BUILD_CHEAT_MULTIPLIER = 2;
 
         #region Properties
         public BuildableState BuildableState { get; private set; }
@@ -284,7 +280,7 @@ namespace BattleCruisers.Buildables
                 Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
 
                 // Find build progress
-                float buildProgressInDroneS = DroneConsumer.NumOfDrones * BuildProgressBoostable.BoostMultiplier * Time.deltaTime * BUILD_CHEAT_MULTIPLIER;
+                float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, Time.deltaTime);
                 _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
 
                 BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
