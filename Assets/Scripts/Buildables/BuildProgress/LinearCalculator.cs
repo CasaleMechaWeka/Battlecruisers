@@ -1,9 +1,8 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Test :)
-
     /// <summary>
     /// Calculates build progress linearly.  This is the "normal" build progress,
     /// and how build progress should be calculated in game.
@@ -12,11 +11,9 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         private readonly float _buildMultiplier;
 
-        private const float DEFAULT_BUILD_MULTIPLIER = 1;
-
-        public LinearCalculator(float buildMultiplier = DEFAULT_BUILD_MULTIPLIER)
+        public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER)
         {
-            _buildMultiplier = buildMultiplier;
+            _buildMultiplier = buildSpeedMultiplier;
         }
 
         public float CalculateBuildProgressInDroneS(IBuildable buildableUnderConstruction, float deltaTime)
