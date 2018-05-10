@@ -16,16 +16,16 @@ namespace BattleCruisers.Tutorial
         public IGameSpeedWrapper GameSpeedWrapper { get; private set; }
         public ICruiserInfo PlayerCruiserInfo { get; private set; }
         public IBuildMenuButtons BuildMenuButtons { get; private set; }
-        public IPermitterProvider PermitterProvider { get; private set; }
+        public ITutorialProvider TutorialProvider { get; private set; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             IHUDCanvasController hudCanvas, 
             IBuildMenuButtons buildMenuButtons,
-            IPermitterProvider permitterProvider)
+            ITutorialProvider tutorialProvider)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, permitterProvider);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Tutorial
             PlayerCruiserInfo = hudCanvas.PlayerCruiserInfo;
 
             BuildMenuButtons = buildMenuButtons;
-            PermitterProvider = permitterProvider;
+            TutorialProvider = tutorialProvider;
         }
     }
 }

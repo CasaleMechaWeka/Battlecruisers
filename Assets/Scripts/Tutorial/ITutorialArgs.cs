@@ -14,6 +14,6 @@ namespace BattleCruisers.Tutorial
         IGameSpeedWrapper GameSpeedWrapper { get; }
         ICruiserInfo PlayerCruiserInfo { get; }
         IBuildMenuButtons BuildMenuButtons { get; }
-        IPermitterProvider PermitterProvider { get; }
+        ITutorialProvider TutorialProvider { get; }
     }
 }

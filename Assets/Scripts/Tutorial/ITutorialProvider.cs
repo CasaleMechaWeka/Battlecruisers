@@ -7,7 +7,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 
 namespace BattleCruisers.Tutorial
 {
-    public interface IPermitterProvider
+    public interface ITutorialProvider
     {
 		ISlotPermitter SlotPermitter { get; }
 		IBuildingCategoryPermitter BuildingCategoryPermitter { get; }

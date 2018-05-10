@@ -16,7 +16,7 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes
 {
-    public class TutorialHelper : IBattleSceneHelper, IPermitterProvider
+    public class TutorialHelper : IBattleSceneHelper, ITutorialProvider
     {
         private readonly IDataProvider _dataProvider;
         private readonly SpecificSlotsFilter _slotFilter;

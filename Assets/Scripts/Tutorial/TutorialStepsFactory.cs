@@ -96,7 +96,7 @@ namespace BattleCruisers.Tutorial
             return 
                 new NavigationStep(
                     navigationButtonArgs, 
-                    _tutorialArgs.PermitterProvider.NavigationPermitter, 
+                    _tutorialArgs.TutorialProvider.NavigationPermitter, 
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
 		}
 
@@ -188,7 +188,7 @@ namespace BattleCruisers.Tutorial
 
             // Click on attack boat
             string textToDisplay = null;
-            ISingleBuildableProvider attackBoatProvider = _tutorialArgs.PermitterProvider.SingleShipProvider;
+            ISingleBuildableProvider attackBoatProvider = _tutorialArgs.TutorialProvider.SingleShipProvider;
             ITutorialStepArgs clickAttackBoatArgs = CreateTutorialStepArgs(textToDisplay, attackBoatProvider);
             // FELIX  Uncomment, once AI step above is implemented :/
             //enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
@@ -229,7 +229,7 @@ namespace BattleCruisers.Tutorial
             IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.BuildMenuButtons.GetCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
             ITutorialStepArgs buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
-            constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.PermitterProvider.BuildingCategoryPermitter));
+            constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct);
@@ -239,7 +239,7 @@ namespace BattleCruisers.Tutorial
                 new BuildingButtonStep(
                     buldingButtonArgs,
                     buildingButton,
-                    _tutorialArgs.PermitterProvider.BuildingPermitter,
+                    _tutorialArgs.TutorialProvider.BuildingPermitter,
                     buildingToConstruct));
 
             // Select a slot
@@ -249,11 +249,11 @@ namespace BattleCruisers.Tutorial
             constructionSteps.Add(
                 new SlotsStep(
                     buildingSlotsArgs,
-                    _tutorialArgs.PermitterProvider.SlotPermitter,
+                    _tutorialArgs.TutorialProvider.SlotPermitter,
                     buildingSlotsArray));
 
             // Wait for building to complete construction
-            ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.PermitterProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
+            ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
 			string waitText = "Wait for " + buildingName + " to complete, patience :)";
             ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
             constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
@@ -277,20 +277,20 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_NavigateToCruiser(string textToDisplay, IButton navigationButton)
         {
             ITutorialStepArgs navigateToCruiserArgs = CreateTutorialStepArgs(textToDisplay, navigationButton);
-            return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.PermitterProvider.NavigationPermitter, navigationButton);
+            return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.TutorialProvider.NavigationPermitter, navigationButton);
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
         {
-            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = buildingKey;
+            _tutorialArgs.TutorialProvider.BuildingPermitter.PermittedBuilding = buildingKey;
 
             ReadOnlyCollection<IBuildableButton> categoryButtons = _tutorialArgs.BuildMenuButtons.GetBuildableButtons(buildingCategory);
 
             IBuildableButton buildableButton
                 = categoryButtons
-                    .FirstOrDefault(button => _tutorialArgs.PermitterProvider.ShouldBuildingBeEnabledFilter.IsMatch(button.Buildable));
+                    .FirstOrDefault(button => _tutorialArgs.TutorialProvider.ShouldBuildingBeEnabledFilter.IsMatch(button.Buildable));
 
-            _tutorialArgs.PermitterProvider.BuildingPermitter.PermittedBuilding = null;
+            _tutorialArgs.TutorialProvider.BuildingPermitter.PermittedBuilding = null;
 
             Assert.IsNotNull(buildableButton);
             return buildableButton;
