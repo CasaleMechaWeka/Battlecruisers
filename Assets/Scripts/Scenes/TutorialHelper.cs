@@ -34,6 +34,7 @@ namespace BattleCruisers.Scenes
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
+        public IBuildSpeedController AICruiserBuildSpeedController { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -54,7 +55,9 @@ namespace BattleCruisers.Scenes
             IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST_BUILD_SPEED_MULTIPLIER);
 
             PlayerCruiserBuildProgressCalculator = normalCalculator;
-            AICruiserBuildProgressCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            CompositeCalculator compositeCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            AICruiserBuildProgressCalculator = compositeCalculator;
+            AICruiserBuildSpeedController = compositeCalculator;
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)

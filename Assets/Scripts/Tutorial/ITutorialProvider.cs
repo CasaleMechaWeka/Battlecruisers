@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Tutorial
         BasicFilter NavigationPermitter { get; }
         ISingleBuildableProvider SingleAircraftProvider { get; }
 		ISingleBuildableProvider SingleShipProvider { get; }
+        IBuildSpeedController AICruiserBuildSpeedController { get; }
 
         ILastBuildingStartedProvider CreateLastBuildingStartedProvider(ICruiserController cruiser);
     }
