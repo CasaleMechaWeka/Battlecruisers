@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
     /// <summary>
     /// Calculates build progress linearly.  This is the "normal" build progress,
-    /// and how build progress should be calculaed in game.
+    /// and how build progress should be calculated in game.
     /// </summary>
     public class LinearCalculator : IBuildProgressCalculator
     {
