@@ -1,10 +1,11 @@
-﻿using BattleCruisers.Tutorial.Steps;
+﻿using System;
+using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 
-namespace BattleCruisers.Tests.Tutorial.Steps
+namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class DelayWaitStepTests : TutorialStepTestsBase
     {

@@ -3,7 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
     /// <summary>
     /// Completed when the specified buildable completes construction.

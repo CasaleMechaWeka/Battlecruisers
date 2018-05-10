@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.WaitSteps;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Tutorial.Steps
+namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class TargetDestroyedWaitStepTests : TutorialStepTestsBase
     {

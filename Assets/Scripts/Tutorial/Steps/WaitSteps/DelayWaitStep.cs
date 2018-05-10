@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
     /// <summary>
     /// Completed when the specified amount of time has passed.
