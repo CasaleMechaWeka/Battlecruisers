@@ -3,6 +3,11 @@
 namespace BattleCruisers.Buildables.BuildProgress
 {
     // FELIX  Test :)
+
+    /// <summary>
+    /// Calculates build progress linearly.  This is the "normal" build progress,
+    /// and how build progress should be calculaed in game.
+    /// </summary>
     public class LinearCalculator : IBuildProgressCalculator
     {
         private readonly float _buildMultiplier;
