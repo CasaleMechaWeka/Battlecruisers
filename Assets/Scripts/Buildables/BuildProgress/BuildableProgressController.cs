@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Buildables
+namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildableProgressController : MonoBehaviour
 	{
