@@ -11,8 +11,8 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
     {
         private IBuildProgressCalculator _calculator;
         private IBuildable _buildable;
-        private float _totalBuildTimeInDroneS;
         private float _proportionOfRemainingHealth;
+        private float _maxBuildProgress;
         private float _deltaTime;
 
         [SetUp]
@@ -26,9 +26,9 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 			_buildable.BuildableState.Returns(BuildableState.InProgress);
             _buildable.BuildTimeInS.Returns(100);
             _buildable.CostInDroneS.Returns(2);
-            _totalBuildTimeInDroneS = _buildable.BuildTimeInS * _buildable.CostInDroneS;
 
-            _proportionOfRemainingHealth = 0.2f;
+            _proportionOfRemainingHealth = 0.05f;
+            _maxBuildProgress = 0.95f;
             _deltaTime = 0.1f;
         }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         public void CalculateBuildProgressInDroneS_BuildableNotUnderConstruction_Throws()
         {
             _buildable.BuildableState.Returns(BuildableState.Completed);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.CalculateBuildProgressInDroneS(_buildable, deltaTime: 0.1f));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildable.BuildProgress.Returns(0);
 
-            float expectedBuildProgress = _totalBuildTimeInDroneS * _proportionOfRemainingHealth * _deltaTime;
+            float expectedBuildProgress = _buildable.CostInDroneS * _proportionOfRemainingHealth * _deltaTime;
 
             Assert.IsTrue(Mathf.Approximately(expectedBuildProgress, _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime)));
         }
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildable.BuildProgress.Returns(0.5f);
 
-            float expectedBuildProgress = _totalBuildTimeInDroneS * (1 - _buildable.BuildProgress) * _proportionOfRemainingHealth * _deltaTime;
+            float expectedBuildProgress = _buildable.CostInDroneS * (1 - _buildable.BuildProgress) * _proportionOfRemainingHealth * _deltaTime;
 
             Assert.IsTrue(Mathf.Approximately(expectedBuildProgress, _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime)));
         }
@@ -64,7 +64,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildable.BuildProgress.Returns(0.9f);
 
-            float expectedBuildProgress = _totalBuildTimeInDroneS * (1 - _buildable.BuildProgress) * _proportionOfRemainingHealth * _deltaTime;
+            float expectedBuildProgress = _buildable.CostInDroneS * (1 - _buildable.BuildProgress) * _proportionOfRemainingHealth * _deltaTime;
 
             Assert.IsTrue(Mathf.Approximately(expectedBuildProgress, _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime)));
         }
