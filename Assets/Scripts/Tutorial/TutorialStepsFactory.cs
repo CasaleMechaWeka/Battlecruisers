@@ -186,7 +186,8 @@ namespace BattleCruisers.Tutorial
             List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
 
             // 1. Create naval factory and start producing attack boats
-            enemyShipSteps.AddRange(CreateSteps_CreateProducingFactory(StaticPrefabKeys.Buildings.NavalFactory, StaticPrefabKeys.Units.AttackBoat));
+            FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(StaticPrefabKeys.Buildings.NavalFactory, StaticPrefabKeys.Units.AttackBoat);
+            enemyShipSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser
             enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an attack boat!  Have a look!"));
@@ -211,16 +212,37 @@ namespace BattleCruisers.Tutorial
             enemyShipSteps.AddRange(buildTurretSteps);
 
             // 6. Insta-complete attack boat
-            CreateChangeBuildSpeedStep(BuildSpeed.VeryFast);
+            enemyShipSteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
+
+            enemyShipSteps.Add(
+                new BuildableCompletedWaitStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider));
+
+            enemyShipSteps.Add(
+                new StopUnitConstructionStep(
+                    CreateTutorialStepArgs(textToDisplay: null), 
+                    factoryStepsResult.FactoryProvider));
+
+            // FELIX  Navigate to mid left
 
             // 7. Wait for anti-ship turret to destroy attack boat
+            enemyShipSteps.Add(
+                new TargetDestroyedWaitStep(
+                    CreateTutorialStepArgs("Nice!  Here comes the enemy attack boat"),
+                    new BuildableToTargetProvider(_tutorialArgs.TutorialProvider.SingleShipProvider)));
 
-            // 8. Congrats!  Wait 2 seconds
+            // 8. Congrats!  Wait 3 seconds
+            enemyShipSteps.Add(
+                new DelayWaitStep(
+                    CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
+                    _deferrer,
+                    waitTimeInS: 3));
 
             return enemyShipSteps;
         }
 
-        private IList<ITutorialStep> CreateSteps_CreateProducingFactory(IPrefabKey factoryKey, IPrefabKey unitKey)
+        private FactoryStepsResult CreateSteps_CreateProducingFactory(IPrefabKey factoryKey, IPrefabKey unitKey)
         {
             IList<ITutorialStep> factorySteps = new List<ITutorialStep>();
 
@@ -257,7 +279,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.PrefabFactory,
                     factoryProvider));
 
-            return factorySteps;
+            return new FactoryStepsResult(factorySteps, factoryProvider);
         }
 
         // FELIX  Allow specification of frontmost slot :)
@@ -373,6 +395,21 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(textToDisplay: null),
                     _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
                     buildSpeed);
+        }
+    }
+
+    // FELIX  move to own file?
+    public class FactoryStepsResult
+    {
+        public IList<ITutorialStep> Steps { get; private set; }
+        public IProvider<IFactory> FactoryProvider { get; private set; }
+
+        public FactoryStepsResult(IList<ITutorialStep> steps, IProvider<IFactory> factoryProvider)
+        {
+            Helper.AssertIsNotNull(steps, factoryProvider);
+
+            Steps = steps;
+            FactoryProvider = factoryProvider;
         }
     }
 }
