@@ -68,5 +68,12 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 
             Assert.IsTrue(Mathf.Approximately(expectedBuildProgress, _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime)));
         }
+
+        [Test]
+        public void CalculateBuildProgressInDroneS_BuildProgress_MaxBuildProgress()
+        {
+            _buildable.BuildProgress.Returns(_maxBuildProgress);
+            Assert.AreEqual(0, _calculator.CalculateBuildProgressInDroneS(_buildable, _deltaTime));
+        }
     }
 }
