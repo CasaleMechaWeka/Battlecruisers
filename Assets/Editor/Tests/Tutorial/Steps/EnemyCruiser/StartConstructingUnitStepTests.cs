@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Providers;
