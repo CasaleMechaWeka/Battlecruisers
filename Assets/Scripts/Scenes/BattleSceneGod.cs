@@ -185,7 +185,7 @@ namespace BattleCruisers.Scenes
             GenerateClouds(currentLevel);
 
 
-            StartTutorialIfNecessary();
+            StartTutorialIfNecessary(prefabFactory);
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IDeferrer deferrer)
@@ -225,11 +225,11 @@ namespace BattleCruisers.Scenes
             cloudGenerator.GenerateClouds(level.CloudStats);
         }
 
-        private void StartTutorialIfNecessary()
+        private void StartTutorialIfNecessary(IPrefabFactory prefabFactory)
         {
             if (ApplicationModel.IsTutorial)
             {
-                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController, _tutorialProvider);
+                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController, _tutorialProvider, prefabFactory);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);

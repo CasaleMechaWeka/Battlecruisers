@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
@@ -15,5 +16,6 @@ namespace BattleCruisers.Tutorial
         ICruiserInfo PlayerCruiserInfo { get; }
         IBuildMenuButtons BuildMenuButtons { get; }
         ITutorialProvider TutorialProvider { get; }
+        IPrefabFactory PrefabFactory { get; }
     }
 }
