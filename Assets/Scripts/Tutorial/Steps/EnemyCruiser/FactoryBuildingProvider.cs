@@ -5,6 +5,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
+    // FELIX  Move to providers namespace
+    // FELIX  Rename
     public class FactoryBuildingProvider : IProvider<IFactory>
     {
         private readonly IProvider<IBuildable> _buildableProvider;
