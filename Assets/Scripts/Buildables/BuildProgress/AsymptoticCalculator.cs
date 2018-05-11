@@ -7,7 +7,6 @@ namespace BattleCruisers.Buildables.BuildProgress
     /// This is for the tutorial, where we do not want a buildable to complete until
     /// the user has completed some action.
     /// </summary>
-    /// FELIX  Update tests
     public class AsymptoticCalculator : IBuildProgressCalculator
     {
         private const float PROPORTION_OF_REMAINING_PROGRESS = 0.05f;
