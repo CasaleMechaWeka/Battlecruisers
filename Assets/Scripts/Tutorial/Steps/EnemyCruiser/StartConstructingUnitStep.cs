@@ -36,6 +36,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
             IBuildableWrapper<IUnit> unitWrapperPrefab = _prefabFactory.GetUnitWrapperPrefab(_unitToConstruct);
             _factoryProvider.FindItem().UnitWrapper = unitWrapperPrefab;
+
+            OnCompleted();
         }
     }
 }

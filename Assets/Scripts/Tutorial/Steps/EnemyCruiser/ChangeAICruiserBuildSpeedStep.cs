@@ -24,6 +24,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
             base.Start(completionCallback);
 
             _buildSpeedController.BuildSpeed = _buildSpeed;
+
+            OnCompleted();
         }
     }
 }

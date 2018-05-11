@@ -22,6 +22,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
             base.Start(completionCallback);
 
             _factoryProvider.FindItem().UnitWrapper = null;
+
+            OnCompleted();
         }
     }
 }

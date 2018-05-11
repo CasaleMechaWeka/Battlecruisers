@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
     // FELIX  Write tests
-    public class StartConstructingBuildingStep : TutorialStep, IProvider<IBuilding>
+    public class StartConstructingBuildingStep : TutorialStep, IProvider<IBuildable>
     {
         private readonly IPrefabKey _buildingToConstruct;
         private readonly IPrefabFactory _prefabFactory;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
             _parentCruiser = parentCruiser;
         }
 
-		public IBuilding FindItem()
+        public IBuildable FindItem()
         {
             return _building;
         }
@@ -49,6 +49,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 			ISlot slot = _parentCruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.PreferCruiserFront);
 
             _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
+
+            OnCompleted();
 		}
 	}
 }
