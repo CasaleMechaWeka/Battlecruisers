@@ -10,8 +10,6 @@ namespace BattleCruisers.Tutorial.Providers
         public StaticListProvider(params TItem[] items)
         {
             Assert.IsNotNull(items);
-            Assert.IsTrue(items.Length > 0);
-
             _items = items;
         }
 
