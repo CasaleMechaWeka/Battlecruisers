@@ -47,8 +47,8 @@ namespace BattleCruisers.Scenes
             _buildingCategoryFilter = new BuildingCategoryFilter();
             NavigationPermitter = new BasicFilter(isMatch: false);
             BackButtonPermitter = new BasicFilter(isMatch: false);
-            SingleAircraftProvider = new SingleBuildableProvider(Tags.AIRCRAFT);
-            SingleShipProvider = new SingleBuildableProvider(Tags.SHIPS);
+            SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
+            SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
