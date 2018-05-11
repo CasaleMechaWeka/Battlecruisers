@@ -104,6 +104,7 @@ namespace BattleCruisers.Cruisers
             FactoryProvider = args.FactoryProvider;
             Direction = args.FacingDirection;
             _helper = args.Helper;
+            BuildProgressCalculator = args.BuildProgressCalculator;
 			
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
