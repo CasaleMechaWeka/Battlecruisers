@@ -3,18 +3,16 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Tutorial.Providers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
+namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    // FELIX  Move to providers namespace
-    // FELIX  Rename
-    public class FactoryBuildingProvider : IProvider<IFactory>
+    public class BuildableToFactoryProvider : IProvider<IFactory>
     {
         private readonly IProvider<IBuildable> _buildableProvider;
 
-        public FactoryBuildingProvider(IProvider<IBuildable> buildingProvider)
+        public BuildableToFactoryProvider(IProvider<IBuildable> buildableProvider)
         {
-            Assert.IsNotNull(buildingProvider);
-            _buildableProvider = buildingProvider;
+            Assert.IsNotNull(buildableProvider);
+            _buildableProvider = buildableProvider;
         }
 
         public IFactory FindItem()
