@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -9,6 +10,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI;
@@ -182,7 +184,8 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
 
-            // FELIX  Add AI step(s) to insta-build naval factory, and infinitely slow build attack boat :)
+            // Create naval factory and start producing attack boats
+            enemyShipSteps.AddRange(CreateSteps_CreateProducingFactory(StaticPrefabKeys.Buildings.NavalFactory, StaticPrefabKeys.Units.AttackBoat));
 
             // Navigate to enemey cruiser
             enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an attack boat!  Have a look!"));
@@ -214,6 +217,54 @@ namespace BattleCruisers.Tutorial
             // Congrats!  Wait 2 seconds
 
             return enemyShipSteps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_CreateProducingFactory(IPrefabKey factoryKey, IPrefabKey unitKey)
+        {
+            IList<ITutorialStep> factorySteps = new List<ITutorialStep>();
+
+            // These steps should complete very quickly and require no user input.
+            // There is no need to display any text to the user or highlight any
+            // elements.
+            string textToDisplay = null;
+            ITutorialStepArgs commonArgs = CreateTutorialStepArgs(textToDisplay);
+
+            // 1. Change build speed to super fast
+            factorySteps.Add(
+                new ChangeAICruiserBuildSpeedStep(
+                    commonArgs,
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    Buildables.BuildProgress.BuildSpeed.VeryFast));
+
+            // 2. Start building factory
+            StartConstructingBuildingStep startConstructingFactoryStep
+                = new StartConstructingBuildingStep(
+                    commonArgs,
+                    factoryKey,
+                    _tutorialArgs.PrefabFactory,
+                    _tutorialArgs.AICruiser);
+            factorySteps.Add(startConstructingFactoryStep);
+
+            // 3. Wait for factory completion
+            factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
+
+            // 4. Change build speed to infinitely slow
+            factorySteps.Add(
+                new ChangeAICruiserBuildSpeedStep(
+                    commonArgs,
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    Buildables.BuildProgress.BuildSpeed.InfinitelySlow));
+
+            // 5. Start building unit
+            IProvider<IFactory> factoryProvider = new FactoryBuildingProvider(startConstructingFactoryStep);
+            factorySteps.Add(
+                new StartConstructingUnitStep(
+                    commonArgs,
+                    unitKey,
+                    _tutorialArgs.PrefabFactory,
+                    factoryProvider));
+
+            return factorySteps;
         }
 
         // FELIX  Allow specification of frontmost slot :)
