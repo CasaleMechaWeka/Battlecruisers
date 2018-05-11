@@ -22,14 +22,14 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
         public StartConstructingBuildingStep(
             ITutorialStepArgs args, 
-            IPrefabKey buildingToconstruct, 
+            IPrefabKey buildingToConstruct, 
             IPrefabFactory prefabFactory, 
             ICruiserController parentCruiser) 
             : base(args)
         {
-            Helper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser);
+            Helper.AssertIsNotNull(buildingToConstruct, prefabFactory, parentCruiser);
 
-            _buildingToConstruct = buildingToconstruct;
+            _buildingToConstruct = buildingToConstruct;
             _prefabFactory = prefabFactory;
             _parentCruiser = parentCruiser;
         }
