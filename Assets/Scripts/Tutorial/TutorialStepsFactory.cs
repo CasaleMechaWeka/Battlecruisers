@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -184,23 +185,22 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
 
-            // Create naval factory and start producing attack boats
+            // 1. Create naval factory and start producing attack boats
             enemyShipSteps.AddRange(CreateSteps_CreateProducingFactory(StaticPrefabKeys.Buildings.NavalFactory, StaticPrefabKeys.Units.AttackBoat));
 
-            // Navigate to enemey cruiser
+            // 2. Navigate to enemey cruiser
             enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an attack boat!  Have a look!"));
 
-            // Click on attack boat
+            // 3. Click on attack boat
             string textToDisplay = null;
             ISingleBuildableProvider attackBoatProvider = _tutorialArgs.TutorialProvider.SingleShipProvider;
             ITutorialStepArgs clickAttackBoatArgs = CreateTutorialStepArgs(textToDisplay, attackBoatProvider);
-            // FELIX  Uncomment, once AI step above is implemented :/
-            //enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
+            enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
 
-            // Navigate back to player cruiser
+            // 4. Navigate back to player cruiser
             enemyShipSteps.Add(CreateStep_NavigateToPlayerCruiser());
 
-            // Build anti-ship turret
+            // 5. Build anti-ship turret
             IList<ITutorialStep> buildTurretSteps
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Defence,
@@ -210,11 +210,12 @@ namespace BattleCruisers.Tutorial
                     "anti-ship turret");
             enemyShipSteps.AddRange(buildTurretSteps);
 
-            // FELIX Insta-complete attack boat
+            // 6. Insta-complete attack boat
+            CreateChangeBuildSpeedStep(BuildSpeed.VeryFast);
 
-            // Wait for anti-ship turret to destroy attack boat
+            // 7. Wait for anti-ship turret to destroy attack boat
 
-            // Congrats!  Wait 2 seconds
+            // 8. Congrats!  Wait 2 seconds
 
             return enemyShipSteps;
         }
@@ -230,11 +231,7 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgs commonArgs = CreateTutorialStepArgs(textToDisplay);
 
             // 1. Change build speed to super fast
-            factorySteps.Add(
-                new ChangeAICruiserBuildSpeedStep(
-                    commonArgs,
-                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
-                    Buildables.BuildProgress.BuildSpeed.VeryFast));
+            factorySteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
 
             // 2. Start building factory
             StartConstructingBuildingStep startConstructingFactoryStep
@@ -249,11 +246,7 @@ namespace BattleCruisers.Tutorial
             factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
 
             // 4. Change build speed to infinitely slow
-            factorySteps.Add(
-                new ChangeAICruiserBuildSpeedStep(
-                    commonArgs,
-                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
-                    Buildables.BuildProgress.BuildSpeed.InfinitelySlow));
+            factorySteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.InfinitelySlow));
 
             // 5. Start building unit
             IProvider<IFactory> factoryProvider = new FactoryBuildingProvider(startConstructingFactoryStep);
@@ -371,6 +364,15 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateClickStep(ITutorialStepArgs args, IListProvider<IClickable> clickablesProvider)
         {
             return new ClickStep(args, clickablesProvider);
+        }
+
+        private ITutorialStep CreateChangeBuildSpeedStep(BuildSpeed buildSpeed)
+        {
+            return
+                new ChangeAICruiserBuildSpeedStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    buildSpeed);
         }
     }
 }
