@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Tutorial
 {
@@ -15,6 +16,7 @@ namespace BattleCruisers.Tutorial
         IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         BasicFilter NavigationPermitter { get; }
+        IUIManagerSettablePermissions UIManagerPermissions { get; }
 
         ISingleBuildableProvider SingleAircraftProvider { get; }
 		ISingleBuildableProvider SingleShipProvider { get; }

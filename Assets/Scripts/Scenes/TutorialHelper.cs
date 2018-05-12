@@ -29,6 +29,7 @@ namespace BattleCruisers.Scenes
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter NavigationPermitter { get; private set; }
         public BasicFilter BackButtonPermitter { get; private set; }
+        public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
 
         public ISingleBuildableProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
@@ -68,12 +69,13 @@ namespace BattleCruisers.Scenes
 
         public IUIManager CreateUIManager(IManagerArgs args)
         {
-            IUIManagerPermissions permissions = new UIManagerPermissions()
+            UIManagerPermissions uiManagerPermissions = new UIManagerPermissions()
             {
                 CanDismissItemDetails = false,
                 CanShowItemDetails = false
             };
-            return new LimitableUIManager(args, permissions);
+            UIManagerPermissions = uiManagerPermissions;
+            return new LimitableUIManager(args, uiManagerPermissions);
         }
 
         public ILoadout GetPlayerLoadout()

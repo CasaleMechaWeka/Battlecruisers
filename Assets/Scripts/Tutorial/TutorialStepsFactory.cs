@@ -429,11 +429,32 @@ namespace BattleCruisers.Tutorial
                      waitForBuildingToComplete: false));
 
             // 3. Bring up drone station details
-            // FELIX  NEXT :)
+            string focusText =
+                "Note that all drones are building the artillery.  But say you want to build " +
+                "the drone station first.  You can 'focus' the drones on the drone station.  " +
+                "Select the drone station.";
+            droneFocusSteps.Add(
+                new BuildingDetailsStep(
+                    CreateTutorialStepArgs(focusText, _lastPlayerIncompleteBuildingStartedProvider),
+                    _lastPlayerIncompleteBuildingStartedProvider,
+                    _tutorialArgs.TutorialProvider.UIManagerPermissions));
 
             // 4. Focus drones button
+            droneFocusSteps.Add(
+                CreateClickStep(
+                    CreateTutorialStepArgs(
+                        "This is the building details panel.  Select the 'focus' drones button", 
+                        _tutorialArgs.BuildingDetails.DroneFocusButton)));
+
             // 5. Change build speed to normal
+            droneFocusSteps.Add(
+                CreateChangeBuildSpeedStep(
+                    _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
+                    BuildSpeed.Normal));
+
             // 6. Dismiss building details
+
+
             // 7. Wait for artillery to complete
             // 8. Enable navigation
             // 9. Wait for enemy cruiser to be destroyed
