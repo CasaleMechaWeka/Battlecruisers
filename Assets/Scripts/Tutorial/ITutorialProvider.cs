@@ -15,8 +15,11 @@ namespace BattleCruisers.Tutorial
         IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         BasicFilter NavigationPermitter { get; }
+
         ISingleBuildableProvider SingleAircraftProvider { get; }
 		ISingleBuildableProvider SingleShipProvider { get; }
+
+        IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
         IBuildSpeedController AICruiserBuildSpeedController { get; }
 
         ILastBuildingStartedProvider CreateLastBuildingStartedProvider(ICruiserController cruiser);

@@ -29,10 +29,13 @@ namespace BattleCruisers.Scenes
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter NavigationPermitter { get; private set; }
         public BasicFilter BackButtonPermitter { get; private set; }
+
         public ILastBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
+
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
+		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
         public IBuildSpeedController AICruiserBuildSpeedController { get; private set; }
 
@@ -54,10 +57,13 @@ namespace BattleCruisers.Scenes
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
             IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST_BUILD_SPEED_MULTIPLIER);
 
-            PlayerCruiserBuildProgressCalculator = normalCalculator;
-            CompositeCalculator compositeCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
-            AICruiserBuildProgressCalculator = compositeCalculator;
-            AICruiserBuildSpeedController = compositeCalculator;
+            CompositeCalculator playerCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            PlayerCruiserBuildProgressCalculator = playerCruiserBuildSpeedCalculator;
+            PlayerCruiserBuildSpeedController = playerCruiserBuildSpeedCalculator;
+
+            CompositeCalculator aiCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            AICruiserBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
+            AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)
