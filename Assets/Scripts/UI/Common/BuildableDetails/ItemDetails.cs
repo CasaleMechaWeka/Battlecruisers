@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
@@ -16,6 +17,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private StatsController<TItem> _statsController;
         
         protected TItem _item;
+
+        public event EventHandler Dismissed;
 
 		public void Initialise()
         {
@@ -53,6 +56,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             CleanUp();
             gameObject.SetActive(false);
+
+            if (Dismissed != null)
+            {
+                Dismissed.Invoke(this, EventArgs.Empty);
+            }
         }
 
         protected virtual void CleanUp() { }
