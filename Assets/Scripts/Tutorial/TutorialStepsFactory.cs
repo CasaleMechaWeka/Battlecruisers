@@ -210,8 +210,15 @@ namespace BattleCruisers.Tutorial
                     "Quick, build an anti-ship turret!",
                     "anti-ship turret");
             enemyShipSteps.AddRange(buildTurretSteps);
+			
+			// 6. Navigate to mid left
+			enemyShipSteps.Add(
+				new NavigationStep(
+					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
+					_tutorialArgs.TutorialProvider.NavigationPermitter,
+					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
 
-            // 6. Insta-complete attack boat
+            // 7. Insta-complete attack boat
             enemyShipSteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
 
             enemyShipSteps.Add(
@@ -224,15 +231,13 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(textToDisplay: null), 
                     factoryStepsResult.FactoryProvider));
 
-            // FELIX  Navigate to mid left
-
-            // 7. Wait for anti-ship turret to destroy attack boat
+            // 8. Wait for anti-ship turret to destroy attack boat
             enemyShipSteps.Add(
                 new TargetDestroyedWaitStep(
-                    CreateTutorialStepArgs("Nice!  Here comes the enemy attack boat"),
+                    CreateTutorialStepArgs("Here comes the enemy attack boat."),
                     new BuildableToTargetProvider(_tutorialArgs.TutorialProvider.SingleShipProvider)));
 
-            // 8. Congrats!  Wait 3 seconds
+            // 9. Congrats!  Wait 3 seconds
             enemyShipSteps.Add(
                 new DelayWaitStep(
                     CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
