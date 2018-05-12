@@ -72,7 +72,12 @@ namespace BattleCruisers.Tutorial
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
             // 8. Enemy ship
-            steps.Enqueue(CreateSteps_EnemyShipDefence());
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-shipt turret")));
 
             // 9. Enemy bomber
             // 10. Drone Focus
@@ -180,75 +185,72 @@ namespace BattleCruisers.Tutorial
             return buildDroneStationSteps;
         }
 
-        // factory key
-        // unit key
-        // unit name
-        // single buildable provider
-        // defence key
-        // defence name
-        private IList<ITutorialStep> CreateSteps_EnemyShipDefence()
+        private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
+            IPrefabKey factoryKey,
+            BuildableInfo unitToBuild,
+            ISingleBuildableProvider unitBuildProvider,
+            BuildableInfo defenceToBuild)
         {
-            List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
+            List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
-            // 1. Create naval factory and start producing attack boats
-            FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(StaticPrefabKeys.Buildings.NavalFactory, StaticPrefabKeys.Units.AttackBoat);
-            enemyShipSteps.AddRange(factoryStepsResult.Steps);
+            // 1. Create factory and start producing units
+            FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
+            enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser
-            enemyShipSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an attack boat!  Have a look!"));
+            enemyUnitDefenceSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an " + unitToBuild.Name + "!  Have a look!"));
 
-            // 3. Click on attack boat
+            // 3. Click on the unit
             string textToDisplay = null;
-            ISingleBuildableProvider attackBoatProvider = _tutorialArgs.TutorialProvider.SingleShipProvider;
-            ITutorialStepArgs clickAttackBoatArgs = CreateTutorialStepArgs(textToDisplay, attackBoatProvider);
-            enemyShipSteps.Add(CreateClickStep(clickAttackBoatArgs, attackBoatProvider));
+            ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            enemyUnitDefenceSteps.Add(CreateClickStep(clickUnitArgs, unitBuildProvider));
 
             // 4. Navigate back to player cruiser
-            enemyShipSteps.Add(CreateStep_NavigateToPlayerCruiser());
+            enemyUnitDefenceSteps.Add(CreateStep_NavigateToPlayerCruiser());
 
-            // 5. Build anti-ship turret
+            // 5. Build defence turret
             IList<ITutorialStep> buildTurretSteps
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Defence,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    defenceToBuild,
                     SlotType.Deck,
-                    "Quick, build an anti-ship turret!");
-            enemyShipSteps.AddRange(buildTurretSteps);
+                    "Quick, build an " + defenceToBuild.Name + "!");
+            enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
-			enemyShipSteps.Add(
+			enemyUnitDefenceSteps.Add(
 				new NavigationStep(
 					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
 					_tutorialArgs.TutorialProvider.NavigationPermitter,
 					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
 
-            // 7. Insta-complete attack boat
-            enemyShipSteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
+            // 7. Insta-complete unit
+            enemyUnitDefenceSteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
 
-            enemyShipSteps.Add(
+            enemyUnitDefenceSteps.Add(
                 new BuildableCompletedWaitStep(
                     CreateTutorialStepArgs(textToDisplay: null),
-                    _tutorialArgs.TutorialProvider.SingleShipProvider));
+                    unitBuildProvider));
 
-            enemyShipSteps.Add(
+            enemyUnitDefenceSteps.Add(
                 new StopUnitConstructionStep(
                     CreateTutorialStepArgs(textToDisplay: null), 
                     factoryStepsResult.FactoryProvider));
 
-            // 8. Wait for anti-ship turret to destroy attack boat
-            enemyShipSteps.Add(
+            // 8. Wait for defence turret to destroy unit
+            enemyUnitDefenceSteps.Add(
                 new TargetDestroyedWaitStep(
-                    CreateTutorialStepArgs("Here comes the enemy attack boat."),
-                    new BuildableToTargetProvider(_tutorialArgs.TutorialProvider.SingleShipProvider)));
+                    CreateTutorialStepArgs("Here comes the enemy " + unitToBuild.Name + "."),
+                    new BuildableToTargetProvider(unitBuildProvider)));
 
             // 9. Congrats!  Wait 3 seconds
-            enemyShipSteps.Add(
+            enemyUnitDefenceSteps.Add(
                 new DelayWaitStep(
                     CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
                     _deferrer,
                     waitTimeInS: 3));
 
-            return enemyShipSteps;
+            return enemyUnitDefenceSteps;
         }
 
         private FactoryStepsResult CreateSteps_CreateProducingFactory(IPrefabKey factoryKey, IPrefabKey unitKey)
