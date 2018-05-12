@@ -161,10 +161,9 @@ namespace BattleCruisers.Tutorial
             IList<ITutorialStep> buildDroneStationSteps
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Factory,
-                    StaticPrefabKeys.Buildings.DroneStation,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
                     SlotType.Utility,
-                    "To get more drones build a drone station.",
-                    "drone station");
+                    "To get more drones build a drone station.");
 
             // Congrats!  Wait 3 seconds
             ITutorialStepArgs droneStationCompletedArgs
@@ -181,6 +180,12 @@ namespace BattleCruisers.Tutorial
             return buildDroneStationSteps;
         }
 
+        // factory key
+        // unit key
+        // unit name
+        // single buildable provider
+        // defence key
+        // defence name
         private IList<ITutorialStep> CreateSteps_EnemyShipDefence()
         {
             List<ITutorialStep> enemyShipSteps = new List<ITutorialStep>();
@@ -205,10 +210,9 @@ namespace BattleCruisers.Tutorial
             IList<ITutorialStep> buildTurretSteps
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Defence,
-                    StaticPrefabKeys.Buildings.AntiShipTurret,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
                     SlotType.Deck,
-                    "Quick, build an anti-ship turret!",
-                    "anti-ship turret");
+                    "Quick, build an anti-ship turret!");
             enemyShipSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
@@ -290,10 +294,9 @@ namespace BattleCruisers.Tutorial
         // FELIX  Allow specification of frontmost slot :)
         public IList<ITutorialStep> CreateSteps_ConstructBuilding(
             BuildingCategory buildingCategory, 
-            IPrefabKey buildingToConstruct,
+            BuildableInfo buildingToConstruct,
             SlotType buildingSlotType,
-            string constructBuildingInstruction,
-            string buildingName)
+            string constructBuildingInstruction)
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
@@ -304,7 +307,7 @@ namespace BattleCruisers.Tutorial
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
             // Select building
-            IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct);
+            IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
             constructionSteps.Add(
@@ -312,7 +315,7 @@ namespace BattleCruisers.Tutorial
                     buldingButtonArgs,
                     buildingButton,
                     _tutorialArgs.TutorialProvider.BuildingPermitter,
-                    buildingToConstruct));
+                    buildingToConstruct.Key));
 
             // Select a slot
             IList<ISlot> buildingSlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(buildingSlotType);
@@ -326,7 +329,7 @@ namespace BattleCruisers.Tutorial
 
             // Wait for building to complete construction
             ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
-			string waitText = "Wait for " + buildingName + " to complete, patience :)";
+            string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
             ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
             constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
 
@@ -400,6 +403,21 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(textToDisplay: null),
                     _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
                     buildSpeed);
+        }
+    }
+
+    // FELIX  Move to own file :P
+    public class BuildableInfo
+    {
+        public IPrefabKey Key { get; private set; }
+        public string Name { get; private set; }
+
+        public BuildableInfo(IPrefabKey key, string name)
+        {
+            Assert.IsNotNull(key);
+
+            Key = key;
+            Name = name;
         }
     }
 }
