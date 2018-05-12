@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
@@ -470,7 +471,17 @@ namespace BattleCruisers.Tutorial
             droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("And the artillery..."));
 
             // 8. Enable navigation
+            droneFocusSteps.Add(
+                new NavigationPermitterStep(
+                    CreateTutorialStepArgs("Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around"),
+                    _tutorialArgs.TutorialProvider.NavigationPermitter,
+                    isNavigationEnabled: true));
+
             // 9. Wait for enemy cruiser to be destroyed
+            droneFocusSteps.Add(
+                new TargetDestroyedWaitStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    new StaticProvider<ITarget>(_tutorialArgs.AICruiser)));
 
             return droneFocusSteps;
         }
