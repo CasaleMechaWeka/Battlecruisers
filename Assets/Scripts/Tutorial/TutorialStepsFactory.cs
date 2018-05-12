@@ -233,7 +233,7 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
 
             // 7. Insta-complete unit
-            enemyUnitDefenceSteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
+            enemyUnitDefenceSteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.VeryFast));
 
             enemyUnitDefenceSteps.Add(
                 new BuildableCompletedWaitStep(
@@ -272,7 +272,7 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgs commonArgs = CreateTutorialStepArgs(textToDisplay);
 
             // 1. Change build speed to super fast
-            factorySteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.VeryFast));
+            factorySteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.VeryFast));
 
             // 2. Start building factory
             StartConstructingBuildingStep startConstructingFactoryStep
@@ -287,7 +287,7 @@ namespace BattleCruisers.Tutorial
             factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
 
             // 4. Change build speed to infinitely slow
-            factorySteps.Add(CreateChangeBuildSpeedStep(BuildSpeed.InfinitelySlow));
+            factorySteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.InfinitelySlow));
 
             // 5. Start building unit
             IProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
@@ -424,12 +424,12 @@ namespace BattleCruisers.Tutorial
             return new ClickStep(args, clickablesProvider);
         }
 
-        private ITutorialStep CreateChangeBuildSpeedStep(BuildSpeed buildSpeed)
+        private ITutorialStep CreateChangeBuildSpeedStep(IBuildSpeedController speedController, BuildSpeed buildSpeed)
         {
             return
                 new ChangeAICruiserBuildSpeedStep(
                     CreateTutorialStepArgs(textToDisplay: null),
-                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    speedController,
                     buildSpeed);
         }
     }
