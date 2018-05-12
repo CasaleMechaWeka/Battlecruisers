@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public class LastIncompleteBuildingStartedProvider : ILastIncompleteBuildingStartedProvider
+    public class LastIncompleteBuildingStartedProvider : ISingleBuildableProvider
     {
         // Sorted list of buildables, witht he most recently started
         // buildable at the end.

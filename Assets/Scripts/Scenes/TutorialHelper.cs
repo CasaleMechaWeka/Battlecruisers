@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes
         public BasicFilter NavigationPermitter { get; private set; }
         public BasicFilter BackButtonPermitter { get; private set; }
 
-        public ILastIncompleteBuildingStartedProvider LastBuildingStartedProvider { get; private set; }
+        public ISingleBuildableProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
 
@@ -116,7 +116,7 @@ namespace BattleCruisers.Scenes
             return BackButtonPermitter;
         }
 
-        public ILastIncompleteBuildingStartedProvider CreateLastBuildingStartedProvider(ICruiserController cruiser)
+        public ISingleBuildableProvider CreateLastBuildingStartedProvider(ICruiserController cruiser)
         {
             return new LastIncompleteBuildingStartedProvider(cruiser);
         }
