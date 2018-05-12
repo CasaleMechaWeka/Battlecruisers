@@ -440,11 +440,13 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.UIManagerPermissions));
 
             // 4. Focus drones button
+            string droneFocusButtonText = "This is the building details panel.  Select the 'focus' drones button";
+            IButton droneFocusButton = _tutorialArgs.BuildingDetails.DroneFocusButton;
+            ITutorialStepArgs droneFocusButtonArgs = CreateTutorialStepArgs(droneFocusButtonText, droneFocusButton);
             droneFocusSteps.Add(
                 CreateClickStep(
-                    CreateTutorialStepArgs(
-                        "This is the building details panel.  Select the 'focus' drones button", 
-                        _tutorialArgs.BuildingDetails.DroneFocusButton)));
+                    droneFocusButtonArgs,
+                    droneFocusButton));
 
             // 5. Change build speed to normal
             droneFocusSteps.Add(
@@ -453,7 +455,14 @@ namespace BattleCruisers.Tutorial
                     BuildSpeed.Normal));
 
             // 6. Dismiss building details
-
+            string dismissText =
+                "Nice!All the drones have moved from the artillery to the drone station.  " +
+                "Now dismiss the details panel by clicking anywhere.";
+            droneFocusSteps.Add(
+                new DismissStep(
+                    CreateTutorialStepArgs(dismissText),
+                    _tutorialArgs.BuildingDetails,
+                    _tutorialArgs.TutorialProvider.UIManagerPermissions));
 
             // 7. Wait for artillery to complete
             // 8. Enable navigation
