@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers
     {
 		public IBuildable Buildable { get; private set; }
 
-		public BuildableConstructionEventArgs(IBuildable buildable)
+		protected BuildableConstructionEventArgs(IBuildable buildable)
 		{
 			Buildable = buildable;
 		}
