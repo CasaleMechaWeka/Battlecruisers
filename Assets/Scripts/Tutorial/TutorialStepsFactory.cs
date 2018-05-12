@@ -354,8 +354,7 @@ namespace BattleCruisers.Tutorial
             {
                 // Wait for building to complete construction
                 string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
-                ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, _lastPlayerIncompleteBuildingStartedProvider);
-                constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, _lastPlayerIncompleteBuildingStartedProvider));
+                constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
 			}
 
             return constructionSteps;
@@ -464,11 +463,23 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.BuildingDetails,
                     _tutorialArgs.TutorialProvider.UIManagerPermissions));
 
+            // 6. Wait for drone station to complete
+            droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("Now we wait for your buildings to complete.  Just relax :)"));
+
             // 7. Wait for artillery to complete
+            droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("And the artillery..."));
+
             // 8. Enable navigation
             // 9. Wait for enemy cruiser to be destroyed
 
             return droneFocusSteps;
+        }
+
+        // FELIX  Make all creating steps method names consistent (have _ )
+        private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
+        {
+            ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay, _lastPlayerIncompleteBuildingStartedProvider);
+            return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
         }
 
         private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, params IHighlightable[] elementsToHighlight)
