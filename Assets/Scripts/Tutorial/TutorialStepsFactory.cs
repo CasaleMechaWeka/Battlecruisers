@@ -427,7 +427,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateChangeBuildSpeedStep(IBuildSpeedController speedController, BuildSpeed buildSpeed)
         {
             return
-                new ChangeAICruiserBuildSpeedStep(
+                new ChangeCruiserBuildSpeedStep(
                     CreateTutorialStepArgs(textToDisplay: null),
                     speedController,
                     buildSpeed);

@@ -4,9 +4,9 @@ using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
+namespace BattleCruisers.Tests.Tutorial.Steps
 {
-    public class ChangeAICruiserBuildSpeedStepTests : TutorialStepTestsBase
+    public class ChangeCruiserBuildSpeedStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
         private IBuildSpeedController _buildSpeedController;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 
             _buildSpeedController = Substitute.For<IBuildSpeedController>();
             _buildSpeed = BuildSpeed.VeryFast;
-            _tutorialStep = new ChangeAICruiserBuildSpeedStep(_args, _buildSpeedController, _buildSpeed);
+            _tutorialStep = new ChangeCruiserBuildSpeedStep(_args, _buildSpeedController, _buildSpeed);
         }
 
         [Test]
