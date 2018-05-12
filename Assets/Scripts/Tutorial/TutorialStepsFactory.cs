@@ -80,14 +80,15 @@ namespace BattleCruisers.Tutorial
                     //new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
 
             // 9. Enemy bomber
-            steps.Enqueue(
-                CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.AirFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
+            //steps.Enqueue(
+                //CreateSteps_EnemyUnitDefence(
+                    //StaticPrefabKeys.Buildings.AirFactory,
+                    //new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    //_tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
 
             // 10. Drone Focus
+            steps.Enqueue(CreateSteps_DroneFocus());
 
             return steps;
         }
@@ -378,6 +379,24 @@ namespace BattleCruisers.Tutorial
 
             Assert.IsNotNull(buildableButton);
             return buildableButton;
+        }
+
+        private IList<ITutorialStep> CreateSteps_DroneFocus()
+        {
+            IList<ITutorialStep> droneFocusSteps = new List<ITutorialStep>();
+
+            // 0. Change build speed to infinitely slow
+            // 1. Build artillery
+            // 2. Build drone station
+            // 3. Bring up drone station details
+            // 4. Focus drones button
+            // 5. Change build speed to normal
+            // 6. Dismiss building details
+            // 7. Wait for artillery to complete
+            // 8. Enable navigation
+            // 9. Wait for enemy cruiser to be destroyed
+
+            return droneFocusSteps;
         }
 
         private ITutorialStepArgs CreateTutorialStepArgs(string textToDisplay, params IHighlightable[] elementsToHighlight)
