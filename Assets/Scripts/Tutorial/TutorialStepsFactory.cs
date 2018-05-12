@@ -233,7 +233,10 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
 
             // 7. Insta-complete unit
-            enemyUnitDefenceSteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.VeryFast));
+            enemyUnitDefenceSteps.Add(
+                CreateChangeBuildSpeedStep(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, 
+                    BuildSpeed.VeryFast));
 
             enemyUnitDefenceSteps.Add(
                 new BuildableCompletedWaitStep(
@@ -272,7 +275,10 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgs commonArgs = CreateTutorialStepArgs(textToDisplay);
 
             // 1. Change build speed to super fast
-            factorySteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.VeryFast));
+            factorySteps.Add(
+                CreateChangeBuildSpeedStep(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, 
+                    BuildSpeed.VeryFast));
 
             // 2. Start building factory
             StartConstructingBuildingStep startConstructingFactoryStep
@@ -287,7 +293,10 @@ namespace BattleCruisers.Tutorial
             factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
 
             // 4. Change build speed to infinitely slow
-            factorySteps.Add(CreateChangeBuildSpeedStep(_tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, BuildSpeed.InfinitelySlow));
+            factorySteps.Add(
+                CreateChangeBuildSpeedStep(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController, 
+                    BuildSpeed.InfinitelySlow));
 
             // 5. Start building unit
             IProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
@@ -306,7 +315,8 @@ namespace BattleCruisers.Tutorial
             BuildingCategory buildingCategory, 
             BuildableInfo buildingToConstruct,
             SlotType buildingSlotType,
-            string constructBuildingInstruction)
+            string constructBuildingInstruction,
+            bool waitForBuildingToComplete = true)
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
@@ -337,11 +347,14 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SlotPermitter,
                     buildingSlotsArray));
 
-            // Wait for building to complete construction
-            ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
-            string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
-            ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
-            constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
+            if (waitForBuildingToComplete)
+            {
+                // Wait for building to complete construction
+                ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
+                string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
+                ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
+                constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
+			}
 
             return constructionSteps;
         }
@@ -383,12 +396,39 @@ namespace BattleCruisers.Tutorial
 
         private IList<ITutorialStep> CreateSteps_DroneFocus()
         {
-            IList<ITutorialStep> droneFocusSteps = new List<ITutorialStep>();
+            List<ITutorialStep> droneFocusSteps = new List<ITutorialStep>();
 
             // 0. Change build speed to infinitely slow
+            droneFocusSteps.Add(
+                CreateChangeBuildSpeedStep(
+                    _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, 
+                    BuildSpeed.InfinitelySlow));
+
+            // FELIX  Temporarily boost drone number, so artillery is allowed to be built.
+            // In real tutorial user would have already built a drone station, so no problem :)
+            _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
+
             // 1. Build artillery
+            droneFocusSteps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Offence,
+                     new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
+                    SlotType.Platform,
+                     "Build an artillery to destroy the enemy cruiser.",
+                     waitForBuildingToComplete: false));
+
             // 2. Build drone station
+            droneFocusSteps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Factory,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
+                    SlotType.Utility,
+                     "Build a drone station",
+                     waitForBuildingToComplete: false));
+
             // 3. Bring up drone station details
+            // FELIX  NEXT :)
+
             // 4. Focus drones button
             // 5. Change build speed to normal
             // 6. Dismiss building details
