@@ -43,7 +43,7 @@ namespace BattleCruisers.Tutorial
             _deferrer = deferrer;
             _tutorialArgs = tutorialArgs;
 
-            _lastPlayerIncompleteBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
+            _lastPlayerIncompleteBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
         }
 
         public Queue<ITutorialStep> CreateTutorialSteps()

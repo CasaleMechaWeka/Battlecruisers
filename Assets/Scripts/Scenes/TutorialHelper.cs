@@ -116,7 +116,7 @@ namespace BattleCruisers.Scenes
             return BackButtonPermitter;
         }
 
-        public ISingleBuildableProvider CreateLastBuildingStartedProvider(ICruiserController cruiser)
+        public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
             return new LastIncompleteBuildingStartedProvider(cruiser);
         }
