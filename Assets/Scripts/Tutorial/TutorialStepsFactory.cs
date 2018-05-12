@@ -28,6 +28,7 @@ namespace BattleCruisers.Tutorial
         private readonly ITextDisplayer _displayer;
         private readonly IVariableDelayDeferrer _deferrer;
         private readonly ITutorialArgs _tutorialArgs;
+        private readonly ILastBuildingStartedProvider _lastPlayerBuildingStartedProvider;
 
         public TutorialStepsFactory(
             IHighlighter highlighter, 
@@ -41,6 +42,8 @@ namespace BattleCruisers.Tutorial
             _displayer = displayer;
             _deferrer = deferrer;
             _tutorialArgs = tutorialArgs;
+
+            _lastPlayerBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
         }
 
         public Queue<ITutorialStep> CreateTutorialSteps()
@@ -350,10 +353,9 @@ namespace BattleCruisers.Tutorial
             if (waitForBuildingToComplete)
             {
                 // Wait for building to complete construction
-                ILastBuildingStartedProvider lastBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
                 string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
-                ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, lastBuildingStartedProvider);
-                constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, lastBuildingStartedProvider));
+                ITutorialStepArgs waitForCompletionArgs = CreateTutorialStepArgs(waitText, _lastPlayerBuildingStartedProvider);
+                constructionSteps.Add(new BuildableCompletedWaitStep(waitForCompletionArgs, _lastPlayerBuildingStartedProvider));
 			}
 
             return constructionSteps;
