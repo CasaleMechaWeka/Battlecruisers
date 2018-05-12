@@ -71,15 +71,22 @@ namespace BattleCruisers.Tutorial
             // 7. Building a building
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
-            // 8. Enemy ship
-            steps.Enqueue(
-                CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.NavalFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    _tutorialArgs.TutorialProvider.SingleShipProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-shipt turret")));
+            //// 8. Enemy ship
+            //steps.Enqueue(
+                //CreateSteps_EnemyUnitDefence(
+                    //StaticPrefabKeys.Buildings.NavalFactory,
+                    //new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    //_tutorialArgs.TutorialProvider.SingleShipProvider,
+                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
 
             // 9. Enemy bomber
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
+
             // 10. Drone Focus
 
             return steps;
