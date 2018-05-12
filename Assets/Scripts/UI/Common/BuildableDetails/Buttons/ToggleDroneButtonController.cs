@@ -1,12 +1,11 @@
 ﻿using System;
 using BattleCruisers.Buildables;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class ToggleDroneButtonController : UIElement
+    public class ToggleDroneButtonController : UIElement, IButton
     {
         private Button _button;
 
@@ -42,20 +41,27 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
+        public event EventHandler Clicked;
+
         public override void Initialise()
         {
             base.Initialise();
 
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
-            _button.onClick.AddListener(ToggleDroneButton);
+            _button.onClick.AddListener(OnClick);
         }
 
-        private void ToggleDroneButton()
+        private void OnClick()
         {
-            _buildable.ToggleDroneConsumerFocusCommand.Execute();
+			_buildable.ToggleDroneConsumerFocusCommand.Execute();
+   
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
         }
-        
+
         private void UpdateVisibility()
         {
             gameObject.SetActive(ShowToggleDroneButton);
