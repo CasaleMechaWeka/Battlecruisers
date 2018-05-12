@@ -12,8 +12,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class BuildableBottomBarController : MonoBehaviour, IBuildableBottomBar
     {
         private RepairButtonController _repairButton;
-        private ToggleDroneButtonController _toggleDronesButton;
         private BuildableProgressBarController _buildProgressController;
+		
+        private ToggleDroneButtonController _toggleDronesButton;
+        public IButton ToggleDronesButton { get { return _toggleDronesButton; } }
 
         public IBuildable Buildable
         {

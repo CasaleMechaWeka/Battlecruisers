@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
@@ -14,6 +15,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		private float _maxHeight;
         private DeleteButtonController _deleteButton;
         private BuildableBottomBarController _bottomBar;
+
+        public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
 
         public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
         {
