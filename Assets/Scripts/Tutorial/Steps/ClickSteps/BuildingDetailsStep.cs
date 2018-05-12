@@ -7,10 +7,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Test
     public class BuildingDetailsStep : ClickStep
     {
-        private readonly IProvider<IBuildable> _buildablePRovider;
+        private readonly IProvider<IBuildable> _buildableProvider;
         private readonly IUIManagerSettablePermissions _uiManagerPermissions;
 
         public BuildingDetailsStep(
@@ -21,7 +20,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         {
             Assert.IsNotNull(uiManagerPermissions);
 
-            _buildablePRovider = buildableProvider;
+            _buildableProvider = buildableProvider;
             _uiManagerPermissions = uiManagerPermissions;
         }
 
