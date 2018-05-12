@@ -12,7 +12,8 @@
 
     public static class BuildSpeedMultipliers
     {
-		public const float NORMAL_BUILD_SPEED_MULTIPLIER = 2;
+        public const float NORMAL_BUILD_SPEED_MULTIPLIER = 2;
+		public const float DEFAULT_TUTORIAL_BUILD_SPEED_MULTIPLIER = 8;
 		public const float FAST_BUILD_SPEED_MULTIPLIER = 50;
     }
 

@@ -55,7 +55,7 @@ namespace BattleCruisers.Scenes
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
-            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
+            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL_BUILD_SPEED_MULTIPLIER);
             IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST_BUILD_SPEED_MULTIPLIER);
 
             CompositeCalculator playerCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
