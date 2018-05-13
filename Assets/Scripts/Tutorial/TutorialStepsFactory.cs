@@ -113,7 +113,7 @@ namespace BattleCruisers.Tutorial
 		{
 			ITutorialStepArgs navigationButtonArgs
                 = CreateTutorialStepArgs(
-    				"These are your navigation buttons.  They help you move around the map.  Play around a bit with these.",
+    				"These are navigation buttons.  They help you move around the map.  Play around a bit with these.",
                     _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton,
                     _tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
                     _tutorialArgs.NavigationButtonsWrapper.OverviewButton,
@@ -143,7 +143,7 @@ namespace BattleCruisers.Tutorial
             // Deviate from normal speed
             ITutorialStepArgs deviateFromNormalSpeedArgs
                 = CreateTutorialStepArgs(
-                    "These control the game speed.  Change the game speed!",
+                    "These buttons control the game speed.  Change the game speed!",
                     _tutorialArgs.GameSpeedWrapper.SlowMotionButton,
                     _tutorialArgs.GameSpeedWrapper.PlayButton,
                     _tutorialArgs.GameSpeedWrapper.FastForwardButton,
@@ -217,7 +217,7 @@ namespace BattleCruisers.Tutorial
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser
-            enemyUnitDefenceSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building an " + unitToBuild.Name + "!  Have a look!"));
+            enemyUnitDefenceSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building a " + unitToBuild.Name + "!  Have a look!"));
 
             // 3. Click on the unit
             string textToDisplay = null;
