@@ -28,10 +28,9 @@ namespace BattleCruisers.Cruisers
 
         public int numOfDrones;
         public float yAdjustmentInM;
+        public float highlightXAdjustmentInM;
         public string description;
         public string cruiserName;
-
-        private const float HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M = 2;
 
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
@@ -42,7 +41,7 @@ namespace BattleCruisers.Cruisers
 		{
 			get
 			{
-                float xAdjustment = Direction == Direction.Right ? -HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M : HIGHLIGHT_X_POSITION_ADJUSTMENT_IN_M;
+                float xAdjustment = Direction == Direction.Right ? -highlightXAdjustmentInM : highlightXAdjustmentInM;
                 return new Vector2(xAdjustment, 0);
 			}
 		}
