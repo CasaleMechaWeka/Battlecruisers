@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Test
     public class NavigationPermitterStep : TutorialStep
     {
         private readonly BasicFilter _navigationPermitter;
