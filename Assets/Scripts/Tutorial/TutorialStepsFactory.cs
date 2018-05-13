@@ -488,7 +488,6 @@ namespace BattleCruisers.Tutorial
             return droneFocusSteps;
         }
 
-        // FELIX  Make all creating steps method names consistent (have _ )
         private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
             ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay, _lastPlayerIncompleteBuildingStartedProvider);
