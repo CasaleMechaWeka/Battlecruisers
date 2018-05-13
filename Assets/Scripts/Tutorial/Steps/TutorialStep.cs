@@ -39,10 +39,11 @@ namespace BattleCruisers.Tutorial.Steps
 
         protected virtual void OnCompleted()
         {
-            Assert.IsNotNull(_completionCallback, "OnCompleted() should not be called before Start()");
+            Assert.IsNotNull(_completionCallback, "OnCompleted() should not be called before Start(), or more than once.");
 
             _highlighter.UnhighlightAll();
             _completionCallback.Invoke();
+            _completionCallback = null;
         }
     }
 }

@@ -75,7 +75,16 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void OnCompleted_NoPreviousStart_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _tutorialStep.Complete());
+            Assert.Throws<UnityAsserts.AssertionException>(_tutorialStep.Complete);
+        }
+
+        [Test]
+        public void DoubleOnCompleted_Throws()
+        {
+            _tutorialStep.Start(_completionCallback);
+            _tutorialStep.Complete();
+
+            Assert.Throws<UnityAsserts.AssertionException>(_tutorialStep.Complete);
         }
         #endregion OnCompleted
     }
