@@ -61,7 +61,7 @@ namespace BattleCruisers.Tutorial
             //// 3. Enemy cruiser
             //steps.Enqueue(CreateStep_EnemyCruiser());
 
-            //// 2. Navigation buttons
+            //// Navigate back to player cruiser
             //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
             //// TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
@@ -72,34 +72,37 @@ namespace BattleCruisers.Tutorial
             //// 6. Drones
             //steps.Enqueue(CreateStep_Drones());
 
-            // 7. Building a building
+            //// 7. Building a building
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
-            // 8. Enemy ship
-            steps.Enqueue(
-                CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.NavalFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    _tutorialArgs.TutorialProvider.SingleShipProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
-
-            // 9. Enemy bomber
+            //// 8. Enemy ship
             //steps.Enqueue(
                 //CreateSteps_EnemyUnitDefence(
-                    //StaticPrefabKeys.Buildings.AirFactory,
-                    //new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-                    //_tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
+                    //StaticPrefabKeys.Buildings.NavalFactory,
+                    //new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    //_tutorialArgs.TutorialProvider.SingleShipProvider,
+                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
 
-            //// 10. Drone Focus
-            //steps.Enqueue(CreateSteps_DroneFocus());
+            // 9. Enemy bomber
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
+			
+			// Navigate back to player cruiser
+			steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+
+            // 10. Drone Focus
+            steps.Enqueue(CreateSteps_DroneFocus());
 
             return steps;
         }
 
         private ITutorialStep CreateStep_YourCruiser()
         {
-            ITutorialStepArgs yourCruiserArgs = CreateTutorialStepArgs("This is your cruiser", _tutorialArgs.PlayerCruiser);
+            ITutorialStepArgs yourCruiserArgs = CreateTutorialStepArgs("This is your awesome cruiser :D", _tutorialArgs.PlayerCruiser);
             return CreateClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
@@ -478,7 +481,7 @@ namespace BattleCruisers.Tutorial
 
             // 6. Dismiss building details
             string dismissText =
-                "Nice!All the drones have moved from the artillery to the drone station.  " +
+                "Nice!  All the drones have moved from the artillery to the drone station.  " +
                 "Now dismiss the details panel by clicking anywhere.";
             droneFocusSteps.Add(
                 new DismissStep(
