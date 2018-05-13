@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
@@ -8,6 +9,7 @@ namespace BattleCruisers.UI.Cameras
 		private readonly Camera _camera;
 
 		private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
+        private const float CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER = 0.08f;
         private const float WATER_RATIO = 0.35f;
         private const float MAX_WATER_Y = -1.5f;
 
@@ -48,6 +50,21 @@ namespace BattleCruisers.UI.Cameras
         public float FindScrollSpeed(float orthographicSize)
         {
             return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
+        }
+
+        public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)
+        {
+            // Want the cruiser camera to be slightly off centre, towards the 
+            // front of the cruiser.  That way the naval factory and the ship
+            // under construction are easily visible.
+            float xAdjustmentMagnitudeInM = cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+            float xAdjustmentInM = cruiser.Direction == Direction.Right ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
+            
+            return
+                new Vector3(
+                    cruiser.Position.x + xAdjustmentInM, 
+                    FindCameraYPosition(orthographicSize), 
+                    zValue);
         }
 	}
 }

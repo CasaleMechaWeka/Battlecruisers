@@ -52,14 +52,15 @@ namespace BattleCruisers.Tutorial
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
             // TEMP  For end game enable all tutorial steps :)
-            // 1. Your cruiser
-            steps.Enqueue(CreateStep_YourCruiser());
 
-            // 2. Navigation buttons
-            steps.Enqueue(CreateStep_NavigationButtons());
+            //// 1. Your cruiser
+            //steps.Enqueue(CreateStep_YourCruiser());
 
-            // 3. Enemy cruiser
-            steps.Enqueue(CreateStep_EnemyCruiser());
+            //// 2. Navigation buttons
+            //steps.Enqueue(CreateStep_NavigationButtons());
+
+            //// 3. Enemy cruiser
+            //steps.Enqueue(CreateStep_EnemyCruiser());
 
             //// Navigate back to player cruiser
             //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
@@ -75,14 +76,14 @@ namespace BattleCruisers.Tutorial
             //// 7. Building a building
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
-   //         // 8. Enemy ship
-   //         steps.Enqueue(
-   //             CreateSteps_EnemyUnitDefence(
-   //                 StaticPrefabKeys.Buildings.NavalFactory,
-   //                 new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-   //                 _tutorialArgs.TutorialProvider.SingleShipProvider,
-   //                 new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-   //                 preferFrontmostSlot: true));
+            // 8. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    preferFrontmostSlot: true));
 
    //         // 9. Enemy bomber
    //         steps.Enqueue(

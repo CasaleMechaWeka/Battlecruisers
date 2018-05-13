@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -7,5 +8,6 @@ namespace BattleCruisers.UI.Cameras
         float FindCameraOrthographicSize(ICruiser cruiser);
         float FindCameraYPosition(float desiredOrthographicSize);
         float FindScrollSpeed(float orthographicSize);
+        Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue);
 	}
 }
