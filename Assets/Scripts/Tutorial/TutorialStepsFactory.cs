@@ -473,12 +473,6 @@ namespace BattleCruisers.Tutorial
                     droneFocusButtonArgs,
                     droneFocusButton));
 
-            // 5. Change build speed to normal
-            droneFocusSteps.Add(
-                CreateChangeBuildSpeedStep(
-                    _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
-                    BuildSpeed.Normal));
-
             // 6. Dismiss building details
             string dismissText =
                 "Nice!  All the drones have moved from the artillery to the drone station.  " +
@@ -488,6 +482,12 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(dismissText),
                     _tutorialArgs.BuildingDetails,
                     _tutorialArgs.TutorialProvider.UIManagerPermissions));
+			
+			// 5. Change build speed to normal
+			droneFocusSteps.Add(
+				CreateChangeBuildSpeedStep(
+					_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
+					BuildSpeed.Normal));
 
             // 6. Wait for drone station to complete
             droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("Now we wait for your buildings to complete.  Just relax :)"));
