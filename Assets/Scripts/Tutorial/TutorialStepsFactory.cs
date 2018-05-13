@@ -75,13 +75,14 @@ namespace BattleCruisers.Tutorial
             //// 7. Building a building
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
-            //// 8. Enemy ship
-            //steps.Enqueue(
-                //CreateSteps_EnemyUnitDefence(
-                    //StaticPrefabKeys.Buildings.NavalFactory,
-                    //new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    //_tutorialArgs.TutorialProvider.SingleShipProvider,
-                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
+            // 8. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    preferFrontmostSlot: true));
 
             // 9. Enemy bomber
             steps.Enqueue(
@@ -89,7 +90,8 @@ namespace BattleCruisers.Tutorial
                     StaticPrefabKeys.Buildings.AirFactory,
                     new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
                     _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    preferFrontmostSlot: false));
 			
 			// Navigate back to player cruiser
 			steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
@@ -204,7 +206,8 @@ namespace BattleCruisers.Tutorial
             IPrefabKey factoryKey,
             BuildableInfo unitToBuild,
             ISingleBuildableProvider unitBuildProvider,
-            BuildableInfo defenceToBuild)
+            BuildableInfo defenceToBuild,
+            bool preferFrontmostSlot)
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
@@ -231,7 +234,7 @@ namespace BattleCruisers.Tutorial
                     SlotType.Deck,
                     "Quick, build an " + defenceToBuild.Name + "!",
                     waitForBuildingToComplete: true,
-                    preferFrontmostSlot: true);
+                    preferFrontmostSlot: preferFrontmostSlot);
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
@@ -347,14 +350,13 @@ namespace BattleCruisers.Tutorial
                     buildingToConstruct.Key));
 
             // Select a slot
-            IList<ISlot> buildingSlots = FindSlotsToHighlight(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
-            ISlot[] buildingSlotsArray = buildingSlots.ToArray();
-            ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, buildingSlotsArray);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
+            ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotsProvider);
             constructionSteps.Add(
                 new SlotsStep(
                     buildingSlotsArgs,
                     _tutorialArgs.TutorialProvider.SlotPermitter,
-                    buildingSlotsArray));
+                    slotsProvider));
 
             if (waitForBuildingToComplete)
             {
@@ -364,24 +366,6 @@ namespace BattleCruisers.Tutorial
 			}
 
             return constructionSteps;
-        }
-
-        private IList<ISlot> FindSlotsToHighlight(ISlotWrapper slotWrapper, SlotType slotType, bool preferFrontmostSlot)
-        {
-            if (preferFrontmostSlot)
-            {
-                ISlot frontMostSlot = slotWrapper.GetFreeSlot(slotType, preferFrontmostSlot);
-                Assert.IsNotNull(frontMostSlot);
-
-                return new List<ISlot>() 
-                { 
-                    frontMostSlot 
-                };
-            }
-            else
-            {
-                return slotWrapper.GetSlotsForType(slotType);
-            }
         }
 
         private ITutorialStep CreateStep_NavigateToPlayerCruiser()

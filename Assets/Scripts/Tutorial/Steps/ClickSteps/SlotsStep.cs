@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.Tutorial.Steps.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     public class SlotsStep : ClickStep
     {
-        private readonly IList<ISlot> _slots;
+        private readonly IListProvider<ISlot> _slotsProvider;
         private readonly ISlotPermitter _highlightableSlotPermitter;
 
         public SlotsStep(
             ITutorialStepArgs args, 
 			ISlotPermitter highlightableSlotPermitter,
-            params ISlot[] slots)
-            : base(args, new StaticListProvider<IClickableEmitter>(slots))
+            ISlotsProvider slotsProvider)
+            : base(args, slotsProvider)
         {
             Assert.IsNotNull(highlightableSlotPermitter);
 
-            _slots = slots;
+            _slotsProvider = slotsProvider;
             _highlightableSlotPermitter = highlightableSlotPermitter;
         }
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 		{
             base.Start(completionCallback);
 
-            _highlightableSlotPermitter.PermittedSlots = _slots;
+            _highlightableSlotPermitter.PermittedSlots = _slotsProvider.FindItems();
 		}
 
 		protected override void OnCompleted()

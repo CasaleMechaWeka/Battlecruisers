@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.Providers;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -12,6 +14,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         private ISlotPermitter _permitter;
         private ISlot _slot1, _slot2;
         private ISlot[] _slots;
+        private ISlotsProvider _slotsProvider;
+        private IListProvider<ISlot> _explicitSlotsProvider;
+        private IListProvider<IClickableEmitter> _clickablesProvider;
 
         [SetUp]
         public override void SetuUp()
@@ -27,8 +32,15 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
                 _slot1,
                 _slot2
             };
+            _slotsProvider = Substitute.For<ISlotsProvider>();
+           
+            _explicitSlotsProvider = _slotsProvider;
+            _explicitSlotsProvider.FindItems().Returns(_slots);
 
-            _clickStep = new SlotsStep(_args, _permitter, _slots);
+            _clickablesProvider = _slotsProvider;
+            _clickablesProvider.FindItems().Returns(_slots);
+
+            _clickStep = new SlotsStep(_args, _permitter, _slotsProvider);
         }
 
         [Test]
