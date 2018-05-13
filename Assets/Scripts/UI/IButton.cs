@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI
 {
-    public interface IButton : IClickable, IHighlightable
+    public interface IButton : IClickableEmitter, IHighlightable
     {
     }
 }

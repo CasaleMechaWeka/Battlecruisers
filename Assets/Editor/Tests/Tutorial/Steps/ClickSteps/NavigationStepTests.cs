@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     {
         private ITutorialStep _clickStep;
         private BasicFilter _shouldNavigationBeEnabledFilter;
-        private IClickable _clickable;
+        private IClickableEmitter _clickable;
 
         [SetUp]
         public override void SetuUp()
@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             base.SetuUp();
 
             _shouldNavigationBeEnabledFilter = new BasicFilter(isMatch: false);
-            _clickable = Substitute.For<IClickable>();
+            _clickable = Substitute.For<IClickableEmitter>();
 
             _clickStep = new NavigationStep(_args, _shouldNavigationBeEnabledFilter, _clickable);
         }

@@ -13,9 +13,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     {
         private ITutorialStep _clickStep;
         private ISingleBuildableProvider _buildableProvider;
-        private IListProvider<IClickable> _clickablesProvider;
+        private IListProvider<IClickableEmitter> _clickablesProvider;
         private IUIManagerSettablePermissions _uiManagerPermissions;
-        private IClickable _building;
+        private IClickableEmitter _building;
 
         [SetUp]
         public override void SetuUp()
@@ -24,8 +24,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 
             _buildableProvider = Substitute.For<ISingleBuildableProvider>();
             _clickablesProvider = _buildableProvider;
-            _building = Substitute.For<IClickable>();
-            IList<IClickable> clickables = new List<IClickable>()
+            _building = Substitute.For<IClickableEmitter>();
+            IList<IClickableEmitter> clickables = new List<IClickableEmitter>()
             {
                 _building
             };

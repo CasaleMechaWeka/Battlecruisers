@@ -10,22 +10,22 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     public class ClickStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _clickStep;
-        private IListProvider<IClickable> _clickablesProvider;
-        private IList<IClickable> _clickables;
-        private IClickable _clickable1, _clickable2;
+        private IListProvider<IClickableEmitter> _clickablesProvider;
+        private IList<IClickableEmitter> _clickables;
+        private IClickableEmitter _clickable1, _clickable2;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _clickable1 = Substitute.For<IClickable>();
-            _clickable2 = Substitute.For<IClickable>();
-            _clickables = new List<IClickable>()
+            _clickable1 = Substitute.For<IClickableEmitter>();
+            _clickable2 = Substitute.For<IClickableEmitter>();
+            _clickables = new List<IClickableEmitter>()
             {
                 _clickable1, _clickable2
             };
-            _clickablesProvider = Substitute.For<IListProvider<IClickable>>();
+            _clickablesProvider = Substitute.For<IListProvider<IClickableEmitter>>();
             _clickablesProvider.FindItems().Returns(_clickables);
 
             _clickStep = new ClickStep(_args, _clickablesProvider);

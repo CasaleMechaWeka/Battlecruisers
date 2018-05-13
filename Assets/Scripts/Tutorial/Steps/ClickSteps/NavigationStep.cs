@@ -9,8 +9,8 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     {
         private readonly BasicFilter _shouldNavigationBeEnabledFilter;
 
-        public NavigationStep(ITutorialStepArgs args, BasicFilter shouldNavigationBeEnabledFilter, params IClickable[] completionClickables)
-            : base(args, new StaticListProvider<IClickable>(completionClickables))
+        public NavigationStep(ITutorialStepArgs args, BasicFilter shouldNavigationBeEnabledFilter, params IClickableEmitter[] completionClickables)
+            : base(args, new StaticListProvider<IClickableEmitter>(completionClickables))
         {
             Assert.IsNotNull(shouldNavigationBeEnabledFilter);
             _shouldNavigationBeEnabledFilter = shouldNavigationBeEnabledFilter;

@@ -27,9 +27,9 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return buildable;
         }
 		
-        IList<IClickable> IListProvider<IClickable>.FindItems()
+        IList<IClickableEmitter> IListProvider<IClickableEmitter>.FindItems()
 		{
-            return new List<IClickable>()
+            return new List<IClickableEmitter>()
             {
                 FindItem()
             };

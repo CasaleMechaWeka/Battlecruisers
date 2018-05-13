@@ -10,10 +10,10 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// </summary>
     public class ClickStep : TutorialStep
     {
-        private readonly IListProvider<IClickable> _clickablesProvider;
-        private IList<IClickable> _completionClickables;
+        private readonly IListProvider<IClickableEmitter> _clickablesProvider;
+        private IList<IClickableEmitter> _completionClickables;
 
-        public ClickStep(ITutorialStepArgs args, IListProvider<IClickable> clickablesProvider)
+        public ClickStep(ITutorialStepArgs args, IListProvider<IClickableEmitter> clickablesProvider)
             : base(args)
         {
             Assert.IsNotNull(clickablesProvider);
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
             _completionClickables = _clickablesProvider.FindItems();
 
-            foreach (IClickable completionClickable in _completionClickables)
+            foreach (IClickableEmitter completionClickable in _completionClickables)
             {
                 completionClickable.Clicked += completionClickable_Clicked;
 			}
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
         private void completionClickable_Clicked(object sender, EventArgs e)
         {
-            foreach (IClickable completionClickable in _completionClickables)
+            foreach (IClickableEmitter completionClickable in _completionClickables)
             {
                 completionClickable.Clicked -= completionClickable_Clicked;
             }

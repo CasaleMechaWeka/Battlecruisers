@@ -54,9 +54,9 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return highlightables;
         }
 
-        IList<IClickable> IListProvider<IClickable>.FindItems()
+        IList<IClickableEmitter> IListProvider<IClickableEmitter>.FindItems()
         {
-            IList<IClickable> clickables = new List<IClickable>();
+            IList<IClickableEmitter> clickables = new List<IClickableEmitter>();
 
             if (LastIncompleteBuildingStarted != null)
             {

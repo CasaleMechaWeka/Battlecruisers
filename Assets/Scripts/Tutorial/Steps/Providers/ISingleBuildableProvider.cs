@@ -7,7 +7,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     public interface ISingleBuildableProvider :
         IProvider<IBuildable>,
         IListProvider<IHighlightable>,
-        IListProvider<IClickable>
+        IListProvider<IClickableEmitter>
     {
     }
 }

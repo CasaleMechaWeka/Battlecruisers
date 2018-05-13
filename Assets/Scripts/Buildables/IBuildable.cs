@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-    public interface IBuildable : ITarget, IComparableItem, IClickable
+    public interface IBuildable : ITarget, IComparableItem, IClickableEmitter
     {
         /// <summary>
         /// 0-1

@@ -17,7 +17,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             IBuildableButton buildableButton,
             IBuildingPermitter permitter,
             IPrefabKey buildingToAllow) 
-            : base(args, new StaticListProvider<IClickable>(buildableButton))
+            : base(args, new StaticListProvider<IClickableEmitter>(buildableButton))
         {
             Assert.IsNotNull(permitter);
 

@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
     {
         private IProvider<IBuildable> _buildableProvider;
         private IListProvider<IHighlightable> _highlightablesProvider;
-        private IListProvider<IClickable> _clickablesProvider;
+        private IListProvider<IClickableEmitter> _clickablesProvider;
         private ICruiserController _cruiser;
         private IBuildable _building1, _building2;
 

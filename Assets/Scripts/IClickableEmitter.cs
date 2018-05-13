@@ -2,8 +2,7 @@
 
 namespace BattleCruisers
 {
-    // FELIX  Rename to IClickableEmitter?
-    public interface IClickable
+    public interface IClickableEmitter
     {
         event EventHandler Clicked;
     }

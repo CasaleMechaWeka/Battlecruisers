@@ -10,7 +10,7 @@ using BattleCruisers.Buildables.BuildProgress;
 
 namespace BattleCruisers.Cruisers
 {
-    public interface ICruiser : ICruiserController, ITarget, IComparableItem, IClickable
+    public interface ICruiser : ICruiserController, ITarget, IComparableItem, IClickableEmitter
     {
         IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
