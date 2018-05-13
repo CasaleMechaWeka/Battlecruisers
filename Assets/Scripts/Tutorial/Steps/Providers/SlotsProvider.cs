@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
                     }
                     else
                     {
-                        _slots = _slotWrapper.GetSlotsForType(_slotType);
+                        _slots = _slotWrapper.GetFreeSlots(_slotType);
                     }
                 }
 

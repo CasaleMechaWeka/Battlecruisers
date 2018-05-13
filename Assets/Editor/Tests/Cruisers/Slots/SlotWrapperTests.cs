@@ -279,21 +279,24 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             Assert.AreEqual(1, _slotWrapper.GetSlotCount(_middleSlot.Type));
         }
 
-        #region GetSlotsForType
+        #region GetFreeSlots
         [Test]
-        public void GetSlotsForType_NonExistantType_Throws()
+        public void GetFreeSlots_NonExistantType_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _slotWrapper.GetSlotsForType(SlotType.Utility));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotWrapper.GetFreeSlots(SlotType.Utility));
         }
 
         [Test]
-        public void GetSlotsForType()
+        public void GetFreeSlots()
         {
-            ReadOnlyCollection<ISlot> deckSlots = _slotWrapper.GetSlotsForType(SlotType.Deck);
-            Assert.AreEqual(2, deckSlots.Count);
+            _deckSlot1.IsFree.Returns(true);
+            _deckSlot2.IsFree.Returns(false);
+
+            ReadOnlyCollection<ISlot> deckSlots = _slotWrapper.GetFreeSlots(SlotType.Deck);
+
+            Assert.AreEqual(1, deckSlots.Count);
             Assert.IsTrue(deckSlots.Contains(_deckSlot1));
-            Assert.IsTrue(deckSlots.Contains(_deckSlot2));
         }
-        #endregion GetSlotsForType
+        #endregion GetFreeSlots
     }
 }

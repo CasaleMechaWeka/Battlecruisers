@@ -207,10 +207,16 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public ReadOnlyCollection<ISlot> GetSlotsForType(SlotType slotType)
+        public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
-            return new ReadOnlyCollection<ISlot>(_slots[slotType]);
+
+            List<ISlot> freeSlots
+                = _slots[slotType]
+                    .Where(slot => slot.IsFree)
+                    .ToList();
+
+            return freeSlots.AsReadOnly();
         }
     }
 }

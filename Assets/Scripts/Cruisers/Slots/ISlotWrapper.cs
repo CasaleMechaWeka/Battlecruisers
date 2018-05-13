@@ -5,8 +5,7 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotWrapper
 	{
-        ReadOnlyCollection<ISlot> GetSlotsForType(SlotType slotType);
-
+        ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);
         bool IsSlotAvailable(SlotType slotType);
         int GetSlotCount(SlotType slotType);
 		ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true);

@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
             _preferFrontmostSlot = false;
             CreateProvider();
 
-            _slotWrapper.GetSlotsForType(_slotType).Returns(_slots);
+            _slotWrapper.GetFreeSlots(_slotType).Returns(_slots);
 
             Assert.AreEqual(2, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
