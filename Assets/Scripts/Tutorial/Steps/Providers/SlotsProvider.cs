@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    // FELIX  Test :P
     public class SlotsProvider : ISlotsProvider
     {
         private readonly ISlotWrapper _slotWrapper;
@@ -15,6 +14,31 @@ namespace BattleCruisers.Tutorial.Steps.Providers
         private readonly bool _preferFrontmostSlot;
 
         private IList<ISlot> _slots;
+        private IList<ISlot> Slots
+        {
+            get
+            {
+                if (_slots == null)
+                {
+                    if (_preferFrontmostSlot)
+                    {
+                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(_slotType, _preferFrontmostSlot);
+                        Assert.IsNotNull(frontMostSlot);
+
+                        _slots = new List<ISlot>()
+                        {
+                            frontMostSlot
+                        };
+                    }
+                    else
+                    {
+                        _slots = _slotWrapper.GetSlotsForType(_slotType);
+                    }
+                }
+
+                return _slots;
+            }
+        }
 
         public SlotsProvider(ISlotWrapper slotWrapper, SlotType slotType, bool preferFrontmostSlot)
         {
@@ -27,35 +51,17 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
         IList<ISlot> IListProvider<ISlot>.FindItems()
         {
-            if (_slots == null)
-            {
-                if (_preferFrontmostSlot)
-                {
-                    ISlot frontMostSlot = _slotWrapper.GetFreeSlot(_slotType, _preferFrontmostSlot);
-                    Assert.IsNotNull(frontMostSlot);
-
-                    _slots = new List<ISlot>()
-                    {
-                        frontMostSlot
-                    };
-                }
-                else
-                {
-                    _slots = _slotWrapper.GetSlotsForType(_slotType);
-                }
-            }
-
-            return _slots;
+            return Slots;
         }
 
         public IList<IHighlightable> FindItems()
         {
-            return _slots.Cast<IHighlightable>().ToList();
+            return Slots.Cast<IHighlightable>().ToList();
         }
 
         IList<IClickableEmitter> IListProvider<IClickableEmitter>.FindItems()
         {
-            return _slots.Cast<IClickableEmitter>().ToList();
+            return Slots.Cast<IClickableEmitter>().ToList();
         }
     }
 }
