@@ -53,28 +53,28 @@ namespace BattleCruisers.Tutorial
 
             // TEMP  For end game enable all tutorial steps :)
 
-            //// 1. Your cruiser
-            //steps.Enqueue(CreateStep_YourCruiser());
+            // 1. Your cruiser
+            steps.Enqueue(CreateStep_YourCruiser());
 
-            //// 2. Navigation buttons
-            //steps.Enqueue(CreateStep_NavigationButtons());
+            // 2. Navigation buttons
+            steps.Enqueue(CreateStep_NavigationButtons());
 
-            //// 3. Enemy cruiser
-            //steps.Enqueue(CreateStep_EnemyCruiser());
+            // 3. Enemy cruiser
+            steps.Enqueue(CreateStep_EnemyCruiser());
 
-            //// Navigate back to player cruiser
-            //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+            // Navigate back to player cruiser
+            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-            //// TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
+            // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
 
-            //// 5. Speed controls
-            //steps.Enqueue(CreateSteps_SpeedControls());
+            // 5. Speed controls
+            steps.Enqueue(CreateSteps_SpeedControls());
 
-            //// 6. Drones
-            //steps.Enqueue(CreateStep_Drones());
+            // 6. Drones
+            steps.Enqueue(CreateStep_Drones());
 
-            //// 7. Building a building
-            //steps.Enqueue(CreateSteps_BuildDroneStation());
+            // 7. Building a building
+            steps.Enqueue(CreateSteps_BuildDroneStation());
 
             // 8. Enemy ship
             steps.Enqueue(
@@ -85,20 +85,20 @@ namespace BattleCruisers.Tutorial
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
                     preferFrontmostSlot: true));
 
-   //         // 9. Enemy bomber
-   //         steps.Enqueue(
-   //             CreateSteps_EnemyUnitDefence(
-   //                 StaticPrefabKeys.Buildings.AirFactory,
-   //                 new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-   //                 _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-   //                 new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-   //                 preferFrontmostSlot: false));
+            // 9. Enemy bomber
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    preferFrontmostSlot: false));
 			
-			//// Navigate back to player cruiser
-			//steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+			// Navigate back to player cruiser
+			steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-            //// 10. Drone Focus
-            //steps.Enqueue(CreateSteps_DroneFocus());
+            // 10. Drone Focus
+            steps.Enqueue(CreateSteps_DroneFocus());
 
             return steps;
         }
