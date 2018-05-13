@@ -75,13 +75,13 @@ namespace BattleCruisers.Tutorial
             // 7. Building a building
             //steps.Enqueue(CreateSteps_BuildDroneStation());
 
-            //// 8. Enemy ship
-            //steps.Enqueue(
-                //CreateSteps_EnemyUnitDefence(
-                    //StaticPrefabKeys.Buildings.NavalFactory,
-                    //new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    //_tutorialArgs.TutorialProvider.SingleShipProvider,
-                    //new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
+            // 8. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret")));
 
             // 9. Enemy bomber
             //steps.Enqueue(
@@ -91,8 +91,8 @@ namespace BattleCruisers.Tutorial
                     //_tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     //new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret")));
 
-            // 10. Drone Focus
-            steps.Enqueue(CreateSteps_DroneFocus());
+            //// 10. Drone Focus
+            //steps.Enqueue(CreateSteps_DroneFocus());
 
             return steps;
         }
@@ -226,7 +226,9 @@ namespace BattleCruisers.Tutorial
                     BuildingCategory.Defence,
                     defenceToBuild,
                     SlotType.Deck,
-                    "Quick, build an " + defenceToBuild.Name + "!");
+                    "Quick, build an " + defenceToBuild.Name + "!",
+                    waitForBuildingToComplete: true,
+                    preferFrontmostSlot: true);
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
@@ -314,13 +316,13 @@ namespace BattleCruisers.Tutorial
             return new FactoryStepsResult(factorySteps, factoryProvider);
         }
 
-        // FELIX  Allow specification of frontmost slot :)
         public IList<ITutorialStep> CreateSteps_ConstructBuilding(
             BuildingCategory buildingCategory, 
             BuildableInfo buildingToConstruct,
             SlotType buildingSlotType,
             string constructBuildingInstruction,
-            bool waitForBuildingToComplete = true)
+            bool waitForBuildingToComplete = true,
+            bool preferFrontmostSlot = false)
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
@@ -342,7 +344,7 @@ namespace BattleCruisers.Tutorial
                     buildingToConstruct.Key));
 
             // Select a slot
-            IList<ISlot> buildingSlots = _tutorialArgs.PlayerCruiser.SlotWrapper.GetSlotsForType(buildingSlotType);
+            IList<ISlot> buildingSlots = FindSlotsToHighlight(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
             ISlot[] buildingSlotsArray = buildingSlots.ToArray();
             ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, buildingSlotsArray);
             constructionSteps.Add(
@@ -359,6 +361,24 @@ namespace BattleCruisers.Tutorial
 			}
 
             return constructionSteps;
+        }
+
+        private IList<ISlot> FindSlotsToHighlight(ISlotWrapper slotWrapper, SlotType slotType, bool preferFrontmostSlot)
+        {
+            if (preferFrontmostSlot)
+            {
+                ISlot frontMostSlot = slotWrapper.GetFreeSlot(slotType, preferFrontmostSlot);
+                Assert.IsNotNull(frontMostSlot);
+
+                return new List<ISlot>() 
+                { 
+                    frontMostSlot 
+                };
+            }
+            else
+            {
+                return slotWrapper.GetSlotsForType(slotType);
+            }
         }
 
         private ITutorialStep CreateStep_NavigateToPlayerCruiser()
