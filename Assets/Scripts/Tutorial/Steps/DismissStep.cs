@@ -31,7 +31,9 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
         private void _dismissableEmitter_Dismissed(object sender, EventArgs e)
         {
+            _dismissableEmitter.Dismissed -= _dismissableEmitter_Dismissed;
             _uiManagerPermissions.CanDismissItemDetails = false;
+         
             OnCompleted();
         }
     }

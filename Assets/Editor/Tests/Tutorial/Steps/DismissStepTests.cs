@@ -31,12 +31,28 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         }
 
         [Test]
-        public void Click_DisablesDismissal()
+        public void Dismissed_DisablesDismissal_Completes()
         {
             Start_EnablesDismissal();
 
             _dismissableEmitter.Dismissed += Raise.Event();
+
             _uiManagerPermissions.Received().CanDismissItemDetails = false;
+            Assert.AreEqual(1, _callbackCounter);
+        }
+
+        [Test]
+        public void SecondDismissal_DoesNothing()
+        {
+            Start_EnablesDismissal();
+
+            // First dismissal
+            _dismissableEmitter.Dismissed += Raise.Event();
+            Assert.AreEqual(1, _callbackCounter);
+
+            // Second dismissal
+            _dismissableEmitter.Dismissed += Raise.Event();
+            Assert.AreEqual(1, _callbackCounter);
         }
     }
 }
