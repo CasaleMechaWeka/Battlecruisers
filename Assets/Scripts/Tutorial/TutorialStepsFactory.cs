@@ -406,9 +406,11 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, 
                     BuildSpeed.InfinitelySlow));
 
-            // FELIX  Temporarily boost drone number, so artillery is allowed to be built.
-            // In real tutorial user would have already built a drone station, so no problem :)
-            _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
+            // TEMP  For testing tutorial, when previous step creating drone staion is disabled :)
+            if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
+            {
+                _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
+			}
 
             // 1. Build artillery
             droneFocusSteps.AddRange(
