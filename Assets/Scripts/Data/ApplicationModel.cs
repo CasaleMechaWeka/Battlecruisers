@@ -4,6 +4,9 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Data
 {
+    /// <summary>
+    /// Static class that allows scenes to communicate with each other.
+    /// </summary>
     public static class ApplicationModel
 	{
 		public static int SelectedLevel { get; set; }
