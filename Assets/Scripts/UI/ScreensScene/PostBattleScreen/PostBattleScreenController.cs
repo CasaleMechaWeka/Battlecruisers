@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public Text title;
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
+        public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
 
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -34,32 +35,41 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider, dataProvider.GameModel.LastBattleResult, prefabFactory, spriteProvider);
+            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel);
+            Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider);
 
             _dataProvider = dataProvider;
 			
             _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
-            // FELIX  If null, indicates tutorial :P
-
-            if (BattleResult.WasVictory)
+            if (BattleResult == null)
             {
-                title.text = VICTORY_TITLE;
-
-                if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
-                {
-					unlockedItemSection.SetActive(true);
-                    _lootManager.UnlockLoot(BattleResult.LevelNum);
-                }
+                // User completed (or rage quit) the tutorial
+                postTutorialButtonsPanel.SetActive(true);
             }
             else
             {
-                title.text = LOSS_TITLE;
+                postBattleButtonsPanel.SetActive(true);
+
+                if (BattleResult.WasVictory)
+                {
+                    title.text = VICTORY_TITLE;
+
+                    if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
+                    {
+                        unlockedItemSection.SetActive(true);
+                        _lootManager.UnlockLoot(BattleResult.LevelNum);
+                    }
+                }
+                else
+                {
+                    title.text = LOSS_TITLE;
+                }
+
+                // Initialise AFTER loot manager potentially unlocks loot and next levels
+                ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
+                nextButton.Initialise(nextCommand);
             }
-			
-            // Initialise AFTER loot manager potentially unlocks loot and next levels
-			ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-			nextButton.Initialise(nextCommand);
 		}
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory, ISpriteProvider spriteProvider)
@@ -104,5 +114,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			_screensSceneGod.GoToHomeScreen();
 		}
+
+        public void RetryTutorial()
+        {
+            ApplicationModel.IsTutorial = true;
+            _screensSceneGod.LoadLevel(levelNum: 1);
+        }
+
+        public void StartLevel1()
+        {
+            _screensSceneGod.LoadLevel(levelNum: 1);
+        }
 	}
 }
