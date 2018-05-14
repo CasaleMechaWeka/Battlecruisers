@@ -40,6 +40,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			
             _lootManager = CreateLootManager(prefabFactory, spriteProvider);
 
+            // FELIX  If null, indicates tutorial :P
+
             if (BattleResult.WasVictory)
             {
                 title.text = VICTORY_TITLE;

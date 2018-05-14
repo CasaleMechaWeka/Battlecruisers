@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,16 +12,31 @@ namespace BattleCruisers.UI.ScreensScene
 		private BattleResult _lastBattleResult;
 		private int _totalNumOfLevels;
 
+        public Button firstTimePlayButton;
 		public Button continueButton;
+        public Button selectLevelButton;
+        public Button tutorialButton;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, BattleResult lastBattleResult, int totalNumOfLevels)
+        public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
 			base.Initialise(screensSceneGod);
 
-			_lastBattleResult = lastBattleResult;
+            Assert.IsNotNull(gameModel);
+
+            _lastBattleResult = gameModel.LastBattleResult;
 			_totalNumOfLevels = totalNumOfLevels;
 
-			// Player has never played a battle!
+            if (gameModel.HasAttemptedTutorial)
+            {
+                firstTimePlayButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                selectLevelButton.gameObject.SetActive(false);
+                tutorialButton.gameObject.SetActive(false);
+            }
+
+            // Player has never played a (non-tutorial) battle!
 			if (_lastBattleResult == null)
 			{
 				continueButton.gameObject.SetActive(false);
@@ -54,6 +70,12 @@ namespace BattleCruisers.UI.ScreensScene
         public void GoToSettingsScreen()
         {
             _screensSceneGod.GoToSettingsScreen();
+        }
+
+        public void StartTutorial()
+        {
+            ApplicationModel.IsTutorial = true;
+            _screensSceneGod.LoadLevel(levelNum: 1);
         }
 
 		public void Quit()

@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes
 			//ApplicationModel.ShowPostBattleScreen = true;
 
 
-			homeScreen.Initialise(this, _gameModel.LastBattleResult, _dataProvider.Levels.Count);
+			homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 

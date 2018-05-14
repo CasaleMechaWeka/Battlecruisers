@@ -309,9 +309,15 @@ namespace BattleCruisers.Scenes
 		{
 			CleanUp();
 
-			_dataProvider.GameModel.LastBattleResult = battleResult;
-			_dataProvider.SaveGame();
+            if (!ApplicationModel.IsTutorial)
+            {
+                // Completing the tutorial does not count as a real level, so do
+                // not save a battle result in this case.
+				_dataProvider.GameModel.LastBattleResult = battleResult;
+				_dataProvider.SaveGame();
+            }
 
+            ApplicationModel.IsTutorial = false;
 			ApplicationModel.ShowPostBattleScreen = true;
 
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
