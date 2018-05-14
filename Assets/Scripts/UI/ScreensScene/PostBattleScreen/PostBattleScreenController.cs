@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
         public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
+        public GameObject postTutorialMessage;
 
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -35,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel);
+            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage);
             Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider);
 
             _dataProvider = dataProvider;
@@ -45,10 +46,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (BattleResult == null)
             {
                 // User completed (or rage quit) the tutorial
+                postTutorialMessage.SetActive(true);
                 postTutorialButtonsPanel.SetActive(true);
             }
             else
             {
+                // User completed a level
                 postBattleButtonsPanel.SetActive(true);
 
                 if (BattleResult.WasVictory)
