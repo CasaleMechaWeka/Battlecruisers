@@ -229,6 +229,9 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
+                _dataProvider.GameModel.HasAttemptedTutorial = true;
+                _dataProvider.SaveGame();
+
                 ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController, _tutorialProvider, prefabFactory);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
