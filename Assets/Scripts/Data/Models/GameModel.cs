@@ -14,6 +14,9 @@ namespace BattleCruisers.Data.Models
 	[Serializable]
 	public class GameModel : IGameModel
 	{
+        [SerializeField]
+        private bool _hasAttemptedTutorial;
+
 		[SerializeField]
 		private int _numOfLevelsCompleted;
 
@@ -31,6 +34,12 @@ namespace BattleCruisers.Data.Models
 
 		[SerializeField]
 		private List<UnitKey> _unlockedUnits;
+
+        public bool HasAttemptedTutorial
+        {
+            get { return _hasAttemptedTutorial; }
+            set { _hasAttemptedTutorial = value; }
+        }
 
 		public int NumOfLevelsCompleted 
 		{ 
@@ -67,6 +76,7 @@ namespace BattleCruisers.Data.Models
 		}
 
 		public GameModel(
+            bool hasAttemptedTutorial,
 			int numOfLevelsCompleted,
 			Loadout playerLoadout,
 			BattleResult lastBattleResult,
@@ -75,6 +85,7 @@ namespace BattleCruisers.Data.Models
 			List<UnitKey> unlockedUnits)
             : this()
 		{
+            HasAttemptedTutorial = hasAttemptedTutorial;
 			NumOfLevelsCompleted = numOfLevelsCompleted;
 			PlayerLoadout = playerLoadout;
 			LastBattleResult = lastBattleResult;
@@ -117,6 +128,7 @@ namespace BattleCruisers.Data.Models
 			GameModel other = obj as GameModel;
 
 			return other != null
+                && other.HasAttemptedTutorial == HasAttemptedTutorial
 				&& other.NumOfLevelsCompleted == NumOfLevelsCompleted
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
@@ -127,7 +139,7 @@ namespace BattleCruisers.Data.Models
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
+            return this.GetHashCode(HasAttemptedTutorial, NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
 		}
 	}
 }

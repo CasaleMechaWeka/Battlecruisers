@@ -33,6 +33,7 @@ namespace BattleCruisers.Tests.Data
 			_serializer = new Serializer(_filePathProvider);
 
 			_originalGameModel = new GameModel(
+                hasAttemptedTutorial: true,
 				numOfLevelsCompleted: 7,
 				playerLoadout: CreateLoadout(),
 				lastBattleResult: CreateBattleResult(),

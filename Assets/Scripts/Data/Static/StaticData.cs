@@ -159,8 +159,10 @@ namespace BattleCruisers.Data.Static
             // TEMP  For final game only unlock first level :P
 			//int numOfLevelsCompleted = 20;
 			int numOfLevelsCompleted = 0;
+            bool hasAttemptedTutorial = false;
 
             return new GameModel(
+                hasAttemptedTutorial,
                 numOfLevelsCompleted,
                 playerLoadout,
                 lastBattleResult: null,
