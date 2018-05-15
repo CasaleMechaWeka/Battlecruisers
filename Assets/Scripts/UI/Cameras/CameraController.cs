@@ -282,8 +282,12 @@ namespace BattleCruisers.UI.Cameras
 
         private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
         {
+			Debug.Log("Calculated scroll speed: " + scrollSpeed);
+
 			// FELIX
-			scrollSpeed = 5 * Time.deltaTime;
+			scrollSpeed *= Time.deltaTime;
+			//scrollSpeed = 5 * Time.deltaTime;
+			Debug.Log("Hardcoded scroll speed: " + scrollSpeed);
 
 			if (mousePosition.x > Screen.width - _scrollBoundaryInPixels)
 			{
@@ -299,7 +303,8 @@ namespace BattleCruisers.UI.Cameras
 		private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
 		{
 			// FELIX
-            scrollSpeed = 5 * Time.deltaTime;
+			scrollSpeed *= Time.deltaTime;
+            //scrollSpeed = 5 * Time.deltaTime;
 
 			if (mousePosition.y > Screen.height - _scrollBoundaryInPixels)
             {
