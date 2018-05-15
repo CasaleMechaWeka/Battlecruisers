@@ -52,6 +52,12 @@ namespace BattleCruisers.UI.Cameras
 			return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
         }
 
+        public float FindScrollSpeed(float orthographicSize, float timeDelta)
+        {
+			float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
+			return scrollSpeedPerS * timeDelta;
+        }
+
         public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)
         {
             // Want the cruiser camera to be slightly off centre, towards the 

@@ -252,6 +252,7 @@ namespace BattleCruisers.UI.Cameras
         }
 
 		// FELIX  Inject into new class?  Or const?
+		// FELIX  Remove?  If scrolling works with boundary of 0 (test when game is full screen)
 		private float _scrollBoundaryInPixels = 0;
 		//private float _scrollBoundaryInPixels = 50;
 
@@ -259,7 +260,7 @@ namespace BattleCruisers.UI.Cameras
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
         private bool HandleScroll()
 		{
-			float scrollSpeed = _cameraCalculator.FindDragSpeed(_camera.orthographicSize);
+			float scrollSpeed = _cameraCalculator.FindScrollSpeed(_camera.orthographicSize, Time.deltaTime);
 
             Vector3 desiredPosition
                 = new Vector3(
@@ -268,8 +269,6 @@ namespace BattleCruisers.UI.Cameras
                     transform.position.z);
 
             Vector3 clampedDesiredPosition = EnforceCameraBounds(desiredPosition);
-
-			Debug.Log("Input.mousePosition: " + Input.mousePosition + "  camera position: " + transform.position + "  desiredPosition: " + desiredPosition + " clampedPosition " + clampedDesiredPosition);
 
 			if (clampedDesiredPosition != transform.position)
 			{
@@ -282,13 +281,6 @@ namespace BattleCruisers.UI.Cameras
 
         private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
         {
-			Debug.Log("Calculated scroll speed: " + scrollSpeed);
-
-			// FELIX
-			scrollSpeed *= Time.deltaTime;
-			//scrollSpeed = 5 * Time.deltaTime;
-			Debug.Log("Hardcoded scroll speed: " + scrollSpeed);
-
 			if (mousePosition.x > Screen.width - _scrollBoundaryInPixels)
 			{
 				return cameraPosition.x + scrollSpeed;
@@ -302,10 +294,6 @@ namespace BattleCruisers.UI.Cameras
 
 		private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
 		{
-			// FELIX
-			scrollSpeed *= Time.deltaTime;
-            //scrollSpeed = 5 * Time.deltaTime;
-
 			if (mousePosition.y > Screen.height - _scrollBoundaryInPixels)
             {
 				return cameraPosition.y + scrollSpeed;
