@@ -239,7 +239,7 @@ namespace BattleCruisers.UI.Cameras
             {
                 // Mid drag
                 Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
-				Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+				Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindDragSpeed(_camera.orthographicSize);
                 transform.position = EnforceCameraBounds(desiredCameraPosition);
             }
             else if (Input.GetMouseButtonUp(DRAGGING_MOUSE_BUTTON_INDEX))
@@ -259,7 +259,7 @@ namespace BattleCruisers.UI.Cameras
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
         private bool HandleScroll()
 		{
-			float scrollSpeed = _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+			float scrollSpeed = _cameraCalculator.FindDragSpeed(_camera.orthographicSize);
 
             Vector3 desiredPosition
                 = new Vector3(

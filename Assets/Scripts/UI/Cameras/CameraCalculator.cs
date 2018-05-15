@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.Cameras
 			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
 		}
 
-        public float FindScrollSpeed(float orthographicSize)
+        public float FindDragSpeed(float orthographicSize)
         {
 			return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
         }
