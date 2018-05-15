@@ -78,7 +78,7 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  Forcing tutorial :)
-            ApplicationModel.IsTutorial = true;
+            //ApplicationModel.IsTutorial = true;
 
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
