@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
+	// FELIX  Make this class testable :)
 	public class CameraController : MonoBehaviour, ICameraController
 	{
 		private Camera _camera;
@@ -40,6 +41,7 @@ namespace BattleCruisers.UI.Cameras
 		private const float CAMERA_POSITION_MAX_Y = 30;
 		private const float CAMERA_POSITION_MIN_Y = 0;
 
+		// FELIX  Just make property with private setter :/
 		private CameraState _cameraState;
 		public CameraState State { get { return _cameraState; } }
 
@@ -176,8 +178,11 @@ namespace BattleCruisers.UI.Cameras
         {
             bool inZoom = HandleZoom();
             bool inDrag = HandleDrag();
+            // FELIX
+			bool inScroll = HandleScroll();
+			//bool inScroll = false;
 
-            if ((inZoom || inDrag)
+			if ((inZoom || inDrag || inScroll)
 			    && _currentTarget != _playerInputTarget)
 			{
 				if (CameraTransitionStarted != null)
@@ -190,6 +195,7 @@ namespace BattleCruisers.UI.Cameras
 			}
         }
 
+        // FELIX  Move to own class, test
         /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
         private bool HandleZoom()
         {
@@ -200,6 +206,7 @@ namespace BattleCruisers.UI.Cameras
             {
                 inZoom = true;
 
+				// FELIX  Take timeDelta into consideration :/
                 _camera.orthographicSize -= _settingsManager.ZoomSpeed * yScrollDelta;
 
                 if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
@@ -215,6 +222,9 @@ namespace BattleCruisers.UI.Cameras
             return inZoom;
         }
 
+        // FELIX  Comment out.  Keep logic for when I implement IPad scrolling?
+		// IPAD  Implement scrolling via dragging :)
+		// IPAD  Move to own class, test
         /// <returns><c>true</c>, if in drag, <c>false</c> otherwise.</returns>
         private bool HandleDrag()
         {
@@ -229,7 +239,7 @@ namespace BattleCruisers.UI.Cameras
             {
                 // Mid drag
                 Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
-                Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+				Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
                 transform.position = EnforceCameraBounds(desiredCameraPosition);
             }
             else if (Input.GetMouseButtonUp(DRAGGING_MOUSE_BUTTON_INDEX))
@@ -240,6 +250,67 @@ namespace BattleCruisers.UI.Cameras
 
             return _inDrag;
         }
+
+		// FELIX  Inject into new class?  Or const?
+		private float _scrollBoundaryInPixels = 0;
+		//private float _scrollBoundaryInPixels = 50;
+
+		// FELIX  Move to own class, test
+        /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
+        private bool HandleScroll()
+		{
+			float scrollSpeed = _cameraCalculator.FindScrollSpeed(_camera.orthographicSize);
+
+            Vector3 desiredPosition
+                = new Vector3(
+    				FindDesiredX(transform.position, Input.mousePosition, scrollSpeed),
+    				FindDesiredY(transform.position, Input.mousePosition, scrollSpeed),
+                    transform.position.z);
+
+            Vector3 clampedDesiredPosition = EnforceCameraBounds(desiredPosition);
+
+			Debug.Log("Input.mousePosition: " + Input.mousePosition + "  camera position: " + transform.position + "  desiredPosition: " + desiredPosition + " clampedPosition " + clampedDesiredPosition);
+
+			if (clampedDesiredPosition != transform.position)
+			{
+				transform.position = clampedDesiredPosition;
+				return true;
+			}
+
+			return false;
+        }
+
+        private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
+        {
+			// FELIX
+			scrollSpeed = 5 * Time.deltaTime;
+
+			if (mousePosition.x > Screen.width - _scrollBoundaryInPixels)
+			{
+				return cameraPosition.x + scrollSpeed;
+			}
+			else if (mousePosition.x < 0 + _scrollBoundaryInPixels)
+			{
+				return cameraPosition.x - scrollSpeed;
+			}
+			return cameraPosition.x;
+		}
+
+		private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
+		{
+			// FELIX
+            scrollSpeed = 5 * Time.deltaTime;
+
+			if (mousePosition.y > Screen.height - _scrollBoundaryInPixels)
+            {
+				return cameraPosition.y + scrollSpeed;
+            }
+			else if (mousePosition.y < 0 + _scrollBoundaryInPixels)
+            {
+				return cameraPosition.y - scrollSpeed;
+            }
+			return transform.position.y;
+		}
 
         private Vector3 EnforceCameraBounds(Vector3 desiredCameraPosition)
         {

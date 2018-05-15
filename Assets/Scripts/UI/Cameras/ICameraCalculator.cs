@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.Cameras
     {
         float FindCameraOrthographicSize(ICruiser cruiser);
         float FindCameraYPosition(float desiredOrthographicSize);
-        float FindScrollSpeed(float orthographicSize);
+		float FindScrollSpeed(float orthographicSize);
         Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue);
 	}
 }

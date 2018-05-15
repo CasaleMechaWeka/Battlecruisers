@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.Cameras
 
         public float FindScrollSpeed(float orthographicSize)
         {
-            return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
+			return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
         }
 
         public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)

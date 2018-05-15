@@ -121,7 +121,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Other
-            tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
+            // FELIX
+			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
