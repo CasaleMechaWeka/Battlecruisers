@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,6 +21,9 @@ namespace BattleCruisers.UI.Cameras
 		private float _cameraOrthographicSizeChangeVelocity;
         private ISettingsManager _settingsManager;
         private IFilter _shouldNavigationBeEnabledFilter;
+
+		// User input
+		private IScrollHandler _scrollHandler;
 
         // Dragging
 		private bool _inDrag;
@@ -115,6 +121,12 @@ namespace BattleCruisers.UI.Cameras
 	                instantStates: new List<CameraState>());
 
 			FocusOnPlayerCruiser();
+
+			// FELIX  Move to factory and inject factory :)
+			IScreen screen = new ScreenBC();
+			Rectangle cameraBounds = new Rectangle(CAMERA_POSITION_MIN_X, CAMERA_POSITION_MAX_X, CAMERA_POSITION_MIN_Y, CAMERA_POSITION_MAX_Y);
+			IPositionClamper cameraPositionClamper = new PositionClamper(cameraBounds);
+			_scrollHandler = new ScrollHandler(_cameraCalculator, screen, cameraPositionClamper);
 		}
 
 		void Update()
@@ -251,59 +263,19 @@ namespace BattleCruisers.UI.Cameras
             return _inDrag;
         }
 
-		// FELIX  Inject into new class?  Or const?
-		// FELIX  Remove?  If scrolling works with boundary of 0 (test when game is full screen)
-		private float _scrollBoundaryInPixels = 0;
-		//private float _scrollBoundaryInPixels = 50;
-
-		// FELIX  Move to own class, test
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
         private bool HandleScroll()
 		{
-			float scrollSpeed = _cameraCalculator.FindScrollSpeed(_camera.orthographicSize, Time.deltaTime);
+			Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.orthographicSize, transform.position, Input.mousePosition, Time.deltaTime);
 
-            Vector3 desiredPosition
-                = new Vector3(
-    				FindDesiredX(transform.position, Input.mousePosition, scrollSpeed),
-    				FindDesiredY(transform.position, Input.mousePosition, scrollSpeed),
-                    transform.position.z);
-
-            Vector3 clampedDesiredPosition = EnforceCameraBounds(desiredPosition);
-
-			if (clampedDesiredPosition != transform.position)
+			if (desiredPosition != transform.position)
 			{
-				transform.position = clampedDesiredPosition;
+				transform.position = desiredPosition;
 				return true;
 			}
 
 			return false;
         }
-
-        private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
-        {
-			if (mousePosition.x > Screen.width - _scrollBoundaryInPixels)
-			{
-				return cameraPosition.x + scrollSpeed;
-			}
-			else if (mousePosition.x < 0 + _scrollBoundaryInPixels)
-			{
-				return cameraPosition.x - scrollSpeed;
-			}
-			return cameraPosition.x;
-		}
-
-		private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
-		{
-			if (mousePosition.y > Screen.height - _scrollBoundaryInPixels)
-            {
-				return cameraPosition.y + scrollSpeed;
-            }
-			else if (mousePosition.y < 0 + _scrollBoundaryInPixels)
-            {
-				return cameraPosition.y - scrollSpeed;
-            }
-			return transform.position.y;
-		}
 
 		// FELIX  Avoid duplicate code with FighterMovementController.CapTargetPositionInSafeZone()
         private Vector3 EnforceCameraBounds(Vector3 desiredCameraPosition)
