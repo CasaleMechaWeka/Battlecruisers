@@ -25,11 +25,6 @@ namespace BattleCruisers.UI.Cameras
 		// User input
 		private IScrollHandler _scrollHandler;
 
-        // Dragging
-		private bool _inDrag;
-		private Vector3 _dragStartCameraPosition;
-		private Vector3 _dragStartMousePosition;
-
 		public float smoothTime;
 
 		public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
@@ -189,12 +184,9 @@ namespace BattleCruisers.UI.Cameras
         private void HandleUserInput()
         {
             bool inZoom = HandleZoom();
-            bool inDrag = HandleDrag();
-            // FELIX
 			bool inScroll = HandleScroll();
-			//bool inScroll = false;
 
-			if ((inZoom || inDrag || inScroll)
+			if ((inZoom || inScroll)
 			    && _currentTarget != _playerInputTarget)
 			{
 				if (CameraTransitionStarted != null)
@@ -232,35 +224,6 @@ namespace BattleCruisers.UI.Cameras
             }
 
             return inZoom;
-        }
-
-        // FELIX  Comment out.  Keep logic for when I implement IPad scrolling?
-		// IPAD  Implement scrolling via dragging :)
-		// IPAD  Move to own class, test
-        /// <returns><c>true</c>, if in drag, <c>false</c> otherwise.</returns>
-        private bool HandleDrag()
-        {
-            if (Input.GetMouseButtonDown(DRAGGING_MOUSE_BUTTON_INDEX))
-            {
-                // Drag start
-                _inDrag = true;
-                _dragStartCameraPosition = transform.position;
-                _dragStartMousePosition = _camera.ScreenToViewportPoint(Input.mousePosition);
-            }
-            else if (Input.GetMouseButton(DRAGGING_MOUSE_BUTTON_INDEX))
-            {
-                // Mid drag
-                Vector3 mousePositionDelta = _camera.ScreenToViewportPoint(Input.mousePosition) - _dragStartMousePosition;
-				Vector3 desiredCameraPosition = _dragStartCameraPosition - mousePositionDelta * _cameraCalculator.FindDragSpeed(_camera.orthographicSize);
-                transform.position = EnforceCameraBounds(desiredCameraPosition);
-            }
-            else if (Input.GetMouseButtonUp(DRAGGING_MOUSE_BUTTON_INDEX))
-            {
-                // Drag end
-                _inDrag = false;
-            }
-
-            return _inDrag;
         }
 
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
