@@ -305,6 +305,7 @@ namespace BattleCruisers.UI.Cameras
 			return transform.position.y;
 		}
 
+		// FELIX  Avoid duplicate code with FighterMovementController.CapTargetPositionInSafeZone()
         private Vector3 EnforceCameraBounds(Vector3 desiredCameraPosition)
         {
             if (desiredCameraPosition.x < CAMERA_POSITION_MIN_X)

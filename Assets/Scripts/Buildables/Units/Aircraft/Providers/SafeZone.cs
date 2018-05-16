@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
+	// FELIX  Replace with Rectangle
     public class SafeZone
 	{
 		public float MinX { get; private set; }
