@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 		private readonly IScreen _screen;
 		private readonly IPositionClamper _clamper;
 
-		// FELIX  Remove, of 0 works while fullscreen :)
+		// FELIX  Remove, if 0 works while fullscreen :)
 		private const float SCROLL_BOUNDARY_IN_PIXELS = 0;
 
 		public ScrollHandler(ICameraCalculator calculator, IScreen screen, IPositionClamper clamper)
@@ -37,9 +37,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
     				FindDesiredY(cameraPosition, mousePosition, scrollSpeed),
 				    cameraPosition.z);
 
-			_clamper.Clamp(desiredPosition);
-
-			return desiredPosition;
+			return _clamper.Clamp(desiredPosition);
 		}
 
 		private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
