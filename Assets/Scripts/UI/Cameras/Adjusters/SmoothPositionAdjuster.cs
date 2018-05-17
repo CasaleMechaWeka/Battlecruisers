@@ -30,9 +30,8 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             {
                 _cameraTransform.position = Vector3.SmoothDamp(_cameraTransform.position, targetPosition, ref _cameraPositionChangeVelocity, _smoothTime);
             }
-            else if (_cameraTransform.position != targetPosition)
+            else
             {
-				// FELIX  Check whether always assigning has side effects :/
                 _cameraTransform.position = targetPosition;
             }
 
