@@ -34,8 +34,6 @@ namespace BattleCruisers.UI.Cameras
 		public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
 		public event EventHandler<CameraTransitionArgs> CameraTransitionCompleted;
 
-		private const float POSITION_EQUALITY_MARGIN = 0.1f;
-		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MID_VIEWS_ORTHOGRAPHIC_SIZE = 18;
 		private const float MID_VIEWS_POSITION_X = 20;
 
