@@ -4,6 +4,7 @@ namespace BattleCruisers.UI.Cameras
 {
     public enum CameraState
     {
+		// FELIX  Remove PlayerInputControlled?
         PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid, PlayerInputControlled
     }
 
