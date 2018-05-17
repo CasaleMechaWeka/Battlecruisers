@@ -8,6 +8,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Cameras.Adjusters;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -18,9 +19,11 @@ namespace BattleCruisers.UI.Cameras
         private ICameraCalculator _cameraCalculator;
         private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget, _playerInputTarget;
 		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
-		private float _cameraOrthographicSizeChangeVelocity;
         private ISettingsManager _settingsManager;
         private IFilter _shouldNavigationBeEnabledFilter;
+
+		// Adjusting camera
+		private ISmoothZoomAdjuster _zoomAdjuster;
 
 		// User input
 		private IScrollHandler _scrollHandler;
@@ -65,8 +68,6 @@ namespace BattleCruisers.UI.Cameras
             Skybox skybox = GetComponent<Skybox>();
 			Assert.IsNotNull(skybox);
 			skybox.material = skyboxMaterial;
-
-            _cameraOrthographicSizeChangeVelocity = 0;
 
 			_cameraState = CameraState.Overview;
 
@@ -125,6 +126,8 @@ namespace BattleCruisers.UI.Cameras
 			_scrollHandler = new ScrollHandler(_cameraCalculator, screen, cameraPositionClamper);
 
 			_mouseZoomHandler = new MouseZoomHandler(_settingsManager, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
+
+			_zoomAdjuster = new SmoothZoomAdjuster(_camera, smoothTime);
 		}
 
 		void Update()
@@ -132,7 +135,7 @@ namespace BattleCruisers.UI.Cameras
 			if (_cameraState != _currentTarget.State)
             {
                 bool isInPosition = UpdateCameraPosition();
-                bool isRightOrthographicSize = UpdateCameraZoom();
+				bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_currentTarget.OrthographicSize);
 
                 // Camera state
                 if (isInPosition && isRightOrthographicSize)
@@ -166,22 +169,6 @@ namespace BattleCruisers.UI.Cameras
 
             return isInPosition;
         }
-
-		private bool UpdateCameraZoom()
-		{
-			bool isRightOrthographicSize = Math.Abs(_camera.orthographicSize - _currentTarget.OrthographicSize) < ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN;
-			if (!isRightOrthographicSize)
-			{
-				_camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, _currentTarget.OrthographicSize, ref _cameraOrthographicSizeChangeVelocity, smoothTime);
-			}
-			else if (_camera.orthographicSize != _currentTarget.OrthographicSize)
-			{
-				_camera.orthographicSize = _currentTarget.OrthographicSize;
-				Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController zoom done");
-			}
-			
-			return isRightOrthographicSize;
-		}
 
         // IPAD:  Adapt input for IPad :P
         private void HandleUserInput()
