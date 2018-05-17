@@ -24,6 +24,7 @@ namespace BattleCruisers.UI.Cameras
 
 		// User input
 		private IScrollHandler _scrollHandler;
+		private IMouseZoomHandler _mouseZoomHandler;
 
 		public float smoothTime;
 
@@ -122,6 +123,8 @@ namespace BattleCruisers.UI.Cameras
 			Rectangle cameraBounds = new Rectangle(CAMERA_POSITION_MIN_X, CAMERA_POSITION_MAX_X, CAMERA_POSITION_MIN_Y, CAMERA_POSITION_MAX_Y);
 			IPositionClamper cameraPositionClamper = new PositionClamper(cameraBounds);
 			_scrollHandler = new ScrollHandler(_cameraCalculator, screen, cameraPositionClamper);
+
+			_mouseZoomHandler = new MouseZoomHandler(_settingsManager, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 		}
 
 		void Update()
@@ -199,31 +202,18 @@ namespace BattleCruisers.UI.Cameras
 			}
         }
 
-        // FELIX  Move to own class, test
         /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
         private bool HandleZoom()
         {
-            bool inZoom = false;
-            float yScrollDelta = Input.mouseScrollDelta.y;
+			float desiredOrthographicSize = _mouseZoomHandler.FindCameraOrthographicSize(_camera.orthographicSize, Input.mouseScrollDelta.y, Time.deltaTime);
 
-            if (yScrollDelta != 0)
-            {
-                inZoom = true;
+			if (!Mathf.Approximately(desiredOrthographicSize, _camera.orthographicSize))
+			{
+				_camera.orthographicSize = desiredOrthographicSize;
+				return true;
+			}
 
-				// FELIX  Take timeDelta into consideration :/
-                _camera.orthographicSize -= _settingsManager.ZoomSpeed * yScrollDelta;
-
-                if (_camera.orthographicSize > CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE)
-                {
-                    _camera.orthographicSize = CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE;
-                }
-                else if (_camera.orthographicSize < CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE)
-                {
-                    _camera.orthographicSize = CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE;
-                }
-            }
-
-            return inZoom;
+			return false;
         }
 
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
@@ -238,30 +228,6 @@ namespace BattleCruisers.UI.Cameras
 			}
 
 			return false;
-        }
-
-		// FELIX  Avoid duplicate code with FighterMovementController.CapTargetPositionInSafeZone()
-        private Vector3 EnforceCameraBounds(Vector3 desiredCameraPosition)
-        {
-            if (desiredCameraPosition.x < CAMERA_POSITION_MIN_X)
-            {
-                desiredCameraPosition.x = CAMERA_POSITION_MIN_X;
-            }
-            else if (desiredCameraPosition.x > CAMERA_POSITION_MAX_X)
-            {
-                desiredCameraPosition.x = CAMERA_POSITION_MAX_X;
-            }
-
-            if (desiredCameraPosition.y < CAMERA_POSITION_MIN_Y)
-            {
-                desiredCameraPosition.y = CAMERA_POSITION_MIN_Y;
-            }
-            else if (desiredCameraPosition.y > CAMERA_POSITION_MAX_Y)
-            {
-                desiredCameraPosition.y = CAMERA_POSITION_MAX_Y;
-            }
-
-            return desiredCameraPosition;
         }
 
         public void FocusOnPlayerCruiser()
