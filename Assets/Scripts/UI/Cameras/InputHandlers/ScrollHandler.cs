@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 	/// When the mouse touches the edge of the screen we want the screen to scroll
 	/// in that direction.  Similar to real time strategy games like Age of Empires.
 	/// </summary>
-	/// FELIX  Test :D
 	public class ScrollHandler : IScrollHandler
 	{
 		private readonly ICameraCalculator _calculator;
@@ -42,11 +41,11 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
 		private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
         {
-            if (mousePosition.x > _screen.Width - SCROLL_BOUNDARY_IN_PIXELS)
+            if (mousePosition.x >= _screen.Width - SCROLL_BOUNDARY_IN_PIXELS)
             {
                 return cameraPosition.x + scrollSpeed;
             }
-            else if (mousePosition.x < 0 + SCROLL_BOUNDARY_IN_PIXELS)
+            else if (mousePosition.x <= 0 + SCROLL_BOUNDARY_IN_PIXELS)
             {
                 return cameraPosition.x - scrollSpeed;
             }
@@ -55,11 +54,11 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
         private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeed)
         {
-            if (mousePosition.y > _screen.Height - SCROLL_BOUNDARY_IN_PIXELS)
+            if (mousePosition.y >= _screen.Height - SCROLL_BOUNDARY_IN_PIXELS)
             {
                 return cameraPosition.y + scrollSpeed;
             }
-            else if (mousePosition.y < 0 + SCROLL_BOUNDARY_IN_PIXELS)
+            else if (mousePosition.y <= 0 + SCROLL_BOUNDARY_IN_PIXELS)
             {
                 return cameraPosition.y - scrollSpeed;
             }

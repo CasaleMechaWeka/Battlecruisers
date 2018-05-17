@@ -9,7 +9,6 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 	/// Alliance scroll, except it is not directional (ie, the mouse position is
 	/// irrelevant, we will not zoom towards the mouse position).
 	/// </summary>
-	/// FELIX  Test :D
 	public class MouseZoomHandler : IMouseZoomHandler
 	{
 		private readonly ISettingsManager _settingsManager;
