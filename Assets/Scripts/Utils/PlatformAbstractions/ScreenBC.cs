@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.PlatformAbstractions
+namespace BattleCruisers.Utils.PlatformAbstractions
 {
 	public class ScreenBC : IScreen
 	{

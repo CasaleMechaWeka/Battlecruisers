@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;

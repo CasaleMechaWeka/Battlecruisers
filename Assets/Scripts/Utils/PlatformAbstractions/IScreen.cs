@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.PlatformAbstractions
+﻿namespace BattleCruisers.Utils.PlatformAbstractions
 {
 	public interface IScreen
 	{
