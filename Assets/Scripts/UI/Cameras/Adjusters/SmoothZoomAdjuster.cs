@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             {
 				_camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, targetOrthographicSize, ref _cameraOrthographicSizeChangeVelocity, _smoothTime);
             }
-            else if (_camera.orthographicSize != targetOrthographicSize)
+            else
             {
                 _camera.orthographicSize = targetOrthographicSize;
             }
