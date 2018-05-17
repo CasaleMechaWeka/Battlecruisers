@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
@@ -9,6 +10,16 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 		private float _cameraOrthographicSizeChangeVelocity;
         
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
+		private const float MIN_SMOOTH_TIME = 0;
+
+		public SmoothZoomAdjuster(Camera camera, float smoothTime)
+		{
+			Assert.IsNotNull(camera);
+			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
+
+			_camera = camera;
+			_smoothTime = smoothTime;
+		}
 
 		public bool AdjustZoom(float targetOrthographicSize)
 		{
