@@ -19,6 +19,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
 			_camera = camera;
 			_smoothTime = smoothTime;
+			_cameraOrthographicSizeChangeVelocity = 0;
 		}
 
 		public bool AdjustZoom(float targetOrthographicSize)

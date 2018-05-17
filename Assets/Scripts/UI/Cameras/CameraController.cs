@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.UI.Cameras.Adjusters;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -18,11 +18,11 @@ namespace BattleCruisers.UI.Cameras
 		private Camera _camera;
         private ICameraCalculator _cameraCalculator;
         private ICameraTarget _currentTarget, _playerCruiserTarget, _aiCruiserTarget, _overviewTarget, _midLeftTarget, _midRightTarget, _playerInputTarget;
-		private Vector3 _cameraPositionChangeVelocity = Vector3.zero;
         private ISettingsManager _settingsManager;
         private IFilter _shouldNavigationBeEnabledFilter;
 
 		// Adjusting camera
+		private ISmoothPositionAdjuster _positionAdjuster;
 		private ISmoothZoomAdjuster _zoomAdjuster;
 
 		// User input
@@ -127,6 +127,7 @@ namespace BattleCruisers.UI.Cameras
 
 			_mouseZoomHandler = new MouseZoomHandler(_settingsManager, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 
+			_positionAdjuster = new SmoothPositionAdjuster(transform, smoothTime);
 			_zoomAdjuster = new SmoothZoomAdjuster(_camera, smoothTime);
 		}
 
@@ -134,7 +135,7 @@ namespace BattleCruisers.UI.Cameras
 		{
 			if (_cameraState != _currentTarget.State)
             {
-                bool isInPosition = UpdateCameraPosition();
+				bool isInPosition = _positionAdjuster.AdjustPosition(_currentTarget.Position);
 				bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_currentTarget.OrthographicSize);
 
                 // Camera state
@@ -153,22 +154,6 @@ namespace BattleCruisers.UI.Cameras
                 HandleUserInput();
             }
 		}
-
-        private bool UpdateCameraPosition()
-        {
-            bool isInPosition = (transform.position - _currentTarget.Position).magnitude < POSITION_EQUALITY_MARGIN;
-            if (!isInPosition)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, _currentTarget.Position, ref _cameraPositionChangeVelocity, smoothTime);
-            }
-            else if (transform.position != _currentTarget.Position)
-            {
-                transform.position = _currentTarget.Position;
-                Logging.Log(Tags.CAMERA_CONTROLLER, "CameraController position done");
-            }
-
-            return isInPosition;
-        }
 
         // IPAD:  Adapt input for IPad :P
         private void HandleUserInput()
