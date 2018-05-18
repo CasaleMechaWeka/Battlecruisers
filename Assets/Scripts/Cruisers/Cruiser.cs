@@ -35,17 +35,18 @@ namespace BattleCruisers.Cruisers
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
 
-		// IHighlightable
+        // IHighlightable
+		public override Vector2 Size { get { return _renderer.bounds.size; } }
         public override float SizeMultiplier { get { return 0.25f; } }
-		public override Vector2 PositionAdjustment
-		{
-			get
-			{
+        public override Vector2 PositionAdjustment
+        {
+            get
+            {
                 float xAdjustment = Direction == Direction.Right ? -highlightXAdjustmentInM : highlightXAdjustmentInM;
                 return new Vector2(xAdjustment, 0);
-			}
-		}
-
+            }
+        }
+        
 		// IComparableItem
 		public string Description { get { return description; } }
         public string Name { get { return cruiserName; } }
@@ -56,7 +57,6 @@ namespace BattleCruisers.Cruisers
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
-        public override Vector2 Size { get { return _renderer.bounds.size; } }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public ISlotWrapper SlotWrapper { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
