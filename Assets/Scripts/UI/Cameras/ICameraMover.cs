@@ -14,6 +14,8 @@ namespace BattleCruisers.UI.Cameras
         }
     }
 
+    // FELIX  Create base class for both IMovers and CameraController (wait until
+	// CameraController does not extend MonoBehaviour first :P)
     public interface ICameraMover
     {
         CameraState State { get; }
