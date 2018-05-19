@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.Cameras
 			{
 				if (_currentMover != null)
 				{
+					_currentMover.Reset();
 					_currentMover.StateChanged -= _currentMover_StateChanged;
 				}
 

@@ -20,13 +20,17 @@ namespace BattleCruisers.UI.Cameras
 		{ 
 			get { return _state; }
             private set
-			{
-				if (StateChanged != null)
-                {
-                    StateChanged.Invoke(this, new CameraStateChangedArgs(_state, value));
-                }
-
+            {
+				// Event handlers may access this property, so want to update the 
+                // value before emitting the changed event.
+                // FELIX  Add test!
+				CameraState oldState = _state;
 				_state = value;
+
+                if (StateChanged != null)
+                {
+					StateChanged.Invoke(this, new CameraStateChangedArgs(oldState, _state));
+                }
 			}
 		}
 
@@ -45,7 +49,7 @@ namespace BattleCruisers.UI.Cameras
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
 
-			_state = CameraState.Overview;
+			Reset();
 		}
 
         public bool SetCameraTarget(CameraState targetState)
@@ -88,6 +92,11 @@ namespace BattleCruisers.UI.Cameras
             {
 				State = _target.State;
             }
+		}
+
+		public void Reset()
+		{
+			_state = CameraState.PlayerInputControlled;
 		}
 	}
 }

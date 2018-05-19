@@ -71,5 +71,7 @@ namespace BattleCruisers.UI.Cameras
 
             return false;
         }
+
+		public void Reset() { }
 	}
 }
