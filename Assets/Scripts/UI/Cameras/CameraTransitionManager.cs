@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Udpate tests :P
 	public class CameraTransitionManager : ICameraTransitionManager
     {
 		private readonly ICamera _camera;
@@ -60,14 +59,14 @@ namespace BattleCruisers.UI.Cameras
 				Assert.IsTrue(_stateToTarget.ContainsKey(targetState));
 				_target = _stateToTarget[targetState];
 
-				State = CameraState.InTransition;
-
                 if (_target.IsInstantTransition(State))
                 {
-					// Move camera instantly
-					_camera.Position = _target.Position;
+                    // Move camera instantly
+                    _camera.Position = _target.Position;
                     _camera.OrthographicSize = _target.OrthographicSize;
                 }
+				
+                State = CameraState.InTransition;
             }
 
             return willMoveCamera;
