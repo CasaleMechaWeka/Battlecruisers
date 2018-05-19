@@ -1,0 +1,74 @@
+﻿using System;
+using BattleCruisers.UI.Cameras.InputHandlers;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
+
+namespace BattleCruisers.UI.Cameras
+{
+	// FELIX  Test :)
+	public class UserInputCameraMover : ICameraMover
+	{
+		private readonly ICamera _camera;
+		private readonly IInput _input;
+		private readonly IScrollHandler _scrollHandler;
+        private readonly IMouseZoomHandler _zoomHandler;
+
+		public CameraState State { get { return CameraState.PlayerInputControlled; } }
+
+		public event EventHandler<CameraStateChangedArgs> StateChanged;
+
+		public UserInputCameraMover(ICamera camera, IInput input, IScrollHandler scrollHandler, IMouseZoomHandler zoomHandler)
+		{
+			Helper.AssertIsNotNull(camera, input, scrollHandler, zoomHandler);
+
+			_camera = camera;
+			_input = input;
+			_scrollHandler = scrollHandler;
+			_zoomHandler = zoomHandler;
+		}
+
+		public void MoveCamera(float deltaTime, CameraState currentState)
+		{
+			bool inZoom = HandleZoom(deltaTime);
+			bool inScroll = HandleScroll(deltaTime);
+
+            if ((inZoom || inScroll)
+			    && currentState != CameraState.PlayerInputControlled)
+            {
+				if (StateChanged != null)
+				{
+					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.InTransition));
+				}
+            }
+		}
+
+		/// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
+		private bool HandleZoom(float deltaTime)
+        {
+            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y, deltaTime);
+
+            if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
+            {
+                _camera.OrthographicSize = desiredOrthographicSize;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
+		private bool HandleScroll(float deltaTime)
+        {
+			Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition, deltaTime);
+
+			if (desiredPosition != _camera.Position)
+            {
+                _camera.Position = desiredPosition;
+                return true;
+            }
+
+            return false;
+        }
+	}
+}
