@@ -9,6 +9,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Cameras
 {
+	// FELIX  update
 	public class CameraTransitionManagerTests
     {
 		private ICameraTransitionManager _transitionManager;
@@ -70,8 +71,9 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_cameraTransitionStartedCounter = 0;
 			_cameraTransitionCompletedCounter = 0;
 
-			_transitionManager.CameraTransitionStarted += (sender, e) => _cameraTransitionStartedCounter++;
-			_transitionManager.CameraTransitionCompleted += (sender, e) => _cameraTransitionCompletedCounter++;
+            // FELIX
+			//_transitionManager.CameraTransitionStarted += (sender, e) => _cameraTransitionStartedCounter++;
+			//_transitionManager.CameraTransitionCompleted += (sender, e) => _cameraTransitionCompletedCounter++;
 
 			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
         }
@@ -123,7 +125,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         [Test]
 		public void MoveCamera_TargetNull_DoesNothing()
 		{
-			_transitionManager.MoveCamera();
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
 		}
 
@@ -131,7 +133,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         public void MoveCamera_InTargetState_DoesNothing()
         {
 			_transitionManager.SetCameraTarget(_startingState.State);
-			_transitionManager.MoveCamera();
+			_transitionManager.MoveCamera(default(float), default(CameraState));
             _positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
         }
 
@@ -143,7 +145,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_positionAdjuster.AdjustPosition(_target2.Position).Returns(false);
 			_zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(false);
 
-			_transitionManager.MoveCamera();
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
 			_positionAdjuster.Received().AdjustPosition(_target2.Position);
 			_zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
@@ -159,7 +161,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _positionAdjuster.AdjustPosition(_target2.Position).Returns(true);
             _zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(true);
 
-            _transitionManager.MoveCamera();
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
             _positionAdjuster.Received().AdjustPosition(_target2.Position);
             _zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);

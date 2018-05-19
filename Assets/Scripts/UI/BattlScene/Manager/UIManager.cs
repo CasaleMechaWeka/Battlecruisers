@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
@@ -12,7 +11,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    public class UIManager : IUIManager
+	// FELIX  Update tests
+	public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly ICameraController _cameraController;
@@ -31,8 +31,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _detailsManager = args.DetailsManager;
             _shouldBuildingDeleteButtonBeEnabledFilter = args.ShouldBuildingDeleteButtonBeEnabledFilter;
    			
-			_cameraController.CameraTransitionStarted += OnCameraTransitionStarted;
-			_cameraController.CameraTransitionCompleted += OnCameraTransitionCompleted;
+			_cameraController.StateChanged += _cameraController_StateChanged;
         }
 
         /// <summary>
@@ -45,9 +44,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			_detailsManager.HideDetails();
         }
 
-		private void OnCameraTransitionStarted(object sender, CameraTransitionArgs e)
+		private void _cameraController_StateChanged(object sender, CameraStateChangedArgs e)
 		{
-			switch (e.Origin)
+			switch (e.PreviousState)
 			{
 				case CameraState.PlayerCruiser:
 					_buildMenu.HideBuildMenu();
@@ -60,11 +59,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
                     _detailsManager.HideDetails();
                     break;
 			}
-		}
 
-		private void OnCameraTransitionCompleted(object sender, CameraTransitionArgs e)
-		{
-            if (e.Destination == CameraState.PlayerCruiser)
+			if (e.NewState == CameraState.PlayerCruiser)
             {
 				_buildMenu.ShowBuildMenu();
             }

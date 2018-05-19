@@ -26,8 +26,7 @@ namespace BattleCruisers.UI.Cameras
     {
         CameraState State { get; }
 
-		event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
-		event EventHandler<CameraTransitionArgs> CameraTransitionCompleted;
+		event EventHandler<CameraStateChangedArgs> StateChanged;
 
         void FocusOnPlayerCruiser();
         void FocusOnAiCruiser();
