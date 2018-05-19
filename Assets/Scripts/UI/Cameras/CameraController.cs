@@ -34,18 +34,10 @@ namespace BattleCruisers.UI.Cameras
 			get { return _currentMover; }
 			set
 			{
-				if (_currentMover != null)
-				{
-					_currentMover.Reset();
-					_currentMover.StateChanged -= _currentMover_StateChanged;
-				}
-
-				_currentMover = value;
-
-				if (_currentMover != null)
-				{
-					_currentMover.StateChanged += _currentMover_StateChanged;
-				}
+				// FELIX  Can add event handler +=/-= logic again :)
+				Assert.IsNotNull(value);
+                _currentMover = value;
+				_currentMover.Reset(State);
 			}
 		}
 
@@ -94,7 +86,7 @@ namespace BattleCruisers.UI.Cameras
 			skybox.material = skyboxMaterial;
 
             _cameraCalculator = new CameraCalculator(_camera);
-			_state = CameraState.Overview;
+			_state = CameraState.PlayerInputControlled;
 
 			// FELIX  Inject
 			// Handle transitions (triggered by navigation buttons)
@@ -112,6 +104,8 @@ namespace BattleCruisers.UI.Cameras
     				new SmoothPositionAdjuster(_camera.transform, smoothTime),
     				new SmoothZoomAdjuster(_camera, smoothTime));
 
+			_transitionManager.StateChanged += _mover_StateChanged;
+
 			// FELIX  Move to factory and inject factory :)
 			// Handle user input (scrolling by screen edge, zooming via mouse wheel)
 			IScreen screen = new ScreenBC();
@@ -122,6 +116,8 @@ namespace BattleCruisers.UI.Cameras
 			_mouseZoomHandler = new MouseZoomHandler(_settingsManager, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 
 			_userInputMover = new UserInputCameraMover(camera, new InputBC(), _scrollHandler, _mouseZoomHandler);
+			_userInputMover.StateChanged += _mover_StateChanged;
+
 			CurrentMover = _userInputMover;
 
 			FocusOnPlayerCruiser();
@@ -159,14 +155,11 @@ namespace BattleCruisers.UI.Cameras
 
 		private void HandleNavigationButtonPress(CameraState newState)
 		{
-			bool willCameraMove = _transitionManager.SetCameraTarget(newState);
-			if (willCameraMove)
-			{
-				CurrentMover = _transitionManager;
-			}
+            CurrentMover = _transitionManager;
+			_transitionManager.SetCameraTarget(newState);
 		}
 
-		private void _currentMover_StateChanged(object sender, CameraStateChangedArgs e)
+		private void _mover_StateChanged(object sender, CameraStateChangedArgs e)
 		{
 			State = e.NewState;
 

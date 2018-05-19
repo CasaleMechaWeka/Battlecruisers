@@ -26,8 +26,9 @@ namespace BattleCruisers.UI.Cameras
 				CameraState oldState = _state;
 				_state = value;
 
-                if (StateChanged != null)
+                if (oldState != _state && StateChanged != null)
                 {
+					Logging.Log("CameraTransitionManager.State: " + oldState + " > " + value);
 					StateChanged.Invoke(this, new CameraStateChangedArgs(oldState, _state));
                 }
 			}
@@ -48,54 +49,53 @@ namespace BattleCruisers.UI.Cameras
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
 
-			Reset();
+			_state = CameraState.PlayerInputControlled;
 		}
 
-        public bool SetCameraTarget(CameraState targetState)
+        public void SetCameraTarget(CameraState targetState)
         {
-			bool willMoveCamera =
-                State != CameraState.InTransition
-                && State != targetState;
-
-            if (willMoveCamera)
-            {
-				Assert.IsTrue(_stateToTarget.ContainsKey(targetState));
-				_target = _stateToTarget[targetState];
-
-                if (_target.IsInstantTransition(State))
-                {
-                    // Move camera instantly
-                    _camera.Position = _target.Position;
-                    _camera.OrthographicSize = _target.OrthographicSize;
-                }
-				
-                State = CameraState.InTransition;
-            }
-
-            return willMoveCamera;
+			Assert.IsTrue(_stateToTarget.ContainsKey(targetState));
+			_target = _stateToTarget[targetState];
         }
 
 		public void MoveCamera(float deltaTime, CameraState currentState)
 		{
-			// FELIX  Want to throw in these conditions?  Only want this called if we're in a transition :P
-			if (_target == null || State == _target.State)
-			{
-				// Camera is already in the right place.  No need to move the camera.
-				return;
+			Assert.IsNotNull(_target);
+
+            if (State == _target.State)
+            {
+                // Already in the right place, fake completed transition
+				State = CameraState.InTransition;
+				State = _target.State;
 			}
 
-            bool isInPosition = _positionAdjuster.AdjustPosition(_target.Position);
-			bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_target.OrthographicSize);
+			// Not in right place.  Need to move camera
+			State = CameraState.InTransition;
 
-            if (isInPosition && isRightOrthographicSize)
-            {
-				State = _target.State;
-            }
+			if (_target.IsInstantTransition(State))
+			{
+				// Move camera instantly
+				_camera.Position = _target.Position;
+				_camera.OrthographicSize = _target.OrthographicSize;
+			}
+			else
+			{
+				// Move camera smoothly over several frames
+				bool isInPosition = _positionAdjuster.AdjustPosition(_target.Position);
+				bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_target.OrthographicSize);
+
+				if (isInPosition && isRightOrthographicSize)
+				{
+					State = _target.State;
+				}
+			}
 		}
 
-		public void Reset()
+		public void Reset(CameraState currentState)
 		{
-			_state = CameraState.PlayerInputControlled;
+			Logging.Log("CameraTransitionManager.Reset(): " + currentState);
+
+			_state = currentState;
 		}
 	}
 }
