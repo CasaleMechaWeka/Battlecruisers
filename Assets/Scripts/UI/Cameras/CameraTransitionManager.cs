@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
+	// FELIX  Udpate tests :P
 	public class CameraTransitionManager : ICameraTransitionManager
     {
 		private readonly ICamera _camera;
@@ -15,10 +16,22 @@ namespace BattleCruisers.UI.Cameras
 		private readonly IDictionary<CameraState, ICameraTarget> _stateToTarget;
 		private ICameraTarget _target;
 
-        public CameraState CurrentState { private set; get; }
+		private CameraState _state;
+        public CameraState State 
+		{ 
+			get { return _state; }
+            private set
+			{
+				if (StateChanged != null)
+                {
+                    StateChanged.Invoke(this, new CameraStateChangedArgs(_state, value));
+                }
 
-		public event EventHandler<CameraTransitionArgs> CameraTransitionStarted;
-		public event EventHandler<CameraTransitionArgs> CameraTransitionCompleted;
+				_state = value;
+			}
+		}
+
+		public event EventHandler<CameraStateChangedArgs> StateChanged;
 
 		public CameraTransitionManager(
 			ICamera camera, 
@@ -33,44 +46,37 @@ namespace BattleCruisers.UI.Cameras
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
 
-			CurrentState = CameraState.Overview;
+			_state = CameraState.Overview;
 		}
 
         public bool SetCameraTarget(CameraState targetState)
         {
 			bool willMoveCamera =
-                CurrentState != CameraState.InTransition
-                && CurrentState != targetState;
+                State != CameraState.InTransition
+                && State != targetState;
 
             if (willMoveCamera)
             {
 				Assert.IsTrue(_stateToTarget.ContainsKey(targetState));
 				_target = _stateToTarget[targetState];
 
-                if (CameraTransitionStarted != null)
-                {
-                    CameraTransitionStarted.Invoke(this, new CameraTransitionArgs(CurrentState, targetState));
-                }
+				State = CameraState.InTransition;
 
-                if (_target.IsInstantTransition(CurrentState))
+                if (_target.IsInstantTransition(State))
                 {
 					// Move camera instantly
 					_camera.Position = _target.Position;
                     _camera.OrthographicSize = _target.OrthographicSize;
-                }
-                else
-                {
-					// Move camera via smooth transition, over multiple frames.
-                    CurrentState = CameraState.InTransition;
                 }
             }
 
             return willMoveCamera;
         }
 
-		public void MoveCamera()
+		public void MoveCamera(CameraState currentState)
 		{
-			if (_target == null || CurrentState == _target.State)
+			// FELIX  Want to throw in these conditions?  Only want this called if we're in a transition :P
+			if (_target == null || State == _target.State)
 			{
 				// Camera is already in the right place.  No need to move the camera.
 				return;
@@ -81,12 +87,7 @@ namespace BattleCruisers.UI.Cameras
 
             if (isInPosition && isRightOrthographicSize)
             {
-                if (CameraTransitionCompleted != null)
-                {
-                    CameraTransitionCompleted.Invoke(this, new CameraTransitionArgs(CurrentState, _target.State));
-                }
-
-				CurrentState = _target.State;
+				State = _target.State;
             }
 		}
 	}

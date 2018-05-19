@@ -115,7 +115,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Assert.IsTrue(_transitionManager.SetCameraTarget(_target2.State));
 
 			Assert.AreEqual(1, _cameraTransitionStartedCounter);
-			Assert.AreEqual(CameraState.InTransition, _transitionManager.CurrentState);
+			Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
         }
 		#endregion SetCameraTarget
 
@@ -148,7 +148,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_positionAdjuster.Received().AdjustPosition(_target2.Position);
 			_zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
 			Assert.AreEqual(_cameraTransitionCompletedCounter, 0);
-			Assert.AreNotEqual(_target2.State, _transitionManager.CurrentState);
+			Assert.AreNotEqual(_target2.State, _transitionManager.State);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _positionAdjuster.Received().AdjustPosition(_target2.Position);
             _zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
             Assert.AreEqual(_cameraTransitionCompletedCounter, 1);
-            Assert.AreEqual(_target2.State, _transitionManager.CurrentState);
+            Assert.AreEqual(_target2.State, _transitionManager.State);
         }
 		#endregion MoveCamera
 
