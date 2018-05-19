@@ -15,7 +15,6 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Manager
 {
-	// FELIX  update
     public class UIManagerTests
     {
         private IUIManager _uiManager;
@@ -76,10 +75,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
         #region Camera transitions
         [Test]
-        public void CameraTransitionStarted_OriginPlayerCruiser()
+        public void CameraStateChanged_OldState_PlayerCruiser()
         {
-            CameraTransitionArgs args = new CameraTransitionArgs(origin: CameraState.PlayerCruiser, destination: CameraState.AiCruiser);
-            //_cameraController.CameraTransitionStarted += Raise.EventWith(_cameraController, args);
+			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.PlayerCruiser, newState: CameraState.InTransition);
+			_cameraController.StateChanged += Raise.EventWith(_cameraController, args);
 
             _buildMenu.Received().HideBuildMenu();
             _playerCruiser.SlotWrapper.Received().HideAllSlots();
@@ -87,29 +86,22 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         }
 
         [Test]
-        public void CameraTransitionStarted_OriginAiCruiser()
+		public void CameraStateChanged_OldState_AiCruiser()
         {
-            CameraTransitionArgs args = new CameraTransitionArgs(origin: CameraState.AiCruiser, destination: CameraState.PlayerCruiser);
-            //_cameraController.CameraTransitionStarted += Raise.EventWith(_cameraController, args);
+			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.AiCruiser, newState: CameraState.InTransition);
+            _cameraController.StateChanged += Raise.EventWith(_cameraController, args);
 
             _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
             _detailsManager.Received().HideDetails();
         }
 
         [Test]
-        public void CameraTransitionCompleted_DestinationPlayerCruiser()
+        public void CameraTransitionCompleted_NewState_PlayerCruiser()
         {
-            CameraTransitionArgs args = new CameraTransitionArgs(origin: CameraState.AiCruiser, destination: CameraState.PlayerCruiser);
-            //_cameraController.CameraTransitionCompleted += Raise.EventWith(_cameraController, args);
+			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.InTransition, newState: CameraState.PlayerCruiser);
+            _cameraController.StateChanged += Raise.EventWith(_cameraController, args);
 
             _buildMenu.Received().ShowBuildMenu();
-        }
-
-        [Test]
-        public void CameraTransitionCompleted_DestinationAiCruiser()
-        {
-            CameraTransitionArgs args = new CameraTransitionArgs(origin: CameraState.PlayerCruiser, destination: CameraState.AiCruiser);
-            //_cameraController.CameraTransitionCompleted += Raise.EventWith(_cameraController, args);
         }
         #endregion Camera transitions
 
