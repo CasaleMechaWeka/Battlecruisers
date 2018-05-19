@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.Cameras
             return willMoveCamera;
         }
 
-		public void MoveCamera(CameraState currentState)
+		public void MoveCamera(float deltaTime, CameraState currentState)
 		{
 			// FELIX  Want to throw in these conditions?  Only want this called if we're in a transition :P
 			if (_target == null || State == _target.State)
