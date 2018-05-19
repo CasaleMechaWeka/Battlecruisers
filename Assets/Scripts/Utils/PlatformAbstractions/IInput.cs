@@ -1,0 +1,10 @@
+﻿using UnityEngine;
+
+namespace BattleCruisers.Utils.PlatformAbstractions
+{
+	public interface IInput
+	{
+		Vector3 MousePosition { get; }
+		Vector2 MouseScrollDelta { get; }
+	}
+}
