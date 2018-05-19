@@ -14,12 +14,15 @@ namespace BattleCruisers.UI.Cameras
         }
     }
 
-	public interface ICameraMover
-	{
-		CameraState State { get; }
+    public interface ICameraMover
+    {
+        CameraState State { get; }
 
-		event EventHandler<CameraStateChangedArgs> StateChanged;
+        event EventHandler<CameraStateChangedArgs> StateChanged;
 
+		/// <summary>
+		/// Should be called every frame to update the camera position/zoom.
+		/// </summary>
 		void MoveCamera(CameraState currentState);
 	}
 }
