@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Test?  Pretty please?
 	public class CameraTransitionManager : ICameraTransitionManager
     {
 		private readonly ICamera _camera;
@@ -71,7 +70,7 @@ namespace BattleCruisers.UI.Cameras
 
 		public void MoveCamera()
 		{
-			if (CurrentState == _target.State)
+			if (_target == null || CurrentState == _target.State)
 			{
 				// Camera is already in the right place.  No need to move the camera.
 				return;

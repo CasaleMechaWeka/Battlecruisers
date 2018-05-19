@@ -120,7 +120,52 @@ namespace BattleCruisers.Tests.UI.Cameras
 		#endregion SetCameraTarget
 
 		#region MoveCamera
-		// FELIX  NEXT :)
+        [Test]
+		public void MoveCamera_TargetNull_DoesNothing()
+		{
+			_transitionManager.MoveCamera();
+			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
+		}
+
+		[Test]
+        public void MoveCamera_InTargetState_DoesNothing()
+        {
+			_transitionManager.SetCameraTarget(_startingState.State);
+			_transitionManager.MoveCamera();
+            _positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
+        }
+
+		[Test]
+        public void MoveCamera_NotInTargetState_AdjustsCamera()
+        {
+			_transitionManager.SetCameraTarget(_target2.State);
+
+			_positionAdjuster.AdjustPosition(_target2.Position).Returns(false);
+			_zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(false);
+
+			_transitionManager.MoveCamera();
+
+			_positionAdjuster.Received().AdjustPosition(_target2.Position);
+			_zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
+			Assert.AreEqual(_cameraTransitionCompletedCounter, 0);
+			Assert.AreNotEqual(_target2.State, _transitionManager.CurrentState);
+        }
+
+        [Test]
+        public void MoveCamera_NotInTargetState_ReachedTargetState()
+        {
+			_transitionManager.SetCameraTarget(_target2.State);
+
+            _positionAdjuster.AdjustPosition(_target2.Position).Returns(true);
+            _zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(true);
+
+            _transitionManager.MoveCamera();
+
+            _positionAdjuster.Received().AdjustPosition(_target2.Position);
+            _zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
+            Assert.AreEqual(_cameraTransitionCompletedCounter, 1);
+            Assert.AreEqual(_target2.State, _transitionManager.CurrentState);
+        }
 		#endregion MoveCamera
 
 		private void MoveToTransitioningState()
