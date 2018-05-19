@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.UI.Cameras
     				new Vector3(-35, 0, -10),
     				target1OrthographicSize,
     				CameraState.PlayerCruiser,
-				    CameraState.Overview);
+				    CameraState.PlayerInputControlled);
 
 			float target2OrthographicSize = 35;
 			_target2
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.Cameras
     			= new CameraTarget(
     				default(Vector3),
     				default(float),
-				    CameraState.Overview);
+				    CameraState.PlayerInputControlled);
 
 			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>
 			{
@@ -71,6 +71,12 @@ namespace BattleCruisers.Tests.UI.Cameras
 
 			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
         }
+
+        [Test]
+        public void InitialState()
+		{
+			Assert.AreEqual(CameraState.PlayerInputControlled, _transitionManager.State);
+		}
 
 		#region SetCameraTarget
 		[Test]
@@ -169,6 +175,26 @@ namespace BattleCruisers.Tests.UI.Cameras
             Assert.AreEqual(_target2.State, _transitionManager.State);
         }
 		#endregion MoveCamera
+
+		[Test]
+        public void ChangingState_UpdatesProperty_BeforeEmittingEvent()
+		{
+			Assert.AreNotEqual(_target2.State, _transitionManager.State);
+
+			MoveCamera_NotInTargetState_ReachedTargetState();
+
+			_transitionManager.StateChanged += (sender, e) => 
+			{
+				Assert.AreEqual(_target2.State, _transitionManager.State);
+			};
+		}
+
+		[Test]
+        public void Reset()
+		{
+			_transitionManager.Reset();
+			Assert.AreEqual(CameraState.PlayerInputControlled, _transitionManager.State);
+		}
 
 		private void MoveToTransitioningState()
 		{

@@ -23,7 +23,6 @@ namespace BattleCruisers.UI.Cameras
             {
 				// Event handlers may access this property, so want to update the 
                 // value before emitting the changed event.
-                // FELIX  Add test!
 				CameraState oldState = _state;
 				_state = value;
 
