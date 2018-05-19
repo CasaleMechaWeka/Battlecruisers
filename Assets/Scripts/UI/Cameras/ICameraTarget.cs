@@ -7,6 +7,6 @@ namespace BattleCruisers.UI.Cameras
         Vector3 Position { get; }
         float OrthographicSize { get; }
         CameraState State { get; }
-        bool IsInstantTransition(CameraState nextState);
+        bool IsInstantTransition(CameraState fromState);
     }
 }
