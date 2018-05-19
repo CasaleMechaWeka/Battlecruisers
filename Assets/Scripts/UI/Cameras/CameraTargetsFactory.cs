@@ -32,28 +32,39 @@ namespace BattleCruisers.UI.Cameras
 			// Overview.  Camera starts in overiview (ish, y-position is only roughly right :P)
 			Vector3 overviewTargetPosition = _camera.Position;
 			overviewTargetPosition.y = _cameraCalculator.FindCameraYPosition(_camera.OrthographicSize);
-			IList<CameraState> overviewInstants = new List<CameraState>();
-			stateToTarget.Add(CameraState.Overview, new CameraTarget(overviewTargetPosition, _camera.OrthographicSize, CameraState.Overview, overviewInstants));
+			stateToTarget.Add(CameraState.Overview, new CameraTarget(overviewTargetPosition, _camera.OrthographicSize, CameraState.Overview));
 			
 			// Player cruiser view
 			float playerCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(_playerCruiser);
 			Vector3 playerCruiserTargetPosition = _cameraCalculator.FindCruiserCameraPosition(_playerCruiser, playerCruiserOrthographicSize, _camera.Position.z);
-			IList<CameraState> leftSideInstants = new List<CameraState>
+			CameraState[] leftSideInstants =
 			{
 				CameraState.RightMid,
 				CameraState.AiCruiser
 			};
-			stateToTarget.Add(CameraState.PlayerCruiser, new CameraTarget(playerCruiserTargetPosition, playerCruiserOrthographicSize, CameraState.PlayerCruiser, leftSideInstants));
+			ICameraTarget playerCruiserTarget
+    			= new CameraTarget(
+    				playerCruiserTargetPosition,
+    				playerCruiserOrthographicSize,
+    				CameraState.PlayerCruiser,
+    				leftSideInstants);
+			stateToTarget.Add(CameraState.PlayerCruiser, playerCruiserTarget);
 			
 			// Ai cruiser overview
 			float aiCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(_aiCruiser);
 			Vector3 aiCruiserTargetPosition = _cameraCalculator.FindCruiserCameraPosition(_aiCruiser, aiCruiserOrthographicSize, _camera.Position.z);
-			IList<CameraState> rightSideInstants = new List<CameraState>
+			CameraState[] rightSideInstants =
 			{
 				CameraState.LeftMid,
 				CameraState.PlayerCruiser
 			};
-			stateToTarget.Add(CameraState.AiCruiser, new CameraTarget(aiCruiserTargetPosition, aiCruiserOrthographicSize, CameraState.AiCruiser, rightSideInstants));
+			ICameraTarget aiCruiserTarget
+    			= new CameraTarget(
+    				aiCruiserTargetPosition,
+    				aiCruiserOrthographicSize,
+    				CameraState.AiCruiser,
+				    rightSideInstants);
+			stateToTarget.Add(CameraState.AiCruiser, aiCruiserTarget);
 			
 			float midViewsPositionY = _cameraCalculator.FindCameraYPosition(MID_VIEWS_ORTHOGRAPHIC_SIZE);
 			

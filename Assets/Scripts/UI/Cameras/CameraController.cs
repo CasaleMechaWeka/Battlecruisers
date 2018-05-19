@@ -74,13 +74,12 @@ namespace BattleCruisers.UI.Cameras
 			// Camera starts in overiview (ish, y-position is only roughly right :P)
 			Vector3 overviewTargetPosition = transform.position;
 			overviewTargetPosition.y = _cameraCalculator.FindCameraYPosition(_camera.orthographicSize);
-			IList<CameraState> overviewInstants = new List<CameraState>();
-			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview, overviewInstants);
+			_overviewTarget = new CameraTarget(overviewTargetPosition, _camera.orthographicSize, CameraState.Overview);
 
 			// Player cruiser view
 			float playerCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(playerCruiser);
             Vector3 playerCruiserTargetPosition = _cameraCalculator.FindCruiserCameraPosition(playerCruiser, playerCruiserOrthographicSize, transform.position.z);
-			IList<CameraState> leftSideInstants = new List<CameraState> 
+			CameraState[] leftSideInstants = 
 			{
 				CameraState.RightMid,
 				CameraState.AiCruiser
@@ -90,7 +89,7 @@ namespace BattleCruisers.UI.Cameras
 			// Ai cruiser overview
 			float aiCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(aiCruiser);
             Vector3 aiCruiserTargetPosition = _cameraCalculator.FindCruiserCameraPosition(aiCruiser, aiCruiserOrthographicSize, transform.position.z);
-			IList<CameraState> rightSideInstants = new List<CameraState> 
+			CameraState[] rightSideInstants =
 			{
 				CameraState.LeftMid,
 				CameraState.PlayerCruiser
@@ -112,8 +111,7 @@ namespace BattleCruisers.UI.Cameras
                 = new CameraTarget(
                     position: default(Vector3),
 	                orthographicSize: -1,
-	                state: CameraState.PlayerInputControlled,
-	                instantStates: new List<CameraState>());
+	                state: CameraState.PlayerInputControlled);
 
 			FocusOnPlayerCruiser();
 
