@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Test :)
 	public class UserInputCameraMover : ICameraMover
 	{
 		private readonly ICamera _camera;
@@ -30,33 +29,21 @@ namespace BattleCruisers.UI.Cameras
 
 		public void MoveCamera(float deltaTime, CameraState currentState)
 		{
-			bool inZoom = HandleZoom(deltaTime);
+			// Want to handle scrolling first, because zoom can change the camera
+            // orthographic size, which affects scrolling.
 			bool inScroll = HandleScroll(deltaTime);
+            bool inZoom = HandleZoom(deltaTime);
 
-            if ((inZoom || inScroll)
+			if ((inScroll || inZoom)
 			    && currentState != CameraState.PlayerInputControlled)
             {
 				if (StateChanged != null)
 				{
-					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.InTransition));
+					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.PlayerInputControlled));
 				}
             }
 		}
-
-		/// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
-		private bool HandleZoom(float deltaTime)
-        {
-            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y, deltaTime);
-
-            if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
-            {
-                _camera.OrthographicSize = desiredOrthographicSize;
-                return true;
-            }
-
-            return false;
-        }
-
+  
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
 		private bool HandleScroll(float deltaTime)
         {
@@ -65,6 +52,20 @@ namespace BattleCruisers.UI.Cameras
 			if (desiredPosition != _camera.Position)
             {
                 _camera.Position = desiredPosition;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
+        private bool HandleZoom(float deltaTime)
+        {
+            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y, deltaTime);
+
+            if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
+            {
+                _camera.OrthographicSize = desiredOrthographicSize;
                 return true;
             }
 
