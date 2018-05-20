@@ -6,16 +6,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class UserInputCameraMover : ICameraMover
+	public class UserInputCameraMover : CameraMover
 	{
 		private readonly ICamera _camera;
 		private readonly IInput _input;
 		private readonly IScrollHandler _scrollHandler;
         private readonly IMouseZoomHandler _zoomHandler;
-
-		public CameraState State { get { return CameraState.UserInputControlled; } }
-
-		public event EventHandler<CameraStateChangedArgs> StateChanged;
 
 		public UserInputCameraMover(ICamera camera, IInput input, IScrollHandler scrollHandler, IMouseZoomHandler zoomHandler)
 		{
@@ -28,7 +24,7 @@ namespace BattleCruisers.UI.Cameras
 		}
 
 		// FELIX  Can remove current state, becaseu Reset() should give us the previous state
-		public void MoveCamera(float deltaTime, CameraState currentState)
+		public override void MoveCamera(float deltaTime, CameraState currentState)
 		{
 			// Want to handle scrolling first, because zoom can change the camera
             // orthographic size, which affects scrolling.
@@ -36,12 +32,9 @@ namespace BattleCruisers.UI.Cameras
             bool inZoom = HandleZoom(deltaTime);
 
 			if ((inScroll || inZoom)
-			    && currentState != CameraState.UserInputControlled)
+			    && State != CameraState.UserInputControlled)
             {
-				if (StateChanged != null)
-				{
-					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.UserInputControlled));
-				}
+				State = CameraState.UserInputControlled;
             }
 		}
   
@@ -72,7 +65,5 @@ namespace BattleCruisers.UI.Cameras
 
             return false;
         }
-
-		public void Reset(CameraState currentState) { }
 	}
 }

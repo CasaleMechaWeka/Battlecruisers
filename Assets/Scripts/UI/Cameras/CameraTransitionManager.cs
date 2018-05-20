@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -7,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class CameraTransitionManager : ICameraTransitionManager
+	public class CameraTransitionManager : CameraMover, ICameraTransitionManager
     {
 		private readonly ICamera _camera;
 		private readonly ISmoothPositionAdjuster _positionAdjuster;
@@ -24,27 +23,6 @@ namespace BattleCruisers.UI.Cameras
 			}
 		}
         
-		private CameraState _state;
-        public CameraState State 
-		{ 
-			get { return _state; }
-            private set
-            {
-				// Event handlers may access this property, so want to update the 
-                // value before emitting the changed event.
-				CameraState oldState = _state;
-				_state = value;
-
-                if (oldState != _state && StateChanged != null)
-                {
-					Logging.Log(Tags.CAMERA, "CameraTransitionManager.State: " + oldState + " > " + value);
-					StateChanged.Invoke(this, new CameraStateChangedArgs(oldState, _state));
-                }
-			}
-		}
-
-		public event EventHandler<CameraStateChangedArgs> StateChanged;
-
 		public CameraTransitionManager(
 			ICamera camera, 
 			ICameraTargetsFactory cameraTargetsFactory,
@@ -57,11 +35,9 @@ namespace BattleCruisers.UI.Cameras
 			_stateToTarget = cameraTargetsFactory.CreateCameraTargets();
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
-
-			_state = CameraState.UserInputControlled;
 		}
 
-		public void MoveCamera(float deltaTime, CameraState currentState)
+		public override void MoveCamera(float deltaTime, CameraState currentState)
 		{
 			Assert.IsNotNull(_target);
 
@@ -93,12 +69,6 @@ namespace BattleCruisers.UI.Cameras
 			{
 				State = _target.State;
 			}
-		}
-
-		public void Reset(CameraState currentState)
-		{
-			Logging.Log(Tags.CAMERA, "CameraTransitionManager.Reset(): " + currentState);
-			_state = currentState;
 		}
 	}
 }

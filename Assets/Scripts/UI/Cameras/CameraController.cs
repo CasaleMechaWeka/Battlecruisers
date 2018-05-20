@@ -12,6 +12,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Cameras
 {
 	// FELIX  Make this class testable :)
+    // FELIX  Extend CameraMover
 	public class CameraController : MonoBehaviour, ICameraController
 	{
 		// FELIX  Remove unused fields :)

@@ -75,6 +75,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: true);
             Zoom(shouldZoom: true);
 
+			_mover.Reset(CameraState.Overview);
 			_mover.MoveCamera(_deltaTime, CameraState.Overview);
 
             ReceivedScroll();

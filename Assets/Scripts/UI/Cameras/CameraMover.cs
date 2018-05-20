@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Cameras
         public CameraState State 
         { 
             get { return _state; }
-            private set
+			protected set
             {
                 // Event handlers may access this property, so want to update the 
                 // value before emitting the changed event.
