@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Cameras
 		private readonly IDictionary<CameraState, ICameraTarget> _stateToTarget;
 
 		private ICameraTarget _target;
-		public CameraState TargetState 
+		public CameraState CameraTarget 
 		{ 
 			set
 			{
@@ -65,32 +65,33 @@ namespace BattleCruisers.UI.Cameras
 		{
 			Assert.IsNotNull(_target);
 
-            if (State == _target.State)
+			CameraState previousState = State;
+			State = CameraState.InTransition;
+
+			if (previousState == _target.State)
             {
                 // Already in the right place, fake completed transition
-				State = CameraState.InTransition;
 				State = _target.State;
+				return;
 			}
 
 			// Not in right place.  Need to move camera
-			State = CameraState.InTransition;
-
-			if (_target.IsInstantTransition(State))
-			{
-				// Move camera instantly
-				_camera.Position = _target.Position;
-				_camera.OrthographicSize = _target.OrthographicSize;
+			if (_target.IsInstantTransition(previousState))
+            {
+                // Move camera instantly
+                _camera.Position = _target.Position;
+                _camera.OrthographicSize = _target.OrthographicSize;
+				State = _target.State;
+				return;
 			}
-			else
-			{
-				// Move camera smoothly over several frames
-				bool isInPosition = _positionAdjuster.AdjustPosition(_target.Position);
-				bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_target.OrthographicSize);
 
-				if (isInPosition && isRightOrthographicSize)
-				{
-					State = _target.State;
-				}
+			// Move camera smoothly over several frames
+			bool isInPosition = _positionAdjuster.AdjustPosition(_target.Position);
+			bool isRightOrthographicSize = _zoomAdjuster.AdjustZoom(_target.OrthographicSize);
+
+			if (isInPosition && isRightOrthographicSize)
+			{
+				State = _target.State;
 			}
 		}
 

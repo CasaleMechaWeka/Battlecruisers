@@ -163,7 +163,7 @@ namespace BattleCruisers.UI.Cameras
 			if (newState != State)
 			{
                 CurrentMover = _transitionManager;
-                _transitionManager.TargetState = newState;
+                _transitionManager.CameraTarget = newState;
 			}
 		}
 
