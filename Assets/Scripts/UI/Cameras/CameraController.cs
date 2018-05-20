@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Make this class testable :)
-	// FELIX  Extend CameraMover
+	// FELIX  Test :P
 	public class CameraController : CameraMover, ICameraController
 	{
         private ICameraTransitionManager _transitionManager;
