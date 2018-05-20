@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: true);
             Zoom(shouldZoom: true);
 
-			_mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
+			_mover.MoveCamera(_deltaTime);
 
 			ReceivedScroll();
             ReceivedZoom();
@@ -76,7 +76,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             Zoom(shouldZoom: true);
 
 			_mover.Reset(CameraState.Overview);
-			_mover.MoveCamera(_deltaTime, CameraState.Overview);
+			_mover.MoveCamera(_deltaTime);
 
             ReceivedScroll();
             ReceivedZoom();
@@ -93,7 +93,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: false);
             Zoom(shouldZoom: false);
 
-            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
+            _mover.MoveCamera(_deltaTime);
 
             ReceivedScroll();
             ReceivedZoom();
@@ -109,7 +109,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: false);
             Zoom(shouldZoom: true);
 
-            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
+            _mover.MoveCamera(_deltaTime);
 
             ReceivedScroll();
             ReceivedZoom();
@@ -125,7 +125,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: true);
             Zoom(shouldZoom: false);
 
-            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
+            _mover.MoveCamera(_deltaTime);
 
             ReceivedScroll();
             ReceivedZoom();

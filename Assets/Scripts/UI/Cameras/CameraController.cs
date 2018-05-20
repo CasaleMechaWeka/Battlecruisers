@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.Cameras
 
 		void Update()
 		{
-			CurrentMover.MoveCamera(Time.deltaTime, State);
+			CurrentMover.MoveCamera(Time.deltaTime);
 		}
 
         public void FocusOnPlayerCruiser()

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Cameras
 		/// <summary>
 		/// Should be called every frame to update the camera position/zoom.
 		/// </summary>
-		void MoveCamera(float deltaTime, CameraState currentState);
+		void MoveCamera(float deltaTime);
 		void Reset(CameraState currentState);
 	}
 }

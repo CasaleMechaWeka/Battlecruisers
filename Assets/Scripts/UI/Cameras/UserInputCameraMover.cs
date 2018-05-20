@@ -23,8 +23,7 @@ namespace BattleCruisers.UI.Cameras
 			_zoomHandler = zoomHandler;
 		}
 
-		// FELIX  Can remove current state, becaseu Reset() should give us the previous state
-		public override void MoveCamera(float deltaTime, CameraState currentState)
+		public override void MoveCamera(float deltaTime)
 		{
 			// Want to handle scrolling first, because zoom can change the camera
             // orthographic size, which affects scrolling.

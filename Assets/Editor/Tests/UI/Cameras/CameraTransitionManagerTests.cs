@@ -102,7 +102,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         [Test]
 		public void MoveCamera_TargetNull_Throws()
 		{
-			Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.MoveCamera(default(float), default(CameraState)));
+			Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.MoveCamera(default(float)));
 		}
 
 		[Test]
@@ -110,7 +110,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 		{
 			_transitionManager.CameraTarget = _startingTarget.State;
 
-			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float));
 
 			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
 			AssertFullTransition(_startingTarget.State);
@@ -121,7 +121,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         {
 			_transitionManager.CameraTarget = _instaTransitionTarget.State;
 
-			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float));
 
 			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
 			Assert.AreEqual(_instaTransitionTarget.Position, _camera.Position);
@@ -137,7 +137,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(false);
 			_zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(false);
 
-			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float));
 
 			_positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
 			_zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);
@@ -153,7 +153,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(true);
             _zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(true);
 
-			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float));
 
             _positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
             _zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);
@@ -170,7 +170,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(false);
             _zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(false);
 
-            _transitionManager.MoveCamera(default(float), default(CameraState));
+            _transitionManager.MoveCamera(default(float));
 
             _positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
             _zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);

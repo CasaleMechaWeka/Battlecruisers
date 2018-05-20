@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Cameras
             _state = CameraState.UserInputControlled;
         }
 
-		public abstract void MoveCamera(float deltaTime, CameraState currentState);
+		public abstract void MoveCamera(float deltaTime);
 
         public void Reset(CameraState currentState)
         {

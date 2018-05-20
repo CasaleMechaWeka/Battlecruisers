@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras
 			_zoomAdjuster = zoomAdjuster;
 		}
 
-		public override void MoveCamera(float deltaTime, CameraState currentState)
+		public override void MoveCamera(float deltaTime)
 		{
 			Assert.IsNotNull(_target);
 
