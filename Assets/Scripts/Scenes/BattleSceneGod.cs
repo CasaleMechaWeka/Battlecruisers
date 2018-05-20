@@ -180,6 +180,7 @@ namespace BattleCruisers.Scenes
             IMaterialFetcher materialFetcher = new MaterialFetcher();
             Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
             cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
+			cameraInitialiser.CameraController.FocusOnPlayerCruiser();
 
 
 			helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);

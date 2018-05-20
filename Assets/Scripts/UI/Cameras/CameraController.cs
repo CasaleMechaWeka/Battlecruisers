@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Test :P
 	public class CameraController : CameraMover, ICameraController
 	{
         private ICameraTransitionManager _transitionManager;
@@ -44,15 +42,13 @@ namespace BattleCruisers.UI.Cameras
             _shouldNavigationBeEnabledFilter = shouldNavigationBeEnabledFilter;
 
 			CurrentMover = _userInputMover;
-
-			FocusOnPlayerCruiser();
 		}
 
 		public override void MoveCamera(float deltaTime)
 		{
 			if (_shouldNavigationBeEnabledFilter.IsMatch)
 			{
-                CurrentMover.MoveCamera(Time.deltaTime);
+				CurrentMover.MoveCamera(deltaTime);
 			}
 		}
 
