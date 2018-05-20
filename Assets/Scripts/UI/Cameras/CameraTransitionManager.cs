@@ -13,8 +13,17 @@ namespace BattleCruisers.UI.Cameras
 		private readonly ISmoothPositionAdjuster _positionAdjuster;
 		private readonly ISmoothZoomAdjuster _zoomAdjuster;
 		private readonly IDictionary<CameraState, ICameraTarget> _stateToTarget;
-		private ICameraTarget _target;
 
+		private ICameraTarget _target;
+		public CameraState TargetState 
+		{ 
+			set
+			{
+				Assert.IsTrue(_stateToTarget.ContainsKey(value));
+                _target = _stateToTarget[value];
+			}
+		}
+        
 		private CameraState _state;
         public CameraState State 
 		{ 
@@ -51,12 +60,6 @@ namespace BattleCruisers.UI.Cameras
 
 			_state = CameraState.PlayerInputControlled;
 		}
-
-        public void SetCameraTarget(CameraState targetState)
-        {
-			Assert.IsTrue(_stateToTarget.ContainsKey(targetState));
-			_target = _stateToTarget[targetState];
-        }
 
 		public void MoveCamera(float deltaTime, CameraState currentState)
 		{

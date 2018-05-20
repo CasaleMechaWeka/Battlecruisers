@@ -160,8 +160,11 @@ namespace BattleCruisers.UI.Cameras
 
 		private void HandleNavigationButtonPress(CameraState newState)
 		{
-            CurrentMover = _transitionManager;
-			_transitionManager.SetCameraTarget(newState);
+			if (newState != State)
+			{
+                CurrentMover = _transitionManager;
+                _transitionManager.TargetState = newState;
+			}
 		}
 
 		private void _currentMover_StateChanged(object sender, CameraStateChangedArgs e)
