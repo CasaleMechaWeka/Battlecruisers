@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MIN_SMOOTH_TIME = 0;
 
-        // FELIX  Use ICamera
 		public SmoothZoomAdjuster(ICamera camera, float smoothTime)
 		{
 			Assert.IsNotNull(camera);
