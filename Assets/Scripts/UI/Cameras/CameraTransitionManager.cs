@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Cameras
 
                 if (oldState != _state && StateChanged != null)
                 {
-					Logging.Log("CameraTransitionManager.State: " + oldState + " > " + value);
+					Logging.Log(Tags.CAMERA, "CameraTransitionManager.State: " + oldState + " > " + value);
 					StateChanged.Invoke(this, new CameraStateChangedArgs(oldState, _state));
                 }
 			}
@@ -93,8 +93,7 @@ namespace BattleCruisers.UI.Cameras
 
 		public void Reset(CameraState currentState)
 		{
-			Logging.Log("CameraTransitionManager.Reset(): " + currentState);
-
+			Logging.Log(Tags.CAMERA, "CameraTransitionManager.Reset(): " + currentState);
 			_state = currentState;
 		}
 	}

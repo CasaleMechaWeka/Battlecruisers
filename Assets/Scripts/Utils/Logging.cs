@@ -50,7 +50,7 @@ namespace BattleCruisers.Utils
 		public const string DRONE_CONSUMER_PROVIDER = "DroneConsumerProvider";
 
         // Other
-        public const string CAMERA_CONTROLLER = "CameraController";
+        public const string CAMERA = "Camera";
         public const string CRUISER = "Cruiser";
 		public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
@@ -121,9 +121,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Other
-            // FELIX
-			tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, true);
-            //tagsToActiveness.Add(Tags.CAMERA_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
