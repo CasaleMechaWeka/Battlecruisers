@@ -14,8 +14,9 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 		private readonly IScreen _screen;
 		private readonly IPositionClamper _clamper;
 
-		// FELIX  Remove, if 0 works while fullscreen :)
-		private const float SCROLL_BOUNDARY_IN_PIXELS = 0;
+        // Cannot have a scroll boundary of 0, otherwise only left and upwards
+        // scroll work on Mac.  Right and downwards do not.
+		private const float SCROLL_BOUNDARY_IN_PIXELS = 2;
 
 		public ScrollHandler(ICameraCalculator calculator, IScreen screen, IPositionClamper clamper)
 		{
