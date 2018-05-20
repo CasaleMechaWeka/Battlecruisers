@@ -1,206 +1,218 @@
-﻿//using System.Collections.Generic;
-//using BattleCruisers.UI.Cameras;
-//using BattleCruisers.UI.Cameras.Adjusters;
-//using BattleCruisers.Utils.PlatformAbstractions;
-//using NSubstitute;
-//using NUnit.Framework;
-//using UnityEngine;
-//using UnityAsserts = UnityEngine.Assertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.Utils.PlatformAbstractions;
+using NSubstitute;
+using NUnit.Framework;
+using UnityEngine;
+using UnityAsserts = UnityEngine.Assertions;
 
-// // FELIX  Fix :D
-//namespace BattleCruisers.Tests.UI.Cameras
-//{
-//	public class CameraTransitionManagerTests
-//    {
-//		private ICameraTransitionManager _transitionManager;
+namespace BattleCruisers.Tests.UI.Cameras
+{
+	public class CameraTransitionManagerTests
+    {
+		private ICameraTransitionManager _transitionManager;
 
-//		private ICamera _camera;
-//        private ISmoothPositionAdjuster _positionAdjuster;
-//        private ISmoothZoomAdjuster _zoomAdjuster;
-//		private ICameraTarget _target1, _target2, _startingState, _invalidTarget;
-//		private CameraStateChangedArgs _lastArgs;
+		private ICamera _camera;
+        private ISmoothPositionAdjuster _positionAdjuster;
+        private ISmoothZoomAdjuster _zoomAdjuster;
+		private ICameraTarget _instaTransitionTarget, _smoothTransitionTarget, _startingTarget, _invalidTarget;
+        private IList<CameraStateChangedArgs> _stateChangedArgs;
 
-//        [SetUp]
-//        public void SetuUp()
-//        {
-//            UnityAsserts.Assert.raiseExceptions = true;
+		private CameraStateChangedArgs LastArgs
+		{
+			get { return _stateChangedArgs.LastOrDefault(); }
+		}
 
-//			_camera = Substitute.For<ICamera>();
-//			_positionAdjuster = Substitute.For<ISmoothPositionAdjuster>();
-//			_zoomAdjuster = Substitute.For<ISmoothZoomAdjuster>();
+        [SetUp]
+        public void SetuUp()
+        {
+            UnityAsserts.Assert.raiseExceptions = true;
 
-//			float target1OrthographicSize = 5;
-//			_target1
-//    			= new CameraTarget(
-//    				new Vector3(-35, 0, -10),
-//    				target1OrthographicSize,
-//    				CameraState.PlayerCruiser,
-//				    CameraState.PlayerInputControlled);
+			_camera = Substitute.For<ICamera>();
+			_positionAdjuster = Substitute.For<ISmoothPositionAdjuster>();
+			_zoomAdjuster = Substitute.For<ISmoothZoomAdjuster>();
 
-//			float target2OrthographicSize = 35;
-//			_target2
-//    			= new CameraTarget(
-//    				new Vector3(35, 15, -10),
-//    				target2OrthographicSize,
-//				    CameraState.AiCruiser);
+			float target1OrthographicSize = 5;
+			_instaTransitionTarget
+    			= new CameraTarget(
+    				new Vector3(-35, 0, -10),
+    				target1OrthographicSize,
+    				CameraState.PlayerCruiser,
+				    CameraState.PlayerInputControlled);
 
-//			_startingState
-//    			= new CameraTarget(
-//    				default(Vector3),
-//    				default(float),
-//				    CameraState.PlayerInputControlled);
+			float target2OrthographicSize = 35;
+			_smoothTransitionTarget
+    			= new CameraTarget(
+    				new Vector3(35, 15, -10),
+    				target2OrthographicSize,
+				    CameraState.AiCruiser);
 
-//			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>
-//			{
-//				{ _target1.State, _target1 },
-//				{ _target2.State, _target2 },
-//				{ _startingState.State, _startingState }
-//			};
+			_startingTarget
+    			= new CameraTarget(
+    				default(Vector3),
+    				default(float),
+				    CameraState.PlayerInputControlled);
 
-//			ICameraTargetsFactory cameraTargetsFactory = Substitute.For<ICameraTargetsFactory>();
-//			cameraTargetsFactory.CreateCameraTargets().Returns(stateToTarget);
+			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>
+			{
+				{ _instaTransitionTarget.State, _instaTransitionTarget },
+				{ _smoothTransitionTarget.State, _smoothTransitionTarget },
+				{ _startingTarget.State, _startingTarget }
+			};
 
-//			_transitionManager
-//    			= new CameraTransitionManager(
-//        			_camera,
-//        			cameraTargetsFactory,
-//        			_positionAdjuster,
-//    				_zoomAdjuster);
+			ICameraTargetsFactory cameraTargetsFactory = Substitute.For<ICameraTargetsFactory>();
+			cameraTargetsFactory.CreateCameraTargets().Returns(stateToTarget);
 
-//			_lastArgs = null;
-//			_transitionManager.StateChanged += (sender, e) => _lastArgs = e;
+			_transitionManager
+    			= new CameraTransitionManager(
+        			_camera,
+        			cameraTargetsFactory,
+        			_positionAdjuster,
+    				_zoomAdjuster);
 
-//			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
-//        }
+			_stateChangedArgs = new List<CameraStateChangedArgs>();
+			_transitionManager.StateChanged += (sender, e) => _stateChangedArgs.Add(e);
 
-//        [Test]
-//        public void InitialState()
-//		{
-//			Assert.AreEqual(CameraState.PlayerInputControlled, _transitionManager.State);
-//		}
+			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
+        }
 
-//		#region SetCameraTarget
-//		[Test]
-//        public void SetCameraTarget_DuringTransition_DoesNothing()
-//        {
-//			MoveToTransitioningState();
+        [Test]
+        public void InitialState()
+		{
+			Assert.AreEqual(CameraState.PlayerInputControlled, _transitionManager.State);
+		}
 
-//			Assert.IsFalse(_transitionManager.SetCameraTarget(_target1.State));
-//			Assert.IsNull(_lastArgs);
-//        }
+		#region CameraTarget
+		[Test]
+        public void SetCameraTarget()
+        {
+			_transitionManager.CameraTarget = _instaTransitionTarget.State;
+        }
 
-//        [Test]
-//		public void SetCameraTarget_SameAsCurrentState_DoesNothing()
-//        {
-//			Assert.IsFalse(_transitionManager.SetCameraTarget(_startingState.State));
-//			Assert.IsNull(_lastArgs);
-//        }
+        [Test]
+        public void SetCameraTarget_InvalidTarget_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.CameraTarget = _invalidTarget.State);
+        }
+		#endregion CameraTarget
 
-//        [Test]
-//        public void SetCameraTarget_InvalidTarget_Throws()
-//        {
-//			Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.SetCameraTarget(_invalidTarget.State));
-//        }
+		#region MoveCamera
+        [Test]
+		public void MoveCamera_TargetNull_Throws()
+		{
+			Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.MoveCamera(default(float), default(CameraState)));
+		}
 
-//        [Test]
-//        public void SetCameraTarget_InstaMove()
-//        {
-//			Assert.IsTrue(_transitionManager.SetCameraTarget(_target1.State));
+		[Test]
+        public void MoveCamera_InTargetState_FakeCompletion()
+		{
+			_transitionManager.CameraTarget = _startingTarget.State;
 
-//			Assert.AreEqual(_target1.Position, _camera.Position);
-//			Assert.AreEqual(_target1.OrthographicSize, _camera.OrthographicSize);
-//			Assert.IsNotNull(_lastArgs);
-//			Assert.AreEqual(CameraState.InTransition, _lastArgs.NewState);
-//			Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
-//        }
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
-//        [Test]
-//        public void SetCameraTarget_SmoothMove()
-//        {
-//			Assert.IsTrue(_transitionManager.SetCameraTarget(_target2.State));
+			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
+			AssertFullTransition(_startingTarget.State);
+		}
 
-//			Assert.IsNotNull(_lastArgs);
-//            Assert.AreEqual(CameraState.InTransition, _lastArgs.NewState);
-//            Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
-//        }
-//		#endregion SetCameraTarget
+		[Test]
+        public void MoveCamera_NotInTargetState_InstaTransition()
+        {
+			_transitionManager.CameraTarget = _instaTransitionTarget.State;
 
-//		#region MoveCamera
-//        [Test]
-//		public void MoveCamera_TargetNull_DoesNothing()
-//		{
-//			_transitionManager.MoveCamera(default(float), default(CameraState));
-//			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
-//		}
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
-//		[Test]
-//        public void MoveCamera_InTargetState_DoesNothing()
-//        {
-//			_transitionManager.SetCameraTarget(_startingState.State);
-//			_transitionManager.MoveCamera(default(float), default(CameraState));
-//            _positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
-//        }
+			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
+			Assert.AreEqual(_instaTransitionTarget.Position, _camera.Position);
+			Assert.AreEqual(_instaTransitionTarget.OrthographicSize, _camera.OrthographicSize);
+			AssertFullTransition(_instaTransitionTarget.State);
+        }
 
-//		[Test]
-//        public void MoveCamera_NotInTargetState_AdjustsCamera()
-//        {
-//			_transitionManager.SetCameraTarget(_target2.State);
-//			_lastArgs = null;
+		[Test]
+        public void MoveCamera_NotInTargetState_AdjustsCamera()
+        {
+			_transitionManager.CameraTarget = _smoothTransitionTarget.State;
 
-//			_positionAdjuster.AdjustPosition(_target2.Position).Returns(false);
-//			_zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(false);
+			_positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(false);
+			_zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(false);
 
-//			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
-//			_positionAdjuster.Received().AdjustPosition(_target2.Position);
-//			_zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
-//			Assert.IsNull(_lastArgs);
-//            Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
-//        }
+			_positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
+			_zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);
+			Assert.AreEqual(CameraState.InTransition, LastArgs.NewState);
+            Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
+        }
 
-//        [Test]
-//        public void MoveCamera_NotInTargetState_ReachedTargetState()
-//        {
-//			_transitionManager.SetCameraTarget(_target2.State);
-//			_lastArgs = null;
+        [Test]
+        public void MoveCamera_NotInTargetState_AdjustsCamera_ReachedTargetState()
+        {
+			_transitionManager.CameraTarget = _smoothTransitionTarget.State;
 
-//            _positionAdjuster.AdjustPosition(_target2.Position).Returns(true);
-//            _zoomAdjuster.AdjustZoom(_target2.OrthographicSize).Returns(true);
+            _positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(true);
+            _zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(true);
 
-//			_transitionManager.MoveCamera(default(float), default(CameraState));
+			_transitionManager.MoveCamera(default(float), default(CameraState));
 
-//            _positionAdjuster.Received().AdjustPosition(_target2.Position);
-//            _zoomAdjuster.Received().AdjustZoom(_target2.OrthographicSize);
-//			Assert.IsNotNull(_lastArgs);
-//			Assert.AreEqual(_target2.State, _lastArgs.NewState);
-//            Assert.AreEqual(_target2.State, _transitionManager.State);
-//        }
-//		#endregion MoveCamera
+            _positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
+            _zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);
+			AssertFullTransition(_smoothTransitionTarget.State);
+        }
 
-//		[Test]
-//        public void ChangingState_UpdatesProperty_BeforeEmittingEvent()
-//		{
-//			Assert.AreNotEqual(_target2.State, _transitionManager.State);
+		[Test]
+        public void MoveCamera_DuringTransition_DoesNotReachTarget_DoesNotEmitEvent()
+        {
+			MoveCamera_NotInTargetState_AdjustsCamera();
 
-//			MoveCamera_NotInTargetState_ReachedTargetState();
+			_stateChangedArgs.Clear();
 
-//			_transitionManager.StateChanged += (sender, e) => 
-//			{
-//				Assert.AreEqual(_target2.State, _transitionManager.State);
-//			};
-//		}
+            _positionAdjuster.AdjustPosition(_smoothTransitionTarget.Position).Returns(false);
+            _zoomAdjuster.AdjustZoom(_smoothTransitionTarget.OrthographicSize).Returns(false);
 
-//		[Test]
-//        public void Reset()
-//		{
-//			_transitionManager.Reset(CameraState.RightMid);
-//			Assert.AreEqual(CameraState.RightMid, _transitionManager.State);
-//		}
+            _transitionManager.MoveCamera(default(float), default(CameraState));
 
-//		private void MoveToTransitioningState()
-//		{
-//			SetCameraTarget_SmoothMove();
-//			_lastArgs = null;
-//		}
-//    }
-//}
+            _positionAdjuster.Received().AdjustPosition(_smoothTransitionTarget.Position);
+            _zoomAdjuster.Received().AdjustZoom(_smoothTransitionTarget.OrthographicSize);
+			Assert.IsNull(LastArgs);
+        }
+		#endregion MoveCamera
+
+		[Test]
+        public void ChangingState_UpdatesProperty_BeforeEmittingEvent()
+		{
+			Assert.AreNotEqual(_smoothTransitionTarget.State, _transitionManager.State);
+
+            _transitionManager.StateChanged += (sender, e) => 
+            {
+				if (e.NewState == CameraState.InTransition)
+				{
+					// First event
+					Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
+                }
+                else
+                {
+					// Second event
+					Assert.AreEqual(_smoothTransitionTarget.State, _transitionManager.State);
+				}
+            };
+
+			MoveCamera_NotInTargetState_AdjustsCamera_ReachedTargetState();
+		}
+
+		[Test]
+        public void Reset()
+		{
+			_transitionManager.Reset(CameraState.RightMid);
+			Assert.AreEqual(CameraState.RightMid, _transitionManager.State);
+		}
+
+        private void AssertFullTransition(CameraState targetState)
+        {
+            Assert.AreEqual(2, _stateChangedArgs.Count);
+            Assert.AreEqual(CameraState.InTransition, _stateChangedArgs[0].NewState);
+            Assert.AreEqual(targetState, _stateChangedArgs[1].NewState);
+			Assert.AreEqual(targetState, _transitionManager.State);
+        }
+    }
+}
