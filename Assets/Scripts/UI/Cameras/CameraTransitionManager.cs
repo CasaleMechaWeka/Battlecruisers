@@ -6,6 +6,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
+	/// <summary>
+    /// Handle camera transitions triggered by the navigation buttons.
+    /// </summary>
 	public class CameraTransitionManager : CameraMover, ICameraTransitionManager
     {
 		private readonly ICamera _camera;

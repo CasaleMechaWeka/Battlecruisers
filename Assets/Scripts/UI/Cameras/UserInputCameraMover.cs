@@ -1,11 +1,15 @@
-﻿using System;
-using BattleCruisers.UI.Cameras.InputHandlers;
+﻿using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
+	/// <summary>
+	/// Handles camera movement in response to user input:
+	/// + Scrolling => Via mouse at screen edge
+	/// + Zooming   => Via mouse scroll wheel
+	/// </summary>
 	public class UserInputCameraMover : CameraMover
 	{
 		private readonly ICamera _camera;
