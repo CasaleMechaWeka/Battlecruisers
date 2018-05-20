@@ -78,12 +78,6 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
         }
 
-        [Test]
-        public void InitialState()
-		{
-			Assert.AreEqual(CameraState.UserInputControlled, _transitionManager.State);
-		}
-
 		#region CameraTarget
 		[Test]
         public void SetCameraTarget()
@@ -177,35 +171,6 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Assert.IsNull(LastArgs);
         }
 		#endregion MoveCamera
-
-		[Test]
-        public void ChangingState_UpdatesProperty_BeforeEmittingEvent()
-		{
-			Assert.AreNotEqual(_smoothTransitionTarget.State, _transitionManager.State);
-
-            _transitionManager.StateChanged += (sender, e) => 
-            {
-				if (e.NewState == CameraState.InTransition)
-				{
-					// First event
-					Assert.AreEqual(CameraState.InTransition, _transitionManager.State);
-                }
-                else
-                {
-					// Second event
-					Assert.AreEqual(_smoothTransitionTarget.State, _transitionManager.State);
-				}
-            };
-
-			MoveCamera_NotInTargetState_AdjustsCamera_ReachedTargetState();
-		}
-
-		[Test]
-        public void Reset()
-		{
-			_transitionManager.Reset(CameraState.RightMid);
-			Assert.AreEqual(CameraState.RightMid, _transitionManager.State);
-		}
 
         private void AssertFullTransition(CameraState targetState)
         {

@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Create test file.  Move appropriate tests from CameraTransitionManagerTests over
 	public abstract class CameraMover : ICameraMover
     {
         private CameraState _state;
