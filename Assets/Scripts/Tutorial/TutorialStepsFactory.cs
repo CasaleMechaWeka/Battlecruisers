@@ -51,7 +51,10 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // TEMP  For end game enable all tutorial steps :)
+			// TEMP  For end game enable all tutorial steps :)
+
+			// 0. Disable navigation
+			steps.Enqueue(CreateStep_NavigationPermitter(isNavigationEnabled: false));
 
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
@@ -405,98 +408,97 @@ namespace BattleCruisers.Tutorial
         }
 
         private IList<ITutorialStep> CreateSteps_DroneFocus()
-        {
-            List<ITutorialStep> droneFocusSteps = new List<ITutorialStep>();
+		{
+			List<ITutorialStep> droneFocusSteps = new List<ITutorialStep>();
 
-            // 0. Change build speed to infinitely slow
-            droneFocusSteps.Add(
-                CreateChangeBuildSpeedStep(
-                    _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, 
-                    BuildSpeed.InfinitelySlow));
+			// 0. Change build speed to infinitely slow
+			droneFocusSteps.Add(
+				CreateChangeBuildSpeedStep(
+					_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
+					BuildSpeed.InfinitelySlow));
 
-            // TEMP  For testing tutorial, when previous step creating drone staion is disabled :)
-            if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
-            {
-                _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
+			// TEMP  For testing tutorial, when previous step creating drone staion is disabled :)
+			if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
+			{
+				_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
 			}
 
-            // 1. Build artillery
-            droneFocusSteps.AddRange(
-                CreateSteps_ConstructBuilding(
-                    BuildingCategory.Offence,
-                     new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
-                    SlotType.Platform,
-                     "Build an artillery to destroy the enemy cruiser.",
-                     waitForBuildingToComplete: false));
+			// 1. Build artillery
+			droneFocusSteps.AddRange(
+				CreateSteps_ConstructBuilding(
+					BuildingCategory.Offence,
+					 new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
+					SlotType.Platform,
+					 "Build an artillery to destroy the enemy cruiser.",
+					 waitForBuildingToComplete: false));
 
-            // 2. Build drone station
-            droneFocusSteps.AddRange(
-                CreateSteps_ConstructBuilding(
-                    BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
-                    SlotType.Utility,
-                     "Build a drone station",
-                     waitForBuildingToComplete: false));
+			// 2. Build drone station
+			droneFocusSteps.AddRange(
+				CreateSteps_ConstructBuilding(
+					BuildingCategory.Factory,
+					new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
+					SlotType.Utility,
+					 "Build a drone station",
+					 waitForBuildingToComplete: false));
 
-            // 3. Bring up drone station details
-            string focusText =
-                "Note that all drones are building the artillery.  But say you want to build " +
-                "the drone station first.  You can 'focus' the drones on the drone station.  " +
-                "Select the drone station.";
-            droneFocusSteps.Add(
-                new BuildingDetailsStep(
-                    CreateTutorialStepArgs(focusText, _lastPlayerIncompleteBuildingStartedProvider),
-                    _lastPlayerIncompleteBuildingStartedProvider,
-                    _tutorialArgs.TutorialProvider.UIManagerPermissions));
+			// 3. Bring up drone station details
+			string focusText =
+				"Note that all drones are building the artillery.  But say you want to build " +
+				"the drone station first.  You can 'focus' the drones on the drone station.  " +
+				"Select the drone station.";
+			droneFocusSteps.Add(
+				new BuildingDetailsStep(
+					CreateTutorialStepArgs(focusText, _lastPlayerIncompleteBuildingStartedProvider),
+					_lastPlayerIncompleteBuildingStartedProvider,
+					_tutorialArgs.TutorialProvider.UIManagerPermissions));
 
-            // 4. Focus drones button
-            string droneFocusButtonText = "This is the building details panel.  Select the 'focus' drones button";
-            IButton droneFocusButton = _tutorialArgs.BuildingDetails.DroneFocusButton;
-            ITutorialStepArgs droneFocusButtonArgs = CreateTutorialStepArgs(droneFocusButtonText, droneFocusButton);
-            droneFocusSteps.Add(
-                CreateClickStep(
-                    droneFocusButtonArgs,
-                    droneFocusButton));
+			// 4. Focus drones button
+			string droneFocusButtonText = "This is the building details panel.  Select the 'focus' drones button";
+			IButton droneFocusButton = _tutorialArgs.BuildingDetails.DroneFocusButton;
+			ITutorialStepArgs droneFocusButtonArgs = CreateTutorialStepArgs(droneFocusButtonText, droneFocusButton);
+			droneFocusSteps.Add(
+				CreateClickStep(
+					droneFocusButtonArgs,
+					droneFocusButton));
 
-            // 6. Dismiss building details
-            string dismissText =
-                "Nice!  All the drones have moved from the artillery to the drone station.  " +
-                "Now dismiss the details panel by clicking anywhere.";
-            droneFocusSteps.Add(
-                new DismissStep(
-                    CreateTutorialStepArgs(dismissText),
-                    _tutorialArgs.BuildingDetails,
-                    _tutorialArgs.TutorialProvider.UIManagerPermissions));
-			
+			// 6. Dismiss building details
+			string dismissText =
+				"Nice!  All the drones have moved from the artillery to the drone station.  " +
+				"Now dismiss the details panel by clicking anywhere.";
+			droneFocusSteps.Add(
+				new DismissStep(
+					CreateTutorialStepArgs(dismissText),
+					_tutorialArgs.BuildingDetails,
+					_tutorialArgs.TutorialProvider.UIManagerPermissions));
+
 			// 5. Change build speed to normal
 			droneFocusSteps.Add(
 				CreateChangeBuildSpeedStep(
 					_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
 					BuildSpeed.Normal));
 
-            // 6. Wait for drone station to complete
-            droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("Now we wait for your buildings to complete.  Just relax :)"));
+			// 6. Wait for drone station to complete
+			droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("Now we wait for your buildings to complete.  Just relax :)"));
 
-            // 7. Wait for artillery to complete
-            droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("And the artillery..."));
+			// 7. Wait for artillery to complete
+			droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("And the artillery..."));
 
-            // 8. Enable navigation
-            droneFocusSteps.Add(
-                new NavigationPermitterStep(
-                    CreateTutorialStepArgs("Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around"),
-                    _tutorialArgs.TutorialProvider.NavigationPermitter,
-                    isNavigationEnabled: true));
+			// 8. Enable navigation
+			droneFocusSteps.Add(
+				CreateStep_NavigationPermitter(
+					isNavigationEnabled: true,
+					textToDisplay: "Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around"));
 
-            // 9. Wait for enemy cruiser to be destroyed
-            droneFocusSteps.Add(
-                new TargetDestroyedWaitStep(
-                    CreateTutorialStepArgs(textToDisplay: null),
-                    new StaticProvider<ITarget>(_tutorialArgs.AICruiser)));
+			// 9. Wait for enemy cruiser to be destroyed
+			droneFocusSteps.Add(
+				new TargetDestroyedWaitStep(
+					CreateTutorialStepArgs(textToDisplay: null),
+					new StaticProvider<ITarget>(_tutorialArgs.AICruiser)));
 
-            return droneFocusSteps;
-        }
+			return droneFocusSteps;
+		}
 
-        private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
+		private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
             ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay, _lastPlayerIncompleteBuildingStartedProvider);
             return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
@@ -534,6 +536,15 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(textToDisplay: null),
                     speedController,
                     buildSpeed);
+        }
+
+        private NavigationPermitterStep CreateStep_NavigationPermitter(bool isNavigationEnabled, string textToDisplay = null)
+        {
+            return
+                new NavigationPermitterStep(
+                    CreateTutorialStepArgs(textToDisplay),
+                    _tutorialArgs.TutorialProvider.NavigationPermitter,
+                    isNavigationEnabled);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
-            NavigationPermitter = new BasicFilter(isMatch: false);
+            NavigationPermitter = new BasicFilter(isMatch: true);
             BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);

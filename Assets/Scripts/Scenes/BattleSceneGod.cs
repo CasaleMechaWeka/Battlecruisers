@@ -240,7 +240,20 @@ namespace BattleCruisers.Scenes
                 tutorialManager.Initialise(tutorialArgs);
 
                 tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
-                tutorialManager.StartTutorial();
+
+                // Only start the tutorial once the camera has moved to the player cruiser.
+                // The first thing the tutorial does is disable navigation, in which case
+				// we never reach the starting state of the player cruiser :P
+				EventHandler<CameraStateChangedArgs> onCameraStateChanged = null;
+				onCameraStateChanged = (sender, e) =>
+				{
+					if (e.NewState == CameraState.PlayerCruiser)
+					{
+						cameraInitialiser.CameraController.StateChanged -= onCameraStateChanged;
+						tutorialManager.StartTutorial();
+                    }
+                };
+				cameraInitialiser.CameraController.StateChanged += onCameraStateChanged;
             }
         }
 
