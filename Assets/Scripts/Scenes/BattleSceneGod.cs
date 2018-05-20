@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
-		public CameraController cameraController;
+		public CameraInitialiser cameraInitialiser;
         public BackgroundController backgroundController;
         public NumOfDronesController numOfDronesController;
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Scenes
                 buildMenuController,
                 hudCanvas,
                 modalMenuController,
-                cameraController,
+                cameraInitialiser,
                 backgroundController,
                 numOfDronesController,
                 deferrer);
@@ -92,6 +92,7 @@ namespace BattleCruisers.Scenes
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
+			cameraInitialiser.StaticInitialise();
 
 
             // Instantiate player cruiser
@@ -118,7 +119,7 @@ namespace BattleCruisers.Scenes
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
-                    cameraController,
+				    cameraInitialiser.CameraController,
                     buildMenuController,
                     new BuildableDetailsManager(hudCanvas),
                     helper.CreateBuildingDeleteButtonFilter(_playerCruiser));
@@ -127,7 +128,7 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
+			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseCruiser(
                     _playerCruiser, 
@@ -142,7 +143,7 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise AI cruiser
-            ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
+			ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseCruiser(
                     _aiCruiser, 
@@ -157,8 +158,8 @@ namespace BattleCruisers.Scenes
 
 
             // UI
-            IFilter shouldNavigationBeEnabledFilter = helper.CreateNavigationFilter();
-            hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraController, shouldNavigationBeEnabledFilter);
+			IFilter shouldNavigationBeEnabledFilter = helper.CreateNavigationFilter();
+			hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraInitialiser.CameraController, shouldNavigationBeEnabledFilter);
             IFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
@@ -175,13 +176,13 @@ namespace BattleCruisers.Scenes
             uiManager.InitialUI();
 
 
-            // Camera controller
+			// Camera controller
             IMaterialFetcher materialFetcher = new MaterialFetcher();
             Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
-            cameraController.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
+            cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
 
 
-            helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
+			helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
 
 
@@ -251,6 +252,8 @@ namespace BattleCruisers.Scenes
 
 		void Update()
 		{
+			cameraInitialiser.CameraController.MoveCamera(Time.deltaTime);
+
             // IPAD:  Adapt input for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{

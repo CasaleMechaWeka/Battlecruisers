@@ -1,13 +1,7 @@
-﻿using System;
-
-namespace BattleCruisers.UI.Cameras
+﻿namespace BattleCruisers.UI.Cameras
 {
-	public interface ICameraController
+	public interface ICameraController : ICameraMover
     {
-        CameraState State { get; }
-
-		event EventHandler<CameraStateChangedArgs> StateChanged;
-
         void FocusOnPlayerCruiser();
         void FocusOnAiCruiser();
         void ShowFullMapView();
