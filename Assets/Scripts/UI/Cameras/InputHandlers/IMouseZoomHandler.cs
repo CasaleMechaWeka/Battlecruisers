@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.UI.Cameras.InputHandlers
+﻿namespace BattleCruisers.UI.Cameras.InputHandlers
 {
 	public interface IMouseZoomHandler
 	{
