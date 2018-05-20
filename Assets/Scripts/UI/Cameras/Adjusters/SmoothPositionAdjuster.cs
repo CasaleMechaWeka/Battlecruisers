@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-	// FELIX  Use ICamera instead of transform
 	public class SmoothPositionAdjuster : ISmoothPositionAdjuster
     {
-		private readonly Transform _cameraTransform;
+		private readonly ITransform _cameraTransform;
 		private readonly float _smoothTime;
 		private Vector3 _cameraPositionChangeVelocity;
         
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float MIN_SMOOTH_TIME = 0;
 
-		public SmoothPositionAdjuster(Transform cameraTransform, float smoothTime)
+		public SmoothPositionAdjuster(ITransform cameraTransform, float smoothTime)
 		{
 			Assert.IsNotNull(cameraTransform);
 			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
@@ -25,15 +25,15 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
         public bool AdjustPosition(Vector3 targetPosition)
 		{
-			bool isInPosition = (_cameraTransform.position - targetPosition).magnitude < POSITION_EQUALITY_MARGIN;
+			bool isInPosition = (_cameraTransform.Position - targetPosition).magnitude < POSITION_EQUALITY_MARGIN;
 
             if (!isInPosition)
             {
-                _cameraTransform.position = Vector3.SmoothDamp(_cameraTransform.position, targetPosition, ref _cameraPositionChangeVelocity, _smoothTime);
+                _cameraTransform.Position = Vector3.SmoothDamp(_cameraTransform.Position, targetPosition, ref _cameraPositionChangeVelocity, _smoothTime);
             }
             else
             {
-                _cameraTransform.position = targetPosition;
+                _cameraTransform.Position = targetPosition;
             }
 
             return isInPosition;

@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.Cameras
 			skybox.material = skyboxMaterial;
 
 			ICameraCalculator cameraCalculator = new CameraCalculator(platformCamera);
-			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, platformCamera, camera, cameraCalculator);
+			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator);
 			ICameraMover userInputMover = CreateUserInputMover(settingsManager, camera, cameraCalculator);
 
 			_cameraController.Initialise(
@@ -86,7 +86,6 @@ namespace BattleCruisers.UI.Cameras
 		private ICameraTransitionManager CreateTransitionManager(
 			ICruiser playerCruiser, 
 			ICruiser aiCruiser, 
-			Camera platformCamera, 
 			ICamera camera, 
 			ICameraCalculator cameraCalculator)
 		{
@@ -101,8 +100,8 @@ namespace BattleCruisers.UI.Cameras
 			    new CameraTransitionManager(
         			camera,
         			cameraTargetsFactory,
-        			new SmoothPositionAdjuster(platformCamera.transform, smoothTime),
-        			new SmoothZoomAdjuster(platformCamera, smoothTime));
+        			new SmoothPositionAdjuster(camera, smoothTime),
+					new SmoothZoomAdjuster(camera, smoothTime));
 		}
 	}
 }
