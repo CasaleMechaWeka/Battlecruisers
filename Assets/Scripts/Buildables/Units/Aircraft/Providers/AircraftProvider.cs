@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -24,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         private const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
         private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
-		public SafeZone FighterSafeZone { get; private set; }
+		public Rectangle FighterSafeZone { get; private set; }
 
 		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)
 		{
@@ -49,7 +50,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
 			}
 
-			FighterSafeZone = new SafeZone(
+			FighterSafeZone = new Rectangle(
 				minX: minX,
 				maxX: maxX,
 				minY: SAFE_ZONE_MIN_Y,

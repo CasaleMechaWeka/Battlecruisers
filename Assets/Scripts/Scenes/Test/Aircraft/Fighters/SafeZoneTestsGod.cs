@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
@@ -28,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			_helper = new Helper();
 
 			FighterController fighter = FindObjectOfType<FighterController>();
-			SafeZone safeZone = new SafeZone(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
+			Rectangle safeZone = new Rectangle(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
 			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
             _helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
 			fighter.StartConstruction();

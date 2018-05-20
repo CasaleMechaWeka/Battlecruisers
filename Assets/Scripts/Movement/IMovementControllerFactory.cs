@@ -10,6 +10,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -28,7 +29,7 @@ namespace BattleCruisers.Movement
 
         // Velocity => Homing
 		IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, SafeZone safeZone);
+		IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone);
 		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider);
         IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider);
 

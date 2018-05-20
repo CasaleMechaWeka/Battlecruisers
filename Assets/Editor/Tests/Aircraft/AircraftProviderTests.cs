@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -35,8 +36,8 @@ namespace BattleCruisers.Tests.Aircraft
 		[Test]
 		public void PlayerAircraftProvider_SafeZone()
 		{
-			SafeZone expected 
-				= new SafeZone(
+			Rectangle expected 
+			    = new Rectangle(
                     minX: -40, 	// -30 - 10
                     maxX: 5, 	// 30 - 25
                     minY: 10,
@@ -48,8 +49,8 @@ namespace BattleCruisers.Tests.Aircraft
 		[Test]
 		public void AiAircraftProvider_SafeZone()
 		{
-			SafeZone expected 
-				= new SafeZone(
+			Rectangle expected 
+			    = new Rectangle(
 					minX: -5, 	// -30 + 25
 					maxX: 40, 	// 30 + 10
 					minY: 10,
@@ -131,7 +132,7 @@ namespace BattleCruisers.Tests.Aircraft
             Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude + 1.5f)));    // 40 - 5
         }
 
-		private void AssertAreSafeZonesEqual(SafeZone expected, SafeZone actual)
+		private void AssertAreSafeZonesEqual(Rectangle expected, Rectangle actual)
 		{
 			Assert.AreEqual(expected.MinX, actual.MinX);
 			Assert.AreEqual(expected.MaxX, actual.MaxX);

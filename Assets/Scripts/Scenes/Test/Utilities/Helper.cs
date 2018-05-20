@@ -330,7 +330,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IList<Vector2> fighterPatrolPoints = null,
 			IList<Vector2> deathstarPatrolPoints = null,
             IList<Vector2> spySatellitePatrolPoints = null,
-			SafeZone fighterSafeZone = null)
+			Rectangle fighterSafeZone = null)
 		{
 			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
 
@@ -389,7 +389,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			if (fighterSafeZone == null)
 			{
-				fighterSafeZone = new SafeZone(
+				fighterSafeZone = new Rectangle(
 					minX: float.MinValue,
 					maxX: float.MaxValue,
 					minY: float.MinValue,

@@ -11,6 +11,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -37,7 +38,7 @@ namespace BattleCruisers.Movement
 			return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
 		}
 
-		public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, SafeZone safeZone)
+		public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone)
 		{
 			return new FighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
 		}

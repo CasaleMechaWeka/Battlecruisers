@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
     public interface IAircraftProvider
 	{
-		SafeZone FighterSafeZone { get; }
+		Rectangle FighterSafeZone { get; }
 
 		IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM);
         IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM);
