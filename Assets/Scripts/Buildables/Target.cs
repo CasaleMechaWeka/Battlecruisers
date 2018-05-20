@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.UIWrappers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 

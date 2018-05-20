@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Utils.UIWrappers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Utils.Fetchers
 {

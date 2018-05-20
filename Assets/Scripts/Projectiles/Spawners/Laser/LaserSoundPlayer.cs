@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.UIWrappers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Projectiles.Spawners.Laser
 {

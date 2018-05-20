@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils.UIWrappers
+namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public class SpriteWrapper : ISpriteWrapper
     {

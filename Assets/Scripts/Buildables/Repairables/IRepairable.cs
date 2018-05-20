@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.UIWrappers;
+﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Repairables
 {

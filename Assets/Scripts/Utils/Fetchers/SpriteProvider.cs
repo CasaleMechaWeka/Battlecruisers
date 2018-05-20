@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Utils.UIWrappers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers

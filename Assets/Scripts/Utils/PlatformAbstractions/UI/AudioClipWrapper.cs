@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Move into PLatformWrappers namespace :P
-namespace BattleCruisers.Utils.UIWrappers
+namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public class AudioClipWrapper : IAudioClipWrapper
     {

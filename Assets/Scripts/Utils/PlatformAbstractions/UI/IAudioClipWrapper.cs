@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Utils.UIWrappers
+namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public interface IAudioClipWrapper
     {

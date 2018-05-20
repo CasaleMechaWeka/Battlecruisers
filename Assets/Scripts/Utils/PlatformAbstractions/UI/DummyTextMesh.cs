@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Utils.UIWrappers
+﻿namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public class DummyTextMesh : ITextMesh
     {

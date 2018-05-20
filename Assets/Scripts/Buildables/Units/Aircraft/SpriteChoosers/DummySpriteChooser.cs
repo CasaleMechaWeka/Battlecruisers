@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.UIWrappers;
+﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
