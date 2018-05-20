@@ -3,6 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
+	// FELIX  Use ICamera instead of transform
 	public class SmoothPositionAdjuster : ISmoothPositionAdjuster
     {
 		private readonly Transform _cameraTransform;
