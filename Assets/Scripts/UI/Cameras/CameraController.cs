@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.Cameras
 			skybox.material = skyboxMaterial;
 
             _cameraCalculator = new CameraCalculator(_camera);
-			_state = CameraState.PlayerInputControlled;
+			_state = CameraState.UserInputControlled;
 
 			// FELIX  Inject
 			// Handle transitions (triggered by navigation buttons)

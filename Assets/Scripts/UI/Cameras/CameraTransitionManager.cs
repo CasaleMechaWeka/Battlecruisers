@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.Cameras
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
 
-			_state = CameraState.PlayerInputControlled;
+			_state = CameraState.UserInputControlled;
 		}
 
 		public void MoveCamera(float deltaTime, CameraState currentState)

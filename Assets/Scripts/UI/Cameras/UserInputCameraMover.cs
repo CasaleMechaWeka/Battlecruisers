@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Cameras
 		private readonly IScrollHandler _scrollHandler;
         private readonly IMouseZoomHandler _zoomHandler;
 
-		public CameraState State { get { return CameraState.PlayerInputControlled; } }
+		public CameraState State { get { return CameraState.UserInputControlled; } }
 
 		public event EventHandler<CameraStateChangedArgs> StateChanged;
 
@@ -36,11 +36,11 @@ namespace BattleCruisers.UI.Cameras
             bool inZoom = HandleZoom(deltaTime);
 
 			if ((inScroll || inZoom)
-			    && currentState != CameraState.PlayerInputControlled)
+			    && currentState != CameraState.UserInputControlled)
             {
 				if (StateChanged != null)
 				{
-					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.PlayerInputControlled));
+					StateChanged.Invoke(this, new CameraStateChangedArgs(currentState, CameraState.UserInputControlled));
 				}
             }
 		}

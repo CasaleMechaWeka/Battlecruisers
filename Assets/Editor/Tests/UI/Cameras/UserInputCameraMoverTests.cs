@@ -49,7 +49,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         [Test]
 		public void State()
         {
-			Assert.AreEqual(CameraState.PlayerInputControlled, _mover.State);
+			Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
         }
 
 		#region MoveCamera
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: true);
             Zoom(shouldZoom: true);
 
-			_mover.MoveCamera(_deltaTime, CameraState.PlayerInputControlled);
+			_mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
 
 			ReceivedScroll();
             ReceivedZoom();
@@ -83,7 +83,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
             Assert.AreEqual(_differentPosition, _camera.Position);
 			Assert.IsNotNull(_lastArgs);
-			Assert.AreEqual(CameraState.PlayerInputControlled, _lastArgs.NewState);
+			Assert.AreEqual(CameraState.UserInputControlled, _lastArgs.NewState);
         }
 
 		[Test]
@@ -92,7 +92,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: false);
             Zoom(shouldZoom: false);
 
-            _mover.MoveCamera(_deltaTime, CameraState.PlayerInputControlled);
+            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
 
             ReceivedScroll();
             ReceivedZoom();
@@ -108,7 +108,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: false);
             Zoom(shouldZoom: true);
 
-            _mover.MoveCamera(_deltaTime, CameraState.PlayerInputControlled);
+            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
 
             ReceivedScroll();
             ReceivedZoom();
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			Scroll(shouldScroll: true);
             Zoom(shouldZoom: false);
 
-            _mover.MoveCamera(_deltaTime, CameraState.PlayerInputControlled);
+            _mover.MoveCamera(_deltaTime, CameraState.UserInputControlled);
 
             ReceivedScroll();
             ReceivedZoom();

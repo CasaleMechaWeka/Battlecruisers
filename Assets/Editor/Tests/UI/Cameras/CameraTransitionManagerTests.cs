@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.UI.Cameras
     				new Vector3(-35, 0, -10),
     				target1OrthographicSize,
     				CameraState.PlayerCruiser,
-				    CameraState.PlayerInputControlled);
+				    CameraState.UserInputControlled);
 
 			float target2OrthographicSize = 35;
 			_smoothTransitionTarget
@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.UI.Cameras
     			= new CameraTarget(
     				default(Vector3),
     				default(float),
-				    CameraState.PlayerInputControlled);
+				    CameraState.UserInputControlled);
 
 			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>
 			{
@@ -81,7 +81,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         [Test]
         public void InitialState()
 		{
-			Assert.AreEqual(CameraState.PlayerInputControlled, _transitionManager.State);
+			Assert.AreEqual(CameraState.UserInputControlled, _transitionManager.State);
 		}
 
 		#region CameraTarget
