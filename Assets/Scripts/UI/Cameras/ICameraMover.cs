@@ -2,6 +2,11 @@
 
 namespace BattleCruisers.UI.Cameras
 {
+	public enum CameraState
+    {
+        PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid, UserInputControlled
+    }
+
 	public class CameraStateChangedArgs : EventArgs
     {
 		public CameraState PreviousState { get; private set; }

@@ -2,12 +2,6 @@
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Move to ICameraMover?
-    public enum CameraState
-    {
-        PlayerCruiser, AiCruiser, Overview, InTransition, LeftMid, RightMid, UserInputControlled
-    }
-
 	// FELIX  Remove
     public class CameraTransitionArgs : EventArgs
     {
