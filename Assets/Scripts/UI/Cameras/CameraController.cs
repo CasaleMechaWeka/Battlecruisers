@@ -50,8 +50,7 @@ namespace BattleCruisers.UI.Cameras
 
 		public override void MoveCamera(float deltaTime)
 		{
-			// FELIX
-			//if (_shouldNavigationBeEnabledFilter.IsMatch)
+			if (_shouldNavigationBeEnabledFilter.IsMatch)
 			{
                 CurrentMover.MoveCamera(Time.deltaTime);
 			}
@@ -84,9 +83,6 @@ namespace BattleCruisers.UI.Cameras
 
 		private void HandleNavigationButtonPress(CameraState newState)
 		{
-			// FELIX
-			//if (_shouldNavigationBeEnabledFilter.IsMatch 
-			    //&& newState != State)
 		    if (newState != State)
 			{
                 CurrentMover = _transitionManager;
