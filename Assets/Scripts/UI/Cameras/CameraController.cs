@@ -19,6 +19,7 @@ namespace BattleCruisers.UI.Cameras
 		private Camera _camera;
         private ICameraCalculator _cameraCalculator;
         private ISettingsManager _settingsManager;
+		//  FELIX  Unused???  Check navigation is switched off correctly in tutorial :/
         private IFilter _shouldNavigationBeEnabledFilter;
 		private ICameraTransitionManager _transitionManager;
 		private ICameraMover _userInputMover;
@@ -131,7 +132,10 @@ namespace BattleCruisers.UI.Cameras
 
 		void Update()
 		{
-			CurrentMover.MoveCamera(Time.deltaTime);
+			if (_shouldNavigationBeEnabledFilter.IsMatch)
+			{
+                CurrentMover.MoveCamera(Time.deltaTime);
+			}
 		}
 
         public void FocusOnPlayerCruiser()
@@ -161,7 +165,8 @@ namespace BattleCruisers.UI.Cameras
 
 		private void HandleNavigationButtonPress(CameraState newState)
 		{
-			if (newState != State)
+			if (_shouldNavigationBeEnabledFilter.IsMatch 
+			    && newState != State)
 			{
                 CurrentMover = _transitionManager;
                 _transitionManager.CameraTarget = newState;
