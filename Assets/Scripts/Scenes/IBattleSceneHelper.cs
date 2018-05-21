@@ -21,7 +21,6 @@ namespace BattleCruisers.Scenes
         IFilter<BuildingCategory> CreateCategoryButtonFilter();
         IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
 
-        BasicFilter CreateNavigationFilter();
         BasicFilter CreateBackButtonFilter();
 
         IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }

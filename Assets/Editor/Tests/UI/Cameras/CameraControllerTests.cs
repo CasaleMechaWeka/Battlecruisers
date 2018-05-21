@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI;
-using BattleCruisers.UI.Cameras;
+﻿using BattleCruisers.UI.Cameras;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -11,7 +10,6 @@ namespace BattleCruisers.Tests.UI.Cameras
 
 		private ICameraTransitionManager _transitionManager;
 		private ICameraMover _userInputMover;
-		private IFilter _shouldNavigationBeEnabledFilter;
 		private float _deltaTime;
 
 		[SetUp]
@@ -20,11 +18,8 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_transitionManager = Substitute.For<ICameraTransitionManager>();
 			_userInputMover = Substitute.For<ICameraMover>();
 
-			_shouldNavigationBeEnabledFilter = Substitute.For<IFilter>();
-			_shouldNavigationBeEnabledFilter.IsMatch.Returns(true);
-
 			_cameraController = new CameraController();
-			_cameraController.Initialise(_transitionManager, _userInputMover, _shouldNavigationBeEnabledFilter);
+			_cameraController.Initialise(_transitionManager, _userInputMover);
 
 			_deltaTime = 0.1234f;
 		}
@@ -40,14 +35,6 @@ namespace BattleCruisers.Tests.UI.Cameras
 		{
 			_cameraController.MoveCamera(_deltaTime);
 			_userInputMover.Received().MoveCamera(_deltaTime);
-		}
-
-		[Test]
-		public void MoveCamera_DisabledDoesNothing()
-		{
-			_shouldNavigationBeEnabledFilter.IsMatch.Returns(false);
-			_cameraController.MoveCamera(_deltaTime);
-			_userInputMover.DidNotReceive().MoveCamera(_deltaTime);
 		}
 
 		#region Transitions

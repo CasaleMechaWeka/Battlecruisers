@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
@@ -35,9 +36,9 @@ namespace BattleCruisers.UI.Cameras
 			ICruiser aiCruiser,
 			ISettingsManager settingsManager,
 			Material skyboxMaterial,
-			IFilter shouldNavigationBeEnabledFilter)
+			INavigationSettings navigationSettings)
 		{
-			Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
+			Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, navigationSettings);
 
 			Camera platformCamera = GetComponent<Camera>();
 			Assert.IsNotNull(platformCamera);
@@ -48,16 +49,17 @@ namespace BattleCruisers.UI.Cameras
 			skybox.material = skyboxMaterial;
 
 			ICameraCalculator cameraCalculator = new CameraCalculator(platformCamera);
-			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator);
-			ICameraMover userInputMover = CreateUserInputMover(settingsManager, camera, cameraCalculator);
+			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator, navigationSettings);
+			ICameraMover userInputMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
 
-			_cameraController.Initialise(
-				transitionManager,
-				userInputMover,
-				shouldNavigationBeEnabledFilter);
+			_cameraController.Initialise(transitionManager, userInputMover);
 		}
 
-		private ICameraMover CreateUserInputMover(ISettingsManager settingsManager, ICamera camera, ICameraCalculator cameraCalculator)
+		private ICameraMover CreateUserInputMover(
+			ISettingsManager settingsManager, 
+			ICamera camera, 
+			ICameraCalculator cameraCalculator, 
+			INavigationSettings navigationSettings)
 		{
 			IScreen screen = new ScreenBC();
 			Rectangle cameraBounds = new Rectangle(CAMERA_POSITION_MIN_X, CAMERA_POSITION_MAX_X, CAMERA_POSITION_MIN_Y, CAMERA_POSITION_MAX_Y);
@@ -80,14 +82,16 @@ namespace BattleCruisers.UI.Cameras
 					camera,
 					new InputBC(),
 					scrollHandler,
-					mouseZoomHandler);
+					mouseZoomHandler,
+					navigationSettings);
 		}
 
 		private ICameraTransitionManager CreateTransitionManager(
 			ICruiser playerCruiser, 
 			ICruiser aiCruiser, 
 			ICamera camera, 
-			ICameraCalculator cameraCalculator)
+			ICameraCalculator cameraCalculator,
+			INavigationSettings navigationSettings)
 		{
 			ICameraTargetsFactory cameraTargetsFactory
     			= new CameraTargetsFactory(
@@ -101,7 +105,8 @@ namespace BattleCruisers.UI.Cameras
         			camera,
         			cameraTargetsFactory,
         			new SmoothPositionAdjuster(camera, smoothTime),
-					new SmoothZoomAdjuster(camera, smoothTime));
+					new SmoothZoomAdjuster(camera, smoothTime),
+				    navigationSettings);
 		}
 	}
 }

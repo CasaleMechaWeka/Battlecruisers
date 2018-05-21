@@ -1,31 +1,31 @@
 ﻿using System;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Navigation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class NavigationPermitterStep : TutorialStep
+	public class NavigationPermitterStep : TutorialStep
     {
-        private readonly BasicFilter _navigationPermitter;
-        private readonly bool _isNavigationEnabled;
+		private readonly INavigationSettings _navigationSettings;
+        private readonly NavigationPermission _permission;
 
         public NavigationPermitterStep(
             ITutorialStepArgs args, 
-            BasicFilter navigationPermitter,
-            bool isNavigationEnabled)
+			INavigationSettings navigationSettings,
+            NavigationPermission permission)
             : base(args)
         {
-            Assert.IsNotNull(navigationPermitter);
+			Assert.IsNotNull(navigationSettings);
 
-            _navigationPermitter = navigationPermitter;
-            _isNavigationEnabled = isNavigationEnabled;
+			_navigationSettings = navigationSettings;
+			_permission = permission;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
 
-            _navigationPermitter.IsMatch = _isNavigationEnabled;
+			_navigationSettings.Permission = _permission;
 
             OnCompleted();
         }

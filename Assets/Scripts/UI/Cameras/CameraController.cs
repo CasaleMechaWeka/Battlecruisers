@@ -6,7 +6,6 @@ namespace BattleCruisers.UI.Cameras
 	{
         private ICameraTransitionManager _transitionManager;
 		private ICameraMover _userInputMover;
-		private IFilter _shouldNavigationBeEnabledFilter;
 
 		private ICameraMover _currentMover;
 		private ICameraMover CurrentMover
@@ -30,26 +29,19 @@ namespace BattleCruisers.UI.Cameras
 		}
 
         // Not constructor because of circular dependencies with cruisers
-		public void Initialise(
-			ICameraTransitionManager cameraTransitionManager,
-			ICameraMover userInputMover,
-            IFilter shouldNavigationBeEnabledFilter)
+		public void Initialise(ICameraTransitionManager cameraTransitionManager, ICameraMover userInputMover)
 		{
-			Helper.AssertIsNotNull(cameraTransitionManager, userInputMover, shouldNavigationBeEnabledFilter);
+			Helper.AssertIsNotNull(cameraTransitionManager, userInputMover);
 
 			_transitionManager = cameraTransitionManager;
 			_userInputMover = userInputMover;
-            _shouldNavigationBeEnabledFilter = shouldNavigationBeEnabledFilter;
 
 			CurrentMover = _userInputMover;
 		}
 
 		public override void MoveCamera(float deltaTime)
 		{
-			if (_shouldNavigationBeEnabledFilter.IsMatch)
-			{
-				CurrentMover.MoveCamera(deltaTime);
-			}
+			CurrentMover.MoveCamera(deltaTime);
 		}
 
         public void FocusOnPlayerCruiser()

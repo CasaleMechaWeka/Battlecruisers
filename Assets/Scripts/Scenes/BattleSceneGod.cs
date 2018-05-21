@@ -15,6 +15,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
@@ -41,6 +42,7 @@ namespace BattleCruisers.Scenes
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
         private ITutorialProvider _tutorialProvider;
+		private INavigationSettings _navigationSettings;
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
@@ -157,9 +159,9 @@ namespace BattleCruisers.Scenes
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
-            // UI
-			IFilter shouldNavigationBeEnabledFilter = helper.CreateNavigationFilter();
-			hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraInitialiser.CameraController, shouldNavigationBeEnabledFilter);
+			// UI
+			_navigationSettings = new NavigationSettings();
+			hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraInitialiser.CameraController, _navigationSettings.AreTransitionsEnabledFilter);
             IFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
@@ -179,7 +181,7 @@ namespace BattleCruisers.Scenes
 			// Camera controller
             IMaterialFetcher materialFetcher = new MaterialFetcher();
             Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
-            cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, shouldNavigationBeEnabledFilter);
+            cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, _navigationSettings);
 			cameraInitialiser.CameraController.FocusOnPlayerCruiser();
 
 
@@ -234,7 +236,15 @@ namespace BattleCruisers.Scenes
                 _dataProvider.GameModel.HasAttemptedTutorial = true;
                 _dataProvider.SaveGame();
 
-                ITutorialArgs tutorialArgs = new TutorialArgs(_playerCruiser, _aiCruiser, hudCanvas, buildMenuController, _tutorialProvider, prefabFactory);
+                ITutorialArgs tutorialArgs 
+				    = new TutorialArgs(
+					    _playerCruiser, 
+    					_aiCruiser, 
+    					hudCanvas, 
+    					buildMenuController, 
+    					_tutorialProvider, 
+    					prefabFactory, 
+    					_navigationSettings);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);

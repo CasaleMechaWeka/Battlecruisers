@@ -22,6 +22,7 @@ namespace BattleCruisers.Tutorial
         public IBuildMenuButtons BuildMenuButtons { get; private set; }
         public ITutorialProvider TutorialProvider { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
+		public INavigationSettings NavigationSettings { get; private set; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
@@ -29,9 +30,10 @@ namespace BattleCruisers.Tutorial
             IHUDCanvasController hudCanvas, 
             IBuildMenuButtons buildMenuButtons,
             ITutorialProvider tutorialProvider,
-            IPrefabFactory prefabFactory)
+            IPrefabFactory prefabFactory,
+			INavigationSettings navigationSettings)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory);
+			Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory, navigationSettings);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -44,6 +46,7 @@ namespace BattleCruisers.Tutorial
             BuildMenuButtons = buildMenuButtons;
             TutorialProvider = tutorialProvider;
             PrefabFactory = prefabFactory;
+			NavigationSettings = navigationSettings;
         }
     }
 }

@@ -27,7 +27,6 @@ namespace BattleCruisers.Scenes
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
         public IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
-        public BasicFilter NavigationPermitter { get; private set; }
         public BasicFilter BackButtonPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
 
@@ -49,7 +48,6 @@ namespace BattleCruisers.Scenes
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
-            NavigationPermitter = new BasicFilter(isMatch: true);
             BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
@@ -106,11 +104,6 @@ namespace BattleCruisers.Scenes
         public IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
         {
             return new StaticFilter<IBuilding>(isMatch: false);
-        }
-
-        public BasicFilter CreateNavigationFilter()
-        {
-            return NavigationPermitter;
         }
 
         public BasicFilter CreateBackButtonFilter()

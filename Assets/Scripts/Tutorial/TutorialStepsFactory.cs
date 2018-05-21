@@ -17,6 +17,7 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -54,7 +55,7 @@ namespace BattleCruisers.Tutorial
 			// TEMP  For end game enable all tutorial steps :)
 
 			// 0. Disable navigation
-			steps.Enqueue(CreateStep_NavigationPermitter(isNavigationEnabled: false));
+			steps.Enqueue(CreateStep_NavigationPermitter(NavigationPermission.None));
 
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
@@ -126,7 +127,7 @@ namespace BattleCruisers.Tutorial
             return 
                 new NavigationStep(
                     navigationButtonArgs, 
-                    _tutorialArgs.TutorialProvider.NavigationPermitter, 
+					_tutorialArgs.NavigationSettings, 
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
 		}
 
@@ -245,7 +246,7 @@ namespace BattleCruisers.Tutorial
 			enemyUnitDefenceSteps.Add(
 				new NavigationStep(
 					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
-					_tutorialArgs.TutorialProvider.NavigationPermitter,
+					_tutorialArgs.NavigationSettings,
 					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
 
             // 7. Insta-complete unit
@@ -388,7 +389,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_NavigateToCruiser(string textToDisplay, IButton navigationButton)
         {
             ITutorialStepArgs navigateToCruiserArgs = CreateTutorialStepArgs(textToDisplay, navigationButton);
-            return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.TutorialProvider.NavigationPermitter, navigationButton);
+			return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.NavigationSettings, navigationButton);
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
@@ -486,8 +487,8 @@ namespace BattleCruisers.Tutorial
 			// 8. Enable navigation
 			droneFocusSteps.Add(
 				CreateStep_NavigationPermitter(
-					isNavigationEnabled: true,
-					textToDisplay: "Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around"));
+					NavigationPermission.Both,
+					"Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around"));
 
 			// 9. Wait for enemy cruiser to be destroyed
 			droneFocusSteps.Add(
@@ -538,13 +539,13 @@ namespace BattleCruisers.Tutorial
                     buildSpeed);
         }
 
-        private NavigationPermitterStep CreateStep_NavigationPermitter(bool isNavigationEnabled, string textToDisplay = null)
+		private NavigationPermitterStep CreateStep_NavigationPermitter(NavigationPermission permission, string textToDisplay = null)
         {
             return
                 new NavigationPermitterStep(
                     CreateTutorialStepArgs(textToDisplay),
-                    _tutorialArgs.TutorialProvider.NavigationPermitter,
-                    isNavigationEnabled);
+					_tutorialArgs.NavigationSettings,
+                    permission);
         }
     }
 }

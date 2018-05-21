@@ -1,30 +1,31 @@
 ﻿using System;
 using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Navigation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    public class NavigationStep : ClickStep
+	// FELIX  Rename to NavigationButtonStep
+	public class NavigationStep : ClickStep
     {
-        private readonly BasicFilter _shouldNavigationBeEnabledFilter;
+		private readonly INavigationSettings _navigationSettings;
 
-        public NavigationStep(ITutorialStepArgs args, BasicFilter shouldNavigationBeEnabledFilter, params IClickableEmitter[] completionClickables)
+		public NavigationStep(ITutorialStepArgs args, INavigationSettings navigationSettings, params IClickableEmitter[] completionClickables)
             : base(args, new StaticListProvider<IClickableEmitter>(completionClickables))
         {
-            Assert.IsNotNull(shouldNavigationBeEnabledFilter);
-            _shouldNavigationBeEnabledFilter = shouldNavigationBeEnabledFilter;
+			Assert.IsNotNull(navigationSettings);
+            _navigationSettings = navigationSettings;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            _shouldNavigationBeEnabledFilter.IsMatch = true;
+			_navigationSettings.Permission = NavigationPermission.TransitionsOnly;
         }
 
         protected override void OnCompleted()
         {
-            _shouldNavigationBeEnabledFilter.IsMatch = false;
+			_navigationSettings.Permission = NavigationPermission.None;
             base.OnCompleted();
         }
     }

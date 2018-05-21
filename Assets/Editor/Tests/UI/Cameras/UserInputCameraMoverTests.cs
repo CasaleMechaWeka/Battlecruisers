@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Cameras;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         private IInput _input;
         private IScrollHandler _scrollHandler;
         private IMouseZoomHandler _zoomHandler;
+		private INavigationSettings _navigationSettings;
 		private CameraStateChangedArgs _lastArgs;
 		private float _deltaTime;
 		private float _sameOrthographicSize, _differentOrthographicSize;
@@ -27,8 +29,9 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_input = Substitute.For<IInput>();
 			_scrollHandler = Substitute.For<IScrollHandler>();
 			_zoomHandler = Substitute.For<IMouseZoomHandler>();
+			_navigationSettings = Substitute.For<INavigationSettings>();
 
-			_mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler);
+			_mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler, _navigationSettings);
 
 			_lastArgs = null;
 			_mover.StateChanged += (sender, e) => _lastArgs = e;

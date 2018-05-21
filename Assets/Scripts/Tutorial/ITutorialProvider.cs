@@ -15,7 +15,6 @@ namespace BattleCruisers.Tutorial
 		IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
-        BasicFilter NavigationPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
 
         ISingleBuildableProvider SingleAircraftProvider { get; }

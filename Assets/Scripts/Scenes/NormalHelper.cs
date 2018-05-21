@@ -76,12 +76,7 @@ namespace BattleCruisers.Scenes
         {
             return new PlayerCruiserBuildingFilter(playerCruiser);
         }
-
-        public BasicFilter CreateNavigationFilter()
-        {
-            return new BasicFilter(isMatch: true);
-        }
-
+        
         public BasicFilter CreateBackButtonFilter()
         {
             return new BasicFilter(isMatch: true);

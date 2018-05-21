@@ -1,10 +1,13 @@
-﻿using BattleCruisers.UI.Cameras.InputHandlers;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
+    // FELIX  Update tests
+
 	/// <summary>
 	/// Handles camera movement in response to user input:
 	/// + Scrolling => Via mouse at screen edge
@@ -16,19 +19,31 @@ namespace BattleCruisers.UI.Cameras
 		private readonly IInput _input;
 		private readonly IScrollHandler _scrollHandler;
         private readonly IMouseZoomHandler _zoomHandler;
+		private readonly INavigationSettings _navigationSettings;
 
-		public UserInputCameraMover(ICamera camera, IInput input, IScrollHandler scrollHandler, IMouseZoomHandler zoomHandler)
+		public UserInputCameraMover(
+			ICamera camera, 
+			IInput input, 
+			IScrollHandler scrollHandler, 
+			IMouseZoomHandler zoomHandler, 
+			INavigationSettings navigationSettings)
 		{
-			Helper.AssertIsNotNull(camera, input, scrollHandler, zoomHandler);
+			Helper.AssertIsNotNull(camera, input, scrollHandler, zoomHandler, navigationSettings);
 
 			_camera = camera;
 			_input = input;
 			_scrollHandler = scrollHandler;
 			_zoomHandler = zoomHandler;
+			_navigationSettings = navigationSettings;
 		}
 
 		public override void MoveCamera(float deltaTime)
 		{
+			if (!_navigationSettings.IsUserInputEnabled)
+			{
+				return;
+			}
+
 			// Want to handle scrolling first, because zoom can change the camera
             // orthographic size, which affects scrolling.
 			bool inScroll = HandleScroll(deltaTime);

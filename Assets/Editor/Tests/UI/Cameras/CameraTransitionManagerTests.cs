@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 		private ICamera _camera;
         private ISmoothPositionAdjuster _positionAdjuster;
         private ISmoothZoomAdjuster _zoomAdjuster;
+		private INavigationSettings _navigationSettings;
 		private ICameraTarget _instaTransitionTarget, _smoothTransitionTarget, _startingTarget, _invalidTarget;
         private IList<CameraStateChangedArgs> _stateChangedArgs;
 
@@ -33,6 +35,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_camera = Substitute.For<ICamera>();
 			_positionAdjuster = Substitute.For<ISmoothPositionAdjuster>();
 			_zoomAdjuster = Substitute.For<ISmoothZoomAdjuster>();
+			_navigationSettings = Substitute.For<INavigationSettings>();
 
 			float target1OrthographicSize = 5;
 			_instaTransitionTarget
@@ -70,7 +73,8 @@ namespace BattleCruisers.Tests.UI.Cameras
         			_camera,
         			cameraTargetsFactory,
         			_positionAdjuster,
-    				_zoomAdjuster);
+    				_zoomAdjuster,
+			        _navigationSettings);
 
 			_stateChangedArgs = new List<CameraStateChangedArgs>();
 			_transitionManager.StateChanged += (sender, e) => _stateChangedArgs.Add(e);

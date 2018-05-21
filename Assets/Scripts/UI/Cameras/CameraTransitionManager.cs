@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -6,6 +7,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
+    // FELIX  update tests
+
 	/// <summary>
     /// Handle camera transitions triggered by the navigation buttons.
     /// </summary>
@@ -14,6 +17,7 @@ namespace BattleCruisers.UI.Cameras
 		private readonly ICamera _camera;
 		private readonly ISmoothPositionAdjuster _positionAdjuster;
 		private readonly ISmoothZoomAdjuster _zoomAdjuster;
+		private readonly INavigationSettings _navigationSettings;
 		private readonly IDictionary<CameraState, ICameraTarget> _stateToTarget;
 
 		private ICameraTarget _target;
@@ -30,19 +34,26 @@ namespace BattleCruisers.UI.Cameras
 			ICamera camera, 
 			ICameraTargetsFactory cameraTargetsFactory,
 			ISmoothPositionAdjuster positionAdjuster,
-			ISmoothZoomAdjuster zoomAdjuster)
+			ISmoothZoomAdjuster zoomAdjuster,
+			INavigationSettings navigationSettings)
 		{
-			Helper.AssertIsNotNull(camera, cameraTargetsFactory, positionAdjuster, zoomAdjuster);
+			Helper.AssertIsNotNull(camera, cameraTargetsFactory, positionAdjuster, zoomAdjuster, navigationSettings);
 
 			_camera = camera;
 			_stateToTarget = cameraTargetsFactory.CreateCameraTargets();
 			_positionAdjuster = positionAdjuster;
 			_zoomAdjuster = zoomAdjuster;
+			_navigationSettings = navigationSettings;
 		}
 
 		public override void MoveCamera(float deltaTime)
 		{
 			Assert.IsNotNull(_target);
+
+			if (!_navigationSettings.AreTransitionsEnabled)
+			{
+				return;
+			}
 
 			CameraState previousState = State;
 			State = CameraState.InTransition;

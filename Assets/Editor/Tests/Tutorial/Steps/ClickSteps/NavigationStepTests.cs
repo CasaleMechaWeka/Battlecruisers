@@ -1,15 +1,15 @@
 ﻿using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Navigation;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
-    public class NavigationStepTests : TutorialStepTestsBase
+	public class NavigationStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _clickStep;
-        private BasicFilter _shouldNavigationBeEnabledFilter;
+		private INavigationSettings _navigationSettings;
         private IClickableEmitter _clickable;
 
         [SetUp]
@@ -17,17 +17,17 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         {
             base.SetuUp();
 
-            _shouldNavigationBeEnabledFilter = new BasicFilter(isMatch: false);
+			_navigationSettings = Substitute.For<INavigationSettings>();
             _clickable = Substitute.For<IClickableEmitter>();
 
-            _clickStep = new NavigationStep(_args, _shouldNavigationBeEnabledFilter, _clickable);
+            _clickStep = new NavigationStep(_args, _navigationSettings, _clickable);
         }
 
         [Test]
         public void Start_PermitsNavigation()
         {
             _clickStep.Start(_completionCallback);
-            Assert.IsTrue(_shouldNavigationBeEnabledFilter.IsMatch);
+			_navigationSettings.Received().Permission = NavigationPermission.TransitionsOnly;
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             Start_PermitsNavigation();
 
             _clickable.Clicked += Raise.Event();
-            Assert.IsFalse(_shouldNavigationBeEnabledFilter.IsMatch);
+			_navigationSettings.Received().Permission = NavigationPermission.None;
         }
     }
 }

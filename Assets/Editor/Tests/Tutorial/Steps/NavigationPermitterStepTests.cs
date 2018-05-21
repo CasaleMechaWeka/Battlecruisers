@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
-using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Navigation;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
@@ -8,24 +9,24 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 	public class NavigationPermitterStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private BasicFilter _navigationPermitter;
-        private bool _isNavigationEnabled;
+		private INavigationSettings _navigationSettings;
+		private NavigationPermission _permission;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _isNavigationEnabled = true;
-            _navigationPermitter = new BasicFilter(!_isNavigationEnabled);
-            _tutorialStep = new NavigationPermitterStep(_args, _navigationPermitter, _isNavigationEnabled);
+			_permission = NavigationPermission.None;
+			_navigationSettings = Substitute.For<INavigationSettings>();
+            _tutorialStep = new NavigationPermitterStep(_args, _navigationSettings, _permission);
         }
 
         [Test]
         public void Start_SetNavigationPermission_AndCompletes()
         {
             _tutorialStep.Start(_completionCallback);
-			Assert.AreEqual(_isNavigationEnabled, _navigationPermitter.IsMatch);
+			_navigationSettings.Received().Permission = _permission;
             Assert.AreEqual(1, _callbackCounter);
         }
     }

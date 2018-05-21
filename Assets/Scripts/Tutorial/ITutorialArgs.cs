@@ -20,5 +20,6 @@ namespace BattleCruisers.Tutorial
         IBuildMenuButtons BuildMenuButtons { get; }
         ITutorialProvider TutorialProvider { get; }
         IPrefabFactory PrefabFactory { get; }
+		INavigationSettings NavigationSettings { get; }
     }
 }
