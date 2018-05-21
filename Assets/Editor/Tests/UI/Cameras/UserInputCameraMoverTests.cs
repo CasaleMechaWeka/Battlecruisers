@@ -29,7 +29,9 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_input = Substitute.For<IInput>();
 			_scrollHandler = Substitute.For<IScrollHandler>();
 			_zoomHandler = Substitute.For<IMouseZoomHandler>();
+
 			_navigationSettings = Substitute.For<INavigationSettings>();
+			_navigationSettings.IsUserInputEnabled.Returns(true);
 
 			_mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler, _navigationSettings);
 
@@ -56,6 +58,16 @@ namespace BattleCruisers.Tests.UI.Cameras
         }
 
 		#region MoveCamera
+		[Test]
+        public void MoveCamere_WhileDisabled_DoesNothing()
+		{
+			_navigationSettings.IsUserInputEnabled.Returns(false);
+
+			_mover.MoveCamera(_deltaTime);
+
+			_scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3), default(float));
+		}
+
 		[Test]
 		public void MoveCamera_InZoom_InScroll_CurrentState_UserInput()
         {

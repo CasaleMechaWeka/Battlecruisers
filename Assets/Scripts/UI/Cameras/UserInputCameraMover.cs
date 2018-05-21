@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  Update tests
-
 	/// <summary>
 	/// Handles camera movement in response to user input:
 	/// + Scrolling => Via mouse at screen edge
