@@ -5,12 +5,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-	// FELIX  Rename to NavigationButtonStep
-	public class NavigationStep : ClickStep
+	public class NavigationButtonStep : ClickStep
     {
 		private readonly INavigationSettings _navigationSettings;
 
-		public NavigationStep(ITutorialStepArgs args, INavigationSettings navigationSettings, params IClickableEmitter[] completionClickables)
+		public NavigationButtonStep(ITutorialStepArgs args, INavigationSettings navigationSettings, params IClickableEmitter[] completionClickables)
             : base(args, new StaticListProvider<IClickableEmitter>(completionClickables))
         {
 			Assert.IsNotNull(navigationSettings);

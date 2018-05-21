@@ -125,7 +125,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
             
             return 
-                new NavigationStep(
+                new NavigationButtonStep(
                     navigationButtonArgs, 
 					_tutorialArgs.NavigationSettings, 
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
@@ -244,7 +244,7 @@ namespace BattleCruisers.Tutorial
 			
 			// 6. Navigate to mid left
 			enemyUnitDefenceSteps.Add(
-				new NavigationStep(
+				new NavigationButtonStep(
 					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
 					_tutorialArgs.NavigationSettings,
 					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
@@ -389,7 +389,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_NavigateToCruiser(string textToDisplay, IButton navigationButton)
         {
             ITutorialStepArgs navigateToCruiserArgs = CreateTutorialStepArgs(textToDisplay, navigationButton);
-			return new NavigationStep(navigateToCruiserArgs, _tutorialArgs.NavigationSettings, navigationButton);
+			return new NavigationButtonStep(navigateToCruiserArgs, _tutorialArgs.NavigationSettings, navigationButton);
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)

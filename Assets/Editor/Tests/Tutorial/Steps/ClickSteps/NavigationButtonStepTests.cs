@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
-	public class NavigationStepTests : TutorialStepTestsBase
+	public class NavigationButtonStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _clickStep;
 		private INavigationSettings _navigationSettings;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 			_navigationSettings = Substitute.For<INavigationSettings>();
             _clickable = Substitute.For<IClickableEmitter>();
 
-            _clickStep = new NavigationStep(_args, _navigationSettings, _clickable);
+            _clickStep = new NavigationButtonStep(_args, _navigationSettings, _clickable);
         }
 
         [Test]
