@@ -35,7 +35,9 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_camera = Substitute.For<ICamera>();
 			_positionAdjuster = Substitute.For<ISmoothPositionAdjuster>();
 			_zoomAdjuster = Substitute.For<ISmoothZoomAdjuster>();
+
 			_navigationSettings = Substitute.For<INavigationSettings>();
+			_navigationSettings.AreTransitionsEnabled.Returns(true);
 
 			float target1OrthographicSize = 5;
 			_instaTransitionTarget
@@ -102,6 +104,18 @@ namespace BattleCruisers.Tests.UI.Cameras
 		{
 			Assert.Throws<UnityAsserts.AssertionException>(() => _transitionManager.MoveCamera(default(float)));
 		}
+
+		[Test]
+        public void MoveCamera_WhileDisabled_DoesNothing()
+        {
+			_navigationSettings.AreTransitionsEnabled.Returns(false);
+			_transitionManager.CameraTarget = _instaTransitionTarget.State;
+
+			_transitionManager.MoveCamera(default(float));
+
+			Assert.AreEqual(_startingTarget.State, _transitionManager.State);
+			Assert.IsNull(LastArgs);
+        }
 
 		[Test]
         public void MoveCamera_InTargetState_FakeCompletion()

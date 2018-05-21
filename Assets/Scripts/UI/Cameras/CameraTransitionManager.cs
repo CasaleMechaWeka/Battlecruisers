@@ -7,8 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  update tests
-
 	/// <summary>
     /// Handle camera transitions triggered by the navigation buttons.
     /// </summary>
