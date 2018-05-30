@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
@@ -10,21 +9,14 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
 	/// <summary>
 	/// Completed when the user zooms using the mouse wheel.
 	/// </summary>
-	public class ZoomWaitStep : TutorialStep
+	public class ZoomWaitStep : UserInputNavigationWaitStep
     {
-		private readonly IUserInputCameraMover _cameraMover;
-        private readonly INavigationSettings _navigationSettings;
-
 		public ZoomWaitStep(
             ITutorialStepArgs args,
 			IUserInputCameraMover cameraMover,
             INavigationSettings navigationSettings)
-            : base(args)
+			: base(args, cameraMover, navigationSettings)
         {
-            Helper.AssertIsNotNull(cameraMover, navigationSettings);
-
-            _cameraMover = cameraMover;
-            _navigationSettings = navigationSettings;
         }
 
         public override void Start(Action completionCallback)
