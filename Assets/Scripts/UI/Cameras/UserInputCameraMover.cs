@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
+﻿using System;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -6,12 +7,14 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
+    // FELIX  Update tests
+
 	/// <summary>
 	/// Handles camera movement in response to user input:
 	/// + Scrolling => Via mouse at screen edge
 	/// + Zooming   => Via mouse scroll wheel
 	/// </summary>
-	public class UserInputCameraMover : CameraMover
+	public class UserInputCameraMover : CameraMover, IUserInputCameraMover
 	{
 		private readonly ICamera _camera;
 		private readonly IInput _input;
@@ -34,6 +37,9 @@ namespace BattleCruisers.UI.Cameras
 			_zoomHandler = zoomHandler;
 			_navigationSettings = navigationSettings;
 		}
+
+		public event EventHandler Zoomed;
+		public event EventHandler Scrolled;
 
 		public override void MoveCamera(float deltaTime)
 		{
@@ -62,6 +68,12 @@ namespace BattleCruisers.UI.Cameras
 			if (desiredPosition != _camera.Position)
             {
                 _camera.Position = desiredPosition;
+
+				if (Scrolled != null)
+				{
+					Scrolled.Invoke(this, EventArgs.Empty);
+				}
+
                 return true;
             }
 
@@ -76,6 +88,12 @@ namespace BattleCruisers.UI.Cameras
             if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
             {
                 _camera.OrthographicSize = desiredOrthographicSize;
+
+				if (Zoomed != null)
+				{
+					Zoomed.Invoke(this, EventArgs.Empty);
+				}
+
                 return true;
             }
 
