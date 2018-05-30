@@ -9,12 +9,17 @@ namespace BattleCruisers.Data.Settings
         private static class Keys
         {
             public const string Difficulty = "Difficulty";
-            public const string ZoomSpeed = "ZoomSpeed";
+			public const string ZoomSpeed = "ZoomSpeed";
+            public const string ScrollSpeed = "ScrollSpeed";
         }
 
         private const float DEFAULT_ZOOM_SPEED = 2;
         public const float MIN_ZOOM_SPEED = 0.1f;
         public const float MAX_ZOOM_SPEED = 3.9f;
+
+		private const float DEFAULT_SCROLL_SPEED = 3;
+		public const float MIN_SCROLL_SPEED = 1;
+		public const float MAX_SCROLL_SPEED = 5;
 
         public Difficulty AIDifficulty
         {
@@ -34,7 +39,6 @@ namespace BattleCruisers.Data.Settings
             {
                 return PlayerPrefs.GetFloat(Keys.ZoomSpeed);
             }
-
             set
             {
                 Assert.IsTrue(value >= MIN_ZOOM_SPEED);
@@ -42,6 +46,20 @@ namespace BattleCruisers.Data.Settings
                 PlayerPrefs.SetFloat(Keys.ZoomSpeed, value);
             }
         }
+
+        public float ScrollSpeed
+		{
+			get
+			{
+				return PlayerPrefs.GetFloat(Keys.ScrollSpeed);
+			}
+			set
+			{
+				Assert.IsTrue(value >= MIN_SCROLL_SPEED);
+				Assert.IsTrue(value <= MAX_SCROLL_SPEED);
+				PlayerPrefs.SetFloat(Keys.ScrollSpeed, value);
+			}
+		}
 
         public SettingsManager()
         {
@@ -55,6 +73,7 @@ namespace BattleCruisers.Data.Settings
         {
             AIDifficulty = Difficulty.Normal;
             ZoomSpeed = DEFAULT_ZOOM_SPEED;
+			ScrollSpeed = DEFAULT_SCROLL_SPEED;
 
             Save();
         }
