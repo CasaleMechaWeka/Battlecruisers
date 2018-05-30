@@ -244,13 +244,16 @@ namespace BattleCruisers.Scenes
     					buildMenuController, 
     					_tutorialProvider, 
     					prefabFactory, 
-    					_navigationSettings);
+    					_navigationSettings,
+					    cameraInitialiser.CameraController);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
                 tutorialManager.Initialise(tutorialArgs);
 
                 tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
+
+				// FELIX  Use new NavigaitonTransitionWaitStep instead :)
 
                 // Only start the tutorial once the camera has moved to the player cruiser.
                 // The first thing the tutorial does is disable navigation, in which case

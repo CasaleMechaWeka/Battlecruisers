@@ -5,6 +5,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Tutorial
         public ITutorialProvider TutorialProvider { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
 		public INavigationSettings NavigationSettings { get; private set; }
+		public ICameraMover CameraMover { get; private set; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
@@ -31,9 +33,10 @@ namespace BattleCruisers.Tutorial
             IBuildMenuButtons buildMenuButtons,
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
-			INavigationSettings navigationSettings)
+			INavigationSettings navigationSettings,
+			ICameraMover cameraMover)
         {
-			Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory, navigationSettings);
+			Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory, navigationSettings, cameraMover);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -47,6 +50,7 @@ namespace BattleCruisers.Tutorial
             TutorialProvider = tutorialProvider;
             PrefabFactory = prefabFactory;
 			NavigationSettings = navigationSettings;
+			CameraMover = cameraMover;
         }
     }
 }

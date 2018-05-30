@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils.Fetchers;
 
@@ -21,5 +22,6 @@ namespace BattleCruisers.Tutorial
         ITutorialProvider TutorialProvider { get; }
         IPrefabFactory PrefabFactory { get; }
 		INavigationSettings NavigationSettings { get; }
+		ICameraMover CameraMover { get; }
     }
 }
