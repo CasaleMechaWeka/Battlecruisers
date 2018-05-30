@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 {
 	public class UserInputCameraMoverTests
     {
-		private ICameraMover _mover;
+		private IUserInputCameraMover _mover;
 
 		private ICamera _camera;
         private IInput _input;
@@ -21,6 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 		private float _deltaTime;
 		private float _sameOrthographicSize, _differentOrthographicSize;
 		private Vector3 _samePosition, _differentPosition;
+		private int _zoomCounter, _scrollCounter;
 
         [SetUp]
         public void SetuUp()
@@ -34,7 +35,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_navigationSettings.IsUserInputEnabled.Returns(true);
 
 			_mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler, _navigationSettings);
-
+            
 			_lastArgs = null;
 			_mover.StateChanged += (sender, e) => _lastArgs = e;
 
@@ -49,6 +50,12 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_camera.Position = _samePosition;
 
 			_deltaTime = 0.123f;
+
+			_zoomCounter = 0;
+			_mover.Zoomed += (sender, e) => _zoomCounter++;
+
+			_scrollCounter = 0;
+			_mover.Scrolled += (sender, e) => _scrollCounter++;
         }
 
         [Test]
@@ -150,6 +157,30 @@ namespace BattleCruisers.Tests.UI.Cameras
             Assert.IsNull(_lastArgs);
         }
 		#endregion MoveCamera
+
+		[Test]
+		public void EventsFired()
+		{
+			Scroll(shouldScroll: true);
+            Zoom(shouldZoom: true);
+
+            _mover.MoveCamera(_deltaTime);
+
+			Assert.AreEqual(1, _scrollCounter);
+			Assert.AreEqual(1, _zoomCounter);
+		}
+
+        [Test]
+        public void EventsNotFired()
+        {
+			Scroll(shouldScroll: false);
+            Zoom(shouldZoom: false);
+
+            _mover.MoveCamera(_deltaTime);
+
+            Assert.AreEqual(0, _scrollCounter);
+            Assert.AreEqual(0, _zoomCounter);
+        }
 
 		private void Zoom(bool shouldZoom)
         {
