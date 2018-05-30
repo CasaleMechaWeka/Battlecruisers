@@ -5,8 +5,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
-	// FELIX  Test :)
-
 	/// <summary>
 	/// Completed when camera reaches the specified state.
 	/// </summary>
