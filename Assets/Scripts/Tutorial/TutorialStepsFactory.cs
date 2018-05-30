@@ -56,10 +56,6 @@ namespace BattleCruisers.Tutorial
 			// -1. Wait until initial camera movement is complete
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
-            // FELIX  Remove
-			// 0. Disable navigation
-			//steps.Enqueue(CreateStep_NavigationPermitter(NavigationPermission.None));
-
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
