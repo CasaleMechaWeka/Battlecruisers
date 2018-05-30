@@ -416,7 +416,7 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController,
 					BuildSpeed.InfinitelySlow));
 
-			// TEMP  For testing tutorial, when previous step creating drone staion is disabled :)
+			// TEMP  For testing tutorial, when previous step creating drone station is disabled :)
 			if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
 			{
 				_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
