@@ -233,6 +233,7 @@ namespace BattleCruisers.Scenes
         {
             if (ApplicationModel.IsTutorial)
             {
+				_dataProvider.GameModel.LastBattleResult = null;
                 _dataProvider.GameModel.HasAttemptedTutorial = true;
                 _dataProvider.SaveGame();
 
