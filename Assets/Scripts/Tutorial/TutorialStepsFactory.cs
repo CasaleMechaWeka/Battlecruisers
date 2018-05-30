@@ -18,6 +18,7 @@ using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -62,6 +63,9 @@ namespace BattleCruisers.Tutorial
 
             // 2. Navigation buttons
             steps.Enqueue(CreateStep_NavigationButtons());
+
+			// FELIX  Create composite step (as all navigation button steps will need a matching wait step :) )
+			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.AiCruiser));
 
             // 3. Enemy cruiser
             steps.Enqueue(CreateStep_EnemyCruiser());
@@ -539,7 +543,7 @@ namespace BattleCruisers.Tutorial
                     buildSpeed);
         }
 
-		private NavigationPermitterStep CreateStep_NavigationPermitter(NavigationPermission permission, string textToDisplay = null)
+		private ITutorialStep CreateStep_NavigationPermitter(NavigationPermission permission, string textToDisplay = null)
         {
             return
                 new NavigationPermitterStep(
@@ -547,5 +551,15 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.NavigationSettings,
                     permission);
         }
+
+		private ITutorialStep CreateStep_NavigationWaitStep(CameraState targetState)
+		{
+			return
+				new NavigationTransitionWaitStep(
+					CreateTutorialStepArgs(textToDisplay: null),
+				    _tutorialArgs.CameraMover,
+					targetState,
+					_tutorialArgs.NavigationSettings);
+		}
     }
 }
