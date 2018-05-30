@@ -11,10 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// </summary>
     public class ScrollWaitStep : UserInputNavigationWaitStep
     {
-		public ScrollWaitStep(
-            ITutorialStepArgs args,
-            IUserInputCameraMover cameraMover,
-            INavigationSettings navigationSettings)
+		public ScrollWaitStep(ITutorialStepArgs args, IUserInputCameraMover cameraMover, INavigationSettings navigationSettings)
             : base(args, cameraMover, navigationSettings)
         {
         }

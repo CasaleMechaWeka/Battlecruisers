@@ -11,10 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
 	/// </summary>
 	public class ZoomWaitStep : UserInputNavigationWaitStep
     {
-		public ZoomWaitStep(
-            ITutorialStepArgs args,
-			IUserInputCameraMover cameraMover,
-            INavigationSettings navigationSettings)
+		public ZoomWaitStep(ITutorialStepArgs args, IUserInputCameraMover cameraMover, INavigationSettings navigationSettings)
 			: base(args, cameraMover, navigationSettings)
         {
         }
