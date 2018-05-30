@@ -53,21 +53,18 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-			// TEMP  For end game enable all tutorial steps :)
-
+			// -1. Wait until initial camera movement is complete
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
+            // FELIX  Remove
 			// 0. Disable navigation
-			steps.Enqueue(CreateStep_NavigationPermitter(NavigationPermission.None));
+			//steps.Enqueue(CreateStep_NavigationPermitter(NavigationPermission.None));
 
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
             // 2. Navigation buttons
-            steps.Enqueue(CreateStep_NavigationButtons());
-
-			// FELIX  Create composite step (as all navigation button steps will need a matching wait step :) )
-			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.AiCruiser));
+            steps.Enqueue(CreateSteps_NavigationButtons());
 
             // 3. Enemy cruiser
             steps.Enqueue(CreateStep_EnemyCruiser());
@@ -119,7 +116,7 @@ namespace BattleCruisers.Tutorial
             return CreateClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
-        private ITutorialStep CreateStep_NavigationButtons()
+		private IList<ITutorialStep> CreateSteps_NavigationButtons()
 		{
 			ITutorialStepArgs navigationButtonArgs
                 = CreateTutorialStepArgs(
@@ -130,11 +127,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.NavigationButtonsWrapper.MidRightButton,
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
             
-            return 
-                new NavigationButtonStep(
-                    navigationButtonArgs, 
-					_tutorialArgs.NavigationSettings, 
-                    _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
+			return CreateSteps_NavigationButton(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton, CameraState.AiCruiser);
 		}
 
         private ITutorialStep CreateStep_EnemyCruiser()
@@ -227,7 +220,7 @@ namespace BattleCruisers.Tutorial
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser
-            enemyUnitDefenceSteps.Add(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building a " + unitToBuild.Name + "!  Have a look!"));
+            enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building a " + unitToBuild.Name + "!  Have a look!"));
 
             // 3. Click on the unit
             string textToDisplay = null;
@@ -235,7 +228,7 @@ namespace BattleCruisers.Tutorial
             enemyUnitDefenceSteps.Add(CreateClickStep(clickUnitArgs, unitBuildProvider));
 
             // 4. Navigate back to player cruiser
-            enemyUnitDefenceSteps.Add(CreateStep_NavigateToPlayerCruiser());
+            enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToPlayerCruiser());
 
             // 5. Build defence turret
             IList<ITutorialStep> buildTurretSteps
@@ -249,11 +242,11 @@ namespace BattleCruisers.Tutorial
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
-			enemyUnitDefenceSteps.Add(
-				new NavigationButtonStep(
+			enemyUnitDefenceSteps.AddRange(
+				CreateSteps_NavigationButton(
 					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
-					_tutorialArgs.NavigationSettings,
-					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton));
+					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
+					CameraState.LeftMid));
 
             // 7. Insta-complete unit
             enemyUnitDefenceSteps.Add(
@@ -379,23 +372,26 @@ namespace BattleCruisers.Tutorial
             return constructionSteps;
         }
 
-        private ITutorialStep CreateStep_NavigateToPlayerCruiser()
+        private IList<ITutorialStep> CreateStep_NavigateToPlayerCruiser()
         {
             string textToDisplay = "Navigate back to your cruiser";
             IButton playerCruiserButton = _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton;
-            return CreateStep_NavigateToCruiser(textToDisplay, playerCruiserButton);
+			return CreateSteps_NavigateToCruiser(textToDisplay, playerCruiserButton, CameraState.PlayerCruiser);
         }
 
-        private ITutorialStep CreateStep_NavigateToEnemyCruiser(string textToDisplay)
+        private IList<ITutorialStep> CreateStep_NavigateToEnemyCruiser(string textToDisplay)
         {
             IButton enemyCruiserButton = _tutorialArgs.NavigationButtonsWrapper.AICruiserButton;
-            return CreateStep_NavigateToCruiser(textToDisplay, enemyCruiserButton);
+			return CreateSteps_NavigateToCruiser(textToDisplay, enemyCruiserButton, CameraState.AiCruiser);
         }
 
-        private ITutorialStep CreateStep_NavigateToCruiser(string textToDisplay, IButton navigationButton)
+		private IList<ITutorialStep> CreateSteps_NavigateToCruiser(string textToDisplay, IButton navigationButton, CameraState targetState)
         {
-            ITutorialStepArgs navigateToCruiserArgs = CreateTutorialStepArgs(textToDisplay, navigationButton);
-			return new NavigationButtonStep(navigateToCruiserArgs, _tutorialArgs.NavigationSettings, navigationButton);
+			return
+				CreateSteps_NavigationButton(
+					CreateTutorialStepArgs(textToDisplay, navigationButton),
+					navigationButton,
+					targetState);
         }
 
         private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
@@ -553,15 +549,27 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.NavigationSettings,
                     permission);
         }
+        private IList<ITutorialStep> CreateSteps_NavigationButton(ITutorialStepArgs navigationButtonStepArgs, IButton navigationButton, CameraState targetState)
+        {
+            return new List<ITutorialStep>
+            {
+                new NavigationButtonStep(
+                    navigationButtonStepArgs,
+                    _tutorialArgs.NavigationSettings,
+                    navigationButton),
 
+                CreateStep_NavigationWaitStep(targetState)
+            };
+		}
+            
 		private ITutorialStep CreateStep_NavigationWaitStep(CameraState targetState)
 		{
 			return
 				new NavigationTransitionWaitStep(
 					CreateTutorialStepArgs(textToDisplay: null),
-				    _tutorialArgs.CameraMover,
+					_tutorialArgs.CameraMover,
 					targetState,
 					_tutorialArgs.NavigationSettings);
 		}
-    }
+	}
 }
