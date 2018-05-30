@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Settings;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
@@ -8,6 +9,7 @@ namespace BattleCruisers.UI.Cameras
 	public class CameraCalculator : ICameraCalculator
 	{
 		private readonly Camera _camera;
+		private readonly ISettingsManager _settingsManager;
 
 		private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
         private const float CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER = 0.08f;
@@ -21,9 +23,10 @@ namespace BattleCruisers.UI.Cameras
 		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
 		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
 
-		public CameraCalculator(Camera camera)
+		public CameraCalculator(Camera camera, ISettingsManager settingsManager)
 		{
 			_camera = camera;
+			_settingsManager = settingsManager;
 		}
 
 		// height = 2 * orthographic size
@@ -56,7 +59,7 @@ namespace BattleCruisers.UI.Cameras
         public float FindScrollSpeed(float orthographicSize, float timeDelta)
         {
 			float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
-			return scrollSpeedPerS * timeDelta;
+			return scrollSpeedPerS * timeDelta * _settingsManager.ScrollSpeed;
         }
 
         public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)
