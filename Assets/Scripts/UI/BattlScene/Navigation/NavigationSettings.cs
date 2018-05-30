@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-	// FELIX  Test :)
 	public class NavigationSettings : INavigationSettings
 	{
 		public bool AreTransitionsEnabled { get { return AreTransitionsEnabledFilter.IsMatch; } }
