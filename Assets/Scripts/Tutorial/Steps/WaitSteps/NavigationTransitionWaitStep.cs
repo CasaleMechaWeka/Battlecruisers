@@ -34,8 +34,15 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
         {
             base.Start(completionCallback);
 
-			_navigationSettings.Permission = NavigationPermission.TransitionsOnly;
-			_cameraMover.StateChanged += _cameraMover_StateChanged;
+			if (_cameraMover.State == _targetState)
+			{
+				OnCompleted();
+			}
+			else
+			{
+				_navigationSettings.Permission = NavigationPermission.TransitionsOnly;
+				_cameraMover.StateChanged += _cameraMover_StateChanged;
+			}
         }
 
         private void _cameraMover_StateChanged(object sender, CameraStateChangedArgs e)
