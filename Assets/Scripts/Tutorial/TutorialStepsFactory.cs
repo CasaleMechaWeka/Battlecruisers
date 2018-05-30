@@ -53,22 +53,23 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-			// -1. Wait until initial camera movement is complete
+			// 0. Wait until initial camera movement is complete
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
-            // 2. Navigation buttons
+			// 2. Mouse navigation
+			steps.Enqueue(CreateSteps_MouseNavigation());
+
+            // 3. Navigation buttons
             steps.Enqueue(CreateSteps_NavigationButtons());
 
-            // 3. Enemy cruiser
+            // 4. Enemy cruiser
             steps.Enqueue(CreateStep_EnemyCruiser());
 
             // Navigate back to player cruiser
             steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
-
-            // TEMP  4. Add step for [Navigating via mouse / touch(eventually: P)]
 
             // 5. Speed controls
             steps.Enqueue(CreateSteps_SpeedControls());
@@ -112,11 +113,34 @@ namespace BattleCruisers.Tutorial
             return CreateClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
+		private IList<ITutorialStep> CreateSteps_MouseNavigation()
+		{
+			return new List<ITutorialStep>()
+			{
+				new ZoomWaitStep(
+					CreateTutorialStepArgs("Use your mouse scroll wheel to zoom in or out"),
+					_tutorialArgs.UserInputCameraMover,
+					_tutorialArgs.NavigationSettings),
+
+				new ScrollWaitStep(
+					CreateTutorialStepArgs("Nice!  Move your mouse to the screen edge to scroll"),
+					_tutorialArgs.UserInputCameraMover,
+					_tutorialArgs.NavigationSettings),
+
+				CreateStep_NavigationPermitter(NavigationPermission.UserInputOnly),
+
+				new DelayWaitStep(
+					CreateTutorialStepArgs(textToDisplay: null),
+					_deferrer,
+					waitTimeInS: 3)
+			};
+		}
+
 		private IList<ITutorialStep> CreateSteps_NavigationButtons()
 		{
 			ITutorialStepArgs navigationButtonArgs
                 = CreateTutorialStepArgs(
-    				"These are navigation buttons.  They help you move around the map.  Play around a bit with these.",
+    				"Nice!  These are navigation buttons.  They help you move around the map.  Play around a bit with these.",
                     _tutorialArgs.NavigationButtonsWrapper.PlayerCruiserButton,
                     _tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
                     _tutorialArgs.NavigationButtonsWrapper.OverviewButton,
