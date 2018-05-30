@@ -32,10 +32,10 @@ using UnityEngine.Assertions;
 // PERF     => Potential performance hit
 namespace BattleCruisers.Scenes
 {
-    /// <summary>
-    /// Initialises everything :D
-    /// </summary>
-    public class BattleSceneGod : MonoBehaviour
+	/// <summary>
+	/// Initialises everything :D
+	/// </summary>
+	public class BattleSceneGod : MonoBehaviour
 	{
         private ISceneNavigator _sceneNavigator;
 		private IDataProvider _dataProvider;
@@ -252,22 +252,7 @@ namespace BattleCruisers.Scenes
                 tutorialManager.Initialise(tutorialArgs);
 
                 tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
-
-				// FELIX  Use new NavigaitonTransitionWaitStep instead :)
-
-                // Only start the tutorial once the camera has moved to the player cruiser.
-                // The first thing the tutorial does is disable navigation, in which case
-				// we never reach the starting state of the player cruiser :P
-				EventHandler<CameraStateChangedArgs> onCameraStateChanged = null;
-				onCameraStateChanged = (sender, e) =>
-				{
-					if (e.NewState == CameraState.PlayerCruiser)
-					{
-						cameraInitialiser.CameraController.StateChanged -= onCameraStateChanged;
-						tutorialManager.StartTutorial();
-                    }
-                };
-				cameraInitialiser.CameraController.StateChanged += onCameraStateChanged;
+				tutorialManager.StartTutorial();
             }
         }
 

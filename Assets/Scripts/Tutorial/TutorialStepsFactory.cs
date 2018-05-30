@@ -55,6 +55,8 @@ namespace BattleCruisers.Tutorial
 
 			// TEMP  For end game enable all tutorial steps :)
 
+			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
+
 			// 0. Disable navigation
 			steps.Enqueue(CreateStep_NavigationPermitter(NavigationPermission.None));
 
