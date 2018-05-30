@@ -18,6 +18,8 @@ namespace BattleCruisers.UI.Cameras
 		private CameraController _cameraController;
 		public ICameraController CameraController { get { return _cameraController; } }
 
+		public IUserInputCameraMover UserInputCameraMover { get; private set; }
+
 		// Scrolling bounds
 		private const float CAMERA_POSITION_MAX_X = 35;
 		private const float CAMERA_POSITION_MIN_X = -35;
@@ -50,12 +52,12 @@ namespace BattleCruisers.UI.Cameras
 
 			ICameraCalculator cameraCalculator = new CameraCalculator(platformCamera);
 			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator, navigationSettings);
-			ICameraMover userInputMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
+			UserInputCameraMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
 
-			_cameraController.Initialise(transitionManager, userInputMover);
+			_cameraController.Initialise(transitionManager, UserInputCameraMover);
 		}
 
-		private ICameraMover CreateUserInputMover(
+		private IUserInputCameraMover CreateUserInputMover(
 			ISettingsManager settingsManager, 
 			ICamera camera, 
 			ICameraCalculator cameraCalculator, 

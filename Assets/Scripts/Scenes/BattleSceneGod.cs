@@ -246,7 +246,8 @@ namespace BattleCruisers.Scenes
     					_tutorialProvider, 
     					prefabFactory, 
     					_navigationSettings,
-					    cameraInitialiser.CameraController);
+					    cameraInitialiser.CameraController,
+					    cameraInitialiser.UserInputCameraMover);
 
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);

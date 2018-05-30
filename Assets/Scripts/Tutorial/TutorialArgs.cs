@@ -25,7 +25,8 @@ namespace BattleCruisers.Tutorial
         public IPrefabFactory PrefabFactory { get; private set; }
 		public INavigationSettings NavigationSettings { get; private set; }
 		public ICameraMover CameraMover { get; private set; }
-
+		public IUserInputCameraMover UserInputCameraMover { get; private set; }
+        
         public TutorialArgs(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
@@ -34,9 +35,10 @@ namespace BattleCruisers.Tutorial
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
 			INavigationSettings navigationSettings,
-			ICameraMover cameraMover)
+			ICameraMover cameraMover,
+			IUserInputCameraMover userInputCameraMover)
         {
-			Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory, navigationSettings, cameraMover);
+			Helper.AssertIsNotNull(playerCruiser, aiCruiser, hudCanvas, buildMenuButtons, tutorialProvider, prefabFactory, navigationSettings, cameraMover, userInputCameraMover);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -51,6 +53,7 @@ namespace BattleCruisers.Tutorial
             PrefabFactory = prefabFactory;
 			NavigationSettings = navigationSettings;
 			CameraMover = cameraMover;
+			UserInputCameraMover = userInputCameraMover;
         }
     }
 }
