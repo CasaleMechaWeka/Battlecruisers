@@ -4,8 +4,6 @@ using BattleCruisers.UI.Cameras;
 
 namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
-    // FELIX  Test :)
-
     /// <summary>
     /// Completed when the user scrolls by moving the mouse to the screen edge.
     /// </summary>
