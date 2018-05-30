@@ -1,8 +1,6 @@
-﻿using BattleCruisers.Tutorial.Highlighting;
-
-namespace BattleCruisers.UI.BattleScene.Navigation
+﻿namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public interface INavigationButtonsWrapper
+	public interface INavigationButtonsWrapper
     {
         IButton PlayerCruiserButton { get; }
         IButton MidLeftButton { get; }
