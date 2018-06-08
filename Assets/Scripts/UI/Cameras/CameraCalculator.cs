@@ -1,14 +1,15 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Test!  (Need to user wrapper for Camera first :/)
+	// FELIX  Test!
 	public class CameraCalculator : ICameraCalculator
 	{
-		private readonly Camera _camera;
+		private readonly ICamera _camera;
 		private readonly ISettingsManager _settingsManager;
 
 		private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
@@ -23,7 +24,7 @@ namespace BattleCruisers.UI.Cameras
 		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
 		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
 
-		public CameraCalculator(Camera camera, ISettingsManager settingsManager)
+		public CameraCalculator(ICamera camera, ISettingsManager settingsManager)
 		{
 			_camera = camera;
 			_settingsManager = settingsManager;
@@ -34,7 +35,7 @@ namespace BattleCruisers.UI.Cameras
 		public float FindCameraOrthographicSize(ICruiser cruiser)
 		{
 			float desiredWidth = cruiser.Size.x * CRUISER_WIDTH_MULTIPLIER;
-			float desiredHeight = desiredWidth / _camera.aspect;
+			float desiredHeight = desiredWidth / _camera.Aspect;
 			float desiredOrthographicSize = desiredHeight / 2;
 
 			if (desiredOrthographicSize < MIN_CAMERA_ORTHOGRAPHIC_SIZE)

@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.Cameras
 			Assert.IsNotNull(skybox);
 			skybox.material = skyboxMaterial;
 
-			ICameraCalculator cameraCalculator = new CameraCalculator(platformCamera, settingsManager);
+            ICameraCalculator cameraCalculator = new CameraCalculator(camera, settingsManager);
 			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator, navigationSettings);
 			UserInputCameraMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
 
