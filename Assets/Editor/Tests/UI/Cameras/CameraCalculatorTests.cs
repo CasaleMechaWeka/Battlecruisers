@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -35,25 +36,81 @@ namespace BattleCruisers.Tests.UI.Cameras
             _calculator = new CameraCalculator(_camera, _settingsManager);
 
             _cruiser = Substitute.For<ICruiser>();
+            _cruiser.Size.Returns(new Vector2(123, 123));
         }
 
         [Test]
         public void FindCameraOrthographicSize()
         {
-            _cruiser.Size.Returns(new Vector2(123, 123));
-
             float desiredWidth = _cruiser.Size.x * CRUISER_WIDTH_MULTIPLIER;
             float desiredHeight = desiredWidth / _camera.Aspect;
             float expectedOrthographicSize = desiredHeight / 2;
 
-            Assert.AreEqual(expectedOrthographicSize, _calculator.FindCameraOrthographicSize(_cruiser));
+            Assert.IsTrue(Mathf.Approximately(expectedOrthographicSize, _calculator.FindCameraOrthographicSize(_cruiser)));
         }
 
         [Test]
         public void FindCameraOrthographicSize_BelowMinClamps()
         {
             _cruiser.Size.Returns(new Vector2(1.2f, 12));
-            Assert.AreEqual(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, _calculator.FindCameraOrthographicSize(_cruiser));
+            Assert.IsTrue(Mathf.Approximately(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, _calculator.FindCameraOrthographicSize(_cruiser)));
+        }
+
+        [Test]
+        public void FindCameraYPosition()
+        {
+            float desiredOrthographicSize = 1.5f;
+            float desiredHeight = 2 * desiredOrthographicSize;
+            float expectedYPosition = desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
+
+            Assert.IsTrue(Mathf.Approximately(expectedYPosition, _calculator.FindCameraYPosition(desiredOrthographicSize)));
+        }
+
+        [Test]
+        public void FindScrollSpeed()
+        {
+            float orthographicSize = 1.5f;
+            float timeDelta = 0.04f;
+            float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
+            float expectedScrollSpeed = scrollSpeedPerS * timeDelta * _settingsManager.ScrollSpeed;
+
+            Assert.IsTrue(Mathf.Approximately(expectedScrollSpeed, _calculator.FindScrollSpeed(orthographicSize, timeDelta)));
+        }
+
+        [Test]
+        public void FindCruiserCameraPosition_CruiserFacingRight()
+        {
+            float orthographicSize = 1.5f;
+            float zValue = -10;
+            _cruiser.Direction.Returns(Direction.Right);
+
+            float xAdjustmentMagnitudeInM = _cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+
+            Vector3 expectedPosition =
+                new Vector3(
+                    _cruiser.Position.x + xAdjustmentMagnitudeInM,
+                    _calculator.FindCameraYPosition(orthographicSize),
+                    zValue);
+
+            Assert.AreEqual(expectedPosition, _calculator.FindCruiserCameraPosition(_cruiser, orthographicSize, zValue));
+        }
+
+        [Test]
+        public void FindCruiserCameraPosition_CruiserFacingLeft()
+        {
+            float orthographicSize = 1.5f;
+            float zValue = -10;
+            _cruiser.Direction.Returns(Direction.Left);
+
+            float xAdjustmentMagnitudeInM = _cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+
+            Vector3 expectedPosition =
+                new Vector3(
+                    _cruiser.Position.x - xAdjustmentMagnitudeInM,
+                    _calculator.FindCameraYPosition(orthographicSize),
+                    zValue);
+
+            Assert.AreEqual(expectedPosition, _calculator.FindCruiserCameraPosition(_cruiser, orthographicSize, zValue));
         }
     }
 }
