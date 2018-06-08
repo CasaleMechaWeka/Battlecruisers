@@ -63,7 +63,9 @@ namespace BattleCruisers.Data.Settings
 
         public SettingsManager()
         {
-            if (!PlayerPrefs.HasKey(Keys.Difficulty))
+            if (!PlayerPrefs.HasKey(Keys.Difficulty)
+                || !PlayerPrefs.HasKey(Keys.ZoomSpeed)
+                || !PlayerPrefs.HasKey(Keys.ScrollSpeed))
             {
                 CreateSettings();
             }

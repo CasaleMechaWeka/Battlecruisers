@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ISettingsManager _settingsManager;
         private IList<Difficulty> _difficulties;
         private Dropdown _difficultyDropdown;
-        private Slider _zoomSpeedSlider;
+        private Slider _zoomSpeedSlider, _scrollSpeedSlider;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
 		{
@@ -23,12 +24,13 @@ namespace BattleCruisers.UI.ScreensScene
 
             _difficultyDropdown = GetComponentInChildren<Dropdown>(includeInactive: true);
             Assert.IsNotNull(_difficultyDropdown);
+			SetupDifficultyDropdown();
 
-            _zoomSpeedSlider = GetComponentInChildren<Slider>(includeInactive: true);
-            Assert.IsNotNull(_zoomSpeedSlider);
-
-            SetupDifficultyDropdown();
-            SetupZoomSpeedSlider();
+            _zoomSpeedSlider = transform.FindNamedComponent<Slider>("ZoomSpeedRow/Slider");
+			SetupZoomSpeedSlider();
+            
+			_scrollSpeedSlider = transform.FindNamedComponent<Slider>("ScrollSpeedRow/Slider");
+			SetupScrollSpeedSlider();
 		}
 
         private void SetupDifficultyDropdown()
@@ -62,6 +64,13 @@ namespace BattleCruisers.UI.ScreensScene
             _zoomSpeedSlider.maxValue = SettingsManager.MAX_ZOOM_SPEED;
 			_zoomSpeedSlider.value = _settingsManager.ZoomSpeed;
         }
+
+		private void SetupScrollSpeedSlider()
+		{
+			_scrollSpeedSlider.minValue = SettingsManager.MIN_SCROLL_SPEED;
+			_scrollSpeedSlider.maxValue = SettingsManager.MAX_SCROLL_SPEED;
+			_scrollSpeedSlider.value = _settingsManager.ScrollSpeed;
+		}
 
         public void Save()
         {
