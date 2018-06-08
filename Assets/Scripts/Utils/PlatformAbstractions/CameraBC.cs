@@ -24,5 +24,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 			get { return _platfromCamera.orthographicSize; }
 			set { _platfromCamera.orthographicSize = value; }
 		}
-	}
+
+        public float Aspect { get { return _platfromCamera.aspect; } }
+    }
 }
