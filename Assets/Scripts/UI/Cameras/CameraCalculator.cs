@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	// FELIX  Test!
 	public class CameraCalculator : ICameraCalculator
 	{
 		private readonly ICamera _camera;
@@ -51,11 +50,6 @@ namespace BattleCruisers.UI.Cameras
 			float desiredHeight = 2 * desiredOrthographicSize;
 			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
 		}
-
-        public float FindDragSpeed(float orthographicSize)
-        {
-			return SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
-        }
 
         public float FindScrollSpeed(float orthographicSize, float timeDelta)
         {
