@@ -78,6 +78,7 @@ namespace BattleCruisers.UI.ScreensScene
             _settingsManager.AIDifficulty = _difficulties[_difficultyDropdown.value];
 
             _settingsManager.ZoomSpeed = _zoomSpeedSlider.value;
+            _settingsManager.ScrollSpeed = _scrollSpeedSlider.value;
 
             _settingsManager.Save();
 
