@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,6 +14,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 	public class MouseZoomHandler : IMouseZoomHandler
 	{
 		private readonly ISettingsManager _settingsManager;
+        private readonly IDeltaTimeProvider _deltaTimeProvider;
 		private readonly float _minOrthographicSize;
 		private readonly float _maxOrthographicSize;
 
@@ -19,21 +22,22 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 		// by this constant so zoom is roughly the same when time delta is normal.
 		private const float ZOOM_SPEED_MULTIPLIER = 30;
 
-		public MouseZoomHandler(ISettingsManager settingsManager, float minOrthographicSize, float maxOrthographicSize)
+        public MouseZoomHandler(ISettingsManager settingsManager, IDeltaTimeProvider deltaTimeProvider, float minOrthographicSize, float maxOrthographicSize)
 		{
-			Assert.IsNotNull(settingsManager);
+            Helper.AssertIsNotNull(settingsManager, deltaTimeProvider);
 			Assert.IsTrue(minOrthographicSize < maxOrthographicSize);
 
 			_settingsManager = settingsManager;
+            _deltaTimeProvider = deltaTimeProvider;
 			_minOrthographicSize = minOrthographicSize;
 			_maxOrthographicSize = maxOrthographicSize;
 		}
 
-		public float FindCameraOrthographicSize(float cameraOrthographicSize, float yMouseScrollDelta, float timeDelta)
+		public float FindCameraOrthographicSize(float cameraOrthographicSize, float yMouseScrollDelta)
 		{
 			if (!Mathf.Approximately(yMouseScrollDelta, 0))
 			{
-				cameraOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * timeDelta;
+                cameraOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.DeltaTime;
 				cameraOrthographicSize = Mathf.Clamp(cameraOrthographicSize, _minOrthographicSize, _maxOrthographicSize);
 			}
 

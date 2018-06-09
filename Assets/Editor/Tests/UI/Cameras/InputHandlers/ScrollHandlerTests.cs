@@ -15,10 +15,10 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 		private ICameraCalculator _calculator;
         private IScreen _screen;
         private IPositionClamper _clamper;
+        private IDeltaTimeProvider _deltaTimeProvider;
 
 		private float _orthographicSize = 71;
 		private float _scrollSpeed = 17;
-		private float _timeDelta = 171;
 		private Vector3 _cameraPosition;
 
 		private float _nonScrollingValue;
@@ -31,16 +31,20 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 			_calculator = Substitute.For<ICameraCalculator>();
 			_screen = Substitute.For<IScreen>();
 			_clamper = Substitute.For<IPositionClamper>();
+            _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
 
-			_scrollHandler = new ScrollHandler(_calculator, _screen, _clamper);
+			_scrollHandler = new ScrollHandler(_calculator, _screen, _clamper, _deltaTimeProvider);
 
 			_screen.Width.Returns(1920);
 			_screen.Height.Returns(1200);
 
-			_calculator.FindScrollSpeed(_orthographicSize, _timeDelta).Returns(_scrollSpeed);
+            _deltaTimeProvider.DeltaTime.Returns(0.171f);
 
-			// Simply return the parameter, ie, don't clamp :P
-			_clamper.Clamp(default(Vector3)).ReturnsForAnyArgs(x => x.Arg<Vector3>());
+            _calculator.FindScrollSpeed(_orthographicSize, _deltaTimeProvider.DeltaTime).Returns(_scrollSpeed);
+
+            // Simply return the parameter, ie, don't clamp :P
+            _clamper.Clamp(default(Vector3)).ReturnsForAnyArgs(x => x.Arg<Vector3>());
+
 
 			_cameraPosition = new Vector3(0, 0, -10);
 
@@ -52,9 +56,9 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
         {
 			Vector3 mousePosition = new Vector3(_nonScrollingValue, _nonScrollingValue, 1);
 
-			Assert.AreEqual(_cameraPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition, _timeDelta));
+			Assert.AreEqual(_cameraPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
 
-			_calculator.Received().FindScrollSpeed(_orthographicSize, _timeDelta);
+            _calculator.Received().FindScrollSpeed(_orthographicSize, _deltaTimeProvider.DeltaTime);
 			_clamper.Received().Clamp(_cameraPosition);
         }
 
@@ -65,7 +69,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 			float expectedX = _cameraPosition.x - _scrollSpeed;
 			Vector3 expectedPosition = new Vector3(expectedX, _cameraPosition.y, _cameraPosition.z);
 
-			Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition, _timeDelta));
+			Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
 		}
 
         [Test]
@@ -75,7 +79,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
             float expectedX = _cameraPosition.x + _scrollSpeed;
             Vector3 expectedPosition = new Vector3(expectedX, _cameraPosition.y, _cameraPosition.z);
 
-            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition, _timeDelta));
+            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
         }
 
         [Test]
@@ -85,7 +89,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 			float expectedY = _cameraPosition.y - _scrollSpeed;
 			Vector3 expectedPosition = new Vector3(_cameraPosition.x, expectedY, _cameraPosition.z);
 
-            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition, _timeDelta));
+            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
         }
 
         [Test]
@@ -95,7 +99,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
             float expectedY = _cameraPosition.y + _scrollSpeed;
             Vector3 expectedPosition = new Vector3(_cameraPosition.x, expectedY, _cameraPosition.z);
 
-            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition, _timeDelta));
+            Assert.AreEqual(expectedPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
         }
 	}
 }

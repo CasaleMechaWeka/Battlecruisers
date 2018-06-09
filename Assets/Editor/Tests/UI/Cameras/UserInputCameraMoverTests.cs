@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 
 			_mover.MoveCamera(_deltaTime);
 
-			_scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3), default(float));
+			_scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3));
 		}
 
 		[Test]
@@ -185,23 +185,23 @@ namespace BattleCruisers.Tests.UI.Cameras
 		private void Zoom(bool shouldZoom)
         {
             float desiredOrthographicSize = shouldZoom ? _differentOrthographicSize : _sameOrthographicSize;
-            _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y, _deltaTime).Returns(desiredOrthographicSize);
+            _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y).Returns(desiredOrthographicSize);
         }
 
 		private void ReceivedZoom()
         {
-			_zoomHandler.Received().FindCameraOrthographicSize(_sameOrthographicSize, _input.MouseScrollDelta.y, _deltaTime);
+			_zoomHandler.Received().FindCameraOrthographicSize(_sameOrthographicSize, _input.MouseScrollDelta.y);
         }
 
         private void Scroll(bool shouldScroll)
         {
             Vector3 desiredPosition = shouldScroll ? _differentPosition : _samePosition;
-            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition, _deltaTime).Returns(desiredPosition);
+            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition).Returns(desiredPosition);
         }
 
         private void ReceivedScroll()
 		{
-			_scrollHandler.Received().FindCameraPosition(_sameOrthographicSize, _samePosition, _input.MousePosition, _deltaTime);
+			_scrollHandler.Received().FindCameraPosition(_sameOrthographicSize, _samePosition, _input.MousePosition);
 		}
     }
 }

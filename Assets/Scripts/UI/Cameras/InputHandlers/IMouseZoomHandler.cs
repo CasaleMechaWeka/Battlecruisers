@@ -2,6 +2,6 @@
 {
 	public interface IMouseZoomHandler
 	{
-		float FindCameraOrthographicSize(float cameraOrthographicSize, float yMouseScrollDelta, float timeDelta);
+		float FindCameraOrthographicSize(float cameraOrthographicSize, float yMouseScrollDelta);
 	}
 }

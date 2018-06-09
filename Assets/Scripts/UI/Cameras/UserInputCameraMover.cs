@@ -48,8 +48,8 @@ namespace BattleCruisers.UI.Cameras
 
 			// Want to handle scrolling first, because zoom can change the camera
             // orthographic size, which affects scrolling.
-			bool inScroll = HandleScroll(deltaTime);
-            bool inZoom = HandleZoom(deltaTime);
+			bool inScroll = HandleScroll();
+            bool inZoom = HandleZoom();
 
 			if ((inScroll || inZoom)
 			    && State != CameraState.UserInputControlled)
@@ -59,9 +59,9 @@ namespace BattleCruisers.UI.Cameras
 		}
   
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
-		private bool HandleScroll(float deltaTime)
+		private bool HandleScroll()
         {
-			Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition, deltaTime);
+			Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition);
 
 			if (desiredPosition != _camera.Position)
             {
@@ -79,9 +79,9 @@ namespace BattleCruisers.UI.Cameras
         }
 
         /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
-        private bool HandleZoom(float deltaTime)
+        private bool HandleZoom()
         {
-            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y, deltaTime);
+            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y);
 
             if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
             {
