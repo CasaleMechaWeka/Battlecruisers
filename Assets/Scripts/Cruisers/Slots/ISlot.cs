@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.DataStrctures;
 
@@ -35,6 +36,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         bool IsFree { get; }
         SlotType Type { get; }
+        Direction Direction { get; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
 

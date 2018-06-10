@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
@@ -21,15 +20,17 @@ namespace BattleCruisers.Cruisers.Slots
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
 
         public SlotType type;
+        public SlotType Type { get { return type; } }
+
         public Direction direction;
+        public Direction Direction { get { return direction; } }
+
         public float index;
-        public bool mirrorBuilding;
+        public float Index { get { return index; } }
 
         public bool IsFree { get { return Building == null; } }
-        public SlotType Type { get { return type; } }
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
-        public float Index { get { return index; } }
 		
         private ISlotState _currentState;
         private ISlotState CurrentState
@@ -123,8 +124,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         private Quaternion FindBuildingRotation()
         {
-            Quaternion buildingRotation = transform.rotation;
-            return mirrorBuilding ? Helper.MirrorAccrossYAxis(buildingRotation) : buildingRotation;
+            return transform.rotation;
         }
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
