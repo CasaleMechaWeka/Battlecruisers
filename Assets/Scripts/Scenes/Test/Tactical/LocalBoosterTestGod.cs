@@ -8,6 +8,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -33,7 +34,9 @@ namespace BattleCruisers.Scenes.Test.Tactical
 			// Setup artillery slot
 			Slot slotToBoost = FindObjectOfType<Slot>();
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
-            slotToBoost.Initialise(parentCruiser, neighbouringSlots: new ReadOnlyCollection<ISlot>(new List<ISlot>()));
+            ReadOnlyCollection<ISlot> emptyNeighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+            IBuildingPlacer buildingPlacer = new BuildingPlacer();
+            slotToBoost.Initialise(parentCruiser, emptyNeighbouringSlots, buildingPlacer);
 
 
             // Setup artillery

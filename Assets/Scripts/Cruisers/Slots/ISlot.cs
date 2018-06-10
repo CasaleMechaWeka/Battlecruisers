@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.DataStrctures;
 
@@ -57,7 +58,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
 
-        void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots);
+        void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer);
         void HighlightSlot();
         void UnhighlightSlot();
 	}

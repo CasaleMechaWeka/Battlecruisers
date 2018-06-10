@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private ISlotWrapper _slotWrapper;
         private ICruiser _parentCruiser;
         private ISlotFilter _highlightableFilter;
+        private IBuildingPlacer _buildingPlacer;
         private ISlot _frontSlot, _middleSlot, _deckSlot1, _deckSlot2;
         private IBuilding _building;
 
@@ -24,6 +26,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             _parentCruiser = Substitute.For<ICruiser>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
+            _buildingPlacer = Substitute.For<IBuildingPlacer>();
 
             // Deck2, Deck1, Platform, Bow
             _frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
@@ -40,7 +43,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                 _deckSlot1
             };
 
-            _slotWrapper = new SlotWrapper(_parentCruiser, slots, _highlightableFilter);
+            _slotWrapper = new SlotWrapper(_parentCruiser, slots, _highlightableFilter, _buildingPlacer);
 
             _building = Substitute.For<IBuilding>();
             SlotType middleSlotType = _middleSlot.Type;
@@ -63,28 +66,32 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                     neighbours.Contains(_middleSlot)
                     && !neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
-            ));
+            ),
+            _buildingPlacer);
 
             _middleSlot.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_frontSlot)
                     && neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_deckSlot2)
-            ));
+            ),
+            _buildingPlacer);
 
             _deckSlot1.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_middleSlot)
                     && neighbours.Contains(_deckSlot2)
                     && !neighbours.Contains(_frontSlot)
-            ));
+            ),
+            _buildingPlacer);
 
             _deckSlot2.Received().Initialise(_parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(_deckSlot1)
                     && !neighbours.Contains(_middleSlot)
                     && !neighbours.Contains(_frontSlot)
-            ));
+            ),
+            _buildingPlacer);
         }
 
         #region IsSlotAvailable

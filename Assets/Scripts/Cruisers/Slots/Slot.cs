@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Cruisers.Slots.States;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private SpriteRenderer _renderer;
         private ICruiser _parentCruiser;
+        private IBuildingPlacer _buildingPlacer;
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
 
         public SlotType type;
@@ -59,8 +61,7 @@ namespace BattleCruisers.Cruisers.Slots
 
                 if (_building != null)
                 {
-                    _building.Position = FindSpawnPosition(_building);
-                    _building.Rotation = FindBuildingRotation();
+                    _buildingPlacer.PlaceBuilding(_building, this);
                     _building.Destroyed += OnBuildingDestroyed;
 				}
             }
@@ -76,12 +77,13 @@ namespace BattleCruisers.Cruisers.Slots
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots)
+        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer)
 		{
-            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
+            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
+            _buildingPlacer = buildingPlacer;
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
@@ -104,28 +106,6 @@ namespace BattleCruisers.Cruisers.Slots
                 Clicked.Invoke(this, EventArgs.Empty);
             }
 		}
-
-		private Vector3 FindSpawnPosition(IBuilding building)
-		{
-			switch (direction)
-			{
-				case Direction.Right:
-					float horizontalChange = (_renderer.bounds.size.x + building.Size.x) / 2 + (building.CustomOffsetProportion * building.Size.x);
-					return transform.position + (transform.right * horizontalChange);
-
-				case Direction.Up:
-					float verticalChange = (_renderer.bounds.size.y + building.Size.y) / 2 + (building.CustomOffsetProportion * building.Size.y);
-					return transform.position + (transform.up * verticalChange);
-
-				default:
-                    throw new ArgumentException("Invalid slot direction");
-			}
-		}
-
-        private Quaternion FindBuildingRotation()
-        {
-            return transform.rotation;
-        }
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{

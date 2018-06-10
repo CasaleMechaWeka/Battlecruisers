@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -42,7 +43,7 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots, ISlotFilter highlightableFilter)
+        public SlotWrapper(ICruiser parentCruiser, IList<ISlot> slots, ISlotFilter highlightableFilter, IBuildingPlacer buildingPlacer)
 		{
             Helper.AssertIsNotNull(parentCruiser, slots, highlightableFilter);
 
@@ -60,7 +61,7 @@ namespace BattleCruisers.Cruisers.Slots
             {
                 ISlot slot = slots[i];
                 ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
-                slot.Initialise(parentCruiser, neighbouringSlots);
+                slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
                 SortSlotsByType(slot);
                 slot.BuildingDestroyed += Slot_BuildingDestroyed;
             }
