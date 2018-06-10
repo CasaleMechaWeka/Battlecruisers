@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,8 @@ namespace BattleCruisers.Buildables.Buildings
 {
     public class Building : Buildable, IPointerClickHandler, IBuilding
 	{
+        private BoxCollider2D _collider;
+
         protected ISlot _parentSlot;
 
 		public BuildingCategory category;
@@ -17,24 +20,33 @@ namespace BattleCruisers.Buildables.Buildings
 		public float customOffsetProportion;
         public bool preferCruiserFront;
 
-		public override TargetType TargetType { get { return TargetType.Buildings; } }
+        public override TargetType TargetType { get { return TargetType.Buildings; } }
+        public override Vector2 Size { get { return _collider.size; } }
         public BuildingCategory Category { get { return category; } }
-		public float CustomOffsetProportion { get { return customOffsetProportion; } }
+        public float CustomOffsetProportion { get { return customOffsetProportion; } }
         public bool PreferCruiserFront { get { return preferCruiserFront; } }
-		
+        
         public SlotType slotType;
         public SlotType SlotType { get { return slotType; } }
 
-		protected override HealthBarController HealthBarController
-		{
-			get
-			{
+        protected override HealthBarController HealthBarController
+        {
+            get
+            {
                 BuildingWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildingWrapper>();
-				return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-			}
-		}
+                return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            }
+        }
 
-		public void Initialise(
+        protected override void OnStaticInitialised()
+        {
+            base.OnStaticInitialised();
+
+            _collider = GetComponent<BoxCollider2D>();
+            Assert.IsNotNull(_collider);
+        }
+
+        public void Initialise(
             ICruiser parentCruiser, 
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
