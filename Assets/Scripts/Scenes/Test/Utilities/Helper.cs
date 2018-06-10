@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public Helper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES, 
-            float buildSpeedMultiplier = BuildSpeedMultipliers.INSANE_BUILD_SPEED_MULTIPLIER)
+            float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;

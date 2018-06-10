@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         private readonly float _buildMultiplier;
 
-        public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER)
+        public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
             _buildMultiplier = buildSpeedMultiplier;
         }

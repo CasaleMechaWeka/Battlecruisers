@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
-            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
+            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT);
             PlayerCruiserBuildProgressCalculator = normalCalculator;
             AICruiserBuildProgressCalculator = normalCalculator;
         }
