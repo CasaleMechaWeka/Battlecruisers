@@ -195,11 +195,11 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
 
@@ -291,8 +291,8 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<HullKey, int>()
             {
                 { StaticPrefabKeys.Hulls.Trident, 1 },
-                { StaticPrefabKeys.Hulls.Raptor, 4 },
-                { StaticPrefabKeys.Hulls.Bullshark, 6 },
+                { StaticPrefabKeys.Hulls.Bullshark, 4 },
+                { StaticPrefabKeys.Hulls.Raptor, 6 },
                 { StaticPrefabKeys.Hulls.Rockjaw, 8 },
                 { StaticPrefabKeys.Hulls.Eagle, 12 },
                 { StaticPrefabKeys.Hulls.Hammerhead, 15 },
