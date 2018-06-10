@@ -20,6 +20,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Strings;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -240,7 +241,8 @@ namespace BattleCruisers.Tutorial
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser
-            enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building a " + unitToBuild.Name + "!  Have a look!"));
+            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
+            enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!  Have a look!"));
 
             // 3. Click on the unit
             string textToDisplay = null;
