@@ -8,6 +8,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
@@ -177,11 +178,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				return droneConsumer;
 			});
 
+            IBuildProgressCalculator buildProgressCalculator = new LinearCalculator(BuildSpeedMultipliers.INSANE_BUILD_SPEED_MULTIPLIER);
+
 			ICruiser cruiser = Substitute.For<ICruiser>();
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
 			cruiser.Direction.Returns(facingDirection);
             cruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 			cruiser.Faction.Returns(faction);
+            cruiser.BuildProgressCalculator.Returns(buildProgressCalculator);
 
 			return cruiser;
 		}
