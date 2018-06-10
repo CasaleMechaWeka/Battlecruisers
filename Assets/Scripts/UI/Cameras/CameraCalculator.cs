@@ -51,7 +51,6 @@ namespace BattleCruisers.UI.Cameras
 			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
 		}
 
-        // FELIX  Use ITimeDeltaProvider
         public float FindScrollSpeed(float orthographicSize, float timeDelta)
         {
 			float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;

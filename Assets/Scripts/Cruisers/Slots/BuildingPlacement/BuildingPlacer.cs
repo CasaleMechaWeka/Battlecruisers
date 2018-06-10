@@ -27,9 +27,6 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
                     return parentSlot.Transform.position + (parentSlot.Transform.right * horizontalChange);
 
                 case Direction.Up:
-                    // FELIX
-                    // Consider building rotation :P
-
                     float verticalChange = (parentSlot.Size.y + buildingToPlace.Size.y) / 2 + (buildingToPlace.CustomOffsetProportion * buildingToPlace.Size.y);
                     return parentSlot.Transform.position + (parentSlot.Transform.up * verticalChange);
 
