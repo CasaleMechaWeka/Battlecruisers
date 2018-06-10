@@ -23,7 +23,18 @@ namespace BattleCruisers.Buildables
         public abstract TargetType TargetType { get; }
         public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
-        public Vector2 Position { get { return gameObject.transform.position; } }
+
+        public Quaternion Rotation
+        {
+            get { return transform.rotation; }
+            set { transform.rotation = value; }
+        }
+
+        public Vector2 Position
+        {
+            get { return transform.position; }
+            set { transform.position = value; }
+        }
 
         // IHighlightable
 		public Transform Transform { get { return transform; } }

@@ -42,9 +42,6 @@ namespace BattleCruisers.Buildables
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
   
-        new Vector2 Position { get; set; }
-        Quaternion Rotation { get; set; }
-
 		event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;

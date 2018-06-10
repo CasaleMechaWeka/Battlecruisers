@@ -30,6 +30,8 @@ namespace BattleCruisers.Buildables
 		Vector2 Velocity { get; }
 		ReadOnlyCollection<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
-		Vector2 Position { get; }
+
+        Vector2 Position { get; set; }
+        Quaternion Rotation { get; set; }
 	}
 }

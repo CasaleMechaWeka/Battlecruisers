@@ -65,18 +65,6 @@ namespace BattleCruisers.Buildables
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
 
-        Quaternion IBuildable.Rotation
-        {
-            get { return transform.rotation; }
-            set { transform.rotation = value; }
-        }
-
-        Vector2 IBuildable.Position
-        {
-            get { return transform.position; }
-            set { transform.position = value; }
-        }
-
         private IDroneConsumer _droneConsumer;
         public IDroneConsumer DroneConsumer
         {
