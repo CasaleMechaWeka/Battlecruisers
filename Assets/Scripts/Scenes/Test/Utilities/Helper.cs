@@ -38,14 +38,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class Helper
 	{
-		private readonly int _numOfDrones;
+        private int _numOfDrones;
+        private float _buildSpeedMultiplier;
 
-		// Massive, so buildables build instantly
-		private const int NUM_OF_DRONES = 2000;
+        private const int DEFAULT_NUM_OF_DRONES = 10;
 
-		public Helper(int numOfDrones = NUM_OF_DRONES)
+        public Helper(
+            int numOfDrones = DEFAULT_NUM_OF_DRONES, 
+            float buildSpeedMultiplier = BuildSpeedMultipliers.INSANE_BUILD_SPEED_MULTIPLIER)
 		{
-			_numOfDrones = numOfDrones;
+            _numOfDrones = numOfDrones;
+            _buildSpeedMultiplier = buildSpeedMultiplier;
 		}
 
         public void InitialiseBuilding(
@@ -178,7 +181,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				return droneConsumer;
 			});
 
-            IBuildProgressCalculator buildProgressCalculator = new LinearCalculator(BuildSpeedMultipliers.INSANE_BUILD_SPEED_MULTIPLIER);
+            IBuildProgressCalculator buildProgressCalculator = new LinearCalculator(_buildSpeedMultiplier);
 
 			ICruiser cruiser = Substitute.For<ICruiser>();
 			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);

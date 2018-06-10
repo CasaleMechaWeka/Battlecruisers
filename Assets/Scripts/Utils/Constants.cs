@@ -16,7 +16,7 @@
         public const float NORMAL_BUILD_SPEED_MULTIPLIER = 2;
 		public const float DEFAULT_TUTORIAL_BUILD_SPEED_MULTIPLIER = 8;
         public const float FAST_BUILD_SPEED_MULTIPLIER = 50;
-		public const float INSANE_BUILD_SPEED_MULTIPLIER = 1000;
+		public const float INSANE_BUILD_SPEED_MULTIPLIER = 100;
     }
 
 	public static class SceneNames

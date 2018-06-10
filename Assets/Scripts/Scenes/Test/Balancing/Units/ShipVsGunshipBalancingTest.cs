@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
 
             _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper(numOfDrones: numOfDrones);
+            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.NORMAL_BUILD_SPEED_MULTIPLIER);
             _completedUnits = new List<ITarget>();
 
             IPrefabKey gunshipKey = StaticPrefabKeys.Units.Gunship;
