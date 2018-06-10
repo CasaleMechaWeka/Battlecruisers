@@ -38,6 +38,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 				_factory.CompletedBuildable += _factory_CompletedBuildable;
 			}
 
+            TriggerPotentialMatchChange();
+
 			// Usually have this at the start of the overriding method, but 
 			// do not want parent to call ShouldBeEnabled() until we have
 			// set our _factory field.
