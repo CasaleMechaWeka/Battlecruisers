@@ -17,6 +17,7 @@ namespace BattleCruisers.Cruisers.Slots
     public class Slot : MonoBehaviourWrapper, ISlot, IPointerClickHandler
     {
         private SpriteRenderer _renderer;
+        private BoxCollider2D _collider;
         private ICruiser _parentCruiser;
         private IBuildingPlacer _buildingPlacer;
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
@@ -70,8 +71,8 @@ namespace BattleCruisers.Cruisers.Slots
         // IHighlightable
         public Transform Transform { get { return transform; } }
         public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
-        public Vector2 Size { get { return _renderer.size; } }
-        public virtual float SizeMultiplier { get { return 0.6f; } }
+        public Vector2 Size { get { return _collider.size; } }
+        public virtual float SizeMultiplier { get { return 2; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
@@ -87,6 +88,9 @@ namespace BattleCruisers.Cruisers.Slots
 
 			_renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
+
+            _collider = GetComponent<BoxCollider2D>();
+            Assert.IsNotNull(_collider);
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
 
