@@ -14,7 +14,7 @@ namespace BattleCruisers.Movement.Velocity
 
 		public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
-        public MovementController(IVelocityProvider maxVelocityProvider)
+        protected MovementController(IVelocityProvider maxVelocityProvider)
         {
             Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
             _maxVelocityProvider = maxVelocityProvider;
