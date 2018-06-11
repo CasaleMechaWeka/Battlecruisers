@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial
         ITutorialProvider TutorialProvider { get; }
         IPrefabFactory PrefabFactory { get; }
 		INavigationSettings NavigationSettings { get; }
-		ICameraMover CameraMover { get; }
+        ICameraController CameraController { get; }
 		IUserInputCameraMover UserInputCameraMover { get; }
     }
 }

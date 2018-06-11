@@ -265,9 +265,8 @@ namespace BattleCruisers.Tutorial
 			
 			// 6. Navigate to mid left
 			enemyUnitDefenceSteps.AddRange(
-				CreateSteps_NavigationButton(
-					CreateTutorialStepArgs("Nice!  Zoom out a bit", _tutorialArgs.NavigationButtonsWrapper.MidLeftButton),
-					_tutorialArgs.NavigationButtonsWrapper.MidLeftButton,
+				CreateSteps_AutoNavigationButton(
+                    CreateTutorialStepArgs(textToDisplay: null),
 					CameraState.LeftMid));
 
             // 7. Insta-complete unit
@@ -571,6 +570,7 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.NavigationSettings,
                     permission);
         }
+
         private IList<ITutorialStep> CreateSteps_NavigationButton(ITutorialStepArgs navigationButtonStepArgs, IButton navigationButton, CameraState targetState)
         {
             return new List<ITutorialStep>
@@ -583,13 +583,27 @@ namespace BattleCruisers.Tutorial
                 CreateStep_NavigationWaitStep(targetState)
             };
 		}
-            
+
+        private IList<ITutorialStep> CreateSteps_AutoNavigationButton(ITutorialStepArgs navigationButtonStepArgs, CameraState targetState)
+        {
+            return new List<ITutorialStep>
+            {
+                new AutomaticNavigationButtonStep(
+                    navigationButtonStepArgs,
+                    _tutorialArgs.NavigationSettings,
+                    targetState,
+                    _tutorialArgs.CameraController),
+
+                CreateStep_NavigationWaitStep(targetState)
+            };
+        }
+
 		private ITutorialStep CreateStep_NavigationWaitStep(CameraState targetState)
 		{
 			return
 				new NavigationTransitionWaitStep(
 					CreateTutorialStepArgs(textToDisplay: null),
-					_tutorialArgs.CameraMover,
+                    _tutorialArgs.CameraController,
 					targetState,
 					_tutorialArgs.NavigationSettings);
 		}
