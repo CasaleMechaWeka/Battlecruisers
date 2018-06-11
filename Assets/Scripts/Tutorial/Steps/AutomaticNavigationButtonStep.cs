@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Test :/
     public class AutomaticNavigationButtonStep : TutorialStep
     {
         private readonly INavigationSettings _navigationSettings;
