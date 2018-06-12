@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Test :P
     public abstract class AircraftBoostStep : TutorialStep
     {
         protected readonly IBoostProvidersManager _boostProvidersManager;

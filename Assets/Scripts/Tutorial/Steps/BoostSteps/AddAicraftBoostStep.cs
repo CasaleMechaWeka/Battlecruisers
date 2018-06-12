@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Test :P
     public class AddAircraftBoostStep : AircraftBoostStep
     {
         public AddAircraftBoostStep(
