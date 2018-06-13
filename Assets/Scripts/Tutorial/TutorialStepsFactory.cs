@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
@@ -88,7 +89,8 @@ namespace BattleCruisers.Tutorial
                     new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
                     _tutorialArgs.TutorialProvider.SingleShipProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-                    preferFrontmostSlot: true));
+                    preferFrontmostSlot: true,
+                    boostAircraftSpeed: false));
 
             // 9. Enemy bomber
             steps.Enqueue(
@@ -97,7 +99,8 @@ namespace BattleCruisers.Tutorial
                     new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
                     _tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-                    preferFrontmostSlot: false));
+                    preferFrontmostSlot: false,
+                    boostAircraftSpeed: true));
 			
 			// Navigate back to player cruiser
 			steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
@@ -232,7 +235,8 @@ namespace BattleCruisers.Tutorial
             BuildableInfo unitToBuild,
             ISingleBuildableProvider unitBuildProvider,
             BuildableInfo defenceToBuild,
-            bool preferFrontmostSlot)
+            bool preferFrontmostSlot,
+            bool boostAircraftSpeed)
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
@@ -285,10 +289,18 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(textToDisplay: null), 
                     factoryStepsResult.FactoryProvider));
 
+            string unitComingText = "Here comes the enemy " + unitToBuild.Name + ".";
+
+            // 7.5  Boost unit speed until just before it reaches the user's camera view
+            if (boostAircraftSpeed)
+            {
+                enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
+            }
+
             // 8. Wait for defence turret to destroy unit
             enemyUnitDefenceSteps.Add(
                 new TargetDestroyedWaitStep(
-                    CreateTutorialStepArgs("Here comes the enemy " + unitToBuild.Name + "."),
+                    CreateTutorialStepArgs(unitComingText),
                     new BuildableToTargetProvider(unitBuildProvider)));
 
             // 9. Congrats!  Wait 3 seconds
@@ -347,7 +359,7 @@ namespace BattleCruisers.Tutorial
             return new FactoryStepsResult(factorySteps, factoryProvider);
         }
 
-        public IList<ITutorialStep> CreateSteps_ConstructBuilding(
+        private IList<ITutorialStep> CreateSteps_ConstructBuilding(
             BuildingCategory buildingCategory, 
             BuildableInfo buildingToConstruct,
             SlotType buildingSlotType,
@@ -391,6 +403,29 @@ namespace BattleCruisers.Tutorial
 			}
 
             return constructionSteps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_AircraftSpeedBoost(string textToDisplay, float speedBoostMultiplier, float boostDurationInS)
+        {
+            IBoostProvider boostProvider = new BoostProvider(speedBoostMultiplier);
+
+            return new List<ITutorialStep>()
+            {
+                new AddAircraftBoostStep(
+                    CreateTutorialStepArgs(textToDisplay),
+                    _tutorialArgs.AICruiser.FactoryProvider.BoostProvidersManager,
+                    boostProvider),
+
+                new DelayWaitStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _deferrer,
+                    boostDurationInS),
+
+                new RemoveAircraftBoostStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _tutorialArgs.AICruiser.FactoryProvider.BoostProvidersManager,
+                    boostProvider)
+            };
         }
 
         private IList<ITutorialStep> CreateStep_NavigateToPlayerCruiser()
