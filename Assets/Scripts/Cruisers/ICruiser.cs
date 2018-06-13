@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
 {
@@ -20,6 +21,7 @@ namespace BattleCruisers.Cruisers
         IRepairManager RepairManager { get; }
         int NumOfDrones { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
+        IFactoryProvider FactoryProvider { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
     }
