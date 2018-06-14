@@ -4,10 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Boost
 {
-    /// <summary>
-    /// Consumes boost producer(s).  Simply provides the cumulative boost
-    /// of all boost providers.
-    /// </summary>
     public class BoostConsumer : IBoostConsumer
 	{
         private readonly IList<IBoostProvider> _boostProviders;
@@ -18,7 +14,7 @@ namespace BattleCruisers.Buildables.Boost
 		public float CumulativeBoost 
         { 
             get { return _cumulativeBoost; }
-            set
+            private set
             {
                 if (_cumulativeBoost != value)
                 {
