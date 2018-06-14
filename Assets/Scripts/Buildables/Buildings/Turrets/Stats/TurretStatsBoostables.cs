@@ -3,8 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    // FELIX  Test
-
     /// <summary>
     /// Keeps track of global turret boost levels, and exposes the cumulative
     /// boost in simple properties.
