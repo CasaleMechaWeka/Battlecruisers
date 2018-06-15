@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         {
             base.SetuUp();
 
-            _boostStep = new AddAircraftBoostStep(_args, _boostProvidersManager, _boostProvider);
+            _boostStep = new AddAircraftBoostStep(_args, _globalBoostProviders, _boostProvider);
         }
 
         [Test]

@@ -2,13 +2,13 @@
 
 namespace BattleCruisers.Buildables.Boost
 {
-    public class BoostProvidersManager : IBoostProvidersManager
+    public class GlobalBoostProviders : IGlobalBoostProviders
     {
         public IObservableCollection<IBoostProvider> AircraftBoostProviders { get; private set; }
         public IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; private set; }
         public IObservableCollection<IBoostProvider> TurretFireRateBoostProviders { get; private set; }
 
-        public BoostProvidersManager()
+        public GlobalBoostProviders()
         {
             AircraftBoostProviders = new ObservableCollection<IBoostProvider>();
             TurretAccuracyBoostProviders = new ObservableCollection<IBoostProvider>();

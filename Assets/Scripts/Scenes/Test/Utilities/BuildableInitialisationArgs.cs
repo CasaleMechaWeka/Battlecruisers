@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
-            IBoostProvidersManager boostProvidersManager = null,
+            IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IExplosionFactory explosionFactory = null,
@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory ?? new BoostFactory(),
-                    boostProvidersManager ?? new BoostProvidersManager(),
+                    globalBoostProviders ?? new GlobalBoostProviders(),
                     damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
                     explosionFactory ?? new ExplosionFactory(prefabFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
@@ -98,7 +98,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
-            IBoostProvidersManager boostProvidersManager,
+            IGlobalBoostProviders globalBoostProviders,
             IDamageApplierFactory damageApplierFactory,
             IExplosionFactory explosionFactory,
             IAccuracyAdjusterFactory accuracyAdjusterFactory,
@@ -118,7 +118,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.AircraftProvider.Returns(aircraftProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.BoostFactory.Returns(boostFactory);
-            factoryProvider.BoostProvidersManager.Returns(boostProvidersManager);
+            factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.ExplosionFactory.Returns(explosionFactory);
             factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);

@@ -17,13 +17,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-            _factoryProvider.BoostProvidersManager.AircraftBoostProviders.Add(_boostProvider);
+            _factoryProvider.GlobalBoostProviders.AircraftBoostProviders.Add(_boostProvider);
 		}
 
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
-            _factoryProvider.BoostProvidersManager.AircraftBoostProviders.Remove(_boostProvider);
+            _factoryProvider.GlobalBoostProviders.AircraftBoostProviders.Remove(_boostProvider);
 		}
 	}
 }

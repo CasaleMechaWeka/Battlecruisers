@@ -26,7 +26,7 @@ namespace BattleCruisers.Utils
 		public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
 		public IAircraftProvider AircraftProvider { get; private set; }
 		public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; } 
-        public IBoostProvidersManager BoostProvidersManager { get; private set; }
+        public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
         public IBoostFactory BoostFactory { get; private set; }
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
         public IExplosionFactory ExplosionFactory { get; private set; }
@@ -52,7 +52,7 @@ namespace BattleCruisers.Utils
 			MovementControllerFactory = new MovementControllerFactory();
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            BoostProvidersManager = new BoostProvidersManager();
+            GlobalBoostProviders = new GlobalBoostProviders();
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
             ExplosionFactory = new ExplosionFactory(PrefabFactory);

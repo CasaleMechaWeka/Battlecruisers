@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
     public abstract class AircraftBoostStepTestsBase : TutorialStepTestsBase
     {
-        protected IBoostProvidersManager _boostProvidersManager;
+        protected IGlobalBoostProviders _globalBoostProviders;
         protected IObservableCollection<IBoostProvider> _aircraftBoostProviders;
         protected IBoostProvider _boostProvider;
 
@@ -17,8 +17,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
             base.SetuUp();
 
             _aircraftBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
-            _boostProvidersManager = Substitute.For<IBoostProvidersManager>();
-            _boostProvidersManager.AircraftBoostProviders.Returns(_aircraftBoostProviders);
+            _globalBoostProviders = Substitute.For<IGlobalBoostProviders>();
+            _globalBoostProviders.AircraftBoostProviders.Returns(_aircraftBoostProviders);
 
             _boostProvider = Substitute.For<IBoostProvider>();
         }

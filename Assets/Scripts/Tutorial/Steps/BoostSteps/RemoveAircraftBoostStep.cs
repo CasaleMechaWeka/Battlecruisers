@@ -6,15 +6,15 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     {
         public RemoveAircraftBoostStep(
             ITutorialStepArgs args,
-            IBoostProvidersManager boostProvidersManager,
+            IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
-            : base(args, boostProvidersManager, boostProvider)
+            : base(args, globalBoostProviders, boostProvider)
         {
         }
 
         protected override void BoostProviderAction()
         {
-            _boostProvidersManager.AircraftBoostProviders.Remove(_boostProvider);
+            _globalBoostProviders.AircraftBoostProviders.Remove(_boostProvider);
         }
     }
 }

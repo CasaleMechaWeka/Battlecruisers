@@ -29,10 +29,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             _fireRateBoostabelGroup.AddBoostable(_accuracyBoostable);
         }
 
-        public void Initialise(IBoostProvidersManager boostProvidersManager)
+        public void Initialise(IGlobalBoostProviders globalBoostProviders)
         {
-            _accuracyBoostableGroup.AddBoostProvidersList(boostProvidersManager.TurretAccuracyBoostProviders);
-            _fireRateBoostabelGroup.AddBoostProvidersList(boostProvidersManager.TurretFireRateBoostProviders);
+            _accuracyBoostableGroup.AddBoostProvidersList(globalBoostProviders.TurretAccuracyBoostProviders);
+            _fireRateBoostabelGroup.AddBoostProvidersList(globalBoostProviders.TurretFireRateBoostProviders);
         }
 
         public void DisposeManagedState()

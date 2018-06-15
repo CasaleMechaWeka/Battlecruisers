@@ -6,18 +6,18 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
     public abstract class AircraftBoostStep : TutorialStep
     {
-        protected readonly IBoostProvidersManager _boostProvidersManager;
+        protected readonly IGlobalBoostProviders _globalBoostProviders;
         protected readonly IBoostProvider _boostProvider;
 
         protected AircraftBoostStep(
             ITutorialStepArgs args,
-            IBoostProvidersManager boostProvidersManager,
+            IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args)
         {
-            Helper.AssertIsNotNull(boostProvidersManager, boostProvider);
+            Helper.AssertIsNotNull(globalBoostProviders, boostProvider);
 
-            _boostProvidersManager = boostProvidersManager;
+            _globalBoostProviders = globalBoostProviders;
             _boostProvider = boostProvider;
         }
 

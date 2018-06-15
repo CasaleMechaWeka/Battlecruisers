@@ -9,8 +9,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
     {
         public int BoostActionCount { get; private set; }
 
-        public DummyBoostStep(ITutorialStepArgs args, IBoostProvidersManager boostProvidersManager, IBoostProvider boostProvider)
-            : base(args, boostProvidersManager, boostProvider)
+        public DummyBoostStep(ITutorialStepArgs args, IGlobalBoostProviders globalBoostProviders, IBoostProvider boostProvider)
+            : base(args, globalBoostProviders, boostProvider)
         {
             BoostActionCount = 0;
         }
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         {
             base.SetuUp();
 
-            _boostStep = new DummyBoostStep(_args, _boostProvidersManager, _boostProvider);
+            _boostStep = new DummyBoostStep(_args, _globalBoostProviders, _boostProvider);
         }
 
         [Test]

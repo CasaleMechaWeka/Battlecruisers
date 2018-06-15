@@ -413,7 +413,7 @@ namespace BattleCruisers.Tutorial
             {
                 new AddAircraftBoostStep(
                     CreateTutorialStepArgs(textToDisplay),
-                    _tutorialArgs.AICruiser.FactoryProvider.BoostProvidersManager,
+                    _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider),
 
                 new DelayWaitStep(
@@ -423,7 +423,7 @@ namespace BattleCruisers.Tutorial
 
                 new RemoveAircraftBoostStep(
                     CreateTutorialStepArgs(textToDisplay: null),
-                    _tutorialArgs.AICruiser.FactoryProvider.BoostProvidersManager,
+                    _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider)
             };
         }

@@ -25,7 +25,7 @@ namespace BattleCruisers.Utils
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IAircraftProvider AircraftProvider { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        IBoostProvidersManager BoostProvidersManager { get; }
+        IGlobalBoostProviders GlobalBoostProviders { get; }
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IExplosionFactory ExplosionFactory { get; }

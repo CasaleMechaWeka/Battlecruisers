@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _boostableGroup.AddBoostable(_velocityBoostable);
-            _boostableGroup.AddBoostProvidersList(_factoryProvider.BoostProvidersManager.AircraftBoostProviders);
+            _boostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.AircraftBoostProviders);
             _boostableGroup.BoostChanged += _boostableGroup_BoostChanged;
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();

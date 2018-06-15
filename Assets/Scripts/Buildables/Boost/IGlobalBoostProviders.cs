@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Boost
 {
-    public interface IBoostProvidersManager
+    public interface IGlobalBoostProviders
     {
         IObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
         IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }

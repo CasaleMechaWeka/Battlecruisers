@@ -5,7 +5,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public interface ITurretStatsBoostables : IManagedDisposable
     {
-        void Initialise(IBoostProvidersManager boostProvidersManager);
+        void Initialise(IGlobalBoostProviders globalBoostProviders);
 
         float AccuracyMultiplier { get; }
         float FireRateMultiplier { get; }
