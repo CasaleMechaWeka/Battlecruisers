@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
     public class TargetDestroyedWaitStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private IProvider<ITarget> _targetProvider;
+        private IItemProvider<ITarget> _targetProvider;
         private ITarget _target;
 
         [SetUp]
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
         {
             base.SetuUp();
 
-            _targetProvider = Substitute.For<IProvider<ITarget>>();
+            _targetProvider = Substitute.For<IItemProvider<ITarget>>();
             _target = Substitute.For<ITarget>();
             _targetProvider.FindItem().Returns(_target);
 

@@ -9,9 +9,9 @@ namespace BattleCruisers.Tutorial
     public class FactoryStepsResult
     {
         public IList<ITutorialStep> Steps { get; private set; }
-        public IProvider<IFactory> FactoryProvider { get; private set; }
+        public IItemProvider<IFactory> FactoryProvider { get; private set; }
 
-        public FactoryStepsResult(IList<ITutorialStep> steps, IProvider<IFactory> factoryProvider)
+        public FactoryStepsResult(IList<ITutorialStep> steps, IItemProvider<IFactory> factoryProvider)
         {
             Helper.AssertIsNotNull(steps, factoryProvider);
 

@@ -10,10 +10,10 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// </summary>
     public class TargetDestroyedWaitStep : TutorialStep
     {
-        private readonly IProvider<ITarget> _targetProvider;
+        private readonly IItemProvider<ITarget> _targetProvider;
         private ITarget _target;
 
-        public TargetDestroyedWaitStep(ITutorialStepArgs args, IProvider<ITarget> targetProvider)
+        public TargetDestroyedWaitStep(ITutorialStepArgs args, IItemProvider<ITarget> targetProvider)
             : base(args)
         {
             Assert.IsNotNull(targetProvider);

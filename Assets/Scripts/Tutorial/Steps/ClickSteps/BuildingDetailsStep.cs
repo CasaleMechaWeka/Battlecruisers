@@ -9,7 +9,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     public class BuildingDetailsStep : ClickStep
     {
-        private readonly IProvider<IBuildable> _buildableProvider;
+        private readonly IItemProvider<IBuildable> _buildableProvider;
         private readonly IUIManagerSettablePermissions _uiManagerPermissions;
 
         public BuildingDetailsStep(

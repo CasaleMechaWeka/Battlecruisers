@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
     {
         private ITutorialStep _tutorialStep;
 
-        private IProvider<IBuildable> _buildableProvider;
+        private IItemProvider<IBuildable> _buildableProvider;
         private IBuildable _buildable;
 
         [SetUp]
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
             base.SetuUp();
 
             _buildable = Substitute.For<IBuildable>();
-            _buildableProvider = Substitute.For<IProvider<IBuildable>>();
+            _buildableProvider = Substitute.For<IItemProvider<IBuildable>>();
             _buildableProvider.FindItem().Returns(_buildable);
 
             _tutorialStep = new BuildableCompletedWaitStep(_args, _buildableProvider);

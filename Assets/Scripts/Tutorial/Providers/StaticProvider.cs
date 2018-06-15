@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Tutorial.Providers
 {
-    public class StaticProvider<TItem> : IProvider<TItem>
+    public class StaticProvider<TItem> : IItemProvider<TItem>
     {
         private readonly TItem _item;
 

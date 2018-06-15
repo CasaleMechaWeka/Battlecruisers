@@ -5,11 +5,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public class BuildableToFactoryProvider : IProvider<IFactory>
+    public class BuildableToFactoryProvider : IItemProvider<IFactory>
     {
-        private readonly IProvider<IBuildable> _buildableProvider;
+        private readonly IItemProvider<IBuildable> _buildableProvider;
 
-        public BuildableToFactoryProvider(IProvider<IBuildable> buildableProvider)
+        public BuildableToFactoryProvider(IItemProvider<IBuildable> buildableProvider)
         {
             Assert.IsNotNull(buildableProvider);
             _buildableProvider = buildableProvider;

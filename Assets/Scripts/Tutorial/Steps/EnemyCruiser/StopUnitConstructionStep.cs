@@ -7,9 +7,9 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
     public class StopUnitConstructionStep : TutorialStep
     {
-        private readonly IProvider<IFactory> _factoryProvider;
+        private readonly IItemProvider<IFactory> _factoryProvider;
 
-        public StopUnitConstructionStep(ITutorialStepArgs args, IProvider<IFactory> factoryProvider)
+        public StopUnitConstructionStep(ITutorialStepArgs args, IItemProvider<IFactory> factoryProvider)
             : base(args)
         {
             Assert.IsNotNull(factoryProvider);

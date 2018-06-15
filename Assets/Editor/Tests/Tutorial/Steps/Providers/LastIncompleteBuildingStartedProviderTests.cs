@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 {
     public class LastIncompleteBuildingStartedProviderTests
     {
-        private IProvider<IBuildable> _buildableProvider;
+        private IItemProvider<IBuildable> _buildableProvider;
         private IListProvider<IHighlightable> _highlightablesProvider;
         private IListProvider<IClickableEmitter> _clickablesProvider;
         private ICruiserController _cruiser;

@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
         private ITutorialStep _tutorialStep;
         private IPrefabKey _unitToConstruct;
         private IPrefabFactory _prefabFactory;
-        private IProvider<IFactory> _factoryProvider;
+        private IItemProvider<IFactory> _factoryProvider;
 
         [SetUp]
         public override void SetuUp()
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 
             _unitToConstruct = Substitute.For<IPrefabKey>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
-            _factoryProvider = Substitute.For<IProvider<IFactory>>();
+            _factoryProvider = Substitute.For<IItemProvider<IFactory>>();
 
             _tutorialStep = new StartConstructingUnitStep(_args, _unitToConstruct, _prefabFactory, _factoryProvider);
         }

@@ -348,7 +348,7 @@ namespace BattleCruisers.Tutorial
                     BuildSpeed.InfinitelySlow));
 
             // 5. Start building unit
-            IProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
+            IItemProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
             factorySteps.Add(
                 new StartConstructingUnitStep(
                     commonArgs,

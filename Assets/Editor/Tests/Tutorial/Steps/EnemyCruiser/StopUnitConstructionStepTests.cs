@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
     public class StopUnitConstructionStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private IProvider<IFactory> _factoryProvider;
+        private IItemProvider<IFactory> _factoryProvider;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _factoryProvider = Substitute.For<IProvider<IFactory>>();
+            _factoryProvider = Substitute.For<IItemProvider<IFactory>>();
 
             _tutorialStep = new StopUnitConstructionStep(_args, _factoryProvider);
         }
