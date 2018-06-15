@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             _accuracyBoostableGroup.AddBoostable(_accuracyBoostable);
 
             _fireRateBoostabelGroup = boostFactory.CreateBoostableGroup();
-            _fireRateBoostabelGroup.AddBoostable(_accuracyBoostable);
+            _fireRateBoostabelGroup.AddBoostable(_fireRateBoostable);
         }
 
         public void Initialise(IGlobalBoostProviders globalBoostProviders)
