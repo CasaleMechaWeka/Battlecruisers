@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         protected float EffectiveFireRatePerS { get { return BoostMultiplier * fireRatePerS; } }
         public virtual float DurationInS { get { return 1 / EffectiveFireRatePerS; } }
+        // FELIX  Remove.  Local and global boost should be handled in same class (BoostedBasicTurretStats :) )
         public float BoostMultiplier { get; set; }
 
         public List<TargetType> attackCapabilities;
