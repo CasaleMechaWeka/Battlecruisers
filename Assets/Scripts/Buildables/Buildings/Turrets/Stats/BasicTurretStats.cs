@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public class BasicTurretStats : MonoBehaviour, IBasicTurretStats, IDurationProvider
+    public class BasicTurretStats : MonoBehaviour, IBasicTurretStats
     {
         public float fireRatePerS;
         public float FireRatePerS { get { return fireRatePerS; } }

@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public float MinRangeInM { get { return _baseStats.MinRangeInM; } }
         public float MeanFireRatePerS { get { return _baseStats.MeanFireRatePerS; } }
         public ReadOnlyCollection<TargetType> AttackCapabilities { get { return _baseStats.AttackCapabilities; } }
+        public float DurationInS { get { return 1 / FireRatePerS; } }
 
         public BoostedBasicTurretStats(
             TStats baseStats,
@@ -42,6 +43,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             // Assign local boost to fire rate.  Can easily be changed to boost
             // another statistic :)
             _fireRateBoostabelGroup.AddBoostProvidersList(localBoostProviders);
+        }
+
+        public void MoveToNextDuration()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

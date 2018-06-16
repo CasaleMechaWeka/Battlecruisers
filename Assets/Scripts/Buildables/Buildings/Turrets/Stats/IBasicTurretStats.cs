@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
-    public interface IBasicTurretStats
+    public interface IBasicTurretStats : IDurationProvider
     {
         float FireRatePerS { get; }
         float RangeInM { get; }
