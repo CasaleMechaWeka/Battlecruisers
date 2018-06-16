@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
-        private float LongDurationInS { get { return 1 / EffectiveFireRatePerS; } }
+        private float LongDurationInS { get { return 1 / FireRatePerS; } }
 
         public override bool IsInBurst 
         { 

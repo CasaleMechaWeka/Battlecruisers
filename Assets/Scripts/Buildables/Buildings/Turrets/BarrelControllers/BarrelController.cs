@@ -56,8 +56,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public float BoostMultiplier
         {
-            get { return _turretStats.BoostMultiplier; }
-            set { _turretStats.BoostMultiplier = value; }
+            // FELIX
+            get { return 0; }
+            set {  }
         }
 
         protected abstract Vector3 ProjectileSpawnerPosition { get; }
