@@ -14,6 +14,7 @@ using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Utils
 {
@@ -28,6 +29,7 @@ namespace BattleCruisers.Utils
 		public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; } 
         public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
         public IBoostFactory BoostFactory { get; private set; }
+        public ITurretStatsFactory TurretStatsFactory { get; private set; }
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
         public IExplosionFactory ExplosionFactory { get; private set; }
         public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; private set; }
@@ -52,8 +54,9 @@ namespace BattleCruisers.Utils
 			MovementControllerFactory = new MovementControllerFactory();
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            GlobalBoostProviders = new GlobalBoostProviders();
             BoostFactory = new BoostFactory();
+            GlobalBoostProviders = new GlobalBoostProviders();
+            TurretStatsFactory = new TurretStatsFactory(BoostFactory, GlobalBoostProviders);
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
             ExplosionFactory = new ExplosionFactory(PrefabFactory);
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();

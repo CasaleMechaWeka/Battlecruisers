@@ -13,6 +13,7 @@ using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Utils
 {
@@ -32,6 +33,7 @@ namespace BattleCruisers.Utils
         IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
         IAngleLimiterFactory AngleLimiterFactory { get; } 
+        ITurretStatsFactory TurretStatsFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ISoundFetcher SoundFetcher { get; }
         ISoundManager SoundManager { get; }
