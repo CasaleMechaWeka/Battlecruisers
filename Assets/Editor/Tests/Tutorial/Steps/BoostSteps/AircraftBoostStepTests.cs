@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
-    public class DummyBoostStep : AircraftBoostStep
+    public class DummyBoostStep : BoostStep
     {
         public int BoostActionCount { get; private set; }
 
