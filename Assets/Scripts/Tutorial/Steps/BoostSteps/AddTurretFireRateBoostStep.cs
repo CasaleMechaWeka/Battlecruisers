@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FElIX  Test :P
     public class AddTurretFireRateBoostStep : BoostStep
     {
         public AddTurretFireRateBoostStep(
