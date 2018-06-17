@@ -3,7 +3,7 @@ using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class LinearAngleRangeFinderTests
     {

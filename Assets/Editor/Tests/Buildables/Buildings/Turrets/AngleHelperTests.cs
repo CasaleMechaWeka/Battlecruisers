@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Turrets
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 {
     public class AngleHelperTests
     {

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Turrets.AngleLimiters
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
 {
     public class AngleLimiterTests
     {

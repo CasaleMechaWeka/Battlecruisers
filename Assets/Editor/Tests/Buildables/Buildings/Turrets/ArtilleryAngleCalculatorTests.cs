@@ -5,7 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.Turrets
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 {
     public class ArtilleryAngleCalculatorTests 
 	{

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters.BoundsFinders
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders
 {
     public class HorizontalTargetBoundsFinderTests
     {
