@@ -29,8 +29,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
 
-        protected TurretStats _turretStats;
-        public ITurretStats TurretStats { get { return _turretStats; } }
+        private ITurretStatsWrapper _turretStatsWrapper;
+        public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
 
         public ITarget Target { get; set; }
         protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
@@ -69,8 +69,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Renderers = GetComponentsInChildren<Renderer>();
 
             _projectileStats = GetProjectileStats();
-            _turretStats = SetupTurretStats();
-            _fireIntervalManager = SetupFireIntervalManager(_turretStats);
+            _turretStatsWrapper = new TurretStatsWrapper(SetupTurretStats());
+            _fireIntervalManager = SetupFireIntervalManager(TurretStats);
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -80,6 +80,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return new ProjectileStatsWrapper(projectileStats);
 		}
 
+        // FELIX  Handle overrides (LaserBarrelController) :/
         protected virtual TurretStats SetupTurretStats()
         {
             TurretStats turretStats = gameObject.GetComponent<TurretStats>();
@@ -88,7 +89,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return turretStats;
         }
 		
-		protected virtual IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
+		protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
 		{
 			FireIntervalManager fireIntervalManager = gameObject.GetComponent<FireIntervalManager>();
 			Assert.IsNotNull(fireIntervalManager);
@@ -98,8 +99,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected virtual IDamageCapability FindDamageCapabilities()
         {
-            float damagePerS = NumOfBarrels * _projectileStats.Damage * _turretStats.MeanFireRatePerS;
-            return new DamageCapability(damagePerS, _turretStats.AttackCapabilities);
+            float damagePerS = NumOfBarrels * _projectileStats.Damage * TurretStats.MeanFireRatePerS;
+            return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
         public virtual void Initialise(IBarrelControllerArgs args)
@@ -160,7 +161,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 _rotationMovementController.AdjustRotation(limitedDesiredAngle);
             }
 
-            if ((!isOnTarget && !_turretStats.IsInBurst)
+            if ((!isOnTarget && !TurretStats.IsInBurst)
                 || !_fireIntervalManager.ShouldFire())
             {
                 // Not on target or haven't waited fire interval
@@ -171,7 +172,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             // Burst fires happen even if we are no longer on target, so we may miss
             // the target in this case.  Hence use the actual angle our turret barrel
             // is at, instead of the perfect desired angle.
-            float fireAngle = _turretStats.IsInBurst ? transform.rotation.eulerAngles.z : limitedDesiredAngle;
+            float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : limitedDesiredAngle;
             Logging.Log(Tags.BARREL_CONTROLLER, "TryFire()  fireAngle: " + fireAngle + "  transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
             fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
 

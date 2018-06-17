@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _laserTurretStats;
         }
 
-        protected override IFireIntervalManager SetupFireIntervalManager(TurretStats turretStats)
+        protected override IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
             Assert.IsNotNull(fireIntervalManager);
@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
             float damagePerS = cycleDamage / cycleLength;
 
-            return new DamageCapability(damagePerS, _turretStats.AttackCapabilities);
+            return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
         public override void Initialise(IBarrelControllerArgs args)
