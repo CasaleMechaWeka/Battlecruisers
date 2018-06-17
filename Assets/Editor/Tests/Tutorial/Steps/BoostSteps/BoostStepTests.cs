@@ -21,8 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         }
     }
 
-    // FELIX  Rename
-    public class AircraftBoostStepTests : AircraftBoostStepTestsBase
+    public class BoostStepTests : AircraftBoostStepTestsBase
     {
         private DummyBoostStep _boostStep;
 
