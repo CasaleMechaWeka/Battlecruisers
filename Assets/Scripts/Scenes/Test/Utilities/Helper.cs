@@ -459,5 +459,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             return factory;
         }
+
+        public static IGlobalBoostProviders CreateGlobalBoostProviders()
+        {
+            IGlobalBoostProviders globalBoostProviders = Substitute.For<IGlobalBoostProviders>();
+
+            IObservableCollection<IBoostProvider> aircraftBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            globalBoostProviders.AircraftBoostProviders.Returns(aircraftBoostProviders);
+
+            IObservableCollection<IBoostProvider> turretAccuracyBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            globalBoostProviders.TurretAccuracyBoostProviders.Returns(turretAccuracyBoostProviders);
+
+            IObservableCollection<IBoostProvider> turretFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            globalBoostProviders.TurretFireRateBoostProviders.Returns(turretFireRateBoostProviders);
+
+            return globalBoostProviders;
+        }
 	}
 }
