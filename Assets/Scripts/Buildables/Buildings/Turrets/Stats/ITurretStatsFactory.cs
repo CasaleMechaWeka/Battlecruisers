@@ -5,9 +5,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public interface ITurretStatsFactory
     {
-        // FELIX  Unused?
-        //IBasicTurretStats CreateBoostedBasicTurretStats(IBasicTurretStats baseTurretStats);
-
         ITurretStats CreateBoostedTurretStats(ITurretStats baseTurretStats, IObservableCollection<IBoostProvider> localBoostProviders);
     }
 }
