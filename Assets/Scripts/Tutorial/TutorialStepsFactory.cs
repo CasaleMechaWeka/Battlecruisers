@@ -58,52 +58,52 @@ namespace BattleCruisers.Tutorial
 			// 0. Wait until initial camera movement is complete
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
-   //         // 1. Your cruiser
-   //         steps.Enqueue(CreateStep_YourCruiser());
+            // 1. Your cruiser
+            steps.Enqueue(CreateStep_YourCruiser());
 
-			//// 2. Mouse navigation
-			//steps.Enqueue(CreateSteps_MouseNavigation());
+			// 2. Mouse navigation
+			steps.Enqueue(CreateSteps_MouseNavigation());
 
-   //         // 3. Navigation buttons
-   //         steps.Enqueue(CreateSteps_NavigationButtons());
+            // 3. Navigation buttons
+            steps.Enqueue(CreateSteps_NavigationButtons());
 
-   //         // 4. Enemy cruiser
-   //         steps.Enqueue(CreateStep_EnemyCruiser());
+            // 4. Enemy cruiser
+            steps.Enqueue(CreateStep_EnemyCruiser());
 
-   //         // Navigate back to player cruiser
-   //         steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+            // Navigate back to player cruiser
+            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-   //         // 5. Speed controls
-   //         steps.Enqueue(CreateSteps_SpeedControls());
+            // 5. Speed controls
+            steps.Enqueue(CreateSteps_SpeedControls());
 
-   //         // 6. Drones
-   //         steps.Enqueue(CreateStep_Drones());
+            // 6. Drones
+            steps.Enqueue(CreateStep_Drones());
 
-   //         // 7. Building a building
-   //         steps.Enqueue(CreateSteps_BuildDroneStation());
+            // 7. Building a building
+            steps.Enqueue(CreateSteps_BuildDroneStation());
 
-   //         // 8. Enemy ship
-   //         steps.Enqueue(
-   //             CreateSteps_EnemyUnitDefence(
-   //                 StaticPrefabKeys.Buildings.NavalFactory,
-   //                 new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-   //                 _tutorialArgs.TutorialProvider.SingleShipProvider,
-   //                 new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-   //                 preferFrontmostSlot: true,
-   //                 boostAircraftSpeed: false));
+            // 8. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    preferFrontmostSlot: true,
+                    boostAircraftSpeed: false));
 
-   //         // 9. Enemy bomber
-   //         steps.Enqueue(
-   //             CreateSteps_EnemyUnitDefence(
-   //                 StaticPrefabKeys.Buildings.AirFactory,
-   //                 new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-   //                 _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-   //                 new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-   //                 preferFrontmostSlot: false,
-   //                 boostAircraftSpeed: true));
+            // 9. Enemy bomber
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    preferFrontmostSlot: false,
+                    boostAircraftSpeed: true));
 			
-			//// Navigate back to player cruiser
-			//steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+			// Navigate back to player cruiser
+			steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
             // 10. Drone Focus
             steps.Enqueue(CreateSteps_DroneFocus());
