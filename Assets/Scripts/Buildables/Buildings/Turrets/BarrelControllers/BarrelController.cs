@@ -116,9 +116,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _accuracyAdjuster = args.AccuracyAdjuster;
             _targetPositionValidator = args.TargetPositionValidator;
             _angleLimiter = args.AngleLimiter;
-
-            // FELIX  Need local boost providers, from ISlot
-            //args.FactoryProvider.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, 
+            _turretStatsWrapper.TurretStats = args.FactoryProvider.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, args.LocalBoostProviders);
 		}
 
 		void FixedUpdate()
