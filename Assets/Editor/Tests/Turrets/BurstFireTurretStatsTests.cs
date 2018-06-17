@@ -77,25 +77,5 @@ namespace BattleCruisers.Tests.Turrets
                 }
             }				
 		}
-
-        // FELIX  Update tests :/
-        [Test]
-        public void ChangingFireRateMultiplier_AffectsDuration()
-        {
-            //float boostMultiplier = 2;
-            //_turretStats.BoostMultiplier = boostMultiplier;
-            //_expectedLongInterval = 1 / (_turretStats.fireRatePerS * boostMultiplier);
-
-            //for (int i = 0; i < _turretStats.burstSize; ++i)
-            //{
-            //    if (i == _turretStats.burstSize - 1)
-            //    {
-            //        // Last shot in burst
-            //        Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
-            //    }
-
-            //    _turretStats.MoveToNextDuration();
-            //}
-        }
 	}
 }
