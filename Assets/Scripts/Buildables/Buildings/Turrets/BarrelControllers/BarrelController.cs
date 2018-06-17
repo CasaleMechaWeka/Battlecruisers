@@ -82,7 +82,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			return new ProjectileStatsWrapper(projectileStats);
 		}
 
-        // FELIX  Handle overrides (LaserBarrelController) :/
         protected virtual TurretStats SetupTurretStats()
         {
             TurretStats turretStats = gameObject.GetComponent<TurretStats>();
