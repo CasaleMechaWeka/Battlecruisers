@@ -542,13 +542,8 @@ namespace BattleCruisers.Tutorial
 			// 7. Wait for artillery to complete
 			droneFocusSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete("And the artillery..."));
 
-            // 7.5 Boost artillery accuracy, so that enemy cruiser is destroyed more quickly :)
-            IBoostProvider artilleryAccuracyBoost = new BoostProvider(20);  // 0.05 * 20 = 1 (100% accuracy)
-            droneFocusSteps.Add(
-                new AddTurretAccuracyBoostStep(
-                    CreateTutorialStepArgs(textToDisplay: null),
-                    _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
-                    artilleryAccuracyBoost));
+            // 7.5 Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
+            droneFocusSteps.AddRange(CreateSteps_BoostArtillery());
 
 			// 8. Enable navigation
 			droneFocusSteps.Add(
@@ -564,6 +559,23 @@ namespace BattleCruisers.Tutorial
 
 			return droneFocusSteps;
 		}
+
+        private IList<ITutorialStep> CreateSteps_BoostArtillery()
+        {
+            return new List<ITutorialStep>()
+            {
+                new AddTurretAccuracyBoostStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
+                    // 0.05 * 20 = 1 (100% accuracy)
+                    new BoostProvider(20)),
+                
+                new AddTurretFireRateBoostStep(
+                    CreateTutorialStepArgs(textToDisplay: null),
+                    _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
+                    new BoostProvider(3))
+            };
+        }
 
 		private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
