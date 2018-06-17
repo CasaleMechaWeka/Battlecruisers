@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
 
+        private ITurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
 
@@ -69,7 +70,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Renderers = GetComponentsInChildren<Renderer>();
 
             _projectileStats = GetProjectileStats();
-            _turretStatsWrapper = new TurretStatsWrapper(SetupTurretStats());
+            _baseTurretStats = SetupTurretStats();
+            _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
         }
 		
@@ -114,6 +116,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _accuracyAdjuster = args.AccuracyAdjuster;
             _targetPositionValidator = args.TargetPositionValidator;
             _angleLimiter = args.AngleLimiter;
+
+            // FELIX  Need local boost providers, from ISlot
+            //args.FactoryProvider.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, 
 		}
 
 		void FixedUpdate()

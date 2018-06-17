@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public ITurretStats CreateBoostedTurretStats(ITurretStats baseTurretStats, IObservableCollection<IBoostProvider> localBoostProviders)
         {
-            return new BoostedTurretStats(baseTurretStats, _boostFactory, localBoostProviders, _globalBoostProviders);
+            return new BoostedTurretStats(baseTurretStats, _boostFactory, _globalBoostProviders, localBoostProviders);
         }
     }
 }

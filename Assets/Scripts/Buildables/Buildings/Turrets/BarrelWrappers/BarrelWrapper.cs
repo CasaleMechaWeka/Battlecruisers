@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -12,6 +13,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -105,7 +107,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
-            ISoundKey firingSound = null)
+            ISoundKey firingSound = null,
+            IObservableCollection<IBoostProvider> localBoostProviders = null)
         {
             Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction);
 
@@ -118,7 +121,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, firingSound);
+                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, firingSound, localBoostProviders);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -139,7 +142,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            ISoundKey firingSound)
+            ISoundKey firingSound,
+            IObservableCollection<IBoostProvider> localBoostProviders)
         {
             return new BarrelControllerArgs(
                 targetFilter,
@@ -151,7 +155,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreateAngleLimiter(),
                 _factoryProvider,
                 parent,
-                firingSound);
+                firingSound,
+                localBoostProviders);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
