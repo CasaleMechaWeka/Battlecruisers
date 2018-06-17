@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
-    public class AddAircraftBoostStepTests : AircraftBoostStepTestsBase
+    public class AddAircraftBoostStepTests : BoostStepTestsBase
     {
         private ITutorialStep _boostStep;
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         public void Start_AddsBoost_AndCompletes()
         {
             _boostStep.Start(_completionCallback);
-            _aircraftBoostProviders.Received().Add(_boostProvider);
+            _globalBoostProviders.AircraftBoostProviders.Received().Add(_boostProvider);
         }
     }
 }

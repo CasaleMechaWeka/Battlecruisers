@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
-    public class RemoveAircraftBoostStepTests : AircraftBoostStepTestsBase
+    public class RemoveAircraftBoostStepTests : BoostStepTestsBase
     {
         private ITutorialStep _boostStep;
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         public void Start_RemovesBoost_AndCompletes()
         {
             _boostStep.Start(_completionCallback);
-            _aircraftBoostProviders.Received().Remove(_boostProvider);
+            _globalBoostProviders.AircraftBoostProviders.Received().Remove(_boostProvider);
         }
     }
 }

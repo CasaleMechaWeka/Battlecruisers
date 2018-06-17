@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         }
     }
 
-    public class BoostStepTests : AircraftBoostStepTestsBase
+    public class BoostStepTests : BoostStepTestsBase
     {
         private DummyBoostStep _boostStep;
 
