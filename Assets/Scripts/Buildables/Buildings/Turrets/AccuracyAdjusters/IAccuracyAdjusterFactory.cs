@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
@@ -9,11 +10,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(
             IAngleCalculator angleCalculator,
             float projectileVelocityInMPerS,
-            float accuracy);
+            ITurretStats turretStats);
 
         IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(
             IAngleCalculator angleCalculator,
             float projectileVelocityInMPerS,
-            float accuracy);
+            ITurretStats turretStats);
     }
 }

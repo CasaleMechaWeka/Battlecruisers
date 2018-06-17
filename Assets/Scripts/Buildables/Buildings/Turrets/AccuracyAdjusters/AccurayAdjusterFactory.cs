@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -17,33 +18,33 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         public IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(
             IAngleCalculator angleCalculator, 
             float projectileVelocityInMPerS, 
-            float accuracy)
+            ITurretStats turretStats)
         {
             return 
                 CreateAccuracyAdjuster(
                     angleCalculator, 
                     projectileVelocityInMPerS, 
-                    accuracy, 
+                    turretStats, 
                     new HorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
         }
 
         public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(
             IAngleCalculator angleCalculator,
             float projectileVelocityInMPerS,
-            float accuracy)
+            ITurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
                     angleCalculator,
                     projectileVelocityInMPerS,
-                    accuracy,
+                    turretStats,
                     new VerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
         }
 
         private IAccuracyAdjuster CreateAccuracyAdjuster(
             IAngleCalculator angleCalculator, 
             float projectileVelocityInMPerS, 
-            float accuracy,
+            ITurretStats turretStats,
             ITargetBoundsFinder targetBoundsFinder)
         {
             return
@@ -53,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                     new LinearRangeFinder(),
                     new RandomGenerator(),
                     projectileVelocityInMPerS,
-                    accuracy);
+                    turretStats);
         }
     }
 }

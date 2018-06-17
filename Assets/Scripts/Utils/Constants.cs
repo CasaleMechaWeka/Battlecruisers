@@ -7,7 +7,9 @@
 		public const int MS_PER_S = 1000;
 
 		public const float DISABLED_UI_ALPHA = 0.5f;
-		public const float ENABLED_UI_ALPHA = 1.0f;
+        public const float ENABLED_UI_ALPHA = 1.0f;
+		
+        public const float MAX_ACCURACY = 1;
     }
 
     public static class BuildSpeedMultipliers

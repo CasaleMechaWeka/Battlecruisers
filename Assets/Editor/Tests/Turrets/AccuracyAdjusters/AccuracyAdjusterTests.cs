@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
         private IAngleRangeFinder _angleRangeFinder;
         private IRandomGenerator _random;
         private float _projectileVelocityInMPerS;
-        private float _accuracy;
+        private ITurretStats _turretStats;
 
         // FindAngelInDegrees() parameters
         private float _idealFireAngleInDegrees;
@@ -45,11 +46,12 @@ namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
             _angleCalculator = Substitute.For<IAngleCalculator>();
             _angleRangeFinder = Substitute.For<IAngleRangeFinder>();
             _random = Substitute.For<IRandomGenerator>();
+            _turretStats = Substitute.For<ITurretStats>();
+            _turretStats.Accuracy.Returns(0.5f);
 
             _projectileVelocityInMPerS = 10;
-            _accuracy = 0.5f;
 
-            _accuracyAdjuster = new AccuracyAdjuster(_boundsFinder, _angleCalculator, _angleRangeFinder, _random, _projectileVelocityInMPerS, _accuracy);
+            _accuracyAdjuster = new AccuracyAdjuster(_boundsFinder, _angleCalculator, _angleRangeFinder, _random, _projectileVelocityInMPerS, _turretStats);
         }
 
         private void CreateMethodParameters()
@@ -83,7 +85,7 @@ namespace BattleCruisers.Tests.Turrets.AccuracyAdjusters
 
             IRange<float> fireRange = new Range<float>(40, 50);
             _angleRangeFinder
-                .FindFireAngleRange(onTargetRange, _accuracy)
+                .FindFireAngleRange(onTargetRange, _turretStats.Accuracy)
                 .Returns(fireRange);
 
             float expectedFireAngle = 42;

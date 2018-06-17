@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -16,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 		
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
-            if (barrel.TurretStats.Accuracy >= AccuracyAdjuster.MAX_ACCURACY)
+            if (barrel.TurretStats.Accuracy >= Constants.MAX_ACCURACY)
             {
                 return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();
             }
@@ -26,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _factoryProvider.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
                         angleCalculator,
                         barrel.ProjectileStats.MaxVelocityInMPerS,
-                        barrel.TurretStats.Accuracy);
+                        barrel.TurretStats);
             }
         }
 	}
