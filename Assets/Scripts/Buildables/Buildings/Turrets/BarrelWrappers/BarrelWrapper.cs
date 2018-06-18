@@ -49,21 +49,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        private float _boostMultiplier;
-        public float BoostMultiplier
-        {
-            get { return _boostMultiplier; }
-            set
-            {
-                _boostMultiplier = value;
-
-                foreach (IBarrelController barrel in _barrels)
-                {
-                    barrel.BoostMultiplier = _boostMultiplier;
-                }
-            }
-        }
-
         public virtual void StaticInitialise()
         {
             _renderers = new List<Renderer>();

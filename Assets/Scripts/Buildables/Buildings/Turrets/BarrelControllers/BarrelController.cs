@@ -55,13 +55,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             }
         }
 
-        public float BoostMultiplier
-        {
-            // FELIX
-            get { return 0; }
-            set {  }
-        }
-
         protected abstract Vector3 ProjectileSpawnerPosition { get; }
 
         public virtual void StaticInitialise()

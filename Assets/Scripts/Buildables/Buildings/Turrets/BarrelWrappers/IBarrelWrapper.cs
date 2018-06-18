@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    public interface IBarrelWrapper : ITargetConsumer, IDisposable, IBoostable
+    public interface IBarrelWrapper : ITargetConsumer, IDisposable
 	{
         IDamageCapability DamageCapability { get; }
         float RangeInM { get; }

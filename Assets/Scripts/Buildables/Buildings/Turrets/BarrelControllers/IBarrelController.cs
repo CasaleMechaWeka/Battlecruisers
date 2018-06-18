@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public interface IBarrelController : ITargetConsumer, IBoostable
+    public interface IBarrelController : ITargetConsumer
     {
 		Transform Transform { get; }
         ITurretStats TurretStats { get; }
