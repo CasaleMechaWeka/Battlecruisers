@@ -3,8 +3,6 @@ using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Boost
 {
-    // FELIX  Perhaps only needs to apply cumulative boost to a single IBoostable?
-
     /// <summary>
     /// That combines the boost multipliers from:
     ///     * lists of boost providers ([][])
