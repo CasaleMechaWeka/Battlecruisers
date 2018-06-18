@@ -1,0 +1,70 @@
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted;
+using NSubstitute;
+using NUnit.Framework;
+using UnityEngine;
+
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
+{
+    public class BoostedTurretStatsTests : BoostedTurretStatsTestsBase<ITurretStats>
+    {
+        private ITurretStats _boostedStats;
+
+        [SetUp]
+        public override void SetuUp()
+        {
+            base.SetuUp();
+
+            _baseStats.TurretRotateSpeedInDegrees.Returns(1.2f);
+            _baseStats.IsInBurst.Returns(true);
+
+            _boostedStats = new BoostedTurretStats(_baseStats, _boostFactory, _globalBoostProviders);
+        }
+
+        [Test]
+        public void Constructor()
+        {
+            // Accuracy
+            _boostableGroup.Received().AddBoostable(_boostable);
+            _boostableGroup.Received().AddBoostProvidersList(_globalBoostProviders.TurretAccuracyBoostProviders);
+        }
+
+        [Test]
+        public void Forwarding_SimpleProperites()
+        {
+            Assert.AreEqual(_baseStats.TurretRotateSpeedInDegrees, _boostedStats.TurretRotateSpeedInDegrees);
+            Assert.AreEqual(_baseStats.IsInBurst, _boostedStats.IsInBurst);
+        }
+
+        #region Accuracy
+        [Test]
+        public void Forwarding_Accuracy_Unclamped()
+        {
+            _boostable.BoostMultiplier.Returns(2);
+            _baseStats.Accuracy.Returns(0.25f);
+
+            Assert.IsTrue(Mathf.Approximately(0.5f, _boostedStats.Accuracy));
+        }
+
+        [Test]
+        public void Forwarding_Accuracy_ClampedToMin()
+        {
+            _boostable.BoostMultiplier.Returns(-1);
+            _baseStats.Accuracy.Returns(0.5f);
+
+            // -1 * 0.5 = -0.5
+            Assert.AreEqual(0, _boostedStats.Accuracy);
+        }
+
+        [Test]
+        public void Forwarding_Accuracy_ClampedToMax()
+        {
+            _boostable.BoostMultiplier.Returns(4);
+            _baseStats.Accuracy.Returns(0.5f);
+
+            // 4 * 0.5 = 2
+            Assert.AreEqual(1, _boostedStats.Accuracy);
+        }
+        #endregion Accuracy
+    }
+}
