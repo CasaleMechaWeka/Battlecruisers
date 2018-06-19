@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Repairables
         private readonly IDroneNumFeedbackFactory _feedbackFactory;
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
-        private IDictionary<IRepairable, IDroneNumFeedback> _repairableToDroneConsumer;
+        private IDictionary<IRepairable, IDroneNumFeedback> _repairableToDroneNum;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Buildables.Repairables
             _cruiser = cruiser;
             _droneConsumerProvider = _cruiser.DroneConsumerProvider;
 
-            _repairableToDroneConsumer = new Dictionary<IRepairable, IDroneNumFeedback>();
+            _repairableToDroneNum = new Dictionary<IRepairable, IDroneNumFeedback>();
 
             AddRepairable(_cruiser);
 
@@ -61,8 +61,8 @@ namespace BattleCruisers.Buildables.Repairables
 
             Logging.Log(Tags.REPAIR_MANAGER, "RepairCommand_CanExecuteChanged() " + repairable + "  repairable.RepairCommand.CanExecute: " + repairable.RepairCommand.CanExecute);
 
-            Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
-            IDroneConsumer droneConsumer = _repairableToDroneConsumer[repairable].DroneConsumer;
+            Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
+            IDroneConsumer droneConsumer = _repairableToDroneNum[repairable].DroneConsumer;
 
             if (repairable.RepairCommand.CanExecute)
             {
@@ -86,9 +86,9 @@ namespace BattleCruisers.Buildables.Repairables
 
         public void Repair(float deltaTimeInS)
         {
-            Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  _repairableToDroneConsumer.Count:  " + _repairableToDroneConsumer.Count);
+            Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  _repairableToDroneConsumer.Count:  " + _repairableToDroneNum.Count);
 
-            foreach (KeyValuePair<IRepairable, IDroneNumFeedback> pair in _repairableToDroneConsumer)
+            foreach (KeyValuePair<IRepairable, IDroneNumFeedback> pair in _repairableToDroneNum)
             {
                 IRepairable repairable = pair.Key;
                 IDroneConsumer droneConsumer = pair.Value.DroneConsumer;
@@ -115,7 +115,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         private void CleanUpCruiser()
         {
-            IList<IRepairable> repairables = _repairableToDroneConsumer.Keys.ToList();
+            IList<IRepairable> repairables = _repairableToDroneNum.Keys.ToList();
 
             foreach (IRepairable repairable in repairables)
 			{
@@ -130,12 +130,12 @@ namespace BattleCruisers.Buildables.Repairables
         {
             Logging.Log(Tags.REPAIR_MANAGER, "AddRepairable(): repairable: " + repairable);
 
-            Assert.IsFalse(_repairableToDroneConsumer.ContainsKey(repairable));
+            Assert.IsFalse(_repairableToDroneNum.ContainsKey(repairable));
 
             IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
 
             IDroneNumFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.NumOfRepairDronesText);
-			_repairableToDroneConsumer.Add(repairable, droneNumFeedback);
+            _repairableToDroneNum.Add(repairable, droneNumFeedback);
 			
             if (repairable.RepairCommand.CanExecute)
             {
@@ -150,13 +150,13 @@ namespace BattleCruisers.Buildables.Repairables
         {
             Logging.Log(Tags.REPAIR_MANAGER, "RemoveRepairable(): repairable: " + repairable);
 
-            Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
+            Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
 
-            IDroneNumFeedback droneNumFeedback = _repairableToDroneConsumer[repairable];
+            IDroneNumFeedback droneNumFeedback = _repairableToDroneNum[repairable];
             droneNumFeedback.DisposeManagedState();
             _droneConsumerProvider.ReleaseDroneConsumer(droneNumFeedback.DroneConsumer);
 
-            _repairableToDroneConsumer.Remove(repairable);
+            _repairableToDroneNum.Remove(repairable);
 
             repairable.Destroyed -= Repairable_Destroyed;
             repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
@@ -169,8 +169,8 @@ namespace BattleCruisers.Buildables.Repairables
 
 		public IDroneConsumer GetDroneConsumer(IRepairable repairable)
 		{
-			Assert.IsTrue(_repairableToDroneConsumer.ContainsKey(repairable));
-            return _repairableToDroneConsumer[repairable].DroneConsumer;
+			Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
+            return _repairableToDroneNum[repairable].DroneConsumer;
 		}
     }
 }
