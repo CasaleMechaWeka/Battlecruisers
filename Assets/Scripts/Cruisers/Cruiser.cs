@@ -65,6 +65,7 @@ namespace BattleCruisers.Cruisers
 		public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones { get { return numOfDrones; } }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
+        public bool IsPlayerCruiser { get { return Direction == Direction.Right; } }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;

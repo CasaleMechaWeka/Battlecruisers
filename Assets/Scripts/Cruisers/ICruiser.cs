@@ -22,6 +22,7 @@ namespace BattleCruisers.Cruisers
         int NumOfDrones { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
         IFactoryProvider FactoryProvider { get; }
+        bool IsPlayerCruiser { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
     }
