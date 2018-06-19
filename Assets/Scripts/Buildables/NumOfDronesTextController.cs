@@ -17,6 +17,16 @@ namespace BattleCruisers.Buildables
 
         public ITextMesh NumOfDronesText { get; private set; }
 
+        private bool ShouldBeVisible
+        {
+            get
+            {
+                return
+                    _toggleDroneConsumerFocusCommand.CanExecute
+                    && _buildable.ParentCruiser.IsPlayerCruiser;
+            }
+        }
+
         public void Initialise(IBuildable buildable)
         {
             Assert.IsNotNull(buildable);
@@ -49,7 +59,7 @@ namespace BattleCruisers.Buildables
 
         private void UpdateVisibility()
         {
-            NumOfDronesText.SetActive(_toggleDroneConsumerFocusCommand.CanExecute);
+            NumOfDronesText.SetActive(ShouldBeVisible);
         }
 
         public void DisposeManagedState()
