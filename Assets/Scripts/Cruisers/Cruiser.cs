@@ -120,9 +120,6 @@ namespace BattleCruisers.Cruisers
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
 
-            // FELIX  Simulate damage :P
-            TakeDamage(12, this);
-
             if (Clicked != null)
             {
                 Clicked.Invoke(this, EventArgs.Empty);
