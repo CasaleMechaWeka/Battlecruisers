@@ -44,10 +44,11 @@ namespace BattleCruisers.Cruisers
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
+            bool isPlayerCruiser = facingDirection == Direction.Right;
+            IDroneNumFeedbackFactory feedbackFactory = CreateFeedbackFactory(isPlayerCruiser);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
-            bool shouldShowFog = facingDirection == Direction.Left;
+            bool shouldShowFog = !isPlayerCruiser;
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -65,6 +66,18 @@ namespace BattleCruisers.Cruisers
                     buildProgressCalculator);
 
             cruiser.Initialise(cruiserArgs);
+        }
+
+        private IDroneNumFeedbackFactory CreateFeedbackFactory(bool isPlayerCruiser)
+        {
+            if (isPlayerCruiser)
+            {
+                return new DroneNumFeedbackFactory();
+            }
+            else
+            {
+                return new DummyDroneNumFeedbackFactory();
+            }
         }
 
         public ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)
