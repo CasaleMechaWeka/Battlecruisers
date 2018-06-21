@@ -1,24 +1,18 @@
 ﻿using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Repairables
 {
-    public class DroneNumFeedback : IDroneNumFeedback
+    /// <summary>
+    /// Shows the number of repair drones via the text mesh.
+    /// </summary>
+    public class DroneNumFeedback : DroneNumFeedbackBase
     {
-        private readonly ITextMesh _textMesh;
-
         private const string FEEDBACK_PREFIX = "R";  // R for "Repair"
 
-        public IDroneConsumer DroneConsumer { get; private set; }
-
         public DroneNumFeedback(IDroneConsumer droneConsumer, ITextMesh textMesh)
+            : base(droneConsumer, textMesh)
         {
-            Helper.AssertIsNotNull(droneConsumer, textMesh);
-
-            DroneConsumer = droneConsumer;
-            _textMesh = textMesh;
-
             DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
         }
 
@@ -28,7 +22,7 @@ namespace BattleCruisers.Buildables.Repairables
             _textMesh.SetActive(e.NewNumOfDrones != 0);
         }
 
-        public void DisposeManagedState()
+        public override void DisposeManagedState()
         {
             DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
         }
