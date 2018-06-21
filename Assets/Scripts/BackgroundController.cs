@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.UI.BattleScene.Manager;
+﻿using BattleCruisers.UI.BattleScene.Manager;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
