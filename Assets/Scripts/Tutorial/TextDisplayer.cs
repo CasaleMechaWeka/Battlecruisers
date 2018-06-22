@@ -14,11 +14,15 @@ namespace BattleCruisers.Tutorial.Steps
             Assert.IsNotNull(_text);
 
             _text.text = string.Empty;
-            gameObject.SetActive(true);
         }
 
         public void DisplayText(string textToDisplay)
         {
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
+
             _text.text = textToDisplay;
         }
     }
