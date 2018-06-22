@@ -66,10 +66,12 @@ namespace BattleCruisers.AI
                 case Difficulty.Sandbox:
                     // Create no AI :)
                     break;
+                case Difficulty.Easy:
                 case Difficulty.Normal:
                     aiFactory.CreateBasicAI(levelInfo);
                     break;
                 case Difficulty.Hard:
+                case Difficulty.Insane:
                     aiFactory.CreateAdaptiveAI(levelInfo);
                     break;
             }

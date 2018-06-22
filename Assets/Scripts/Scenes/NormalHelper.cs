@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -34,9 +35,24 @@ namespace BattleCruisers.Scenes
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
-            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT);
+            IBuildProgressCalculator normalCalculator = new LinearCalculator(FindBuildSpeedMultiplier(_dataProvider.SettingsManager));
             PlayerCruiserBuildProgressCalculator = normalCalculator;
             AICruiserBuildProgressCalculator = normalCalculator;
+        }
+
+        private float FindBuildSpeedMultiplier(ISettingsManager settingsManager)
+        {
+            switch (settingsManager.AIDifficulty)
+            {
+                case Difficulty.Easy:
+                    return BuildSpeedMultipliers.HALF_DEFAULT;
+
+                case Difficulty.Insane:
+                    return BuildSpeedMultipliers.ONE_AND_A_HALF_DEFAULT;
+
+                default:
+                    return BuildSpeedMultipliers.DEFAULT;
+            }
         }
 
         public IUIManager CreateUIManager(IManagerArgs args)

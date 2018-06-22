@@ -2,7 +2,7 @@
 {
     public enum Difficulty
     {
-        Sandbox, Normal, Hard
+        Sandbox, Easy, Normal, Hard, Insane
     }
 
     public interface ISettingsManager

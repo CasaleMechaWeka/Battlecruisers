@@ -73,7 +73,7 @@ namespace BattleCruisers.Data.Settings
 
         private void CreateSettings()
         {
-            AIDifficulty = Difficulty.Normal;
+            AIDifficulty = Difficulty.Easy;
             ZoomSpeed = DEFAULT_ZOOM_SPEED;
 			ScrollSpeed = DEFAULT_SCROLL_SPEED;
 
