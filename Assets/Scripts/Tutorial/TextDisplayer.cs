@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps
 
         public void Initialise()
         {
-            _text = GetComponent<Text>();
+            _text = GetComponentInChildren<Text>();
             Assert.IsNotNull(_text);
 
             _text.text = string.Empty;

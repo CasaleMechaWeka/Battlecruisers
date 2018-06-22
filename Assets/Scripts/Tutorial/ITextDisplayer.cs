@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BattleCruisers.Tutorial.Steps
+﻿namespace BattleCruisers.Tutorial.Steps
 {
     public interface ITextDisplayer
     {
