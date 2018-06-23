@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             return new ShortSoundPlayer(sound, audioSource);
         }
 
-        public IProjectileSpawnerSoundPlayer CreateShortSoundPlayer(ISoundKey firingSound, IAudioSourceWrapper audioSource, int burstSize, float burstEndDelayInS)
+        public IProjectileSpawnerSoundPlayer CreateLongSoundPlayer(ISoundKey firingSound, IAudioSourceWrapper audioSource, int burstSize, float burstEndDelayInS)
         {
             IAudioClipWrapper sound = _soundFetcher.GetSound(firingSound);
             return new LongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);
