@@ -5,5 +5,6 @@
         float Accuracy { get; }
         float TurretRotateSpeedInDegrees { get; }
         bool IsInBurst { get; }
+        int BurstSize { get; }
     }
 }

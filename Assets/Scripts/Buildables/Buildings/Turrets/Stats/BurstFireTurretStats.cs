@@ -12,10 +12,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     {
         private float _shortDurationInS;
 
-        public int burstSize;
         public float burstFireRatePerS;
 
         private const int MIN_BURST_SIZE = 2;
+
+        public int burstSize;
+        public override int BurstSize { get { return burstSize; } }
 
         private int _queryIndex;
         private int QueryIndex

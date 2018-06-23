@@ -25,6 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         public float MeanFireRatePerS { get { return TurretStats.MeanFireRatePerS; } }
         public ReadOnlyCollection<TargetType> AttackCapabilities { get { return TurretStats.AttackCapabilities; } }
         public float DurationInS { get { return TurretStats.DurationInS; } }
+        public int BurstSize { get { return TurretStats.BurstSize; } }
 
         public TurretStatsWrapper(ITurretStats turretStats)
         {

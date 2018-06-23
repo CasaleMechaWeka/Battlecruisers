@@ -12,6 +12,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public virtual bool IsInBurst { get { return false; } }
 
+        public virtual int BurstSize { get { return DEFAULT_BURST_SIZE; } }
+
+        private const int DEFAULT_BURST_SIZE = 1;
+
         public override void Initialise()
 		{
             base.Initialise();

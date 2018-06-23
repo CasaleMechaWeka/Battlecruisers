@@ -17,6 +17,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 
             _baseStats.TurretRotateSpeedInDegrees.Returns(1.2f);
             _baseStats.IsInBurst.Returns(true);
+            _baseStats.BurstSize.Returns(7);
 
             _boostedStats = new BoostedTurretStats(_baseStats, _boostFactory, _globalBoostProviders);
         }
@@ -34,6 +35,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         {
             Assert.AreEqual(_baseStats.TurretRotateSpeedInDegrees, _boostedStats.TurretRotateSpeedInDegrees);
             Assert.AreEqual(_baseStats.IsInBurst, _boostedStats.IsInBurst);
+            Assert.AreEqual(_baseStats.BurstSize, _boostedStats.BurstSize);
         }
 
         #region Accuracy
