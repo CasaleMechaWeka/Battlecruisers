@@ -14,6 +14,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 
 namespace BattleCruisers.Utils
 {
@@ -37,5 +38,6 @@ namespace BattleCruisers.Utils
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ISoundFetcher SoundFetcher { get; }
         ISoundManager SoundManager { get; }
+        ISoundPlayerFactory SoundPlayerFactory { get; }
     }
 }

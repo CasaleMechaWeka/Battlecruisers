@@ -60,6 +60,7 @@ namespace BattleCruisers.Scenes
             Time.timeScale = 1;
 
             IDeferrer deferrer = GetComponent<IDeferrer>();
+            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
             Helper.AssertIsNotNull(
                 uiFactory,
@@ -69,7 +70,8 @@ namespace BattleCruisers.Scenes
                 cameraInitialiser,
                 backgroundController,
                 numOfDronesController,
-                deferrer);
+                deferrer,
+                variableDelayDeferrer);
 
 
             // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -91,7 +93,7 @@ namespace BattleCruisers.Scenes
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, spriteProvider);
+            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();

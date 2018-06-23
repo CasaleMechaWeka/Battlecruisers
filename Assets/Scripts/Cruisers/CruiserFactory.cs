@@ -18,14 +18,16 @@ namespace BattleCruisers.Cruisers
 	{
         private readonly IPrefabFactory _prefabFactory;
 		private readonly IDeferrer _deferrer;
+        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISpriteProvider _spriteProvider;
 
-        public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer, ISpriteProvider spriteProvider)
+        public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer, ISpriteProvider spriteProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, spriteProvider);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+            _variableDelayDeferrer = variableDelayDeferrer;
             _spriteProvider = spriteProvider;
         }
 
@@ -41,7 +43,7 @@ namespace BattleCruisers.Cruisers
         {
             Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator);
 
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             bool isPlayerCruiser = facingDirection == Direction.Right;

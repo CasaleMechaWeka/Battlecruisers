@@ -15,6 +15,8 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils
 {
@@ -38,14 +40,16 @@ namespace BattleCruisers.Utils
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
         public ISoundFetcher SoundFetcher { get; private set; }
         public ISoundManager SoundManager { get; private set; }
+        public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
             ICruiser friendlyCruiser, 
             ICruiser enemyCruiser, 
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            IVariableDelayDeferrer deferrer)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer);
 
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser);
@@ -68,6 +72,7 @@ namespace BattleCruisers.Utils
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
                     spriteProvider);
+            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
 		}
 	}
 }
