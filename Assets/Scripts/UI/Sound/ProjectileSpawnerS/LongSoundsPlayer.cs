@@ -3,7 +3,7 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     // FELIX  Test
 

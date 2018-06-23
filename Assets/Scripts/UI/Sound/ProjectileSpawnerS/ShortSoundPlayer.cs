@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     // FELIX  Test
 

@@ -3,7 +3,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public class SoundPlayerFactory : ISoundPlayerFactory
     {

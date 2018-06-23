@@ -1,0 +1,1 @@
+﻿namespace BattleCruisers.UI.Sound.ProjectileSpawners{    public interface IProjectileSpawnerSoundPlayer    {        void OnProjectileFired();    }}

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public interface ISoundPlayerFactory
     {
