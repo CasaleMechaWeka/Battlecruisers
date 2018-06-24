@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -13,9 +14,9 @@ namespace BattleCruisers.Projectiles.Spawners
         public RocketController rocketPrefab;
         protected override ProjectileController ProjectilePrefab { get { return rocketPrefab; } }
 
-        public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, IFactoryProvider factoryProvider)
+        public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, int burstSize, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(new ProjectileSpawnerArgs(parent, rocketStats, factoryProvider));
+            base.Initialise(new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider));
 
             _rocketStats = rocketStats;
 		}

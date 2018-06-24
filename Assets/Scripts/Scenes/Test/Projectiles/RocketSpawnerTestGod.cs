@@ -39,9 +39,10 @@ namespace BattleCruisers.Scenes.Test
 			ITarget parent = Substitute.For<ITarget>();
             CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
             ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
+            int burstSize = 1;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-            _rocketSpawner.Initialise(parent, rocketStats, args.FactoryProvider);
+            _rocketSpawner.Initialise(parent, rocketStats, burstSize, args.FactoryProvider);
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
 		}

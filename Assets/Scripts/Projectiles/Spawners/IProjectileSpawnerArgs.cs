@@ -8,6 +8,7 @@ namespace BattleCruisers.Projectiles.Spawners
     {
         ITarget Parent { get; }
         IProjectileStats ProjectileStats { get; }
+        int BurstSize { get; }
         IFactoryProvider FactoryProvider { get; }
     }
 }
