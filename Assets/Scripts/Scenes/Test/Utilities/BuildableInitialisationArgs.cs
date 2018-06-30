@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
@@ -16,8 +17,10 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using BcUtils = BattleCruisers.Utils;
 
@@ -54,7 +57,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAngleLimiterFactory angleLimiterFactory = null,
 			ISoundFetcher soundFetcher = null,
             ISoundManager soundManager = null,
-            ISpriteChooserFactory spriteChooserFactory = null)
+            ISpriteChooserFactory spriteChooserFactory = null,
+            IVariableDelayDeferrer variableDelayDeferrer = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
@@ -63,6 +67,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
+            variableDelayDeferrer = variableDelayDeferrer ?? Substitute.For<IVariableDelayDeferrer>();
+            globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
+            boostFactory = boostFactory ?? new BoostFactory();
 
             FactoryProvider
                 = CreateFactoryProvider(
@@ -73,20 +80,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    boostFactory ?? new BoostFactory(),
-                    globalBoostProviders ?? new GlobalBoostProviders(),
+                    boostFactory,
+                    globalBoostProviders,
                     damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
                     explosionFactory ?? new ExplosionFactory(prefabFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
-				    soundFetcher,
+                    soundFetcher,
                     soundManager ?? new SoundManager(soundFetcher, new SoundPlayer()),
-
-                    spriteChooserFactory ?? 
+                    spriteChooserFactory ??
                         new SpriteChooserFactory(
-                            new AssignerFactory(), 
-                            new SpriteProvider(new SpriteFetcher())));
+                            new AssignerFactory(),
+                            new SpriteProvider(new SpriteFetcher())),
+                    new SoundPlayerFactory(soundFetcher, variableDelayDeferrer),
+                    new TurretStatsFactory(boostFactory, globalBoostProviders));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -106,27 +114,31 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
             ISoundManager soundManager,
-            ISpriteChooserFactory spriteChooserFactory)
+            ISpriteChooserFactory spriteChooserFactory,
+            ISoundPlayerFactory soundPlayerFactory,
+            ITurretStatsFactory turretStatsFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
-            factoryProvider.PrefabFactory.Returns(prefabFactory);
-            factoryProvider.TargetsFactory.Returns(targetsFactory);
-            factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
-            factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
-            factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
+            factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
             factoryProvider.AircraftProvider.Returns(aircraftProvider);
-            factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
+            factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
+            factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             factoryProvider.BoostFactory.Returns(boostFactory);
-            factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.ExplosionFactory.Returns(explosionFactory);
-            factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
-            factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
-            factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
+            factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
+            factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
+            factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
+            factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SoundFetcher.Returns(soundFetcher);
             factoryProvider.SoundManager.Returns(soundManager);
+            factoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
+            factoryProvider.TargetsFactory.Returns(targetsFactory);
+            factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
+            factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
+            factoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
 
             return factoryProvider;
         }

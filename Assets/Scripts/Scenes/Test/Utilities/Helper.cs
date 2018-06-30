@@ -31,6 +31,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine;
 
@@ -38,17 +39,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class Helper
 	{
-        private int _numOfDrones;
-        private float _buildSpeedMultiplier;
+        private readonly int _numOfDrones;
+        private readonly float _buildSpeedMultiplier;
+        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
         public Helper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES, 
-            float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST)
+            float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
+            IVariableDelayDeferrer variableDelayDeferrer = null)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
+            _variableDelayDeferrer = variableDelayDeferrer;
 		}
 
         public void InitialiseBuilding(
@@ -93,7 +97,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parentCruiserDirection,
                     explosionFactory,
                     accuracyAdjusterFactory,
-                    targetPositionValidatorFactory);
+                    targetPositionValidatorFactory,
+                    variableDelayDeferrer: _variableDelayDeferrer);
 
             InitialiseBuilding(building, args, parentSlot);
         }
