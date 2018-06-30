@@ -113,7 +113,10 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateStep_YourCruiser()
         {
-            ITutorialStepArgs yourCruiserArgs = CreateTutorialStepArgs("This is your awesome cruiser :D", _tutorialArgs.PlayerCruiser);
+            ITutorialStepArgs yourCruiserArgs 
+                = CreateTutorialStepArgs(
+                    "This is your awesome cruiser :D", 
+                    _tutorialArgs.PlayerCruiser);
             return CreateClickStep(yourCruiserArgs, _tutorialArgs.PlayerCruiser);
         }
 
@@ -151,7 +154,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.NavigationButtonsWrapper.MidRightButton,
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
             
-			return CreateSteps_NavigationButton(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton, CameraState.AiCruiser);
+			return CreateSteps_NavigationButton(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton, CameraState.Overview);
 		}
 
         private ITutorialStep CreateStep_EnemyCruiser()
