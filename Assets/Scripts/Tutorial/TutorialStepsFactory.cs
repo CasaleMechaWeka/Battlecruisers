@@ -523,7 +523,7 @@ namespace BattleCruisers.Tutorial
 			// 6. Dismiss building details
 			string dismissText =
 				"Nice!  All the drones have moved from the artillery to the drone station.  " +
-				"Now dismiss the details panel by clicking anywhere.";
+				"Now dismiss the details panel by clicking anywhere in the sky.";
 			droneFocusSteps.Add(
 				new DismissStep(
 					CreateTutorialStepArgs(dismissText),
