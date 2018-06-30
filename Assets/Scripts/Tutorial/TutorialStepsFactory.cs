@@ -61,8 +61,8 @@ namespace BattleCruisers.Tutorial
             // 1. Your cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
-			// 2. Mouse navigation
-			steps.Enqueue(CreateSteps_MouseNavigation());
+            // 2. Mouse navigation
+            steps.Enqueue(CreateSteps_MouseNavigation());
 
             // 3. Navigation buttons
             steps.Enqueue(CreateSteps_NavigationButtons());
@@ -154,16 +154,20 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.NavigationButtonsWrapper.MidRightButton,
                     _tutorialArgs.NavigationButtonsWrapper.AICruiserButton);
             
-			return CreateSteps_NavigationButton(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.AICruiserButton, CameraState.Overview);
+			return CreateSteps_NavigationButton(navigationButtonArgs, _tutorialArgs.NavigationButtonsWrapper.OverviewButton, CameraState.Overview);
 		}
 
-        private ITutorialStep CreateStep_EnemyCruiser()
+        private IList<ITutorialStep> CreateStep_EnemyCruiser()
         {
-            ITutorialStepArgs yourCruiserArgs
+            IList<ITutorialStep> steps = CreateStep_NavigateToEnemyCruiser("Navigate to the enemy cruiser.");
+
+            ITutorialStepArgs enemyCruiserArgs
                 = CreateTutorialStepArgs(
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _tutorialArgs.AICruiser);
-            return CreateClickStep(yourCruiserArgs, _tutorialArgs.AICruiser);
+            steps.Add(CreateClickStep(enemyCruiserArgs, _tutorialArgs.AICruiser));
+
+            return steps;
         }
 
         private IList<ITutorialStep> CreateSteps_SpeedControls()
