@@ -36,14 +36,16 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 
             float expectedFireRate = _boostable.BoostMultiplier * _baseStats.FireRatePerS;
             Assert.IsTrue(Mathf.Approximately(expectedFireRate, boostedStats.FireRatePerS));
-            Assert.IsTrue(Mathf.Approximately(expectedFireRate, boostedStats.MeanFireRatePerS));
+
+            float expectedMeanFireRate = _boostable.BoostMultiplier * _baseStats.MeanFireRatePerS;
+            Assert.IsTrue(Mathf.Approximately(expectedMeanFireRate, boostedStats.MeanFireRatePerS));
+
+            float expectedDuration = _baseStats.DurationInS / _boostable.BoostMultiplier;
+            Assert.IsTrue(Mathf.Approximately(expectedDuration, boostedStats.DurationInS));
 
             Assert.AreEqual(_baseStats.RangeInM, boostedStats.RangeInM);
             Assert.AreEqual(_baseStats.MinRangeInM, boostedStats.MinRangeInM);
             Assert.AreEqual(_baseStats.AttackCapabilities, boostedStats.AttackCapabilities);
-
-            float expectedDuration = 1 / expectedFireRate;
-            Assert.IsTrue(Mathf.Approximately(expectedDuration, boostedStats.DurationInS));
         }
 
         [Test]
