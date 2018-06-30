@@ -17,9 +17,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public float FireRatePerS { get { return _fireRateBoostable.BoostMultiplier * _baseStats.FireRatePerS; } }
         public float RangeInM { get { return _baseStats.RangeInM; } }
         public float MinRangeInM { get { return _baseStats.MinRangeInM; } }
-        public float MeanFireRatePerS { get { return FireRatePerS; } }
+        public float MeanFireRatePerS { get { return _fireRateBoostable.BoostMultiplier * _baseStats.MeanFireRatePerS; } }
         public ReadOnlyCollection<TargetType> AttackCapabilities { get { return _baseStats.AttackCapabilities; } }
-        public float DurationInS { get { return 1 / FireRatePerS; } }
+        public float DurationInS { get { return _baseStats.DurationInS / _fireRateBoostable.BoostMultiplier; } }
 
         public BoostedBasicTurretStats(
             TStats baseStats,
