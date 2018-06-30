@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats
 {
     public class BurstFireTurretStatsTests 
 	{
