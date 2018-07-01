@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
-            float currentAngleInRadians = _barrelController.Transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
             Vector2 predictedTargetPosition
                 = _targetPositionPredictor.PredictTargetPosition(
                     _barrelController.ProjectileSpawnerPosition,

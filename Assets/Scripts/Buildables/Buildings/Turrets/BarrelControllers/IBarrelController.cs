@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         Vector3 ProjectileSpawnerPosition { get; }
         bool IsSourceMirrored { get; }
         ITarget CurrentTarget { get; }
+        float BarrelAngleInDegrees { get; }
 
         void Fire(float angleInDegrees);
     }
