@@ -34,35 +34,42 @@ namespace BattleCruisers.UI.BattleScene.Manager
         }
 
         /// <summary>
-        /// Not in constructor because of circular dependency between UIManager
-        /// and cruisers.  Hence need to wait until both the UIManager and
-        /// cruisers are setup before executing this method.
+        /// Not in constructor because of circular dependency between:
+        /// * UIManager
+        /// and 
+        /// * Cruisers
+        /// * Build menu  
+        /// Hence need to wait until all classes are set up before executing this method.
         /// </summary>
         public void InitialUI()
         {
 			_detailsManager.HideDetails();
+
+            // FELIX
+            _buildMenu.ShowBuildMenu();
         }
 
 		private void _cameraController_StateChanged(object sender, CameraStateChangedArgs e)
 		{
-			switch (e.PreviousState)
-			{
-				case CameraState.PlayerCruiser:
-					_buildMenu.HideBuildMenu();
-					_playerCruiser.SlotWrapper.HideAllSlots();
-                    _detailsManager.HideDetails();
-					break;
+            // FELIX
+			//switch (e.PreviousState)
+			//{
+			//	case CameraState.PlayerCruiser:
+			//		_buildMenu.HideBuildMenu();
+			//		_playerCruiser.SlotWrapper.HideAllSlots();
+   //                 _detailsManager.HideDetails();
+			//		break;
 
-                case CameraState.AiCruiser:
-                    _aiCruiser.SlotWrapper.UnhighlightSlots();
-                    _detailsManager.HideDetails();
-                    break;
-			}
+   //             case CameraState.AiCruiser:
+   //                 _aiCruiser.SlotWrapper.UnhighlightSlots();
+   //                 _detailsManager.HideDetails();
+   //                 break;
+			//}
 
-			if (e.NewState == CameraState.PlayerCruiser)
-            {
-				_buildMenu.ShowBuildMenu();
-            }
+			//if (e.NewState == CameraState.PlayerCruiser)
+   //         {
+			//	_buildMenu.ShowBuildMenu();
+   //         }
 		}
 
 		public virtual void HideItemDetails()
@@ -102,13 +109,17 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		public virtual void SelectBuilding(IBuilding building)
 		{
 			if (ReferenceEquals(building.ParentCruiser, _playerCruiser)
-				&& _cameraController.State == CameraState.PlayerCruiser)
+                // FELIX
+                )
+				//&& _cameraController.State == CameraState.PlayerCruiser)
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
 			else if (ReferenceEquals(building.ParentCruiser, _aiCruiser)
-				&& _cameraController.State == CameraState.AiCruiser)
-			{
+                // FELIX
+                )
+				//&& _cameraController.State == CameraState.AiCruiser)
+            {
 				SelectBuildingFromEnemyCruiser(building);
 			}
 		}
