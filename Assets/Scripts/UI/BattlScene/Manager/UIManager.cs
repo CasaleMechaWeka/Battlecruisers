@@ -11,10 +11,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
+    // FELIX  Update tests :)
 	public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
+
+        // FELIX  Remove :D
         private readonly ICameraController _cameraController;
+
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
         private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
@@ -141,7 +145,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public void ShowFactoryUnits(IFactory factory)
 		{
-			if (_cameraController.State == CameraState.PlayerCruiser)
+            if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
 			{
 				_buildMenu.ShowUnitsMenu(factory);
 			}
@@ -149,11 +153,15 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public virtual void ShowUnitDetails(IUnit unit)
 		{
+            HideItemDetails();
+
             _detailsManager.ShowDetails(unit);
 		}
 
         public virtual void ShowCruiserDetails(ICruiser cruiser)
         {
+            HideItemDetails();
+
             _detailsManager.ShowDetails(cruiser);
         }
     }
