@@ -1,12 +1,14 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     /// <summary>
     /// For example, if burst size = 3:
     /// 
-    /// Duration (S = short / L = long):    S S L   S S L
-    /// InBurst (T = true / F = false):     F T T   F T T
+    /// InBurst (T = true / F = false):         F  T  T    F  T  T
+    /// Turret fires (MoveToNextDuration()):     *  *  *    *  *  *
+    /// Duration (S = short / L = long):          S  S  L    S  S  L
     /// </summary>
     public class BurstFireTurretStats : TurretStats
     {
@@ -38,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         { 
             get 
             {
-                return QueryIndex == burstSize - 1 ? LongDurationInS : _shortDurationInS;
+                return QueryIndex == 0 ? LongDurationInS : _shortDurationInS;
             }
         }
 
@@ -70,8 +72,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             QueryIndex = 0;
 		}
 
+        int tempCounter = 0;
+
         public override void MoveToNextDuration()
         {
+            Logging.Log("BurstFireTurretStats.MoveToNextDuration() " + tempCounter++);
+
             QueryIndex++;
 		}
 	}

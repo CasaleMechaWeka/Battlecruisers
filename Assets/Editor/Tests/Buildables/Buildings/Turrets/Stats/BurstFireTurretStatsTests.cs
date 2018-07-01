@@ -43,37 +43,28 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats
         /// <summary>
         /// Burst size = 3:
         /// 
-        /// Duration (S = short / L = long):    S S L   S S L
-        /// InBurst (T = true / F = false):     F T T   F T T
+        /// InBurst (T = true / F = false):         F  T  T    F  T  T
+        /// Turret fires (MoveToNextDuration()):     *  *  *    *  *  *
+        /// Duration (S = short / L = long):          S  S  L    S  S  L
         /// </summary>
-		[Test]
+        [Test]
 		public void NextFireIntervalInS_And_IsInBurst()
 		{
-            // Several bursts
-            for (int j = 0; j < 2; ++j)
+            int numOfBursts = 10;
+
+            bool[] expectedIsInBursts = new bool[] { false, true, true };
+            float[] expectedDurations = new float[] { _expectedBurstInterval, _expectedBurstInterval, _expectedLongInterval };
+
+            for (int j = 0; j < numOfBursts; ++j)
             {
                 for (int i = 0; i < _turretStats.burstSize; ++i)
                 {
-                    if (i == 0)
-                    {
-                        // First shot in burst
-                        Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
-                        Assert.IsFalse(_turretStats.IsInBurst);
-                    }
-                    else if (i == _turretStats.burstSize - 1)
-                    {
-                        // Last shot in burst
-                        Assert.AreEqual(_expectedLongInterval, _turretStats.DurationInS);
-                        Assert.IsTrue(_turretStats.IsInBurst);
-                    }
-                    else
-                    {
-                        // Middle of burst
-                        Assert.AreEqual(_expectedBurstInterval, _turretStats.DurationInS);
-                        Assert.IsTrue(_turretStats.IsInBurst);
-                    }
+                    Assert.AreEqual(expectedIsInBursts[i], _turretStats.IsInBurst);
 
+                    // Turret fires
                     _turretStats.MoveToNextDuration();
+
+                    Assert.AreEqual(expectedDurations[i], _turretStats.DurationInS);
                 }
             }				
 		}
