@@ -1,17 +1,22 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
     public abstract class BaseFireIntervalManager : MonoBehaviour, IFireIntervalManager
 	{
 		private IState _currentState;
+        private IDurationProvider _waitingDurationProvider;
 
 		public virtual void Initialise(IDurationProvider waitingDurationProvider)
 		{
+            Assert.IsNotNull(waitingDurationProvider);
+            _waitingDurationProvider = waitingDurationProvider;
+
             WaitingState waitingState = new WaitingState();
             IState firingState = CreateFiringState(waitingState);
-			waitingState.Initialise(firingState, waitingDurationProvider);
+			waitingState.Initialise(firingState, _waitingDurationProvider);
 
             _currentState = firingState;
 		}
@@ -26,6 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 		public void OnFired()
 		{
 			_currentState = _currentState.OnFired();
+            _waitingDurationProvider.MoveToNextDuration();
 		}
 
 		void Update()

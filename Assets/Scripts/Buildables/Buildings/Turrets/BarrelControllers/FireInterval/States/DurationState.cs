@@ -41,8 +41,9 @@
 
         private void ResetTime()
         {
+            // FELIX
 			_elapsedTimeInS = 0;
-            _durationProvider.MoveToNextDuration();
+            //_durationProvider.MoveToNextDuration();
         }
 	}
 }
