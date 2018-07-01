@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
 
         public ITarget Target { get; set; }
-        protected bool IsSourceMirrored { get { return transform.IsMirrored(); } }
+        public bool IsSourceMirrored { get { return transform.IsMirrored(); } }
         protected virtual int NumOfBarrels { get { return 1; } }
         public Transform Transform { get { return transform; } }
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             }
         }
 
-        protected abstract Vector3 ProjectileSpawnerPosition { get; }
+        public abstract Vector3 ProjectileSpawnerPosition { get; }
 
         public virtual void StaticInitialise()
         {
@@ -187,7 +187,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return true;
         }
 
-        protected abstract void Fire(float angleInDegrees);
+        public abstract void Fire(float angleInDegrees);
 
 		protected virtual void CeaseFire() { }
 	}

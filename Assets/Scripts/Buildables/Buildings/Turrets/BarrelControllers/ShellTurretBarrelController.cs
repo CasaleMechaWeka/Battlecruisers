@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override int NumOfBarrels { get { return _shellSpawners.Length; } }
 
-        protected override Vector3 ProjectileSpawnerPosition { get { return _shellSpawners.Middle().transform.position; } }
+        public override Vector3 ProjectileSpawnerPosition { get { return _shellSpawners.Middle().transform.position; } }
 
         public override void StaticInitialise()
 		{
@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             }
 		}
 
-		protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
 			foreach (ShellSpawner spawner in _shellSpawners)
             {

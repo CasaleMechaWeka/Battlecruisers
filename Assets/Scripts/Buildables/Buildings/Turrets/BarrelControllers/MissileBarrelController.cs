@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
         private ICircularList<MissileSpawner> _missileSpawners;
 
-        protected override Vector3 ProjectileSpawnerPosition { get { return _missileSpawners.Items.Middle().transform.position; } }
+        public override Vector3 ProjectileSpawnerPosition { get { return _missileSpawners.Items.Middle().transform.position; } }
 
         public override void StaticInitialise()
         {
@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			}
 		}
 
-		protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
             Logging.Log(Tags.BARREL_CONTROLLER, "MissileBarrelController.Fire()  angleInDegrees: " + angleInDegrees);
 

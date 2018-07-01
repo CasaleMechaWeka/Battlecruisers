@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawner _missileSpawner;
 
-        protected override Vector3 ProjectileSpawnerPosition { get { return _missileSpawner.transform.position; } }
+        public override Vector3 ProjectileSpawnerPosition { get { return _missileSpawner.transform.position; } }
 
         public override void StaticInitialise()
         {
@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _missileSpawner.Initialise(spawnerArgs);
 		}
 
-		protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
 			_exactMatchTargetFilter.Target = Target;
 			_missileSpawner.SpawnMissile(angleInDegrees, IsSourceMirrored, Target, _exactMatchTargetFilter);

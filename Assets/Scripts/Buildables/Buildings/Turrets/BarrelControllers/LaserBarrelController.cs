@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
-        protected override Vector3 ProjectileSpawnerPosition { get { return _laserEmitter.transform.position; } }
+        public override Vector3 ProjectileSpawnerPosition { get { return _laserEmitter.transform.position; } }
 
         public override void StaticInitialise()
 		{
@@ -58,7 +58,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _laserEmitter.Initialise(args.TargetFilter, _laserTurretStats.damagePerS, args.Parent, args.FactoryProvider.SoundFetcher);
 		}
 
-		protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
 			_laserEmitter.FireLaser(angleInDegrees, transform.IsMirrored());
 		}

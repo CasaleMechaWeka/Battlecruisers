@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private Faction _faction;
         private ICruisingProjectileStats _rocketStats;
 
-        protected override Vector3 ProjectileSpawnerPosition { get { return _rocketSpawners.Items.Middle().transform.position; } }
+        public override Vector3 ProjectileSpawnerPosition { get { return _rocketSpawners.Items.Middle().transform.position; } }
 
         public override void StaticInitialise()
         {
@@ -45,7 +45,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			}
 		}
 
-		protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
 			_rocketSpawners.Next().SpawnRocket(
 				angleInDegrees,
