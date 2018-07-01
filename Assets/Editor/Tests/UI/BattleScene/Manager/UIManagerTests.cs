@@ -7,7 +7,6 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using NSubstitute;
 using NUnit.Framework;
@@ -68,16 +67,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             _uiManager.InitialUI();
             _detailsManager.Received().HideDetails();
+            _buildMenu.Received().ShowBuildMenu();
         }
 
         [Test]
         public void HideItemDetails()
         {
             _uiManager.HideItemDetails();
-
-            _detailsManager.Received().HideDetails();
-            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
-            _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
+            Expect_HideItemDetails();
         }
 
         [Test]
@@ -116,82 +113,52 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
         #region SelectBuilding()
         [Test]
-        public void SelectBuilding_ParentIsPlayerCruiser_CameraAtPlayerCruiser_ShowsDetails()
+        public void SelectBuilding_ParentIsPlayerCruiser()
         {
             _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(_building).Returns(true);
             _building.ParentCruiser.Returns(_playerCruiser);
 
             _uiManager.SelectBuilding(_building);
 
-            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
-            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            Expect_HideItemDetails();
+
             _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
             _detailsManager.Received().ShowDetails(_building, allowDelete: true);
+
+            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
 
         [Test]
-        public void SelectBuilding_ParentIsNotPlayerCruiser_DoesNothing()
+        public void SelectBuilding_ParentIsAiCruiser_ShowsDetails()
         {
             _building.ParentCruiser.Returns(_aiCruiser);
 
             _uiManager.SelectBuilding(_building);
 
-            _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
-        }
-
-        [Test]
-        public void SelectBuilding_ParentIsPlayerCruiser_CameraNotAtPlayerCruiser_DoesNothing()
-        {
-            _building.ParentCruiser.Returns(_playerCruiser);
-
-            _uiManager.SelectBuilding(_building);
-
-            _playerCruiser.SlotWrapper.DidNotReceive().UnhighlightSlots();
-        }
-
-        [Test]
-        public void SelectBuilding_ParentIsAiCruiser_CameraAtAiCruiser_ShowsDetails()
-        {
-            _building.ParentCruiser.Returns(_aiCruiser);
-
-            _uiManager.SelectBuilding(_building);
+            Expect_HideItemDetails();
 
             _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
             _detailsManager.Received().ShowDetails(_building, allowDelete: false);
-        }
 
-        [Test]
-        public void SelectBuilding_ParentIsNotAiCruiser_DoesNothing()
-        {
-            _building.ParentCruiser.Returns(_playerCruiser);
-            _uiManager.SelectBuilding(_building);
-            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
-        }
-
-        [Test]
-        public void SelectBuilding_ParentIsAiCruiser_CameraNotAtAiCruiser_DoesNothing()
-        {
-            _building.ParentCruiser.Returns(_aiCruiser);
-
-            _uiManager.SelectBuilding(_building);
-
-            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
+            _playerCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
         #endregion SelectBuilding()
 
         [Test]
-        public void ShowFactoryUnits_AtPlayerCruiser_ShowsDetails()
+        public void ShowFactoryUnits_PlayerCruiserFactory_ShowsDetails()
         {
+            _factory.ParentCruiser.Returns(_playerCruiser);
             _uiManager.ShowFactoryUnits(_factory);
-
             _buildMenu.Received().ShowUnitsMenu(_factory);
         }
 
         [Test]
-        public void ShowFactoryUnits_NotAtPlayerCruiser_DoesNothing()
+        public void ShowFactoryUnits_NotPlayerCruiserFactory_DoesNothing()
         {
+            _factory.ParentCruiser.Returns(_aiCruiser);
             _uiManager.ShowFactoryUnits(_factory);
-
             _buildMenu.DidNotReceive().ShowUnitsMenu(_factory);
         }
 
@@ -202,6 +169,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _uiManager.ShowUnitDetails(unit);
 
+            Expect_HideItemDetails();
             _detailsManager.Received().ShowDetails(unit);
         }
 
@@ -209,7 +177,16 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void ShowCruiserDetails()
         {
             _uiManager.ShowCruiserDetails(_playerCruiser);
+
+            Expect_HideItemDetails();
             _detailsManager.Received().ShowDetails(_playerCruiser);
+        }
+
+        private void Expect_HideItemDetails()
+        {
+            _detailsManager.Received().HideDetails();
+            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
         }
     }
 }
