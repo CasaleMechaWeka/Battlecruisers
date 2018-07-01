@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
@@ -16,6 +17,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             this.IsOnTarget = isOnTarget;
             this.DesiredAngleInDegrees = desiredAngleInDegrees;
             this.PredictedTargetPosition = predictedTargetPosition;
+        }
+
+        public override bool Equals(object obj)
+        {
+            BarrelAdjustmentResult other = obj as BarrelAdjustmentResult;
+            return
+                other != null
+                && IsOnTarget == other.IsOnTarget
+                && DesiredAngleInDegrees == other.DesiredAngleInDegrees
+                && PredictedTargetPosition == other.PredictedTargetPosition;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(IsOnTarget, DesiredAngleInDegrees, PredictedTargetPosition);
         }
     }
 }
