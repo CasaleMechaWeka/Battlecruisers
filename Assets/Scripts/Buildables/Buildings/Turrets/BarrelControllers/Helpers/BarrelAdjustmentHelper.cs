@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -15,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     public class BarrelAdjustmentHelper : IBarrelAdjustmentHelper
     {
         private readonly IBarrelController _barrelController;
-        private readonly ITargetProvider _targetProvider;
         private readonly ITargetPositionPredictor _targetPositionPredictor;
         private readonly ITargetPositionValidator _targetPositionValidator;
         private readonly IAngleCalculator _angleCalculator;
@@ -42,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public BarrelAdjustmentResult AdjustTurretBarrel()
         {
-            if (_targetProvider.Target == null || _targetProvider.Target.IsDestroyed)
+            if (_barrelController.CurrentTarget == null || _barrelController.CurrentTarget.IsDestroyed)
             {
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "No alive target, cannot be on target");
                 return new BarrelAdjustmentResult(isOnTarget: false);
@@ -52,7 +50,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             Vector2 predictedTargetPosition
                 = _targetPositionPredictor.PredictTargetPosition(
                     _barrelController.ProjectileSpawnerPosition,
-                    _targetProvider.Target,
+                    _barrelController.CurrentTarget,
                     _barrelController.ProjectileStats.MaxVelocityInMPerS,
                     currentAngleInRadians);
 

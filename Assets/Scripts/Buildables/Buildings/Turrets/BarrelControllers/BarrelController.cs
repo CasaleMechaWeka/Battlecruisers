@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
-        protected IFireIntervalManager _fireIntervalManager;
+        private IFireIntervalManager _fireIntervalManager;
         protected ITargetFilter _targetFilter;
         protected ITargetPositionPredictor _targetPositionPredictor;
         protected IAngleCalculator _angleCalculator;
@@ -34,6 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
 
         public ITarget Target { get; set; }
+        public ITarget CurrentTarget { get { return Target; } }
         public bool IsSourceMirrored { get { return transform.IsMirrored(); } }
         protected virtual int NumOfBarrels { get { return 1; } }
         public Transform Transform { get { return transform; } }

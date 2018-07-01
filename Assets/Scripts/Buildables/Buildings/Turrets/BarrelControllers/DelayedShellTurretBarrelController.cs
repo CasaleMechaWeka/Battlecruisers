@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _deferrer = constDelayDeferrer;
         }
 
-        protected override void Fire(float angleInDegrees)
+        public override void Fire(float angleInDegrees)
 		{
             _deferrer.Defer(() => base.Fire(angleInDegrees));
 		}
