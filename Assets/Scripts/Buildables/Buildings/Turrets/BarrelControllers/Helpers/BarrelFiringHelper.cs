@@ -7,13 +7,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     // FELIX  Use!
     // FELIX  Test!
     // FELIX  Ski!
-    public class FiringManager : IBarrelFiringHelper
+    public class BarrelFiringHelper : IBarrelFiringHelper
     {
         private readonly IBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
 
-        public FiringManager(IBarrelController barrelController, IAccuracyAdjuster accuracyAdjuster, IFireIntervalManager fireIntervalManager)
+        public BarrelFiringHelper(IBarrelController barrelController, IAccuracyAdjuster accuracyAdjuster, IFireIntervalManager fireIntervalManager)
         {
             Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager);
 
