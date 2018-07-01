@@ -1,11 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -17,13 +12,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
+        private IBarrelAdjustmentHelper _adjustmentHelper;
+        private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
-        private ITargetPositionPredictor _targetPositionPredictor;
-        private IAngleCalculator _angleCalculator;
-        private IRotationMovementController _rotationMovementController;
-        private IAccuracyAdjuster _accuracyAdjuster;
-        private ITargetPositionValidator _targetPositionValidator;
-        private IAngleLimiter _angleLimiter;
         protected ITargetFilter _targetFilter;
 		
         protected IProjectileStats _projectileStats;
@@ -103,14 +94,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(args);
 
             _targetFilter = args.TargetFilter;
-            _targetPositionPredictor = args.TargetPositionPredictor;
-			_angleCalculator = args.AngleCalculator;
-			_rotationMovementController = args.RotationMovementController;
-            _accuracyAdjuster = args.AccuracyAdjuster;
-            _targetPositionValidator = args.TargetPositionValidator;
-            _angleLimiter = args.AngleLimiter;
             _turretStatsWrapper.TurretStats = args.FactoryProvider.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, args.LocalBoostProviders);
-		}
+
+            _adjustmentHelper
+                = new BarrelAdjustmentHelper(
+                    this,
+                    args.TargetPositionPredictor,
+                    args.TargetPositionValidator,
+                    args.AngleCalculator,
+                    args.RotationMovementController,
+                    args.AngleLimiter);
+
+            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager);
+        }
 
 		void FixedUpdate()
         {
@@ -119,73 +115,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 return;
             }
 
-            bool wasFireSuccessful = TryFire();
+            BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
+            bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
 
             if (!wasFireSuccessful)
             {
                 CeaseFire();
             }
-        }
-
-        // FELIX  Test this method somehow :/  Move functionality to testable class?  (Not MonoBehaviour :P)
-        /// <returns><c>true</c>, if successfully fired, <c>false</c> otherwise.</returns>
-        private bool TryFire()
-        {
-            if ((Target == null || Target.IsDestroyed)
-                && !TurretStats.IsInBurst)
-            {
-                // No alive target to shoot
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "No alive target to shoot");
-                return false;
-            }
-
-            // FELIX
-            //Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
-
-            float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-            Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
-
-            if (!_targetPositionValidator.IsValid(predictedTargetPosition, ProjectileSpawnerPosition, IsSourceMirrored))
-            {
-                // Target position is invalid
-                // FELIX
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "Target position is invalid");
-                return false;
-            }
-
-            float desiredAngleInDegrees = _angleCalculator.FindDesiredAngle(ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored, _projectileStats.MaxVelocityInMPerS);
-            bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
-            float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
-
-            if (!isOnTarget)
-            {
-                _rotationMovementController.AdjustRotation(limitedDesiredAngle);
-            }
-
-            if ((!isOnTarget && !TurretStats.IsInBurst)
-                || !_fireIntervalManager.ShouldFire())
-            {
-                // FELIX
-                //Logging.Log("isOnTarget: " + isOnTarget + "  IsInBurst: " + TurretStats.IsInBurst);
-                //Logging.Log("_fireIntervalManager.ShouldFire(): " + _fireIntervalManager.ShouldFire());
-
-                // Not on target or haven't waited fire interval
-                // FELIX
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target or haven't waited fire interval");
-                return false;
-            }
-
-            // Burst fires happen even if we are no longer on target, so we may miss
-            // the target in this case.  Hence use the actual angle our turret barrel
-            // is at, instead of the perfect desired angle.
-            float fireAngle = TurretStats.IsInBurst ? transform.rotation.eulerAngles.z : limitedDesiredAngle;
-            Logging.Log(Tags.BARREL_CONTROLLER, "TryFire()  fireAngle: " + fireAngle + "  transform.rotation.eulerAngles.z: " + transform.rotation.eulerAngles.z);
-            fireAngle = _accuracyAdjuster.FindAngleInDegrees(fireAngle, ProjectileSpawnerPosition, predictedTargetPosition, IsSourceMirrored);
-
-            Fire(fireAngle);
-            _fireIntervalManager.OnFired();
-
-            return true;
         }
 
         public abstract void Fire(float angleInDegrees);
