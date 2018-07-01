@@ -18,13 +18,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
         private IFireIntervalManager _fireIntervalManager;
-        protected ITargetFilter _targetFilter;
-        protected ITargetPositionPredictor _targetPositionPredictor;
-        protected IAngleCalculator _angleCalculator;
-        protected IRotationMovementController _rotationMovementController;
+        private ITargetPositionPredictor _targetPositionPredictor;
+        private IAngleCalculator _angleCalculator;
+        private IRotationMovementController _rotationMovementController;
         private IAccuracyAdjuster _accuracyAdjuster;
         private ITargetPositionValidator _targetPositionValidator;
         private IAngleLimiter _angleLimiter;
+        protected ITargetFilter _targetFilter;
 		
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats { get { return _projectileStats; } }
