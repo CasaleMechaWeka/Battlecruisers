@@ -20,7 +20,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private IUIManager _uiManager;
 
         private ICruiser _playerCruiser, _aiCruiser;
-        private ICameraController _cameraController;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
         private IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
@@ -35,7 +34,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _playerCruiser = CreateMockCruiser();
             _aiCruiser = CreateMockCruiser();
-            _cameraController = Substitute.For<ICameraController>();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
             _shouldBuildingDeleteButtonBeEnabledFilter = Substitute.For<IFilter<IBuilding>>();
@@ -44,7 +42,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
-                    _cameraController,
                     _buildMenu,
                     _detailsManager,
                     _shouldBuildingDeleteButtonBeEnabledFilter);
@@ -72,38 +69,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.InitialUI();
             _detailsManager.Received().HideDetails();
         }
-
-        #region Camera transitions
-        [Test]
-        public void CameraStateChanged_OldState_PlayerCruiser()
-        {
-			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.PlayerCruiser, newState: CameraState.InTransition);
-			_cameraController.StateChanged += Raise.EventWith(_cameraController, args);
-
-            _buildMenu.Received().HideBuildMenu();
-            _playerCruiser.SlotWrapper.Received().HideAllSlots();
-            _detailsManager.Received().HideDetails();
-        }
-
-        [Test]
-		public void CameraStateChanged_OldState_AiCruiser()
-        {
-			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.AiCruiser, newState: CameraState.InTransition);
-            _cameraController.StateChanged += Raise.EventWith(_cameraController, args);
-
-            _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
-            _detailsManager.Received().HideDetails();
-        }
-
-        [Test]
-        public void CameraTransitionCompleted_NewState_PlayerCruiser()
-        {
-			CameraStateChangedArgs args = new CameraStateChangedArgs(previousState: CameraState.InTransition, newState: CameraState.PlayerCruiser);
-            _cameraController.StateChanged += Raise.EventWith(_cameraController, args);
-
-            _buildMenu.Received().ShowBuildMenu();
-        }
-        #endregion Camera transitions
 
         [Test]
         public void HideItemDetails()
@@ -153,7 +118,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsPlayerCruiser_CameraAtPlayerCruiser_ShowsDetails()
         {
-            _cameraController.State.Returns(CameraState.PlayerCruiser);
             _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(_building).Returns(true);
             _building.ParentCruiser.Returns(_playerCruiser);
 
@@ -168,7 +132,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsNotPlayerCruiser_DoesNothing()
         {
-            _cameraController.State.Returns(CameraState.PlayerCruiser);
             _building.ParentCruiser.Returns(_aiCruiser);
 
             _uiManager.SelectBuilding(_building);
@@ -179,7 +142,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsPlayerCruiser_CameraNotAtPlayerCruiser_DoesNothing()
         {
-            _cameraController.State.Returns(CameraState.Overview);
             _building.ParentCruiser.Returns(_playerCruiser);
 
             _uiManager.SelectBuilding(_building);
@@ -190,7 +152,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsAiCruiser_CameraAtAiCruiser_ShowsDetails()
         {
-            _cameraController.State.Returns(CameraState.AiCruiser);
             _building.ParentCruiser.Returns(_aiCruiser);
 
             _uiManager.SelectBuilding(_building);
@@ -210,7 +171,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsAiCruiser_CameraNotAtAiCruiser_DoesNothing()
         {
-            _cameraController.State.Returns(CameraState.Overview);
             _building.ParentCruiser.Returns(_aiCruiser);
 
             _uiManager.SelectBuilding(_building);
@@ -222,8 +182,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void ShowFactoryUnits_AtPlayerCruiser_ShowsDetails()
         {
-            _cameraController.State.Returns(CameraState.PlayerCruiser);
-
             _uiManager.ShowFactoryUnits(_factory);
 
             _buildMenu.Received().ShowUnitsMenu(_factory);
@@ -232,8 +190,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void ShowFactoryUnits_NotAtPlayerCruiser_DoesNothing()
         {
-            _cameraController.State.Returns(CameraState.Overview);
-
             _uiManager.ShowFactoryUnits(_factory);
 
             _buildMenu.DidNotReceive().ShowUnitsMenu(_factory);

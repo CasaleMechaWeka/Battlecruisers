@@ -123,7 +123,6 @@ namespace BattleCruisers.Scenes
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
-				    cameraInitialiser.CameraController,
                     buildMenuController,
                     new BuildableDetailsManager(hudCanvas),
                     helper.CreateBuildingDeleteButtonFilter(_playerCruiser));

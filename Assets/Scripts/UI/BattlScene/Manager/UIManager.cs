@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -12,13 +11,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.Manager
 {
     // FELIX  Update tests :)
-	public class UIManager : IUIManager
+    public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
-
-        // FELIX  Remove :D
-        private readonly ICameraController _cameraController;
-
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
         private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
@@ -29,12 +24,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 			_playerCruiser = args.PlayerCruiser;
             _aiCruiser = args.AICruiser;
-            _cameraController = args.CameraController;
             _buildMenu = args.BuildMenu;
             _detailsManager = args.DetailsManager;
             _shouldBuildingDeleteButtonBeEnabledFilter = args.ShouldBuildingDeleteButtonBeEnabledFilter;
-   			
-			_cameraController.StateChanged += _cameraController_StateChanged;
         }
 
         /// <summary>
@@ -48,33 +40,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public void InitialUI()
         {
 			_detailsManager.HideDetails();
-
-            // FELIX
             _buildMenu.ShowBuildMenu();
         }
-
-		private void _cameraController_StateChanged(object sender, CameraStateChangedArgs e)
-		{
-            // FELIX
-			//switch (e.PreviousState)
-			//{
-			//	case CameraState.PlayerCruiser:
-			//		_buildMenu.HideBuildMenu();
-			//		_playerCruiser.SlotWrapper.HideAllSlots();
-   //                 _detailsManager.HideDetails();
-			//		break;
-
-   //             case CameraState.AiCruiser:
-   //                 _aiCruiser.SlotWrapper.UnhighlightSlots();
-   //                 _detailsManager.HideDetails();
-   //                 break;
-			//}
-
-			//if (e.NewState == CameraState.PlayerCruiser)
-   //         {
-			//	_buildMenu.ShowBuildMenu();
-   //         }
-		}
 
 		public virtual void HideItemDetails()
 		{
@@ -114,17 +81,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
             HideItemDetails();
 
-			if (ReferenceEquals(building.ParentCruiser, _playerCruiser)
-                // FELIX
-                )
-				//&& _cameraController.State == CameraState.PlayerCruiser)
+			if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
 			{
 				SelectBuildingFromFriendlyCruiser(building);
 			}
-			else if (ReferenceEquals(building.ParentCruiser, _aiCruiser)
-                // FELIX
-                )
-				//&& _cameraController.State == CameraState.AiCruiser)
+			else if (ReferenceEquals(building.ParentCruiser, _aiCruiser))
             {
 				SelectBuildingFromEnemyCruiser(building);
 			}
@@ -155,14 +116,12 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		public virtual void ShowUnitDetails(IUnit unit)
 		{
             HideItemDetails();
-
             _detailsManager.ShowDetails(unit);
 		}
 
         public virtual void ShowCruiserDetails(ICruiser cruiser)
         {
             HideItemDetails();
-
             _detailsManager.ShowDetails(cruiser);
         }
     }
