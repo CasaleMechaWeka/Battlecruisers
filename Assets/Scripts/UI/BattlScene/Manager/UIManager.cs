@@ -112,6 +112,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public virtual void SelectBuilding(IBuilding building)
 		{
+            HideItemDetails();
+
 			if (ReferenceEquals(building.ParentCruiser, _playerCruiser)
                 // FELIX
                 )
@@ -130,7 +132,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
-			_playerCruiser.SlotWrapper.UnhighlightSlots();
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
             bool allowDelete = _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(building);
             _detailsManager.ShowDetails(building, allowDelete);
