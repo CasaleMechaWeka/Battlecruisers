@@ -126,16 +126,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             }
         }
 
+        // FELIX  Test this method somehow :/  Move functionality to testable class?  (Not MonoBehaviour :P)
         /// <returns><c>true</c>, if successfully fired, <c>false</c> otherwise.</returns>
         private bool TryFire()
         {
-            if (Target == null || Target.IsDestroyed)
+            if ((Target == null || Target.IsDestroyed)
+                && !TurretStats.IsInBurst)
             {
                 // No alive target to shoot
+                Logging.Verbose(Tags.BARREL_CONTROLLER, "No alive target to shoot");
                 return false;
             }
 
-            Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
+            // FELIX
+            //Logging.Verbose(Tags.BARREL_CONTROLLER, "Target.Velocity: " + Target.Velocity);
 
             float currentAngleInRadians = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
             Vector2 predictedTargetPosition = _targetPositionPredictor.PredictTargetPosition(ProjectileSpawnerPosition, Target, _projectileStats.MaxVelocityInMPerS, currentAngleInRadians);
@@ -143,6 +147,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             if (!_targetPositionValidator.IsValid(predictedTargetPosition, ProjectileSpawnerPosition, IsSourceMirrored))
             {
                 // Target position is invalid
+                // FELIX
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "Target position is invalid");
                 return false;
             }
@@ -159,7 +164,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             if ((!isOnTarget && !TurretStats.IsInBurst)
                 || !_fireIntervalManager.ShouldFire())
             {
+                // FELIX
+                //Logging.Log("isOnTarget: " + isOnTarget + "  IsInBurst: " + TurretStats.IsInBurst);
+                //Logging.Log("_fireIntervalManager.ShouldFire(): " + _fireIntervalManager.ShouldFire());
+
                 // Not on target or haven't waited fire interval
+                // FELIX
                 Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target or haven't waited fire interval");
                 return false;
             }

@@ -16,10 +16,10 @@ namespace BattleCruisers.Scenes.Test
 		{
             _helper = new Helper();
 
-			InitialisePair(barrel1, target1);
-			InitialisePair(barrel2, target2);
-			InitialisePair(barrel3, target3);
-		}
+            InitialisePair(barrel1, target1);
+            InitialisePair(barrel2, target2);
+            InitialisePair(barrel3, target3);
+        }
 
         private void InitialisePair(BarrelController barrel, GameObject targetGameObject)
 		{

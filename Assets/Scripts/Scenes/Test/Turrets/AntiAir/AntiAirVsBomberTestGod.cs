@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,7 +21,10 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 		void Start() 
 		{
-			Helper helper = new Helper();
+            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
+            Assert.IsNotNull(variableDelayDeferrer);
+
+			Helper helper = new Helper(variableDelayDeferrer: variableDelayDeferrer);
 
 
 			// Set up turret
