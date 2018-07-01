@@ -20,24 +20,24 @@ namespace BattleCruisers.Utils
 {
     public interface IFactoryProvider
     {
-        IPrefabFactory PrefabFactory { get; }
-        ITargetsFactory TargetsFactory { get; }
-        IMovementControllerFactory MovementControllerFactory { get; }
-        IAngleCalculatorFactory AngleCalculatorFactory { get; }
-        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         IAircraftProvider AircraftProvider { get; }
-        IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        IGlobalBoostProviders GlobalBoostProviders { get; }
+        IAngleCalculatorFactory AngleCalculatorFactory { get; }
+        IAngleLimiterFactory AngleLimiterFactory { get; } 
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IExplosionFactory ExplosionFactory { get; }
-        IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
-        ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        IAngleLimiterFactory AngleLimiterFactory { get; } 
-        ITurretStatsFactory TurretStatsFactory { get; }
+        IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
+        IGlobalBoostProviders GlobalBoostProviders { get; }
+        IMovementControllerFactory MovementControllerFactory { get; }
+        IPrefabFactory PrefabFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ISoundFetcher SoundFetcher { get; }
         ISoundManager SoundManager { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
+        ITargetsFactory TargetsFactory { get; }
+        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
+        ITurretStatsFactory TurretStatsFactory { get; }
     }
 }
