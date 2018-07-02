@@ -49,15 +49,13 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 
         private void OnBurstStart()
         {
-            // FELIX
-            //_audioSource.Play();
+            _audioSource.Play();
         }
 
         private void OnBurstEnd()
         {
-            // FELIX
-            //_burstIndex = 0;
-            //_deferrer.Defer(() => _audioSource.Stop(), _burstEndDelayInS);
+            _burstIndex = 0;
+            _deferrer.Defer(() => _audioSource.Stop(), _burstEndDelayInS);
         }
     }
 }
