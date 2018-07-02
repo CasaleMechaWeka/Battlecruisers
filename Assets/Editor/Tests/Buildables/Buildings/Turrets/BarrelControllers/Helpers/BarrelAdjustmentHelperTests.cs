@@ -96,24 +96,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             SetupIsOnTarget(isOnTarget: false);
         }
 
-        // FELIX  Move non-test methods to file end
-        private void SetupTargetPositionValidation(bool isValid)
-        {
-            _targetPositionValidator
-                .IsValid(
-                    _predictedTargetPosition,
-                    _barrelController.ProjectileSpawnerPosition,
-                    _barrelController.IsSourceMirrored)
-                .Returns(isValid);
-        }
-
-        private void SetupIsOnTarget(bool isOnTarget)
-        {
-            _rotationMovementController
-                .IsOnTarget(_desiredAngleInDegrees)
-                .Returns(isOnTarget);
-        }
-
         [Test]
         public void AdjustTurretBarrel_TargetIsNull()
         {
@@ -168,6 +150,23 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             Assert.AreEqual(expectedResult, _helper.AdjustTurretBarrel());
 
             _rotationMovementController.Received().AdjustRotation(_limitedAngelInDegrees);
+        }
+
+        private void SetupTargetPositionValidation(bool isValid)
+        {
+            _targetPositionValidator
+                .IsValid(
+                    _predictedTargetPosition,
+                    _barrelController.ProjectileSpawnerPosition,
+                    _barrelController.IsSourceMirrored)
+                .Returns(isValid);
+        }
+
+        private void SetupIsOnTarget(bool isOnTarget)
+        {
+            _rotationMovementController
+                .IsOnTarget(_desiredAngleInDegrees)
+                .Returns(isOnTarget);
         }
     }
 }
