@@ -31,19 +31,11 @@
 
 			if (_elapsedTimeInS >= _durationProvider.DurationInS)
 			{
-                ResetTime();
-
+			    _elapsedTimeInS = 0;
                 nextState = _otherState;
             }
 
             return nextState;
-        }
-
-        private void ResetTime()
-        {
-            // FELIX
-			_elapsedTimeInS = 0;
-            //_durationProvider.MoveToNextDuration();
         }
 	}
 }
