@@ -5,8 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
-    // FELIX  Test
-
     /// <summary>
     /// Plays the projectile firing only at the start of the burst.  Stops playing the sound after
     /// the specified delay after the last shot in the burst.  For long sounds, such as the anti-air
