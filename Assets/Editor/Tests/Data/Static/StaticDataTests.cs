@@ -171,9 +171,9 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void GetLevelLoot_Hull()
         {
-            // Raptor
+            // Bullshark
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 3);
-            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor});
+            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Bullshark});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
