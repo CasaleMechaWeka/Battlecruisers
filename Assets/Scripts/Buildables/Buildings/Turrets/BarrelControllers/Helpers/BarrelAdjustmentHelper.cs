@@ -8,9 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    // FELIX  Use!
-    // FELIX  Test!
-    // FELIX  Ski!
     public class BarrelAdjustmentHelper : IBarrelAdjustmentHelper
     {
         private readonly IBarrelController _barrelController;
