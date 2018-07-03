@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            LaserFireIntervalManager fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManager>();
+            LaserFireIntervalManagerInitialiser fireIntervalManager = gameObject.GetComponent<LaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManager);
             
             IDurationProvider waitingDurationProvider = _laserTurretStats;
