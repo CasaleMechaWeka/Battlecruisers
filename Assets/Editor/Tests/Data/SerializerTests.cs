@@ -25,7 +25,8 @@ namespace BattleCruisers.Tests.Data
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
 
-			_filePath = Application.persistentDataPath + "/sweetTestFile.bcms";
+            string fileName = "sweetTestFile" + Random.value;
+			_filePath = Application.persistentDataPath + "/" + fileName + ".bcms";
 
 			_filePathProvider = Substitute.For<IModelFilePathProvider>();
 			_filePathProvider.GameModelFilePath.Returns(_filePath);
@@ -97,11 +98,11 @@ namespace BattleCruisers.Tests.Data
 			Assert.IsFalse(_serializer.DoesSavedGameExist());
 		}
 
-
 		[Test]
 		public void DoesSavedGameExist_True()
 		{
-			File.Create(_filePathProvider.GameModelFilePath);
+			FileStream savedGameFile = File.Create(_filePathProvider.GameModelFilePath);
+            savedGameFile.Dispose();
 			Assert.IsTrue(_serializer.DoesSavedGameExist());
 		}
 
