@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class LaserFireIntervalManagerInitialiser : BaseFireIntervalManager
+    public class LaserFireIntervalManagerInitialiser : FireIntervalManagerBase
 	{
         private IDurationProvider _firingDurationProvider;
 

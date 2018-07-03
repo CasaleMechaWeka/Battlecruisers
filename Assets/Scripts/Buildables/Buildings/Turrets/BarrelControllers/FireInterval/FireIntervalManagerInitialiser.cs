@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class FireIntervalManagerInitialiser : BaseFireIntervalManager
+    public class FireIntervalManagerInitialiser : FireIntervalManagerBase
 	{
         public override void Initialise(IDurationProvider waitingDurationProvider)
 		{
