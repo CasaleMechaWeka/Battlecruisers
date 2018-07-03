@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
+    // FELIX  Rename, append Base instead of prepending :P
     public abstract class BaseFireIntervalManager : MonoBehaviour, IFireIntervalManager
 	{
 		private IState _currentState;
