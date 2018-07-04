@@ -7,15 +7,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 	{
         private IState _currentState;
 
+		public bool ShouldFire { get { return _currentState.ShouldFire; } }
+
 		public FireIntervalManager(IState startingState)
 		{
             Assert.IsNotNull(startingState);
             _currentState = startingState;
-		}
-
-		public bool ShouldFire()
-		{
-			return _currentState.ShouldFire;
 		}
 
 		public void OnFired()
@@ -23,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 			_currentState = _currentState.OnFired();
 		}
 
-		public void Update(float deltaTime)
+		public void ProcessTimeInterval(float deltaTime)
 		{
 			_currentState = _currentState.ProcessTimeInterval(deltaTime);
 		}

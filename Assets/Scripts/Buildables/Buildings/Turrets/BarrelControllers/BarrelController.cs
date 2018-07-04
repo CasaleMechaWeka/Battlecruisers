@@ -115,7 +115,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 return;
             }
 
-            _fireIntervalManager.Update(Time.deltaTime);
+            _fireIntervalManager.ProcessTimeInterval(Time.deltaTime);
             BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
 

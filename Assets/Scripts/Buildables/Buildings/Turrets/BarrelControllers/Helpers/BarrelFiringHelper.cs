@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
         {
-            if (_fireIntervalManager.ShouldFire())
+            if (_fireIntervalManager.ShouldFire)
             {
                 if (_barrelController.TurretStats.IsInBurst)
                 {

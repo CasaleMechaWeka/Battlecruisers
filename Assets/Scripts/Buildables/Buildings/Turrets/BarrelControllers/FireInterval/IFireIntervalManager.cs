@@ -2,8 +2,9 @@
 {
     public interface IFireIntervalManager
 	{
-		bool ShouldFire();
+		bool ShouldFire { get; }
+
         void OnFired();
-        void Update(float deltaTime);
+        void ProcessTimeInterval(float deltaTime);
 	}
 }

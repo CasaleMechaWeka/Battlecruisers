@@ -43,17 +43,17 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldNotFire_DoesNotFire()
         {
-            _fireIntervalManager.ShouldFire().Returns(false);
+            _fireIntervalManager.ShouldFire.Returns(false);
 
             Assert.IsFalse(_helper.TryFire(_onTargetResult));
-            _fireIntervalManager.Received().ShouldFire();
+            bool compilerBribe = _fireIntervalManager.Received().ShouldFire;
             Expect_NoFire();
         }
 
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_NotInBurst_NotOnTarget_DoesNotFire()
         {
-            _fireIntervalManager.ShouldFire().Returns(true);
+            _fireIntervalManager.ShouldFire.Returns(true);
             _turretStats.IsInBurst.Returns(false);
 
             Assert.IsFalse(_helper.TryFire(_notOnTargetResult));
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_InBurst_Fires()
         {
-            _fireIntervalManager.ShouldFire().Returns(true);
+            _fireIntervalManager.ShouldFire.Returns(true);
             _turretStats.IsInBurst.Returns(true);
 
             float barrelAngleInDegrees = 120;
@@ -76,7 +76,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_NotInBurst_OnTarget_Fires()
         {
-            _fireIntervalManager.ShouldFire().Returns(true);
+            _fireIntervalManager.ShouldFire.Returns(true);
             _turretStats.IsInBurst.Returns(false);
 
             Vector3 projectileSpawnerPosition = new Vector3(17, 71, 171);
