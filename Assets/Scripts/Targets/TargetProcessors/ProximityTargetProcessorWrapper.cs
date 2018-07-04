@@ -11,7 +11,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
 		{
-
             _targetFinder = CreateTargetFinder(args);
             return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
         }
