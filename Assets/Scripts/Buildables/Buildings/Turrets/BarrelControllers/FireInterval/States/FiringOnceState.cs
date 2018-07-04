@@ -1,6 +1,5 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
-    // FELIX  Test!!! + all other states & fire interval manager :/
     public class FiringOnceState : State
     {
         public override bool ShouldFire { get { return true; } }
