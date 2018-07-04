@@ -78,10 +78,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		
 		protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
 		{
-			FireIntervalManagerInitialiser fireIntervalManager = gameObject.GetComponent<FireIntervalManagerInitialiser>();
-			Assert.IsNotNull(fireIntervalManager);
-			fireIntervalManager.Initialise(turretStats);
-			return fireIntervalManager;
+			FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
+			Assert.IsNotNull(fireIntervalManagerInitialiser);
+			return fireIntervalManagerInitialiser.Initialise(turretStats);
 		}
 
         protected virtual IDamageCapability FindDamageCapabilities()

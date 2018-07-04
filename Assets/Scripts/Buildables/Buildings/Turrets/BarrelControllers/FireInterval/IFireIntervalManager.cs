@@ -4,5 +4,6 @@
 	{
 		bool ShouldFire();
         void OnFired();
+        void Update(float deltaTime);
 	}
 }

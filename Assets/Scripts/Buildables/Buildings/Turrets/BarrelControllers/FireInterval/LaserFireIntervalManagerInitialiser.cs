@@ -1,23 +1,22 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
+using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class LaserFireIntervalManagerInitialiser : FireIntervalManagerBase
+    public class LaserFireIntervalManagerInitialiser : MonoBehaviour
 	{
-        private IDurationProvider _firingDurationProvider;
-
-		public void Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
+		public IFireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
 		{
-            _firingDurationProvider = firingDurationProvider;
+            Helper.AssertIsNotNull(waitingDurationProvider, firingDurationProvider);
 
-            base.Initialise(waitingDurationProvider);
-		}
-
-        protected override IState CreateFiringState(IState waitingState)
-        {
+            WaitingState waitingState = new WaitingState();
             FiringDurationState firingState = new FiringDurationState();
-            firingState.Initialise(waitingState, _firingDurationProvider);
-            return firingState;
-        }
+
+            waitingState.Initialise(firingState, waitingDurationProvider);
+            firingState.Initialise(waitingState, firingDurationProvider);
+
+            return new FireIntervalManager(firingState, waitingDurationProvider);
+		}
     }
 }
