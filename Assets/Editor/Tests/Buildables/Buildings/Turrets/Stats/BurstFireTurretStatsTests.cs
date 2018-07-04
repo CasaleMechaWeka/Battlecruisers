@@ -43,9 +43,9 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats
         /// <summary>
         /// Burst size = 3:
         /// 
-        /// InBurst (T = true / F = false):         F  T  T    F  T  T
+        /// InBurst (T = true / F = false):         F  T  T    F  T  T    F
         /// Turret fires (MoveToNextDuration()):     *  *  *    *  *  *
-        /// Duration (S = short / L = long):          S  S  L    S  S  L
+        /// Duration (S = short / L = long):        L  S  S    L  S  S    L
         /// </summary>
         [Test]
 		public void NextFireIntervalInS_And_IsInBurst()
@@ -53,18 +53,17 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats
             int numOfBursts = 10;
 
             bool[] expectedIsInBursts = new bool[] { false, true, true };
-            float[] expectedDurations = new float[] { _expectedBurstInterval, _expectedBurstInterval, _expectedLongInterval };
+            float[] expectedDurations = new float[] { _expectedLongInterval, _expectedBurstInterval, _expectedBurstInterval };
 
             for (int j = 0; j < numOfBursts; ++j)
             {
                 for (int i = 0; i < _turretStats.burstSize; ++i)
                 {
                     Assert.AreEqual(expectedIsInBursts[i], _turretStats.IsInBurst);
+                    Assert.AreEqual(expectedDurations[i], _turretStats.DurationInS);
 
                     // Turret fires
                     _turretStats.MoveToNextDuration();
-
-                    Assert.AreEqual(expectedDurations[i], _turretStats.DurationInS);
                 }
             }				
 		}
