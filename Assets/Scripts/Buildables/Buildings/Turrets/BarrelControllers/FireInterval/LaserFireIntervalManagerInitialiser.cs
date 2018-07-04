@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
             waitingState.Initialise(firingState, waitingDurationProvider);
             firingState.Initialise(waitingState, firingDurationProvider);
 
-            return new FireIntervalManager(firingState, waitingDurationProvider);
+            return new FireIntervalManager(firingState);
 		}
     }
 }

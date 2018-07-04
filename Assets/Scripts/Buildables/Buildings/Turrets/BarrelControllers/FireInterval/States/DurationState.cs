@@ -19,7 +19,7 @@
 
         public IState OnFired()
         {
-            // Do nothing
+            _durationProvider.MoveToNextDuration();
             return this;
         }
 
