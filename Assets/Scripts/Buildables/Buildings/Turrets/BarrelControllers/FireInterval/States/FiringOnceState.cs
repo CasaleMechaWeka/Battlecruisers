@@ -1,32 +1,17 @@
-﻿using BattleCruisers.Utils;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
-    // FELIX  Avoid duplicate code between states, base class?
     // FELIX  Test!!! + all other states & fire interval manager :/
-    public class FiringOnceState : IState
+    public class FiringOnceState : State
     {
-        private IState _waitingState;
-        private IDurationProvider _waitingDurationProvider;
+        public override bool ShouldFire { get { return true; } }
 
-        public bool ShouldFire { get { return true; } }
-
-		// No constructor due to circular dependency :)
-		public void Initialise(IState waitingState, IDurationProvider waitingDurationProvider)
+        public override IState OnFired()
         {
-            Helper.AssertIsNotNull(waitingState, waitingDurationProvider);
-
-            _waitingState = waitingState;
-            _waitingDurationProvider = waitingDurationProvider;
+            _durationProvider.MoveToNextDuration();
+            return _otherState;
         }
 
-        public IState OnFired()
-        {
-            _waitingDurationProvider.MoveToNextDuration();
-            return _waitingState;
-        }
-
-        public IState ProcessTimeInterval(float timePassedInS)
+        public override IState ProcessTimeInterval(float timePassedInS)
         {
             // Do nothing
             return this;

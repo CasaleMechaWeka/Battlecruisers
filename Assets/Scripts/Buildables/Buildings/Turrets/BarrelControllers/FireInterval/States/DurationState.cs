@@ -1,29 +1,24 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
-    public abstract class DurationState : IState
+    public abstract class DurationState : State
 	{
-        private IState _otherState;
-		private IDurationProvider _durationProvider;
 		private float _elapsedTimeInS;
 
-        public abstract bool ShouldFire { get; }
-
         // No constructor due to circular dependency :)
-        public void Initialise(IState otherState, IDurationProvider durationProvider)
+        public override void Initialise(IState otherState, IDurationProvider durationProvider)
 		{
-			_otherState = otherState;
-            _durationProvider = durationProvider;
+            base.Initialise(otherState, durationProvider);
 
-			_elapsedTimeInS = 0;
+            _elapsedTimeInS = 0;
 		}
 
-        public IState OnFired()
+        public override IState OnFired()
         {
             _durationProvider.MoveToNextDuration();
             return this;
         }
 
-        public IState ProcessTimeInterval(float timePassedInS)
+        public override IState ProcessTimeInterval(float timePassedInS)
 		{
 			IState nextState = this;
 
