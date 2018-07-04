@@ -11,7 +11,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
 
-
         public virtual void StartDetecting()
         {
             // Emtpy.  Means that we will try to emit events BEFORE this method
