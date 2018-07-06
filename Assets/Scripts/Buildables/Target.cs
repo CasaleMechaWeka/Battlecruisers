@@ -149,13 +149,7 @@ namespace BattleCruisers.Buildables
 
 		protected virtual void InternalDestroy()
 		{
-            // FELIX  TEMP
-            Logging.Log("Target => BEFORE Destroy(gameObject)");
-
             Destroy(gameObject);
-            
-            // FELIX  TEMP
-            Logging.Log("Target => AFTER Destroy(gameObject)");
         }
 
         protected virtual void OnDestroyed() { }

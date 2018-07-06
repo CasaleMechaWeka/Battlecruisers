@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -16,8 +13,11 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.Timers;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -327,14 +327,7 @@ namespace BattleCruisers.Buildables
         protected override void InternalDestroy()
         {
             Assert.IsNotNull(transform.parent);
-
-            // FELIX  TEMP
-            Logging.Log("Buildable => BEFORE Destroy(transform.parent.gameObject)");
-
             Destroy(transform.parent.gameObject);
-
-            // FELIX  TEMP
-            Logging.Log("Buildable => AFTER Destroy(transform.parent.gameObject)");
         }
 
         protected override void OnDestroyed()
