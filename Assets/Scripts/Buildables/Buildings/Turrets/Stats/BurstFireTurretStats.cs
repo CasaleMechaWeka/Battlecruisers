@@ -71,8 +71,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             QueryIndex = 0;
 		}
 
-        int tempCounter = 0;
-
         public override void MoveToNextDuration()
         {
             QueryIndex++;
