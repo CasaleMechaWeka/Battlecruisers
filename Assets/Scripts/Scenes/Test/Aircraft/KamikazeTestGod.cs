@@ -14,8 +14,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class KamikazeTestGod : MonoBehaviour
 	{
-        private KamikazeSignal _kamikazeSignal;
-
 		void Start()
 		{
 			Helper helper = new Helper();
@@ -28,10 +26,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			enemyCruiser.GameObject.Returns(_target.GameObject);
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
-            
-			// Setup kamikaze signal
-			_kamikazeSignal = FindObjectOfType<KamikazeSignal>();
-            helper.InitialiseBuilding(_kamikazeSignal, enemyCruiser: enemyCruiser);
 
             // Setup AA
             TurretController aaTurret = FindObjectOfType<TurretController>();
@@ -46,15 +40,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft
                 aircraft.StartConstruction();
             }
 
-			// When completed, aircraft switches to patrol movement controller.
-			// Hence wait a bit after completed before setting kamikaze
-			// homing movement controller.
-			Invoke("Kamikaze", time: 1);
+            // Setup kamikaze signal.  When completed, aircraft switches to patrol movement controller.
+            KamikazeSignal kamikazeSignal = FindObjectOfType<KamikazeSignal>();
+            helper.InitialiseBuilding(kamikazeSignal, enemyCruiser: enemyCruiser);
+            kamikazeSignal.StartConstruction();
 		}
-
-        public void Kamikaze()
-        {
-            _kamikazeSignal.StartConstruction();
-        }
 	}
 }
