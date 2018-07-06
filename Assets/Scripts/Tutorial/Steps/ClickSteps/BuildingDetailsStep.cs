@@ -1,15 +1,12 @@
-﻿using System;
-using BattleCruisers.Buildables;
-using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.Tutorial.Steps.Providers;
+﻿using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Manager;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     public class BuildingDetailsStep : ClickStep
     {
-        private readonly IItemProvider<IBuildable> _buildableProvider;
         private readonly IUIManagerSettablePermissions _uiManagerPermissions;
 
         public BuildingDetailsStep(
@@ -19,8 +16,6 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             : base(args, buildableProvider)
         {
             Assert.IsNotNull(uiManagerPermissions);
-
-            _buildableProvider = buildableProvider;
             _uiManagerPermissions = uiManagerPermissions;
         }
 
