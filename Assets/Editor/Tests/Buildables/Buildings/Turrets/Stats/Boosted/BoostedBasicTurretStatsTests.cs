@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         [Test]
         public void Constructor_NoLocalBoosts()
         {
-            IBasicTurretStats boostedStats = CreateBoostedStats(hasLocalBoosters: false);
+            CreateBoostedStats(hasLocalBoosters: false);
 
             _boostFactory.Received().CreateBoostable();
             _boostFactory.Received().CreateBoostableGroup();
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         [Test]
         public void Constructor_WithLocalBoosts()
         {
-            IBasicTurretStats boostedStats = CreateBoostedStats(hasLocalBoosters: true);
+            CreateBoostedStats(hasLocalBoosters: true);
 
             _boostableGroup.Received().AddBoostProvidersList(_localBoostProviders);
         }
