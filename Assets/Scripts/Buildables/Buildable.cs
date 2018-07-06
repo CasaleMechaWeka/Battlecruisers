@@ -327,7 +327,14 @@ namespace BattleCruisers.Buildables
         protected override void InternalDestroy()
         {
             Assert.IsNotNull(transform.parent);
+
+            // FELIX  TEMP
+            Logging.Log("Buildable => BEFORE Destroy(transform.parent.gameObject)");
+
             Destroy(transform.parent.gameObject);
+
+            // FELIX  TEMP
+            Logging.Log("Buildable => AFTER Destroy(transform.parent.gameObject)");
         }
 
         protected override void OnDestroyed()
