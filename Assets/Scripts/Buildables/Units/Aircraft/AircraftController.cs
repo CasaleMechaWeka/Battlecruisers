@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
@@ -8,6 +6,8 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -143,7 +143,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             // object to inactive.
             PlayEngineSound();
 
-			_kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
+            _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
 			_kamikazeController.gameObject.SetActive(true);
         }
 

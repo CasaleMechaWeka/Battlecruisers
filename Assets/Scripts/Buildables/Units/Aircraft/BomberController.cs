@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
@@ -10,6 +9,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
