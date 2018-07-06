@@ -20,6 +20,12 @@ namespace BattleCruisers.Projectiles
         private ITarget _parent;
         private ISoundManager _soundManager;
 
+        // Have this to defer damaging the target until the next FixedUpdate(), because
+        // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
+        // the target collider does not trigger OnTriggerExit2D().  I filed a bug with
+        // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
+        private ITarget _targetToDamage;
+
 		protected Rigidbody2D _rigidBody;
 		protected IMovementController _movementController;
 
@@ -44,6 +50,7 @@ namespace BattleCruisers.Projectiles
             _soundManager = factoryProvider.SoundManager;
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
+            _targetToDamage = null;
 
             AdjustGameObjectDirection();
 
@@ -69,7 +76,13 @@ namespace BattleCruisers.Projectiles
 
 		void FixedUpdate()
 		{
-			if (_movementController != null)
+            if (_targetToDamage != null)
+            {
+                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+
+                DestroyProjectile();
+            }
+			else if (_movementController != null)
             {
                 _movementController.AdjustVelocity();
 
@@ -83,11 +96,11 @@ namespace BattleCruisers.Projectiles
 
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
 
-			if (target != null && _targetFilter.IsMatch(target))
+			if (target != null 
+                && _targetFilter.IsMatch(target)
+                && _targetToDamage == null)
 			{
-                _damageApplier.ApplyDamage(target, transform.position, damageSource: _parent);
-
-                DestroyProjectile();
+                _targetToDamage = target;
             }
         }
 
