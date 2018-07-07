@@ -108,6 +108,15 @@ namespace BattleCruisers.Tests.AI.Tasks
 			Assert.AreEqual(1, _numOfCompletedEvents);
 		}
 
+        [Test]
+        public void BuildableDestroyedEvent_CausesTaskCompletedEvent()
+        {
+            Start_StartsConstructingBuilding();
+
+            _building.Destroyed += Raise.EventWith(new DestroyedEventArgs(_building));
+			Assert.AreEqual(1, _numOfCompletedEvents);
+        }
+
         private void _task_Completed(object sender, EventArgs e)
         {
             _numOfCompletedEvents++;

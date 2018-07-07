@@ -46,7 +46,8 @@ namespace BattleCruisers.AI.Tasks
 				Assert.IsNotNull(slot);
 				
                 _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
-				_building.CompletedBuildable += Building_CompletedBuildable;
+				_building.CompletedBuildable += _building_CompletedBuildable;
+                _building.Destroyed += _building_Destroyed;
             }
             else
             {
@@ -67,9 +68,21 @@ namespace BattleCruisers.AI.Tasks
 			// Emtpy
 		}
 
-		private void Building_CompletedBuildable(object sender, EventArgs e)
+		private void _building_CompletedBuildable(object sender, EventArgs e)
         {
-            _building.CompletedBuildable -= Building_CompletedBuildable;
+            TaskCompleted();
+        }
+
+        private void _building_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            TaskCompleted();
+        }
+
+        private void TaskCompleted()
+        {
+            _building.CompletedBuildable -= _building_CompletedBuildable;
+            _building.Destroyed -= _building_Destroyed;
+
             EmitCompletedEvent();
         }
 
