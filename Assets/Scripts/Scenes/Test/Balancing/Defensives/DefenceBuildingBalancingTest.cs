@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private const int DEFENCE_BUILDINGS_GROUP_GAP_IN_M = 1;
         private const float DEFENCE_BUILDING_SPACING_MULTIPLIER = 4;
 
-        private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone secodns): ";
+        private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone seconds): ";
 		
         public Camera Camera { get; private set; }
 
