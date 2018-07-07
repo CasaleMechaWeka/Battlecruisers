@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             _offensiveUnitKey = unitKey;
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
-            _helper = new TestUtils.Helper(numOfUnitDrones);
+            _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT);
             _prefabFactory = prefabFactory;
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
