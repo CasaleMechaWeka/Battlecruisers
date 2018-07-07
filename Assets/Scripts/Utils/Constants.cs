@@ -19,7 +19,7 @@
         public const float ONE_AND_A_HALF_DEFAULT = 3;
         public const float DEFAULT_TUTORIAL = 8;
         public const float FAST = 50;
-		public const float VERY_FAST = 100;
+		public const float VERY_FAST = 500;
     }
 
 	public static class SceneNames
