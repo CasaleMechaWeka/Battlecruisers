@@ -48,12 +48,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void Fire(float angleInDegrees)
 		{
-			_rocketSpawners.Next().SpawnRocket(
-				angleInDegrees,
-				transform.IsMirrored(),
-				Target,
-				_targetFilter,
-				_faction);
+			_rocketSpawners
+                .Next()
+                .SpawnRocket(
+				    angleInDegrees,
+				    transform.IsMirrored(),
+				    Target,
+				    _targetFilter,
+				    _faction);
 		}
 	}
 }
