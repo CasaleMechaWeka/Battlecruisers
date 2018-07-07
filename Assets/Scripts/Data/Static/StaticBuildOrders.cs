@@ -44,7 +44,6 @@ namespace BattleCruisers.Data.Static
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
