@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
@@ -19,6 +20,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
         private BarrelAdjustmentResult _onTargetResult, _notOnTargetResult;
         private ITurretStats _turretStats;
+        private ITarget _target;
 
         [SetUp]
         public void TestSetup()
@@ -38,6 +40,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
             _turretStats = Substitute.For<ITurretStats>();
             _barrelController.TurretStats.Returns(_turretStats);
+
+            _target = Substitute.For<ITarget>();
         }
 
         [Test]
@@ -61,10 +65,38 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         }
 
         [Test]
-        public void TryFire_FireIntervalManager_ShouldFire_InBurst_Fires()
+        public void TryFire_FireIntervalManager_ShouldFire_InBurst_NoTarget_CannotFireWithoutTarget_NotOnTarget_DoesNotFire()
         {
             _fireIntervalManager.ShouldFire.Returns(true);
             _turretStats.IsInBurst.Returns(true);
+            _barrelController.CurrentTarget.Returns((ITarget)null);
+            _barrelController.CanFireWithoutTarget.Returns(false);
+
+            Assert.IsFalse(_helper.TryFire(_notOnTargetResult));
+            Expect_NoFire();
+        }
+
+        [Test]
+        public void TryFire_FireIntervalManager_ShouldFire_InBurst_HasTarget_Fires()
+        {
+            _fireIntervalManager.ShouldFire.Returns(true);
+            _turretStats.IsInBurst.Returns(true);
+            _barrelController.CurrentTarget.Returns(_target);
+
+            float barrelAngleInDegrees = 120;
+            _barrelController.BarrelAngleInDegrees.Returns(barrelAngleInDegrees);
+
+            Assert.IsTrue(_helper.TryFire(_notOnTargetResult));
+            Expect_Fire(barrelAngleInDegrees);
+        }
+
+        [Test]
+        public void TryFire_FireIntervalManager_ShouldFire_InBurst_NoTarget_CanFireWithoutTarget_Fires()
+        {
+            _fireIntervalManager.ShouldFire.Returns(true);
+            _turretStats.IsInBurst.Returns(true);
+            _barrelController.CurrentTarget.Returns((ITarget)null);
+            _barrelController.CanFireWithoutTarget.Returns(true);
 
             float barrelAngleInDegrees = 120;
             _barrelController.BarrelAngleInDegrees.Returns(barrelAngleInDegrees);
