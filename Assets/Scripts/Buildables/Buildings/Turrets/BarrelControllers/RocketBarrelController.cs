@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private ICruisingProjectileStats _rocketStats;
 
         public override Vector3 ProjectileSpawnerPosition { get { return _rocketSpawners.Items.Middle().transform.position; } }
+        public override bool CanFireWithoutTarget { get { return false; } }
 
         public override void StaticInitialise()
         {

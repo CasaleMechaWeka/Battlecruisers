@@ -11,6 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private MissileSpawner _missileSpawner;
 
         public override Vector3 ProjectileSpawnerPosition { get { return _missileSpawner.transform.position; } }
+        public override bool CanFireWithoutTarget { get { return false; } }
 
         public override void StaticInitialise()
         {

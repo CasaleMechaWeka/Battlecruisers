@@ -49,6 +49,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
 
         public abstract Vector3 ProjectileSpawnerPosition { get; }
+        public abstract bool CanFireWithoutTarget { get; }
 
         public virtual void StaticInitialise()
         {
