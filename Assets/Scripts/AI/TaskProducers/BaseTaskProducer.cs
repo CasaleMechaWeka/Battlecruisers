@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
+    // FELIX  Rename to append Base :)
     public abstract class BaseTaskProducer : IDisposable
 	{
 		protected readonly ITaskList _tasks;
