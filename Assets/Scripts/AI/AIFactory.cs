@@ -35,6 +35,7 @@ namespace BattleCruisers.AI
             _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
 
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
+            _taskProducerFactory.CreatePostFactoryTaskProducer(tasks);
             
             // FELIX  Return, so have a reference, so does not get garbage collected & can dispose.
             new TaskConsumer(tasks);
@@ -75,8 +76,9 @@ namespace BattleCruisers.AI
             }
 			
             _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
+            _taskProducerFactory.CreatePostFactoryTaskProducer(tasks);
 
-			new TaskConsumer(tasks);
+            new TaskConsumer(tasks);
 		}
     }
 }
