@@ -15,19 +15,21 @@ namespace BattleCruisers.AI.FactoryManagers
     /// A) Planes => Build interceptors
     /// B) Lots of ships => Build gunships
     /// </summary>
-    public class AircraftUnitChooser : IUnitChooser
+    public class AircraftUnitChooser : UnitChooser
 	{
         private readonly IBuildableWrapper<IUnit> _defaultPlane, _antiAirPlane, _antiNavalPlane;
 		private readonly IDroneManager _droneManager;
         private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
 
-		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
-
-		public AircraftUnitChooser(IBuildableWrapper<IUnit> defaultPlane, 
-            IBuildableWrapper<IUnit> antiAirPlane, IBuildableWrapper<IUnit> antiNavalPlane, 
-            IDroneManager droneManager, IThreatMonitor airThreatMonitor, 
-            IThreatMonitor navalThreatMonitor, ThreatLevel threatLevelThreshold)
+		public AircraftUnitChooser(
+            IBuildableWrapper<IUnit> defaultPlane, 
+            IBuildableWrapper<IUnit> antiAirPlane, 
+            IBuildableWrapper<IUnit> antiNavalPlane, 
+            IDroneManager droneManager, 
+            IThreatMonitor airThreatMonitor, 
+            IThreatMonitor navalThreatMonitor, 
+            ThreatLevel threatLevelThreshold)
 		{
             Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, droneManager, airThreatMonitor, navalThreatMonitor);
 
@@ -99,7 +101,7 @@ namespace BattleCruisers.AI.FactoryManagers
             return unitWrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones;
         }
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
             _airThreatMonitor.ThreatLevelChanged -= ThreatMonitor_ThreatLevelChanged;

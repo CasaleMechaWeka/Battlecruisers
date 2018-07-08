@@ -13,13 +13,11 @@ namespace BattleCruisers.AI.FactoryManagers
 	/// 
 	/// Updates the chosen unit every time the cruiser's number of drones changes.
 	/// </summary>
-	public class MostExpensiveUnitChooser : IUnitChooser
+	public class MostExpensiveUnitChooser : UnitChooser
 	{
 		private readonly IList<IBuildableWrapper<IUnit>> _units;
 		private readonly IDroneManager _droneManager;
         private readonly IUnitFilter _unitFilter;
-
-		public IBuildableWrapper<IUnit> ChosenUnit { get; private set; }
 
         public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager, IUnitFilter unitFilter)
 		{
@@ -49,7 +47,7 @@ namespace BattleCruisers.AI.FactoryManagers
 					.FirstOrDefault();
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
 		}
