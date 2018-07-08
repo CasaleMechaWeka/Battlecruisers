@@ -261,7 +261,6 @@ namespace BattleCruisers.Scenes
 
         private void _tutorialManager_TutorialCompleted(object sender, EventArgs e)
         {
-            // TEMP  Actually want to go to special post battle screen :)
             InstaWin();
         }
 
