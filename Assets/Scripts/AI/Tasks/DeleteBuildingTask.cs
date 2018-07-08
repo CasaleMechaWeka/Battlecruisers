@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.AI.Tasks
 {
-    public class DeleteBuildingTask : IInternalTask
+    public class DeleteBuildingTask : ITask
 	{
 		private readonly IBuilding _building;
 

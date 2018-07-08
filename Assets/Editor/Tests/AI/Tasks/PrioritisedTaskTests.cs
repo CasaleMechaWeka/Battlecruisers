@@ -8,13 +8,13 @@ namespace BattleCruisers.Tests.AI.Tasks
     public class PrioritisedTaskTests
     {
         private IPrioritisedTask _taskController;
-        private IInternalTask _task;
+        private ITask _task;
         private int _numOfCompletedEvents;
 
         [SetUp]
         public void SetuUp()
         {
-            _task = Substitute.For<IInternalTask>();
+            _task = Substitute.For<ITask>();
             _taskController = new PrioritisedTask(TaskPriority.High, _task);
             _taskController.Completed += _task_Completed;
 

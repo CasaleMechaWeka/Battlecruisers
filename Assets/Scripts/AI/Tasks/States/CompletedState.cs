@@ -4,7 +4,7 @@ namespace BattleCruisers.AI.Tasks.States
 {
 	public class CompletedState : BaseState
 	{
-        public CompletedState(IInternalTask task, ICompletedEventEmitter eventEmitter)
+        public CompletedState(ITask task, ICompletedEventEmitter eventEmitter)
             : base(task, eventEmitter)
 		{
             _eventEmitter.EmitCompletedEvent();

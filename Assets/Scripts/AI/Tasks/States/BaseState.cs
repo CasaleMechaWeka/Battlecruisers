@@ -2,10 +2,10 @@
 {
     public abstract class BaseState : IState
 	{
-		protected readonly IInternalTask _task;
+		protected readonly ITask _task;
         protected readonly ICompletedEventEmitter _eventEmitter;
 
-        public BaseState(IInternalTask task, ICompletedEventEmitter eventEmitter)
+        public BaseState(ITask task, ICompletedEventEmitter eventEmitter)
 		{
 			_task = task;
             _eventEmitter = eventEmitter;

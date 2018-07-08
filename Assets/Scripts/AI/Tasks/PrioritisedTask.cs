@@ -16,14 +16,14 @@ namespace BattleCruisers.AI.Tasks
 	/// </summary>
     public class PrioritisedTask : IPrioritisedTask, ICompletedEventEmitter
     {
-        private readonly IInternalTask _task;
+        private readonly ITask _task;
         private IState _currentState;
 
         public TaskPriority Priority { get; private set; }
 
         public event EventHandler<EventArgs> Completed;
 
-        public PrioritisedTask(TaskPriority priority, IInternalTask task)
+        public PrioritisedTask(TaskPriority priority, ITask task)
         {
             Priority = priority;
             _task = task;

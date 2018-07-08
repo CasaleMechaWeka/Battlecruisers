@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 {
     public class ConstructBuildingTaskTests
     {
-        private IInternalTask _task;
+        private ITask _task;
 
 		private IPrefabKey _key;
 		private IPrefabFactory _prefabFactory;

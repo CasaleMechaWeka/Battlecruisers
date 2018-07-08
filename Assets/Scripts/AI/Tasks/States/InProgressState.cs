@@ -15,7 +15,7 @@
             }
         }
 
-        public InProgressState(IInternalTask task, ICompletedEventEmitter eventEmitter)
+        public InProgressState(ITask task, ICompletedEventEmitter eventEmitter)
             : base(task, eventEmitter)
 		{
 		}

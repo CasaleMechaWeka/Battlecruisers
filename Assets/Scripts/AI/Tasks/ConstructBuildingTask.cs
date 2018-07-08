@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Tasks
 {
-    public class ConstructBuildingTask : IInternalTask
+    public class ConstructBuildingTask : ITask
     {
         private readonly IPrefabKey _buildingToConstruct;
         private readonly IPrefabFactory _prefabFactory;

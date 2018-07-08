@@ -13,7 +13,7 @@ namespace BattleCruisers.AI.Tasks
     /// 2. Factory is destroyed
     /// 3. Factory has all its drones removed (ie, no unit is being built)
     /// </summary>
-    public class WaitForUnitConstructionTask : IInternalTask
+    public class WaitForUnitConstructionTask : ITask
     {
         private readonly IFactory _factory;
         private readonly int _numOfUnitsToBuild;

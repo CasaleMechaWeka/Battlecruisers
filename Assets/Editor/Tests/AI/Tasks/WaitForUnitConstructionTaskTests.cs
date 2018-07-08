@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 {
     public class WaitForUnitConstructionTaskTests
     {
-        private IInternalTask _task;
+        private ITask _task;
         private IFactory _factory;
         private int _numOfUnitsToBuild, _completedEventCount;
         private IBuildableWrapper<IUnit> _unitWrapper;

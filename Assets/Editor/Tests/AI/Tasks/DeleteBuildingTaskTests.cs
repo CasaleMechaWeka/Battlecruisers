@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 {
     public class DeleteBuildingTaskTests
     {
-        private IInternalTask _task;
+        private ITask _task;
         private IBuilding _building;
         private int _numOfCompletedEvents;
 
