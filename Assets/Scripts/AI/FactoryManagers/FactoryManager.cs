@@ -19,7 +19,6 @@ namespace BattleCruisers.AI.FactoryManagers
     /// c) The unit chooser changes the chosen unit (eg, because the number of drones has changed)
     ///     AND the factory is not building a unit
     /// </summary>
-    /// FELIX  Update tests :)
     public class FactoryManager : IFactoryManager
     {
         private readonly HashSet<IFactory> _factories;
@@ -92,7 +91,8 @@ namespace BattleCruisers.AI.FactoryManagers
         {
             foreach (IFactory factory in _factories)
             {
-                if (factory.UnitWrapper == null)
+                if (factory.BuildableState == BuildableState.Completed
+                    && factory.UnitWrapper == null)
                 {
                     factory.UnitWrapper = _unitChooser.ChosenUnit;
                 }
