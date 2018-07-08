@@ -11,7 +11,7 @@ namespace BattleCruisers.AI.TaskProducers
     /// This means that after building a factory, the AI cruiser should wait for some
     /// units to be produced before constructing the next building.
     /// </summary>
-    public class PostFactoryTaskProducer : BaseTaskProducer
+    public class PostFactoryTaskProducer : TaskProducerBase
     {
         public PostFactoryTaskProducer(
             ITaskList tasks, 

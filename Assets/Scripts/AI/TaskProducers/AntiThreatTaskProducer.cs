@@ -9,7 +9,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public class AntiThreatTaskProducer : BaseTaskProducer
+    public class AntiThreatTaskProducer : TaskProducerBase
     {
         private readonly IDynamicBuildOrder _antiThreatBuildOrder;
         private readonly IThreatMonitor _threatMonitor;

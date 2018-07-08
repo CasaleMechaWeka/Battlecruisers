@@ -13,7 +13,7 @@ namespace BattleCruisers.AI.TaskProducers
     /// <summary>
     /// Lazily creates tasks when the task list becomes empty.
     /// </summary>
-    public class BasicTaskProducer : BaseTaskProducer
+    public class BasicTaskProducer : TaskProducerBase
     {
         private readonly IDynamicBuildOrder _buildOrder;
 

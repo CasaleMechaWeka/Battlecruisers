@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public class ReplaceDestroyedBuildingsTaskProducer : BaseTaskProducer
+    public class ReplaceDestroyedBuildingsTaskProducer : TaskProducerBase
     {
         private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
 

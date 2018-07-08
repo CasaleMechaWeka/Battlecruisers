@@ -6,15 +6,14 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    // FELIX  Rename to append Base :)
-    public abstract class BaseTaskProducer : IDisposable
+    public abstract class TaskProducerBase : IDisposable
 	{
 		protected readonly ITaskList _tasks;
 		protected readonly ICruiserController _cruiser;
 		protected readonly ITaskFactory _taskFactory;
         protected readonly IPrefabFactory _prefabFactory;
 
-		public BaseTaskProducer(
+		public TaskProducerBase(
             ITaskList tasks, 
             ICruiserController cruiser, 
             ITaskFactory taskFactory, 
