@@ -37,7 +37,11 @@ namespace BattleCruisers.AI.FactoryManagers
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
-            IUnitChooser unitChooser = new MostExpensiveUnitChooser(availableShips, levelInfo.AICruiser.DroneManager, new BufferUnitFilter(droneBuffer: 4));
+            IUnitChooser unitChooser 
+                = new MostExpensiveUnitChooser(
+                    availableShips, 
+                    levelInfo.AICruiser.DroneManager, 
+                    new AffordableUnitFilter());
 
             return new FactoryManager(UnitCategory.Naval, levelInfo.AICruiser, unitChooser);
         }
