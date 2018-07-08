@@ -47,5 +47,10 @@ namespace BattleCruisers.AI.TaskProducers
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.High, key));
 		}
+
+        public override void Dispose()
+        {
+            _cruiser.BuildingDestroyed -= _cruiser_BuildingDestroyed;
+        }
     }
 }
