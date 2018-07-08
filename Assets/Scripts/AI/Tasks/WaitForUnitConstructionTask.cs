@@ -7,8 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Tasks
 {
-    // FELIX  Test
-
     /// <summary>
     /// Waits for whichever is sooner:
     /// 1. Specified number of units are completed
@@ -33,7 +31,7 @@ namespace BattleCruisers.AI.Tasks
                     !_factory.IsDestroyed
                     && _factory.BuildableState == BuildableState.Completed
                     && _factory.UnitWrapper != null
-                    && _factory.DroneConsumer.NumOfDrones != 0;
+                    && _factory.NumOfDrones != 0;
             }
         }
 
