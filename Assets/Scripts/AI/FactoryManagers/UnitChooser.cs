@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    // FELIX  Create tests :)
     public abstract class UnitChooser : IUnitChooser
     {
         public event EventHandler ChosenUnitChanged;
