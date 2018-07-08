@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.AI.TaskProducers
 {
+    // FELIX  Return, so have a reference, so does not get garbage collected & can dispose.
     public interface ITaskProducerFactory
     {
         void CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder);
