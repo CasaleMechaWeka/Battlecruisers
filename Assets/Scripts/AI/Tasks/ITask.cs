@@ -7,8 +7,9 @@ namespace BattleCruisers.AI.Tasks
         event EventHandler Completed;
 
         void Start();
-        // FELIX  No need for Stop() and Resume() ???  Implementations are all empty...
-        // But what if constructing building is stopped, but building completes => completed event, next task started...
+        
+        // Currently Stop() and Resume() are not implemented anywhere, but could
+        // come in handy if an AI task needs to perform some action to stop :)
         void Stop();
         void Resume();
     }
