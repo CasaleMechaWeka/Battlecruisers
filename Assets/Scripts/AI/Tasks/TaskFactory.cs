@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -23,5 +24,11 @@ namespace BattleCruisers.AI.Tasks
             IInternalTask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser, _deferrer);
             return new TaskController(taskPriority, constructBuildingTask);
         }
-	}
+
+        public ITask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory)
+        {
+            IInternalTask waitForUnitConstructionTask = new WaitForUnitConstructionTask(factory);
+            return new TaskController(priority, waitForUnitConstructionTask);
+        }
+    }
 }
