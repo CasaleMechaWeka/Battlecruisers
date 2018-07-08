@@ -1,24 +1,18 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI;
-using BattleCruisers.AI.TaskProducers;
+﻿using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
-    public class ReplaceDestroyedBuildingsTaskProducerTests
-	{
-		private ITaskList _tasks;
-		private ICruiserController _cruiser;
-        private IPrefabFactory _prefabFactory;
-		private ITaskFactory _taskFactory;
+    public class ReplaceDestroyedBuildingsTaskProducerTests : TaskProducerTestsBase
+    {
         private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuilding _buildingWithKey, _buildingWithoutKey;
         private BuildingKey _buildingKey1;
@@ -26,12 +20,9 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IList<BuildingKey> _unlockedBuildingKeys;
 
 		[SetUp]
-		public void SetuUp()
+		public override void SetuUp()
 		{
-            _tasks = Substitute.For<ITaskList>();
-            _cruiser = Substitute.For<ICruiserController>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
-            _taskFactory = Substitute.For<ITaskFactory>();
+            base.SetuUp();
 
             _buildingWithKey = Substitute.For<IBuilding>();
             _buildingWithKey.Name.Returns("DeathstarLauncher");

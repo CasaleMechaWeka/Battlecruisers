@@ -1,26 +1,19 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.AI.BuildOrders;
+﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
-    public class BasicTaskProducerTests
+    public class BasicTaskProducerTests : TaskProducerTestsBase
     {
         private BasicTaskProducer _taskProducer;
-        private ITaskList _tasks;
-        private ICruiserController _cruiser;
         private ISlotWrapper _slotWrapper;
-        private IPrefabFactory _prefabFactory;
-        private ITaskFactory _taskFactory;
         private IDynamicBuildOrder _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
@@ -28,19 +21,17 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ITask _platformBuildingTask, _deckBuildingTask;
 
         [SetUp]
-        public void SetuUp()
+        public override void SetuUp()
         {
-            _tasks = Substitute.For<ITaskList>();
+            base.SetuUp();
+
             _tasks.IsEmpty.Returns(true);
 
             _slotWrapper = Substitute.For<ISlotWrapper>();
             _slotWrapper.IsSlotAvailable(SlotType.Platform).Returns(true);
             _slotWrapper.IsSlotAvailable(SlotType.Deck).Returns(false);
 
-            _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
-            _prefabFactory = Substitute.For<IPrefabFactory>();
-            _taskFactory = Substitute.For<ITaskFactory>();
 
             _platformSlotBuilding = Substitute.For<IBuilding>();
             _platformSlotBuilding.SlotType.Returns(SlotType.Platform);

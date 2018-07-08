@@ -1,27 +1,20 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.AI.BuildOrders;
+﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
-    public class AntiThreatTaskProducerTests
-	{
-		private ITaskList _tasks;
-		private ICruiserController _cruiser;
+    public class AntiThreatTaskProducerTests : TaskProducerTestsBase
+    {
         private ISlotWrapper _slotWrapper;
-		private IPrefabFactory _prefabFactory;
-		private ITaskFactory _taskFactory;
         private IDynamicBuildOrder _buildOrder;
         private IThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
@@ -29,13 +22,12 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ITask _task;
 
 		[SetUp]
-		public void SetuUp()
+		public override void SetuUp()
 		{
+            base.SetuUp();
+
 			UnityAsserts.Assert.raiseExceptions = true;
    
-            _tasks = Substitute.For<ITaskList>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
-            _taskFactory = Substitute.For<ITaskFactory>();
             _task = Substitute.For<ITask>();
 			_slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 
@@ -44,7 +36,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
             _slotWrapper = Substitute.For<ISlotWrapper>();
             _slotWrapper.GetSlotCount(SlotType.Deck).Returns(5);
-            _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
 
             _buildingKey = new BuildingKey(BuildingCategory.Tactical, "Zwackelmann");
