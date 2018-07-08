@@ -52,6 +52,11 @@ namespace BattleCruisers.AI.TaskProducers
             new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
         }
 
+        public void CreatePostFactoryTaskProducer(ITaskList tasks)
+        {
+            new PostFactoryTaskProducer(tasks, _aiCruiser, _taskFactory, _prefabFactory);
+        }
+
         public void CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)
         {
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateAirThreatMonitor(_playerCruiser);
@@ -87,5 +92,5 @@ namespace BattleCruisers.AI.TaskProducers
 
             new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiStealthBuildOrder, stealthThreatMonitor, slotNumCalculator);
         }
-	}
+    }
 }
