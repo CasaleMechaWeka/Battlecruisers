@@ -39,7 +39,7 @@ namespace BattleCruisers.AI.TaskProducers
         {
             if (_tasks.IsEmpty)
             {
-                ITask newTask = CreateTask();
+                IPrioritisedTask newTask = CreateTask();
 
                 if (newTask != null)
                 {
@@ -56,7 +56,7 @@ namespace BattleCruisers.AI.TaskProducers
         /// <returns>
         /// The next task, or null, if we have run out of building keys to create tasks from.
         /// </returns>
-        private ITask CreateTask()
+        private IPrioritisedTask CreateTask()
         {
             while (_buildOrder.MoveNext())
             {

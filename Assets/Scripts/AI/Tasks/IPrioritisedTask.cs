@@ -7,7 +7,7 @@ namespace BattleCruisers.AI.Tasks
 		Normal, High
 	}
 
-    public interface ITask
+    public interface IPrioritisedTask
     {
         TaskPriority Priority { get; }
 

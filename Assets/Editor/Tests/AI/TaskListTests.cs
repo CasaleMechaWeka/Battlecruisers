@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.AI
 	{
         private ITaskList _taskList;
 
-        private ITask _normalTask1, _normalTask2, _highTask1, _highTask2;
+        private IPrioritisedTask _normalTask1, _normalTask2, _highTask1, _highTask2;
         private int _highestPriorityChangedCount, _isEmptyChangedCount;
 
 		[SetUp]
@@ -32,9 +32,9 @@ namespace BattleCruisers.Tests.AI
             _taskList.IsEmptyChanged += (sender, e) => _isEmptyChangedCount++;
         }
 
-        private ITask CreateMockTask(TaskPriority priority)
+        private IPrioritisedTask CreateMockTask(TaskPriority priority)
         {
-			ITask task = Substitute.For<ITask>();
+			IPrioritisedTask task = Substitute.For<IPrioritisedTask>();
             task.Priority.Returns(priority);
             return task;
         }

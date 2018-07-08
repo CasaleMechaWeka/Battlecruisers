@@ -5,7 +5,7 @@ namespace BattleCruisers.AI.Tasks
 {
     public interface ITaskFactory
     {
-        ITask CreateConstructBuildingTask(TaskPriority taskPriority, IPrefabKey buildingKey);
-        ITask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory);
+        IPrioritisedTask CreateConstructBuildingTask(TaskPriority taskPriority, IPrefabKey buildingKey);
+        IPrioritisedTask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory);
     }
 }

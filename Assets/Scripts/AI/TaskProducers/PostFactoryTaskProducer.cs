@@ -29,7 +29,7 @@ namespace BattleCruisers.AI.TaskProducers
 
             if (factory != null)
             {
-                ITask taskToAdd = _taskFactory.CreateWaitForUnitConstructionTask(TaskPriority.Normal, factory);
+                IPrioritisedTask taskToAdd = _taskFactory.CreateWaitForUnitConstructionTask(TaskPriority.Normal, factory);
                 _tasks.Add(taskToAdd);
             }
         }

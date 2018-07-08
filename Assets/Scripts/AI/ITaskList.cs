@@ -6,12 +6,12 @@ namespace BattleCruisers.AI
     public interface ITaskList
     {
         bool IsEmpty { get; }
-        ITask HighestPriorityTask { get; }
+        IPrioritisedTask HighestPriorityTask { get; }
 
         event EventHandler HighestPriorityTaskChanged;
         event EventHandler IsEmptyChanged;
 
-        void Add(ITask taskToAdd);
-        void Remove(ITask taskToRemove);
+        void Add(IPrioritisedTask taskToAdd);
+        void Remove(IPrioritisedTask taskToRemove);
     }
 }

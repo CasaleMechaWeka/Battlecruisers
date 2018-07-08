@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.TaskProducers
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
-        private ITask _currentTask;
+        private IPrioritisedTask _currentTask;
 		
         public AntiThreatTaskProducer(
             ITaskList tasks, 

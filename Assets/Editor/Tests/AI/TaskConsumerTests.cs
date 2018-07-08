@@ -9,13 +9,13 @@ namespace BattleCruisers.Tests.AI
     public class TaskConsumerTests
     {
         private ITaskList _tasks;
-        private ITask _task1, _task2;
+        private IPrioritisedTask _task1, _task2;
 
         [SetUp]
         public void SetuUp()
         {
-            _task1 = Substitute.For<ITask>();
-            _task2 = Substitute.For<ITask>();
+            _task1 = Substitute.For<IPrioritisedTask>();
+            _task2 = Substitute.For<IPrioritisedTask>();
 
             _tasks = Substitute.For<ITaskList>();
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Tests.AI
 		{
 			NewHighestPriorityTask_StartsNewTask();
 
-			_tasks.HighestPriorityTask.Returns(default(ITask));
+			_tasks.HighestPriorityTask.Returns(default(IPrioritisedTask));
 			_task1.Completed += Raise.Event();
 
 			// Receives stop even though it has completed

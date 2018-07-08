@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     public class PostFactoryTaskProducerTests : TaskProducerTestsBase
     {
         private PostFactoryTaskProducer _taskProducer;
-        private ITask _waitForUnitsTask;
+        private IPrioritisedTask _waitForUnitsTask;
         private IFactory _factory;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             base.SetuUp();
 
             _factory = Substitute.For<IFactory>();
-            _waitForUnitsTask = Substitute.For<ITask>();
+            _waitForUnitsTask = Substitute.For<IPrioritisedTask>();
 
             _taskFactory
                 .CreateWaitForUnitConstructionTask(TaskPriority.Normal, _factory)

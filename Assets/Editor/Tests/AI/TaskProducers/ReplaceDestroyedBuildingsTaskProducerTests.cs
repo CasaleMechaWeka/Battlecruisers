@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuilding _buildingWithKey, _buildingWithoutKey;
         private BuildingKey _buildingKey1;
-        private ITask _buildingTask;
+        private IPrioritisedTask _buildingTask;
         private IList<BuildingKey> _unlockedBuildingKeys;
 
 		[SetUp]
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _buildingWrapper.Buildable.Returns(_buildingWithKey);
 
             _buildingKey1 = new BuildingKey(BuildingCategory.Defence, "Kartoffeln");
-            _buildingTask = Substitute.For<ITask>();
+            _buildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.High, _buildingKey1).Returns(_buildingTask);
             
             _unlockedBuildingKeys = new List<BuildingKey>();

@@ -14,7 +14,7 @@ namespace BattleCruisers.AI.Tasks
 	/// + IInternalTask.Stop()  => Only called if started or resumed
 	/// + IInternalTask.Resume()=> Only called if stopped
 	/// </summary>
-    public class TaskController : ITask, ICompletedEventEmitter
+    public class PrioritisedTask : IPrioritisedTask, ICompletedEventEmitter
     {
         private readonly IInternalTask _task;
         private IState _currentState;
@@ -23,7 +23,7 @@ namespace BattleCruisers.AI.Tasks
 
         public event EventHandler<EventArgs> Completed;
 
-        public TaskController(TaskPriority priority, IInternalTask task)
+        public PrioritisedTask(TaskPriority priority, IInternalTask task)
         {
             Priority = priority;
             _task = task;

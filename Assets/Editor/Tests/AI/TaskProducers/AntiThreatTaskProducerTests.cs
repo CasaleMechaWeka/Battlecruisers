@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
         private BuildingKey _buildingKey;
-        private ITask _task;
+        private IPrioritisedTask _task;
 
 		[SetUp]
 		public override void SetuUp()
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
 			UnityAsserts.Assert.raiseExceptions = true;
    
-            _task = Substitute.For<ITask>();
+            _task = Substitute.For<IPrioritisedTask>();
 			_slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 
             _threatMonitor = Substitute.For<IThreatMonitor>();

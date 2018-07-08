@@ -13,8 +13,8 @@ namespace BattleCruisers.AI
     {
         private readonly ITaskList _tasks;
 
-        private ITask _currentTask;
-        private ITask CurrentTask
+        private IPrioritisedTask _currentTask;
+        private IPrioritisedTask CurrentTask
         {
             get { return _currentTask; }
             set

@@ -19,16 +19,16 @@ namespace BattleCruisers.AI.Tasks
             _deferrer = deferrer;
         }
 
-		public ITask CreateConstructBuildingTask(TaskPriority taskPriority, IPrefabKey buildingKey)
+		public IPrioritisedTask CreateConstructBuildingTask(TaskPriority taskPriority, IPrefabKey buildingKey)
         {
             IInternalTask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser, _deferrer);
-            return new TaskController(taskPriority, constructBuildingTask);
+            return new PrioritisedTask(taskPriority, constructBuildingTask);
         }
 
-        public ITask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory)
+        public IPrioritisedTask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory)
         {
             IInternalTask waitForUnitConstructionTask = new WaitForUnitConstructionTask(factory);
-            return new TaskController(priority, waitForUnitConstructionTask);
+            return new PrioritisedTask(priority, waitForUnitConstructionTask);
         }
     }
 }

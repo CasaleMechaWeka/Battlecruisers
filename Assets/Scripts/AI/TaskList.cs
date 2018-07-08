@@ -16,21 +16,21 @@ namespace BattleCruisers.AI
     /// </summary>
     public class TaskList : ITaskList
     {
-        private readonly IList<ITask> _tasks;
+        private readonly IList<IPrioritisedTask> _tasks;
 
         public bool IsEmpty { get { return _tasks.Count == 0; } }
 		
-        public ITask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
+        public IPrioritisedTask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
 
         public event EventHandler HighestPriorityTaskChanged;
         public event EventHandler IsEmptyChanged;
 
         public TaskList()
         {
-            _tasks = new List<ITask>();
+            _tasks = new List<IPrioritisedTask>();
         }
 
-        public void Add(ITask taskToAdd)
+        public void Add(IPrioritisedTask taskToAdd)
         {
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.AI
 			}
         }
 
-        public void Remove(ITask taskToRemove)
+        public void Remove(IPrioritisedTask taskToRemove)
         {
             Assert.IsTrue(_tasks.Contains(taskToRemove));
 

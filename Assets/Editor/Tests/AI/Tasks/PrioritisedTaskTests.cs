@@ -5,9 +5,9 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
-    public class TaskControllerTests
+    public class PrioritisedTaskTests
     {
-        private ITask _taskController;
+        private IPrioritisedTask _taskController;
         private IInternalTask _task;
         private int _numOfCompletedEvents;
 
@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _task = Substitute.For<IInternalTask>();
-            _taskController = new TaskController(TaskPriority.High, _task);
+            _taskController = new PrioritisedTask(TaskPriority.High, _task);
             _taskController.Completed += _task_Completed;
 
             _numOfCompletedEvents = 0;
