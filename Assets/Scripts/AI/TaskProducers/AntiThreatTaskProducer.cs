@@ -19,8 +19,14 @@ namespace BattleCruisers.AI.TaskProducers
         private int _numOfTasksCompleted;
         private ITask _currentTask;
 		
-        public AntiThreatTaskProducer(ITaskList tasks, ICruiserController cruiser, IPrefabFactory prefabFactory, ITaskFactory taskFactory, 
-            IDynamicBuildOrder antiThreatBuildOrder, IThreatMonitor threatMonitor, ISlotNumCalculator slotNumCalculator)
+        public AntiThreatTaskProducer(
+            ITaskList tasks, 
+            ICruiserController cruiser, 
+            IPrefabFactory prefabFactory, 
+            ITaskFactory taskFactory, 
+            IDynamicBuildOrder antiThreatBuildOrder, 
+            IThreatMonitor threatMonitor, 
+            ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
             Helper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);
