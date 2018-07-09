@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -43,6 +44,7 @@ namespace BattleCruisers.Scenes
 		private Cruiser _playerCruiser, _aiCruiser;
         private ITutorialProvider _tutorialProvider;
 		private INavigationSettings _navigationSettings;
+        private IArtificialIntelligence _ai;
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
@@ -186,7 +188,7 @@ namespace BattleCruisers.Scenes
 			cameraInitialiser.CameraController.FocusOnPlayerCruiser();
 
 
-			helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
+			_ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
 
 
@@ -344,6 +346,7 @@ namespace BattleCruisers.Scenes
 		{
 			_playerCruiser.Destroyed -= PlayerCruiser_Destroyed;
 			_aiCruiser.Destroyed -= AiCruiser_Destroyed;
+            _ai.DisposeManagedState();
 		}
 	}
 }
