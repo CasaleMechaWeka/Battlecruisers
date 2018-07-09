@@ -59,6 +59,7 @@ namespace BattleCruisers.AI.TaskProducers
                 _tasks.Add(_currentTask);
             }
         }
+
         private void _currentTask_Completed(object sender, EventArgs e)
         {
             _currentTask.Completed -= _currentTask_Completed;
@@ -66,6 +67,12 @@ namespace BattleCruisers.AI.TaskProducers
             _currentTask = null;
 
             CreateNextTask();
+        }
+
+        public override void DisposeManagedState()
+        {
+            _threatMonitor.ThreatLevelChanged -= _threatMonitor_ThreatLevelChanged;
+            base.DisposeManagedState();
         }
     }
 }

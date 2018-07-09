@@ -1,13 +1,12 @@
-﻿using System;
-using BattleCruisers.AI.Tasks;
+﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public abstract class TaskProducerBase : IDisposable
-	{
+    public abstract class TaskProducerBase : ITaskProducer
+    {
 		protected readonly ITaskList _tasks;
 		protected readonly ICruiserController _cruiser;
 		protected readonly ITaskFactory _taskFactory;
@@ -27,7 +26,7 @@ namespace BattleCruisers.AI.TaskProducers
             _prefabFactory = prefabFactory;
 		}
 
-        public virtual void Dispose()
+        public virtual void DisposeManagedState()
         {
         }
     }

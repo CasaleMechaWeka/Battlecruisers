@@ -123,7 +123,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _buildOrder.ClearReceivedCalls();
 
-            _taskProducer.Dispose();
+            _taskProducer.DisposeManagedState();
 
             _tasks.IsEmptyChanged += Raise.Event();
 

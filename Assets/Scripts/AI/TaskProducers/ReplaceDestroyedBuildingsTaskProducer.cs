@@ -48,9 +48,10 @@ namespace BattleCruisers.AI.TaskProducers
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.High, key));
 		}
 
-        public override void Dispose()
+        public override void DisposeManagedState()
         {
             _cruiser.BuildingDestroyed -= _cruiser_BuildingDestroyed;
+            base.DisposeManagedState();
         }
     }
 }

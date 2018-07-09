@@ -77,9 +77,10 @@ namespace BattleCruisers.AI.TaskProducers
             return _cruiser.SlotWrapper.IsSlotAvailable(building.SlotType);
         }
 
-        public override void Dispose()
+        public override void DisposeManagedState()
         {
             _tasks.IsEmptyChanged -= _tasks_IsEmptyChanged;
+            base.DisposeManagedState();
         }
     }
 }

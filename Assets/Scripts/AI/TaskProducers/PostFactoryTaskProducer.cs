@@ -34,9 +34,10 @@ namespace BattleCruisers.AI.TaskProducers
             }
         }
 
-        public override void Dispose()
+        public override void DisposeManagedState()
         {
             _cruiser.StartedConstruction -= _cruiser_StartedConstruction;
+            base.DisposeManagedState();
         }
     }
 }
