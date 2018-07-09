@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 
 namespace BattleCruisers.AI
 {
@@ -27,18 +28,21 @@ namespace BattleCruisers.AI
 		/// 1. Follows a base strategy (eg:  balanced, boom or rush)
 		/// 2. Replaces destroyed buildings
 		/// </summary>
-		public void CreateBasicAI(ILevelInfo levelInfo)
+		public IArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
 
-            IDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
-            _taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder);
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
-            _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
-            _taskProducerFactory.CreatePostFactoryTaskProducer(tasks);
+            IDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
+            taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
+
+            taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
+            taskProducers.Add(_taskProducerFactory.CreatePostFactoryTaskProducer(tasks));
             
-            // FELIX  Return, so have a reference, so does not get garbage collected & can dispose.
-            new TaskConsumer(tasks);
+            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
+
+            return new ArtificialIntelligence(taskConsumer, taskProducers);
         }
 
 		/// <summary>
@@ -47,38 +51,41 @@ namespace BattleCruisers.AI
 		/// 2. Responds to threats (eg: air, naval)
 		/// 3. Replaces destroyed buildings
 		/// </summary>
-		public void CreateAdaptiveAI(ILevelInfo levelInfo)
+		public IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
 		{
             ITaskList tasks = new TaskList();
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             // Base build order, main strategy
             IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
-            _taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder);
+            taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder));
 
             // Anti air
             IDynamicBuildOrder antiAirBuildOrder = _buildOrderFactory.CreateAntiAirBuildOrder(levelInfo);
-            _taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder);
+            taskProducers.Add(_taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder));
 
             // Anti naval
             IDynamicBuildOrder antiNavalBuildOrder = _buildOrderFactory.CreateAntiNavalBuildOrder(levelInfo);
-			_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder);
+            taskProducers.Add(_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder));
 
             // Anti rocket
             if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable(levelInfo.LevelNum))
             {
-                _taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder());
+                taskProducers.Add(_taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder()));
             }
 
             // Anti stealth
             if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable(levelInfo.LevelNum))
             {
-                _taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder());
+                taskProducers.Add(_taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder()));
             }
-			
-            _taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks);
-            _taskProducerFactory.CreatePostFactoryTaskProducer(tasks);
 
-            new TaskConsumer(tasks);
+            taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
+            taskProducers.Add(_taskProducerFactory.CreatePostFactoryTaskProducer(tasks));
+
+            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
+
+            return new ArtificialIntelligence(taskConsumer, taskProducers);
 		}
     }
 }
