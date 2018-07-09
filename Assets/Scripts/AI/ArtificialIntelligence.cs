@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.AI
 {
-    // FELIX  Test :P
-
     /// <summary>
     /// 1. Ensures there is a reference to the ITaskConsumer and ITaskProducers, 
     ///     so the garbage collector does not clean them up.
