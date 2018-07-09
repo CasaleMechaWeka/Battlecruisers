@@ -2,6 +2,6 @@
 {
     public interface IAIManager
     {
-        void CreateAI(ILevelInfo levelInfo);
+        IArtificialIntelligence CreateAI(ILevelInfo levelInfo);
 	}
 }

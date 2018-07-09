@@ -65,11 +65,11 @@ namespace BattleCruisers.Scenes
             return _dataProvider.GameModel.PlayerLoadout;
         }
 		
-        public void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.StaticData, _prefabFactory, currentLevelNum);
             IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, _dataProvider);
-            aiManager.CreateAI(levelInfo);
+            return aiManager.CreateAI(levelInfo);
 		}
 		
 		public ISlotFilter CreateHighlightableSlotFilter()

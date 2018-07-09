@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Scenes
     {
         IUIManager CreateUIManager(IManagerArgs args);
         ILoadout GetPlayerLoadout();
-        void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
+        IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
 
         IFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);

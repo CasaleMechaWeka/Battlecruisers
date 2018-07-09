@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
@@ -81,9 +82,10 @@ namespace BattleCruisers.Scenes
             return _dataProvider.StaticData.InitialGameModel.PlayerLoadout;
         }
 		
-        public void CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
-            // The tutorial has no AI :)
+            // There is no AI for the tutorial :)
+            return new DummyArtificialIntelligence();
 		}
 		
 		public ISlotFilter CreateHighlightableSlotFilter()

@@ -10,6 +10,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.ThreatMonitors;
+using System;
 
 namespace BattleCruisers.AI
 {
@@ -40,7 +41,7 @@ namespace BattleCruisers.AI
 
         }
 
-        public void CreateAI(ILevelInfo levelInfo)
+        public IArtificialIntelligence CreateAI(ILevelInfo levelInfo)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
@@ -64,16 +65,19 @@ namespace BattleCruisers.AI
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
                 case Difficulty.Sandbox:
-                    // Create no AI :)
-                    break;
+                    // Sandbox has no AI :P
+                    return new DummyArtificialIntelligence();
+
                 case Difficulty.Easy:
                 case Difficulty.Normal:
-                    aiFactory.CreateBasicAI(levelInfo);
-                    break;
+                    return aiFactory.CreateBasicAI(levelInfo);
+
                 case Difficulty.Hard:
                 case Difficulty.Insane:
-                    aiFactory.CreateAdaptiveAI(levelInfo);
-                    break;
+                    return aiFactory.CreateAdaptiveAI(levelInfo);
+
+                default:
+                    throw new ArgumentException("Unkonwn difficulty: " + _dataProvider.SettingsManager.AIDifficulty);
             }
         }
     }
