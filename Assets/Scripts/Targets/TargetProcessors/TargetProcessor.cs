@@ -20,7 +20,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
 			get
 			{
-				return _targets.Count != 0 ? _targets[0] : null;
+                return _targets.FirstOrDefault();
 			}
 		}
 
