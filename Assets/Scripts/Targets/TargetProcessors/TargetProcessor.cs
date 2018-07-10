@@ -48,6 +48,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             {
 				// Should never be the case but defensive programming because rarely it IS
 				// the case :/
+                Logging.Warn(Tags.TARGET_PROCESSORS, "Received TargetFound event for a target that has already been found");
                 return;
             }
 
