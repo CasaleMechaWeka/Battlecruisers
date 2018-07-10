@@ -19,8 +19,15 @@ namespace BattleCruisers.Targets
 
 		public TargetsFactory(ICruiser enemyCruiser)
 		{
+            // Global target finders keep track of what buildings th enemy cruiser builds,
+            // so we must start them BEFORE the cruiser builds any buildings, otherwise
+            // these targets will be lost.
+
 			BomberTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new BomberTargetRanker());
+            BomberTargetProcessor.StartProcessingTargets();
+
 			OffensiveBuildableTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new OffensiveBuildableTargetRanker());
+            OffensiveBuildableTargetProcessor.StartProcessingTargets();
 		}
 
 		#region TargetProcessors
