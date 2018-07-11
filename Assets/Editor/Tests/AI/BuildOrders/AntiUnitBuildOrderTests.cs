@@ -33,7 +33,6 @@ namespace BattleCruisers.Tests.AI.BuildOrders
                     _numOfSlotsToUse);
 
             _levelInfo.CanConstructBuilding(_basicDefenceKey).Returns(true);
-
         }
 
         [Test]
