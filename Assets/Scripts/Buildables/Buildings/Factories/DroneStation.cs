@@ -15,7 +15,10 @@
 
 		protected override void OnDestroyed()
 		{
-			_droneManager.NumOfDrones -= numOfDronesProvided;
+            if (BuildableState == BuildableState.Completed)
+            {
+    			_droneManager.NumOfDrones -= numOfDronesProvided;
+            }
             
             base.OnDestroyed();
 		}
