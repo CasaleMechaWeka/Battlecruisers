@@ -4,11 +4,34 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
 {
+    /// <summary>
+    /// Keeps track of all bulidings that are destroyed, and creates a high
+    /// priority ConstructBuildingTask for them.
+    /// 
+    /// The NORMAL priority means these tasks will run BEFORE any normal
+    /// ConstructBuildingTask run (which are LOW priority).  This makes sense, 
+    /// becaues later bulidings in the build order often rely on earlier 
+    /// buildings in the build order (mainly drone stations, so later buildings 
+    /// can be afforded).
+    /// 
+    /// Additionally drone stations are given a HIGH priority, becaues otherwise
+    /// we can get into the situation where we try to rebuild a buliding we 
+    /// can no longer afford (if all rebuild tasks had the same priority):
+    /// 
+    /// 1. DS
+    /// 2. Artillery
+    /// 3. DS destroyed, create rebuild task
+    /// 4. Start rebuilding DS
+    /// 5. Artillery destroyed, create rebuild task
+    /// 6. In progress DS is destroyed, create rebuild task(gets slotted in BEHIND rebuild artillery task)
+    /// 7. Start rebuilding artillery => Don't have enough drones :/
+    /// </summary>
     public class ReplaceDestroyedBuildingsTaskProducer : TaskProducerBase
     {
         private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
@@ -32,6 +55,8 @@ namespace BattleCruisers.AI.TaskProducers
 
             foreach (BuildingKey key in buildingKeys)
             {
+                Assert.IsNotNull(key);
+
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
                 Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.Name));
                 buildingNamesToKeys.Add(buildingWrapper.Buildable.Name, key);
@@ -45,7 +70,8 @@ namespace BattleCruisers.AI.TaskProducers
             Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.Name));
 
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
-            _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
+            TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
+            _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
 		}
 
         public override void DisposeManagedState()

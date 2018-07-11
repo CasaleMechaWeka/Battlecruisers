@@ -4,6 +4,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -13,48 +14,80 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class ReplaceDestroyedBuildingsTaskProducerTests : TaskProducerTestsBase
     {
-        private IBuildableWrapper<IBuilding> _buildingWrapper;
-        private IBuilding _buildingWithKey, _buildingWithoutKey;
-        private BuildingKey _buildingKey1;
-        private IPrioritisedTask _buildingTask;
-        private IList<BuildingKey> _unlockedBuildingKeys;
+        private IBuilding _normalBuilding, _droneStation, _buildingWithoutKey;
+        private IPrioritisedTask _normalRebuildTask, _highPriorityRebuildTask;
 
 		[SetUp]
 		public override void SetuUp()
-		{
+        {
             base.SetuUp();
 
-            _buildingWithKey = Substitute.For<IBuilding>();
-            _buildingWithKey.Name.Returns("DeathstarLauncher");
+            // Building without key
             _buildingWithoutKey = Substitute.For<IBuilding>();
             _buildingWithoutKey.Name.Returns("SamSite");
 
-            _buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
-            _buildingWrapper.Buildable.Returns(_buildingWithKey);
+            // Normal building
+            _normalBuilding = Substitute.For<IBuilding>();
+            BuildingKey normalBuildingKey = StaticPrefabKeys.Buildings.DeathstarLauncher;
+            _normalRebuildTask = SetupBuilding(normalBuildingKey, _normalBuilding, "Deathstar", TaskPriority.Normal);
 
-            _buildingKey1 = new BuildingKey(BuildingCategory.Defence, "Kartoffeln");
-            _buildingTask = Substitute.For<IPrioritisedTask>();
-            _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _buildingKey1).Returns(_buildingTask);
-            
-            _unlockedBuildingKeys = new List<BuildingKey>();
-            _unlockedBuildingKeys.Add(_buildingKey1);
-            _prefabFactory.GetBuildingWrapperPrefab(_buildingKey1).Returns(_buildingWrapper);
+            // Drone station
+            _droneStation = Substitute.For<IBuilding>();
+            BuildingKey droneStationBuildingKey = StaticPrefabKeys.Buildings.DroneStation;
+            _highPriorityRebuildTask = SetupBuilding(droneStationBuildingKey, _droneStation, "DroneStation", TaskPriority.High);
 
-            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _unlockedBuildingKeys);
+            IList<BuildingKey> unlockedBuildingKeys = new List<BuildingKey>()
+            {
+                normalBuildingKey,
+                droneStationBuildingKey
+            };
 
-			UnityAsserts.Assert.raiseExceptions = true;
-		}
+            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
 
-		[Test]
-		public void BuildingDestroyed_CreatesTask()
+            UnityAsserts.Assert.raiseExceptions = true;
+        }
+
+        private IPrioritisedTask SetupBuilding(
+            BuildingKey buildingKey, 
+            IBuilding building, 
+            string buildingName, 
+            TaskPriority taskPriority)
+        {
+            building.Name.Returns(buildingName);
+
+            IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
+            buildingWrapper.Buildable.Returns(building);
+            _prefabFactory
+                .GetBuildingWrapperPrefab(buildingKey)
+                .Returns(buildingWrapper);
+
+            IPrioritisedTask task = Substitute.For<IPrioritisedTask>();
+            _taskFactory
+                .CreateConstructBuildingTask(taskPriority, buildingKey)
+                .Returns(task);
+
+            return task;
+        }
+
+        [Test]
+		public void BuildingDestroyed_NotDronesStation_CreatesNormalPriorityTask()
 		{
-            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_buildingWithKey);
+            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_normalBuilding);
             _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
 
-			_tasks.Received().Add(_buildingTask);
+			_tasks.Received().Add(_normalRebuildTask);
 		}
 
-		[Test]
+        [Test]
+        public void BuildingDestroyed_DronesStation_CreatesHighPriorityTask()
+        {
+            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_droneStation);
+            _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
+
+            _tasks.Received().Add(_highPriorityRebuildTask);
+        }
+
+        [Test]
 		public void BuildingDestroyed_NoPrefabKey_Throws()
 		{
             BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_buildingWithoutKey);

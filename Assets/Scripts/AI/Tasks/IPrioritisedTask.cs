@@ -4,7 +4,7 @@ namespace BattleCruisers.AI.Tasks
 {
     public enum TaskPriority
 	{
-		Low, Normal
+		Low, Normal, High
 	}
 
     public interface IPrioritisedTask
