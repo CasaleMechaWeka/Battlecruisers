@@ -65,7 +65,7 @@ namespace BattleCruisers.AI.TaskProducers
 
                 if (CanConstructBuilding(buildingWrapper.Buildable))
                 {
-                    return _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, buildingKey);
+                    return _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, buildingKey);
                 }
 			}
 

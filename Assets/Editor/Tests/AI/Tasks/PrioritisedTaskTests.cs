@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _task = Substitute.For<ITask>();
-            _taskController = new PrioritisedTask(TaskPriority.High, _task);
+            _taskController = new PrioritisedTask(TaskPriority.Normal, _task);
             _taskController.Completed += _task_Completed;
 
             _numOfCompletedEvents = 0;

@@ -102,7 +102,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private void CreateTask(int numOfSlotsForThreat)
         {
             _slotNumCalculator.FindSlotNum(_threatMonitor.CurrentThreatLevel).Returns(numOfSlotsForThreat);
-			_taskFactory.CreateConstructBuildingTask(TaskPriority.High, _buildingKey).Returns(_task);
+			_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _buildingKey).Returns(_task);
 
 			_threatMonitor.ThreatLevelChanged += Raise.Event();
 

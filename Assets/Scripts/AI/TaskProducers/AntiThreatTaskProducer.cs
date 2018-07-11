@@ -54,7 +54,7 @@ namespace BattleCruisers.AI.TaskProducers
                 && _targetNumOfSlotsToUse > _numOfTasksCompleted
                 && _antiThreatBuildOrder.MoveNext())
             {
-                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.High, _antiThreatBuildOrder.Current);
+                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _antiThreatBuildOrder.Current);
                 _currentTask.Completed += _currentTask_Completed;
                 _tasks.Add(_currentTask);
             }

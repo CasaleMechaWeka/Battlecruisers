@@ -20,10 +20,10 @@ namespace BattleCruisers.Tests.AI
 
             _taskList = new TaskList();
 
-            _normalTask1 = CreateMockTask(TaskPriority.Normal);
-            _normalTask2 = CreateMockTask(TaskPriority.Normal);
-            _highTask1 = CreateMockTask(TaskPriority.High);
-            _highTask2 = CreateMockTask(TaskPriority.High);
+            _normalTask1 = CreateMockTask(TaskPriority.Low);
+            _normalTask2 = CreateMockTask(TaskPriority.Low);
+            _highTask1 = CreateMockTask(TaskPriority.Normal);
+            _highTask2 = CreateMockTask(TaskPriority.Normal);
 			
 			_highestPriorityChangedCount = 0;
             _taskList.HighestPriorityTaskChanged += (sender, e) => _highestPriorityChangedCount++;

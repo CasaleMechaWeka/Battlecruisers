@@ -45,7 +45,7 @@ namespace BattleCruisers.AI.TaskProducers
             Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.Name));
 
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
-            _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.High, key));
+            _tasks.Add(_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, key));
 		}
 
         public override void DisposeManagedState()

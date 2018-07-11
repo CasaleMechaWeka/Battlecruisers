@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _waitForUnitsTask = Substitute.For<IPrioritisedTask>();
 
             _taskFactory
-                .CreateWaitForUnitConstructionTask(TaskPriority.Normal, _factory)
+                .CreateWaitForUnitConstructionTask(TaskPriority.Low, _factory)
                 .Returns(_waitForUnitsTask);
 
             _taskProducer = new PostFactoryTaskProducer(_tasks, _cruiser, _taskFactory, _prefabFactory);
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             StartConstructingBuilding(_factory);
 
-            _taskFactory.Received().CreateWaitForUnitConstructionTask(TaskPriority.Normal, _factory);
+            _taskFactory.Received().CreateWaitForUnitConstructionTask(TaskPriority.Low, _factory);
             _tasks.Received().Add(_waitForUnitsTask);
         }
 
