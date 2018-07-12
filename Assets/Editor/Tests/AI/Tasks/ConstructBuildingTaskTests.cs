@@ -1,20 +1,18 @@
-﻿using System;
-using BattleCruisers.AI.Tasks;
+﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
-    // FELIX  Update tests
     public class ConstructBuildingTaskTests
     {
         private ITask _task;
@@ -54,15 +52,16 @@ namespace BattleCruisers.Tests.AI.Tasks
         }
 
         [Test]
-        public void Start_StartsConstructingBuilding()
+        public void Start_StartsConstructingBuilding_ReturnsTrue()
         {
             _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(true);
             _cruiser.SlotWrapper.GetFreeSlot(_building.SlotType, _building.PreferCruiserFront).Returns(_slot);
             _cruiser.ConstructBuilding(_prefab.UnityObject, _slot).Returns(_building);
 
-            _task.Start();
+            bool haveStarted = _task.Start();
 
+            Assert.IsTrue(haveStarted);
             _cruiser.Received().ConstructBuilding(_prefab.UnityObject, _slot);
         }
 
@@ -79,30 +78,22 @@ namespace BattleCruisers.Tests.AI.Tasks
 		}
 
 		[Test]
-		public void Start_NoAvailabeSlots_EmitsCompletedEvent()
+		public void Start_NoAvailabeSlots_ReturnsFalse()
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
 			_cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(false);
-            // FELIX  Update tests
-            //_deferrer
-            //    .WhenForAnyArgs(deferrer => deferrer.Defer(null))
-            //    .Do(callInfo =>
-            //    {
-            //     Assert.IsTrue(callInfo.Args().Length == 1);
-            //     Action actionToDefer = callInfo.Args()[0] as Action;
-            //        actionToDefer.Invoke();
-            //    });
 
-            _task.Start();
+            bool haveStarted = _task.Start();
 
+            Assert.IsFalse(haveStarted);
             _cruiser.DidNotReceiveWithAnyArgs().ConstructBuilding(null, null);
-			Assert.AreEqual(1, _numOfCompletedEvents);
+			Assert.AreEqual(0, _numOfCompletedEvents);
 		}
 
         [Test]
         public void BuildableCompletedEvent_CausesTaskCompletedEvent()
         {
-            Start_StartsConstructingBuilding();
+            Start_StartsConstructingBuilding_ReturnsTrue();
 
             _building.CompletedBuildable += Raise.Event();
 			Assert.AreEqual(1, _numOfCompletedEvents);
@@ -111,7 +102,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void BuildableDestroyedEvent_CausesTaskCompletedEvent()
         {
-            Start_StartsConstructingBuilding();
+            Start_StartsConstructingBuilding_ReturnsTrue();
 
             _building.Destroyed += Raise.EventWith(new DestroyedEventArgs(_building));
 			Assert.AreEqual(1, _numOfCompletedEvents);
