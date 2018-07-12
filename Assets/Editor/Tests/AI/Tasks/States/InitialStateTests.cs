@@ -1,24 +1,18 @@
-﻿using BattleCruisers.AI.Tasks;
-using BattleCruisers.AI.Tasks.States;
+﻿using BattleCruisers.AI.Tasks.States;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 
 namespace BattleCruisers.Tests.AI.Tasks.States
 {
-    // FELIX  Base class, avoid duplicate code :D
-    public class InitialStateTests
+    public class InitialStateTests : StateTestsBase
     {
         private IState _state;
 
-        private ITask _task;
-        private ICompletedEventEmitter _eventEmitter;
-
         [SetUp]
-        public void TestSetup()
+        public override void TestSetup()
         {
-            _task = Substitute.For<ITask>();
-            _eventEmitter = Substitute.For<ICompletedEventEmitter>();
+            base.TestSetup();
 
             _state = new InitialState(_task, _eventEmitter);
         }
