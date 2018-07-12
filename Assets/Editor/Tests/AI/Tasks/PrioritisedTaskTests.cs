@@ -5,6 +5,8 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
+    // FELIX  Test states individually.
+    // FELIX  This should simply test that the current state is called :P
     public class PrioritisedTaskTests
     {
         private IPrioritisedTask _taskController;
