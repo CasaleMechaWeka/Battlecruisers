@@ -13,6 +13,7 @@ namespace BattleCruisers.AI.Tasks
     /// 2. Factory is destroyed
     /// 3. Factory has all its drones removed (ie, no unit is being built)
     /// </summary>
+    /// FELIX   Update tests
     public class WaitForUnitConstructionTask : ITask
     {
         private readonly IFactory _factory;
@@ -44,18 +45,20 @@ namespace BattleCruisers.AI.Tasks
             _numOfUnitsBuilt = 0;
         }
 
-        public void Start()
+        public bool Start()
         {
-            if (!FactoryCanProduceUnit)
-            {
-                Complete();
-            }
-            else
+            bool haveStartedTask = false;
+
+            if (FactoryCanProduceUnit)
             {
                 _factory.CompletedBuildingUnit += _factory_CompletedBuildingUnit;
                 _factory.Destroyed += _factory_Destroyed;
                 _factory.DroneNumChanged += _factory_DroneNumChanged;
+
+                haveStartedTask = true;
             }
+
+            return haveStartedTask;
         }
 
         private void _factory_CompletedBuildingUnit(object sender, CompletedConstructionEventArgs e)

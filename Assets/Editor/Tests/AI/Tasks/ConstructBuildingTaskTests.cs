@@ -14,6 +14,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
+    // FELIX  Update tests
     public class ConstructBuildingTaskTests
     {
         private ITask _task;
@@ -22,7 +23,6 @@ namespace BattleCruisers.Tests.AI.Tasks
 		private IPrefabFactory _prefabFactory;
 		private ICruiserController _cruiser;
         private ISlotWrapper _slotWrapper;
-        private IDeferrer _deferrer;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
         private ISlot _slot;
@@ -39,9 +39,8 @@ namespace BattleCruisers.Tests.AI.Tasks
 			_slotWrapper = Substitute.For<ISlotWrapper>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.SlotWrapper.Returns(_slotWrapper);
-            _deferrer = Substitute.For<IDeferrer>();
 
-            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser, _deferrer);
+            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
 
             _task.Completed += _task_Completed;
 
@@ -84,16 +83,17 @@ namespace BattleCruisers.Tests.AI.Tasks
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
 			_cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(false);
-            _deferrer
-                .WhenForAnyArgs(deferrer => deferrer.Defer(null))
-                .Do(callInfo =>
-                {
-	                Assert.IsTrue(callInfo.Args().Length == 1);
-	                Action actionToDefer = callInfo.Args()[0] as Action;
-                    actionToDefer.Invoke();
-                });
+            // FELIX  Update tests
+            //_deferrer
+            //    .WhenForAnyArgs(deferrer => deferrer.Defer(null))
+            //    .Do(callInfo =>
+            //    {
+            //     Assert.IsTrue(callInfo.Args().Length == 1);
+            //     Action actionToDefer = callInfo.Args()[0] as Action;
+            //        actionToDefer.Invoke();
+            //    });
 
-			_task.Start();
+            _task.Start();
 
             _cruiser.DidNotReceiveWithAnyArgs().ConstructBuilding(null, null);
 			Assert.AreEqual(1, _numOfCompletedEvents);

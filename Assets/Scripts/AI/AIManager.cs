@@ -1,15 +1,14 @@
-﻿using BattleCruisers.AI.FactoryManagers;
-using BattleCruisers.AI.BuildOrders;
+﻿using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
-using BattleCruisers.AI.Drones;
-using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Utils.Fetchers;
 using System;
 
 namespace BattleCruisers.AI
@@ -17,19 +16,17 @@ namespace BattleCruisers.AI
     public class AIManager : IAIManager
     {
         private readonly IPrefabFactory _prefabFactory;
-        private readonly IDeferrer _deferrer;
         private readonly IDataProvider _dataProvider;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDeferrer deferrer, IDataProvider dataProvider)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, dataProvider);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider);
 
             _prefabFactory = prefabFactory;
-            _deferrer = deferrer;
             _dataProvider = dataProvider;
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
@@ -50,7 +47,7 @@ namespace BattleCruisers.AI
 
             new DroneConsumerFocusManager(new ResponsiveStrategy(), levelInfo.AICruiser);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 
