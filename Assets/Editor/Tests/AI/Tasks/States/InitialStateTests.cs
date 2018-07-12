@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
 
             IState nextState = _state.Start();
 
-            Assert.IsInstanceOf(typeof(InProgressState), nextState);
+            Assert.IsInstanceOf<InProgressState>(nextState);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
 
             IState nextState = _state.Start();
 
-            Assert.IsInstanceOf(typeof(CompletedState), nextState);
+            Assert.IsInstanceOf<CompletedState>(nextState);
         }
 
         [Test]
