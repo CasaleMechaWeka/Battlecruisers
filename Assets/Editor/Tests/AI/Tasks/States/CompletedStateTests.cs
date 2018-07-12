@@ -5,7 +5,7 @@ using System;
 
 namespace BattleCruisers.Tests.AI.Tasks.States
 {
-    public class InitialStateTests : StateTestsBase
+    public class CompletedStateTests : StateTestsBase
     {
         private IState _state;
 
@@ -14,31 +14,20 @@ namespace BattleCruisers.Tests.AI.Tasks.States
         {
             base.TestSetup();
 
-            _state = new InitialState(_task, _eventEmitter);
+            _state = new CompletedState(_task, _eventEmitter);
         }
 
         [Test]
-        public void Start_TaskSuccessfullyStarts_GoesToInProgress()
+        public void Start_EmitsEvent_StaysInCompletedState()
         {
-            _task.Start().Returns(true);
-
             IState nextState = _state.Start();
 
-            Assert.IsInstanceOf(typeof(InProgressState), nextState);
+            Assert.AreSame(_state, nextState);
+            _eventEmitter.Received().EmitCompletedEvent();
         }
 
         [Test]
-        public void Start_TaskFailsToStart_GoesToCompleted()
-        {
-            _task.Start().Returns(false);
-
-            IState nextState = _state.Start();
-
-            Assert.IsInstanceOf(typeof(CompletedState), nextState);
-        }
-
-        [Test]
-        public void Stop_StaysInInitialState()
+        public void Stop_StaysInCompletedState()
         {
             IState nextState = _state.Stop();
             Assert.AreSame(_state, nextState);
