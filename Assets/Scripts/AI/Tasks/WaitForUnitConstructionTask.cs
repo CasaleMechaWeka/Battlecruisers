@@ -13,7 +13,6 @@ namespace BattleCruisers.AI.Tasks
     /// 2. Factory is destroyed
     /// 3. Factory has all its drones removed (ie, no unit is being built)
     /// </summary>
-    /// FELIX   Update tests
     public class WaitForUnitConstructionTask : ITask
     {
         private readonly IFactory _factory;
