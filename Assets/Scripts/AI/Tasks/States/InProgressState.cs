@@ -7,6 +7,7 @@
         {
             get
             {
+                // Laziliy initialise, because will not be needed unless the task is stopped.
                 if (_stoppedState == null)
                 {
                     _stoppedState = new StoppedState(_task, _eventEmitter, this);
