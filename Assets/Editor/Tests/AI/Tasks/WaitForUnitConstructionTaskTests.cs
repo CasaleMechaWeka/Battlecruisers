@@ -39,9 +39,11 @@ namespace BattleCruisers.Tests.AI.Tasks
         }
 
         [Test]
-        public void Start_FactoryCanProduceUnit()
+        public void Start_FactoryCanProduceUnit_ReturnsTrue()
         {
-            _task.Start();
+            bool haveStarted = _task.Start();
+
+            Assert.IsTrue(haveStarted);
             Assert.AreEqual(0, _completedEventCount);
         }
 
@@ -50,39 +52,51 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void Start_FactoryCannotProduceUnit_BecauseDestroyed_Completes()
         {
             _factory.IsDestroyed.Returns(true);
-            _task.Start();
-            Assert.AreEqual(1, _completedEventCount);
+
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            Assert.AreEqual(0, _completedEventCount);
         }
 
         [Test]
         public void Start_FactoryCannotProduceUnit_BecauseNotCompleted_Completes()
         {
             _factory.BuildableState.Returns(BuildableState.InProgress);
-            _task.Start();
-            Assert.AreEqual(1, _completedEventCount);
+
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            Assert.AreEqual(0, _completedEventCount);
         }
 
         [Test]
         public void Start_FactoryCannotProduceUnit_NoAssignedUnit_Completes()
         {
             _factory.UnitWrapper.Returns((IBuildableWrapper<IUnit>)null);
-            _task.Start();
-            Assert.AreEqual(1, _completedEventCount);
+
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            Assert.AreEqual(0, _completedEventCount);
         }
 
         [Test]
         public void Start_FactoryCannotProduceUnit_NoAssignedDrones_Completes()
         {
             _factory.NumOfDrones.Returns(INVALID_NUM_OF_DRONES);
-            _task.Start();
-            Assert.AreEqual(1, _completedEventCount);
+
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            Assert.AreEqual(0, _completedEventCount);
         }
         #endregion Factory cannot produce Unit
 
         [Test]
         public void Factory_Destroyed_Completes()
         {
-            Start_FactoryCanProduceUnit();
+            Start_FactoryCanProduceUnit_ReturnsTrue();
 
             _factory.Destroyed += Raise.EventWith(new DestroyedEventArgs(_factory));
             Assert.AreEqual(1, _completedEventCount);
@@ -91,7 +105,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Factory_DroneStarved_Completes()
         {
-            Start_FactoryCanProduceUnit();
+            Start_FactoryCanProduceUnit_ReturnsTrue();
 
             _factory.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(INVALID_NUM_OF_DRONES));
             Assert.AreEqual(1, _completedEventCount);
@@ -100,7 +114,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Factory_BuiltUnits_Completes()
         {
-            Start_FactoryCanProduceUnit();
+            Start_FactoryCanProduceUnit_ReturnsTrue();
 
             ConstructUnits(_numOfUnitsToBuild);
             Assert.AreEqual(1, _completedEventCount);
@@ -109,7 +123,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Factory_DoubleBuiltUnits_DoesNotDoubleComplete()
         {
-            Start_FactoryCanProduceUnit();
+            Start_FactoryCanProduceUnit_ReturnsTrue();
 
             // Create desired number of units to complete
             ConstructUnits(_numOfUnitsToBuild);
