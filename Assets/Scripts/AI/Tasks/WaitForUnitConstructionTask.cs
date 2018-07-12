@@ -50,10 +50,12 @@ namespace BattleCruisers.AI.Tasks
             {
                 Complete();
             }
-
-            _factory.CompletedBuildingUnit += _factory_CompletedBuildingUnit;
-            _factory.Destroyed += _factory_Destroyed;
-            _factory.DroneNumChanged += _factory_DroneNumChanged;
+            else
+            {
+                _factory.CompletedBuildingUnit += _factory_CompletedBuildingUnit;
+                _factory.Destroyed += _factory_Destroyed;
+                _factory.DroneNumChanged += _factory_DroneNumChanged;
+            }
         }
 
         private void _factory_CompletedBuildingUnit(object sender, CompletedConstructionEventArgs e)
