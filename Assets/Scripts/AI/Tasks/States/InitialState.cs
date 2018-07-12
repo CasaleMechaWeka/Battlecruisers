@@ -9,7 +9,6 @@ namespace BattleCruisers.AI.Tasks.States
         {
         }
 
-        // FELIX  Update tests
         public override IState Start()
         {
             if (_task.Start())
