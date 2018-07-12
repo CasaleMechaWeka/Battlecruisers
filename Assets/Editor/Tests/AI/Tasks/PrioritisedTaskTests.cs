@@ -5,8 +5,6 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
-    // FELIX  Test states individually.
-    // FELIX  This should simply test that the current state is called :P
     public class PrioritisedTaskTests
     {
         private IPrioritisedTask _taskController;
@@ -17,6 +15,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _task = Substitute.For<ITask>();
+            _task.Start().Returns(true);
             _taskController = new PrioritisedTask(TaskPriority.Normal, _task);
             _taskController.Completed += _task_Completed;
 
@@ -33,10 +32,21 @@ namespace BattleCruisers.Tests.AI.Tasks
 
         #region ITask.Start()
         [Test]
-        public void Start_WhileNotStarted_StartsTask()
+        public void Start_WhileNotStarted_StartsTask_TaskStartedSuccessfully()
         {
             _taskController.Start();
             _task.Received().Start();
+        }
+
+        [Test]
+        public void Start_WhileNotStarted_StartsTask_TaskFailedToStart_Completes()
+        {
+            _task.Start().Returns(false);
+
+            _taskController.Start();
+
+            _task.Received().Start();
+            Assert.AreEqual(1, _numOfCompletedEvents);
         }
 
 		[Test]
