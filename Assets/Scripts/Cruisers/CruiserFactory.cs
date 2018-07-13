@@ -78,7 +78,10 @@ namespace BattleCruisers.Cruisers
             }
             else
             {
-                return new DummyDroneNumFeedbackFactory();
+                // TEMP  Want to see repair drone numbers on AI cruiser, helps me debug :)
+                // For end game use Dummy factory :)
+                return new DroneNumFeedbackFactory();
+                //return new DummyDroneNumFeedbackFactory();
             }
         }
 

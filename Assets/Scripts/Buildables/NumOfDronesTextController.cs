@@ -21,9 +21,11 @@ namespace BattleCruisers.Buildables
         {
             get
             {
-                return
-                    _toggleDroneConsumerFocusCommand.CanExecute
-                    && _buildable.ParentCruiser.IsPlayerCruiser;
+                // TEMP Show number of drones for AI cruiser so I can debug more easily :)
+                //return
+                //    _toggleDroneConsumerFocusCommand.CanExecute
+                //    && _buildable.ParentCruiser.IsPlayerCruiser;
+                return _toggleDroneConsumerFocusCommand.CanExecute;
             }
         }
 
