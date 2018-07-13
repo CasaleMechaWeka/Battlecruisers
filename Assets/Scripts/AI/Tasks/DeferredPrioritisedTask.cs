@@ -1,0 +1,52 @@
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+using System;
+
+namespace BattleCruisers.AI.Tasks
+{
+    /// <summary>
+    /// Sometimes a task is created in response to an event (Eg: A ConstructBuildingTask
+    /// in response to a building having been destroyed).  We do not want to start
+    /// this task immediately, because then none of the other building destroyed event
+    /// handlers have run yet.  
+    /// 
+    /// Hence, always defer the start of a task to allow any other potential event handlers 
+    /// to run before starting this task.  (Destroying a drone station would start a 
+    /// ConstructBuildingTask before the DroneConsumerFocusManager
+    /// received it's building destroyed event, resulting in a null reference :) )
+    /// 
+    /// If one task action is deferred, all task actions must be deferred.  (Otherwise,
+    /// if we only deferred Start(), then a Stop() could happen before the Start()!)
+    /// </summary>
+    public class DeferredPrioritisedTask : IPrioritisedTask
+    {
+        private readonly IPrioritisedTask _baseTask;
+        private readonly IDeferrer _deferrer;
+
+        public TaskPriority Priority { get { return _baseTask.Priority; } }
+
+        public event EventHandler<EventArgs> Completed
+        {
+            add { _baseTask.Completed += value; }
+            remove { _baseTask.Completed -= value; }
+        }
+
+        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer)
+        {
+            Helper.AssertIsNotNull(baseTask, deferrer);
+
+            _baseTask = baseTask;
+            _deferrer = deferrer;
+        }
+
+        public void Start()
+        {
+            _deferrer.Defer(() => _baseTask.Start());
+        }
+
+        public void Stop()
+        {
+            _deferrer.Defer(() => _baseTask.Stop());
+        }
+    }
+}
