@@ -30,6 +30,7 @@ namespace BattleCruisers.AI
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
+            _deferrer = deferrer;
 			
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
 			_threatMonitorFactory = new ThreatMonitorFactory();
