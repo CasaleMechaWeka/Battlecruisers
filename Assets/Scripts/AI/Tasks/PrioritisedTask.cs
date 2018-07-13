@@ -32,12 +32,12 @@ namespace BattleCruisers.AI.Tasks
             _task.Completed += _task_Completed;
         }
 
-        public virtual void Start()
+        public void Start()
         {
             _currentState = _currentState.Start();
         }
 
-        public virtual void Stop()
+        public void Stop()
         {
             _currentState = _currentState.Stop();
         }
