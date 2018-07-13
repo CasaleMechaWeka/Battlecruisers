@@ -66,9 +66,6 @@ namespace BattleCruisers.Buildables.Buildings
         protected override void OnClicked()
         {
             _uiManager.SelectBuilding(this);
-
-            // FELIX
-            TakeDamage(MaxHealth, null);
         }
 	}
 }

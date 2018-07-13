@@ -79,9 +79,7 @@ namespace BattleCruisers.Scenes
             // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
             if (ApplicationModel.SelectedLevel == -1)
             {
-                // FELIX
-                ApplicationModel.SelectedLevel = 3;
-                //ApplicationModel.SelectedLevel = 1;
+                ApplicationModel.SelectedLevel = 1;
             }
 
 
