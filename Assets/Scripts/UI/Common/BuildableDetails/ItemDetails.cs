@@ -48,9 +48,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _itemName.text = item.Name;
             _itemDescription.text = item.Description;
             _itemImage.sprite = item.Sprite;
-            
+
+            _item.Destroyed += _item_Destroyed;
+
 			gameObject.SetActive(true);
 		}
+
+        private void _item_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            _item.Destroyed -= _item_Destroyed;
+            Hide();
+        }
 
         public void Hide()
         {
