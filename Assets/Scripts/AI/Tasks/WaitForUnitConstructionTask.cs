@@ -19,7 +19,7 @@ namespace BattleCruisers.AI.Tasks
         private readonly int _numOfUnitsToBuild;
         private int _numOfUnitsBuilt;
 
-        private const int DEFAULT_NUM_OF_UNIT = 3;
+        private const int DEFAULT_NUM_OF_UNITS = 3;
 
         public event EventHandler Completed;
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.AI.Tasks
             }
         }
 
-        public WaitForUnitConstructionTask(IFactory factory, int numOfUnitsToBuild = DEFAULT_NUM_OF_UNIT)
+        public WaitForUnitConstructionTask(IFactory factory, int numOfUnitsToBuild = DEFAULT_NUM_OF_UNITS)
         {
             Assert.IsNotNull(factory);
 
