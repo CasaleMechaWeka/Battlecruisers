@@ -9,6 +9,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using System;
 
 namespace BattleCruisers.AI
@@ -17,14 +18,15 @@ namespace BattleCruisers.AI
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
+        private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
@@ -47,7 +49,7 @@ namespace BattleCruisers.AI
 
             new DroneConsumerFocusManager(new ResponsiveStrategy(), levelInfo.AICruiser);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 

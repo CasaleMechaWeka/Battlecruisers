@@ -98,7 +98,7 @@ namespace BattleCruisers.Scenes
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
-            IBattleSceneHelper helper = CreateHelper(prefabFactory);
+            IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
 
@@ -197,7 +197,7 @@ namespace BattleCruisers.Scenes
             StartTutorialIfNecessary(prefabFactory);
         }
 
-        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory)
+        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
             if (ApplicationModel.IsTutorial)
             {
@@ -207,7 +207,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                return new NormalHelper(_dataProvider, prefabFactory);
+                return new NormalHelper(_dataProvider, prefabFactory, deferrer);
             }
         }
 
