@@ -191,17 +191,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             _followableTargetProcessor.RemoveTargetConsumer(this);
             _followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
-            _followableTargetProcessor.Dispose();
+            _followableTargetProcessor.DisposeManagedState();
             _followableTargetProcessor = null;
 
-            _followableTargetFinder.Dispose();
+            _followableTargetFinder.DisposeManagedState();
             _followableTargetFinder = null;
 
             _shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
-            _shootableTargetProcessor.Dispose();
+            _shootableTargetProcessor.DisposeManagedState();
             _shootableTargetProcessor = null;
 
-            _shootableTargetFinder.Dispose();
+            _shootableTargetFinder.DisposeManagedState();
             _shootableTargetFinder = null;
         }
     }

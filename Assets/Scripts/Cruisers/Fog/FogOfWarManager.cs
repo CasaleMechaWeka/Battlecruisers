@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Fog
@@ -11,8 +11,8 @@ namespace BattleCruisers.Cruisers.Fog
     /// <summary>
     /// Determines when to re-evalute whether fog of war should be enabled or not.
     /// </summary>
-    public class FogOfWarManager : IDisposable
-	{
+    public class FogOfWarManager : IManagedDisposable
+    {
         private readonly IFogOfWar _fog;
         private readonly ICruiserController _friendlyCruiser, _enemyCruiser;
         private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
@@ -87,7 +87,7 @@ namespace BattleCruisers.Cruisers.Fog
             _fog.UpdateIsEnabled(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count);
         }
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
             _friendlyCruiser.BuildingCompleted -= _friendlyCruiser_BuildingCompleted;
             _enemyCruiser.BuildingCompleted -= _enemyCruiser_BuildingCompleted;

@@ -125,7 +125,7 @@ namespace BattleCruisers.Tests.Buildables
 			// Drone consumer 2
 			AddRepairableBuilding();
 
-            _repairManager.Dispose();
+            _repairManager.DisposeManagedState();
 
 			// Released 2 drone consumers, 1 for the cruiser and 1 for the building
             _droneConsumerProvider.Received().ReleaseDroneConsumer(_cruiserDroneConsumer);

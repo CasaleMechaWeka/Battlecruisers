@@ -25,6 +25,6 @@ namespace BattleCruisers.AI.FactoryManagers
             }
         }
 
-        public abstract void Dispose();
+        public abstract void DisposeManagedState();
     }
 }

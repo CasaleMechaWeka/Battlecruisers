@@ -101,7 +101,7 @@ namespace BattleCruisers.AI.FactoryManagers
             return unitWrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones;
         }
 
-		public override void Dispose()
+		public override void DisposeManagedState()
 		{
 			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
             _airThreatMonitor.ThreatLevelChanged -= ThreatMonitor_ThreatLevelChanged;

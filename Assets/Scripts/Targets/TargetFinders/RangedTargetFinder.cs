@@ -56,7 +56,7 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-		public void Dispose()
+		public void DisposeManagedState()
 		{
 			_enemyDetector.OnEntered -= OnEnemyEntered;
 			_enemyDetector.OnExited -= OnEnemyExited;

@@ -140,7 +140,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 			}
 		}
 
-		public void Dispose()
+		public void DisposeManagedState()
 		{
 			_targetFinder.TargetFound -= TargetFinder_TargetFound;
 			_targetFinder.TargetLost -= TargetFinder_TargetLost;

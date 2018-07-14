@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             ChosenUnit = newChosenUnit;
         }
 
-        public override void Dispose() { }
+        public override void DisposeManagedState() { }
     }
 
     public class UnitChooserTests

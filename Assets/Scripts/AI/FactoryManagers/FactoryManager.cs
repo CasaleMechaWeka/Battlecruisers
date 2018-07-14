@@ -99,7 +99,7 @@ namespace BattleCruisers.AI.FactoryManagers
             }
         }
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
             _friendlyCruiser.StartedConstruction -= _friendlyCruiser_StartedConstruction;
 

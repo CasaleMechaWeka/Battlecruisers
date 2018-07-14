@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets
@@ -67,7 +67,7 @@ namespace BattleCruisers.Targets
             return _targets.Contains(target);
         }
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
             _targetFinder.TargetFound -= _targetFinder_TargetFound;
             _targetFinder.TargetLost -= _targetFinder_TargetLost;

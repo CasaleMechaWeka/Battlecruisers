@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             _targetProcessor.StartProcessingTargets();
         }
 		
-        public void Dispose()
+        public void DisposeManagedState()
         {
             if (IsInitialised)
             {
@@ -53,7 +53,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         protected virtual void CleanUp()
         {
 			_targetProcessor.RemoveTargetConsumer(_targetConsumer);
-            _targetProcessor.Dispose();
+            _targetProcessor.DisposeManagedState();
 			_targetProcessor = null;
         }
     }

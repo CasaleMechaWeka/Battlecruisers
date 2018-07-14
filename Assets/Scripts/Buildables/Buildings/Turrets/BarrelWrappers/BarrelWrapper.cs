@@ -191,9 +191,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return _factoryProvider.AngleLimiterFactory.CreateFacingLimiter();
         }
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
-            _targetProcessorWrapper.Dispose();
+            _targetProcessorWrapper.DisposeManagedState();
             _targetProcessorWrapper = null;
         }
     }

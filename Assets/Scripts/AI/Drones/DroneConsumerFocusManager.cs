@@ -22,7 +22,7 @@ namespace BattleCruisers.AI.Drones
     /// production, while they are also trying to produce additional buildings
     /// that may otherwise never complete.
     /// </summary>
-    public class DroneConsumerFocusManager : IDisposable
+    public class DroneConsumerFocusManager : IManagedDisposable
     {
         private readonly IDroneFocusingStrategy _strategy;
         private readonly ICruiserController _aiCruiser;
@@ -149,7 +149,7 @@ namespace BattleCruisers.AI.Drones
             RemoveInProgressBuilding(destroyedBuildable);
 		}
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
             _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
 

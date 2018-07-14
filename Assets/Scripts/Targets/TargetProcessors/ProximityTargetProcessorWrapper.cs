@@ -29,7 +29,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         protected override void CleanUp()
         {
             base.CleanUp();
-            _targetFinder.Dispose();
+            _targetFinder.DisposeManagedState();
         }
     }
 }

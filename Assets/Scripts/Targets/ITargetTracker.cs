@@ -1,9 +1,10 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Targets
 {
-    public interface ITargetTracker : IDisposable
+    public interface ITargetTracker : IManagedDisposable
     {
         event EventHandler TargetsChanged;
 

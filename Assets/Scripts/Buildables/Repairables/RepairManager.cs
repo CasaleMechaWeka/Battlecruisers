@@ -108,24 +108,6 @@ namespace BattleCruisers.Buildables.Repairables
             }
         }
 
-        public void Dispose()
-        {
-            CleanUpCruiser();
-        }
-
-        private void CleanUpCruiser()
-        {
-            IList<IRepairable> repairables = _repairableToDroneNum.Keys.ToList();
-
-            foreach (IRepairable repairable in repairables)
-			{
-				RemoveRepairable(repairable);
-			}
-
-            _cruiser.Destroyed -= _cruiser_Destroyed;
-            _cruiser.StartedConstruction -= _cruiser_StartedConstruction;
-        }
-
         private void AddRepairable(IRepairable repairable)
         {
             Logging.Log(Tags.REPAIR_MANAGER, "AddRepairable(): repairable: " + repairable);
@@ -172,5 +154,23 @@ namespace BattleCruisers.Buildables.Repairables
 			Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
             return _repairableToDroneNum[repairable].DroneConsumer;
 		}
+
+        public void DisposeManagedState()
+        {
+            CleanUpCruiser();
+        }
+
+        private void CleanUpCruiser()
+        {
+            IList<IRepairable> repairables = _repairableToDroneNum.Keys.ToList();
+
+            foreach (IRepairable repairable in repairables)
+            {
+                RemoveRepairable(repairable);
+            }
+
+            _cruiser.Destroyed -= _cruiser_Destroyed;
+            _cruiser.StartedConstruction -= _cruiser_StartedConstruction;
+        }
     }
 }

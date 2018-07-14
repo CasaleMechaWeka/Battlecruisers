@@ -1,6 +1,6 @@
-﻿using System;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -58,7 +58,7 @@ namespace BattleCruisers.Targets.TargetFinders
             }
         }
 
-        public void Dispose()
+        public void DisposeManagedState()
         {
             _maxRangeDetector.OnEntered -= OnTargetFound;
             _maxRangeDetector.OnExited -= OnTargetLost;

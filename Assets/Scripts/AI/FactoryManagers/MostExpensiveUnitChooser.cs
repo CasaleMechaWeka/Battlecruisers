@@ -47,7 +47,7 @@ namespace BattleCruisers.AI.FactoryManagers
 					.FirstOrDefault();
 		}
 
-		public override void Dispose()
+		public override void DisposeManagedState()
 		{
 			_droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
 		}

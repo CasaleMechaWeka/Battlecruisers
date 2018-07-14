@@ -1,7 +1,7 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
@@ -100,7 +100,7 @@ namespace BattleCruisers.Targets.TargetFinders
             }
         }
 
-		public void Dispose()
+		public void DisposeManagedState()
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.StartedConstruction -= _enemyCruiser_StartedConstruction;

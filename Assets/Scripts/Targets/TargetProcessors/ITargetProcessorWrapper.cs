@@ -1,9 +1,9 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    public interface ITargetProcessorWrapper : IDisposable
-	{
+    public interface ITargetProcessorWrapper : IManagedDisposable
+    {
         void StartProvidingTargets();
 	}
 }

@@ -1,5 +1,6 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -16,8 +17,8 @@ namespace BattleCruisers.Targets.TargetFinders
 	/// <summary>
 	/// Finds targets to feed to a ITargeProcessor.
 	/// </summary>
-	public interface ITargetFinder : IDisposable
-	{
+	public interface ITargetFinder : IManagedDisposable
+    {
 		// When a target is found (eg, started being built, or comes within range)
 		event EventHandler<TargetEventArgs> TargetFound;
 

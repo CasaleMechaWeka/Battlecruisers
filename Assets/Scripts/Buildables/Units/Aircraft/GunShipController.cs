@@ -162,14 +162,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            _followingTargetProcessor.Dispose();
+            _followingTargetProcessor.DisposeManagedState();
             _followingTargetProcessor = null;
 
             _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
-            _inRangeTargetFinder.Dispose();
+            _inRangeTargetFinder.DisposeManagedState();
             _inRangeTargetFinder = null;
 
-            _inRangeTargetTracker.Dispose();
+            _inRangeTargetTracker.DisposeManagedState();
             _inRangeTargetTracker = null;
 		}
 	}

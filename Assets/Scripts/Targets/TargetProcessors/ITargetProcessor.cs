@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
     /// <summary>
     /// Ranks all targets, and assigns the highest ranked target to ITargetConsumers.
     /// </summary>
-    public interface ITargetProcessor : IDisposable
-	{
+    public interface ITargetProcessor : IManagedDisposable
+    {
         void StartProcessingTargets();
 
 		/// <exception cref="ArgumentException">If the target consumer is already added.</exception>
