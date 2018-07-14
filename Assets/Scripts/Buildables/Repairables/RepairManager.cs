@@ -99,7 +99,7 @@ namespace BattleCruisers.Buildables.Repairables
                     Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  About to repair: " + repairable);
 
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
-                    float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS;
+                    float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;
 
                     // Defer, as this may bring the repairable to full health, which 
                     // sets its DroneConsumer to null, which modifies this enumerable :)

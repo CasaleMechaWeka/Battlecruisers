@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
@@ -62,7 +63,7 @@ namespace BattleCruisers.Tests.Buildables
             _building.RepairCommand.Returns(_buildingRepairCommand);
             _buildingRepairCommand.Repairable.Returns(_building);
 
-            _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S;
+            _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S * BuildSpeedMultipliers.DEFAULT;
 
             _repairManager = new RepairManager(new DummyDeferrer(), _feedbackFactory);
 
