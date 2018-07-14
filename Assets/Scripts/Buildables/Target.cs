@@ -43,7 +43,8 @@ namespace BattleCruisers.Buildables
 		public virtual float SizeMultiplier { get { return 1; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
-        // Seems to be an okay approximation (for cruisers at least)
+        // Seems to be an okay approximation (for cruisers at least).
+        // For buildables ranges from 0.2 (broadsides) to 1.33 (tesla coil).
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
