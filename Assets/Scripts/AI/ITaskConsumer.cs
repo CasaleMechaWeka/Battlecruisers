@@ -1,6 +1,8 @@
-﻿namespace BattleCruisers.AI
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.AI
 {
-    public interface ITaskConsumer
+    public interface ITaskConsumer : IManagedDisposable
     {
     }
 }

@@ -7,8 +7,8 @@ namespace BattleCruisers.AI
     /// <summary>
     /// 1. Ensures there is a reference to the ITaskConsumer and ITaskProducers, 
     ///     so the garbage collector does not clean them up.
-    /// 2. Provides a way to dispose all task producers, cleaning up their
-    ///     event handlers.
+    /// 2. Provides a way to dispose the ITaskConsumer and all ITaskProducers, 
+    ///     cleaning up their event handlers.
     /// </summary>
     public class ArtificialIntelligence : IArtificialIntelligence
     {
@@ -25,6 +25,8 @@ namespace BattleCruisers.AI
 
         public void DisposeManagedState()
         {
+            _taskConsumer.DisposeManagedState();
+
             foreach (ITaskProducer taskProducer in _taskProducers)
             {
                 taskProducer.DisposeManagedState();

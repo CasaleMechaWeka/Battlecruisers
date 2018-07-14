@@ -52,5 +52,10 @@ namespace BattleCruisers.AI
         {
             CurrentTask = _tasks.HighestPriorityTask;
         }
+
+        public void DisposeManagedState()
+        {
+            _tasks.HighestPriorityTaskChanged -= _tasks_HighestPriorityTaskChanged;
+        }
     }
 }
