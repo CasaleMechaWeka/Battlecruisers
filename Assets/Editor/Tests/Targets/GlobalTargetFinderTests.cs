@@ -11,8 +11,8 @@ namespace BattleCruisers.Tests.Targets
 		private ITargetFinder _targetFinder;
 		private ICruiser _enemyCruiser;
 		private IBuildable _target;
-		private ITarget _expectedTargetFound;
-		private int _targetFoundEmittedCount;
+		private ITarget _expectedTargetFound, _expectedTargetLost;
+		private int _targetFoundEmittedCount, _targetLostEmittedCount;
 
 		[SetUp]
 		public void TestSetup()
@@ -21,9 +21,12 @@ namespace BattleCruisers.Tests.Targets
 			_target = Substitute.For<IBuildable>();
 
 			_targetFinder = new GlobalTargetFinder(_enemyCruiser);
+
+            _targetFoundEmittedCount = 0;
 			_targetFinder.TargetFound += OnTargetFound;
 
-			_targetFoundEmittedCount = 0;
+            _targetLostEmittedCount = 0;
+            _targetFinder.TargetLost += OnTargetLost;
 		}
 
 		[Test]
@@ -53,44 +56,50 @@ namespace BattleCruisers.Tests.Targets
 		{
 			BuildableReachesHalfway_EmitsTargetFound();
 
-			bool wasTargetLostEmitted = false;
-
-			_targetFinder.TargetLost += (object sender, TargetEventArgs e) => 
-			{
-				wasTargetLostEmitted = true;
-
-				Assert.AreEqual(_targetFinder, sender);
-				Assert.AreEqual(_target, e.Target);
-			};
+            _expectedTargetLost = _target;
 
 			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
 
-			Assert.IsTrue(wasTargetLostEmitted);
+            Assert.AreEqual(1, _targetLostEmittedCount);
 		}
 
 		[Test]
 		public void BuildableThatWasNotFound_Destroyed_DoesNotEmitsTargetLost()
 		{
-			_enemyCruiser.StartedConstruction += Raise.EventWith(_enemyCruiser, new StartedConstructionEventArgs(_target));
+            Cruiser_EmitsTargetFound();
+
+            _enemyCruiser.StartedConstruction += Raise.EventWith(_enemyCruiser, new StartedConstructionEventArgs(_target));
 			_target.BuildProgress.Returns(0.1f);
-
-			bool wasTargetLostEmitted = false;
-
-			_targetFinder.TargetLost += (object sender, TargetEventArgs e) => 
-			{
-				wasTargetLostEmitted = true;
-			};
 
 			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
 
-			Assert.IsFalse(wasTargetLostEmitted);
+            Assert.AreEqual(0, _targetLostEmittedCount);
 		}
 
-		private void OnTargetFound(object sender, TargetEventArgs e)
+        [Test]
+        public void CruiserDestroyed_EmitsTargetLost()
+        {
+            Cruiser_EmitsTargetFound();
+
+            _expectedTargetLost = _enemyCruiser;
+
+            _enemyCruiser.Destroyed += Raise.EventWith(new DestroyedEventArgs(_enemyCruiser));
+
+            Assert.AreEqual(1, _targetLostEmittedCount);
+        }
+
+        private void OnTargetLost(object sender, TargetEventArgs e)
+        {
+            _targetLostEmittedCount++;
+            Assert.AreSame(_targetFinder, sender);
+            Assert.AreSame(_expectedTargetLost, e.Target);
+        }
+
+        private void OnTargetFound(object sender, TargetEventArgs e)
 		{
 			_targetFoundEmittedCount++;
-			Assert.AreEqual(_targetFinder, sender);
-			Assert.AreEqual(_expectedTargetFound, e.Target);
+			Assert.AreSame(_targetFinder, sender);
+			Assert.AreSame(_expectedTargetFound, e.Target);
 		}
 	}
 }

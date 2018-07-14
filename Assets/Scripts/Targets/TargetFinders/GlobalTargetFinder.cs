@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -27,21 +28,31 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		public GlobalTargetFinder(ICruiser enemyCruiser)
 		{
+            Assert.IsNotNull(enemyCruiser);
+
 			_enemyCruiser = enemyCruiser;
             _isFindingTargets = false;
 		}
 
-		public void StartFindingTargets()
+        public void StartFindingTargets()
 		{
             if (!_isFindingTargets)
             {
-                _enemyCruiser.StartedConstruction += EnemyCruiser_StartedConstruction;
+                Assert.IsFalse(_enemyCruiser.IsDestroyed);
+
+                _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
+                _enemyCruiser.StartedConstruction += _enemyCruiser_StartedConstruction;
                 InvokeTargetFoundEvent(_enemyCruiser);
                 _isFindingTargets = true;
 			}
 		}
 
-		private void EnemyCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            InvokeTargetLostEvent(_enemyCruiser);
+        }
+
+		private void _enemyCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
 		{
 			IBuildable buildable = e.Buildable;
 
@@ -67,24 +78,32 @@ namespace BattleCruisers.Targets.TargetFinders
             // Build progress NEVER decreases.  Otherwise there would be a subtle bug:
             // If build progresss went past 50%, but then below 50%
             // TargetLost will never be called for that target.
-			if (buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET
-				&& TargetLost != null)
+			if (buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET)
 			{
-				TargetLost.Invoke(this, new TargetEventArgs(buildable));
+                InvokeTargetLostEvent(buildable);
 			}
 		}
 
-		private void InvokeTargetFoundEvent(ITarget target)
+		private void InvokeTargetFoundEvent(ITarget targetFound)
 		{
 			if (TargetFound != null)
 			{
-				TargetFound.Invoke(this, new TargetEventArgs(target));
+				TargetFound.Invoke(this, new TargetEventArgs(targetFound));
 			}
 		}
 
+        private void InvokeTargetLostEvent(ITarget targetLost)
+        {
+            if (TargetLost != null)
+            {
+                TargetLost.Invoke(this, new TargetEventArgs(targetLost));
+            }
+        }
+
 		public void Dispose()
 		{
-			_enemyCruiser.StartedConstruction -= EnemyCruiser_StartedConstruction;
+            _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
+			_enemyCruiser.StartedConstruction -= _enemyCruiser_StartedConstruction;
 			_enemyCruiser = null;
 		}
 	}
