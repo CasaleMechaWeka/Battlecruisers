@@ -49,6 +49,19 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _tasks.DidNotReceiveWithAnyArgs().Add(null);
         }
 
+        [Test]
+        public void DisposeManagedState_Unsubscribes()
+        {
+            _taskProducer.DisposeManagedState();
+
+            // Cruiser builds factory
+            StartConstructingBuilding(_factory);
+
+            // Task producer does no thing, as we no longer subscribe to the cruiser event
+            _taskFactory.DidNotReceiveWithAnyArgs().CreateWaitForUnitConstructionTask(TaskPriority.Low, _factory);
+            _tasks.DidNotReceiveWithAnyArgs().Add(_waitForUnitsTask);
+        }
+
         private void StartConstructingBuilding(IBuilding building)
         {
             _cruiser.StartedConstruction += Raise.EventWith(new StartedConstructionEventArgs(building));
