@@ -382,10 +382,6 @@ namespace BattleCruisers.Buildables
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            // FELIX  TEMP :P
-            TakeDamage(MaxHealth, null);
-            return;
-
             if (DeleteCountdown.IsInProgress)
             {
                 CancelDelete();
