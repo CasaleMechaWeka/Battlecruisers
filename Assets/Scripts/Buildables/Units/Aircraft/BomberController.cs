@@ -35,7 +35,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			set
 			{
 				_target = value;
-                SetTargetVelocity();
+
+                if (_target == null)
+                {
+                    SwitchMovementControllers(PatrollingMovementController);
+                }
+                else
+                {
+                    SwitchMovementControllers(_bomberMovementControler);
+                    SetTargetVelocity();
+                }
 			}
 		}
 

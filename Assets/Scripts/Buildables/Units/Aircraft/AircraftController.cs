@@ -95,9 +95,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
 		}
 
+        // FELIX  Property?
 		protected void SwitchMovementControllers(IMovementController newMovementController)
 		{
             Logging.Log(Tags.AIRCRAFT, "SwitchMovementControllers: " + ActiveMovementController + " => " + newMovementController);
+
+            if (ReferenceEquals(ActiveMovementController, newMovementController))
+            {
+                // Already have the desired movement controller
+                return;
+            }
 
             if (ActiveMovementController != null)
             {
