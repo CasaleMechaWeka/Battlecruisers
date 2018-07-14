@@ -332,8 +332,8 @@ namespace BattleCruisers.Scenes
 
             if (!ApplicationModel.IsTutorial)
             {
-                // Completing the tutorial does not count as a real level, so do
-                // not save a battle result in this case.
+                // Completing the tutorial does not count as a real level, so 
+                // only save save battle result if this was not the tutorial.
 				_dataProvider.GameModel.LastBattleResult = battleResult;
 				_dataProvider.SaveGame();
             }
