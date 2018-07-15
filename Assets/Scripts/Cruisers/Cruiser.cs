@@ -54,19 +54,22 @@ namespace BattleCruisers.Cruisers
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
-        public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
-        public ISlotWrapper SlotWrapper { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
-        public ISlotNumProvider SlotNumProvider { get; private set; }
         private FogOfWar _fog;
         public IFogOfWar Fog { get { return _fog; } }
 		public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones { get { return numOfDrones; } }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser { get { return Direction == Direction.Right; } }
+
+        // ICruiserController
+        bool ICruiserController.IsDestroyed { get { return IsDestroyed; } }
+        public ISlotWrapper SlotWrapper { get; private set; }
+        public ISlotNumProvider SlotNumProvider { get; private set; }
+        public IDroneManager DroneManager { get; private set; }
 
         public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
         public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
