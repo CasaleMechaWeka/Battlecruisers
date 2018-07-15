@@ -305,5 +305,65 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             Assert.IsTrue(deckSlots.Contains(_deckSlot1));
         }
         #endregion GetFreeSlots
+
+        #region Slot_BuildingDestroyed
+        [Test]
+        public void Slot_BuildingDestroyed_AllVisible_NonNullMatchingHighlightedSlotType_HighlightsSlot()
+        {
+            _slotWrapper.ShowAllSlots();
+            _slotWrapper.HighlightAvailableSlots(SlotType.Deck);
+            _building.SlotType.Returns(SlotType.Deck);
+            _deckSlot1.ClearReceivedCalls();
+
+            _deckSlot1.BuildingDestroyed += Raise.EventWith(new SlotBuildingDestroyedEventArgs(_deckSlot1));
+
+            _deckSlot1.Received().HighlightSlot();
+        }
+
+        [Test]
+        public void Slot_BuildingDestroyed_AllVisible_NonNullNotMatchingHighlightedSlotType_UnhighlightsSlot()
+        {
+            _slotWrapper.ShowAllSlots();
+            _slotWrapper.HighlightAvailableSlots(SlotType.Platform);
+            _building.SlotType.Returns(SlotType.Deck);
+            _deckSlot1.ClearReceivedCalls();
+
+            _deckSlot1.BuildingDestroyed += Raise.EventWith(new SlotBuildingDestroyedEventArgs(_deckSlot1));
+
+            _deckSlot1.Received().UnhighlightSlot();
+        }
+
+        [Test]
+        public void Slot_BuildingDestroyed_AllVisible_NullHighlightedSlotType_UnhighlightsSlot()
+        {
+            _slotWrapper.ShowAllSlots();
+            _building.SlotType.Returns(SlotType.Deck);
+            _deckSlot1.ClearReceivedCalls();
+
+            _deckSlot1.BuildingDestroyed += Raise.EventWith(new SlotBuildingDestroyedEventArgs(_deckSlot1));
+
+            _deckSlot1.Received().UnhighlightSlot();
+        }
+
+        [Test]
+        public void Slot_BuildingDestroyed_NotAllVisible_UnhighlightsAndHidesSlot()
+        {
+            _deckSlot1.BuildingDestroyed += Raise.EventWith(new SlotBuildingDestroyedEventArgs(_deckSlot1));
+
+            _deckSlot1.Received().UnhighlightSlot();
+            _deckSlot1.Received().IsVisible = false;
+        }
+        #endregion Slot_BuildingDestroyed
+
+        [Test]
+        public void Disposed_UnsubscribesFromBuildingDestroyedEvent()
+        {
+            _slotWrapper.DisposeManagedState();
+
+            _deckSlot1.BuildingDestroyed += Raise.EventWith(new SlotBuildingDestroyedEventArgs(_deckSlot1));
+
+            _deckSlot1.DidNotReceive().HighlightSlot();
+            _deckSlot1.DidNotReceive().UnhighlightSlot();
+        }
     }
 }

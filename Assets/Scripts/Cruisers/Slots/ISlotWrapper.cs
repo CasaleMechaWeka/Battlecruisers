@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public interface ISlotWrapper
-	{
+    public interface ISlotWrapper : IManagedDisposable
+    {
         ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);
         bool IsSlotAvailable(SlotType slotType);
         int GetSlotCount(SlotType slotType);

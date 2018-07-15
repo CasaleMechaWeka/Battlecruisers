@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers.Slots
 		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
         private readonly ISlotFilter _highlightableFilter;
 		private SlotType? _highlightedSlotType;
-        private bool _areMultipleSlotsVisible;
+        private bool _areAllSlotsVisible;
 
 		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     _highlightedSlot.UnhighlightSlot();
 
-                    if (!_areMultipleSlotsVisible)
+                    if (!_areAllSlotsVisible)
                     {
                         _highlightedSlot.IsVisible = false;
 					}
@@ -48,7 +48,7 @@ namespace BattleCruisers.Cruisers.Slots
             Helper.AssertIsNotNull(parentCruiser, slots, highlightableFilter);
 
             _highlightableFilter = highlightableFilter;
-            _areMultipleSlotsVisible = false;
+            _areAllSlotsVisible = false;
             _slots = new Dictionary<SlotType, IList<ISlot>>();
 
             // Sort slots by position (cruiser front to cruiser rear)
@@ -104,14 +104,14 @@ namespace BattleCruisers.Cruisers.Slots
 		public void ShowAllSlots()
 		{
             SetSlotVisibility(isVisible: true);
-            _areMultipleSlotsVisible = true;
+            _areAllSlotsVisible = true;
 		}
 
 		public void HideAllSlots()
 		{
             SetSlotVisibility(isVisible: false);
             HighlightedSlot = null;
-            _areMultipleSlotsVisible = false;
+            _areAllSlotsVisible = false;
 		}
 
         private void SetSlotVisibility(bool isVisible)
@@ -188,11 +188,10 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void Slot_BuildingDestroyed(object sender, SlotBuildingDestroyedEventArgs e)
         {
-            if (_areMultipleSlotsVisible)
+            if (_areAllSlotsVisible)
             {
-				e.BuildingParent.IsVisible = true;
-
-                if (_highlightedSlotType != null && _highlightedSlotType == e.BuildingParent.Type)
+                if (_highlightedSlotType != null 
+                    && _highlightedSlotType == e.BuildingParent.Type)
                 {
                     e.BuildingParent.HighlightSlot();
                 }
@@ -218,6 +217,17 @@ namespace BattleCruisers.Cruisers.Slots
                     .ToList();
 
             return freeSlots.AsReadOnly();
+        }
+
+        public void DisposeManagedState()
+        {
+            foreach (IList<ISlot> slotList in _slots.Values)
+            {
+                foreach (ISlot slot in slotList)
+                {
+                    slot.BuildingDestroyed -= Slot_BuildingDestroyed;
+                }
+            }
         }
     }
 }
