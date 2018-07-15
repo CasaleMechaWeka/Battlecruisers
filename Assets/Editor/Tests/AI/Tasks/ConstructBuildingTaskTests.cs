@@ -36,6 +36,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             _prefabFactory = Substitute.For<IPrefabFactory>();
 			_slotWrapper = Substitute.For<ISlotWrapper>();
             _cruiser = Substitute.For<ICruiserController>();
+            _cruiser.IsAlive.Returns(true);
             _cruiser.SlotWrapper.Returns(_slotWrapper);
 
             _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
@@ -77,7 +78,20 @@ namespace BattleCruisers.Tests.AI.Tasks
             Assert.Throws<UnityAsserts.AssertionException>(() => _task.Start());
 		}
 
-		[Test]
+        [Test]
+        public void Start_CruiserIsNotAlive_ReturnsFalse()
+        {
+            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            _cruiser.IsAlive.Returns(false);
+
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            _cruiser.DidNotReceiveWithAnyArgs().ConstructBuilding(null, null);
+            Assert.AreEqual(0, _numOfCompletedEvents);
+        }
+
+        [Test]
 		public void Start_NoAvailabeSlots_ReturnsFalse()
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);

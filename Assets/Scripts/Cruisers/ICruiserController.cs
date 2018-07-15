@@ -40,7 +40,7 @@ namespace BattleCruisers.Cruisers
 
 	public interface ICruiserController
 	{
-        bool IsDestroyed { get; }
+        bool IsAlive { get; }
         ISlotWrapper SlotWrapper { get; }
         ISlotNumProvider SlotNumProvider { get; }
 		IDroneManager DroneManager { get; }

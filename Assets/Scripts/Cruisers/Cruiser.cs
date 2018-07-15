@@ -66,7 +66,7 @@ namespace BattleCruisers.Cruisers
         public bool IsPlayerCruiser { get { return Direction == Direction.Right; } }
 
         // ICruiserController
-        bool ICruiserController.IsDestroyed { get { return IsDestroyed; } }
+        public bool IsAlive { get { return !IsDestroyed; } }
         public ISlotWrapper SlotWrapper { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
