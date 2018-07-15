@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     ActiveMovementController.DirectionChanged -= _movementController_DirectionChanged;
                 }
 
-                ActiveMovementController = value;
+                _activeMovementController = value;
 
                 ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
                 ActiveMovementController.Activate();
@@ -93,7 +93,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     patrolPoints: GetPatrolPoints(),
                     positionEqualityMarginInM: PositionEqualityMarginInM);
 
-			SwitchMovementControllers(DummyMovementController);
+            ActiveMovementController = DummyMovementController;
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
 		}
@@ -102,7 +102,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
 
-            SwitchMovementControllers(PatrollingMovementController);
+            ActiveMovementController = PatrollingMovementController;
 		}
 
 		protected abstract IList<IPatrolPoint> GetPatrolPoints();
@@ -122,28 +122,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
 		}
 
-        // FELIX  Property?
-		protected void SwitchMovementControllers(IMovementController newMovementController)
-		{
-            Logging.Log(Tags.AIRCRAFT, "SwitchMovementControllers: " + ActiveMovementController + " => " + newMovementController);
-
-            if (ReferenceEquals(ActiveMovementController, newMovementController))
-            {
-                // Already have the desired movement controller
-                return;
-            }
-
-            if (ActiveMovementController != null)
-            {
-                newMovementController.Velocity = ActiveMovementController.Velocity;
-                ActiveMovementController.DirectionChanged -= _movementController_DirectionChanged;
-			}
-
-			ActiveMovementController = newMovementController;
-			ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
-            ActiveMovementController.Activate();
-		}
-
         public void Kamikaze(ITarget kamikazeTarget)
         {
 			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
@@ -156,7 +134,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
 
             ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(kamikazeTarget);
-            SwitchMovementControllers(_movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget));
+            ActiveMovementController = _movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget);
 
             UpdateFaction(kamikazeTarget);
 

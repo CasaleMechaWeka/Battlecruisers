@@ -143,12 +143,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void UpdateMovementController()
         {
-            IMovementController desiredMovementController = ChooseMovementController();
-
-            if (!ReferenceEquals(ActiveMovementController, desiredMovementController))
-            {
-                SwitchMovementControllers(desiredMovementController);
-            }
+            ActiveMovementController = ChooseMovementController();
         }
 
         private IMovementController ChooseMovementController()

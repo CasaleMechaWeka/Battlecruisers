@@ -46,11 +46,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 				if (_target == null)
 				{
-					SwitchMovementControllers(PatrollingMovementController);
+                    ActiveMovementController = PatrollingMovementController;
 				}
 				else
 				{
-					SwitchMovementControllers(_figherMovementController);
+                    ActiveMovementController = _figherMovementController;
 				}
 			}
 		}

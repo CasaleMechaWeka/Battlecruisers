@@ -38,11 +38,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
                 if (_target == null)
                 {
-                    SwitchMovementControllers(PatrollingMovementController);
+                    ActiveMovementController = PatrollingMovementController;
                 }
                 else
                 {
-                    SwitchMovementControllers(_bomberMovementControler);
+                    ActiveMovementController = _bomberMovementControler;
                     SetTargetVelocity();
                 }
 			}
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private void OnFirstPatrolPointReached()
 		{
 			_isAtCruisingHeight = true;
-			SwitchMovementControllers(_bomberMovementControler);
+            ActiveMovementController = _bomberMovementControler;
 		}
 
 		protected override void OnFixedUpdate()

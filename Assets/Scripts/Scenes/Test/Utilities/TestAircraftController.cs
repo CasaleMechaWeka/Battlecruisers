@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			if (UseDummyMovementController)
 			{
-				SwitchMovementControllers(DummyMovementController);
+                ActiveMovementController = DummyMovementController;
 			}
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooser(this);
