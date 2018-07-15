@@ -42,14 +42,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 }
                 else if (_isAtCruisingHeight)
                 {
-                    ActiveMovementController = _bomberMovementControler;
-                    SetTargetVelocity();
+                    SwitchToBomberMovement();
                 }
 			}
 		}
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
-		#endregion Properties
+        #endregion Properties
 
         protected override void OnStaticInitialised()
 		{
@@ -103,17 +102,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
+            IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
             return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
 		}
 
 		private void OnFirstPatrolPointReached()
-		{
-			_isAtCruisingHeight = true;
-            ActiveMovementController = _bomberMovementControler;
-		}
+        {
+            _isAtCruisingHeight = true;
+            SwitchToBomberMovement();
+        }
 
-		protected override void OnFixedUpdate()
+        private void SwitchToBomberMovement()
+        {
+            SetTargetVelocity();
+            ActiveMovementController = _bomberMovementControler;
+        }
+
+        protected override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
 
