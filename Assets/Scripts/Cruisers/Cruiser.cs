@@ -200,5 +200,11 @@ namespace BattleCruisers.Cruisers
         {
             RepairManager.Repair(Time.deltaTime);
         }
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            SlotWrapper.DisposeManagedState();
+        }
     }
 }
