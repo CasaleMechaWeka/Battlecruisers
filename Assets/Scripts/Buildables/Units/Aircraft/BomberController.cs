@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 {
                     ActiveMovementController = PatrollingMovementController;
                 }
-                else
+                else if (_isAtCruisingHeight)
                 {
                     ActiveMovementController = _bomberMovementControler;
                     SetTargetVelocity();
