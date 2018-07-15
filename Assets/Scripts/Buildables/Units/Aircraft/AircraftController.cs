@@ -22,10 +22,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public float cruisingAltitudeInM;
 
-        protected IMovementController ActiveMovementController { get; private set; }
-        protected IMovementController DummyMovementController { get; private set; }
-        protected IMovementController PatrollingMovementController { get; private set; }
-
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
@@ -35,6 +31,37 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
         protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Aircraft; } }
+
+        protected IMovementController DummyMovementController { get; private set; }
+        protected IMovementController PatrollingMovementController { get; private set; }
+
+        private IMovementController _activeMovementController;
+        protected IMovementController ActiveMovementController
+        {
+            get { return _activeMovementController; }
+            set
+            {
+                Logging.Log(Tags.AIRCRAFT, "ActiveMovementController_set: " + ActiveMovementController + " => " + value);
+                Assert.IsNotNull(value);
+
+                if (ReferenceEquals(ActiveMovementController, value))
+                {
+                    // Already have the desired movement controller
+                    return;
+                }
+
+                if (ActiveMovementController != null)
+                {
+                    value.Velocity = ActiveMovementController.Velocity;
+                    ActiveMovementController.DirectionChanged -= _movementController_DirectionChanged;
+                }
+
+                ActiveMovementController = value;
+
+                ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
+                ActiveMovementController.Activate();
+            }
+        }
 
         protected override void OnStaticInitialised()
         {
