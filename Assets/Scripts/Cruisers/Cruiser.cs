@@ -60,6 +60,7 @@ namespace BattleCruisers.Cruisers
         public float YAdjustmentInM { get { return yAdjustmentInM; } }
         public ISlotWrapper SlotWrapper { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
+        public ISlotNumProvider SlotNumProvider { get; private set; }
         private FogOfWar _fog;
         public IFogOfWar Fog { get { return _fog; } }
 		public IRepairManager RepairManager { get; private set; }
@@ -81,6 +82,8 @@ namespace BattleCruisers.Cruisers
 
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
+            _slotWrapperController.StaticInitialise();
+            SlotNumProvider = _slotWrapperController;
 
             _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);

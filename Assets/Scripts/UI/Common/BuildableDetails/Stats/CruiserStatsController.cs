@@ -24,17 +24,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 		{
             _healthRow.Initialise(_cruiserHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
-			int platformSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Platform);
-			_platformSlotsRow.Initialise(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Platform)));
+			int platformSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Platform);
+			_platformSlotsRow.Initialise(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Platform)));
 
-			int deckSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Deck);
-			_deckSlotsRow.Initialise(deckSlotCount, _higherIsBetterComparer.CompareStats(deckSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Deck)));
+			int deckSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Deck);
+			_deckSlotsRow.Initialise(deckSlotCount, _higherIsBetterComparer.CompareStats(deckSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Deck)));
 
-			int utilitySlotCount = item.SlotWrapper.GetSlotCount(SlotType.Utility);
-			_utilitySlotsRow.Initialise(utilitySlotCount, _higherIsBetterComparer.CompareStats(utilitySlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Utility)));
+			int utilitySlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Utility);
+			_utilitySlotsRow.Initialise(utilitySlotCount, _higherIsBetterComparer.CompareStats(utilitySlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Utility)));
 
-			int mastSlotCount = item.SlotWrapper.GetSlotCount(SlotType.Mast);
-			_mastSlotsRow.Initialise(mastSlotCount, _higherIsBetterComparer.CompareStats(mastSlotCount, itemToCompareTo.SlotWrapper.GetSlotCount(SlotType.Mast)));
+			int mastSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Mast);
+			_mastSlotsRow.Initialise(mastSlotCount, _higherIsBetterComparer.CompareStats(mastSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Mast)));
 		}
 	}
 }
