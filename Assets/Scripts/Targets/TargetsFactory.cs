@@ -101,6 +101,12 @@ namespace BattleCruisers.Targets
         {
             return new ShipTargetRanker();
         }
+
+        public ITargetRanker CreateOffensiveBuildableTargetRanker()
+        {
+            return new OffensiveBuildableTargetRanker();
+        }
+
         #endregion TargetRankers
 
         #region TargetProviders

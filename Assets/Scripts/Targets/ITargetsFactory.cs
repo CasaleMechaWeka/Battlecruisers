@@ -37,6 +37,7 @@ namespace BattleCruisers.Targets
 		// Rankers
 		ITargetRanker CreateEqualTargetRanker();
         ITargetRanker CreateShipTargetRanker();
+        ITargetRanker CreateOffensiveBuildableTargetRanker();
 
         // Providers
         ITargetProvider CreateStaticTargetProvider(ITarget target);
