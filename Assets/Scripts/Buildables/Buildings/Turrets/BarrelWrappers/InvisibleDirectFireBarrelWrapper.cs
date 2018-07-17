@@ -4,6 +4,10 @@ using BattleCruisers.Movement.Rotation;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
+    /// <summary>
+    /// Used by:
+    /// + Tesla coil
+    /// </summary>
     public class InvisibleDirectFireBarrelWrapper : DirectFireBarrelWrapper
     {
         protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
