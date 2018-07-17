@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
@@ -17,9 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class DeathstarController : AircraftController
 	{
-		private BarrelController _barrelController;
-		private ITargetDetector _targetDetector;
-		private ITargetProcessor _targetProcessor;
+		private IBarrelWrapper _barrelWrapper;
 
 		public RotatingController leftWing, rightWing;
 
@@ -36,13 +35,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Helper.AssertIsNotNull(leftWing, rightWing);
 
-			_barrelController = gameObject.GetComponentInChildren<LaserBarrelController>();
-			Assert.IsNotNull(_barrelController);
-			_barrelController.StaticInitialise();
-            AddDamageStats(_barrelController.DamageCapability);
-
-			_targetDetector = gameObject.GetComponentInChildren<ITargetDetector>();
-			Assert.IsNotNull(_targetDetector);
+            _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+            Assert.IsNotNull(_barrelWrapper);
+            _barrelWrapper.StaticInitialise();
+            AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
 		protected override void OnInitialised()
@@ -51,7 +47,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
 			rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
-		}
+
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.Laser);
+        }
 
 		protected override void OnBuildableCompleted()
 		{
@@ -59,29 +58,33 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			// Barrel controller
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            _barrelWrapper.StartAttackingTargets();
 
-            IBarrelControllerArgs args
-                = new BarrelControllerArgs(
-                    targetFilter,
-                    _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor(),
-                    _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
-                    _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-                    _movementControllerFactory.CreateDummyRotationMovementController(),
-                    _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
-                    _factoryProvider.AngleLimiterFactory.CreateDummyLimiter(),
-                    _factoryProvider,
-                    parent: this);
+            // FELIX  Delete :D
+   //         // Barrel controller
+   //         Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+   //         ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
 
-            _barrelController.Initialise(args);
+   //         IBarrelControllerArgs args
+   //             = new BarrelControllerArgs(
+   //                 targetFilter,
+   //                 _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor(),
+   //                 _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
+   //                 _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
+   //                 null,
+   //                 //_movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, ,
+   //                 _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
+   //                 _factoryProvider.AngleLimiterFactory.CreateDummyLimiter(),
+   //                 _factoryProvider,
+   //                 parent: this);
+
+   //         _barrelController.Initialise(args);
 			
-			// Target detection
-			ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
-			_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
-			_targetProcessor.AddTargetConsumer(_barrelController);
-            _targetProcessor.StartProcessingTargets();
+			//// Target detection
+			//ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
+			//_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
+			//_targetProcessor.AddTargetConsumer(_barrelController);
+   //         _targetProcessor.StartProcessingTargets();
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
@@ -128,12 +131,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
-
-			if (BuildableState == BuildableState.Completed)
-			{
-				_targetProcessor.RemoveTargetConsumer(_barrelController);
-				_targetProcessor = null;
-			}
+            _barrelWrapper.DisposeManagedState();
 		}
 	}
 }
