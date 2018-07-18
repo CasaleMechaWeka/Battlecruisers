@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI
 {
@@ -29,6 +30,7 @@ namespace BattleCruisers.AI
 
                 if (_currentTask != null)
                 {
+                    Logging.Log(Tags.AI, "set_CurrentTask: " + _currentTask);
                     _currentTask.Completed += _currentTask_Completed;
                     _currentTask.Start();
                 }

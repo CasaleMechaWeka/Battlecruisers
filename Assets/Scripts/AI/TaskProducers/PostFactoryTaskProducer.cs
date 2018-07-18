@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -29,6 +30,8 @@ namespace BattleCruisers.AI.TaskProducers
 
             if (factory != null)
             {
+                Logging.Log(Tags.AI, "_cruiser_StartedConstruction(): of factory: " + factory);
+
                 IPrioritisedTask taskToAdd = _taskFactory.CreateWaitForUnitConstructionTask(TaskPriority.Low, factory);
                 _tasks.Add(taskToAdd);
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI
@@ -32,6 +33,7 @@ namespace BattleCruisers.AI
 
         public void Add(IPrioritisedTask taskToAdd)
         {
+            Logging.Log(Tags.AI, "Add(): " + taskToAdd);
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
             bool wasEmpty = IsEmpty;
@@ -61,6 +63,7 @@ namespace BattleCruisers.AI
 
         public void Remove(IPrioritisedTask taskToRemove)
         {
+            Logging.Log(Tags.AI, "Remove(): " + taskToRemove);
             Assert.IsTrue(_tasks.Contains(taskToRemove));
 
             bool wasHighestPriorityTask = ReferenceEquals(taskToRemove, HighestPriorityTask);
