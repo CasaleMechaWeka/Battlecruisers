@@ -13,7 +13,16 @@ namespace BattleCruisers.Utils
 		
         public float Range(float minInclusive, float maxInclusive)
         {
+            Assert.IsTrue(minInclusive < maxInclusive);
             return Random.Range(minInclusive, maxInclusive);
+        }
+
+        public int Range(int minInclusive, int maxInclusive)
+        {
+            Assert.IsTrue(minInclusive < maxInclusive);
+
+            float randomFloat = Random.Range(minInclusive - 0.5f, maxInclusive + 0.5f);
+            return Mathf.RoundToInt(randomFloat);
         }
     }
 }

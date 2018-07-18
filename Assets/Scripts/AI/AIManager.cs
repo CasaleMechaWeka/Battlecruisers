@@ -20,9 +20,10 @@ namespace BattleCruisers.AI
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
-		private readonly IFactoryManagerFactory _factoryManagerFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
+		private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
+        private readonly IRandomGenerator _randomGenerator;
 
         public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer)
         {
@@ -39,6 +40,8 @@ namespace BattleCruisers.AI
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
 
+            _randomGenerator = new RandomGenerator();
+
         }
 
         public IArtificialIntelligence CreateAI(ILevelInfo levelInfo)
@@ -50,7 +53,7 @@ namespace BattleCruisers.AI
 
             new DroneConsumerFocusManager(new ResponsiveStrategy(), levelInfo.AICruiser);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer, _randomGenerator);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 

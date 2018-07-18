@@ -12,14 +12,16 @@ namespace BattleCruisers.AI.Tasks
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
         private readonly IDeferrer _deferrer;
+        private readonly IRandomGenerator _randomGenerator;
 
-        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
+        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer, IRandomGenerator randomGenerator)
         {
-            Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer, randomGenerator);
 
             _prefabFactory = prefabFactory;
             _cruiser = cruiser;
             _deferrer = deferrer;
+            _randomGenerator = randomGenerator;
         }
 
 		public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
@@ -30,7 +32,8 @@ namespace BattleCruisers.AI.Tasks
 
         public IPrioritisedTask CreateWaitForUnitConstructionTask(TaskPriority priority, IFactory factory)
         {
-            ITask waitForUnitConstructionTask = new WaitForUnitConstructionTask(factory);
+            int numOfUnitsToBuild = _randomGenerator.Range(minInclusive: 2, maxInclusive: 4);
+            ITask waitForUnitConstructionTask = new WaitForUnitConstructionTask(factory, numOfUnitsToBuild);
             return CreatePrioritisedTask(waitForUnitConstructionTask, priority);
         }
 
