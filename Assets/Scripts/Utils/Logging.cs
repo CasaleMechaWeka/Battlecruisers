@@ -43,6 +43,7 @@ namespace BattleCruisers.Utils
 
         // AI
 		public const string AI = "AI";
+		public const string AI_TASKS = "Tasks";
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
 
         // Drones
@@ -116,6 +117,8 @@ namespace BattleCruisers.Utils
             // FELIX
             tagsToActiveness.Add(Tags.AI, true);
             //tagsToActiveness.Add(Tags.AI, false);
+            tagsToActiveness.Add(Tags.AI_TASKS, true);
+            //tagsToActiveness.Add(Tags.AI_TASKS, false);
             tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
             // Drones

@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
 
@@ -27,6 +28,12 @@ namespace BattleCruisers.AI.Tasks
         {
             get
             {
+                Logging.Log(Tags.AI_TASKS, "WaitForUnitConstructionTask.get_FactoryCanproduceUnit");
+                Logging.Log(Tags.AI_TASKS, "!_factory.IsDestroyed: " + !_factory.IsDestroyed);
+                Logging.Log(Tags.AI_TASKS, "_factory.BuildableState == BuildableState.Completed: " + (_factory.BuildableState == BuildableState.Completed));
+                Logging.Log(Tags.AI_TASKS, "_factory.UnitWrapper != null: " + (_factory.UnitWrapper != null));
+                Logging.Log(Tags.AI_TASKS, "_factory.NumOfDrones != 0: " + (_factory.NumOfDrones != 0));
+
                 return
                     !_factory.IsDestroyed
                     && _factory.BuildableState == BuildableState.Completed
@@ -56,6 +63,8 @@ namespace BattleCruisers.AI.Tasks
 
                 haveStartedTask = true;
             }
+
+            Logging.Log(Tags.AI_TASKS, "WaitForConstructionTask.Start()  haveStartedTask: " + haveStartedTask + "  FactoryCanProduceUnit: " + FactoryCanProduceUnit);
 
             return haveStartedTask;
         }
