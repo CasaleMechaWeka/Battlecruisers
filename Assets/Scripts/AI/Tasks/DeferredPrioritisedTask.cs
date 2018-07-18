@@ -48,5 +48,10 @@ namespace BattleCruisers.AI.Tasks
         {
             _deferrer.Defer(() => _baseTask.Stop());
         }
+
+        public override string ToString()
+        {
+            return _baseTask.ToString();
+        }
     }
 }

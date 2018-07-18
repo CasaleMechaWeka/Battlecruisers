@@ -55,5 +55,10 @@ namespace BattleCruisers.AI.Tasks
 			_task.Completed -= _task_Completed;
 			_currentState = _currentState.OnCompleted();
 		}
+
+        public override string ToString()
+        {
+            return _task.ToString();
+        }
     }
 }
