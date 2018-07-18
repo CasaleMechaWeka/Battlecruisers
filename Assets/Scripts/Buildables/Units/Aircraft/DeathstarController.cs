@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -57,34 +52,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-
             _barrelWrapper.StartAttackingTargets();
-
-            // FELIX  Delete :D
-   //         // Barrel controller
-   //         Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-   //         ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
-
-   //         IBarrelControllerArgs args
-   //             = new BarrelControllerArgs(
-   //                 targetFilter,
-   //                 _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor(),
-   //                 _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
-   //                 _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-   //                 null,
-   //                 //_movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, ,
-   //                 _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
-   //                 _factoryProvider.AngleLimiterFactory.CreateDummyLimiter(),
-   //                 _factoryProvider,
-   //                 parent: this);
-
-   //         _barrelController.Initialise(args);
-			
-			//// Target detection
-			//ITargetFinder targetFinder = _targetsFactory.CreateRangedTargetFinder(_targetDetector, targetFilter);
-			//_targetProcessor = _targetsFactory.CreateTargetProcessor(targetFinder, new OffensiveBuildableTargetRanker());
-			//_targetProcessor.AddTargetConsumer(_barrelController);
-   //         _targetProcessor.StartProcessingTargets();
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
