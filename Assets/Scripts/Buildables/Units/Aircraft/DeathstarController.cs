@@ -128,7 +128,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController = PatrollingMovementController;
 		}
 
-		protected override void OnDestroyed()
+        protected override void OnDirectionChange()
+        {
+            // Do not switch direction, as this flips the invisible turret barrel 
+            // angle and means the laser doesn't work as well as it should :P
+        }
+
+        protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
             _barrelWrapper.DisposeManagedState();
