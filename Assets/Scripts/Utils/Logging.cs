@@ -41,7 +41,7 @@ namespace BattleCruisers.Utils
 		public const string PROGRESS_BARS = "ProgressBars";
 		public const string UI_MANAGER = "UIManager";
 
-        //AI
+        // AI
 		public const string AI = "AI";
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
 
