@@ -48,7 +48,7 @@ namespace BattleCruisers.Utils
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
 
         // Drones
-        public const string DRONES = "Drones";
+        public const string DRONE_MANAGER = "DroneManager";
 		public const string DRONE_CONSUMER_PROVIDER = "DroneConsumerProvider";
 
         // Other
@@ -128,7 +128,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
             // Drones
-            tagsToActiveness.Add(Tags.DRONES, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.DRONE_MANAGER, true);
+            //tagsToActiveness.Add(Tags.DRONE_MANAGER, false);
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Other
