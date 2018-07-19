@@ -43,9 +43,27 @@ namespace BattleCruisers.Tests.AI
             _task1.Received().Stop();
             _task2.Received().Start();
         }
-		#endregion ITaskList.HighestPriorityTaskChanged
 
-		#region ITask.Completed
+        [Test]
+        public void SameHighestPriorityTask_DoesNothing()
+        {
+            // Task started
+            _tasks.HighestPriorityTask.Returns(_task1);
+            _tasks.HighestPriorityTaskChanged += Raise.EventWith(_tasks, EventArgs.Empty);
+
+            _task1.Received().Start();
+
+            // Task already the current task, so nothing happens
+            _task1.ClearReceivedCalls();
+            _tasks.HighestPriorityTaskChanged += Raise.EventWith(_tasks, EventArgs.Empty);
+
+            _task1.DidNotReceive().Start();
+            _task1.DidNotReceive().Stop();
+
+        }
+        #endregion ITaskList.HighestPriorityTaskChanged
+
+        #region ITask.Completed
         [Test]
         public void TaskCompleted_StartsNextTask()
         {

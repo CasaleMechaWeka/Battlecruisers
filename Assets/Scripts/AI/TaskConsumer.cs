@@ -20,6 +20,11 @@ namespace BattleCruisers.AI
             get { return _currentTask; }
             set
             {
+                if (ReferenceEquals(_currentTask, value))
+                {
+                    return;
+                }
+
                 if (_currentTask != null)
                 {
                     _currentTask.Stop();
