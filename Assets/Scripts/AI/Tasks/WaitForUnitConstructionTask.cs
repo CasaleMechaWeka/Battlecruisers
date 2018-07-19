@@ -28,11 +28,12 @@ namespace BattleCruisers.AI.Tasks
         {
             get
             {
-                Logging.Log(Tags.AI_TASKS, "WaitForUnitConstructionTask.get_FactoryCanproduceUnit");
-                Logging.Log(Tags.AI_TASKS, "!_factory.IsDestroyed: " + !_factory.IsDestroyed);
-                Logging.Log(Tags.AI_TASKS, "_factory.BuildableState == BuildableState.Completed: " + (_factory.BuildableState == BuildableState.Completed));
-                Logging.Log(Tags.AI_TASKS, "_factory.UnitWrapper != null: " + (_factory.UnitWrapper != null));
-                Logging.Log(Tags.AI_TASKS, "_factory.NumOfDrones != 0: " + (_factory.NumOfDrones != 0));
+                // FELIX
+                //Logging.Log(Tags.AI_TASKS, "WaitForUnitConstructionTask.get_FactoryCanproduceUnit");
+                //Logging.Log(Tags.AI_TASKS, "!_factory.IsDestroyed: " + !_factory.IsDestroyed);
+                //Logging.Log(Tags.AI_TASKS, "_factory.BuildableState == BuildableState.Completed: " + (_factory.BuildableState == BuildableState.Completed));
+                //Logging.Log(Tags.AI_TASKS, "_factory.UnitWrapper != null: " + (_factory.UnitWrapper != null));
+                //Logging.Log(Tags.AI_TASKS, "_factory.NumOfDrones != 0: " + (_factory.NumOfDrones != 0));
 
                 return
                     !_factory.IsDestroyed
