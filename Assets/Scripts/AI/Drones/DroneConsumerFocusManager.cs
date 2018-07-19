@@ -90,13 +90,13 @@ namespace BattleCruisers.AI.Drones
 			
             if (_completedFactories.Any(SelectFactoryUsingDrones))
             {
-                IBuildable AffordableBuilding = GetNonFocusedAffordableBuilding();
+                IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
 
-                if (AffordableBuilding != null)
+                if (affordableBuilding != null)
                 {
-					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + AffordableBuilding);
+					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
      
-                    IDroneConsumer affordableDroneConsumer = AffordableBuilding.DroneConsumer;
+                    IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
 
                     // Try to upgrade: Idle => Active
                     if (affordableDroneConsumer.State == DroneConsumerState.Idle)
