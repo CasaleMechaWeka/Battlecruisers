@@ -44,5 +44,10 @@ namespace BattleCruisers.Data.Models.PrefabKeys
 		{
 			return PrefabPath.GetHashCode();
 		}
-	}
+
+        public override string ToString()
+        {
+            return base.ToString() + " " + _prefabName;
+        }
+    }
 }
