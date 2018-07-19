@@ -33,7 +33,7 @@ namespace BattleCruisers.AI
 
         public void Add(IPrioritisedTask taskToAdd)
         {
-            Logging.Log(Tags.AI, "TasList.Add(): " + taskToAdd);
+            Logging.Log(Tags.AI, "TaskList.Add(): " + taskToAdd);
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
             bool wasEmpty = IsEmpty;
