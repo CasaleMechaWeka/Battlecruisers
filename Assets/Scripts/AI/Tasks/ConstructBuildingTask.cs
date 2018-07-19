@@ -90,5 +90,10 @@ namespace BattleCruisers.AI.Tasks
                 Completed.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "  building to consruct: " + _buildingToConstruct;
+        }
     }
 }
