@@ -17,6 +17,7 @@ namespace BattleCruisers.Utils
 		public const string SHIPS = "Ships";
 
 		// Buildings
+		public const string BUILDABLE = "BUILDABLE";
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
 		public const string FACTORY = "Factory";
 
@@ -89,10 +90,15 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.SHIPS, false);
 
 			// Buildings
+            // FELIX
+			tagsToActiveness.Add(Tags.BUILDABLE, true);
+			//tagsToActiveness.Add(Tags.BUILDABLE, false);
 			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-			tagsToActiveness.Add(Tags.FACTORY, false);
+            // FELIX
+			tagsToActiveness.Add(Tags.FACTORY, true);
+			//tagsToActiveness.Add(Tags.FACTORY, false);
 
-			// Projectiles
+            // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
