@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +10,13 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.Drones
 {
     // FELIX  Use & test :)
-
-    /// <summary>
-    /// Completed factories are considered low priority if they have completed
-    /// the desired number of buildings.
-    /// 
-    /// Factory priority:
-    /// Under construction                      => High priority
-    /// Building desired number of units        => High priority
-    /// After building desired number of units  => Low priority
-    /// </summary>
     public class FactoriesMonitor : IFactoriesMonitor
     {
         private readonly ICruiserController _cruiser;
         private readonly IFactoryMonitorFactory _monitorFactory;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
-        public bool AreAllFactoriesLowPriority { get { return _completedFactories.All(factoryMonitor => factoryMonitor.HasFactoryBuiltDesiredNumOfUnits); } }
-        public bool AreAnyFactoriesCompleted { get { return _completedFactories.Count != 0; } }
+        public bool AreAnyFactoriesWronglyUsingDrones { get { return _completedFactories.Any(IsFactoryWronglyUsingDrones); } }
 
         public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory)
         {
@@ -68,6 +58,20 @@ namespace BattleCruisers.AI.Drones
         private IFactoryMonitor GetMonitor(IFactory factory)
         {
             return _completedFactories.FirstOrDefault(monitor => ReferenceEquals(monitor.Factory, factory));
+        }
+
+        /// <summary>
+        /// A factory is wrongly using drones if:
+        /// + It has completed building the desired number of units
+        /// + AND it is using drones
+        /// </summary>
+        /// FELIX  Remove to separate class, improves testability :)
+        private bool IsFactoryWronglyUsingDrones(IFactoryMonitor factoryMonitor)
+        {
+            return
+                factoryMonitor.HasFactoryBuiltDesiredNumOfUnits
+                && factoryMonitor.Factory.DroneConsumer != null
+                && factoryMonitor.Factory.DroneConsumer.State != DroneConsumerState.Idle;
         }
 
         public void DisposeManagedState()

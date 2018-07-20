@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.Drones
 {
     /// <summary>
+    /// FELIX  Update tests :)
     /// // FELIX  Update :P
     /// Manages which drone consumer should be in focus, thus having the most
     /// drones.
@@ -28,16 +29,21 @@ namespace BattleCruisers.AI.Drones
         private readonly IDroneFocusingStrategy _strategy;
         private readonly ICruiserController _aiCruiser;
         private readonly IDroneManager _droneManager;
+        private readonly IFactoriesMonitor _factoriesMonitor;
+        
+        // FELIX  Remove?
         private readonly IList<IFactory> _completedFactories;
+
         private readonly IList<IBuildable> _inProgressBuildings;
 
-        public DroneConsumerFocusManager(IDroneFocusingStrategy strategy, ICruiserController aiCruiser)
+        public DroneConsumerFocusManager(IDroneFocusingStrategy strategy, ICruiserController aiCruiser, IFactoriesMonitor factoriesMonitor)
         {
-            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager);
+            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, factoriesMonitor);
 
             _strategy = strategy;
             _aiCruiser = aiCruiser;
             _droneManager = _aiCruiser.DroneManager;
+            _factoriesMonitor = factoriesMonitor;
 
             _completedFactories = new List<IFactory>();
             _inProgressBuildings = new List<IBuildable>();
@@ -90,9 +96,9 @@ namespace BattleCruisers.AI.Drones
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
 			
             // FELIX  Use returns to avoid nesting :)
-
+            if (_factoriesMonitor.AreAnyFactoriesWronglyUsingDrones)
             // FELIX  If there are any low priority factories
-            if (_completedFactories.Any(SelectFactoryUsingDrones))
+            //if (_completedFactories.Any(SelectFactoryUsingDrones))
             {
                 IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
 
@@ -118,6 +124,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
+        // FELIX  Remove?
         private bool SelectFactoryUsingDrones(IFactory factory)
         {
             return 

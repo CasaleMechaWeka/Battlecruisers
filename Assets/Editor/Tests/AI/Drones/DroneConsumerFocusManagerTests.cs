@@ -28,7 +28,8 @@ namespace BattleCruisers.Tests.AI.Drones
 			_aiCruiser = Substitute.For<ICruiserController>();
             _aiCruiser.DroneManager.Returns(_droneManager);
 
-            new DroneConsumerFocusManager(_strategy, _aiCruiser);
+            // FELIX  Update tests :P
+            new DroneConsumerFocusManager(_strategy, _aiCruiser, null);
 
             _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
             _factory = Substitute.For<IFactory>();
