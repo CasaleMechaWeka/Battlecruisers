@@ -22,7 +22,8 @@ namespace BattleCruisers.AI.TaskProducers
             IPrefabFactory prefabFactory) 
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            _cruiser.StartedConstruction += _cruiser_StartedConstruction;
+            // FELIX  TEMP
+            //_cruiser.StartedConstruction += _cruiser_StartedConstruction;
         }
 
         private void _cruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
