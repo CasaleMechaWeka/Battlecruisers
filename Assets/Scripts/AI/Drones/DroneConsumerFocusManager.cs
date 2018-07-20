@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.Drones
 {
     /// <summary>
+    /// // FELIX  Update :P
     /// Manages which drone consumer should be in focus, thus having the most
     /// drones.
     /// 
@@ -89,6 +90,8 @@ namespace BattleCruisers.AI.Drones
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
 			
             // FELIX  Use returns to avoid nesting :)
+
+            // FELIX  If there are any low priority factories
             if (_completedFactories.Any(SelectFactoryUsingDrones))
             {
                 IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
@@ -154,6 +157,7 @@ namespace BattleCruisers.AI.Drones
         {
             _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
 
+            // FELIX  Edit during enumeration exception :P
             foreach (IFactory factory in _completedFactories)
             {
                 RemoveFactory(factory);
