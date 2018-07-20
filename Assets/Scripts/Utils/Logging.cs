@@ -125,7 +125,8 @@ namespace BattleCruisers.Utils
             //tagsToActiveness.Add(Tags.AI, false);
             tagsToActiveness.Add(Tags.AI_TASKS, true);
             //tagsToActiveness.Add(Tags.AI_TASKS, false);
-            tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
+            tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, true);
+            //tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
             // Drones
             // FELIX
