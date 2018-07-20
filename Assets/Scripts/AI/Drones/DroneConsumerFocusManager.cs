@@ -73,12 +73,29 @@ namespace BattleCruisers.AI.Drones
             IFactory factory = completedBuildable as IFactory;
             if (factory != null)
             {
+                factory.StartedBuildingUnit += Factory_StartedBuildingUnit1;
+
+                // FELIX  Remove?
                 Assert.IsFalse(_completedFactories.Contains(factory));
                 _completedFactories.Add(factory);
 
                 factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
+        }
+
+        /// <summary>
+        /// The first time a factory starts building a unit, toggle its drone focus
+        /// so it becomes the highest priority drone consumer.  This means it has 
+        /// higher priority than previously built factories.
+        /// </summary>
+        private void Factory_StartedBuildingUnit1(object sender, StartedConstructionEventArgs e)
+        {
+            IFactory factory = sender.Parse<IFactory>();
+            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit1;
+
+            Assert.IsNotNull(factory.DroneConsumer);
+            _droneManager.ToggleDroneConsumerFocus(factory.DroneConsumer);
         }
 
         private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
