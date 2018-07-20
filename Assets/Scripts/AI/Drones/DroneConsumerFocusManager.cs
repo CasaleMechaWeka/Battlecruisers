@@ -88,6 +88,7 @@ namespace BattleCruisers.AI.Drones
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
 			
+            // FELIX  Use returns to avoid nesting :)
             if (_completedFactories.Any(SelectFactoryUsingDrones))
             {
                 IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
