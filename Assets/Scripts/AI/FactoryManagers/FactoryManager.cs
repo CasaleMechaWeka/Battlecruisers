@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.FactoryManagers
 {
     /// <summary>
-    /// Monitors all factories for a unit category (air/naval).
+    /// Decides what units all factories should build.
     /// 
     /// This manager asks the injected IUnitChooser which unit a factory should
     /// build when that factory:
