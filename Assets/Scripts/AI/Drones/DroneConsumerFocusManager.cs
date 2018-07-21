@@ -70,6 +70,7 @@ namespace BattleCruisers.AI.Drones
 
             RemoveInProgressBuilding(completedBuildable);
 
+
             IFactory factory = completedBuildable as IFactory;
             if (factory != null)
             {
@@ -89,6 +90,7 @@ namespace BattleCruisers.AI.Drones
         /// so it becomes the highest priority drone consumer.  This means it has 
         /// higher priority than previously built factories.
         /// </summary>
+        /// FELIX  Rename
         private void Factory_StartedBuildingUnit1(object sender, StartedConstructionEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
