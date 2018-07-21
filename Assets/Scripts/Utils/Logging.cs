@@ -89,14 +89,10 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.AIRCRAFT, false);
 			tagsToActiveness.Add(Tags.SHIPS, false);
 
-			// Buildings
-            // FELIX
-			tagsToActiveness.Add(Tags.BUILDABLE, true);
-			//tagsToActiveness.Add(Tags.BUILDABLE, false);
-			tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-            // FELIX
-			tagsToActiveness.Add(Tags.FACTORY, true);
-			//tagsToActiveness.Add(Tags.FACTORY, false);
+            // Buildings
+            tagsToActiveness.Add(Tags.BUILDABLE, false);
+            tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
+            tagsToActiveness.Add(Tags.FACTORY, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
@@ -120,18 +116,12 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 
             // AI
-            // FELIX
-            tagsToActiveness.Add(Tags.AI, true);
-            //tagsToActiveness.Add(Tags.AI, false);
-            tagsToActiveness.Add(Tags.AI_TASKS, true);
-            //tagsToActiveness.Add(Tags.AI_TASKS, false);
-            tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, true);
-            //tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
+            tagsToActiveness.Add(Tags.AI, false);
+            tagsToActiveness.Add(Tags.AI_TASKS, false);
+            tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
             // Drones
-            // FELIX
-            tagsToActiveness.Add(Tags.DRONE_MANAGER, true);
-            //tagsToActiveness.Add(Tags.DRONE_MANAGER, false);
+            tagsToActiveness.Add(Tags.DRONE_MANAGER, false);
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Other
