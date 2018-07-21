@@ -9,6 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones
 {
+    // FELIX  Rename to InProgressBuildingMonitor (also interface) :)
     // FELIX   Test
     public class BuildingMonitor : IBuildingMonitor, IManagedDisposable
     {
