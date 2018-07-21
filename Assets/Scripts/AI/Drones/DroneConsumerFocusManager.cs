@@ -12,17 +12,17 @@ namespace BattleCruisers.AI.Drones
 {
     /// <summary>
     /// FELIX  Update tests :)
-    /// // FELIX  Update :P
     /// Manages which drone consumer should be in focus, thus having the most
     /// drones.
     /// 
     /// Ensures the drone consumers of factories that are producing units
     /// (completed factories) are never the highest priority drone
-    /// consumer, unless they are the only drone consumer.
-    /// 
-    /// This ensures that the AI does not pour all their drones into unit
-    /// production, while they are also trying to produce additional buildings
-    /// that may otherwise never complete.
+    /// consumer, unless they are:
+    /// 1. The only drone consumer
+    /// 2. Or, producing the desired number of units (usually 3ish).  This means
+    /// factories produce some units (otherwise they have no point :P) but stop 
+    /// hogging drones after having produced some units (so that other buildings
+    /// can be built).
     /// </summary>
     public class DroneConsumerFocusManager : IManagedDisposable
     {
@@ -30,10 +30,7 @@ namespace BattleCruisers.AI.Drones
         private readonly ICruiserController _aiCruiser;
         private readonly IDroneManager _droneManager;
         private readonly IFactoriesMonitor _factoriesMonitor;
-        
-        // FELIX  Remove?
         private readonly IList<IFactory> _completedFactories;
-
         private readonly IList<IBuildable> _inProgressBuildings;
 
         public DroneConsumerFocusManager(IDroneFocusingStrategy strategy, ICruiserController aiCruiser, IFactoriesMonitor factoriesMonitor)
@@ -67,16 +64,13 @@ namespace BattleCruisers.AI.Drones
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
         {
             IBuildable completedBuildable = sender.Parse<IBuildable>();
-
             RemoveInProgressBuilding(completedBuildable);
-
 
             IFactory factory = completedBuildable as IFactory;
             if (factory != null)
             {
-                factory.StartedBuildingUnit += Factory_StartedBuildingUnit1;
+                factory.StartedBuildingUnit += Factory_StartedBuildingFirstUnit;
 
-                // FELIX  Remove?
                 Assert.IsFalse(_completedFactories.Contains(factory));
                 _completedFactories.Add(factory);
 
@@ -90,11 +84,10 @@ namespace BattleCruisers.AI.Drones
         /// so it becomes the highest priority drone consumer.  This means it has 
         /// higher priority than previously built factories.
         /// </summary>
-        /// FELIX  Rename
-        private void Factory_StartedBuildingUnit1(object sender, StartedConstructionEventArgs e)
+        private void Factory_StartedBuildingFirstUnit(object sender, StartedConstructionEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
-            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit1;
+            factory.StartedBuildingUnit -= Factory_StartedBuildingFirstUnit;
 
             Assert.IsNotNull(factory.DroneConsumer);
             _droneManager.ToggleDroneConsumerFocus(factory.DroneConsumer);
@@ -113,43 +106,35 @@ namespace BattleCruisers.AI.Drones
         private void FocusOnNonFactoryDroneConsumer()
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
-			
-            // FELIX  Use returns to avoid nesting :)
-            if (_factoriesMonitor.AreAnyFactoriesWronglyUsingDrones)
-            // FELIX  If there are any low priority factories
-            //if (_completedFactories.Any(SelectFactoryUsingDrones))
+
+            if (!_factoriesMonitor.AreAnyFactoriesWronglyUsingDrones)
             {
-                IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
-
-                if (affordableBuilding != null)
-                {
-					Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
-     
-                    IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
-
-                    // Try to upgrade: Idle => Active
-                    if (affordableDroneConsumer.State == DroneConsumerState.Idle)
-                    {
-                        _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-					}
-
-					// Try to upgrade: Active => Focused
-                    if (affordableDroneConsumer.State == DroneConsumerState.Active
-                        && _strategy.ForceInProgressBuildingToFocused)
-					{
-						_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-					}
-                }
+                // No factories wrongly using drones, no need to reassign drones
+                return;
             }
-        }
 
-        // FELIX  Remove?
-        private bool SelectFactoryUsingDrones(IFactory factory)
-        {
-            return 
-                !factory.IsDestroyed
-                && factory.DroneConsumer != null
-                && factory.DroneConsumer.State != DroneConsumerState.Idle;
+            IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
+            if (affordableBuilding == null)
+            {
+                // No affordable buildings, so no buildings to assign wrongly used drones to
+                return;
+            }
+
+			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
+            IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
+
+            // Try to upgrade: Idle => Active
+            if (affordableDroneConsumer.State == DroneConsumerState.Idle)
+            {
+                _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+			}
+
+			// Try to upgrade: Active => Focused
+            if (affordableDroneConsumer.State == DroneConsumerState.Active
+                && _strategy.ForceInProgressBuildingToFocused)
+			{
+				_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+			}
         }
 
         private IBuildable GetNonFocusedAffordableBuilding()
@@ -170,7 +155,11 @@ namespace BattleCruisers.AI.Drones
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IFactory destroyedFactory = e.DestroyedTarget.Parse<IFactory>();
-            RemoveFactory(destroyedFactory);
+
+            Assert.IsTrue(_completedFactories.Contains(destroyedFactory));
+            _completedFactories.Remove(destroyedFactory);
+
+            UnsubscribeFromFactoryEvents(destroyedFactory);
         }
 
         private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
@@ -179,36 +168,40 @@ namespace BattleCruisers.AI.Drones
             RemoveInProgressBuilding(destroyedBuildable);
 		}
 
-        public void DisposeManagedState()
-        {
-            _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
-
-            // FELIX  Edit during enumeration exception :P
-            foreach (IFactory factory in _completedFactories)
-            {
-                RemoveFactory(factory);
-            }
-
-            foreach (IBuildable building in _inProgressBuildings)
-            {
-                RemoveInProgressBuilding(building);
-            }
-        }
-
-        private void RemoveFactory(IFactory factory)
-        {
-            Assert.IsTrue(_completedFactories.Contains(factory));
-            _completedFactories.Remove(factory);
-
-            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
-            factory.Destroyed -= Factory_Destroyed;
-        }
-		
         private void RemoveInProgressBuilding(IBuildable buildable)
         {
             Assert.IsTrue(_inProgressBuildings.Contains(buildable));
             _inProgressBuildings.Remove(buildable);
-            
+
+            UnsubsribeFromBuildingEvents(buildable);
+        }
+
+        // FELIX  Add test for dispose :)
+        public void DisposeManagedState()
+        {
+            _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
+
+            foreach (IFactory factory in _completedFactories)
+            {
+                UnsubscribeFromFactoryEvents(factory);
+            }
+            _completedFactories.Clear();
+
+            foreach (IBuildable building in _inProgressBuildings)
+            {
+                UnsubsribeFromBuildingEvents(building);
+            }
+            _inProgressBuildings.Clear();
+        }
+
+        private void UnsubscribeFromFactoryEvents(IFactory factory)
+        {
+            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
+            factory.Destroyed -= Factory_Destroyed;
+        }
+
+        private void UnsubsribeFromBuildingEvents(IBuildable buildable)
+        {
             buildable.CompletedBuildable -= Buildable_CompletedBuildable;
             buildable.Destroyed -= Buildable_Destroyed;
         }
