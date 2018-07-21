@@ -38,7 +38,6 @@ namespace BattleCruisers.AI
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
-            taskProducers.Add(_taskProducerFactory.CreatePostFactoryTaskProducer(tasks));
             
             ITaskConsumer taskConsumer = new TaskConsumer(tasks);
 
@@ -81,7 +80,6 @@ namespace BattleCruisers.AI
             }
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
-            taskProducers.Add(_taskProducerFactory.CreatePostFactoryTaskProducer(tasks));
 
             ITaskConsumer taskConsumer = new TaskConsumer(tasks);
 

@@ -6,7 +6,6 @@ namespace BattleCruisers.AI.TaskProducers
     {
         ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder);
 		ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks);
-        ITaskProducer CreatePostFactoryTaskProducer(ITaskList tasks);
 
         // Anti-<threat type> task producers
         ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder);
