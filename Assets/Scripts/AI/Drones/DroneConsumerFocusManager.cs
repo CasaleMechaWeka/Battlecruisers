@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones
@@ -31,42 +29,32 @@ namespace BattleCruisers.AI.Drones
         private readonly IDroneManager _droneManager;
         private readonly IFactoriesMonitor _factoriesMonitor;
         private readonly IList<IFactory> _completedFactories;
-        private readonly IList<IBuildable> _inProgressBuildings;
+        private readonly IBuildingMonitor _buildingMonitor;
 
-        public DroneConsumerFocusManager(IDroneFocusingStrategy strategy, ICruiserController aiCruiser, IFactoriesMonitor factoriesMonitor)
+        public DroneConsumerFocusManager(
+            IDroneFocusingStrategy strategy, 
+            ICruiserController aiCruiser, 
+            IFactoriesMonitor factoriesMonitor,
+            IBuildingMonitor buildingMonitor)
         {
-            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, factoriesMonitor);
+            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, factoriesMonitor, buildingMonitor);
 
             _strategy = strategy;
             _aiCruiser = aiCruiser;
             _droneManager = _aiCruiser.DroneManager;
             _factoriesMonitor = factoriesMonitor;
+            _buildingMonitor = buildingMonitor;
 
             _completedFactories = new List<IFactory>();
-            _inProgressBuildings = new List<IBuildable>();
 
             _aiCruiser.StartedConstruction += _aiCruiser_StartedConstruction;
+            _aiCruiser.BuildingCompleted += _aiCruiser_BuildingCompleted;
         }
 
-        private void _aiCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        private void _aiCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
         {
-            e.Buildable.CompletedBuildable += Buildable_CompletedBuildable;
-            e.Buildable.Destroyed += Buildable_Destroyed;
+            IFactory factory = e.Buildable as IFactory;
 
-            _inProgressBuildings.Add(e.Buildable);
-
-            if (_strategy.EvaluateWhenBuildingStarted)
-            {
-                FocusOnNonFactoryDroneConsumer();
-			}
-        }
-
-        private void Buildable_CompletedBuildable(object sender, EventArgs e)
-        {
-            IBuildable completedBuildable = sender.Parse<IBuildable>();
-            RemoveInProgressBuilding(completedBuildable);
-
-            IFactory factory = completedBuildable as IFactory;
             if (factory != null)
             {
                 factory.StartedBuildingUnit += Factory_StartedBuildingFirstUnit;
@@ -77,6 +65,14 @@ namespace BattleCruisers.AI.Drones
                 factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
+        }
+
+        private void _aiCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        {
+            if (_strategy.EvaluateWhenBuildingStarted)
+            {
+                FocusOnNonFactoryDroneConsumer();
+			}
         }
 
         /// <summary>
@@ -113,7 +109,7 @@ namespace BattleCruisers.AI.Drones
                 return;
             }
 
-            IBuildable affordableBuilding = GetNonFocusedAffordableBuilding();
+            IBuildable affordableBuilding = _buildingMonitor.GetNonFocusedAffordableBuilding();
             if (affordableBuilding == null)
             {
                 // No affordable buildings, so no buildings to assign wrongly used drones to
@@ -137,21 +133,6 @@ namespace BattleCruisers.AI.Drones
 			}
         }
 
-        private IBuildable GetNonFocusedAffordableBuilding()
-        {
-            IBuildable affordableBuilding = null;
-
-            if (_inProgressBuildings.Count != 0
-                && _inProgressBuildings.All(building => building.DroneConsumer.State != DroneConsumerState.Focused))
-            {
-                affordableBuilding
-				    = _inProgressBuildings
-						.FirstOrDefault(building => building.DroneConsumer.NumOfDronesRequired <= _droneManager.NumOfDrones);
-            }
-
-            return affordableBuilding;
-        }
-
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IFactory destroyedFactory = e.DestroyedTarget.Parse<IFactory>();
@@ -162,48 +143,23 @@ namespace BattleCruisers.AI.Drones
             UnsubscribeFromFactoryEvents(destroyedFactory);
         }
 
-        private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            IBuildable destroyedBuildable = e.DestroyedTarget.Parse<IBuildable>();
-            RemoveInProgressBuilding(destroyedBuildable);
-		}
-
-        private void RemoveInProgressBuilding(IBuildable buildable)
-        {
-            Assert.IsTrue(_inProgressBuildings.Contains(buildable));
-            _inProgressBuildings.Remove(buildable);
-
-            UnsubsribeFromBuildingEvents(buildable);
-        }
-
         // FELIX  Add test for dispose :)
         public void DisposeManagedState()
         {
             _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
+            _aiCruiser.BuildingCompleted -= _aiCruiser_BuildingCompleted;
 
             foreach (IFactory factory in _completedFactories)
             {
                 UnsubscribeFromFactoryEvents(factory);
             }
             _completedFactories.Clear();
-
-            foreach (IBuildable building in _inProgressBuildings)
-            {
-                UnsubsribeFromBuildingEvents(building);
-            }
-            _inProgressBuildings.Clear();
         }
 
         private void UnsubscribeFromFactoryEvents(IFactory factory)
         {
             factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
             factory.Destroyed -= Factory_Destroyed;
-        }
-
-        private void UnsubsribeFromBuildingEvents(IBuildable buildable)
-        {
-            buildable.CompletedBuildable -= Buildable_CompletedBuildable;
-            buildable.Destroyed -= Buildable_Destroyed;
         }
     }
 }

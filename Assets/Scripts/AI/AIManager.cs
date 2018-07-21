@@ -53,7 +53,8 @@ namespace BattleCruisers.AI
             new DroneConsumerFocusManager(
                 new ResponsiveStrategy(), 
                 levelInfo.AICruiser,
-                new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory));
+                new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory),
+                new BuildingMonitor(levelInfo.AICruiser));
 
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 

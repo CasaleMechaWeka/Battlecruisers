@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private IDroneFocusingStrategy _strategy;
         private ICruiserController _aiCruiser;
         private IDroneManager _droneManager;
+        private IFactoriesMonitor _factoriesMonitor;
         private IFactory _factory;
         private IBuilding _inProgressBuilding;
         private IDroneConsumer _factoryDroneConsumer, _inProgressBuildingDroneConsumer;
@@ -27,9 +28,10 @@ namespace BattleCruisers.Tests.AI.Drones
             _droneManager.NumOfDrones = 12;
 			_aiCruiser = Substitute.For<ICruiserController>();
             _aiCruiser.DroneManager.Returns(_droneManager);
+            _factoriesMonitor = Substitute.For<IFactoriesMonitor>();
 
             // FELIX  Update tests :P
-            new DroneConsumerFocusManager(_strategy, _aiCruiser, null);
+            new DroneConsumerFocusManager(_strategy, _aiCruiser, null, null);
 
             _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
             _factory = Substitute.For<IFactory>();
@@ -42,7 +44,18 @@ namespace BattleCruisers.Tests.AI.Drones
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
-		#region FocusOnNonFactoryDroneConsumer
+        #region FocusOnNonFactoryDroneConsumer
+        // FELIX
+        //[Test]
+        //public void FocusOnNonFactoryDroneConsumer_DroneConsumerIsNull_DoesNothing()
+        //{
+        //    _factory.DroneConsumer.Returns((IDroneConsumer)null);
+
+        //    TriggerFocusOnNonFactoryDroneConsumer();
+
+        //    _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
+        //}
+
         [Test]
         public void FocusOnNonFactoryDroneConsumer_DroneConsumerIsNull_DoesNothing()
         {
