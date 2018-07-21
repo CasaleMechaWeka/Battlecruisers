@@ -23,7 +23,6 @@ namespace BattleCruisers.AI
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
-        private readonly IRandomGenerator _randomGenerator;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
         public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer)
@@ -41,8 +40,7 @@ namespace BattleCruisers.AI
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
 
-            _randomGenerator = new RandomGenerator();
-            _factoryMonitorFactory = new FactoryMonitorFactory(_randomGenerator);
+            _factoryMonitorFactory = new FactoryMonitorFactory(new RandomGenerator());
         }
 
         public IArtificialIntelligence CreateAI(ILevelInfo levelInfo)
@@ -57,7 +55,7 @@ namespace BattleCruisers.AI
                 levelInfo.AICruiser,
                 new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory));
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer, _randomGenerator);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 

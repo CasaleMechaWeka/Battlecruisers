@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -12,17 +11,14 @@ namespace BattleCruisers.AI.Tasks
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
         private readonly IDeferrer _deferrer;
-        // FELIX  Remove
-        private readonly IRandomGenerator _randomGenerator;
 
-        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer, IRandomGenerator randomGenerator)
+        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer, randomGenerator);
+            Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
 
             _prefabFactory = prefabFactory;
             _cruiser = cruiser;
             _deferrer = deferrer;
-            _randomGenerator = randomGenerator;
         }
 
 		public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
