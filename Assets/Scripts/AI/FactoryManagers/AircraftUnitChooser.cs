@@ -72,10 +72,6 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private IBuildableWrapper<IUnit> ChooseDesiredUnit()
         {
-            // FELIX  TEMP
-            return _antiNavalPlane;
-
-
 			if (_airThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold
 				&& _navalThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)
 			{
