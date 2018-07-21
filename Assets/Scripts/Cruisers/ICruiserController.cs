@@ -16,6 +16,7 @@ namespace BattleCruisers.Cruisers
 		}
     }
 
+    // FELIX  Make subclasses for IUnit & IBuildable (otherwise IBuildingMonitor has IBuildables instead of IBuildings :/)
     public class StartedConstructionEventArgs : BuildableConstructionEventArgs
     {
         public StartedConstructionEventArgs(IBuildable buildable)
