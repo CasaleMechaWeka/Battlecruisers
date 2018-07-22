@@ -71,8 +71,8 @@ namespace BattleCruisers.Cruisers
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
 
-        public event EventHandler<StartedConstructionEventArgs> StartedConstruction;
-        public event EventHandler<CompletedConstructionEventArgs> BuildingCompleted;
+        public event EventHandler<StartedBuildingConstructionEventArgs> StartedConstruction;
+        public event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
@@ -158,7 +158,7 @@ namespace BattleCruisers.Cruisers
 
 			if (StartedConstruction != null)
 			{
-				StartedConstruction.Invoke(this, new StartedConstructionEventArgs(building));
+				StartedConstruction.Invoke(this, new StartedBuildingConstructionEventArgs(building));
 			}
 
 			return building;
@@ -179,7 +179,7 @@ namespace BattleCruisers.Cruisers
 
             if (BuildingCompleted != null)
             {
-                BuildingCompleted.Invoke(this, new CompletedConstructionEventArgs(completedBuilding));
+                BuildingCompleted.Invoke(this, new CompletedBuildingConstructionEventArgs(completedBuilding));
             }
         }
 

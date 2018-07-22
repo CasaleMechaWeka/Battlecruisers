@@ -33,7 +33,7 @@ namespace BattleCruisers.Cruisers.Fog
             _enemySpySatellites = new List<ISpySatelliteLauncher>();
         }
 
-        private void _friendlyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
+        private void _friendlyCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             // Look for stealth generators
             AddBuilding(_friendlyIStealthGenerators, e.Buildable, IStealthGenerator_Destroyed);
@@ -44,7 +44,7 @@ namespace BattleCruisers.Cruisers.Fog
             RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, IStealthGenerator_Destroyed);
 		}
 
-        private void _enemyCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
+        private void _enemyCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             // Look for spy satellite launchers
             AddBuilding(_enemySpySatellites, e.Buildable, SatelliteLauncher_Destroyed);
@@ -55,6 +55,7 @@ namespace BattleCruisers.Cruisers.Fog
             RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
         }
 
+        // FELIX  Don't need generic anymore?
         private void AddBuilding<T>(IList<T> buildings, IBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander) 
             where T : class, IBuilding
         {

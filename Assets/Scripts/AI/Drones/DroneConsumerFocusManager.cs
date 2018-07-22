@@ -48,7 +48,7 @@ namespace BattleCruisers.AI.Drones
             _aiCruiser.BuildingCompleted += _aiCruiser_BuildingCompleted;
         }
 
-        private void _aiCruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
+        private void _aiCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        private void _aiCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        private void _aiCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
         {
             if (_strategy.EvaluateWhenBuildingStarted)
             {
@@ -77,7 +77,7 @@ namespace BattleCruisers.AI.Drones
         /// so it becomes the highest priority drone consumer.  This means it has 
         /// higher priority than previously built factories.
         /// </summary>
-        private void Factory_StartedBuildingFirstUnit(object sender, StartedConstructionEventArgs e)
+        private void Factory_StartedBuildingFirstUnit(object sender, StartedUnitConstructionEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
             factory.StartedBuildingUnit -= Factory_StartedBuildingFirstUnit;
@@ -86,7 +86,7 @@ namespace BattleCruisers.AI.Drones
             _droneManager.ToggleDroneConsumerFocus(factory.DroneConsumer);
         }
 
-        private void Factory_StartedBuildingUnit(object sender, StartedConstructionEventArgs e)
+        private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Factory_StartedBuildingUnit()");
 

@@ -10,8 +10,9 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 {
     public class LastIncompleteBuildingStartedProvider : ISingleBuildableProvider
     {
-        // Sorted list of buildables, witht he most recently started
-        // buildable at the end.
+        // Sorted list of buildings, with the most recently started
+        // building at the end.
+        // FELIX  Use IBuilding instead of IBuildable :)
         private readonly IList<IBuildable> _incompleteBuildables;
 
         private IBuildable LastIncompleteBuildingStarted
@@ -32,12 +33,12 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             cruiser.BuildingCompleted += cruiser_BuildingCompleted;
         }
 
-        private void cruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        private void cruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
         {
             _incompleteBuildables.Add(e.Buildable);
         }
 
-        private void cruiser_BuildingCompleted(object sender, CompletedConstructionEventArgs e)
+        private void cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             _incompleteBuildables.Remove(e.Buildable);
         }

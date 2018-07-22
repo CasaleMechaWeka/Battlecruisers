@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
@@ -46,7 +47,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         [Test]
         public void MatchingFactoryBuilt_SetsUnit()
         {
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory));
+            StartConstructingBuliding(_navalFactory);
             Assert.IsNull(_navalFactory.UnitWrapper);
             _navalFactory.CompletedBuildable += Raise.Event();
             Assert.AreSame(_unit, _navalFactory.UnitWrapper);
@@ -55,7 +56,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         [Test]
         public void NonMatchingFactoryBuilt_DoesNotSetUnit()
         {
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_airFactory));
+            StartConstructingBuliding(_airFactory);
             Assert.IsNull(_airFactory.UnitWrapper);
 			_navalFactory.CompletedBuildable += Raise.Event();
 			Assert.IsNull(_airFactory.UnitWrapper);
@@ -65,12 +66,12 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 		public void NavalFactory_UnitCompleted_SetsUnit()
 		{
             // Factory completed
-			_friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory));
+            StartConstructingBuliding(_navalFactory);
             _navalFactory.CompletedBuildable += Raise.Event();
 			Assert.AreNotSame(_unit2, _navalFactory.UnitWrapper);
 
             // Unit completed
-            _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new CompletedConstructionEventArgs(_unit.Buildable));
+            _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new CompletedUnitConstructionEventArgs(_unit.Buildable));
 			Assert.AreSame(_unit2, _navalFactory.UnitWrapper);
 		}
 
@@ -78,9 +79,9 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         public void ChosenUnitChanged_SetsUnit_ForCompletedAndInactiveFactories()
         {
             // Need to start buliding factories for manager to keep track of them
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory));
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_navalFactory2));
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedConstructionEventArgs(_notCompletedNavalFactory));
+            StartConstructingBuliding(_navalFactory);
+            StartConstructingBuliding(_navalFactory2);
+            StartConstructingBuliding(_notCompletedNavalFactory);
 
             _navalFactory.UnitWrapper = _unit;
             _navalFactory2.UnitWrapper = null;
@@ -97,6 +98,11 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 
             // Factory was inactive, but not yet completed.  So no unit assignment.
             Assert.IsNull(_notCompletedNavalFactory.UnitWrapper);
+        }
+
+        private void StartConstructingBuliding(IBuilding building)
+        {
+            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedBuildingConstructionEventArgs(building));
         }
     }
 }

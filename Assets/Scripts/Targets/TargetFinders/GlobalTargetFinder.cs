@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using System;
@@ -52,12 +53,12 @@ namespace BattleCruisers.Targets.TargetFinders
             InvokeTargetLostEvent(_enemyCruiser);
         }
 
-		private void _enemyCruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+		private void _enemyCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
 		{
-			IBuildable buildable = e.Buildable;
+			IBuilding building = e.Buildable;
 
-			buildable.BuildableProgress += Buildable_BuildableProgress;
-			buildable.Destroyed += Buildable_Destroyed;
+			building.BuildableProgress += Buildable_BuildableProgress;
+			building.Destroyed += Building_Destroyed;
 		}
 
 		private void Buildable_BuildableProgress(object sender, BuildProgressEventArgs e)
@@ -69,18 +70,18 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-		private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
+		private void Building_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			e.DestroyedTarget.Destroyed -= Buildable_Destroyed;
+			e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
-			IBuildable buildable = e.DestroyedTarget.Parse<IBuildable>();
+			IBuilding building = e.DestroyedTarget.Parse<IBuilding>();
 
             // Build progress NEVER decreases.  Otherwise there would be a subtle bug:
             // If build progresss went past 50%, but then below 50%
             // TargetLost will never be called for that target.
-			if (buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET)
+			if (building.BuildProgress >= BUILD_PROGRESS_CONSIDERED_TARGET)
 			{
-                InvokeTargetLostEvent(buildable);
+                InvokeTargetLostEvent(building);
 			}
 		}
 

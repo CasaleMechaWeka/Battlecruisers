@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Fog;
+using BattleCruisers.Tests.Utils;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -53,7 +54,7 @@ namespace BattleCruisers.Tests.Cruisers
         [Test]
 		public void RandomFriendlyBuildingBuilt_DoesNotUpdate()
 		{
-            _friendlyCruiser.BuildingCompleted += Raise.EventWith(_friendlyCruiser, new CompletedConstructionEventArgs(_randomBuilding));
+            _friendlyCruiser.CompleteConstructingBuliding(_randomBuilding);
             _fog.DidNotReceiveWithAnyArgs().UpdateIsEnabled(numOfFriendlyStealthGenerators: -99, numOfEnemySpySatellites: -99);
 		}
 		#endregion Friendly cruiser building completed
@@ -91,7 +92,7 @@ namespace BattleCruisers.Tests.Cruisers
 		[Test]
 		public void RandomEnemyBuildingBuilt_DoesNotUpdate()
 		{
-			_enemyCruiser.BuildingCompleted += Raise.EventWith(_enemyCruiser, new CompletedConstructionEventArgs(_randomBuilding));
+            _enemyCruiser.CompleteConstructingBuliding(_randomBuilding);
             _fog.DidNotReceiveWithAnyArgs().UpdateIsEnabled(numOfFriendlyStealthGenerators: -99, numOfEnemySpySatellites: -99);
 		}
 		#endregion Enemy cruiser building completed
@@ -132,7 +133,7 @@ namespace BattleCruisers.Tests.Cruisers
 
         private void BuildStealthGenerator()
         {
-            _friendlyCruiser.BuildingCompleted += Raise.EventWith(_friendlyCruiser, new CompletedConstructionEventArgs(_stealthGenerator));
+            _friendlyCruiser.CompleteConstructingBuliding(_stealthGenerator);
         }
 
         private void DestroyStealthGenerator()
@@ -142,7 +143,7 @@ namespace BattleCruisers.Tests.Cruisers
 
 		private void BuildSpySatellite()
 		{
-			_enemyCruiser.BuildingCompleted += Raise.EventWith(_enemyCruiser, new CompletedConstructionEventArgs(_satelliteLauncher));
+            _enemyCruiser.CompleteConstructingBuliding(_satelliteLauncher);
 		}
 
         private void DestroySpySatellite()

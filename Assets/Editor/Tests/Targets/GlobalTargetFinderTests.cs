@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Tests.Utils;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -10,7 +12,7 @@ namespace BattleCruisers.Tests.Targets
 	{
 		private ITargetFinder _targetFinder;
 		private ICruiser _enemyCruiser;
-		private IBuildable _target;
+		private IBuilding _target;
 		private ITarget _expectedTargetFound, _expectedTargetLost;
 		private int _targetFoundEmittedCount, _targetLostEmittedCount;
 
@@ -18,7 +20,7 @@ namespace BattleCruisers.Tests.Targets
 		public void TestSetup()
 		{
 			_enemyCruiser = Substitute.For<ICruiser>();
-			_target = Substitute.For<IBuildable>();
+			_target = Substitute.For<IBuilding>();
 
 			_targetFinder = new GlobalTargetFinder(_enemyCruiser);
 
@@ -44,7 +46,7 @@ namespace BattleCruisers.Tests.Targets
 
 			_expectedTargetFound = _target;
 
-			_enemyCruiser.StartedConstruction += Raise.EventWith(_enemyCruiser, new StartedConstructionEventArgs(_target));
+            _enemyCruiser.StartConstructingBuilding(_target);
 			_target.BuildProgress.Returns(0.5f);
 			_target.BuildableProgress += Raise.EventWith(_target, new BuildProgressEventArgs(_target));
 
@@ -68,7 +70,7 @@ namespace BattleCruisers.Tests.Targets
 		{
             Cruiser_EmitsTargetFound();
 
-            _enemyCruiser.StartedConstruction += Raise.EventWith(_enemyCruiser, new StartedConstructionEventArgs(_target));
+            _enemyCruiser.StartConstructingBuilding(_target);
 			_target.BuildProgress.Returns(0.1f);
 
 			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));

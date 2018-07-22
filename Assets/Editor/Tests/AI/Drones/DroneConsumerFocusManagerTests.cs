@@ -69,7 +69,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenBuildingStarted.Returns(true);
 
-            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(buildable: null));
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
 
             _focusHelper.Received().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenBuildingStarted.Returns(false);
 
-            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(buildable: null));
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
 
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
@@ -147,12 +147,12 @@ namespace BattleCruisers.Tests.AI.Drones
 
         private void BuildFactory()
         {
-            _aiCruiser.BuildingCompleted += Raise.EventWith(new CompletedConstructionEventArgs(_factory));
+            _aiCruiser.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
         }
 
         private void BuildUnit()
         {
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
+            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedUnitConstructionEventArgs(unit: null));
         }
     }
 }

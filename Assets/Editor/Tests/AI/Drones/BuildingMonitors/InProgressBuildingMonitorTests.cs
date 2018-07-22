@@ -65,12 +65,12 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
 
         private void StartConstructingBuilding(IBuilding building)
         {
-            _cruiser.StartedConstruction += Raise.EventWith(new StartedConstructionEventArgs(building));
+            _cruiser.StartedConstruction += Raise.EventWith(new StartedBuildingConstructionEventArgs(building));
         }
 
         private void CompleteBuliding(IBuilding building)
         {
-            building.CompletedBuildable += Raise.EventWith(new CompletedConstructionEventArgs(building));
+            building.CompletedBuildable += Raise.EventWith(new CompletedBuildingConstructionEventArgs(building));
         }
 
         private void DestroyBuilding(IBuilding building)

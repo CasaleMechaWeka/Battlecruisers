@@ -26,7 +26,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
             _cruiser.StartedConstruction += _cruiser_StartedConstruction;
         }
 
-        private void _cruiser_StartedConstruction(object sender, StartedConstructionEventArgs e)
+        private void _cruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
         {
             e.Buildable.CompletedBuildable += Buildable_CompletedBuildable;
             e.Buildable.Destroyed += Buildable_Destroyed;

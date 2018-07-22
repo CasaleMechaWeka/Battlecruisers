@@ -18,8 +18,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
-		public event EventHandler<StartedConstructionEventArgs> StartedBuildingUnit;
-        public event EventHandler<CompletedConstructionEventArgs> CompletedBuildingUnit;
+		public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
+        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         #region Properties
         private IBuildableWrapper<IUnit> _unitWrapper;
@@ -150,7 +150,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             if (StartedBuildingUnit != null)
             {
-                StartedBuildingUnit.Invoke(this, new StartedConstructionEventArgs(unit));
+                StartedBuildingUnit.Invoke(this, new StartedUnitConstructionEventArgs(unit));
             }
 		}
 
@@ -158,7 +158,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (CompletedBuildingUnit != null)
 			{
-				CompletedBuildingUnit.Invoke(this, new CompletedConstructionEventArgs(_unitUnderConstruction));
+				CompletedBuildingUnit.Invoke(this, new CompletedUnitConstructionEventArgs(_unitUnderConstruction));
 			}
 
             CleanUpUnitUnderConstruction();

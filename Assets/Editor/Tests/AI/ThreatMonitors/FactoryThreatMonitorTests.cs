@@ -59,21 +59,21 @@ namespace BattleCruisers.Tests.AI
         [Test]
         public void StartedConstruction_NonFactoryBuilding_DoesNotEvaluate()
         {
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonFactoryBuilding));
+            StartConstructingBuilding(_nonFactoryBuilding);
             _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(value: 72);
         }
 
         [Test]
         public void StartedConstruction_FactoryBuilding_WrongUnitCategory_DoesNotEvaluate()
         {
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_nonThreateningFactory));
+            StartConstructingBuilding(_nonThreateningFactory);
             _threatEvaluator.DidNotReceiveWithAnyArgs().FindThreatLevel(value: 97);
         }
 
         [Test]
         public void StartedConstruction_FactoryBuilding_RightUnitCategory_Evaluates()
         {
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+            StartConstructingBuilding(_threateningFactory);
             _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
         }
         #endregion ICruiserController.StartedConstruction
@@ -102,11 +102,11 @@ namespace BattleCruisers.Tests.AI
         public void NumOfDrones_FromMultipleFactoriesIsConsidered()
         {
 			// Factory 1
-			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+            StartConstructingBuilding(_threateningFactory);
 			_threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
 
-			// Factory 2
-			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory2));
+            // Factory 2
+            StartConstructingBuilding(_threateningFactory2);
             _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones + _threateningFactory2.NumOfDrones);
         }
 
@@ -116,7 +116,7 @@ namespace BattleCruisers.Tests.AI
 			Assert.AreEqual(0, _numOfEventsEmitted);
 
             _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(ThreatLevel.High);
-			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+            StartConstructingBuilding(_threateningFactory);
 
             Assert.AreEqual(1, _numOfEventsEmitted);
         }
@@ -127,9 +127,15 @@ namespace BattleCruisers.Tests.AI
 			Assert.AreEqual(0, _numOfEventsEmitted);
 
             _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(_initialThreatLevel);
-			_cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedConstructionEventArgs(_threateningFactory));
+            StartConstructingBuilding(_threateningFactory);
 
 			Assert.AreEqual(0, _numOfEventsEmitted);
 		}
+
+        // FELIX  Test extension method :/  Use extension method everywhere :P
+        private void StartConstructingBuilding(IBuilding building)
+        {
+            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(building));
+        }
     }
 }
