@@ -80,6 +80,7 @@ namespace BattleCruisers.AI.Drones
         /// so it becomes the highest priority drone consumer.  This means it has 
         /// higher priority than previously built factories.
         /// </summary>
+        /// FELIX  Test!
         private void Factory_StartedBuildingFirstUnit(object sender, StartedConstructionEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
