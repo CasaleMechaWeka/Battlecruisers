@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.Drones.BuildingMonitors;
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
@@ -15,7 +14,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private IBuildingProvider _provider;
         private IDroneManager _droneManager;
         private IInProgressBuildingMonitor _buildingMonitor;
-        private IList<IBuildable> _inProgressBuildings;
+        private IList<IBuilding> _inProgressBuildings;
         private IBuilding _building;
         private IDroneConsumer _buildingDroneConsumer;
 
@@ -28,8 +27,8 @@ namespace BattleCruisers.Tests.AI.Drones
 
             _provider = new AffordableInProgressNonFocusedProvider(_droneManager, _buildingMonitor);
 
-            _inProgressBuildings = new List<IBuildable>();
-            ReadOnlyCollection<IBuildable> readonlyInProgressBuildings = new ReadOnlyCollection<IBuildable>(_inProgressBuildings);
+            _inProgressBuildings = new List<IBuilding>();
+            ReadOnlyCollection<IBuilding> readonlyInProgressBuildings = new ReadOnlyCollection<IBuilding>(_inProgressBuildings);
             _buildingMonitor.InProgressBuildings.Returns(readonlyInProgressBuildings);
 
             _building = Substitute.For<IBuilding>();
