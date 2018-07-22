@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using System;
@@ -11,17 +12,17 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
     public class InProgressBuildingMonitor : IInProgressBuildingMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
-        private readonly IList<IBuildable> _inProgressBuildings;
+        private readonly IList<IBuilding> _inProgressBuildings;
 
-        public ReadOnlyCollection<IBuildable> InProgressBuildings { get; private set; }
+        public ReadOnlyCollection<IBuilding> InProgressBuildings { get; private set; }
 
         public InProgressBuildingMonitor(ICruiserController cruiser)
         {
             Helper.AssertIsNotNull(cruiser, cruiser.DroneManager);
 
             _cruiser = cruiser;
-            _inProgressBuildings = new List<IBuildable>();
-            InProgressBuildings = new ReadOnlyCollection<IBuildable>(_inProgressBuildings);
+            _inProgressBuildings = new List<IBuilding>();
+            InProgressBuildings = new ReadOnlyCollection<IBuilding>(_inProgressBuildings);
 
             _cruiser.BuildingStarted += _cruiser_StartedConstruction;
         }
@@ -36,39 +37,39 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
         {
-            IBuildable completedBuildable = sender.Parse<IBuildable>();
-            RemoveInProgressBuilding(completedBuildable);
+            IBuilding completedBuilding = sender.Parse<IBuilding>();
+            RemoveInProgressBuilding(completedBuilding);
         }
 
         private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {
-            IBuildable destroyedBuildable = e.DestroyedTarget.Parse<IBuildable>();
+            IBuilding destroyedBuildable = e.DestroyedTarget.Parse<IBuilding>();
             RemoveInProgressBuilding(destroyedBuildable);
         }
 
-        private void RemoveInProgressBuilding(IBuildable buildable)
+        private void RemoveInProgressBuilding(IBuilding building)
         {
-            Assert.IsTrue(_inProgressBuildings.Contains(buildable));
-            _inProgressBuildings.Remove(buildable);
+            Assert.IsTrue(_inProgressBuildings.Contains(building));
+            _inProgressBuildings.Remove(building);
 
-            UnsubsribeFromBuildingEvents(buildable);
+            UnsubsribeFromBuildingEvents(building);
         }
 
         public void DisposeManagedState()
         {
             _cruiser.BuildingStarted -= _cruiser_StartedConstruction;
 
-            foreach (IBuildable building in _inProgressBuildings)
+            foreach (IBuilding building in _inProgressBuildings)
             {
                 UnsubsribeFromBuildingEvents(building);
             }
             _inProgressBuildings.Clear();
         }
 
-        private void UnsubsribeFromBuildingEvents(IBuildable buildable)
+        private void UnsubsribeFromBuildingEvents(IBuilding building)
         {
-            buildable.CompletedBuildable -= Buildable_CompletedBuildable;
-            buildable.Destroyed -= Buildable_Destroyed;
+            building.CompletedBuildable -= Buildable_CompletedBuildable;
+            building.Destroyed -= Buildable_Destroyed;
         }
     }
 }

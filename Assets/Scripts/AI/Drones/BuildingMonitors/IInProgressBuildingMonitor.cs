@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables.Buildings;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public interface IInProgressBuildingMonitor
     {
-        // FELIX IBuilding!  Once event args have changed :D
-        ReadOnlyCollection<IBuildable> InProgressBuildings { get; }
+        ReadOnlyCollection<IBuilding> InProgressBuildings { get; }
     }
 }
