@@ -100,6 +100,7 @@ namespace BattleCruisers.AI.Drones
 			}
         }
 
+        // FELIX  Extract to other class? => Yes!!!
         private void FocusOnNonFactoryDroneConsumer()
         {
 			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
