@@ -55,7 +55,6 @@ namespace BattleCruisers.Cruisers.Fog
             RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
         }
 
-        // FELIX  Don't need generic anymore?
         private void AddBuilding<T>(IList<T> buildings, IBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander) 
             where T : class, IBuilding
         {
