@@ -28,7 +28,7 @@ namespace BattleCruisers.Movement.Deciders
         private readonly IShip _ship;
         private readonly ITargetsFactory _targetsFactory;
         private readonly ITargetRangeHelper _rangeHelper;
-        private readonly IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly IHighestPriorityTargetProvider _highPriorityTarget;
         private readonly ITargetProvider _highestPriorityTargetProvider;
         private readonly ITargetConsumer _highestPriorityTargetConsumer;
@@ -63,16 +63,16 @@ namespace BattleCruisers.Movement.Deciders
             DecideMovement();
         }
 
-        private IBroadCastingTargetProvider SetupBlockingEnemyDetection(ITargetDetector enemyDetector)
+        private IBroadcastingTargetProvider SetupBlockingEnemyDetection(ITargetDetector enemyDetector)
         {
-            IBroadCastingTargetProvider blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, _ship);
+            IBroadcastingTargetProvider blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, _ship);
             blockingEnemyProvider.TargetChanged += OnTargetChanged;
             return blockingEnemyProvider;
         }
 
-        private IBroadCastingTargetProvider SetupBlockingFriendDetection(ITargetDetector friendDetector)
+        private IBroadcastingTargetProvider SetupBlockingFriendDetection(ITargetDetector friendDetector)
         {
-            IBroadCastingTargetProvider blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, _ship);
+            IBroadcastingTargetProvider blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, _ship);
             blockingFriendlyProvider.TargetChanged += OnTargetChanged;
             return blockingFriendlyProvider;
         }

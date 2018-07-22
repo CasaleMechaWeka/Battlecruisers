@@ -3,7 +3,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
-    public abstract class BroadcastingTargetProvider : IBroadCastingTargetProvider
+    public abstract class BroadcastingTargetProvider : IBroadcastingTargetProvider
     {
         private ITarget _target;
         public ITarget Target 

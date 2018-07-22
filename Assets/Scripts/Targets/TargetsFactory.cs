@@ -115,12 +115,12 @@ namespace BattleCruisers.Targets
             return new StaticTargetProvider(target);
 		}
 
-        public IBroadCastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
+        public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {
             return new ShipBlockingEnemyProvider(this, enemyDetector, parentUnit);
         }
 
-        public IBroadCastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
+        public IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
         {
             return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
         }

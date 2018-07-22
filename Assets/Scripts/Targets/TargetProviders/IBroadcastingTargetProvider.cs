@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Targets.TargetProviders
 {
-    public interface IBroadCastingTargetProvider : ITargetProvider
+    public interface IBroadcastingTargetProvider : ITargetProvider
     {
         event EventHandler TargetChanged;
     }

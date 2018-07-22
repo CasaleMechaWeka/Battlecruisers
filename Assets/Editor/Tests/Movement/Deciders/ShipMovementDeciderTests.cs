@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Movement.Deciders
         private IShip _ship;
         private ITargetsFactory _targetsFactory;
         private ITargetRangeHelper _rangeHelper;
-        private IBroadCastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private IHighestPriorityTargetProvider _highPriorityTarget;
         private ITargetProvider _highestPriorityTargetProvider;
         private ITargetConsumer _highestPriorityTargetConsumer;
@@ -50,10 +50,10 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _rangeHelper = Substitute.For<ITargetRangeHelper>();
             _targetsFactory.CreateShipRangeHelper(_ship).Returns(_rangeHelper);
 
-            _blockingEnemyProvider = Substitute.For<IBroadCastingTargetProvider>();
+            _blockingEnemyProvider = Substitute.For<IBroadcastingTargetProvider>();
             _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, _ship).Returns(_blockingEnemyProvider);
 
-            _blockingFriendlyProvider = Substitute.For<IBroadCastingTargetProvider>();
+            _blockingFriendlyProvider = Substitute.For<IBroadcastingTargetProvider>();
             _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, _ship).Returns(_blockingFriendlyProvider);
 
             ITargetRanker shipRanker = Substitute.For<ITargetRanker>();
