@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             }
 
             _rotationMovementController.AdjustRotation(limitedDesiredAngle);
-            Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target, but adjusted barrel rotation :)  Desired: " + limitedDesiredAngle + "  actual: " + _barrelController.Transform.rotation.eulerAngles.z);
+            Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target, but adjusted barrel rotation :)");
             return new BarrelAdjustmentResult(isOnTarget: false);
         }
     }
