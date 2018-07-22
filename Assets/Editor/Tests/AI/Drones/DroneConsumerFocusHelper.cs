@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.Drones
 
         private IDroneManager _droneManager;
         private IFactoriesMonitor _factoriesMonitor;
-        private IBuildingMonitor _buildingMonitor;
+        private IBuildingProvider _buildingProvider;
         private IBuilding _inProgressBuilding;
         private IDroneConsumer _inProgressBuildingDroneConsumer;
 
@@ -27,9 +27,9 @@ namespace BattleCruisers.Tests.AI.Drones
             _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();
             _inProgressBuilding.DroneConsumer.Returns(_inProgressBuildingDroneConsumer);
 
-            _buildingMonitor = Substitute.For<IBuildingMonitor>();
+            _buildingProvider = Substitute.For<IBuildingProvider>();
 
-            _focusHelper = new DroneConsumerFocusHelper(_droneManager, _factoriesMonitor, _buildingMonitor);
+            _focusHelper = new DroneConsumerFocusHelper(_droneManager, _factoriesMonitor, _buildingProvider);
 		}
 
         [Test]
@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.AI.Drones
         public void FocusOnNonFactoryDroneConsumer_NoAffordableNonFocusedBuildings_DoesNothing()
         {
             _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns((IBuildable)null);
+            _buildingProvider.Building.Returns((IBuildable)null);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: false);
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.AI.Drones
         public void FocusOnNonFactoryDroneConsumer_GoesActive()
         {
             _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns(_inProgressBuilding);
+            _buildingProvider.Building.Returns(_inProgressBuilding);
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: false);
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tests.AI.Drones
 		public void FocusOnNonFactoryDroneConsumer_GoesFocused()
 		{
             _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns(_inProgressBuilding);
+            _buildingProvider.Building.Returns(_inProgressBuilding);
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Active);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: true);

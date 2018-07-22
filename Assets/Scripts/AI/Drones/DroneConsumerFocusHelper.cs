@@ -8,15 +8,15 @@ namespace BattleCruisers.AI.Drones
     {
         private readonly IDroneManager _droneManager;
         private readonly IFactoriesMonitor _factoriesMonitor;
-        private readonly IBuildingMonitor _buildingMonitor;
+        private readonly IBuildingProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public DroneConsumerFocusHelper(IDroneManager droneManager, IFactoriesMonitor factoriesMonitor, IBuildingMonitor buildingMonitor)
+        public DroneConsumerFocusHelper(IDroneManager droneManager, IFactoriesMonitor factoriesMonitor, IBuildingProvider affordableInProgressNonFocusedBuildingProvider)
         {
-            Helper.AssertIsNotNull(droneManager, factoriesMonitor, buildingMonitor);
+            Helper.AssertIsNotNull(droneManager, factoriesMonitor, affordableInProgressNonFocusedBuildingProvider);
 
             _droneManager = droneManager;
             _factoriesMonitor = factoriesMonitor;
-            _buildingMonitor = buildingMonitor;
+            _affordableInProgressNonFocusedBuildingProvider = affordableInProgressNonFocusedBuildingProvider;
         }
 
         public void FocusOnNonFactoryDroneConsumer(bool forceInProgressBuildingToFocused)
@@ -29,7 +29,7 @@ namespace BattleCruisers.AI.Drones
                 return;
             }
 
-            IBuildable affordableBuilding = _buildingMonitor.GetNonFocusedAffordableBuilding();
+            IBuildable affordableBuilding = _affordableInProgressNonFocusedBuildingProvider.Building;
             if (affordableBuilding == null)
             {
                 // No affordable buildings, so no buildings to assign wrongly used drones to
