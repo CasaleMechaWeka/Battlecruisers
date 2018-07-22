@@ -47,7 +47,8 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenUnitStarted.Returns(true);
 
-            FactoryStartBuildingUnit();
+            BuildFactory();
+            BuildUnit();
 
             _focusHelper.Received().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
@@ -57,7 +58,8 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenUnitStarted.Returns(false);
 
-            FactoryStartBuildingUnit();
+            BuildFactory();
+            BuildUnit();
 
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
@@ -89,7 +91,8 @@ namespace BattleCruisers.Tests.AI.Drones
         [Test]
         public void Factory_StartedUnitConstruction_FirstUnit_Focuses()
         {
-            FactoryStartBuildingUnit();
+            BuildFactory();
+            BuildUnit();
             _droneManager.Received().ToggleDroneConsumerFocus(_factoryDroneConsumer);
         }
 
@@ -97,12 +100,13 @@ namespace BattleCruisers.Tests.AI.Drones
         public void Factory_StartedUnitConstruction_NotFirstUnit_DoesNotFocus()
         {
             // First unit, focuses
-            FactoryStartBuildingUnit();
+            BuildFactory();
+            BuildUnit();
             _droneManager.Received().ToggleDroneConsumerFocus(_factoryDroneConsumer);
 
             // Second unit, does not focus
             _droneManager.ClearReceivedCalls();
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
+            BuildUnit();
             _droneManager.DidNotReceive().ToggleDroneConsumerFocus(_factoryDroneConsumer);
         }
         #endregion Factory first unit
@@ -115,8 +119,7 @@ namespace BattleCruisers.Tests.AI.Drones
             _factory.Destroyed += Raise.EventWith(new DestroyedEventArgs(_factory));
 
             // Build unit for destroyed factory, should no longer trigger focus
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
-
+            BuildUnit();
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
 
@@ -129,33 +132,29 @@ namespace BattleCruisers.Tests.AI.Drones
 
             // Factory started construction ignored
             _strategy.EvaluateWhenUnitStarted.Returns(true);
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
+            BuildUnit();
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
             _droneManager.DidNotReceive().ToggleDroneConsumerFocus(_factoryDroneConsumer);
 
             // Cruiser started construction ignored
             _strategy.EvaluateWhenBuildingStarted.Returns(true);
-            _aiCruiser.StartedConstruction += Raise.EventWith(new StartedConstructionEventArgs(buildable: null));
+            BuildUnit();
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
 
             // Cruiser completed construction ignored
             BuildFactory();
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
+            BuildUnit();
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
-        }
-
-        private void FactoryStartBuildingUnit()
-        {
-            BuildFactory();
-            // FELIX  Also create helper method?  More readable :P
-            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
         }
 
         private void BuildFactory()
         {
             _aiCruiser.BuildingCompleted += Raise.EventWith(new CompletedConstructionEventArgs(_factory));
-            // FELIX  Remove?
-            //_factory.CompletedBuildable += Raise.Event();
+        }
+
+        private void BuildUnit()
+        {
+            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
         }
     }
 }
