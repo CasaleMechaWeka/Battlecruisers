@@ -27,23 +27,20 @@ namespace BattleCruisers.AI.Drones
         private readonly IDroneFocusingStrategy _strategy;
         private readonly ICruiserController _aiCruiser;
         private readonly IDroneManager _droneManager;
-        private readonly IFactoriesMonitor _factoriesMonitor;
         private readonly IList<IFactory> _completedFactories;
-        private readonly IBuildingMonitor _buildingMonitor;
+        private readonly IDroneConsumerFocusHelper _focusHelper;
 
         public DroneConsumerFocusManager(
             IDroneFocusingStrategy strategy, 
             ICruiserController aiCruiser, 
-            IFactoriesMonitor factoriesMonitor,
-            IBuildingMonitor buildingMonitor)
+            IDroneConsumerFocusHelper focusHelper)
         {
-            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, factoriesMonitor, buildingMonitor);
+            Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, focusHelper);
 
             _strategy = strategy;
             _aiCruiser = aiCruiser;
             _droneManager = _aiCruiser.DroneManager;
-            _factoriesMonitor = factoriesMonitor;
-            _buildingMonitor = buildingMonitor;
+            _focusHelper = focusHelper;
 
             _completedFactories = new List<IFactory>();
 
@@ -71,8 +68,8 @@ namespace BattleCruisers.AI.Drones
         {
             if (_strategy.EvaluateWhenBuildingStarted)
             {
-                FocusOnNonFactoryDroneConsumer();
-			}
+                _focusHelper.FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
+            }
         }
 
         /// <summary>
@@ -96,42 +93,7 @@ namespace BattleCruisers.AI.Drones
 
             if (_strategy.EvaluateWhenUnitStarted)
             {
-                FocusOnNonFactoryDroneConsumer();
-			}
-        }
-
-        // FELIX  Extract to other class? => Yes!!!
-        private void FocusOnNonFactoryDroneConsumer()
-        {
-			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
-
-            if (!_factoriesMonitor.AreAnyFactoriesWronglyUsingDrones)
-            {
-                // No factories wrongly using drones, no need to reassign drones
-                return;
-            }
-
-            IBuildable affordableBuilding = _buildingMonitor.GetNonFocusedAffordableBuilding();
-            if (affordableBuilding == null)
-            {
-                // No affordable buildings, so no buildings to assign wrongly used drones to
-                return;
-            }
-
-			Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
-            IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
-
-            // Try to upgrade: Idle => Active
-            if (affordableDroneConsumer.State == DroneConsumerState.Idle)
-            {
-                _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
-			}
-
-			// Try to upgrade: Active => Focused
-            if (affordableDroneConsumer.State == DroneConsumerState.Active
-                && _strategy.ForceInProgressBuildingToFocused)
-			{
-				_droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
+                _focusHelper.FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
 			}
         }
 

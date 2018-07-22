@@ -17,9 +17,8 @@ namespace BattleCruisers.Tests.AI.Drones
         private IDroneFocusingStrategy _strategy;
         private ICruiserController _aiCruiser;
         private IDroneManager _droneManager;
-        private IFactoriesMonitor _factoriesMonitor;
-        private IBuildingMonitor _buildingMonitor;
-        
+        private IDroneConsumerFocusHelper _focusHelper;
+
         // FELIX  Unused?
         private IFactory _factory;
 
@@ -36,7 +35,7 @@ namespace BattleCruisers.Tests.AI.Drones
 			_aiCruiser = Substitute.For<ICruiserController>();
             _aiCruiser.DroneManager.Returns(_droneManager);
 
-            _factoriesMonitor = Substitute.For<IFactoriesMonitor>();
+            _focusHelper = Substitute.For<IDroneConsumerFocusHelper>();
 
             _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();
             // FELIX  Remove?
@@ -46,93 +45,32 @@ namespace BattleCruisers.Tests.AI.Drones
             _inProgressBuilding = Substitute.For<IBuilding>();
             _inProgressBuilding.DroneConsumer.Returns(_inProgressBuildingDroneConsumer);
 
-            _buildingMonitor = Substitute.For<IBuildingMonitor>();
-
-            _focusManager = new DroneConsumerFocusManager(_strategy, _aiCruiser, _factoriesMonitor, _buildingMonitor);
+            _focusManager = new DroneConsumerFocusManager(_strategy, _aiCruiser, _focusHelper);
 
             _factory = Substitute.For<IFactory>();
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
-        #region FocusOnNonFactoryDroneConsumer
-        [Test]
-        public void FocusOnNonFactoryDroneConsumer_NoFactoriesWronglyUsingDrones_DoesNothing()
-        {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(false);
-
-            TriggerFocusOnNonFactoryDroneConsumer();
-
-            _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
-        }
-
-        [Test]
-        public void FocusOnNonFactoryDroneConsumer_NoAffordableNonFocusedBuildings_DoesNothing()
-        {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns((IBuildable)null);
-
-            TriggerFocusOnNonFactoryDroneConsumer();
-
-            _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
-        }
-
-        [Test]
-        public void FocusOnNonFactoryDroneConsumer_GoesActive()
-        {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns(_inProgressBuilding);
-
-			_strategy.ForceInProgressBuildingToFocused.Returns(false);
-            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
-
-            TriggerFocusOnNonFactoryDroneConsumer();
-
-            // Idle => Active
-			_droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
-        }
-
-		[Test]
-		public void FocusOnNonFactoryDroneConsumer_GoesFocused()
-		{
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
-            _buildingMonitor.GetNonFocusedAffordableBuilding().Returns(_inProgressBuilding);
-
-            _strategy.ForceInProgressBuildingToFocused.Returns(true);
-            _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Active);
-			
-			TriggerFocusOnNonFactoryDroneConsumer();
-
-			// Idle => Active, Active => Focused
-            _droneManager
-                .Received(requiredNumberOfCalls: 2)
-                .ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
-		}
-        #endregion FocusOnNonFactoryDroneConsumer
-
         #region UnitStartedConstruction
         [Test]
-        public void UnitStartedConstruction_Evaluates()
+        public void UnitStartedConstruction_TriggersFocus()
         {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(false);
             _strategy.EvaluateWhenUnitStarted.Returns(true);
 
             FactoryStartBuildingUnit();
 
-            // Evaluated
-            bool compilerBribe = _factoriesMonitor.Received().AreAnyFactoriesWronglyUsingDrones;
+            _focusHelper.Received().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
 
         [Test]
-        public void UnitStartedConstruction_DoesNotEvaluate()
+        public void UnitStartedConstruction_DoesNotTriggerFocus()
         {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(false);
             _strategy.EvaluateWhenUnitStarted.Returns(false);
 
             FactoryStartBuildingUnit();
 
-            // Did not evaluate
-            bool compilerBribe = _factoriesMonitor.DidNotReceive().AreAnyFactoriesWronglyUsingDrones;
+            _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
         #endregion UnitStartedConstruction
 
