@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -45,7 +46,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         public void BuildingCompleted_NonFactory_DoesNotAdd()
         {
             IBuilding nonFactoryBuilding = Substitute.For<IBuilding>();
-            CompleteBuilding(nonFactoryBuilding);
+            _cruiser.StartConstructingBuilding(nonFactoryBuilding);
 
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
         }
@@ -53,7 +54,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BuildingCompleted_Factory_Adds()
         {
-            CompleteBuilding(_factory);
+            _cruiser.StartConstructingBuilding(_factory);
 
             Assert.AreEqual(1, _monitor.CompletedFactories.Count);
             Assert.AreSame(_factoryMonitor, _monitor.CompletedFactories[0]);
@@ -62,14 +63,14 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BuildingCompleted_DuplicateFactory_Throws()
         {
-            CompleteBuilding(_factory);
-            Assert.Throws<UnityAsserts.AssertionException>(() => CompleteBuilding(_factory));
+            _cruiser.StartConstructingBuilding(_factory);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.StartConstructingBuilding(_factory));
         }
 
         [Test]
         public void FactoryDestroyed_Removes()
         {
-            CompleteBuilding(_factory);
+            _cruiser.StartConstructingBuilding(_factory);
             _factory.Destroyed += Raise.EventWith(new DestroyedEventArgs(_factory));
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
         }
@@ -77,14 +78,9 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void Dispose_RemovesFactories()
         {
-            CompleteBuilding(_factory);
+            _cruiser.StartConstructingBuilding(_factory);
             _monitor.DisposeManagedState();
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
-        }
-
-        private void CompleteBuilding(IBuilding building)
-        {
-            _cruiser.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(building));
         }
     }
 }
