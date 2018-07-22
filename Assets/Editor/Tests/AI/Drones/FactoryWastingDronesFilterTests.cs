@@ -1,11 +1,12 @@
-﻿using BattleCruisers.AI.Drones.BuildingMonitors;
+﻿using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
+namespace BattleCruisers.Tests.AI.Drones
 {
     public class FactoryWastingDronesFilterTests
     {

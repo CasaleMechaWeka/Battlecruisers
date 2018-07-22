@@ -1,7 +1,8 @@
-﻿using BattleCruisers.Cruisers.Drones;
+﻿using BattleCruisers.AI.Drones.BuildingMonitors;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.AI.Drones.BuildingMonitors
+namespace BattleCruisers.AI.Drones
 {
     public class FactoryWastingDronesFilter : IFilter<IFactoryMonitor>
     {
