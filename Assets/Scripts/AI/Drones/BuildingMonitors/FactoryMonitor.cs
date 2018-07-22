@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
-    // FELIX  Use, test
     public class FactoryMonitor : IFactoryMonitor
     {
         private readonly int _desiredNumOfUnits;
