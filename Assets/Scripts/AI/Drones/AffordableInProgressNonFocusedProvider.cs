@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BattleCruisers.AI.Drones
 {
-    public class AffordableInProgressNonAffordableProvider : IBuildingProvider
+    public class AffordableInProgressNonFocusedProvider : IBuildingProvider
     {
         private readonly IDroneManager _droneManager;
         private readonly IInProgressBuildingMonitor _buildingMonitor;
@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        public AffordableInProgressNonAffordableProvider(IDroneManager droneManager, IInProgressBuildingMonitor buildingMonitor)
+        public AffordableInProgressNonFocusedProvider(IDroneManager droneManager, IInProgressBuildingMonitor buildingMonitor)
         {
             Helper.AssertIsNotNull(droneManager, buildingMonitor);
 

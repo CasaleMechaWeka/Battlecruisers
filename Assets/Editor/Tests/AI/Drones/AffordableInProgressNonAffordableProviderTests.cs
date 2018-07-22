@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.AI.Drones
             _droneManager.NumOfDrones = 6;
             _buildingMonitor = Substitute.For<IInProgressBuildingMonitor>();
 
-            _provider = new AffordableInProgressNonAffordableProvider(_droneManager, _buildingMonitor);
+            _provider = new AffordableInProgressNonFocusedProvider(_droneManager, _buildingMonitor);
 
             _inProgressBuildings = new List<IBuildable>();
             ReadOnlyCollection<IBuildable> readonlyInProgressBuildings = new ReadOnlyCollection<IBuildable>(_inProgressBuildings);
