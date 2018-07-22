@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         public void BuildingCompleted_NonFactory_DoesNotAdd()
         {
             IBuilding nonFactoryBuilding = Substitute.For<IBuilding>();
-            _cruiser.StartConstructingBuilding(nonFactoryBuilding);
+            _cruiser.CompleteConstructingBuliding(nonFactoryBuilding);
 
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
         }
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BuildingCompleted_Factory_Adds()
         {
-            _cruiser.StartConstructingBuilding(_factory);
+            _cruiser.CompleteConstructingBuliding(_factory);
 
             Assert.AreEqual(1, _monitor.CompletedFactories.Count);
             Assert.AreSame(_factoryMonitor, _monitor.CompletedFactories[0]);
@@ -63,14 +63,14 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BuildingCompleted_DuplicateFactory_Throws()
         {
-            _cruiser.StartConstructingBuilding(_factory);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.StartConstructingBuilding(_factory));
+            _cruiser.CompleteConstructingBuliding(_factory);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.CompleteConstructingBuliding(_factory));
         }
 
         [Test]
         public void FactoryDestroyed_Removes()
         {
-            _cruiser.StartConstructingBuilding(_factory);
+            _cruiser.CompleteConstructingBuliding(_factory);
             _factory.Destroyed += Raise.EventWith(new DestroyedEventArgs(_factory));
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
         }
@@ -78,7 +78,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void Dispose_RemovesFactories()
         {
-            _cruiser.StartConstructingBuilding(_factory);
+            _cruiser.CompleteConstructingBuliding(_factory);
             _monitor.DisposeManagedState();
             Assert.AreEqual(0, _monitor.CompletedFactories.Count);
         }
