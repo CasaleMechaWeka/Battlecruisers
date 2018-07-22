@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace BattleCruisers.AI.Drones
 {
-    // FELIX  Test :)
     public class FactoryAnalyzer : IFactoryAnalyzer
     {
         private readonly IFactoriesMonitor _factoriesMonitor;
