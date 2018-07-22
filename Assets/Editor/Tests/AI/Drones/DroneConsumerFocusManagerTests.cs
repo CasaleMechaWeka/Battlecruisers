@@ -1,6 +1,4 @@
 ﻿using BattleCruisers.AI.Drones;
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -18,12 +16,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private ICruiserController _aiCruiser;
         private IDroneManager _droneManager;
         private IDroneConsumerFocusHelper _focusHelper;
-
-        // FELIX  Unused?
         private IFactory _factory;
-
-        private IBuilding _inProgressBuilding;
-        private IDroneConsumer _inProgressBuildingDroneConsumer;
 
 		[SetUp]
 		public void SetuUp()
@@ -36,14 +29,6 @@ namespace BattleCruisers.Tests.AI.Drones
             _aiCruiser.DroneManager.Returns(_droneManager);
 
             _focusHelper = Substitute.For<IDroneConsumerFocusHelper>();
-
-            _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();
-            // FELIX  Remove?
-            //int numOfDronesRequired = _droneManager.NumOfDrones - 1;
-            //_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
-
-            _inProgressBuilding = Substitute.For<IBuilding>();
-            _inProgressBuilding.DroneConsumer.Returns(_inProgressBuildingDroneConsumer);
 
             _focusManager = new DroneConsumerFocusManager(_strategy, _aiCruiser, _focusHelper);
 
@@ -96,21 +81,6 @@ namespace BattleCruisers.Tests.AI.Drones
         }
         #endregion BuildingStartedConstruction
 
-        // FELIX  Use/remove :)
-        private void SetupInProgressBuilding()
-		{
-			_inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
-			int numOfDronesRequired = _droneManager.NumOfDrones - 1;
-			_inProgressBuildingDroneConsumer.NumOfDronesRequired.Returns(numOfDronesRequired);
-		}
-		
-        private void TriggerFocusOnNonFactoryDroneConsumer()
-        {
-            _strategy.EvaluateWhenBuildingStarted.Returns(true);
-            _aiCruiser.StartedConstruction += Raise.EventWith(new StartedConstructionEventArgs(buildable: null));
-        }
-
-        // FELIX  Remove
         private void FactoryStartBuildingUnit()
 		{
             _aiCruiser.BuildingCompleted += Raise.EventWith(new CompletedConstructionEventArgs(_factory));
