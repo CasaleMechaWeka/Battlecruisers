@@ -1,9 +1,8 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots;
+using System;
 
 namespace BattleCruisers.Cruisers
 {
