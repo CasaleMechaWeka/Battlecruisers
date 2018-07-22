@@ -12,7 +12,6 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     {
         // Sorted list of buildings, with the most recently started
         // building at the end.
-        // FELIX  Use IBuilding instead of IBuildable :)
         private readonly IList<IBuildable> _incompleteBuildables;
 
         private IBuildable LastIncompleteBuildingStarted
