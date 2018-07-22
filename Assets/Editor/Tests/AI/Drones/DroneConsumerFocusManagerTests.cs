@@ -74,37 +74,27 @@ namespace BattleCruisers.Tests.AI.Drones
         }
         #endregion UnitStartedConstruction
 
-        //#region BuildingStartedConstruction
-        //[Test]
-        //      public void BuildingStartedConstruction_AlsoTriggers_FocusOnNonFactoryDroneConsumer()
-        //      {
-        //          CreateActiveFactory();
+        #region BuildingStartedConstruction
+        [Test]
+        public void BuildingStartedConstruction_TriggersFocus()
+        {
+            _strategy.EvaluateWhenBuildingStarted.Returns(true);
 
-        //          SetupInProgressBuilding();
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(buildable: null));
 
-        //	_strategy.ForceInProgressBuildingToFocused.Returns(false);
-        //          _strategy.EvaluateWhenBuildingStarted.Returns(true);
-        //          _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
+            _focusHelper.Received().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
+        }
 
-        //          // Focusing:  Idle => Active
-        //          _droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
-        //      }
+        [Test]
+        public void BuildingStartedConstruction_DoesNotTrigger()
+        {
+            _strategy.EvaluateWhenBuildingStarted.Returns(false);
 
-        //      [Test]
-        //      public void BuildingStartedConstruction_DoesNotEvalute()
-        //      {
-        //	_strategy.EvaluateWhenBuildingStarted.Returns(false);
+            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(buildable: null));
 
-        //          CreateActiveFactory();
-
-        //          SetupInProgressBuilding();
-
-        //	_aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedConstructionEventArgs(_inProgressBuilding));
-
-        //          // No focusing
-        //          _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(droneConsumer: null);
-        //}
-        //#endregion BuildingStartedConstruction
+            _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
+        }
+        #endregion BuildingStartedConstruction
 
         // FELIX  Use/remove :)
         private void SetupInProgressBuilding()
