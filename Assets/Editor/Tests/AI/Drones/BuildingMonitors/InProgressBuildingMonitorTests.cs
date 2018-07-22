@@ -1,12 +1,11 @@
-﻿using BattleCruisers.AI.Drones;
-using BattleCruisers.AI.Drones.BuildingMonitors;
+﻿using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.AI.Drones
+namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
 {
     public class InProgressBuildingMonitorTests
     {
