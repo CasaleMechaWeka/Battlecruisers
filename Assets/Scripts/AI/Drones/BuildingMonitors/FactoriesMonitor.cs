@@ -3,29 +3,29 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     // FELIX  Use & test :)
-    public class FactoriesMonitor : IFactoriesMonitor
+    public class FactoriesMonitor : IFactoriesMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
         private readonly IFactoryMonitorFactory _monitorFactory;
-        private readonly IFilter<IFactoryMonitor> _wastingDronesFilter;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
-        public bool AreAnyFactoriesWronglyUsingDrones { get { return _completedFactories.Any(_wastingDronesFilter.IsMatch); } }
+        public ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; private set; }
 
-        public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory, IFilter<IFactoryMonitor> wastingDronesFilter)
+        public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory)
         {
-            Helper.AssertIsNotNull(cruiser, monitorFactory, wastingDronesFilter);
+            Helper.AssertIsNotNull(cruiser, monitorFactory);
 
             _cruiser = cruiser;
             _monitorFactory = monitorFactory;
-            _wastingDronesFilter = wastingDronesFilter;
             _completedFactories = new List<IFactoryMonitor>();
+            CompletedFactories = new ReadOnlyCollection<IFactoryMonitor>(_completedFactories);
 
             _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
         }

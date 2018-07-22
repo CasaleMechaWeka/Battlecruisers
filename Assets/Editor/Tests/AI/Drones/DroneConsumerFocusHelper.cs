@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI.Drones;
-using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Drones;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private IDroneConsumerFocusHelper _focusHelper;
 
         private IDroneManager _droneManager;
-        private IFactoriesMonitor _factoriesMonitor;
+        private IFactoryAnalyzer _factoryAnalyzer;
         private IBuildingProvider _buildingProvider;
         private IBuilding _inProgressBuilding;
         private IDroneConsumer _inProgressBuildingDroneConsumer;
@@ -22,7 +21,7 @@ namespace BattleCruisers.Tests.AI.Drones
 		public void SetuUp()
 		{
             _droneManager = Substitute.For<IDroneManager>();
-            _factoriesMonitor = Substitute.For<IFactoriesMonitor>();
+            _factoryAnalyzer = Substitute.For<IFactoryAnalyzer>();
 
             _inProgressBuilding = Substitute.For<IBuilding>();
             _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();
@@ -30,13 +29,13 @@ namespace BattleCruisers.Tests.AI.Drones
 
             _buildingProvider = Substitute.For<IBuildingProvider>();
 
-            _focusHelper = new DroneConsumerFocusHelper(_droneManager, _factoriesMonitor, _buildingProvider);
+            _focusHelper = new DroneConsumerFocusHelper(_droneManager, _factoryAnalyzer, _buildingProvider);
 		}
 
         [Test]
         public void FocusOnNonFactoryDroneConsumer_NoFactoriesWronglyUsingDrones_DoesNothing()
         {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(false);
+            _factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones.Returns(false);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: false);
 
@@ -46,7 +45,7 @@ namespace BattleCruisers.Tests.AI.Drones
         [Test]
         public void FocusOnNonFactoryDroneConsumer_NoAffordableNonFocusedBuildings_DoesNothing()
         {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
+            _factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones.Returns(true);
             _buildingProvider.Building.Returns((IBuildable)null);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: false);
@@ -57,7 +56,7 @@ namespace BattleCruisers.Tests.AI.Drones
         [Test]
         public void FocusOnNonFactoryDroneConsumer_GoesActive()
         {
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
+            _factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones.Returns(true);
             _buildingProvider.Building.Returns(_inProgressBuilding);
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle);
 
@@ -70,7 +69,7 @@ namespace BattleCruisers.Tests.AI.Drones
 		[Test]
 		public void FocusOnNonFactoryDroneConsumer_GoesFocused()
 		{
-            _factoriesMonitor.AreAnyFactoriesWronglyUsingDrones.Returns(true);
+            _factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones.Returns(true);
             _buildingProvider.Building.Returns(_inProgressBuilding);
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Active);
 

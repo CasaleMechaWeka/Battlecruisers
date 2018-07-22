@@ -1,9 +1,9 @@
-﻿using BattleCruisers.Utils;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
-    public interface IFactoriesMonitor : IManagedDisposable
+    public interface IFactoriesMonitor
     {
-        bool AreAnyFactoriesWronglyUsingDrones { get; }
+        ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI.Drones.BuildingMonitors;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 
@@ -8,15 +7,15 @@ namespace BattleCruisers.AI.Drones
     public class DroneConsumerFocusHelper : IDroneConsumerFocusHelper
     {
         private readonly IDroneManager _droneManager;
-        private readonly IFactoriesMonitor _factoriesMonitor;
+        private readonly IFactoryAnalyzer _factoryAnalyzer;
         private readonly IBuildingProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public DroneConsumerFocusHelper(IDroneManager droneManager, IFactoriesMonitor factoriesMonitor, IBuildingProvider affordableInProgressNonFocusedBuildingProvider)
+        public DroneConsumerFocusHelper(IDroneManager droneManager, IFactoryAnalyzer factoryAnalyzer, IBuildingProvider affordableInProgressNonFocusedBuildingProvider)
         {
-            Helper.AssertIsNotNull(droneManager, factoriesMonitor, affordableInProgressNonFocusedBuildingProvider);
+            Helper.AssertIsNotNull(droneManager, factoryAnalyzer, affordableInProgressNonFocusedBuildingProvider);
 
             _droneManager = droneManager;
-            _factoriesMonitor = factoriesMonitor;
+            _factoryAnalyzer = factoryAnalyzer;
             _affordableInProgressNonFocusedBuildingProvider = affordableInProgressNonFocusedBuildingProvider;
         }
 
@@ -24,7 +23,7 @@ namespace BattleCruisers.AI.Drones
         {
             Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
 
-            if (!_factoriesMonitor.AreAnyFactoriesWronglyUsingDrones)
+            if (!_factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones)
             {
                 // No factories wrongly using drones, no need to reassign drones
                 return;
