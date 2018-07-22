@@ -51,7 +51,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             AddRepairable(_cruiser);
 
-            _cruiser.BuildingStarted += _cruiser_StartedConstruction;
+            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
             _cruiser.Destroyed += _cruiser_Destroyed;
         }
 
@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Repairables
             }
         }
 
-        private void _cruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             AddRepairable(e.Buildable);
         }
@@ -170,7 +170,7 @@ namespace BattleCruisers.Buildables.Repairables
             }
 
             _cruiser.Destroyed -= _cruiser_Destroyed;
-            _cruiser.BuildingStarted -= _cruiser_StartedConstruction;
+            _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
         }
     }
 }

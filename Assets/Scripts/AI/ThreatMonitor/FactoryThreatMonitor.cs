@@ -29,10 +29,10 @@ namespace BattleCruisers.AI.ThreatMonitors
 			_threatCategory = threatCategory;
             _factories = new List<IFactory>();
 
-            _enemyCruiser.BuildingStarted += _enemyCruiser_StartedConstruction;
+            _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
         }
 
-        private void _enemyCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void _enemyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 

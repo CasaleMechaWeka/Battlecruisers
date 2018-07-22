@@ -35,11 +35,11 @@ namespace BattleCruisers.AI.FactoryManagers
             _unitChooser = unitChooser;
             _factories = new HashSet<IFactory>();
 
-            _friendlyCruiser.BuildingStarted += _friendlyCruiser_StartedConstruction;
+            _friendlyCruiser.BuildingStarted += _friendlyCruiser_BuildingStarted;
             _unitChooser.ChosenUnitChanged += _unitChooser_ChosenUnitChanged;
         }
 
-        private void _friendlyCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void _friendlyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -101,7 +101,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         public void DisposeManagedState()
         {
-            _friendlyCruiser.BuildingStarted -= _friendlyCruiser_StartedConstruction;
+            _friendlyCruiser.BuildingStarted -= _friendlyCruiser_BuildingStarted;
 
             foreach (IFactory factory in _factories)
             {

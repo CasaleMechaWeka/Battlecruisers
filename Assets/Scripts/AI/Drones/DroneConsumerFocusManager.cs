@@ -44,7 +44,7 @@ namespace BattleCruisers.AI.Drones
 
             _completedFactories = new List<IFactory>();
 
-            _aiCruiser.BuildingStarted += _aiCruiser_StartedConstruction;
+            _aiCruiser.BuildingStarted += _aiCruiser_BuildingStarted;
             _aiCruiser.BuildingCompleted += _aiCruiser_BuildingCompleted;
         }
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        private void _aiCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void _aiCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             if (_strategy.EvaluateWhenBuildingStarted)
             {
@@ -108,7 +108,7 @@ namespace BattleCruisers.AI.Drones
 
         public void DisposeManagedState()
         {
-            _aiCruiser.BuildingStarted -= _aiCruiser_StartedConstruction;
+            _aiCruiser.BuildingStarted -= _aiCruiser_BuildingStarted;
             _aiCruiser.BuildingCompleted -= _aiCruiser_BuildingCompleted;
 
             foreach (IFactory factory in _completedFactories)

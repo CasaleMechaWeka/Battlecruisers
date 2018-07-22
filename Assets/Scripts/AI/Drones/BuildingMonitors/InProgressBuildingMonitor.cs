@@ -24,10 +24,10 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
             _inProgressBuildings = new List<IBuilding>();
             InProgressBuildings = new ReadOnlyCollection<IBuilding>(_inProgressBuildings);
 
-            _cruiser.BuildingStarted += _cruiser_StartedConstruction;
+            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
         }
 
-        private void _cruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             e.Buildable.CompletedBuildable += Buildable_CompletedBuildable;
             e.Buildable.Destroyed += Buildable_Destroyed;
@@ -57,7 +57,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
 
         public void DisposeManagedState()
         {
-            _cruiser.BuildingStarted -= _cruiser_StartedConstruction;
+            _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
 
             foreach (IBuilding building in _inProgressBuildings)
             {

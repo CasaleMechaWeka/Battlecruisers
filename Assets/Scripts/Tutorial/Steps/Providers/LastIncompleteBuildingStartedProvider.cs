@@ -29,11 +29,11 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
             _incompleteBuildables = new List<IBuildable>();
 
-            cruiser.BuildingStarted += cruiser_StartedConstruction;
+            cruiser.BuildingStarted += cruiser_BuildingStarted;
             cruiser.BuildingCompleted += cruiser_BuildingCompleted;
         }
 
-        private void cruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             _incompleteBuildables.Add(e.Buildable);
         }

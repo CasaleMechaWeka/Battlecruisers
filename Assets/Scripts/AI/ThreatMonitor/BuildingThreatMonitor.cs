@@ -28,10 +28,10 @@ namespace BattleCruisers.AI.ThreatMonitors
         {
             _buildings = new List<TBuilding>();
 
-			_enemyCruiser.BuildingStarted += EnemyCruiser_StartedConstruction;
+			_enemyCruiser.BuildingStarted += EnemyCruiser_BuildingStarted;
         }
 
-        private void EnemyCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)
+        private void EnemyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             TBuilding building = e.Buildable as TBuilding;
 

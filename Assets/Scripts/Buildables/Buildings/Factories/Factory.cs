@@ -130,7 +130,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             _unitUnderConstruction.Position = spawnPosition;
             _unitUnderConstruction.Rotation = transform.rotation;
 
-			_unitUnderConstruction.StartedConstruction += Unit_StartedConstruction;
+			_unitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
 			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
             _unitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
@@ -141,9 +141,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		protected abstract Vector3 FindUnitSpawnPosition(IUnit unit);
 
-		protected virtual void Unit_StartedConstruction(object sender, EventArgs e) 
+		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 
 		{ 
-			_unitUnderConstruction.StartedConstruction -= Unit_StartedConstruction;
+			_unitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
 
             IUnit unit = sender.Parse<IUnit>();
 			_lastUnitProduced = unit;
