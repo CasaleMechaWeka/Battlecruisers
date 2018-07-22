@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Tests.Utils;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 

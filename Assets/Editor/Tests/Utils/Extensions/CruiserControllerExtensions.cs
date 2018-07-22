@@ -2,9 +2,9 @@
 using BattleCruisers.Cruisers;
 using NSubstitute;
 
-namespace BattleCruisers.Tests.Utils
+namespace BattleCruisers.Tests.Utils.Extensions
 {
-    public static class TestExtensions
+    public static class CruiserControllerExtensions
     {
         public static void StartConstructingBuilding(this ICruiserController cruiser, IBuilding buildingToStart)
         {

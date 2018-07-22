@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -31,7 +32,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void ConstructionStarted_AddsBuilding()
         {
-            StartConstructingBuilding(_building);
+            _cruiser.StartConstructingBuilding(_building);
 
             Assert.AreEqual(1, _monitor.InProgressBuildings.Count);
             Assert.AreSame(_building, _monitor.InProgressBuildings[0]);
@@ -40,7 +41,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BuildingCompleted_RemovesBuildings()
         {
-            StartConstructingBuilding(_building);
+            _cruiser.StartConstructingBuilding(_building);
             CompleteBuliding(_building);
 
             Assert.AreEqual(0, _monitor.InProgressBuildings.Count);
@@ -49,7 +50,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void BulidingDestroyed_RemovesBuliding()
         {
-            StartConstructingBuilding(_building);
+            _cruiser.StartConstructingBuilding(_building);
             DestroyBuilding(_building);
 
             Assert.AreEqual(0, _monitor.InProgressBuildings.Count);
@@ -58,14 +59,9 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void Dispose_RemovesBulidings()
         {
-            StartConstructingBuilding(_building);
+            _cruiser.StartConstructingBuilding(_building);
             _monitor.DisposeManagedState();
             Assert.AreEqual(0, _monitor.InProgressBuildings.Count);
-        }
-
-        private void StartConstructingBuilding(IBuilding building)
-        {
-            _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(building));
         }
 
         private void CompleteBuliding(IBuilding building)

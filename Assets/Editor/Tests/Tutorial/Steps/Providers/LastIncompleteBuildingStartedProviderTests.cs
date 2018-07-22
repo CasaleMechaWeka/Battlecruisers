@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Tests.Utils;
+using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;

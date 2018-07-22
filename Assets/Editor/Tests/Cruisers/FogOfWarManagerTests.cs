@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Fog;
-using BattleCruisers.Tests.Utils;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
