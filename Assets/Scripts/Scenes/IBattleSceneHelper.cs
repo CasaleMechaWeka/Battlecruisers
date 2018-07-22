@@ -18,9 +18,9 @@ namespace BattleCruisers.Scenes
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
 
-        IFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
-        IFilter<BuildingCategory> CreateCategoryButtonFilter();
-        IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
+        IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
+        IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter();
+        IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
 
         BasicFilter CreateBackButtonFilter();
 

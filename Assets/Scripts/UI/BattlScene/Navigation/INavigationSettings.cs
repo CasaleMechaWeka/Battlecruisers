@@ -10,8 +10,8 @@
 		bool AreTransitionsEnabled { get; }
 		bool IsUserInputEnabled { get; }
 
-		IFilter AreTransitionsEnabledFilter { get; }
-		IFilter IsUserInputEnabledFilter { get; }
+		IBroadcastingFilter AreTransitionsEnabledFilter { get; }
+		IBroadcastingFilter IsUserInputEnabledFilter { get; }
 
 		NavigationPermission Permission { set; }
 	}

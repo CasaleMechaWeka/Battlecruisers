@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
-        public IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
+        public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter BackButtonPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
@@ -93,17 +93,17 @@ namespace BattleCruisers.Scenes
             return _slotFilter;
 		}
 
-        public IFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager)
+        public IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager)
         {
             return _buildingNameFilter;
         }
 
-        public IFilter<BuildingCategory> CreateCategoryButtonFilter()
+        public IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter()
         {
             return _buildingCategoryFilter;
         }
 
-        public IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
+        public IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
         {
             return new StaticFilter<IBuilding>(isMatch: false);
         }

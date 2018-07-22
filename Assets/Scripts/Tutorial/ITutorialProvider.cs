@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial
     {
 		ISlotPermitter SlotPermitter { get; }
 		IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
-        IFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
+        IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
 

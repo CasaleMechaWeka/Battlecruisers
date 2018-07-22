@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
 {
     public class PlayerCruiserBuildingFilterTests
     {
-        private IFilter<IBuilding> _filter;
+        private IBroadcastingFilter<IBuilding> _filter;
         private IBuilding _building;
         private ICruiser _playerCruiser, _aiCruiser;
 

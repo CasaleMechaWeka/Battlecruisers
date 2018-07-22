@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
-        private IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
+        private IBroadcastingFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         private IBuilding _building;
         private IFactory _factory;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _aiCruiser = CreateMockCruiser();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
-            _shouldBuildingDeleteButtonBeEnabledFilter = Substitute.For<IFilter<IBuilding>>();
+            _shouldBuildingDeleteButtonBeEnabledFilter = Substitute.For<IBroadcastingFilter<IBuilding>>();
 
             IManagerArgs managerArgs
                 = new ManagerArgs(

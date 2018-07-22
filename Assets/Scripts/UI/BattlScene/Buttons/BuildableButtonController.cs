@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : Presentable, IBuildableButton, IFilter
+    public abstract class BuildableButtonController : Presentable, IBuildableButton, IBroadcastingFilter
 	{
 		protected IUIManager _uiManager;
-        private IFilter<IBuildable> _shouldBeEnabledFilter;
+        private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
 
 		public Image buildableImage;
 		public Text buildableName;
@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
-        public void Initialise(IBuildable buildable, IUIManager uiManager, IFilter<IBuildable> shouldBeEnabledFilter)
+        public void Initialise(IBuildable buildable, IUIManager uiManager, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();
 

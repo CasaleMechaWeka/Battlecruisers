@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			}
 		}
 
-		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IFilter<IBuildable> shouldBeEnabledFilter)
+		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
             base.Initialise(unitWrapper.Buildable, uiManager, shouldBeEnabledFilter);
 

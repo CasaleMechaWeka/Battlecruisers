@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 		public bool IsUserInputEnabled { get { return IsUserInputEnabledFilter.IsMatch; } }
 
 		private readonly BasicFilter _areTransitionsEnabledFilter;
-		public IFilter AreTransitionsEnabledFilter { get { return _areTransitionsEnabledFilter; } }
+		public IBroadcastingFilter AreTransitionsEnabledFilter { get { return _areTransitionsEnabledFilter; } }
 
 		private readonly BasicFilter _isUserInputEnabledFilter;
-		public IFilter IsUserInputEnabledFilter { get { return _isUserInputEnabledFilter; } }
+		public IBroadcastingFilter IsUserInputEnabledFilter { get { return _isUserInputEnabledFilter; } }
         
 		public NavigationPermission Permission
 		{

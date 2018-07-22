@@ -15,9 +15,9 @@ namespace BattleCruisers.UI.BattleScene
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;
-        private IFilter<IBuildable> _shouldBuildableButtonBeEnabledFilter;
-        private IFilter<BuildingCategory> _shouldBuildingCategoryButtonBeEnabledFilter;
-        private IFilter _shouldBackButtonBeEnabledFilter;
+        private IBroadcastingFilter<IBuildable> _shouldBuildableButtonBeEnabledFilter;
+        private IBroadcastingFilter<BuildingCategory> _shouldBuildingCategoryButtonBeEnabledFilter;
+        private IBroadcastingFilter _shouldBackButtonBeEnabledFilter;
 		private Canvas _canvas;
 
 		public GameObject panelPrefab;
@@ -29,9 +29,9 @@ namespace BattleCruisers.UI.BattleScene
         public void Initialise(
             IUIManager uiManager, 
             ISpriteProvider spriteProvider, 
-            IFilter<IBuildable> shouldBuildableButtonBeEnabledFilter,
-            IFilter<BuildingCategory> shouldBuildingCategoryButtonBeEnabledFilter,
-            IFilter shouldBackButtonBeEnabledFilter)
+            IBroadcastingFilter<IBuildable> shouldBuildableButtonBeEnabledFilter,
+            IBroadcastingFilter<BuildingCategory> shouldBuildingCategoryButtonBeEnabledFilter,
+            IBroadcastingFilter shouldBackButtonBeEnabledFilter)
         {
             Helper.AssertIsNotNull(
                 uiManager, 

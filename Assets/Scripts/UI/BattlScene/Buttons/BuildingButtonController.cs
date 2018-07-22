@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             IBuildableWrapper<IBuilding> buildingWrapper, 
             IUIManager uiManager, 
-            IFilter<IBuildable> shouldBeEnabledFilter, 
+            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter, 
             Sprite slotSprite)
 		{
             base.Initialise(buildingWrapper.Buildable, uiManager, shouldBeEnabledFilter);

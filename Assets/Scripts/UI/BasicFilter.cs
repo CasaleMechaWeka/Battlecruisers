@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI
 {
-    public class BasicFilter : IFilter
+    public class BasicFilter : IBroadcastingFilter
     {
         private bool _isMatch;
         public bool IsMatch

@@ -2,14 +2,14 @@
 
 namespace BattleCruisers.UI
 {
-    public interface IFilter
+    public interface IBroadcastingFilter
     {
         event EventHandler PotentialMatchChange;
 
         bool IsMatch { get; }
     }
 
-    public interface IFilter<TElement>
+    public interface IBroadcastingFilter<TElement>
     {
         event EventHandler PotentialMatchChange;
 

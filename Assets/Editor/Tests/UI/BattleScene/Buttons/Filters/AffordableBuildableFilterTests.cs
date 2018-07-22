@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
 {
     public class AffordableBuildableFilterTests
     {
-        private IFilter<IBuildable> _filter;
+        private IBroadcastingFilter<IBuildable> _filter;
 
         private IDroneManager _droneManager;
         private IBuildable _buildable;

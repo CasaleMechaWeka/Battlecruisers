@@ -167,9 +167,9 @@ namespace BattleCruisers.Scenes
 			// UI
 			_navigationSettings = new NavigationSettings();
 			hudCanvas.Initialise(spriteProvider, _playerCruiser, _aiCruiser, cameraInitialiser.CameraController, _navigationSettings.AreTransitionsEnabledFilter);
-            IFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
-            IFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
-            IFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
+            IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
+            IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
+            IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
             uiFactory.Initialise(uiManager, spriteProvider, buildableButtonShouldBeEnabledFilter, buildingCategoryButtonShouldBeEnabledFilter, backButtonShouldBeEnabledFilter);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 

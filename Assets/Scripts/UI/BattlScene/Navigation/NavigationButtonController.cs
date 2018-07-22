@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public event EventHandler Clicked;
 
-        public void Initialise(Action navigationAction, IFilter shouldBeEnabledFilter)
+        public void Initialise(Action navigationAction, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise();
 

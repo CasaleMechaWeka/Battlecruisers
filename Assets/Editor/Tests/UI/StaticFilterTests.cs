@@ -9,14 +9,14 @@ namespace BattleCruisers.Tests.UI
         [Test]
         public void ShouldBeEnabled_True()
         {
-            IFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: true);
+            IBroadcastingFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: true);
             Assert.IsTrue(filter.IsMatch(BuildingCategory.Ultra));
         }
 
         [Test]
         public void ShouldBeEnabled_False()
         {
-            IFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: false);
+            IBroadcastingFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: false);
             Assert.IsFalse(filter.IsMatch(BuildingCategory.Ultra));
         }
     }

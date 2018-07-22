@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class AffordableBuildableFilter : IFilter<IBuildable>
+    public class AffordableBuildableFilter : IBroadcastingFilter<IBuildable>
     {
         private readonly IDroneManager _droneManager;
 

@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI
 {
-    public class StaticFilter<TElement> : IFilter<TElement>
+    public class StaticFilter<TElement> : IBroadcastingFilter<TElement>
     {
         private readonly bool _isMatch;
 

@@ -11,6 +11,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         ICruiser AICruiser { get; }
         IBuildMenu BuildMenu { get; }
         IBuildableDetailsManager DetailsManager { get; }
-        IFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; }
+        IBroadcastingFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; }
     }
 }

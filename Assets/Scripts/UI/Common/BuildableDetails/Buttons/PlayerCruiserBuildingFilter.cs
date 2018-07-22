@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class PlayerCruiserBuildingFilter : IFilter<IBuilding>
+    public class PlayerCruiserBuildingFilter : IBroadcastingFilter<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
 

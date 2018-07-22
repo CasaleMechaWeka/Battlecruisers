@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public IButton MidRightButton { get; private set; }
         public IButton AICruiserButton { get; private set; }
 
-        public void Initialise(ICameraController cameraController, IFilter shouldNavigationBeEnabledFilter)
+        public void Initialise(ICameraController cameraController, IBroadcastingFilter shouldNavigationBeEnabledFilter)
         {
             base.Initialise();
 

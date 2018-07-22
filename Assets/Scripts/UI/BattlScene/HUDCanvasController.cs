@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,
-            IFilter shouldNavigationBeEnabledFilter)
+            IBroadcastingFilter shouldNavigationBeEnabledFilter)
         {
             Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter);
 

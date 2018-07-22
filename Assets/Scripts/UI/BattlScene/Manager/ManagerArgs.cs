@@ -12,14 +12,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public ICruiser AICruiser { get; private set; }
         public IBuildMenu BuildMenu { get; private set; }
         public IBuildableDetailsManager DetailsManager { get; private set; }
-        public IFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; private set; }
+        public IBroadcastingFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; private set; }
 
         public ManagerArgs(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBuildMenu buildMenu,
             IBuildableDetailsManager detailsManager,
-            IFilter<IBuilding> shouldBuildingDeleteButtonBeEnabledFilter)
+            IBroadcastingFilter<IBuilding> shouldBuildingDeleteButtonBeEnabledFilter)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager, shouldBuildingDeleteButtonBeEnabledFilter);
 

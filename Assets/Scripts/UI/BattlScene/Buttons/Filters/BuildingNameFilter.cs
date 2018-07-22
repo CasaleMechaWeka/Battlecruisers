@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class BuildingNameFilter : IFilter<IBuildable>, IBuildingPermitter
+    public class BuildingNameFilter : IBroadcastingFilter<IBuildable>, IBuildingPermitter
     {
         private readonly IPrefabFactory _prefabFactory;
 

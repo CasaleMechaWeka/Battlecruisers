@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IFilter
+    public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IBroadcastingFilter
 	{
         private IUIManager _uiManager;
-        private IFilter<BuildingCategory> _shouldBeEnabledFilter;
+        private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
 
         public event EventHandler Clicked;
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             IBuildingGroup buildingGroup, 
             IUIManager uiManager, 
-            IFilter<BuildingCategory> shouldBeEnabledFilter)
+            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
 		{
             base.Initialise();
 

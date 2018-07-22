@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
+        private readonly IBroadcastingFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         public UIManager(IManagerArgs args)
 		{

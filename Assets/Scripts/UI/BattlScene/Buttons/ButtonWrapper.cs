@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class ButtonWrapper : MonoBehaviour, IButtonWrapper
     {
-        private IFilter _shouldBeEnabledFilter;
+        private IBroadcastingFilter _shouldBeEnabledFilter;
         private CanvasGroup _canvasGroup;
 
 		public Button Button { get; private set; }
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(UnityAction clickHandler, IFilter shouldBeEnabledFilter)
+        public void Initialise(UnityAction clickHandler, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(clickHandler, shouldBeEnabledFilter);
 
