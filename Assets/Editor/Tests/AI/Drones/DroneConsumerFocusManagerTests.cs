@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Drones
 {
@@ -37,8 +36,6 @@ namespace BattleCruisers.Tests.AI.Drones
             _factory = Substitute.For<IFactory>();
             _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
             _factory.DroneConsumer.Returns(_factoryDroneConsumer);
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
         #region UnitStartedConstruction
