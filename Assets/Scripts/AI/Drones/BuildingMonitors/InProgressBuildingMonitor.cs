@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Drones
+namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     // FELIX   Test
     public class InProgressBuildingMonitor : IInProgressBuildingMonitor, IManagedDisposable

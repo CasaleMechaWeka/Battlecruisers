@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
 
-namespace BattleCruisers.AI.Drones
+namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public interface IFactoriesMonitor : IManagedDisposable
     {

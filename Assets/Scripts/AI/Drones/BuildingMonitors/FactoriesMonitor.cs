@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Drones
+namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     // FELIX  Use & test :)
     public class FactoriesMonitor : IFactoriesMonitor

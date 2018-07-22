@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.AI.Drones
+namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public class FactoryMonitorFactory : IFactoryMonitorFactory
     {
