@@ -135,7 +135,7 @@ namespace BattleCruisers.Tests.AI
         // FELIX  Test extension method :/  Use extension method everywhere :P
         private void StartConstructingBuilding(IBuilding building)
         {
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(building));
+            _cruiser.BuildingStarted += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(building));
         }
     }
 }

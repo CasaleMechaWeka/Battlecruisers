@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets.TargetFinders
                 Assert.IsFalse(_enemyCruiser.IsDestroyed);
 
                 _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
-                _enemyCruiser.StartedConstruction += _enemyCruiser_StartedConstruction;
+                _enemyCruiser.BuildingStarted += _enemyCruiser_StartedConstruction;
                 InvokeTargetFoundEvent(_enemyCruiser);
                 _isFindingTargets = true;
 			}
@@ -104,7 +104,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		public void DisposeManagedState()
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
-			_enemyCruiser.StartedConstruction -= _enemyCruiser_StartedConstruction;
+			_enemyCruiser.BuildingStarted -= _enemyCruiser_StartedConstruction;
 			_enemyCruiser = null;
 		}
 	}

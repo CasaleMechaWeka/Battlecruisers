@@ -102,7 +102,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 
         private void StartConstructingBuliding(IBuilding building)
         {
-            _friendlyCruiser.StartedConstruction += Raise.EventWith(_friendlyCruiser, new StartedBuildingConstructionEventArgs(building));
+            _friendlyCruiser.BuildingStarted += Raise.EventWith(_friendlyCruiser, new StartedBuildingConstructionEventArgs(building));
         }
     }
 }

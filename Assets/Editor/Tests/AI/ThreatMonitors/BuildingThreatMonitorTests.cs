@@ -118,7 +118,7 @@ namespace BattleCruisers.Tests.AI
 
         private void StartConstructingBuilding(IBuilding building)
         {
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(building));
+            _cruiser.BuildingStarted += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(building));
         }
     }
 }

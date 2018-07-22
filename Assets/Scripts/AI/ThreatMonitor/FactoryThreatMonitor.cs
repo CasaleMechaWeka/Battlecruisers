@@ -29,7 +29,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 			_threatCategory = threatCategory;
             _factories = new List<IFactory>();
 
-            _enemyCruiser.StartedConstruction += _enemyCruiser_StartedConstruction;
+            _enemyCruiser.BuildingStarted += _enemyCruiser_StartedConstruction;
         }
 
         private void _enemyCruiser_StartedConstruction(object sender, StartedBuildingConstructionEventArgs e)

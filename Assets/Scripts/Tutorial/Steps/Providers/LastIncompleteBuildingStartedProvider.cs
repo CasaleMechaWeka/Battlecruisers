@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
             _incompleteBuildables = new List<IBuildable>();
 
-            cruiser.StartedConstruction += cruiser_StartedConstruction;
+            cruiser.BuildingStarted += cruiser_StartedConstruction;
             cruiser.BuildingCompleted += cruiser_BuildingCompleted;
         }
 

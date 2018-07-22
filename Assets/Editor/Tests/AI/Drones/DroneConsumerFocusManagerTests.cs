@@ -69,7 +69,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenBuildingStarted.Returns(true);
 
-            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
+            _aiCruiser.BuildingStarted += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
 
             _focusHelper.Received().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _strategy.EvaluateWhenBuildingStarted.Returns(false);
 
-            _aiCruiser.StartedConstruction += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
+            _aiCruiser.BuildingStarted += Raise.EventWith(_aiCruiser, new StartedBuildingConstructionEventArgs(building: null));
 
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }

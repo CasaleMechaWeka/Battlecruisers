@@ -262,7 +262,7 @@ namespace BattleCruisers.Tests.Buildables
             _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_buildingDroneConsumer);
             _feedbackFactory.CreateFeedback(_buildingDroneConsumer, _numOfRepairDronesText).Returns(_buildingFeedback);
 
-            _cruiser.StartedConstruction += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(_building));
+            _cruiser.BuildingStarted += Raise.EventWith(_cruiser, new StartedBuildingConstructionEventArgs(_building));
 
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_buildingDroneConsumer, _numOfRepairDronesText);
