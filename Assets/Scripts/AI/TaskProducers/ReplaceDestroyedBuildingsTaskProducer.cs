@@ -32,7 +32,7 @@ namespace BattleCruisers.AI.TaskProducers
     /// 6. In progress DS is destroyed, create rebuild task(gets slotted in BEHIND rebuild artillery task)
     /// 7. Start rebuilding artillery => Don't have enough drones :/
     /// </summary>
-    public class ReplaceDestroyedBuildingsTaskProducer : TaskProducerBase
+    public class ReplaceDestroyedBuildingsTaskProducer : TaskProducer
     {
         private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
 

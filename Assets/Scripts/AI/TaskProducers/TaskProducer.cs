@@ -5,14 +5,14 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public abstract class TaskProducerBase : ITaskProducer
+    public abstract class TaskProducer : ITaskProducer
     {
 		protected readonly ITaskList _tasks;
 		protected readonly ICruiserController _cruiser;
 		protected readonly ITaskFactory _taskFactory;
         protected readonly IPrefabFactory _prefabFactory;
 
-		public TaskProducerBase(
+		public TaskProducer(
             ITaskList tasks, 
             ICruiserController cruiser, 
             ITaskFactory taskFactory, 
