@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.AI.Drones.BuildingMonitors;
-using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace BattleCruisers.AI.Drones
         private readonly IDroneManager _droneManager;
         private readonly IInProgressBuildingMonitor _buildingMonitor;
 
-        public IBuildable Building
+        public IBuilding Building
         {
             get
             {

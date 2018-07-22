@@ -1,10 +1,9 @@
-﻿using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.AI.Drones
 {
     public interface IBuildingProvider
     {
-        // FELIX  IBuilding once events change :D
-        IBuildable Building { get; }
+        IBuilding Building { get; }
     }
 }
