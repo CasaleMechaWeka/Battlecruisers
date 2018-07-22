@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace BattleCruisers.AI.Drones
 {
-    // FELIX  NEXT Test
     public class AffordableInProgressNonAffordableProvider : IBuildingProvider
     {
         private readonly IDroneManager _droneManager;
