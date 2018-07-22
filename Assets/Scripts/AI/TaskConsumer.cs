@@ -10,7 +10,7 @@ namespace BattleCruisers.AI
     /// priority task changes, stops the current task and starts
     /// the new highest priority task.
     /// </summary>
-    public class TaskConsumer : ITaskConsumer
+    public class TaskConsumer : IManagedDisposable
     {
         private readonly ITaskList _tasks;
 

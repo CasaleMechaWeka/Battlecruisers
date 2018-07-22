@@ -89,7 +89,7 @@ namespace BattleCruisers.AI
 
         private IArtificialIntelligence CreateAI(ILevelInfo levelInfo, ITaskList tasks, IList<ITaskProducer> taskProducers)
         {
-            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
+            TaskConsumer taskConsumer = new TaskConsumer(tasks);
             DroneConsumerFocusManager focusManager = CreateDroneFocusManager(levelInfo);
 
             return new ArtificialIntelligence(taskConsumer, taskProducers, focusManager);

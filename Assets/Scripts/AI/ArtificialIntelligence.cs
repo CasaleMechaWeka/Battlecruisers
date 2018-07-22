@@ -13,11 +13,11 @@ namespace BattleCruisers.AI
     /// </summary>
     public class ArtificialIntelligence : IArtificialIntelligence
     {
-        private readonly ITaskConsumer _taskConsumer;
+        private readonly TaskConsumer _taskConsumer;
         private readonly IList<ITaskProducer> _taskProducers;
         private readonly DroneConsumerFocusManager _focusManager;
 
-        public ArtificialIntelligence(ITaskConsumer taskConsumer, IList<ITaskProducer> taskProducers, DroneConsumerFocusManager focusManager)
+        public ArtificialIntelligence(TaskConsumer taskConsumer, IList<ITaskProducer> taskProducers, DroneConsumerFocusManager focusManager)
         {
             Helper.AssertIsNotNull(taskConsumer, taskProducers, focusManager);
 
