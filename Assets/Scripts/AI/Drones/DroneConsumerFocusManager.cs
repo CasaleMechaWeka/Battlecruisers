@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.Drones
 {
     /// <summary>
-    /// FELIX  Update tests :)
     /// Manages which drone consumer should be in focus, thus having the most
     /// drones.
     /// 
@@ -77,7 +76,6 @@ namespace BattleCruisers.AI.Drones
         /// so it becomes the highest priority drone consumer.  This means it has 
         /// higher priority than previously built factories.
         /// </summary>
-        /// FELIX  Test!
         private void Factory_StartedBuildingFirstUnit(object sender, StartedConstructionEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
@@ -107,7 +105,6 @@ namespace BattleCruisers.AI.Drones
             UnsubscribeFromFactoryEvents(destroyedFactory);
         }
 
-        // FELIX  Add test for dispose :)
         public void DisposeManagedState()
         {
             _aiCruiser.StartedConstruction -= _aiCruiser_StartedConstruction;
@@ -123,6 +120,7 @@ namespace BattleCruisers.AI.Drones
         private void UnsubscribeFromFactoryEvents(IFactory factory)
         {
             factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
+            factory.StartedBuildingUnit -= Factory_StartedBuildingFirstUnit;
             factory.Destroyed -= Factory_Destroyed;
         }
     }
