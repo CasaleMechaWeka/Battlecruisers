@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.UI
 {
@@ -9,10 +10,8 @@ namespace BattleCruisers.UI
         bool IsMatch { get; }
     }
 
-    public interface IBroadcastingFilter<TElement>
+    public interface IBroadcastingFilter<TElement> : IFilter<TElement>
     {
         event EventHandler PotentialMatchChange;
-
-        bool IsMatch(TElement element);
     }
 }
