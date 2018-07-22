@@ -1,7 +1,8 @@
-﻿namespace BattleCruisers.Cruisers.Slots
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.Cruisers.Slots
 {
-    public interface ISlotFilter
+    public interface ISlotFilter : IFilter<ISlot>
     {
-        bool IsMatch(ISlot slot);
     }
 }

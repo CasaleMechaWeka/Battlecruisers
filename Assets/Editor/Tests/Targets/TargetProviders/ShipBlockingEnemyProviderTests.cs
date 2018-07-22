@@ -65,7 +65,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         public void TargetAssigned_Null_DoesNotCheckIsInFront()
         {
             _asTargetConsumer.Target = null;
-            _isInFrontFilter.DidNotReceive().IsMatch(target: null);
+            _isInFrontFilter.DidNotReceive().IsMatch(element: null);
         }
 
         [Test]

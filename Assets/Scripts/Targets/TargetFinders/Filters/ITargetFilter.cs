@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-    public interface ITargetFilter
+    public interface ITargetFilter : IFilter<ITarget>
 	{
-		bool IsMatch(ITarget target);
 	}
 }
