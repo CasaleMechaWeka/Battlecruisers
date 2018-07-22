@@ -17,6 +17,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private IDroneManager _droneManager;
         private IDroneConsumerFocusHelper _focusHelper;
         private IFactory _factory;
+        private IDroneConsumer _factoryDroneConsumer;
 
 		[SetUp]
 		public void SetuUp()
@@ -33,6 +34,8 @@ namespace BattleCruisers.Tests.AI.Drones
             _focusManager = new DroneConsumerFocusManager(_strategy, _aiCruiser, _focusHelper);
 
             _factory = Substitute.For<IFactory>();
+            _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
+            _factory.DroneConsumer.Returns(_factoryDroneConsumer);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}
@@ -80,6 +83,32 @@ namespace BattleCruisers.Tests.AI.Drones
             _focusHelper.DidNotReceive().FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
         }
         #endregion BuildingStartedConstruction
+
+        #region Factory first unit
+        [Test]
+        public void Factory_StartedUnitConstruction_FirstUnit_Focuses()
+        {
+            FactoryStartBuildingUnit();
+            _droneManager.Received().ToggleDroneConsumerFocus(_factoryDroneConsumer);
+        }
+
+        [Test]
+        public void Factory_StartedUnitConstruction_NotFirstUnit_DoesNotFocus()
+        {
+            // First unit, focuses
+            FactoryStartBuildingUnit();
+            _droneManager.Received().ToggleDroneConsumerFocus(_factoryDroneConsumer);
+
+            // Second unit, does not focus
+            _droneManager.ClearReceivedCalls();
+            _factory.StartedBuildingUnit += Raise.EventWith(_factory, new StartedConstructionEventArgs(buildable: null));
+            _droneManager.DidNotReceive().ToggleDroneConsumerFocus(_factoryDroneConsumer);
+        }
+        #endregion Factory first unit
+
+        // Factory destroyed
+
+        // Dispose
 
         private void FactoryStartBuildingUnit()
 		{
