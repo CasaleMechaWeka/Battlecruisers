@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
-    // FELIX   Test
     public class InProgressBuildingMonitor : IInProgressBuildingMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
