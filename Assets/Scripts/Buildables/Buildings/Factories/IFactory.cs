@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-    // FELIX  Check all event subscribers, see if we want to use IBuilding intead of IBuildable now :)
     public class StartedUnitConstructionEventArgs : BuildableConstructionEventArgs<IUnit>
     {
         public StartedUnitConstructionEventArgs(IUnit unit)
