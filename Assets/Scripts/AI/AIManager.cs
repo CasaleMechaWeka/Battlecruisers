@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.AI.BuildOrders;
-using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.Drones.BuildingMonitors;
-using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
@@ -52,22 +50,6 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
 
-            IFactoryAnalyzer factoryAnalyzer
-                = new FactoryAnalyzer(
-                    new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory),
-                    new FactoryWastingDronesFilter());
-            IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(levelInfo.AICruiser);
-            IDroneConsumerFocusHelper focusHelper 
-                = new DroneConsumerFocusHelper(
-                    levelInfo.AICruiser.DroneManager,
-                    factoryAnalyzer,
-                    new AffordableInProgressNonFocusedProvider(levelInfo.AICruiser.DroneManager, inProgressBuildingMonitor));
-            // FELIX  Store and dispose
-            new DroneConsumerFocusManager(
-                new ResponsiveStrategy(),
-                levelInfo.AICruiser,
-                focusHelper);
-
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
@@ -78,7 +60,7 @@ namespace BattleCruisers.AI
                     _slotNumCalculatorFactory, 
                     _dataProvider.StaticData,
                     _threatMonitorFactory);
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {

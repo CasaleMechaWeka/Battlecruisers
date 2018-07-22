@@ -1,4 +1,7 @@
 ﻿using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.Drones.BuildingMonitors;
+using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -14,13 +17,15 @@ namespace BattleCruisers.AI
     {
         private readonly ITaskProducerFactory _taskProducerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
+        private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory)
+        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory, IFactoryMonitorFactory factoryMonitorFactory)
         {
-            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
+            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory, factoryMonitorFactory);
 
             _taskProducerFactory = taskProducerFactory;
             _buildOrderFactory = buildOrderFactory;
+            _factoryMonitorFactory = factoryMonitorFactory;
         }
 
 		/// <summary>
@@ -38,10 +43,8 @@ namespace BattleCruisers.AI
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
-            
-            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
 
-            return new ArtificialIntelligence(taskConsumer, taskProducers);
+            return CreateAI(levelInfo, tasks, taskProducers);
         }
 
 		/// <summary>
@@ -51,7 +54,7 @@ namespace BattleCruisers.AI
 		/// 3. Replaces destroyed buildings
 		/// </summary>
 		public IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
-		{
+        {
             ITaskList tasks = new TaskList();
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
@@ -81,9 +84,37 @@ namespace BattleCruisers.AI
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
 
-            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
+            return CreateAI(levelInfo, tasks, taskProducers);
+        }
 
-            return new ArtificialIntelligence(taskConsumer, taskProducers);
-		}
+        private IArtificialIntelligence CreateAI(ILevelInfo levelInfo, ITaskList tasks, IList<ITaskProducer> taskProducers)
+        {
+            ITaskConsumer taskConsumer = new TaskConsumer(tasks);
+            DroneConsumerFocusManager focusManager = CreateDroneFocusManager(levelInfo);
+
+            return new ArtificialIntelligence(taskConsumer, taskProducers, focusManager);
+        }
+
+        private DroneConsumerFocusManager CreateDroneFocusManager(ILevelInfo levelInfo)
+        {
+            IFactoryAnalyzer factoryAnalyzer
+                = new FactoryAnalyzer(
+                    new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory),
+                    new FactoryWastingDronesFilter());
+
+            IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(levelInfo.AICruiser);
+
+            IDroneConsumerFocusHelper focusHelper
+                = new DroneConsumerFocusHelper(
+                    levelInfo.AICruiser.DroneManager,
+                    factoryAnalyzer,
+                    new AffordableInProgressNonFocusedProvider(levelInfo.AICruiser.DroneManager, inProgressBuildingMonitor));
+
+            return
+                new DroneConsumerFocusManager(
+                    new ResponsiveStrategy(),
+                    levelInfo.AICruiser,
+                    focusHelper);
+        }
     }
 }

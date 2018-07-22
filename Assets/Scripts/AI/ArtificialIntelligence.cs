@@ -1,4 +1,5 @@
-﻿using BattleCruisers.AI.TaskProducers;
+﻿using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -14,18 +15,21 @@ namespace BattleCruisers.AI
     {
         private readonly ITaskConsumer _taskConsumer;
         private readonly IList<ITaskProducer> _taskProducers;
+        private readonly DroneConsumerFocusManager _focusManager;
 
-        public ArtificialIntelligence(ITaskConsumer taskConsumer, IList<ITaskProducer> taskProducers)
+        public ArtificialIntelligence(ITaskConsumer taskConsumer, IList<ITaskProducer> taskProducers, DroneConsumerFocusManager focusManager)
         {
-            Helper.AssertIsNotNull(taskConsumer, taskProducers);
+            Helper.AssertIsNotNull(taskConsumer, taskProducers, focusManager);
 
             _taskConsumer = taskConsumer;
             _taskProducers = taskProducers;
+            _focusManager = focusManager;
         }
 
         public void DisposeManagedState()
         {
             _taskConsumer.DisposeManagedState();
+            _focusManager.DisposeManagedState();
 
             foreach (ITaskProducer taskProducer in _taskProducers)
             {
