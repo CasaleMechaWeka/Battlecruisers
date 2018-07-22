@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.Drones;
+using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;

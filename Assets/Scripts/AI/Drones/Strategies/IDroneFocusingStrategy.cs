@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.AI.Drones
+﻿namespace BattleCruisers.AI.Drones.Strategies
 {
     public interface IDroneFocusingStrategy
     {
