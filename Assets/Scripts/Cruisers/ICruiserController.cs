@@ -17,7 +17,6 @@ namespace BattleCruisers.Cruisers
 		}
     }
 
-    // FELIX  Check all event subscribers, see if we want to use IBuilding intead of IBuildable now :)
     public class StartedBuildingConstructionEventArgs : BuildableConstructionEventArgs<IBuilding>
     {
         public StartedBuildingConstructionEventArgs(IBuilding building)
