@@ -5,6 +5,11 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public class FactoryWastingDronesFilter : IFilter<IFactoryMonitor>
     {
+        /// <summary>
+        /// A factory is wrongly using drones if:
+        /// + It has completed building the desired number of units
+        /// + AND it is using drones
+        /// </summary>
         public bool IsMatch(IFactoryMonitor factoryMonitor)
         {
             return

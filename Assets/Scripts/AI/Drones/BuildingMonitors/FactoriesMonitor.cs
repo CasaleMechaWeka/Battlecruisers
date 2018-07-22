@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +13,18 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
     {
         private readonly ICruiserController _cruiser;
         private readonly IFactoryMonitorFactory _monitorFactory;
+        private readonly IFilter<IFactoryMonitor> _wastingDronesFilter;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
-        public bool AreAnyFactoriesWronglyUsingDrones { get { return _completedFactories.Any(IsFactoryWronglyUsingDrones); } }
+        public bool AreAnyFactoriesWronglyUsingDrones { get { return _completedFactories.Any(_wastingDronesFilter.IsMatch); } }
 
-        public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory)
+        public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory, IFilter<IFactoryMonitor> wastingDronesFilter)
         {
-            Helper.AssertIsNotNull(cruiser, monitorFactory);
+            Helper.AssertIsNotNull(cruiser, monitorFactory, wastingDronesFilter);
 
             _cruiser = cruiser;
             _monitorFactory = monitorFactory;
+            _wastingDronesFilter = wastingDronesFilter;
             _completedFactories = new List<IFactoryMonitor>();
 
             _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
@@ -58,20 +59,6 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
         private IFactoryMonitor GetMonitor(IFactory factory)
         {
             return _completedFactories.FirstOrDefault(monitor => ReferenceEquals(monitor.Factory, factory));
-        }
-
-        /// <summary>
-        /// A factory is wrongly using drones if:
-        /// + It has completed building the desired number of units
-        /// + AND it is using drones
-        /// </summary>
-        /// FELIX  Remove to separate class, improves testability :)
-        private bool IsFactoryWronglyUsingDrones(IFactoryMonitor factoryMonitor)
-        {
-            return
-                factoryMonitor.HasFactoryBuiltDesiredNumOfUnits
-                && factoryMonitor.Factory.DroneConsumer != null
-                && factoryMonitor.Factory.DroneConsumer.State != DroneConsumerState.Idle;
         }
 
         public void DisposeManagedState()

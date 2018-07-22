@@ -52,11 +52,12 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
 
+            IFilter<IFactoryMonitor> wastingDronesFilter = new FactoryWastingDronesFilter();
             IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(levelInfo.AICruiser);
             IDroneConsumerFocusHelper focusHelper 
                 = new DroneConsumerFocusHelper(
                     levelInfo.AICruiser.DroneManager,
-                    new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory),
+                    new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory, wastingDronesFilter),
                     new AffordableInProgressNonAffordableProvider(levelInfo.AICruiser.DroneManager, inProgressBuildingMonitor));
             // FELIX  Store and dispose
             new DroneConsumerFocusManager(
