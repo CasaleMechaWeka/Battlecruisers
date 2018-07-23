@@ -19,20 +19,22 @@ namespace BattleCruisers.AI
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
+        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, variableDelayDeferrer);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
             _deferrer = deferrer;
-			
+            _variableDelayDeferrer = variableDelayDeferrer;
+
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
 			_threatMonitorFactory = new ThreatMonitorFactory();
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
@@ -59,7 +61,8 @@ namespace BattleCruisers.AI
                     taskFactory, 
                     _slotNumCalculatorFactory, 
                     _dataProvider.StaticData,
-                    _threatMonitorFactory);
+                    _threatMonitorFactory,
+                    _variableDelayDeferrer);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
             switch (_dataProvider.SettingsManager.AIDifficulty)

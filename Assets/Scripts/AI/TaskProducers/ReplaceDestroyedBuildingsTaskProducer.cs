@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -34,16 +35,23 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class ReplaceDestroyedBuildingsTaskProducer : TaskProducer
     {
+        private readonly IVariableDelayDeferrer _deferrer;
         private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
+
+        private const float TASK_DELAY_IN_S = 1;
 
         public ReplaceDestroyedBuildingsTaskProducer(
             ITaskList tasks, 
             ICruiserController cruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
-            IList<BuildingKey> buildingKeys)
+            IList<BuildingKey> buildingKeys,
+            IVariableDelayDeferrer deferrer)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
+            Assert.IsNotNull(deferrer);
+
+            _deferrer = deferrer;
             _buildingNamesToKeys = CreateMap(buildingKeys);
 
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
@@ -71,7 +79,15 @@ namespace BattleCruisers.AI.TaskProducers
 
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
             TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
-            _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
+
+            // Do not want to instantly start building, otherwise lasers (like the railgun)
+            // will keep destroying the same building that is instantly being rebuilt,
+            // making those lasers useless :P  Hence wait slightly before trying to rebuild
+            // a building.
+            _deferrer.Defer(() =>
+            {
+                _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
+            }, delayInS: TASK_DELAY_IN_S);
 		}
 
         public override void DisposeManagedState()

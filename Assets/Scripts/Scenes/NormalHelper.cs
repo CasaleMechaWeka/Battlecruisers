@@ -23,17 +23,19 @@ namespace BattleCruisers.Scenes
         private readonly IDataProvider _dataProvider;
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
+        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
 
-        public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer)
+        public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, deferrer);
+            Helper.AssertIsNotNull(dataProvider, prefabFactory, deferrer, variableDelayDeferrer);
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+            _variableDelayDeferrer = variableDelayDeferrer;
 
             IBuildProgressCalculator normalCalculator = new LinearCalculator(FindBuildSpeedMultiplier(_dataProvider.SettingsManager));
             PlayerCruiserBuildProgressCalculator = normalCalculator;
@@ -68,7 +70,7 @@ namespace BattleCruisers.Scenes
         public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.StaticData, _prefabFactory, currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _deferrer);
+            IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _deferrer, _variableDelayDeferrer);
             return aiManager.CreateAI(levelInfo);
 		}
 		
