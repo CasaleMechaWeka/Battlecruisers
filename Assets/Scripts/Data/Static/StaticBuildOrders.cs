@@ -20,12 +20,12 @@ namespace BattleCruisers.Data.Static
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new OffensivePrefabKeyWrapper(),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper(),
-						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper()
 					};
 				}
@@ -47,8 +47,9 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
-						new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper()
 					};
 				}
@@ -101,7 +102,6 @@ namespace BattleCruisers.Data.Static
 						new AntiNavalPrefabKeyWrapper(),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper(),
 						new AntiAirPrefabKeyWrapper(),
 						new AntiNavalPrefabKeyWrapper(),
@@ -112,9 +112,6 @@ namespace BattleCruisers.Data.Static
 						new AntiNavalPrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
 						new AntiAirPrefabKeyWrapper(),
-						new AntiNavalPrefabKeyWrapper(),
-						new AntiAirPrefabKeyWrapper(),
-						new OffensivePrefabKeyWrapper(),
                         new OffensivePrefabKeyWrapper()
 					};
 				}
@@ -157,8 +154,6 @@ namespace BattleCruisers.Data.Static
                         new AntiNavalPrefabKeyWrapper(),
                         new OffensivePrefabKeyWrapper(),
                         new AntiAirPrefabKeyWrapper(),
-						new AntiNavalPrefabKeyWrapper(),
-						new AntiAirPrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper()
 					});
@@ -181,11 +176,10 @@ namespace BattleCruisers.Data.Static
 						new AntiNavalPrefabKeyWrapper(),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new AntiAirPrefabKeyWrapper(),
                         new AntiNavalPrefabKeyWrapper(),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil)
                     };
                 }
             }
@@ -211,7 +205,7 @@ namespace BattleCruisers.Data.Static
 						new OffensivePrefabKeyWrapper(),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper(),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation)
 					};
                 }
             }
@@ -247,9 +241,7 @@ namespace BattleCruisers.Data.Static
 						new AntiAirPrefabKeyWrapper(),
 						new AntiNavalPrefabKeyWrapper(),
 						new AntiAirPrefabKeyWrapper(),
-						new AntiNavalPrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
-						new AntiAirPrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper(),
 						new OffensivePrefabKeyWrapper()
 					};
