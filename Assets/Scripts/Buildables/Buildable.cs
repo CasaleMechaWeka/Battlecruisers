@@ -211,7 +211,7 @@ namespace BattleCruisers.Buildables
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             _cumulativeBuildProgressInDroneS = 0;
 
-            HealthGainPerDroneS = _buildTimeInDroneSeconds / maxHealth;
+            HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
 
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
