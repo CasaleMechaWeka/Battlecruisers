@@ -120,24 +120,22 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			ChangePanel(panel, factory);
 		}
 
-		private bool ChangePanel(Presentable panel, object activationParameter = null)
+        /// <summary>
+        /// Always want to dismiss the current panel, even if we are switching to the same panel.
+        /// This is because the activation parameter may have changed.  Ie, the user may be 
+        /// switching from the aircraft units panel for one factory to another factory.
+        /// </summary>
+		private void ChangePanel(Presentable panel, object activationParameter = null)
 		{
-			if (_currentPanel != panel)
+			if (_currentPanel != null)
 			{
-				if (_currentPanel != null)
-				{
-					_currentPanel.OnDismissing();
-					_currentPanel.gameObject.SetActive(false);
-				}
-
-				panel.OnPresenting(activationParameter);
-				panel.gameObject.SetActive(true);
-				_currentPanel = panel;
-
-				return true;
+				_currentPanel.OnDismissing();
+				_currentPanel.gameObject.SetActive(false);
 			}
 
-			return false;
+			panel.OnPresenting(activationParameter);
+			panel.gameObject.SetActive(true);
+			_currentPanel = panel;
 		}
 
         public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
