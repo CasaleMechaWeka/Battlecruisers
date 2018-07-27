@@ -6,7 +6,7 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public class SlotBoostFeedbackInitialiser : MonoBehaviour
     {
-        public SlotBoostFeedback InitialiseSlotBoostFeedback(ISlot parentSlot)
+        public SlotBoostFeedback CreateSlotBoostFeedback(ISlot parentSlot)
         {
             Assert.IsNotNull(parentSlot);
 

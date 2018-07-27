@@ -21,6 +21,7 @@ namespace BattleCruisers.Cruisers.Slots
         private ICruiser _parentCruiser;
         private IBuildingPlacer _buildingPlacer;
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
+        private SlotBoostFeedback _boostFeedback;
 
         public SlotType type;
         public SlotType Type { get { return type; } }
@@ -86,7 +87,7 @@ namespace BattleCruisers.Cruisers.Slots
             NeighbouringSlots = neighbouringSlots;
             _buildingPlacer = buildingPlacer;
 
-			_renderer = GetComponent<SpriteRenderer>();
+			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
 			Assert.IsNotNull(_renderer);
 
             _collider = GetComponent<BoxCollider2D>();
@@ -99,7 +100,11 @@ namespace BattleCruisers.Cruisers.Slots
             _highlightedEmptyState = new HighlightedEmptyState(_parentCruiser, this);
 
             CurrentState = _defaultState;
-		}
+
+            SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
+            Assert.IsNotNull(feedbackInitialiser);
+            _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
+        }
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
