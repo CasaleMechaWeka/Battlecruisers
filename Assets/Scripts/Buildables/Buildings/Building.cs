@@ -5,11 +5,10 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-    public class Building : Buildable, IPointerClickHandler, IBuilding
+    public class Building : Buildable, IBuilding
 	{
         private BoxCollider2D _collider;
 
