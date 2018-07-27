@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Common
             Assert.IsTrue(doubleClickThresholdInS > 0);
 
             _doubleClickThresholdInS = doubleClickThresholdInS;
-            _lastClickTime = 0;
+            _lastClickTime = float.MinValue;
         }
 
         public event EventHandler SingleClick;
@@ -28,6 +28,9 @@ namespace BattleCruisers.UI.Common
                 {
                     DoubleClick.Invoke(this, EventArgs.Empty);
                 }
+
+                // Don't want third click within threshold to count as a second double click :)
+                _lastClickTime = float.MinValue;
             }
             else
             {
@@ -36,9 +39,9 @@ namespace BattleCruisers.UI.Common
                 {
                     SingleClick.Invoke(this, EventArgs.Empty);
                 }
-            }
 
-            _lastClickTime = timeSinceGameStartInS;
+                _lastClickTime = timeSinceGameStartInS;
+            }
         }
     }
 }
