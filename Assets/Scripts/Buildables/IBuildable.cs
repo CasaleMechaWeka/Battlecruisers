@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
-using UnityEngine;
+using System;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables
 {
