@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Units
 
 		protected virtual void OnFixedUpdate() { }
 
-		protected override void OnClicked()
+		protected override void OnSingleClick()
 		{
 			_uiManager.ShowUnitDetails(this);
 		}

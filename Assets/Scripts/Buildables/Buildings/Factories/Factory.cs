@@ -76,9 +76,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             return new TextMeshWrapper(repairDroneNumText);
         }
 
-        protected override void OnClicked()
+        protected override void OnSingleClick()
 		{
-			base.OnClicked();
+			base.OnSingleClick();
 
 			if (Faction == Faction.Blues)
 			{

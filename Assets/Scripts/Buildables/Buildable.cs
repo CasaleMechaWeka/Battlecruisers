@@ -10,6 +10,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
+using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -30,6 +31,7 @@ namespace BattleCruisers.Buildables
         private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
         private HealthBarController _healthBar;
+        private IClickHandler _clickHandler;
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
@@ -215,9 +217,44 @@ namespace BattleCruisers.Buildables
 
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+
+            _clickHandler = _factoryProvider.ClickHandlerFactory.CreateClickHandler();
+            _clickHandler.SingleClick += ClickHandler_SingleClick;
+            _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
         protected virtual void OnInitialised() { }
+
+        private void ClickHandler_SingleClick(object sender, EventArgs e)
+        {
+            OnSingleClick();
+        }
+
+        protected abstract void OnSingleClick();
+
+        private void ClickHandler_DoubleClick(object sender, EventArgs e)
+        {
+            OnDoubleClick();
+        }
+
+        protected virtual void OnDoubleClick() { }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (DeleteCountdown.IsInProgress)
+            {
+                CancelDelete();
+            }
+            else
+            {
+                _clickHandler.OnClick(Time.time);
+            }
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
@@ -381,24 +418,5 @@ namespace BattleCruisers.Buildables
         {
             DeleteCountdown.Cancel();
         }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (DeleteCountdown.IsInProgress)
-            {
-                CancelDelete();
-            }
-            else
-            {
-                OnClicked();
-            }
-			
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        protected abstract void OnClicked();
     }
 }

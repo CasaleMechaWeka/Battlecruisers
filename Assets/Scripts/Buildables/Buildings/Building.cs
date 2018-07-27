@@ -63,7 +63,7 @@ namespace BattleCruisers.Buildables.Buildings
             OnInitialised();
 		}
 
-        protected override void OnClicked()
+        protected override void OnSingleClick()
         {
             _uiManager.SelectBuilding(this);
         }
