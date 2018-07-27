@@ -66,5 +66,16 @@ namespace BattleCruisers.Buildables.Buildings
         {
             _uiManager.SelectBuilding(this);
         }
-	}
+
+        protected override void OnDoubleClick()
+        {
+            base.OnDoubleClick();
+
+            // Toggle drone consumer focus on double click :)
+            if (BuildableState == BuildableState.InProgress)
+            {
+                _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+            }
+        }
+    }
 }
