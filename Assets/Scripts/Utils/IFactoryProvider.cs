@@ -15,6 +15,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.UI.Common;
 
 namespace BattleCruisers.Utils
 {
@@ -39,5 +40,6 @@ namespace BattleCruisers.Utils
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
         ITurretStatsFactory TurretStatsFactory { get; }
+        IClickHandlerFactory ClickHandlerFactory { get; }
     }
 }

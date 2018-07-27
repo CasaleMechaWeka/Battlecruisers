@@ -3,19 +3,20 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils
@@ -41,6 +42,7 @@ namespace BattleCruisers.Utils
         public ISoundFetcher SoundFetcher { get; private set; }
         public ISoundManager SoundManager { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
+        public IClickHandlerFactory ClickHandlerFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -73,6 +75,7 @@ namespace BattleCruisers.Utils
                     new AssignerFactory(),
                     spriteProvider);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
-		}
+            ClickHandlerFactory = new ClickHandlerFactory();
+        }
 	}
 }
