@@ -10,6 +10,8 @@
         public const float ENABLED_UI_ALPHA = 1.0f;
 		
         public const float MAX_ACCURACY = 1;
+
+        public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
     }
 
     public static class BuildSpeedMultipliers
