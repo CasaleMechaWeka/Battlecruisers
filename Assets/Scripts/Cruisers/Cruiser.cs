@@ -94,7 +94,7 @@ namespace BattleCruisers.Cruisers
 
         protected override ITextMesh GetRepairDroneNumText()
         {
-            TextMesh numOfRepairDronesText = GetComponentInChildren<TextMesh>(includeInactive: true);
+            TextMesh numOfRepairDronesText = transform.FindNamedComponent<TextMesh>("NumOfDrones");
             Assert.IsNotNull(numOfRepairDronesText);
             return new TextMeshWrapper(numOfRepairDronesText);
         }
