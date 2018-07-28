@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         {
             base.Start(completionCallback);
 
-            _factoryProvider.FindItem().StartBuildingUnit(null);
+            _factoryProvider.FindItem().StopBuildingUnit();
 
             OnCompleted();
         }
