@@ -43,6 +43,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	                if (_unitWrapper != null)
 	                {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
+
+                        // If the user has decided to build a unit, they want this unit built
+                        // now.  Hence focus on this drone consumer.
+                        if (DroneConsumer.State == DroneConsumerState.Idle)
+                        {
+                            _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+                        }
 	                }
 				}
 			}
