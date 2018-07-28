@@ -238,7 +238,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             if (IsUnitPaused)
             {
                 Assert.IsNotNull(_unitWrapper);
+
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+                IsUnitPaused = false;
             }
         }
     }
