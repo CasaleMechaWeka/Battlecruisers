@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		{
             base.HandleClick();
 
-			_factory.UnitWrapper = _unitWrapper;
+            _factory.StartBuildingUnit(_unitWrapper);
 			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
 	}

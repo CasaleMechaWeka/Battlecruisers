@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, IKillCountController killCounter)
         {
-            factory.UnitWrapper = unitToBuild;
+            factory.StartBuildingUnit(unitToBuild);
             factory.CompletedBuildingUnit += (sender, e) => OnFactoryCompletedUnit(e.Buildable, killCounter);
         }
 
@@ -128,11 +128,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             // Stop producing units
             if (!_navalFactory.IsDestroyed)
             {
-                _navalFactory.UnitWrapper = null;
+                _navalFactory.StopBuildingUnit();
             }
             if (!_airFactory.IsDestroyed)
             {
-                _airFactory.UnitWrapper = null;
+                _airFactory.StopBuildingUnit();
             }
 
             int currentAircraftKillCount = _aircraftKillCount.KillCount;

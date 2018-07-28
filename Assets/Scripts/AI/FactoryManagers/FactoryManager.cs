@@ -59,7 +59,7 @@ namespace BattleCruisers.AI.FactoryManagers
 			IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));
 
-            factory.UnitWrapper = _unitChooser.ChosenUnit;
+            factory.StartBuildingUnit(_unitChooser.ChosenUnit);
         }
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
@@ -67,7 +67,7 @@ namespace BattleCruisers.AI.FactoryManagers
 			IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));
 
-            factory.UnitWrapper = _unitChooser.ChosenUnit;
+            factory.StartBuildingUnit(_unitChooser.ChosenUnit);
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
@@ -94,7 +94,7 @@ namespace BattleCruisers.AI.FactoryManagers
                 if (factory.BuildableState == BuildableState.Completed
                     && factory.UnitWrapper == null)
                 {
-                    factory.UnitWrapper = _unitChooser.ChosenUnit;
+                    factory.StartBuildingUnit(_unitChooser.ChosenUnit);
                 }
             }
         }

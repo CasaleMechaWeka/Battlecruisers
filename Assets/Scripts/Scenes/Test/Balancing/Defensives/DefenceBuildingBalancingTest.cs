@@ -146,7 +146,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
-                    _offensiveFactory.UnitWrapper = _prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey);
+                    _offensiveFactory.StartBuildingUnit(_prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
                     _offensiveFactory.CompletedBuildingUnit += Factory_CompletedUnit;
                 };
 
@@ -180,7 +180,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         protected void OnAllDefenceBuildingsDestroyed()
         {
             // Stop producing units
-            _offensiveFactory.UnitWrapper = null;
+            _offensiveFactory.StopBuildingUnit();
 
             int currentUnitKillCount = _unitKillCount.KillCount;
 

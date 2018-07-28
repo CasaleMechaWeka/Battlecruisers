@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         private IBuildableWrapper<IUnit> _unitWrapper;
 		public IBuildableWrapper<IUnit> UnitWrapper 
 		{ 
-			set	
+			private set	
 			{
 				Logging.Log(Tags.FACTORY, "set_UnitWrapper: " + _unitWrapper + " > " + value);
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
@@ -35,6 +35,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	                {
                         CleanUpDroneConsumer();
 	                    DestroyUnitUnderConstruction();
+                        IsUnitPaused = false;
 	                }
 
 	                _unitWrapper = value;
@@ -57,6 +58,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 return DroneConsumer != null ? DroneConsumer.NumOfDrones : 0;
             }
         }
+
+        public bool IsUnitPaused { get; private set; }
         #endregion Properties
 
         /// <summary>
@@ -180,7 +183,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			return DroneConsumer;
 		}
 
-		protected override void OnDestroyed()
+        public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
+
+        public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
+
+        protected override void OnDestroyed()
 		{
 			Logging.Log(Tags.FACTORY, "OnDestroyed()");
 
@@ -206,8 +213,33 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			_unitUnderConstruction = null;
 		}
 
-		public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
+        public void StartBuildingUnit(IBuildableWrapper<IUnit> unit)
+        {
+            UnitWrapper = unit;
+        }
 
-		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
-	}
+        public void StopBuildingUnit()
+        {
+            UnitWrapper = null;
+        }
+
+        public void PauseBuildingUnit()
+        {
+            if (_unitWrapper != null
+                && !IsUnitPaused)
+            {
+                _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+                IsUnitPaused = true;
+            }
+        }
+
+        public void ResumeBuildingUnit()
+        {
+            if (IsUnitPaused)
+            {
+                Assert.IsNotNull(_unitWrapper);
+                _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+            }
+        }
+    }
 }

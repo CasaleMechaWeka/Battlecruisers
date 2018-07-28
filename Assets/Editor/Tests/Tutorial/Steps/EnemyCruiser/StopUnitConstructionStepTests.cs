@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 
             _tutorialStep.Start(_completionCallback);
 
-            factory.Received().UnitWrapper = null;
+            factory.Received().StopBuildingUnit();
 
             Assert.AreEqual(1, _callbackCounter);
         }

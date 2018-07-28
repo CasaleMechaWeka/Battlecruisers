@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         {
             IFactory factory = Substitute.For<IFactory>();
             factory.UnitCategory.Returns(unitCategory);
-            factory.UnitWrapper = null;
+            factory.UnitWrapper.Returns((IBuildableWrapper<IUnit>)null);
             factory.BuildableState.Returns(buildableState);
             return factory;
         }
@@ -83,9 +83,9 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _friendlyCruiser.StartConstructingBuilding(_navalFactory2);
             _friendlyCruiser.StartConstructingBuilding(_notCompletedNavalFactory);
 
-            _navalFactory.UnitWrapper = _unit;
-            _navalFactory2.UnitWrapper = null;
-            _notCompletedNavalFactory.UnitWrapper = null;
+            _navalFactory.UnitWrapper.Returns(_unit);
+            _navalFactory2.UnitWrapper.Returns((IBuildableWrapper<IUnit>)null);
+            _notCompletedNavalFactory.UnitWrapper.Returns((IBuildableWrapper<IUnit>)null);
 
             _unitChooser.ChosenUnit.Returns(_unit2);
             _unitChooser.ChosenUnitChanged += Raise.Event();

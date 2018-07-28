@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 		private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
-			((Factory)sender).UnitWrapper = unitPrefab;
+            ((Factory)sender).StartBuildingUnit(unitPrefab);
 		}
 	}
 }

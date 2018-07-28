@@ -34,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
             base.Start(completionCallback);
 
             IBuildableWrapper<IUnit> unitWrapperPrefab = _prefabFactory.GetUnitWrapperPrefab(_unitToConstruct);
-            _factoryProvider.FindItem().UnitWrapper = unitWrapperPrefab;
+            _factoryProvider.FindItem().StartBuildingUnit(unitWrapperPrefab);
 
             OnCompleted();
         }
