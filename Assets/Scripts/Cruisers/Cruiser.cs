@@ -198,9 +198,6 @@ namespace BattleCruisers.Cruisers
 
         void Update()
         {
-            // FELIX  TEMP
-            return;
-
             RepairManager.Repair(Time.deltaTime);
         }
 
