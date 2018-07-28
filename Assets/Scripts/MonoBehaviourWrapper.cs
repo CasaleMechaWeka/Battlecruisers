@@ -2,7 +2,7 @@
 
 namespace BattleCruisers
 {
-    public class MonoBehaviourWrapper : MonoBehaviour , IGameObject
+    public class MonoBehaviourWrapper : MonoBehaviour, IGameObject
     {
         public Vector2 Position { get { return gameObject.transform.position; } }
 
