@@ -45,12 +45,12 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         }
 
         [Test]
-        public void MatchingFactoryBuilt_SetsUnit()
+        public void MatchingFactoryBuilt_StartsBuildingUnit()
         {
             _friendlyCruiser.StartConstructingBuilding(_navalFactory);
             Assert.IsNull(_navalFactory.UnitWrapper);
             _navalFactory.CompletedBuildable += Raise.Event();
-            Assert.AreSame(_unit, _navalFactory.UnitWrapper);
+            _navalFactory.Received().StartBuildingUnit(_unit);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         }
 
 		[Test]
-		public void NavalFactory_UnitCompleted_SetsUnit()
+		public void NavalFactory_UnitCompleted_UpdatesChosenUnit()
 		{
             // Factory completed
             _friendlyCruiser.StartConstructingBuilding(_navalFactory);
@@ -72,11 +72,11 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 
             // Unit completed
             _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new CompletedUnitConstructionEventArgs(_unit.Buildable));
-			Assert.AreSame(_unit2, _navalFactory.UnitWrapper);
+            _navalFactory.Received().StartBuildingUnit(_unit2);
 		}
 
         [Test]
-        public void ChosenUnitChanged_SetsUnit_ForCompletedAndInactiveFactories()
+        public void ChosenUnitChanged_StartsBuildingUnit_ForCompletedAndInactiveFactories()
         {
             // Need to start buliding factories for manager to keep track of them
             _friendlyCruiser.StartConstructingBuilding(_navalFactory);
@@ -94,10 +94,10 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             Assert.AreSame(_unit, _navalFactory.UnitWrapper);
 
             // Factory was inactive, so unit assigned
-            Assert.AreSame(_unit2, _navalFactory2.UnitWrapper);
+            _navalFactory2.Received().StartBuildingUnit(_unit2);
 
             // Factory was inactive, but not yet completed.  So no unit assignment.
-            Assert.IsNull(_notCompletedNavalFactory.UnitWrapper);
+            _notCompletedNavalFactory.DidNotReceiveWithAnyArgs().StartBuildingUnit(null);
         }
     }
 }
