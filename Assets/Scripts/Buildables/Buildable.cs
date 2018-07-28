@@ -404,7 +404,7 @@ namespace BattleCruisers.Buildables
                 && BuildableState == BuildableState.Completed;
         }
 
-        private void ToggleDroneConsumerFocusCommandExecute()
+        protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
             _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
         }

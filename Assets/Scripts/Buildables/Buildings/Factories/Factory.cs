@@ -243,5 +243,18 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 IsUnitPaused = false;
             }
         }
+
+        protected override void ToggleDroneConsumerFocusCommandExecute()
+        {
+            if (IsUnitPaused)
+            {
+                // Cannot focus on drone consumer if they are not activated.
+                // Hence, activate drone consumer before focusing on them :)
+                _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+                IsUnitPaused = false;
+            }
+
+            base.ToggleDroneConsumerFocusCommandExecute();
+        }
     }
 }
