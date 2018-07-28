@@ -33,13 +33,14 @@ namespace BattleCruisers.Cruisers.Slots
         }
     }
 
-    public interface ISlot : IGameObject, IHighlightable, IClickableEmitter
+    public interface ISlot : IHighlightable, IClickableEmitter
     {
         bool IsFree { get; }
         SlotType Type { get; }
         Direction Direction { get; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
+        bool IsVisible { get; set; }
 
         /// <summary>
         /// Slots are ordered via their index, from the crusier front (low

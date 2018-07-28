@@ -14,7 +14,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class Slot : MonoBehaviourWrapper, ISlot, IPointerClickHandler
+    public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
     {
         private SpriteRenderer _renderer;
         private BoxCollider2D _collider;
@@ -45,6 +45,15 @@ namespace BattleCruisers.Cruisers.Slots
                 _currentState = value;
                 _renderer.color = _currentState.Colour;
             }
+        }
+
+        /// <summary>
+        /// Only show/hide slot sprite renderer.  Always show boost feedback.
+        /// </summary>
+        public bool IsVisible
+        {
+            get { return _renderer.gameObject.activeSelf; }
+            set { _renderer.gameObject.SetActive(value); }
         }
 
         private IBuilding _building;
