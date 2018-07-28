@@ -3,15 +3,21 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class UnitButtonController : BuildableButtonController
 	{
+        // The unit wrapper is always the same for this button.  The factory
+        // can change :)
 		private IBuildableWrapper<IUnit> _unitWrapper;
+        // FELIX  Rename to _currentFactory :)  
 		private IFactory _factory;
+        private IUnitClickHandler _unitClickHandler;
 
-		public override bool IsMatch
+
+        public override bool IsMatch
 		{
 			get
 			{
@@ -22,11 +28,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			}
 		}
 
-		public void Initialise(IBuildableWrapper<IUnit> unitWrapper, IUIManager uiManager, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+		public void Initialise(
+            IBuildableWrapper<IUnit> unitWrapper, 
+            IUIManager uiManager, 
+            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
+            IUnitClickHandler unitClickHandler)
 		{
+            Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
+
             base.Initialise(unitWrapper.Buildable, uiManager, shouldBeEnabledFilter);
 
 			_unitWrapper = unitWrapper;
+            _unitClickHandler = unitClickHandler;
 		}
 
 		public override void OnPresenting(object activationParameter)
@@ -63,7 +76,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		{
             base.HandleClick();
 
-            _factory.StartBuildingUnit(_unitWrapper);
+            Assert.IsNotNull(_factory);
+
+            _unitClickHandler.HandleUnitClick(_unitWrapper, _factory);
 			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
 	}

@@ -19,8 +19,9 @@ namespace BattleCruisers.UI.BattleScene
         private IBroadcastingFilter<BuildingCategory> _shouldBuildingCategoryButtonBeEnabledFilter;
         private IBroadcastingFilter _shouldBackButtonBeEnabledFilter;
 		private Canvas _canvas;
+        private IUnitClickHandler _unitClickHandler;
 
-		public GameObject panelPrefab;
+        public GameObject panelPrefab;
         public BuildingCategoryButton buildingCategoryButtonPrefab;
 		public Button buildingButtonPrefab;
 		public Button unitButtonPrefab;
@@ -45,6 +46,7 @@ namespace BattleCruisers.UI.BattleScene
             _shouldBuildableButtonBeEnabledFilter = shouldBuildableButtonBeEnabledFilter;
             _shouldBuildingCategoryButtonBeEnabledFilter = shouldBuildingCategoryButtonBeEnabledFilter;
             _shouldBackButtonBeEnabledFilter = shouldBackButtonBeEnabledFilter;
+            _unitClickHandler = new UnitClickHandler();
 
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
@@ -83,7 +85,7 @@ namespace BattleCruisers.UI.BattleScene
 			Button button = Instantiate(unitButtonPrefab);
 			button.transform.SetParent(buttonParent.transform, worldPositionStays: false);
 			UnitButtonController controller = button.GetComponent<UnitButtonController>();
-            controller.Initialise(unitWrapper, _uiManager, _shouldBuildableButtonBeEnabledFilter);
+            controller.Initialise(unitWrapper, _uiManager, _shouldBuildableButtonBeEnabledFilter, _unitClickHandler);
 			return controller;
 		}
 
