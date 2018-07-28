@@ -41,22 +41,16 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	                _unitWrapper = value;
 
 	                if (_unitWrapper != null)
-	                {
+                    {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
-
-                        // If the user has decided to build a unit, they want this unit built
-                        // now.  Hence focus on this drone consumer.
-                        if (DroneConsumer.State == DroneConsumerState.Idle)
-                        {
-                            _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
-                        }
-	                }
-				}
+                        EnsureDroneConsumerHasHighestPriority();
+                    }
+                }
 			}
 			get { return _unitWrapper; }
 		}
 
-		protected abstract LayerMask UnitLayerMask { get; }
+        protected abstract LayerMask UnitLayerMask { get; }
 
         public int NumOfDrones
         {
@@ -247,7 +241,16 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 Assert.IsNotNull(_unitWrapper);
 
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+                EnsureDroneConsumerHasHighestPriority();
                 IsUnitPaused = false;
+            }
+        }
+
+        private void EnsureDroneConsumerHasHighestPriority()
+        {
+            if (DroneConsumer.State == DroneConsumerState.Idle)
+            {
+                _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
             }
         }
 
