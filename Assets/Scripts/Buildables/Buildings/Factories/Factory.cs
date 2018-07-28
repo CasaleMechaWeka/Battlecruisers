@@ -1,9 +1,8 @@
-﻿using System;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
