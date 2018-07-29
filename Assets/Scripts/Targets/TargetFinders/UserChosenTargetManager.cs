@@ -9,7 +9,6 @@ namespace BattleCruisers.Targets.TargetFinders
     /// trumping other forms of target finding.  This class keeps track
     /// of that target.
     /// </summary>
-    /// FELIX  Test, use
     public class UserChosenTargetManager : IUserChosenTargetManager
     {
         private ITarget _userChosenTarget;
@@ -18,6 +17,11 @@ namespace BattleCruisers.Targets.TargetFinders
             get { return _userChosenTarget; }
             set
             {
+                if (ReferenceEquals(_userChosenTarget, value))
+                {
+                    return;
+                }
+
                 if (_userChosenTarget != null)
                 {
                     if (TargetLost != null)
