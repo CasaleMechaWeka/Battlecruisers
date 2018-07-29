@@ -37,6 +37,27 @@ namespace BattleCruisers.Targets.TargetProviders
             }
         }
 
+        // Highest priority in range target
+        private IRankedTarget _inRangeTarget;
+        ITarget ITargetConsumer.Target
+        {
+            set
+            {
+                Logging.Log(Tags.TARGET_PROVIDERS, "Assigned target: " + value);
+
+                int targetRank = value != null ? _targetRanker.RankTarget(value) : BaseTargetRanker.MIN_TARGET_RANK;
+                _inRangeTarget = new RankedTarget(targetRank, value);
+                UpdateHighestPriorityTarget();
+
+                if (NewInRangeTarget != null)
+                {
+                    NewInRangeTarget.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        public event EventHandler NewInRangeTarget;
+
         public HighestPriorityTargetProvider(ITargetRanker targetRanker, ITargetFilter attackingTargetFilter, IDamagable parentDamagable)
         {
             Helper.AssertIsNotNull(targetRanker, attackingTargetFilter, parentDamagable);
@@ -53,27 +74,6 @@ namespace BattleCruisers.Targets.TargetProviders
 
             Target = null;
         }
-
-        // Highest priority in range target
-        private IRankedTarget _inRangeTarget;
-        ITarget ITargetConsumer.Target 
-        { 
-            set 
-            {
-                Logging.Log(Tags.TARGET_PROVIDERS, "Assigned target: " + value);
-
-                int targetRank = value != null ? _targetRanker.RankTarget(value) : BaseTargetRanker.MIN_TARGET_RANK;
-                _inRangeTarget = new RankedTarget(targetRank, value);
-                UpdateHighestPriorityTarget();
-
-                if (NewInRangeTarget != null)
-                {
-                    NewInRangeTarget.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        public event EventHandler NewInRangeTarget;
 
         private void _parentDamagable_Damaged(object sender, DamagedEventArgs e)
         {
