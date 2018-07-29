@@ -1,8 +1,11 @@
-﻿namespace BattleCruisers.Targets.TargetFinders
+﻿using BattleCruisers.Targets.TargetProviders;
+
+namespace BattleCruisers.Targets.TargetFinders
 {
     public interface IUserChosenTargetManager : 
         ITargetFinder, 
-        IUserChosenTargetTracker
+        ITargetConsumer,
+        ITargetProvider
     {
         // empty
     }

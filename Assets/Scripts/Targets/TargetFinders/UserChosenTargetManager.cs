@@ -13,9 +13,9 @@ namespace BattleCruisers.Targets.TargetFinders
     public class UserChosenTargetManager : IUserChosenTargetManager
     {
         private ITarget _userChosenTarget;
-        public ITarget UserChosenTarget
+        public ITarget Target
         {
-            private get { return _userChosenTarget; }
+            get { return _userChosenTarget; }
             set
             {
                 if (_userChosenTarget != null)
@@ -45,8 +45,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
         private void _userChosenTarget_Destroyed(object sender, DestroyedEventArgs e)
         {
-            Assert.IsTrue(ReferenceEquals(UserChosenTarget, e.DestroyedTarget));
-            UserChosenTarget = null;
+            Assert.IsTrue(ReferenceEquals(Target, e.DestroyedTarget));
+            Target = null;
         }
 
         public void StartFindingTargets()
@@ -56,7 +56,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
         public void DisposeManagedState()
         {
-            UserChosenTarget = null;
+            Target = null;
         }
     }
 }
