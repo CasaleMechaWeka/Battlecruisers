@@ -13,7 +13,8 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		[SetUp]
 		public override void SetuUp()
 		{
-			_targetRanker = new BomberTargetRanker();
+            // FELIX  Fix :P
+			_targetRanker = new BomberTargetRanker(null);
 		}
 
 		[Test]

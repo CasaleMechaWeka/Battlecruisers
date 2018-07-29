@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Tutorial;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
@@ -101,6 +102,8 @@ namespace BattleCruisers.Scenes
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer, variableDelayDeferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
+            IUserChosenTargetManager aiCruiesrUserChosenTargetManager = new DummyUserChosenTargetManager();
 
 
             // Instantiate player cruiser
@@ -145,7 +148,8 @@ namespace BattleCruisers.Scenes
                     Faction.Blues, 
                     Direction.Right, 
                     highlightableSlotFilter, 
-                    helper.PlayerCruiserBuildProgressCalculator);
+                    helper.PlayerCruiserBuildProgressCalculator,
+                    playerCruiserUserChosenTargetManager);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
@@ -160,7 +164,8 @@ namespace BattleCruisers.Scenes
                     Faction.Reds, 
                     Direction.Left, 
                     highlightableSlotFilter, 
-                    helper.AICruiserBuildProgressCalculator);
+                    helper.AICruiserBuildProgressCalculator,
+                    aiCruiesrUserChosenTargetManager);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

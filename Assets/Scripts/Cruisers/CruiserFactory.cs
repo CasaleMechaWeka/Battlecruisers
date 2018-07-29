@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
@@ -39,11 +40,12 @@ namespace BattleCruisers.Cruisers
             Faction faction, 
             Direction facingDirection,
             ISlotFilter highlightableFilter,
-            IBuildProgressCalculator buildProgressCalculator)
+            IBuildProgressCalculator buildProgressCalculator,
+            ITargetProvider userChosenTargetProvider)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator);
+            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator, userChosenTargetProvider);
 
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetProvider);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             bool isPlayerCruiser = facingDirection == Direction.Right;

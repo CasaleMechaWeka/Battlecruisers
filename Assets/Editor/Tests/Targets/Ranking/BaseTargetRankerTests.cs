@@ -20,7 +20,8 @@ namespace BattleCruisers.Tests.Targets.Ranking
 		[SetUp]
 		public virtual void SetuUp()
 		{
-			_targetRanker = new BaseTargetRanker();
+            // FELIX  Fix :P
+			_targetRanker = new BaseTargetRanker(null);
 		}
 
 		[Test]
