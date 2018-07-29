@@ -40,6 +40,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetFinder.StartFindingTargets();
         }
 
+        // FELIX  Allow duplicate target adding, add comment, update tests :P
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
 			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound(): " + e.Target);
