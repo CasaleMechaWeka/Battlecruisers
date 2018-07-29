@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
 		{
-			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound");
+			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetFound(): " + e.Target);
 
             if (_targets.Contains(e.Target))
             {
@@ -93,7 +93,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		
 		private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
 		{
-			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost");
+			Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "TargetFinder_TargetLost(): " + e.Target);
 
             if (!_targets.Contains(e.Target))
             {
@@ -131,10 +131,12 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		private void AssignTarget(ITarget target)
 		{
+            Logging.Log(Tags.TARGET_PROCESSORS, _targetFinder, "AssignTarget() (new highest priority target): " + target);
+
             // PERF
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
-			foreach (ITargetConsumer consumer in _targetConsumers.ToList())
+            foreach (ITargetConsumer consumer in _targetConsumers.ToList())
 			{
 				consumer.Target = target;
 			}
