@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace BattleCruisers.Tests.Targets.Ranking
+namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.

@@ -7,7 +7,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Targets
+namespace BattleCruisers.Tests.Targets.TargetProcessors
 {
     public class TargetProcessorTests 
 	{
