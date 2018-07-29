@@ -4,7 +4,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Targets
+namespace BattleCruisers.Tests.Targets.TargetFinders
 {
     public class RangedTargetFinderTests 
 	{

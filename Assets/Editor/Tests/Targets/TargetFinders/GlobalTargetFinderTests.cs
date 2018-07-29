@@ -6,7 +6,7 @@ using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Targets
+namespace BattleCruisers.Tests.Targets.TargetFinders
 {
     public class GlobalTargetFinderTests 
 	{
