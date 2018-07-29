@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.Targets.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.
     /// </summary>
-    public class OffensiveBuildableTargetRankerTests : BaseTargetRankerTests
+    public class OffensiveBuildableTargetRankerTests : TargetRankerTestsBase
 	{
-		[SetUp]
+        private ITargetRanker _targetRanker;
+        protected override ITargetRanker TargetRanker { get { return _targetRanker; } }
+
+        [SetUp]
 		public override void SetuUp()
 		{
-            // FELIX  Fix :P
-			_targetRanker = new OffensiveBuildableTargetRanker(null);
+            base.SetuUp();
+            _targetRanker = new OffensiveBuildableTargetRanker(_userChosenTargetProvider);
 		}
 
 		[Test]
@@ -30,5 +33,10 @@ namespace BattleCruisers.Tests.Targets.Ranking
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
-	}
+
+        protected override ITarget CreateHighestValueTarget()
+        {
+            return CreateMockTarget(TargetValue.High, TargetType.Cruiser);
+        }
+    }
 }

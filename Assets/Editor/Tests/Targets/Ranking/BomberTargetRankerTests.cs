@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.Targets.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.
     /// </summary>
-    public class BomberTargetRankerTests : BaseTargetRankerTests
-	{
-		[SetUp]
+    public class BomberTargetRankerTests : TargetRankerTestsBase
+    {
+		private ITargetRanker _targetRanker;
+        protected override ITargetRanker TargetRanker { get { return _targetRanker; } }
+
+        [SetUp]
 		public override void SetuUp()
 		{
-            // FELIX  Fix :P
-			_targetRanker = new BomberTargetRanker(null);
+            base.SetuUp();
+			_targetRanker = new BomberTargetRanker(_userChosenTargetProvider);
 		}
 
 		[Test]
@@ -23,10 +26,10 @@ namespace BattleCruisers.Tests.Targets.Ranking
             ITarget lowValueAntiAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiAir, highValue });
+			_rankedTargets = new List<ITarget>() { lowValueAntiAir, highValue };
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAntiAir });
+			_expectedOrder = new List<ITarget>() { highValue, lowValueAntiAir };
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
@@ -37,10 +40,10 @@ namespace BattleCruisers.Tests.Targets.Ranking
             ITarget lowValueAntiCruiser = CreateMockTarget(TargetValue.Low, TargetType.Cruiser);
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiCruiser, highValue });
+			_rankedTargets = new List<ITarget>() { lowValueAntiCruiser, highValue };
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValue, lowValueAntiCruiser });
+			_expectedOrder = new List<ITarget>() { highValue, lowValueAntiCruiser };
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
@@ -51,12 +54,17 @@ namespace BattleCruisers.Tests.Targets.Ranking
             ITarget lowValueAntiAir = CreateMockTarget(TargetValue.Low, TargetType.Aircraft);
 			ITarget highValueAntiCruiser = CreateMockTarget(TargetValue.High, TargetType.Cruiser);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { lowValueAntiAir, highValueAntiCruiser });
+			_rankedTargets = new List<ITarget>() { lowValueAntiAir, highValueAntiCruiser };
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { highValueAntiCruiser, lowValueAntiAir });
+			_expectedOrder = new List<ITarget>() { highValueAntiCruiser, lowValueAntiAir };
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
-	}
+
+        protected override ITarget CreateHighestValueTarget()
+        {
+            return CreateMockTarget(TargetValue.High, TargetType.Aircraft);
+        }
+    }
 }

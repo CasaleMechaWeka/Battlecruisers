@@ -9,7 +9,6 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
     /// <summary>
     /// Prioritise targets by target value.
     /// </summary>
-    /// FELIX  Update tests :)
     public class BaseTargetRanker : ITargetRanker
 	{
         private readonly ITargetProvider _userChosenTargetProvider;

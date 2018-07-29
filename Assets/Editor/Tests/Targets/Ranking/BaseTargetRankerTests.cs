@@ -1,27 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
-using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.Targets.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.
     /// </summary>
-    public class BaseTargetRankerTests 
+    public class BaseTargetRankerTests : TargetRankerTestsBase
 	{
-		protected ITargetRanker _targetRanker;
+		private ITargetRanker _targetRanker;
+        protected override ITargetRanker TargetRanker { get { return _targetRanker; } }
 
-		protected List<ITarget> _rankedTargets;
-		protected IList<ITarget> _expectedOrder;
-
-		[SetUp]
-		public virtual void SetuUp()
+        [SetUp]
+		public override void SetuUp()
 		{
-            // FELIX  Fix :P
-			_targetRanker = new BaseTargetRanker(null);
+            base.SetuUp();
+			_targetRanker = new BaseTargetRanker(_userChosenTargetProvider);
 		}
 
 		[Test]
@@ -31,25 +27,17 @@ namespace BattleCruisers.Tests.Targets.Ranking
 			ITarget mediumValue = CreateMockTarget(TargetValue.Medium);
 			ITarget highValue = CreateMockTarget(TargetValue.High);
 
-			_rankedTargets = new List<ITarget>(new ITarget[] { mediumValue, highValue, lowValue });
+			_rankedTargets = new List<ITarget>() { mediumValue, highValue, lowValue };
 			RankTargets();
 
-			_expectedOrder = new List<ITarget>(new ITarget[] { lowValue, mediumValue, highValue });
+			_expectedOrder = new List<ITarget>() { lowValue, mediumValue, highValue };
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
 
-		protected ITarget CreateMockTarget(TargetValue targetValue, params TargetType[] attackCapabilities)
-		{
-			ITarget target = Substitute.For<ITarget>();
-			target.TargetValue.Returns(targetValue);
-			target.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(attackCapabilities));
-			return target;
-		}
-
-		protected void RankTargets()
-		{
-			_rankedTargets.Sort((x, y) => _targetRanker.RankTarget(x) - _targetRanker.RankTarget(y));
-		}
-	}
+        protected override ITarget CreateHighestValueTarget()
+        {
+            return CreateMockTarget(TargetValue.High);
+        }
+    }
 }
