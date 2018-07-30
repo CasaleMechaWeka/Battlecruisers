@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    // FELIX  Test :P
     // FELIX  Keep track of rank, so composite target tracker can compare ranks.
     // class RankedTarget
     // + Target
