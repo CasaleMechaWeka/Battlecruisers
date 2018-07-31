@@ -1,16 +1,31 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
     public class RankedTarget : IRankedTarget
     {
-        public int Rank { get; private set; }
         public ITarget Target { get; private set; }
+        public int Rank { get; private set; }
 
-        public RankedTarget(int rank, ITarget target)
+        public RankedTarget(ITarget target, int rank)
         {
-            Rank = rank;
             Target = target;
+            Rank = rank;
+        }
+
+        public override bool Equals(object obj)
+        {
+            RankedTarget other = obj as RankedTarget;
+            return
+                other != null
+                && ReferenceEquals(Target, other.Target)
+                && Rank == other.Rank;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Target, Rank);
         }
     }
 }

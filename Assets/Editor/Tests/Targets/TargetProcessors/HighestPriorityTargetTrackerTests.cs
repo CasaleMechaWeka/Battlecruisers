@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
         private IHighestPriorityTargetTracker _targetTracker;
         private ITargetFinder _targetFinder;
 		private ITargetRanker _targetRanker;
-		private ITarget _target1, _target2, _target3;
+        private RankedTarget _highRankTarget, _mediumRankTarget, _lowRankTarget;
         private int _highestPriorityTargetChangedCount;
 
 		[SetUp]
@@ -22,11 +22,19 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 			_targetFinder = Substitute.For<ITargetFinder>();
 			_targetRanker = Substitute.For<ITargetRanker>();
 
-			_target1 = Substitute.For<ITarget>();
-			_target2 = Substitute.For<ITarget>();
-			_target3 = Substitute.For<ITarget>();
+			ITarget target1 = Substitute.For<ITarget>();
+            _highRankTarget = new RankedTarget(target1, 3);
+            _targetRanker.RankTarget(target1).Returns(3);
 
-			_targetTracker = new HighestPriorityTargetTracker(_targetFinder, _targetRanker);
+            ITarget target2 = Substitute.For<ITarget>();
+            _mediumRankTarget = new RankedTarget(target2, 2);
+            _targetRanker.RankTarget(target2).Returns(2);
+
+            ITarget target3 = Substitute.For<ITarget>();
+            _lowRankTarget = new RankedTarget(target3, 1);
+            _targetRanker.RankTarget(target3).Returns(1);
+
+            _targetTracker = new HighestPriorityTargetTracker(_targetFinder, _targetRanker);
 
             _targetTracker.StartTrackingTargets();
             _targetFinder.Received().StartFindingTargets();
@@ -40,73 +48,66 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 		[Test]
 		public void InitialState()
 		{
-            Assert.IsNull(_targetTracker.HighestPriorityTarget);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
 		}
 
         #region TargetFound
         [Test]
 		public void TargetFound_FirstTarget_IsHighestPriority()
 		{
-			_targetRanker.RankTarget(_target1).Returns(50);
-			InvokeTargetFound(_target1);
+			InvokeTargetFound(_mediumRankTarget.Target);
 
-            _targetRanker.Received().RankTarget(_target1);
-            Assert.AreSame(_target1, _targetTracker.HighestPriorityTarget);
+            _targetRanker.Received().RankTarget(_mediumRankTarget.Target);
+            Assert.AreEqual(_mediumRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 		}
 
         [Test]
         public void TargetFound_AlreadyHaveFoundTarget_IsIgnored()
         {
-            _targetRanker.RankTarget(_target1).Returns(50);
-
             // First time target is found => All good
-            InvokeTargetFound(_target1);
-            _targetRanker.Received().RankTarget(_target1);
+            InvokeTargetFound(_mediumRankTarget.Target);
+            _targetRanker.Received().RankTarget(_mediumRankTarget.Target);
             _targetRanker.ClearReceivedCalls();
 
             // Second time target is found => Ignore
-            InvokeTargetFound(_target1);
-            _targetRanker.DidNotReceive().RankTarget(_target1);
+            InvokeTargetFound(_mediumRankTarget.Target);
+            _targetRanker.DidNotReceive().RankTarget(_mediumRankTarget.Target);
         }
 
         [Test]
         public void TargetFound_TargetIsDestroyed_IsIgnored()
         {
-            _target1.IsDestroyed.Returns(true);
-            InvokeTargetFound(_target1);
+            _mediumRankTarget.Target.IsDestroyed.Returns(true);
+            InvokeTargetFound(_mediumRankTarget.Target);
 
-            _targetRanker.DidNotReceive().RankTarget(_target1);
-            Assert.IsNull(_targetTracker.HighestPriorityTarget);
+            _targetRanker.DidNotReceive().RankTarget(_mediumRankTarget.Target);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
             Assert.AreEqual(0, _highestPriorityTargetChangedCount);
         }
 
         [Test]
         public void TargetFound_MultipleTargets_RankedCorrectly()
         {
-            _targetRanker.RankTarget(_target1).Returns(25);
-            _targetRanker.RankTarget(_target2).Returns(15);
-            _targetRanker.RankTarget(_target3).Returns(50);
+            // First target => Currently highest ranked
+            InvokeTargetFound(_mediumRankTarget.Target);
 
-            // First target => Highest ranked
-            InvokeTargetFound(_target1);
-
-            _targetRanker.Received().RankTarget(_target1);
-            Assert.AreSame(_target1, _targetTracker.HighestPriorityTarget);
+            _targetRanker.Received().RankTarget(_mediumRankTarget.Target);
+            Assert.AreEqual(_mediumRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
             // Second target => Not highest ranked
-            InvokeTargetFound(_target2);
+            InvokeTargetFound(_lowRankTarget.Target);
 
-            _targetRanker.Received().RankTarget(_target2);
-            Assert.AreSame(_target1, _targetTracker.HighestPriorityTarget);
+            _targetRanker.Received().RankTarget(_lowRankTarget.Target);
+            Assert.AreEqual(_mediumRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
             // Third target => Highest ranked
-            InvokeTargetFound(_target3);
+            InvokeTargetFound(_highRankTarget.Target);
 
-            _targetRanker.Received().RankTarget(_target3);
-            Assert.AreSame(_target3, _targetTracker.HighestPriorityTarget);
+            _targetRanker.Received().RankTarget(_highRankTarget.Target);
+            Assert.AreEqual(_highRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(2, _highestPriorityTargetChangedCount);
         }
         #endregion TargetFound
@@ -115,21 +116,20 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
         [Test]
         public void TargetLost_TargetWasNeverFound_Ignores()
         {
-            InvokeTargetLost(_target1);
+            InvokeTargetLost(_mediumRankTarget.Target);
         }
 
         [Test]
         public void TargetLost_WasHighestPriorityTarget_EmitsEvent()
         {
             // Find target
-            _targetRanker.RankTarget(_target1).Returns(50);
-            InvokeTargetFound(_target1);
-            Assert.AreSame(_target1, _targetTracker.HighestPriorityTarget);
+            InvokeTargetFound(_mediumRankTarget.Target);
+            Assert.AreEqual(_mediumRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
             // Lose target
-            InvokeTargetLost(_target1);
-            Assert.IsNull(_targetTracker.HighestPriorityTarget);
+            InvokeTargetLost(_mediumRankTarget.Target);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
             Assert.AreEqual(2, _highestPriorityTargetChangedCount);
         }
 
@@ -137,20 +137,18 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
         public void TargetLost_WasNotHighestPriorityTarget_DoesNotEmitEvent()
         {
             // Find target
-            _targetRanker.RankTarget(_target1).Returns(25);
-            InvokeTargetFound(_target1);
-            Assert.AreSame(_target1, _targetTracker.HighestPriorityTarget);
+            InvokeTargetFound(_lowRankTarget.Target);
+            Assert.AreEqual(_lowRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
             // Find higher priority target
-            _targetRanker.RankTarget(_target2).Returns(50);
-            InvokeTargetFound(_target2);
-            Assert.AreSame(_target2, _targetTracker.HighestPriorityTarget);
+            InvokeTargetFound(_highRankTarget.Target);
+            Assert.AreEqual(_highRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(2, _highestPriorityTargetChangedCount);
 
             // Lose lower priority target
-            InvokeTargetLost(_target1);
-            Assert.AreSame(_target2, _targetTracker.HighestPriorityTarget);
+            InvokeTargetLost(_lowRankTarget.Target);
+            Assert.AreEqual(_highRankTarget, _targetTracker.HighestPriorityTarget);
             Assert.AreEqual(2, _highestPriorityTargetChangedCount);
         }
         #endregion TargetLost

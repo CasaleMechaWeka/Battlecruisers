@@ -46,7 +46,7 @@ namespace BattleCruisers.Targets.TargetProviders
                 Logging.Log(Tags.TARGET_PROVIDERS, "Assigned target: " + value);
 
                 int targetRank = value != null ? _targetRanker.RankTarget(value) : BaseTargetRanker.MIN_TARGET_RANK;
-                _inRangeTarget = new RankedTarget(targetRank, value);
+                _inRangeTarget = new RankedTarget(value, targetRank);
                 UpdateHighestPriorityTarget();
 
                 if (NewInRangeTarget != null)
@@ -68,7 +68,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
             _parentDamagable.Damaged += _parentDamagable_Damaged;
 
-            _nullTarget = new RankedTarget(BaseTargetRanker.MIN_TARGET_RANK, target: null);
+            _nullTarget = new RankedTarget(target: null, rank: BaseTargetRanker.MIN_TARGET_RANK);
             _attackingTarget = _nullTarget;
             _inRangeTarget = _nullTarget;
 
@@ -87,7 +87,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
                 if (newRank > AttackingTarget.Rank)
                 {
-                    AttackingTarget = new RankedTarget(newRank, e.DamageSource);
+                    AttackingTarget = new RankedTarget(e.DamageSource, newRank);
                 }
             }
         }

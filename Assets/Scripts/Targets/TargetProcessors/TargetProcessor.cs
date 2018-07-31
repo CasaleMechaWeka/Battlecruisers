@@ -28,7 +28,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
             foreach (ITargetConsumer consumer in _targetConsumers.ToList())
             {
-                consumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget;
+                consumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget.Target;
             }
         }
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 			_targetConsumers.Add(targetConsumer);
 
-			targetConsumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget;
+			targetConsumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget.Target;
 		}
 
 		public void RemoveTargetConsumer(ITargetConsumer targetConsumer)
