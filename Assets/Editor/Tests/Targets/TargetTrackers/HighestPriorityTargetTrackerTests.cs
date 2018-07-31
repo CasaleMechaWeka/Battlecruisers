@@ -6,7 +6,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Targets.TargetProcessors
+namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
     public class HighestPriorityTargetTrackerTests
     {

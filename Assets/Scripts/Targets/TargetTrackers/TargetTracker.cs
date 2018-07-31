@@ -10,6 +10,7 @@ namespace BattleCruisers.Targets.TargetTrackers
     /// <summary>
     /// Keeps track of all targets found by the given ITargetFinder.
     /// </summary>
+    /// FELIX  Tests!!!
     public class TargetTracker : ITargetTracker
 	{
         private readonly ITargetFinder _targetFinder;
