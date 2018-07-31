@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BattleCruisers.Targets.TargetProcessors
+namespace BattleCruisers.Targets.TargetTrackers
 {
     /// <summary>
     /// Keeps track of all targets found by the ITargetFinder, exposing the highest

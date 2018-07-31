@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

@@ -8,6 +8,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Targets
 {

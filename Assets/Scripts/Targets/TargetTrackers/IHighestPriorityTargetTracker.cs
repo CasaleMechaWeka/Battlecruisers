@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Targets.TargetProcessors
+namespace BattleCruisers.Targets.TargetTrackers
 {
     public interface IHighestPriorityTargetTracker : IManagedDisposable
     {
