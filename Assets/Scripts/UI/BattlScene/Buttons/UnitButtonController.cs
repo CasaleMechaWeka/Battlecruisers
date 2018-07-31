@@ -12,8 +12,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         // The unit wrapper is always the same for this button.  The factory
         // can change :)
 		private IBuildableWrapper<IUnit> _unitWrapper;
-        // FELIX  Rename to _currentFactory :)  
-		private IFactory _factory;
+		private IFactory _currentFactory;
         private IUnitClickHandler _unitClickHandler;
 
 
@@ -23,8 +22,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			{
 				return 
                     base.IsMatch
-                    && _factory != null
-                    && _factory.BuildableState == BuildableState.Completed;
+                    && _currentFactory != null
+                    && _currentFactory.BuildableState == BuildableState.Completed;
 			}
 		}
 
@@ -44,11 +43,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public override void OnPresenting(object activationParameter)
 		{
-			_factory = activationParameter.Parse<IFactory>();
+			_currentFactory = activationParameter.Parse<IFactory>();
 
-			if (_factory.BuildableState != BuildableState.Completed)
+			if (_currentFactory.BuildableState != BuildableState.Completed)
 			{
-				_factory.CompletedBuildable += _factory_CompletedBuildable;
+				_currentFactory.CompletedBuildable += _factory_CompletedBuildable;
 			}
 
             TriggerPotentialMatchChange();
@@ -68,17 +67,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		{
 			base.OnDismissing();
 
-			_factory.CompletedBuildable -= _factory_CompletedBuildable;
-			_factory = null;
+			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
+			_currentFactory = null;
 		}
 
 		protected override void HandleClick()
 		{
             base.HandleClick();
 
-            Assert.IsNotNull(_factory);
+            Assert.IsNotNull(_currentFactory);
 
-            _unitClickHandler.HandleUnitClick(_unitWrapper, _factory);
+            _unitClickHandler.HandleUnitClick(_unitWrapper, _currentFactory);
 			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
 	}
