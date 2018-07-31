@@ -17,11 +17,14 @@ namespace BattleCruisers.Targets
 		ITargetProcessor OffensiveBuildableTargetProcessor { get; }
 
 		// Processors
-		ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker);
+		ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker);
 
 		// Finders
         ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
         ITargetFinder CreateMinRangeTargetFinder(ITargetDetector maxRangeTargetDetector, ITargetDetector minRangeTargetDetector, ITargetFilter targetFilter);
+
+        // Highest priority trackers
+        IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker);
 
         // Trackers
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);

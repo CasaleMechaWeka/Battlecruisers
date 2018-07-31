@@ -8,11 +8,13 @@ namespace BattleCruisers.Targets.TargetProcessors
     public class ProximityTargetProcessorWrapper : TargetProcessorWrapper
 	{
 		private ITargetFinder _targetFinder;
+        private IHighestPriorityTargetTracker _targetTracker;
 
         protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
 		{
             _targetFinder = CreateTargetFinder(args);
-            return args.TargetsFactory.CreateTargetProcessor(_targetFinder, targetRanker);
+            _targetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(_targetFinder, targetRanker);
+            return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
         }
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
@@ -29,6 +31,8 @@ namespace BattleCruisers.Targets.TargetProcessors
         protected override void CleanUp()
         {
             base.CleanUp();
+
+            _targetTracker.DisposeManagedState();
             _targetFinder.DisposeManagedState();
         }
     }

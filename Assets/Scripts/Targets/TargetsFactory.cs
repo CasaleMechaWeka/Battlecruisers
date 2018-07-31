@@ -29,17 +29,25 @@ namespace BattleCruisers.Targets
             // so we must start them BEFORE the cruiser builds any buildings, otherwise
             // these targets will be lost.
 
-			BomberTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new BomberTargetRanker(_userChosenTargetProvider));
+			BomberTargetProcessor 
+                = new TargetProcessor(
+                    new HighestPriorityTargetTracker(
+                        new GlobalTargetFinder(enemyCruiser), 
+                        new BomberTargetRanker(_userChosenTargetProvider)));
             BomberTargetProcessor.StartProcessingTargets();
 
-			OffensiveBuildableTargetProcessor = new TargetProcessor(new GlobalTargetFinder(enemyCruiser), new OffensiveBuildableTargetRanker(_userChosenTargetProvider));
+            OffensiveBuildableTargetProcessor
+                = new TargetProcessor(
+                    new HighestPriorityTargetTracker(
+                        new GlobalTargetFinder(enemyCruiser),
+                        new OffensiveBuildableTargetRanker(_userChosenTargetProvider)));
             OffensiveBuildableTargetProcessor.StartProcessingTargets();
 		}
 
 		#region TargetProcessors
-		public ITargetProcessor CreateTargetProcessor(ITargetFinder targetFinder, ITargetRanker targetRanker)
+		public ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
 		{
-			return new TargetProcessor(targetFinder, targetRanker);
+			return new TargetProcessor(highestPriorityTargetTracker);
 		}
 		#endregion TargetProcessors
 
@@ -95,10 +103,17 @@ namespace BattleCruisers.Targets
         {
             return new TargetInFrontFilter(source);
         }
-		#endregion TargetFilters
+        #endregion TargetFilters
 
-		#region TargetRankers
-		public ITargetRanker CreateEqualTargetRanker()
+        #region Highest priority trackers
+        public IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
+        {
+            return new HighestPriorityTargetTracker(targetFinder, targetRanker);
+        }
+        #endregion Highest priority trackers
+
+        #region TargetRankers
+        public ITargetRanker CreateEqualTargetRanker()
 		{
 			return new EqualTargetRanker();
 		}

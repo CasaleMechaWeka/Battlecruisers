@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Targets.TargetProviders
 {
     /// <summary>
-    /// Simply passes wraps a target processor that detects blocking enemy targets.
+    /// Simply wraps a target processor that detects blocking enemy targets.
     /// 
     /// NOTE:
     /// + Assumes all blocking targets will be in front of the parent unit
@@ -46,7 +46,9 @@ namespace BattleCruisers.Targets.TargetProviders
             ITargetFinder enemyFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = targetsFactory.CreateEqualTargetRanker();
-            ITargetProcessor targetProcessor = targetsFactory.CreateTargetProcessor(enemyFinder, targetRanker);
+            IHighestPriorityTargetTracker targetTracker = targetsFactory.CreateHighestPriorityTargetTracker(enemyFinder, targetRanker);
+            ITargetProcessor targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
+
             targetProcessor.AddTargetConsumer(this);
             targetProcessor.StartProcessingTargets();
         }

@@ -218,7 +218,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
-			ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, new EqualTargetRanker());
+            IHighestPriorityTargetTracker targetTracker = new HighestPriorityTargetTracker(targetFinder, new EqualTargetRanker());
+			ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
 
             if (exactMatchTargetFilter == null)
@@ -229,7 +230,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
 			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-			targetsFactory.CreateTargetProcessor(null, null).ReturnsForAnyArgs(targetProcessor);
+            targetsFactory.CreateHighestPriorityTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
+			targetsFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
             targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
             targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
@@ -293,7 +295,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private ITargetsFactory CreateTargetsFactory(ITargetFinder targetFinder)
         {
             ITargetRanker targetRanker = new EqualTargetRanker();
-            ITargetProcessor targetProcessor = new TargetProcessor(targetFinder, targetRanker);
+            IHighestPriorityTargetTracker targetTracker = new HighestPriorityTargetTracker(targetFinder, targetRanker);
+            ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
 
@@ -329,11 +332,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         // Copy real TargetsFactory behaviour
+        private void SetupCreateHighestPriorityTargetTracker(ITargetsFactory targetsFactory)
+        {
+            targetsFactory
+                .CreateHighestPriorityTargetTracker(null, null)
+                .ReturnsForAnyArgs(arg => new HighestPriorityTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
+        }
+
+        // Copy real TargetsFactory behaviour
         private void SetupCreateTargetProcessor(ITargetsFactory targetsFactory)
         {
             targetsFactory
-                .CreateTargetProcessor(null, null)
-                .ReturnsForAnyArgs(arg => new TargetProcessor((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
+                .CreateTargetProcessor(null)
+                .ReturnsForAnyArgs(arg => new TargetProcessor((IHighestPriorityTargetTracker)arg.Args()[0]));
         }
 
 		public IAircraftProvider CreateAircraftProvider(

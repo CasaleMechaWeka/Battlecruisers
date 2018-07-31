@@ -32,6 +32,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             ITargetFilter enemyFilter = Substitute.For<ITargetFilter>();
             ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
             ITargetRanker enemyRanker = Substitute.For<ITargetRanker>();
+            IHighestPriorityTargetTracker targetTracker = Substitute.For<IHighestPriorityTargetTracker>();
 			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
@@ -39,7 +40,8 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             targetsFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
             targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetsFactory.CreateEqualTargetRanker().Returns(enemyRanker);
-            targetsFactory.CreateTargetProcessor(enemyFinder, enemyRanker).Returns(targetProcessor);
+            targetsFactory.CreateHighestPriorityTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
+            targetsFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 
             _targetProvider = new ShipBlockingEnemyProvider(targetsFactory, enemyDetector, parentUnit);
             _asTargetConsumer = _targetProvider;
