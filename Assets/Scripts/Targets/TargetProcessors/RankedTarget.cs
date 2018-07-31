@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -11,6 +12,20 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             Target = target;
             Rank = rank;
+        }
+
+        public override bool Equals(object obj)
+        {
+            RankedTarget other = obj as RankedTarget;
+            return
+                other != null
+                && ReferenceEquals(Target, other.Target)
+                && Rank == other.Rank;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Target, Rank);
         }
     }
 }
