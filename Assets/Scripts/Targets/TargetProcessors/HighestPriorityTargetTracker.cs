@@ -25,7 +25,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         // List of targets, in decreasing priority
         private readonly IList<RankedTarget> _targets;
 
-        public RankedTarget HighestPriorityTarget { get { return _targets.First(); } }
+        public RankedTarget HighestPriorityTarget { get { return _targets.FirstOrDefault(); } }
 
         public event EventHandler HighestPriorityTargetChanged;
 
@@ -35,12 +35,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             _targetFinder = targetFinder;
             _targetRanker = targetRanker;
-
-            _targets = new List<RankedTarget>()
-            {
-                // Add the lowest ranked RankedTarget, to have a target of null
-                new RankedTarget(target: null, rank: int.MinValue)
-            };
+            _targets = new List<RankedTarget>();
 
             _targetFinder.TargetFound += TargetFinder_TargetFound;
             _targetFinder.TargetLost += TargetFinder_TargetLost;

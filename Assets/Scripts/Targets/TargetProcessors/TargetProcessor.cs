@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Buildables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
@@ -12,6 +13,14 @@ namespace BattleCruisers.Targets.TargetProcessors
 	{
 		private readonly IHighestPriorityTargetTracker _highestPriorityTargetTracker;
 		private readonly IList<ITargetConsumer> _targetConsumers;
+
+        private ITarget HighestPriorityTarget
+        {
+            get
+            {
+                return _highestPriorityTargetTracker.HighestPriorityTarget != null ? _highestPriorityTargetTracker.HighestPriorityTarget.Target : null;
+            }
+        }
 
 		public TargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
 		{
@@ -28,7 +37,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
             foreach (ITargetConsumer consumer in _targetConsumers.ToList())
             {
-                consumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget.Target;
+                consumer.Target = HighestPriorityTarget;
             }
         }
 
@@ -43,7 +52,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 			_targetConsumers.Add(targetConsumer);
 
-			targetConsumer.Target = _highestPriorityTargetTracker.HighestPriorityTarget.Target;
+			targetConsumer.Target = HighestPriorityTarget;
 		}
 
 		public void RemoveTargetConsumer(ITargetConsumer targetConsumer)

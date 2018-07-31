@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 		[Test]
 		public void InitialState()
 		{
-            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget);
 		}
 
         #region TargetFound
@@ -82,7 +82,7 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
             InvokeTargetFound(_mediumRankTarget.Target);
 
             _targetRanker.DidNotReceive().RankTarget(_mediumRankTarget.Target);
-            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget);
             Assert.AreEqual(0, _highestPriorityTargetChangedCount);
         }
 
@@ -129,7 +129,7 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 
             // Lose target
             InvokeTargetLost(_mediumRankTarget.Target);
-            Assert.IsNull(_targetTracker.HighestPriorityTarget.Target);
+            Assert.IsNull(_targetTracker.HighestPriorityTarget);
             Assert.AreEqual(2, _highestPriorityTargetChangedCount);
         }
 
