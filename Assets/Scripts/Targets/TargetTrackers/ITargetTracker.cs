@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.TargetTrackers
 {
     public interface ITargetTracker : IManagedDisposable
     {

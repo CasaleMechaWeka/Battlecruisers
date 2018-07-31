@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;

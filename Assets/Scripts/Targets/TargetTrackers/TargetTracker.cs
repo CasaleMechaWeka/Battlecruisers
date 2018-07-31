@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.TargetTrackers
 {
     /// <summary>
     /// Keeps track of all targets found by the given ITargetFinder.
