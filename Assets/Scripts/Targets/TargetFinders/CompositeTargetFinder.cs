@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
-    // FELIX  Use
+    // FELIX  Remove :(
     public class CompositeTargetFinder : ITargetFinder
     {
         private readonly ITargetFinder[] _targetFinders;
