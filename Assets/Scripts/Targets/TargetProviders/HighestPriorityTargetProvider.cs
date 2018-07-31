@@ -12,6 +12,9 @@ namespace BattleCruisers.Targets.TargetProviders
     ///     via the ITargetConsumer.Target property).
     /// B) Attacking the parent damagable
     /// </summary>
+    /// FELIX  Could potentiall refactor. 
+    /// 1. Create AttackingTargetFinder/Provider (give attacking targets high priority)
+    /// 2. Use CompositeTargetTracker (when it exists :P)
     public class HighestPriorityTargetProvider : BroadcastingTargetProvider, IHighestPriorityTargetProvider
     {
         private readonly ITargetRanker _targetRanker;
