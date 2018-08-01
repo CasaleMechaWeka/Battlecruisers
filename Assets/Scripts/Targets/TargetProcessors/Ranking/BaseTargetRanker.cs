@@ -11,7 +11,9 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
     /// </summary>
     public class BaseTargetRanker : ITargetRanker
 	{
+        // FELIX  Remove :P
         private readonly ITargetProvider _userChosenTargetProvider;
+
         protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 
 		private const int TARGET_VALUE_MULTIPLIER = 10;
