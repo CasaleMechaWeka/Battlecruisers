@@ -29,9 +29,11 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
+            RankedTarget currentHighestRankedTarget = HighestPriorityTarget;
             HighestPriorityTarget = FindHighestRankedTarget();
 
-            if (HighestPriorityTargetChanged != null)
+            if (!ReferenceEquals(currentHighestRankedTarget, HighestPriorityTarget)
+                && HighestPriorityTargetChanged != null)
             {
                 HighestPriorityTargetChanged.Invoke(this, EventArgs.Empty);
             }
