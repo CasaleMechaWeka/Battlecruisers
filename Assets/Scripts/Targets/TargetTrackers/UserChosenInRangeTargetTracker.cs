@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
-    // FELIX  Test :)
     public class UserChosenInRangeTargetTracker : IHighestPriorityTargetTracker
     {
         private readonly ITargetTracker _inRangeTargetTracker;
