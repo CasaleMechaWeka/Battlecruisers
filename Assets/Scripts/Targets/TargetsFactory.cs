@@ -9,19 +9,23 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
+        private readonly IHighestPriorityTargetTracker _userChosenTargetTracker;
+
         public ITargetProcessor BomberTargetProcessor { get; private set; }
 		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
-		public TargetsFactory(ICruiser enemyCruiser)
+		public TargetsFactory(ICruiser enemyCruiser, IHighestPriorityTargetTracker userChosenTargetTracker)
 		{
-            Assert.IsNotNull(enemyCruiser);
+            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
+
+            _userChosenTargetTracker = userChosenTargetTracker;
 
             // Global target finders keep track of what buildings th enemy cruiser builds,
             // so we must start them BEFORE the cruiser builds any buildings, otherwise
@@ -29,16 +33,20 @@ namespace BattleCruisers.Targets
 
 			BomberTargetProcessor 
                 = new TargetProcessor(
-                    new HighestPriorityTargetTracker(
-                        new GlobalTargetFinder(enemyCruiser), 
-                        new BomberTargetRanker()));
+                    new CompositeTracker(
+                        _userChosenTargetTracker,
+                        new HighestPriorityTargetTracker(
+                            new GlobalTargetFinder(enemyCruiser), 
+                            new BomberTargetRanker())));
             BomberTargetProcessor.StartProcessingTargets();
 
             OffensiveBuildableTargetProcessor
                 = new TargetProcessor(
-                    new HighestPriorityTargetTracker(
-                        new GlobalTargetFinder(enemyCruiser),
-                        new OffensiveBuildableTargetRanker()));
+                    new CompositeTracker(
+                        _userChosenTargetTracker,
+                        new HighestPriorityTargetTracker(
+                            new GlobalTargetFinder(enemyCruiser),
+                            new OffensiveBuildableTargetRanker())));
             OffensiveBuildableTargetProcessor.StartProcessingTargets();
 		}
 

@@ -15,6 +15,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
@@ -58,13 +59,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ISoundFetcher soundFetcher = null,
             ISoundManager soundManager = null,
             ISpriteChooserFactory spriteChooserFactory = null,
-            IVariableDelayDeferrer variableDelayDeferrer = null)
+            IVariableDelayDeferrer variableDelayDeferrer = null,
+            IUserChosenTargetManager userChosenTargetManager = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
-            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser);
+            userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
+            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser, userChosenTargetManager);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             variableDelayDeferrer = variableDelayDeferrer ?? Substitute.For<IVariableDelayDeferrer>();

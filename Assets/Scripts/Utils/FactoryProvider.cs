@@ -13,6 +13,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
@@ -49,12 +50,13 @@ namespace BattleCruisers.Utils
             ICruiser friendlyCruiser, 
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
-            IVariableDelayDeferrer deferrer)
+            IVariableDelayDeferrer deferrer,
+            IHighestPriorityTargetTracker userChosenTargetTracker)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker);
 
 			PrefabFactory = prefabFactory;
-			TargetsFactory = new TargetsFactory(enemyCruiser);
+			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
 			AngleCalculatorFactory = new AngleCalculatorFactory();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();
