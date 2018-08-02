@@ -102,6 +102,7 @@ namespace BattleCruisers.Scenes
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer, variableDelayDeferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
+            // FELIX  Use/Remove.  Should use somewhere?
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiesrUserChosenTargetManager = new DummyUserChosenTargetManager();
 
@@ -148,8 +149,7 @@ namespace BattleCruisers.Scenes
                     Faction.Blues, 
                     Direction.Right, 
                     highlightableSlotFilter, 
-                    helper.PlayerCruiserBuildProgressCalculator,
-                    playerCruiserUserChosenTargetManager);
+                    helper.PlayerCruiserBuildProgressCalculator);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
@@ -164,8 +164,7 @@ namespace BattleCruisers.Scenes
                     Faction.Reds, 
                     Direction.Left, 
                     highlightableSlotFilter, 
-                    helper.AICruiserBuildProgressCalculator,
-                    aiCruiesrUserChosenTargetManager);
+                    helper.AICruiserBuildProgressCalculator);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 

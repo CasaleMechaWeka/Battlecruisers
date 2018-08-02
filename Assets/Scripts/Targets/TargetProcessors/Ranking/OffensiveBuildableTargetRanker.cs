@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProviders;
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
@@ -12,8 +11,7 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 	{
 		private const int ANTI_CRUISER_BONUS = 30;
 
-		public OffensiveBuildableTargetRanker(ITargetProvider userChosenTargetProvider)
-            : base(userChosenTargetProvider)
+		public OffensiveBuildableTargetRanker()
 		{
 			_attackCapabilityToBonus[TargetType.Cruiser] = ANTI_CRUISER_BONUS;
 		}

@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProviders;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
@@ -11,9 +9,6 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
     /// </summary>
     public class BaseTargetRanker : ITargetRanker
 	{
-        // FELIX  Remove :P
-        private readonly ITargetProvider _userChosenTargetProvider;
-
         protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 
 		private const int TARGET_VALUE_MULTIPLIER = 10;
@@ -22,11 +17,8 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 		private const int CHOSEN_TARGET_BONUS = 1000;
         public const int MIN_TARGET_RANK = 0;
 
-		public BaseTargetRanker(ITargetProvider userChosenTargetProvider)
+		public BaseTargetRanker()
 		{
-            Assert.IsNotNull(userChosenTargetProvider);
-            _userChosenTargetProvider = userChosenTargetProvider;
-
 			_attackCapabilityToBonus = new Dictionary<TargetType, int>();
 
 			foreach (TargetType attackCapability in Enum.GetValues(typeof(TargetType)))
@@ -43,11 +35,6 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 			{
 				rank += _attackCapabilityToBonus[attackCapability];
 			}
-
-            if (ReferenceEquals(_userChosenTargetProvider.Target, target))
-            {
-                rank += CHOSEN_TARGET_BONUS;
-            }
 
             return rank;
 		}

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -10,21 +9,19 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.Utils;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        private readonly ITargetProvider _userChosenTargetProvider;
-
         public ITargetProcessor BomberTargetProcessor { get; private set; }
 		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
-		public TargetsFactory(ICruiser enemyCruiser, ITargetProvider userChosenTargetProvider)
+		public TargetsFactory(ICruiser enemyCruiser)
 		{
-            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetProvider);
-            _userChosenTargetProvider = userChosenTargetProvider;
+            Assert.IsNotNull(enemyCruiser);
 
             // Global target finders keep track of what buildings th enemy cruiser builds,
             // so we must start them BEFORE the cruiser builds any buildings, otherwise
@@ -34,14 +31,14 @@ namespace BattleCruisers.Targets
                 = new TargetProcessor(
                     new HighestPriorityTargetTracker(
                         new GlobalTargetFinder(enemyCruiser), 
-                        new BomberTargetRanker(_userChosenTargetProvider)));
+                        new BomberTargetRanker()));
             BomberTargetProcessor.StartProcessingTargets();
 
             OffensiveBuildableTargetProcessor
                 = new TargetProcessor(
                     new HighestPriorityTargetTracker(
                         new GlobalTargetFinder(enemyCruiser),
-                        new OffensiveBuildableTargetRanker(_userChosenTargetProvider)));
+                        new OffensiveBuildableTargetRanker()));
             OffensiveBuildableTargetProcessor.StartProcessingTargets();
 		}
 
@@ -121,12 +118,12 @@ namespace BattleCruisers.Targets
 
         public ITargetRanker CreateShipTargetRanker()
         {
-            return new ShipTargetRanker(_userChosenTargetProvider);
+            return new ShipTargetRanker();
         }
 
         public ITargetRanker CreateOffensiveBuildableTargetRanker()
         {
-            return new OffensiveBuildableTargetRanker(_userChosenTargetProvider);
+            return new OffensiveBuildableTargetRanker();
         }
 
         #endregion TargetRankers

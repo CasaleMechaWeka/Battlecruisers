@@ -14,10 +14,9 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
         protected override ITargetRanker TargetRanker { get { return _targetRanker; } }
 
         [SetUp]
-		public override void SetuUp()
+		public void SetuUp()
 		{
-            base.SetuUp();
-			_targetRanker = new BaseTargetRanker(_userChosenTargetProvider);
+			_targetRanker = new BaseTargetRanker();
 		}
 
 		[Test]
@@ -34,10 +33,5 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
 
 			Assert.AreEqual(_expectedOrder, _rankedTargets);
 		}
-
-        protected override ITarget CreateHighestValueTarget()
-        {
-            return CreateMockTarget(TargetValue.High);
-        }
     }
 }
