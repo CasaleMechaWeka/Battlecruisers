@@ -12,11 +12,22 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private ITargetFinder _targetFinder;
         private IHighestPriorityTargetTracker _targetTracker;
 
+        public bool considerUserChosenTarget;
+
         protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
             _targetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(_targetFinder, targetRanker);
+
+            if (considerUserChosenTarget)
+            {
+                ITargetTracker inRangeTargetTracker = args.TargetsFactory.CreateTargetTracker(_targetFinder);
+                IHighestPriorityTargetTracker userChosenInRangeTargetTracker = args.TargetsFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
+                IHighestPriorityTargetTracker inRangeSingleTargetTracker = _targetTracker;
+                _targetTracker = args.TargetsFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
+            }
+
             return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
         }
 
