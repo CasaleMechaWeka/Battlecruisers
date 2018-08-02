@@ -27,6 +27,7 @@ namespace BattleCruisers.Targets
         // Highest priority trackers
         IHighestPriorityTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
         IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker);
+        IHighestPriorityTargetTracker CreateCompositeTracker(params IHighestPriorityTargetTracker[] targetTrackers);
 
         // Trackers
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);

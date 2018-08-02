@@ -121,6 +121,11 @@ namespace BattleCruisers.Targets
         {
             return new HighestPriorityTargetTracker(targetFinder, targetRanker);
         }
+
+        public IHighestPriorityTargetTracker CreateCompositeTracker(params IHighestPriorityTargetTracker[] targetTrackers)
+        {
+            return new CompositeTracker(targetTrackers);
+        }
         #endregion Highest priority trackers
 
         #region TargetRankers
