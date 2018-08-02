@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using System;
 using UnityEngine.Assertions;
 
@@ -11,10 +12,13 @@ namespace BattleCruisers.Targets.TargetFinders
     /// </summary>
     public class UserChosenTargetManager : IUserChosenTargetManager
     {
+        // The highest rank possible :)
+        private const int USER_CHOSEN_TARGET_RANK = int.MaxValue;
+
         private ITarget _userChosenTarget;
         public ITarget Target
         {
-            get { return _userChosenTarget; }
+            private get { return _userChosenTarget; }
             set
             {
                 if (ReferenceEquals(_userChosenTarget, value))
@@ -24,28 +28,27 @@ namespace BattleCruisers.Targets.TargetFinders
 
                 if (_userChosenTarget != null)
                 {
-                    if (TargetLost != null)
-                    {
-                        TargetLost.Invoke(this, new TargetEventArgs(_userChosenTarget));
-                    }
                     _userChosenTarget.Destroyed -= _userChosenTarget_Destroyed;
                 }
 
                 _userChosenTarget = value;
+                HighestPriorityTarget = _userChosenTarget != null ? new RankedTarget(_userChosenTarget, USER_CHOSEN_TARGET_RANK) : null;
 
                 if (_userChosenTarget != null)
                 {
-                    if (TargetFound != null)
-                    {
-                        TargetFound.Invoke(this, new TargetEventArgs(_userChosenTarget));
-                    }
                     _userChosenTarget.Destroyed += _userChosenTarget_Destroyed;
+                }
+
+                if (HighestPriorityTargetChanged != null)
+                {
+                    HighestPriorityTargetChanged.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        public event EventHandler<TargetEventArgs> TargetFound;
-        public event EventHandler<TargetEventArgs> TargetLost;
+        public RankedTarget HighestPriorityTarget { get; private set; }
+
+        public event EventHandler HighestPriorityTargetChanged;
 
         private void _userChosenTarget_Destroyed(object sender, DestroyedEventArgs e)
         {
@@ -53,7 +56,7 @@ namespace BattleCruisers.Targets.TargetFinders
             Target = null;
         }
 
-        public void StartFindingTargets()
+        public void StartTrackingTargets()
         {
             // Empty
         }

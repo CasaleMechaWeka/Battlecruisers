@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Targets.TargetProviders;
+﻿using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
     public interface IUserChosenTargetManager : 
-        ITargetFinder,      // For TargetProcessor/CompositTargetFinder
-        ITargetConsumer,    // For UI, so user can set their chosen target
-        ITargetProvider     // For target rankers  (FELIX  Remove?  Once target rankers no longer use us :P)
+        IHighestPriorityTargetTracker,  // For TargetProcessor/CompositTargetFinder
+        ITargetConsumer                 // For UI, so user can set their chosen target
     {
         // empty
     }

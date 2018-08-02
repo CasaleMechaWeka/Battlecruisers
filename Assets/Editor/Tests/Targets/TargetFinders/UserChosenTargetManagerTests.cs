@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetProcessors.Ranking;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -11,10 +10,11 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
     public class UserChosenTargetManagerTests
     {
         private IUserChosenTargetManager _targetManager;
-        private ITargetConsumer _targetConsumer;
-        private ITargetProvider _targetProvider;
-        private ITarget _target, _target2, _expectedTargetFound, _expectedTargetLost;
-        private int _targetFoundCount, _targetLostCount;
+        private ITarget _target1, _target2;
+        private RankedTarget _rankedTarget1, _rankedTarget2;
+        private int _highestPriorityTargetChangedCount;
+
+        private const int USER_CHOSEN_TARGET_RANK = int.MaxValue;
 
         [SetUp]
         public void TestSetup()
@@ -22,134 +22,111 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             UnityAsserts.Assert.raiseExceptions = true;
 
             _targetManager = new UserChosenTargetManager();
-            _targetConsumer = _targetManager;
-            _targetProvider = _targetManager;
 
-            _target = Substitute.For<ITarget>();
+            _target1 = Substitute.For<ITarget>();
+            _rankedTarget1 = new RankedTarget(_target1, USER_CHOSEN_TARGET_RANK);
+
             _target2 = Substitute.For<ITarget>();
+            _rankedTarget2 = new RankedTarget(_target2, USER_CHOSEN_TARGET_RANK);
 
-            _targetFoundCount = 0;
-            _targetLostCount = 0;
+            _highestPriorityTargetChangedCount = 0;
 
-            _targetManager.TargetFound += _targetManager_TargetFound;
-            _targetManager.TargetLost += _targetManager_TargetLost;
-        }
-
-        private void _targetManager_TargetFound(object sender, TargetEventArgs e)
-        {
-            Assert.AreSame(_expectedTargetFound, e.Target);
-            _targetFoundCount++;
-        }
-
-        private void _targetManager_TargetLost(object sender, TargetEventArgs e)
-        {
-            Assert.AreSame(_expectedTargetLost, e.Target);
-            _targetLostCount++;
+            _targetManager.HighestPriorityTargetChanged += (sender, e) => _highestPriorityTargetChangedCount++;
         }
 
         [Test]
         public void InitialState()
         {
-            Assert.IsNull(_targetProvider.Target);
+            Assert.IsNull(_targetManager.HighestPriorityTarget);
         }
 
         [Test]
-        public void SetFirstTarget()
+        public void SetFirstTarget_UpdatesHighestPriorityTarget_EmitsEvent()
         {
-            SetTarget(_target);
+            _targetManager.Target = _target1;
 
-            Assert.AreEqual(1, _targetFoundCount);
-            Assert.AreSame(_target, _targetProvider.Target);
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
+            Assert.AreEqual(_rankedTarget1, _targetManager.HighestPriorityTarget);
         }
 
         [Test]
-        public void SetTargetToNull()
+        public void SetTargetToNull_UpdatesHighestPriorityTarget_EmitsEvent()
         {
-            SetTarget(_target);
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
-            _expectedTargetLost = _target;
-
-            _targetConsumer.Target = null;
-
-            Assert.AreEqual(1, _targetLostCount);
-            Assert.IsNull(_targetProvider.Target);
+            _targetManager.Target = null;
+            Assert.AreEqual(2, _highestPriorityTargetChangedCount);
+            Assert.IsNull(_targetManager.HighestPriorityTarget);
         }
 
         [Test]
-        public void SetSecondSameTarget()
+        public void SetSecondSameTarget_DoesNotEmitEvent()
         {
-            SetTarget(_target);
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
 
-            _targetFoundCount = 0;
-            _targetConsumer.Target = _target;
-            Assert.AreEqual(0, _targetFoundCount);
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
         }
 
         [Test]
-        public void SetSecondDifferentTarget()
+        public void SetSecondDifferentTarget_UpdatesHighestPriorityTarget_EmitsEvent()
         {
-            SetTarget(_target);
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
+            Assert.AreEqual(_rankedTarget1, _targetManager.HighestPriorityTarget);
 
-            _targetFoundCount = 0;
-            _expectedTargetLost = _target;
-            _expectedTargetFound = _target2;
-
-            _targetConsumer.Target = _target2;
-
-            Assert.AreEqual(1, _targetLostCount);
-            Assert.AreEqual(1, _targetFoundCount);
-            Assert.AreSame(_target2, _targetProvider.Target);
+            _targetManager.Target = _target2;
+            Assert.AreEqual(2, _highestPriorityTargetChangedCount);
+            Assert.AreEqual(_rankedTarget2, _targetManager.HighestPriorityTarget);
         }
 
         [Test]
-        public void TargetDestroyed()
+        public void TargetDestroyed_UpdatesHighestPriorityTarget_EmitsEvent()
         {
-            SetTarget(_target);
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
+            Assert.AreEqual(_rankedTarget1, _targetManager.HighestPriorityTarget);
 
-            _expectedTargetLost = _target;
-
-            _target.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target));
-
-            Assert.AreEqual(1, _targetLostCount);
-            Assert.IsNull(_targetProvider.Target);
+            _target1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target1));
+            Assert.AreEqual(2, _highestPriorityTargetChangedCount);
+            Assert.IsNull(_targetManager.HighestPriorityTarget);
         }
 
         [Test]
         public void TargetDestroyed_NotChosenTarget_Throws()
         {
-            SetTarget(_target);
-
-            Assert.Throws<UnityAsserts.AssertionException>(() => _target.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target2)));
+            _targetManager.Target = _target1;
+            Assert.Throws<UnityAsserts.AssertionException>(() => _target1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target2)));
         }
 
         [Test]
-        public void TargetLost_UnsubsribesFromDestoryedEvent()
+        public void TargetChanged_UnsubsribesFromDestoryedEvent()
         {
-            // First target destroyed event should be unsubsribed
-            SetSecondDifferentTarget();
+            // Set target 1
+            _targetManager.Target = _target1;
 
-            _targetLostCount = 0;
-            _target.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target));
-            Assert.AreEqual(0, _targetLostCount);
+            // Lose target 1
+            _targetManager.Target = null;
+
+            // Target 1 destroyed should no longer be subsribed to
+            // First target destroyed event should be unsubsribed
+            _highestPriorityTargetChangedCount = 0;
+            _target1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_target1));
+            Assert.AreEqual(0, _highestPriorityTargetChangedCount);
         }
 
         [Test]
         public void Dispose_SetsTargetToNull()
         {
-            SetTarget(_target);
-
-            _expectedTargetLost = _target;
+            _targetManager.Target = _target1;
+            Assert.AreEqual(1, _highestPriorityTargetChangedCount);
+            Assert.AreEqual(_rankedTarget1, _targetManager.HighestPriorityTarget);
 
             _targetManager.DisposeManagedState();
-
-            Assert.AreEqual(1, _targetLostCount);
-            Assert.IsNull(_targetProvider.Target);
-        }
-
-        private void SetTarget(ITarget target)
-        {
-            _expectedTargetFound = target;
-            _targetConsumer.Target = target;
+            Assert.AreEqual(2, _highestPriorityTargetChangedCount);
+            Assert.IsNull(_targetManager.HighestPriorityTarget);
         }
     }
 }
