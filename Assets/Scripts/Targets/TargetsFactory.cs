@@ -21,7 +21,7 @@ namespace BattleCruisers.Targets
         public ITargetProcessor BomberTargetProcessor { get; private set; }
 		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
-		public TargetsFactory(ICruiser enemyCruiser, IHighestPriorityTargetTracker userChosenTargetTracker)
+        public TargetsFactory(ICruiser enemyCruiser, IHighestPriorityTargetTracker userChosenTargetTracker)
 		{
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
@@ -112,6 +112,11 @@ namespace BattleCruisers.Targets
         #endregion TargetFilters
 
         #region Highest priority trackers
+        public IHighestPriorityTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
+        {
+            return new UserChosenInRangeTargetTracker(inRangeTargetTracker, _userChosenTargetTracker);
+        }
+
         public IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
         {
             return new HighestPriorityTargetTracker(targetFinder, targetRanker);
