@@ -4,6 +4,7 @@ using System;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
+    // FELIX  Rename to ISingleTargetTracker?
     public interface IHighestPriorityTargetTracker : IManagedDisposable
     {
         /// <summary>
