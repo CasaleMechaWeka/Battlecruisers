@@ -2,7 +2,7 @@
 using BattleCruisers.Targets.TargetProcessors.Ranking;
 using System;
 
-namespace BattleCruisers.Targets.TargetFinders
+namespace BattleCruisers.Targets.TargetTrackers
 {
     public class DummyUserChosenTargetManager : IUserChosenTargetManager
     {

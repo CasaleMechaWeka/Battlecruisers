@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.AI;
+﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -9,7 +7,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Tutorial;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
@@ -24,6 +22,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -34,10 +34,10 @@ using UnityEngine.Assertions;
 // PERF     => Potential performance hit
 namespace BattleCruisers.Scenes
 {
-	/// <summary>
-	/// Initialises everything :D
-	/// </summary>
-	public class BattleSceneGod : MonoBehaviour
+    /// <summary>
+    /// Initialises everything :D
+    /// </summary>
+    public class BattleSceneGod : MonoBehaviour
 	{
         private ISceneNavigator _sceneNavigator;
 		private IDataProvider _dataProvider;

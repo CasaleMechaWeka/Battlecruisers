@@ -3,7 +3,7 @@ using BattleCruisers.Targets.TargetProcessors.Ranking;
 using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Targets.TargetFinders
+namespace BattleCruisers.Targets.TargetTrackers
 {
     /// <summary>
     /// The user can choose one target as the highest priority target,

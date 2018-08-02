@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Targets.TargetTrackers;
 
-namespace BattleCruisers.Targets.TargetFinders
+namespace BattleCruisers.Targets.TargetTrackers
 {
     public interface IUserChosenTargetManager : 
         IHighestPriorityTargetTracker,  // For TargetProcessor/CompositTargetFinder
