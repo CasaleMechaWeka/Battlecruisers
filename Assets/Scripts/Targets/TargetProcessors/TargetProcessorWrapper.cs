@@ -9,6 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         private ITargetProcessor _targetProcessor;
         private bool _isProvidingTargets;
 
+        // FELIX  Remove this?  Should never be disposed if Initalise() was not first called :/
         private bool IsInitialised { get { return _targetProcessor != null; } }
 
         public void Initialise(ITargetProcessorArgs args)
