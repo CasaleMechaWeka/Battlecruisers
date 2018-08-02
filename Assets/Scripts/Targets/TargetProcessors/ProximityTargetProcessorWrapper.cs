@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetProcessors.Ranking.Wrappers;
 using BattleCruisers.Targets.TargetTrackers;
 using UnityEngine.Assertions;
 
@@ -11,11 +12,19 @@ namespace BattleCruisers.Targets.TargetProcessors
 		private ITargetFinder _targetFinder;
         private IHighestPriorityTargetTracker _targetTracker;
 
-        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker)
+        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
 		{
             _targetFinder = CreateTargetFinder(args);
+            ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
             _targetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(_targetFinder, targetRanker);
             return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
+        }
+
+        private ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        {
+            ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
+            Assert.IsNotNull(targetRankerWrapper);
+            return targetRankerWrapper.CreateTargetRanker(targetsFactory);
         }
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)

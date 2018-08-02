@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Targets.TargetProcessors.Ranking;
-using BattleCruisers.Targets.TargetProcessors.Ranking.Wrappers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
@@ -20,18 +18,10 @@ namespace BattleCruisers.Targets.TargetProcessors
             _targetConsumer = args.TargetConsumer;
 			_isProvidingTargets = false;
 
-            ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
-            _targetProcessor = CreateTargetProcessor(args, targetRanker);
+            _targetProcessor = CreateTargetProcessor(args);
         }
 
-        protected virtual ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
-        {
-			ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
-			Assert.IsNotNull(targetRankerWrapper);
-			return targetRankerWrapper.CreateTargetRanker(targetsFactory);
-        }
-
-        protected abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args, ITargetRanker targetRanker);
+        protected abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args);
 
         public void StartProvidingTargets()
         {
