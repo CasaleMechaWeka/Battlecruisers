@@ -8,10 +8,9 @@ namespace BattleCruisers.Targets.TargetFinders
     /// <summary>
     /// Tracks the highest priority target that is attacking us.
     /// </summary>
-    /// FELIX  TEst :D
     public class AttackingTargetFinder : ITargetFinder
     {
-        private readonly ITargetFilter _attackingTargetFilter;
+        private readonly ITargetFilter _targetFilter;
         private readonly IDamagable _parentDamagable;
 
         public event EventHandler<TargetEventArgs> TargetFound;
@@ -21,7 +20,7 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             Helper.AssertIsNotNull(targetFilter, parentDamagable);
 
-            _attackingTargetFilter = targetFilter;
+            _targetFilter = targetFilter;
             _parentDamagable = parentDamagable;
         }
 
@@ -36,7 +35,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
             if (e.DamageSource != null
                 && !e.DamageSource.IsDestroyed
-                && _attackingTargetFilter.IsMatch(e.DamageSource))
+                && _targetFilter.IsMatch(e.DamageSource))
             {
                 e.DamageSource.Destroyed += AttackingTarget_Destroyed;
 
