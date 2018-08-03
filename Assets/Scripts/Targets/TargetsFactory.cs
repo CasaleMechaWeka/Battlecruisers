@@ -67,6 +67,11 @@ namespace BattleCruisers.Targets
         {
             return new MinRangeTargetFinder(maxRangeTargetDetector, minRangeTargetDetector, targetFilter);
         }
+
+        public ITargetFinder CreateAttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter)
+        {
+            return new AttackingTargetFinder(parentDamagable, targetFilter);
+        }
         #endregion TargetFinders
 
         #region TargetTrackers
