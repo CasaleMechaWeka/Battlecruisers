@@ -8,6 +8,7 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.DataStrctures;
@@ -16,21 +17,21 @@ using UnityEngine;
 namespace BattleCruisers.Movement
 {
     public interface IMovementControllerFactory
-	{
+    {
         // Velocity
         IMovementController CreatePatrollingMovementController(
-            Rigidbody2D rigidBody, 
-            IVelocityProvider maxVelocityProvider, 
-            IList<IPatrolPoint> patrolPoints, 
+            Rigidbody2D rigidBody,
+            IVelocityProvider maxVelocityProvider,
+            IList<IPatrolPoint> patrolPoints,
             float positionEqualityMarginInM = MovementControllerFactory.DEFAULT_POSITION_EQUALITY_MARGIN_IN_M);
-		IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
+        IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
         FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
-		IMovementController CreateDummyMovementController();
+        IMovementController CreateDummyMovementController();
 
         // Velocity => Homing
-		IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory);
-		IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone);
-		IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider);
+        IMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory);
+        IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone);
+        IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider);
         IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider);
 
         // Velocity => Providers
@@ -39,12 +40,12 @@ namespace BattleCruisers.Movement
         IVelocityProvider CreatePatrollingVelocityProvider(IPatrollingVelocityProvider patrollingVelocityProvider);
 
         // Rotation
-		IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
-		IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);
-		IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
-		IConstantRotationController CreateDummyConstantRotationController();
+        IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
+        IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);
+        IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
+        IConstantRotationController CreateDummyConstantRotationController();
 
         // Deciers
-        IMovementDecider CreateShipMovementDecider(IShip ship, ITargetsFactory targetsFactory, ITargetDetector enemyDetector, ITargetDetector friendDetector);
-	}
+        IMovementDecider CreateShipMovementDecider(IShip ship, IBroadcastingTargetProvider blockingEnemyTargetProvider, IBroadcastingTargetProvider blockingFriendTargetProvider, ITargetRangeHelper rangeHelper);
+    }
 }

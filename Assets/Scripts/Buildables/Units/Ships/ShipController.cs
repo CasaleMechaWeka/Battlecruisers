@@ -6,6 +6,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -149,9 +150,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
-                    _targetsFactory,
-                    enemyDetector,
-                    friendDetector);
+                    _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, this),
+                    _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this),
+                    _targetsFactory.CreateShipRangeHelper(this));
         }
 
 		public void StartMoving()

@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.Helpers;
-using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using System;
@@ -15,16 +13,14 @@ namespace BattleCruisers.Movement.Deciders
     /// Ship stops moving when:
     /// 1. Blocking friendly
     /// 2. Blocking enemy
-    /// 3. Have in range target, and no higher priority target is attacking us.
+    /// 3. Our highest priority target is in range.
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
     /// FELIX  Update tests :)
     public class ShipMovementDecider : IMovementDecider
     {
-        // FELIX  Inject everything :P (most things)  Should not have to use ITargetsFactory :)
         private readonly IShip _ship;
-        private readonly ITargetsFactory _targetsFactory;
         private readonly ITargetRangeHelper _rangeHelper;
         private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
 
@@ -44,37 +40,24 @@ namespace BattleCruisers.Movement.Deciders
 
         public ShipMovementDecider(
             IShip ship,
-            ITargetsFactory targetsFactory,
-            ITargetDetector enemyDetector,
-            ITargetDetector friendDetector)
+            IBroadcastingTargetProvider blockingEnemyProvider,
+            IBroadcastingTargetProvider blockingFriendlyProvider,
+            ITargetRangeHelper rangeHelper)
         {
-            Helper.AssertIsNotNull(ship, targetsFactory, enemyDetector, friendDetector);
+            Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, rangeHelper);
 
             _ship = ship;
-            _targetsFactory = targetsFactory;
+            _blockingEnemyProvider = blockingEnemyProvider;
+            _blockingFriendlyProvider = blockingFriendlyProvider;
+            _rangeHelper = rangeHelper;
 
-            _rangeHelper = _targetsFactory.CreateShipRangeHelper(_ship);
-            _blockingEnemyProvider = SetupBlockingEnemyDetection(enemyDetector);
-            _blockingFriendlyProvider = SetupBlockingFriendDetection(friendDetector);
+            _blockingEnemyProvider.TargetChanged += OnBlockingTargetChanged;
+            _blockingFriendlyProvider.TargetChanged += OnBlockingTargetChanged;
 
             DecideMovement();
         }
 
-        private IBroadcastingTargetProvider SetupBlockingEnemyDetection(ITargetDetector enemyDetector)
-        {
-            IBroadcastingTargetProvider blockingEnemyProvider = _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, _ship);
-            blockingEnemyProvider.TargetChanged += OnTargetChanged;
-            return blockingEnemyProvider;
-        }
-
-        private IBroadcastingTargetProvider SetupBlockingFriendDetection(ITargetDetector friendDetector)
-        {
-            IBroadcastingTargetProvider blockingFriendlyProvider = _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, _ship);
-            blockingFriendlyProvider.TargetChanged += OnTargetChanged;
-            return blockingFriendlyProvider;
-        }
-
-        private void OnTargetChanged(object sender, EventArgs args)
+        private void OnBlockingTargetChanged(object sender, EventArgs args)
         {
             DecideMovement();
         }
@@ -107,8 +90,8 @@ namespace BattleCruisers.Movement.Deciders
 
         public void DisposeManagedState()
         {
-            _blockingEnemyProvider.TargetChanged -= OnTargetChanged;
-            _blockingFriendlyProvider.TargetChanged -= OnTargetChanged;
+            _blockingEnemyProvider.TargetChanged -= OnBlockingTargetChanged;
+            _blockingFriendlyProvider.TargetChanged -= OnBlockingTargetChanged;
         }
     }
 }
