@@ -5,6 +5,7 @@ using System;
 namespace BattleCruisers.Targets.TargetTrackers
 {
     // FELIX  Rename to ISingleTargetTracker?
+    // FELIX  Very similar to IBroadcastingTargetProvider.  Remove one?  Or does it makes sense to keep both?
     public interface IHighestPriorityTargetTracker : IManagedDisposable
     {
         /// <summary>
