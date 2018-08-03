@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Movement.Deciders
 {
@@ -23,21 +19,28 @@ namespace BattleCruisers.Movement.Deciders
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
+    /// FELIX  Update tests :)
     public class ShipMovementDecider : IMovementDecider
     {
+        // FELIX  Inject everything :P (most things)  Should not have to use ITargetsFactory :)
         private readonly IShip _ship;
         private readonly ITargetsFactory _targetsFactory;
         private readonly ITargetRangeHelper _rangeHelper;
         private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
-        private readonly IHighestPriorityTargetProvider _highPriorityTarget;
-        private readonly ITargetProvider _highestPriorityTargetProvider;
-        private readonly ITargetConsumer _highestPriorityTargetConsumer;
 
         // Frigate would have optimal range of 18.63 but target was at 18.6305.
         // Hence provide a tiny bit of leeway, so target is counted as in range.
         private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
 
-        public ITarget Target{ set { _highestPriorityTargetConsumer.Target = value; } }
+        private ITarget _highestPriorityTarget;
+        public ITarget Target
+        {
+            set
+            {
+                _highestPriorityTarget = value;
+                DecideMovement();
+            }
+        }
 
         public ShipMovementDecider(
             IShip ship,
@@ -53,12 +56,6 @@ namespace BattleCruisers.Movement.Deciders
             _rangeHelper = _targetsFactory.CreateShipRangeHelper(_ship);
             _blockingEnemyProvider = SetupBlockingEnemyDetection(enemyDetector);
             _blockingFriendlyProvider = SetupBlockingFriendDetection(friendDetector);
-
-            // High priority target provider, for detecting targets that are attacking
-            // us but are currently out of range.
-            _highPriorityTarget = SetupHighestPriorityTargetProvider();
-			_highestPriorityTargetProvider = _highPriorityTarget;
-            _highestPriorityTargetConsumer = _highPriorityTarget;
 
             DecideMovement();
         }
@@ -77,31 +74,6 @@ namespace BattleCruisers.Movement.Deciders
             return blockingFriendlyProvider;
         }
 
-        private IHighestPriorityTargetProvider SetupHighestPriorityTargetProvider()
-        {
-            ITargetRanker shipTargetRanker = _targetsFactory.CreateShipTargetRanker();
-            ITargetFilter attackingTargetFilter = CreateAttackingTargetFilter();
-            
-            IHighestPriorityTargetProvider highPriorityTarget 
-                = _targetsFactory.CreateHighestPriorityTargetProvider(shipTargetRanker, attackingTargetFilter, _ship);
-
-            highPriorityTarget.TargetChanged += OnTargetChanged;
-            highPriorityTarget.NewInRangeTarget += OnTargetChanged;
-
-            return highPriorityTarget;
-        }
-
-        private ITargetFilter CreateAttackingTargetFilter()
-        {
-			Faction enemyFaction = Helper.GetOppositeFaction(_ship.Faction);
-
-            // Do not want to stop for aircraft, even if they are attacking us
-            IList<TargetType> validTargetTypes = _ship.AttackCapabilities.ToList();
-            validTargetTypes.Remove(TargetType.Aircraft);
-
-            return _targetsFactory.CreateTargetFilter(enemyFaction, validTargetTypes);
-        }
-
         private void OnTargetChanged(object sender, EventArgs args)
         {
             DecideMovement();
@@ -113,7 +85,7 @@ namespace BattleCruisers.Movement.Deciders
             {
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
-                    && (_highestPriorityTargetProvider.Target == null
+                    && (_highestPriorityTarget == null
                         || !IsHighestPriorityTargetInRange()))
                 {
                     _ship.StartMoving();
@@ -121,7 +93,7 @@ namespace BattleCruisers.Movement.Deciders
             }
             else if (_blockingEnemyProvider.Target != null
                 || _blockingFriendlyProvider.Target != null
-                || (_highestPriorityTargetProvider.Target != null
+                || (_highestPriorityTarget != null
                     && IsHighestPriorityTargetInRange()))
             {
                 _ship.StopMoving();
@@ -130,15 +102,13 @@ namespace BattleCruisers.Movement.Deciders
 
         private bool IsHighestPriorityTargetInRange()
         {
-            return _rangeHelper.IsTargetInRange(_highestPriorityTargetProvider.Target);
+            return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
         }
 
         public void DisposeManagedState()
         {
             _blockingEnemyProvider.TargetChanged -= OnTargetChanged;
             _blockingFriendlyProvider.TargetChanged -= OnTargetChanged;
-            _highPriorityTarget.TargetChanged -= OnTargetChanged;
-            _highPriorityTarget.NewInRangeTarget -= OnTargetChanged;
         }
     }
 }
