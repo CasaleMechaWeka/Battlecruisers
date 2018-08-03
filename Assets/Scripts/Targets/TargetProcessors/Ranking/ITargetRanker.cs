@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
+    // FELIX  Move to TargetTrackers namespace, used there not in target processors :P
     public interface ITargetRanker
 	{
 		/// <returns>
