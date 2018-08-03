@@ -102,7 +102,6 @@ namespace BattleCruisers.Scenes
             IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer, variableDelayDeferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
-            // FELIX  Use/Remove.  Should use somewhere?
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiesrUserChosenTargetManager = new DummyUserChosenTargetManager();
 
