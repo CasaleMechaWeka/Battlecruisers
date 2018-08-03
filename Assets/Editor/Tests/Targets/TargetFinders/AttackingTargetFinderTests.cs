@@ -10,18 +10,18 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
     {
         private ITargetFinder _finder;
 
-        private ITargetFilter _targetFilter;
         private IDamagable _parentDamagable;
+        private ITargetFilter _targetFilter;
         private ITarget _target, _expectedTargetFound, _expectedTargetLost;
         private int _targetFoundCount, _targetLostCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _targetFilter = Substitute.For<ITargetFilter>();
             _parentDamagable = Substitute.For<IDamagable>();
+            _targetFilter = Substitute.For<ITargetFilter>();
 
-            _finder = new AttackingTargetFinder(_targetFilter, _parentDamagable);
+            _finder = new AttackingTargetFinder(_parentDamagable, _targetFilter);
 
             _target = Substitute.For<ITarget>();
             _expectedTargetFound = null;
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
         [Test]
         public void ParentDamaged_BeforeStartFindingTargets_DoesNothing()
         {
-            _finder = new AttackingTargetFinder(_targetFilter, _parentDamagable);
+            _finder = new AttackingTargetFinder(_parentDamagable, _targetFilter);
             _parentDamagable.Damaged += Raise.EventWith(new DamagedEventArgs(_target));
             Assert.AreEqual(0, _targetFoundCount);
         }

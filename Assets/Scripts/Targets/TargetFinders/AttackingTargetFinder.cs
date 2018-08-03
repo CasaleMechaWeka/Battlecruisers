@@ -10,18 +10,18 @@ namespace BattleCruisers.Targets.TargetFinders
     /// </summary>
     public class AttackingTargetFinder : ITargetFinder
     {
-        private readonly ITargetFilter _targetFilter;
         private readonly IDamagable _parentDamagable;
+        private readonly ITargetFilter _targetFilter;
 
         public event EventHandler<TargetEventArgs> TargetFound;
         public event EventHandler<TargetEventArgs> TargetLost;
 
-        public AttackingTargetFinder(ITargetFilter targetFilter, IDamagable parentDamagable)
+        public AttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter)
         {
-            Helper.AssertIsNotNull(targetFilter, parentDamagable);
+            Helper.AssertIsNotNull(parentDamagable, targetFilter);
 
-            _targetFilter = targetFilter;
             _parentDamagable = parentDamagable;
+            _targetFilter = targetFilter;
         }
 
         public void StartFindingTargets()
