@@ -134,6 +134,7 @@ namespace BattleCruisers.Targets
         #endregion Highest priority trackers
 
         #region TargetRankers
+        // FELIX  Create in constructor, simply return copy :P  Also concvert to properties :)
         public ITargetRanker CreateEqualTargetRanker()
 		{
 			return new EqualTargetRanker();
