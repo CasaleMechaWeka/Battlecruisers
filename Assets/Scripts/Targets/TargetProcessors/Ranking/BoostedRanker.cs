@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
     // FELIX  Test :)
-    public class RankBooster : ITargetRanker
+    public class BoostedRanker : ITargetRanker
     {
         private readonly ITargetRanker _baseRanker;
         private readonly int _rankBoost;
 
-        public RankBooster(ITargetRanker baseRanker, int rankBoost)
+        public BoostedRanker(ITargetRanker baseRanker, int rankBoost)
         {
             Assert.IsNotNull(baseRanker);
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Targets.TargetProcessors.Ranking
 
         public int RankTarget(ITarget target)
         {
-            return _baseRanker.RankTarget(target) + _rankBoost);
+            return _baseRanker.RankTarget(target) + _rankBoost;
         }
     }
 }
