@@ -134,7 +134,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _movementDecider,
                     enemyFaction,
                     targetProcessorTargetTypes,
-                    OptimalArmamentRangeInM);
+                    OptimalArmamentRangeInM,
+                    parentTarget: this);
 
 			_targetProcessorWrapper.Initialise(args);
             _targetProcessorWrapper.StartProvidingTargets();
