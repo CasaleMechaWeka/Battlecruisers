@@ -144,6 +144,10 @@ namespace BattleCruisers.Targets
             return new OffensiveBuildableTargetRanker();
         }
 
+        public ITargetRanker CreateBoostedRanker(ITargetRanker baseRanker, int rankBoost)
+        {
+            return new BoostedRanker(baseRanker, rankBoost);
+        }
         #endregion TargetRankers
 
         #region TargetProviders
