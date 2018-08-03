@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors.Ranking
 {
-    // FELIX  Test :)
     public class BoostedRanker : ITargetRanker
     {
         private readonly ITargetRanker _baseRanker;
