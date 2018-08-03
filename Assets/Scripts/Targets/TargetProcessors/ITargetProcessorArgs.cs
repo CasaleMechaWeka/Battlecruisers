@@ -11,5 +11,6 @@ namespace BattleCruisers.Targets.TargetProcessors
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }
         float MinRangeInM { get; }
+        IDamagable ParentDamagable { get; }
     }
 }

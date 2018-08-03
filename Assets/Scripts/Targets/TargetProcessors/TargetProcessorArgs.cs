@@ -13,6 +13,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         public IList<TargetType> AttackCapabilities { get; private set; }
         public float MaxRangeInM { get; private set; }
         public float MinRangeInM { get; private set; }
+        public IDamagable ParentDamagable { get; private set; }
 
         public TargetProcessorArgs(
         	ITargetsFactory targetsFactory,
@@ -20,7 +21,8 @@ namespace BattleCruisers.Targets.TargetProcessors
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
-            float minRangeInM = 0)
+            float minRangeInM = 0,
+            IDamagable parentDamagable = null)
         {
             Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM);
@@ -31,6 +33,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             AttackCapabilities = attackCapabilities;
             MaxRangeInM = maxRangeInM;
             MinRangeInM = minRangeInM;
+            ParentDamagable = parentDamagable;
         }
     }
 }
