@@ -15,6 +15,7 @@ namespace BattleCruisers.Targets.TargetProviders
     /// FELIX  Could potentiall refactor. 
     /// 1. Create AttackingTargetFinder/Provider (give attacking targets high priority)
     /// 2. Use CompositeTargetTracker (when it exists :P)
+    /// FELIX  Remove :)
     public class HighestPriorityTargetProvider : BroadcastingTargetProvider, IHighestPriorityTargetProvider
     {
         private readonly ITargetRanker _targetRanker;
