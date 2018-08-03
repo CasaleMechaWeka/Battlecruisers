@@ -31,7 +31,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
         }
 
-        private ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        protected ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
         {
             ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
             Assert.IsNotNull(targetRankerWrapper);
