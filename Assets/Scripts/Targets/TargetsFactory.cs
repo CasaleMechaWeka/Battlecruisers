@@ -16,8 +16,7 @@ namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        private readonly IHighestPriorityTargetTracker _userChosenTargetTracker;
-
+        public IHighestPriorityTargetTracker UserChosenTargetTracker { get; private set; }
         public ITargetProcessor BomberTargetProcessor { get; private set; }
 		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
@@ -25,7 +24,7 @@ namespace BattleCruisers.Targets
 		{
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
-            _userChosenTargetTracker = userChosenTargetTracker;
+            UserChosenTargetTracker = userChosenTargetTracker;
 
             // Global target finders keep track of what buildings th enemy cruiser builds,
             // so we must start them BEFORE the cruiser builds any buildings, otherwise
@@ -34,7 +33,7 @@ namespace BattleCruisers.Targets
 			BomberTargetProcessor 
                 = new TargetProcessor(
                     new CompositeTracker(
-                        _userChosenTargetTracker,
+                        UserChosenTargetTracker,
                         new HighestPriorityTargetTracker(
                             new GlobalTargetFinder(enemyCruiser), 
                             new BomberTargetRanker())));
@@ -43,7 +42,7 @@ namespace BattleCruisers.Targets
             OffensiveBuildableTargetProcessor
                 = new TargetProcessor(
                     new CompositeTracker(
-                        _userChosenTargetTracker,
+                        UserChosenTargetTracker,
                         new HighestPriorityTargetTracker(
                             new GlobalTargetFinder(enemyCruiser),
                             new OffensiveBuildableTargetRanker())));
@@ -119,7 +118,7 @@ namespace BattleCruisers.Targets
         #region Highest priority trackers
         public IHighestPriorityTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
         {
-            return new UserChosenInRangeTargetTracker(inRangeTargetTracker, _userChosenTargetTracker);
+            return new UserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }
 
         public IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)

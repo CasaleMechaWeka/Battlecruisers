@@ -14,6 +14,7 @@ namespace BattleCruisers.Targets
 {
     public interface ITargetsFactory
 	{
+        IHighestPriorityTargetTracker UserChosenTargetTracker { get; }
 		ITargetProcessor BomberTargetProcessor { get; }
 		ITargetProcessor OffensiveBuildableTargetProcessor { get; }
 
