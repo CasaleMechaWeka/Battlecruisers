@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
