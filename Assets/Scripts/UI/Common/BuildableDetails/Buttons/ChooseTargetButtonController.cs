@@ -11,13 +11,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private Button _button;
         private IUserChosenTargetManager _userChosenTargetManager;
 
-        private IBuildable _buildable;
-        public IBuildable Buildable
+        private ITarget _target;
+        public ITarget Target
         {
-            private get { return _buildable; }
+            private get { return _target; }
             set
             {
-                _buildable = value;
+                _target = value;
 				UpdateVisibility();
             }
         }
@@ -28,10 +28,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             get 
             {
                 return
-                    _buildable != null
-                    && _buildable.Faction == Faction.Reds
-                    && (_buildable.TargetType == TargetType.Buildings
-                        || _buildable.TargetType == TargetType.Cruiser);
+                    _target != null
+                    && _target.Faction == Faction.Reds
+                    && (_target.TargetType == TargetType.Buildings
+                        || _target.TargetType == TargetType.Cruiser);
             } 
         }
 
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
             ITarget currentUserChosenTarget = _userChosenTargetManager.HighestPriorityTarget != null ? _userChosenTargetManager.HighestPriorityTarget.Target : null;
 
-            if (ReferenceEquals(currentUserChosenTarget, _buildable))
+            if (ReferenceEquals(currentUserChosenTarget, _target))
             {
                 // Clear user chosen target
                 _userChosenTargetManager.Target = null;
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             else
             {
                 // Set user chosen target
-                _userChosenTargetManager.Target = _buildable;
+                _userChosenTargetManager.Target = _target;
             }
    
             if (Clicked != null)
