@@ -58,11 +58,14 @@ namespace BattleCruisers.Movement.Deciders
 
         private void OnBlockingTargetChanged(object sender, EventArgs args)
         {
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "OnBlockingTargetChanged()");
             DecideMovement();
         }
 
         private void DecideMovement()
         {
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "DecideMovement()  enemy:  " + _blockingEnemyProvider.Target + "  friend: " + _blockingFriendlyProvider.Target + "  target: " + _highestPriorityTarget);
+
             if (!_ship.IsMoving)
             {
                 if (_blockingEnemyProvider.Target == null
@@ -84,7 +87,11 @@ namespace BattleCruisers.Movement.Deciders
 
         private bool IsHighestPriorityTargetInRange()
         {
-            return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
+            // FELIX  TEMP
+            bool isInRange = _rangeHelper.IsTargetInRange(_highestPriorityTarget);
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "IsHighestPriorityTargetInRange()  isInRange: " + isInRange);
+            return isInRange;
+            //return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
         }
 
         public void DisposeManagedState()

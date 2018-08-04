@@ -52,12 +52,15 @@ namespace BattleCruisers.Utils
         public const string DRONE_MANAGER = "DroneManager";
 		public const string DRONE_CONSUMER_PROVIDER = "DroneConsumerProvider";
 
+        // Movement
+        public const string MOVEMENT = "Movement";
+        public const string SHIP_MOVEMENT_DECIDER = "ShipMovementDecider";
+
         // Other
         public const string CAMERA = "Camera";
         public const string CRUISER = "Cruiser";
 		public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
-        public const string MOVEMENT = "Movement";
         public const string PREDICTORS = "TargetPositionPredictors";
         public const string REPAIR_MANAGER = "RepairManager";
         public const string SCENE_NAVIGATION = "SceneNavigation";
@@ -128,12 +131,17 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_MANAGER, false);
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
+            // Movement
+            tagsToActiveness.Add(Tags.MOVEMENT, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, true);
+            //tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
+
             // Other
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
 			tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
-            tagsToActiveness.Add(Tags.MOVEMENT, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
