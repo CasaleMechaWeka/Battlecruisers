@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Tests.Targets.TargetTrackers.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.

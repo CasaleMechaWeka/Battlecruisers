@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Targets.TargetProcessors.Ranking.Wrappers
+namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
     public class EqualTargetRankerWrapper : MonoBehaviour, ITargetRankerWrapper
     {

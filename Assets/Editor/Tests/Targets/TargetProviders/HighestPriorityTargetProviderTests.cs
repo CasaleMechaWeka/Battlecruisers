@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using NSubstitute;
 using NUnit.Framework;

@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetProviders

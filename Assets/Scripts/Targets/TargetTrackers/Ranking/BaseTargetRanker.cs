@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Targets.TargetTrackers.Ranking
 {
     /// <summary>
     /// Prioritise targets by target value.

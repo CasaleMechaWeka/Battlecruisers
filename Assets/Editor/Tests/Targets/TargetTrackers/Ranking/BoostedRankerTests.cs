@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Tests.Targets.TargetTrackers.Ranking
 {
     public class BoostedRankerTests
     {

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Targets.TargetProcessors.Ranking;
+﻿using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
 using System;
 

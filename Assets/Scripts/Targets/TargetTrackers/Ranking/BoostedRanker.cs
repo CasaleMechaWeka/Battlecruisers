@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Targets.TargetTrackers.Ranking
 {
     public class BoostedRanker : ITargetRanker
     {

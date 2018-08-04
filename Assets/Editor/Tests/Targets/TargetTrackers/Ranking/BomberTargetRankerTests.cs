@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Targets.TargetProcessors.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Tests.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Tests.Targets.TargetTrackers.Ranking
 {
     /// <summary>
     /// Note:  Targets are ranked in ascending priority.

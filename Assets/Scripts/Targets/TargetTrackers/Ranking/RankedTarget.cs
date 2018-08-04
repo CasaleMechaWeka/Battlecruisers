@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Targets.TargetTrackers.Ranking
 {
     public class RankedTarget : IRankedTarget
     {

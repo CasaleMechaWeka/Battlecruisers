@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 
-namespace BattleCruisers.Targets.TargetProcessors.Ranking
+namespace BattleCruisers.Targets.TargetTrackers.Ranking
 {
     /// <summary>
     /// Prioritises targets by:
