@@ -152,7 +152,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             enemyDetector.Initialise(EnemyDetectionRangeInM);
             friendDetector.Initialise(FriendDetectionRangeInM);
 
-            // FELIX  NEXT  Add in range target tracker :)
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
