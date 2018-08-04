@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
