@@ -92,11 +92,7 @@ namespace BattleCruisers.Movement.Deciders
 
         private bool IsHighestPriorityTargetInRange()
         {
-            // FELIX  TEMP
-            bool isInRange = _rangeHelper.IsTargetInRange(_highestPriorityTarget);
-            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "IsHighestPriorityTargetInRange()  isInRange: " + isInRange);
-            return isInRange;
-            //return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
+            return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
         }
 
         public void DisposeManagedState()
