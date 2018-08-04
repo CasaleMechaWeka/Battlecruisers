@@ -158,6 +158,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     this,
                     _targetsFactory.CreateShipBlockingEnemyProvider(enemyDetector, this),
                     _targetsFactory.CreateShipBlockingFriendlyProvider(friendDetector, this),
+                    _targetsFactory.CreateTargetTracker(inRangeTargetFinder),
                     _targetsFactory.CreateShipRangeHelper(this));
         }
 

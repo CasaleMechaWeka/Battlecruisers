@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Buildables.Units.Ships;
+﻿using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.Helpers;
-using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -46,6 +44,11 @@ namespace BattleCruisers.Movement
         IConstantRotationController CreateDummyConstantRotationController();
 
         // Deciers
-        IMovementDecider CreateShipMovementDecider(IShip ship, IBroadcastingTargetProvider blockingEnemyTargetProvider, IBroadcastingTargetProvider blockingFriendTargetProvider, ITargetRangeHelper rangeHelper);
+        IMovementDecider CreateShipMovementDecider(
+            IShip ship, 
+            IBroadcastingTargetProvider blockingEnemyTargetProvider, 
+            IBroadcastingTargetProvider blockingFriendTargetProvider,
+            ITargetTracker inRangeTargetTracker,
+            ITargetRangeHelper rangeHelper);
     }
 }

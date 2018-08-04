@@ -8,6 +8,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using UnityEngine;
@@ -119,10 +120,11 @@ namespace BattleCruisers.Movement
         public IMovementDecider CreateShipMovementDecider(
             IShip ship, 
             IBroadcastingTargetProvider blockingEnemyTargetProvider, 
-            IBroadcastingTargetProvider blockingFriendTargetProvider, 
+            IBroadcastingTargetProvider blockingFriendTargetProvider,
+            ITargetTracker inRangeTargetTracker,
             ITargetRangeHelper rangeHelper)
         {
-            return new ShipMovementDecider(ship, blockingEnemyTargetProvider, blockingFriendTargetProvider, rangeHelper);
+            return new ShipMovementDecider(ship, blockingEnemyTargetProvider, blockingFriendTargetProvider, inRangeTargetTracker, rangeHelper);
         }
     }
 }

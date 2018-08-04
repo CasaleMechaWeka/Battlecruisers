@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System;
 
@@ -17,11 +18,13 @@ namespace BattleCruisers.Movement.Deciders
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
+    /// FELIX  Update tests
     public class ShipMovementDecider : IMovementDecider
     {
         private readonly IShip _ship;
-        private readonly ITargetRangeHelper _rangeHelper;
         private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private readonly ITargetTracker _inRangeTargetTracker;
+        private readonly ITargetRangeHelper _rangeHelper;
 
         // Frigate would have optimal range of 18.63 but target was at 18.6305.
         // Hence provide a tiny bit of leeway, so target is counted as in range.
@@ -41,24 +44,27 @@ namespace BattleCruisers.Movement.Deciders
             IShip ship,
             IBroadcastingTargetProvider blockingEnemyProvider,
             IBroadcastingTargetProvider blockingFriendlyProvider,
+            ITargetTracker inRangeTargetTracker,
             ITargetRangeHelper rangeHelper)
         {
-            Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, rangeHelper);
+            Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, rangeHelper);
 
             _ship = ship;
             _blockingEnemyProvider = blockingEnemyProvider;
             _blockingFriendlyProvider = blockingFriendlyProvider;
+            _inRangeTargetTracker = inRangeTargetTracker;
             _rangeHelper = rangeHelper;
 
-            _blockingEnemyProvider.TargetChanged += OnBlockingTargetChanged;
-            _blockingFriendlyProvider.TargetChanged += OnBlockingTargetChanged;
+            _blockingEnemyProvider.TargetChanged += TriggerDecideMovement;
+            _blockingFriendlyProvider.TargetChanged += TriggerDecideMovement;
+            _inRangeTargetTracker.TargetsChanged += TriggerDecideMovement;
 
             DecideMovement();
         }
 
-        private void OnBlockingTargetChanged(object sender, EventArgs args)
+        private void TriggerDecideMovement(object sender, EventArgs args)
         {
-            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "OnBlockingTargetChanged()");
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "TriggerDecideMovement()");
             DecideMovement();
         }
 
@@ -96,8 +102,8 @@ namespace BattleCruisers.Movement.Deciders
 
         public void DisposeManagedState()
         {
-            _blockingEnemyProvider.TargetChanged -= OnBlockingTargetChanged;
-            _blockingFriendlyProvider.TargetChanged -= OnBlockingTargetChanged;
+            _blockingEnemyProvider.TargetChanged -= TriggerDecideMovement;
+            _blockingFriendlyProvider.TargetChanged -= TriggerDecideMovement;
         }
     }
 }
