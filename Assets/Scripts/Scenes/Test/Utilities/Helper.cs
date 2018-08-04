@@ -136,7 +136,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IExplosionFactory explosionFactory = null,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = null)
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
+            IUserChosenTargetManager userChosenTargetManager = null)
 		{
 			BuildableInitialisationArgs args
 				= new BuildableInitialisationArgs(
@@ -157,7 +158,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     damageApplierFactory,
 					parentCruiserDirection,
                     explosionFactory,
-                    accuracyAdjusterFactory);
+                    accuracyAdjusterFactory,
+                    userChosenTargetManager: userChosenTargetManager);
 
             InitialiseUnit(unit, args);
 		}

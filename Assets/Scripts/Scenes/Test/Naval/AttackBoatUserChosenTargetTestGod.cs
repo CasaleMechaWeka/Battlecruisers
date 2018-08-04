@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Targets.TargetTrackers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace BattleCruisers.Scenes.Test.Naval
 {
     public class AttackBoatUserChosenTargetTestGod : MonoBehaviour 
 	{
+        private IUserChosenTargetManager _userChosenTargetManager;
+
         public TestAircraftController inRangeLowPriorityTarget, inRangeHighPriorityTarget, outOfRangeLowPriorityTarget;
 
 		void Start()
@@ -30,10 +33,33 @@ namespace BattleCruisers.Scenes.Test.Naval
             }
 
             // Ship
-            // FELIX  Pass in user chosen target manager :)
             ShipController boat = FindObjectOfType<ShipController>();
-			helper.InitialiseUnit(boat, Faction.Blues);
+            _userChosenTargetManager = new UserChosenTargetManager();
+            helper.InitialiseUnit(boat, Faction.Blues, userChosenTargetManager: _userChosenTargetManager);
             boat.StartConstruction();
+
+            // Imitate user choosing targets
+            Invoke("ChooseInRangeLowPriorityTarget", 2);
+            Invoke("ChooseOutOfRangeLowPriorityTarget", 4);
+            Invoke("ClearChosenTarget", 6);
         }
-	}
+
+        private void ChooseInRangeLowPriorityTarget()
+        {
+            Debug.Log("User chooses in range target");
+            _userChosenTargetManager.Target = inRangeLowPriorityTarget;
+        }
+
+        private void ChooseOutOfRangeLowPriorityTarget()
+        {
+            Debug.Log("User chooses out of range target");
+            _userChosenTargetManager.Target = outOfRangeLowPriorityTarget;
+        }
+
+        private void ClearChosenTarget()
+        {
+            Debug.Log("User clears chosen target");
+            _userChosenTargetManager.Target = null;
+        }
+    }
 }
