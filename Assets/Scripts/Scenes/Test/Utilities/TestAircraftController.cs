@@ -1,29 +1,24 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
-using System;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-	public class TestAircraftController : AircraftController
+    public class TestAircraftController : AircraftController
 	{
 		private TargetType _targetType;
 
 		// IList is not picked up by the Unit inspector
 		public List<Vector2> patrolPoints;
-
 		public IList<Vector2> PatrolPoints
 		{
-			get { throw new NotImplementedException(); }
-			set
-			{
-				patrolPoints = new List<Vector2>(value);
-			}
+			get { return patrolPoints; }
+			set { patrolPoints = new List<Vector2>(value); }
 		}
 
 		public override TargetType TargetType { get { return _targetType; } }
@@ -46,7 +41,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			}
 		}
 
-		protected override void OnBuildableCompleted()
+        public TargetValue targetValue;
+        public override TargetValue TargetValue { get { return targetValue; } }
+
+        protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
