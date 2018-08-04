@@ -24,6 +24,7 @@ namespace BattleCruisers.Targets.TargetFinders
 			_targetFilter = targetFilter;
 		}
 
+        // FELIX  Add assert to guard against double starting!
 		public void StartFindingTargets()
 		{
 			_enemyDetector.OnEntered += OnEnemyEntered;

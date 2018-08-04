@@ -10,14 +10,16 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         private const int ATTACKING_RANK_BOOST = 200;
 
+        public ITargetFinder InRangeTargetFinder { get; private set; }
+
         protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
         {
             Assert.IsNotNull(args.ParentTarget);
 
             // In range targets
-            ITargetFinder inRangeTargetFinder = CreateTargetFinder(args);
+            InRangeTargetFinder = CreateTargetFinder(args);
             ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetsFactory);
-            IHighestPriorityTargetTracker inRangeTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(inRangeTargetFinder, inRangeTargetRanker);
+            IHighestPriorityTargetTracker inRangeTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
             ITargetFilter attackingTargetFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);

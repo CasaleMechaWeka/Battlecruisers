@@ -24,7 +24,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             float minRangeInM = 0,
             ITarget parentTarget = null)
         {
-            Helper.AssertIsNotNull(targetsFactory, targetConsumer, attackCapabilities);
+            Helper.AssertIsNotNull(targetsFactory, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM);
 
             TargetsFactory = targetsFactory;

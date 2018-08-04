@@ -44,7 +44,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public void StartProcessingTargets()
         {
-			_highestPriorityTargetTracker.StartTrackingTargets();
+            // FELIX  Add assert to guard against double starting!
+            _highestPriorityTargetTracker.StartTrackingTargets();
         }
 
 		public void AddTargetConsumer(ITargetConsumer targetConsumer)

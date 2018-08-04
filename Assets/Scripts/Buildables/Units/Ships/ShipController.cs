@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
@@ -24,7 +25,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 	{
 		private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
-        private TargetProcessorWrapper _targetProcessorWrapper;
+        private ShipTargetProcessorWrapper _targetProcessorWrapper;
+        private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
@@ -75,7 +77,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             FindDamageStats();
 
-            _targetProcessorWrapper = transform.FindNamedComponent<TargetProcessorWrapper>("ShipTargetProcessorWrapper");
+            _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
         }
 
         private void FindDamageStats()
@@ -116,11 +118,13 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.StartAttackingTargets();
             }
 
-            _movementDecider = SetupMovementDecider();
-			SetupTargetProcessorWrapper();
+			_movementTargetProcessor = SetupTargetProcessorWrapper();
+            _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
+            _movementTargetProcessor.AddTargetConsumer(_movementDecider);
+            _movementTargetProcessor.StartProcessingTargets();
         }
 
-        private void SetupTargetProcessorWrapper()
+        private ITargetProcessor SetupTargetProcessorWrapper()
         {
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
@@ -128,24 +132,27 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
             targetProcessorTargetTypes.Remove(TargetType.Aircraft);
 
+            // Add the target consumer after the processor has been initalised
+            ITargetConsumer targetConsumer = null;
+
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
-                    _movementDecider,
+                    targetConsumer,
                     enemyFaction,
                     targetProcessorTargetTypes,
                     OptimalArmamentRangeInM,
                     parentTarget: this);
 
-			_targetProcessorWrapper.Initialise(args);
-            _targetProcessorWrapper.StartProvidingTargets();
+			return _targetProcessorWrapper.Initialise(args);
         }
 
-        private IMovementDecider SetupMovementDecider()
+        private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
             enemyDetector.Initialise(EnemyDetectionRangeInM);
             friendDetector.Initialise(FriendDetectionRangeInM);
 
+            // FELIX  NEXT  Add in range target tracker :)
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
