@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -61,12 +62,13 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,
-            IBroadcastingFilter shouldNavigationBeEnabledFilter)
+            IBroadcastingFilter shouldNavigationBeEnabledFilter,
+            IUserChosenTargetManager userChosenTargetManager)
         {
-            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetManager);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager);
-            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
+            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
             _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
 
             _playerCruiserInfo.Initialise(playerCruiser);

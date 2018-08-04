@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
@@ -13,7 +14,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private RepairButtonController _repairButton;
         private BuildableProgressBarController _buildProgressController;
-		
+        private ChooseTargetButtonController _chooseTargetButton;
+
         private ToggleDroneButtonController _toggleDronesButton;
         public IButton ToggleDronesButton { get { return _toggleDronesButton; } }
 
@@ -30,6 +32,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _buildProgressController.Buildable = buildable;
                 _toggleDronesButton.Buildable = buildable;
                 _repairButton.Repairable = buildable;
+                _chooseTargetButton.Target = buildable;
             }
         }
 
@@ -41,9 +44,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public float Height { get; private set; }
 
-        public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(IDroneManager droneManager, IRepairManager repairManager, IUserChosenTargetManager userChosenTargetManager)
         {
-            Helper.AssertIsNotNull(droneManager, repairManager);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetManager);
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
             Height = rectTransform.sizeDelta.y;
@@ -55,6 +58,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
             Assert.IsNotNull(_toggleDronesButton);
             _toggleDronesButton.Initialise();
+
+            _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
+            Assert.IsNotNull(_chooseTargetButton);
+            _chooseTargetButton.Initialise(userChosenTargetManager);
 
             _buildProgressController = GetComponentInChildren<BuildableProgressBarController>(includeInactive: true);
             Assert.IsNotNull(_buildProgressController);

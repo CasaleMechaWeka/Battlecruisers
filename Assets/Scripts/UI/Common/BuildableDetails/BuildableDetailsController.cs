@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -17,11 +18,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
 
-        public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(IDroneManager droneManager, IRepairManager repairManager, IUserChosenTargetManager userChosenTargetManager)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetManager);
 
             _rectTransform = transform.Parse<RectTransform>();
             _maxHeight = _rectTransform.sizeDelta.y;
@@ -32,7 +33,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
             Assert.IsNotNull(_bottomBar);
-            _bottomBar.Initialise(droneManager, repairManager);
+            _bottomBar.Initialise(droneManager, repairManager, userChosenTargetManager);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable, bool allowDelete)
