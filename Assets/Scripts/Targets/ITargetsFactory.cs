@@ -52,7 +52,6 @@ namespace BattleCruisers.Targets
         ITargetProvider CreateStaticTargetProvider(ITarget target);
         IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit);
         IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
-        IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, ITargetFilter attackingTargetFilter, IDamagable parentDamagable);
 
         // Helpers
         ITargetRangeHelper CreateShipRangeHelper(IShip ship);

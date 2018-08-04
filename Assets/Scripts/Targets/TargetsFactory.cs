@@ -170,11 +170,6 @@ namespace BattleCruisers.Targets
         {
             return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
         }
-
-        public IHighestPriorityTargetProvider CreateHighestPriorityTargetProvider(ITargetRanker targetRanker, ITargetFilter attackingTargetFilter, IDamagable parentDamagable)
-        {
-            return new HighestPriorityTargetProvider(targetRanker, attackingTargetFilter, parentDamagable);
-        }
         #endregion TargetProviders
 		
 		public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
