@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetTrackers;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -16,8 +17,9 @@ namespace BattleCruisers.Tests.Movement.Deciders
         private IMovementDecider _shipMovementDecider;
 
         private IShip _ship;
-        private ITargetRangeHelper _rangeHelper;
         private IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private ITargetTracker _inRangeTargetTracker;
+        private ITargetRangeHelper _rangeHelper;
         private ITarget _target, _nullTarget;
 
         [SetUp]
@@ -34,15 +36,15 @@ namespace BattleCruisers.Tests.Movement.Deciders
             ReadOnlyCollection<TargetType> readonlyAttackCapabilities = new ReadOnlyCollection<TargetType>(attackCapabilities);
             _ship.AttackCapabilities.Returns(readonlyAttackCapabilities);
 
-            _rangeHelper = Substitute.For<ITargetRangeHelper>();
             _blockingEnemyProvider = Substitute.For<IBroadcastingTargetProvider>();
             _blockingFriendlyProvider = Substitute.For<IBroadcastingTargetProvider>();
+            _inRangeTargetTracker = Substitute.For<ITargetTracker>();
+            _rangeHelper = Substitute.For<ITargetRangeHelper>();
 
             _target = Substitute.For<ITarget>();
 			_nullTarget = null;
 
-            // FELIX  Fix :)
-            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, null, _rangeHelper);
+            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, _inRangeTargetTracker, _rangeHelper);
             _ship.ClearReceivedCalls();
         }
 
@@ -72,6 +74,13 @@ namespace BattleCruisers.Tests.Movement.Deciders
         public void HighestPriorityTargetChanged_TriggersDecision()
         {
             _shipMovementDecider.Target = _target;
+            AssertDecideMovementWasCalled();
+        }
+
+        [Test]
+        public void InRangeTargetsChanged_TriggersDecision()
+        {
+            _inRangeTargetTracker.TargetsChanged += Raise.Event();
             AssertDecideMovementWasCalled();
         }
         #endregion Events trigger update

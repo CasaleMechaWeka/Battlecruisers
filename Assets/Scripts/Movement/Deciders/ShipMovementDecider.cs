@@ -18,7 +18,6 @@ namespace BattleCruisers.Movement.Deciders
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
-    /// FELIX  Update tests
     public class ShipMovementDecider : IMovementDecider
     {
         private readonly IShip _ship;
