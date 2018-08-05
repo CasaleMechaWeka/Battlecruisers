@@ -92,7 +92,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     enemyFollowRangeInM);
 
             _followingTargetProcessor.Initialise(args);
-            _followingTargetProcessor.StartProvidingTargets();
 
 			// Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);

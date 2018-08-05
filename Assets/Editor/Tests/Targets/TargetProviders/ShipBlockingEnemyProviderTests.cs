@@ -48,7 +48,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _asTargetConsumer = _targetProvider;
 
             targetProcessor.Received().AddTargetConsumer(_targetProvider);
-            targetProcessor.Received().StartProcessingTargets();
         }
 
         [Test]

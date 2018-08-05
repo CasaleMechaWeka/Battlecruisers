@@ -19,8 +19,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
             ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(defenceBuildings);
 
-            targetsFactory.BomberTargetProcessor.StartProcessingTargets();
-
             _helper
                 .InitialiseBuilding(
                     factory, 

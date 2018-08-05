@@ -36,7 +36,6 @@ namespace BattleCruisers.Targets.TargetProcessors
             {
     			_targetProcessor.AddTargetConsumer(_targetConsumer);
             }
-            _targetProcessor.StartProcessingTargets();
         }
 		
         public void DisposeManagedState()

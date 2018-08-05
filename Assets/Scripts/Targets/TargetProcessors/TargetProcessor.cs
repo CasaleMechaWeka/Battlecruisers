@@ -29,6 +29,9 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetConsumers =  new List<ITargetConsumer>();
 
             _highestPriorityTargetTracker.HighestPriorityTargetChanged += _highestPriorityTargetTracker_HighestPriorityTargetChanged;
+            
+            // FELIX  Also move to TargetTracker constructor and remove this method?
+            _highestPriorityTargetTracker.StartTrackingTargets();
         }
 
         private void _highestPriorityTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
@@ -40,12 +43,6 @@ namespace BattleCruisers.Targets.TargetProcessors
             {
                 consumer.Target = HighestPriorityTarget;
             }
-        }
-
-        public void StartProcessingTargets()
-        {
-            // FELIX  Add assert to guard against double starting!
-            _highestPriorityTargetTracker.StartTrackingTargets();
         }
 
 		public void AddTargetConsumer(ITargetConsumer targetConsumer)

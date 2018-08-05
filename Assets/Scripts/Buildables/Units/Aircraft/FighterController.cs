@@ -135,7 +135,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IHighestPriorityTargetTracker followableTargetTracker = _targetsFactory.CreateHighestPriorityTargetTracker(_followableTargetFinder, followableTargetRanker);
 			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(followableTargetTracker);
 			_followableTargetProcessor.AddTargetConsumer(this);
-            _followableTargetProcessor.StartProcessingTargets();
 
 
 			// Detect shootable enemies
@@ -149,7 +148,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IHighestPriorityTargetTracker shootableTargetTracker = _targetsFactory.CreateHighestPriorityTargetTracker(_shootableTargetFinder, shootableTargetRanker);
 			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(shootableTargetTracker);
 			_shootableTargetProcessor.AddTargetConsumer(_barrelController);
-            _shootableTargetProcessor.StartProcessingTargets();
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

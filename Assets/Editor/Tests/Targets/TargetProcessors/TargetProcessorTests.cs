@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 
             _targetProcessor = new TargetProcessor(_targetTracker);
 
-            _targetProcessor.StartProcessingTargets();
+            // FELIX  Hm, also get rid of StartTrackingTargets()?
             _targetTracker.Received().StartTrackingTargets();
 
             _targetTracker.HighestPriorityTarget.Returns(_target1);

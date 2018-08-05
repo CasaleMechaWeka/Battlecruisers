@@ -33,7 +33,6 @@ namespace BattleCruisers.Targets
                         new HighestPriorityTargetTracker(
                             new GlobalTargetFinder(enemyCruiser), 
                             new BomberTargetRanker())));
-            BomberTargetProcessor.StartProcessingTargets();
 
             OffensiveBuildableTargetProcessor
                 = new TargetProcessor(
@@ -42,7 +41,6 @@ namespace BattleCruisers.Targets
                         new HighestPriorityTargetTracker(
                             new GlobalTargetFinder(enemyCruiser),
                             new OffensiveBuildableTargetRanker())));
-            OffensiveBuildableTargetProcessor.StartProcessingTargets();
 
             EqualTargetRanker = new EqualTargetRanker();
             ShipTargetRanker = new ShipTargetRanker();

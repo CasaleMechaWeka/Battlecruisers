@@ -51,7 +51,6 @@ namespace BattleCruisers.Targets.TargetProviders
             ITargetProcessor targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
 
             targetProcessor.AddTargetConsumer(this);
-            targetProcessor.StartProcessingTargets();
         }
     }
 }

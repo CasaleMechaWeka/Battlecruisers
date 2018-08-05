@@ -95,7 +95,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			_targetProcessor = _targetsFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
-            _targetProcessor.StartProcessingTargets();
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooser(this);
 		}
