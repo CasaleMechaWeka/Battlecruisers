@@ -108,20 +108,16 @@ namespace BattleCruisers.Utils
 			// Targets
 			tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.TARGET_FINDER, true);
-            //tagsToActiveness.Add(Tags.TARGET_FINDER, false);
+            tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
             tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
             tagsToActiveness.Add(Tags.TARGET_PROVIDERS, false);
             tagsToActiveness.Add(Tags.TARGET_RANGE_HELPER, false);
             tagsToActiveness.Add(Tags.TARGET_TRACKER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, true);
-            //tagsToActiveness.Add(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, false);
 
-			// UI
-			tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+            // UI
+            tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
 			tagsToActiveness.Add(Tags.UI_MANAGER, false);
 
             // AI
