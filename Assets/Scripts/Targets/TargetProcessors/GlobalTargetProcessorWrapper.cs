@@ -2,7 +2,7 @@
 {
     public class GlobalTargetProcessorWrapper : TargetProcessorWrapper
     {
-        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
         {
             return args.TargetsFactory.OffensiveBuildableTargetProcessor;
         }

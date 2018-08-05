@@ -14,7 +14,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public bool considerUserChosenTarget;
 
-        protected override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);

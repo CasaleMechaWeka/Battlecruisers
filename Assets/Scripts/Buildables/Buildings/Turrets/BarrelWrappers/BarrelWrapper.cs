@@ -119,7 +119,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     RangeInM,
                     _minRangeInM);
 
-            _targetProcessor = _targetProcessorWrapper.Initialise(args);
+            _targetProcessor = _targetProcessorWrapper.CreateTargetProcessor(args);
             _targetProcessor.AddTargetConsumer(this);
         }
 

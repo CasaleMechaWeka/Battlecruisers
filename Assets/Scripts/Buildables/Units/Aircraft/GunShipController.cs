@@ -90,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     AttackCapabilities,
                     enemyFollowRangeInM);
 
-            _followingTargetProcessor = _followingTargetProcessorWrapper.Initialise(args);
+            _followingTargetProcessor = _followingTargetProcessorWrapper.CreateTargetProcessor(args);
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets

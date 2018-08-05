@@ -139,7 +139,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     OptimalArmamentRangeInM,
                     parentTarget: this);
 
-			return _targetProcessorWrapper.Initialise(args);
+			return _targetProcessorWrapper.CreateTargetProcessor(args);
         }
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
