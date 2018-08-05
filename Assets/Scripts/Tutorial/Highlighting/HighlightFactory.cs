@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
@@ -8,25 +7,6 @@ namespace BattleCruisers.Tutorial.Highlighting
         public InGameHighlight inGameHighlightPrefab;
         public OnCanvasHighlight onCanvasHighlightPrefab;
 
-        public IHighlight CreateHighlight(IHighlightable highlightable)
-        {
-            float radius = highlightable.Size.x / 2 * highlightable.SizeMultiplier;
-
-            switch (highlightable.HighlightableType)
-            {
-                case HighlightableType.InGame:
-                    Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;
-                    return CreateInGameHighlight(radius, spawnPosition);
-
-                case HighlightableType.OnCanvas:
-                    return CreateOnCanvasHighlight(radius, highlightable.Transform, highlightable.PositionAdjustment);
-
-                default:
-                    throw new ArgumentException();
-            }
-        }
-
-        // FELIX  Make private :)
         public IHighlight CreateInGameHighlight(float radiusInM, Vector2 position)
         {
             InGameHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
@@ -34,7 +14,6 @@ namespace BattleCruisers.Tutorial.Highlighting
             return inGameHighlight;
         }
 
-        // FELIX  Make private :)
         public IHighlight CreateOnCanvasHighlight(float radiusInPixels, Transform parentTransform, Vector2 positionAdjustment)
         {
             OnCanvasHighlight onCanvasHighlight = Instantiate(onCanvasHighlightPrefab, parentTransform);
