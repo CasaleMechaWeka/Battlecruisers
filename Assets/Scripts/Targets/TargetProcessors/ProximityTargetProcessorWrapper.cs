@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers;
-using BattleCruisers.Targets.TargetTrackers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
@@ -47,14 +47,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 			enemyDetector.Initialise(args.MaxRangeInM);
 			ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
 			return args.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
-        }
-
-        protected override void CleanUp()
-        {
-            base.CleanUp();
-
-            _targetTracker.DisposeManagedState();
-            _targetFinder.DisposeManagedState();
         }
     }
 }

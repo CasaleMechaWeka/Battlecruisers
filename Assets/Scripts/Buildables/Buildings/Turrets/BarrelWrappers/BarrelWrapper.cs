@@ -190,9 +190,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void DisposeManagedState()
         {
-            _targetProcessorWrapper.DisposeManagedState();
-            _targetProcessorWrapper = null;
-
             // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
         }
     }

@@ -154,8 +154,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            _followingTargetProcessorWrapper.DisposeManagedState();
-            _followingTargetProcessorWrapper = null;
             // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
 
             _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
