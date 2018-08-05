@@ -47,6 +47,9 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         public void HighestPriorityTarget_NoUserChosenTarget_ReturnsNull()
         {
             _userChosenTargetTracker.HighestPriorityTarget.Returns((RankedTarget)null);
+
+            TriggerReevaluation();
+
             Assert.IsNull(_userChosenInRangeTargetTracker.HighestPriorityTarget);
         }
 
@@ -55,6 +58,8 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         {
             _userChosenTargetTracker.HighestPriorityTarget.Returns(_rankedTarget);
             _inRangeTargetTracker.ContainsTarget(_rankedTarget.Target).Returns(false);
+
+            TriggerReevaluation();
 
             Assert.IsNull(_userChosenInRangeTargetTracker.HighestPriorityTarget);
         }
@@ -65,7 +70,14 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _userChosenTargetTracker.HighestPriorityTarget.Returns(_rankedTarget);
             _inRangeTargetTracker.ContainsTarget(_rankedTarget.Target).Returns(true);
 
+            TriggerReevaluation();
+
             Assert.AreSame(_userChosenTargetTracker.HighestPriorityTarget, _userChosenInRangeTargetTracker.HighestPriorityTarget);
+        }
+
+        private void TriggerReevaluation()
+        {
+            _inRangeTargetTracker.TargetsChanged += Raise.Event();
         }
     }
 }
