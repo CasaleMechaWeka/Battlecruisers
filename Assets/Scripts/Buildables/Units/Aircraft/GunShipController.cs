@@ -20,7 +20,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
-        private TargetProcessorWrapper _followingTargetProcessorWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
@@ -58,8 +57,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
 
-            _followingTargetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
-
             _isAtCruisingHeight = false;
 		}
 
@@ -90,7 +87,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     AttackCapabilities,
                     enemyFollowRangeInM);
 
-            _followingTargetProcessor = _followingTargetProcessorWrapper.CreateTargetProcessor(args);
+            TargetProcessorWrapper followingTargetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
+            _followingTargetProcessor = followingTargetProcessorWrapper.CreateTargetProcessor(args);
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
@@ -153,14 +151,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
+            _followingTargetProcessor.DisposeManagedState();
 
             _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
             _inRangeTargetFinder.DisposeManagedState();
-            _inRangeTargetFinder = null;
 
             _inRangeTargetTracker.DisposeManagedState();
-            _inRangeTargetTracker = null;
 		}
 	}
 }

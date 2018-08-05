@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -14,6 +12,8 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
         protected BarrelController[] _barrels;
-        private TargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
@@ -59,9 +58,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             DamageCapability = SumBarrelDamage();
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
             _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
-
-            _targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
-            Assert.IsNotNull(_targetProcessorWrapper);
         }
 
         private void InitialiseBarrels()
@@ -119,7 +115,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     RangeInM,
                     _minRangeInM);
 
-            _targetProcessor = _targetProcessorWrapper.CreateTargetProcessor(args);
+            TargetProcessorWrapper targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
+            Assert.IsNotNull(targetProcessorWrapper);
+            _targetProcessor = targetProcessorWrapper.CreateTargetProcessor(args);
             _targetProcessor.AddTargetConsumer(this);
         }
 
@@ -189,7 +187,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void DisposeManagedState()
         {
-            // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
+            _targetProcessor.DisposeManagedState();
         }
     }
 }
