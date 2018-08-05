@@ -29,9 +29,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 			_targetConsumers =  new List<ITargetConsumer>();
 
             _highestPriorityTargetTracker.HighestPriorityTargetChanged += _highestPriorityTargetTracker_HighestPriorityTargetChanged;
-            
-            // FELIX  Also move to TargetTracker constructor and remove this method?
-            _highestPriorityTargetTracker.StartTrackingTargets();
         }
 
         private void _highestPriorityTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)

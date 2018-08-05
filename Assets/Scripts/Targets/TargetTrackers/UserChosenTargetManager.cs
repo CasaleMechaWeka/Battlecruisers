@@ -56,11 +56,6 @@ namespace BattleCruisers.Targets.TargetTrackers
             Target = null;
         }
 
-        public void StartTrackingTargets()
-        {
-            // Empty
-        }
-
         public void DisposeManagedState()
         {
             Target = null;

@@ -30,13 +30,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         }
 
         [Test]
-        public void StartTrackingTargets_FindsTarget()
-        {
-            _userChosenInRangeTargetTracker.StartTrackingTargets();
-            RankedTarget compilerBribe = _userChosenTargetTracker.Received().HighestPriorityTarget;
-        }
-
-        [Test]
         public void InRangeTargetsChanged_FindsTarget()
         {
             _inRangeTargetTracker.TargetsChanged += Raise.Event();
@@ -54,7 +47,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         public void HighestPriorityTarget_NoUserChosenTarget_ReturnsNull()
         {
             _userChosenTargetTracker.HighestPriorityTarget.Returns((RankedTarget)null);
-            _userChosenInRangeTargetTracker.StartTrackingTargets();
             Assert.IsNull(_userChosenInRangeTargetTracker.HighestPriorityTarget);
         }
 
@@ -64,7 +56,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _userChosenTargetTracker.HighestPriorityTarget.Returns(_rankedTarget);
             _inRangeTargetTracker.ContainsTarget(_rankedTarget.Target).Returns(false);
 
-            _userChosenInRangeTargetTracker.StartTrackingTargets();
             Assert.IsNull(_userChosenInRangeTargetTracker.HighestPriorityTarget);
         }
 
@@ -74,7 +65,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _userChosenTargetTracker.HighestPriorityTarget.Returns(_rankedTarget);
             _inRangeTargetTracker.ContainsTarget(_rankedTarget.Target).Returns(true);
 
-            _userChosenInRangeTargetTracker.StartTrackingTargets();
             Assert.AreSame(_userChosenTargetTracker.HighestPriorityTarget, _userChosenInRangeTargetTracker.HighestPriorityTarget);
         }
     }

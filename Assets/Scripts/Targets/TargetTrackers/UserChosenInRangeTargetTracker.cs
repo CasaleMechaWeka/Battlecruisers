@@ -38,6 +38,8 @@ namespace BattleCruisers.Targets.TargetTrackers
 
             _inRangeTargetTracker.TargetsChanged += _inRangeTargetTracker_TargetsChanged;
             _userChosenTargetTracker.HighestPriorityTargetChanged += _userChosenTargetTracker_HighestPriorityTargetChanged;
+
+            HighestPriorityTarget = FindHighestPriorityTarget();
         }
 
         private void _inRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
@@ -61,11 +63,6 @@ namespace BattleCruisers.Targets.TargetTrackers
             }
 
             return highestRankedTarget;
-        }
-
-        public void StartTrackingTargets()
-        {
-            HighestPriorityTarget = FindHighestPriorityTarget();
         }
 
         public void DisposeManagedState()

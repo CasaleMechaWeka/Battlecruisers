@@ -59,14 +59,6 @@ namespace BattleCruisers.Targets.TargetTrackers
             return highestRankedTarget;
         }
 
-        public void StartTrackingTargets()
-        {
-            foreach (IHighestPriorityTargetTracker targetTracker in _targetTrackers)
-            {
-                targetTracker.StartTrackingTargets();
-            }
-        }
-
         public void DisposeManagedState()
         {
             foreach (IHighestPriorityTargetTracker targetTracker in _targetTrackers)

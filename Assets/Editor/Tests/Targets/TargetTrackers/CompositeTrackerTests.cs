@@ -69,15 +69,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         }
 
         [Test]
-        public void StartTrackingTargets_Propagates()
-        {
-            _compositeTracker.StartTrackingTargets();
-
-            _tracker1.Received().StartTrackingTargets();
-            _tracker2.Received().StartTrackingTargets();
-        }
-
-        [Test]
         public void Dispose_Propagates()
         {
             _compositeTracker.DisposeManagedState();

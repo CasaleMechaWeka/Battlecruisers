@@ -14,7 +14,5 @@ namespace BattleCruisers.Targets.TargetTrackers
         RankedTarget HighestPriorityTarget { get; }
 
         event EventHandler HighestPriorityTargetChanged;
-
-        void StartTrackingTargets();
     }
 }

@@ -36,8 +36,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
 
             _targetTracker = new HighestPriorityTargetTracker(_targetFinder, _targetRanker);
 
-            _targetTracker.StartTrackingTargets();
-
             _highestPriorityTargetChangedCount = 0;
             _targetTracker.HighestPriorityTargetChanged += (sender, e) => _highestPriorityTargetChangedCount++;
 

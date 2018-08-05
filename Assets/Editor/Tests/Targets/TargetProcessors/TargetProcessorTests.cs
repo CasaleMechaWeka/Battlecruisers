@@ -26,9 +26,6 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
 
             _targetProcessor = new TargetProcessor(_targetTracker);
 
-            // FELIX  Hm, also get rid of StartTrackingTargets()?
-            _targetTracker.Received().StartTrackingTargets();
-
             _targetTracker.HighestPriorityTarget.Returns(_target1);
 
             UnityAsserts.Assert.raiseExceptions = true;

@@ -13,11 +13,6 @@ namespace BattleCruisers.Targets.TargetTrackers
         public event EventHandler HighestPriorityTargetChanged;
 #pragma warning restore 67  // Unused event
 
-        public void StartTrackingTargets()
-        {
-            // empty
-        }
-
         public void DisposeManagedState()
         {
             // empty

@@ -132,12 +132,6 @@ namespace BattleCruisers.Targets.TargetTrackers
             return new RankedTarget(target, targetRank);
         }
 
-        // FELIX  Remove method
-        public void StartTrackingTargets()
-        {
-            //_targetFinder.StartFindingTargets();
-        }
-
         public void DisposeManagedState()
         {
             _targetFinder.TargetFound -= TargetFinder_TargetFound;
