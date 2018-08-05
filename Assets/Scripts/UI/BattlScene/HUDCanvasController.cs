@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene
 
             _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
             _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
-            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager);
+            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
 
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);
