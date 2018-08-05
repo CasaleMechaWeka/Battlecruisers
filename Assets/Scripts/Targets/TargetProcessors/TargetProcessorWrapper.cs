@@ -8,17 +8,16 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         private ITargetConsumer _targetConsumer;
         private ITargetProcessor _targetProcessor;
-        private bool _isProvidingTargets;
 
         // FELIX  Remove this?  Should never be disposed if Initalise() was not first called :/
         private bool IsInitialised { get { return _targetProcessor != null; } }
 
+        // FELIX  Simplify args, don't need target consumer anymore :)
         public ITargetProcessor Initialise(ITargetProcessorArgs args)
         {
             Assert.IsNotNull(args);
 
             _targetConsumer = args.TargetConsumer;
-			_isProvidingTargets = false;
 
             _targetProcessor = CreateTargetProcessor(args);
             return _targetProcessor;
@@ -26,18 +25,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args);
 
-        // FELIX  Remove this method?  Hm...  Caller's responsibility to:  1. Add consumer  2. Start processor
-        public void StartProvidingTargets()
-        {
-            Assert.IsFalse(_isProvidingTargets);
-            _isProvidingTargets = true;
-
-            if (_targetConsumer != null)
-            {
-    			_targetProcessor.AddTargetConsumer(_targetConsumer);
-            }
-        }
-		
         public void DisposeManagedState()
         {
             if (IsInitialised)
@@ -46,6 +33,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             }
         }
 
+        // FELIX  Should not be this wrapper's resonsibility :/  Wrapper should simply act as a factory.
         protected virtual void CleanUp()
         {
 			_targetProcessor.RemoveTargetConsumer(_targetConsumer);

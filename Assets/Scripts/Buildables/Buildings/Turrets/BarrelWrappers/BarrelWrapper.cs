@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     {
         protected BarrelController[] _barrels;
         private TargetProcessorWrapper _targetProcessorWrapper;
+        private ITargetProcessor _targetProcessor;
         protected IFactoryProvider _factoryProvider;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
@@ -119,7 +120,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     RangeInM,
                     _minRangeInM);
 
-            _targetProcessorWrapper.Initialise(args);
+            _targetProcessor = _targetProcessorWrapper.Initialise(args);
+            _targetProcessor.AddTargetConsumer(this);
         }
 
         private IBarrelControllerArgs CreateBarrelControllerArgs(
@@ -190,6 +192,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             _targetProcessorWrapper.DisposeManagedState();
             _targetProcessorWrapper = null;
+
+            // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
         }
     }
 }

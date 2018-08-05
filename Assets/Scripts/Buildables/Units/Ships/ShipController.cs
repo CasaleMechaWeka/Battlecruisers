@@ -178,6 +178,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 			{
 				_movementDecider.DisposeManagedState();
 			}
+
+            if (_movementTargetProcessor != null)
+            {
+                _movementTargetProcessor.DisposeManagedState();
+            }
+
             base.OnDestroyed();
 		}
 	}

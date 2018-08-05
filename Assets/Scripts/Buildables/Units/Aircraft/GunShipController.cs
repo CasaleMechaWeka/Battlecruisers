@@ -20,8 +20,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
-        private TargetProcessorWrapper _followingTargetProcessor;
-		private ITargetFinder _inRangeTargetFinder;
+        private TargetProcessorWrapper _followingTargetProcessorWrapper;
+        private ITargetProcessor _followingTargetProcessor;
+        private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
 
@@ -57,7 +58,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
 
-            _followingTargetProcessor = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
+            _followingTargetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
 
             _isAtCruisingHeight = false;
 		}
@@ -80,20 +81,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
             // Create target processor => For following enemies
-            ITargetConsumer targetConsumer = this;
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
-                    targetConsumer,
+                    this,
                     enemyFaction,
                     AttackCapabilities,
                     enemyFollowRangeInM);
 
-            _followingTargetProcessor.Initialise(args);
+            _followingTargetProcessor = _followingTargetProcessorWrapper.Initialise(args);
+            _followingTargetProcessor.AddTargetConsumer(this);
 
-			// Create target tracker => For keeping track of in range targets
+            // Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
@@ -154,8 +155,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            _followingTargetProcessor.DisposeManagedState();
-            _followingTargetProcessor = null;
+            _followingTargetProcessorWrapper.DisposeManagedState();
+            _followingTargetProcessorWrapper = null;
+            // FELIX  Clean up targetProcessor (once TargetProcessorWrapper no longer has dispose)
 
             _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
             _inRangeTargetFinder.DisposeManagedState();
