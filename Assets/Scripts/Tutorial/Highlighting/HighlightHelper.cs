@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    // FLEIX  Test :)  (from HighlighterTests)
     public class HighlightHelper : IHighlightHelper
     {
         private readonly IHighlightFactory _highlightFactory;
