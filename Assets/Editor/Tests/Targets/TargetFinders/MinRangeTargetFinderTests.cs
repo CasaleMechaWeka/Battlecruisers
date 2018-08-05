@@ -23,7 +23,6 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             _targetFilter = Substitute.For<ITargetFilter>();
 
             _targetFinder = new MinRangeTargetFinder(_maxRangeDetector, _minRangeDetector, _targetFilter);
-            _targetFinder.StartFindingTargets();
         }
 
         #region Max range detector

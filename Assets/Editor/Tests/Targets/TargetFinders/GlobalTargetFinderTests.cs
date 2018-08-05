@@ -35,7 +35,6 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 		public void Cruiser_EmitsTargetFound()
 		{
 			_expectedTargetFound = _enemyCruiser;
-			_targetFinder.StartFindingTargets();
 			Assert.AreEqual(1, _targetFoundEmittedCount);
 		}
 

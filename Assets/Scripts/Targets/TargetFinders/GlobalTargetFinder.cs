@@ -20,7 +20,6 @@ namespace BattleCruisers.Targets.TargetFinders
     public class GlobalTargetFinder : ITargetFinder
 	{
 		private ICruiser _enemyCruiser;
-        private bool _isFindingTargets;
 
 		private const float BUILD_PROGRESS_CONSIDERED_TARGET = 0.5f;
 
@@ -30,22 +29,14 @@ namespace BattleCruisers.Targets.TargetFinders
 		public GlobalTargetFinder(ICruiser enemyCruiser)
 		{
             Assert.IsNotNull(enemyCruiser);
+            Assert.IsFalse(enemyCruiser.IsDestroyed);
 
 			_enemyCruiser = enemyCruiser;
-            _isFindingTargets = false;
-		}
 
-        public void StartFindingTargets()
-		{
-            if (!_isFindingTargets)
-            {
-                Assert.IsFalse(_enemyCruiser.IsDestroyed);
+            _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
+            _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
 
-                _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
-                _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
-                InvokeTargetFoundEvent(_enemyCruiser);
-                _isFindingTargets = true;
-			}
+            InvokeTargetFoundEvent(_enemyCruiser);
 		}
 
         private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)

@@ -22,7 +22,6 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			_targetFilter = Substitute.For<ITargetFilter>();
 
 			_targetFinder = new RangedTargetFinder(_enemyDetector, _targetFilter);
-			_targetFinder.StartFindingTargets();
 		}
 
 		[Test]

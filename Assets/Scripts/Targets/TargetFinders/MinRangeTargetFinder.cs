@@ -26,10 +26,7 @@ namespace BattleCruisers.Targets.TargetFinders
             _maxRangeDetector = maxRangeDetector;
             _minRangeDetector = minRangeDetector;
             _targetFilter = targetFilter;
-        }
 
-        public void StartFindingTargets()
-        {
             _maxRangeDetector.OnEntered += OnTargetFound;
             _maxRangeDetector.OnExited += OnTargetLost;
 

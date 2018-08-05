@@ -23,9 +23,7 @@ namespace BattleCruisers.Targets.TargetFinders
 		event EventHandler<TargetEventArgs> TargetFound;
 
 		// When an existing target is lost (eg, because it is destroyed or
-		// moves out of range.
+		// moves out of range)
 		event EventHandler<TargetEventArgs> TargetLost;
-
-		void StartFindingTargets();
 	}
 }

@@ -32,8 +32,6 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 
             _finder.TargetFound += _finder_TargetFound;
             _finder.TargetLost += _finder_TargetLost;
-
-            _finder.StartFindingTargets();
         }
 
         private void _finder_TargetFound(object sender, TargetEventArgs e)

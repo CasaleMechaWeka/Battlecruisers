@@ -37,8 +37,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter).Returns(_friendFinder);
 
             _targetProvider = new ShipBlockingFriendlyProvider(targetsFactory, friendDetector, parentUnit);
-
-            _friendFinder.Received().StartFindingTargets();
         }
 
         [Test]

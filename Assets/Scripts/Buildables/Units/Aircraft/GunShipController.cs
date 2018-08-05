@@ -100,7 +100,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
-            _inRangeTargetFinder.StartFindingTargets();
 
             _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
 		}

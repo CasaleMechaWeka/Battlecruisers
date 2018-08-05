@@ -22,10 +22,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
             _parentDamagable = parentDamagable;
             _targetFilter = targetFilter;
-        }
 
-        public void StartFindingTargets()
-        {
             _parentDamagable.Damaged += _parentDamagable_Damaged;
         }
 
