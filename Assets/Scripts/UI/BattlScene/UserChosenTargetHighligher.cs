@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.BattleScene
     /// <summary>
     /// Highlights the user chosen target.
     /// </summary>
-    /// FELIX  Test :)
     public class UserChosenTargetHighligher : IManagedDisposable
     {
         private readonly IHighestPriorityTargetTracker _userChosenTargetTracker;
