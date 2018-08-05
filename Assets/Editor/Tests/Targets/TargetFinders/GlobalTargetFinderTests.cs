@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 {
     public class GlobalTargetFinderTests 
 	{
-		private ITargetFinder _targetFinder;
+		private GlobalTargetFinder _targetFinder;
 		private ICruiser _enemyCruiser;
 		private IBuilding _target;
 		private ITarget _expectedTargetFound, _expectedTargetLost;
@@ -32,16 +32,17 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 		}
 
 		[Test]
-		public void Cruiser_EmitsTargetFound()
+		public void EmitCruiserAsGlobalTarget()
 		{
 			_expectedTargetFound = _enemyCruiser;
+            _targetFinder.EmitCruiserAsGlobalTarget();
 			Assert.AreEqual(1, _targetFoundEmittedCount);
 		}
 
 		[Test]
 		public void BuildableReachesHalfway_EmitsTargetFound()
 		{
-			Cruiser_EmitsTargetFound();
+			EmitCruiserAsGlobalTarget();
 
 			_expectedTargetFound = _target;
 
@@ -67,7 +68,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 		[Test]
 		public void BuildableThatWasNotFound_Destroyed_DoesNotEmitsTargetLost()
 		{
-            Cruiser_EmitsTargetFound();
+            EmitCruiserAsGlobalTarget();
 
             _enemyCruiser.StartConstructingBuilding(_target);
 			_target.BuildProgress.Returns(0.1f);
@@ -80,7 +81,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
         [Test]
         public void CruiserDestroyed_EmitsTargetLost()
         {
-            Cruiser_EmitsTargetFound();
+            EmitCruiserAsGlobalTarget();
 
             _expectedTargetLost = _enemyCruiser;
 

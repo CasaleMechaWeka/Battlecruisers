@@ -22,16 +22,14 @@ namespace BattleCruisers.Targets
 
             UserChosenTargetTracker = userChosenTargetTracker;
 
-            // Global target finders keep track of what buildings th enemy cruiser builds,
-            // so we must start them BEFORE the cruiser builds any buildings, otherwise
-            // these targets will be lost.
+            GlobalTargetFinder globalTargetFinder = new GlobalTargetFinder(enemyCruiser);
 
-			BomberTargetProcessor 
+            BomberTargetProcessor 
                 = new TargetProcessor(
                     new CompositeTracker(
                         UserChosenTargetTracker,
                         new HighestPriorityTargetTracker(
-                            new GlobalTargetFinder(enemyCruiser), 
+                            globalTargetFinder, 
                             new BomberTargetRanker())));
 
             OffensiveBuildableTargetProcessor
@@ -39,8 +37,10 @@ namespace BattleCruisers.Targets
                     new CompositeTracker(
                         UserChosenTargetTracker,
                         new HighestPriorityTargetTracker(
-                            new GlobalTargetFinder(enemyCruiser),
+                            globalTargetFinder,
                             new OffensiveBuildableTargetRanker())));
+
+            globalTargetFinder.EmitCruiserAsGlobalTarget();
 
             EqualTargetRanker = new EqualTargetRanker();
             ShipTargetRanker = new ShipTargetRanker();

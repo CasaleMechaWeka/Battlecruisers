@@ -35,8 +35,6 @@ namespace BattleCruisers.Targets.TargetFinders
 
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
-
-            InvokeTargetFoundEvent(_enemyCruiser);
 		}
 
         private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
@@ -76,6 +74,13 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
+        // Not in constructor because then client code has not had a chance
+        // to subribe to our target found event.
+        public void EmitCruiserAsGlobalTarget()
+        {
+            InvokeTargetFoundEvent(_enemyCruiser);
+        }
+
 		private void InvokeTargetFoundEvent(ITarget targetFound)
 		{
 			if (TargetFound != null)
@@ -96,7 +101,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
-			_enemyCruiser = null;
 		}
 	}
 }
