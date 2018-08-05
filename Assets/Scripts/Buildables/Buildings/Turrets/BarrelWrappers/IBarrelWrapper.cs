@@ -24,7 +24,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             Faction enemyFaction, 
             ISoundKey firingSound = null,
             IObservableCollection<IBoostProvider> localBoostProviders = null);
-
-        void StartAttackingTargets();
 	}
 }
