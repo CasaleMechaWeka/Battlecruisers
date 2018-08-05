@@ -42,9 +42,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
 			rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
-
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.Laser);
         }
 
 		protected override void OnBuildableCompleted()
@@ -52,7 +49,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-            _barrelWrapper.StartAttackingTargets();
+
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.Laser);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

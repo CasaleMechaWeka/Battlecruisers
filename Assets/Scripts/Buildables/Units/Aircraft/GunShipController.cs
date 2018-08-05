@@ -73,9 +73,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     providerToWrap: this,
                     multiplier: WITHTIN_RANGE_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
-
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
 		}
 
 		protected override void OnBuildableCompleted()
@@ -105,7 +102,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
             _inRangeTargetFinder.StartFindingTargets();
 
-            _barrelWrapper.StartAttackingTargets();
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
 		}
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)

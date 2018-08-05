@@ -25,18 +25,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
-
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, FiringSound, _parentSlot.BoostProviders);
-		}
-
 		protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            _barrelWrapper.StartAttackingTargets();
+
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, FiringSound, _parentSlot.BoostProviders);
         }
 
         protected override IList<Renderer> GetInGameRenderers()
