@@ -7,6 +7,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
+    // FELIX  Transfer some tests to HighlightHelper :)
     public class HighlighterTests
     {
         private IHighlighter _highlighter;
@@ -22,7 +23,8 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
             UnityAsserts.Assert.raiseExceptions = true;
 
             _factory = Substitute.For<IHighlightFactory>();
-            _highlighter = new Highlighter(_factory);
+            // FELIX  Fix :)
+            //_highlighter = new Highlighter(_factory);
             _highlight = Substitute.For<IHighlight>();
 
             // Highlightable

@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial
             _highlightFactory = GetComponent<IHighlightFactory>();
             Assert.IsNotNull(_highlightFactory);
 
-            IHighlighter highlighter = new Highlighter(_highlightFactory);
+            IHighlighter highlighter = new Highlighter(new HighlightHelper(_highlightFactory));
 
             ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, _deferrer, tutorialArgs);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();

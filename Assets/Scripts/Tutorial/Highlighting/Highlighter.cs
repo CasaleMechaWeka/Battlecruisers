@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
+    // FELIX  Update tests (move tests to HighlightHelper)
     public class Highlighter : IHighlighter
     {
-        private readonly IHighlightFactory _factory;
+        private readonly IHighlightHelper _highlightHelper;
         private readonly IList<IHighlight> _highlights;
 
-        public Highlighter(IHighlightFactory factory)
+        public Highlighter(IHighlightHelper highlightHelper)
         {
-            Assert.IsNotNull(factory);
+            Assert.IsNotNull(highlightHelper);
 
-            _factory = factory;
+            _highlightHelper = highlightHelper;
             _highlights = new List<IHighlight>();
         }
 
@@ -24,25 +23,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
             foreach (IHighlightable highlightable in toHighlight)
             {
-                _highlights.Add(CreateHighlight(highlightable));
-            }
-        }
-
-        private IHighlight CreateHighlight(IHighlightable highlightable)
-        {
-            float radius = highlightable.Size.x / 2 * highlightable.SizeMultiplier;
-
-            switch (highlightable.HighlightableType)
-            {
-                case HighlightableType.InGame:
-                    Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;
-                    return _factory.CreateInGameHighlight(radius, spawnPosition);
-
-                case HighlightableType.OnCanvas:
-                    return _factory.CreateOnCanvasHighlight(radius, highlightable.Transform, highlightable.PositionAdjustment);
-                
-                default:
-                    throw new ArgumentException();
+                _highlights.Add(_highlightHelper.CreateHighlight(highlightable));
             }
         }
 
