@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    // FELIX  Update tests (move tests to HighlightHelper)
     public class Highlighter : IHighlighter
     {
         private readonly IHighlightHelper _highlightHelper;

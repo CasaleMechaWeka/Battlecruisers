@@ -1,20 +1,17 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
-    // FELIX  Transfer some tests to HighlightHelper :)
     public class HighlighterTests
     {
         private IHighlighter _highlighter;
-        private IHighlightFactory _factory;
+        private IHighlightHelper _helper;
         private IHighlightable _highlightable;
         private IList<IHighlightable> _highlightables;
-        private GameObject _gameObj;
         private IHighlight _highlight;
 
         [SetUp]
@@ -22,20 +19,12 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _factory = Substitute.For<IHighlightFactory>();
-            // FELIX  Fix :)
-            //_highlighter = new Highlighter(_factory);
-            _highlight = Substitute.For<IHighlight>();
+            _helper = Substitute.For<IHighlightHelper>();
+            _highlighter = new Highlighter(_helper);
 
-            // Highlightable
+            _highlight = Substitute.For<IHighlight>();
             _highlightable = Substitute.For<IHighlightable>();
-            Vector2 highlightableSize = new Vector2(12, 17);
-            _highlightable.Size.Returns(highlightableSize);
-            _highlightable.SizeMultiplier.Returns(1.5f);
-            Vector2 positionAdjustment = new Vector2(3, 3);
-            _highlightable.PositionAdjustment.Returns(positionAdjustment);
-            _gameObj = new GameObject();
-            _highlightable.Transform.Returns(_gameObj.transform);
+            _helper.CreateHighlight(_highlightable).Returns(_highlight);
 
             _highlightables = new List<IHighlightable>()
             {
@@ -45,37 +34,17 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 
         #region Highlight
         [Test]
-        public void Highlight_InGameHighlightable()
+        public void Highlight_CreatesHighlight()
         {
-            _highlightable.HighlightableType.Returns(HighlightableType.InGame);
-
-			float radius = _highlightable.Size.x / 2 * _highlightable.SizeMultiplier;
-			Vector2 spawnPosition = (Vector2)_gameObj.transform.position + _highlightable.PositionAdjustment;
-			_factory.CreateInGameHighlight(radius, spawnPosition).Returns(_highlight);
-
             _highlighter.Highlight(_highlightables);
-
-            _factory.Received().CreateInGameHighlight(radius, spawnPosition);
-        }
-
-        [Test]
-        public void Highlight_OnCanvasHighlightable()
-        {
-            _highlightable.HighlightableType.Returns(HighlightableType.OnCanvas);
-
-            float radius = _highlightable.Size.x / 2 * _highlightable.SizeMultiplier;
-            _factory.CreateOnCanvasHighlight(radius, _gameObj.transform, _highlightable.PositionAdjustment);
-
-            _highlighter.Highlight(_highlightables);
-
-            _factory.Received().CreateOnCanvasHighlight(radius, _gameObj.transform, _highlightable.PositionAdjustment);
+            _helper.Received().CreateHighlight(_highlightable);
         }
 
         [Test]
         public void Highlight_DoubleHighlightThrows()
         {
             // Valid first highlight
-            Highlight_InGameHighlightable();
+            _highlighter.Highlight(_highlightables);
 
             // Invalid second highlight (without intervening UnhighlightAll())
             Assert.Throws<UnityAsserts.AssertionException>(() => _highlighter.Highlight(_highlightables));
@@ -85,7 +54,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         [Test]
         public void UnHighlight()
         {
-            Highlight_InGameHighlightable();
+            _highlighter.Highlight(_highlightables);
 
             _highlighter.UnhighlightAll();
 
@@ -95,9 +64,9 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         [Test]
         public void Highlight_UnHighlight_Highlight()
         {
-            Highlight_InGameHighlightable();
+            _highlighter.Highlight(_highlightables);
             _highlighter.UnhighlightAll();
-            Highlight_OnCanvasHighlightable();
+            _highlighter.Highlight(_highlightables);
         }
     }
 }
