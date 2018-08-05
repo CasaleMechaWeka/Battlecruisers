@@ -112,17 +112,16 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             _directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
 
-            // Initialise turrets
-            foreach (IBarrelWrapper turret in _turrets)
-            {
-                turret.StartAttackingTargets();
-            }
+            InitialiseTurrets();
 
 			_movementTargetProcessor = SetupTargetProcessorWrapper();
             _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
             _movementTargetProcessor.AddTargetConsumer(_movementDecider);
-            _movementTargetProcessor.StartProcessingTargets();
         }
+
+        // Turrets start attacking targets as soon as they are initialised, so
+        // only initialise them once the ship has been completed.
+        protected abstract void InitialiseTurrets();
 
         private ITargetProcessor SetupTargetProcessorWrapper()
         {

@@ -45,10 +45,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             return turrets;
         }
 
-        protected override void OnInitialised()
+        protected override void InitialiseTurrets()
         {
-            base.OnInitialised();
-
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
             _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
