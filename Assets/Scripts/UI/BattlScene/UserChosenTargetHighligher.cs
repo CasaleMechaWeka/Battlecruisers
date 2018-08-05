@@ -31,6 +31,7 @@ namespace BattleCruisers.UI.BattleScene
             if (_currentHighlight != null)
             {
                 _currentHighlight.Destroy();
+                _currentHighlight = null;
             }
                 
             if (_userChosenTargetTracker.HighestPriorityTarget != null)
