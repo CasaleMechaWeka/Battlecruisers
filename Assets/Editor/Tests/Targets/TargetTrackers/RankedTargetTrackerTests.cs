@@ -8,9 +8,9 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
-    public class HighestPriorityTargetTrackerTests
+    public class RankedTargetTrackerTests
     {
-        private IHighestPriorityTargetTracker _targetTracker;
+        private IRankedTargetTracker _targetTracker;
         private ITargetFinder _targetFinder;
 		private ITargetRanker _targetRanker;
         private RankedTarget _highRankTarget, _mediumRankTarget, _lowRankTarget;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _lowRankTarget = new RankedTarget(target3, 1);
             _targetRanker.RankTarget(target3).Returns(1);
 
-            _targetTracker = new HighestPriorityTargetTracker(_targetFinder, _targetRanker);
+            _targetTracker = new RankedTargetTracker(_targetFinder, _targetRanker);
 
             _highestPriorityTargetChangedCount = 0;
             _targetTracker.HighestPriorityTargetChanged += (sender, e) => _highestPriorityTargetChangedCount++;

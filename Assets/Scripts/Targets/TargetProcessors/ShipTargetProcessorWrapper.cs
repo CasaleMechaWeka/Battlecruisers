@@ -19,16 +19,16 @@ namespace BattleCruisers.Targets.TargetProcessors
             // In range targets
             InRangeTargetFinder = CreateTargetFinder(args);
             ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetsFactory);
-            IHighestPriorityTargetTracker inRangeTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
+            IRankedTargetTracker inRangeTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
             ITargetFilter attackingTargetFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = args.TargetsFactory.CreateAttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = args.TargetsFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetsFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
-            IHighestPriorityTargetTracker attackingTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(attackingTargetFinder, attackingTargetRanker);
+            IRankedTargetTracker attackingTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(attackingTargetFinder, attackingTargetRanker);
 
-            IHighestPriorityTargetTracker compositeTracker 
+            IRankedTargetTracker compositeTracker 
                 = args.TargetsFactory.CreateCompositeTracker(
                     inRangeTargetTracker, 
                     attackingTargetTracker, 

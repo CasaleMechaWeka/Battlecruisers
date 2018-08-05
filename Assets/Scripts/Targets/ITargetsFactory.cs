@@ -17,7 +17,7 @@ namespace BattleCruisers.Targets
 		// Processors
 		ITargetProcessor BomberTargetProcessor { get; }
 		ITargetProcessor OffensiveBuildableTargetProcessor { get; }
-		ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker);
+		ITargetProcessor CreateTargetProcessor(IRankedTargetTracker highestPriorityTargetTracker);
 
 		// Finders
         ITargetFinder CreateRangedTargetFinder(ITargetDetector targetDetector, ITargetFilter targetFilter);
@@ -25,10 +25,10 @@ namespace BattleCruisers.Targets
         ITargetFinder CreateAttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter);
 
         // Highest priority trackers
-        IHighestPriorityTargetTracker UserChosenTargetTracker { get; }
-        IHighestPriorityTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
-        IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker);
-        IHighestPriorityTargetTracker CreateCompositeTracker(params IHighestPriorityTargetTracker[] targetTrackers);
+        IRankedTargetTracker UserChosenTargetTracker { get; }
+        IRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
+        IRankedTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker);
+        IRankedTargetTracker CreateCompositeTracker(params IRankedTargetTracker[] targetTrackers);
 
         // Trackers
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);

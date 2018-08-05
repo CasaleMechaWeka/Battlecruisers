@@ -10,7 +10,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     public class ProximityTargetProcessorWrapper : TargetProcessorWrapper
 	{
 		private ITargetFinder _targetFinder;
-        private IHighestPriorityTargetTracker _targetTracker;
+        private IRankedTargetTracker _targetTracker;
 
         public bool considerUserChosenTarget;
 
@@ -23,8 +23,8 @@ namespace BattleCruisers.Targets.TargetProcessors
             if (considerUserChosenTarget)
             {
                 ITargetTracker inRangeTargetTracker = args.TargetsFactory.CreateTargetTracker(_targetFinder);
-                IHighestPriorityTargetTracker userChosenInRangeTargetTracker = args.TargetsFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
-                IHighestPriorityTargetTracker inRangeSingleTargetTracker = _targetTracker;
+                IRankedTargetTracker userChosenInRangeTargetTracker = args.TargetsFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
+                IRankedTargetTracker inRangeSingleTargetTracker = _targetTracker;
                 _targetTracker = args.TargetsFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 

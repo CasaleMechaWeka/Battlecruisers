@@ -4,10 +4,10 @@ using System;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
-    public class UserChosenInRangeTargetTracker : IHighestPriorityTargetTracker
+    public class UserChosenInRangeTargetTracker : IRankedTargetTracker
     {
         private readonly ITargetTracker _inRangeTargetTracker;
-        private readonly IHighestPriorityTargetTracker _userChosenTargetTracker;
+        private readonly IRankedTargetTracker _userChosenTargetTracker;
 
         private RankedTarget _highestPriorityTarget;
         public RankedTarget HighestPriorityTarget
@@ -29,7 +29,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public UserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker, IHighestPriorityTargetTracker userChosenTargetTracker)
+        public UserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker, IRankedTargetTracker userChosenTargetTracker)
         {
             Helper.AssertIsNotNull(inRangeTargetTracker, userChosenTargetTracker);
 

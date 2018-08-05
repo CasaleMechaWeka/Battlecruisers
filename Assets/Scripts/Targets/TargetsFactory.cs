@@ -16,7 +16,7 @@ namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        public TargetsFactory(ICruiser enemyCruiser, IHighestPriorityTargetTracker userChosenTargetTracker)
+        public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
 		{
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.Targets
                 = new TargetProcessor(
                     new CompositeTracker(
                         UserChosenTargetTracker,
-                        new HighestPriorityTargetTracker(
+                        new RankedTargetTracker(
                             globalTargetFinder, 
                             new BomberTargetRanker())));
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Targets
                 = new TargetProcessor(
                     new CompositeTracker(
                         UserChosenTargetTracker,
-                        new HighestPriorityTargetTracker(
+                        new RankedTargetTracker(
                             globalTargetFinder,
                             new OffensiveBuildableTargetRanker())));
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.Targets
         public ITargetProcessor BomberTargetProcessor { get; private set; }
         public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
-        public ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
+        public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker highestPriorityTargetTracker)
 		{
 			return new TargetProcessor(highestPriorityTargetTracker);
 		}
@@ -75,7 +75,7 @@ namespace BattleCruisers.Targets
         #endregion TargetFinders
 
         #region TargetTrackers
-        public IHighestPriorityTargetTracker UserChosenTargetTracker { get; private set; }
+        public IRankedTargetTracker UserChosenTargetTracker { get; private set; }
 
         public ITargetTracker CreateTargetTracker(ITargetFinder targetFinder)
         {
@@ -119,17 +119,17 @@ namespace BattleCruisers.Targets
         #endregion TargetFilters
 
         #region Highest priority trackers
-        public IHighestPriorityTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
+        public IRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
         {
             return new UserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }
 
-        public IHighestPriorityTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
+        public IRankedTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
         {
-            return new HighestPriorityTargetTracker(targetFinder, targetRanker);
+            return new RankedTargetTracker(targetFinder, targetRanker);
         }
 
-        public IHighestPriorityTargetTracker CreateCompositeTracker(params IHighestPriorityTargetTracker[] targetTrackers)
+        public IRankedTargetTracker CreateCompositeTracker(params IRankedTargetTracker[] targetTrackers)
         {
             return new CompositeTracker(targetTrackers);
         }

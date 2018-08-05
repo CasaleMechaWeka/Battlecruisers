@@ -4,9 +4,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
-    public class CompositeTracker : IHighestPriorityTargetTracker
+    public class CompositeTracker : IRankedTargetTracker
     {
-        private readonly IHighestPriorityTargetTracker[] _targetTrackers;
+        private readonly IRankedTargetTracker[] _targetTrackers;
 
         private const int MIN_NUM_OF_TARGET_TRACKERS = 2;
 
@@ -14,14 +14,14 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public CompositeTracker(params IHighestPriorityTargetTracker[] targetTrackers)
+        public CompositeTracker(params IRankedTargetTracker[] targetTrackers)
         {
             Assert.IsNotNull(targetTrackers);
             Assert.IsTrue(targetTrackers.Length >= MIN_NUM_OF_TARGET_TRACKERS);
 
             _targetTrackers = targetTrackers;
 
-            foreach (IHighestPriorityTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 targetTracker.HighestPriorityTargetChanged += TargetTracker_HighestPriorityTargetChanged;
             }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Targets.TargetTrackers
             RankedTarget highestRankedTarget = null;
             int maxRankSoFar = int.MinValue;
 
-            foreach (IHighestPriorityTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 RankedTarget rankedTarget = targetTracker.HighestPriorityTarget;
 
@@ -61,7 +61,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         public void DisposeManagedState()
         {
-            foreach (IHighestPriorityTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 targetTracker.DisposeManagedState();
             }

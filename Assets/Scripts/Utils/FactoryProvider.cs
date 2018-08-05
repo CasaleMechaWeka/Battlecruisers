@@ -51,7 +51,7 @@ namespace BattleCruisers.Utils
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
             IVariableDelayDeferrer deferrer,
-            IHighestPriorityTargetTracker userChosenTargetTracker)
+            IRankedTargetTracker userChosenTargetTracker)
 		{
             Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker);
 

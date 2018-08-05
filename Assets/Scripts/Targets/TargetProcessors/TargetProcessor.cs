@@ -12,7 +12,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     /// </summary>
     public class TargetProcessor : ITargetProcessor
 	{
-		private readonly IHighestPriorityTargetTracker _highestPriorityTargetTracker;
+		private readonly IRankedTargetTracker _highestPriorityTargetTracker;
 		private readonly IList<ITargetConsumer> _targetConsumers;
 
         private ITarget HighestPriorityTarget
@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             }
         }
 
-		public TargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
+		public TargetProcessor(IRankedTargetTracker highestPriorityTargetTracker)
 		{
             _highestPriorityTargetTracker = highestPriorityTargetTracker;
 			_targetConsumers =  new List<ITargetConsumer>();

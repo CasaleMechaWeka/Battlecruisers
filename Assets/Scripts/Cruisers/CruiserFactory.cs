@@ -41,7 +41,7 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
-            IHighestPriorityTargetTracker userChosenTargetTracker)
+            IRankedTargetTracker userChosenTargetTracker)
         {
             Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator, userChosenTargetTracker);
 

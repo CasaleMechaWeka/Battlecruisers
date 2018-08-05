@@ -10,12 +10,12 @@ namespace BattleCruisers.UI.BattleScene
     /// </summary>
     public class UserChosenTargetHighligher : IManagedDisposable
     {
-        private readonly IHighestPriorityTargetTracker _userChosenTargetTracker;
+        private readonly IRankedTargetTracker _userChosenTargetTracker;
         private readonly IHighlightHelper _highlightHelper;
 
         private IHighlight _currentHighlight;
 
-        public UserChosenTargetHighligher(IHighestPriorityTargetTracker userChosenTargetTracker, IHighlightHelper highlightHelper)
+        public UserChosenTargetHighligher(IRankedTargetTracker userChosenTargetTracker, IHighlightHelper highlightHelper)
         {
             Helper.AssertIsNotNull(userChosenTargetTracker, highlightHelper);
 

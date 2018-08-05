@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             ITargetFilter enemyFilter = Substitute.For<ITargetFilter>();
             ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
             ITargetRanker enemyRanker = Substitute.For<ITargetRanker>();
-            IHighestPriorityTargetTracker targetTracker = Substitute.For<IHighestPriorityTargetTracker>();
+            IRankedTargetTracker targetTracker = Substitute.For<IRankedTargetTracker>();
 			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
             IUnit parentUnit = Substitute.For<IUnit>();
 

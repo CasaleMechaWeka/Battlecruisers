@@ -7,15 +7,15 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
     public class CompositeTrackerTests
     {
-        private IHighestPriorityTargetTracker _compositeTracker, _tracker1, _tracker2;
+        private IRankedTargetTracker _compositeTracker, _tracker1, _tracker2;
         private RankedTarget _target1, _target2;
         private int _highestPriorityTargetChangedCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _tracker1 = Substitute.For<IHighestPriorityTargetTracker>();
-            _tracker2 = Substitute.For<IHighestPriorityTargetTracker>();
+            _tracker1 = Substitute.For<IRankedTargetTracker>();
+            _tracker2 = Substitute.For<IRankedTargetTracker>();
             _compositeTracker = new CompositeTracker(_tracker1, _tracker2);
 
             _target1 = new RankedTarget(null, 0);

@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
     public class UserChosenTargetHighligherTests
     {
         private UserChosenTargetHighligher _highlighter;
-        private IHighestPriorityTargetTracker _userChosenTargetTracker;
+        private IRankedTargetTracker _userChosenTargetTracker;
         private IHighlightHelper _highlightHelper;
         private IHighlight _highlight1, _highlight2;
         private ITarget _target1, _target2;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         [SetUp]
         public void TestSetup()
         {
-            _userChosenTargetTracker = Substitute.For<IHighestPriorityTargetTracker>();
+            _userChosenTargetTracker = Substitute.For<IRankedTargetTracker>();
             _highlightHelper = Substitute.For<IHighlightHelper>();
 
             _highlighter = new UserChosenTargetHighligher(_userChosenTargetTracker, _highlightHelper);

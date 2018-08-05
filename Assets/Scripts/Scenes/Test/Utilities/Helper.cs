@@ -221,7 +221,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
 			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
-            IHighestPriorityTargetTracker targetTracker = new HighestPriorityTargetTracker(targetFinder, new EqualTargetRanker());
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
 			ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
 			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
 
@@ -298,7 +298,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private ITargetsFactory CreateTargetsFactory(ITargetFinder targetFinder)
         {
             ITargetRanker targetRanker = new EqualTargetRanker();
-            IHighestPriorityTargetTracker targetTracker = new HighestPriorityTargetTracker(targetFinder, targetRanker);
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, targetRanker);
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
@@ -339,7 +339,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             targetsFactory
                 .CreateHighestPriorityTargetTracker(null, null)
-                .ReturnsForAnyArgs(arg => new HighestPriorityTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
+                .ReturnsForAnyArgs(arg => new RankedTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
         }
 
         // Copy real TargetsFactory behaviour
@@ -347,7 +347,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             targetsFactory
                 .CreateTargetProcessor(null)
-                .ReturnsForAnyArgs(arg => new TargetProcessor((IHighestPriorityTargetTracker)arg.Args()[0]));
+                .ReturnsForAnyArgs(arg => new TargetProcessor((IRankedTargetTracker)arg.Args()[0]));
         }
 
 		public IAircraftProvider CreateAircraftProvider(

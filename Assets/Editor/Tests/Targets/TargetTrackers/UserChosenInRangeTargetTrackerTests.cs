@@ -8,14 +8,14 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
     public class UserChosenInRangeTargetTrackerTests
     {
-        private IHighestPriorityTargetTracker _userChosenInRangeTargetTracker, _userChosenTargetTracker;
+        private IRankedTargetTracker _userChosenInRangeTargetTracker, _userChosenTargetTracker;
         private ITargetTracker _inRangeTargetTracker;
         private RankedTarget _rankedTarget;
 
         [SetUp]
         public void TestSetup()
         {
-            _userChosenTargetTracker = Substitute.For<IHighestPriorityTargetTracker>();
+            _userChosenTargetTracker = Substitute.For<IRankedTargetTracker>();
             _inRangeTargetTracker = Substitute.For<ITargetTracker>();
 
             _userChosenInRangeTargetTracker = new UserChosenInRangeTargetTracker(_inRangeTargetTracker, _userChosenTargetTracker);

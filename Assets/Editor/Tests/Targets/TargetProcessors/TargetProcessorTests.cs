@@ -12,14 +12,14 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
     public class TargetProcessorTests
     {
         private ITargetProcessor _targetProcessor;
-        private IHighestPriorityTargetTracker _targetTracker;
+        private IRankedTargetTracker _targetTracker;
         private ITargetConsumer _targetConsumer;
         private RankedTarget _target1, _target2;
 
         [SetUp]
         public void TestSetup()
         {
-            _targetTracker = Substitute.For<IHighestPriorityTargetTracker>();
+            _targetTracker = Substitute.For<IRankedTargetTracker>();
             _targetConsumer = Substitute.For<ITargetConsumer>();
             _target1 = new RankedTarget(Substitute.For<ITarget>(), 12);
             _target2 = new RankedTarget(Substitute.For<ITarget>(), 13);

@@ -18,7 +18,7 @@ namespace BattleCruisers.Targets.TargetTrackers
     /// NOTE:
     /// + Assumes target rank value is constant.
     /// </summary>
-    public class HighestPriorityTargetTracker : IHighestPriorityTargetTracker
+    public class RankedTargetTracker : IRankedTargetTracker
     {
         private readonly ITargetFinder _targetFinder;
         private readonly ITargetRanker _targetRanker;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public HighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
+        public RankedTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
         {
             Helper.AssertIsNotNull(targetFinder, targetRanker);
 

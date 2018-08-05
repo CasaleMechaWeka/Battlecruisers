@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
-            IHighestPriorityTargetTracker userChosenTargetTracker);
+            IRankedTargetTracker userChosenTargetTracker);
         
 		ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera);
 		ICruiserHelper CreateAIHelper(IUIManager uiIManager, ICameraController camera);
