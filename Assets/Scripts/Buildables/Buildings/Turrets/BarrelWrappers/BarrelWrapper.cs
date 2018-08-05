@@ -149,11 +149,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             barrel.Initialise(args);
         }
 
-        public void StartAttackingTargets()
-        {
-            _targetProcessorWrapper.StartProvidingTargets();
-        }
-
         protected virtual ITargetFilter CreateTargetFilter()
         {
             return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
