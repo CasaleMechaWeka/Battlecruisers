@@ -9,6 +9,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Tutorial;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -46,6 +47,7 @@ namespace BattleCruisers.Scenes
         private ITutorialProvider _tutorialProvider;
 		private INavigationSettings _navigationSettings;
         private IArtificialIntelligence _ai;
+        private UserChosenTargetHighligher _userChosenTargetHighligher;
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
@@ -64,6 +66,7 @@ namespace BattleCruisers.Scenes
 
             IDeferrer deferrer = GetComponent<IDeferrer>();
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
+            IHighlightFactory highlightFactory = GetComponent<IHighlightFactory>();
 
             Helper.AssertIsNotNull(
                 uiFactory,
@@ -74,7 +77,8 @@ namespace BattleCruisers.Scenes
                 backgroundController,
                 numOfDronesController,
                 deferrer,
-                variableDelayDeferrer);
+                variableDelayDeferrer,
+                highlightFactory);
 
 
             // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
@@ -202,7 +206,12 @@ namespace BattleCruisers.Scenes
 			cameraInitialiser.CameraController.FocusOnPlayerCruiser();
 
 
-			_ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
+            // User chosen target highlighter
+            IHighlightHelper highlightHelper = new HighlightHelper(highlightFactory);
+            _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
+
+
+            _ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
 
 
@@ -361,6 +370,7 @@ namespace BattleCruisers.Scenes
 			_playerCruiser.Destroyed -= PlayerCruiser_Destroyed;
 			_aiCruiser.Destroyed -= AiCruiser_Destroyed;
             _ai.DisposeManagedState();
+            _userChosenTargetHighligher.DisposeManagedState();
 		}
 	}
 }
