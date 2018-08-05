@@ -20,6 +20,7 @@ namespace BattleCruisers.Targets.TargetProviders
     /// </summary>
     public class ShipBlockingEnemyProvider : BroadcastingTargetProvider, ITargetConsumer
     {
+        private readonly ITargetProcessor _targetProcessor;
         private readonly ITargetFilter _isInFrontFilter;
 
         ITarget ITargetConsumer.Target
@@ -48,9 +49,14 @@ namespace BattleCruisers.Targets.TargetProviders
 
             ITargetRanker targetRanker = targetsFactory.EqualTargetRanker;
             IHighestPriorityTargetTracker targetTracker = targetsFactory.CreateHighestPriorityTargetTracker(enemyFinder, targetRanker);
-            ITargetProcessor targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
+            _targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
 
-            targetProcessor.AddTargetConsumer(this);
+            _targetProcessor.AddTargetConsumer(this);
+        }
+
+        public override void DisposeManagedState()
+        {
+            _targetProcessor.DisposeManagedState();
         }
     }
 }

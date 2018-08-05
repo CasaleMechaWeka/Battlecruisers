@@ -12,6 +12,11 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         {
             Target = target;
         }
+
+        public override void DisposeManagedState()
+        {
+            // empty
+        }
     }
 
     public class BroadcastingTargetProviderTests

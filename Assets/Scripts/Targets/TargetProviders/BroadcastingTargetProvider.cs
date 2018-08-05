@@ -24,5 +24,7 @@ namespace BattleCruisers.Targets.TargetProviders
         }
 
         public event EventHandler TargetChanged;
+
+        public abstract void DisposeManagedState();
     }
 }

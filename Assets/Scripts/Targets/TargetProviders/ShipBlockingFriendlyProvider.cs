@@ -19,9 +19,9 @@ namespace BattleCruisers.Targets.TargetProviders
     /// </summary>
     public class ShipBlockingFriendlyProvider : BroadcastingTargetProvider
     {
+        private readonly ITargetFinder _friendFinder;
         private readonly ITargetFilter _isInFrontFilter;
 
-        // FELIX  Add dispose to unsubsribe from found/lost events
         public ShipBlockingFriendlyProvider(
 			ITargetsFactory targetsFactory, 
             ITargetDetector friendDetector, 
@@ -33,10 +33,10 @@ namespace BattleCruisers.Targets.TargetProviders
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
             ITargetFilter friendFilter = targetsFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
-            ITargetFinder friendFinder = targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+            _friendFinder = targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
 
-            friendFinder.TargetFound += OnFriendFound;
-            friendFinder.TargetLost += OnFriendLost;
+            _friendFinder.TargetFound += OnFriendFound;
+            _friendFinder.TargetLost += OnFriendLost;
         }
 
         private void OnFriendFound(object sender, TargetEventArgs args)
@@ -62,6 +62,12 @@ namespace BattleCruisers.Targets.TargetProviders
                     Target = null;
                 }
             }
+        }
+
+        public override void DisposeManagedState()
+        {
+            _friendFinder.TargetFound -= OnFriendFound;
+            _friendFinder.TargetLost -= OnFriendLost;
         }
     }
 }

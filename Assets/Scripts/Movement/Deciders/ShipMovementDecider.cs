@@ -98,7 +98,10 @@ namespace BattleCruisers.Movement.Deciders
         public void DisposeManagedState()
         {
             _blockingEnemyProvider.TargetChanged -= TriggerDecideMovement;
+            _blockingEnemyProvider.DisposeManagedState();
+
             _blockingFriendlyProvider.TargetChanged -= TriggerDecideMovement;
+            _blockingFriendlyProvider.DisposeManagedState();
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
-    public interface IBroadcastingTargetProvider : ITargetProvider
+    public interface IBroadcastingTargetProvider : ITargetProvider, IManagedDisposable
     {
         event EventHandler TargetChanged;
     }
