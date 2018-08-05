@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             targetsFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
             targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetsFactory.EqualTargetRanker.Returns(enemyRanker);
-            targetsFactory.CreateHighestPriorityTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
+            targetsFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
             targetsFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 
             _targetProvider = new ShipBlockingEnemyProvider(targetsFactory, enemyDetector, parentUnit);

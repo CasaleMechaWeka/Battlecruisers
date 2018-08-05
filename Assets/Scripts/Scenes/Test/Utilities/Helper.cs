@@ -233,7 +233,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
 			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-            targetsFactory.CreateHighestPriorityTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
+            targetsFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 			targetsFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
             targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
@@ -335,10 +335,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         // Copy real TargetsFactory behaviour
-        private void SetupCreateHighestPriorityTargetTracker(ITargetsFactory targetsFactory)
+        private void SetupCreateRankedTargetTracker(ITargetsFactory targetsFactory)
         {
             targetsFactory
-                .CreateHighestPriorityTargetTracker(null, null)
+                .CreateRankedTargetTracker(null, null)
                 .ReturnsForAnyArgs(arg => new RankedTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
         }
 

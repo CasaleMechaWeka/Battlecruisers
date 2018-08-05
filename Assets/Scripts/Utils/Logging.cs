@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils
         public const string TARGET_PROVIDERS = "TargetProviders";
 		public const string TARGET_RANGE_HELPER = "TargetRangeHelpers";
 		public const string TARGET_TRACKER = "TargetTracker";
-		public const string HIGHEST_PRIORITY_TARGET_TRACKER = "HighestPriorityTargetTracker";
+		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 
         // UI
         public const string PROGRESS_BARS = "ProgressBars";
@@ -114,7 +114,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.TARGET_PROVIDERS, false);
             tagsToActiveness.Add(Tags.TARGET_RANGE_HELPER, false);
             tagsToActiveness.Add(Tags.TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
 
             // UI
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);

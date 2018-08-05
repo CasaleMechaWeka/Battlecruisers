@@ -51,9 +51,9 @@ namespace BattleCruisers.Targets
         public ITargetProcessor BomberTargetProcessor { get; private set; }
         public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
 
-        public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker highestPriorityTargetTracker)
+        public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker)
 		{
-			return new TargetProcessor(highestPriorityTargetTracker);
+			return new TargetProcessor(rankedTargetTracker);
 		}
 		#endregion TargetProcessors
 
@@ -124,7 +124,7 @@ namespace BattleCruisers.Targets
             return new UserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }
 
-        public IRankedTargetTracker CreateHighestPriorityTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
+        public IRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, ITargetRanker targetRanker)
         {
             return new RankedTargetTracker(targetFinder, targetRanker);
         }

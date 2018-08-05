@@ -12,26 +12,26 @@ namespace BattleCruisers.Targets.TargetProcessors
     /// </summary>
     public class TargetProcessor : ITargetProcessor
 	{
-		private readonly IRankedTargetTracker _highestPriorityTargetTracker;
+		private readonly IRankedTargetTracker _rankedTargetTracker;
 		private readonly IList<ITargetConsumer> _targetConsumers;
 
         private ITarget HighestPriorityTarget
         {
             get
             {
-                return _highestPriorityTargetTracker.HighestPriorityTarget != null ? _highestPriorityTargetTracker.HighestPriorityTarget.Target : null;
+                return _rankedTargetTracker.HighestPriorityTarget != null ? _rankedTargetTracker.HighestPriorityTarget.Target : null;
             }
         }
 
-		public TargetProcessor(IRankedTargetTracker highestPriorityTargetTracker)
+		public TargetProcessor(IRankedTargetTracker rankedTargetTracker)
 		{
-            _highestPriorityTargetTracker = highestPriorityTargetTracker;
+            _rankedTargetTracker = rankedTargetTracker;
 			_targetConsumers =  new List<ITargetConsumer>();
 
-            _highestPriorityTargetTracker.HighestPriorityTargetChanged += _highestPriorityTargetTracker_HighestPriorityTargetChanged;
+            _rankedTargetTracker.HighestPriorityTargetChanged += _rankedTargetTracker_HighestPriorityTargetChanged;
         }
 
-        private void _highestPriorityTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
+        private void _rankedTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
             // PERF
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 
@@ -60,7 +60,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		public void DisposeManagedState()
 		{
-            _highestPriorityTargetTracker.HighestPriorityTargetChanged -= _highestPriorityTargetTracker_HighestPriorityTargetChanged;
+            _rankedTargetTracker.HighestPriorityTargetChanged -= _rankedTargetTracker_HighestPriorityTargetChanged;
 		}
     }
 }

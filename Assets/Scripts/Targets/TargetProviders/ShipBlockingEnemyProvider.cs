@@ -48,7 +48,7 @@ namespace BattleCruisers.Targets.TargetProviders
             ITargetFinder enemyFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = targetsFactory.EqualTargetRanker;
-            IRankedTargetTracker targetTracker = targetsFactory.CreateHighestPriorityTargetTracker(enemyFinder, targetRanker);
+            IRankedTargetTracker targetTracker = targetsFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
             _targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
 
             _targetProcessor.AddTargetConsumer(this);

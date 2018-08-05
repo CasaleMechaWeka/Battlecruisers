@@ -43,13 +43,13 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, _targetFinder, "TargetFinder_TargetFound(): " + e.Target);
+            Logging.Log(Tags.RANKED_TARGET_TRACKER, _targetFinder, "TargetFinder_TargetFound(): " + e.Target);
 
             if (AreTrackingTarget(e.Target))
             {
                 // Should never be the case but defensive programming because rarely it IS
                 // the case :/
-                Logging.Warn(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, "Received TargetFound event for a target that has already been found");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetFound event for a target that has already been found");
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.Targets.TargetTrackers
                 // is called **before** OnTriggerEnter2D().  Hence ignore the
                 // TargetFound events for already destroyed objects, as they have
                 // already had their corresponding TargetLost event.
-                Logging.Warn(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, "Received TargetFound event for a destroyed target");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetFound event for a destroyed target");
                 return;
             }
 
@@ -92,14 +92,14 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, _targetFinder, "TargetFinder_TargetLost(): " + e.Target);
+            Logging.Log(Tags.RANKED_TARGET_TRACKER, _targetFinder, "TargetFinder_TargetLost(): " + e.Target);
 
             if (!AreTrackingTarget(e.Target))
             {
                 // Edge case, where collider object is destroyed and OnTriggerExit2D() 
                 // is called **before** OnTriggerEnter2D().  Hence ignore this
                 // TargetLost event.
-                Logging.Warn(Tags.HIGHEST_PRIORITY_TARGET_TRACKER, "Received TargetLost event without a preceeding TargetFound event");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetLost event without a preceeding TargetFound event");
                 return;
             }
 

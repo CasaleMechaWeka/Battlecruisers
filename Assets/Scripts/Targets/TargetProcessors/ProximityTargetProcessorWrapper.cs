@@ -18,7 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
-            _targetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(_targetFinder, targetRanker);
+            _targetTracker = args.TargetsFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
             {
