@@ -86,7 +86,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
-                    this,
                     enemyFaction,
                     AttackCapabilities,
                     enemyFollowRangeInM);

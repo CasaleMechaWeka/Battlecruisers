@@ -8,7 +8,6 @@ namespace BattleCruisers.Targets.TargetProcessors
     public class TargetProcessorArgs : ITargetProcessorArgs
     {
         public ITargetsFactory TargetsFactory { get; private set; }
-        public ITargetConsumer TargetConsumer { get; private set; }
         public Faction EnemyFaction { get; private set; }
         public IList<TargetType> AttackCapabilities { get; private set; }
         public float MaxRangeInM { get; private set; }
@@ -17,7 +16,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public TargetProcessorArgs(
         	ITargetsFactory targetsFactory,
-            ITargetConsumer targetConsumer,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
@@ -28,7 +26,6 @@ namespace BattleCruisers.Targets.TargetProcessors
             Assert.IsTrue(maxRangeInM > minRangeInM);
 
             TargetsFactory = targetsFactory;
-            TargetConsumer = targetConsumer;
             EnemyFaction = enemyFaction;
             AttackCapabilities = attackCapabilities;
             MaxRangeInM = maxRangeInM;

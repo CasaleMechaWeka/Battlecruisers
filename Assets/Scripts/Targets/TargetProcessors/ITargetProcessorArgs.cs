@@ -6,7 +6,6 @@ namespace BattleCruisers.Targets.TargetProcessors
     public interface ITargetProcessorArgs
     {
         ITargetsFactory TargetsFactory { get; }
-        ITargetConsumer TargetConsumer { get; }
         Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }

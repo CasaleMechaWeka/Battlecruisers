@@ -131,13 +131,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
             targetProcessorTargetTypes.Remove(TargetType.Aircraft);
 
-            // Add the target consumer after the processor has been initalised
-            ITargetConsumer targetConsumer = null;
-
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetsFactory,
-                    targetConsumer,
                     enemyFaction,
                     targetProcessorTargetTypes,
                     OptimalArmamentRangeInM,

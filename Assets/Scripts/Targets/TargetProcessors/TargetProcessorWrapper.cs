@@ -13,6 +13,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             return CreateTargetProcessor(args);
         }
 
+        // FELIX  Merge with Initailise() :P
         protected abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args);
     }
 }
