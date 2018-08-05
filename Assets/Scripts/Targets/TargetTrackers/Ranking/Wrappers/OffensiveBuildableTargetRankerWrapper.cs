@@ -6,7 +6,7 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
     {
         public ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
         {
-            return targetsFactory.CreateOffensiveBuildableTargetRanker();
+            return targetsFactory.OffensiveBuildableTargetRanker;
         }
     }
 }

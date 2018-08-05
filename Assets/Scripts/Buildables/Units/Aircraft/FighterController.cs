@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
 			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
 			
-			ITargetRanker followableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
+			ITargetRanker followableTargetRanker = _targetsFactory.EqualTargetRanker;
             IHighestPriorityTargetTracker followableTargetTracker = _targetsFactory.CreateHighestPriorityTargetTracker(_followableTargetFinder, followableTargetRanker);
 			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(followableTargetTracker);
 			_followableTargetProcessor.AddTargetConsumer(this);
@@ -145,7 +145,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			shootableEnemyDetector.Initialise(_barrelController.TurretStats.RangeInM);
 			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
-			ITargetRanker shootableTargetRanker = _targetsFactory.CreateEqualTargetRanker();
+			ITargetRanker shootableTargetRanker = _targetsFactory.EqualTargetRanker;
             IHighestPriorityTargetTracker shootableTargetTracker = _targetsFactory.CreateHighestPriorityTargetTracker(_shootableTargetFinder, shootableTargetRanker);
 			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(shootableTargetTracker);
 			_shootableTargetProcessor.AddTargetConsumer(_barrelController);

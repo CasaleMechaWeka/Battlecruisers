@@ -16,10 +16,6 @@ namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        public IHighestPriorityTargetTracker UserChosenTargetTracker { get; private set; }
-        public ITargetProcessor BomberTargetProcessor { get; private set; }
-		public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
-
         public TargetsFactory(ICruiser enemyCruiser, IHighestPriorityTargetTracker userChosenTargetTracker)
 		{
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
@@ -47,10 +43,17 @@ namespace BattleCruisers.Targets
                             new GlobalTargetFinder(enemyCruiser),
                             new OffensiveBuildableTargetRanker())));
             OffensiveBuildableTargetProcessor.StartProcessingTargets();
+
+            EqualTargetRanker = new EqualTargetRanker();
+            ShipTargetRanker = new ShipTargetRanker();
+            OffensiveBuildableTargetRanker = new OffensiveBuildableTargetRanker();
 		}
 
-		#region TargetProcessors
-		public ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
+        #region TargetProcessors
+        public ITargetProcessor BomberTargetProcessor { get; private set; }
+        public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
+
+        public ITargetProcessor CreateTargetProcessor(IHighestPriorityTargetTracker highestPriorityTargetTracker)
 		{
 			return new TargetProcessor(highestPriorityTargetTracker);
 		}
@@ -74,6 +77,8 @@ namespace BattleCruisers.Targets
         #endregion TargetFinders
 
         #region TargetTrackers
+        public IHighestPriorityTargetTracker UserChosenTargetTracker { get; private set; }
+
         public ITargetTracker CreateTargetTracker(ITargetFinder targetFinder)
         {
             return new TargetTracker(targetFinder);
@@ -133,21 +138,9 @@ namespace BattleCruisers.Targets
         #endregion Highest priority trackers
 
         #region TargetRankers
-        // FELIX  Create in constructor, simply return copy :P  Also concvert to properties :)
-        public ITargetRanker CreateEqualTargetRanker()
-		{
-			return new EqualTargetRanker();
-		}
-
-        public ITargetRanker CreateShipTargetRanker()
-        {
-            return new ShipTargetRanker();
-        }
-
-        public ITargetRanker CreateOffensiveBuildableTargetRanker()
-        {
-            return new OffensiveBuildableTargetRanker();
-        }
+        public ITargetRanker EqualTargetRanker { get; private set; }
+        public ITargetRanker ShipTargetRanker { get; private set; }
+        public ITargetRanker OffensiveBuildableTargetRanker { get; private set; }
 
         public ITargetRanker CreateBoostedRanker(ITargetRanker baseRanker, int rankBoost)
         {

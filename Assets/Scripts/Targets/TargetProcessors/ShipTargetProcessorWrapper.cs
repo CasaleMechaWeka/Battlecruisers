@@ -24,7 +24,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             // Attacking targets
             ITargetFilter attackingTargetFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = args.TargetsFactory.CreateAttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
-            ITargetRanker baseRanker = args.TargetsFactory.CreateShipTargetRanker();
+            ITargetRanker baseRanker = args.TargetsFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetsFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
             IHighestPriorityTargetTracker attackingTargetTracker = args.TargetsFactory.CreateHighestPriorityTargetTracker(attackingTargetFinder, attackingTargetRanker);
 
