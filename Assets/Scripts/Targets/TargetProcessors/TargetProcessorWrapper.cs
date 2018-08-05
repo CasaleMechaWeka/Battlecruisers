@@ -3,8 +3,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    // FELIX  Rename to Initialiser/Factory?
-    public abstract class TargetProcessorWrapper : MonoBehaviour, ITargetProcessorWrapper
+    // FELIX  Rename to Initialiser/Factory?  (Need to update all prefabs :/)
+    public abstract class TargetProcessorWrapper : MonoBehaviour
     {
         // FELIX  Simplify args, don't need target consumer anymore :)
         public ITargetProcessor Initialise(ITargetProcessorArgs args)
