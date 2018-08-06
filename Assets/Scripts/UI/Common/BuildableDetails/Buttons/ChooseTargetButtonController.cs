@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     public class ChooseTargetButtonController : UIElement, IButton
     {
         private Button _button;
-        private IUserChosenTargetManager _userChosenTargetManager;
+        private IUserChosenTargetHelper _userChosenTargetHelper;
 
         private ITarget _target;
         public ITarget Target
@@ -37,12 +37,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public event EventHandler Clicked;
 
-        public void Initialise(IUserChosenTargetManager userChosenTargetManager)
+        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper)
         {
             base.Initialise();
 
-            Assert.IsNotNull(userChosenTargetManager);
-            _userChosenTargetManager = userChosenTargetManager;
+            Assert.IsNotNull(userChosenTargetHelper);
+            _userChosenTargetHelper = userChosenTargetHelper;
 
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
@@ -51,18 +51,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private void OnClick()
         {
-            ITarget currentUserChosenTarget = _userChosenTargetManager.HighestPriorityTarget != null ? _userChosenTargetManager.HighestPriorityTarget.Target : null;
-
-            if (ReferenceEquals(currentUserChosenTarget, _target))
-            {
-                // Clear user chosen target
-                _userChosenTargetManager.Target = null;
-            }
-            else
-            {
-                // Set user chosen target
-                _userChosenTargetManager.Target = _target;
-            }
+            _userChosenTargetHelper.ToggleChosenTarget(_target);
    
             if (Clicked != null)
             {

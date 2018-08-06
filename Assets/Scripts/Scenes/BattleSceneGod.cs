@@ -107,6 +107,7 @@ namespace BattleCruisers.Scenes
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
+            IUserChosenTargetHelper playerCruiserUserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
 
 
@@ -182,7 +183,7 @@ namespace BattleCruisers.Scenes
                     _aiCruiser, 
                     cameraInitialiser.CameraController, 
                     _navigationSettings.AreTransitionsEnabledFilter, 
-                    playerCruiserUserChosenTargetManager);
+                    playerCruiserUserChosenTargetHelper);
             IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();

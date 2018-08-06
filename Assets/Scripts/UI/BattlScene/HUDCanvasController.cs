@@ -63,13 +63,13 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser aiCruiser,
             ICameraController cameraController,
             IBroadcastingFilter shouldNavigationBeEnabledFilter,
-            IUserChosenTargetManager userChosenTargetManager)
+            IUserChosenTargetHelper userChosenTargetHelper)
         {
-            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetManager);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetHelper);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
-            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
-            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetManager);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
+            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
+            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
 
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);
