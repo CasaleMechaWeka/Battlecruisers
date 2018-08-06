@@ -51,12 +51,13 @@ namespace BattleCruisers.Utils
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
             IVariableDelayDeferrer deferrer,
-            IRankedTargetTracker userChosenTargetTracker)
+            IRankedTargetTracker userChosenTargetTracker,
+            IUserChosenTargetHelper userChosenTargetHelper)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, userChosenTargetHelper);
 
 			PrefabFactory = prefabFactory;
-			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
+			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker, userChosenTargetHelper);
 			AngleCalculatorFactory = new AngleCalculatorFactory();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();

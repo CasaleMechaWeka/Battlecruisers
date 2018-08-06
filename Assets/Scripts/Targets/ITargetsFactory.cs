@@ -53,6 +53,7 @@ namespace BattleCruisers.Targets
         IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
 
         // Helpers
+        IUserChosenTargetHelper UserChosenTargetHelper { get; }
         ITargetRangeHelper CreateShipRangeHelper(IShip ship);
 	}
 }

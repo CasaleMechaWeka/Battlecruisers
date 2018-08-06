@@ -41,11 +41,20 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
-            IRankedTargetTracker userChosenTargetTracker)
+            IRankedTargetTracker userChosenTargetTracker,
+            IUserChosenTargetHelper userChosenTargetHelper)
         {
-            Helper.AssertIsNotNull(cruiser, enemyCruiser, uiManager, helper, highlightableFilter, buildProgressCalculator, userChosenTargetTracker);
+            Helper.AssertIsNotNull(
+                cruiser, 
+                enemyCruiser, 
+                uiManager, 
+                helper, 
+                highlightableFilter, 
+                buildProgressCalculator, 
+                userChosenTargetTracker, 
+                userChosenTargetHelper);
 
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, userChosenTargetHelper);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             bool isPlayerCruiser = facingDirection == Direction.Right;

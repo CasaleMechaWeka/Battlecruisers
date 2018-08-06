@@ -16,11 +16,12 @@ namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
+        public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUserChosenTargetHelper userChosenTargetHelper)
 		{
-            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
+            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker, userChosenTargetHelper);
 
             UserChosenTargetTracker = userChosenTargetTracker;
+            UserChosenTargetHelper = userChosenTargetHelper;
 
             GlobalTargetFinder globalTargetFinder = new GlobalTargetFinder(enemyCruiser);
 
@@ -162,10 +163,14 @@ namespace BattleCruisers.Targets
             return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
         }
         #endregion TargetProviders
-		
-		public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
+
+        #region Helpers
+        public IUserChosenTargetHelper UserChosenTargetHelper { get; private set; }
+
+        public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
 		{
             return new ShipRangeHelper(ship);
 		}
+        #endregion Helpers
     }
 }

@@ -154,7 +154,9 @@ namespace BattleCruisers.Scenes
                     Direction.Right, 
                     highlightableSlotFilter, 
                     helper.PlayerCruiserBuildProgressCalculator,
-                    playerCruiserUserChosenTargetManager);
+                    playerCruiserUserChosenTargetManager,
+                    // FELIX
+                    null);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
@@ -170,7 +172,9 @@ namespace BattleCruisers.Scenes
                     Direction.Left, 
                     highlightableSlotFilter, 
                     helper.AICruiserBuildProgressCalculator,
-                    aiCruiserUserChosenTargetManager);
+                    aiCruiserUserChosenTargetManager,
+                    // FELIX
+                    null);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
