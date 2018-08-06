@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
-            IUserChosenTargetManager aiCruiesrUserChosenTargetManager = new DummyUserChosenTargetManager();
+            IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
 
 
             // Instantiate player cruiser
@@ -169,7 +169,7 @@ namespace BattleCruisers.Scenes
                     Direction.Left, 
                     highlightableSlotFilter, 
                     helper.AICruiserBuildProgressCalculator,
-                    aiCruiesrUserChosenTargetManager);
+                    aiCruiserUserChosenTargetManager);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
