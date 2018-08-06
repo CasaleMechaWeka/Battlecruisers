@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
@@ -9,22 +8,24 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Cruisers
 {
-    public class Cruiser : Target, ICruiser, IPointerClickHandler, IComparableItem
+    public class Cruiser : Target, ICruiser, IComparableItem
 	{
 		private IUIManager _uiManager;
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
+        private IClickHandler _clickHandler;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -90,6 +91,10 @@ namespace BattleCruisers.Cruisers
 
             _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);
+
+            ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
+            Assert.IsNotNull(clickHandlerWrapper);
+            _clickHandler = clickHandlerWrapper.GetClickHandler();
         }
 
         protected override ITextMesh GetRepairDroneNumText()
@@ -119,10 +124,13 @@ namespace BattleCruisers.Cruisers
 
             SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter);
             SlotWrapper.HideAllSlots();
+
+            _clickHandler.SingleClick += _clickHandler_SingleClick;
+            _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 		}
 
-		public void OnPointerClick(PointerEventData eventData)
-		{
+        private void _clickHandler_SingleClick(object sender, EventArgs e)
+        {
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
 
@@ -130,7 +138,12 @@ namespace BattleCruisers.Cruisers
             {
                 Clicked.Invoke(this, EventArgs.Empty);
             }
-		}
+        }
+
+        private void _clickHandler_DoubleClick(object sender, EventArgs e)
+        {
+            // FELIX  Choos target :D
+        }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
