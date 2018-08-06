@@ -21,11 +21,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Buildable : Target, IBuildable, IPointerClickHandler
+    public abstract class Buildable : Target, IBuildable
     {
         private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
@@ -158,6 +157,10 @@ namespace BattleCruisers.Buildables
             Assert.IsNotNull(_numOfDronesText);
             _numOfDronesText.Initialise(this);
 
+            ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
+            Assert.IsNotNull(clickHandlerWrapper);
+            _clickHandler = clickHandlerWrapper.GetClickHandler();
+
             _damageCapabilities = new List<IDamageCapability>();
             this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
         }
@@ -218,7 +221,6 @@ namespace BattleCruisers.Buildables
             _boostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 
-            _clickHandler = _factoryProvider.ClickHandlerFactory.CreateClickHandler();
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
@@ -227,7 +229,19 @@ namespace BattleCruisers.Buildables
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {
-            OnSingleClick();
+            if (DeleteCountdown.IsInProgress)
+            {
+                CancelDelete();
+            }
+            else
+            {
+                OnSingleClick();
+            }
+
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this, EventArgs.Empty);
+            }
         }
 
         protected abstract void OnSingleClick();
@@ -238,23 +252,6 @@ namespace BattleCruisers.Buildables
         }
 
         protected virtual void OnDoubleClick() { }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (DeleteCountdown.IsInProgress)
-            {
-                CancelDelete();
-            }
-            else
-            {
-                _clickHandler.OnClick(Time.time);
-            }
-
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {

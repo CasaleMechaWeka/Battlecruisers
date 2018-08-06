@@ -5,7 +5,7 @@ namespace BattleCruisers.Tests.UI.Common
 {
     public class ClickHandlerTests
     {
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
         private float _doubleClickThresholdInS;
         private int _singleClickCount, _doubleClickCount;
 

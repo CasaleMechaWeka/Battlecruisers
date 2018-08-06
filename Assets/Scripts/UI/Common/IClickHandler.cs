@@ -6,7 +6,5 @@ namespace BattleCruisers.UI.Common
     {
         event EventHandler SingleClick;
         event EventHandler DoubleClick;
-
-        void OnClick(float timeSinceGameStartInS);
     }
 }

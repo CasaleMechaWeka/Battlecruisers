@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.Common
 {
     public class ClickHandlerWrapper : MonoBehaviour, IPointerClickHandler
     {
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
 
         public IClickHandler GetClickHandler(float doubleClickThresholdInS = Constants.DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S)
         {
