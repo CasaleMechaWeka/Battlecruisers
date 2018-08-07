@@ -107,8 +107,9 @@ namespace BattleCruisers.Scenes
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
-            IUserChosenTargetHelper playerCruiserUserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
+            IUserChosenTargetHelper playerCruiserUserChosenTargetHelper = new DummyUserChosenTargetHelper();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
+            IUserChosenTargetHelper aiCruiserUserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
 
 
             // Instantiate player cruiser
@@ -155,8 +156,7 @@ namespace BattleCruisers.Scenes
                     highlightableSlotFilter, 
                     helper.PlayerCruiserBuildProgressCalculator,
                     playerCruiserUserChosenTargetManager,
-                    // FELIX
-                    null);
+                    playerCruiserUserChosenTargetHelper);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
@@ -164,17 +164,16 @@ namespace BattleCruisers.Scenes
 			ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseCruiser(
-                    _aiCruiser, 
-                    _playerCruiser, 
-                    uiManager, 
-                    aiHelper, 
-                    Faction.Reds, 
-                    Direction.Left, 
-                    highlightableSlotFilter, 
+                    _aiCruiser,
+                    _playerCruiser,
+                    uiManager,
+                    aiHelper,
+                    Faction.Reds,
+                    Direction.Left,
+                    highlightableSlotFilter,
                     helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
-                    // FELIX
-                    null);
+                    aiCruiserUserChosenTargetHelper);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
@@ -187,7 +186,7 @@ namespace BattleCruisers.Scenes
                     _aiCruiser, 
                     cameraInitialiser.CameraController, 
                     _navigationSettings.AreTransitionsEnabledFilter, 
-                    playerCruiserUserChosenTargetHelper);
+                    aiCruiserUserChosenTargetHelper);
             IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
