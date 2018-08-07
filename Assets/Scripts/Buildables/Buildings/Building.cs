@@ -77,6 +77,9 @@ namespace BattleCruisers.Buildables.Buildings
             {
                 _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
             }
+
+            // Set as user chosen target, to make everything attack this building
+            _factoryProvider.TargetsFactory.UserChosenTargetHelper.ToggleChosenTarget(this);
         }
     }
 }

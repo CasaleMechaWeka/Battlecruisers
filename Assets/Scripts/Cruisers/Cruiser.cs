@@ -142,7 +142,8 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_DoubleClick(object sender, EventArgs e)
         {
-            // FELIX  Choos target :D
+            // Set as user chosen target, to make everything attack this building
+            FactoryProvider.TargetsFactory.UserChosenTargetHelper.ToggleChosenTarget(this);
         }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
