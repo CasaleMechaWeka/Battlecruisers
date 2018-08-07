@@ -14,7 +14,6 @@ using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
@@ -43,7 +42,6 @@ namespace BattleCruisers.Utils
         public ISoundFetcher SoundFetcher { get; private set; }
         public ISoundManager SoundManager { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
-        public IClickHandlerFactory ClickHandlerFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -78,7 +76,6 @@ namespace BattleCruisers.Utils
                     new AssignerFactory(),
                     spriteProvider);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
-            ClickHandlerFactory = new ClickHandlerFactory();
         }
 	}
 }
