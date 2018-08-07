@@ -220,10 +220,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			enemyCruiser.GameObject.Returns(globalTarget);
 			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
-			ITargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
+			GlobalTargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
 			ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
-			ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            targetFinder.EmitCruiserAsGlobalTarget();
 
             if (exactMatchTargetFilter == null)
             {
