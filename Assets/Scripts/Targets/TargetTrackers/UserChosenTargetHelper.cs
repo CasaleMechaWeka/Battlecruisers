@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
-    // FELIX  Test :)
     public class UserChosenTargetHelper : IUserChosenTargetHelper
     {
         private readonly IUserChosenTargetManager _userChosenTargetManager;
