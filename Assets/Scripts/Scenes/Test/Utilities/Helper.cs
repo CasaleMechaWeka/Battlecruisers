@@ -314,6 +314,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             SetupCreateTargetFilter(targetsFactory);
             SetupCreateRangedTargetFinder(targetsFactory);
+            SetupCreateRankedTargetTracker(targetsFactory);
             SetupCreateTargetProcessor(targetsFactory);
 
             return targetsFactory;
