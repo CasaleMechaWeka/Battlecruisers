@@ -58,11 +58,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void FixedUpdate()
         {
-            if (_targetToDamage != null)
+            if (_targetToDamage != null
+                && !_parentAircraft.IsDestroyed)
             {
+                _parentAircraft.Destroy();
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
                 _explosion.Show(_parentAircraft.Position);
-                _parentAircraft.Destroy();
             }
         }
     }
