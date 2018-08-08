@@ -206,8 +206,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			enemyCruiser.GameObject.Returns(target);
 			enemyCruiser.Position.Returns(x => (Vector2)target.transform.position);
+            enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 			return enemyCruiser;
-		}
+        }
 
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
