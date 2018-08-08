@@ -14,6 +14,7 @@ namespace BattleCruisers.Utils
 	{
 		// Units
 		public const string AIRCRAFT = "Aircraft";
+		public const string FIGHTER = "Figher";
 		public const string SHIPS = "Ships";
 
 		// Buildings
@@ -91,7 +92,8 @@ namespace BattleCruisers.Utils
 
 			// Units
 			tagsToActiveness.Add(Tags.AIRCRAFT, false);
-			tagsToActiveness.Add(Tags.SHIPS, false);
+            tagsToActiveness.Add(Tags.FIGHTER, false);
+            tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
             tagsToActiveness.Add(Tags.BUILDABLE, false);
