@@ -72,7 +72,8 @@ namespace BattleCruisers.Buildables.Buildings
             base.OnDoubleClick();
 
             // Toggle drone consumer focus on double click :)
-            if (BuildableState == BuildableState.InProgress
+            if (BuildableState == BuildableState.NotStarted
+                || BuildableState == BuildableState.InProgress
                 || BuildableState == BuildableState.Paused)
             {
                 _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
