@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots.States
 {
@@ -11,6 +12,9 @@ namespace BattleCruisers.Cruisers.Slots.States
             Colour = colour;
         }
 
-        public virtual void OnClick() { }
+        public virtual void OnClick()
+        {
+            Logging.Log(Tags.SLOTS, "OnClick()  this: " + this);
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace BattleCruisers.Cruisers.Slots.States
 
         public override void OnClick()
         {
+            base.OnClick();
             _parentCruiser.ConstructSelectedBuilding(_parentSlot);
         }
     }

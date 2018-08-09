@@ -131,6 +131,8 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
+            Logging.Log(Tags.CRUISER, "_clickHandler_SingleClick");
+
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
 

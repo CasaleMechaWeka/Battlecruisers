@@ -117,6 +117,8 @@ namespace BattleCruisers.Cruisers.Slots
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
+            Logging.Log(Tags.SLOTS, "OnPointerClick()");
+
             CurrentState.OnClick();
 
             if (Clicked != null)
