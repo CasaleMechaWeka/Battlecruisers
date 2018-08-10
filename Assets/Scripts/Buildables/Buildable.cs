@@ -229,6 +229,8 @@ namespace BattleCruisers.Buildables
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {
+            Logging.Log(Tags.BUILDABLE, "ClickHandler_SingleClick()  " + this);
+
             if (DeleteCountdown.IsInProgress)
             {
                 CancelDelete();
@@ -248,6 +250,7 @@ namespace BattleCruisers.Buildables
 
         private void ClickHandler_DoubleClick(object sender, EventArgs e)
         {
+            Logging.Log(Tags.BUILDABLE, "ClickHandler_DoubleClick()  " + this);
             OnDoubleClick();
         }
 
