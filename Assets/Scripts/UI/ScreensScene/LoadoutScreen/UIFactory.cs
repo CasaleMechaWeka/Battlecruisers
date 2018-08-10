@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             HorizontalOrVerticalLayoutGroup itemRow, 
             TBuildable itemBuildable,
             IItemDetailsManager<TBuildable> detailsManager) 
-                where TBuildable : IBuildable
+                where TBuildable : class, IBuildable
         {
             LoadoutItem<TBuildable> loadoutItem = Instantiate(itemPrefab);
             loadoutItem.transform.SetParent(itemRow.transform, worldPositionStays: false);

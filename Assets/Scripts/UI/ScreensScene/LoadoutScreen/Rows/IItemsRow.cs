@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public interface IItemsRow<TItem> : IStatefulUIElement where TItem : IComparableItem
+    public interface IItemsRow<TItem> : IStatefulUIElement where TItem : class, IComparableItem
 	{
         // Not in constructor because setup requires protected abstract methods, which
         // should not be called from the constructor.

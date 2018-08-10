@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public class UnlockedItemsRowArgs<TItem> : IUnlockedItemsRowArgs<TItem> where TItem : IComparableItem
+    public class UnlockedItemsRowArgs<TItem> : IUnlockedItemsRowArgs<TItem> where TItem : class, IComparableItem
     {
         public IUIFactory UIFactory { get; private set; }
         public IList<TItem> UnlockedItems { get; private set; }

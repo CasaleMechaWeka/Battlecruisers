@@ -3,12 +3,13 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     public abstract class BaseItem<TItem> : MonoBehaviour,
-        IItem<TItem> where TItem : IComparableItem
+        IItem<TItem> where TItem : class, IComparableItem
 	{
 		public static class Colors
 		{
@@ -16,8 +17,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             public readonly static Color DEFAULT = Color.grey;
 		}
 
-        protected TItem _item;
-        public TItem Item { get { return _item; } }
+        private TItem _item;
+        public TItem Item
+        {
+            get { return _item; }
+            protected set
+            {
+                Assert.IsNotNull(value);
+
+                _item = value;
+                itemImage.sprite = _item.Sprite;
+            }
+        }
 
         protected IItemDetailsManager<TItem> _itemDetailsManager;
         protected IItemState<TItem> _state;
@@ -39,8 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             Helper.AssertIsNotNull(item, itemDetailsManager, itemImage, selectedFeedbackImage, BackgroundImage);
 
-            _item = item;
-            itemImage.sprite = _item.Sprite;
+            Item = item;
 
             _itemDetailsManager = itemDetailsManager;
         }

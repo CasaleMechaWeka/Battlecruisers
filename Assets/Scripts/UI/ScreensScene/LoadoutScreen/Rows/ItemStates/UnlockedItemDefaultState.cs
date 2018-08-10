@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
-    public class UnlockedItemDefaultState<TItem> : DefaultState<TItem> where TItem : IComparableItem
+    public class UnlockedItemDefaultState<TItem> : DefaultState<TItem> where TItem : class, IComparableItem
     {
         private readonly UnlockedItem<TItem> _unlockedItem;
         private readonly IItemsRow<TItem> _itemsRow;

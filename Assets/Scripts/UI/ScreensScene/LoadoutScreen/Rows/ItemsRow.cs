@@ -7,8 +7,8 @@ using BattleCruisers.Data;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : IComparableItem
-	{
+    public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : class, IComparableItem
+    {
         protected readonly IGameModel _gameModel;
 		protected readonly ILockedInformation _lockedInfo;
 		protected readonly IPrefabFactory _prefabFactory;

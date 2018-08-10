@@ -1,10 +1,9 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
-    public class LoadoutItemDefaultState<TItem> : DefaultState<TItem> where TItem : IComparableItem
+    public class LoadoutItemDefaultState<TItem> : DefaultState<TItem> where TItem : class, IComparableItem
     {
         private readonly IItemDetailsManager<TItem> _itemDetailsManager;
 

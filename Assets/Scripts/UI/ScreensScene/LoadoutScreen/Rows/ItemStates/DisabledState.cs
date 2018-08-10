@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {
-    public class DisabledState<TItem> : ItemState<TItem> where TItem : IComparableItem
+    public class DisabledState<TItem> : ItemState<TItem> where TItem : class, IComparableItem
     {
         protected override Color BackgroundColour { get { return BaseItem<TItem>.Colors.DEFAULT; } }
 

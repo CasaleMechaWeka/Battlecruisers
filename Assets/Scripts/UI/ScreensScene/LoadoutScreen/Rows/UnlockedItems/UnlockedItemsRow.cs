@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
     public abstract class UnlockedItemsRow<TItem> : MonoBehaviour, IStatefulUIElement 
-        where TItem : IComparableItem
-	{
+        where TItem : class, IComparableItem
+    {
 		protected IUIFactory _uiFactory;
 		private IList<TItem> _unlockedItems;
         private int _numOfLockedItems;

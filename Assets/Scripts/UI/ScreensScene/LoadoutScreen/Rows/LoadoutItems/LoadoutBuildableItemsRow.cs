@@ -12,7 +12,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
     public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : MonoBehaviour, IStatefulUIElement
-        where TBuildable : IBuildable
+        where TBuildable : class, IBuildable
         where TPrefabKey : IPrefabKey
 	{
         protected IGameModel _gameModel;

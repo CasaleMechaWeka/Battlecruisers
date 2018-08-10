@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : IComparableItem
+    public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
 	{
         private IItemsRow<TItem> _itemsRow;
 		private RectTransform _rectTransform;
