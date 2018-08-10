@@ -134,11 +134,13 @@ namespace BattleCruisers.Scenes
 
 			if (_currentScreen != null)
 			{
+                _currentScreen.OnDismissing();
 				_currentScreen.gameObject.SetActive(false);
 			}
 
 			_currentScreen = destinationScreen;
 			_currentScreen.gameObject.SetActive(true);
+            _currentScreen.OnPresenting(activationParameter: null);
 		}
 	}
 }
