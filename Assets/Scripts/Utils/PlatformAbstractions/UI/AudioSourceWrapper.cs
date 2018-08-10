@@ -33,7 +33,11 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
 
         public void Stop()
         {
-            _audioSource.Stop();
+            // Only stop audio if game object is still alive
+            if (_audioSource.gameObject != null)
+            {
+                _audioSource.Stop();
+            }
         }
     }
 }
