@@ -18,6 +18,7 @@ namespace BattleCruisers.AI
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
+        // FELIX  Unused, remove :)
         private readonly IDeferrer _deferrer;
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
@@ -52,7 +53,7 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _variableDelayDeferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Tasks
 {
@@ -21,7 +22,11 @@ namespace BattleCruisers.AI.Tasks
     public class DeferredPrioritisedTask : IPrioritisedTask
     {
         private readonly IPrioritisedTask _baseTask;
-        private readonly IDeferrer _deferrer;
+        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly float _delayInS;
+
+        public const float DEFAULT_DELAY_IN_S = 1;
+        private const float MIN_DELAY_IN_S = 0.1f;
 
         public TaskPriority Priority { get { return _baseTask.Priority; } }
 
@@ -31,22 +36,24 @@ namespace BattleCruisers.AI.Tasks
             remove { _baseTask.Completed -= value; }
         }
 
-        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer)
+        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IVariableDelayDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
         {
             Helper.AssertIsNotNull(baseTask, deferrer);
+            Assert.IsTrue(delayInS >= MIN_DELAY_IN_S);
 
             _baseTask = baseTask;
             _deferrer = deferrer;
+            _delayInS = delayInS;
         }
 
         public void Start()
         {
-            _deferrer.Defer(() => _baseTask.Start());
+            _deferrer.Defer(() => _baseTask.Start(), _delayInS);
         }
 
         public void Stop()
         {
-            _deferrer.Defer(() => _baseTask.Stop());
+            _deferrer.Defer(() => _baseTask.Stop(), _delayInS);
         }
 
         public override string ToString()

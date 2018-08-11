@@ -9,21 +9,23 @@ namespace BattleCruisers.Tests.AI.Tasks
     public class DeferredPrioritisedTaskTests
     {
         private IPrioritisedTask _deferredTask, _baseTask;
-        private IDeferrer _deferrer;
+        private IVariableDelayDeferrer _deferrer;
+        private float _delayInS;
 
         [SetUp]
         public void TestSetup()
         {
             _baseTask = Substitute.For<IPrioritisedTask>();
-            _deferrer = Substitute.For<IDeferrer>();
+            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _delayInS = 1;
 
-            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer);
+            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, _delayInS);
 
             _deferrer
-                .WhenForAnyArgs(deferrer => deferrer.Defer(null))
+                .WhenForAnyArgs(deferrer => deferrer.Defer(null, default(float)))
                 .Do(callInfo =>
                 {
-                    Assert.IsTrue(callInfo.Args().Length == 1);
+                    Assert.IsTrue(callInfo.Args().Length == 2);
                     Action actionToDefer = callInfo.Args()[0] as Action;
                     Assert.IsNotNull(actionToDefer);
                     actionToDefer.Invoke();
@@ -36,7 +38,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         {
             _deferredTask.Start();
 
-            _deferrer.ReceivedWithAnyArgs().Defer(null);
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
             _baseTask.Received().Start();
         }
 
@@ -45,7 +47,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         {
             _deferredTask.Stop();
 
-            _deferrer.ReceivedWithAnyArgs().Defer(null);
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
             _baseTask.Received().Stop();
         }
 

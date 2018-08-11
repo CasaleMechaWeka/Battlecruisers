@@ -12,8 +12,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.TaskProducers
 {
     /// <summary>
-    /// Keeps track of all bulidings that are destroyed, and creates a high
-    /// priority ConstructBuildingTask for them.
+    /// Keeps track of all bulidings that are destroyed, and creates 
+    /// ConstructBuildingTask for them.
     /// 
     /// The NORMAL priority means these tasks will run BEFORE any normal
     /// ConstructBuildingTask run (which are LOW priority).  This makes sense, 
@@ -84,6 +84,9 @@ namespace BattleCruisers.AI.TaskProducers
             // will keep destroying the same building that is instantly being rebuilt,
             // making those lasers useless :P  Hence wait slightly before trying to rebuild
             // a building.
+            // FELIX  This stuffs things.  If an aritllery task is in the queue, and a drone
+            // station is destroyed, we wait 1s before starting the drone station.  Hence,
+            // the artillery is started, BUT we don't have enough drones :/  Kaboom!
             _deferrer.Defer(() =>
             {
                 _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
