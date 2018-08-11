@@ -103,7 +103,7 @@ namespace BattleCruisers.Scenes
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
-            IBattleSceneHelper helper = CreateHelper(prefabFactory, deferrer, variableDelayDeferrer);
+            IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
@@ -222,7 +222,7 @@ namespace BattleCruisers.Scenes
             StartTutorialIfNecessary(prefabFactory);
         }
 
-        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer)
+        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
             if (ApplicationModel.IsTutorial)
             {
@@ -232,7 +232,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                return new NormalHelper(_dataProvider, prefabFactory, deferrer, variableDelayDeferrer);
+                return new NormalHelper(_dataProvider, prefabFactory, variableDelayDeferrer);
             }
         }
 

@@ -18,8 +18,6 @@ namespace BattleCruisers.AI
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
-        // FELIX  Unused, remove :)
-        private readonly IDeferrer _deferrer;
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
@@ -27,13 +25,12 @@ namespace BattleCruisers.AI
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, variableDelayDeferrer);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, variableDelayDeferrer);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
-            _deferrer = deferrer;
             _variableDelayDeferrer = variableDelayDeferrer;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
