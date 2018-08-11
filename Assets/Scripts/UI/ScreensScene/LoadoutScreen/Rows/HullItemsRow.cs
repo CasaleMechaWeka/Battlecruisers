@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             ICruiser hull =
                 _hullToKey
-                    .FirstOrDefault(hullToKey => hullToKey.Key.Equals(hullKey))
+                    .FirstOrDefault(hullToKey => hullToKey.Value.Equals(hullKey))
                     .Key;
             Assert.IsNotNull(hull);
 

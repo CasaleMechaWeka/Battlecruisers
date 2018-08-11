@@ -94,26 +94,32 @@ namespace BattleCruisers.Scenes
 
 		public void GoToLoadoutScreen()
 		{
+            StartCoroutine(GotToLoadoutScreenAsync());
+		}
+
+        private IEnumerator GotToLoadoutScreenAsync()
+        {
             // Laziliy initalise, because post battle screen can change the loadout
             if (!loadoutScreen.IsInitialised)
             {
                 // TEMP  For starting ScreensScene without previous LandingScene.
                 // So I can test the ScreensScene without having to go through
                 // the LandingScene each time :P
-				IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+                // => Should be able to remove if els, and just keep if content
+                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
 
                 if (LandingSceneGod.LoadingScreen != null)
                 {
-					StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
+                    yield return StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
                 }
                 else
                 {
-                    StartCoroutine(initialiseLoadout);
+                    yield return StartCoroutine(initialiseLoadout);
                 }
             }
 
-			GoToScreen(loadoutScreen);
-		}
+            yield return GoToScreenAsync(loadoutScreen);
+        }
 
         public void GoToSettingsScreen()
         {
@@ -127,6 +133,12 @@ namespace BattleCruisers.Scenes
 			ApplicationModel.SelectedLevel = levelNum;
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
 		}
+
+        private IEnumerator GoToScreenAsync(ScreenController destinationScreen)
+        {
+            yield return null;
+            GoToScreen(destinationScreen);
+        }
 
 		private void GoToScreen(ScreenController destinationScreen)
 		{
