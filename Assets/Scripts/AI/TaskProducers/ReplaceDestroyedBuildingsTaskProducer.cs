@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.Tasks;
+﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Threading;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -35,7 +34,6 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class ReplaceDestroyedBuildingsTaskProducer : TaskProducer
     {
-        private readonly IVariableDelayDeferrer _deferrer;
         private readonly IDictionary<string, BuildingKey> _buildingNamesToKeys;
 
         private const float TASK_DELAY_IN_S = 1;
@@ -45,13 +43,9 @@ namespace BattleCruisers.AI.TaskProducers
             ICruiserController cruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
-            IList<BuildingKey> buildingKeys,
-            IVariableDelayDeferrer deferrer)
+            IList<BuildingKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
-            Assert.IsNotNull(deferrer);
-
-            _deferrer = deferrer;
             _buildingNamesToKeys = CreateMap(buildingKeys);
 
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
@@ -79,18 +73,7 @@ namespace BattleCruisers.AI.TaskProducers
 
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
             TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
-
-            // Do not want to instantly start building, otherwise lasers (like the railgun)
-            // will keep destroying the same building that is instantly being rebuilt,
-            // making those lasers useless :P  Hence wait slightly before trying to rebuild
-            // a building.
-            // FELIX  This stuffs things.  If an aritllery task is in the queue, and a drone
-            // station is destroyed, we wait 1s before starting the drone station.  Hence,
-            // the artillery is started, BUT we don't have enough drones :/  Kaboom!
-            _deferrer.Defer(() =>
-            {
-                _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
-            }, delayInS: TASK_DELAY_IN_S);
+            _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
 		}
 
         public override void DisposeManagedState()

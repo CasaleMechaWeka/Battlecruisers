@@ -5,9 +5,8 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
@@ -19,7 +18,6 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IStaticData _staticData;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
-        private readonly IVariableDelayDeferrer _deferrer;
 
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
@@ -31,10 +29,9 @@ namespace BattleCruisers.AI.TaskProducers
             ITaskFactory taskFactory, 
             ISlotNumCalculatorFactory slotNumCalculatorFactory, 
             IStaticData staticData,
-            IThreatMonitorFactory threatMonitorFactory,
-            IVariableDelayDeferrer deferrer)
+            IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory, deferrer);
+            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);
 
             _aiCruiser = aiCruiser;
             _playerCruiser = playerCruiser;
@@ -43,7 +40,6 @@ namespace BattleCruisers.AI.TaskProducers
             _slotNumCalculatorFactory = slotNumCalculatorFactory;
             _staticData = staticData;
             _threatMonitorFactory = threatMonitorFactory;
-            _deferrer = deferrer;
         }
 
         public ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder)
@@ -53,7 +49,7 @@ namespace BattleCruisers.AI.TaskProducers
 
 		public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
         {
-            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys, _deferrer);
+            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
         }
 
         public ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)

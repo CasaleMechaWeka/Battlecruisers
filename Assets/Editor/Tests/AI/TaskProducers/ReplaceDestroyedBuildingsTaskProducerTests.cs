@@ -18,9 +18,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     {
         private IBuilding _normalBuilding, _droneStation, _buildingWithoutKey;
         private IPrioritisedTask _normalRebuildTask, _highPriorityRebuildTask;
-        private IVariableDelayDeferrer _variableDelayDeferrer;
-
-        private const float EXPECTED_TASK_DELAY_IN_S = 1;
 
         [SetUp]
 		public override void SetuUp()
@@ -47,11 +44,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
                 droneStationBuildingKey
             };
 
-            // Immediately call deferred action :)
-            _variableDelayDeferrer = Substitute.For<IVariableDelayDeferrer>();
-            _variableDelayDeferrer.Defer(Arg.Do<Action>(deferredAction => deferredAction()), EXPECTED_TASK_DELAY_IN_S);
-
-            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys, _variableDelayDeferrer);
+            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
 
             UnityAsserts.Assert.raiseExceptions = true;
         }
@@ -84,7 +77,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_normalBuilding);
             _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
 
-            _variableDelayDeferrer.Received().Defer(Arg.Any<Action>(), EXPECTED_TASK_DELAY_IN_S);
 			_tasks.Received().Add(_normalRebuildTask);
 		}
 
@@ -94,7 +86,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_droneStation);
             _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
 
-            _variableDelayDeferrer.Received().Defer(Arg.Any<Action>(), EXPECTED_TASK_DELAY_IN_S);
             _tasks.Received().Add(_highPriorityRebuildTask);
         }
 

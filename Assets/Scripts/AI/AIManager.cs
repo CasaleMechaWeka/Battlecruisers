@@ -59,8 +59,7 @@ namespace BattleCruisers.AI
                     taskFactory, 
                     _slotNumCalculatorFactory, 
                     _dataProvider.StaticData,
-                    _threatMonitorFactory,
-                    _variableDelayDeferrer);
+                    _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
             switch (_dataProvider.SettingsManager.AIDifficulty)

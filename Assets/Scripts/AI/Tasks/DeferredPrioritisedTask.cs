@@ -18,6 +18,11 @@ namespace BattleCruisers.AI.Tasks
     /// 
     /// If one task action is deferred, all task actions must be deferred.  (Otherwise,
     /// if we only deferred Start(), then a Stop() could happen before the Start()!)
+    /// 
+    /// Additionally, do not want to instantly start building, otherwise lasers (like the railgun)
+    /// will keep destroying the same building that is instantly being rebuilt,
+    /// making those lasers useless :P  Hence wait slightly before trying to rebuild
+    /// a building.
     /// </summary>
     public class DeferredPrioritisedTask : IPrioritisedTask
     {
