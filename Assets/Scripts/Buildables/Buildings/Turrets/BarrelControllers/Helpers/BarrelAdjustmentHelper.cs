@@ -43,6 +43,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
+            // FELIX  Choose attackable position :)
+
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
             Vector2 predictedTargetPosition
                 = _targetPositionPredictor.PredictTargetPosition(
