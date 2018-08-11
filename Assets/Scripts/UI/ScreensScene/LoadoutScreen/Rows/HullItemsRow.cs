@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public class HullItemsRow : ItemsRow<ICruiser>
-	{
+    public class HullItemsRow : ItemsRow<ICruiser>, IHullItemsRow
+    {
 		private readonly LoadoutHullItem _loadoutHull;
         private readonly UnlockedHullItemsRow _unlockedHullsRow;
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
-		public HullItemsRow(
+        public HullKey UserChosenHull { get; private set; }
+
+        public HullItemsRow(
             IItemsRowArgs<ICruiser> args,
             LoadoutHullItem loadoutHull, 
             UnlockedHullItemsRow unlockedHullsRow)
@@ -60,13 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
 		public override bool SelectUnlockedItem(UnlockedItem<ICruiser> hullItem)
 		{
-			ICruiser hull = hullItem.Item;
-			_gameModel.PlayerLoadout.Hull = _hullToKey[hull];
-			
-			// Update UI
-			_loadoutHull.UpdateHull(hull);
-			_unlockedHullsRow.UpdateSelectedHull(hull);
-
+            UpdateUserChosenHull(hullItem.Item);
 			return true;
 		}
 
@@ -75,5 +73,38 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _loadoutHull.GoToState(state);
             _unlockedHullsRow.GoToState(state);
         }
-	}
+
+        public void OnPresenting(object activationParameter)
+        {
+            ICruiser loadoutHull = HullForKey(_gameModel.PlayerLoadout.Hull);
+            UpdateUserChosenHull(loadoutHull);
+        }
+
+        private ICruiser HullForKey(HullKey hullKey)
+        {
+            Assert.IsTrue(_hullToKey.Count != 0);
+
+            ICruiser hull =
+                _hullToKey
+                    .FirstOrDefault(hullToKey => hullToKey.Key.Equals(hullKey))
+                    .Key;
+            Assert.IsNotNull(hull);
+
+            return hull;
+        }
+
+        private void UpdateUserChosenHull(ICruiser hull)
+        {
+            UserChosenHull = _hullToKey[hull];
+
+            // Update UI
+            _loadoutHull.UpdateHull(hull);
+            _unlockedHullsRow.UpdateSelectedHull(hull);
+        }
+
+        public void OnDismissing()
+        {
+            // empty
+        }
+    }
 }
