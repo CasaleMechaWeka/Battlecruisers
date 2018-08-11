@@ -94,6 +94,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             }
         }
 
+        public override void OnPresenting(object activationParameter)
+        {
+            base.OnPresenting(activationParameter);
+            hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
+        }
+
         public void GoToHomeScreen()
 		{
 			_screensSceneGod.GoToHomeScreen();
@@ -101,7 +107,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 		public void Save()
 		{
-			_dataProvider.SaveGame();
+            if (!hullsRowWrapper.HullsRow.UserChosenHull.Equals(_gameModel.PlayerLoadout.Hull))
+            {
+                _gameModel.PlayerLoadout.Hull = hullsRowWrapper.HullsRow.UserChosenHull;
+                _dataProvider.SaveGame();
+            }
+
             _screensSceneGod.GoToHomeScreen();
 		}
 	}
