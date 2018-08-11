@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 			if (squareRootArg < 0)
 			{
-				throw new ArgumentException("Out of range :/");
+				throw new ArgumentException("Out of range :/  source: " + source + "  target: " + targetPosition);
 			}
 
 			float denominator = Constants.GRAVITY * distanceInM;
