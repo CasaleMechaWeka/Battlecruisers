@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers
+namespace BattleCruisers.Utils.BattleScene
 {
     public class BackgroundController : MonoBehaviour, IPointerClickHandler
 	{

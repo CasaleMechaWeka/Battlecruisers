@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers
+namespace BattleCruisers.Utils.BattleScene
 {
 	public class Remover : MonoBehaviour 
 	{
