@@ -1,13 +1,21 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions;
 using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    // FELIX  Test :)
     public class PauseGameManager : IPauseGameManager
     {
         private readonly ITime _time;
+
+        private bool IsGamePaused
+        {
+            get
+            {
+                return Mathf.Approximately(_time.TimeScale, 0);
+            }
+        }
 
         public event EventHandler GamePaused;
         public event EventHandler GameResumed;
@@ -20,6 +28,11 @@ namespace BattleCruisers.Utils.BattleScene
 
         public void PauseGame()
         {
+            if (IsGamePaused)
+            {
+                return;
+            }
+
             _time.TimeScale = 0;
 
             if (GamePaused != null)
@@ -30,6 +43,11 @@ namespace BattleCruisers.Utils.BattleScene
 
         public void ResumeGame()
         {
+            if (!IsGamePaused)
+            {
+                return;
+            }
+
             _time.TimeScale = 1;
 
             if (GameResumed != null)
