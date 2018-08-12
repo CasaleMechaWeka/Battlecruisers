@@ -5,24 +5,20 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.Click
 {
-    // FELIX  Test :)
     public class PlayerBuildingDoubleClickHandler : IDoubleClickHandler<IBuilding>
     {
         public void OnDoubleClick(IBuilding playerBuliding)
         {
             Assert.AreEqual(Faction.Blues, playerBuliding.Faction);
 
-            // Toggle drone consumer focus on double click :)
-            if (playerBuliding.BuildableState == BuildableState.NotStarted
-                || playerBuliding.BuildableState == BuildableState.InProgress
-                || playerBuliding.BuildableState == BuildableState.Paused)
+            if (playerBuliding.BuildableState != BuildableState.Completed)
             {
+                // Toggle construction drone consumer focus
                 playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(playerBuliding.DroneConsumer);
             }
-            // Toggle repair drone consumer focus
-            else if (playerBuliding.BuildableState == BuildableState.Completed
-                && playerBuliding.RepairCommand.CanExecute)
+            else if (playerBuliding.RepairCommand.CanExecute)
             {
+                // Toggle repair drone consumer focus
                 IDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
                 playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
             }
