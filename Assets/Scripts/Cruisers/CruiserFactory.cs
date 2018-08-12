@@ -57,8 +57,7 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection = Direction.Right;
             bool shouldShowFog = false;
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
-            IDroneManager droneManager = new DroneManager();
-            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new PlayerBuildingDoubleClickHandler(droneManager);
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new PlayerBuildingDoubleClickHandler();
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
@@ -73,7 +72,6 @@ namespace BattleCruisers.Cruisers
                 buildProgressCalculator,
                 userChosenTargetTracker,
                 feedbackFactory,
-                droneManager,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler);
         }
@@ -107,7 +105,6 @@ namespace BattleCruisers.Cruisers
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
             //IDroneNumFeedbackFactory feedbackFactory = new DummyDroneNumFeedbackFactory();
 
-            IDroneManager droneManager = new DroneManager();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
@@ -123,7 +120,6 @@ namespace BattleCruisers.Cruisers
                 buildProgressCalculator,
                 userChosenTargetTracker,
                 feedbackFactory,
-                droneManager,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler);
         }
@@ -140,11 +136,11 @@ namespace BattleCruisers.Cruisers
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IDroneNumFeedbackFactory feedbackFactory,
-            IDroneManager droneManager,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler)
         {
             IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
+            IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             // FELIX  Store, so is not garbage collected!

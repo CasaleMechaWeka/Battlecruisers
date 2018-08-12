@@ -8,14 +8,6 @@ namespace BattleCruisers.UI.Common.Click
     // FELIX  Test :)
     public class PlayerBuildingDoubleClickHandler : IDoubleClickHandler<IBuilding>
     {
-        private readonly IDroneManager _playerDroneManager;
-
-        public PlayerBuildingDoubleClickHandler(IDroneManager playerDroneManager)
-        {
-            Assert.IsNotNull(playerDroneManager);
-            _playerDroneManager = playerDroneManager;
-        }
-
         public void OnDoubleClick(IBuilding playerBuliding)
         {
             Assert.AreEqual(Faction.Blues, playerBuliding.Faction);
@@ -25,14 +17,14 @@ namespace BattleCruisers.UI.Common.Click
                 || playerBuliding.BuildableState == BuildableState.InProgress
                 || playerBuliding.BuildableState == BuildableState.Paused)
             {
-                _playerDroneManager.ToggleDroneConsumerFocus(playerBuliding.DroneConsumer);
+                playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(playerBuliding.DroneConsumer);
             }
             // Toggle repair drone consumer focus
             else if (playerBuliding.BuildableState == BuildableState.Completed
                 && playerBuliding.RepairCommand.CanExecute)
             {
                 IDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
-                _playerDroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+                playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
             }
         }
     }
