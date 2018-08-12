@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -72,12 +73,24 @@ namespace BattleCruisers.Buildables.Buildings
         {
             base.OnDoubleClick();
 
-            // Toggle drone consumer focus on double click :)
-            if (BuildableState == BuildableState.NotStarted
-                || BuildableState == BuildableState.InProgress
-                || BuildableState == BuildableState.Paused)
+            // FELIX  Create double click handler?  Have Player-/AI- handlers, will avoid ugly Faction check :/
+            // Only allow double clicks to control player cruiser drones :P
+            if (Faction == Faction.Blues)
             {
-                _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+                // Toggle drone consumer focus on double click :)
+                if (BuildableState == BuildableState.NotStarted
+                    || BuildableState == BuildableState.InProgress
+                    || BuildableState == BuildableState.Paused)
+                {
+                    _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+                }
+                // Toggle repair drone consumer focus
+                else if (BuildableState == BuildableState.Completed
+                    && RepairCommand.CanExecute)
+                {
+                    IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
+                    _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+                }
             }
 
             // Set as user chosen target, to make everything attack this building
