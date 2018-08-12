@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
+namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
     public interface IAttackablePositionFinder
     {

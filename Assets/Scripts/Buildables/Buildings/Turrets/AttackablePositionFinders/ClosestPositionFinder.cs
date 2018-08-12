@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
+namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
     /// <summary>
     /// Designed for large targets (cruisers), where the attack boat may be
