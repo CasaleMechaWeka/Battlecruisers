@@ -167,8 +167,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private IAttackablePositionFinder CreateAttackablePositionFinder()
         {
             IAttackablePositionFinderWrapper positionFinderWrapper = GetComponent<IAttackablePositionFinderWrapper>();
-            Assert.IsNotNull(positionFinderWrapper);
-            return positionFinderWrapper.CreatePositionFinder();
+
+            if (positionFinderWrapper != null)
+            {
+                return positionFinderWrapper.CreatePositionFinder();
+            }
+            else
+            {
+                return _factoryProvider.AttackablePositionFinderFactory.DummyPositionFinder;
+            }
         }
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
