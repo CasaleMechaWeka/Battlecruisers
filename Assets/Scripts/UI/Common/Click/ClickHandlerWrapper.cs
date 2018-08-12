@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.UI.Common
+namespace BattleCruisers.UI.Common.Click
 {
     public class ClickHandlerWrapper : MonoBehaviour, IPointerClickHandler
     {

@@ -1,7 +1,7 @@
-﻿using BattleCruisers.UI.Common;
+﻿using BattleCruisers.UI.Common.Click;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.Common
+namespace BattleCruisers.Tests.UI.Common.Click
 {
     public class ClickHandlerTests
     {

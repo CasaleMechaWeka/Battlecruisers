@@ -10,7 +10,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;

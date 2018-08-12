@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Common
+namespace BattleCruisers.UI.Common.Click
 {
     public class ClickHandler : IClickHandler
     {
