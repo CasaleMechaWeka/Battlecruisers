@@ -18,7 +18,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 		protected override Vector2 FindTargetPosition()
 		{
-            return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target, _maxVelocityProvider.VelocityInMPerS, currentAngleInRadians: -1);
+            return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target.Position, _targetProvider.Target, _maxVelocityProvider.VelocityInMPerS, currentAngleInRadians: -1);
 		}
 
 		protected override float FindVelocitySmoothTime()

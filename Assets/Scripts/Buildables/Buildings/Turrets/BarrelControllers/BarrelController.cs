@@ -104,7 +104,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.TargetPositionValidator,
                     args.AngleCalculator,
                     args.RotationMovementController,
-                    args.AngleLimiter);
+                    args.AngleLimiter,
+                    args.AttackablePositionFinder);
 
             _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager);
         }

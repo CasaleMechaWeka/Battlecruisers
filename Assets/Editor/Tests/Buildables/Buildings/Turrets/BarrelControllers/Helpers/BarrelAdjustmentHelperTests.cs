@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
@@ -23,10 +24,11 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         private IAngleCalculator _angleCalculator;
         private IRotationMovementController _rotationMovementController;
         private IAngleLimiter _angleLimiter;
+        private IAttackablePositionFinder _attackablePositionFinder;
 
         private ITarget _target;
         private IProjectileStats _projectileStats;
-        private Vector2 _predictedTargetPosition;
+        private Vector2 _targetPositionToAttack, _predictedTargetPosition;
         private float _desiredAngleInDegrees, _limitedAngelInDegrees;
 
         [SetUp]
@@ -38,6 +40,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _angleCalculator = Substitute.For<IAngleCalculator>();
             _rotationMovementController = Substitute.For<IRotationMovementController>();
             _angleLimiter = Substitute.For<IAngleLimiter>();
+            _attackablePositionFinder = Substitute.For<IAttackablePositionFinder>();
 
             _helper
                 = new BarrelAdjustmentHelper(
@@ -46,7 +49,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
                     _targetPositionValidator,
                     _angleCalculator,
                     _rotationMovementController,
-                    _angleLimiter);
+                    _angleLimiter,
+                    _attackablePositionFinder);
 
             // Non-destroyed target check
             _target = Substitute.For<ITarget>();
@@ -64,11 +68,13 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _barrelController.BarrelAngleInDegrees.Returns(17);
             float barrelAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
 
+            _targetPositionToAttack = new Vector2(27, 83);
             _predictedTargetPosition = new Vector2(87, 56);
 
             _targetPositionPredictor
                 .PredictTargetPosition(
                     projectileSpawnerPosition,
+                    _targetPositionToAttack,
                     _target,
                     _projectileStats.MaxVelocityInMPerS,
                     barrelAngleInRadians)
@@ -94,6 +100,11 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
                 .Returns(_limitedAngelInDegrees);
 
             SetupIsOnTarget(isOnTarget: false);
+
+            // Finding attackable position
+            _attackablePositionFinder
+                .FindClosestAttackablePosition(projectileSpawnerPosition, _target)
+                .Returns(_targetPositionToAttack);
         }
 
         [Test]

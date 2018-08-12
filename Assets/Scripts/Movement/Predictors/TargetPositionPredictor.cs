@@ -4,21 +4,22 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Predictors
 {
+    // FELIX  Update tests :)
     public abstract class TargetPositionPredictor : ITargetPositionPredictor
 	{
-		public Vector2 PredictTargetPosition(Vector2 sourcePosition, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
+		public Vector2 PredictTargetPosition(Vector2 sourcePosition, Vector2 targetPositionToAttack, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
-			float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, target.Position, projectileVelocityInMPerS, currentAngleInRadians);
+			float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, targetPositionToAttack, projectileVelocityInMPerS, currentAngleInRadians);
 
-			float projectedX = target.Position.x + target.Velocity.x * timeToTargetEstimate;
-			float projectedY = target.Position.y + target.Velocity.y * timeToTargetEstimate;
+			float projectedX = targetPositionToAttack.x + target.Velocity.x * timeToTargetEstimate;
+			float projectedY = targetPositionToAttack.y + target.Velocity.y * timeToTargetEstimate;
 
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
 			Logging.Log(Tags.PREDICTORS, string.Format("target: {0}  projectedPosition: {1}  targetVelocity: {2}  timeToTargetEstimate: {3}", target, projectedPosition, target.Velocity, timeToTargetEstimate));
 			return projectedPosition;
 		}
 
-		protected virtual float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPosition, float projectileVelocityInMPerS, float currentAngleInRadians)
+		protected virtual float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack, float projectileVelocityInMPerS, float currentAngleInRadians)
 		{
 			return 0;
 		}

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
         private readonly IAngleLimiter _angleLimiter;
+        private readonly IAttackablePositionFinder _attackablePositionFinder;
 
         public BarrelAdjustmentHelper(
             IBarrelController barrelController,
@@ -23,9 +25,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             ITargetPositionValidator targetPositionValidator,
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
-            IAngleLimiter angleLimiter)
+            IAngleLimiter angleLimiter,
+            IAttackablePositionFinder attackablePositionFinder)
         {
-            Helper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter);
+            Helper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter, attackablePositionFinder);
 
             _barrelController = barrelController;
             _targetPositionPredictor = targetPositionPredictor;
@@ -33,6 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             _angleCalculator = angleCalculator;
             _rotationMovementController = rotationMovementController;
             _angleLimiter = angleLimiter;
+            _attackablePositionFinder = attackablePositionFinder;
         }
 
         public BarrelAdjustmentResult AdjustTurretBarrel()
@@ -43,14 +47,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
-            // FELIX  Choose attackable position :)
-            // FELIX  Need to be able to turn this off (Dummy AttackablePositionFinder),
-            // because want cruiser center for offensives (Artillery, broadsides etc)
-
+            Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
+
             Vector2 predictedTargetPosition
                 = _targetPositionPredictor.PredictTargetPosition(
                     _barrelController.ProjectileSpawnerPosition,
+                    targetPositionToAttack,
                     _barrelController.CurrentTarget,
                     _barrelController.ProjectileStats.MaxVelocityInMPerS,
                     currentAngleInRadians);

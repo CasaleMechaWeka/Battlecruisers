@@ -35,6 +35,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -454,13 +455,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFactoryProvider factoryProvider = null,
             ITarget parent = null,
             ISoundKey firingSound = null,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
+            IObservableCollection<IBoostProvider> localBoostProviders = null,
+            IAttackablePositionFinder attackablePositionFinder = null)
         {
             return
                 new BarrelControllerArgs(
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionpredictor(),
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),
+                    attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
                     rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
                     targetPositionValidator ?? new DummyPositionValidator(),

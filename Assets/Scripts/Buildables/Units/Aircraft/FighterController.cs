@@ -97,6 +97,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
                     _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
+                    _factoryProvider.AttackablePositionFinderFactory.DummyPositionFinder,
                     _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
                     _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
