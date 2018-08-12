@@ -175,7 +175,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
             else
             {
-                return _factoryProvider.AttackablePositionFinderFactory.DummyPositionFinder;
+                return _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder;
             }
         }
 
@@ -190,18 +190,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             // Default to 100% accuracy
-            return _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster();
+            return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();
         }
 
         protected virtual ITargetPositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator();
+            return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator();
         }
 
         protected virtual IAngleLimiter CreateAngleLimiter()
         {
-            return _factoryProvider.AngleLimiterFactory.CreateFacingLimiter();
+            return _factoryProvider.Turrets.AngleLimiterFactory.CreateFacingLimiter();
         }
 
         public void DisposeManagedState()

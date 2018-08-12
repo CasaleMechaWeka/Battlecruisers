@@ -95,7 +95,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(args);
 
             _targetFilter = args.TargetFilter;
-            _turretStatsWrapper.TurretStats = args.FactoryProvider.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, args.LocalBoostProviders);
+            _turretStatsWrapper.TurretStats = args.FactoryProvider.Turrets.TurretStatsFactory.CreateBoostedTurretStats(_baseTurretStats, args.LocalBoostProviders);
 
             _adjustmentHelper
                 = new BarrelAdjustmentHelper(

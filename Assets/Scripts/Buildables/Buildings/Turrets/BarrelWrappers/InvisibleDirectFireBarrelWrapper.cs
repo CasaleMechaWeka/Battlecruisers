@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override IAngleLimiter CreateAngleLimiter()
         {
-            return _factoryProvider.AngleLimiterFactory.CreateDummyLimiter();
+            return _factoryProvider.Turrets.AngleLimiterFactory.CreateDummyLimiter();
         }
     }
 }

@@ -21,13 +21,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public interface IFactoryProvider
     {
-        // FELIX  These factories are all for turrets, so move them to own container class :)
-        IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
-        ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        IAngleCalculatorFactory AngleCalculatorFactory { get; }
-        IAngleLimiterFactory AngleLimiterFactory { get; } 
-        ITurretStatsFactory TurretStatsFactory { get; }
-        IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
+        ITurretFactoryProvider Turrets { get; }
 
         // FELIX  Sound related factories.  Move to own container :)
         ISoundFetcher SoundFetcher { get; }

@@ -128,10 +128,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
-            factoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
             factoryProvider.AircraftProvider.Returns(aircraftProvider);
-            factoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
-            factoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.ExplosionFactory.Returns(explosionFactory);
@@ -145,9 +142,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.TargetsFactory.Returns(targetsFactory);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
-            factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
-            factoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
-            factoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
+
+            // Turrets
+            ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
+            turretFactoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
+            turretFactoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
+            turretFactoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
+            turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
+            turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
+            turretFactoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
+            factoryProvider.Turrets.Returns(turretFactoryProvider);
 
             return factoryProvider;
         }

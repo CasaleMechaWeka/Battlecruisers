@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     targetProvider: this, 
                     safeZone: _aircraftProvider.FighterSafeZone);
 
-            _angleHelper = _factoryProvider.AngleCalculatorFactory.CreateAngleHelper();
+            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -96,12 +96,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = new BarrelControllerArgs(
                     _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
-                    _factoryProvider.AngleCalculatorFactory.CreateAngleCalculator(),
-                    _factoryProvider.AttackablePositionFinderFactory.DummyPositionFinder,
-                    _factoryProvider.AccuracyAdjusterFactory.CreateDummyAdjuster(),
+                    _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
+                    _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
+                    _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
-                    _factoryProvider.TargetPositionValidatorFactory.CreateDummyValidator(),
-                    _factoryProvider.AngleLimiterFactory.CreateFighterLimiter(),
+                    _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
+                    _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
                     parent: this,
                     firingSound: SoundKeys.Firing.BigCannon);
