@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -33,6 +34,7 @@ namespace BattleCruisers.Cruisers
             _spriteProvider = spriteProvider;
         }
 
+        // FELIX  Create separate Player/AI cruiser methods, then don't need stupid ifs on isPlayerCruiser :P
         public void InitialiseCruiser(
             Cruiser cruiser, 
             ICruiser enemyCruiser,
@@ -63,6 +65,7 @@ namespace BattleCruisers.Cruisers
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = !isPlayerCruiser;
+            IBuildingDoubleClickHandler buildingDoubleClickHandler = CreateBuildingDoubleClickHandler(isPlayerCruiser, droneManager, userChosenTargetHelper);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -77,7 +80,8 @@ namespace BattleCruisers.Cruisers
                     shouldShowFog,
                     helper,
                     highlightableFilter,
-                    buildProgressCalculator);
+                    buildProgressCalculator,
+                    buildingDoubleClickHandler);
 
             cruiser.Initialise(cruiserArgs);
         }
@@ -94,6 +98,18 @@ namespace BattleCruisers.Cruisers
                 // For end game use Dummy factory :)
                 return new DroneNumFeedbackFactory();
                 //return new DummyDroneNumFeedbackFactory();
+            }
+        }
+
+        private IBuildingDoubleClickHandler CreateBuildingDoubleClickHandler(bool isPlayerCruiser, IDroneManager droneManager, IUserChosenTargetHelper userChosenTargetHelper)
+        {
+            if (isPlayerCruiser)
+            {
+                return new PlayerBuildingDoubleClickHandler(droneManager);
+            }
+            else
+            {
+                return new AIBuildingDoubleClickHandler(userChosenTargetHelper);
             }
         }
 

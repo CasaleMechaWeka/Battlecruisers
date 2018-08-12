@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.Factories;
 using BCUtils = BattleCruisers.Utils;
 
@@ -25,6 +26,7 @@ namespace BattleCruisers.Cruisers
         public ICruiserHelper Helper { get; private set; }
         public ISlotFilter HighlightableFilter { get; private set; }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
+        public IBuildingDoubleClickHandler BuildingDoubleClickHandler { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -38,9 +40,20 @@ namespace BattleCruisers.Cruisers
             bool shouldShowFog,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
-            IBuildProgressCalculator buildProgressCalculator)
+            IBuildProgressCalculator buildProgressCalculator,
+            IBuildingDoubleClickHandler buildingDoubleClickHandler)
         {
-            BCUtils.Helper.AssertIsNotNull(enemyCruiser, uiManager, droneManager, droneConsumerProvider, factoryProvider, repairManager, helper, highlightableFilter, buildProgressCalculator);
+            BCUtils.Helper.AssertIsNotNull(
+                enemyCruiser, 
+                uiManager, 
+                droneManager, 
+                droneConsumerProvider, 
+                factoryProvider, 
+                repairManager, 
+                helper, 
+                highlightableFilter, 
+                buildProgressCalculator,
+                buildingDoubleClickHandler);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -54,6 +67,7 @@ namespace BattleCruisers.Cruisers
             Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;
+            BuildingDoubleClickHandler = buildingDoubleClickHandler;
         }
     }
 }

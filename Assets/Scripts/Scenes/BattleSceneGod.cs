@@ -19,6 +19,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -151,13 +152,13 @@ namespace BattleCruisers.Scenes
 			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseCruiser(
-                    _playerCruiser, 
-                    _aiCruiser, 
-                    uiManager, 
-                    playerHelper, 
-                    Faction.Blues, 
-                    Direction.Right, 
-                    highlightableSlotFilter, 
+                    _playerCruiser,
+                    _aiCruiser,
+                    uiManager,
+                    playerHelper,
+                    Faction.Blues,
+                    Direction.Right,
+                    highlightableSlotFilter,
                     helper.PlayerCruiserBuildProgressCalculator,
                     playerCruiserUserChosenTargetManager,
                     playerCruiserUserChosenTargetHelper);
