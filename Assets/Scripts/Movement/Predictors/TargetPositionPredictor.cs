@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Predictors
 {
-    // FELIX  Update tests :)
     public abstract class TargetPositionPredictor : ITargetPositionPredictor
 	{
 		public Vector2 PredictTargetPosition(Vector2 sourcePosition, Vector2 targetPositionToAttack, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
