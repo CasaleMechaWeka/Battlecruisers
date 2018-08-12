@@ -24,7 +24,6 @@ namespace BattleCruisers.Utils.Factories
         // FELIX  These factories are all for turrets, so move them to own container class :)
         IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        IAircraftProvider AircraftProvider { get; }
         IAngleCalculatorFactory AngleCalculatorFactory { get; }
         IAngleLimiterFactory AngleLimiterFactory { get; } 
         ITurretStatsFactory TurretStatsFactory { get; }
@@ -35,6 +34,7 @@ namespace BattleCruisers.Utils.Factories
         ISoundManager SoundManager { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
 
+        IAircraftProvider AircraftProvider { get; }
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IExplosionFactory ExplosionFactory { get; }
