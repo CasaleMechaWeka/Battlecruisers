@@ -1,0 +1,25 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Targets.TargetTrackers;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.Common.Click
+{
+    // FELIX  Test :)
+    public class AIBuildingDoubleClickHandler : IBuildingDoubleClickHandler
+    {
+        private readonly IUserChosenTargetHelper _userChosenTargetHelper;
+
+        public AIBuildingDoubleClickHandler(IUserChosenTargetHelper userChosenTargetHelper)
+        {
+            Assert.IsNotNull(userChosenTargetHelper);
+            _userChosenTargetHelper = userChosenTargetHelper;
+        }
+
+        public void OnDoubleClick(IBuilding aiBuliding)
+        {
+            Assert.AreEqual(Faction.Reds, aiBuliding.Faction);
+            _userChosenTargetHelper.ToggleChosenTarget(aiBuliding);
+        }
+    }
+}
