@@ -145,6 +145,15 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_DoubleClick(object sender, EventArgs e)
         {
+            // FELIX  Create double click handler?  Have Player-/AI- handlers, will avoid ugly Faction check :/
+            // Only allow double clicks to control player cruiser drones :P
+            if (Faction == Faction.Blues
+                && RepairCommand.CanExecute)
+            {
+                IDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
+                DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+            }
+
             // Set as user chosen target, to make everything attack this building
             FactoryProvider.TargetsFactory.UserChosenTargetHelper.ToggleChosenTarget(this);
         }
