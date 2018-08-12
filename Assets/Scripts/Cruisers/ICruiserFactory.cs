@@ -10,8 +10,6 @@ namespace BattleCruisers.Cruisers
     public interface ICruiserFactory
     {
         void InitialisePlayerCruiser(
-            Cruiser cruiser,
-            ICruiser enemyCruiser,
             IUIManager uiManager,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
@@ -19,8 +17,6 @@ namespace BattleCruisers.Cruisers
             IRankedTargetTracker userChosenTargetTracker);
 
         void InitialiseAICruiser(
-            Cruiser cruiser, 
-            ICruiser enemyCruiser, 
             IUIManager uiManager, 
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,

@@ -24,20 +24,27 @@ namespace BattleCruisers.Cruisers
 		private readonly IDeferrer _deferrer;
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISpriteProvider _spriteProvider;
+        private readonly Cruiser _playerCruiser, _aiCruiser;
 
-        public CruiserFactory(IPrefabFactory prefabFactory, IDeferrer deferrer, IVariableDelayDeferrer variableDelayDeferrer, ISpriteProvider spriteProvider)
+        public CruiserFactory(
+            IPrefabFactory prefabFactory, 
+            IDeferrer deferrer, 
+            IVariableDelayDeferrer variableDelayDeferrer, 
+            ISpriteProvider spriteProvider,
+            Cruiser playerCruiser,
+            Cruiser aiCruiser)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, playerCruiser, aiCruiser);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
             _variableDelayDeferrer = variableDelayDeferrer;
             _spriteProvider = spriteProvider;
+            _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
         }
 
         public void InitialisePlayerCruiser(
-            Cruiser cruiser,
-            ICruiser enemyCruiser,
             IUIManager uiManager,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
@@ -45,8 +52,6 @@ namespace BattleCruisers.Cruisers
             IRankedTargetTracker userChosenTargetTracker)
         {
             Helper.AssertIsNotNull(
-                cruiser,
-                enemyCruiser,
                 uiManager,
                 helper,
                 highlightableFilter,
@@ -61,8 +66,8 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
-                cruiser,
-                enemyCruiser,
+                _playerCruiser,
+                _aiCruiser,
                 uiManager,
                 helper,
                 faction,
@@ -77,8 +82,6 @@ namespace BattleCruisers.Cruisers
         }
 
         public void InitialiseAICruiser(
-            Cruiser cruiser,
-            ICruiser enemyCruiser,
             IUIManager uiManager,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
@@ -87,8 +90,6 @@ namespace BattleCruisers.Cruisers
             IUserChosenTargetHelper userChosenTargetHelper)
         {
             Helper.AssertIsNotNull(
-                cruiser,
-                enemyCruiser,
                 uiManager,
                 helper,
                 highlightableFilter,
@@ -109,8 +110,8 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
             InitialiseCruiser(
-                cruiser,
-                enemyCruiser,
+                _aiCruiser,
+                _playerCruiser,
                 uiManager,
                 helper,
                 faction,

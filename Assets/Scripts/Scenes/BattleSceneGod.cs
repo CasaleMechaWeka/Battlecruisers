@@ -105,7 +105,6 @@ namespace BattleCruisers.Scenes
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider);
             IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
@@ -147,11 +146,10 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
+            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, _playerCruiser, _aiCruiser);
 			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialisePlayerCruiser(
-                    _playerCruiser,
-                    _aiCruiser,
                     uiManager,
                     playerHelper,
                     highlightableSlotFilter,
@@ -164,8 +162,6 @@ namespace BattleCruisers.Scenes
 			ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseAICruiser(
-                    _aiCruiser,
-                    _playerCruiser,
                     uiManager,
                     aiHelper,
                     highlightableSlotFilter,
