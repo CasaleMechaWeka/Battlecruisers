@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -38,9 +39,10 @@ namespace BattleCruisers.UI.Cameras
 			ICruiser aiCruiser,
 			ISettingsManager settingsManager,
 			Material skyboxMaterial,
-			INavigationSettings navigationSettings)
+			INavigationSettings navigationSettings,
+            IPauseGameManager pauseGameManager)
 		{
-			Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, navigationSettings);
+			Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, navigationSettings, pauseGameManager);
 
 			Camera platformCamera = GetComponent<Camera>();
 			Assert.IsNotNull(platformCamera);
@@ -54,7 +56,9 @@ namespace BattleCruisers.UI.Cameras
 			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator, navigationSettings);
 			UserInputCameraMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
 
-			_cameraController.Initialise(transitionManager, UserInputCameraMover);
+            ICameraMover dummyMover = new DummyCameraMover();
+
+			_cameraController.Initialise(pauseGameManager, transitionManager, UserInputCameraMover, dummyMover);
 		}
 
 		private IUserInputCameraMover CreateUserInputMover(

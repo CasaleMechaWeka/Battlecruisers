@@ -22,6 +22,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -49,6 +50,7 @@ namespace BattleCruisers.Scenes
 		private INavigationSettings _navigationSettings;
         private IArtificialIntelligence _ai;
         private UserChosenTargetHighligher _userChosenTargetHighligher;
+        private IPauseGameManager _pauseGameManager;
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
@@ -111,6 +113,7 @@ namespace BattleCruisers.Scenes
             IUserChosenTargetHelper playerCruiserUserChosenTargetHelper = new DummyUserChosenTargetHelper();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             IUserChosenTargetHelper aiCruiserUserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
+            _pauseGameManager = new PauseGameManager(new TimeBC());
 
 
             // Instantiate player cruiser
@@ -207,7 +210,7 @@ namespace BattleCruisers.Scenes
 			// Camera controller
             IMaterialFetcher materialFetcher = new MaterialFetcher();
             Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
-            cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, _navigationSettings);
+            cameraInitialiser.Initialise(_playerCruiser, _aiCruiser, _dataProvider.SettingsManager, skyboxMaterial, _navigationSettings, _pauseGameManager);
 			cameraInitialiser.CameraController.FocusOnPlayerCruiser();
 
 
@@ -239,14 +242,14 @@ namespace BattleCruisers.Scenes
 
         private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			PauseGame();
+            _pauseGameManager.PauseGame();
 			CompleteBattleAsLoss();
 		}
 
 		private void AiCruiser_Destroyed(object sender, DestroyedEventArgs e)
 		{
-			PauseGame();
-			BattleResult victoryResult = new BattleResult(_currentLevelNum, wasVictory: true);
+            _pauseGameManager.PauseGame();
+            BattleResult victoryResult = new BattleResult(_currentLevelNum, wasVictory: true);
 			CompleteBattle(victoryResult);
 		}
 
@@ -318,7 +321,7 @@ namespace BattleCruisers.Scenes
         public void ShowModalMenu()
         {
             modalMenuController.ShowMenu(OnModalMenuDismissed);
-            PauseGame();
+            _pauseGameManager.PauseGame();
         }
 
 		private void OnModalMenuDismissed(UserAction userAction)
@@ -326,7 +329,7 @@ namespace BattleCruisers.Scenes
 			switch (userAction)
 			{
 				case UserAction.Dismissed:
-					ResumeGame();
+                    _pauseGameManager.ResumeGame();
 					break;
 				case UserAction.Quit:
 					CompleteBattleAsLoss();
@@ -334,16 +337,6 @@ namespace BattleCruisers.Scenes
 				default:
 					throw new ArgumentException();
 			}
-		}
-
-		private void PauseGame()
-		{
-			Time.timeScale = 0;
-		}
-
-		private void ResumeGame()
-		{
-			Time.timeScale = 1;
 		}
 
 		private void CompleteBattleAsLoss()

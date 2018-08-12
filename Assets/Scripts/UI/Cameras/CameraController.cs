@@ -1,11 +1,15 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
+using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class CameraController : CameraMover, ICameraController
+	public class CameraController : CameraMover, ICameraController, IManagedDisposable
 	{
+        private IPauseGameManager _pauseGameManager;
         private ICameraTransitionManager _transitionManager;
-		private ICameraMover _userInputMover;
+        private ICameraMover _userInputMover, _dummyMover, _prePauseMover;
 
 		private ICameraMover _currentMover;
 		private ICameraMover CurrentMover
@@ -29,17 +33,40 @@ namespace BattleCruisers.UI.Cameras
 		}
 
         // Not constructor because of circular dependencies with cruisers
-		public void Initialise(ICameraTransitionManager cameraTransitionManager, ICameraMover userInputMover)
+		public void Initialise(
+            IPauseGameManager pauseGameManager, 
+            ICameraTransitionManager cameraTransitionManager, 
+            ICameraMover userInputMover,
+            ICameraMover dummyMover)
 		{
-			Helper.AssertIsNotNull(cameraTransitionManager, userInputMover);
+			Helper.AssertIsNotNull(pauseGameManager, cameraTransitionManager, userInputMover, dummyMover);
 
+            _pauseGameManager = pauseGameManager;
 			_transitionManager = cameraTransitionManager;
 			_userInputMover = userInputMover;
+            _dummyMover = dummyMover;
 
 			CurrentMover = _userInputMover;
+
+            _pauseGameManager.GamePaused += _pauseGameManager_GamePaused;
+            _pauseGameManager.GameResumed += _pauseGameManager_GameResumed;
 		}
 
-		public override void MoveCamera(float deltaTime)
+        private void _pauseGameManager_GamePaused(object sender, EventArgs e)
+        {
+            _prePauseMover = CurrentMover;
+            CurrentMover = _dummyMover;
+        }
+
+        private void _pauseGameManager_GameResumed(object sender, EventArgs e)
+        {
+            Assert.IsNotNull(_prePauseMover, "Received resume game without preceding pause game.");
+
+            CurrentMover = _prePauseMover;
+            _prePauseMover = null;
+        }
+
+        public override void MoveCamera(float deltaTime)
 		{
 			CurrentMover.MoveCamera(deltaTime);
 		}
@@ -88,5 +115,11 @@ namespace BattleCruisers.UI.Cameras
 				CurrentMover = _userInputMover;
 			}
 		}
-	}
+
+        public void DisposeManagedState()
+        {
+            _pauseGameManager.GamePaused -= _pauseGameManager_GamePaused;
+            _pauseGameManager.GameResumed -= _pauseGameManager_GameResumed;
+        }
+    }
 }

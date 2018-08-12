@@ -19,7 +19,8 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_userInputMover = Substitute.For<ICameraMover>();
 
 			_cameraController = new CameraController();
-			_cameraController.Initialise(_transitionManager, _userInputMover);
+            // FELIX  Update tests :P
+			//_cameraController.Initialise(_transitionManager, _userInputMover);
 
 			_deltaTime = 0.1234f;
 		}
