@@ -2,7 +2,8 @@
 {
     public interface IAttackablePositionFinderFactory
     {
+        IAttackablePositionFinder DummyPositionFinder { get; }
+
         IAttackablePositionFinder CreateClosestPositionFinder();
-        IAttackablePositionFinder CreateDummyPositionFinder();
     }
 }

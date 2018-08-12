@@ -2,14 +2,16 @@
 {
     public class AttackablePositionFinderFactory : IAttackablePositionFinderFactory
     {
+        public IAttackablePositionFinder DummyPositionFinder { get; private set; }
+
+        public AttackablePositionFinderFactory()
+        {
+            DummyPositionFinder = new DummyPositionFinder();
+        }
+
         public IAttackablePositionFinder CreateClosestPositionFinder()
         {
             return new ClosestPositionFinder();
-        }
-
-        public IAttackablePositionFinder CreateDummyPositionFinder()
-        {
-            return new DummyPositionFinder();
         }
     }
 }
