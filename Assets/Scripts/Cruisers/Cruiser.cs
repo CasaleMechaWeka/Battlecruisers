@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
-        private IBuildingDoubleClickHandler _buildingDoubleClickHandler;
+        private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
 
         public int numOfDrones;
         public float yAdjustmentInM;

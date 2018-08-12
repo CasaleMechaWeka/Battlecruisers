@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Cruisers
         public ICruiserHelper Helper { get; private set; }
         public ISlotFilter HighlightableFilter { get; private set; }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
-        public IBuildingDoubleClickHandler BuildingDoubleClickHandler { get; private set; }
+        public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -41,7 +42,7 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
-            IBuildingDoubleClickHandler buildingDoubleClickHandler)
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 

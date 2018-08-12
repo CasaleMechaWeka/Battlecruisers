@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Common.Click
 {
     // FELIX  Test :)
-    public class PlayerBuildingDoubleClickHandler : IBuildingDoubleClickHandler
+    public class PlayerBuildingDoubleClickHandler : IDoubleClickHandler<IBuilding>
     {
         private readonly IDroneManager _playerDroneManager;
 

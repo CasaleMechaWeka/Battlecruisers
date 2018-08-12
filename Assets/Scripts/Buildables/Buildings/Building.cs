@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings
 	{
         private BoxCollider2D _collider;
 
-        private IBuildingDoubleClickHandler _doubleClickHandler;
+        private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
 
 		public BuildingCategory category;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings
             IUIManager uiManager, 
             IFactoryProvider factoryProvider,
             ISlot parentSlot,
-            IBuildingDoubleClickHandler doubleClickHandler)
+            IDoubleClickHandler<IBuilding> doubleClickHandler)
         {
             base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
 

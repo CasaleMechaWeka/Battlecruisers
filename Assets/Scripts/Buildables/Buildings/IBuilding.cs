@@ -24,6 +24,6 @@ namespace BattleCruisers.Buildables.Buildings
             IUIManager uiManager, 
             IFactoryProvider factoryProvider, 
             ISlot parentSlot,
-            IBuildingDoubleClickHandler buildingDoubleClickHandler);
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler);
 	}
 }

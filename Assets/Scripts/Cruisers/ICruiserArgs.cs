@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
@@ -26,6 +27,6 @@ namespace BattleCruisers.Cruisers
         ISlotFilter HighlightableFilter { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
         // FELIX  Also add (after creating :P) cruiser double click handler
-        IBuildingDoubleClickHandler BuildingDoubleClickHandler { get; }
+        IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
     }
 }

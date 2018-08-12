@@ -119,7 +119,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
                 parentSlot ?? CreateParentSlot(),
-                Substitute.For<IBuildingDoubleClickHandler>());
+                Substitute.For<IDoubleClickHandler<IBuilding>>());
         }
 
         public void InitialiseUnit(

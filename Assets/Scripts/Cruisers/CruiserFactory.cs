@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
@@ -65,7 +66,7 @@ namespace BattleCruisers.Cruisers
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = !isPlayerCruiser;
-            IBuildingDoubleClickHandler buildingDoubleClickHandler = CreateBuildingDoubleClickHandler(isPlayerCruiser, droneManager, userChosenTargetHelper);
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = CreateBuildingDoubleClickHandler(isPlayerCruiser, droneManager, userChosenTargetHelper);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -101,7 +102,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        private IBuildingDoubleClickHandler CreateBuildingDoubleClickHandler(bool isPlayerCruiser, IDroneManager droneManager, IUserChosenTargetHelper userChosenTargetHelper)
+        private IDoubleClickHandler<IBuilding> CreateBuildingDoubleClickHandler(bool isPlayerCruiser, IDroneManager droneManager, IUserChosenTargetHelper userChosenTargetHelper)
         {
             if (isPlayerCruiser)
             {
