@@ -35,39 +35,120 @@ namespace BattleCruisers.Cruisers
             _spriteProvider = spriteProvider;
         }
 
-        // FELIX  Create separate Player/AI cruiser methods, then don't need stupid ifs on isPlayerCruiser :P
-        public void InitialiseCruiser(
-            Cruiser cruiser, 
+        public void InitialisePlayerCruiser(
+            Cruiser cruiser,
             ICruiser enemyCruiser,
             IUIManager uiManager,
             ICruiserHelper helper,
-            Faction faction, 
-            Direction facingDirection,
+            ISlotFilter highlightableFilter,
+            IBuildProgressCalculator buildProgressCalculator,
+            IRankedTargetTracker userChosenTargetTracker)
+        {
+            Helper.AssertIsNotNull(
+                cruiser,
+                enemyCruiser,
+                uiManager,
+                helper,
+                highlightableFilter,
+                buildProgressCalculator,
+                userChosenTargetTracker);
+
+            Faction faction = Faction.Blues;
+            Direction facingDirection = Direction.Right;
+            bool shouldShowFog = false;
+            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
+            IDroneManager droneManager = new DroneManager();
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new PlayerBuildingDoubleClickHandler(droneManager);
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
+
+            InitialiseCruiser(
+                cruiser,
+                enemyCruiser,
+                uiManager,
+                helper,
+                faction,
+                facingDirection,
+                shouldShowFog,
+                highlightableFilter,
+                buildProgressCalculator,
+                userChosenTargetTracker,
+                feedbackFactory,
+                droneManager,
+                buildingDoubleClickHandler,
+                cruiserDoubleClickHandler);
+        }
+
+        public void InitialiseAICruiser(
+            Cruiser cruiser,
+            ICruiser enemyCruiser,
+            IUIManager uiManager,
+            ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IUserChosenTargetHelper userChosenTargetHelper)
         {
             Helper.AssertIsNotNull(
-                cruiser, 
-                enemyCruiser, 
-                uiManager, 
-                helper, 
-                highlightableFilter, 
-                buildProgressCalculator, 
-                userChosenTargetTracker, 
+                cruiser,
+                enemyCruiser,
+                uiManager,
+                helper,
+                highlightableFilter,
+                buildProgressCalculator,
+                userChosenTargetTracker,
                 userChosenTargetHelper);
 
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
+            Faction faction = Faction.Reds;
+            Direction facingDirection = Direction.Left;
+            bool shouldShowFog = true;
+
+            // TEMP  Want to see repair drone numbers on AI cruiser, helps me debug :)
+            // For end game use Dummy factory :)
+            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
+            //IDroneNumFeedbackFactory feedbackFactory = new DummyDroneNumFeedbackFactory();
+
             IDroneManager droneManager = new DroneManager();
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
+
+            InitialiseCruiser(
+                cruiser,
+                enemyCruiser,
+                uiManager,
+                helper,
+                faction,
+                facingDirection,
+                shouldShowFog,
+                highlightableFilter,
+                buildProgressCalculator,
+                userChosenTargetTracker,
+                feedbackFactory,
+                droneManager,
+                buildingDoubleClickHandler,
+                cruiserDoubleClickHandler);
+        }
+
+        private void InitialiseCruiser(
+            Cruiser cruiser, 
+            ICruiser enemyCruiser,
+            IUIManager uiManager,
+            ICruiserHelper helper,
+            Faction faction, 
+            Direction facingDirection,
+            bool shouldShowFog,
+            ISlotFilter highlightableFilter,
+            IBuildProgressCalculator buildProgressCalculator,
+            IRankedTargetTracker userChosenTargetTracker,
+            IDroneNumFeedbackFactory feedbackFactory,
+            IDroneManager droneManager,
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler)
+        {
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            bool isPlayerCruiser = facingDirection == Direction.Right;
-            IDroneNumFeedbackFactory feedbackFactory = CreateFeedbackFactory(isPlayerCruiser);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
+            // FELIX  Store, so is not garbage collected!
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
-            bool shouldShowFog = !isPlayerCruiser;
-            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = CreateBuildingDoubleClickHandler(isPlayerCruiser, droneManager, userChosenTargetHelper);
-            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = CreateCruiserDoubleClickHandler(isPlayerCruiser, userChosenTargetHelper);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -87,45 +168,6 @@ namespace BattleCruisers.Cruisers
                     cruiserDoubleClickHandler);
 
             cruiser.Initialise(cruiserArgs);
-        }
-
-        private IDroneNumFeedbackFactory CreateFeedbackFactory(bool isPlayerCruiser)
-        {
-            if (isPlayerCruiser)
-            {
-                return new DroneNumFeedbackFactory();
-            }
-            else
-            {
-                // TEMP  Want to see repair drone numbers on AI cruiser, helps me debug :)
-                // For end game use Dummy factory :)
-                return new DroneNumFeedbackFactory();
-                //return new DummyDroneNumFeedbackFactory();
-            }
-        }
-
-        private IDoubleClickHandler<IBuilding> CreateBuildingDoubleClickHandler(bool isPlayerCruiser, IDroneManager droneManager, IUserChosenTargetHelper userChosenTargetHelper)
-        {
-            if (isPlayerCruiser)
-            {
-                return new PlayerBuildingDoubleClickHandler(droneManager);
-            }
-            else
-            {
-                return new AIBuildingDoubleClickHandler(userChosenTargetHelper);
-            }
-        }
-
-        private IDoubleClickHandler<ICruiser> CreateCruiserDoubleClickHandler(bool isPlayerCruiser, IUserChosenTargetHelper userChosenTargetHelper)
-        {
-            if (isPlayerCruiser)
-            {
-                return new PlayerCruiserDoubleClickHandler();
-            }
-            else
-            {
-                return new AICruiserDoubleClickHandler(userChosenTargetHelper);
-            }
         }
 
         public ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)

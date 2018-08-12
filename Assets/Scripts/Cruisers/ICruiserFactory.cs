@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.BuildProgress;
-using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Targets.TargetTrackers;
@@ -11,13 +9,20 @@ namespace BattleCruisers.Cruisers
 {
     public interface ICruiserFactory
     {
-        void InitialiseCruiser(
+        void InitialisePlayerCruiser(
+            Cruiser cruiser,
+            ICruiser enemyCruiser,
+            IUIManager uiManager,
+            ICruiserHelper helper,
+            ISlotFilter highlightableFilter,
+            IBuildProgressCalculator buildProgressCalculator,
+            IRankedTargetTracker userChosenTargetTracker);
+
+        void InitialiseAICruiser(
             Cruiser cruiser, 
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             ICruiserHelper helper,
-            Faction faction, 
-            Direction facingDirection,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,

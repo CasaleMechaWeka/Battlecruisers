@@ -19,7 +19,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -151,30 +150,25 @@ namespace BattleCruisers.Scenes
             // Initialise player cruiser
 			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
-                .InitialiseCruiser(
+                .InitialisePlayerCruiser(
                     _playerCruiser,
                     _aiCruiser,
                     uiManager,
                     playerHelper,
-                    Faction.Blues,
-                    Direction.Right,
                     highlightableSlotFilter,
                     helper.PlayerCruiserBuildProgressCalculator,
-                    playerCruiserUserChosenTargetManager,
-                    playerCruiserUserChosenTargetHelper);
+                    playerCruiserUserChosenTargetManager);
             _playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
 
             // Initialise AI cruiser
 			ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
-                .InitialiseCruiser(
+                .InitialiseAICruiser(
                     _aiCruiser,
                     _playerCruiser,
                     uiManager,
                     aiHelper,
-                    Faction.Reds,
-                    Direction.Left,
                     highlightableSlotFilter,
                     helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
