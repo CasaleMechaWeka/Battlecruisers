@@ -6,9 +6,9 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -16,12 +16,11 @@ namespace BattleCruisers.Targets
 {
     public class TargetsFactory : ITargetsFactory
 	{
-        public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUserChosenTargetHelper userChosenTargetHelper)
+        public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
 		{
-            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker, userChosenTargetHelper);
+            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
             UserChosenTargetTracker = userChosenTargetTracker;
-            UserChosenTargetHelper = userChosenTargetHelper;
 
             GlobalTargetFinder globalTargetFinder = new GlobalTargetFinder(enemyCruiser);
 
@@ -165,8 +164,6 @@ namespace BattleCruisers.Targets
         #endregion TargetProviders
 
         #region Helpers
-        public IUserChosenTargetHelper UserChosenTargetHelper { get; private set; }
-
         public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
 		{
             return new ShipRangeHelper(ship);

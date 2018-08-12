@@ -61,16 +61,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISoundManager soundManager = null,
             ISpriteChooserFactory spriteChooserFactory = null,
             IVariableDelayDeferrer variableDelayDeferrer = null,
-            IUserChosenTargetManager userChosenTargetManager = null,
-            IUserChosenTargetHelper userChosenTargetHelper = null)
+            IUserChosenTargetManager userChosenTargetManager = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
-            userChosenTargetHelper = userChosenTargetHelper ?? new UserChosenTargetHelper(userChosenTargetManager);
-            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser, userChosenTargetManager, userChosenTargetHelper);
+            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser, userChosenTargetManager);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             variableDelayDeferrer = variableDelayDeferrer ?? Substitute.For<IVariableDelayDeferrer>();

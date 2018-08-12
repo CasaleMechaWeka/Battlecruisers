@@ -58,7 +58,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker, 
                 userChosenTargetHelper);
 
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, userChosenTargetHelper);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             bool isPlayerCruiser = facingDirection == Direction.Right;

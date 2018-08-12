@@ -36,13 +36,12 @@ namespace BattleCruisers.Utils.Factories
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
             IVariableDelayDeferrer deferrer,
-            IRankedTargetTracker userChosenTargetTracker,
-            IUserChosenTargetHelper userChosenTargetHelper)
+            IRankedTargetTracker userChosenTargetTracker)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, userChosenTargetHelper);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker);
 
 			PrefabFactory = prefabFactory;
-			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker, userChosenTargetHelper);
+			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());

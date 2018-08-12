@@ -5,9 +5,9 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Targets
@@ -53,9 +53,6 @@ namespace BattleCruisers.Targets
         IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit);
 
         // Helpers
-        // FELIX  Remove
-        IUserChosenTargetHelper UserChosenTargetHelper { get; }
-
         ITargetRangeHelper CreateShipRangeHelper(IShip ship);
 	}
 }
