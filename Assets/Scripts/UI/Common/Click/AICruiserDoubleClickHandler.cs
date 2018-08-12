@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.Click
 {
-    // FELIX  Test :)
     public class AICruiserDoubleClickHandler : IDoubleClickHandler<ICruiser>
     {
         private readonly IUserChosenTargetHelper _userChosenTargetHelper;
