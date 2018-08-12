@@ -29,6 +29,8 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        // Just holding a reference so this does not get garbage collected.
+        private FogOfWarManager _fogOfWarManager;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -121,6 +123,7 @@ namespace BattleCruisers.Cruisers
             BuildProgressCalculator = args.BuildProgressCalculator;
             _buildingDoubleClickHandler = args.BuildingDoubleClickHandler;
             _cruiserDoubleClickHandler = args.CruiserDoubleClickHandler;
+            _fogOfWarManager = args.FogOfWarManager;
 
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;

@@ -144,8 +144,7 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
-            // FELIX  Store, so is not garbage collected!
-            new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
+            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -162,7 +161,8 @@ namespace BattleCruisers.Cruisers
                     highlightableFilter,
                     buildProgressCalculator,
                     buildingDoubleClickHandler,
-                    cruiserDoubleClickHandler);
+                    cruiserDoubleClickHandler,
+                    fogOfWarManager);
 
             cruiser.Initialise(cruiserArgs);
         }

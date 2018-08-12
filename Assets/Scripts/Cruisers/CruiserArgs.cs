@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -29,6 +30,7 @@ namespace BattleCruisers.Cruisers
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; private set; }
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; private set; }
+        public FogOfWarManager FogOfWarManager { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -44,7 +46,8 @@ namespace BattleCruisers.Cruisers
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
-            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler)
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
+            FogOfWarManager fogOfWarManager)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 
@@ -57,7 +60,8 @@ namespace BattleCruisers.Cruisers
                 highlightableFilter, 
                 buildProgressCalculator,
                 buildingDoubleClickHandler,
-                cruiserDoubleClickHandler);
+                cruiserDoubleClickHandler,
+                fogOfWarManager);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -73,6 +77,7 @@ namespace BattleCruisers.Cruisers
             BuildProgressCalculator = buildProgressCalculator;
             BuildingDoubleClickHandler = buildingDoubleClickHandler;
             CruiserDoubleClickHandler = cruiserDoubleClickHandler;
+            FogOfWarManager = fogOfWarManager;
         }
     }
 }

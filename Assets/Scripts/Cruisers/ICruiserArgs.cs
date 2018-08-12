@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -28,5 +29,6 @@ namespace BattleCruisers.Cruisers
         IBuildProgressCalculator BuildProgressCalculator { get; }
         IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
+        FogOfWarManager FogOfWarManager { get; }
     }
 }
