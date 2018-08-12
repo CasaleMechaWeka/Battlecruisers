@@ -44,6 +44,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             }
 
             // FELIX  Choose attackable position :)
+            // FELIX  Need to be able to turn this off (Dummy AttackablePositionFinder),
+            // because want cruiser center for offensives (Artillery, broadsides etc)
 
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
             Vector2 predictedTargetPosition
