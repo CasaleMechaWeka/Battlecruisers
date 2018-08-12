@@ -48,7 +48,7 @@ namespace BattleCruisers.Projectiles
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
             _parent = parent;
-            _soundManager = factoryProvider.SoundManager;
+            _soundManager = factoryProvider.Sound.SoundManager;
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
             _targetToDamage = null;

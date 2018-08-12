@@ -60,7 +60,7 @@ namespace BattleCruisers.Buildables.Units
             Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = ParentCruiser.Direction;
 
-            _engineAudioClip = _factoryProvider.SoundFetcher.GetSound(EngineSoundKey);
+            _engineAudioClip = _factoryProvider.Sound.SoundFetcher.GetSound(EngineSoundKey);
 
             OnInitialised();
         }

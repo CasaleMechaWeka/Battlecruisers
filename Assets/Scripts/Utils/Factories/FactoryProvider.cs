@@ -9,8 +9,6 @@ using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
@@ -18,6 +16,8 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
 	{
+        public ITurretFactoryProvider Turrets { get; private set; }
+        public ISoundFactoryProvider Sound { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
 		public ITargetsFactory TargetsFactory { get; private set; }
 		public IMovementControllerFactory MovementControllerFactory { get; private set; }
@@ -29,10 +29,6 @@ namespace BattleCruisers.Utils.Factories
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
         public IExplosionFactory ExplosionFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
-        public ISoundFetcher SoundFetcher { get; private set; }
-        public ISoundManager SoundManager { get; private set; }
-        public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
-        public ITurretFactoryProvider Turrets { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -55,15 +51,13 @@ namespace BattleCruisers.Utils.Factories
             GlobalBoostProviders = new GlobalBoostProviders();
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
             ExplosionFactory = new ExplosionFactory(PrefabFactory);
-            SoundFetcher = new SoundFetcher();
-            SoundManager = new SoundManager(SoundFetcher, new SoundPlayer());
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
                     spriteProvider);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
 
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
+            Sound = new SoundFactoryProvider(deferrer);
         }
 	}
 }

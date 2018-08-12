@@ -21,7 +21,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer = soundPlayerInitialiser.CreateSoundPlayer(args.FactoryProvider.SoundPlayerFactory, firingSound, args.BurstSize);
+            _soundPlayer = soundPlayerInitialiser.CreateSoundPlayer(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
         }
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)

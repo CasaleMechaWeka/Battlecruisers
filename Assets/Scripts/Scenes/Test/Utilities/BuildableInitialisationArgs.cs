@@ -136,9 +136,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
-            factoryProvider.SoundFetcher.Returns(soundFetcher);
-            factoryProvider.SoundManager.Returns(soundManager);
-            factoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.TargetsFactory.Returns(targetsFactory);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
@@ -152,6 +149,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             turretFactoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);
+
+            // Sound
+            ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
+            soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
+            soundFactoryProvider.SoundManager.Returns(soundManager);
+            soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
+            factoryProvider.Sound.Returns(soundFactoryProvider);
 
             return factoryProvider;
         }
