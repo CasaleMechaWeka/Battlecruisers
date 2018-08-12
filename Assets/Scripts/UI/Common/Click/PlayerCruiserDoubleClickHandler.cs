@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.Click
 {
-    // FELIX  Test :)
     public class PlayerCruiserDoubleClickHandler : IDoubleClickHandler<ICruiser>
     {
         public void OnDoubleClick(ICruiser playerCruiser)
