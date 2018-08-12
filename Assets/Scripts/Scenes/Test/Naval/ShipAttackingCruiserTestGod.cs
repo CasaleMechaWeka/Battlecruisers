@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
-    public class AttackBoatAttackingCruiserTestGod : MonoBehaviour
+    public class ShipAttackingCruiserTestGod : MonoBehaviour
     {
         void Start()
         {
@@ -13,9 +13,9 @@ namespace BattleCruisers.Scenes.Test.Naval
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
             fakeCruiser.Initialise(Faction.Reds);
 
-            // Setup attack boat
+            // Setup ship
             Helper helper = new Helper();
-            AttackBoatController attackBoat = FindObjectOfType<AttackBoatController>();
+            ShipController attackBoat = FindObjectOfType<ShipController>();
             helper.InitialiseUnit(attackBoat, Faction.Blues);
             attackBoat.StartConstruction();
         }
