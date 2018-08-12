@@ -14,6 +14,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void Initialise(Faction faction)
         {
+            StaticInitialise();
+
             Faction = faction;
 
             SpriteRenderer renderer = GetComponent<SpriteRenderer>();

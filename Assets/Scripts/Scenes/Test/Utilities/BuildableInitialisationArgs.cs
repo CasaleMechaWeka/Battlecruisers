@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
@@ -99,7 +100,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                             new AssignerFactory(),
                             new SpriteProvider(new SpriteFetcher())),
                     new SoundPlayerFactory(soundFetcher, variableDelayDeferrer),
-                    new TurretStatsFactory(boostFactory, globalBoostProviders));
+                    new TurretStatsFactory(boostFactory, globalBoostProviders),
+                    new AttackablePositionFinderFactory());
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -121,7 +123,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISoundManager soundManager,
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
-            ITurretStatsFactory turretStatsFactory)
+            ITurretStatsFactory turretStatsFactory,
+            IAttackablePositionFinderFactory attackablePositionFinderFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -144,6 +147,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
             factoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
+            factoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
 
             return factoryProvider;
         }
