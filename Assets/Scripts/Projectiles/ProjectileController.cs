@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
 

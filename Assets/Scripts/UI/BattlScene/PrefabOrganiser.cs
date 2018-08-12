@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
+using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene
 {

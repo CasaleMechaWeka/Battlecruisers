@@ -20,7 +20,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;

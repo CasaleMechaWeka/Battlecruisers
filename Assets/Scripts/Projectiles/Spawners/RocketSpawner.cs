@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners

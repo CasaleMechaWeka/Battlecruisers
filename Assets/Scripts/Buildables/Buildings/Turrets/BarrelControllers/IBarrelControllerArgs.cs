@@ -8,8 +8,8 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {

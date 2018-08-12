@@ -1,11 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Units
 {
-	public enum UnitCategory
+    public enum UnitCategory
 	{
 		Naval, Aircraft, Untouchable
 	}

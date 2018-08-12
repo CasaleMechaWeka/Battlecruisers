@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
 

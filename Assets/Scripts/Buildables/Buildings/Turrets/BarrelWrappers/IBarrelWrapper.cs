@@ -4,6 +4,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 

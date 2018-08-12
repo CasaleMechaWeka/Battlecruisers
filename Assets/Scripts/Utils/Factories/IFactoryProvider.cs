@@ -17,7 +17,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
 
-namespace BattleCruisers.Utils
+namespace BattleCruisers.Utils.Factories
 {
     public interface IFactoryProvider
     {

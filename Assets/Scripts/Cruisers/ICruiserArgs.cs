@@ -6,7 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Cruisers
 {

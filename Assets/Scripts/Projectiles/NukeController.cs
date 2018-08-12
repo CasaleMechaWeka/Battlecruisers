@@ -5,7 +5,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Projectiles
 {

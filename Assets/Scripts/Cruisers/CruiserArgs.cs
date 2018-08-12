@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.Utils.Factories;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
@@ -17,7 +18,7 @@ namespace BattleCruisers.Cruisers
         public IUIManager UiManager { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-        public BCUtils.IFactoryProvider FactoryProvider { get; private set; }
+        public IFactoryProvider FactoryProvider { get; private set; }
         public Direction FacingDirection { get; private set; }
         public RepairManager RepairManager { get; private set; }
         public bool ShouldShowFog { get; private set; }
@@ -31,7 +32,7 @@ namespace BattleCruisers.Cruisers
             IUIManager uiManager, 
             IDroneManager droneManager, 
             IDroneConsumerProvider droneConsumerProvider,
-            BCUtils.IFactoryProvider factoryProvider, 
+            IFactoryProvider factoryProvider, 
             Direction facingDirection, 
             RepairManager repairManager, 
             bool shouldShowFog,

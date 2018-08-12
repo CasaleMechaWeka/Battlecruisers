@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats.Wrappers;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Projectiles.Spawners
 {

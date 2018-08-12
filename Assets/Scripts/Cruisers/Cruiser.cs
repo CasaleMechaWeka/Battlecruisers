@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
