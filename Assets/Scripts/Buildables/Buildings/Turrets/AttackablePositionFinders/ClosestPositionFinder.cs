@@ -68,7 +68,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 // Target is to the left, want to increase target position
                 return 1;
             }
-
         }
     }
 }
