@@ -110,9 +110,8 @@ namespace BattleCruisers.Scenes
             ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
-            IUserChosenTargetHelper playerCruiserUserChosenTargetHelper = new DummyUserChosenTargetHelper();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
-            IUserChosenTargetHelper aiCruiserUserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
+            IUserChosenTargetHelper UserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
             _pauseGameManager = new PauseGameManager(new TimeBC());
 
 
@@ -172,7 +171,7 @@ namespace BattleCruisers.Scenes
                     highlightableSlotFilter,
                     helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
-                    aiCruiserUserChosenTargetHelper);
+                    UserChosenTargetHelper);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
@@ -185,7 +184,7 @@ namespace BattleCruisers.Scenes
                     _aiCruiser, 
                     cameraInitialiser.CameraController, 
                     _navigationSettings.AreTransitionsEnabledFilter, 
-                    aiCruiserUserChosenTargetHelper);
+                    UserChosenTargetHelper);
             IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
