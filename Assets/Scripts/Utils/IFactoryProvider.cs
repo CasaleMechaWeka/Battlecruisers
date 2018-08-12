@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -20,10 +21,20 @@ namespace BattleCruisers.Utils
 {
     public interface IFactoryProvider
     {
+        // FELIX  These factories are all for turrets, so move them to own container class :)
         IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
+        ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
         IAircraftProvider AircraftProvider { get; }
         IAngleCalculatorFactory AngleCalculatorFactory { get; }
         IAngleLimiterFactory AngleLimiterFactory { get; } 
+        ITurretStatsFactory TurretStatsFactory { get; }
+        IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
+
+        // FELIX  Sound related factories.  Move to own container :)
+        ISoundFetcher SoundFetcher { get; }
+        ISoundManager SoundManager { get; }
+        ISoundPlayerFactory SoundPlayerFactory { get; }
+
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IExplosionFactory ExplosionFactory { get; }
@@ -32,12 +43,7 @@ namespace BattleCruisers.Utils
         IMovementControllerFactory MovementControllerFactory { get; }
         IPrefabFactory PrefabFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
-        ISoundFetcher SoundFetcher { get; }
-        ISoundManager SoundManager { get; }
-        ISoundPlayerFactory SoundPlayerFactory { get; }
         ITargetsFactory TargetsFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
-        ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        ITurretStatsFactory TurretStatsFactory { get; }
     }
 }

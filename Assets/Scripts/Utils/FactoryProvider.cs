@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -42,6 +43,7 @@ namespace BattleCruisers.Utils
         public ISoundFetcher SoundFetcher { get; private set; }
         public ISoundManager SoundManager { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
+        public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -76,6 +78,7 @@ namespace BattleCruisers.Utils
                     new AssignerFactory(),
                     spriteProvider);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
+            AttackablePositionFinderFactory = new AttackablePositionFinderFactory();
         }
 	}
 }
