@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace BattleCruisers
 {
-	public class Ring
+    public class Ring
 	{
 		private readonly float _radiusInM;
 		private readonly int _numOfPoints;
