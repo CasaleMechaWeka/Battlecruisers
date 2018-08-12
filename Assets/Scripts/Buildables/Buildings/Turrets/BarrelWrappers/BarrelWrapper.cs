@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -100,10 +101,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator();
+            IAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, firingSound, localBoostProviders);
+                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, attackablePositionFinder, firingSound, localBoostProviders);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -126,6 +128,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
+            IAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             IObservableCollection<IBoostProvider> localBoostProviders)
         {
@@ -133,6 +136,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 targetFilter,
                 CreateTargetPositionPredictor(),
                 angleCalculator,
+                attackablePositionFinder,
                 CreateAccuracyAdjuster(angleCalculator, barrel),
                 CreateRotationMovementController(barrel),
                 CreatePositionValidator(),
@@ -159,6 +163,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator();
+
+        private IAttackablePositionFinder CreateAttackablePositionFinder()
+        {
+            IAttackablePositionFinderWrapper positionFinderWrapper = GetComponent<IAttackablePositionFinderWrapper>();
+            Assert.IsNotNull(positionFinderWrapper);
+            return positionFinderWrapper.CreatePositionFinder();
+        }
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
         {
