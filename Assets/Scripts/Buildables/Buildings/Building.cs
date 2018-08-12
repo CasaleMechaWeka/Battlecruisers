@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
@@ -14,6 +14,7 @@ namespace BattleCruisers.Buildables.Buildings
 	{
         private BoxCollider2D _collider;
 
+        private IBuildingDoubleClickHandler _doubleClickHandler;
         protected ISlot _parentSlot;
 
 		public BuildingCategory category;
@@ -52,13 +53,15 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider,
-            ISlot parentSlot)
+            ISlot parentSlot,
+            IBuildingDoubleClickHandler doubleClickHandler)
         {
             base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
 
-            Assert.IsNotNull(parentSlot);
+            Helper.AssertIsNotNull(parentCruiser, doubleClickHandler);
 
             _parentSlot = parentSlot;
+            _doubleClickHandler = doubleClickHandler;
             _boostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
             OnInitialised();
@@ -72,29 +75,7 @@ namespace BattleCruisers.Buildables.Buildings
         protected override void OnDoubleClick()
         {
             base.OnDoubleClick();
-
-            // FELIX  Create double click handler?  Have Player-/AI- handlers, will avoid ugly Faction check :/
-            // Only allow double clicks to control player cruiser drones :P
-            if (Faction == Faction.Blues)
-            {
-                // Toggle drone consumer focus on double click :)
-                if (BuildableState == BuildableState.NotStarted
-                    || BuildableState == BuildableState.InProgress
-                    || BuildableState == BuildableState.Paused)
-                {
-                    _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
-                }
-                // Toggle repair drone consumer focus
-                else if (BuildableState == BuildableState.Completed
-                    && RepairCommand.CanExecute)
-                {
-                    IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
-                    _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
-                }
-            }
-
-            // Set as user chosen target, to make everything attack this building
-            _factoryProvider.TargetsFactory.UserChosenTargetHelper.ToggleChosenTarget(this);
+            _doubleClickHandler.OnDoubleClick(this);
         }
     }
 }

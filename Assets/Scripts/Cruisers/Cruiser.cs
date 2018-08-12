@@ -27,6 +27,7 @@ namespace BattleCruisers.Cruisers
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
+        private IBuildingDoubleClickHandler _buildingDoubleClickHandler;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -117,6 +118,7 @@ namespace BattleCruisers.Cruisers
             Direction = args.FacingDirection;
             _helper = args.Helper;
             BuildProgressCalculator = args.BuildProgressCalculator;
+            _buildingDoubleClickHandler = args.BuildingDoubleClickHandler;
 			
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
@@ -172,7 +174,7 @@ namespace BattleCruisers.Cruisers
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotType, slot.Type);
 
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
-            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, slot);
+            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, slot, _buildingDoubleClickHandler);
 			slot.Building = building;
 
 			building.CompletedBuildable += Building_CompletedBuildable;

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -22,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider, 
-            ISlot parentSlot);
+            ISlot parentSlot,
+            IBuildingDoubleClickHandler buildingDoubleClickHandler);
 	}
 }

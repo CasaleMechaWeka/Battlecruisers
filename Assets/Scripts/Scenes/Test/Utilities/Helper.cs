@@ -27,6 +27,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -117,7 +118,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
-                parentSlot ?? CreateParentSlot());
+                parentSlot ?? CreateParentSlot(),
+                Substitute.For<IBuildingDoubleClickHandler>());
         }
 
         public void InitialiseUnit(
