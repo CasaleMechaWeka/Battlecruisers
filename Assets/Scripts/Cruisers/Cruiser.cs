@@ -28,6 +28,7 @@ namespace BattleCruisers.Cruisers
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
+        private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -119,7 +120,8 @@ namespace BattleCruisers.Cruisers
             _helper = args.Helper;
             BuildProgressCalculator = args.BuildProgressCalculator;
             _buildingDoubleClickHandler = args.BuildingDoubleClickHandler;
-			
+            _cruiserDoubleClickHandler = args.CruiserDoubleClickHandler;
+
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
 
@@ -147,17 +149,7 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_DoubleClick(object sender, EventArgs e)
         {
-            // FELIX  Create double click handler?  Have Player-/AI- handlers, will avoid ugly Faction check :/
-            // Only allow double clicks to control player cruiser drones :P
-            if (Faction == Faction.Blues
-                && RepairCommand.CanExecute)
-            {
-                IDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
-                DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
-            }
-
-            // Set as user chosen target, to make everything attack this building
-            FactoryProvider.TargetsFactory.UserChosenTargetHelper.ToggleChosenTarget(this);
+            _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
