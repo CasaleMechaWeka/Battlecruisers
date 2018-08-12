@@ -28,6 +28,7 @@ namespace BattleCruisers.Cruisers
         public ISlotFilter HighlightableFilter { get; private set; }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; private set; }
+        public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; private set; }
 
         public CruiserArgs(
             Faction faction, 
@@ -42,7 +43,8 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
-            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler)
+            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 
@@ -54,7 +56,8 @@ namespace BattleCruisers.Cruisers
                 helper, 
                 highlightableFilter, 
                 buildProgressCalculator,
-                buildingDoubleClickHandler);
+                buildingDoubleClickHandler,
+                cruiserDoubleClickHandler);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -69,6 +72,7 @@ namespace BattleCruisers.Cruisers
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;
             BuildingDoubleClickHandler = buildingDoubleClickHandler;
+            CruiserDoubleClickHandler = cruiserDoubleClickHandler;
         }
     }
 }

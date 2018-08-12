@@ -67,6 +67,7 @@ namespace BattleCruisers.Cruisers
             new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
             bool shouldShowFog = !isPlayerCruiser;
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = CreateBuildingDoubleClickHandler(isPlayerCruiser, droneManager, userChosenTargetHelper);
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = CreateCruiserDoubleClickHandler(isPlayerCruiser, userChosenTargetHelper);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -82,7 +83,8 @@ namespace BattleCruisers.Cruisers
                     helper,
                     highlightableFilter,
                     buildProgressCalculator,
-                    buildingDoubleClickHandler);
+                    buildingDoubleClickHandler,
+                    cruiserDoubleClickHandler);
 
             cruiser.Initialise(cruiserArgs);
         }
@@ -111,6 +113,18 @@ namespace BattleCruisers.Cruisers
             else
             {
                 return new AIBuildingDoubleClickHandler(userChosenTargetHelper);
+            }
+        }
+
+        private IDoubleClickHandler<ICruiser> CreateCruiserDoubleClickHandler(bool isPlayerCruiser, IUserChosenTargetHelper userChosenTargetHelper)
+        {
+            if (isPlayerCruiser)
+            {
+                return new PlayerCruiserDoubleClickHandler();
+            }
+            else
+            {
+                return new AICruiserDoubleClickHandler(userChosenTargetHelper);
             }
         }
 

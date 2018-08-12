@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers
         ICruiserHelper Helper { get; }
         ISlotFilter HighlightableFilter { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
-        // FELIX  Also add (after creating :P) cruiser double click handler
         IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
+        IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
     }
 }
