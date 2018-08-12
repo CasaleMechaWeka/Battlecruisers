@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.UI.Cameras;
+using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Cameras
 {
@@ -8,21 +10,25 @@ namespace BattleCruisers.Tests.UI.Cameras
 	{
 		private CameraController _cameraController;
 
-		private ICameraTransitionManager _transitionManager;
-		private ICameraMover _userInputMover;
+        private IPauseGameManager _pauseGameManager;
+        private ICameraTransitionManager _transitionManager;
+		private ICameraMover _userInputMover, _dummyMover;
 		private float _deltaTime;
 
 		[SetUp]
 		public void SetuUp()
 		{
+            _pauseGameManager = Substitute.For<IPauseGameManager>();
 			_transitionManager = Substitute.For<ICameraTransitionManager>();
 			_userInputMover = Substitute.For<ICameraMover>();
+            _dummyMover = Substitute.For<ICameraMover>();
 
 			_cameraController = new CameraController();
-            // FELIX  Update tests :P
-			//_cameraController.Initialise(_transitionManager, _userInputMover);
+            _cameraController.Initialise(_pauseGameManager, _transitionManager, _userInputMover, _dummyMover);
 
-			_deltaTime = 0.1234f;
+            _deltaTime = 0.1234f;
+
+            UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]
@@ -127,6 +133,33 @@ namespace BattleCruisers.Tests.UI.Cameras
 		
 			_userInputMover.DidNotReceiveWithAnyArgs().Reset(default(CameraState));
         }
-		#endregion _currentMover_StateChanged
-	}
+        #endregion _currentMover_StateChanged
+
+        #region Pause/Resume Game
+        [Test]
+        public void PauseGame_ChangesToDummyMover()
+        {
+            _pauseGameManager.GamePaused += Raise.Event();
+
+            _cameraController.MoveCamera(_deltaTime);
+            _dummyMover.Received().MoveCamera(_deltaTime);
+        }
+
+        [Test]
+        public void ResumeGame_ChangesToMoverBeforePause()
+        {
+            _pauseGameManager.GamePaused += Raise.Event();
+            _pauseGameManager.GameResumed += Raise.Event();
+
+            _cameraController.MoveCamera(_deltaTime);
+            _userInputMover.Received().MoveCamera(_deltaTime);
+        }
+
+        [Test]
+        public void ResumeGame_WithoutPrecedingPause_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _pauseGameManager.GameResumed += Raise.Event());
+        }
+        #endregion Pause/Resume Game
+    }
 }
