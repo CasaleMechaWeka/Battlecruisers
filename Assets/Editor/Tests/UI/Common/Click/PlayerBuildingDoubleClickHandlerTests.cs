@@ -37,7 +37,6 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _clickedBuilding = Substitute.For<IBuilding>();
             _clickedBuilding.ParentCruiser.Returns(_parentCruiser);
-            _clickedBuilding.DroneConsumer.Returns(_constructionDroneConsumer);
             _clickedBuilding.RepairCommand.Returns(_repairCommand);
 
             _repairDroneConsumer = Substitute.For<IDroneConsumer>();
@@ -54,10 +53,10 @@ namespace BattleCruisers.Tests.UI.Common.Click
         }
 
         [Test]
-        public void OnDoubleClick_RightFaction_NotCompleted_TogglesDroneFocus()
+        public void OnDoubleClick_RightFaction_HasDroneConsumer_TogglesDroneFocus()
         {
             _clickedBuilding.Faction.Returns(Faction.Blues);
-            _clickedBuilding.BuildableState.Returns(BuildableState.InProgress);
+            _clickedBuilding.DroneConsumer.Returns(_constructionDroneConsumer);
 
             _handler.OnDoubleClick(_clickedBuilding);
 
@@ -65,10 +64,10 @@ namespace BattleCruisers.Tests.UI.Common.Click
         }
 
         [Test]
-        public void OnDoubleClick_RightFaction_Completed_CanRepair_TogglesRepairDrones()
+        public void OnDoubleClick_RightFaction_NoDroneConsumer_CanRepair_TogglesRepairDrones()
         {
             _clickedBuilding.Faction.Returns(Faction.Blues);
-            _clickedBuilding.BuildableState.Returns(BuildableState.Completed);
+            _clickedBuilding.DroneConsumer.Returns((IDroneConsumer)null);
             _repairCommand.CanExecute.Returns(true);
 
             _handler.OnDoubleClick(_clickedBuilding);
@@ -77,10 +76,10 @@ namespace BattleCruisers.Tests.UI.Common.Click
         }
 
         [Test]
-        public void OnDoubleClick_RightFaction_Completed_CannotRepair_DoesNothing()
+        public void OnDoubleClick_RightFaction_NoDroneConsumer_CannotRepair_DoesNothing()
         {
             _clickedBuilding.Faction.Returns(Faction.Blues);
-            _clickedBuilding.BuildableState.Returns(BuildableState.Completed);
+            _clickedBuilding.DroneConsumer.Returns((IDroneConsumer)null);
             _repairCommand.CanExecute.Returns(false);
 
             _handler.OnDoubleClick(_clickedBuilding);
