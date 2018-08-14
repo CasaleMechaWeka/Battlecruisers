@@ -15,7 +15,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IFactory _currentFactory;
         private IUnitClickHandler _unitClickHandler;
 
-
         public override bool IsMatch
 		{
 			get
