@@ -11,18 +11,16 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         public NegativeVelocityTeleporter(ICloud cloud, ICloudStats cloudStats)
             : base(cloud, cloudStats)
         {
-            _adjustedReappearXPosition = cloudStats.ReappaerLineInM + _cloud.Size.x;
-            _adjustedDisappearXPosition = cloudStats.DisappearLineInM - _cloud.Size.x;
         }
 
         public override bool ShouldTeleportCloud()
         {
-            return _cloud.Position.x < _adjustedDisappearXPosition;
+            return _cloud.Position.x < _disappearXPosition;
         }
 
         public override void TeleportCloud()
         {
-            _cloud.Position = new Vector2(_adjustedReappearXPosition, _cloud.Position.y);
+            _cloud.Position = new Vector2(_reappearXPosition, _cloud.Position.y);
         }
     }
 }

@@ -225,9 +225,9 @@ namespace BattleCruisers.Data.Static
 
         private ICloudGenerationStats CreateCloudStats(CloudDensity density, CloudMovementSpeed movementSpeed)
         {
-            // -80 <= x <= 80
+            // -110 <= x <= 110
             //  10 <= y <= 60
-            Rect cloudSpawnArea = new Rect(x: -80, y: 10, width: 160, height: 50);
+            Rect cloudSpawnArea = new Rect(x: -110, y: 10, width: 220, height: 50);
 
             return new CloudGenerationStats(cloudSpawnArea, density, movementSpeed);
         }
