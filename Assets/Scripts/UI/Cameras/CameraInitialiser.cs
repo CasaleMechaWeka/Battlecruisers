@@ -22,8 +22,8 @@ namespace BattleCruisers.UI.Cameras
 		public IUserInputCameraMover UserInputCameraMover { get; private set; }
 
 		// Scrolling bounds
-		private const float CAMERA_POSITION_MAX_X = 35;
-		private const float CAMERA_POSITION_MIN_X = -35;
+		private const float CAMERA_POSITION_MAX_X = 45;
+		private const float CAMERA_POSITION_MIN_X = -45;
 		private const float CAMERA_POSITION_MAX_Y = 30;
 		private const float CAMERA_POSITION_MIN_Y = 0;
 
