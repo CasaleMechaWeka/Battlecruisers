@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
+    // FELIX  Avoid duplicate code with new build progress feedback :)  (once it exists :P)
     public class BuildableProgressController : MonoBehaviour
 	{
 		private Buildable _buildable;
