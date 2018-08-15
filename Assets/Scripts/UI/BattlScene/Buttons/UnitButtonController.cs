@@ -56,10 +56,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			}
 
             _currentFactory.StartedBuildingUnit += _currentFactory_StartedBuildingUnit;
-            if (_currentFactory.UnitUnderConstruction != null)
-            {
-                _buildProgressFeedback.ShowBuildProgress(_currentFactory.UnitUnderConstruction);
-            }
+            ShowBuildProgressIfNecessary(_currentFactory.UnitUnderConstruction);
 
             TriggerPotentialMatchChange();
 
@@ -76,7 +73,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         private void _currentFactory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
-            _buildProgressFeedback.ShowBuildProgress(e.Buildable);
+            ShowBuildProgressIfNecessary(e.Buildable);
+        }
+
+        private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
+        {
+            if (unitUnderConstruction != null
+                && unitUnderConstruction.Name == _unitWrapper.Buildable.Name)
+            {
+                _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction);
+            }
         }
 
 		public override void OnDismissing()
