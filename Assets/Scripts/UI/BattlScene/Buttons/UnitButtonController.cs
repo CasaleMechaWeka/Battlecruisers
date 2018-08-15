@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
@@ -14,6 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _currentFactory;
         private IUnitClickHandler _unitClickHandler;
+        private IBuildProgressFeedback _buildProgressFeedback;
 
         public override bool IsMatch
 		{
@@ -38,7 +40,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 			_unitWrapper = unitWrapper;
             _unitClickHandler = unitClickHandler;
-		}
+
+            BuildProgressFeedbackWrapper feedbackWrapper = GetComponentInChildren<BuildProgressFeedbackWrapper>();
+            Assert.IsNotNull(feedbackWrapper);
+            _buildProgressFeedback = feedbackWrapper.CreateFeedback();
+        }
 
 		public override void OnPresenting(object activationParameter)
 		{
@@ -49,6 +55,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 				_currentFactory.CompletedBuildable += _factory_CompletedBuildable;
 			}
 
+            _currentFactory.StartedBuildingUnit += _currentFactory_StartedBuildingUnit;
+            if (_currentFactory.UnitUnderConstruction != null)
+            {
+                _buildProgressFeedback.ShowBuildProgress(_currentFactory.UnitUnderConstruction);
+            }
+
             TriggerPotentialMatchChange();
 
 			// Usually have this at the start of the overriding method, but 
@@ -57,16 +69,23 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			base.OnPresenting(activationParameter);
 		}
 
-		private void _factory_CompletedBuildable(object sender, System.EventArgs e)
+        private void _factory_CompletedBuildable(object sender, System.EventArgs e)
 		{
             TriggerPotentialMatchChange();
 		}
+
+        private void _currentFactory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
+        {
+            _buildProgressFeedback.ShowBuildProgress(e.Buildable);
+        }
 
 		public override void OnDismissing()
 		{
 			base.OnDismissing();
 
+            _buildProgressFeedback.HideBuildProgress();
 			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
+            _currentFactory.StartedBuildingUnit -= _currentFactory_StartedBuildingUnit;
 			_currentFactory = null;
 		}
 
