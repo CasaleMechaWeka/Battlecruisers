@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.BuildProgress
                     _currentBuildable.CompletedBuildable += _currentBuildable_CompletedBuildable;
                     _currentBuildable.Destroyed += _currentBuildable_Destroyed;
 
-                    _buildProgressImage.FillAmount = _currentBuildable.BuildProgress;
+                    ShowBuildProgress(_currentBuildable.BuildProgress);
                 }
             }
         }
@@ -43,7 +43,12 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         private void _currentBuildable_BuildableProgress(object sender, BuildProgressEventArgs e)
         {
-            _buildProgressImage.FillAmount = _currentBuildable.BuildProgress;
+            ShowBuildProgress(_currentBuildable.BuildProgress);
+        }
+
+        private void ShowBuildProgress(float buildProgress)
+        {
+            _buildProgressImage.FillAmount = 1 - buildProgress;
         }
 
         private void _currentBuildable_CompletedBuildable(object sender, System.EventArgs e)
