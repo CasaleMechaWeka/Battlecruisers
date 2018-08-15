@@ -20,9 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         #region Properties
-        // FELIX  Make private, and only use properyt in child classes :)
-		protected IUnit _unitUnderConstruction;
-        public IUnit UnitUnderConstruction { get { return _unitUnderConstruction; } }
+        public IUnit UnitUnderConstruction { get; private set; }
 
         private IBuildableWrapper<IUnit> _unitWrapper;
 		public IBuildableWrapper<IUnit> UnitWrapper 
@@ -95,7 +93,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		protected override void OnUpdate()
 		{
 			if (_unitWrapper != null 
-				&& (_unitUnderConstruction == null || _unitUnderConstruction.BuildableState == BuildableState.Completed)
+				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
 				&& CanSpawnUnit(_unitWrapper.Buildable))
 			{
 				StartBuildingUnit();
@@ -128,28 +126,28 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
 
-			_unitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
-			_unitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
-			_unitUnderConstruction.DroneConsumerProvider = this;
+			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
+			UnitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
+			UnitUnderConstruction.DroneConsumerProvider = this;
 
-			Vector3 spawnPosition = FindUnitSpawnPosition(_unitUnderConstruction);
-            _unitUnderConstruction.Position = spawnPosition;
-            _unitUnderConstruction.Rotation = transform.rotation;
+			Vector3 spawnPosition = FindUnitSpawnPosition(UnitUnderConstruction);
+            UnitUnderConstruction.Position = spawnPosition;
+            UnitUnderConstruction.Rotation = transform.rotation;
 
-			_unitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
-			_unitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
-            _unitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
+			UnitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
+			UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
+            UnitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
-            _boostableGroup.AddBoostable(_unitUnderConstruction.BuildProgressBoostable);
+            _boostableGroup.AddBoostable(UnitUnderConstruction.BuildProgressBoostable);
 
-			_unitUnderConstruction.StartConstruction();
+			UnitUnderConstruction.StartConstruction();
 		}
 
 		protected abstract Vector3 FindUnitSpawnPosition(IUnit unit);
 
 		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 
 		{ 
-			_unitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
+			UnitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
 
             IUnit unit = sender.Parse<IUnit>();
 			_lastUnitProduced = unit;
@@ -164,7 +162,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (CompletedBuildingUnit != null)
 			{
-				CompletedBuildingUnit.Invoke(this, new CompletedUnitConstructionEventArgs(_unitUnderConstruction));
+				CompletedBuildingUnit.Invoke(this, new CompletedUnitConstructionEventArgs(UnitUnderConstruction));
 			}
 
             CleanUpUnitUnderConstruction();
@@ -201,20 +199,20 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void DestroyUnitUnderConstruction()
 		{
-			if (_unitUnderConstruction != null
-                && !_unitUnderConstruction.IsDestroyed
-                && _unitUnderConstruction.BuildableState != BuildableState.Completed)
+			if (UnitUnderConstruction != null
+                && !UnitUnderConstruction.IsDestroyed
+                && UnitUnderConstruction.BuildableState != BuildableState.Completed)
 			{
-				_unitUnderConstruction.Destroy();
+				UnitUnderConstruction.Destroy();
 			}
 		}
 
 		private void CleanUpUnitUnderConstruction()
 		{
-            _boostableGroup.RemoveBoostable(_unitUnderConstruction.BuildProgressBoostable);
-			_unitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
-            _unitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
-			_unitUnderConstruction = null;
+            _boostableGroup.RemoveBoostable(UnitUnderConstruction.BuildProgressBoostable);
+			UnitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
+            UnitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
+			UnitUnderConstruction = null;
 		}
 
         public void StartBuildingUnit(IBuildableWrapper<IUnit> unit)
