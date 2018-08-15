@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     // FELIX  Test & use :)
     public class BuildProgressFeedback : IBuildProgressFeedback
     {
-        private readonly IFillabelImage _buildProgressImage;
+        private readonly IFillableImage _buildProgressImage;
 
         private IBuildable _currentBuildable;
         private IBuildable CurrentBuildable
@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        public BuildProgressFeedback(IFillabelImage buildProgressImage)
+        public BuildProgressFeedback(IFillableImage buildProgressImage)
         {
             Assert.IsNotNull(buildProgressImage);
             _buildProgressImage = buildProgressImage;

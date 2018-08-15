@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
-    public class FillabelImage : IFillabelImage
+    public class FillableImage : IFillableImage
     {
         private readonly Image _platformImage;
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             set { _platformImage.gameObject.SetActive(value); }
         }
 
-        public FillabelImage(Image platformImage)
+        public FillableImage(Image platformImage)
         {
             Assert.IsNotNull(platformImage);
             _platformImage = platformImage;
