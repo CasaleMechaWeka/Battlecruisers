@@ -58,17 +58,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 {
                     title.text = VICTORY_TITLE;
 
-                    if (BattleResult.LevelNum == _dataProvider.Levels.Count
-                        && BattleResult.LevelNum > _dataProvider.GameModel.NumOfLevelsCompleted)
-                    {
-                        // Completed last level for the frist time
-                        completedGameMessage.SetActive(true);
-                    }
 
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
                         unlockedItemSection.SetActive(true);
                         _lootManager.UnlockLoot(BattleResult.LevelNum);
+                    }
+                    else if (BattleResult.LevelNum == _dataProvider.Levels.Count
+                        && BattleResult.LevelNum > _dataProvider.GameModel.NumOfLevelsCompleted)
+                    {
+                        // Completed last level for the frist time
+                        completedGameMessage.SetActive(true);
+
+                        _dataProvider.GameModel.NumOfLevelsCompleted = BattleResult.LevelNum;
+                        _dataProvider.SaveGame();
                     }
                 }
                 else
