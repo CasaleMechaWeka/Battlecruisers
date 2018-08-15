@@ -412,7 +412,14 @@ namespace BattleCruisers.Buildables
 
         public void InitiateDelete()
         {
-            DeleteCountdown.Begin(Destroy);
+            if (BuildableState == BuildableState.NotStarted)
+            {
+                Destroy();
+            }
+            else
+            {
+                DeleteCountdown.Begin(Destroy);
+            }
         }
 
         public void CancelDelete()
