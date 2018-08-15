@@ -43,6 +43,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
             _dataProvider.StaticData.GetLevelLoot(default(int)).ReturnsForAnyArgs(_unlockedLoot);
+            _dataProvider.StaticData.LastLevelWithLoot.Returns(99);
 
             _item1 = Substitute.For<ILootItem>();
             _item2 = Substitute.For<ILootItem>();
@@ -50,19 +51,32 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
         #region ShouldShowLoot
         [Test]
-        public void ShouldShowLoot_True()
-        {
-            int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
-            Assert.IsTrue(_lootManager.ShouldShowLoot(levelCompleted));
-        }
-
-        [Test]
-        public void ShouldShowLoot_False()
+        public void ShouldShowLoot_HaveCompletedLevelBefore_ReturnsFalse()
         {
             int levelCompleted = 7;
             _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted;
+
             Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
+        }
+
+        [Test]
+        public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelDoesNotHaveLoot_ReturnsFalse()
+        {
+            int levelCompleted = 7;
+            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
+            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
+
+            Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
+        }
+
+        [Test]
+        public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelHasLoot_ReturnsTrue()
+        {
+            int levelCompleted = 7;
+            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
+            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+
+            Assert.IsTrue(_lootManager.ShouldShowLoot(levelCompleted));
         }
         #endregion ShouldShowLoot
 

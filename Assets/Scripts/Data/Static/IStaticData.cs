@@ -23,6 +23,7 @@ namespace BattleCruisers.Data.Static
 		ReadOnlyCollection<UnitKey> UnitKeys { get; }
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys{ get; }
+        int LastLevelWithLoot { get; }
 
         bool IsUnitAvailable(UnitKey unitKey, int levelNum);
         IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum);

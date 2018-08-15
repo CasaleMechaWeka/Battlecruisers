@@ -2,11 +2,6 @@
 {
     public interface ILootManager
     {
-        /// <summary>
-        /// Shoulds the show loot.
-        /// </summary>
-        /// <returns><c>true</c>, if show loot was shoulded, <c>false</c> otherwise.</returns>
-        /// <param name="levelNum">Level number.</param>
         bool ShouldShowLoot(int levelNum);
 
         /// <summary>

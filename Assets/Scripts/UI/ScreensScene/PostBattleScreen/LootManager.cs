@@ -32,7 +32,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLoot(int levelCompleted)
         {
-            return levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted;
+            return 
+                levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
+                && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
         public void UnlockLoot(int levelCompleted)

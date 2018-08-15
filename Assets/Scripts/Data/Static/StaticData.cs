@@ -31,6 +31,7 @@ namespace BattleCruisers.Data.Static
 		public ReadOnlyCollection<UnitKey> UnitKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
+        public int LastLevelWithLoot { get { return 20; } }
 
         public StaticData()
 		{
