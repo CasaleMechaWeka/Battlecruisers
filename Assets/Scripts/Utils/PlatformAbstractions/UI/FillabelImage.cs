@@ -13,6 +13,12 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             set { _platformImage.fillAmount = value; }
         }
 
+        public bool IsVisible
+        {
+            get { return _platformImage.IsActive(); }
+            set { _platformImage.gameObject.SetActive(value); }
+        }
+
         public FillabelImage(Image platformImage)
         {
             Assert.IsNotNull(platformImage);
