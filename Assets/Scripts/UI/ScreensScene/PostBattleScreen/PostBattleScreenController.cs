@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
         public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
-        public GameObject postTutorialMessage;
+        public GameObject postTutorialMessage, completedGameMessage;
 
 		private const string VICTORY_TITLE = "Congratulations!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage);
+            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage, completedGameMessage);
             Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider);
 
             _dataProvider = dataProvider;
@@ -57,6 +57,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (BattleResult.WasVictory)
                 {
                     title.text = VICTORY_TITLE;
+
+                    if (BattleResult.LevelNum == _dataProvider.Levels.Count
+                        && BattleResult.LevelNum > _dataProvider.GameModel.NumOfLevelsCompleted)
+                    {
+                        // Completed last level for the frist time
+                        completedGameMessage.SetActive(true);
+                    }
 
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
