@@ -22,6 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         int NumOfDrones { get; }
         bool IsUnitPaused { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
+        IUnit UnitUnderConstruction { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();

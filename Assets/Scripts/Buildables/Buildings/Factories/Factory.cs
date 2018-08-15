@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
 		private IUnit _lastUnitProduced;
-		protected IUnit _unitUnderConstruction;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -21,6 +20,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         #region Properties
+        // FELIX  Make private, and only use properyt in child classes :)
+		protected IUnit _unitUnderConstruction;
+        public IUnit UnitUnderConstruction { get { return _unitUnderConstruction; } }
+
         private IBuildableWrapper<IUnit> _unitWrapper;
 		public IBuildableWrapper<IUnit> UnitWrapper 
 		{ 
