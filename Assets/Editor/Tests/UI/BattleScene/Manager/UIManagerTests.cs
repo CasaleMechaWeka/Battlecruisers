@@ -7,7 +7,6 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -21,7 +20,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
         private IBuildableDetailsManager _detailsManager;
-        private IBroadcastingFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         private IBuilding _building;
         private IFactory _factory;
@@ -35,15 +33,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _aiCruiser = CreateMockCruiser();
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IBuildableDetailsManager>();
-            _shouldBuildingDeleteButtonBeEnabledFilter = Substitute.For<IBroadcastingFilter<IBuilding>>();
 
             IManagerArgs managerArgs
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
                     _buildMenu,
-                    _detailsManager,
-                    _shouldBuildingDeleteButtonBeEnabledFilter);
+                    _detailsManager);
             _uiManager = new UIManager(managerArgs);
 
             _building = Substitute.For<IBuilding>();
@@ -115,7 +111,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void SelectBuilding_ParentIsPlayerCruiser()
         {
-            _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(_building).Returns(true);
             _building.ParentCruiser.Returns(_playerCruiser);
 
             _uiManager.SelectBuilding(_building);
@@ -123,7 +118,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             Expect_HideItemDetails();
 
             _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
-            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
             _detailsManager.Received().ShowDetails(_building);
 
             _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
@@ -139,7 +133,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             Expect_HideItemDetails();
 
             _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
-            _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
             _detailsManager.Received().ShowDetails(_building);
 
             _playerCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);

@@ -15,8 +15,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        // FELIX  Remove :)
-        private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         public UIManager(IManagerArgs args)
 		{
@@ -26,7 +24,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _aiCruiser = args.AICruiser;
             _buildMenu = args.BuildMenu;
             _detailsManager = args.DetailsManager;
-            _shouldBuildingDeleteButtonBeEnabledFilter = args.ShouldBuildingDeleteButtonBeEnabledFilter;
         }
 
         /// <summary>

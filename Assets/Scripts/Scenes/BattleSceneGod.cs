@@ -139,8 +139,7 @@ namespace BattleCruisers.Scenes
                     _playerCruiser,
                     _aiCruiser,
                     buildMenuController,
-                    new BuildableDetailsManager(hudCanvas),
-                    helper.CreateBuildingDeleteButtonFilter(_playerCruiser));
+                    new BuildableDetailsManager(hudCanvas));
             IUIManager uiManager = helper.CreateUIManager(managerArgs);
             backgroundController.Initialise(uiManager);
 

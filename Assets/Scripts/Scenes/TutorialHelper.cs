@@ -103,11 +103,6 @@ namespace BattleCruisers.Scenes
             return _buildingCategoryFilter;
         }
 
-        public IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
-        {
-            return new StaticFilter<IBuilding>(isMatch: false);
-        }
-
         public BasicFilter CreateBackButtonFilter()
         {
             return BackButtonPermitter;
