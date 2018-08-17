@@ -98,7 +98,7 @@ namespace BattleCruisers.Scenes
 
         public IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter()
         {
-            return new ChooseTargetFilter();
+            return new ChooseTargetButtonVisibilityFilter();
         }
 
         public IFilter<ITarget> CreateDeletButtonVisiblityFilter()

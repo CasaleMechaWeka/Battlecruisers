@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
 {
-    public class ChooseTargetFilterTests
+    public class ChooseTargetButtonVisibilityFilterTests
     {
         private IFilter<ITarget> _filter;
         private ITarget _target;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
         [SetUp]
         public void TestSetup()
         {
-            _filter = new ChooseTargetFilter();
+            _filter = new ChooseTargetButtonVisibilityFilter();
             _target = Substitute.For<ITarget>();
         }
 
