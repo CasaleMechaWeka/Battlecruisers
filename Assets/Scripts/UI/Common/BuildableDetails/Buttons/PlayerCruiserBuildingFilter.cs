@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     // FELIX  Can this just be IFilter?  Would avoid having to supress warning :/
-    public class IBroadcastingFilter<IBuilding>
+    public class PlayerCruiserBuildingFilter : IBroadcastingFilter<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
 
