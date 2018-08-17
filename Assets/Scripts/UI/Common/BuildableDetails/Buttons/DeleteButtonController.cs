@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -11,13 +12,25 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private Button _button;
         private IHidable _details;
+        private IFilter<ITarget> _buttonVisibilityFilter;
 
-		public IBuildable Buildable { private get; set; }
-
-        public void Initialise(IHidable details)
+        private IBuildable _buildable;
+        public IBuildable Buildable
         {
-            Assert.IsNotNull(details);
+            private get { return _buildable; }
+            set
+            {
+                _buildable = value;
+                gameObject.SetActive(_buttonVisibilityFilter.IsMatch(_buildable));
+            }
+        }
+
+        public void Initialise(IHidable details, IFilter<ITarget> buttonVisibilityFilter)
+        {
+            Helper.AssertIsNotNull(details, buttonVisibilityFilter);
+
             _details = details;
+            _buttonVisibilityFilter = buttonVisibilityFilter;
 
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);

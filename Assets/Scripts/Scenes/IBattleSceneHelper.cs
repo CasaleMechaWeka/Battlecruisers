@@ -21,8 +21,12 @@ namespace BattleCruisers.Scenes
 
         IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
         IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter();
+        // FELIX  Remove
+
         IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
+
         IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter();
+        IFilter<ITarget> CreateDeletButtonVisiblityFilter();
 
         BasicFilter CreateBackButtonFilter();
 

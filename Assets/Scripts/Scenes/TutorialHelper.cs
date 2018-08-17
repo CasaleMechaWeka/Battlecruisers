@@ -122,5 +122,10 @@ namespace BattleCruisers.Scenes
         {
             return new StaticFilter<ITarget>(isMatch: false);
         }
+
+        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
+        {
+            return new StaticFilter<ITarget>(isMatch: false);
+        }
     }
 }

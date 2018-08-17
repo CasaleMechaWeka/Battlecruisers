@@ -22,18 +22,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneManager droneManager, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter,
+            IFilter<ITarget> deleteButtonVisibilityFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
 
             _rectTransform = transform.Parse<RectTransform>();
             _maxHeight = _rectTransform.sizeDelta.y;
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
-            _deleteButton.Initialise(this);
+            _deleteButton.Initialise(this, deleteButtonVisibilityFilter);
 
             _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
             Assert.IsNotNull(_bottomBar);

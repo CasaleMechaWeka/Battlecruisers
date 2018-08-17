@@ -105,5 +105,10 @@ namespace BattleCruisers.Scenes
         {
             return new ChooseTargetFilter();
         }
+
+        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
+        {
+            return new DeleteButtonVisibilityFilter();
+        }
     }
 }

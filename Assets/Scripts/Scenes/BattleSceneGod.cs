@@ -181,7 +181,8 @@ namespace BattleCruisers.Scenes
                     cameraInitialiser.CameraController, 
                     _navigationSettings.AreTransitionsEnabledFilter, 
                     UserChosenTargetHelper,
-                    helper.CreateChooseTargetButtonVisiblityFilter());
+                    helper.CreateChooseTargetButtonVisiblityFilter(),
+                    helper.CreateDeletButtonVisiblityFilter());
             IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
             IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
             IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
