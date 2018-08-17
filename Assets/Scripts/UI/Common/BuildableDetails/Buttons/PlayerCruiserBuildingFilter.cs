@@ -1,19 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Filters;
-using System;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    // FELIX  Can this just be IFilter?  Would avoid having to supress warning :/
-    public class PlayerCruiserBuildingFilter : IBroadcastingFilter<IBuilding>
+    public class PlayerCruiserBuildingFilter : IFilter<IBuilding>
     {
         private readonly ICruiser _playerCruiser;
-
-        #pragma warning disable 67  // Unused event
-        public event EventHandler PotentialMatchChange;
-        #pragma warning restore 67  // Unused event
 
         public PlayerCruiserBuildingFilter(ICruiser playerCruiser)
         {

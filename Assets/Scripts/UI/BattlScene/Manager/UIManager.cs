@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -16,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
-        private readonly IBroadcastingFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
+        private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         public UIManager(IManagerArgs args)
 		{

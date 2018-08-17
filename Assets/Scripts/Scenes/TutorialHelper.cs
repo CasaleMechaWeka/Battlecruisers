@@ -11,7 +11,6 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -104,9 +103,9 @@ namespace BattleCruisers.Scenes
             return _buildingCategoryFilter;
         }
 
-        public IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
+        public IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
         {
-            return new StaticBroadcastingFilter<IBuilding>(isMatch: false);
+            return new StaticFilter<IBuilding>(isMatch: false);
         }
 
         public BasicFilter CreateBackButtonFilter()

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
-using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
 {
     public class PlayerCruiserBuildingFilterTests
     {
-        private IBroadcastingFilter<IBuilding> _filter;
+        private IFilter<IBuilding> _filter;
         private IBuilding _building;
         private ICruiser _playerCruiser, _aiCruiser;
 

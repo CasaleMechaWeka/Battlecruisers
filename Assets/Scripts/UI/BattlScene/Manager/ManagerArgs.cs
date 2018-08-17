@@ -2,7 +2,6 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager
@@ -13,14 +12,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public ICruiser AICruiser { get; private set; }
         public IBuildMenu BuildMenu { get; private set; }
         public IBuildableDetailsManager DetailsManager { get; private set; }
-        public IBroadcastingFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; private set; }
+        public IFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; private set; }
 
         public ManagerArgs(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBuildMenu buildMenu,
             IBuildableDetailsManager detailsManager,
-            IBroadcastingFilter<IBuilding> shouldBuildingDeleteButtonBeEnabledFilter)
+            IFilter<IBuilding> shouldBuildingDeleteButtonBeEnabledFilter)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager, shouldBuildingDeleteButtonBeEnabledFilter);
 

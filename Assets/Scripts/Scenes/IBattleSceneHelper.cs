@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes
 
         IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
         IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter();
-        IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
+        IFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
         IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter();
 
         BasicFilter CreateBackButtonFilter();

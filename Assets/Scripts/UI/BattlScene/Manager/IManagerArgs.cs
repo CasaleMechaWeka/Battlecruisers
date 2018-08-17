@@ -2,7 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
@@ -12,6 +12,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         ICruiser AICruiser { get; }
         IBuildMenu BuildMenu { get; }
         IBuildableDetailsManager DetailsManager { get; }
-        IBroadcastingFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; }
+        IFilter<IBuilding> ShouldBuildingDeleteButtonBeEnabledFilter { get; }
     }
 }
