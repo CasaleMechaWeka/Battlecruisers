@@ -4,6 +4,7 @@ using BattleCruisers.Utils;
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     // FELIX  Test, use
+    // FELIX  Rename (remove "Real")
     public class RealChooseTargetFilter : IFilter<ITarget>
     {
         // AI buildings or cruiser

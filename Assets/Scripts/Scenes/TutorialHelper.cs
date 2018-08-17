@@ -11,6 +11,7 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -116,6 +117,11 @@ namespace BattleCruisers.Scenes
         public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
             return new LastIncompleteBuildingStartedProvider(cruiser);
+        }
+
+        public IFilter<ITarget> CreateChooseTargetButtonFilter()
+        {
+            return new StaticFilter<ITarget>(isMatch: false);
         }
     }
 }

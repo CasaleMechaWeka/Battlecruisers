@@ -8,6 +8,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes
 {
@@ -21,6 +22,7 @@ namespace BattleCruisers.Scenes
         IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager);
         IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter();
         IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser);
+        IFilter<ITarget> CreateChooseTargetButtonFilter();
 
         BasicFilter CreateBackButtonFilter();
 
