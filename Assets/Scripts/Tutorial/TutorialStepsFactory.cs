@@ -58,26 +58,26 @@ namespace BattleCruisers.Tutorial
 			// 0. Wait until initial camera movement is complete
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
-            //// 1. Your cruiser
-            //steps.Enqueue(CreateStep_YourCruiser());
+            // 1. Your cruiser
+            steps.Enqueue(CreateStep_YourCruiser());
 
-            //// 2. Mouse navigation
-            //steps.Enqueue(CreateSteps_MouseNavigation());
+            // 2. Mouse navigation
+            steps.Enqueue(CreateSteps_MouseNavigation());
 
-            //// 3. Navigation buttons
-            //steps.Enqueue(CreateSteps_NavigationButtons());
+            // 3. Navigation buttons
+            steps.Enqueue(CreateSteps_NavigationButtons());
 
-            //// 4. Enemy cruiser
-            //steps.Enqueue(CreateStep_EnemyCruiser());
+            // 4. Enemy cruiser
+            steps.Enqueue(CreateStep_EnemyCruiser());
 
-            //// Navigate back to player cruiser
-            //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+            // Navigate back to player cruiser
+            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-            //// 5. Speed controls
-            //steps.Enqueue(CreateSteps_SpeedControls());
+            // 5. Speed controls
+            steps.Enqueue(CreateSteps_SpeedControls());
 
-            //// 6. Drones
-            //steps.Enqueue(CreateStep_Drones());
+            // 6. Drones
+            steps.Enqueue(CreateStep_Drones());
 
             // 7. Building a building
             steps.Enqueue(CreateSteps_BuildDroneStation());
