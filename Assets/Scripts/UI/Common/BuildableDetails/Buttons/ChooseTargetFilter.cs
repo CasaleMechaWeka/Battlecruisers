@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
+    // FELIX  Rename, Visibility
     public class ChooseTargetFilter : IFilter<ITarget>
     {
         // AI buildings or cruiser
