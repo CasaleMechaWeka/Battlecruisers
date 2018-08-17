@@ -64,15 +64,12 @@ namespace BattleCruisers.AI
 
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
-                case Difficulty.Sandbox:
-                    // Sandbox has no AI :P
-                    return new DummyArtificialIntelligence();
-
                 case Difficulty.Easy:
                 case Difficulty.Normal:
+                case Difficulty.Hard:
                     return aiFactory.CreateBasicAI(levelInfo);
 
-                case Difficulty.Hard:
+                case Difficulty.Harder:
                 case Difficulty.Insane:
                     return aiFactory.CreateAdaptiveAI(levelInfo);
 

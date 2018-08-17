@@ -45,7 +45,10 @@ namespace BattleCruisers.Scenes
             switch (settingsManager.AIDifficulty)
             {
                 case Difficulty.Easy:
-                    return BuildSpeedMultipliers.HALF_DEFAULT;
+                    return BuildSpeedMultipliers.POINT_3_DEFAULT;
+
+                case Difficulty.Normal:
+                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
 
                 case Difficulty.Insane:
                     return BuildSpeedMultipliers.ONE_AND_A_HALF_DEFAULT;
