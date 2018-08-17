@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.Filters
+namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
 {
     public class ChooseTargetFilterTests
     {
