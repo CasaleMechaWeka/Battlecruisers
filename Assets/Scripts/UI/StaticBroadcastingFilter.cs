@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI
 {
-    public class StaticFilter<TElement> : IBroadcastingFilter<TElement>
+    public class StaticBroadcastingFilter<TElement> : IBroadcastingFilter<TElement>
     {
         private readonly bool _isMatch;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.UI
         public event EventHandler PotentialMatchChange;
 #pragma warning restore 67  // Unused event
 
-        public StaticFilter(bool isMatch)
+        public StaticBroadcastingFilter(bool isMatch)
         {
             _isMatch = isMatch;
         }

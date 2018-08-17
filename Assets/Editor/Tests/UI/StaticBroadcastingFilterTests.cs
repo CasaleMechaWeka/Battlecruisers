@@ -4,19 +4,19 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI
 {
-    public class StaticFilterTests
+    public class StaticBroadcastingFilter
     {
         [Test]
         public void ShouldBeEnabled_True()
         {
-            IBroadcastingFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: true);
+            IBroadcastingFilter<BuildingCategory> filter = new StaticBroadcastingFilter<BuildingCategory>(isMatch: true);
             Assert.IsTrue(filter.IsMatch(BuildingCategory.Ultra));
         }
 
         [Test]
         public void ShouldBeEnabled_False()
         {
-            IBroadcastingFilter<BuildingCategory> filter = new StaticFilter<BuildingCategory>(isMatch: false);
+            IBroadcastingFilter<BuildingCategory> filter = new StaticBroadcastingFilter<BuildingCategory>(isMatch: false);
             Assert.IsFalse(filter.IsMatch(BuildingCategory.Ultra));
         }
     }

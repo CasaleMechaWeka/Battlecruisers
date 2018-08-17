@@ -105,7 +105,7 @@ namespace BattleCruisers.Scenes
 
         public IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
         {
-            return new StaticFilter<IBuilding>(isMatch: false);
+            return new StaticBroadcastingFilter<IBuilding>(isMatch: false);
         }
 
         public BasicFilter CreateBackButtonFilter()

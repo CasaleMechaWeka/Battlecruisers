@@ -85,7 +85,7 @@ namespace BattleCruisers.Scenes
         public IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter()
         {
             // For the real game want to enable all building categories :)
-            return new StaticFilter<BuildingCategory>(isMatch: true);
+            return new StaticBroadcastingFilter<BuildingCategory>(isMatch: true);
         }
 
         public IBroadcastingFilter<IBuilding> CreateBuildingDeleteButtonFilter(ICruiser playerCruiser)
