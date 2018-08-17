@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    // FELIX  Test :)
     public class DeleteButtonVisibilityFilter : IFilter<ITarget>
     {
         // Player bulidnig
