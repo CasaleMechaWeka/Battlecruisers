@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetTrackers;
@@ -64,13 +65,14 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser aiCruiser,
             ICameraController cameraController,
             IBroadcastingFilter shouldNavigationBeEnabledFilter,
-            IUserChosenTargetHelper userChosenTargetHelper)
+            IUserChosenTargetHelper userChosenTargetHelper,
+            IFilter<ITarget> showChooseTargetButtonFilter)
         {
-            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetHelper);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetHelper, showChooseTargetButtonFilter);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
-            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
-            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
 
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);

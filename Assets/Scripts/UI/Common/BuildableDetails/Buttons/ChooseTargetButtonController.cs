@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private Button _button;
         private IUserChosenTargetHelper _userChosenTargetHelper;
+        private IFilter<ITarget> _showButtonFilter;
 
         private ITarget _target;
         public ITarget Target
@@ -22,27 +24,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             }
         }
 
-        // Should only be visible for AI buildings or cruiser
-        private bool ShowButton 
-        { 
-            get 
-            {
-                return
-                    _target != null
-                    && _target.Faction == Faction.Reds
-                    && (_target.TargetType == TargetType.Buildings
-                        || _target.TargetType == TargetType.Cruiser);
-            } 
-        }
+        private bool ShowButton { get { return _showButtonFilter.IsMatch(Target); } }
 
         public event EventHandler Clicked;
 
-        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper)
+        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> showButtonFilter)
         {
             base.Initialise();
 
-            Assert.IsNotNull(userChosenTargetHelper);
+            Helper.AssertIsNotNull(userChosenTargetHelper, showButtonFilter);
+
             _userChosenTargetHelper = userChosenTargetHelper;
+            _showButtonFilter = showButtonFilter;
 
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);

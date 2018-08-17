@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
@@ -13,9 +15,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private SlotTypeController _slotType;
 
-        public void Initialise(ISpriteProvider spriteProvider, IDroneManager droneManager, IRepairManager repairManager, IUserChosenTargetHelper userChosenTargetHelper)
+        public void Initialise(
+            ISpriteProvider spriteProvider, 
+            IDroneManager droneManager, 
+            IRepairManager repairManager, 
+            IUserChosenTargetHelper userChosenTargetHelper,
+            IFilter<ITarget> showChooseTargetButtonFilter)
         {
-            base.Initialise(droneManager, repairManager, userChosenTargetHelper);
+            base.Initialise(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
 
             Assert.IsNotNull(spriteProvider);
 

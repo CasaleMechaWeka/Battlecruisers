@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Repairables;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers;
@@ -14,11 +15,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
 
-        public void Initialise(IDroneManager droneManager, IRepairManager repairManager, IUserChosenTargetHelper userChosenTargetHelper)
+        public void Initialise(
+            IDroneManager droneManager, 
+            IRepairManager repairManager, 
+            IUserChosenTargetHelper userChosenTargetHelper, 
+            IFilter<ITarget> showChooseTargetButtonFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
@@ -26,7 +31,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper);
+            _chooseTargetButton.Initialise(userChosenTargetHelper, showChooseTargetButtonFilter);
         }
 
         protected override StatsController<ICruiser> GetStatsController()
