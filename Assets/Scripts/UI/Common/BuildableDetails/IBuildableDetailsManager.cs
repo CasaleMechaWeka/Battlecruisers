@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public interface IBuildableDetailsManager
     {
-        void ShowDetails(IBuilding building, bool allowDelete);
+        void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);
         void ShowDetails(ICruiser cruiser);
         void HideDetails();

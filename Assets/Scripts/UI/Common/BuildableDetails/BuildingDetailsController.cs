@@ -37,9 +37,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             return GetComponentInChildren<BuildingStatsController>();
         }
 
-        public override void ShowBuildableDetails(IBuilding buildable, bool allowDelete)
+        public override void ShowBuildableDetails(IBuilding buildable)
         {
-            base.ShowBuildableDetails(buildable, allowDelete);
+            base.ShowBuildableDetails(buildable);
             _slotType.SlotType = buildable.SlotType;
         }
     }

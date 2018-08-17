@@ -41,15 +41,12 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         }
 
         [Test]
-        public void ShowBuildingDetails_AllowDelete()
+        public void ShowBuildingDetails()
         {
-            ShowBuildingDetails(allowDelete: true);
-        }
+            _detailsManager.ShowDetails(_building);
 
-        [Test]
-        public void ShowBuildingDetails_DoNotAllowDelete()
-        {
-            ShowBuildingDetails(allowDelete: false);
+            AllDetails_ReceivedHide();
+            _buildingDetails.Received().ShowBuildableDetails(_building);
         }
 
         [Test]
@@ -58,7 +55,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _detailsManager.ShowDetails(_unit);
 
             AllDetails_ReceivedHide();
-            _unitDetails.Received().ShowBuildableDetails(_unit, allowDelete: false);
+            _unitDetails.Received().ShowBuildableDetails(_unit);
         }
 
         [Test]
@@ -75,14 +72,6 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.HideDetails();
             AllDetails_ReceivedHide();
-        }
-
-        private void ShowBuildingDetails(bool allowDelete)
-        {
-            _detailsManager.ShowDetails(_building, allowDelete);
-
-            AllDetails_ReceivedHide();
-            _buildingDetails.Received().ShowBuildableDetails(_building, allowDelete);
         }
 
         private void AllDetails_ReceivedHide()

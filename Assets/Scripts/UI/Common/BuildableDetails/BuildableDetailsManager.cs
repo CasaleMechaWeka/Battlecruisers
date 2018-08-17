@@ -21,16 +21,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _cruiserDetails = hudCanvas.CruiserDetails;
         }
 
-        public void ShowDetails(IBuilding building, bool allowDelete)
+        public void ShowDetails(IBuilding building)
         {
             HideDetails();
-            _buildingDetails.ShowBuildableDetails(building, allowDelete);
+            _buildingDetails.ShowBuildableDetails(building);
         }
 
         public void ShowDetails(IUnit unit)
         {
             HideDetails();
-            _unitDetails.ShowBuildableDetails(unit, allowDelete: false);
+            _unitDetails.ShowBuildableDetails(unit);
         }
 
         public void ShowDetails(ICruiser cruiser)

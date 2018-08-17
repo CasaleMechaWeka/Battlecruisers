@@ -41,18 +41,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _bottomBar.Initialise(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
         }
 
-        public virtual void ShowBuildableDetails(TItem buildable, bool allowDelete)
+        public virtual void ShowBuildableDetails(TItem buildable)
         {
             base.ShowItemDetails(buildable);
 
             _bottomBar.Buildable = buildable;
+            _deleteButton.Buildable = buildable;
 
             // Shrink details panel if bottom bar is invisble
             float desiredHeight = _bottomBar.IsVisible ? _maxHeight : _maxHeight - _bottomBar.Height;
             _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, desiredHeight);
-
-            _deleteButton.gameObject.SetActive(allowDelete);
-            _deleteButton.Buildable = buildable;
         }
 
         protected override void CleanUp()

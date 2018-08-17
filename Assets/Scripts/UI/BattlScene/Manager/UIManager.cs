@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenu _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
+        // FELIX  Remove :)
         private readonly IFilter<IBuilding> _shouldBuildingDeleteButtonBeEnabledFilter;
 
         public UIManager(IManagerArgs args)
@@ -73,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
 			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
-            _detailsManager.ShowDetails(buildingWrapper.Buildable, allowDelete: false);
+            _detailsManager.ShowDetails(buildingWrapper.Buildable);
 		}
 
 		public virtual void SelectBuilding(IBuilding building)
@@ -93,15 +94,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
             _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(building);
-            _detailsManager.ShowDetails(building, allowDelete);
+            _detailsManager.ShowDetails(building);
 		}
 
 		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
             _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
-            bool allowDelete = _shouldBuildingDeleteButtonBeEnabledFilter.IsMatch(building);
-            _detailsManager.ShowDetails(building, allowDelete);
+            _detailsManager.ShowDetails(building);
 		}
 
 		public void ShowFactoryUnits(IFactory factory)

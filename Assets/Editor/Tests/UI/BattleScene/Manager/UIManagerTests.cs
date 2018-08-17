@@ -108,7 +108,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
             _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
-            _detailsManager.Received().ShowDetails(buildingWrapper.Buildable, allowDelete: false);
+            _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
         }
 
         #region SelectBuilding()
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
             _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
-            _detailsManager.Received().ShowDetails(_building, allowDelete: true);
+            _detailsManager.Received().ShowDetails(_building);
 
             _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }
@@ -140,7 +140,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
             _shouldBuildingDeleteButtonBeEnabledFilter.Received().IsMatch(_building);
-            _detailsManager.Received().ShowDetails(_building, allowDelete: false);
+            _detailsManager.Received().ShowDetails(_building);
 
             _playerCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
         }

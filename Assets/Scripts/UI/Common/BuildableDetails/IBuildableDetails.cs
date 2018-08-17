@@ -6,6 +6,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         IButton DroneFocusButton { get; }
 
-        void ShowBuildableDetails(TItem buildable, bool allowDelete);
+        void ShowBuildableDetails(TItem buildable);
     }
 }
