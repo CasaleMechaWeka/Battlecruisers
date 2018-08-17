@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.Filters;
 using NSubstitute;
 using NUnit.Framework;
 

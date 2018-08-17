@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 

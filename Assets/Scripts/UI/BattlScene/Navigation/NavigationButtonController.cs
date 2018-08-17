@@ -1,6 +1,7 @@
-﻿using System;
-using BattleCruisers.UI.BattleScene.Buttons;
+﻿using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation

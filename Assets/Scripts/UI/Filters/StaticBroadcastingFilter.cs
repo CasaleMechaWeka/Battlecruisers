@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.Filters
 {
     public class StaticBroadcastingFilter<TElement> : IBroadcastingFilter<TElement>
     {

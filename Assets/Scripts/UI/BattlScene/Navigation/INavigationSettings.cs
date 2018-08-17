@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.UI.BattleScene.Navigation
+﻿using BattleCruisers.UI.Filters;
+
+namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public enum NavigationPermission
 	{

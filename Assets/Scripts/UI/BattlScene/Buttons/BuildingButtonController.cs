@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using UnityEngine;
 using UnityEngine.UI;
 

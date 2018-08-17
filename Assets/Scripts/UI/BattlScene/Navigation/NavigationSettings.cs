@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BattleCruisers.UI.Filters;
+using System;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-	public class NavigationSettings : INavigationSettings
+    public class NavigationSettings : INavigationSettings
 	{
 		public bool AreTransitionsEnabled { get { return AreTransitionsEnabledFilter.IsMatch; } }
 		public bool IsUserInputEnabled { get { return IsUserInputEnabledFilter.IsMatch; } }

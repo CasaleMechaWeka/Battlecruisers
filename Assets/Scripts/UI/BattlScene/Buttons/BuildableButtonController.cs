@@ -1,7 +1,8 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons

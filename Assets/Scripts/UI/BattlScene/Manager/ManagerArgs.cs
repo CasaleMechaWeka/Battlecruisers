@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public class UIFactory : MonoBehaviour, IUIFactory
+    public class UIFactory : MonoBehaviour, IUIFactory
 	{
         private IUIManager _uiManager;
         private ISpriteProvider _spriteProvider;

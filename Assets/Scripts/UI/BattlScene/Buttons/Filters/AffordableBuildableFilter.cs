@@ -1,6 +1,7 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.Filters;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters

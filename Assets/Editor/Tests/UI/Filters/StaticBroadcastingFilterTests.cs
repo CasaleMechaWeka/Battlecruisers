@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI;
+using BattleCruisers.UI.Filters;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI
+namespace BattleCruisers.Tests.UI.Filters
 {
     public class StaticBroadcastingFilter
     {

@@ -1,7 +1,8 @@
-﻿using System;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 

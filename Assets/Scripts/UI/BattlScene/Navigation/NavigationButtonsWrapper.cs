@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Navigation

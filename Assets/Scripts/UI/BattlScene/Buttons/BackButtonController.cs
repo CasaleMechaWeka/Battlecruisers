@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

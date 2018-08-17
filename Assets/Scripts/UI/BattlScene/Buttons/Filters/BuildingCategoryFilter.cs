@@ -1,5 +1,6 @@
-﻿using System;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.Filters;
+using System;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {

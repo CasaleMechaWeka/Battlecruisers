@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Filters;
 using NSubstitute;
 using NUnit.Framework;
 

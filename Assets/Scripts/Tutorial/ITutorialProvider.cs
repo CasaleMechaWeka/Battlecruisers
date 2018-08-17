@@ -3,9 +3,9 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Steps.Providers;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Tutorial
 {
