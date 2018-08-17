@@ -119,7 +119,7 @@ namespace BattleCruisers.Scenes
             return new LastIncompleteBuildingStartedProvider(cruiser);
         }
 
-        public IFilter<ITarget> CreateChooseTargetButtonFilter()
+        public IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter()
         {
             return new StaticFilter<ITarget>(isMatch: false);
         }

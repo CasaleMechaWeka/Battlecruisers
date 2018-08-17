@@ -19,11 +19,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneManager droneManager, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper, 
-            IFilter<ITarget> showChooseTargetButtonFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper, showChooseTargetButtonFilter);
+            _chooseTargetButton.Initialise(userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
         }
 
         protected override StatsController<ICruiser> GetStatsController()

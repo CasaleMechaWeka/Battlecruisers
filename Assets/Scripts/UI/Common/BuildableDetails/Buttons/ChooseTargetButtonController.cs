@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private Button _button;
         private IUserChosenTargetHelper _userChosenTargetHelper;
-        private IFilter<ITarget> _showButtonFilter;
+        private IFilter<ITarget> _buttonVisibilityFilter;
 
         private ITarget _target;
         public ITarget Target
@@ -24,18 +24,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             }
         }
 
-        private bool ShowButton { get { return _showButtonFilter.IsMatch(Target); } }
+        private bool ShowButton { get { return _buttonVisibilityFilter.IsMatch(Target); } }
 
         public event EventHandler Clicked;
 
-        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> showButtonFilter)
+        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(userChosenTargetHelper, showButtonFilter);
+            Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter);
 
             _userChosenTargetHelper = userChosenTargetHelper;
-            _showButtonFilter = showButtonFilter;
+            _buttonVisibilityFilter = buttonVisibilityFilter;
 
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);

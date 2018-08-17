@@ -22,11 +22,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneManager droneManager, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> showChooseTargetButtonFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _rectTransform = transform.Parse<RectTransform>();
             _maxHeight = _rectTransform.sizeDelta.y;
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
             Assert.IsNotNull(_bottomBar);
-            _bottomBar.Initialise(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            _bottomBar.Initialise(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable, bool allowDelete)

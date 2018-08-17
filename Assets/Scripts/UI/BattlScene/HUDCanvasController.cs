@@ -66,13 +66,13 @@ namespace BattleCruisers.UI.BattleScene
             ICameraController cameraController,
             IBroadcastingFilter shouldNavigationBeEnabledFilter,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> showChooseTargetButtonFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
-            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetHelper, showChooseTargetButtonFilter);
+            Helper.AssertIsNotNull(spriteProvider, playerCruiser, aiCruiser, cameraController, shouldNavigationBeEnabledFilter, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
-            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
-            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);

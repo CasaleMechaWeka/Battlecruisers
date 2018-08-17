@@ -20,9 +20,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneManager droneManager, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> showChooseTargetButtonFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
-            base.Initialise(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            base.Initialise(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             Assert.IsNotNull(spriteProvider);
 

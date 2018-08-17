@@ -98,7 +98,7 @@ namespace BattleCruisers.Scenes
             return new BasicFilter(isMatch: true);
         }
 
-        public IFilter<ITarget> CreateChooseTargetButtonFilter()
+        public IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter()
         {
             return new ChooseTargetFilter();
         }

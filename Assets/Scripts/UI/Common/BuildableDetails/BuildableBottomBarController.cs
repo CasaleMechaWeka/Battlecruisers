@@ -48,9 +48,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneManager droneManager, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> showChooseTargetButtonFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, showChooseTargetButtonFilter);
+            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
             Height = rectTransform.sizeDelta.y;
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper, showChooseTargetButtonFilter);
+            _chooseTargetButton.Initialise(userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _buildProgressController = GetComponentInChildren<BuildableProgressBarController>(includeInactive: true);
             Assert.IsNotNull(_buildProgressController);
