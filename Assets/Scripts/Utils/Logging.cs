@@ -138,13 +138,17 @@ namespace BattleCruisers.Utils
 
             // Other
             tagsToActiveness.Add(Tags.CAMERA, false);
-            tagsToActiveness.Add(Tags.CRUISER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.CRUISER, true);
+            //tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
-            tagsToActiveness.Add(Tags.SLOTS, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.SLOTS, true);
+            //tagsToActiveness.Add(Tags.SLOTS, false);
 
             return tagsToActiveness;
 		}

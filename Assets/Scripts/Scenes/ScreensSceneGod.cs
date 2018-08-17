@@ -128,7 +128,9 @@ namespace BattleCruisers.Scenes
 
 		public void LoadLevel(int levelNum)
 		{
-            Assert.IsTrue(levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+            Assert.IsTrue(
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			ApplicationModel.SelectedLevel = levelNum;
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);

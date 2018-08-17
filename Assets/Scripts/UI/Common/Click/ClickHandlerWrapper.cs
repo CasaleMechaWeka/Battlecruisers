@@ -19,6 +19,8 @@ namespace BattleCruisers.UI.Common.Click
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            Logging.Log("ClicHandlerWrapper.OnPointerClick()");
+
             if (_clickHandler != null)
             {
                 _clickHandler.OnClick(Time.time);
