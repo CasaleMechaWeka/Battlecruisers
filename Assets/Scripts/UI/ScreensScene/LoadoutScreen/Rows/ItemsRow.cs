@@ -1,16 +1,14 @@
-﻿using BattleCruisers.Data.Models;
-using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
-using BattleCruisers.Data;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : class, IComparableItem
     {
-        protected readonly IGameModel _gameModel;
-		protected readonly ILockedInformation _lockedInfo;
+        protected readonly IDataProvider _dataProvider;
 		protected readonly IPrefabFactory _prefabFactory;
         protected readonly IUIFactory _uiFactory;
         protected readonly IItemDetailsManager<TItem> _detailsManager;
@@ -19,8 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 		{
             Assert.IsNotNull(args);
 
-			_gameModel = args.GameModel;
-            _lockedInfo = args.LockedInfo;
+            _dataProvider = args.DataProvider;
             _prefabFactory = args.PrefabFactory;
             _uiFactory = args.UIFactory;
             _detailsManager = args.DetailsManager;

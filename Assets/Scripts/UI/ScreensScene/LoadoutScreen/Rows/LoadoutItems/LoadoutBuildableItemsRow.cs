@@ -30,8 +30,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 		{
             Helper.AssertIsNotNull(args);
 
-            _gameModel = args.GameModel;
-            _lockedInfo = args.LockedInfo;
+            _gameModel = args.DataProvider.GameModel;
+            _lockedInfo = args.DataProvider.LockedInfo;
             _prefabFactory = args.PrefabFactory;
 			_uiFactory = args.UIFactory;
             _buildableToLoadoutItem = new Dictionary<TBuildable, IItem<TBuildable>>();

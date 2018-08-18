@@ -33,23 +33,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public override void SetupUI()
         {
-			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_gameModel.PlayerLoadout.Hull);
+			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 
             IUnlockedItemsRowArgs<ICruiser> args 
                 = new UnlockedItemsRowArgs<ICruiser>(
                     _uiFactory, 
-                    GetUnlockedHullPrefabs(), 
-                    _lockedInfo.NumOfLockedHulls, 
+                    GetUnlockedHullPrefabs(),
+                    _dataProvider.LockedInfo.NumOfLockedHulls, 
                     this);
-            
-            _unlockedHullsRow.Initialise(args, loadoutCruiser);
-            _unlockedHullsRow.SetupUI();
+
+            _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
         }
 
 		private IList<ICruiser> GetUnlockedHullPrefabs()
 		{
-			IList<HullKey> hullKeys = _gameModel.UnlockedHulls;
+			IList<HullKey> hullKeys = _dataProvider.GameModel.UnlockedHulls;
 			IList<ICruiser> prefabs = new List<ICruiser>();
 
 			foreach (HullKey hullKey in hullKeys)
@@ -76,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public void OnPresenting(object activationParameter)
         {
-            ICruiser loadoutHull = HullForKey(_gameModel.PlayerLoadout.Hull);
+            ICruiser loadoutHull = HullForKey(_dataProvider.GameModel.PlayerLoadout.Hull);
             UpdateUserChosenHull(loadoutHull);
         }
 

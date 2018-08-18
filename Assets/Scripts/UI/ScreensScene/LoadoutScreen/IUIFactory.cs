@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
+    // FELIX  I think all of these will be obsolete?
     public interface IUIFactory
     {
         // Unlocked items

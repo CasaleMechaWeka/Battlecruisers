@@ -11,13 +11,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     // FELIX  Potentially avoid duplicate code with BuildableItems?
-    public class HullItem : MonoBehaviour
+    public class HullItem : MonoBehaviour, IStatefulUIElement
     {
-        // FELIX  Do not cache unused fields :/
-        private IItemDetailsManager<ICruiser> _hullDetailsManager;
-        private IHullItemsRow _hullItemsRow;
         private IGameModel _gameModel;
-        private ICruiser _hull;
         private HullKey _hullKey;
         private UnlockedHullItem _unlockedHullItem;
         private LockedItem _lockedItem;
@@ -31,15 +27,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, gameModel, hull, hullKey);
 
-            _hullDetailsManager = hullDetailsManager;
-            _hullItemsRow = hullItemsRow;
             _gameModel = gameModel;
-            _hull = hull;
             _hullKey = hullKey;
 
             _unlockedHullItem = GetComponentInChildren<UnlockedHullItem>();
             Assert.IsNotNull(_unlockedHullItem);
-            _unlockedHullItem.Initialise(_hull, _hullDetailsManager);
+            _unlockedHullItem.Initialise(hull, hullDetailsManager);
 
             _lockedItem = GetComponentInChildren<LockedItem>();
             Assert.IsNotNull(_lockedItem);
@@ -52,6 +45,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             _unlockedHullItem.IsVisible = isHullUnlocked;
             _lockedItem.IsVisible = !isHullUnlocked;
+        }
+
+        public void GoToState(UIState state)
+        {
+            _unlockedHullItem.GoToState(state);
+        }
+
+        public void OnNewHullSelected(ICruiser selectedHull)
+        {
+            _unlockedHullItem.OnNewHullSelected(selectedHull);
         }
     }
 }

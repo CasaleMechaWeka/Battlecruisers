@@ -1,14 +1,12 @@
-﻿using BattleCruisers.Data.Models;
-using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.Data;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
     public interface IItemsRowArgs<TItem> where TItem : IComparableItem
     {
-        IGameModel GameModel { get; }
-        ILockedInformation LockedInfo { get; }
+        IDataProvider DataProvider { get; }
         IPrefabFactory PrefabFactory {  get; }
         IUIFactory UIFactory { get; }
         IItemDetailsManager<TItem> DetailsManager { get; }

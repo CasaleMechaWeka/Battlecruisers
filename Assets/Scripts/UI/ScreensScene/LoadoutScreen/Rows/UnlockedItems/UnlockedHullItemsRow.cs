@@ -1,52 +1,55 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    // FELIX  Merge with UnlockedHullItem.  No other class extends this :P
-    public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
-	{
-        private IItemsRow<TItem> _itemsRow;
-		private RectTransform _rectTransform;
+    public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement 
+    {
+        private IList<HullItem> _hullItems;
 
-		public Image isInLoadoutFeedback;
+        public void Initialise(
+            IItemDetailsManager<ICruiser> hullDetailsManager,
+            IHullItemsRow hullItemsRow,
+            IDataProvider dataProvider,
+            IPrefabFactory prefabFactory)
+		{
+            Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, dataProvider, prefabFactory); 
 
-		private bool _isItemInLoadout;
-        public bool IsItemInLoadout
-        {
-            get { return _isItemInLoadout; }
-            set
+            _hullItems = GetComponentsInChildren<HullItem>().ToList();
+            Assert.AreEqual(dataProvider.StaticData.HullKeys.Count, _hullItems.Count);
+
+            for (int i = 0; i < _hullItems.Count; ++i)
             {
-                _isItemInLoadout = value;
-                isInLoadoutFeedback.gameObject.SetActive(_isItemInLoadout);
+                HullItem hullItem = _hullItems[i];
+                HullKey hullKey = dataProvider.StaticData.HullKeys[i];
+                ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(hullKey);
+
+                hullItem.Initialise(hullDetailsManager, hullItemsRow, dataProvider.GameModel, hullPrefab, hullKey);
             }
         }
 
-        public Vector2 Size { get { return _rectTransform.sizeDelta; } }
-		
-        public void Initialise(
-            TItem item, 
-            IItemDetailsManager<TItem> itemDetailsManager,
-            IItemsRow<TItem> itemsRow, 
-            bool isInLoadout) 
+        public void GoToState(UIState state)
         {
-            base.Initialise(item, itemDetailsManager);
-
-            Helper.AssertIsNotNull(itemsRow, isInLoadoutFeedback);
-
-            _itemsRow = itemsRow;
-            _rectTransform = transform.Parse<RectTransform>();
-            IsItemInLoadout = isInLoadout;
-
-            GoToState(UIState.Default);
+            foreach (HullItem hullItem in _hullItems)
+            {
+                hullItem.GoToState(state);
+            }
         }
 
-        protected override IItemState<TItem> CreateDefaultState()
+        public void UpdateSelectedHull(ICruiser selectedHull)
         {
-            return new UnlockedItemDefaultState<TItem>(_itemsRow, this);
+            foreach (HullItem hullItem in _hullItems)
+            {
+                hullItem.OnNewHullSelected(selectedHull);
+            }
         }
-	}
+    }
 }
