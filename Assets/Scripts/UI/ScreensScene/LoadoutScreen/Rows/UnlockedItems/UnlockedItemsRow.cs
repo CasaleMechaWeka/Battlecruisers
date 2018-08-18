@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -7,34 +8,36 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public abstract class UnlockedItemsRow<TItem> : MonoBehaviour, IStatefulUIElement 
-        where TItem : class, IComparableItem
+    public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement 
     {
-		protected IUIFactory _uiFactory;
-		private IList<TItem> _unlockedItems;
+        private ICruiser _loadoutHull;
+        protected IUIFactory _uiFactory;
+		private IList<ICruiser> _unlockedHulls;
         private int _numOfLockedItems;
-        protected IItemsRow<TItem> _itemsRow;
-		protected IList<UnlockedItem<TItem>> _unlockedItemButtons;
+        protected IItemsRow<ICruiser> _hullsRow;
+		protected IList<UnlockedHullItem> _unlockedItemButtons;
 
 		public HorizontalLayoutGroup layoutGroup;
 		public RectTransform scrollViewContent;
 
-        public void Initialise(IUnlockedItemsRowArgs<TItem> args)
+        // FELIX  Add hull ot args?
+        public void Initialise(IUnlockedItemsRowArgs<ICruiser> args, ICruiser loadoutHull)
 		{
-            Helper.AssertIsNotNull(layoutGroup, scrollViewContent, args); 
+            Helper.AssertIsNotNull(layoutGroup, scrollViewContent, args, loadoutHull); 
 
 			_uiFactory = args.UIFactory;
-            _unlockedItems = args.UnlockedItems;
+            _unlockedHulls = args.UnlockedItems;
             _numOfLockedItems = args.NumOfLockedItems;
-			_itemsRow = args.ItemsRow;
+			_hullsRow = args.ItemsRow;
+            _loadoutHull = loadoutHull;
         }
 
         public void SetupUI()
         {
-			CreateItemButtons(_unlockedItems);
+			CreateItemButtons(_unlockedHulls);
         }
 
-        private void CreateItemButtons(IList<TItem> unlockedItems)
+        private void CreateItemButtons(IList<ICruiser> unlockedItems)
 		{
             float unlockedItemsWidth = CreateUnlockedItems(unlockedItems);
             float lockedItemsWidth = CreatLockedItems();
@@ -44,15 +47,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 			scrollViewContent.sizeDelta = new Vector2(rowWith, scrollViewContent.sizeDelta.y);
 		}
 		
-		private float CreateUnlockedItems(IList<TItem> unlockedItems)
+		private float CreateUnlockedItems(IList<ICruiser> unlockedItems)
 		{
 			float width = 0;
 			
-			_unlockedItemButtons = new List<UnlockedItem<TItem>>();
+			_unlockedItemButtons = new List<UnlockedHullItem>();
 			
-			foreach (TItem unlockedItem in unlockedItems)
+			foreach (ICruiser unlockedItem in unlockedItems)
 			{
-				UnlockedItem<TItem> itemButton = CreateUnlockedItem(unlockedItem, layoutGroup);
+				UnlockedHullItem itemButton = CreateUnlockedItem(unlockedItem, layoutGroup);
 				_unlockedItemButtons.Add(itemButton);
 				width += itemButton.Size.x;
 			}
@@ -73,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             return width;
         }
 
-        private float FindRowWidth(IList<TItem> unlockedItems, float unlockedItemsWidth, float lockedItemsWidth)
+        private float FindRowWidth(IList<ICruiser> unlockedItems, float unlockedItemsWidth, float lockedItemsWidth)
         {
             int numOfItems = unlockedItems.Count + _numOfLockedItems;
             Assert.IsTrue(numOfItems > 0);
@@ -81,16 +84,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             return unlockedItemsWidth + lockedItemsWidth + spacesWidth;
         }
 
-        protected abstract UnlockedItem<TItem> CreateUnlockedItem(TItem item, HorizontalOrVerticalLayoutGroup itemParent);
+        private UnlockedHullItem CreateUnlockedItem(ICruiser hull, HorizontalOrVerticalLayoutGroup itemParent)
+        {
+            bool isInLoadout = ReferenceEquals(_loadoutHull, hull);
+            return _uiFactory.CreateUnlockedHull(layoutGroup, _hullsRow, hull, isInLoadout);
+        }
 
-        protected abstract LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent);
+        private LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent)
+        {
+            return _uiFactory.CreateLockedHull(itemParent);
+        }
 
         public void GoToState(UIState state)
         {
-			foreach (UnlockedItem<TItem> unlockedItemButton in _unlockedItemButtons)
+			foreach (UnlockedHullItem unlockedItemButton in _unlockedItemButtons)
 			{
 				unlockedItemButton.GoToState(state);
 			}
         }
-	}
+
+        public void UpdateSelectedHull(ICruiser selectedHull)
+        {
+            foreach (UnlockedHullItem unlockedHullButton in _unlockedItemButtons)
+            {
+                unlockedHullButton.OnNewHullSelected(selectedHull);
+            }
+        }
+    }
 }

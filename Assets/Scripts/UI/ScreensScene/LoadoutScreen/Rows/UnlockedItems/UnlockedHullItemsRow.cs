@@ -1,40 +1,52 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
-using UnityEngine.Assertions;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
+using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public class UnlockedHullItemsRow : UnlockedItemsRow<ICruiser>
+    // FELIX  Merge with UnlockedHullItem.  No other class extends this :P
+    public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
 	{
-		private ICruiser _loadoutCruiser;
+        private IItemsRow<TItem> _itemsRow;
+		private RectTransform _rectTransform;
 
-        public void Initialise(IUnlockedItemsRowArgs<ICruiser> args, ICruiser loadoutCruiser)
-		{
-			base.Initialise(args);
+		public Image isInLoadoutFeedback;
 
-            Assert.IsTrue(args.UnlockedItems.Count > 0);
-
-            _loadoutCruiser = loadoutCruiser;
-		}
-
-		protected override UnlockedItem<ICruiser> CreateUnlockedItem(ICruiser item, HorizontalOrVerticalLayoutGroup itemParent)
-		{
-			bool isInLoadout = ReferenceEquals(_loadoutCruiser, item);
-			return _uiFactory.CreateUnlockedHull(layoutGroup, _itemsRow, item, isInLoadout);
-		}
-
-		public void UpdateSelectedHull(ICruiser selectedCruiser)
-		{
-			foreach (UnlockedHullItem unlockedHullButton in _unlockedItemButtons)
-			{
-				unlockedHullButton.OnNewHullSelected(selectedCruiser);
-			}
-		}
-
-        protected override LockedItem CreateLockedItem(HorizontalOrVerticalLayoutGroup itemParent)
+		private bool _isItemInLoadout;
+        public bool IsItemInLoadout
         {
-            return _uiFactory.CreateLockedHull(itemParent);
+            get { return _isItemInLoadout; }
+            set
+            {
+                _isItemInLoadout = value;
+                isInLoadoutFeedback.gameObject.SetActive(_isItemInLoadout);
+            }
+        }
+
+        public Vector2 Size { get { return _rectTransform.sizeDelta; } }
+		
+        public void Initialise(
+            TItem item, 
+            IItemDetailsManager<TItem> itemDetailsManager,
+            IItemsRow<TItem> itemsRow, 
+            bool isInLoadout) 
+        {
+            base.Initialise(item, itemDetailsManager);
+
+            Helper.AssertIsNotNull(itemsRow, isInLoadoutFeedback);
+
+            _itemsRow = itemsRow;
+            _rectTransform = transform.Parse<RectTransform>();
+            IsItemInLoadout = isInLoadout;
+
+            GoToState(UIState.Default);
+        }
+
+        protected override IItemState<TItem> CreateDefaultState()
+        {
+            return new UnlockedItemDefaultState<TItem>(_itemsRow, this);
         }
 	}
 }
