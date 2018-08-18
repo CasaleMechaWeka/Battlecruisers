@@ -57,12 +57,12 @@ namespace BattleCruisers.Scenes
             {
                 GoToHomeScreen();
             }
-            
-            
+
+
             // TEMP  Go to specific screen :)
             //GoToSettingsScreen();
             //GoToLevelsScreen();
-            //GoToLoadoutScreen();
+            GoToLoadoutScreen();
         }
         
         private void GoToPostBattleScreen()
