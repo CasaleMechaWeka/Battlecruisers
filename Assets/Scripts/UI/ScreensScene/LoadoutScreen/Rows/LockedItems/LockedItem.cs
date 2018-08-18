@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems
