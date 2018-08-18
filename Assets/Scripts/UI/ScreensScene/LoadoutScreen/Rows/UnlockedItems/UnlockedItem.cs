@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
+    // FELIX  Merge with UnlockedHullItem.  No other class extends this :P
     public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
 	{
         private IItemsRow<TItem> _itemsRow;
