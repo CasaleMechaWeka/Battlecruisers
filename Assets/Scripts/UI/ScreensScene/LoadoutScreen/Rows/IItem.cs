@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         Cruiser, Building, Unit
     }
 
-    public interface IItem<TItem> : IStatefulUIElement
+    public interface IItem<TItem> : IStatefulUIElement, IGameObject
         where TItem : IComparableItem
 	{
         ItemType Type { get; }
