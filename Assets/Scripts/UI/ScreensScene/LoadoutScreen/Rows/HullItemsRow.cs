@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
 		private readonly LoadoutHullItem _loadoutHull;
         private readonly UnlockedHullItemsRow _unlockedHullsRow;
+        // FELIX  Can I remove this map???
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
         public HullKey UserChosenHull { get; private set; }
@@ -28,7 +29,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 			_loadoutHull = loadoutHull;
             _unlockedHullsRow = unlockedHullsRow;
 
-			_hullToKey = new Dictionary<ICruiser, HullKey>();
+            _hullToKey = CreateHullToKeyMap();
+        }
+
+        private IDictionary<ICruiser, HullKey> CreateHullToKeyMap()
+        {
+            IDictionary<ICruiser, HullKey> hullToKey = new Dictionary<ICruiser, HullKey>();
+
+            foreach (HullKey hullKey in _dataProvider.GameModel.UnlockedHulls)
+            {
+                ICruiser hull = _prefabFactory.GetCruiserPrefab(hullKey);
+                hullToKey.Add(hull, hullKey);
+            }
+
+            return hullToKey;
         }
 
         public override void SetupUI()
@@ -36,30 +50,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 
-            IUnlockedItemsRowArgs<ICruiser> args 
-                = new UnlockedItemsRowArgs<ICruiser>(
-                    _uiFactory, 
-                    GetUnlockedHullPrefabs(),
-                    _dataProvider.LockedInfo.NumOfLockedHulls, 
-                    this);
-
             _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
         }
-
-		private IList<ICruiser> GetUnlockedHullPrefabs()
-		{
-			IList<HullKey> hullKeys = _dataProvider.GameModel.UnlockedHulls;
-			IList<ICruiser> prefabs = new List<ICruiser>();
-
-			foreach (HullKey hullKey in hullKeys)
-			{
-				ICruiser hull = _prefabFactory.GetCruiserPrefab(hullKey);
-				prefabs.Add(hull);
-				_hullToKey.Add(hull, hullKey);
-			}
-
-			return prefabs;
-		}
 
 		public override bool SelectUnlockedItem(UnlockedItem<ICruiser> hullItem)
 		{
@@ -77,6 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             ICruiser loadoutHull = HullForKey(_dataProvider.GameModel.PlayerLoadout.Hull);
             UpdateUserChosenHull(loadoutHull);
+            _unlockedHullsRow.RefreshLockedStatus();
         }
 
         private ICruiser HullForKey(HullKey hullKey)

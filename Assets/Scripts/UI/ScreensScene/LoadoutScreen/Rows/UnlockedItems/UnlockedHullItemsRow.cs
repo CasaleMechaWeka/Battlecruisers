@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement 
+    public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement
     {
         private IList<HullItem> _hullItems;
 
@@ -33,6 +33,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
                 ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(hullKey);
 
                 hullItem.Initialise(hullDetailsManager, hullItemsRow, dataProvider.GameModel, hullPrefab, hullKey);
+            }
+        }
+
+        public void RefreshLockedStatus()
+        {
+            foreach (HullItem hullItem in _hullItems)
+            {
+                hullItem.RefreshLockedStatus();
             }
         }
 
