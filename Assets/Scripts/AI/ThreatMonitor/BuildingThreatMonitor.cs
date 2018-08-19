@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// + A building is completed
     /// + A building is destroyed
     /// </summary>
-    public class BuildingThreatMonitor<TBuilding> : BaseThreatMonitor where TBuilding : class, IBuilding
+    public class BuildingThreatMonitor<TBuilding> : ImmediateThreatMonitor where TBuilding : class, IBuilding
     {
         private readonly IList<TBuilding> _buildings;
 

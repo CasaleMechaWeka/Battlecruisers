@@ -18,7 +18,7 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// + A factory is completed
     /// + The number of drones used by a factory change
     /// </summary>
-    public class FactoryThreatMonitor : BaseThreatMonitor
+    public class FactoryThreatMonitor : ImmediateThreatMonitor
     {
 		private readonly UnitCategory _threatCategory;
         private readonly IList<IFactory> _factories;
