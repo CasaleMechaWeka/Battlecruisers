@@ -44,17 +44,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         public void RefreshLockedStatus()
         {
-            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableitem in _buildableItems)
+            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableItem in _buildableItems)
             {
-                buildableitem.OnPresenting(activationParameter: null);
+                buildableItem.OnPresenting(activationParameter: null);
             }
         }
 
         public void GoToState(UIState state)
         {
-            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableitem in _buildableItems)
+            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableItem in _buildableItems)
             {
-                buildableitem.GoToState(state);
+                buildableItem.GoToState(state);
             }
         }
 	}
