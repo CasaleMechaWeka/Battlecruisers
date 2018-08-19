@@ -24,11 +24,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
             _itemKey = itemKey;
             _gameModel = gameModel;
 
-            _unlockedItem = GetComponent<LoadoutItem<TItem>>();
+            _unlockedItem = GetComponentInChildren<LoadoutItem<TItem>>();
             Assert.IsNotNull(_unlockedItem);
             _unlockedItem.Initialise(item, itemDetailsManager);
 
-            _lockedItem = GetComponent<LockedItem>();
+            _lockedItem = GetComponentInChildren<LockedItem>();
             Assert.IsNotNull(_lockedItem);
         }
 
