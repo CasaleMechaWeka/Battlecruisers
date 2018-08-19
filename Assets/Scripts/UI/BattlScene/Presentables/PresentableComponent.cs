@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    // FELIX  Test :)
     public sealed class PresentableComponent : IPresentableComponent
     {
         private readonly IList<IPresentable> _childPresentables;
