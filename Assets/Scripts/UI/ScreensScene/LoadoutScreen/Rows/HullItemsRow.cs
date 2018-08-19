@@ -34,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 
             _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
+            _childPresentables.Add(_unlockedHullsRow);
         }
 
         private IDictionary<ICruiser, HullKey> CreateHullToKeyMap()
@@ -61,12 +62,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _unlockedHullsRow.GoToState(state);
         }
 
-        public void OnPresenting(object activationParameter)
+        public override void OnPresenting(object activationParameter)
         {
+            base.OnPresenting(activationParameter);
+
+            // FELIX  Add to child presentables for automatic activation??
             ICruiser loadoutHull = HullForKey(_dataProvider.GameModel.PlayerLoadout.Hull);
             UpdateUserChosenHull(loadoutHull);
 
-            _unlockedHullsRow.RefreshLockedStatus();
             _loadoutHull.ShowSelectedFeedback = false;
         }
 
@@ -90,11 +93,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             // Update UI
             _loadoutHull.UpdateHull(hull);
             _unlockedHullsRow.UpdateSelectedHull(hull);
-        }
-
-        public void OnDismissing()
-        {
-            // empty
         }
     }
 }

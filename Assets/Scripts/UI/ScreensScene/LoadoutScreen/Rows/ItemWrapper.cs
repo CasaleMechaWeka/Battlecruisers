@@ -27,6 +27,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
         public void Initialise(IGameModel gameModel, TPrefabKey itemKey)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(gameModel, itemKey);
 
             _gameModel = gameModel;

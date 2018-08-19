@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils.Fetchers;
@@ -6,7 +7,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public abstract class ItemsRow<TItem> : IItemsRow<TItem> where TItem : class, IComparableItem
+    public abstract class ItemsRow<TItem> : Presentable, IItemsRow<TItem> 
+        where TItem : class, IComparableItem
     {
         protected readonly IDataProvider _dataProvider;
 		protected readonly IPrefabFactory _prefabFactory;

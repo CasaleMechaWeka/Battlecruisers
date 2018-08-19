@@ -1,17 +1,17 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
-    public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement
+    public class UnlockedHullItemsRow : PresentableController, IStatefulUIElement
     {
         private IList<HullItemWrapper> _hullItems;
 
@@ -21,6 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
 		{
+            base.Initialise();
+
             Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, dataProvider, prefabFactory); 
 
             _hullItems = GetComponentsInChildren<HullItemWrapper>().ToList();
@@ -33,14 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
                 ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(hullKey);
 
                 hullItem.Initialise(hullDetailsManager, hullItemsRow, dataProvider.GameModel, hullPrefab, hullKey);
-            }
-        }
-
-        public void RefreshLockedStatus()
-        {
-            foreach (HullItemWrapper hullItem in _hullItems)
-            {
-                hullItem.OnPresenting(activationParameter: null);
+                _childPresentables.Add(hullItem);
             }
         }
 
