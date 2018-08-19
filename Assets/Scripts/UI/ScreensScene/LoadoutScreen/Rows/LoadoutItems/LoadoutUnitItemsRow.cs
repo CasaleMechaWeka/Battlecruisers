@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
@@ -8,28 +11,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
     {
         private UnitCategory _unitCategory;
 
-        protected override int NumOfLockedBuildables { get { return _lockedInfo.NumOfLockedUnits(_unitCategory); } }
-
         public void Initialise(IItemsRowArgs<IUnit> args, UnitCategory unitCategory)
         {
-            base.Initialise(args);
-
+            // Will be used in overridden method called by base.Initialise() :/
             _unitCategory = unitCategory;
+
+            base.Initialise(args);
         }
 
-        protected override LoadoutItem<IUnit> CreateItem(IUnit item)
+        protected override IList<UnitKey> FindBuildableKeys(IStaticData staticData)
         {
-            return _uiFactory.CreateLoadoutUnitItem(_layoutGroup, item);
+            return
+                staticData.UnitKeys
+                    .Where(key => key.UnitCategory == _unitCategory)
+                    .ToList();
         }
 
-        protected override IUnit GetBuildablePrefab(UnitKey prefabKey)
+        protected override IUnit GetBuildablePrefab(IPrefabFactory prefabFactory, UnitKey buildableKey)
         {
-            return _prefabFactory.GetUnitWrapperPrefab(prefabKey).Buildable;
-        }
-
-        protected override IList<IUnit> GetLoadoutBuildablePrefabs()
-        {
-            return GetBuildablePrefabs(_gameModel.PlayerLoadout.GetUnits(_unitCategory));
+            return prefabFactory.GetUnitWrapperPrefab(buildableKey).Buildable;
         }
     }
 }

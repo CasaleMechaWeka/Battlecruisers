@@ -1,97 +1,60 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
     public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : MonoBehaviour, IStatefulUIElement
         where TBuildable : class, IBuildable
-        where TPrefabKey : IPrefabKey
+        where TPrefabKey : class, IPrefabKey
 	{
-        protected IGameModel _gameModel;
-        protected ILockedInformation _lockedInfo;
-        protected IPrefabFactory _prefabFactory;
-        protected IUIFactory _uiFactory;
-        private IDictionary<TBuildable, IItem<TBuildable>> _buildableToLoadoutItem;
-        protected HorizontalLayoutGroup _layoutGroup;
+        private IList<LoadoutItemWrapper<TBuildable, TPrefabKey>> _buildableItems;
 
         private const int MAX_NUM_OF_ITEMS = 5;
-
-        protected abstract int NumOfLockedBuildables { get; }
 
         public void Initialise(IItemsRowArgs<TBuildable> args)
 		{
             Helper.AssertIsNotNull(args);
 
-            _gameModel = args.DataProvider.GameModel;
-            _lockedInfo = args.DataProvider.LockedInfo;
-            _prefabFactory = args.PrefabFactory;
-			_uiFactory = args.UIFactory;
-            _buildableToLoadoutItem = new Dictionary<TBuildable, IItem<TBuildable>>();
+            _buildableItems = GetComponentsInChildren<LoadoutItemWrapper<TBuildable, TPrefabKey>>().ToList();
+            IList<TPrefabKey> buildableKeys = FindBuildableKeys(args.DataProvider.StaticData);
 
-            _layoutGroup = GetComponent<HorizontalLayoutGroup>();
-            Assert.IsNotNull(_layoutGroup);
-        }
+            Assert.AreEqual(buildableKeys.Count, _buildableItems.Count);
+            Assert.IsTrue(buildableKeys.Count <= MAX_NUM_OF_ITEMS);
 
-        // Not in Initialise() because uses abstract members which will only
-        // be correct after Iniitalise().
-        public void SetupUI()
-        {
-            IList<TBuildable> _buildables = GetLoadoutBuildablePrefabs();
-
-            Assert.IsTrue(_buildables.Count + NumOfLockedBuildables <= MAX_NUM_OF_ITEMS);
-
-            // Create unlocked items
-			foreach (TBuildable buildable in _buildables)
-			{
-				CreateLoadoutItem(buildable);
-			}
-
-            // Create placeholders for locked items
-            for (int i = 0; i < NumOfLockedBuildables; ++i)
+            for (int i = 0; i < _buildableItems.Count; ++i)
             {
-                _uiFactory.CreateLockedBuildable(_layoutGroup);
+                LoadoutItemWrapper<TBuildable, TPrefabKey> buildableItem = _buildableItems[i];
+                TPrefabKey buildableKey = buildableKeys[i];
+                TBuildable buildablePrefab = GetBuildablePrefab(args.PrefabFactory, buildableKey);
+
+                buildableItem.Initialise(buildablePrefab, buildableKey, args.DetailsManager, args.DataProvider.GameModel);
             }
         }
 
-        protected abstract IList<TBuildable> GetLoadoutBuildablePrefabs();
+        protected abstract IList<TPrefabKey> FindBuildableKeys(IStaticData staticData);
 
-        private void CreateLoadoutItem(TBuildable buildableToAdd)
+        protected abstract TBuildable GetBuildablePrefab(IPrefabFactory prefabFactory, TPrefabKey buildableKey);
+
+        public void RefreshLockedStatus()
         {
-            Assert.IsFalse(_buildableToLoadoutItem.ContainsKey(buildableToAdd));
-            IItem<TBuildable> item = CreateItem(buildableToAdd);
-            _buildableToLoadoutItem.Add(buildableToAdd, item);
-        }
-
-        protected abstract LoadoutItem<TBuildable> CreateItem(TBuildable item);
-
-        protected IList<TBuildable> GetBuildablePrefabs(IList<TPrefabKey> buildableKeys)
-        {
-            IList<TBuildable> prefabs = new List<TBuildable>();
-
-            foreach (TPrefabKey key in buildableKeys)
+            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableitem in _buildableItems)
             {
-                TBuildable buildable = GetBuildablePrefab(key);
-                prefabs.Add(buildable);
+                buildableitem.RefreshLockedStatus();
             }
-
-            return prefabs;
         }
-
-        protected abstract TBuildable GetBuildablePrefab(TPrefabKey prefabKey);
 
         public void GoToState(UIState state)
         {
-            foreach (IItem<TBuildable> item in _buildableToLoadoutItem.Values)
+            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableitem in _buildableItems)
             {
-                item.GoToState(state);
+                buildableitem.GoToState(state);
             }
         }
 	}

@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             LoadoutUnitItemsRow loadoutRow = GetComponentInChildren<LoadoutUnitItemsRow>();
             Assert.IsNotNull(loadoutRow);
             loadoutRow.Initialise(args, category);
-            loadoutRow.SetupUI();
 
             UnitsRow = loadoutRow;
         }
