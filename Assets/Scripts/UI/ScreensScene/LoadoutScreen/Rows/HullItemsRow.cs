@@ -65,7 +65,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             ICruiser loadoutHull = HullForKey(_dataProvider.GameModel.PlayerLoadout.Hull);
             UpdateUserChosenHull(loadoutHull);
+
             _unlockedHullsRow.RefreshLockedStatus();
+            _loadoutHull.ShowSelectedFeedback = false;
         }
 
         private ICruiser HullForKey(HullKey hullKey)
