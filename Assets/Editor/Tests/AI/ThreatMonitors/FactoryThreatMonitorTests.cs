@@ -9,7 +9,7 @@ using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.AI
+namespace BattleCruisers.Tests.AI.ThreatMonitors
 {
     public class FactoryThreatMonitorTests
     {
