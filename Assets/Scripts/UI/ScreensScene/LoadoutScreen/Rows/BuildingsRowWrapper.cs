@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         public BuildingCategory category;
 
-        public IStatefulUIElement BuildingsRow { get; private set; }
+        public LoadoutBuildingItemsRow BuildingsRow { get; private set; }
 
         public void Initialise(IItemsRowArgs<IBuilding> args)
         {
