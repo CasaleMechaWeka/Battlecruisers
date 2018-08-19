@@ -1,14 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public abstract class BuildableSection<TBuildable, TPrefabKey> : MonoBehaviour
+    public abstract class BuildableSection<TBuildable, TPrefabKey> : PresentableController
         where TBuildable : class, IBuildable
         where TPrefabKey : class, IPrefabKey
     {
@@ -18,6 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(ItemsRowArgs<TBuildable> args, IItemStateManager itemStateManager)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(args, itemStateManager);
 
             _buildablesRow = GetComponentsInChildren<BuildablesRowWrapper<TBuildable, TPrefabKey>>().ToList();
@@ -29,8 +31,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             }
         }
 
-        public void OnPresented()
+        public override void OnPresenting(object activationParameter)
         {
+            base.OnPresenting(activationParameter);
+
+            // FELIX  Use child presentables :)
             foreach (BuildablesRowWrapper<TBuildable, TPrefabKey> buildablesRow in _buildablesRow)
             {
                 buildablesRow.BuildablesRow.RefreshLockedStatus();

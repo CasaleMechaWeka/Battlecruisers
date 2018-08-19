@@ -71,6 +71,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IItemsRowArgs<ICruiser> args = new ItemsRowArgs<ICruiser>(_dataProvider, _prefabFactory, cruiserDetailsManager);
             hullsRowWrapper.Initialise(args);
             _itemStateManager.AddItem(hullsRowWrapper.HullsRow, ItemType.Cruiser);
+
+            _childPresentables.Add(hullsRowWrapper.HullsRow);
         }
 
         private void SetupBuildingRows()
@@ -80,6 +82,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _buildingSection = GetComponentInChildren<BuildingSection>();
             Assert.IsNotNull(_buildingSection);
             _buildingSection.Initialise(args, _itemStateManager);
+
+            _childPresentables.Add(_buildingSection);
         }
 
         private void SetupUnitRows()
@@ -89,16 +93,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _unitSection = GetComponentInChildren<UnitSection>();
             Assert.IsNotNull(_unitSection);
             _unitSection.Initialise(args, _itemStateManager);
-        }
 
-        // FELIX  Use child presentables to automate propagation?
-        public override void OnPresenting(object activationParameter)
-        {
-            base.OnPresenting(activationParameter);
-
-            hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
-            _buildingSection.OnPresented();
-            _unitSection.OnPresented();
+            _childPresentables.Add(_unitSection);
         }
 
         public void GoToHomeScreen()
