@@ -19,7 +19,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             Assert.IsNotNull(unlockedHullsRow);
 
             IHullItemsRow hullsRow = new HullItemsRow(args, loadoutHullItem, unlockedHullsRow);
-            hullsRow.SetupUI();
             HullsRow = hullsRow;
         }
     }

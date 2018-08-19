@@ -29,6 +29,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _unlockedHullsRow = unlockedHullsRow;
 
             _hullToKey = CreateHullToKeyMap();
+
+            Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
+            _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
+
+            _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
         }
 
         private IDictionary<ICruiser, HullKey> CreateHullToKeyMap()
@@ -42,14 +47,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             }
 
             return hullToKey;
-        }
-
-        public override void SetupUI()
-        {
-			Cruiser loadoutCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
-            _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
-
-            _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
         }
 
 		public override bool SelectUnlockedItem(UnlockedItem<ICruiser> hullItem)
