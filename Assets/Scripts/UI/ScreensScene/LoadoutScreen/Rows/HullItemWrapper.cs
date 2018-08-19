@@ -10,9 +10,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    // FELIX  Rename to HullItemWrapper to be consistent with LoadoutItemWrapper?
     // FELIX  Potentially avoid duplicate code with LoadoutItemWrapper?
-    public class HullItem : MonoBehaviour, IStatefulUIElement
+    public class HullItemWrapper : MonoBehaviour, IStatefulUIElement
     {
         private IGameModel _gameModel;
         private HullKey _hullKey;

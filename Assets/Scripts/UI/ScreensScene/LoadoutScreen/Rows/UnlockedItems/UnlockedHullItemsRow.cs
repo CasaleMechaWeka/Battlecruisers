@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 {
     public class UnlockedHullItemsRow : MonoBehaviour, IStatefulUIElement
     {
-        private IList<HullItem> _hullItems;
+        private IList<HullItemWrapper> _hullItems;
 
         public void Initialise(
             IItemDetailsManager<ICruiser> hullDetailsManager,
@@ -23,12 +23,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 		{
             Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, dataProvider, prefabFactory); 
 
-            _hullItems = GetComponentsInChildren<HullItem>().ToList();
+            _hullItems = GetComponentsInChildren<HullItemWrapper>().ToList();
             Assert.AreEqual(dataProvider.StaticData.HullKeys.Count, _hullItems.Count);
 
             for (int i = 0; i < _hullItems.Count; ++i)
             {
-                HullItem hullItem = _hullItems[i];
+                HullItemWrapper hullItem = _hullItems[i];
                 HullKey hullKey = dataProvider.StaticData.HullKeys[i];
                 ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(hullKey);
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void RefreshLockedStatus()
         {
-            foreach (HullItem hullItem in _hullItems)
+            foreach (HullItemWrapper hullItem in _hullItems)
             {
                 hullItem.RefreshLockedStatus();
             }
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void GoToState(UIState state)
         {
-            foreach (HullItem hullItem in _hullItems)
+            foreach (HullItemWrapper hullItem in _hullItems)
             {
                 hullItem.GoToState(state);
             }
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
 
         public void UpdateSelectedHull(ICruiser selectedHull)
         {
-            foreach (HullItem hullItem in _hullItems)
+            foreach (HullItemWrapper hullItem in _hullItems)
             {
                 hullItem.OnNewHullSelected(selectedHull);
             }
