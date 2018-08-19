@@ -19,8 +19,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
         private IItemStateManager _itemStateManager;
-        private BuildingSection _buildingSection;
-        private UnitSection _unitSection;
 
         public HullsRowWrapper hullsRowWrapper;
         public CruiserDetailsManager cruiserDetailsManager;
@@ -79,22 +77,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_dataProvider, _prefabFactory, buildingDetailsManager);
 
-            _buildingSection = GetComponentInChildren<BuildingSection>();
-            Assert.IsNotNull(_buildingSection);
-            _buildingSection.Initialise(args, _itemStateManager);
+            BuildingSection buildingSection = GetComponentInChildren<BuildingSection>();
+            Assert.IsNotNull(buildingSection);
+            buildingSection.Initialise(args, _itemStateManager);
 
-            _childPresentables.Add(_buildingSection);
+            _childPresentables.Add(buildingSection);
         }
 
         private void SetupUnitRows()
         {
             ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_dataProvider, _prefabFactory, unitDetailsManager);
 
-            _unitSection = GetComponentInChildren<UnitSection>();
-            Assert.IsNotNull(_unitSection);
-            _unitSection.Initialise(args, _itemStateManager);
+            UnitSection unitSection = GetComponentInChildren<UnitSection>();
+            Assert.IsNotNull(unitSection);
+            unitSection.Initialise(args, _itemStateManager);
 
-            _childPresentables.Add(_unitSection);
+            _childPresentables.Add(unitSection);
         }
 
         public void GoToHomeScreen()
