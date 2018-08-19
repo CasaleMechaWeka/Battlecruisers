@@ -57,16 +57,18 @@ namespace BattleCruisers.Data.Static
 
 		private List<HullKey> AllHullKeys()
 		{
+            // In order they are available to the user.  Means the loadout
+            // screen order is nice :)
 			return new List<HullKey>()
 			{
+				StaticPrefabKeys.Hulls.Trident,
 				StaticPrefabKeys.Hulls.Bullshark,
+				StaticPrefabKeys.Hulls.Raptor,
+				StaticPrefabKeys.Hulls.Rockjaw,
 				StaticPrefabKeys.Hulls.Eagle,
 				StaticPrefabKeys.Hulls.Hammerhead,
 				StaticPrefabKeys.Hulls.Longbow,
-				StaticPrefabKeys.Hulls.Megalodon,
-				StaticPrefabKeys.Hulls.Raptor,
-				StaticPrefabKeys.Hulls.Rockjaw,
-				StaticPrefabKeys.Hulls.Trident
+				StaticPrefabKeys.Hulls.Megalodon
 			};
 		}
 
