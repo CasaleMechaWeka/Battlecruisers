@@ -1,35 +1,27 @@
-﻿using System.Collections.Generic;
-
-namespace BattleCruisers.UI.BattleScene.Presentables
+﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public class Presentable : IPresentable
 	{
-		protected bool _isPresented;
-		protected readonly IList<IPresentable> _childPresentables;
+        private readonly IPresentableComponent _presentableComponent;
 
         public Presentable()
 		{
-			_childPresentables = new List<IPresentable>();
+            _presentableComponent = new PresentableComponent();
 		}
 
 		public virtual void OnPresenting(object activationParameter)
 		{
-			_isPresented = true;
-
-			foreach (IPresentable presentable in _childPresentables)
-			{
-				presentable.OnPresenting(activationParameter);
-			}
+            _presentableComponent.OnPresenting(activationParameter);
 		}
 
 		public virtual void OnDismissing()
 		{
-			_isPresented = false;
-
-			foreach (IPresentable presentable in _childPresentables)
-			{
-				presentable.OnDismissing();
-			}
+            _presentableComponent.OnDismissing();
 		}
-	}
+
+        protected void AddChildPresentable(IPresentable presentableToAdd)
+        {
+            _presentableComponent.AddChildPresentable(presentableToAdd);
+        }
+    }
 }

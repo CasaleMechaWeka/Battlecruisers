@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             _loadoutHull.Initialise(loadoutCruiser, _detailsManager);
 
             _unlockedHullsRow.Initialise(_detailsManager, this, _dataProvider, _prefabFactory);
-            _childPresentables.Add(_unlockedHullsRow);
+            AddChildPresentable(_unlockedHullsRow);
         }
 
         private IDictionary<ICruiser, HullKey> CreateHullToKeyMap()
