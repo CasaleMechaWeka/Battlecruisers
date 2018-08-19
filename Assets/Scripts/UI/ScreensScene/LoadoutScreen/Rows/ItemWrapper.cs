@@ -36,12 +36,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             Assert.IsNotNull(_lockedItem);
         }
 
+        // FELIX  Rename method?  OnPresented :)
         public void RefreshLockedStatus()
         {
             bool isItemUnlocked = IsItemUnlocked();
 
             UnlockedItem.IsVisible = isItemUnlocked;
             _lockedItem.IsVisible = !isItemUnlocked;
+
+            UnlockedItem.ShowSelectedFeedback = false;
         }
 
         protected abstract bool IsItemUnlocked();

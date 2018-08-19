@@ -90,6 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             base.OnPresenting(activationParameter);
 
+            _itemStateManager.HandleDetailsManagerDismissed();
             hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
             _buildingSection.OnPresented();
             _unitSection.OnPresented();
@@ -110,5 +111,5 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _screensSceneGod.GoToHomeScreen();
 		}
-	}
+    }
 }
