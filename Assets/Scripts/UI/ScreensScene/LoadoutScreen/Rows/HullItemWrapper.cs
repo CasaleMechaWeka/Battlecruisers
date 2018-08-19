@@ -2,21 +2,16 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    // FELIX  Potentially avoid duplicate code with LoadoutItemWrapper?
-    public class HullItemWrapper : MonoBehaviour, IStatefulUIElement
+    public class HullItemWrapper : ItemWrapper<ICruiser, HullKey>
     {
-        private IGameModel _gameModel;
-        private HullKey _hullKey;
         private UnlockedHullItem _unlockedHullItem;
-        private LockedItem _lockedItem;
+        protected override IItem<ICruiser> UnlockedItem { get { return _unlockedHullItem; } }
 
         public void Initialise(
             IItemDetailsManager<ICruiser> hullDetailsManager,
@@ -25,36 +20,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             ICruiser hull,
             HullKey hullKey)
         {
-            Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, gameModel, hull, hullKey);
+            base.Initialise(gameModel, hullKey);
 
-            _gameModel = gameModel;
-            _hullKey = hullKey;
+            Helper.AssertIsNotNull(hullDetailsManager, hullItemsRow, hull);
 
             _unlockedHullItem = GetComponentInChildren<UnlockedHullItem>();
             Assert.IsNotNull(_unlockedHullItem);
             bool isInLoadout = gameModel.PlayerLoadout.Hull.Equals(hullKey);
             _unlockedHullItem.Initialise(hull, hullDetailsManager, hullItemsRow, isInLoadout);
-
-            _lockedItem = GetComponentInChildren<LockedItem>();
-            Assert.IsNotNull(_lockedItem);
-        }
-
-        public void RefreshLockedStatus()
-        {
-            bool isHullUnlocked = _gameModel.UnlockedHulls.Contains(_hullKey);
-
-            _unlockedHullItem.IsVisible = isHullUnlocked;
-            _lockedItem.IsVisible = !isHullUnlocked;
-        }
-
-        public void GoToState(UIState state)
-        {
-            _unlockedHullItem.GoToState(state);
         }
 
         public void OnNewHullSelected(ICruiser selectedHull)
         {
             _unlockedHullItem.OnNewHullSelected(selectedHull);
+        }
+
+        protected override bool IsItemUnlocked()
+        {
+            return _gameModel.UnlockedHulls.Contains(_itemKey);
         }
     }
 }

@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public abstract class BaseItem<TItem> : MonoBehaviourWrapper,
-        IItem<TItem> where TItem : class, IComparableItem
+    public abstract class BaseItem<TItem> : MonoBehaviourWrapper, IItem<TItem> 
+        where TItem : class, IComparableItem
 	{
 		public static class Colors
 		{
