@@ -74,7 +74,9 @@ namespace BattleCruisers.Data.Static
 
 		private List<BuildingKey> AllBuildingKeys()
 		{
-			return new List<BuildingKey>()
+            // Buildings in a category (eg:  Factories) are in the order they 
+            // become available to the user.  Means the loadout screen order is nice :)
+            return new List<BuildingKey>()
 			{
                 // Factories
                 StaticPrefabKeys.Buildings.AirFactory,
@@ -83,10 +85,10 @@ namespace BattleCruisers.Data.Static
 
                 // Tactical
                 StaticPrefabKeys.Buildings.ShieldGenerator,
-                StaticPrefabKeys.Buildings.StealthGenerator,
-				StaticPrefabKeys.Buildings.SpySatelliteLauncher,
 				StaticPrefabKeys.Buildings.LocalBooster,
                 StaticPrefabKeys.Buildings.ControlTower,
+                StaticPrefabKeys.Buildings.StealthGenerator,
+				StaticPrefabKeys.Buildings.SpySatelliteLauncher,
 
                 // Defence
                 StaticPrefabKeys.Buildings.AntiShipTurret,
@@ -97,8 +99,8 @@ namespace BattleCruisers.Data.Static
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
-				StaticPrefabKeys.Buildings.RocketLauncher,
 				StaticPrefabKeys.Buildings.Railgun,
+				StaticPrefabKeys.Buildings.RocketLauncher,
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
@@ -128,14 +130,16 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-		private List<UnitKey> AllUnitKeys()
+        private List<UnitKey> AllUnitKeys()
 		{
+            // Units in a category (eg:  Aircraft) are in the order they 
+            // become available to the user.  Means the loadout screen order is nice :)
 			return new List<UnitKey>()
 			{
                 // Aircraft
                 StaticPrefabKeys.Units.Bomber,
-				StaticPrefabKeys.Units.Fighter,
                 StaticPrefabKeys.Units.Gunship,
+				StaticPrefabKeys.Units.Fighter,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
