@@ -29,7 +29,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             }
         }
 
-        // FELIX  Extend IPresentable once it does not take an activationParameter?
         public void OnPresented()
         {
             foreach (BuildablesRowWrapper<TBuildable, TPrefabKey> buildablesRow in _buildablesRow)
