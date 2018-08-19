@@ -9,5 +9,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             get { return Time.timeScale; }
             set { Time.timeScale = value; }
         }
+
+        public float TimeSinceGameStartInS { get { return Time.time; } }
     }
 }
