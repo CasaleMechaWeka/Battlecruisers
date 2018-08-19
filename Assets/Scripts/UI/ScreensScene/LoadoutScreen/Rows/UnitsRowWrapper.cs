@@ -1,15 +1,13 @@
 ﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {
-    public class UnitsRowWrapper : MonoBehaviour
+    public class UnitsRowWrapper : BuildablesRowWrapper<IUnit, UnitKey>
     {
         public UnitCategory category;
-
-        public LoadoutUnitItemsRow UnitsRow { get; private set; }
 
         public void Initialise(IItemsRowArgs<IUnit> args)
         {
@@ -19,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             Assert.IsNotNull(loadoutRow);
             loadoutRow.Initialise(args, category);
 
-            UnitsRow = loadoutRow;
+            BuildablesRow = loadoutRow;
         }
     }
 }
