@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
 		private readonly LoadoutHullItem _loadoutHull;
         private readonly UnlockedHullItemsRow _unlockedHullsRow;
-        // FELIX  Can I remove this map???
 		private readonly IDictionary<ICruiser, HullKey> _hullToKey;
 
         public HullKey UserChosenHull { get; private set; }
