@@ -32,7 +32,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             _unlockedHullItem = GetComponentInChildren<UnlockedHullItem>();
             Assert.IsNotNull(_unlockedHullItem);
-            _unlockedHullItem.Initialise(hull, hullDetailsManager);
+            bool isInLoadout = gameModel.PlayerLoadout.Hull.Equals(hullKey);
+            _unlockedHullItem.Initialise(hull, hullDetailsManager, hullItemsRow, isInLoadout);
 
             _lockedItem = GetComponentInChildren<LockedItem>();
             Assert.IsNotNull(_lockedItem);
