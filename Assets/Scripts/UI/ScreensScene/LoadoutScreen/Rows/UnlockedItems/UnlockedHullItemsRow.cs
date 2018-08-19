@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
         {
             foreach (HullItemWrapper hullItem in _hullItems)
             {
-                hullItem.RefreshLockedStatus();
+                hullItem.OnPresenting(activationParameter: null);
             }
         }
 

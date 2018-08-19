@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         {
             foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableitem in _buildableItems)
             {
-                buildableitem.RefreshLockedStatus();
+                buildableitem.OnPresenting(activationParameter: null);
             }
         }
 

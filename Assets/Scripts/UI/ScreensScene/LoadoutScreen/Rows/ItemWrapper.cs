@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     /// If the user has unlocked the item we show the unlocked item, otherwise
     /// we show the locked item placeholder.
     /// </summary>
-    public abstract class ItemWrapper<TItem, TPrefabKey> : MonoBehaviour, IStatefulUIElement
+    public abstract class ItemWrapper<TItem, TPrefabKey> : Presentable, IStatefulUIElement
         where TItem : IComparableItem
         where TPrefabKey : class, IPrefabKey
     {
@@ -36,9 +36,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
             Assert.IsNotNull(_lockedItem);
         }
 
-        // FELIX  Rename method?  OnPresented :)
-        public void RefreshLockedStatus()
+        public override void OnPresenting(object activationParameter)
         {
+            base.OnPresenting(activationParameter);
+
             bool isItemUnlocked = IsItemUnlocked();
 
             UnlockedItem.IsVisible = isItemUnlocked;
