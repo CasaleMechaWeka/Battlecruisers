@@ -1,37 +1,31 @@
-﻿using System.Collections.Generic;
-
-namespace BattleCruisers.UI.BattleScene.Presentables
+﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    // FELIX  Avoid duplicate code with Presentable :/
     public class PresentableController : UIElement, IPresentable
 	{
-		protected bool _isPresented;
-		protected IList<IPresentable> _childPresentables;
+        private IPresentableComponent _presentableComponent;
+
+		protected bool IsPresented { get { return _presentableComponent.IsPresented; } }
 
 		public override void Initialise()
 		{
             base.Initialise();
-			_childPresentables = new List<IPresentable>();
+
+            _presentableComponent = new PresentableComponent();
 		}
 
 		public virtual void OnPresenting(object activationParameter)
 		{
-			_isPresented = true;
-
-			foreach (IPresentable presentable in _childPresentables)
-			{
-				presentable.OnPresenting(activationParameter);
-			}
+            _presentableComponent.OnPresenting(activationParameter);
 		}
 
 		public virtual void OnDismissing()
 		{
-			_isPresented = false;
-
-			foreach (IPresentable presentable in _childPresentables)
-			{
-				presentable.OnDismissing();
-			}
+            _presentableComponent.OnDismissing();
 		}
+
+        protected void AddChildPresentable(IPresentable presentableToAdd)
+        {
+            _presentableComponent.AddChildPresentable(presentableToAdd);
+        }
 	}
 }

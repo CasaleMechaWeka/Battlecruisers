@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
                 TBuildable buildablePrefab = GetBuildablePrefab(args.PrefabFactory, buildableKey);
 
                 buildableItem.Initialise(buildablePrefab, buildableKey, args.DetailsManager, args.DataProvider.GameModel);
-                _childPresentables.Add(buildableItem);
+                AddChildPresentable(buildableItem);
             }
         }
 

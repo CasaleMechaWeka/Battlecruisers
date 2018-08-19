@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 buildableRow.Initialise(args);
                 itemStateManager.AddItem(buildableRow.BuildablesRow, ItemType);
-                _childPresentables.Add(buildableRow.BuildablesRow);
+                AddChildPresentable(buildableRow.BuildablesRow);
             }
         }
     }

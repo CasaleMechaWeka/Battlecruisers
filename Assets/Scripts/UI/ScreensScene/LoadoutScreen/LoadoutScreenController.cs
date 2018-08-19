@@ -46,13 +46,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemStateManager = new ItemStateManager();
 
             buildingDetailsManager.Initialise(spriteProvider, _itemStateManager);
-            _childPresentables.Add(buildingDetailsManager);
+            AddChildPresentable(buildingDetailsManager);
 
             unitDetailsManager.Initialise(_itemStateManager);
-            _childPresentables.Add(unitDetailsManager);
+            AddChildPresentable(unitDetailsManager);
 
             cruiserDetailsManager.Initialise(_itemStateManager);
-            _childPresentables.Add(cruiserDetailsManager);
+            AddChildPresentable(cruiserDetailsManager);
 
 			yield return null;
             SetupHullsRow();
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             hullsRowWrapper.Initialise(args);
             _itemStateManager.AddItem(hullsRowWrapper.HullsRow, ItemType.Cruiser);
 
-            _childPresentables.Add(hullsRowWrapper.HullsRow);
+            AddChildPresentable(hullsRowWrapper.HullsRow);
         }
 
         private void SetupBuildingRows()
@@ -81,7 +81,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(buildingSection);
             buildingSection.Initialise(args, _itemStateManager);
 
-            _childPresentables.Add(buildingSection);
+            AddChildPresentable(buildingSection);
         }
 
         private void SetupUnitRows()
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(unitSection);
             unitSection.Initialise(args, _itemStateManager);
 
-            _childPresentables.Add(unitSection);
+            AddChildPresentable(unitSection);
         }
 
         public void GoToHomeScreen()

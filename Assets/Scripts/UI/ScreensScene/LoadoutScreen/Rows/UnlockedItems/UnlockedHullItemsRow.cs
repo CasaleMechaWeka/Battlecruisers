@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
                 ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(hullKey);
 
                 hullItem.Initialise(hullDetailsManager, hullItemsRow, dataProvider.GameModel, hullPrefab, hullKey);
-                _childPresentables.Add(hullItem);
+                AddChildPresentable(hullItem);
             }
         }
 

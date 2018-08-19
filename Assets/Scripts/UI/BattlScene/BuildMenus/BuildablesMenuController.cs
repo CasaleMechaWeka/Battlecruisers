@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			for (int i = 0; i < buildables.Count; ++i)
 			{
                 BuildableButtonController button = CreateBuildableButton(uiFactory, buttonGroup, buildables[i]);
-				_childPresentables.Add(button);
+                AddChildPresentable(button);
                 buildableButtons.Add(button);
 			}
 
