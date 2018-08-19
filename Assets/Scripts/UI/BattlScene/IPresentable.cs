@@ -9,7 +9,6 @@
         void OnPresenting(object activationParameter);
 
         // About to be hidden
-        // FELIX  Is this used anywhere?
         void OnDismissing();
     }
 }
