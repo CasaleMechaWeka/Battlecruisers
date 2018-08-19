@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             foreach (BuildingsRowWrapper buildingRowWrapper in buildingRowWrappers)
             {
                 buildingRowWrapper.Initialise(args);
-                _itemStateManager.AddItem(buildingRowWrapper.BuildingsRow, ItemType.Building);
+                _itemStateManager.AddItem(buildingRowWrapper.BuildablesRow, ItemType.Building);
             }
         }
 
@@ -90,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             foreach (UnitsRowWrapper unitRowWrapper in unitRowWrappers)
             {
                 unitRowWrapper.Initialise(args);
-                _itemStateManager.AddItem(unitRowWrapper.UnitsRow, ItemType.Unit);
+                _itemStateManager.AddItem(unitRowWrapper.BuildablesRow, ItemType.Unit);
             }
         }
 
