@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         protected readonly IDataProvider _dataProvider;
 		protected readonly IPrefabFactory _prefabFactory;
-        protected readonly IUIFactory _uiFactory;
         protected readonly IItemDetailsManager<TItem> _detailsManager;
 
         protected ItemsRow(IItemsRowArgs<TItem> args)
@@ -19,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             _dataProvider = args.DataProvider;
             _prefabFactory = args.PrefabFactory;
-            _uiFactory = args.UIFactory;
             _detailsManager = args.DetailsManager;
 		}
 

@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         IDataProvider DataProvider { get; }
         IPrefabFactory PrefabFactory {  get; }
-        IUIFactory UIFactory { get; }
         IItemDetailsManager<TItem> DetailsManager { get; }
     }
 }
