@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
@@ -9,6 +8,8 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System.Collections;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -18,6 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 		private IGameModel _gameModel;
 		private IPrefabFactory _prefabFactory;
         private IItemStateManager _itemStateManager;
+        private BuildingSection _buildingSection;
+        private UnitSection _unitSection;
 
 		public UIFactory uiFactory;
         public HullsRowWrapper hullsRowWrapper;
@@ -72,32 +75,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ItemsRowArgs<IBuilding> args = new ItemsRowArgs<IBuilding>(_dataProvider, _prefabFactory, uiFactory, buildingDetailsManager);
 
-            BuildingsRowWrapper[] buildingRowWrappers = GetComponentsInChildren<BuildingsRowWrapper>();
-
-            foreach (BuildingsRowWrapper buildingRowWrapper in buildingRowWrappers)
-            {
-                buildingRowWrapper.Initialise(args);
-                _itemStateManager.AddItem(buildingRowWrapper.BuildablesRow, ItemType.Building);
-            }
+            _buildingSection = GetComponentInChildren<BuildingSection>();
+            Assert.IsNotNull(_buildingSection);
+            _buildingSection.Initialise(args, _itemStateManager);
         }
 
         private void SetupUnitRows()
         {
             ItemsRowArgs<IUnit> args = new ItemsRowArgs<IUnit>(_dataProvider, _prefabFactory, uiFactory, unitDetailsManager);
 
-            UnitsRowWrapper[] unitRowWrappers = GetComponentsInChildren<UnitsRowWrapper>();
-
-            foreach (UnitsRowWrapper unitRowWrapper in unitRowWrappers)
-            {
-                unitRowWrapper.Initialise(args);
-                _itemStateManager.AddItem(unitRowWrapper.BuildablesRow, ItemType.Unit);
-            }
+            _unitSection = GetComponentInChildren<UnitSection>();
+            Assert.IsNotNull(_unitSection);
+            _unitSection.Initialise(args, _itemStateManager);
         }
 
         public override void OnPresenting(object activationParameter)
         {
             base.OnPresenting(activationParameter);
+
             hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
+            _buildingSection.OnPresented();
+            _unitSection.OnPresented();
         }
 
         public void GoToHomeScreen()
