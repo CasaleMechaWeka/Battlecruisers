@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     /// If the user has unlocked the item we show the unlocked item, otherwise
     /// we show the locked item placeholder.
     /// </summary>
-    public abstract class ItemWrapper<TItem, TPrefabKey> : Presentable, IStatefulUIElement
+    public abstract class ItemWrapper<TItem, TPrefabKey> : PresentableController, IStatefulUIElement
         where TItem : IComparableItem
         where TPrefabKey : class, IPrefabKey
     {

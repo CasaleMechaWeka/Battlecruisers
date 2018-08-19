@@ -21,8 +21,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IUIFactory _uiFactory;
 		private IList<IBuildingGroup> _buildingGroups;
         private IDictionary<BuildingCategory, BuildingsMenuController> _buildingGroupPanels;
-        private IDictionary<UnitCategory, Presentable> _unitGroupPanels;
-        private Presentable _currentPanel, _homePanel;
+        private IDictionary<UnitCategory, PresentableController> _unitGroupPanels;
+        private PresentableController _currentPanel, _homePanel;
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
         private IDictionary<BuildingCategory, ReadOnlyCollection<IBuildableButton>> _categoryToBuildableButtons;
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 			// Create main menu panel
 			GameObject homePanelGameObject = _uiFactory.CreatePanel(isActive: true);
-            _homePanel = homePanelGameObject.AddComponent<Presentable>();
+            _homePanel = homePanelGameObject.AddComponent<PresentableController>();
 			_currentPanel = _homePanel;
 			_homePanel.Initialise();
 
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             // Create menu UI for units
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-			_unitGroupPanels = new Dictionary<UnitCategory, Presentable>();
+			_unitGroupPanels = new Dictionary<UnitCategory, PresentableController>();
 
 			foreach (UnitCategory unitCategory in units.Keys)
 			{
@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				throw new ArgumentException();
 			}
 
-			Presentable panel = _buildingGroupPanels[buildingCategory];
+			PresentableController panel = _buildingGroupPanels[buildingCategory];
 			ChangePanel(panel);
 		}
 
@@ -116,7 +116,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				throw new ArgumentException();
 			}
 
-			Presentable panel = _unitGroupPanels[factory.UnitCategory];
+			PresentableController panel = _unitGroupPanels[factory.UnitCategory];
 			ChangePanel(panel, factory);
 		}
 
@@ -125,7 +125,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         /// This is because the activation parameter may have changed.  Ie, the user may be 
         /// switching from the aircraft units panel for one factory to another factory.
         /// </summary>
-		private void ChangePanel(Presentable panel, object activationParameter = null)
+		private void ChangePanel(PresentableController panel, object activationParameter = null)
 		{
 			if (_currentPanel != null)
 			{

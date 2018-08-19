@@ -2,13 +2,15 @@
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class Presentable : IPresentable
+    // FELIX  Avoid duplicate code with Presentable :/
+    public class PresentableController : UIElement, IPresentable
 	{
 		protected bool _isPresented;
-		protected readonly IList<IPresentable> _childPresentables;
+		protected IList<IPresentable> _childPresentables;
 
-        public Presentable()
+		public override void Initialise()
 		{
+            base.Initialise();
 			_childPresentables = new List<IPresentable>();
 		}
 

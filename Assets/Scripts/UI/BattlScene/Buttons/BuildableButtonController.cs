@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : Presentable, IBuildableButton, IBroadcastingFilter
+    public abstract class BuildableButtonController : PresentableController, IBuildableButton, IBroadcastingFilter
 	{
 		protected IUIManager _uiManager;
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class BuildablesMenuController<TBuildable> : Presentable
+    public abstract class BuildablesMenuController<TBuildable> : PresentableController
         where TBuildable : class, IBuildable
 	{
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
