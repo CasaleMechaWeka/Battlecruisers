@@ -12,10 +12,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
         where TItem : class, IComparableItem
         where TKey : class, IPrefabKey
     {
-        private TKey _itemKey;
-        private IGameModel _gameModel;
         private LoadoutItem<TItem> _unlockedItem;
         private LockedItem _lockedItem;
+        protected TKey _itemKey;
+        protected IGameModel _gameModel;
 
         public void Initialise(TItem item, TKey itemKey , IItemDetailsManager<TItem> itemDetailsManager, IGameModel gameModel)
         {
