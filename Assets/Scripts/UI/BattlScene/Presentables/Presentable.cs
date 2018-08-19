@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public class Presentable : IPresentable
 	{

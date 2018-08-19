@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Presentables;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;

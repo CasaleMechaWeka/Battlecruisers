@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;

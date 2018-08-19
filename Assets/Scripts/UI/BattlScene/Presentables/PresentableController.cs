@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.Presentables
 {
     // FELIX  Avoid duplicate code with Presentable :/
     public class PresentableController : UIElement, IPresentable

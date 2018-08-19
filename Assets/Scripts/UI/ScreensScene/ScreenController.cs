@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Scenes;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Presentables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene

@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
 using BattleCruisers.Utils.Fetchers;

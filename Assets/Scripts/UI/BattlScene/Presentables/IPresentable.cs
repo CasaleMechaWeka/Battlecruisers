@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.BattleScene
+﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public interface IPresentable
     {
