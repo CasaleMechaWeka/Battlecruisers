@@ -37,7 +37,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 
             _lockedItem = GetComponentInChildren<LockedItem>();
             Assert.IsNotNull(_lockedItem);
-            _lockedItem.Initialise();
         }
 
         public void RefreshLockedStatus()

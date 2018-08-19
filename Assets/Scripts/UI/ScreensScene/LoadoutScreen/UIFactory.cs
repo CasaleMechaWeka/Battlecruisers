@@ -89,7 +89,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             LockedItem lockedItem = Instantiate(lockedItemPrefab);
             lockedItem.transform.SetParent(itemRow.transform, worldPositionStays: false);
-            lockedItem.Initialise();
             return lockedItem;
         }
     }
