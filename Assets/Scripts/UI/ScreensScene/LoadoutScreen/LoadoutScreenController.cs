@@ -48,8 +48,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemStateManager = new ItemStateManager();
 
             buildingDetailsManager.Initialise(spriteProvider, _itemStateManager);
+            _childPresentables.Add(buildingDetailsManager);
+
             unitDetailsManager.Initialise(_itemStateManager);
+            _childPresentables.Add(unitDetailsManager);
+
             cruiserDetailsManager.Initialise(_itemStateManager);
+            _childPresentables.Add(cruiserDetailsManager);
 
 			yield return null;
             SetupHullsRow();
@@ -94,10 +99,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
             _buildingSection.OnPresented();
             _unitSection.OnPresented();
-
-            buildingDetailsManager.OnPresented();
-            unitDetailsManager.OnPresented();
-            cruiserDetailsManager.OnPresented();
         }
 
         public void GoToHomeScreen()

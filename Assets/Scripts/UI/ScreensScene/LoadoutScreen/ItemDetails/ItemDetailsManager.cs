@@ -1,15 +1,16 @@
-﻿using System;
+﻿using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
-using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
+    public abstract class ItemDetailsManager<TItem> : PresentableController, IItemDetailsManager<TItem>, IPointerClickHandler 
+        where TItem : IComparableItem
 	{
 		private IComparableItemDetails<TItem> _singleItemDetails, _leftComparableItemDetails, _rightComparableItemDetails;
         private IItemStateManager _itemStateManager;
@@ -39,6 +40,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 			IComparableItemDetails<TItem> rightComparableItemDetails,
             IItemStateManager itemStateManager)
 		{
+            base.Initialise();
+
             Helper.AssertIsNotNull(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails, itemStateManager);
 
 			_singleItemDetails = singleItemDetails;
@@ -88,8 +91,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 			State = State.Dismiss();
 		}
 
-        public void OnPresented()
+        public override void OnPresenting(object activationParameter)
         {
+            base.OnPresenting(activationParameter);
+
             State = _defaultState;
             _itemStateManager.HandleDetailsManagerDismissed();
         }
