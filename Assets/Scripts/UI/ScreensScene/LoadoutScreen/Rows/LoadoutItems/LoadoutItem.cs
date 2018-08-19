@@ -3,7 +3,8 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
-    public abstract class LoadoutItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
+    public abstract class LoadoutItem<TItem> : BaseItem<TItem> 
+        where TItem : class, IComparableItem
     {
         public override void Initialise(TItem item, IItemDetailsManager<TItem> itemDetailsManager) 
         {
