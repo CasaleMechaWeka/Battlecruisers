@@ -1,16 +1,16 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 {
-    public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : MonoBehaviour, IStatefulUIElement
+    public abstract class LoadoutBuildableItemsRow<TBuildable, TPrefabKey> : PresentableController, IStatefulUIElement
         where TBuildable : class, IBuildable
         where TPrefabKey : class, IPrefabKey
 	{
@@ -20,6 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
 
         public void Initialise(IItemsRowArgs<TBuildable> args)
 		{
+            base.Initialise();
+
             Helper.AssertIsNotNull(args);
 
             _buildableItems = GetComponentsInChildren<LoadoutItemWrapper<TBuildable, TPrefabKey>>().ToList();
@@ -35,20 +37,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LoadoutItems
                 TBuildable buildablePrefab = GetBuildablePrefab(args.PrefabFactory, buildableKey);
 
                 buildableItem.Initialise(buildablePrefab, buildableKey, args.DetailsManager, args.DataProvider.GameModel);
+                _childPresentables.Add(buildableItem);
             }
         }
 
         protected abstract IList<TPrefabKey> FindBuildableKeys(IStaticData staticData);
 
         protected abstract TBuildable GetBuildablePrefab(IPrefabFactory prefabFactory, TPrefabKey buildableKey);
-
-        public void RefreshLockedStatus()
-        {
-            foreach (LoadoutItemWrapper<TBuildable, TPrefabKey> buildableItem in _buildableItems)
-            {
-                buildableItem.OnPresenting(activationParameter: null);
-            }
-        }
 
         public void GoToState(UIState state)
         {

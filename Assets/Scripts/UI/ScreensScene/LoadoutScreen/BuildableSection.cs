@@ -28,17 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 buildableRow.Initialise(args);
                 itemStateManager.AddItem(buildableRow.BuildablesRow, ItemType);
-            }
-        }
-
-        public override void OnPresenting(object activationParameter)
-        {
-            base.OnPresenting(activationParameter);
-
-            // FELIX  Use child presentables :)
-            foreach (BuildablesRowWrapper<TBuildable, TPrefabKey> buildablesRow in _buildablesRow)
-            {
-                buildablesRow.BuildablesRow.RefreshLockedStatus();
+                _childPresentables.Add(buildableRow.BuildablesRow);
             }
         }
     }
