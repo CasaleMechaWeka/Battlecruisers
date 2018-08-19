@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         public BuildingCategory category;
 
-        public void Initialise(IItemsRowArgs<IBuilding> args)
+        public override void Initialise(IItemsRowArgs<IBuilding> args)
         {
             Assert.IsNotNull(args);
 

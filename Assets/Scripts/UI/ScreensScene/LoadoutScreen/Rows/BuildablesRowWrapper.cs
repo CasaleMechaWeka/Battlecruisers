@@ -10,5 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         where TPrefabKey : class, IPrefabKey
     {
         public LoadoutBuildableItemsRow<TBuildable, TPrefabKey> BuildablesRow { get; protected set; }
+
+        public abstract void Initialise(IItemsRowArgs<TBuildable> args);
     }
 }
