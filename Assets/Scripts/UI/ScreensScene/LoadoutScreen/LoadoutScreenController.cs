@@ -86,14 +86,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _unitSection.Initialise(args, _itemStateManager);
         }
 
+        // FELIX  Use child presentables to automate propagation?
         public override void OnPresenting(object activationParameter)
         {
             base.OnPresenting(activationParameter);
 
-            _itemStateManager.HandleDetailsManagerDismissed();
             hullsRowWrapper.HullsRow.OnPresenting(activationParameter: null);
             _buildingSection.OnPresented();
             _unitSection.OnPresented();
+
+            buildingDetailsManager.OnPresented();
+            unitDetailsManager.OnPresented();
+            cruiserDetailsManager.OnPresented();
         }
 
         public void GoToHomeScreen()

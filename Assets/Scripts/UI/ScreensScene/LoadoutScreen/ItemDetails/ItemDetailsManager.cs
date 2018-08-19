@@ -12,12 +12,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
     public abstract class ItemDetailsManager<TItem> : MonoBehaviour, IItemDetailsManager<TItem>, IPointerClickHandler where TItem : IComparableItem
 	{
 		private IComparableItemDetails<TItem> _singleItemDetails, _leftComparableItemDetails, _rightComparableItemDetails;
+        private IItemStateManager _itemStateManager;
+        private IItemDetailsState<TItem> _defaultState;
 
 		public Image modalBackground;
 
 		public event EventHandler<StateChangedEventArgs<TItem>> StateChanged;
-		private IItemDetailsState<TItem> _state;
 		
+		private IItemDetailsState<TItem> _state;
 		private IItemDetailsState<TItem> State
 		{
 			get { return _state; }
@@ -42,8 +44,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 			_singleItemDetails = singleItemDetails;
 			_leftComparableItemDetails = leftComparableItemDetails;
 			_rightComparableItemDetails = rightComparableItemDetails;
+            _itemStateManager = itemStateManager;
 
-			State = new DismissedState<TItem>(this, itemStateManager);
+            _defaultState = new DismissedState<TItem>(this, itemStateManager);
+            State = _defaultState;
 			
 			HideItemDetails();
 		}
@@ -83,5 +87,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 		{
 			State = State.Dismiss();
 		}
+
+        public void OnPresented()
+        {
+            State = _defaultState;
+            _itemStateManager.HandleDetailsManagerDismissed();
+        }
 	}
 }
