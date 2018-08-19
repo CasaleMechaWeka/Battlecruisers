@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
@@ -9,7 +8,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
     public abstract class UnlockedItem<TItem> : BaseItem<TItem> where TItem : class, IComparableItem
 	{
         private IItemsRow<TItem> _itemsRow;
-		private RectTransform _rectTransform;
 
 		public Image isInLoadoutFeedback;
 
@@ -24,8 +22,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             }
         }
 
-        public Vector2 Size { get { return _rectTransform.sizeDelta; } }
-		
         public void Initialise(
             TItem item, 
             IItemDetailsManager<TItem> itemDetailsManager,
@@ -37,7 +33,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems
             Helper.AssertIsNotNull(itemsRow, isInLoadoutFeedback);
 
             _itemsRow = itemsRow;
-            _rectTransform = transform.Parse<RectTransform>();
             IsItemInLoadout = isInLoadout;
 
             GoToState(UIState.Default);
