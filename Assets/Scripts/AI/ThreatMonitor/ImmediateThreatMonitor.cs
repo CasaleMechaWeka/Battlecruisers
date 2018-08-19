@@ -18,8 +18,6 @@ namespace BattleCruisers.AI.ThreatMonitors
 
 			_enemyCruiser = enemyCruiser;
 			_threatEvaluator = threatEvaluator;
-
-            CurrentThreatLevel = ThreatLevel.None;
         }
 
 		protected void EvaluateThreatLevel()

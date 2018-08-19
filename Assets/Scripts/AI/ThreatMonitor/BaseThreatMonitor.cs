@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
+    // FELIX  Test :)
     public abstract class BaseThreatMonitor : IThreatMonitor
 	{
 		private ThreatLevel _currentThreatLevel;
@@ -23,5 +24,10 @@ namespace BattleCruisers.AI.ThreatMonitors
 		}
 		
 		public event EventHandler ThreatLevelChanged;
-	}
+
+        public BaseThreatMonitor()
+        {
+            CurrentThreatLevel = ThreatLevel.None;
+        }
+    }
 }
