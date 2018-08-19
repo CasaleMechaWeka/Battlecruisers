@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
     {
         public UnitCategory category;
 
-        public IStatefulUIElement UnitsRow { get; private set; }
+        public LoadoutUnitItemsRow UnitsRow { get; private set; }
 
         public void Initialise(IItemsRowArgs<IUnit> args)
         {
