@@ -66,7 +66,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
         {
             base.OnPresenting(activationParameter);
 
-            // FELIX  Add to child presentables for automatic activation??
             ICruiser loadoutHull = HullForKey(_dataProvider.GameModel.PlayerLoadout.Hull);
             UpdateUserChosenHull(loadoutHull);
 
