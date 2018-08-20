@@ -61,8 +61,8 @@ namespace BattleCruisers.AI.FactoryManagers
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 
-            IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateAirThreatMonitor();
-            IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateNavalThreatMonitor();
+            IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
+            IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
             IUnitChooser unitchooser
                 = new AircraftUnitChooser(
