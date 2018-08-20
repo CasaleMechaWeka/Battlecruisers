@@ -3,22 +3,29 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
     public class ThreatMonitorFactory : IThreatMonitorFactory
     {
         private readonly ICruiserController _playerCruiser;
+        private readonly ITime _time;
+        private readonly IVariableDelayDeferrer _deferrer;
 
         private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
 		private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
 		private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
-        public ThreatMonitorFactory(ICruiserController playerCruiser)
+        public ThreatMonitorFactory(ICruiserController playerCruiser, ITime time, IVariableDelayDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(playerCruiser);
+            Helper.AssertIsNotNull(playerCruiser, time, deferrer);
+
             _playerCruiser = playerCruiser;
+            _time = time;
+            _deferrer = deferrer;
         }
 
 		public IThreatMonitor CreateAirThreatMonitor()
@@ -43,6 +50,11 @@ namespace BattleCruisers.AI.ThreatMonitors
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
             return new BuildingThreatMonitor<IStealthGenerator>(_playerCruiser, threatEvaluator);
+        }
+
+        public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)
+        {
+            return new DelayedThreadMonitor(coreMonitor, _time, _deferrer);
         }
     }
 }

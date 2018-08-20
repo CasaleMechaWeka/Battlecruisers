@@ -10,6 +10,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using System;
 
@@ -35,7 +36,7 @@ namespace BattleCruisers.AI
             _variableDelayDeferrer = variableDelayDeferrer;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-			_threatMonitorFactory = new ThreatMonitorFactory(playerCruiser);
+            _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, new TimeBC(), variableDelayDeferrer);
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
