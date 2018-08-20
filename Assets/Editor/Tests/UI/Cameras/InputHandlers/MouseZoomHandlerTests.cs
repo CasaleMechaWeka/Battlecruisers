@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 
             _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
             // * ZOOM_SPEED_MULTIPLIER = 1 :)
-            _deltaTimeProvider.DeltaTime.Returns(0.03333333f);
+            _deltaTimeProvider.UnscaledDeltaTime.Returns(0.03333333f);
 
             _zoomHandler = new MouseZoomHandler(_settingsManager, _deltaTimeProvider, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
         }

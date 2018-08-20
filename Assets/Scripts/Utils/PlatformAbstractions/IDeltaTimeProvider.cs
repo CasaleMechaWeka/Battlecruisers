@@ -2,6 +2,6 @@
 {
     public interface IDeltaTimeProvider
     {
-        float DeltaTime { get; }
+        float UnscaledDeltaTime { get; }
     }
 }

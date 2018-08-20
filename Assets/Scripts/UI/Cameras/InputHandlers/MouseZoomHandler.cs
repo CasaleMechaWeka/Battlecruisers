@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 		{
 			if (!Mathf.Approximately(yMouseScrollDelta, 0))
 			{
-                cameraOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.DeltaTime;
+                cameraOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
 				cameraOrthographicSize = Mathf.Clamp(cameraOrthographicSize, _minOrthographicSize, _maxOrthographicSize);
 			}
 

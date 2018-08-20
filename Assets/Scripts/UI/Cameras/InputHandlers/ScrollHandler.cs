@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
 		public Vector3 FindCameraPosition(float cameraOrthographicSize, Vector3 cameraPosition, Vector3 mousePosition)
 		{
-            float scrollSpeed = _calculator.FindScrollSpeed(cameraOrthographicSize, _deltaTimeProvider.DeltaTime);
+            float scrollSpeed = _calculator.FindScrollSpeed(cameraOrthographicSize, _deltaTimeProvider.UnscaledDeltaTime);
 
             Vector3 desiredPosition
                 = new Vector3(

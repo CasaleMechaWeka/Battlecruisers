@@ -38,9 +38,9 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 			_screen.Width.Returns(1920);
 			_screen.Height.Returns(1200);
 
-            _deltaTimeProvider.DeltaTime.Returns(0.171f);
+            _deltaTimeProvider.UnscaledDeltaTime.Returns(0.171f);
 
-            _calculator.FindScrollSpeed(_orthographicSize, _deltaTimeProvider.DeltaTime).Returns(_scrollSpeed);
+            _calculator.FindScrollSpeed(_orthographicSize, _deltaTimeProvider.UnscaledDeltaTime).Returns(_scrollSpeed);
 
             // Simply return the parameter, ie, don't clamp :P
             _clamper.Clamp(default(Vector3)).ReturnsForAnyArgs(x => x.Arg<Vector3>());
@@ -58,7 +58,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 
 			Assert.AreEqual(_cameraPosition, _scrollHandler.FindCameraPosition(_orthographicSize, _cameraPosition, mousePosition));
 
-            _calculator.Received().FindScrollSpeed(_orthographicSize, _deltaTimeProvider.DeltaTime);
+            _calculator.Received().FindScrollSpeed(_orthographicSize, _deltaTimeProvider.UnscaledDeltaTime);
 			_clamper.Received().Clamp(_cameraPosition);
         }
 
