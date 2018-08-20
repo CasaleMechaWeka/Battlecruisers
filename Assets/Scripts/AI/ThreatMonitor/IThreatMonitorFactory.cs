@@ -4,9 +4,9 @@ namespace BattleCruisers.AI.ThreatMonitors
 {
     public interface IThreatMonitorFactory
     {
-		IThreatMonitor CreateAirThreatMonitor(ICruiserController playerCruiser);
-		IThreatMonitor CreateNavalThreatMonitor(ICruiserController playerCruiser);
-        IThreatMonitor CreateRocketThreatMonitor(ICruiserController playerCruiser);
-        IThreatMonitor CreateStealthThreatMonitor(ICruiserController playerCruiser);
+		IThreatMonitor CreateAirThreatMonitor();
+		IThreatMonitor CreateNavalThreatMonitor();
+        IThreatMonitor CreateRocketThreatMonitor();
+        IThreatMonitor CreateStealthThreatMonitor();
 	}
 }

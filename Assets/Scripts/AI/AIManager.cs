@@ -5,6 +5,7 @@ using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
@@ -25,16 +26,16 @@ namespace BattleCruisers.AI
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IVariableDelayDeferrer variableDelayDeferrer)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IVariableDelayDeferrer variableDelayDeferrer, ICruiserController playerCruiser)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, variableDelayDeferrer);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, variableDelayDeferrer, playerCruiser);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
             _variableDelayDeferrer = variableDelayDeferrer;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-			_threatMonitorFactory = new ThreatMonitorFactory();
+			_threatMonitorFactory = new ThreatMonitorFactory(playerCruiser);
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
