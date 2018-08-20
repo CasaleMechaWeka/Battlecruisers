@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         public ThreatMonitorFactory(ICruiserController playerCruiser)
         {
-            Helper.AssertIsNotNull(_playerCruiser);
+            Helper.AssertIsNotNull(playerCruiser);
             _playerCruiser = playerCruiser;
         }
 
