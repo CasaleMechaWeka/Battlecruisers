@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
-    // FELIX  Test :)
     public abstract class BaseThreatMonitor : IThreatMonitor
 	{
 		private ThreatLevel _currentThreatLevel;
