@@ -16,7 +16,6 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// thos drones (so AI wastes resources buidling defences it may
     /// never need).
     /// </summary>
-    /// FELIX  Use :)
     public class DelayedThreadMonitor : BaseThreatMonitor, IManagedDisposable
     {
         private readonly IThreatMonitor _coreThreatMonitor;
