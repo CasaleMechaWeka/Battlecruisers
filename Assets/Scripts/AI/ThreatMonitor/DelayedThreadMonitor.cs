@@ -16,7 +16,6 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// thos drones (so AI wastes resources buidling defences it may
     /// never need).
     /// </summary>
-    /// FELIX  Test
     /// FELIX  Use :)
     public class DelayedThreadMonitor : BaseThreatMonitor, IManagedDisposable
     {
@@ -38,6 +37,7 @@ namespace BattleCruisers.AI.ThreatMonitors
             _coreThreatMonitor = coreThreatMonitor;
             _time = time;
             _deferrer = deferrer;
+            _delayInS = delayInS;
             _lastThreatChange = null;
 
             _coreThreatMonitor.ThreatLevelChanged += _coreThreatMonitor_ThreatLevelChanged;
@@ -45,9 +45,10 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         private void _coreThreatMonitor_ThreatLevelChanged(object sender, EventArgs e)
         {
-            _lastThreatChange = new ThreatChangeSnapshot(_coreThreatMonitor.CurrentThreatLevel, _time.TimeSinceGameStartInS);
+            ThreatChangeSnapshot cachedSnapshot = new ThreatChangeSnapshot(_coreThreatMonitor.CurrentThreatLevel, _time.TimeSinceGameStartInS);
+            _lastThreatChange = cachedSnapshot;
 
-            _deferrer.Defer(() => DelayedThreatEvaluation(_lastThreatChange), _delayInS);
+            _deferrer.Defer(() => DelayedThreatEvaluation(cachedSnapshot), _delayInS);
         }
 
         private void DelayedThreatEvaluation(ThreatChangeSnapshot originalThreatSnapshot)
