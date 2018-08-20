@@ -56,7 +56,6 @@ namespace BattleCruisers.AI
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 
-                    levelInfo.PlayerCruiser, 
                     _prefabFactory, 
                     taskFactory, 
                     _slotNumCalculatorFactory, 

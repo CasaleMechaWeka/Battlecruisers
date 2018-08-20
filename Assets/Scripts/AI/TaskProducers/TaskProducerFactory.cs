@@ -12,8 +12,7 @@ namespace BattleCruisers.AI.TaskProducers
 {
     public class TaskProducerFactory : ITaskProducerFactory
 	{
-        // FELIX  Remove unused player cruiser :)
-        private readonly ICruiserController _aiCruiser, _playerCruiser;
+        private readonly ICruiserController _aiCruiser;
         private readonly IPrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
@@ -25,17 +24,15 @@ namespace BattleCruisers.AI.TaskProducers
 
         public TaskProducerFactory(
             ICruiserController aiCruiser, 
-            ICruiserController playerCruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
             ISlotNumCalculatorFactory slotNumCalculatorFactory, 
             IStaticData staticData,
             IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);
+            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);
 
             _aiCruiser = aiCruiser;
-            _playerCruiser = playerCruiser;
             _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
             _slotNumCalculatorFactory = slotNumCalculatorFactory;
