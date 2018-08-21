@@ -11,10 +11,10 @@ namespace BattleCruisers.UI.Common.Click
         {
             Assert.AreEqual(Faction.Blues, playerBuliding.Faction);
 
-            if (playerBuliding.DroneConsumer != null)
+            if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
             {
                 // Building construction or factory production
-                playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(playerBuliding.DroneConsumer);
+                playerBuliding.ToggleDroneConsumerFocusCommand.Execute();
             }
             else if (playerBuliding.RepairCommand.CanExecute)
             {

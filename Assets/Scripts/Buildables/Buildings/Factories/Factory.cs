@@ -20,7 +20,19 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         #region Properties
+        protected abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
+        public bool IsUnitPaused { get; private set; }
+
+        protected override bool IsDroneConsumerFocusable
+        {
+            get
+            {
+                return
+                    base.IsDroneConsumerFocusable
+                    && !IsUnitPaused;
+            }
+        }
 
         private IBuildableWrapper<IUnit> _unitWrapper;
 		public IBuildableWrapper<IUnit> UnitWrapper 
@@ -51,8 +63,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			get { return _unitWrapper; }
 		}
 
-        protected abstract LayerMask UnitLayerMask { get; }
-
         public int NumOfDrones
         {
             get
@@ -60,8 +70,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 return DroneConsumer != null ? DroneConsumer.NumOfDrones : 0;
             }
         }
-
-        public bool IsUnitPaused { get; private set; }
         #endregion Properties
 
         /// <summary>
