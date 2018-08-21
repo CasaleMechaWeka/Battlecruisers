@@ -120,6 +120,10 @@ namespace BattleCruisers.Buildables
                 if (_deleteCountdown == null)
                 {
                     _deleteCountdown = _factoryProvider.PrefabFactory.CreateDeleteCountdown(transform);
+
+                    // Position below buildable
+                    float yOffset = -Size.y / 2;
+                    _deleteCountdown.transform.position = transform.position + Transform.up * yOffset;
                 }
                 return _deleteCountdown;
             }
