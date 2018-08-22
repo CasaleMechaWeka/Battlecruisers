@@ -1,11 +1,15 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+﻿using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
+    // FELIX  Update tests :)
     public class BuildProgressFeedback : IBuildProgressFeedback
     {
         private readonly IFillableImage _buildProgressImage;
+        private readonly IGameObject _pausedFeedback;
 
         private IBuildable _currentBuildable;
         private IBuildable CurrentBuildable
@@ -32,10 +36,32 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        public BuildProgressFeedback(IFillableImage buildProgressImage)
+        private IFactory _currentFactory;
+        private IFactory CurrentFactory
         {
-            Assert.IsNotNull(buildProgressImage);
+            set
+            {
+                if (_currentFactory != null)
+                {
+                    _currentFactory.IsUnitPausedChanged += _currentFactory_IsUnitPausedChanged;
+                }
+
+                _currentFactory = value;
+
+                if (_currentFactory != null)
+                {
+                    _currentFactory.IsUnitPausedChanged -= _currentFactory_IsUnitPausedChanged;
+                    _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused;
+                }
+            }
+        }
+
+        public BuildProgressFeedback(IFillableImage buildProgressImage, IGameObject pausedFeedback)
+        {
+            Helper.AssertIsNotNull(buildProgressImage, pausedFeedback);
+
             _buildProgressImage = buildProgressImage;
+            _pausedFeedback = pausedFeedback;
 
             HideBuildProgress();
         }
@@ -60,19 +86,29 @@ namespace BattleCruisers.Buildables.BuildProgress
             HideBuildProgress();
         }
 
-        public void ShowBuildProgress(IBuildable buildable)
+        private void _currentFactory_IsUnitPausedChanged(object sender, System.EventArgs e)
         {
-            Assert.IsNotNull(buildable);
+            _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused;
+        }
+
+        public void ShowBuildProgress(IBuildable buildable, IFactory buildableFactory)
+        {
+            Helper.AssertIsNotNull(buildable, buildableFactory);
             Assert.AreNotEqual(BuildableState.Completed, buildable.BuildableState);
 
             CurrentBuildable = buildable;
+            CurrentFactory = buildableFactory;
+
             _buildProgressImage.IsVisible = true;
         }
 
         public void HideBuildProgress()
         {
             CurrentBuildable = null;
+            CurrentFactory = null;
+
             _buildProgressImage.IsVisible = false;
+            _pausedFeedback.IsVisible = false;
         }
     }
 }

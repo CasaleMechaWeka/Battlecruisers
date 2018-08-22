@@ -2,6 +2,7 @@
 
 namespace BattleCruisers
 {
+    // FELIX  Move to platform abstractions namespace :)
     public interface IGameObject
     {
         bool IsVisible { get; set; }

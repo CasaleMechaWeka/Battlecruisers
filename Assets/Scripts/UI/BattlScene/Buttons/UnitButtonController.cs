@@ -11,8 +11,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class UnitButtonController : BuildableButtonController
 	{
-        // The unit wrapper is always the same for this button.  The factory
-        // can change :)
+        // The unit wrapper is always the same for this button.  In contrast 
+        // the factory can change
 		private IBuildableWrapper<IUnit> _unitWrapper;
 		private IFactory _currentFactory;
         private IUnitClickHandler _unitClickHandler;
@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             if (unitUnderConstruction != null
                 && unitUnderConstruction.Name == _unitWrapper.Buildable.Name)
             {
-                _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction);
+                _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction, _currentFactory);
             }
         }
 

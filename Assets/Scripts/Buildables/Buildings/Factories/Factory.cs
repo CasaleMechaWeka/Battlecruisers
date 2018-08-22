@@ -18,13 +18,29 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
-        public event EventHandler UnitPaused;
-        public event EventHandler UnitResumed;
+        public event EventHandler IsUnitPausedChanged;
 
         #region Properties
         protected abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
-        public bool IsUnitPaused { get; private set; }
+
+        private bool _isUnitPaused;
+        public bool IsUnitPaused
+        {
+            get { return _isUnitPaused; }
+            private set
+            {
+                if (_isUnitPaused != value)
+                {
+                    _isUnitPaused = value;
+
+                    if (IsUnitPausedChanged != null)
+                    {
+                        IsUnitPausedChanged.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
 
         protected override bool IsDroneConsumerFocusable
         {
@@ -242,11 +258,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             {
                 _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
                 IsUnitPaused = true;
-
-                if (UnitPaused != null)
-                {
-                    UnitPaused.Invoke(this, EventArgs.Empty);
-                }
             }
         }
 
@@ -259,11 +270,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
                 EnsureDroneConsumerHasHighestPriority();
                 IsUnitPaused = false;
-
-                if (UnitResumed != null)
-                {
-                    UnitResumed.Invoke(this, EventArgs.Empty);
-                }
             }
         }
 
