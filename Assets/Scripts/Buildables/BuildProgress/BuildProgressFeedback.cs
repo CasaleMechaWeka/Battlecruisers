@@ -43,14 +43,14 @@ namespace BattleCruisers.Buildables.BuildProgress
             {
                 if (_currentFactory != null)
                 {
-                    _currentFactory.IsUnitPausedChanged += _currentFactory_IsUnitPausedChanged;
+                    _currentFactory.IsUnitPausedChanged -= _currentFactory_IsUnitPausedChanged;
                 }
 
                 _currentFactory = value;
 
                 if (_currentFactory != null)
                 {
-                    _currentFactory.IsUnitPausedChanged -= _currentFactory_IsUnitPausedChanged;
+                    _currentFactory.IsUnitPausedChanged += _currentFactory_IsUnitPausedChanged;
                     _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused;
                 }
             }

@@ -15,13 +15,12 @@ namespace BattleCruisers.Buildables.BuildProgress
             Assert.IsNotNull(fillableImage);
             Assert.AreEqual(Image.Type.Filled, fillableImage.type);
 
-            GameObject pausedFeedback = transform.FindNamedComponent<GameObject>("PausedFeedback");
-            Assert.IsNotNull(pausedFeedback);
+            Image pausedFeedback = transform.FindNamedComponent<Image>("PausedFeedback");
 
             return 
                 new BuildProgressFeedback(
                     new FillableImage(fillableImage),
-                    new GameObjectBC(pausedFeedback));
+                    new GameObjectBC(pausedFeedback.gameObject));
         }
     }
 }
