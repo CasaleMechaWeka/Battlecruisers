@@ -20,7 +20,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     {
 		UnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
-        bool IsUnitPaused { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
         IUnit UnitUnderConstruction { get; }
 
@@ -31,6 +30,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
 		event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+
+        // FELIX  Create IObservableProperty, and use here :)
+        bool IsUnitPaused { get; }
         event EventHandler IsUnitPausedChanged;
 	}
 }
