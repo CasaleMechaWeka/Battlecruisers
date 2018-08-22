@@ -283,6 +283,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void ToggleDroneConsumerFocusCommandExecute()
         {
+            // FELIX  Should no longer work, because CanExecute checks if unit is paused :/
+            // => Remove this or the CanExecute...
             if (IsUnitPaused)
             {
                 // Cannot focus on drone consumer if they are not activated.
