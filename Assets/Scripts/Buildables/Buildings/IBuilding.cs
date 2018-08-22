@@ -17,8 +17,6 @@ namespace BattleCruisers.Buildables.Buildings
 		float CustomOffsetProportion { get; }
         bool PreferCruiserFront { get; }
         SlotType SlotType { get; }
-        // FELIX
-        //bool CanToggleDroneFocus { get; }
 
         void Initialise(
             ICruiser parentCruiser, 
