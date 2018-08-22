@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Update tests :)
     public class BuildProgressFeedback : IBuildProgressFeedback
     {
         private readonly IFillableImage _buildProgressImage;

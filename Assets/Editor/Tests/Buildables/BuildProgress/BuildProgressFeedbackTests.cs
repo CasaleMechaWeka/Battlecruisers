@@ -1,127 +1,167 @@
-﻿// FELIX  :D
-//using BattleCruisers.Buildables;
-//using BattleCruisers.Buildables.BuildProgress;
-//using BattleCruisers.Utils.PlatformAbstractions.UI;
-//using NSubstitute;
-//using NUnit.Framework;
-//using UnityAsserts = UnityEngine.Assertions;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
+using NSubstitute;
+using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
 
-//namespace BattleCruisers.Tests.Buildables.BuildProgress
-//{
-//    public class BuildProgressFeedbackTests
-//    {
-//        private IBuildProgressFeedback _buildProgress;
-//        private IFillableImage _fillableImage;
-//        private IBuildable _buildable1, _buildable2;
+namespace BattleCruisers.Tests.Buildables.BuildProgress
+{
+    public class BuildProgressFeedbackTests
+    {
+        private IBuildProgressFeedback _buildProgress;
+        private IFillableImage _fillableImage;
+        private IGameObject _pausedFeedback;
+        private IBuildable _buildable1, _buildable2;
+        private IFactory _factory;
 
-//        [SetUp]
-//        public void TestSetup()
-//        {
-//            _fillableImage = Substitute.For<IFillableImage>();
-//            _buildProgress = new BuildProgressFeedback(_fillableImage);
+        [SetUp]
+        public void TestSetup()
+        {
+            _fillableImage = Substitute.For<IFillableImage>();
+            _pausedFeedback = Substitute.For<IGameObject>();
+            _buildProgress = new BuildProgressFeedback(_fillableImage, _pausedFeedback);
 
-//            _buildable1 = Substitute.For<IBuildable>();
-//            _buildable1.BuildableState.Returns(BuildableState.InProgress);
-//            _buildable1.BuildProgress.Returns(0.25f);
+            _buildable1 = Substitute.For<IBuildable>();
+            _buildable1.BuildableState.Returns(BuildableState.InProgress);
+            _buildable1.BuildProgress.Returns(0.25f);
 
-//            _buildable2 = Substitute.For<IBuildable>();
-//            _buildable2.BuildableState.Returns(BuildableState.InProgress);
-//            _buildable2.BuildProgress.Returns(0.75f);
+            _buildable2 = Substitute.For<IBuildable>();
+            _buildable2.BuildableState.Returns(BuildableState.InProgress);
+            _buildable2.BuildProgress.Returns(0.75f);
 
-//            UnityAsserts.Assert.raiseExceptions = true;
-//        }
+            _factory = Substitute.For<IFactory>();
+            _factory.IsUnitPaused.Returns(true);
 
-//        [Test]
-//        public void InitialState_Hidden()
-//        {
-//            Assert.IsFalse(_fillableImage.IsVisible);
-//        }
+            UnityAsserts.Assert.raiseExceptions = true;
+        }
 
-//        #region ShowBuildProgress
-//        [Test]
-//        public void ShowBuildProgress_NullBuildable_Throws()
-//        {
-//            Assert.Throws<UnityAsserts.AssertionException>(() => _buildProgress.ShowBuildProgress(buildable: null));
-//        }
+        [Test]
+        public void InitialState_Hidden()
+        {
+            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_pausedFeedback.IsVisible);
+        }
 
-//        [Test]
-//        public void ShowBuildProgress_CompletedBuildable_Throws()
-//        {
-//            _buildable1.BuildableState.Returns(BuildableState.Completed);
-//            Assert.Throws<UnityAsserts.AssertionException>(() => _buildProgress.ShowBuildProgress(_buildable1));
-//        }
+        #region ShowBuildProgress
+        [Test]
+        public void ShowBuildProgress_NullBuildable_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _buildProgress.ShowBuildProgress(buildable: null, buildableFactory: _factory));
+        }
 
-//        [Test]
-//        public void ShowBuildProgress_ValidBuildable_ShowsProgress()
-//        {
-//            _buildProgress.ShowBuildProgress(_buildable1);
+        [Test]
+        public void ShowBuildProgress_NullFactory_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _buildProgress.ShowBuildProgress(_buildable1, buildableFactory: null));
+        }
 
-//            Assert.IsTrue(_fillableImage.IsVisible);
-//            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
-//        }
+        [Test]
+        public void ShowBuildProgress_CompletedBuildable_Throws()
+        {
+            _buildable1.BuildableState.Returns(BuildableState.Completed);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _buildProgress.ShowBuildProgress(_buildable1, _factory));
+        }
 
-//        [Test]
-//        public void ShowBuildProgress_ValidBuildable_ReplacesCurrentBuilding_AndShowsProgress()
-//        {
-//            // First buildable
-//            _buildProgress.ShowBuildProgress(_buildable1);
-//            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+        [Test]
+        public void ShowBuildProgress_ValidBuildable_ShowsProgress()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
 
-//            // Second buildable
-//            _buildProgress.ShowBuildProgress(_buildable2);
-//            Assert.AreEqual(1 - _buildable2.BuildProgress, _fillableImage.FillAmount);
-//            AssertAreUnsubribed(_buildable1);
-//        }
-//        #endregion ShowBuildProgress
+            Assert.IsTrue(_fillableImage.IsVisible);
+            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+            Assert.AreEqual(_factory.IsUnitPaused, _pausedFeedback.IsVisible);
+        }
 
-//        [Test]
-//        public void BuildProgressChanged_UpdatesProgress()
-//        {
-//            _buildProgress.ShowBuildProgress(_buildable1);
+        [Test]
+        public void ShowBuildProgress_ValidBuildable_ReplacesCurrentBuilding_AndShowsProgress()
+        {
+            // First buildable
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
+            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
 
-//            _buildable1.BuildProgress.Returns(0.55f);
-//            _buildable1.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(_buildable1));
+            // Second buildable
+            _buildProgress.ShowBuildProgress(_buildable2, _factory);
+            Assert.AreEqual(1 - _buildable2.BuildProgress, _fillableImage.FillAmount);
+            AssertUnsubribedFromBuildable(_buildable1);
+        }
+        #endregion ShowBuildProgress
 
-//            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
-//        }
+        [Test]
+        public void BuildProgressChanged_UpdatesProgress()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
 
-//        [Test]
-//        public void BuildableCompleted_HidesProgress_AndUnsubsribes()
-//        {
-//            _buildProgress.ShowBuildProgress(_buildable1);
-//            _buildProgress.HideBuildProgress();
+            _buildable1.BuildProgress.Returns(0.55f);
+            _buildable1.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(_buildable1));
 
-//            Assert.IsFalse(_fillableImage.IsVisible);
-//            AssertAreUnsubribed(_buildable1);
-//        }
+            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+        }
 
-//        [Test]
-//        public void BuidlableDestroyed_HidesProgress_AndUnsubscribes()
-//        {
-//            _buildProgress.ShowBuildProgress(_buildable1);
-//            _buildable1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_buildable1));
+        [Test]
+        public void IsUnitPausedChanged_UpdatesPausedFeedbackVisibility()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
 
-//            Assert.IsFalse(_fillableImage.IsVisible);
-//            AssertAreUnsubribed(_buildable1);
-//        }
+            _factory.IsUnitPaused.Returns(false);
+            _factory.IsUnitPausedChanged += Raise.Event();
+            Assert.IsFalse(_pausedFeedback.IsVisible);
 
-//        [Test]
-//        public void HideBuildProgress_HidesProgress_AndUnsubsribes()
-//        {
-//            _buildProgress.ShowBuildProgress(_buildable1);
-//            _buildable1.CompletedBuildable += Raise.Event();
+            _factory.IsUnitPaused.Returns(true);
+            _factory.IsUnitPausedChanged += Raise.Event();
+            Assert.IsTrue(_pausedFeedback.IsVisible);
+        }
 
-//            Assert.IsFalse(_fillableImage.IsVisible);
-//            AssertAreUnsubribed(_buildable1);
-//        }
+        [Test]
+        public void BuildableCompleted_HidesProgress_AndUnsubsribes()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
+            _buildProgress.HideBuildProgress();
 
-//        private void AssertAreUnsubribed(IBuildable buildable)
-//        {
-//            _fillableImage.ClearReceivedCalls();
+            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_pausedFeedback.IsVisible);
+            AssertUnsubribedFromBuildable(_buildable1);
+            AssertUnsubsribedFromFactory(_factory);
+        }
 
-//            buildable.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(buildable));
+        [Test]
+        public void BuidlableDestroyed_HidesProgress_AndUnsubscribes()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
+            _buildable1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_buildable1));
 
-//            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default(float);
-//        }
-//    }
-//}
+            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_pausedFeedback.IsVisible);
+            AssertUnsubribedFromBuildable(_buildable1);
+            AssertUnsubsribedFromFactory(_factory);
+        }
+
+        [Test]
+        public void HideBuildProgress_HidesProgress_AndUnsubsribes()
+        {
+            _buildProgress.ShowBuildProgress(_buildable1, _factory);
+            _buildable1.CompletedBuildable += Raise.Event();
+
+            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_pausedFeedback.IsVisible);
+            AssertUnsubribedFromBuildable(_buildable1);
+            AssertUnsubsribedFromFactory(_factory);
+        }
+
+        private void AssertUnsubribedFromBuildable(IBuildable buildable)
+        {
+            // IBuildable events unsubsribed
+            _fillableImage.ClearReceivedCalls();
+            buildable.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(buildable));
+            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default(float);
+        }
+
+        private void AssertUnsubsribedFromFactory(IFactory factory)
+        {
+            _pausedFeedback.ClearReceivedCalls();
+            factory.IsUnitPausedChanged += Raise.Event();
+            _pausedFeedback.DidNotReceiveWithAnyArgs().IsVisible = default(bool);
+        }
+    }
+}
