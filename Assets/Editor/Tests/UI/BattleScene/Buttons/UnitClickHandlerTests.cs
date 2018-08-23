@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons
         public void HandleUnitClick_SameUnit_IsPaused_ResumesUnit()
         {
             _factory.UnitWrapper.Returns(_unit);
-            _factory.IsUnitPaused.Returns(true);
+            _factory.IsUnitPaused.Value.Returns(true);
 
             _clickHandler.HandleUnitClick(_unit, _factory);
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons
         public void HandleUnitClick_SameUnit_IsNotPaused_PausesUnit()
         {
             _factory.UnitWrapper.Returns(_unit);
-            _factory.IsUnitPaused.Returns(false);
+            _factory.IsUnitPaused.Value.Returns(false);
 
             _clickHandler.HandleUnitClick(_unit, _factory);
 

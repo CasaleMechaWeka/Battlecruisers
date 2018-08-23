@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))
             {
                 // Same unit
-                if (unitFactory.IsUnitPaused)
+                if (unitFactory.IsUnitPaused.Value)
                 {
                     unitFactory.ResumeBuildingUnit();
                 }

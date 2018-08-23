@@ -43,15 +43,15 @@ namespace BattleCruisers.Buildables.BuildProgress
             {
                 if (_currentFactory != null)
                 {
-                    _currentFactory.IsUnitPausedChanged -= _currentFactory_IsUnitPausedChanged;
+                    _currentFactory.IsUnitPaused.ValueChanged -= _currentFactory_IsUnitPausedChanged;
                 }
 
                 _currentFactory = value;
 
                 if (_currentFactory != null)
                 {
-                    _currentFactory.IsUnitPausedChanged += _currentFactory_IsUnitPausedChanged;
-                    _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused;
+                    _currentFactory.IsUnitPaused.ValueChanged += _currentFactory_IsUnitPausedChanged;
+                    _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused.Value;
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         private void _currentFactory_IsUnitPausedChanged(object sender, System.EventArgs e)
         {
-            _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused;
+            _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused.Value;
         }
 
         public void ShowBuildProgress(IBuildable buildable, IFactory buildableFactory)

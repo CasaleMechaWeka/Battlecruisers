@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
@@ -18,28 +19,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
-        public event EventHandler IsUnitPausedChanged;
 
         #region Properties
         protected abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
 
-        private bool _isUnitPaused;
-        public bool IsUnitPaused
+        private ObservableValue<bool> _isUnitPaused;
+        public IObservableValue<bool> IsUnitPaused
         {
             get { return _isUnitPaused; }
-            private set
-            {
-                if (_isUnitPaused != value)
-                {
-                    _isUnitPaused = value;
-
-                    if (IsUnitPausedChanged != null)
-                    {
-                        IsUnitPausedChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
         }
 
         private IBuildableWrapper<IUnit> _unitWrapper;
@@ -56,7 +44,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	                {
                         CleanUpDroneConsumer();
 	                    DestroyUnitUnderConstruction();
-                        IsUnitPaused = false;
+                        _isUnitPaused.Value = false;
 	                }
 
 	                _unitWrapper = value;
@@ -79,6 +67,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             }
         }
         #endregion Properties
+
+        protected override void OnStaticInitialised()
+        {
+            base.OnStaticInitialised();
+            _isUnitPaused = new ObservableValue<bool>(false);
+        }
 
         /// <summary>
         /// Buildings only become repairable after they are completed.  So buildings
@@ -244,22 +238,22 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public void PauseBuildingUnit()
         {
             if (_unitWrapper != null
-                && !IsUnitPaused)
+                && !_isUnitPaused.Value)
             {
                 _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-                IsUnitPaused = true;
+                _isUnitPaused.Value = true;
             }
         }
 
         public void ResumeBuildingUnit()
         {
-            if (IsUnitPaused)
+            if (_isUnitPaused.Value)
             {
                 Assert.IsNotNull(_unitWrapper);
 
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
                 EnsureDroneConsumerHasHighestPriority();
-                IsUnitPaused = false;
+                _isUnitPaused.Value = false;
             }
         }
 
@@ -273,12 +267,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void ToggleDroneConsumerFocusCommandExecute()
         {
-            if (IsUnitPaused)
+            if (_isUnitPaused.Value)
             {
                 // Cannot focus on drone consumer if they are not activated.
                 // Hence, activate drone consumer before focusing on them :)
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
-                IsUnitPaused = false;
+                _isUnitPaused.Value = false;
             }
 
             base.ToggleDroneConsumerFocusCommandExecute();

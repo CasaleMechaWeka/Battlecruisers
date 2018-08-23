@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             _buildable2.BuildProgress.Returns(0.75f);
 
             _factory = Substitute.For<IFactory>();
-            _factory.IsUnitPaused.Returns(true);
+            _factory.IsUnitPaused.Value.Returns(true);
 
             UnityAsserts.Assert.raiseExceptions = true;
         }
@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 
             Assert.IsTrue(_fillableImage.IsVisible);
             Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
-            Assert.AreEqual(_factory.IsUnitPaused, _pausedFeedback.IsVisible);
+            Assert.AreEqual(_factory.IsUnitPaused.Value, _pausedFeedback.IsVisible);
         }
 
         [Test]
@@ -105,12 +105,12 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
 
-            _factory.IsUnitPaused.Returns(false);
-            _factory.IsUnitPausedChanged += Raise.Event();
+            _factory.IsUnitPaused.Value.Returns(false);
+            _factory.IsUnitPaused.ValueChanged += Raise.Event();
             Assert.IsFalse(_pausedFeedback.IsVisible);
 
-            _factory.IsUnitPaused.Returns(true);
-            _factory.IsUnitPausedChanged += Raise.Event();
+            _factory.IsUnitPaused.Value.Returns(true);
+            _factory.IsUnitPaused.ValueChanged += Raise.Event();
             Assert.IsTrue(_pausedFeedback.IsVisible);
         }
 
@@ -161,7 +161,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         private void AssertUnsubsribedFromFactory(IFactory factory)
         {
             _pausedFeedback.ClearReceivedCalls();
-            factory.IsUnitPausedChanged += Raise.Event();
+            factory.IsUnitPaused.ValueChanged += Raise.Event();
             _pausedFeedback.DidNotReceiveWithAnyArgs().IsVisible = default(bool);
         }
     }

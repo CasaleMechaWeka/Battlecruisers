@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils.DataStrctures;
 using System;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -22,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         int NumOfDrones { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
         IUnit UnitUnderConstruction { get; }
+        IObservableValue<bool> IsUnitPaused { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();
@@ -30,9 +32,5 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
 		event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
-
-        // FELIX  Create IObservableProperty, and use here :)
-        bool IsUnitPaused { get; }
-        event EventHandler IsUnitPausedChanged;
 	}
 }
