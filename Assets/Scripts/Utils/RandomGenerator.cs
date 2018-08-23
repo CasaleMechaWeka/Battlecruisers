@@ -25,7 +25,6 @@ namespace BattleCruisers.Utils
             return Mathf.RoundToInt(randomFloat);
         }
 
-        // FELIX  Use in aircraft controller to randomise max velocity (downards :P)
         public float Randomise(float baseValue, float maxChangeByProportionOfBaseValue, ChangeDirection changeDirection)
         {
             Assert.IsTrue(maxChangeByProportionOfBaseValue >= 0);
