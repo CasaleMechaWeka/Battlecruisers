@@ -12,7 +12,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds.Teleporters
 
         private ICloud _cloud;
         private ICloudStats _cloudStats;
-        private float _adjustedDisappearLine, _adjustedReappearLine;
 
         [SetUp]
         public void SetuUp()
@@ -27,33 +26,30 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds.Teleporters
             _cloudStats.ReappaerLineInM.Returns(10);
 
             _teleporter = new NegativeVelocityTeleporter(_cloud, _cloudStats);
-
-            _adjustedDisappearLine = -14;
-            _adjustedReappearLine = 14;
         }
 
         [Test]
         public void ShouldTeleportCloud_False()
         {
-            _cloud.Position = new Vector2(_adjustedDisappearLine, 0);
+            _cloud.Position = new Vector2(_cloudStats.DisappearLineInM, 0);
             Assert.IsFalse(_teleporter.ShouldTeleportCloud());
         }
 
         [Test]
         public void ShouldTeleportCloud_True()
         {
-            _cloud.Position = new Vector2(_adjustedDisappearLine - 0.01f, 0);
+            _cloud.Position = new Vector2(_cloudStats.DisappearLineInM - 0.01f, 0);
             Assert.IsTrue(_teleporter.ShouldTeleportCloud());
         }
 
         [Test]
         public void TeleportCloud()
         {
-            _cloud.Position = new Vector2(_adjustedDisappearLine - 0.01f, 7);
+            _cloud.Position = new Vector2(_cloudStats.DisappearLineInM - 0.01f, 7);
 
             _teleporter.TeleportCloud();
 
-            Assert.AreEqual(new Vector2(_adjustedReappearLine, 7), _cloud.Position);
+            Assert.AreEqual(new Vector2(_cloudStats.ReappaerLineInM, 7), _cloud.Position);
         }
     }
 }
