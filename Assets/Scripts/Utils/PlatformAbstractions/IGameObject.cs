@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers
+namespace BattleCruisers.Utils.PlatformAbstractions
 {
-    // FELIX  Move to platform abstractions namespace :)
     public interface IGameObject
     {
         bool IsVisible { get; set; }
