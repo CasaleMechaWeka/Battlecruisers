@@ -18,15 +18,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
+        private float _fuzziedMaxVelocityInMPerS;
         protected ISpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
+
+        private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
 
         protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
         public override TargetType TargetType { get { return TargetType.Aircraft; } }
 		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
         protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
-        protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * maxVelocityInMPerS; } }
+        protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS; } }
 		public float PatrollingVelocityInMPerS { get { return MaxPatrollingVelocity; } }
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
         protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
@@ -83,6 +86,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _boostableGroup.AddBoostable(_velocityBoostable);
             _boostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.AircraftBoostProviders);
             _boostableGroup.BoostChanged += _boostableGroup_BoostChanged;
+            _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
 			
