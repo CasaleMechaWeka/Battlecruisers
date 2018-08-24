@@ -10,7 +10,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 {
     public class SlotBoostFeedbackTests
     {
+#pragma warning disable CS0414  // Variable is assigned but never used
         private SlotBoostFeedback _slotBoostFeedback;
+#pragma warning restore CS0414  // Variable is assigned but never used
         private ITextMesh _textMesh;
         private IObservableCollection<IBoostProvider> _boostProviders;
         private IBoostProvider _boostProvider;

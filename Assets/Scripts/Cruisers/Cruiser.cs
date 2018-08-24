@@ -30,7 +30,9 @@ namespace BattleCruisers.Cruisers
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         // Just holding a reference so this does not get garbage collected.
+#pragma warning disable CS0414  // Variable is assigned but never used
         private FogOfWarManager _fogOfWarManager;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
         public int numOfDrones;
         public float yAdjustmentInM;
