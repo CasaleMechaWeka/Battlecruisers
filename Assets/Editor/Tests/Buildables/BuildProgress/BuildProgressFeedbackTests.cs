@@ -115,34 +115,32 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         }
 
         [Test]
-        public void BuildableCompleted_HidesProgress_AndUnsubsribes()
+        public void BuildableCompleted_ResetsProgress()
         {
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
-            _buildProgress.HideBuildProgress();
 
-            Assert.IsFalse(_fillableImage.IsVisible);
-            Assert.IsFalse(_pausedFeedback.IsVisible);
-            AssertUnsubribedFromBuildable(_buildable1);
-            AssertUnsubsribedFromFactory(_factory);
+            _buildable1.CompletedBuildable += Raise.Event();
+
+            Assert.IsTrue(_fillableImage.IsVisible);
+            Assert.AreEqual(1, _fillableImage.FillAmount);
         }
 
         [Test]
-        public void BuidlableDestroyed_HidesProgress_AndUnsubscribes()
+        public void BuidlableDestroyed_ResetsProgress()
         {
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
+
             _buildable1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_buildable1));
 
-            Assert.IsFalse(_fillableImage.IsVisible);
-            Assert.IsFalse(_pausedFeedback.IsVisible);
-            AssertUnsubribedFromBuildable(_buildable1);
-            AssertUnsubsribedFromFactory(_factory);
+            Assert.IsTrue(_fillableImage.IsVisible);
+            Assert.AreEqual(1, _fillableImage.FillAmount);
         }
 
         [Test]
         public void HideBuildProgress_HidesProgress_AndUnsubsribes()
         {
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
-            _buildable1.CompletedBuildable += Raise.Event();
+            _buildProgress.HideBuildProgress();
 
             Assert.IsFalse(_fillableImage.IsVisible);
             Assert.IsFalse(_pausedFeedback.IsVisible);

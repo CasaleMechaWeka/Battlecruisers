@@ -78,12 +78,12 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         private void _currentBuildable_CompletedBuildable(object sender, System.EventArgs e)
         {
-            HideBuildProgress();
+            _buildProgressImage.FillAmount = 1;
         }
 
         private void _currentBuildable_Destroyed(object sender, DestroyedEventArgs e)
         {
-            HideBuildProgress();
+            _buildProgressImage.FillAmount = 1;
         }
 
         private void _currentFactory_IsUnitPausedChanged(object sender, System.EventArgs e)
