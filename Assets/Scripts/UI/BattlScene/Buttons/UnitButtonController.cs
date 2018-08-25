@@ -84,6 +84,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             {
                 _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction, _currentFactory);
             }
+            else
+            {
+                _buildProgressFeedback.HideBuildProgress();
+            }
         }
 
 		public override void OnDismissing()
