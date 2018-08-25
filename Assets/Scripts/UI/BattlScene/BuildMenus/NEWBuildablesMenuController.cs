@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Presentables;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,13 +15,22 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{
+        protected IUIManager _uiManager;
+        protected IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
+
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
 
-		public void Initialise(IList<IBuildableWrapper<TBuildable>> buildables)
+		public void Initialise(
+            IList<IBuildableWrapper<TBuildable>> buildables, 
+            IUIManager uiManager, 
+            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();
 
-            Assert.IsNotNull(buildables);
+            Helper.AssertIsNotNull(buildables, uiManager, shouldBeEnabledFilter);
+
+            _uiManager = uiManager;
+            _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
             IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
             Assert.IsTrue(buildables.Count <= buildableButtons.Count);
@@ -47,6 +59,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     .AsReadOnly();
 		}
 
+        // FELIX  Rename buildable to buildableWrapper
         protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildable);
 	}
 }

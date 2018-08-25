@@ -7,14 +7,12 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class NEWUnitsMenuController : NEWBuildablesMenuController<UnitButtonController, IUnit>
 	{
-        // FELIX  Move UIManager to parent class?
-        private IUIManager _uiManager;
-        private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
         private IUnitClickHandler _unitClickHandler;
         private Factory _factory;
 
@@ -24,12 +22,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             IUnitClickHandler unitClickHandler)
 		{
-            base.Initialise(units);
+            base.Initialise(units, uiManager, shouldBeEnabledFilter);
 
-            Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter, unitClickHandler);
-
-            _uiManager = uiManager;
-            _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            Assert.IsNotNull(unitClickHandler);
             _unitClickHandler = unitClickHandler;
 		}
 
