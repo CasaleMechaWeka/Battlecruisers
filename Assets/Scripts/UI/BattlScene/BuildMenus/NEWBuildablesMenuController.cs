@@ -8,7 +8,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class NEWBuildablesMenuController<TBuildable> : PresentableController
+    public abstract class NEWBuildablesMenuController<TButton, TBuildable> : PresentableController
+        where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
@@ -19,17 +20,17 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             Assert.IsNotNull(buildables);
 
-            IList<BuildableButtonController> buildableButtons = GetComponentsInChildren<BuildableButtonController>().ToList();
+            IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
             Assert.IsTrue(buildables.Count <= buildableButtons.Count);
 
 			for (int i = 0; i < buildables.Count; ++i)
 			{
-                BuildableButtonController buildableButton = buildableButtons[i];
+                TButton buildableButton = buildableButtons[i];
 
                 if (i < buildables.Count)
                 {
                     // Have buildable for button
-                    InitialiseBuildableButton(buildables[i]);
+                    InitialiseBuildableButton(buildableButton, buildables[i]);
                     AddChildPresentable(buildableButton);
                 }
                 else
@@ -46,6 +47,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     .AsReadOnly();
 		}
 
-        protected abstract void InitialiseBuildableButton(IBuildableWrapper<TBuildable> buildable);
+        protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildable);
 	}
 }
