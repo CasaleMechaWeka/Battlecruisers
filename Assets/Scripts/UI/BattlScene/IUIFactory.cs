@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
+    // FELIX  Remove :D  Create UI via inspector scrub!!
     public interface IUIFactory
     {
         GameObject CreatePanel(bool isActive);

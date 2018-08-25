@@ -64,6 +64,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				// Create category panel
 				GameObject panelGameObject = _uiFactory.CreatePanel(isActive: false);
 				BuildingsMenuController buildingsMenu = panelGameObject.AddComponent<BuildingsMenuController>();
+                // FELIX  Sort before passing to buildings menu :)
                 buildingsMenu.Initialise(_uiFactory, buildingGroup.Buildings, buildingSorter);
 				
                 _buildingGroupPanels[buildingGroup.BuildingCategory] = buildingsMenu;
