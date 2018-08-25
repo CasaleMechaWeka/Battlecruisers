@@ -17,7 +17,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		{
 			get
 			{
-				return progressBarOutline.enabled && progressSoFar.enabled;
+				return 
+                    progressBarOutline.enabled 
+                    && progressSoFar.enabled;
 			}
 		}
 
@@ -30,6 +32,12 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		protected void OnProgressChanged(float newProgress)
 		{
 			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
+
+            if (this == null)
+            {
+                // We have been destroyed
+                return;
+            }
 
 			if (newProgress == 0)
 			{
