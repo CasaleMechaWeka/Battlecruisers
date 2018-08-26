@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUnitClickHandler unitClickHandler,
             IBuildableSorter<IUnit> unitSorter)
         {
-            Helper.AssertIsNotNull(units, uiManager, shouldBeEnabledFilter, unitClickHandler);
+            Helper.AssertIsNotNull(units, uiManager, shouldBeEnabledFilter, unitClickHandler, unitSorter);
 
             IList<NEWUnitsMenuController> unitMenus = GetComponentsInChildren<NEWUnitsMenuController>().ToList();
             Assert.AreEqual(units.Count, unitMenus.Count);
