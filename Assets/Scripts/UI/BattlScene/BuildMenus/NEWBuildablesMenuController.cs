@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _shouldBeEnabledFilter = buttonVisibilityFilters.BuildableButtonVisibilityFilter;
 
             IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
-            Assert.IsTrue(buildables.Count <= buildableButtons.Count);
+            Assert.IsTrue(buildables.Count <= buildableButtons.Count, "Buildable count " + buildables.Count + " should be <= button count " + buildableButtons.Count);
 
 			for (int i = 0; i < buildables.Count; ++i)
 			{
