@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private Image _backgroundImage;
 
         private static Color SELECTED_COLOR = Color.grey;
-        private static Color DESELECTED_COLOR = Color.black;
+        private static Color DESELECTED_COLOR = Color.clear;
 
         private const float MIN_GAME_SPEED = 0.25f;
         private const float MAX_GAME_SPEED = 4;
