@@ -203,7 +203,6 @@ namespace BattleCruisers.Scenes
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
             buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units, sorterFactory);
 
-            // FELIX  Forgot to initalise back buttons :/
             NEWbuildMenuController
                 .Initialise(
                     uiManager,
