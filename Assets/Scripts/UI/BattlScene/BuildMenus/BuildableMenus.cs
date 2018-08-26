@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
@@ -19,10 +19,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
             IUIManager uiManager,
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
+            IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<TBuildable> buildableSorter)
         {
-            Helper.AssertIsNotNull(buildables, uiManager, shouldBeEnabledFilter, buildableSorter);
+            Helper.AssertIsNotNull(buildables, uiManager, buttonVisibilityFilters, buildableSorter);
 
             IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             {
                 TMenu buildableMenu = buildableMenus[i];
                 IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
-                InitialiseMenu(buildableMenu, sortedBuildables, uiManager, shouldBeEnabledFilter);
+                InitialiseMenu(buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
                 _buildableCategoryToPanels.Add(pair.Key, buildableMenu);
                 i++;
             }
@@ -43,9 +43,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         protected abstract void InitialiseMenu(
             TMenu menu,
-            IList<IBuildableWrapper<TBuildable>> buildables,
             IUIManager uiManager,
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter);
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildableWrapper<TBuildable>> buildables);
 
         // FELIX  Rename panel to menu
         public IBuildablesMenu GetBuildablesPanel(TCategories buildableCategory)

@@ -2,8 +2,8 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private Factory _factory;
 
 		public override void Initialise(
-            IList<IBuildableWrapper<IUnit>> units,
-            IUIManager uiManager, 
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+            IUIManager uiManager,
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildableWrapper<IUnit>> units)
 		{
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
             _unitClickHandler = new UnitClickHandler();
 
-            base.Initialise(units, uiManager, shouldBeEnabledFilter);
+            base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
 
         protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildable)

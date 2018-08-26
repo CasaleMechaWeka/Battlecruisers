@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,16 +15,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private ISpriteProvider _spriteProvider;
 
         public void Initialise(
-            IList<IBuildableWrapper<IBuilding>> buildings,
             IUIManager uiManager,
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildableWrapper<IBuilding>> buildings,
             ISpriteProvider spriteProvider)
         {
             // Need _spriteProvider for abstract method called by base.Initialise().  Codesmell :P
             Assert.IsNotNull(spriteProvider);
             _spriteProvider = spriteProvider;
 
-            base.Initialise(buildings, uiManager, shouldBeEnabledFilter);
+            base.Initialise(uiManager, buttonVisibilityFilters, buildings);
         }
 
         protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildable)

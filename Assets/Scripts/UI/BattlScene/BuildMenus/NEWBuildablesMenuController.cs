@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class NEWBuildablesMenuController<TButton, TBuildable> : PresentableController, IBuildablesMenu
+    public abstract class NEWBuildablesMenuController<TButton, TBuildable> : Menu, IBuildablesMenu
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{
@@ -21,16 +20,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
 
 		public virtual void Initialise(
-            IList<IBuildableWrapper<TBuildable>> buildables, 
-            IUIManager uiManager, 
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+            IUIManager uiManager,
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildableWrapper<TBuildable>> buildables)
 		{
-			base.Initialise();
+			base.Initialise(uiManager, buttonVisibilityFilters);
 
-            Helper.AssertIsNotNull(buildables, uiManager, shouldBeEnabledFilter);
+            Assert.IsNotNull(buildables);
 
             _uiManager = uiManager;
-            _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            _shouldBeEnabledFilter = buttonVisibilityFilters.BuildableButtonVisibilityFilter;
 
             IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
             Assert.IsTrue(buildables.Count <= buildableButtons.Count);

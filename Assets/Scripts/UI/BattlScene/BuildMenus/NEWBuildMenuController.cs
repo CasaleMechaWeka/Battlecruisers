@@ -49,13 +49,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(_buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters.BuildableButtonVisibilityFilter, buildingSorter);
+            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter);
 
             // Unit menus
             _unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(_unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters.BuildableButtonVisibilityFilter, unitSorter);
+            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter);
 		}
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)

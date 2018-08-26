@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     {
         protected override void InitialiseMenu(
             NEWUnitsMenuController menu, 
-            IList<IBuildableWrapper<IUnit>> buildables, 
-            IUIManager uiManager, 
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+            IUIManager uiManager,
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildableWrapper<IUnit>> buildables)
         {
-            menu.Initialise(buildables, uiManager, shouldBeEnabledFilter);
+            menu.Initialise(uiManager, buttonVisibilityFilters, buildables);
         }
     }
 }
