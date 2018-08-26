@@ -7,14 +7,14 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     // FELIX  Rename, remove Controller suffix
     public class NavigationFeedbackButtonController : MonoBehaviour 
     {
-        private NEWLevelsScreenController _levelScreenController;
+        private LevelsScreenController _levelScreenController;
         private int _setIndex;
         private bool _isSelected;
         private RectTransform _transform;
 
         private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.5f;
 
-        public void Initialise(NEWLevelsScreenController levelScreenController, int setIndex)
+        public void Initialise(LevelsScreenController levelScreenController, int setIndex)
         {
             _levelScreenController = levelScreenController;
             _setIndex = setIndex;

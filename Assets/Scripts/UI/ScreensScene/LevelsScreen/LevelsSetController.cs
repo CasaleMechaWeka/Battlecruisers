@@ -1,25 +1,28 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using UnityEngine;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class LevelsSetController : MonoBehaviour
+    public class LevelsSetController : MonoBehaviourWrapper
     {
-		public void Initialise(IScreensSceneGod screensSceneGod, UIFactory uiFactory, IList<ILevel> levels, int numOfLevelsUnlocked)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
         {
-            HorizontalOrVerticalLayoutGroup buttonsWrapper = GetComponent<HorizontalOrVerticalLayoutGroup>();
-            Assert.IsNotNull(buttonsWrapper);
+            Helper.AssertIsNotNull(screensSceneGod, levels);
 
-            // Create level buttons
-            foreach (ILevel level in levels)
-			{
+            LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
+            Assert.AreEqual(levels.Count, levelButtons.Length);
+
+            for (int i = 0; i < levels.Count; ++i)
+            {
+                LevelButtonController button = levelButtons[i];
+                ILevel level = levels[i];
                 bool isLevelUnlocked = level.Num <= numOfLevelsUnlocked;
-			    uiFactory.CreateLevelButton(buttonsWrapper, level, isLevelUnlocked, screensSceneGod); 
-			}
+
+                button.Initialise(level, isLevelUnlocked, screensSceneGod);
+            }
 		}
 	}
 }

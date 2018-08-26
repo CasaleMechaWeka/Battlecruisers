@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
+using BattleCruisers.Utils.PlatformAbstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsScreenController : ScreenController
 	{
-        private IList<LevelsSetController> _levelSets;
+        private IList<IGameObject> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
 
         public ButtonController nextSetButton, previousSetButton;
-        public HorizontalOrVerticalLayoutGroup navigationFeedbackButtonsWrapper;
 
         private const int SET_SIZE = 7;
 
-        private LevelsSetController VisibleLevelsSet { get { return _levelSets[VisibleSetIndex]; } }
+        private IGameObject VisibleLevelsSet { get { return _levelSets[VisibleSetIndex]; } }
 
         private int _visibleSetIndex;
         public int VisibleSetIndex 
@@ -45,10 +45,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.Initialise(screensSceneGod);
 
-            UIFactory uiFactory = GetComponent<UIFactory>();
-            Assert.IsNotNull(uiFactory);
-
-            CreateLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, uiFactory);
+            int numOfSets = levels.Count / SET_SIZE;
+            InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets);
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(_nextSetCommand);
@@ -56,31 +54,36 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(_previousSetCommand);
 
+            NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
+            Assert.IsNotNull(navigationFeedbackButtonsPanel);
+            navigationFeedbackButtonsPanel.Initialise(this, numOfSets);
+
             VisibleSetIndex = (lastPlayedLevelNum - 1) / SET_SIZE;
             ShowSet(VisibleSetIndex);
         }
 
-        private void CreateLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, UIFactory uiFactory)
+        private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, int numOfSets)
         {
             Assert.IsTrue(levels.Count % SET_SIZE == 0);
 
-            int numOfSets = levels.Count / SET_SIZE;
-            _levelSets = new List<LevelsSetController>(numOfSets);
+            LevelsSetController[] levelSets = GetComponentsInChildren<LevelsSetController>();
+
+            Assert.AreEqual(numOfSets, levelSets.Length);
+            _levelSets = new List<IGameObject>(numOfSets);
 
             for (int j = 0; j < numOfSets; j++)
             {
-                IList<ILevel> setLevels = new List<ILevel>(SET_SIZE);
+                int startIndex = j * SET_SIZE;
+                IList<ILevel> setLevels
+                    = levels
+                        .Skip(startIndex)
+                        .Take(SET_SIZE)
+                        .ToList();
 
-                for (int i = 0; i < SET_SIZE; ++i)
-                {
-                    setLevels.Add(levels[j * SET_SIZE + i]);
-                }
-
-                LevelsSetController levelsSet = uiFactory.CreateLevelsSet(screensSceneGod, this, uiFactory, setLevels, numOfLevelsUnlocked);
-                levelsSet.gameObject.SetActive(false);
+                LevelsSetController levelsSet = levelSets[j];
+                levelsSet.Initialise(screensSceneGod, setLevels, numOfLevelsUnlocked);
+                levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
-
-                uiFactory.CreateNavigationFeedbackButton(navigationFeedbackButtonsWrapper, this, j);
             }
         }
 
@@ -88,9 +91,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             Assert.IsTrue(setIndex >= 0 && setIndex < _levelSets.Count);
 
-            VisibleLevelsSet.gameObject.SetActive(false);
+            VisibleLevelsSet.IsVisible = false;
             VisibleSetIndex = setIndex;
-            VisibleLevelsSet.gameObject.SetActive(true);
+            VisibleLevelsSet.IsVisible = true;
         }
 
 		private void NextSetCommandExecute()

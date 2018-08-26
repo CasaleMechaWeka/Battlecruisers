@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class NavigationFeedbackButtonsPanel : MonoBehaviour
     {
-        public void Initialise(NEWLevelsScreenController levelsScreenController, int numOfSets)
+        public void Initialise(LevelsScreenController levelsScreenController, int numOfSets)
         {
             Assert.IsNotNull(levelsScreenController);
 
