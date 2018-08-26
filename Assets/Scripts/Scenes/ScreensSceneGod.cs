@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes
         private ISceneNavigator _sceneNavigator;
 
 		public HomeScreenController homeScreen;
-		public LevelsScreenController levelsScreen;
+		public NEWLevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;

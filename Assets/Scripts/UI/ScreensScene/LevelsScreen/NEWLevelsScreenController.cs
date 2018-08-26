@@ -68,7 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             NEWLevelsSetController[] levelSets = GetComponentsInChildren<NEWLevelsSetController>();
 
-            Assert.AreEqual(numOfLevelsUnlocked, levelSets.Length);
+            Assert.AreEqual(numOfSets, levelSets.Length);
             _levelSets = new List<IGameObject>(numOfSets);
 
             for (int j = 0; j < numOfSets; j++)
