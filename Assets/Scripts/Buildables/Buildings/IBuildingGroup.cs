@@ -7,6 +7,8 @@ namespace BattleCruisers.Buildables.Buildings
 		IList<IBuildableWrapper<IBuilding>> Buildings { get; }
 		BuildingCategory BuildingCategory { get; }
 		string BuildingGroupName { get; }
+
+        // FELIX  Unused :/
 		string Description { get; }
 	}
 }

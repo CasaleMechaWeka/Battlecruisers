@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
@@ -11,11 +10,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class BuildableMenus<TBuildable, TCategories, TBuildableMenuController> : MonoBehaviour
+    public abstract class BuildableMenus<TBuildable, TCategories, TMenu> : MonoBehaviour
         where TBuildable : class, IBuildable
-        where TBuildableMenuController : PresentableController
+        where TMenu : IBuildablesMenu
     {
-        private IDictionary<TCategories, PresentableController> _buildableCategoryToPanels;
+        private IDictionary<TCategories, IBuildablesMenu> _buildableCategoryToPanels;
 
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
@@ -25,16 +24,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         {
             Helper.AssertIsNotNull(buildables, uiManager, shouldBeEnabledFilter, buildableSorter);
 
-            IList<TBuildableMenuController> buildableMenus = GetComponentsInChildren<TBuildableMenuController>().ToList();
+            IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
 
-            _buildableCategoryToPanels = new Dictionary<TCategories, PresentableController>();
+            _buildableCategoryToPanels = new Dictionary<TCategories, IBuildablesMenu>();
 
             int i = 0;
 
             foreach (KeyValuePair<TCategories, IList<IBuildableWrapper<TBuildable>>> pair in buildables)
             {
-                TBuildableMenuController buildableMenu = buildableMenus[i];
+                TMenu buildableMenu = buildableMenus[i];
                 IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
                 InitialiseMenu(buildableMenu, sortedBuildables, uiManager, shouldBeEnabledFilter);
                 _buildableCategoryToPanels.Add(pair.Key, buildableMenu);
@@ -43,12 +42,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected abstract void InitialiseMenu(
-            TBuildableMenuController menu,
+            TMenu menu,
             IList<IBuildableWrapper<TBuildable>> buildables,
             IUIManager uiManager,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter);
 
-        public PresentableController GetBuildingsPanel(TCategories buildableCategory)
+        // FELIX  Rename panel to menu
+        public IBuildablesMenu GetBuildablesPanel(TCategories buildableCategory)
         {
             Assert.IsTrue(_buildableCategoryToPanels.ContainsKey(buildableCategory));
             return _buildableCategoryToPanels[buildableCategory];
