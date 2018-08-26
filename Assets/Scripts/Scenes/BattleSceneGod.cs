@@ -53,7 +53,6 @@ namespace BattleCruisers.Scenes
         private IPauseGameManager _pauseGameManager;
 
         public HUDCanvasController hudCanvas;
-		public UIFactory uiFactory;
         public NEWBuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
 		public CameraInitialiser cameraInitialiser;
@@ -72,7 +71,6 @@ namespace BattleCruisers.Scenes
             IHighlightFactory highlightFactory = GetComponent<IHighlightFactory>();
 
             Helper.AssertIsNotNull(
-                uiFactory,
                 buildMenuController,
                 hudCanvas,
                 modalMenuController,
@@ -185,13 +183,6 @@ namespace BattleCruisers.Scenes
                     UserChosenTargetHelper,
                     buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter,
                     buttonVisibilityFilters.DeletButtonVisiblityFilter);
-            uiFactory
-                .Initialise(
-                    uiManager,
-                    spriteProvider,
-                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
-                    buttonVisibilityFilters.CategoryButtonVisibilityFilter,
-                    buttonVisibilityFilters.BackButtonVisibilityFilter);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
