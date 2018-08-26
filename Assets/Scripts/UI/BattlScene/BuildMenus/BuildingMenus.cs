@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, NEWBuildingsMenuController>
+    public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, BuildingsMenuController>
     {
         private ISpriteProvider _spriteProvider;
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected override void InitialiseMenu(
-            NEWBuildingsMenuController menu, 
+            BuildingsMenuController menu, 
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)

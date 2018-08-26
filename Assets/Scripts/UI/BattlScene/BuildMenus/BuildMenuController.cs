@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class NEWBuildMenuController : MonoBehaviour, IBuildMenu
+    public class BuildMenuController : MonoBehaviour, IBuildMenu
 	{
         private IMenu _currentMenu;
         private BuildingCategoriesMenu _buildingCategoriesMenu;

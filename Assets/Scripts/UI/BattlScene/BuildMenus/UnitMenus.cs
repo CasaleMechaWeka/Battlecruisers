@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class UnitMenus : BuildableMenus<IUnit, UnitCategory, NEWUnitsMenuController>
+    public class UnitMenus : BuildableMenus<IUnit, UnitCategory, UnitsMenuController>
     {
         protected override void InitialiseMenu(
-            NEWUnitsMenuController menu, 
+            UnitsMenuController menu, 
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IUnit>> buildables)

@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class NEWBuildablesMenuController<TButton, TBuildable> : PresentableController, IBuildablesMenu
+    public abstract class BuildablesMenuController<TButton, TBuildable> : PresentableController, IBuildablesMenu
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{

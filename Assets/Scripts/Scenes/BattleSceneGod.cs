@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes
         private IPauseGameManager _pauseGameManager;
 
         public HUDCanvasController hudCanvas;
-        public NEWBuildMenuController buildMenuController;
+        public BuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
 		public CameraInitialiser cameraInitialiser;
         public BackgroundController backgroundController;

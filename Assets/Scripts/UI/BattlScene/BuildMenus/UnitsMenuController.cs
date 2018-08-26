@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class NEWUnitsMenuController : NEWBuildablesMenuController<UnitButtonController, IUnit>
+    public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
 	{
         private IUnitClickHandler _unitClickHandler;
         private Factory _factory;

@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class NEWBuildingsMenuController : NEWBuildablesMenuController<BuildingButtonController, IBuilding>
+    public class BuildingsMenuController : BuildablesMenuController<BuildingButtonController, IBuilding>
 	{
         private ISpriteProvider _spriteProvider;
 
