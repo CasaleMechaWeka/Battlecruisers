@@ -19,7 +19,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -55,9 +54,7 @@ namespace BattleCruisers.Scenes
 
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
-        // FELIX  Remove :)
-		public BuildMenuController buildMenuController;
-        public NEWBuildMenuController NEWbuildMenuController;
+        public NEWBuildMenuController buildMenuController;
 		public ModalMenuController modalMenuController;
 		public CameraInitialiser cameraInitialiser;
         public BackgroundController backgroundController;
@@ -77,7 +74,6 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(
                 uiFactory,
                 buildMenuController,
-                NEWbuildMenuController,
                 hudCanvas,
                 modalMenuController,
                 cameraInitialiser,
@@ -142,7 +138,7 @@ namespace BattleCruisers.Scenes
                 = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
-                    NEWbuildMenuController,
+                    buildMenuController,
                     //buildMenuController,
                     new BuildableDetailsManager(hudCanvas));
             IUIManager uiManager = helper.CreateUIManager(managerArgs);
@@ -203,10 +199,8 @@ namespace BattleCruisers.Scenes
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
-            // FELIX  Remove :)
-            //buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units, sorterFactory);
 
-            NEWbuildMenuController
+            buildMenuController
                 .Initialise(
                     uiManager,
                     buildingGroups,
@@ -287,9 +281,7 @@ namespace BattleCruisers.Scenes
 					    _playerCruiser, 
     					_aiCruiser, 
     					hudCanvas, 
-                        // FELIX
-    					NEWbuildMenuController,
-                        //buildMenuController, 
+    					buildMenuController,
     					_tutorialProvider, 
     					prefabFactory, 
     					_navigationSettings,
