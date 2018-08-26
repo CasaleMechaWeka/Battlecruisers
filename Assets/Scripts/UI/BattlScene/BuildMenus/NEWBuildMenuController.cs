@@ -31,8 +31,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBroadcastingFilter<BuildingCategory> shouldCategoryButtonsBeEnabledFilter,
             IBroadcastingFilter<IBuildable> shouldBuildingButtonsBeEnabledFilter,
             ISpriteProvider spriteProvider,
-            IBroadcastingFilter<IBuildable> shouldUnitButtonsBeEnabledFilter,
-            IUnitClickHandler unitClickHandler)
+            IBroadcastingFilter<IBuildable> shouldUnitButtonsBeEnabledFilter)
 		{
             Helper.AssertIsNotNull(
                 uiManager,
@@ -42,8 +41,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 shouldCategoryButtonsBeEnabledFilter,
                 shouldBuildingButtonsBeEnabledFilter,
                 spriteProvider,
-                shouldUnitButtonsBeEnabledFilter,
-                unitClickHandler);
+                shouldUnitButtonsBeEnabledFilter);
 
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();

@@ -7,7 +7,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
@@ -16,16 +15,15 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IUnitClickHandler _unitClickHandler;
         private Factory _factory;
 
-		public void Initialise(
+		public override void Initialise(
             IList<IBuildableWrapper<IUnit>> units,
             IUIManager uiManager, 
-            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
-            IUnitClickHandler unitClickHandler)
+            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
-            base.Initialise(units, uiManager, shouldBeEnabledFilter);
+            // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
+            _unitClickHandler = new UnitClickHandler();
 
-            Assert.IsNotNull(unitClickHandler);
-            _unitClickHandler = unitClickHandler;
+            base.Initialise(units, uiManager, shouldBeEnabledFilter);
 		}
 
         protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildable)

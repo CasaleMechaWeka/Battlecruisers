@@ -213,9 +213,7 @@ namespace BattleCruisers.Scenes
                     buttonVisibilityFilters.CategoryButtonVisibilityFilter,
                     buttonVisibilityFilters.BuildableButtonVisibilityFilter,
                     spriteProvider,
-                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
-                    // FELIX  Get real unit click handler :P
-                    unitClickHandler: null);
+                    buttonVisibilityFilters.BuildableButtonVisibilityFilter);
 
             uiManager.InitialUI();
 

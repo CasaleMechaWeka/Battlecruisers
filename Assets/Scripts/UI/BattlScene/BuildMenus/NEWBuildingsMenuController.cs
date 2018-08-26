@@ -20,10 +20,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             ISpriteProvider spriteProvider)
         {
-            base.Initialise(buildings, uiManager, shouldBeEnabledFilter);
-
+            // Need _spriteProvider for abstract method called by base.Initialise().  Codesmell :P
             Assert.IsNotNull(spriteProvider);
             _spriteProvider = spriteProvider;
+
+            base.Initialise(buildings, uiManager, shouldBeEnabledFilter);
         }
 
         protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildable)

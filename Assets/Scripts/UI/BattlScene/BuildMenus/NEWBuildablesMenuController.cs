@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
 
-		public void Initialise(
+		public virtual void Initialise(
             IList<IBuildableWrapper<TBuildable>> buildables, 
             IUIManager uiManager, 
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
