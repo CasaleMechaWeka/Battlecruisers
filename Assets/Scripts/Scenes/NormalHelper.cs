@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
@@ -80,30 +79,16 @@ namespace BattleCruisers.Scenes
             return new FreeSlotFilter();
 		}
 
-        public IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager)
+        public IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
         {
-            return new AffordableBuildableFilter(droneManager);
-        }
-
-        public IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter()
-        {
-            // For the real game want to enable all building categories :)
-            return new StaticBroadcastingFilter<BuildingCategory>(isMatch: true);
-        }
-
-        public BasicFilter CreateBackButtonFilter()
-        {
-            return new BasicFilter(isMatch: true);
-        }
-
-        public IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter()
-        {
-            return new ChooseTargetButtonVisibilityFilter();
-        }
-
-        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
-        {
-            return new DeleteButtonVisibilityFilter();
+            return
+                new ButtonVisibilityFilters(
+                    new AffordableBuildableFilter(droneManager),
+                    // For the real game want to enable all building categories :)
+                    new StaticBroadcastingFilter<BuildingCategory>(isMatch: true),
+                    new ChooseTargetButtonVisibilityFilter(),
+                    new DeleteButtonVisibilityFilter(),
+                    new BasicFilter(isMatch: true));
         }
     }
 }

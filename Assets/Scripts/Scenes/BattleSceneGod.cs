@@ -12,6 +12,7 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -55,6 +56,7 @@ namespace BattleCruisers.Scenes
         public HUDCanvasController hudCanvas;
 		public UIFactory uiFactory;
 		public BuildMenuController buildMenuController;
+        public NEWBuildMenuController NEWbuildMenuController;
 		public ModalMenuController modalMenuController;
 		public CameraInitialiser cameraInitialiser;
         public BackgroundController backgroundController;
@@ -74,6 +76,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(
                 uiFactory,
                 buildMenuController,
+                NEWbuildMenuController,
                 hudCanvas,
                 modalMenuController,
                 cameraInitialiser,
@@ -172,20 +175,25 @@ namespace BattleCruisers.Scenes
 
 			// UI
 			_navigationSettings = new NavigationSettings();
-			hudCanvas
+            IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(_playerCruiser.DroneManager);
+
+            hudCanvas
                 .Initialise(
-                    spriteProvider, 
-                    _playerCruiser, 
-                    _aiCruiser, 
-                    cameraInitialiser.CameraController, 
-                    _navigationSettings.AreTransitionsEnabledFilter, 
+                    spriteProvider,
+                    _playerCruiser,
+                    _aiCruiser,
+                    cameraInitialiser.CameraController,
+                    _navigationSettings.AreTransitionsEnabledFilter,
                     UserChosenTargetHelper,
-                    helper.CreateChooseTargetButtonVisiblityFilter(),
-                    helper.CreateDeletButtonVisiblityFilter());
-            IBroadcastingFilter<IBuildable> buildableButtonShouldBeEnabledFilter = helper.CreateBuildableButtonFilter(_playerCruiser.DroneManager);
-            IBroadcastingFilter<BuildingCategory> buildingCategoryButtonShouldBeEnabledFilter = helper.CreateCategoryButtonFilter();
-            IBroadcastingFilter backButtonShouldBeEnabledFilter = helper.CreateBackButtonFilter();
-            uiFactory.Initialise(uiManager, spriteProvider, buildableButtonShouldBeEnabledFilter, buildingCategoryButtonShouldBeEnabledFilter, backButtonShouldBeEnabledFilter);
+                    buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter,
+                    buttonVisibilityFilters.DeletButtonVisiblityFilter);
+            uiFactory
+                .Initialise(
+                    uiManager,
+                    spriteProvider,
+                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
+                    buttonVisibilityFilters.CategoryButtonVisibilityFilter,
+                    buttonVisibilityFilters.BackButtonVisibilityFilter);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
@@ -194,6 +202,20 @@ namespace BattleCruisers.Scenes
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
             buildMenuController.Initialise(uiManager, uiFactory, buildingGroups, units, sorterFactory);
+
+            // FELIX  Forgot to initalise back buttons :/
+            NEWbuildMenuController
+                .Initialise(
+                    uiManager,
+                    buildingGroups,
+                    units,
+                    sorterFactory,
+                    buttonVisibilityFilters.CategoryButtonVisibilityFilter,
+                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
+                    spriteProvider,
+                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
+                    // FELIX  Get real unit click handler :P
+                    unitClickHandler: null);
 
             uiManager.InitialUI();
 

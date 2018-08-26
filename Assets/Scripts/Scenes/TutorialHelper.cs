@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -93,34 +92,25 @@ namespace BattleCruisers.Scenes
             return _slotFilter;
 		}
 
-        public IBroadcastingFilter<IBuildable> CreateBuildableButtonFilter(IDroneManager droneManager)
-        {
-            return _buildingNameFilter;
-        }
-
-        public IBroadcastingFilter<BuildingCategory> CreateCategoryButtonFilter()
-        {
-            return _buildingCategoryFilter;
-        }
-
-        public BasicFilter CreateBackButtonFilter()
-        {
-            return BackButtonPermitter;
-        }
-
         public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
             return new LastIncompleteBuildingStartedProvider(cruiser);
         }
 
-        public IFilter<ITarget> CreateChooseTargetButtonVisiblityFilter()
+        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
         {
             return new StaticFilter<ITarget>(isMatch: false);
         }
 
-        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
+        public IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
         {
-            return new StaticFilter<ITarget>(isMatch: false);
+            return
+                new ButtonVisibilityFilters(
+                    _buildingNameFilter,
+                    _buildingCategoryFilter,
+                    new StaticFilter<ITarget>(isMatch: false),
+                    new StaticFilter<ITarget>(isMatch: false),
+                    BackButtonPermitter);
         }
     }
 }
