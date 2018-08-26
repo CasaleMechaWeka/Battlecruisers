@@ -45,7 +45,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.Initialise(screensSceneGod);
 
-            InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked);
+            int numOfSets = levels.Count / SET_SIZE;
+            InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets);
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(_nextSetCommand);
@@ -53,17 +54,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(_previousSetCommand);
 
+            NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
+            Assert.IsNotNull(navigationFeedbackButtonsPanel);
+            navigationFeedbackButtonsPanel.Initialise(this, numOfSets);
+
             VisibleSetIndex = (lastPlayedLevelNum - 1) / SET_SIZE;
             ShowSet(VisibleSetIndex);
         }
 
-        private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
+        private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, int numOfSets)
         {
             Assert.IsTrue(levels.Count % SET_SIZE == 0);
 
             NEWLevelsSetController[] levelSets = GetComponentsInChildren<NEWLevelsSetController>();
 
-            int numOfSets = levels.Count / SET_SIZE;
             Assert.AreEqual(numOfLevelsUnlocked, levelSets.Length);
             _levelSets = new List<IGameObject>(numOfSets);
 
