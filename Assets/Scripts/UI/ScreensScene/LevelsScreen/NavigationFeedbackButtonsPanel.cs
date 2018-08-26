@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             Assert.IsNotNull(levelsScreenController);
 
-            NavigationFeedbackButtonController[] feedbackButtons = GetComponentsInChildren<NavigationFeedbackButtonController>();
+            NavigationFeedbackButton[] feedbackButtons = GetComponentsInChildren<NavigationFeedbackButton>();
             Assert.AreEqual(numOfSets, feedbackButtons.Length);
 
             for (int i = 0; i < numOfSets; ++i)
