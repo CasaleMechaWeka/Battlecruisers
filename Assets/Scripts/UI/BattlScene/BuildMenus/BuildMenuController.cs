@@ -102,6 +102,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
+            // FELIX  Use assert :)
 			if (!_buildingGroupPanels.ContainsKey(buildingCategory))
 			{
 				throw new ArgumentException();
@@ -113,6 +114,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowUnitsMenu(IFactory factory)
 		{
+            // FELIX  Use assert :)
 			if (!_unitGroupPanels.ContainsKey(factory.UnitCategory))
 			{
 				throw new ArgumentException();
