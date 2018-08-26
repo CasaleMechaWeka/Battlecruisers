@@ -69,7 +69,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             backButton.Initialise(uiManager, buttonVisibilityFilters.BackButtonVisibilityFilter);
         }
 
-        // FELIX  Rename buildable to buildableWrapper
-        protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildable);
+        protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildableWrapper);
 	}
 }

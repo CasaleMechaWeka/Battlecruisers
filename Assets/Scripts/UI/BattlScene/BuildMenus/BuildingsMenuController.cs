@@ -27,10 +27,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             base.Initialise(uiManager, buttonVisibilityFilters, buildings);
         }
 
-        protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildable)
+        protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildableWrapper)
         {
-            Sprite slotSprite = _spriteProvider.GetSlotSprite(buildable.Buildable.SlotType).Sprite;
-            button.Initialise(buildable, _uiManager, _shouldBeEnabledFilter, slotSprite);
+            Sprite slotSprite = _spriteProvider.GetSlotSprite(buildableWrapper.Buildable.SlotType).Sprite;
+            button.Initialise(buildableWrapper, _uiManager, _shouldBeEnabledFilter, slotSprite);
         }
     }
 }

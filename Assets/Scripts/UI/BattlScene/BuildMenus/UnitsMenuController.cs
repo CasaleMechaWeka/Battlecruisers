@@ -26,9 +26,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
 
-        protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildable)
+        protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)
         {
-            button.Initialise(buildable, _uiManager, _shouldBeEnabledFilter, _unitClickHandler);
+            button.Initialise(buildableWrapper, _uiManager, _shouldBeEnabledFilter, _unitClickHandler);
         }
 
 		public override void OnPresenting(object activationParameter)
