@@ -88,12 +88,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
-			ChangePanel(_buildingMenus.GetBuildablesPanel(buildingCategory));
+			ChangePanel(_buildingMenus.GetBuildablesMenu(buildingCategory));
 		}
 
 		public void ShowUnitsMenu(IFactory factory)
 		{
-            IBuildablesMenu unitMenu = _unitMenus.GetBuildablesPanel(factory.UnitCategory);
+            IBuildablesMenu unitMenu = _unitMenus.GetBuildablesMenu(factory.UnitCategory);
 			ChangePanel(unitMenu, factory);
 		}
 
@@ -122,7 +122,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public ReadOnlyCollection<IBuildableButton> GetBuildableButtons(BuildingCategory category)
         {
-            IBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesPanel(category);
+            IBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesMenu(category);
             return buildMenuForCategory.BuildableButtons;
         }
 	}

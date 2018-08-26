@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         where TBuildable : class, IBuildable
         where TMenu : IBuildablesMenu
     {
-        private IDictionary<TCategories, IBuildablesMenu> _buildableCategoryToPanels;
+        private IDictionary<TCategories, IBuildablesMenu> _buildableCategoryToMenus;
 
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
 
-            _buildableCategoryToPanels = new Dictionary<TCategories, IBuildablesMenu>();
+            _buildableCategoryToMenus = new Dictionary<TCategories, IBuildablesMenu>();
 
             int i = 0;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 TMenu buildableMenu = buildableMenus[i];
                 IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
                 InitialiseMenu(buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
-                _buildableCategoryToPanels.Add(pair.Key, buildableMenu);
+                _buildableCategoryToMenus.Add(pair.Key, buildableMenu);
                 i++;
             }
         }
@@ -47,11 +47,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables);
 
-        // FELIX  Rename panel to menu
-        public IBuildablesMenu GetBuildablesPanel(TCategories buildableCategory)
+        public IBuildablesMenu GetBuildablesMenu(TCategories buildableCategory)
         {
-            Assert.IsTrue(_buildableCategoryToPanels.ContainsKey(buildableCategory));
-            return _buildableCategoryToPanels[buildableCategory];
+            Assert.IsTrue(_buildableCategoryToMenus.ContainsKey(buildableCategory));
+            return _buildableCategoryToMenus[buildableCategory];
         }
     }
 }
