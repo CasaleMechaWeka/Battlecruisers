@@ -2,52 +2,38 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    // FELIX  Avoid duplicate code with BulidingMenus?
-    public class UnitMenus : MonoBehaviour
+    public class UnitMenus : BuildableMenus<IUnit, UnitCategory, NEWUnitsMenuController>
     {
-        private IDictionary<UnitCategory, PresentableController> _unitGroupPanels;
+        private IUnitClickHandler _unitClickHandler;
 
         public void Initialise(
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IUIManager uiManager,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
-            IUnitClickHandler unitClickHandler,
-            IBuildableSorter<IUnit> unitSorter)
+            IBuildableSorter<IUnit> unitSorter,
+            IUnitClickHandler unitClickHandler)
         {
-            Helper.AssertIsNotNull(units, uiManager, shouldBeEnabledFilter, unitClickHandler, unitSorter);
+            // Need unitClickHandler in abstract method called from parent class Initialise().  Codesmell :(
+            Assert.IsNotNull(unitClickHandler);
+            _unitClickHandler = unitClickHandler;
 
-            IList<NEWUnitsMenuController> unitMenus = GetComponentsInChildren<NEWUnitsMenuController>().ToList();
-            Assert.AreEqual(units.Count, unitMenus.Count);
-
-            _unitGroupPanels = new Dictionary<UnitCategory, PresentableController>();
-
-            int i = 0;
-
-            foreach (KeyValuePair<UnitCategory, IList <IBuildableWrapper<IUnit>>> pair in units)
-            {
-                NEWUnitsMenuController unitMenu = unitMenus[i];
-                IList<IBuildableWrapper<IUnit>> sortedUnits = unitSorter.Sort(pair.Value);
-                unitMenu.Initialise(sortedUnits, uiManager, shouldBeEnabledFilter, unitClickHandler);
-                _unitGroupPanels.Add(pair.Key, unitMenu);
-                i++;
-            }
+            base.Initialise(units, uiManager, shouldBeEnabledFilter, unitSorter);
         }
 
-        public PresentableController GetUnitsPanel(UnitCategory unitCategory)
+        protected override void InitialiseMenu(
+            NEWUnitsMenuController menu, 
+            IList<IBuildableWrapper<IUnit>> buildables, 
+            IUIManager uiManager, 
+            IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
         {
-            Assert.IsTrue(_unitGroupPanels.ContainsKey(unitCategory));
-            return _unitGroupPanels[unitCategory];
+            menu.Initialise(buildables, uiManager, shouldBeEnabledFilter, _unitClickHandler);
         }
     }
 }
