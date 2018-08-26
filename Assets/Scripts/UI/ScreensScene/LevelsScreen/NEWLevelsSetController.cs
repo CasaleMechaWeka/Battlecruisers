@@ -2,12 +2,11 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class NEWLevelsSetController : MonoBehaviour
+    public class NEWLevelsSetController : MonoBehaviourWrapper
     {
 		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
         {
