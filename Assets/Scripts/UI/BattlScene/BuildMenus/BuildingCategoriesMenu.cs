@@ -2,13 +2,15 @@
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Presentables;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildingCategoriesMenu : Menu
+    public class BuildingCategoriesMenu : PresentableController, IMenu
 	{
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
@@ -17,9 +19,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)
         {
-            base.Initialise(uiManager, buttonVisibilityFilters);
+            base.Initialise();
 
-            Assert.IsNotNull(buildingGroups);
+            Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters, buildingGroups);
 
             _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
 
