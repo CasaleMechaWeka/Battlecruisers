@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -23,19 +22,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private BuildingMenus _buildingMenus;
         private UnitMenus _unitMenus;
 
-        // FELIX  Remnove unused :)
-		private IUIManager _uiManager;
-        private IUIFactory _uiFactory;
-		private IList<IBuildingGroup> _buildingGroups;
-        private IDictionary<BuildingCategory, BuildingsMenuController> _buildingGroupPanels;
-        private IDictionary<UnitCategory, PresentableController> _unitGroupPanels;
-        private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
-        private IDictionary<BuildingCategory, ReadOnlyCollection<IBuildableButton>> _categoryToBuildableButtons;
-
-        // FELIX  Gropu some parameters?  Perhaps filters?
+        // FELIX  Group some parameters?  Perhaps filters?
 		public void Initialise(
 			IUIManager uiManager,
-            IUIFactory uiFactory,
             IList<IBuildingGroup> buildingGroups, 
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IBuildableSorterFactory sorterFactory,
@@ -47,7 +36,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
             Helper.AssertIsNotNull(
                 uiManager,
-                uiFactory,
                 buildingGroups,
                 units,
                 sorterFactory,
@@ -56,12 +44,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 spriteProvider,
                 shouldUnitButtonsBeEnabledFilter,
                 unitClickHandler);
-
-            _uiManager = uiManager;
-            _uiFactory = uiFactory;
-			_buildingGroups = buildingGroups;
-            _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
-            _categoryToBuildableButtons = new Dictionary<BuildingCategory, ReadOnlyCollection<IBuildableButton>>();
 
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
@@ -122,13 +104,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			ChangePanel(unitMenu, factory);
 		}
 
-        // FELIX  Rename panel to menu :)
         /// <summary>
-        /// Always want to dismiss the current panel, even if we are switching to the same panel.
+        /// Always want to dismiss the current menu, even if we are switching to the same menu.
         /// This is because the activation parameter may have changed.  Ie, the user may be 
-        /// switching from the aircraft units panel for one factory to another factory.
+        /// switching from the aircraft units menu for one factory to another factory.
         /// </summary>
-		private void ChangePanel(IMenu panel, object activationParameter = null)
+		private void ChangePanel(IMenu menu, object activationParameter = null)
 		{
 			if (_currentMenu != null)
 			{
@@ -136,9 +117,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 _currentMenu.IsVisible = false;
 			}
 
-			panel.OnPresenting(activationParameter);
-            panel.IsVisible = true;
-			_currentMenu = panel;
+			menu.OnPresenting(activationParameter);
+            menu.IsVisible = true;
+			_currentMenu = menu;
 		}
 
         public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
