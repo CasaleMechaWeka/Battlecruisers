@@ -45,6 +45,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     Destroy(button);
                 }
             }
+
+            // FELIX  Initialise back button
         }
 
         public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
