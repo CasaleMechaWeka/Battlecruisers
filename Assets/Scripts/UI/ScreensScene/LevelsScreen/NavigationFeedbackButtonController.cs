@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
+    // FELIX  Rename, remove Controller suffix
     public class NavigationFeedbackButtonController : MonoBehaviour 
     {
         private LevelsScreenController _levelScreenController;
