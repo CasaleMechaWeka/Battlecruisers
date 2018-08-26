@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
             Assert.IsNotNull(_buildingCategoriesMenu);
-            _buildingCategoriesMenu.Initialise(buildingGroups, uiManager, buttonVisibilityFilters.CategoryButtonVisibilityFilter);
+            _buildingCategoriesMenu.Initialise(uiManager, buttonVisibilityFilters, buildingGroups);
             _currentMenu = _buildingCategoriesMenu;
 
             // Building menus

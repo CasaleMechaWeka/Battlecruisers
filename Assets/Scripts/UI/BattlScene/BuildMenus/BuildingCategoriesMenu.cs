@@ -1,27 +1,25 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Presentables;
-using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildingCategoriesMenu : PresentableController, IMenu
+    public class BuildingCategoriesMenu : Menu
 	{
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
-            IList<IBuildingGroup> buildingGroups,
             IUIManager uiManager,
-            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IList<IBuildingGroup> buildingGroups)
         {
-            base.Initialise();
+            base.Initialise(uiManager, buttonVisibilityFilters);
 
-            Helper.AssertIsNotNull(buildingGroups, uiManager, shouldBeEnabledFilter);
+            Assert.IsNotNull(buildingGroups);
 
             _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
 
@@ -36,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 {
                     // Have category for button
                     IBuildingGroup group = buildingGroups[i];
-                    button.Initialise(group, uiManager, shouldBeEnabledFilter);
+                    button.Initialise(group, uiManager, buttonVisibilityFilters.CategoryButtonVisibilityFilter);
                     _categoryToCategoryButtons.Add(group.BuildingCategory, button);
                 }
                 else
@@ -45,8 +43,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     Destroy(button);
                 }
             }
-
-            // FELIX  Initialise back button
         }
 
         public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
