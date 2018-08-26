@@ -210,10 +210,8 @@ namespace BattleCruisers.Scenes
                     buildingGroups,
                     units,
                     sorterFactory,
-                    buttonVisibilityFilters.CategoryButtonVisibilityFilter,
-                    buttonVisibilityFilters.BuildableButtonVisibilityFilter,
-                    spriteProvider,
-                    buttonVisibilityFilters.BuildableButtonVisibilityFilter);
+                    buttonVisibilityFilters,
+                    spriteProvider);
 
             uiManager.InitialUI();
 

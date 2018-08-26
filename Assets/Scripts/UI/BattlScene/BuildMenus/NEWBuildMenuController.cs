@@ -3,8 +3,8 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
@@ -22,31 +22,26 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private BuildingMenus _buildingMenus;
         private UnitMenus _unitMenus;
 
-        // FELIX  Group some parameters?  Perhaps filters?
 		public void Initialise(
 			IUIManager uiManager,
             IList<IBuildingGroup> buildingGroups, 
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IBuildableSorterFactory sorterFactory,
-            IBroadcastingFilter<BuildingCategory> shouldCategoryButtonsBeEnabledFilter,
-            IBroadcastingFilter<IBuildable> shouldBuildingButtonsBeEnabledFilter,
-            ISpriteProvider spriteProvider,
-            IBroadcastingFilter<IBuildable> shouldUnitButtonsBeEnabledFilter)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            ISpriteProvider spriteProvider)
 		{
             Helper.AssertIsNotNull(
                 uiManager,
                 buildingGroups,
                 units,
                 sorterFactory,
-                shouldCategoryButtonsBeEnabledFilter,
-                shouldBuildingButtonsBeEnabledFilter,
-                spriteProvider,
-                shouldUnitButtonsBeEnabledFilter);
+                buttonVisibilityFilters,
+                spriteProvider);
 
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
             Assert.IsNotNull(_buildingCategoriesMenu);
-            _buildingCategoriesMenu.Initialise(buildingGroups, uiManager, shouldCategoryButtonsBeEnabledFilter);
+            _buildingCategoriesMenu.Initialise(buildingGroups, uiManager, buttonVisibilityFilters.CategoryButtonVisibilityFilter);
             _currentMenu = _buildingCategoriesMenu;
 
             // Building menus
@@ -54,13 +49,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(_buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            _buildingMenus.Initialise(categoryToBuildings, uiManager, shouldBuildingButtonsBeEnabledFilter, buildingSorter);
+            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters.BuildableButtonVisibilityFilter, buildingSorter);
 
             // Unit menus
             _unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(_unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            _unitMenus.Initialise(units, uiManager, shouldUnitButtonsBeEnabledFilter, unitSorter);
+            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters.BuildableButtonVisibilityFilter, unitSorter);
 		}
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
