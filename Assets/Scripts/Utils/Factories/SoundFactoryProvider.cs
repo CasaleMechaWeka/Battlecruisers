@@ -9,7 +9,7 @@ namespace BattleCruisers.Utils.Factories
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
         public ISoundFetcher SoundFetcher { get; private set; }
-        public ISoundManager SoundManager { get; private set; }
+        public ISoundPlayer SoundPlayer { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
 
         public SoundFactoryProvider(IVariableDelayDeferrer deferrer)
@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Factories
             Assert.IsNotNull(deferrer);
 
             SoundFetcher = new SoundFetcher();
-            SoundManager = new SoundManager(SoundFetcher, new AudioClipPlayer());
+            SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer());
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
         }
 	}

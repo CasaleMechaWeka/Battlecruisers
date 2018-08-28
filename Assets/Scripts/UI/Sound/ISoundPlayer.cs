@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Sound
 {
-    public interface ISoundManager
+    public interface ISoundPlayer
     {
         void PlaySound(ISoundKey soundKey, Vector2 position);
     }

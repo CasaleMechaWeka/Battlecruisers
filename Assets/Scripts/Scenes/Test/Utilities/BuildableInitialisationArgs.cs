@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
 			ISoundFetcher soundFetcher = null,
-            ISoundManager soundManager = null,
+            ISoundPlayer soundPlayer = null,
             ISpriteChooserFactory spriteChooserFactory = null,
             IVariableDelayDeferrer variableDelayDeferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null)
@@ -92,7 +92,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
-                    soundManager ?? new SoundManager(soundFetcher, new AudioClipPlayer()),
+                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer()),
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
                             new AssignerFactory(),
@@ -118,7 +118,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
-            ISoundManager soundManager,
+            ISoundPlayer soundManager,
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
@@ -151,7 +151,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             // Sound
             ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
             soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
-            soundFactoryProvider.SoundManager.Returns(soundManager);
+            soundFactoryProvider.SoundPlayer.Returns(soundManager);
             soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.Sound.Returns(soundFactoryProvider);
 

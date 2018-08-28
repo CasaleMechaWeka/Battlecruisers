@@ -356,7 +356,7 @@ namespace BattleCruisers.Buildables
 
             RepairCommand.EmitCanExecuteChanged();
 
-            _factoryProvider.Sound.SoundManager.PlaySound(ConstructionCompletedSoundKey, transform.position);
+            _factoryProvider.Sound.SoundPlayer.PlaySound(ConstructionCompletedSoundKey, transform.position);
         }
 
         private void EnableRenderers(bool enabled)
@@ -387,7 +387,7 @@ namespace BattleCruisers.Buildables
 
             _boostableGroup.CleanUp();
 
-            _factoryProvider.Sound.SoundManager.PlaySound(DeathSoundKey, transform.position);
+            _factoryProvider.Sound.SoundPlayer.PlaySound(DeathSoundKey, transform.position);
         }
 
         protected void SetupDroneConsumer(int numOfDrones)

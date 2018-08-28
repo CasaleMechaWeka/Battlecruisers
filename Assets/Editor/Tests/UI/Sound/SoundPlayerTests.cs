@@ -8,9 +8,9 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Sound
 {
-    public class SoundManagerTests
+    public class SoundPlayerTests
     {
-        private ISoundManager _soundManager;
+        private ISoundPlayer _soundPlayer;
         private ISoundFetcher _soundFetcher;
         private IAudioClipPlayer _audioClipPlayer;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Sound
             _soundFetcher = Substitute.For<ISoundFetcher>();
             _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
 
-            _soundManager = new SoundManager(_soundFetcher, _audioClipPlayer);
+            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _soundFetcher.GetSound(soundKey).Returns(audioClip);
 
-            _soundManager.PlaySound(soundKey, soundPosition);
+            _soundPlayer.PlaySound(soundKey, soundPosition);
 
             _audioClipPlayer.Received().PlaySound(audioClip, soundPosition);
         }

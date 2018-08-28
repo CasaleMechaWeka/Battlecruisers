@@ -7,7 +7,7 @@ namespace BattleCruisers.Utils.Factories
     public interface ISoundFactoryProvider
     {
         ISoundFetcher SoundFetcher { get; }
-        ISoundManager SoundManager { get; }
+        ISoundPlayer SoundPlayer { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
     }
 }

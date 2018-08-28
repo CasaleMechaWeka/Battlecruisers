@@ -233,7 +233,7 @@ namespace BattleCruisers.Cruisers
 
             SlotWrapper.DisposeManagedState();
             // FELIX  Use right sound key :P
-            FactoryProvider.Sound.SoundManager.PlaySound(SoundKeys.Deaths.Ship, Position);
+            FactoryProvider.Sound.SoundPlayer.PlaySound(SoundKeys.Deaths.Ship, Position);
         }
     }
 }

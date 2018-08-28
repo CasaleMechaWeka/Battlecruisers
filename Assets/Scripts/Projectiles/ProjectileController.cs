@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _damageApplier;
         private IExplosion _explosion;
         private ITarget _parent;
-        private ISoundManager _soundManager;
+        private ISoundPlayer _soundPlayer;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -48,7 +48,7 @@ namespace BattleCruisers.Projectiles
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
             _parent = parent;
-            _soundManager = factoryProvider.Sound.SoundManager;
+            _soundPlayer = factoryProvider.Sound.SoundPlayer;
             _rigidBody.velocity = velocityInMPerS;
 			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
             _targetToDamage = null;
@@ -111,7 +111,7 @@ namespace BattleCruisers.Projectiles
 
             if (ImpactSoundKey != null)
             {
-                _soundManager.PlaySound(ImpactSoundKey, transform.position);
+                _soundPlayer.PlaySound(ImpactSoundKey, transform.position);
             }
 
 			Destroy(gameObject);

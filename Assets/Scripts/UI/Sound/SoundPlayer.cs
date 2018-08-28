@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
-    public class SoundManager : ISoundManager
+    public class SoundPlayer : ISoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
         private readonly IAudioClipPlayer _audioClipPlayer;
 
-        public SoundManager(ISoundFetcher soundFetcher, IAudioClipPlayer audioClipPlayer)
+        public SoundPlayer(ISoundFetcher soundFetcher, IAudioClipPlayer audioClipPlayer)
         {
             Helper.AssertIsNotNull(soundFetcher, audioClipPlayer);
 
