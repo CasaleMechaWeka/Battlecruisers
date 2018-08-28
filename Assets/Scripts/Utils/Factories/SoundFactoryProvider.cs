@@ -11,14 +11,16 @@ namespace BattleCruisers.Utils.Factories
         public ISoundFetcher SoundFetcher { get; private set; }
         public ISoundPlayer SoundPlayer { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
+        public ISoundPlayer BuildableCompletedSoundPlayer { get; private set; }
 
-        public SoundFactoryProvider(IVariableDelayDeferrer deferrer)
+        public SoundFactoryProvider(IVariableDelayDeferrer deferrer, bool isPlayerCruiser)
 		{
             Assert.IsNotNull(deferrer);
 
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer());
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
+            BuildableCompletedSoundPlayer = isPlayerCruiser ? SoundPlayer : new DummySoundPlayer();
         }
 	}
 }

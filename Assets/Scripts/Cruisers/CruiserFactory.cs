@@ -78,7 +78,8 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
-                cruiserDoubleClickHandler);
+                cruiserDoubleClickHandler,
+                isPlayerCruiser: true);
         }
 
         public void InitialiseAICruiser(
@@ -122,7 +123,8 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
-                cruiserDoubleClickHandler);
+                cruiserDoubleClickHandler,
+                isPlayerCruiser: false);
         }
 
         private void InitialiseCruiser(
@@ -138,9 +140,10 @@ namespace BattleCruisers.Cruisers
             IRankedTargetTracker userChosenTargetTracker,
             IDroneNumFeedbackFactory feedbackFactory,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
-            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler)
+            IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
+            bool isPlayerCruiser)
         {
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, isPlayerCruiser);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);

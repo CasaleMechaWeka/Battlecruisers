@@ -36,7 +36,8 @@ namespace BattleCruisers.Utils.Factories
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
             IVariableDelayDeferrer deferrer,
-            IRankedTargetTracker userChosenTargetTracker)
+            IRankedTargetTracker userChosenTargetTracker,
+            bool isPlayerCruiser)
 		{
             Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker);
 
@@ -56,7 +57,7 @@ namespace BattleCruisers.Utils.Factories
                     spriteProvider);
 
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
-            Sound = new SoundFactoryProvider(deferrer);
+            Sound = new SoundFactoryProvider(deferrer, isPlayerCruiser);
         }
 	}
 }
