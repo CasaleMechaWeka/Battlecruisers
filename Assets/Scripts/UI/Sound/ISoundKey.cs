@@ -6,7 +6,7 @@
     /// </summary>
     public enum SoundType
     {
-        Deaths, Engines, Explosions, Firing
+        Deaths, Engines, Explosions, Firing, Completed
     }
 
     public interface ISoundKey

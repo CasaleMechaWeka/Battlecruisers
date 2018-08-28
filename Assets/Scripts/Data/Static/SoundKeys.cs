@@ -44,5 +44,13 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Bomb { get { return new SoundKey(SoundType.Explosions, "bomb"); } }
             public static ISoundKey Default { get { return new SoundKey(SoundType.Explosions, "default"); } }
         }
+
+        public static class Completed
+        {
+            public static ISoundKey Aircraft { get { return new SoundKey(SoundType.Completed, "aircraft"); } }
+            public static ISoundKey Building { get { return new SoundKey(SoundType.Completed, "building"); } }
+            public static ISoundKey Ship { get { return new SoundKey(SoundType.Completed, "ship"); } }
+            public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
+        }
     }
 }
