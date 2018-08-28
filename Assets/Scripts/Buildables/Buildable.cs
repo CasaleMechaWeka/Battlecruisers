@@ -62,6 +62,8 @@ namespace BattleCruisers.Buildables
         public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
+        // FELIX  Change sound key :P
+        protected virtual ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Explosions.Default; } }
         public ICruiser ParentCruiser { get; private set; }
 
         private IList<IDamageCapability> _damageCapabilities;
@@ -353,6 +355,8 @@ namespace BattleCruisers.Buildables
             }
 
             RepairCommand.EmitCanExecuteChanged();
+
+            _factoryProvider.Sound.SoundManager.PlaySound(ConstructionCompletedSoundKey, transform.position);
         }
 
         private void EnableRenderers(bool enabled)
