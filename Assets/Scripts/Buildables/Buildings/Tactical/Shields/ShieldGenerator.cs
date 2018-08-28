@@ -1,4 +1,6 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -6,7 +8,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 	{
         private ShieldController _shieldController;
 
-		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building5; } }
+        public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
         protected override void OnStaticInitialised()
         {

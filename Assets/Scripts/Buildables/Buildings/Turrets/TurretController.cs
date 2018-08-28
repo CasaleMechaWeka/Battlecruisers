@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class TurretController : Building
 	{
 		protected IBarrelWrapper _barrelWrapper;
+
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building2; } }
 
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound { get { return null; } }

@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
@@ -30,6 +32,8 @@ namespace BattleCruisers.Buildables.Buildings
         
         public SlotType slotType;
         public SlotType SlotType { get { return slotType; } }
+
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building1; } }
 
         protected override HealthBarController HealthBarController
         {

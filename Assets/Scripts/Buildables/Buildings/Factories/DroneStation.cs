@@ -1,10 +1,14 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Factories
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+
+namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public class DroneStation : Building
 	{
 		public int numOfDronesProvided;
 
-		public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building4; } }
+        public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
 		protected override void OnBuildableCompleted()
 		{

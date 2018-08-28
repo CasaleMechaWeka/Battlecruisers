@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
         private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
-		public IShieldStats Stats { get; private set; } 
+        public IShieldStats Stats { get; private set; } 
 		public override TargetType TargetType { get { return TargetType.Buildings; } }
 
         private Vector2 _size;

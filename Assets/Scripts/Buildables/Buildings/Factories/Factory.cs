@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -21,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         #region Properties
+        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building3; } }
         protected abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
 
