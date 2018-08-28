@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public class ShortSoundPlayerInitialiser : ProjectileSoundPlayerInitialiser
     {
-        protected override IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSourceWrapper audioSource)
+        protected override IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSource audioSource)
         {
             return soundPlayerFactory.CreateShortSoundPlayer(firingSound, audioSource);
         }

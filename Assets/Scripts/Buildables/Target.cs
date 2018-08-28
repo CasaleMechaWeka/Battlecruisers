@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables
 {
     public abstract class Target : MonoBehaviour, ITarget
     {
-        protected IAudioSourceWrapper _audioSource;
+        protected IAudioSource _audioSource;
 
         public float maxHealth;
 

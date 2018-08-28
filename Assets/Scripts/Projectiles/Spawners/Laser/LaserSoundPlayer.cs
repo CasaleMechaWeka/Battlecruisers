@@ -8,9 +8,9 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
     public class LaserSoundPlayer : ILaserSoundPlayer
     {
         private readonly ILaserRenderer _laserRenderer;
-        private readonly IAudioSourceWrapper _audioSource;
+        private readonly IAudioSource _audioSource;
 
-        public LaserSoundPlayer(ILaserRenderer laserRenderer, IAudioSourceWrapper audioSource, ISoundFetcher soundFetcher)
+        public LaserSoundPlayer(ILaserRenderer laserRenderer, IAudioSource audioSource, ISoundFetcher soundFetcher)
         {
             Helper.AssertIsNotNull(laserRenderer, audioSource, soundFetcher);
 

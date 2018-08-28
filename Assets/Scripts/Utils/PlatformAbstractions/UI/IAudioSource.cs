@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
-    public interface IAudioSourceWrapper
+    public interface IAudioSource
     {
         IAudioClipWrapper AudioClip { set; }
 

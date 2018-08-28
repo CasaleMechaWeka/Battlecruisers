@@ -5,9 +5,9 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public abstract class ProjectileSpawnerSoundPlayer : IProjectileSpawnerSoundPlayer
     {
-        protected readonly IAudioSourceWrapper _audioSource;
+        protected readonly IAudioSource _audioSource;
 
-        protected ProjectileSpawnerSoundPlayer(IAudioClipWrapper audioClip, IAudioSourceWrapper audioSource)
+        protected ProjectileSpawnerSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource)
         {
             Helper.AssertIsNotNull(audioClip, audioSource);
 

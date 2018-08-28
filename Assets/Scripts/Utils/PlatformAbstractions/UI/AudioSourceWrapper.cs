@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
-    public class AudioSourceWrapper : IAudioSourceWrapper
+    public class AudioSourceWrapper : IAudioSource
     {
         private readonly AudioSource _audioSource;
 

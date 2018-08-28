@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 	{
         private ILaserRenderer _laserRenderer;
         private ILaserCollisionDetector _collisionDetector;
-        private IAudioSourceWrapper _audioSource;
+        private IAudioSource _audioSource;
         private ILaserSoundPlayer _laserSoundPlayer;
 		private float _damagePerS;
         private ITarget _parent;

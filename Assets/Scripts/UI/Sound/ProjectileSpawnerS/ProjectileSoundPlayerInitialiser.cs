@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         {
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
-            IAudioSourceWrapper audioSourceWrapper = new AudioSourceWrapper(audioSource);
+            IAudioSource audioSourceWrapper = new AudioSourceWrapper(audioSource);
 
             return CreateSoundPlayer(soundPlayerFactory, firingSound, burstSize, audioSourceWrapper);
         }
 
-        protected abstract IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSourceWrapper audioSource);
+        protected abstract IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSource audioSource);
     }
 }
