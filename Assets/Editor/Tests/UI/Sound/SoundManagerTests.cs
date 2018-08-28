@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         private ISoundManager _soundManager;
         private ISoundFetcher _soundFetcher;
-        private ISoundPlayer _soundPlayer;
+        private IAudioClipPlayer _audioClipPlayer;
 
         [SetUp]
         public void SetuUp()
@@ -20,9 +20,9 @@ namespace BattleCruisers.Tests.UI.Sound
             UnityAsserts.Assert.raiseExceptions = true;
 
             _soundFetcher = Substitute.For<ISoundFetcher>();
-            _soundPlayer = Substitute.For<ISoundPlayer>();
+            _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
 
-            _soundManager = new SoundManager(_soundFetcher, _soundPlayer);
+            _soundManager = new SoundManager(_soundFetcher, _audioClipPlayer);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _soundManager.PlaySound(soundKey, soundPosition);
 
-            _soundPlayer.Received().PlaySound(audioClip, soundPosition);
+            _audioClipPlayer.Received().PlaySound(audioClip, soundPosition);
         }
     }
 }

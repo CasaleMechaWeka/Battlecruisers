@@ -92,7 +92,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
-                    soundManager ?? new SoundManager(soundFetcher, new SoundPlayer()),
+                    soundManager ?? new SoundManager(soundFetcher, new AudioClipPlayer()),
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
                             new AssignerFactory(),

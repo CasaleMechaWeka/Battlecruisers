@@ -8,20 +8,20 @@ namespace BattleCruisers.UI.Sound
     public class SoundManager : ISoundManager
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly ISoundPlayer _soundPlayer;
+        private readonly IAudioClipPlayer _audioClipPlayer;
 
-        public SoundManager(ISoundFetcher soundFetcher, ISoundPlayer soundPlayer)
+        public SoundManager(ISoundFetcher soundFetcher, IAudioClipPlayer audioClipPlayer)
         {
-            Helper.AssertIsNotNull(soundFetcher, soundPlayer);
+            Helper.AssertIsNotNull(soundFetcher, audioClipPlayer);
 
             _soundFetcher = soundFetcher;
-            _soundPlayer = soundPlayer;
+            _audioClipPlayer = audioClipPlayer;
         }
 
         public void PlaySound(ISoundKey soundKey, Vector2 position)
         {
             IAudioClipWrapper sound = _soundFetcher.GetSound(soundKey);
-            _soundPlayer.PlaySound(sound, position);
+            _audioClipPlayer.PlaySound(sound, position);
         }
     }
 }

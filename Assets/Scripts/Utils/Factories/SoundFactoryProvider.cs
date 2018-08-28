@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Factories
             Assert.IsNotNull(deferrer);
 
             SoundFetcher = new SoundFetcher();
-            SoundManager = new SoundManager(SoundFetcher, new SoundPlayer());
+            SoundManager = new SoundManager(SoundFetcher, new AudioClipPlayer());
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
         }
 	}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
-    public class SoundPlayer : ISoundPlayer
+    public class AudioClipPlayer : IAudioClipPlayer
     {
         public void PlaySound(IAudioClipWrapper soundClip, Vector2 position)
         {
