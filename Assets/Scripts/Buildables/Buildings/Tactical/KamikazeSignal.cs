@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,6 +9,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class KamikazeSignal : Building
     {
+        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();

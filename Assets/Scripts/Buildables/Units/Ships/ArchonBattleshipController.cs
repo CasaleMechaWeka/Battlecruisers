@@ -20,7 +20,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         }
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Archon; } }
-		
+        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();

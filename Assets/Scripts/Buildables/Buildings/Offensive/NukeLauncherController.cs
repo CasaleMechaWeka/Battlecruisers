@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -24,7 +26,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
 		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
-		public override TargetValue TargetValue { get { return TargetValue.High; } }
+        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        public override TargetValue TargetValue { get { return TargetValue.High; } }
 		
         protected override void OnStaticInitialised()
 		{

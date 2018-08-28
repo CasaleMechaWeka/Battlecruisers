@@ -34,6 +34,7 @@ namespace BattleCruisers.Buildables.Buildings
         public SlotType SlotType { get { return slotType; } }
 
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building1; } }
+        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Building; } }
 
         protected override HealthBarController HealthBarController
         {

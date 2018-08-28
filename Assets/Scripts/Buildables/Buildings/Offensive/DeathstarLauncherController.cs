@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
@@ -6,6 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
     public class DeathstarLauncherController : SatelliteLauncherController
 	{
 		protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0, 0.015f, 0); } }
+        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
         public override TargetValue TargetValue { get { return TargetValue.High; } }
 
         protected override void OnStaticInitialised()
