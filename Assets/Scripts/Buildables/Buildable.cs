@@ -356,7 +356,7 @@ namespace BattleCruisers.Buildables
 
             RepairCommand.EmitCanExecuteChanged();
 
-            _factoryProvider.Sound.SoundPlayer.PlaySound(ConstructionCompletedSoundKey, transform.position);
+            _factoryProvider.Sound.BuildableCompletedSoundPlayer.PlaySound(ConstructionCompletedSoundKey, transform.position);
         }
 
         private void EnableRenderers(bool enabled)
