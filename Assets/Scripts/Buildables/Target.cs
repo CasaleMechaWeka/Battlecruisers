@@ -121,7 +121,7 @@ namespace BattleCruisers.Buildables
 
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
-            _audioSource = new AudioSourceWrapper(audioSource);
+            _audioSource = new AudioSourceBC(audioSource);
 
             OnStaticInitialised();
         }

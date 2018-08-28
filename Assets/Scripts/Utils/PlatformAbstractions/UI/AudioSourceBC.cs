@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
-    public class AudioSourceWrapper : IAudioSource
+    public class AudioSourceBC : IAudioSource
     {
         private readonly AudioSource _audioSource;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             }
         }
 
-        public AudioSourceWrapper(AudioSource audioSource)
+        public AudioSourceBC(AudioSource audioSource)
         {
             Assert.IsNotNull(audioSource);
             _audioSource = audioSource;

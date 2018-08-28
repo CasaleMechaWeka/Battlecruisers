@@ -26,7 +26,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
-			_audioSource = new AudioSourceWrapper(audioSource);
+			_audioSource = new AudioSourceBC(audioSource);
         }
 
         public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent, ISoundFetcher soundFetcher)
