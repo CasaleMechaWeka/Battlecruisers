@@ -52,5 +52,11 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Ship { get { return new SoundKey(SoundType.Completed, "ship"); } }
             public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
         }
+
+        public static class Event
+        {
+            public static ISoundKey CruiserUnderAttack { get { return new SoundKey(SoundType.Events, "cruiser-under-attack"); } }
+            public static ISoundKey CruiserSignificantlyDamaged { get { return new SoundKey(SoundType.Events, "cruiser-significantly-damaged"); } }
+        }
     }
 }
