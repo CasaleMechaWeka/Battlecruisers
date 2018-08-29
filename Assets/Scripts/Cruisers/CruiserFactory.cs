@@ -14,6 +14,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Cruisers
@@ -25,6 +26,7 @@ namespace BattleCruisers.Cruisers
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
         private readonly ISpriteProvider _spriteProvider;
         private readonly Cruiser _playerCruiser, _aiCruiser;
+        private readonly ICamera _soleCamera;
 
         public CruiserFactory(
             IPrefabFactory prefabFactory, 
@@ -32,9 +34,10 @@ namespace BattleCruisers.Cruisers
             IVariableDelayDeferrer variableDelayDeferrer, 
             ISpriteProvider spriteProvider,
             Cruiser playerCruiser,
-            Cruiser aiCruiser)
+            Cruiser aiCruiser,
+            ICamera soleCamera)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, playerCruiser, aiCruiser, soleCamera);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
@@ -42,6 +45,7 @@ namespace BattleCruisers.Cruisers
             _spriteProvider = spriteProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
+            _soleCamera = soleCamera;
         }
 
         public void InitialisePlayerCruiser(
@@ -143,7 +147,7 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
             bool isPlayerCruiser)
         {
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, isPlayerCruiser);
+            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, _soleCamera, isPlayerCruiser);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);

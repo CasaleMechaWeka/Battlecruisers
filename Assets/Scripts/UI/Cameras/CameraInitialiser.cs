@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Cameras
 		public ICameraController CameraController { get { return _cameraController; } }
 
 		public IUserInputCameraMover UserInputCameraMover { get; private set; }
+        public ICamera MainCamera { get; private set; }
 
 		// Scrolling bounds
 		private const float CAMERA_POSITION_MAX_X = 45;
@@ -46,15 +47,15 @@ namespace BattleCruisers.UI.Cameras
 
 			Camera platformCamera = GetComponent<Camera>();
 			Assert.IsNotNull(platformCamera);
-			ICamera camera = new CameraBC(platformCamera);
+			MainCamera = new CameraBC(platformCamera);
 
 			Skybox skybox = GetComponent<Skybox>();
 			Assert.IsNotNull(skybox);
 			skybox.material = skyboxMaterial;
 
-            ICameraCalculator cameraCalculator = new CameraCalculator(camera, settingsManager);
-			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, camera, cameraCalculator, navigationSettings);
-			UserInputCameraMover = CreateUserInputMover(settingsManager, camera, cameraCalculator, navigationSettings);
+            ICameraCalculator cameraCalculator = new CameraCalculator(MainCamera, settingsManager);
+			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, MainCamera, cameraCalculator, navigationSettings);
+			UserInputCameraMover = CreateUserInputMover(settingsManager, MainCamera, cameraCalculator, navigationSettings);
 
             ICameraMover dummyMover = new DummyCameraMover();
 

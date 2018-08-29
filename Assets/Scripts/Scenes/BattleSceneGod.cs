@@ -144,7 +144,15 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise player cruiser
-            ICruiserFactory cruiserFactory = new CruiserFactory(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, _playerCruiser, _aiCruiser);
+            ICruiserFactory cruiserFactory 
+                = new CruiserFactory(
+                    prefabFactory, 
+                    deferrer, 
+                    variableDelayDeferrer, 
+                    spriteProvider, 
+                    _playerCruiser, 
+                    _aiCruiser, 
+                    cameraInitialiser.MainCamera);
 			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialisePlayerCruiser(

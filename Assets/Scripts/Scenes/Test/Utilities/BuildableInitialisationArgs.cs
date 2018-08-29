@@ -22,6 +22,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using BcUtils = BattleCruisers.Utils;
@@ -92,7 +93,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
-                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer()),
+                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer(), Substitute.For<ICamera>()),
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
                             new AssignerFactory(),

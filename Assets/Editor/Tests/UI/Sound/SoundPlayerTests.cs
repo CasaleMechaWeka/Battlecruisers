@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,6 +14,9 @@ namespace BattleCruisers.Tests.UI.Sound
         private ISoundPlayer _soundPlayer;
         private ISoundFetcher _soundFetcher;
         private IAudioClipPlayer _audioClipPlayer;
+        private ICamera _camera;
+        private IAudioClipWrapper _audioClip;
+        private ISoundKey _soundKey;
 
         [SetUp]
         public void SetuUp()
@@ -21,22 +25,29 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _soundFetcher = Substitute.For<ISoundFetcher>();
             _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
+            _camera = Substitute.For<ICamera>();
 
-            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer);
+            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _camera);
+
+            _audioClip = Substitute.For<IAudioClipWrapper>();
+            _soundKey = Substitute.For<ISoundKey>();
+            _soundFetcher.GetSound(_soundKey).Returns(_audioClip);
         }
 
         [Test]
-        public void PlaySound()
+        public void PlaySound_ProvideNoPosition_UsesMainCameraPosition()
         {
-            IAudioClipWrapper audioClip = Substitute.For<IAudioClipWrapper>();
-            ISoundKey soundKey = Substitute.For<ISoundKey>();
+            _camera.Position.Returns(new Vector3(99, 88, 77));
+            _soundPlayer.PlaySound(_soundKey);
+            _audioClipPlayer.Received().PlaySound(_audioClip, _camera.Position);
+        }
+
+        [Test]
+        public void PlaySound_ProvidePosition()
+        {
             Vector2 soundPosition = new Vector2(2, 3);
-
-            _soundFetcher.GetSound(soundKey).Returns(audioClip);
-
-            _soundPlayer.PlaySound(soundKey, soundPosition);
-
-            _audioClipPlayer.Received().PlaySound(audioClip, soundPosition);
+            _soundPlayer.PlaySound(_soundKey, soundPosition);
+            _audioClipPlayer.Received().PlaySound(_audioClip, soundPosition);
         }
     }
 }

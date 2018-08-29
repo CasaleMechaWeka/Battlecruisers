@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -13,12 +13,12 @@ namespace BattleCruisers.Utils.Factories
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
         public ISoundPlayer BuildableCompletedSoundPlayer { get; private set; }
 
-        public SoundFactoryProvider(IVariableDelayDeferrer deferrer, bool isPlayerCruiser)
+        public SoundFactoryProvider(IVariableDelayDeferrer deferrer, ICamera soleCamera, bool isPlayerCruiser)
 		{
-            Assert.IsNotNull(deferrer);
+            Helper.AssertIsNotNull(deferrer, soleCamera);
 
             SoundFetcher = new SoundFetcher();
-            SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer());
+            SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer(), soleCamera);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
             BuildableCompletedSoundPlayer = isPlayerCruiser ? SoundPlayer : new DummySoundPlayer();
         }
