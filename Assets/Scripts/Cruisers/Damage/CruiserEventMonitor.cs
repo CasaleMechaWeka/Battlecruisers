@@ -10,7 +10,6 @@ namespace BattleCruisers.Cruisers.Damage
     /// 1. The cruiser (or its buildings) are damaged
     /// 2. The cruiser reaches critical health (say a third)
     /// </summary>
-    /// FELIX  Test
     /// FELIX  Use :)
     public class CruiserEventMonitor
     {
