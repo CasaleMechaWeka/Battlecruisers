@@ -5,11 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Damage
 {
-    /// <summary>
-    /// Plays sounds to the user when:
-    /// 1. The crusier (or its buildings) are damaged (have a cooldown so this doesn't get annoying)
-    /// 2. The cruiser reaches critical health (say a third)
-    /// </summary>
     public class CruiserDamageMonitor : ICruiserDamageMonitor, IManagedDisposable
     {
         private readonly ICruiser _cruiser;
