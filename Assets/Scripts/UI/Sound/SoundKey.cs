@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.UI.Sound
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.UI.Sound
 {
     public class SoundKey : ISoundKey
     {
@@ -9,6 +11,20 @@
         {
             Type = type;
             Name = name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            SoundKey other = obj as SoundKey;
+            return
+                other != null
+                && Type == other.Type
+                && Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Type, Name);
         }
     }
 }
