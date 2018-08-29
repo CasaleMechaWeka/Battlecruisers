@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.Cruisers.Damage
 {
     public interface ICruiserDamageMonitor
     {

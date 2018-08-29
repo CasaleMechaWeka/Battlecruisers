@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Cruisers
+namespace BattleCruisers.Cruisers.Damage
 {
     /// <summary>
     /// Plays sounds to the user when:
