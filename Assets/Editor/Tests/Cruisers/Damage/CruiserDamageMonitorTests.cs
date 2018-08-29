@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Damage;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Cruisers
+namespace BattleCruisers.Tests.Cruisers.Damage
 {
     public class CruiserDamageMonitorTests
     {
