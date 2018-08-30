@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using System;
 using System.Linq;
-using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
@@ -13,13 +13,15 @@ namespace BattleCruisers.Cruisers.Drones
     /// If a DC is focused they are the highest priority DC and any 
     /// newly available drones will go to them.
     /// </summary>
+    /// FELIX  Update tests (DCs) :D
     public class DroneManager : IDroneManager
     {
+        private const int MIN_NUM_OF_DRONES = 0;
+
         // Consumers are in descending order of priority.  Ie, the first consumer 
         // has the highest priority and the last consumer has the lowest priority.
-        private readonly IList<IDroneConsumer> _droneConsumers;
-
-        private const int MIN_NUM_OF_DRONES = 0;
+        private readonly IObservableCollection<IDroneConsumer> _droneConsumers;
+        public IReadonlyObservableCollection<IDroneConsumer> DroneConsumers { get { return _droneConsumers; } }
 
         private int _numOfDrones;
         public int NumOfDrones
@@ -27,13 +29,13 @@ namespace BattleCruisers.Cruisers.Drones
             get { return _numOfDrones; }
             set
             {
-                Logging.Log(Tags.DRONE_MANAGER, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
+                Logging.Log(Tags.DRONE_MANAGER, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Items.Count));
 
                 Assert.IsTrue(value >= MIN_NUM_OF_DRONES, string.Format("Invalid num of drones {0}.  Must be at least {1}", value, MIN_NUM_OF_DRONES));
 
                 if (_numOfDrones != value)
                 {
-                    if (_droneConsumers.Count != 0)
+                    if (_droneConsumers.Items.Count != 0)
                     {
                         if (value > _numOfDrones)
                         {
@@ -67,7 +69,7 @@ namespace BattleCruisers.Cruisers.Drones
 
         public DroneManager()
         {
-            _droneConsumers = new List<IDroneConsumer>();
+            _droneConsumers = new ObservableCollection<IDroneConsumer>();
             _numOfDrones = 0;
         }
 
@@ -91,10 +93,10 @@ namespace BattleCruisers.Cruisers.Drones
         /// </summary>
         public void AddDroneConsumer(IDroneConsumer consumerToAdd)
         {
-            Logging.Log(Tags.DRONE_MANAGER, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
+            Logging.Log(Tags.DRONE_MANAGER, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Items.Count);
 
             Assert.IsTrue(CanSupportDroneConsumer(consumerToAdd.NumOfDronesRequired), "Not enough drones to support drone consumer :/");
-            Assert.IsFalse(_droneConsumers.Contains(consumerToAdd), "Drone consumer has already been added.  Should not be added again!");
+            Assert.IsFalse(_droneConsumers.Items.Contains(consumerToAdd), "Drone consumer has already been added.  Should not be added again!");
 
             bool wereAllConsumersNotIdle = AllConsumersAreNotIdle();
             IDroneConsumer focusedConsumer = GetFocusedConsumer();
@@ -102,7 +104,7 @@ namespace BattleCruisers.Cruisers.Drones
             // Make new consumer have the lowest priority
             _droneConsumers.Add(consumerToAdd);
 
-            if (_droneConsumers.Count == 1
+            if (_droneConsumers.Items.Count == 1
                 || (wereAllConsumersNotIdle
                     && focusedConsumer != null
                     && focusedConsumer.NumOfSpareDrones >= consumerToAdd.NumOfDronesRequired)
@@ -116,14 +118,14 @@ namespace BattleCruisers.Cruisers.Drones
         private bool AllConsumersAreNotIdle()
         {
             return
-                _droneConsumers
+                _droneConsumers.Items
                     .All(consumer => consumer.State != DroneConsumerState.Idle);
         }
 
         private bool AllConsumersAreIdle()
         {
             return
-                _droneConsumers
+                _droneConsumers.Items
                     .All(consumer => consumer.State == DroneConsumerState.Idle);
         }
 
@@ -132,14 +134,14 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
         public void RemoveDroneConsumer(IDroneConsumer consumerToRemove)
 		{
-			Logging.Log(Tags.DRONE_MANAGER, "RemoveDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
+			Logging.Log(Tags.DRONE_MANAGER, "RemoveDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Items.Count);
 
 			bool wasRemoved = _droneConsumers.Remove(consumerToRemove);
             Assert.IsTrue(wasRemoved, "Tried to remove consumer that was not first added.");
 
 			if (consumerToRemove.NumOfDrones != 0)
 			{
-				if (_droneConsumers.Count != 0)
+				if (_droneConsumers.Items.Count != 0)
 				{
 					AssignSpareDrones(consumerToRemove.NumOfDrones);
 				}
@@ -157,7 +159,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONE_MANAGER, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: " + _droneConsumers.Count);
+			Logging.Log(Tags.DRONE_MANAGER, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: " + _droneConsumers.Items.Count);
 
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{
@@ -227,7 +229,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
 		private void AssignSpareDrones(int numOfSpareDrones)
 		{
-			Assert.IsTrue(_droneConsumers.Count != 0);
+			Assert.IsTrue(_droneConsumers.Items.Count != 0);
 
             IDroneConsumer focusedConsumer = GetFocusedConsumer();
 			if (focusedConsumer != null)
@@ -247,7 +249,7 @@ namespace BattleCruisers.Cruisers.Drones
         private void AssignToHighestPriorityNonIdleConsumer(int numOfSpareDrones)
         {
             // Consumer priority:  High => Low
-            foreach (IDroneConsumer droneConsumer in _droneConsumers)
+            foreach (IDroneConsumer droneConsumer in _droneConsumers.Items)
             {
                 if (droneConsumer.State == DroneConsumerState.Idle)
                 {
@@ -274,7 +276,7 @@ namespace BattleCruisers.Cruisers.Drones
         private int MakeConsumersActive(int numOfSpareDrones)
         {
 			// Consumer priority:  High => Low
-            foreach (IDroneConsumer droneConsumer in _droneConsumers)
+            foreach (IDroneConsumer droneConsumer in _droneConsumers.Items)
             {
                 if (droneConsumer.State == DroneConsumerState.Idle
                     && droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
@@ -371,9 +373,9 @@ namespace BattleCruisers.Cruisers.Drones
 				// Remove drones from active consumers (from low => high priority)
                 if (numOfFreedDrones < minDronesToFree)
                 {
-                    for (int i = _droneConsumers.Count - 1; i >= 0; --i)
+                    for (int i = _droneConsumers.Items.Count - 1; i >= 0; --i)
 					{
-						IDroneConsumer droneConsumer = _droneConsumers[i];
+						IDroneConsumer droneConsumer = _droneConsumers.Items[i];
 
 						numOfFreedDrones += droneConsumer.NumOfDrones;
 						droneConsumer.NumOfDrones = 0;
@@ -403,7 +405,7 @@ namespace BattleCruisers.Cruisers.Drones
         /// </summary>
         private int FindSpareDrones()
         {
-            int numOfDronesUsed = _droneConsumers.Sum(droneConsumer => droneConsumer.NumOfDrones);
+            int numOfDronesUsed = _droneConsumers.Items.Sum(droneConsumer => droneConsumer.NumOfDrones);
             return NumOfDrones - numOfDronesUsed;
         }
 
@@ -422,12 +424,12 @@ namespace BattleCruisers.Cruisers.Drones
 
 		private IDroneConsumer GetHighestPriorityConsumer()
 		{
-            return _droneConsumers.FirstOrDefault();
+            return _droneConsumers.Items.FirstOrDefault();
 		}
 
         public bool HasDroneConsumer(IDroneConsumer droneConsumer)
         {
-            return _droneConsumers.Contains(droneConsumer);
+            return _droneConsumers.Items.Contains(droneConsumer);
         }
     }
 }
