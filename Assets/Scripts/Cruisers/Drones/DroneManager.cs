@@ -13,7 +13,6 @@ namespace BattleCruisers.Cruisers.Drones
     /// If a DC is focused they are the highest priority DC and any 
     /// newly available drones will go to them.
     /// </summary>
-    /// FELIX  Update tests (DCs) :D
     public class DroneManager : IDroneManager
     {
         private const int MIN_NUM_OF_DRONES = 0;

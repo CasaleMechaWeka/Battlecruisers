@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -8,11 +9,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 	{
 		private IDroneManager _droneManager;
         private IDroneConsumer _droneConsumer1, _droneConsumer2, _droneConsumer3, _droneConsumer4;
+        private CollectionChangedEventArgs<IDroneConsumer> _lastDroneConsumersChangedEventArgs;
 
-		[SetUp]
+        [SetUp]
 		public void TestSetup()
 		{
 			_droneManager = new DroneManager();
+
+            _droneManager.DroneConsumers.Changed += (sender, e) => _lastDroneConsumersChangedEventArgs = e;
 
 			_droneConsumer1 = new DroneConsumer(1);
 			_droneConsumer2 = new DroneConsumer(2);
@@ -155,11 +159,16 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		public void AddDroneConsumer_ExactNumOfDrones()
 		{
 			_droneManager.NumOfDrones = 1;
-			_droneManager.AddDroneConsumer(_droneConsumer1);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
-		}
 
-		[Test]
+            _droneManager.AddDroneConsumer(_droneConsumer1);
+
+            Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);
+            CollectionChangedEventArgs<IDroneConsumer> expectedArgs = new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Add, _droneConsumer1);
+            Assert.AreEqual(expectedArgs, _lastDroneConsumersChangedEventArgs);
+            Assert.IsTrue(_droneManager.DroneConsumers.Items.Contains(_droneConsumer1));
+        }
+
+        [Test]
 		public void AddDroneConsumer_TooManyDrones()
 		{
 			_droneManager.NumOfDrones = 2;
@@ -293,7 +302,11 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
 			_droneManager.RemoveDroneConsumer(_droneConsumer1);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
-		}
+
+            CollectionChangedEventArgs<IDroneConsumer> expectedArgs = new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Remove, _droneConsumer1);
+            Assert.AreEqual(expectedArgs, _lastDroneConsumersChangedEventArgs);
+            Assert.IsFalse(_droneManager.DroneConsumers.Items.Contains(_droneConsumer1));
+        }
 
 		[Test]
 		public void RemoveDroneConsumer_HadNoDrones()
