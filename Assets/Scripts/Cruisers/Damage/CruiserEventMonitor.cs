@@ -10,8 +10,7 @@ namespace BattleCruisers.Cruisers.Damage
     /// 1. The cruiser (or its buildings) are damaged
     /// 2. The cruiser reaches critical health (say a third)
     /// </summary>
-    /// FELIX  Use :)
-    public class CruiserEventMonitor
+    public class CruiserEventMonitor : IManagedDisposable
     {
         private readonly IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private readonly ICruiserDamageMonitor _cruiserDamageMonitor;
@@ -40,6 +39,12 @@ namespace BattleCruisers.Cruisers.Damage
         private void _cruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
             _soundPlayer.PlaySound(SoundKeys.Events.CruiserUnderAttack);
+        }
+
+        public void DisposeManagedState()
+        {
+            _cruiserHealthThresholdMonitor.ThresholdReached -= _cruiserHealthThresholdMonitor_ThresholdReached;
+            _cruiserDamageMonitor.CruiserOrBuildingDamaged -= _cruiserDamageMonitor_CruiserOrBuildingDamaged;
         }
     }
 }

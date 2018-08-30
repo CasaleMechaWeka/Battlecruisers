@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
@@ -51,6 +52,7 @@ namespace BattleCruisers.Scenes
         private IArtificialIntelligence _ai;
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IPauseGameManager _pauseGameManager;
+        private CruiserEventMonitor _cruiserEventMonitor;
 
         public HUDCanvasController hudCanvas;
         public BuildMenuController buildMenuController;
@@ -109,7 +111,8 @@ namespace BattleCruisers.Scenes
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             IUserChosenTargetHelper UserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
-            _pauseGameManager = new PauseGameManager(new TimeBC());
+            ITime time = new TimeBC();
+            _pauseGameManager = new PauseGameManager(time);
 
 
             // Instantiate player cruiser
@@ -225,9 +228,20 @@ namespace BattleCruisers.Scenes
 
             _ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
-
+            _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
 
             StartTutorialIfNecessary(prefabFactory);
+        }
+
+        private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)
+        {
+            return
+                new CruiserEventMonitor(
+                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                    new CruiserDamagedMonitorDebouncer(
+                        new CruiserDamageMonitor(playerCruiser),
+                        time),
+                    playerCruiser.FactoryProvider.Sound.SoundPlayer);
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -373,6 +387,7 @@ namespace BattleCruisers.Scenes
 			_aiCruiser.Destroyed -= AiCruiser_Destroyed;
             _ai.DisposeManagedState();
             _userChosenTargetHighligher.DisposeManagedState();
+            _cruiserEventMonitor.DisposeManagedState();
 		}
 	}
 }
