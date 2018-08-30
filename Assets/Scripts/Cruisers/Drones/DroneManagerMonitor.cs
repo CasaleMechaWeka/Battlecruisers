@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  use :D
     public class DroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
     {
         private readonly IDroneManager _droneManager;
