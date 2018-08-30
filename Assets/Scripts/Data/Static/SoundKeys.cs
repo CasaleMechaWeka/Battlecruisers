@@ -55,8 +55,13 @@ namespace BattleCruisers.Data.Static
 
         public static class Events
         {
+            // Cruiser
             public static ISoundKey CruiserUnderAttack { get { return new SoundKey(SoundType.Events, "cruiser-under-attack"); } }
             public static ISoundKey CruiserSignificantlyDamaged { get { return new SoundKey(SoundType.Events, "cruiser-significantly-damaged"); } }
+            
+            // Drones
+            public static ISoundKey DronesNewDronesReady { get { return new SoundKey(SoundType.Events, "drones-new-drones-ready"); } }
+            public static ISoundKey DronesIdle { get { return new SoundKey(SoundType.Events, "drones-idle"); } }
         }
     }
 }
