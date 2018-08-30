@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  test
     // FELIX  use :D
     public class DroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
     {
@@ -35,10 +34,17 @@ namespace BattleCruisers.Cruisers.Drones
                 DroneNumIncreased.Invoke(this, EventArgs.Empty);
             }
 
+            CheckForIdleDrones();
+
             _previousNumOfDrones = e.NewNumOfDrones;
         }
 
         private void DroneConsumers_Changed(object sender, CollectionChangedEventArgs<IDroneConsumer> e)
+        {
+            CheckForIdleDrones();
+        }
+
+        private void CheckForIdleDrones()
         {
             if (AreAllDroneConsumersIdle()
                 && IdleDrones != null)
