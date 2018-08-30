@@ -23,6 +23,12 @@ namespace BattleCruisers.Utils.DataStrctures
             EmitChangedEvent(ChangeType.Add, item);
         }
 
+        public void Insert(int index, T item)
+        {
+            _items.Insert(index, item);
+            EmitChangedEvent(ChangeType.Add, item);
+        }
+
         public bool Remove(T item)
         {
             bool wasSuccessful = _items.Remove(item);
