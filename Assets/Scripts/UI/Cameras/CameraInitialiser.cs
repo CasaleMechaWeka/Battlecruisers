@@ -33,6 +33,10 @@ namespace BattleCruisers.UI.Cameras
         public void StaticInitialise()
 		{
 			_cameraController = new CameraController();
+
+			Camera platformCamera = GetComponent<Camera>();
+			Assert.IsNotNull(platformCamera);
+			MainCamera = new CameraBC(platformCamera);
 		}
 
 		public void Initialise(
@@ -44,10 +48,6 @@ namespace BattleCruisers.UI.Cameras
             IPauseGameManager pauseGameManager)
 		{
 			Helper.AssertIsNotNull(playerCruiser, aiCruiser, settingsManager, skyboxMaterial, navigationSettings, pauseGameManager);
-
-			Camera platformCamera = GetComponent<Camera>();
-			Assert.IsNotNull(platformCamera);
-			MainCamera = new CameraBC(platformCamera);
 
 			Skybox skybox = GetComponent<Skybox>();
 			Assert.IsNotNull(skybox);
