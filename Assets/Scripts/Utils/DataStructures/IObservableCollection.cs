@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-
-namespace BattleCruisers.Utils.DataStrctures
+﻿namespace BattleCruisers.Utils.DataStrctures
 {
     /// <summary>
     /// Unity does not have ObservableCollection, so have to implement my own :)
