@@ -31,6 +31,15 @@ namespace BattleCruisers.Tests.Utils.DataStructures
 		}
 
         [Test]
+        public void Insert_InsertsAndEmitsChangedEvent()
+        {
+            _collection.Insert(0, _item);
+
+            Assert.AreEqual(new CollectionChangedEventArgs<object>(ChangeType.Add, _item), _lastEventArgs);
+            Assert.AreSame(_item, _collection.Items[0]);
+        }
+
+        [Test]
         public void Remove_Removes_EmitsChangedEvent_AndReturnsTrue()
         {
             _collection.Add(_item);
