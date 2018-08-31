@@ -7,8 +7,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
     {
         private readonly AudioSource _audioSource;
 
-        private const float MAX_BLEND = 1;
-        private const float MIN_BLEND = 0;
+        public const float MAX_BLEND = 1;
+        public const float MIN_BLEND = 0;
 
         public IAudioClipWrapper AudioClip
         {
