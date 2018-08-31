@@ -54,10 +54,17 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         }
 
         [Test]
-        public void IdleDrones_DroneConsumersChanged_TriggersCheck()
+        public void IdleDrones_DroneConsumerRemoved_TriggersCheck()
+        {
+            _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Remove, _idleDroneConsumer));
+            Assert.AreEqual(1, _idleDronesEventCount);
+        }
+
+        [Test]
+        public void IdleDrones_DroneConsumerAdded_DoesNotTriggersCheck()
         {
             _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Add, _idleDroneConsumer));
-            Assert.AreEqual(1, _idleDronesEventCount);
+            Assert.AreEqual(0, _idleDronesEventCount);
         }
 
         [Test]
