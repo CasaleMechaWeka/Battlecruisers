@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
@@ -53,6 +54,7 @@ namespace BattleCruisers.Scenes
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IPauseGameManager _pauseGameManager;
         private CruiserEventMonitor _cruiserEventMonitor;
+        private DroneEventSoundPlayer _droneEventSoundPlayer;
 
         public HUDCanvasController hudCanvas;
         public BuildMenuController buildMenuController;
@@ -229,6 +231,7 @@ namespace BattleCruisers.Scenes
             _ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
             _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
+            _droneEventSoundPlayer = CreateDroneEventSoundPlayer(_playerCruiser);
 
             StartTutorialIfNecessary(prefabFactory);
         }
@@ -241,6 +244,14 @@ namespace BattleCruisers.Scenes
                     new CruiserDamagedMonitorDebouncer(
                         new CruiserDamageMonitor(playerCruiser),
                         time),
+                    playerCruiser.FactoryProvider.Sound.SoundPlayer);
+        }
+
+        private DroneEventSoundPlayer CreateDroneEventSoundPlayer(ICruiser playerCruiser)
+        {
+            return
+                new DroneEventSoundPlayer(
+                    new DroneManagerMonitor(playerCruiser.DroneManager),
                     playerCruiser.FactoryProvider.Sound.SoundPlayer);
         }
 
@@ -388,6 +399,7 @@ namespace BattleCruisers.Scenes
             _ai.DisposeManagedState();
             _userChosenTargetHighligher.DisposeManagedState();
             _cruiserEventMonitor.DisposeManagedState();
+            _droneEventSoundPlayer.DisposeManagedState();
 		}
 	}
 }
