@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.Collections;
 
 // FELIX  Move all sound to own namespace :P (not in UI)
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public interface IAwaitableAudioSource
     {
-        void Play(IAudioClipWrapper audioClip, Action audioCompletedCallback);
+        IEnumerator Play(IAudioClipWrapper audioClip);
     }
 }

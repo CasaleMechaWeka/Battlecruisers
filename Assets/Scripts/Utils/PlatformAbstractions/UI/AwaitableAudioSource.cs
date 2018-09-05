@@ -1,17 +1,14 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     // FELIX  Test this is heard regardless of where in the scene the camera is!!
-    // FELIX  Rename :/
-    public class AwaitableAudioSource : MonoBehaviour, IAwaitableAudioSource
+    public class AwaitableAudioSource : IAwaitableAudioSource
     {
         private readonly AudioSource _audioSource;
-        private Action _audioCompletedCallback;
 
-        // FELIX  Don't inject, use GetComponent?
         public AwaitableAudioSource(AudioSource audioSource)
         {
             Assert.IsNotNull(audioSource);
@@ -21,22 +18,14 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             _audioSource.loop = false;
         }
 
-        public void Play(IAudioClipWrapper audioClip, Action audioCompletedCallback)
+        public IEnumerator Play(IAudioClipWrapper audioClip)
         {
-            Helper.AssertIsNotNull(audioClip, audioCompletedCallback);
-            Assert.IsNull(_audioCompletedCallback, "Called Play() before last audio completed :/");
+            Assert.IsNotNull(audioClip);
 
             _audioSource.clip = audioClip.AudioClip;
-            _audioCompletedCallback = audioCompletedCallback;
             _audioSource.Play();
 
-            Invoke("ExecuteCallback", audioClip.AudioClip.length);
-        }
-
-        private void ExecuteCallback()
-        {
-            _audioCompletedCallback.Invoke();
-            _audioCompletedCallback = null;
+            yield return new WaitForSeconds(audioClip.AudioClip.length);
         }
     }
 }
