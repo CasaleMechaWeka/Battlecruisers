@@ -38,7 +38,6 @@ namespace BattleCruisers.Cruisers.Drones
             _previousNumOfDrones = e.NewNumOfDrones;
         }
 
-        // FELIX  Update tests :P
         private void DroneConsumers_Changed(object sender, CollectionChangedEventArgs<IDroneConsumer> e)
         {
             if (e.Type == ChangeType.Remove)
