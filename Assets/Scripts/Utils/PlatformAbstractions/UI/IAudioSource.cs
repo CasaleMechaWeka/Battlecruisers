@@ -2,6 +2,7 @@
 {
     public interface IAudioSource
     {
+        bool IsPlaying { get; }
         IAudioClipWrapper AudioClip { set; }
 
         /// <param name="isSpatial">
