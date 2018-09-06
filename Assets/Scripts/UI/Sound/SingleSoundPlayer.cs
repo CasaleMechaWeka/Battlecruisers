@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -12,10 +11,12 @@ namespace BattleCruisers.UI.Sound
     /// then the first sound is stopped.
     /// </summary>
     /// FELIX  Test :)
-    public class SingleSoundPlayer : ISoundPlayer
+    public class SingleSoundPlayer : ISingleSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
         private readonly IAudioSource _audioSource;
+
+        public bool IsPlayingSound { get { return _audioSource.IsPlaying; } }
 
         public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
         {
@@ -26,11 +27,6 @@ namespace BattleCruisers.UI.Sound
         }
 
         public void PlaySound(ISoundKey soundKey)
-        {
-            PlaySound(soundKey, default(Vector2));
-        }
-
-        public void PlaySound(ISoundKey soundKey, Vector2 position)
         {
             // Not playing sound spatially, so position is irrelevant.
             IAudioClipWrapper soundToPlay = _soundFetcher.GetSound(soundKey);
