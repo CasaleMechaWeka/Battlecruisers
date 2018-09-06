@@ -2,10 +2,11 @@
 {
     public enum SoundPriority
     {
-        VeryHigh = 4,
-        High = 3,
-        Normal = 2,
-        Low = 1
+        VeryHigh = 5,
+        High = 4,
+        Normal = 3,
+        Low = 2,
+        VeryLow = 1
     }
 
     public class PrioritisedSoundKey
