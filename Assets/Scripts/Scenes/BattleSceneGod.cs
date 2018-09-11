@@ -25,6 +25,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -55,6 +56,7 @@ namespace BattleCruisers.Scenes
         private IPauseGameManager _pauseGameManager;
         private CruiserEventMonitor _cruiserEventMonitor;
         private DroneEventSoundPlayer _droneEventSoundPlayer;
+        private IAudioSource _audioSource;
 
         public HUDCanvasController hudCanvas;
         public BuildMenuController buildMenuController;
@@ -73,6 +75,10 @@ namespace BattleCruisers.Scenes
             IDeferrer deferrer = GetComponent<IDeferrer>();
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
             IHighlightFactory highlightFactory = GetComponent<IHighlightFactory>();
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(audioSource);
+            _audioSource = new AudioSourceBC(audioSource);
 
             Helper.AssertIsNotNull(
                 buildMenuController,
@@ -157,7 +163,8 @@ namespace BattleCruisers.Scenes
                     spriteProvider, 
                     _playerCruiser, 
                     _aiCruiser, 
-                    cameraInitialiser.MainCamera);
+                    cameraInitialiser.MainCamera,
+                    _audioSource);
 			ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialisePlayerCruiser(
@@ -252,7 +259,7 @@ namespace BattleCruisers.Scenes
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager),
-                    playerCruiser.FactoryProvider.Sound.SoundPlayer);
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)

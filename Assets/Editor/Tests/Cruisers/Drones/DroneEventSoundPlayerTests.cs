@@ -10,13 +10,13 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     {
         private DroneEventSoundPlayer _droneEventSoundPlayer;
         private IDroneManagerMonitor _droneManagerMonitor;
-        private ISoundPlayer _soundPlayer;
+        private IPrioritisedSoundPlayer _soundPlayer;
 
         [SetUp]
         public void TestSetup()
         {
             _droneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
-            _soundPlayer = Substitute.For<ISoundPlayer>();
+            _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _droneEventSoundPlayer = new DroneEventSoundPlayer(_droneManagerMonitor, _soundPlayer);
         }
 
@@ -24,14 +24,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void DroneNumberIncrease_PlaysSound()
         {
             _droneManagerMonitor.DroneNumIncreased += Raise.Event();
-            _soundPlayer.Received().PlaySound(SoundKeys.Events.DronesNewDronesReady);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.DronesNewDronesReady);
         }
 
         [Test]
         public void IdleDrones_PlaysSound()
         {
             _droneManagerMonitor.IdleDrones += Raise.Event();
-            _soundPlayer.Received().PlaySound(SoundKeys.Events.DronesIdle);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.DronesIdle);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace BattleCruisers.Cruisers.Drones
     public class DroneEventSoundPlayer : IManagedDisposable
     {
         private readonly IDroneManagerMonitor _droneManagerMonitor;
-        private readonly ISoundPlayer _soundPlayer;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
 
-        public DroneEventSoundPlayer(IDroneManagerMonitor droneManagerMonitor, ISoundPlayer soundPlayer)
+        public DroneEventSoundPlayer(IDroneManagerMonitor droneManagerMonitor, IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(droneManagerMonitor, soundPlayer);
 
@@ -23,12 +23,12 @@ namespace BattleCruisers.Cruisers.Drones
 
         private void _droneManagerMonitor_DroneNumIncreased(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(SoundKeys.Events.DronesNewDronesReady);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.DronesNewDronesReady);
         }
 
         private void _droneManagerMonitor_IdleDrones(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(SoundKeys.Events.DronesIdle);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.DronesIdle);
         }
 
         public void DisposeManagedState()

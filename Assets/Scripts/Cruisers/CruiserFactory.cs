@@ -15,6 +15,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Cruisers
@@ -27,6 +28,7 @@ namespace BattleCruisers.Cruisers
         private readonly ISpriteProvider _spriteProvider;
         private readonly Cruiser _playerCruiser, _aiCruiser;
         private readonly ICamera _soleCamera;
+        private readonly IAudioSource _audioSource;
 
         public CruiserFactory(
             IPrefabFactory prefabFactory, 
@@ -35,9 +37,10 @@ namespace BattleCruisers.Cruisers
             ISpriteProvider spriteProvider,
             Cruiser playerCruiser,
             Cruiser aiCruiser,
-            ICamera soleCamera)
+            ICamera soleCamera,
+            IAudioSource audioSource)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, playerCruiser, aiCruiser, soleCamera);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, playerCruiser, aiCruiser, soleCamera, audioSource);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
@@ -46,6 +49,7 @@ namespace BattleCruisers.Cruisers
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _soleCamera = soleCamera;
+            _audioSource = audioSource;
         }
 
         public void InitialisePlayerCruiser(
@@ -147,7 +151,17 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
             bool isPlayerCruiser)
         {
-            IFactoryProvider factoryProvider = new FactoryProvider(_prefabFactory, cruiser, enemyCruiser, _spriteProvider, _variableDelayDeferrer, userChosenTargetTracker, _soleCamera, isPlayerCruiser);
+            IFactoryProvider factoryProvider 
+                = new FactoryProvider(
+                    _prefabFactory, 
+                    cruiser, 
+                    enemyCruiser, 
+                    _spriteProvider, 
+                    _variableDelayDeferrer, 
+                    userChosenTargetTracker, 
+                    _soleCamera, 
+                    isPlayerCruiser, 
+                    _audioSource);
             IDroneManager droneManager = new DroneManager();
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);

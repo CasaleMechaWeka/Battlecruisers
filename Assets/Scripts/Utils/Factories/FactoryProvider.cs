@@ -11,6 +11,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils.Factories
@@ -39,9 +40,10 @@ namespace BattleCruisers.Utils.Factories
             IVariableDelayDeferrer deferrer,
             IRankedTargetTracker userChosenTargetTracker,
             ICamera soleCamera,
-            bool isPlayerCruiser)
+            bool isPlayerCruiser,
+            IAudioSource audioSource)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource);
 
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
@@ -59,7 +61,7 @@ namespace BattleCruisers.Utils.Factories
                     spriteProvider);
 
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
-            Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser);
+            Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
         }
 	}
 }
