@@ -14,12 +14,12 @@ namespace BattleCruisers.Cruisers.Damage
     {
         private readonly IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private readonly ICruiserDamageMonitor _cruiserDamageMonitor;
-        private readonly ISoundPlayer _soundPlayer;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
 
         public CruiserEventMonitor(
             IHealthThresholdMonitor cruiserHealthThresholdMonitor,
             ICruiserDamageMonitor cruiserDamageMonitor,
-            ISoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(cruiserHealthThresholdMonitor, cruiserDamageMonitor, soundPlayer);
 
@@ -33,12 +33,12 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void _cruiserHealthThresholdMonitor_ThresholdReached(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(SoundKeys.Events.CruiserSignificantlyDamaged);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.CruiserSignificantlyDamaged);
         }
 
         private void _cruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(SoundKeys.Events.CruiserUnderAttack);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.CruiserUnderAttack);
         }
 
         public void DisposeManagedState()

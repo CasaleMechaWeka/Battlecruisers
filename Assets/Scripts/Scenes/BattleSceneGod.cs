@@ -251,7 +251,7 @@ namespace BattleCruisers.Scenes
                     new CruiserDamagedMonitorDebouncer(
                         new CruiserDamageMonitor(playerCruiser),
                         time),
-                    playerCruiser.FactoryProvider.Sound.SoundPlayer);
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
         private DroneEventSoundPlayer CreateDroneEventSoundPlayer(ICruiser playerCruiser)

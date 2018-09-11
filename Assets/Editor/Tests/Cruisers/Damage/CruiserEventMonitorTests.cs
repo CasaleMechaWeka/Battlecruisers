@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         private CruiserEventMonitor _monitor;
         private IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private ICruiserDamageMonitor _cruiserDamageMonitor;
-        private ISoundPlayer _soundPlayer;
+        private IPrioritisedSoundPlayer _soundPlayer;
 
         [SetUp]
         public void TestSetup()
         {
             _cruiserHealthThresholdMonitor = Substitute.For<IHealthThresholdMonitor>();
             _cruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
-            _soundPlayer = Substitute.For<ISoundPlayer>();
+            _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
             _monitor = new CruiserEventMonitor(_cruiserHealthThresholdMonitor, _cruiserDamageMonitor, _soundPlayer);
         }
@@ -27,14 +27,14 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         public void CruiserHealthThresholdReached_PlaysSound()
         {
             _cruiserHealthThresholdMonitor.ThresholdReached += Raise.Event();
-            _soundPlayer.Received().PlaySound(SoundKeys.Events.CruiserSignificantlyDamaged);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.CruiserSignificantlyDamaged);
         }
 
         [Test]
         public void CruiserDamaged_PlaysSound()
         {
             _cruiserDamageMonitor.CruiserOrBuildingDamaged += Raise.Event();
-            _soundPlayer.Received().PlaySound(SoundKeys.Events.CruiserUnderAttack);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.CruiserUnderAttack);
         }
     }
 }

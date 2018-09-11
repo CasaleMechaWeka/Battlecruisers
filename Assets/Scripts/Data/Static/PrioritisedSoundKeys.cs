@@ -8,7 +8,7 @@ namespace BattleCruisers.Data.Static
         {
             // Cruiser
             public static PrioritisedSoundKey CruiserUnderAttack { get; private set; }
-            public static PrioritisedSoundKey CrusierSignificantlyDamanged { get; private set; }
+            public static PrioritisedSoundKey CruiserSignificantlyDamaged { get; private set; }
 
             // Drones
             public static PrioritisedSoundKey DronesNewDronesReady { get; private set; }
@@ -18,7 +18,7 @@ namespace BattleCruisers.Data.Static
             {
                 // Cruiser
                 CruiserUnderAttack = new PrioritisedSoundKey(SoundKeys.Events.CruiserUnderAttack, SoundPriority.Normal);
-                CrusierSignificantlyDamanged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.VeryHigh);
+                CruiserSignificantlyDamaged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.VeryHigh);
 
                 // Drones
                 DronesNewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
