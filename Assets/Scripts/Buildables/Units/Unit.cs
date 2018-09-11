@@ -27,6 +27,7 @@ namespace BattleCruisers.Buildables.Units
 		public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
 		public UnitCategory Category { get { return category; } }
 		public override Vector2 Velocity { get { return rigidBody.velocity; } }
+        public virtual bool IsUltra { get { return false; } }
 
 		private Direction _facingDirection;
 		public Direction FacingDirection

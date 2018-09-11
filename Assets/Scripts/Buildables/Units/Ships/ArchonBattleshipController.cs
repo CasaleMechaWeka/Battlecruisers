@@ -10,6 +10,8 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
         private IBarrelWrapper _directFireAntiSea, _directFireAntiAir1, _directFireAntiAir2, _missileLauncherFront, _missileLauncherRear;
 
+        public override bool IsUltra { get { return true; } }
+
         public override float OptimalArmamentRangeInM
         {
             get
