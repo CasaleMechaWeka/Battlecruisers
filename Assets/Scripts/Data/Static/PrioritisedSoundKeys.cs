@@ -30,15 +30,19 @@ namespace BattleCruisers.Data.Static
             public static PrioritisedSoundKey DronesNewDronesReady { get; private set; }
             public static PrioritisedSoundKey DronesIdle { get; private set; }
 
+            public static PrioritisedSoundKey EnemyStartedUltra { get; private set; }
+
             static Events()
             {
                 // Cruiser
                 CruiserUnderAttack = new PrioritisedSoundKey(SoundKeys.Events.CruiserUnderAttack, SoundPriority.Normal);
-                CruiserSignificantlyDamaged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.VeryHigh);
+                CruiserSignificantlyDamaged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.High);
 
                 // Drones
                 DronesNewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
                 DronesIdle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
+
+                EnemyStartedUltra = new PrioritisedSoundKey(SoundKeys.Events.EnemyStartedUltra, SoundPriority.VeryHigh);
             }
         }
     }
