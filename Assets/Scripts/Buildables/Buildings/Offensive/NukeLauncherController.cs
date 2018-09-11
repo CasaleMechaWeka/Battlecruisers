@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
 		private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
         public override TargetValue TargetValue { get { return TargetValue.High; } }
 		
         protected override void OnStaticInitialised()

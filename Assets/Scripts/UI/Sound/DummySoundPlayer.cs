@@ -1,15 +1,8 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.UI.Sound
+﻿namespace BattleCruisers.UI.Sound
 {
-    public class DummySoundPlayer : ISoundPlayer
+    public class DummySoundPlayer : IPrioritisedSoundPlayer
     {
-        public void PlaySound(ISoundKey soundKey)
-        {
-            // empty
-        }
-
-        public void PlaySound(ISoundKey soundKey, Vector2 position)
+        public void PlaySound(PrioritisedSoundKey soundKey)
         {
             // empty
         }

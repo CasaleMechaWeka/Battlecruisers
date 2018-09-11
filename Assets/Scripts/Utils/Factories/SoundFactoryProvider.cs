@@ -13,7 +13,7 @@ namespace BattleCruisers.Utils.Factories
         public ISoundPlayer SoundPlayer { get; private set; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; private set; }
         public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
-        public ISoundPlayer BuildableCompletedSoundPlayer { get; private set; }
+        public IPrioritisedSoundPlayer BuildableCompletedSoundPlayer { get; private set; }
 
         public SoundFactoryProvider(IVariableDelayDeferrer deferrer, ICamera soleCamera, bool isPlayerCruiser, IAudioSource audioSource)
 		{
@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.Factories
             ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, audioSource);
             PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
-            BuildableCompletedSoundPlayer = isPlayerCruiser ? SoundPlayer : new DummySoundPlayer();
+            BuildableCompletedSoundPlayer = isPlayerCruiser ? PrioritisedSoundPlayer : new DummySoundPlayer();
         }
 	}
 }

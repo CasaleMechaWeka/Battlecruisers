@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
     public class DeathstarLauncherController : SatelliteLauncherController
 	{
 		protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0, 0.015f, 0); } }
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
         public override TargetValue TargetValue { get { return TargetValue.High; } }
 
         protected override void OnStaticInitialised()

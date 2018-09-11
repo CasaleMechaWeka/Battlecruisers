@@ -5,6 +5,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public class Ultralisk : DroneStation
     {
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
     }
 }

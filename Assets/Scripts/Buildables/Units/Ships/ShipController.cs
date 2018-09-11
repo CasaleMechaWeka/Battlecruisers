@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ship; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ship; } }
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of

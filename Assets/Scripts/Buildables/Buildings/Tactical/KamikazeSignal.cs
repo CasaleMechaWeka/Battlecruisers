@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class KamikazeSignal : Building
     {
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
 
         protected override void OnBuildableCompleted()
         {

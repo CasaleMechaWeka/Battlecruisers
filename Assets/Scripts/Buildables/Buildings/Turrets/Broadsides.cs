@@ -6,6 +6,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class Broadsides : TurretController
 	{
         protected override ISoundKey FiringSound { get { return SoundKeys.Firing.Broadsides; } }
-        protected override ISoundKey ConstructionCompletedSoundKey { get { return SoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
     }
 }
