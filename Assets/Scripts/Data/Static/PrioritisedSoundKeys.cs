@@ -4,6 +4,22 @@ namespace BattleCruisers.Data.Static
 {
     public static class PrioritisedSoundKeys
     {
+        public static class Completed
+        {
+            public static PrioritisedSoundKey Aircraft { get; private set; }
+            public static PrioritisedSoundKey Building { get; private set; }
+            public static PrioritisedSoundKey Ship { get; private set; }
+            public static PrioritisedSoundKey Ultra { get; private set; }
+
+            static Completed()
+            {
+                Aircraft = new PrioritisedSoundKey(SoundKeys.Completed.Aircraft, SoundPriority.VeryLow);
+                Building = new PrioritisedSoundKey(SoundKeys.Completed.Building, SoundPriority.Low);
+                Ship = new PrioritisedSoundKey(SoundKeys.Completed.Ship, SoundPriority.VeryLow);
+                Ultra = new PrioritisedSoundKey(SoundKeys.Completed.Ultra, SoundPriority.VeryHigh);
+            }
+        }
+
         public static class Events
         {
             // Cruiser
