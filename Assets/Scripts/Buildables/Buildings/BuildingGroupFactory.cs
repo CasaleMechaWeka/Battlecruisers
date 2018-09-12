@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings
 	{
 		public IBuildingGroup CreateBuildingGroup(BuildingCategory category, IList<IBuildableWrapper<IBuilding>> buildings)
 		{
-			return new BuildingGroup(buildings, GetGroupName(category), GetGroupDescription(category));
+			return new BuildingGroup(category, buildings, GetGroupName(category), GetGroupDescription(category));
 		}
 
 		private string GetGroupName(BuildingCategory category)

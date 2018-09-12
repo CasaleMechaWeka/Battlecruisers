@@ -10,10 +10,11 @@ namespace BattleCruisers.Buildables.Buildings
 		public string BuildingGroupName { get; private set; }
 		public string Description { get; private set; }
 
-		private int MIN_NUM_OF_BUILDINGS = 1;
+		private int MIN_NUM_OF_BUILDINGS = 0;
 		private int MAX_NUM_OF_BUILDINGS = 5;
 
 		public BuildingGroup(
+            BuildingCategory buildingCategory,
 			IList<IBuildableWrapper<IBuilding>> buildings,
 			string groupName,
 			string description)
@@ -23,23 +24,19 @@ namespace BattleCruisers.Buildables.Buildings
 				throw new ArgumentException("Invalid building count: " + buildings.Count);
 			}
 
-			// Check building category matches this group's category
-			if (buildings.Count > 0)
-			{
-				BuildingCategory = buildings[0].Buildable.Category;
-
-				for (int i = 1; i < buildings.Count; ++i)
-				{
-					if (buildings[i].Buildable.Category != BuildingCategory)
-					{
-						throw new ArgumentException();
-					}
-				}
-			}
-
+            BuildingCategory = buildingCategory;
 			Buildings = buildings;
 			BuildingGroupName = groupName;
 			Description = description;
+
+			// Check building category matches this group's category
+			for (int i = 1; i < buildings.Count; ++i)
+			{
+				if (buildings[i].Buildable.Category != BuildingCategory)
+				{
+					throw new ArgumentException();
+				}
+			}
 		}
 	}
 }

@@ -34,27 +34,23 @@ namespace BattleCruisers.UI.BattleScene
         {
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _playerFactoryProvider);
             return CreateBuildingGroups(buildings, _buildingGroupFactory);
-
         }
 
 		private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IFactoryProvider factoryProvider)
 		{
 			IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
 
-			foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
+            foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
 				IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
 
-				if (buildingKeys.Count != 0)
-				{
-					IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
-					categoryToBuildings[category] = buildings;
+				IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
+                categoryToBuildings.Add(category, buildings);
 
-					foreach (BuildingKey buildingKey in buildingKeys)
-					{
-						IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-						categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
-					}
+				foreach (BuildingKey buildingKey in buildingKeys)
+				{
+					IBuildableWrapper<IBuilding> buildingWrapper = factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+					categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
 				}
 			}
 
