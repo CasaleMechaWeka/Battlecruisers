@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
             Assert.IsTrue(buildables.Count <= buildableButtons.Count, "Buildable count " + buildables.Count + " should be <= button count " + buildableButtons.Count);
 
-            for (int i = 0; i < buildables.Count; ++i)
+            for (int i = 0; i < buildableButtons.Count; ++i)
             {
                 TButton buildableButton = buildableButtons[i];
 
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 else
                 {
                     // Have no buildable for button (user has not unlocked it yet)
-                    Destroy(buildableButton);
+                    Destroy(buildableButton.gameObject);
                 }
             }
 
