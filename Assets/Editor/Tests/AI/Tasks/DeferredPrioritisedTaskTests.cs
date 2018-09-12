@@ -32,7 +32,6 @@ namespace BattleCruisers.Tests.AI.Tasks
                 });
         }
 
-
         [Test]
         public void Start_DefersStart()
         {
