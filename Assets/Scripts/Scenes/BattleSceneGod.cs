@@ -3,6 +3,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
@@ -56,6 +57,7 @@ namespace BattleCruisers.Scenes
         private IPauseGameManager _pauseGameManager;
         private CruiserEventMonitor _cruiserEventMonitor;
         private DroneEventSoundPlayer _droneEventSoundPlayer;
+        private UltrasConstructionMonitor _ultrasConstructionMonitor;
         private IAudioSource _audioSource;
 
         public HUDCanvasController hudCanvas;
@@ -239,6 +241,7 @@ namespace BattleCruisers.Scenes
             GenerateClouds(currentLevel);
             _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
             _droneEventSoundPlayer = CreateDroneEventSoundPlayer(_playerCruiser);
+            _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(_aiCruiser);
 
             StartTutorialIfNecessary(prefabFactory);
         }
@@ -260,6 +263,15 @@ namespace BattleCruisers.Scenes
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+        }
+
+        private UltrasConstructionMonitor CreateUltrasConstructionMonitor(ICruiser aiCruiser)
+        {
+            return
+                new UltrasConstructionMonitor(
+                    aiCruiser,
+                    new UnitConstructionMonitor(aiCruiser),
+                    aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -407,6 +419,7 @@ namespace BattleCruisers.Scenes
             _userChosenTargetHighligher.DisposeManagedState();
             _cruiserEventMonitor.DisposeManagedState();
             _droneEventSoundPlayer.DisposeManagedState();
+            _ultrasConstructionMonitor.DisposeManagedState();
 		}
 	}
 }
