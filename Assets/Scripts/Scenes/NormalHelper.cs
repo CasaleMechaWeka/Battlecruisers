@@ -91,11 +91,11 @@ namespace BattleCruisers.Scenes
                     new BasicFilter(isMatch: true));
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser)
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
         {
             return
                 new DroneEventSoundPlayer(
-                    new DroneManagerMonitor(playerCruiser.DroneManager),
+                    new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
     }

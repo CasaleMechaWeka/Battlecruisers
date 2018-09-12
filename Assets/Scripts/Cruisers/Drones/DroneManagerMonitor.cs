@@ -1,24 +1,28 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Threading;
 using System;
 using System.Linq;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
     public class DroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
     {
         private readonly IDroneManager _droneManager;
+        private readonly IVariableDelayDeferrer _deferrer;
         private int _previousNumOfDrones;
+
+        private const float IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S = 0.1f;
 
         public event EventHandler DroneNumIncreased;
         public event EventHandler IdleDrones;
 
-        public DroneManagerMonitor(IDroneManager droneManager)
+        public DroneManagerMonitor(IDroneManager droneManager, IVariableDelayDeferrer deferrer)
         {
-            Assert.IsNotNull(droneManager);
+            Helper.AssertIsNotNull(droneManager, deferrer);
 
             _droneManager = droneManager;
+            _deferrer = deferrer;
             _previousNumOfDrones = _droneManager.NumOfDrones;
 
             _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
@@ -33,7 +37,7 @@ namespace BattleCruisers.Cruisers.Drones
                 DroneNumIncreased.Invoke(this, EventArgs.Empty);
             }
 
-            CheckForIdleDrones();
+            DeferCheckForIdleDrones();
 
             _previousNumOfDrones = e.NewNumOfDrones;
         }
@@ -42,8 +46,18 @@ namespace BattleCruisers.Cruisers.Drones
         {
             if (e.Type == ChangeType.Remove)
             {
-                CheckForIdleDrones();
+                DeferCheckForIdleDrones();
             }
+        }
+
+        /// <summary>
+        /// As the DroneManager (DM) cleans up a DroneConsumer (DC) all DCs may be briefly idle,
+        /// before the DM has a chance to assign the freed up drones to other DCs.  Hence, wait
+        /// briefly before checking for idle drones, giving the DM a chance to assign drones.
+        /// </summary>
+        private void DeferCheckForIdleDrones()
+        {
+            _deferrer.Defer(CheckForIdleDrones, IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S);
         }
 
         private void CheckForIdleDrones()

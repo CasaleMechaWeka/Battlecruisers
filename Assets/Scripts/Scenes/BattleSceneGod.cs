@@ -239,7 +239,7 @@ namespace BattleCruisers.Scenes
             _ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
             _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
-            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(_playerCruiser);
+            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(_playerCruiser, variableDelayDeferrer);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(_aiCruiser);
 
             StartTutorialIfNecessary(prefabFactory);

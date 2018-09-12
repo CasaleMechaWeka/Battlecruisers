@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -11,6 +13,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     {
         private IDroneManagerMonitor _monitor;
         private IDroneManager _droneManager;
+        private IVariableDelayDeferrer _deferrer;
         private IList<IDroneConsumer> _droneConsumers;
         private IDroneConsumer _idleDroneConsumer, _activeDroneConsumer;
         private int _droneNumIncreasedEventCount, _idleDronesEventCount;
@@ -24,7 +27,19 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             ReadOnlyCollection<IDroneConsumer> readonlyDroneConsumers = new ReadOnlyCollection<IDroneConsumer>(_droneConsumers);
             _droneManager.DroneConsumers.Items.Returns(readonlyDroneConsumers);
 
-            _monitor = new DroneManagerMonitor(_droneManager);
+            // FELIX  Avoid duplicate code with DeferredPrioritisedTaskTests
+            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer
+                .WhenForAnyArgs(deferrer => deferrer.Defer(null, default(float)))
+                .Do(callInfo =>
+                {
+                    Assert.IsTrue(callInfo.Args().Length == 2);
+                    Action actionToDefer = callInfo.Args()[0] as Action;
+                    Assert.IsNotNull(actionToDefer);
+                    actionToDefer.Invoke();
+                });
+
+            _monitor = new DroneManagerMonitor(_droneManager, _deferrer);
 
             _idleDroneConsumer = Substitute.For<IDroneConsumer>();
             _idleDroneConsumer.State.Returns(DroneConsumerState.Idle);
@@ -57,6 +72,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void IdleDrones_DroneConsumerRemoved_TriggersCheck()
         {
             _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Remove, _idleDroneConsumer));
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
             Assert.AreEqual(1, _idleDronesEventCount);
         }
 
@@ -64,6 +80,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void IdleDrones_DroneConsumerAdded_DoesNotTriggersCheck()
         {
             _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Add, _idleDroneConsumer));
+            _deferrer.DidNotReceiveWithAnyArgs().Defer(null, default(float));
             Assert.AreEqual(0, _idleDronesEventCount);
         }
 
@@ -71,6 +88,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void IdleDrones_NumerOfDronesChanged_TriggersCheck()
         {
             _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(_droneManager.NumOfDrones - 1));
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
             Assert.AreEqual(1, _idleDronesEventCount);
         }
 

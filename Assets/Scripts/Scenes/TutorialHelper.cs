@@ -13,6 +13,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Scenes
 {
@@ -113,7 +114,7 @@ namespace BattleCruisers.Scenes
                     BackButtonPermitter);
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser)
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
         {
             return new NullManagedDispoasable();
         }
