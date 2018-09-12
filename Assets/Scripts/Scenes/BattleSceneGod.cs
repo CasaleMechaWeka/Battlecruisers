@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
@@ -56,7 +55,7 @@ namespace BattleCruisers.Scenes
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IPauseGameManager _pauseGameManager;
         private CruiserEventMonitor _cruiserEventMonitor;
-        private DroneEventSoundPlayer _droneEventSoundPlayer;
+        private IManagedDisposable _droneEventSoundPlayer;
         private UltrasConstructionMonitor _ultrasConstructionMonitor;
         private IAudioSource _audioSource;
 
@@ -240,7 +239,7 @@ namespace BattleCruisers.Scenes
             _ai = helper.CreateAI(_aiCruiser, _playerCruiser, _currentLevelNum);
             GenerateClouds(currentLevel);
             _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
-            _droneEventSoundPlayer = CreateDroneEventSoundPlayer(_playerCruiser);
+            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(_playerCruiser);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(_aiCruiser);
 
             StartTutorialIfNecessary(prefabFactory);
@@ -254,14 +253,6 @@ namespace BattleCruisers.Scenes
                     new CruiserDamagedMonitorDebouncer(
                         new CruiserDamageMonitor(playerCruiser),
                         time),
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
-        }
-
-        private DroneEventSoundPlayer CreateDroneEventSoundPlayer(ICruiser playerCruiser)
-        {
-            return
-                new DroneEventSoundPlayer(
-                    new DroneManagerMonitor(playerCruiser.DroneManager),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 

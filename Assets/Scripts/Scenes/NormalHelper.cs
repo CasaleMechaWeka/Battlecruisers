@@ -90,5 +90,13 @@ namespace BattleCruisers.Scenes
                     new DeleteButtonVisibilityFilter(),
                     new BasicFilter(isMatch: true));
         }
+
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser)
+        {
+            return
+                new DroneEventSoundPlayer(
+                    new DroneManagerMonitor(playerCruiser.DroneManager),
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+        }
     }
 }

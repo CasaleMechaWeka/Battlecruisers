@@ -112,5 +112,10 @@ namespace BattleCruisers.Scenes
                     new StaticFilter<ITarget>(isMatch: false),
                     BackButtonPermitter);
         }
+
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser)
+        {
+            return new NullManagedDispoasable();
+        }
     }
 }
