@@ -31,18 +31,18 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             for (int i = 0; i < buildingGroups.Count; ++i)
             {
                 BuildingCategoryButton button = categoryButtons[i];
+                IBuildingGroup group = buildingGroups[i];
 
-                if (i < buildingGroups.Count)
+                if (group.Buildings.Count != 0)
                 {
                     // Have category for button
-                    IBuildingGroup group = buildingGroups[i];
                     button.Initialise(group, uiManager, buttonVisibilityFilters.CategoryButtonVisibilityFilter);
                     _categoryToCategoryButtons.Add(group.BuildingCategory, button);
                 }
                 else
                 {
                     // Have no buildable for button (user has not unlocked it yet)
-                    Destroy(button);
+                    Destroy(button.gameObject);
                 }
             }
         }

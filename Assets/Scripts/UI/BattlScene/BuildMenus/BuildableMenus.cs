@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public abstract class BuildableMenus<TBuildable, TCategories, TMenu> : MonoBehaviour
         where TBuildable : class, IBuildable
-        where TMenu : IBuildablesMenu
+        where TMenu : MonoBehaviour, IBuildablesMenu
     {
         private IDictionary<TCategories, IBuildablesMenu> _buildableCategoryToMenus;
 
@@ -34,10 +34,19 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             foreach (KeyValuePair<TCategories, IList<IBuildableWrapper<TBuildable>>> pair in buildables)
             {
                 TMenu buildableMenu = buildableMenus[i];
-                IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
-                InitialiseMenu(buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
-                _buildableCategoryToMenus.Add(pair.Key, buildableMenu);
-                buildableMenu.IsVisible = false;
+
+                if (pair.Value.Count != 0)
+                {
+                    IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
+                    InitialiseMenu(buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
+                    _buildableCategoryToMenus.Add(pair.Key, buildableMenu);
+                    buildableMenu.IsVisible = false;
+                }
+                else
+                {
+                    Destroy(buildableMenu.gameObject);
+                }
+
                 i++;
             }
         }
