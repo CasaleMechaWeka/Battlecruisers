@@ -6,7 +6,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Test :)
     public class UltrasConstructionMonitor : IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
