@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Test :)
     public class UnitConstructionMonitor : IUnitConstructionMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
@@ -18,10 +17,10 @@ namespace BattleCruisers.Cruisers.Construction
             Assert.IsNotNull(cruiser);
 
             _cruiser = cruiser;
-            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
+            _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
         }
 
-        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -49,7 +48,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         public void DisposeManagedState()
         {
-            _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
+            _cruiser.BuildingCompleted -= _cruiser_BuildingCompleted;
         }
     }
 }
