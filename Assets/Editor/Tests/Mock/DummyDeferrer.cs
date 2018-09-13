@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleCruisers.Utils.Threading;
 
-namespace BattleCruisers.Tests
+namespace BattleCruisers.Tests.Mock
 {
     public class DummyDeferrer : IDeferrer
     {
