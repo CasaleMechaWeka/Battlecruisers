@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.AI.Tasks;
+using BattleCruisers.Tests.Mock;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
@@ -16,20 +16,10 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void TestSetup()
         {
             _baseTask = Substitute.For<IPrioritisedTask>();
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer = SubstituteFactory.CreateVariableDelayDeferrer();
             _delayInS = 1;
 
             _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, _delayInS);
-
-            _deferrer
-                .WhenForAnyArgs(deferrer => deferrer.Defer(null, default(float)))
-                .Do(callInfo =>
-                {
-                    Assert.IsTrue(callInfo.Args().Length == 2);
-                    Action actionToDefer = callInfo.Args()[0] as Action;
-                    Assert.IsNotNull(actionToDefer);
-                    actionToDefer.Invoke();
-                });
         }
 
         [Test]

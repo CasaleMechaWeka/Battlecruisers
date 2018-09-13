@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Tests.Mock;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,17 +27,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             ReadOnlyCollection<IDroneConsumer> readonlyDroneConsumers = new ReadOnlyCollection<IDroneConsumer>(_droneConsumers);
             _droneManager.DroneConsumers.Items.Returns(readonlyDroneConsumers);
 
-            // FELIX  Avoid duplicate code with DeferredPrioritisedTaskTests
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
-            _deferrer
-                .WhenForAnyArgs(deferrer => deferrer.Defer(null, default(float)))
-                .Do(callInfo =>
-                {
-                    Assert.IsTrue(callInfo.Args().Length == 2);
-                    Action actionToDefer = callInfo.Args()[0] as Action;
-                    Assert.IsNotNull(actionToDefer);
-                    actionToDefer.Invoke();
-                });
+            _deferrer = SubstituteFactory.CreateVariableDelayDeferrer();
 
             _monitor = new DroneManagerMonitor(_droneManager, _deferrer);
 
