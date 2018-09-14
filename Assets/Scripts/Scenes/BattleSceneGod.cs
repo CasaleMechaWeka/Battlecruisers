@@ -325,15 +325,8 @@ namespace BattleCruisers.Scenes
                 TutorialManager tutorialManager = GetComponentInChildren<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
                 tutorialManager.Initialise(tutorialArgs);
-
-                tutorialManager.TutorialCompleted += _tutorialManager_TutorialCompleted;
 				tutorialManager.StartTutorial();
             }
-        }
-
-        private void _tutorialManager_TutorialCompleted(object sender, EventArgs e)
-        {
-            InstaWin();
         }
 
 		void Update()
