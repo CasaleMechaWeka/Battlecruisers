@@ -27,10 +27,10 @@ namespace BattleCruisers.Data.Models
             set { _hardestDifficulty = value; }
         }
 
-        public CompletedLevel(int levelNum, Difficulty hardestCompletedDifficulty)
+        public CompletedLevel(int levelNum, Difficulty hardestDifficulty)
         {
             LevelNum = levelNum;
-            HardestDifficulty = hardestCompletedDifficulty;
+            HardestDifficulty = hardestDifficulty;
         }
 
         public override bool Equals(object obj)
