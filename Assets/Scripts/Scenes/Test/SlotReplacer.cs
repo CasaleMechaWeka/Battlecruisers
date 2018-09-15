@@ -44,7 +44,8 @@ namespace BattleCruisers.Scenes.Test
                 string uniquePrefabname = prefabFolderPath + prefabName + index + ".prefab";
                 index++;
 
-                PrefabUtility.CreatePrefab(uniquePrefabname, cruiser.gameObject, ReplacePrefabOptions.ReplaceNameBased);
+                // TEMP  Cannot build game with this, so uncommented :)
+                //PrefabUtility.CreatePrefab(uniquePrefabname, cruiser.gameObject, ReplacePrefabOptions.ReplaceNameBased);
             }
         }
 
