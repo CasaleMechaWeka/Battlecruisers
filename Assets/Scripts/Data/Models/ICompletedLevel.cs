@@ -2,9 +2,9 @@
 
 namespace BattleCruisers.Data.Models
 {
-    public interface ILevelModel
+    public interface ICompletedLevel
     {
         int LevelNum { get; set;  }
-        Difficulty HardestCompletedDifficulty { get; set; }
+        Difficulty HardestDifficulty { get; set; }
     }
 }

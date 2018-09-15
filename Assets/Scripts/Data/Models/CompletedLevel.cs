@@ -7,13 +7,13 @@ namespace BattleCruisers.Data.Models
 {
     // FELIX  Create serialize tests :)
     [Serializable]
-    public class LevelModel : ILevelModel
+    public class CompletedLevel : ICompletedLevel
     {
         [SerializeField]
         private int _levelNum;
 
         [SerializeField]
-        private Difficulty _hardestCompletedDifficulty;
+        private Difficulty _hardestDifficulty;
 
         public int LevelNum
         {
@@ -21,30 +21,30 @@ namespace BattleCruisers.Data.Models
             set { _levelNum = value; }
         }
 
-        public Difficulty HardestCompletedDifficulty
+        public Difficulty HardestDifficulty
         {
-            get { return _hardestCompletedDifficulty; }
-            set { _hardestCompletedDifficulty = value; }
+            get { return _hardestDifficulty; }
+            set { _hardestDifficulty = value; }
         }
 
-        public LevelModel(int levelNum, Difficulty hardestCompletedDifficulty)
+        public CompletedLevel(int levelNum, Difficulty hardestCompletedDifficulty)
         {
             LevelNum = levelNum;
-            HardestCompletedDifficulty = hardestCompletedDifficulty;
+            HardestDifficulty = hardestCompletedDifficulty;
         }
 
         public override bool Equals(object obj)
         {
-            LevelModel other = obj as LevelModel;
+            CompletedLevel other = obj as CompletedLevel;
             return
                 other != null
                 && LevelNum == other.LevelNum
-                && HardestCompletedDifficulty == other.HardestCompletedDifficulty;
+                && HardestDifficulty == other.HardestDifficulty;
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(LevelNum, HardestCompletedDifficulty);
+            return this.GetHashCode(LevelNum, HardestDifficulty);
         }
     }
 }
