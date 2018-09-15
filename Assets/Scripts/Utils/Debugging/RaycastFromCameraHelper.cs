@@ -4,6 +4,14 @@ namespace BattleCruisers.Utils.Debugging
 {
     public class RaycastFromCameraHelper : MonoBehaviour
     {
+        void Start()
+        {
+            if (!Debug.isDebugBuild)
+            {
+                Destroy(gameObject);
+            }
+        }
+
         void Update()
         {
             if (Input.GetKeyUp(KeyCode.C))

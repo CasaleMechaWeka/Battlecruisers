@@ -19,9 +19,16 @@ namespace BattleCruisers.Utils.Debugging
 
         void Start()
         {
-            IDamageStats damageStats = new DamageStats(damage, damageRadiusInM);
-            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
-            _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
+            if (!Debug.isDebugBuild)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                IDamageStats damageStats = new DamageStats(damage, damageRadiusInM);
+                ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+                _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
+            }
         }
 
         void Update()
