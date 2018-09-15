@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-	public interface IComparisonResult
+    public interface IComparisonResult
 	{
 		Color Color { get; }
 	}
