@@ -16,10 +16,12 @@ namespace BattleCruisers.Data.Models
         ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
+        ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
         void AddUnlockedHull(HullKey hull);
         void AddUnlockedBuilding(BuildingKey building);
         void AddUnlockedUnit(UnitKey unit);
+        void AddCompletedLevel(CompletedLevel completedLevel);
 
         IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);

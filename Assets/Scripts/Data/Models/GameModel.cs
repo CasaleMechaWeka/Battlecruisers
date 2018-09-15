@@ -35,12 +35,16 @@ namespace BattleCruisers.Data.Models
 		[SerializeField]
 		private List<UnitKey> _unlockedUnits;
 
+        [SerializeField]
+        private List<CompletedLevel> _completedLevels;
+
         public bool HasAttemptedTutorial
         {
             get { return _hasAttemptedTutorial; }
             set { _hasAttemptedTutorial = value; }
         }
 
+        // FELIX  Remove.  Can be deduced from CompletedLevels property :)
 		public int NumOfLevelsCompleted 
 		{ 
 			get { return _numOfLevelsCompleted; }
@@ -62,6 +66,7 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; private set; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; private set; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; private set; }
+        public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; private set; }
 
         public GameModel()
 		{
@@ -73,6 +78,9 @@ namespace BattleCruisers.Data.Models
 
 			_unlockedUnits = new List<UnitKey>();
             UnlockedUnits = _unlockedUnits.AsReadOnly();
+
+            _completedLevels = new List<CompletedLevel>();
+            CompletedLevels = _completedLevels.AsReadOnly();
 		}
 
 		public GameModel(
@@ -113,6 +121,26 @@ namespace BattleCruisers.Data.Models
 			_unlockedUnits.Add(unit);
 		}
 
+        public void AddCompletedLevel(CompletedLevel completedLevel)
+        {
+            if (completedLevel.LevelNum > _completedLevels.Count)
+            {
+                // First time level has been completed
+                Assert.IsTrue(completedLevel.LevelNum == _completedLevels.Count + 1);
+                _completedLevels.Add(completedLevel);
+            }
+            else
+            {
+                // Level has been completed before
+                CompletedLevel currentLevel = _completedLevels[completedLevel.LevelNum - 1];
+
+                if (completedLevel.HardestDifficulty > currentLevel.HardestDifficulty)
+                {
+                    currentLevel.HardestDifficulty = completedLevel.HardestDifficulty;
+                }
+            }
+        }
+
 		public IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)
 		{
 			return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
@@ -134,12 +162,13 @@ namespace BattleCruisers.Data.Models
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
 				&& Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
 				&& Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)
-				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits);
+				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits)
+                && Enumerable.SequenceEqual(CompletedLevels, other.CompletedLevels);
 		}
 
 		public override int GetHashCode()
 		{
-            return this.GetHashCode(HasAttemptedTutorial, NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings);
+            return this.GetHashCode(HasAttemptedTutorial, NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings, _completedLevels);
 		}
-	}
+    }
 }
