@@ -338,7 +338,6 @@ namespace BattleCruisers.Scenes
 			{
                 ShowModalMenu();
 			}
-			// TEMP  Insta win :P
 			else if (Input.GetKeyUp(KeyCode.W) && Debug.isDebugBuild)
 			{
                 InstaWin();
