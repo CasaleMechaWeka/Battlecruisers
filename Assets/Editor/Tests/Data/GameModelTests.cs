@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -76,6 +77,59 @@ namespace BattleCruisers.Tests.Data
 			AddUnlockedUnit();
 			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddUnlockedUnit(_unit));
 		}
-		#endregion AddUnlockedUnit
-	}
+        #endregion AddUnlockedUnit
+
+        #region AddCompletedLevel
+        [Test]
+        public void AddCompletedLevel_HaveNotCompletedPreceedingLevel_Throws()
+        {
+            CompletedLevel level = new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Easy);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
+        }
+
+        [Test]
+        public void AddCompletedLevel_TooSmallLevelNum_Throws()
+        {
+            CompletedLevel level = new CompletedLevel(levelNum: 0, hardestDifficulty: Difficulty.Easy);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
+        }
+
+        [Test]
+        public void AddCompletedLevel_FirstTimeLevelCompleted_AddsLevel()
+        {
+            CompletedLevel level = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+            _gameModel.AddCompletedLevel(level);
+            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+            Assert.AreSame(level, _gameModel.CompletedLevels[0]);
+        }
+
+        [Test]
+        public void AddCompletedLevel_SecondTimeLevelCompleted_HarderDifficulty_UpdatesDifficulty()
+        {
+            // Complete first time on easy
+            CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+            _gameModel.AddCompletedLevel(firstTime);
+
+            // Complete second time on normal
+            CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
+            _gameModel.AddCompletedLevel(secondTime);
+            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+            Assert.AreEqual(secondTime, _gameModel.CompletedLevels[0]);
+        }
+
+        [Test]
+        public void AddCompletedLevel_SecondTimeLevelCompleted_EasierDifficulty_DoesNotUpdateDifficulty()
+        {
+            // Complete first time on normal
+            CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
+            _gameModel.AddCompletedLevel(firstTime);
+
+            // Complete second time on easy
+            CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+            _gameModel.AddCompletedLevel(secondTime);
+            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+            Assert.AreSame(firstTime, _gameModel.CompletedLevels[0]);
+        }
+        #endregion AddCompletedLevel
+    }
 }

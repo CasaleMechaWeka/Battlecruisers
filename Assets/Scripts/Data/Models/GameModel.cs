@@ -123,10 +123,12 @@ namespace BattleCruisers.Data.Models
 
         public void AddCompletedLevel(CompletedLevel completedLevel)
         {
+            Assert.IsTrue(completedLevel.LevelNum <= _completedLevels.Count + 1, "Have not completed preceeding level :/");
+            Assert.IsTrue(completedLevel.LevelNum > 0);
+
             if (completedLevel.LevelNum > _completedLevels.Count)
             {
                 // First time level has been completed
-                Assert.IsTrue(completedLevel.LevelNum == _completedLevels.Count + 1);
                 _completedLevels.Add(completedLevel);
             }
             else
