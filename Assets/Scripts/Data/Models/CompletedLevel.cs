@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Data.Models
 {
-    // FELIX  Create serialize tests :)
     [Serializable]
     public class CompletedLevel : ICompletedLevel
     {
