@@ -385,6 +385,11 @@ namespace BattleCruisers.Scenes
                 // Completing the tutorial does not count as a real level, so 
                 // only save save battle result if this was not the tutorial.
 				_dataProvider.GameModel.LastBattleResult = battleResult;
+                if (battleResult.WasVictory)
+                {
+                    CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: _dataProvider.SettingsManager.AIDifficulty);
+                    _dataProvider.GameModel.AddCompletedLevel(level);
+                }
 				_dataProvider.SaveGame();
             }
 
