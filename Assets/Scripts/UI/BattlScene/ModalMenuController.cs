@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
@@ -13,11 +15,23 @@ namespace BattleCruisers.UI.BattleScene
 		private MenuDismissed _onMenuDismissed;
 
 		public Canvas canvas;
+        public Button endGameButton, skipTutorialButton;
 
 		public delegate void MenuDismissed(UserAction UserAction);
 
-		void Start() 
+		public void Initialise(bool isTutorial)
 		{
+            Helper.AssertIsNotNull(canvas, endGameButton, skipTutorialButton);
+
+            if (isTutorial)
+            {
+                Destroy(endGameButton.gameObject);
+            }
+            else
+            {
+                Destroy(skipTutorialButton.gameObject);
+            }
+
 			HideMenu();
 		}
 

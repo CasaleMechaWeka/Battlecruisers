@@ -122,6 +122,7 @@ namespace BattleCruisers.Scenes
             IUserChosenTargetHelper UserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
             ITime time = new TimeBC();
             _pauseGameManager = new PauseGameManager(time);
+            modalMenuController.Initialise(ApplicationModel.IsTutorial);
 
 
             // Instantiate player cruiser
