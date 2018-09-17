@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, int lastPlayedLevelNum)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, int lastPlayedLevelNum)
         {
             base.Initialise(screensSceneGod);
 
@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ShowSet(VisibleSetIndex);
         }
 
-        private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked, int numOfSets)
+        private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, int numOfSets)
         {
             Assert.IsTrue(levels.Count % SET_SIZE == 0);
 
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int j = 0; j < numOfSets; j++)
             {
                 int startIndex = j * SET_SIZE;
-                IList<ILevel> setLevels
+                IList<LevelInfo> setLevels
                     = levels
                         .Skip(startIndex)
                         .Take(SET_SIZE)

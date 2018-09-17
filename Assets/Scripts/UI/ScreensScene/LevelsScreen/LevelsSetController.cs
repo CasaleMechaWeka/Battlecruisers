@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Scenes;
+﻿using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -8,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsSetController : MonoBehaviourWrapper
     {
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<ILevel> levels, int numOfLevelsUnlocked)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked)
         {
             Helper.AssertIsNotNull(screensSceneGod, levels);
 
@@ -18,10 +17,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int i = 0; i < levels.Count; ++i)
             {
                 LevelButtonController button = levelButtons[i];
-                ILevel level = levels[i];
-                bool isLevelUnlocked = level.Num <= numOfLevelsUnlocked;
+                LevelInfo level = levels[i];
 
-                button.Initialise(level, isLevelUnlocked, screensSceneGod);
+                button.Initialise(level, screensSceneGod, numOfLevelsUnlocked);
             }
 		}
 	}

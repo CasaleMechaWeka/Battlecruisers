@@ -1,6 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
@@ -81,13 +84,36 @@ namespace BattleCruisers.Scenes
                 BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
                 int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
-                levelsScreen.Initialise(this, _dataProvider.Levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
+                IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
+
+                levelsScreen.Initialise(this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
             }
 
 			GoToScreen(levelsScreen);
 		}
 
-		public void GoToHomeScreen()
+        private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
+        {
+            IList<LevelInfo> levels = new List<LevelInfo>();
+
+            for (int i = 0; i < staticLevels.Count; ++i)
+            {
+                ILevel staticLevel = staticLevels[i];
+                CompletedLevel completedLevel = completedLevels.ElementAtOrDefault(i);
+                Difficulty? completedDifficulty = null;
+
+                if (completedLevel != null)
+                {
+                    completedDifficulty = completedLevel.HardestDifficulty;
+                }
+
+                levels.Add(new LevelInfo(staticLevel.Num, staticLevel.Name, completedDifficulty));
+            }
+
+            return levels;
+        }
+
+        public void GoToHomeScreen()
 		{
 			GoToScreen(homeScreen);
 		}
