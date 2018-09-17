@@ -163,14 +163,10 @@ namespace BattleCruisers.Data.Static
             Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
-            // TEMP  For final game only unlock first level :P
-            //int numOfLevelsCompleted = 19;
-            int numOfLevelsCompleted = 0;
             bool hasAttemptedTutorial = false;
 
             return new GameModel(
                 hasAttemptedTutorial,
-                numOfLevelsCompleted,
                 playerLoadout,
                 lastBattleResult: null,
 				// TEMP  Do not unlock all hulls & buildables at the game start :P

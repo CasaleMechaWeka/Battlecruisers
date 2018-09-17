@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveCompletedLevelBefore_ReturnsFalse()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted;
+            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted);
 
             Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
         }
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelDoesNotHaveLoot_ReturnsFalse()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
+            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
 
             Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
@@ -73,7 +73,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelHasLoot_ReturnsTrue()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
+            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
             Assert.IsTrue(_lootManager.ShouldShowLoot(levelCompleted));
@@ -81,33 +81,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         #endregion ShouldShowLoot
 
         #region UnlockLoot
-        [Test]
-        public void UnlockLoot_InvalidLevel_NotGreaterThanCurrent_Throws()
-        {
-            int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted;
-            Assert.Throws<UnityAsserts.AssertionException>(() => _lootManager.UnlockLoot(levelCompleted));
-        }
-
-        [Test]
-        public void UnlockLoot_InvalidLevel_NotJustOneGreaterThanCurrent_Throws()
-        {
-            int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted;
-            Assert.Throws<UnityAsserts.AssertionException>(() => _lootManager.UnlockLoot(levelCompleted + 2));
-        }
-
-        [Test]
-        public void UnlockLoot_UnlocksLevel()
-        {
-            int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted - 1;
-
-            _lootManager.UnlockLoot(levelCompleted);
-
-            Assert.AreEqual(levelCompleted, _dataProvider.GameModel.NumOfLevelsCompleted);
-        }
-
         [Test]
         public void UnlockLoot_UnlocksLootItems()
         {
@@ -156,7 +129,11 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
         private void TriggerUnlock()
         {
-            UnlockLoot_UnlocksLevel();
+            int levelCompleted = 7;
+            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
+            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+
+            _lootManager.UnlockLoot(levelCompleted);
         }
     }
 }

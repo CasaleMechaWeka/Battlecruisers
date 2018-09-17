@@ -41,8 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             Assert.IsTrue(ShouldShowLoot(levelCompleted));
 
-            UnlockNextLevel(levelCompleted);
-
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
@@ -52,12 +50,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             _dataProvider.SaveGame();
-        }
-
-        private void UnlockNextLevel(int levelCompleted)
-        {
-            Assert.AreEqual(_dataProvider.GameModel.NumOfLevelsCompleted + 1, levelCompleted);
-            _dataProvider.GameModel.NumOfLevelsCompleted = levelCompleted;
         }
 
         private void UnlockLootItems(ILoot unlockedLoot)

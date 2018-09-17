@@ -40,14 +40,14 @@ namespace BattleCruisers.Tests.Data
         [Test]
         public void NumOfLevelsUnlocked_FromNumOfLevelsCompleted()
         {
-            _gameModel.NumOfLevelsCompleted = 0;
+            _gameModel.NumOfLevelsCompleted.Returns(0);
             Assert.AreEqual(1, _lockedInfo.NumOfLevelsUnlocked);
         }
 
         [Test]
         public void NumOfLevelsUnlocked_WhenAllLevelsAreCompleted()
         {
-            _gameModel.NumOfLevelsCompleted = _levels.Count;
+            _gameModel.NumOfLevelsCompleted.Returns(_levels.Count);
             Assert.AreEqual(_levels.Count, _lockedInfo.NumOfLevelsUnlocked);
         }
         #endregion NumOfLevelsUnlocked

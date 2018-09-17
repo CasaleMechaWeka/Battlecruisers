@@ -18,9 +18,6 @@ namespace BattleCruisers.Data.Models
         private bool _hasAttemptedTutorial;
 
 		[SerializeField]
-		private int _numOfLevelsCompleted;
-
-		[SerializeField]
 		private Loadout _playerLoadout;
 
 		[SerializeField]
@@ -38,18 +35,13 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
+		public int NumOfLevelsCompleted { get { return _completedLevels.Count; } }
+
         public bool HasAttemptedTutorial
         {
             get { return _hasAttemptedTutorial; }
             set { _hasAttemptedTutorial = value; }
         }
-
-        // FELIX  Remove.  Can be deduced from CompletedLevels property :)
-		public int NumOfLevelsCompleted 
-		{ 
-			get { return _numOfLevelsCompleted; }
-			set { _numOfLevelsCompleted = value; }
-		}
 
 		public Loadout PlayerLoadout
 		{
@@ -85,7 +77,6 @@ namespace BattleCruisers.Data.Models
 
 		public GameModel(
             bool hasAttemptedTutorial,
-			int numOfLevelsCompleted,
 			Loadout playerLoadout,
 			BattleResult lastBattleResult,
 			List<HullKey> unlockedHulls,
@@ -94,7 +85,6 @@ namespace BattleCruisers.Data.Models
             : this()
 		{
             HasAttemptedTutorial = hasAttemptedTutorial;
-			NumOfLevelsCompleted = numOfLevelsCompleted;
 			PlayerLoadout = playerLoadout;
 			LastBattleResult = lastBattleResult;
 

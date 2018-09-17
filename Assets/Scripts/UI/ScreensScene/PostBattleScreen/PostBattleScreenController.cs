@@ -58,7 +58,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 {
                     title.text = VICTORY_TITLE;
 
-
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
                         unlockedItemSection.SetActive(true);
@@ -69,10 +68,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     {
                         // Completed last level for the frist time
                         completedGameMessage.SetActive(true);
-
-                        _dataProvider.GameModel.NumOfLevelsCompleted = BattleResult.LevelNum;
-                        _dataProvider.SaveGame();
                     }
+
+                    CompletedLevel level = new CompletedLevel(levelNum: BattleResult.LevelNum, hardestDifficulty: _dataProvider.SettingsManager.AIDifficulty);
+                    _dataProvider.GameModel.AddCompletedLevel(level);
+                    _dataProvider.SaveGame();
                 }
                 else
                 {

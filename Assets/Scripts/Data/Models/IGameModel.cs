@@ -8,8 +8,8 @@ namespace BattleCruisers.Data.Models
 {
     public interface IGameModel
     {
+        int NumOfLevelsCompleted { get; }
         bool HasAttemptedTutorial { get; set; }
-        int NumOfLevelsCompleted { get; set; }
         Loadout PlayerLoadout { get; set; }
         BattleResult LastBattleResult { get; set; }
 
