@@ -15,9 +15,9 @@ namespace BattleCruisers.Projectiles
         private IVariableDelayDeferrer _deferrer;
         private IMovementController _dummyMovementController;
 
-        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 3;
+        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
 
-		public  ITarget Target { get; private set; }
+        public  ITarget Target { get; private set; }
 
 		public void Initialise(
             IProjectileStats missileStats, 
@@ -53,8 +53,16 @@ namespace BattleCruisers.Projectiles
             MovementController = _dummyMovementController;
 
             // Destroy missile eventually (in case it does not hit a matching target)
-            _deferrer.Defer(DestroyProjectile, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+            _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
 		}
+
+        private void ConditionalDestroy()
+        {
+            if (this != null)
+            {
+                DestroyProjectile();
+            }
+        }
 
 		protected override void DestroyProjectile()
 		{
