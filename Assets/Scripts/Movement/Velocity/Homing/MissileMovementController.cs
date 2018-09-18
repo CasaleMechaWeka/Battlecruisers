@@ -10,7 +10,11 @@ namespace BattleCruisers.Movement.Velocity.Homing
 	{
 		private ITargetPositionPredictor _targetPositionPredictor;
 
-		public MissileMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, ITargetPositionPredictorFactory targetPositionPredictorFactory)
+		public MissileMovementController(
+            Rigidbody2D rigidBody, 
+            IVelocityProvider maxVelocityProvider, 
+            ITargetProvider targetProvider, 
+            ITargetPositionPredictorFactory targetPositionPredictorFactory)
             : base(rigidBody, maxVelocityProvider, targetProvider) 
 		{ 
 			_targetPositionPredictor = targetPositionPredictorFactory.CreateLinearPredictor();
@@ -18,7 +22,13 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 		protected override Vector2 FindTargetPosition()
 		{
-            return _targetPositionPredictor.PredictTargetPosition(_rigidBody.transform.position, _targetProvider.Target.Position, _targetProvider.Target, _maxVelocityProvider.VelocityInMPerS, currentAngleInRadians: -1);
+            return 
+                _targetPositionPredictor.PredictTargetPosition(
+                    _rigidBody.transform.position, 
+                    _targetProvider.Target.Position, 
+                    _targetProvider.Target, 
+                    _maxVelocityProvider.VelocityInMPerS, 
+                    currentAngleInRadians: -1);
 		}
 
 		protected override float FindVelocitySmoothTime()
