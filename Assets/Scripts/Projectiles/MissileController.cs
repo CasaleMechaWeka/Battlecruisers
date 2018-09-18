@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -10,6 +11,8 @@ namespace BattleCruisers.Projectiles
 {
     public class MissileController : ProjectileController, ITargetProvider
 	{
+        private IMovementController _dummyMovementController;
+
 		public  ITarget Target { get; private set; }
 
 		public void Initialise(
@@ -34,14 +37,18 @@ namespace BattleCruisers.Projectiles
                     targetProvider, 
                     factoryProvider.TargetPositionPredictorFactory);
 
+            _dummyMovementController = factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+
 			target.Destroyed += Target_Destroyed;
 		}
 
 		private void Target_Destroyed(object sender, DestroyedEventArgs e)
 		{
-            // FELIX  Switch movement controllers
+            // Let missile keep current velocity
+            MovementController = _dummyMovementController;
+
             // FELIX  Add timeout, so projectile is eventually destroyed
-			DestroyProjectile();
+			//DestroyProjectile();
 		}
 
 		protected override void DestroyProjectile()
