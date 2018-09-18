@@ -38,7 +38,7 @@ namespace BattleCruisers.Projectiles
             IVelocityProvider maxVelocityProvider = _movementControllerFactory.CreateStaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
 			ITargetProvider targetProvider = this;
 
-			_movementController 
+			MovementController 
                 = _movementControllerFactory.CreateRocketMovementController(
                     _rigidBody, 
                     maxVelocityProvider, 

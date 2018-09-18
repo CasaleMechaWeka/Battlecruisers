@@ -28,7 +28,24 @@ namespace BattleCruisers.Projectiles
         private ITarget _targetToDamage;
 
 		protected Rigidbody2D _rigidBody;
-		protected IMovementController _movementController;
+
+        private IMovementController _movementController;
+		protected IMovementController MovementController
+        {
+            get { return _movementController; }
+            set
+            {
+                Assert.IsNotNull(value);
+                Assert.AreNotEqual(value, _movementController);
+
+                if (_movementController != null)
+                {
+                    value.Velocity = _movementController.Velocity;
+                }
+
+                _movementController = value;
+            }
+        }
 
         // By default have no impact sound
         protected virtual ISoundKey ImpactSoundKey { get { return null; } }
@@ -83,9 +100,9 @@ namespace BattleCruisers.Projectiles
 
                 DestroyProjectile();
             }
-			else if (_movementController != null)
+			else if (MovementController != null)
             {
-                _movementController.AdjustVelocity();
+                MovementController.AdjustVelocity();
 
                 AdjustGameObjectDirection();
             }
