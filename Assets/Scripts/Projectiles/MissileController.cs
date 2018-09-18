@@ -5,13 +5,17 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
     public class MissileController : ProjectileController, ITargetProvider
 	{
+        private IVariableDelayDeferrer _deferrer;
         private IMovementController _dummyMovementController;
+
+        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 3;
 
 		public  ITarget Target { get; private set; }
 
@@ -26,6 +30,7 @@ namespace BattleCruisers.Projectiles
             base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider, parent);
 
 			Target = target;
+            _deferrer = factoryProvider.DeferrerProvider.VariableDelayDeferrer;
 
             IVelocityProvider maxVelocityProvider = factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(missileStats.MaxVelocityInMPerS);
 			ITargetProvider targetProvider = this;
@@ -47,8 +52,8 @@ namespace BattleCruisers.Projectiles
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
 
-            // FELIX  Add timeout, so projectile is eventually destroyed
-			//DestroyProjectile();
+            // Destroy missile eventually (in case it does not hit a matching target)
+            _deferrer.Defer(DestroyProjectile, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
 		}
 
 		protected override void DestroyProjectile()
