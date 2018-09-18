@@ -100,7 +100,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                             new SpriteProvider(new SpriteFetcher())),
                     new SoundPlayerFactory(soundFetcher, variableDelayDeferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
-                    new AttackablePositionFinderFactory());
+                    new AttackablePositionFinderFactory(),
+                    new DeferrerProvider(variableDelayDeferrer));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -123,7 +124,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
-            IAttackablePositionFinderFactory attackablePositionFinderFactory)
+            IAttackablePositionFinderFactory attackablePositionFinderFactory,
+            IDeferrerProvider deferrerProvider)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -138,6 +140,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.TargetsFactory.Returns(targetsFactory);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
+            factoryProvider.DeferrerProvider.Returns(deferrerProvider);
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();

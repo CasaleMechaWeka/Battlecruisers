@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,10 +17,12 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 		void Start () 
 		{
-			Helper helper = new Helper();
+            // Is ok if null
+            IVariableDelayDeferrer deferrer = GetComponent<IVariableDelayDeferrer>();
+			Helper helper = new Helper(variableDelayDeferrer: deferrer);
 
-			// Setup turret
-			_turret = FindObjectOfType<TurretController>();
+            // Setup turret
+            _turret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_turret);
             helper.InitialiseBuilding(_turret, faction: Faction.Reds);
 			_turret.StartConstruction();
