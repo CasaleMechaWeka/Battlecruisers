@@ -39,6 +39,8 @@ namespace BattleCruisers.Projectiles
 
 		private void Target_Destroyed(object sender, DestroyedEventArgs e)
 		{
+            // FELIX  Switch movement controllers
+            // FELIX  Add timeout, so projectile is eventually destroyed
 			DestroyProjectile();
 		}
 
