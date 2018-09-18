@@ -8,6 +8,7 @@ using BattleCruisers.Projectiles.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -18,6 +19,7 @@ namespace BattleCruisers.Utils.Factories
         IAircraftProvider AircraftProvider { get; }
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
+        IDeferrerProvider DeferrerProvider { get; }
         IExplosionFactory ExplosionFactory { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }

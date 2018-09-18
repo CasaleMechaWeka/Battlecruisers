@@ -20,17 +20,18 @@ namespace BattleCruisers.Utils.Factories
 	{
         public ITurretFactoryProvider Turrets { get; private set; }
         public ISoundFactoryProvider Sound { get; private set; }
-        public IPrefabFactory PrefabFactory { get; private set; }
-		public ITargetsFactory TargetsFactory { get; private set; }
-		public IMovementControllerFactory MovementControllerFactory { get; private set; }
-		public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
-		public IAircraftProvider AircraftProvider { get; private set; }
-		public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; } 
-        public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
+        public IAircraftProvider AircraftProvider { get; private set; }
         public IBoostFactory BoostFactory { get; private set; }
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
+        public IDeferrerProvider DeferrerProvider { get; private set; }
         public IExplosionFactory ExplosionFactory { get; private set; }
+        public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
+        public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
+        public IMovementControllerFactory MovementControllerFactory { get; private set; }
+        public IPrefabFactory PrefabFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
+        public ITargetsFactory TargetsFactory { get; private set; }
+        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -62,6 +63,7 @@ namespace BattleCruisers.Utils.Factories
 
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
             Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
+            DeferrerProvider = new DeferrerProvider(deferrer);
         }
 	}
 }
