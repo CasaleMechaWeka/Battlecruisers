@@ -205,12 +205,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 Destroy(HealthBarController.gameObject);
 
-                // FELIX
                 // Make gravity take effect
                 rigidBody.bodyType = RigidbodyType2D.Dynamic;
                 rigidBody.gravityScale = 1;
-                // FELIX
-                //rigidBody.angularDrag =
+                
+                // Pass on current velocity
+                rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
+
+                // Make aircraft spin a bit for coolness
+                rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
             }
             else
             {
