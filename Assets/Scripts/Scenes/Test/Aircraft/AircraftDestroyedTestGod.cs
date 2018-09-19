@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
@@ -6,24 +8,39 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class AircraftDestroyedTestGod : MonoBehaviour 
 	{
-        private TestAircraftController _aircraft;
+        public TestAircraftController aircraftToDestroy, blockingAircraft;
 		public List<Vector2> patrolPoints;
 
 		void Start() 
 		{
 			Helper helper = new Helper();
 
-			_aircraft = FindObjectOfType<TestAircraftController>();
-			_aircraft.PatrolPoints = patrolPoints;
-            helper.InitialiseUnit(_aircraft);
-			_aircraft.StartConstruction();
+            Faction aircraftFaction = Faction.Blues;
+            Faction turretFaction = Faction.Reds;
 
+            // Initialise aircraft
+			aircraftToDestroy.PatrolPoints = patrolPoints;
+            helper.InitialiseUnit(aircraftToDestroy, aircraftFaction);
+			aircraftToDestroy.StartConstruction();
             Invoke("DestroyAircraft", time: 1);
+
+            blockingAircraft.UseDummyMovementController = true;
+            helper.InitialiseUnit(blockingAircraft, turretFaction);
+            blockingAircraft.StartConstruction();
+
+            // Initialise turrets
+            TurretController[] turrets = FindObjectsOfType<TurretController>();
+
+            foreach (TurretController turret in turrets)
+            {
+                helper.InitialiseBuilding(turret, turretFaction);
+                turret.StartConstruction();
+            }
 		}
 
         private void DestroyAircraft()
         {
-            _aircraft.TakeDamage(damageAmount: _aircraft.MaxHealth, damageSource: null);
+            aircraftToDestroy.TakeDamage(damageAmount: aircraftToDestroy.MaxHealth, damageSource: null);
         }
 	}
 }
