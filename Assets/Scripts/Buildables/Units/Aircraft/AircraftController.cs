@@ -13,6 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
+    // FELIX  Avoid duplicte code with ShipController (once unit is dead)
     public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider
 	{
         private KamikazeController _kamikazeController;
@@ -121,6 +122,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
+            if (IsDestroyed)
+            {
+                return;
+            }
+
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 
@@ -191,6 +197,25 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnDestroyed();
             _boostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
+        }
+
+        protected override void InternalDestroy()
+        {
+            if (BuildableState == BuildableState.Completed)
+            {
+                Destroy(HealthBarController.gameObject);
+
+                // FELIX
+                // Make gravity take effect
+                rigidBody.bodyType = RigidbodyType2D.Dynamic;
+                rigidBody.gravityScale = 1;
+                // FELIX
+                //rigidBody.angularDrag =
+            }
+            else
+            {
+                base.InternalDestroy();
+            }
         }
     }
 }
