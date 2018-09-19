@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-    public class FactionTargetFilter : ITargetFilter
+    public class FactionTargetFilter : AliveTargetFilter
     {
         private readonly Faction _factionToDetect;
 
@@ -11,9 +11,11 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
             _factionToDetect = faction;
         }
 
-        public virtual bool IsMatch(ITarget target)
+        public override bool IsMatch(ITarget target)
         {
-            return target.Faction == _factionToDetect;
+            return 
+                base.IsMatch(target)
+                && target.Faction == _factionToDetect;
         }
     }
 }
