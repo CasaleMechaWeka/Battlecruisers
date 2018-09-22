@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly ICameraController _cameraController;
         private readonly ICruiser _playerCruiser;
 
-        private const float CAMERA_MARGIN_IN_M = 5;
+        private const float CAMERA_MARGIN_IN_M = 10;
 
         public PlayerCruiserFocusHelper(ICamera camera, ICameraController cameraController, ICruiser playerCruiser)
         {
