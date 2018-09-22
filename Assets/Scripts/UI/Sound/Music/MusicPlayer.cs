@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using System;
 
 namespace BattleCruisers.UI.Music
 {
@@ -22,53 +21,31 @@ namespace BattleCruisers.UI.Music
 
         public void PlayScreensSceneMusic()
         {
-            PlayMusic(Music.ScreensScene);
+            PlayMusic(Music.ScreensScene, _musicProvider.ScreensSceneKey);
         }
 
         public void PlayBattleSceneMusic()
         {
-            PlayMusic(Music.BattleScene);
+            PlayMusic(Music.BattleScene, _musicProvider.BattleSceneKey);
         }
 
         public void PlayDangerMusic()
         {
-            PlayMusic(Music.Danger);
+            PlayMusic(Music.Danger, _musicProvider.DangerKey);
         }
 
         public void PlayVictoryMusic()
         {
-            PlayMusic(Music.Victory);
+            PlayMusic(Music.Victory, _musicProvider.VictoryKey);
         }
 
-        private void PlayMusic(Music musicToPlay)
+        private void PlayMusic(Music musicToPlay, ISoundKey soundKeyToPlay)
         {
             if (musicToPlay != _currentlyPlaying)
             {
-                ISoundKey soundKeyToPlay = GetKey(musicToPlay);
                 _soundPlayer.PlaySound(soundKeyToPlay, loop: true);
                 _currentlyPlaying = musicToPlay;
             }
         }
-
-        private ISoundKey GetKey(Music musicToPlay)
-        {
-            switch (musicToPlay)
-            {
-                case Music.BattleScene:
-                    return _musicProvider.BattleSceneKey;
-
-                case Music.ScreensScene:
-                    return _musicProvider.ScreensSceneKey;
-
-                case Music.Danger:
-                    return _musicProvider.DangerKey;
-
-                case Music.Victory:
-                    return _musicProvider.VictoryKey;
-
-                default:
-                    throw new ArgumentException();
-            }
-        }
-    }
+   }
 }
