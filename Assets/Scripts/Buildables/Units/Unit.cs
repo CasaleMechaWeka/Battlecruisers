@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
@@ -12,8 +13,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public abstract class Unit : Buildable, IUnit
-	{
+    public abstract class Unit : Buildable, IUnit, IDestructable
+    {
         private IAudioClipWrapper _engineAudioClip;
 
 		public UnitCategory category;
@@ -126,6 +127,32 @@ namespace BattleCruisers.Buildables.Units
         {
             base.OnDestroyed();
             _audioSource.Stop();
+        }
+
+        protected override void InternalDestroy()
+        {
+            if (BuildableState == BuildableState.Completed)
+            {
+                OnDeathWhileCompleted();
+            }
+            else
+            {
+                base.InternalDestroy();
+            }
+        }
+
+        protected virtual void OnDeathWhileCompleted()
+        {
+            Destroy(HealthBarController.gameObject);
+
+            // Make gravity take effect
+            rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            rigidBody.gravityScale = 1;
+        }
+
+        void IDestructable.Destroy()
+        {
+            base.InternalDestroy();
         }
     }
 }

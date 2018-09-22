@@ -14,7 +14,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    // FELIX  Avoid duplicte code with ShipController (once unit is dead)
     public abstract class AircraftController : 
         Unit, 
         IVelocityProvider, 
@@ -199,31 +198,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _boostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
         }
 
-        protected override void InternalDestroy()
+        protected override void OnDeathWhileCompleted()
         {
-            if (BuildableState == BuildableState.Completed)
-            {
-                Destroy(HealthBarController.gameObject);
+            base.OnDeathWhileCompleted();
+            
+            // Pass on current velocity
+            rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
 
-                // Make gravity take effect
-                rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                rigidBody.gravityScale = 1;
-                
-                // Pass on current velocity
-                rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
-
-                // Make aircraft spin a bit for coolness
-                rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-            }
-            else
-            {
-                base.InternalDestroy();
-            }
-        }
-
-        void IDestructable.Destroy()
-        {
-            base.InternalDestroy();
+            // Make aircraft spin a bit for coolness
+            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
         }
     }
 }

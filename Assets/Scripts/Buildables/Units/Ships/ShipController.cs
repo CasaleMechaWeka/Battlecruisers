@@ -183,5 +183,14 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             base.OnDestroyed();
 		}
-	}
+
+        protected override void OnDeathWhileCompleted()
+        {
+            base.OnDeathWhileCompleted();
+
+            // FELIX Disable turrets
+
+            // FELIX  Torque?
+        }
+    }
 }
