@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
@@ -28,7 +29,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IBuildableSorterFactory sorterFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper)
 		{
             Helper.AssertIsNotNull(
                 uiManager,
@@ -36,7 +38,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 units,
                 sorterFactory,
                 buttonVisibilityFilters,
-                spriteProvider);
+                spriteProvider,
+                playerCruiserFocusHelper);
 
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
@@ -49,7 +52,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(_buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider);
+            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, playerCruiserFocusHelper);
 
             // Unit menus
             _unitMenus = GetComponentInChildren<UnitMenus>();

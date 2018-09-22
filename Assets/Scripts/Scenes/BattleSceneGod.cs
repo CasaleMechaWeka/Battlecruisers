@@ -20,6 +20,7 @@ using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -212,6 +213,11 @@ namespace BattleCruisers.Scenes
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper
+                = new PlayerCruiserFocusHelper(
+                    cameraInitialiser.MainCamera,
+                    cameraInitialiser.CameraController,
+                    _playerCruiser);
 
             buildMenuController
                 .Initialise(
@@ -220,7 +226,8 @@ namespace BattleCruisers.Scenes
                     units,
                     sorterFactory,
                     buttonVisibilityFilters,
-                    spriteProvider);
+                    spriteProvider,
+                    playerCruiserFocusHelper);
 
             uiManager.InitialUI();
 

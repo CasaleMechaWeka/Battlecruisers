@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         private bool IsCameraRoughlyOnPlayerCruiser()
         {
-            return Vector2.Distance(_camera.Position, _playerCruiser.Position) > CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Position, _playerCruiser.Position) < CAMERA_MARGIN_IN_M;
         }
     }
 }
