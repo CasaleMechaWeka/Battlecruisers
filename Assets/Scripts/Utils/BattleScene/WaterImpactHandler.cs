@@ -16,9 +16,10 @@ namespace BattleCruisers.Utils.BattleScene
         {
             Destroy(collision.gameObject);
 
-            Quaternion rotation = Quaternion.Euler(x: -90, y: 0, z: 0);
-            ParticleSystem splash = Instantiate(splashPrefab, collision.transform.position, rotation);
-            splash.Play();
+            // FELIX  Remove or uncomment?
+            //Quaternion rotation = Quaternion.Euler(x: -90, y: 0, z: 0);
+            //ParticleSystem splash = Instantiate(splashPrefab, collision.transform.position, rotation);
+            //splash.Play();
         }
     }
 }
