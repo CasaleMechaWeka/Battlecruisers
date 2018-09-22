@@ -127,11 +127,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            if (IsDestroyed)
-            {
-                return;
-            }
-
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 

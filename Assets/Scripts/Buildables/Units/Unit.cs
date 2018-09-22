@@ -80,7 +80,10 @@ namespace BattleCruisers.Buildables.Units
 
         void FixedUpdate()
 		{
-			OnFixedUpdate();
+            if (!IsDestroyed)
+            {
+    			OnFixedUpdate();
+            }
 		}
 
 		protected virtual void OnFixedUpdate() { }
