@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
+        private bool _isCleanedUp;
         protected ITargetFilter _targetFilter;
 		
         protected IProjectileStats _projectileStats;
@@ -32,6 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public float BarrelAngleInDegrees { get { return Transform.rotation.eulerAngles.z; } }
 
         private bool IsInitialised { get { return _targetFilter != null; } }
+        private bool IsActive { get { return IsInitialised && !_isCleanedUp; } }
         public Renderer[] Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
@@ -60,6 +62,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
+            _isCleanedUp = false;
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -112,7 +115,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		void FixedUpdate()
         {
-            if (!IsInitialised)
+            if (!IsActive)
             {
                 return;
             }
@@ -130,5 +133,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public abstract void Fire(float angleInDegrees);
 
 		protected virtual void CeaseFire() { }
-	}
+
+        public void CleanUp()
+        {
+            _isCleanedUp = true;
+        }
+    }
 }

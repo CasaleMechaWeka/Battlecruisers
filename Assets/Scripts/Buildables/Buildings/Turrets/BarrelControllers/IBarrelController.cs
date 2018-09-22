@@ -22,5 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         bool CanFireWithoutTarget { get; }
 
         void Fire(float angleInDegrees);
+
+        void CleanUp();
     }
 }
