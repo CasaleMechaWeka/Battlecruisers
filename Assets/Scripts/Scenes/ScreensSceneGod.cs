@@ -39,6 +39,7 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _spriteProvider = new SpriteProvider(new SpriteFetcher());
             _sceneNavigator = LandingSceneGod.SceneNavigator;
+            LandingSceneGod.MusicPlayer.PlayScreensSceneMusic();
 
 
             // TEMP  For showing PostBattleScreen :)

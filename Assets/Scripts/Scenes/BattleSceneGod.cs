@@ -110,6 +110,7 @@ namespace BattleCruisers.Scenes
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _dataProvider = ApplicationModel.DataProvider;
             _currentLevelNum = ApplicationModel.SelectedLevel;
+            LandingSceneGod.MusicPlayer.PlayBattleSceneMusic();
 
 
             // Common setup
