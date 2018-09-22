@@ -187,6 +187,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.OnDeathWhileCompleted();
 
+            StopMoving();
+
             // Disable turrets
             foreach (IBarrelWrapper turret in _turrets)
             {
@@ -196,10 +198,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             // FELIX  Create property to be assigned by parent class
             rigidBody.gravityScale = 0.5f;
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-
-            // Make ship sink stern (back) first
-            rigidBody.velocity = Vector2.zero;
-
         }
     }
 }
