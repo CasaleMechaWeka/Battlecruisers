@@ -188,7 +188,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.OnDeathWhileCompleted();
 
-            // FELIX Disable turrets
+            // Disable turrets
+            foreach (IBarrelWrapper turret in _turrets)
+            {
+                turret.DisposeManagedState();
+            }
 
             // FELIX  Torque?
         }
