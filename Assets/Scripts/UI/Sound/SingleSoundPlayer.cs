@@ -25,13 +25,13 @@ namespace BattleCruisers.UI.Sound
             _audioSource = audioSource;
         }
 
-        public void PlaySound(ISoundKey soundKey)
+        public void PlaySound(ISoundKey soundKey, bool loop = false)
         {
             // Not playing sound spatially, so position is irrelevant.
             IAudioClipWrapper soundToPlay = _soundFetcher.GetSound(soundKey);
             _audioSource.Stop();
             _audioSource.AudioClip = soundToPlay;
-            _audioSource.Play(isSpatial: false);
+            _audioSource.Play(isSpatial: false, loop: loop);
         }
     }
 }
