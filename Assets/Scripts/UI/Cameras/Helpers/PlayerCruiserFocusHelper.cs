@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Test :)
     public class PlayerCruiserFocusHelper : IPlayerCruiserFocusHelper
     {
         private readonly ICamera _camera;
