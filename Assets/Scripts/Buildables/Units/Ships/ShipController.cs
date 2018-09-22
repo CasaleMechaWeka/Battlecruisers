@@ -194,7 +194,13 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.DisposeManagedState();
             }
 
-            // FELIX  Torque?
+            // FELIX  Create property to be assigned by parent class
+            rigidBody.gravityScale = 0.5f;
+            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+
+            // Make ship sink stern (back) first
+            rigidBody.velocity = Vector2.zero;
+
         }
     }
 }
