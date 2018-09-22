@@ -6,6 +6,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,11 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
     // FELIX  Avoid duplicte code with ShipController (once unit is dead)
-    public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider
+    public abstract class AircraftController : 
+        Unit, 
+        IVelocityProvider, 
+        IPatrollingVelocityProvider, 
+        IDestructable
 	{
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
@@ -219,6 +224,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 base.InternalDestroy();
             }
+        }
+
+        void IDestructable.Destroy()
+        {
+            base.InternalDestroy();
         }
     }
 }

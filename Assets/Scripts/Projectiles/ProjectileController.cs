@@ -6,14 +6,15 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public class ProjectileController : MonoBehaviour
-	{
+    public class ProjectileController : MonoBehaviour, IDestructable
+    {
         private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -138,5 +139,10 @@ namespace BattleCruisers.Projectiles
         {
             transform.right = _rigidBody.velocity;
         }
-	}
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -6,7 +7,9 @@ namespace BattleCruisers.Utils.BattleScene
 	{
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Destroy(collider.gameObject);
+            IDestructable destructable = collider.GetComponent<IDestructable>();
+            Assert.IsNotNull(destructable);
+            destructable.Destroy();
 		}
 	}
 }
