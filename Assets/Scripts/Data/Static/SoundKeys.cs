@@ -65,5 +65,16 @@ namespace BattleCruisers.Data.Static
 
             public static ISoundKey EnemyStartedUltra { get { return new SoundKey(SoundType.Events, "enemy-started-ultra"); } }
         }
+
+        public static class Music
+        {
+            // Kentient
+            public static ISoundKey Kentient { get { return new SoundKey(SoundType.Music, "kentient"); } }
+            public static ISoundKey KentientDanger { get { return new SoundKey(SoundType.Music, "kentient-danger"); } }
+            public static ISoundKey KentientVictory { get { return new SoundKey(SoundType.Music, "kentient-victory"); } }
+
+            // Other
+            public static ISoundKey MainTheme { get { return new SoundKey(SoundType.Music, "main-theme"); } }
+        }
     }
 }
