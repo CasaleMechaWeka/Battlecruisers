@@ -36,6 +36,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ship; } }
+        protected override float OnDeathGravityScale { get { return 0.2f; } }
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
@@ -195,9 +196,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                 turret.DisposeManagedState();
             }
 
-            // FELIX  Create property to be assigned by parent class
-            rigidBody.gravityScale = 0.5f;
-            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+            // Make ship rear sink first
+            rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
         }
     }
 }

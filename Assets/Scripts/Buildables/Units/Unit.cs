@@ -53,6 +53,7 @@ namespace BattleCruisers.Buildables.Units
         protected override bool IsDroneConsumerFocusable { get { return false; } }
 
         protected abstract ISoundKey EngineSoundKey { get; }
+        protected virtual float OnDeathGravityScale { get { return 1; } }
 		#endregion Properties
 
 		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -147,7 +148,7 @@ namespace BattleCruisers.Buildables.Units
 
             // Make gravity take effect
             rigidBody.bodyType = RigidbodyType2D.Dynamic;
-            rigidBody.gravityScale = 1;
+            rigidBody.gravityScale = OnDeathGravityScale;
         }
 
         void IDestructable.Destroy()
