@@ -3,7 +3,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.UI.Music
 {
-    public class StaticMusicProvider : IMusicProvider
+    public class KentientMusicProvider : IMusicProvider
     {
         public ISoundKey ScreensSceneKey { get { return SoundKeys.Music.MainTheme; } }
         public ISoundKey BattleSceneKey { get { return SoundKeys.Music.Kentient; } }

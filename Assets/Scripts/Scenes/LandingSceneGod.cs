@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes
 
             return
                 new MusicPlayer(
-                    new StaticMusicProvider(),
+                    new ExperimentalMusicProvider(),
                     new SingleSoundPlayer(
                         new SoundFetcher(),
                         audioSource));
