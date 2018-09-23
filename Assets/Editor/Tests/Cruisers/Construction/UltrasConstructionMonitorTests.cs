@@ -14,7 +14,6 @@ namespace BattleCruisers.Tests.Cruisers.Construction
     {
         private UltrasConstructionMonitor _monitor;
         private ICruiserController _cruiser;
-        private IUnitConstructionMonitor _unitConstructionMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IUnit _ultraUnit, _normalUnit;
         private IBuilding _ultraBuilding, _normalBuilding;
@@ -23,10 +22,9 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         public void TestSetup()
         {
             _cruiser = Substitute.For<ICruiserController>();
-            _unitConstructionMonitor = Substitute.For<IUnitConstructionMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
-            _monitor = new UltrasConstructionMonitor(_cruiser, _unitConstructionMonitor, _soundPlayer);
+            _monitor = new UltrasConstructionMonitor(_cruiser, _soundPlayer);
 
             _ultraUnit = Substitute.For<IUnit>();
             _ultraUnit.IsUltra.Returns(true);
@@ -58,14 +56,14 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UltraUnitStarted_PlaysSound()
         {
-            _unitConstructionMonitor.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
+            _cruiser.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         [Test]
         public void NormalUnitStarted_DoesNotPlaySound()
         {
-            _unitConstructionMonitor.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_normalUnit));
+            _cruiser.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_normalUnit));
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
 
@@ -74,7 +72,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             _monitor.DisposeManagedState();
 
-            _unitConstructionMonitor.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
+            _cruiser.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
 
             _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(_ultraBuilding));

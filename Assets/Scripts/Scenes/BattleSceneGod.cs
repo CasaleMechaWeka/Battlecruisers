@@ -270,7 +270,6 @@ namespace BattleCruisers.Scenes
             return
                 new UltrasConstructionMonitor(
                     aiCruiser,
-                    new UnitConstructionMonitor(aiCruiser),
                     aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
