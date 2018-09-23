@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using NSubstitute;
-using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
-using BattleCruisers.UI.Music;
+﻿using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Threading;
+using NSubstitute;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.UI.Music
 {
@@ -13,6 +13,8 @@ namespace BattleCruisers.Tests.UI.Music
         private IMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;
         private IVariableDelayDeferrer _deferrer;
+        private IList<Action> _deferredActions;
+        private const float EXPECTED_DEFER_TIME_IN_S = 15;
 
         [SetUp]
         public void TestSetup()
@@ -22,11 +24,41 @@ namespace BattleCruisers.Tests.UI.Music
             _deferrer = Substitute.For<IVariableDelayDeferrer>();
 
             _dangerMusicPlayer = new DangerMusicPlayer(_musicPlayer, _dangerMonitor, _deferrer);
+
+            _deferredActions = new List<Action>();
+            _deferrer.Defer(Arg.Do<Action>(action => _deferredActions.Add(action)), EXPECTED_DEFER_TIME_IN_S);
         }
 
         [Test]
-        public void SweetTest()
+        public void DangerEvent_PlaysDangerMusic_DefersChangeMusicBack()
         {
+            _dangerMonitor.Danger += Raise.Event();
+
+            _musicPlayer.Received().PlayDangerMusic();
+            Assert.AreEqual(1, _deferredActions.Count);
+
+            _deferredActions[0].Invoke();
+            _musicPlayer.Received().PlayBattleSceneMusic();
+        }
+
+        [Test]
+        public void SecondDangerBeforeDeferralRuns_DoesNotStopDangerMusic()
+        {
+            // First danger event
+            _dangerMonitor.Danger += Raise.Event();
+            Assert.AreEqual(1, _deferredActions.Count);
+
+            // Second danger event
+            _dangerMonitor.Danger += Raise.Event();
+            Assert.AreEqual(2, _deferredActions.Count);
+
+            // Run first deferral => Does nothing
+            _deferredActions[0].Invoke();
+            _musicPlayer.DidNotReceive().PlayBattleSceneMusic();
+
+            // Run second deferral => Stops danger music
+            _deferredActions[1].Invoke();
+            _musicPlayer.Received().PlayBattleSceneMusic();
         }
     }
 }

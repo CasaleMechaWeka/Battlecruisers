@@ -35,8 +35,9 @@ namespace BattleCruisers.UI.Music
         private void _dangerMonitor_Danger(object sender, EventArgs e)
         {
             _currentDangerCount++;
+            int cachedDangerCount = _currentDangerCount;
             _musicPlayer.PlayDangerMusic();
-            _deferrer.Defer(() => OnDangerComplete(_currentDangerCount), DANGER_MUSIC_PLAY_TIME_IN_S);
+            _deferrer.Defer(() => OnDangerComplete(cachedDangerCount), DANGER_MUSIC_PLAY_TIME_IN_S);
         }
 
         private void OnDangerComplete(int dangerCount)
