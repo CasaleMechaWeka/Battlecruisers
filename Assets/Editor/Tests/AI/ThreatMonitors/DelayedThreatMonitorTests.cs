@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.AI.ThreatMonitors
 {
-    public class DelayedThreadMonitorTests
+    public class DelayedThreatMonitorTests
     {
         private IThreatMonitor _delayedMonitor, _coreMonitor;
         private ITime _time;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
             _deferrer = Substitute.For<IVariableDelayDeferrer>();
             _delayInS = 4.32f;
 
-            _delayedMonitor = new DelayedThreadMonitor(_coreMonitor, _time, _deferrer, _delayInS);
+            _delayedMonitor = new DelayedThreatMonitor(_coreMonitor, _time, _deferrer, _delayInS);
 
             _threatChangeCount = 0;
             _delayedMonitor.ThreatLevelChanged += (sender, e) => _threatChangeCount++;

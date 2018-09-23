@@ -16,7 +16,7 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// thos drones (so AI wastes resources buidling defences it may
     /// never need).
     /// </summary>
-    public class DelayedThreadMonitor : BaseThreatMonitor, IManagedDisposable
+    public class DelayedThreatMonitor : BaseThreatMonitor, IManagedDisposable
     {
         private readonly IThreatMonitor _coreThreatMonitor;
         private readonly ITime _time;
@@ -28,7 +28,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         private const float DEFAULT_DELAY_IN_S = 5;
         private const float MIN_DELAY_IN_S = 0;
 
-        public DelayedThreadMonitor(IThreatMonitor coreThreatMonitor, ITime time, IVariableDelayDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
+        public DelayedThreatMonitor(IThreatMonitor coreThreatMonitor, ITime time, IVariableDelayDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
         {
             Helper.AssertIsNotNull(coreThreatMonitor, time, deferrer);
             Assert.IsTrue(delayInS >= MIN_DELAY_IN_S);
