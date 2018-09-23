@@ -76,10 +76,21 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void PlayerCruiser_HealthThresholdReached_EmitsEvent()
+        public void PlayerCruiser_HealthThresholdReached_CruisersStillAlive_EmitsEvent()
         {
+            _playerCruiser.IsAlive.Returns(true);
+            _aiCruiser.IsAlive.Returns(true);
             _playerCruiserHealthMonitor.ThresholdReached += Raise.Event();
             Assert.AreEqual(1, _dangerEventCount);
+        }
+
+        [Test]
+        public void PlayerCruiser_HealthThresholdReached_ACruiserIsDestroyed_DoesNotEmit()
+        {
+            _playerCruiser.IsAlive.Returns(false);
+            _aiCruiser.IsAlive.Returns(true);
+            _playerCruiserHealthMonitor.ThresholdReached += Raise.Event();
+            Assert.AreEqual(0, _dangerEventCount);
         }
 
         [Test]
@@ -123,10 +134,21 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void AICruiser_HealthThresholdReached_EmitsEvent()
+        public void AICruiser_HealthThresholdReached_CruisersStillAlive_EmitsEvent()
         {
+            _playerCruiser.IsAlive.Returns(true);
+            _aiCruiser.IsAlive.Returns(true);
             _aiCruiserHealthMonitor.ThresholdReached += Raise.Event();
             Assert.AreEqual(1, _dangerEventCount);
+        }
+
+        [Test]
+        public void AICruiser_HealthThresholdReached_ACruiserIsDestroyed_DoesNotEmit()
+        {
+            _playerCruiser.IsAlive.Returns(true);
+            _aiCruiser.IsAlive.Returns(false);
+            _aiCruiserHealthMonitor.ThresholdReached += Raise.Event();
+            Assert.AreEqual(0, _dangerEventCount);
         }
     }
 }
