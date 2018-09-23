@@ -22,6 +22,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -29,6 +30,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Sorting;
 using BattleCruisers.Utils.Threading;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +60,7 @@ namespace BattleCruisers.Scenes
         private CruiserEventMonitor _cruiserEventMonitor;
         private IManagedDisposable _droneEventSoundPlayer;
         private UltrasConstructionMonitor _ultrasConstructionMonitor;
+        private DangerMusicPlayer _dangerMusicPlayer;
         private IAudioSource _audioSource;
 
         public HUDCanvasController hudCanvas;
@@ -94,23 +97,28 @@ namespace BattleCruisers.Scenes
                 highlightFactory);
 
 
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
+            IMusicPlayer musicPlayer = LandingSceneGod.MusicPlayer;
+
+
             // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
             if (ApplicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                ApplicationModel.SelectedLevel = 13;
-                //ApplicationModel.SelectedLevel = 1;
+                ApplicationModel.SelectedLevel = 1;
+
+                musicPlayer = Substitute.For<IMusicPlayer>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
+
+
+            _dataProvider = ApplicationModel.DataProvider;
+            _currentLevelNum = ApplicationModel.SelectedLevel;
+            musicPlayer.PlayBattleSceneMusic();
 
 
             // TEMP  Forcing tutorial :)
             //ApplicationModel.IsTutorial = true;
-
-
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
-            _dataProvider = ApplicationModel.DataProvider;
-            _currentLevelNum = ApplicationModel.SelectedLevel;
-            LandingSceneGod.MusicPlayer.PlayBattleSceneMusic();
 
 
             // Common setup
@@ -250,6 +258,7 @@ namespace BattleCruisers.Scenes
             _cruiserEventMonitor = CreateCruiserEventMonitor(_playerCruiser, time);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(_playerCruiser, variableDelayDeferrer);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(_aiCruiser);
+            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, _playerCruiser, _aiCruiser, variableDelayDeferrer);
 
             StartTutorialIfNecessary(prefabFactory);
         }
@@ -271,6 +280,23 @@ namespace BattleCruisers.Scenes
                 new UltrasConstructionMonitor(
                     aiCruiser,
                     aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+        }
+
+        private DangerMusicPlayer CreateDangerMusicPlayer(
+            IMusicPlayer musicPlayer,
+            ICruiser playerCruiser, 
+            ICruiser aiCruiser,
+            IVariableDelayDeferrer deferrer)
+        {
+            return
+                new DangerMusicPlayer(
+                    musicPlayer,
+                    new DangerMonitor(
+                        playerCruiser,
+                        aiCruiser,
+                        new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                        new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f)),
+                    deferrer);
         }
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
