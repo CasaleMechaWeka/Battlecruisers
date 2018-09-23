@@ -93,6 +93,11 @@ namespace BattleCruisers.Cruisers
             add { _unitConstructionMonitor.StartedBuildingUnit += value; }
             remove { _unitConstructionMonitor.StartedBuildingUnit -= value; }
         }
+        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit
+        {
+            add { _unitConstructionMonitor.CompletedBuildingUnit += value; }
+            remove { _unitConstructionMonitor.CompletedBuildingUnit -= value; }
+        }
 
         protected override void OnStaticInitialised()
 		{
