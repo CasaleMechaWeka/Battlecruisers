@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.Music
     /// + An ultra is completed
     /// + A cruiser drops below 1/3 health
     /// </summary>
-    /// FELIX  Test :)
     public class DangerMonitor : IDangerMonitor
     {
         private readonly ICruiserController _playerCruiser, _aiCruiser;
