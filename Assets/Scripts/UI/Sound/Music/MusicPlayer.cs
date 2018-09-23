@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Music
 {
-    // FELIX  Test :)
     public class MusicPlayer : IMusicPlayer
     {
         private readonly IMusicProvider _musicProvider;
