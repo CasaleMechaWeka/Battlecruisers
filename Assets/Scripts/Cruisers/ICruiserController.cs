@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using System;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Cruisers
         }
     }
 
-	public interface ICruiserController
+	public interface ICruiserController : IUnitConstructionMonitor
 	{
         bool IsAlive { get; }
         ISlotWrapper SlotWrapper { get; }

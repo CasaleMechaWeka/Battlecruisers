@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
@@ -30,6 +32,7 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        private IUnitConstructionMonitor _unitConstructionMonitor;
         // Just holding a reference so this does not get garbage collected.
 #pragma warning disable CS0414  // Variable is assigned but never used
         private FogOfWarManager _fogOfWarManager;
@@ -85,6 +88,12 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
+        public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit
+        {
+            add { _unitConstructionMonitor.StartedBuildingUnit += value; }
+            remove { _unitConstructionMonitor.StartedBuildingUnit -= value; }
+        }
+
         protected override void OnStaticInitialised()
 		{
             base.OnStaticInitialised();
@@ -135,6 +144,8 @@ namespace BattleCruisers.Cruisers
 
             SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter);
             SlotWrapper.HideAllSlots();
+
+            _unitConstructionMonitor = new UnitConstructionMonitor(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
