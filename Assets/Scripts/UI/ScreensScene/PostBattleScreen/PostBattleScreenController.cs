@@ -4,6 +4,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -32,12 +33,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            IMusicPlayer musicPlayer)
 		{
 			base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage, completedGameMessage);
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider);
+            Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider, musicPlayer);
 
             _dataProvider = dataProvider;
 			
@@ -48,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed (or rage quit) the tutorial
                 postTutorialMessage.SetActive(true);
                 postTutorialButtonsPanel.SetActive(true);
+                musicPlayer.PlayVictoryMusic();
             }
             else
             {
@@ -57,6 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (BattleResult.WasVictory)
                 {
                     title.text = VICTORY_TITLE;
+                    musicPlayer.PlayVictoryMusic();
 
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {

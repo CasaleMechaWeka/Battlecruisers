@@ -4,6 +4,7 @@ using System.Linq;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Scenes
 		private IGameModel _gameModel;
         private ISpriteProvider _spriteProvider;
         private ISceneNavigator _sceneNavigator;
+        private IMusicPlayer _musicPlayer;
 
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
@@ -39,7 +41,7 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _spriteProvider = new SpriteProvider(new SpriteFetcher());
             _sceneNavigator = LandingSceneGod.SceneNavigator;
-            LandingSceneGod.MusicPlayer.PlayScreensSceneMusic();
+            _musicPlayer = LandingSceneGod.MusicPlayer;
 
 
             // TEMP  For showing PostBattleScreen :)
@@ -47,7 +49,8 @@ namespace BattleCruisers.Scenes
 			//ApplicationModel.ShowPostBattleScreen = true;
 
 
-			homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
+            _musicPlayer.PlayScreensSceneMusic();
+            homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 
@@ -72,9 +75,9 @@ namespace BattleCruisers.Scenes
         private void GoToPostBattleScreen()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, _musicPlayer);
 
-            GoToScreen(postBattleScreen);
+            GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
 
 		public void GoToLevelsScreen()
@@ -169,7 +172,7 @@ namespace BattleCruisers.Scenes
             GoToScreen(destinationScreen);
         }
 
-		private void GoToScreen(ScreenController destinationScreen)
+		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
 			Assert.AreNotEqual(_currentScreen, destinationScreen);
 
@@ -182,6 +185,11 @@ namespace BattleCruisers.Scenes
 			_currentScreen = destinationScreen;
 			_currentScreen.gameObject.SetActive(true);
             _currentScreen.OnPresenting(activationParameter: null);
-		}
+
+            if (playDefaultMusic)
+            {
+                _musicPlayer.PlayScreensSceneMusic();
+            }
+        }
 	}
 }
