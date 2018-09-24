@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
-using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
@@ -37,6 +36,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ship; } }
+        protected override float OnDeathGravityScale { get { return 0.2f; } }
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
@@ -183,5 +183,21 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             base.OnDestroyed();
 		}
-	}
+
+        protected override void OnDeathWhileCompleted()
+        {
+            base.OnDeathWhileCompleted();
+
+            StopMoving();
+
+            // Disable turrets
+            foreach (IBarrelWrapper turret in _turrets)
+            {
+                turret.DisposeManagedState();
+            }
+
+            // Make ship rear sink first
+            rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
+        }
+    }
 }

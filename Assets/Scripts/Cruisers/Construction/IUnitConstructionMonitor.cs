@@ -6,5 +6,6 @@ namespace BattleCruisers.Cruisers.Construction
     public interface IUnitConstructionMonitor
     {
         event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
+        event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
     }
 }

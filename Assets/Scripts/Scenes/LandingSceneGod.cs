@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using BattleCruisers.UI;
+using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -13,6 +17,7 @@ namespace BattleCruisers.Scenes
 
 		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
+        public static IMusicPlayer MusicPlayer { get; private set; }
 
         void Awake()
         {
@@ -23,6 +28,8 @@ namespace BattleCruisers.Scenes
                 loadingScreen.Initialise();
                 LoadingScreen = loadingScreen;
 
+                MusicPlayer = CreateMusicPlayer();
+
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
@@ -32,6 +39,20 @@ namespace BattleCruisers.Scenes
                 // Game starts with the screens scene
                 GoToScene(SceneNames.SCREENS_SCENE);
             }
+        }
+
+        private IMusicPlayer CreateMusicPlayer()
+        {
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(platformAudioSource);
+            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
+
+            return
+                new MusicPlayer(
+                    new ExperimentalMusicProvider(),
+                    new SingleSoundPlayer(
+                        new SoundFetcher(),
+                        audioSource));
         }
 
         public void GoToScene(string sceneName)

@@ -1,14 +1,14 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.UI.Cameras;
+﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 {
-	public class ScrollHandlerTests
+    public class ScrollHandlerTests
 	{
 		private IScrollHandler _scrollHandler;
 

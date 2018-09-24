@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class AircraftDestroyedTestGod : MonoBehaviour 
 	{

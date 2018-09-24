@@ -4,7 +4,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Helpers
 {
 	public class CameraCalculator : ICameraCalculator
 	{

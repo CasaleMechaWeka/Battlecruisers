@@ -6,6 +6,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    // FELIX  Avoid duplicte code with ShipController (once unit is dead)
-    public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider
+    public abstract class AircraftController : 
+        Unit, 
+        IVelocityProvider, 
+        IPatrollingVelocityProvider, 
+        IDestructable
 	{
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
@@ -122,11 +126,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            if (IsDestroyed)
-            {
-                return;
-            }
-
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 
@@ -199,26 +198,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _boostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
         }
 
-        protected override void InternalDestroy()
+        protected override void OnDeathWhileCompleted()
         {
-            if (BuildableState == BuildableState.Completed)
-            {
-                Destroy(HealthBarController.gameObject);
+            base.OnDeathWhileCompleted();
+            
+            // Pass on current velocity
+            rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
 
-                // Make gravity take effect
-                rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                rigidBody.gravityScale = 1;
-                
-                // Pass on current velocity
-                rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
-
-                // Make aircraft spin a bit for coolness
-                rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-            }
-            else
-            {
-                base.InternalDestroy();
-            }
+            // Make aircraft spin a bit for coolness
+            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
         }
     }
 }

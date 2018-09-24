@@ -9,19 +9,17 @@ namespace BattleCruisers.Cruisers.Construction
     public class UltrasConstructionMonitor : IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
-        private readonly IUnitConstructionMonitor _unitConstructionMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
-        public UltrasConstructionMonitor(ICruiserController cruiser, IUnitConstructionMonitor unitConstructionMonitor, IPrioritisedSoundPlayer soundPlayer)
+        public UltrasConstructionMonitor(ICruiserController cruiser, IPrioritisedSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(cruiser, unitConstructionMonitor, soundPlayer);
+            Helper.AssertIsNotNull(cruiser, soundPlayer);
 
             _cruiser = cruiser;
-            _unitConstructionMonitor = unitConstructionMonitor;
             _soundPlayer = soundPlayer;
 
             _cruiser.BuildingStarted += _cruiser_BuildingStarted;
-            _unitConstructionMonitor.StartedBuildingUnit += _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiser.StartedBuildingUnit += _unitConstructionMonitor_StartedBuildingUnit;
         }
 
         private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
@@ -43,7 +41,7 @@ namespace BattleCruisers.Cruisers.Construction
         public void DisposeManagedState()
         {
             _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
-            _unitConstructionMonitor.StartedBuildingUnit -= _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiser.StartedBuildingUnit -= _unitConstructionMonitor_StartedBuildingUnit;
         }
     }
 }

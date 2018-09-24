@@ -4,6 +4,6 @@
     {
         bool IsPlayingSound { get; }
 
-        void PlaySound(ISoundKey soundKey);
+        void PlaySound(ISoundKey soundKey, bool loop = false);
     }
 }

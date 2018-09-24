@@ -11,6 +11,7 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly ICruiserController _cruiser;
 
         public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
+        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
 
         public UnitConstructionMonitor(ICruiserController cruiser)
         {
@@ -27,6 +28,7 @@ namespace BattleCruisers.Cruisers.Construction
             if (factory != null)
             {
                 factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
+                factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
         }
@@ -39,10 +41,19 @@ namespace BattleCruisers.Cruisers.Construction
             }
         }
 
+        private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        {
+            if (CompletedBuildingUnit != null)
+            {
+                CompletedBuildingUnit.Invoke(this, e);
+            }
+        }
+
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IFactory factory = e.DestroyedTarget.Parse<IFactory>();
             factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
+            factory.CompletedBuildingUnit -= Factory_CompletedBuildingUnit;
             factory.Destroyed -= Factory_Destroyed;
         }
 

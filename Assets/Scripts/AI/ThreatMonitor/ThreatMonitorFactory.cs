@@ -54,7 +54,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)
         {
-            return new DelayedThreadMonitor(coreMonitor, _time, _deferrer);
+            return new DelayedThreatMonitor(coreMonitor, _time, _deferrer);
         }
     }
 }

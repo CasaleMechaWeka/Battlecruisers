@@ -169,14 +169,14 @@ namespace BattleCruisers.Data.Static
                 hasAttemptedTutorial,
                 playerLoadout,
                 lastBattleResult: null,
-				// TEMP  Do not unlock all hulls & buildables at the game start :P
+                // TEMP  Do not unlock all hulls & buildables at the game start :P
                 unlockedHulls: new List<HullKey>() { initialHull },
                 unlockedBuildings: GetInitialBuildings(),
                 unlockedUnits: GetInitialUnits());
                 //unlockedHulls: AllHullKeys(),
                 //unlockedBuildings: AllBuildingKeys(),
                 //unlockedUnits: AllUnitKeys());
-		}
+        }
 
         private HullKey GetInitialHull()
         {
