@@ -47,10 +47,32 @@ namespace BattleCruisers.Data.Static
 
         public static class Completed
         {
+            // Buildings
+            public static ISoundKey AirFactory { get { return new SoundKey(SoundType.Completed, "air-factory"); } }
+            public static ISoundKey AntiAirTurret { get { return new SoundKey(SoundType.Completed, "anti-air"); } }
+            public static ISoundKey AnitShipTurret { get { return new SoundKey(SoundType.Completed, "anti-surface"); } }
+            public static ISoundKey Artillery { get { return new SoundKey(SoundType.Completed, "artillery"); } }
+            public static ISoundKey Booster { get { return new SoundKey(SoundType.Completed, "booster"); } }
+            public static ISoundKey DroneStation { get { return new SoundKey(SoundType.Completed, "builders"); } }
+            public static ISoundKey ControlTower { get { return new SoundKey(SoundType.Completed, "control-tower"); } }
+            public static ISoundKey Mortar { get { return new SoundKey(SoundType.Completed, "mortar"); } }
+            public static ISoundKey NavalFactory { get { return new SoundKey(SoundType.Completed, "naval-factory"); } }
+            public static ISoundKey Railgun { get { return new SoundKey(SoundType.Completed, "railgun"); } }
+            public static ISoundKey RocketLauncher { get { return new SoundKey(SoundType.Completed, "rocket-launcher"); } }
+            public static ISoundKey SamSite { get { return new SoundKey(SoundType.Completed, "sam-site"); } }
+            public static ISoundKey SpySatellite { get { return new SoundKey(SoundType.Completed, "satellite"); } }
+            public static ISoundKey Shields { get { return new SoundKey(SoundType.Completed, "shields"); } }
+            public static ISoundKey TeslaCoil { get { return new SoundKey(SoundType.Completed, "tesla-coil"); } }
+
+            // Units
+
+            // Other
+            public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
+
+            // FELIX  Remove legacy?
             public static ISoundKey Aircraft { get { return new SoundKey(SoundType.Completed, "aircraft"); } }
             public static ISoundKey Building { get { return new SoundKey(SoundType.Completed, "building"); } }
             public static ISoundKey Ship { get { return new SoundKey(SoundType.Completed, "ship"); } }
-            public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
         }
 
         public static class Events
