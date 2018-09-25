@@ -8,6 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public int numOfDronesProvided;
 
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building4; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.DroneStation; } }
         public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
 		protected override void OnBuildableCompleted()

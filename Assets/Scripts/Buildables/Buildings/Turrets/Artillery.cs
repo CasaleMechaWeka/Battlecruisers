@@ -6,5 +6,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class Artillery : TurretController
 	{
         protected override ISoundKey FiringSound { get { return SoundKeys.Firing.Artillery; } }
-	}
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.Artillery; } }
+    }
 }

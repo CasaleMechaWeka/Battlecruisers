@@ -27,8 +27,6 @@ namespace BattleCruisers.Data.Static
 
                 static Buildings()
                 {
-                    Aircraft = new PrioritisedSoundKey(SoundKeys.Completed.Aircraft, SoundPriority.VeryLow);
-
                     AirFactory = new PrioritisedSoundKey(SoundKeys.Completed.AirFactory, SoundPriority.VeryLow);
                     AntiAirTurret = new PrioritisedSoundKey(SoundKeys.Completed.AntiAirTurret, SoundPriority.VeryLow);
                     AntiShipTurret = new PrioritisedSoundKey(SoundKeys.Completed.AntiShipTurret, SoundPriority.VeryLow);

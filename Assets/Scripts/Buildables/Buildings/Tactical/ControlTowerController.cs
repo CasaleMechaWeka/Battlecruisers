@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
@@ -6,7 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
     {
 		private IBoostProvider _boostProvider;
 
-		public float boostMultiplier;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.ControlTower; } }
+
+        public float boostMultiplier;
 
 		protected override void OnInitialised()
 		{

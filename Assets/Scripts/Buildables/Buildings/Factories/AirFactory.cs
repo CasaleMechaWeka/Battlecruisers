@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -8,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public LayerMask aircraftLayerMask;
 
 		protected override LayerMask UnitLayerMask { get { return aircraftLayerMask; } }
-
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.AirFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Aircraft; } }
 
 		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
