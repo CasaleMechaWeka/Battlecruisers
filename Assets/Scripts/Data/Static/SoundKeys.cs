@@ -50,7 +50,7 @@ namespace BattleCruisers.Data.Static
             // Buildings
             public static ISoundKey AirFactory { get { return new SoundKey(SoundType.Completed, "air-factory"); } }
             public static ISoundKey AntiAirTurret { get { return new SoundKey(SoundType.Completed, "anti-air"); } }
-            public static ISoundKey AnitShipTurret { get { return new SoundKey(SoundType.Completed, "anti-surface"); } }
+            public static ISoundKey AntiShipTurret { get { return new SoundKey(SoundType.Completed, "anti-surface"); } }
             public static ISoundKey Artillery { get { return new SoundKey(SoundType.Completed, "artillery"); } }
             public static ISoundKey Booster { get { return new SoundKey(SoundType.Completed, "booster"); } }
             public static ISoundKey DroneStation { get { return new SoundKey(SoundType.Completed, "builders"); } }
