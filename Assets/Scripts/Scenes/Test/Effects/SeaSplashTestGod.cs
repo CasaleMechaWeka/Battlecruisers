@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects
 {
-    public class SeaTestGod : MonoBehaviour
+    public class SeaSplashTestGod : MonoBehaviour
     {
         private void Start()
         {
