@@ -45,6 +45,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Gunship; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Gunship; } }
 
         protected override void OnStaticInitialised()
 		{

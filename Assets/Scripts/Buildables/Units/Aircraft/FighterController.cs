@@ -26,8 +26,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private BarrelController _barrelController;
         private IAngleHelper _angleHelper;
 
-		// Detects enemies that come within following range
-		public CircleTargetDetector followableEnemyDetector;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Fighter; } }
+
+        // Detects enemies that come within following range
+        public CircleTargetDetector followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
 		public CircleTargetDetector shootableEnemyDetector;
 

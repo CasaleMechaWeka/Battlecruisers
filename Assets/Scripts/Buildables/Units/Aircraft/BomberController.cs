@@ -48,6 +48,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Bomber; } }
         #endregion Properties
 
         protected override void OnStaticInitialised()

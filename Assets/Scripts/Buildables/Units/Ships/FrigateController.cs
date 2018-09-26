@@ -14,6 +14,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
 
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Frigate; } }
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Frigate; } }
 
         protected override void OnStaticInitialised()
