@@ -75,10 +75,8 @@ namespace BattleCruisers.Data.Static
             // Other
             public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
 
-            // FELIX  Remove legacy?
-            public static ISoundKey Aircraft { get { return new SoundKey(SoundType.Completed, "aircraft"); } }
+            // FELIX  Remove once have StealthField specific sound :)
             public static ISoundKey Building { get { return new SoundKey(SoundType.Completed, "building"); } }
-            public static ISoundKey Ship { get { return new SoundKey(SoundType.Completed, "ship"); } }
         }
 
         public static class Events

@@ -39,7 +39,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
         protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Aircraft; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Aircraft; } }
 
         protected IMovementController DummyMovementController { get; private set; }
         protected IMovementController PatrollingMovementController { get; private set; }

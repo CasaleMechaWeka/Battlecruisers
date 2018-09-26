@@ -17,8 +17,8 @@ namespace BattleCruisers.Tests.UI.Sound
             _singleSoundPlayer = Substitute.For<ISingleSoundPlayer>();
             _prioritisedSoundPlayer = new PrioritisedSoundPlayer(_singleSoundPlayer);
 
-            _lowPrioritySound = new PrioritisedSoundKey(SoundKeys.Completed.Aircraft, SoundPriority.Low);
-            _highPrioritySound = new PrioritisedSoundKey(SoundKeys.Completed.Building, SoundPriority.High);
+            _lowPrioritySound = new PrioritisedSoundKey(SoundKeys.Completed.Bomber, SoundPriority.Low);
+            _highPrioritySound = new PrioritisedSoundKey(SoundKeys.Completed.Ultra, SoundPriority.High);
         }
 
         [Test]

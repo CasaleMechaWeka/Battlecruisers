@@ -35,7 +35,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ship; } }
         protected override float OnDeathGravityScale { get { return 0.2f; } }
 
         /// <summary>

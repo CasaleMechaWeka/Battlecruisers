@@ -10,6 +10,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     {
 		// TEMP  Use satellite sound once we have it :)
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
+        // FELIX  Use satellite sound :P
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Bomber; } }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
