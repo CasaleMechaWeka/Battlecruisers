@@ -53,6 +53,7 @@ namespace BattleCruisers.Data.Static
                 public static PrioritisedSoundKey Bomber { get; private set; }
                 public static PrioritisedSoundKey Gunship { get; private set; }
                 public static PrioritisedSoundKey Fighter { get; private set; }
+                public static PrioritisedSoundKey Satellite { get; private set; }
 
                 static Units()
                 {
@@ -62,6 +63,7 @@ namespace BattleCruisers.Data.Static
                     Bomber = new PrioritisedSoundKey(SoundKeys.Completed.Bomber, SoundPriority.VeryLow);
                     Gunship = new PrioritisedSoundKey(SoundKeys.Completed.Gunship, SoundPriority.VeryLow);
                     Fighter = new PrioritisedSoundKey(SoundKeys.Completed.Fighter, SoundPriority.VeryLow);
+                    Satellite = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.VeryLow);
                 }
             }
 

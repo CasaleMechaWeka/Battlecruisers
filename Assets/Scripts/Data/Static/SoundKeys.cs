@@ -60,7 +60,6 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Railgun { get { return new SoundKey(SoundType.Completed, "railgun"); } }
             public static ISoundKey RocketLauncher { get { return new SoundKey(SoundType.Completed, "rocket-launcher"); } }
             public static ISoundKey SamSite { get { return new SoundKey(SoundType.Completed, "sam-site"); } }
-            public static ISoundKey SpySatellite { get { return new SoundKey(SoundType.Completed, "satellite"); } }
             public static ISoundKey Shields { get { return new SoundKey(SoundType.Completed, "shields"); } }
             public static ISoundKey TeslaCoil { get { return new SoundKey(SoundType.Completed, "tesla-coil"); } }
 
@@ -73,6 +72,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Fighter { get { return new SoundKey(SoundType.Completed, "fighter"); } }
 
             // Other
+            public static ISoundKey SpySatellite { get { return new SoundKey(SoundType.Completed, "satellite"); } }
             public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
 
             // FELIX  Remove once have StealthField specific sound :)
