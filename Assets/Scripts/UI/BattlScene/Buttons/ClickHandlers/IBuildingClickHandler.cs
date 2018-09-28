@@ -1,0 +1,10 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+
+namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
+{
+    public interface IBuildingClickHandler
+    {
+        void HandleClick(IBuildableWrapper<IBuilding> buildingClicked);
+    }
+}
