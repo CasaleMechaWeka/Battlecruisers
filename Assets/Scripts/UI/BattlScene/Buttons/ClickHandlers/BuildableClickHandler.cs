@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
         protected void PlayUnaffordableSound()
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDrones);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
         }
     }
 }

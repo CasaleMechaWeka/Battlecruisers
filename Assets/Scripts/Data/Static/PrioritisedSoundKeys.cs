@@ -95,7 +95,7 @@ namespace BattleCruisers.Data.Static
             {
                 public static PrioritisedSoundKey NewDronesReady { get; private set; }
                 public static PrioritisedSoundKey Idle { get; private set; }
-                public static PrioritisedSoundKey NotEnoughDrones { get; private set; }
+                public static PrioritisedSoundKey NotEnoughDronesToBuild { get; private set; }
                 public static PrioritisedSoundKey NotEnoughDronesToFocus { get; private set; }
                 public static PrioritisedSoundKey Focusing { get; private set; }
                 public static PrioritisedSoundKey AllFocused { get; private set; }
@@ -106,7 +106,7 @@ namespace BattleCruisers.Data.Static
                     // Drones
                     NewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
                     Idle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
-                    NotEnoughDrones = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
+                    NotEnoughDronesToBuild = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
                     // FELIX:  Use different sound once Peter provides :)
                     NotEnoughDronesToFocus = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
                     Focusing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);

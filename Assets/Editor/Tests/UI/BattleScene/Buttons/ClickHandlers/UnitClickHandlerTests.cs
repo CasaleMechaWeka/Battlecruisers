@@ -81,7 +81,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
             bool canAffordUnit = false;
             _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
 
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDrones);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
             _uiManager.DidNotReceiveWithAnyArgs().ShowUnitDetails(null);
             _factory.DidNotReceive().StartBuildingUnit(null);
             _factory.DidNotReceive().PauseBuildingUnit();
