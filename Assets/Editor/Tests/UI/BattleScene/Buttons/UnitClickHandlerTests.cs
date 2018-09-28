@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons
             _factory.UnitWrapper.Returns(_unit);
             _factory.IsUnitPaused.Value.Returns(true);
 
-            _clickHandler.HandleUnitClick(_unit, _factory);
+            _clickHandler.HandleClick(_unit, _factory);
 
             _factory.Received().ResumeBuildingUnit();
         }
@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons
             _factory.UnitWrapper.Returns(_unit);
             _factory.IsUnitPaused.Value.Returns(false);
 
-            _clickHandler.HandleUnitClick(_unit, _factory);
+            _clickHandler.HandleClick(_unit, _factory);
 
             _factory.Received().PauseBuildingUnit();
         }
@@ -49,7 +49,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons
         {
             _factory.UnitWrapper.Returns((IBuildableWrapper<IUnit>)null);
 
-            _clickHandler.HandleUnitClick(_unit, _factory);
+            _clickHandler.HandleClick(_unit, _factory);
 
             _factory.Received().StartBuildingUnit(_unit);
         }

@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     // FELIX  Add not enough drones sound
     public class UnitClickHandler : IUnitClickHandler
     {
-        public void HandleUnitClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
+        public void HandleClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 

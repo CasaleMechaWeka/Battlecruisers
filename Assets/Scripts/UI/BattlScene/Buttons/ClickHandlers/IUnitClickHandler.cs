@@ -6,7 +6,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     public interface IUnitClickHandler
     {
-        // FELIX  Rename.  Remove "unit" :P
-        void HandleUnitClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory);
+        void HandleClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory);
     }
 }
