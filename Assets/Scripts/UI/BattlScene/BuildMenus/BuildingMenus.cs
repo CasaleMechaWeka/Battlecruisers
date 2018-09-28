@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, BuildingsMenuController>
     {
         private ISpriteProvider _spriteProvider;
-        private IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
+        private IBuildingClickHandler _clickHandler;
 
         public void Initialise(
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings,
@@ -21,13 +21,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
             ISpriteProvider spriteProvider,
-            IPlayerCruiserFocusHelper playerCruiserFocusHelper)
+            IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
-            Helper.AssertIsNotNull(spriteProvider, playerCruiserFocusHelper);
+            Helper.AssertIsNotNull(spriteProvider, clickHandler);
 
             _spriteProvider = spriteProvider;
-            _playerCruiserFocusHelper = playerCruiserFocusHelper;
+            _clickHandler = clickHandler;
 
             base.Initialise(buildings, uiManager, buttonVisibilityFilters, buildingSorter);
         }
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)
         {
-            menu.Initialise(uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _playerCruiserFocusHelper);
+            menu.Initialise(uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler);
         }
     }
 }

@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -32,13 +31,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public void Initialise(
             IBuildableWrapper<IUnit> unitWrapper, 
-            IUIManager uiManager, 
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             IUnitClickHandler unitClickHandler)
 		{
             Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
 
-            base.Initialise(unitWrapper.Buildable, uiManager, shouldBeEnabledFilter);
+            base.Initialise(unitWrapper.Buildable, shouldBeEnabledFilter);
 
 			_unitWrapper = unitWrapper;
             _unitClickHandler = unitClickHandler;
@@ -104,9 +102,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override void OnClicked()
         {
             Assert.IsNotNull(_currentFactory);
-
             _unitClickHandler.HandleClick(_unitWrapper, _currentFactory);
-			_uiManager.ShowUnitDetails(_unitWrapper.Buildable);
 		}
 	}
 }

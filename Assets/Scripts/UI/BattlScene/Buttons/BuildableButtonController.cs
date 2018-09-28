@@ -11,7 +11,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public abstract class BuildableButtonController : PresentableController, IBuildableButton, IBroadcastingFilter
 	{
-		protected IUIManager _uiManager;
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
         private ButtonWrapper _buttonWrapper;
 
@@ -26,14 +25,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
-        public void Initialise(IBuildable buildable, IUIManager uiManager, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+        public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();
 
-            Helper.AssertIsNotNull(buildable, uiManager, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(buildable, shouldBeEnabledFilter);
 
 			Buildable = buildable;
-			_uiManager = uiManager;
 
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;

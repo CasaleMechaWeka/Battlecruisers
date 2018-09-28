@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
@@ -52,13 +53,15 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(_buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, playerCruiserFocusHelper);
+            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager);
+            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
             // Unit menus
+            IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager);
             _unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(_unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter);
+            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
 		}
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)

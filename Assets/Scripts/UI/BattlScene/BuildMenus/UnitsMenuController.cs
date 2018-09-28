@@ -8,6 +8,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
@@ -16,21 +17,22 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IUnitClickHandler _unitClickHandler;
         private Factory _factory;
 
-		public override void Initialise(
+		public void Initialise(
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            IList<IBuildableWrapper<IUnit>> units)
+            IList<IBuildableWrapper<IUnit>> units,
+            IUnitClickHandler clickHandler)
 		{
-            // FELIX  Can inject... => Avoid this codesmell :)
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
-            _unitClickHandler = new UnitClickHandler(uiManager);
+            Assert.IsNotNull(clickHandler);
+            _unitClickHandler = clickHandler;
 
             base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
 
         protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)
         {
-            button.Initialise(buildableWrapper, _uiManager, _shouldBeEnabledFilter, _unitClickHandler);
+            button.Initialise(buildableWrapper, _shouldBeEnabledFilter, _unitClickHandler);
         }
 
 		public override void OnPresenting(object activationParameter)

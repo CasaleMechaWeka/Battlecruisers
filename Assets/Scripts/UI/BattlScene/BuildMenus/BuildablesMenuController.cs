@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{
+        // FELIX  Only used by UnitMenuController => Remove from base class :)
         protected IUIManager _uiManager;
         protected IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
 

@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,28 +10,26 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class BuildingButtonController : BuildableButtonController
 	{
 		private IBuildableWrapper<IBuilding> _buildingWrapper;
-        private IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
+        private IBuildingClickHandler _clickHandler;
 
         public Image slotImage;
 
         public void Initialise(
             IBuildableWrapper<IBuilding> buildingWrapper, 
-            IUIManager uiManager, 
+            IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter, 
-            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             Sprite slotSprite)
 		{
-            base.Initialise(buildingWrapper.Buildable, uiManager, shouldBeEnabledFilter);
+            base.Initialise(buildingWrapper.Buildable, shouldBeEnabledFilter);
 			
 			_buildingWrapper = buildingWrapper;
-            _playerCruiserFocusHelper = playerCruiserFocusHelper;
+            _clickHandler = clickHandler;
 			slotImage.sprite = slotSprite;
 		}
 
         protected override void OnClicked()
         {
-            _playerCruiserFocusHelper.FocusOnPlayerCruiserIfNeeded();
-			_uiManager.SelectBuildingFromMenu(_buildingWrapper);
+            _clickHandler.HandleClick(_buildingWrapper);
 		}
 	}
 }
