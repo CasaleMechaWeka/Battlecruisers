@@ -11,6 +11,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -47,6 +48,13 @@ namespace BattleCruisers.Scenes
             // TEMP  For showing PostBattleScreen :)
    //         _gameModel.LastBattleResult = new BattleResult(1, true);
 			//ApplicationModel.ShowPostBattleScreen = true;
+
+            
+            // TEMP  For when not coming from LandingScene :)
+            if (_musicPlayer == null)
+            {
+                _musicPlayer = Substitute.For<IMusicPlayer>();
+            }
 
 
             _musicPlayer.PlayScreensSceneMusic();
