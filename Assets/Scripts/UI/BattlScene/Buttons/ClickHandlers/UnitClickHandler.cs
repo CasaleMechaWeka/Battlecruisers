@@ -2,29 +2,32 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     // FELIX  Add not enough drones sound
-    // FELIX  Avoid duplicate code with BuildingClickHandler :)
-    public class UnitClickHandler : IUnitClickHandler
+    public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
-        private readonly IUIManager _uiManager;
-
-        public UnitClickHandler(IUIManager uiManager)
+        public UnitClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer soundPlayer)
+            : base(uiManager, soundPlayer)
         {
-            Assert.IsNotNull(uiManager);
-            _uiManager = uiManager;
         }
 
-        public void HandleClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
+        public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
-            HandleFactory(unitClicked, unitFactory);
-			_uiManager.ShowUnitDetails(unitClicked.Buildable);
+            if (canAffordBuildable)
+            {
+                HandleFactory(unitClicked, unitFactory);
+			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
+            }
+            else
+            {
+                PlayUnaffordableSound();
+            }
         }
 
         private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)

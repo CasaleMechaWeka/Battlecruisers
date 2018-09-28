@@ -1,10 +1,8 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -59,17 +57,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		protected void HandleClick()
         {
-            // FELIX  Remove
-            Debug.Log("BuildableButtonController.HandleClic()");
-
-            if (IsMatch)
-            {
-                OnClicked();
-            }
-            else
-            {
-                // FELIX  Play not enough drones sound :)
-            }
+            OnClicked(IsMatch);
 
             if (Clicked != null)
             {
@@ -77,6 +65,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        protected abstract void OnClicked();
+        protected abstract void OnClicked(bool isButtonEnabled);
 	}
 }

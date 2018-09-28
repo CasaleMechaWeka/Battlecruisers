@@ -6,6 +6,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     public interface IUnitClickHandler
     {
-        void HandleClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory);
+        void HandleClick(bool canAffordBuildable, IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory);
     }
 }

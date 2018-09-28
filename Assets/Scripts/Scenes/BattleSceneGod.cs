@@ -236,7 +236,8 @@ namespace BattleCruisers.Scenes
                     sorterFactory,
                     buttonVisibilityFilters,
                     spriteProvider,
-                    playerCruiserFocusHelper);
+                    playerCruiserFocusHelper,
+                    _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
 
             uiManager.InitialUI();
 

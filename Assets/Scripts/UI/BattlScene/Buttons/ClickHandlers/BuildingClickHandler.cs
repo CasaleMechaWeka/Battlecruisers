@@ -2,29 +2,38 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
-using BattleCruisers.Utils;
+using BattleCruisers.UI.Sound;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     // FELIX  Test
     // FELIX  Handle tutorial???
-    public class BuildingClickHandler : IBuildingClickHandler
+    public class BuildingClickHandler : BuildableClickHandler, IBuildingClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
-        private readonly IUIManager _uiManager;
 
-        public BuildingClickHandler(IPlayerCruiserFocusHelper playerCruiserFocusHelper, IUIManager uiManager)
+        public BuildingClickHandler(
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
+            IUIManager uiManager, 
+            IPrioritisedSoundPlayer soundPlayer)
+            : base(uiManager, soundPlayer)
         {
-            Helper.AssertIsNotNull(playerCruiserFocusHelper, uiManager);
-
+            Assert.IsNotNull(playerCruiserFocusHelper);
             _playerCruiserFocusHelper = playerCruiserFocusHelper;
-            _uiManager = uiManager;
         }
 
-        public void HandleClick(IBuildableWrapper<IBuilding> buildingClicked)
+        public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IBuilding> buildingClicked)
         {
-            _playerCruiserFocusHelper.FocusOnPlayerCruiserIfNeeded();
-            _uiManager.SelectBuildingFromMenu(buildingClicked);
+            if (canAffordBuildable)
+            {
+                _playerCruiserFocusHelper.FocusOnPlayerCruiserIfNeeded();
+                _uiManager.SelectBuildingFromMenu(buildingClicked);
+            }
+            else
+            {
+                PlayUnaffordableSound();
+            }
         }
     }
 }
