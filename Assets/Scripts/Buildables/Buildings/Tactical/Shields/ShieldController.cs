@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.BattleScene.ProgressBars;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,6 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
 	{
+        private IPrioritisedSoundPlayer _soundPlayer;
         private Ring _ring;
         private float _timeSinceDamageInS;
 
@@ -35,10 +38,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _size = new Vector2(diameter, diameter); 
         }
 
-		public void Initialise(Faction faction)
+		public void Initialise(Faction faction, IPrioritisedSoundPlayer soundPlayer)
 		{
 			Faction = faction;
 
+            _soundPlayer = soundPlayer;
             _ring = new Ring(Stats.ShieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
 			circleCollider.radius = Stats.ShieldRadiusInM;
@@ -99,6 +103,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		{
 			_ring.Enabled = false;
 			circleCollider.enabled = false;
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.ShieldsDown);
 		}
 	}
 }

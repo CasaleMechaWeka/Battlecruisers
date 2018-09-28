@@ -4,6 +4,9 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Shields
@@ -13,11 +16,19 @@ namespace BattleCruisers.Scenes.Test.Shields
 		void Start () 
 		{
             // Setup shield
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
+            IPrioritisedSoundPlayer soundPlayer
+                = new PrioritisedSoundPlayer(
+                    new SingleSoundPlayer(
+                        new SoundFetcher(),
+                        audioSource));
+
             ShieldStats shieldStats = FindObjectOfType<ShieldStats>();
             shieldStats.BoostMultiplier = 1;
             ShieldController shield = FindObjectOfType<ShieldController>();
             shield.StaticInitialise();
-			shield.Initialise(Faction.Reds);
+			shield.Initialise(Faction.Reds, soundPlayer);
 
 
             // Setup turret
