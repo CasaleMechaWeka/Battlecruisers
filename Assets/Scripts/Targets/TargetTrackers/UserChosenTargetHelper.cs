@@ -1,16 +1,21 @@
 ﻿using BattleCruisers.Buildables;
-using UnityEngine.Assertions;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetTrackers
 {
     public class UserChosenTargetHelper : IUserChosenTargetHelper
     {
         private readonly IUserChosenTargetManager _userChosenTargetManager;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
 
-        public UserChosenTargetHelper(IUserChosenTargetManager userChosenTargetManager)
+        public UserChosenTargetHelper(IUserChosenTargetManager userChosenTargetManager, IPrioritisedSoundPlayer soundPlayer)
         {
-            Assert.IsNotNull(userChosenTargetManager);
+            Helper.AssertIsNotNull(userChosenTargetManager, soundPlayer);
+
             _userChosenTargetManager = userChosenTargetManager;
+            _soundPlayer = soundPlayer;
         }
 
         public void ToggleChosenTarget(ITarget target)
@@ -21,11 +26,13 @@ namespace BattleCruisers.Targets.TargetTrackers
             {
                 // Clear user chosen target
                 _userChosenTargetManager.Target = null;
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.TargettingTargetCleared);
             }
             else
             {
                 // Set user chosen target
                 _userChosenTargetManager.Target = target;
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.TargettingNewTarget);
             }
         }
     }

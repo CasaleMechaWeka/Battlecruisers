@@ -129,7 +129,6 @@ namespace BattleCruisers.Scenes
 			cameraInitialiser.StaticInitialise();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
-            IUserChosenTargetHelper UserChosenTargetHelper = new UserChosenTargetHelper(playerCruiserUserChosenTargetManager);
             ITime time = new TimeBC();
             _pauseGameManager = new PauseGameManager(time);
             modalMenuController.Initialise(ApplicationModel.IsTutorial);
@@ -189,7 +188,11 @@ namespace BattleCruisers.Scenes
 
 
             // Initialise AI cruiser
-			ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
+            IUserChosenTargetHelper userChosenTargetHelper 
+                = new UserChosenTargetHelper(
+                    playerCruiserUserChosenTargetManager, 
+                    _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+            ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraInitialiser.CameraController);
             cruiserFactory
                 .InitialiseAICruiser(
                     uiManager,
@@ -197,7 +200,7 @@ namespace BattleCruisers.Scenes
                     highlightableSlotFilter,
                     helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
-                    UserChosenTargetHelper);
+                    userChosenTargetHelper);
             _aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
@@ -212,7 +215,7 @@ namespace BattleCruisers.Scenes
                     _aiCruiser,
                     cameraInitialiser.CameraController,
                     _navigationSettings.AreTransitionsEnabledFilter,
-                    UserChosenTargetHelper,
+                    userChosenTargetHelper,
                     buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter,
                     buttonVisibilityFilters.DeletButtonVisiblityFilter);
             numOfDronesController.Initialise(_playerCruiser.DroneManager);
