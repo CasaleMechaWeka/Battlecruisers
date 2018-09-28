@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  Test :)
     public class DroneFocusSoundPicker : IDroneFocusSoundPicker
     {
         public PrioritisedSoundKey PickSound(DroneConsumerState preFocusState, DroneConsumerState postFocusState)
