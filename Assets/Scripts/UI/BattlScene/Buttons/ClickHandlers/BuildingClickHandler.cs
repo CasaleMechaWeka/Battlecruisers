@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    // FELIX  Test
     // FELIX  Handle tutorial???
     public class BuildingClickHandler : BuildableClickHandler, IBuildingClickHandler
     {
@@ -25,6 +24,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IBuilding> buildingClicked)
         {
+            Assert.IsNotNull(buildingClicked);
+
             if (canAffordBuildable)
             {
                 _playerCruiserFocusHelper.FocusOnPlayerCruiserIfNeeded();
