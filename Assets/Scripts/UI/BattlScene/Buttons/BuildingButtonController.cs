@@ -29,10 +29,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			slotImage.sprite = slotSprite;
 		}
 
-		protected override void HandleClick()
-		{
-            base.HandleClick();
-
+        protected override void OnClicked()
+        {
             _playerCruiserFocusHelper.FocusOnPlayerCruiserIfNeeded();
 			_uiManager.SelectBuildingFromMenu(_buildingWrapper);
 		}

@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -12,6 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
 		protected IUIManager _uiManager;
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
+        private ButtonWrapper _buttonWrapper;
 
 		public Image buildableImage;
 		public Text buildableName;
@@ -40,8 +42,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             buildableImage.sprite = Buildable.Sprite;
 
-            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
-            buttonWrapper.Initialise(HandleClick, this);
+            _buttonWrapper = GetComponent<ButtonWrapper>();
+            _buttonWrapper.Initialise(HandleClick, this, disableButton: false);
 		}
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
@@ -57,12 +59,26 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-		protected virtual void HandleClick()
+		protected void HandleClick()
         {
+            // FELIX  Remove
+            Debug.Log("BuildableButtonController.HandleClic()");
+
+            if (IsMatch)
+            {
+                OnClicked();
+            }
+            else
+            {
+                // FELIX  Play not enough drones sound :)
+            }
+
             if (Clicked != null)
             {
                 Clicked.Invoke(this, EventArgs.Empty);
             }
         }
+
+        protected abstract void OnClicked();
 	}
 }

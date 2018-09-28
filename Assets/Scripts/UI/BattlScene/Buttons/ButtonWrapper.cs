@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         private IBroadcastingFilter _shouldBeEnabledFilter;
         private CanvasGroup _canvasGroup;
+        private bool _disableButton;
 
 		public Button Button { get; private set; }
 
@@ -19,17 +20,22 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             set
             {
-                Button.enabled = value;
+                if (_disableButton)
+                {
+                    Button.enabled = value;
+                }
+
                 _canvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
             }
         }
 
-        public void Initialise(UnityAction clickHandler, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(UnityAction clickHandler, IBroadcastingFilter shouldBeEnabledFilter, bool disableButton = true)
         {
             Helper.AssertIsNotNull(clickHandler, shouldBeEnabledFilter);
 
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
+            _disableButton = disableButton;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);

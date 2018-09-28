@@ -100,10 +100,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			_currentFactory = null;
 		}
 
-		protected override void HandleClick()
-		{
-            base.HandleClick();
-
+        protected override void OnClicked()
+        {
             Assert.IsNotNull(_currentFactory);
 
             _unitClickHandler.HandleUnitClick(_unitWrapper, _currentFactory);
