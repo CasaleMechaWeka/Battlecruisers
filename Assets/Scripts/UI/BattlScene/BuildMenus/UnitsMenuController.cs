@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
             // FELIX  Can inject... => Avoid this codesmell :)
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
-            _unitClickHandler = new UnitClickHandler();
+            _unitClickHandler = new UnitClickHandler(uiManager);
 
             base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
