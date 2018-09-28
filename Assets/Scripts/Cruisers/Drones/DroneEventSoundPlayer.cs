@@ -23,12 +23,12 @@ namespace BattleCruisers.Cruisers.Drones
 
         private void _droneManagerMonitor_DroneNumIncreased(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.DronesNewDronesReady);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.DronesNewDronesReady);
         }
 
         private void _droneManagerMonitor_IdleDrones(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.DronesIdle);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.DronesIdle);
         }
 
         public void DisposeManagedState()

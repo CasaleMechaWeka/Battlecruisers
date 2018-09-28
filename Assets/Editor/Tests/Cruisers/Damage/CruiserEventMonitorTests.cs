@@ -27,14 +27,14 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         public void CruiserHealthThresholdReached_PlaysSound()
         {
             _cruiserHealthThresholdMonitor.ThresholdReached += Raise.Event();
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.CruiserSignificantlyDamaged);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.CruiserSignificantlyDamaged);
         }
 
         [Test]
         public void CruiserDamaged_PlaysSound()
         {
             _cruiserDamageMonitor.CruiserOrBuildingDamaged += Raise.Event();
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.CruiserUnderAttack);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.CruiserUnderAttack);
         }
     }
 }

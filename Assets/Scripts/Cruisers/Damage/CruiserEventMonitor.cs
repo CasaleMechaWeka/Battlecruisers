@@ -33,12 +33,12 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void _cruiserHealthThresholdMonitor_ThresholdReached(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.CruiserSignificantlyDamaged);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.CruiserSignificantlyDamaged);
         }
 
         private void _cruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.CruiserUnderAttack);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.CruiserUnderAttack);
         }
 
         public void DisposeManagedState()

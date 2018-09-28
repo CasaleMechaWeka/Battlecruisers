@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             bool canAffordBuilding = false;
             _clickHandler.HandleClick(canAffordBuilding, _building);
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.DronesNotEnoughDrones);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.DronesNotEnoughDrones);
         }
     }
 }
