@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Common.Click
             {
                 // Building repairs
                 IDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
-                playerBuliding.ParentCruiser.DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+                playerBuliding.ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             }
         }
     }

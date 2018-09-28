@@ -208,6 +208,7 @@ namespace BattleCruisers.Cruisers
 			return building;
 		}
 
+        // FELIX  Unused, remove?
         public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
         {
             if (DroneManager.NumOfDrones > droneConsumer.NumOfDrones)

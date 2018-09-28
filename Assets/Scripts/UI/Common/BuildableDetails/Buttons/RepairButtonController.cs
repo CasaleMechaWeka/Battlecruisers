@@ -62,6 +62,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private void ToggleRepairButton()
         {
             IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
+            // FELIX  Use DroneFocuser instead
             _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
         }
 

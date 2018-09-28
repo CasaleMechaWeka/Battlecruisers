@@ -414,7 +414,7 @@ namespace BattleCruisers.Buildables
 
         protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
-            _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
         }
 
         public void InitiateDelete()

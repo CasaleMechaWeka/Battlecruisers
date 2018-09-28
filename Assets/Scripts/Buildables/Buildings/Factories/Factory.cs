@@ -264,7 +264,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         {
             if (DroneConsumer.State == DroneConsumerState.Idle)
             {
-                _droneManager.ToggleDroneConsumerFocus(DroneConsumer);
+                ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: false);
             }
         }
 

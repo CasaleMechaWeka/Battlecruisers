@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Common.Click
             if (playerCruiser.RepairCommand.CanExecute)
             {
                 IDroneConsumer repairDroneConsumer = playerCruiser.RepairManager.GetDroneConsumer(playerCruiser);
-                playerCruiser.DroneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+                playerCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             }
         }
     }
