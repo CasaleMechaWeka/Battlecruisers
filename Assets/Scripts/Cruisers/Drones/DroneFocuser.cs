@@ -1,0 +1,38 @@
+﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Cruisers.Drones
+{
+    // FELIX  Test :)
+    // FELIX  use :P
+    public class DroneFocuser : IDroneFocuser
+    {
+        private readonly IDroneManager _droneManager;
+        private readonly IDroneFocusSoundPicker _soundPicker;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
+
+        public DroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
+        {
+            Helper.AssertIsNotNull(droneManager, soundPicker, soundPlayer);
+
+            _droneManager = droneManager;
+            _soundPicker = soundPicker;
+            _soundPlayer = soundPlayer;
+        }
+
+        public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer, bool isTriggeredByPlayer)
+        {
+            Assert.IsNotNull(droneConsumer);
+
+            DroneConsumerState preFocusState = droneConsumer.State;
+            _droneManager.ToggleDroneConsumerFocus(droneConsumer);
+            DroneConsumerState postFocusState = droneConsumer.State;
+
+            if (isTriggeredByPlayer)
+            {
+                _soundPlayer.PlaySound(_soundPicker.PickSound(preFocusState, postFocusState));
+            }
+        }
+    }
+}
