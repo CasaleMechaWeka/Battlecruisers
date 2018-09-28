@@ -79,9 +79,9 @@ namespace BattleCruisers.UI.BattleScene
                 chooseTargetButtonVisibilityFilter,
                 deleteButtonVisibilityFilter);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
-            _unitDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
-            _cruiserDetails.Initialise(playerCruiser.DroneManager, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _playerCruiserInfo.Initialise(playerCruiser);
             _aiCruiserInfo.Initialise(aiCruiser);

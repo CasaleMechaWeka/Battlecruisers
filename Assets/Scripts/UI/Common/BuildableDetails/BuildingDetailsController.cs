@@ -16,14 +16,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private SlotTypeController _slotType;
 
         public void Initialise(
-            ISpriteProvider spriteProvider, 
-            IDroneManager droneManager, 
+            ISpriteProvider spriteProvider,
+            IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> chooseTargetButtonVisibilityFilter,
             IFilter<ITarget> deleteButtonVisibilityFilter)
         {
-            base.Initialise(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            base.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
 
             Assert.IsNotNull(spriteProvider);
 

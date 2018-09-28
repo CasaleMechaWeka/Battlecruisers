@@ -16,18 +16,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private ChooseTargetButtonController _chooseTargetButton;
 
         public void Initialise(
-            IDroneManager droneManager, 
+            IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper, 
             IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(droneManager, repairManager);
+            _repairButton.Initialise(droneFocuser, repairManager);
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);

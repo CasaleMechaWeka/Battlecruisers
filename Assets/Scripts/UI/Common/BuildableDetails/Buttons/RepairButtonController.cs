@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     public class RepairButtonController : MonoBehaviour
     {
         private Button _button;
-        private IDroneManager _droneManager;
+        private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
 
         private ITarget _repairable;
@@ -47,11 +47,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
-        public void Initialise(IDroneManager droneManager, IRepairManager repairManager)
+        public void Initialise(IDroneFocuser droneFocuser, IRepairManager repairManager)
         {
-            Helper.AssertIsNotNull(droneManager, repairManager);
+            Helper.AssertIsNotNull(droneFocuser, repairManager);
 
-            _droneManager = droneManager;
+            _droneFocuser = droneFocuser;
             _repairManager = repairManager;
 
             _button = GetComponent<Button>();
@@ -62,8 +62,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private void ToggleRepairButton()
         {
             IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
-            // FELIX  Use DroneFocuser instead
-            _droneManager.ToggleDroneConsumerFocus(repairDroneConsumer);
+            _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)

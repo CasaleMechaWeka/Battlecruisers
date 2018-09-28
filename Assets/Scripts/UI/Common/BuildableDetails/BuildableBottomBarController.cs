@@ -45,19 +45,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public float Height { get; private set; }
 
         public void Initialise(
-            IDroneManager droneManager, 
+            IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> chooseTargetButtonVisibilityFilter)
         {
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
             Height = rectTransform.sizeDelta.y;
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(droneManager, repairManager);
+            _repairButton.Initialise(droneFocuser, repairManager);
 
             _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
             Assert.IsNotNull(_toggleDronesButton);

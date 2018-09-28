@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
 
         public void Initialise(
-            IDroneManager droneManager, 
+            IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> chooseTargetButtonVisibilityFilter,
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
 
             _rectTransform = transform.Parse<RectTransform>();
             _maxHeight = _rectTransform.sizeDelta.y;
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
             Assert.IsNotNull(_bottomBar);
-            _bottomBar.Initialise(droneManager, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _bottomBar.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)
