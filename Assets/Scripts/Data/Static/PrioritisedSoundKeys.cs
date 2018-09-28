@@ -81,52 +81,51 @@ namespace BattleCruisers.Data.Static
         {
             public static class Cruiser
             {
-                // FELIX Remove prefix :)
-                public static PrioritisedSoundKey CruiserUnderAttack { get; private set; }
-                public static PrioritisedSoundKey CruiserSignificantlyDamaged { get; private set; }
+                public static PrioritisedSoundKey UnderAttack { get; private set; }
+                public static PrioritisedSoundKey SignificantlyDamaged { get; private set; }
 
                 static Cruiser()
                 {
-                    CruiserUnderAttack = new PrioritisedSoundKey(SoundKeys.Events.CruiserUnderAttack, SoundPriority.Normal);
-                    CruiserSignificantlyDamaged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.High);
+                    UnderAttack = new PrioritisedSoundKey(SoundKeys.Events.CruiserUnderAttack, SoundPriority.Normal);
+                    SignificantlyDamaged = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.High);
                 }
             }
 
             public static class Drones
             {
-                public static PrioritisedSoundKey DronesNewDronesReady { get; private set; }
-                public static PrioritisedSoundKey DronesIdle { get; private set; }
-                public static PrioritisedSoundKey DronesNotEnoughDrones { get; private set; }
-                public static PrioritisedSoundKey DronesNotEnoughDronesToFocus { get; private set; }
-                public static PrioritisedSoundKey DronesFocusing { get; private set; }
-                public static PrioritisedSoundKey DronesAllFocused { get; private set; }
-                public static PrioritisedSoundKey DronesDispersing { get; private set; }
+                public static PrioritisedSoundKey NewDronesReady { get; private set; }
+                public static PrioritisedSoundKey Idle { get; private set; }
+                public static PrioritisedSoundKey NotEnoughDrones { get; private set; }
+                public static PrioritisedSoundKey NotEnoughDronesToFocus { get; private set; }
+                public static PrioritisedSoundKey Focusing { get; private set; }
+                public static PrioritisedSoundKey AllFocused { get; private set; }
+                public static PrioritisedSoundKey Dispersing { get; private set; }
 
                 static Drones()
                 {
                     // Drones
-                    DronesNewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
-                    DronesIdle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
-                    DronesNotEnoughDrones = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
+                    NewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
+                    Idle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
+                    NotEnoughDrones = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
                     // FELIX:  Use different sound once Peter provides :)
-                    DronesNotEnoughDronesToFocus = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
-                    DronesFocusing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
-                    DronesAllFocused = new PrioritisedSoundKey(SoundKeys.Events.DronesAllFocused, SoundPriority.High);
+                    NotEnoughDronesToFocus = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
+                    Focusing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
+                    AllFocused = new PrioritisedSoundKey(SoundKeys.Events.DronesAllFocused, SoundPriority.High);
                     // FELIX:  Use different sound once Peter provides :)
-                    DronesDispersing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
+                    Dispersing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
                 }
             }
 
             public static class Targetting
             {
-                public static PrioritisedSoundKey TargettingNewTarget { get; private set; }
-                public static PrioritisedSoundKey TargettingTargetCleared { get; private set; }
+                public static PrioritisedSoundKey NewTarget { get; private set; }
+                public static PrioritisedSoundKey TargetCleared { get; private set; }
             
                 static Targetting()
                 {
-                    TargettingNewTarget = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
+                    NewTarget = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
                     // FELIX:  Use different sound once Peter provides :)
-                    TargettingTargetCleared = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
+                    TargetCleared = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
                 }
             }
 

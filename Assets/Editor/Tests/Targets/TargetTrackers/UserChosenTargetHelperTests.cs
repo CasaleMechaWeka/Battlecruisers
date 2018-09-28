@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _targetManager.HighestPriorityTarget.Returns((RankedTarget)null);
             _targetHelper.ToggleChosenTarget(_target1.Target);
             _targetManager.Received().Target = _target1.Target;
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargettingNewTarget);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _targetManager.HighestPriorityTarget.Returns(_target1);
             _targetHelper.ToggleChosenTarget(_target2.Target);
             _targetManager.Received().Target = _target2.Target;
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargettingNewTarget);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
             _targetManager.HighestPriorityTarget.Returns(_target1);
             _targetHelper.ToggleChosenTarget(_target1.Target);
             _targetManager.Received().Target = null;
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargettingTargetCleared);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargetCleared);
         }
     }
 }

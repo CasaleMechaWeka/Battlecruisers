@@ -24,14 +24,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void DroneNumberIncrease_PlaysSound()
         {
             _droneManagerMonitor.DroneNumIncreased += Raise.Event();
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.DronesNewDronesReady);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NewDronesReady);
         }
 
         [Test]
         public void IdleDrones_PlaysSound()
         {
             _droneManagerMonitor.IdleDrones += Raise.Event();
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.DronesIdle);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.Idle);
         }
     }
 }

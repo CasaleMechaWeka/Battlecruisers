@@ -26,13 +26,13 @@ namespace BattleCruisers.Targets.TargetTrackers
             {
                 // Clear user chosen target
                 _userChosenTargetManager.Target = null;
-                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.TargettingTargetCleared);
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.TargetCleared);
             }
             else
             {
                 // Set user chosen target
                 _userChosenTargetManager.Target = target;
-                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.TargettingNewTarget);
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
             }
         }
     }
