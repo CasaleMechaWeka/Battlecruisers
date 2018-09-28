@@ -91,6 +91,7 @@ namespace BattleCruisers.Data.Static
             // Other
             public static ISoundKey EnemyStartedUltra { get { return new SoundKey(SoundType.Events, "enemy-started-ultra"); } }
             public static ISoundKey ShieldsDown { get { return new SoundKey(SoundType.Events, "shields-down"); } }
+            public static ISoundKey TargettingNewTarget { get { return new SoundKey(SoundType.Events, "targeting-new-target"); } }
         }
 
         public static class Music

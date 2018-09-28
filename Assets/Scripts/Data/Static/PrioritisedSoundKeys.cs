@@ -88,6 +88,10 @@ namespace BattleCruisers.Data.Static
             public static PrioritisedSoundKey DronesIdle { get; private set; }
             public static PrioritisedSoundKey DronesNotEnoughDrones { get; private set; }
 
+            // Targetting
+            public static PrioritisedSoundKey TargettingNewTarget { get; private set; }
+            public static PrioritisedSoundKey TargettingTargetCleared { get; private set; }
+
             // Other
             public static PrioritisedSoundKey EnemyStartedUltra { get; private set; }
             public static PrioritisedSoundKey ShieldsDown { get; private set; }
@@ -102,6 +106,11 @@ namespace BattleCruisers.Data.Static
                 DronesNewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
                 DronesIdle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
                 DronesNotEnoughDrones = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
+
+                // Targetting
+                TargettingNewTarget = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
+                // FELIX:  Use different sound once Peter provides :)
+                TargettingTargetCleared = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
 
                 // Other
                 EnemyStartedUltra = new PrioritisedSoundKey(SoundKeys.Events.EnemyStartedUltra, SoundPriority.VeryHigh);
