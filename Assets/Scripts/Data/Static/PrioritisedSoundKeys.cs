@@ -88,6 +88,7 @@ namespace BattleCruisers.Data.Static
             // Drones
             public static PrioritisedSoundKey DronesNewDronesReady { get; private set; }
             public static PrioritisedSoundKey DronesIdle { get; private set; }
+            public static PrioritisedSoundKey DronesNotEnoughDrones { get; private set; }
 
             public static PrioritisedSoundKey EnemyStartedUltra { get; private set; }
 
@@ -100,6 +101,7 @@ namespace BattleCruisers.Data.Static
                 // Drones
                 DronesNewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
                 DronesIdle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
+                DronesNotEnoughDrones = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDrones, SoundPriority.VeryHigh);
 
                 EnemyStartedUltra = new PrioritisedSoundKey(SoundKeys.Events.EnemyStartedUltra, SoundPriority.VeryHigh);
             }
