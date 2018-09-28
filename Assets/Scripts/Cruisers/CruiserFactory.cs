@@ -110,11 +110,7 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection = Direction.Left;
             bool shouldShowFog = true;
 
-            // TEMP  Want to see repair drone numbers on AI cruiser, helps me debug :)
-            // For end game use Dummy factory :)
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
-            //IDroneNumFeedbackFactory feedbackFactory = new DummyDroneNumFeedbackFactory();
-
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
