@@ -20,6 +20,7 @@ namespace BattleCruisers.Cruisers
         public ICruiser EnemyCruiser { get; private set; }
         public IUIManager UiManager { get; private set; }
         public IDroneManager DroneManager { get; private set; }
+        public IDroneFocuser DroneFocuser { get; private set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public IFactoryProvider FactoryProvider { get; private set; }
         public Direction FacingDirection { get; private set; }
@@ -36,7 +37,8 @@ namespace BattleCruisers.Cruisers
             Faction faction, 
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
-            IDroneManager droneManager, 
+            IDroneManager droneManager,
+            IDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
             IFactoryProvider factoryProvider, 
             Direction facingDirection, 
@@ -53,6 +55,7 @@ namespace BattleCruisers.Cruisers
                 enemyCruiser, 
                 uiManager, 
                 droneManager, 
+                droneFocuser,
                 droneConsumerProvider, 
                 factoryProvider, 
                 repairManager, 
@@ -67,6 +70,7 @@ namespace BattleCruisers.Cruisers
             EnemyCruiser = enemyCruiser;
             UiManager = uiManager;
             DroneManager = droneManager;
+            DroneFocuser = droneFocuser;
             DroneConsumerProvider = droneConsumerProvider;
             FactoryProvider = factoryProvider;
             FacingDirection = facingDirection;

@@ -11,6 +11,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -158,7 +159,9 @@ namespace BattleCruisers.Cruisers
                     _soleCamera, 
                     isPlayerCruiser, 
                     _audioSource);
+
             IDroneManager droneManager = new DroneManager();
+            IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
@@ -169,6 +172,7 @@ namespace BattleCruisers.Cruisers
                     enemyCruiser,
                     uiManager,
                     droneManager,
+                    droneFocuser,
                     droneConsumerProvider,
                     factoryProvider,
                     facingDirection,
@@ -182,6 +186,18 @@ namespace BattleCruisers.Cruisers
                     fogOfWarManager);
 
             cruiser.Initialise(cruiserArgs);
+        }
+
+        private IDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IDroneManager droneManager, IPrioritisedSoundPlayer soundPlayer)
+        {
+            if (isPlayerCruiser)
+            {
+                return new DroneFocuser(droneManager, new DroneFocusSoundPicker(), soundPlayer);
+            }
+            else
+            {
+                return new SimpleDroneFocuser(droneManager);
+            }
         }
 
         public ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)

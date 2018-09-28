@@ -19,6 +19,7 @@ namespace BattleCruisers.Cruisers
         ICruiser EnemyCruiser { get; }
         IUIManager UiManager { get; }
         IDroneManager DroneManager { get; }
+        IDroneFocuser DroneFocuser { get; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
         IFactoryProvider FactoryProvider { get; }
         Direction FacingDirection { get; }

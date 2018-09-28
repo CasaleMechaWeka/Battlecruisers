@@ -82,6 +82,7 @@ namespace BattleCruisers.Cruisers
         public ISlotWrapper SlotWrapper { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
+        public IDroneFocuser DroneFocuser { get; private set; }
 
         public event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
         public event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
@@ -132,6 +133,7 @@ namespace BattleCruisers.Cruisers
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
             DroneManager = args.DroneManager;
+            DroneFocuser = args.DroneFocuser;
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
             FactoryProvider = args.FactoryProvider;

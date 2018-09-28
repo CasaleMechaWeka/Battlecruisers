@@ -45,8 +45,9 @@ namespace BattleCruisers.Cruisers
         ISlotWrapper SlotWrapper { get; }
         ISlotNumProvider SlotNumProvider { get; }
 		IDroneManager DroneManager { get; }
+        IDroneFocuser DroneFocuser { get; }
 
-		event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
+        event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
 		event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
 		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
