@@ -208,15 +208,6 @@ namespace BattleCruisers.Cruisers
 			return building;
 		}
 
-        // FELIX  Unused, remove?
-        public void FocusOnDroneConsumer(IDroneConsumer droneConsumer)
-        {
-            if (DroneManager.NumOfDrones > droneConsumer.NumOfDrones)
-            {
-                DroneManager.ToggleDroneConsumerFocus(droneConsumer);
-            }
-        }
-
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
             IBuilding completedBuilding = sender.Parse<IBuilding>();

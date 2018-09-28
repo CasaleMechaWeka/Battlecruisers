@@ -52,6 +52,5 @@ namespace BattleCruisers.Cruisers
 		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
-        void FocusOnDroneConsumer(IDroneConsumer droneConsumer);
 	}
 }
