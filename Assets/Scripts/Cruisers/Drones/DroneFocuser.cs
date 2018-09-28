@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  Test :)
     // FELIX  use :P
     public class DroneFocuser : IDroneFocuser
     {
