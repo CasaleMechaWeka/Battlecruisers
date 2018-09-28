@@ -11,6 +11,7 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -117,6 +118,11 @@ namespace BattleCruisers.Scenes
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
         {
             return new NullManagedDispoasable();
+        }
+
+        public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
+        {
+            return new DummySoundPlayer();
         }
     }
 }
