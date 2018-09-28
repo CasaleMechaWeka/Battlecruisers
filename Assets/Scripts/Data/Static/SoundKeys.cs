@@ -75,9 +75,6 @@ namespace BattleCruisers.Data.Static
             // Other
             public static ISoundKey SpySatellite { get { return new SoundKey(SoundType.Completed, "satellite"); } }
             public static ISoundKey Ultra { get { return new SoundKey(SoundType.Completed, "ultra"); } }
-
-            // FELIX  Remove once have StealthField specific sound :)
-            public static ISoundKey Building { get { return new SoundKey(SoundType.Completed, "building"); } }
         }
 
         public static class Events

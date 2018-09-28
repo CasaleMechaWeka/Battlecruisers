@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class TurretController : Building
+    public abstract class TurretController : Building
 	{
 		protected IBarrelWrapper _barrelWrapper;
 

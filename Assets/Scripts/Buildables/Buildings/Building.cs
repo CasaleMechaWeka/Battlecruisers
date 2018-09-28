@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-    public class Building : Buildable, IBuilding
+    public abstract class Building : Buildable, IBuilding
 	{
         private BoxCollider2D _collider;
 
@@ -34,7 +34,6 @@ namespace BattleCruisers.Buildables.Buildings
         public SlotType SlotType { get { return slotType; } }
 
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building1; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Building; } }
 
         protected override HealthBarController HealthBarController
         {

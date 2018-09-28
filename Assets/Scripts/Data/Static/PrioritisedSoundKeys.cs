@@ -69,14 +69,10 @@ namespace BattleCruisers.Data.Static
                 }
             }
 
-            // FELIX  Remove once have StealthField specific sound :)
-            public static PrioritisedSoundKey Building { get; private set; }
-
             public static PrioritisedSoundKey Ultra { get; private set; }
 
             static Completed()
             {
-                Building = new PrioritisedSoundKey(SoundKeys.Completed.Building, SoundPriority.Low);
                 Ultra = new PrioritisedSoundKey(SoundKeys.Completed.Ultra, SoundPriority.VeryHigh);
             }
         }
