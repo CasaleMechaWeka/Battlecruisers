@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
 	{
-        // FELIX  Only used by UnitMenuController => Remove from base class :)
         protected IUIManager _uiManager;
         protected IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
 
@@ -60,10 +59,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     .ToList()
                     .AsReadOnly();
 
-            InitialiseBckButton(uiManager, buttonVisibilityFilters);
+            InitialiseBackButton(uiManager, buttonVisibilityFilters);
         }
 
-        private void InitialiseBckButton(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters)
+        private void InitialiseBackButton(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             BackButtonController backButton = GetComponentInChildren<BackButtonController>();
             Assert.IsNotNull(backButton);
