@@ -1,10 +1,10 @@
-﻿namespace BattleCruisers.Buildables.Buildings.Tactical
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+
+namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class StealthGenerator : Building, IStealthGenerator
     {
-        // Empty.  Solely exists so that classes like FogOfWarManager and
-        // stealth threat responder can keep track of when this building is built.
-        
-        // FELIX  Sound, once Peter provides :)
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.StealthGenerator; } }
     }
 }

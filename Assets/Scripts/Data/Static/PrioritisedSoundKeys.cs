@@ -23,6 +23,7 @@ namespace BattleCruisers.Data.Static
                 public static PrioritisedSoundKey SamSite { get; private set; }
                 public static PrioritisedSoundKey SpySatellite { get; private set; }
                 public static PrioritisedSoundKey Shields { get; private set; }
+                public static PrioritisedSoundKey StealthGenerator { get; private set; }
                 public static PrioritisedSoundKey TeslaCoil { get; private set; }
 
                 static Buildings()
@@ -41,6 +42,7 @@ namespace BattleCruisers.Data.Static
                     SamSite = new PrioritisedSoundKey(SoundKeys.Completed.SamSite, SoundPriority.VeryLow);
                     SpySatellite = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.VeryLow);
                     Shields = new PrioritisedSoundKey(SoundKeys.Completed.Shields, SoundPriority.VeryLow);
+                    StealthGenerator = new PrioritisedSoundKey(SoundKeys.Completed.StealthGenerator, SoundPriority.VeryLow);
                     TeslaCoil = new PrioritisedSoundKey(SoundKeys.Completed.TeslaCoil, SoundPriority.VeryLow);
                 }
             }

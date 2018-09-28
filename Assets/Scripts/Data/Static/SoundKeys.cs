@@ -61,6 +61,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey RocketLauncher { get { return new SoundKey(SoundType.Completed, "rocket-launcher"); } }
             public static ISoundKey SamSite { get { return new SoundKey(SoundType.Completed, "sam-site"); } }
             public static ISoundKey Shields { get { return new SoundKey(SoundType.Completed, "shields"); } }
+            public static ISoundKey StealthGenerator { get { return new SoundKey(SoundType.Completed, "stealth-field"); } }
             public static ISoundKey TeslaCoil { get { return new SoundKey(SoundType.Completed, "tesla-coil"); } }
 
             // Units
