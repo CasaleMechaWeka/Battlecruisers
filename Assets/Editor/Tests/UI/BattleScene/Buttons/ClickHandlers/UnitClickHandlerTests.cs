@@ -8,7 +8,7 @@ using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene.Buttons
+namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 {
     public class UnitClickHandlerTests
     {
