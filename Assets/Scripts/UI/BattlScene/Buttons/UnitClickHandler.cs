@@ -5,6 +5,8 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Add UImanager handling
+    // FELIX  Add not enough drones sound
     public class UnitClickHandler : IUnitClickHandler
     {
         public void HandleUnitClick(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)

@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IUnit>> units)
 		{
+            // FELIX  Can inject... => Avoid this codesmell :)
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
             _unitClickHandler = new UnitClickHandler();
 
