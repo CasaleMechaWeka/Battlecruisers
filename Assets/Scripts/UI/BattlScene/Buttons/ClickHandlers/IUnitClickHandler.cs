@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     public interface IUnitClickHandler
     {

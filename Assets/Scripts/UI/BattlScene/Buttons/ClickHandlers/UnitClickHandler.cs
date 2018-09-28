@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     // FELIX  Add UImanager handling
     // FELIX  Add not enough drones sound
