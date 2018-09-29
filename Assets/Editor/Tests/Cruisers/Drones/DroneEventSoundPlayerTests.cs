@@ -8,7 +8,9 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneEventSoundPlayerTests
     {
+#pragma warning disable CS0414  // Variable is assigned but never used
         private DroneEventSoundPlayer _droneEventSoundPlayer;
+#pragma warning restore CS0414  // Variable is assigned but never used
         private IDroneManagerMonitor _droneManagerMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
 

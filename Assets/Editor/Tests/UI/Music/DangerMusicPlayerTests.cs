@@ -9,7 +9,9 @@ namespace BattleCruisers.Tests.UI.Music
 {
     public class DangerMusicPlayerTests
     {
+#pragma warning disable CS0414  // Variable is assigned but never used
         private DangerMusicPlayer _dangerMusicPlayer;
+#pragma warning restore CS0414  // Variable is assigned but never used
         private IMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;
         private IVariableDelayDeferrer _deferrer;

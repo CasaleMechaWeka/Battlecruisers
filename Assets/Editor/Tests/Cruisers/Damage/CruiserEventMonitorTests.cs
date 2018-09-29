@@ -8,7 +8,9 @@ namespace BattleCruisers.Tests.Cruisers.Damage
 {
     public class CruiserEventMonitorTests
     {
+#pragma warning disable CS0414  // Variable is assigned but never used
         private CruiserEventMonitor _monitor;
+#pragma warning restore CS0414  // Variable is assigned but never used
         private IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private ICruiserDamageMonitor _cruiserDamageMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
