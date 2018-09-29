@@ -7,10 +7,10 @@ namespace BattleCruisers.Tutorial.Highlighting
         public InGameHighlight inGameHighlightPrefab;
         public OnCanvasHighlight onCanvasHighlightPrefab;
 
-        public IHighlight CreateInGameHighlight(float radiusInM, Vector2 position)
+        public IHighlight CreateInGameHighlight(float radiusInM, Vector2 position, bool usePulsingAnimation)
         {
             InGameHighlight inGameHighlight = Instantiate(inGameHighlightPrefab);
-            inGameHighlight.Initialise(radiusInM, position);
+            inGameHighlight.Initialise(radiusInM, position, usePulsingAnimation);
             return inGameHighlight;
         }
 

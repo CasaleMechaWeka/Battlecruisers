@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene
                 
             if (_userChosenTargetTracker.HighestPriorityTarget != null)
             {
-                _currentHighlight = _highlightHelper.CreateHighlight(_userChosenTargetTracker.HighestPriorityTarget.Target);
+                _currentHighlight = _highlightHelper.CreateHighlight(_userChosenTargetTracker.HighestPriorityTarget.Target, usePulsingAnimation: false);
             }
         }
 

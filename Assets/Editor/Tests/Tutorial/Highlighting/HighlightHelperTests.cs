@@ -41,11 +41,12 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 
 			float radius = _highlightable.Size.x / 2 * _highlightable.SizeMultiplier;
 			Vector2 spawnPosition = (Vector2)_gameObj.transform.position + _highlightable.PositionAdjustment;
-			_factory.CreateInGameHighlight(radius, spawnPosition).Returns(_highlight);
+            bool usePulsingAnimation = true;
+            _factory.CreateInGameHighlight(radius, spawnPosition, usePulsingAnimation).Returns(_highlight);
 
             IHighlight highlight = _highlightHelper.CreateHighlight(_highlightable);
 
-            _factory.Received().CreateInGameHighlight(radius, spawnPosition);
+            _factory.Received().CreateInGameHighlight(radius, spawnPosition, usePulsingAnimation);
             Assert.AreSame(_highlight, highlight);
         }
 

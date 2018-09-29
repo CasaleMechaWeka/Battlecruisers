@@ -2,6 +2,6 @@
 {
     public interface IHighlightHelper
     {
-        IHighlight CreateHighlight(IHighlightable highlightable);
+        IHighlight CreateHighlight(IHighlightable highlightable, bool usePulsingAnimation = true);
     }
 }

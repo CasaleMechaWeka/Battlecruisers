@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Highlighting
             _highlightFactory = highlightFactory;
         }
 
-        public IHighlight CreateHighlight(IHighlightable highlightable)
+        public IHighlight CreateHighlight(IHighlightable highlightable, bool usePulsingAnimation = true)
         {
             float radius = highlightable.Size.x / 2 * highlightable.SizeMultiplier;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Highlighting
             {
                 case HighlightableType.InGame:
                     Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;
-                    return _highlightFactory.CreateInGameHighlight(radius, spawnPosition);
+                    return _highlightFactory.CreateInGameHighlight(radius, spawnPosition, usePulsingAnimation);
 
                 case HighlightableType.OnCanvas:
                     return _highlightFactory.CreateOnCanvasHighlight(radius, highlightable.Transform, highlightable.PositionAdjustment);

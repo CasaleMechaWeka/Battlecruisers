@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
             float radius = renderer.size.x / 2;
 
-            IHighlight inGameHighlight = factory.CreateInGameHighlight(radius, inGameObject.transform.position);
+            IHighlight inGameHighlight = factory.CreateInGameHighlight(radius, inGameObject.transform.position, usePulsingAnimation: true);
 
             deferrer.Defer(inGameHighlight.Destroy);
         }
