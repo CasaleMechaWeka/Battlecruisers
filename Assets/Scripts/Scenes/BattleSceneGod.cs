@@ -60,7 +60,10 @@ namespace BattleCruisers.Scenes
         private CruiserEventMonitor _cruiserEventMonitor;
         private IManagedDisposable _droneEventSoundPlayer;
         private UltrasConstructionMonitor _ultrasConstructionMonitor;
+        // Just holding a reference so this does not get garbage collected.
+#pragma warning disable CS0414  // Variable is assigned but never used
         private DangerMusicPlayer _dangerMusicPlayer;
+#pragma warning restore CS0414  // Variable is assigned but never used
         private IAudioSource _audioSource;
 
         public HUDCanvasController hudCanvas;
