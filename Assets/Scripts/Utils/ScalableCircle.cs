@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
