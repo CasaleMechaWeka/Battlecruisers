@@ -5,6 +5,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Cameras.InputHandlers
 {
     // FELIX  Test :)  (Copy from ScrollHandler?)
+    /// <summary>
+    /// Moves the camera towards the screen edge where the mouse is.
+    /// </summary>
     public class ScreenEdgePositionFinder : IScrollPositionFinder
     {
         private readonly IScreen _screen;
@@ -19,37 +22,37 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
             _screen = screen;
         }
 
-        public Vector3 FindDesiredPosition(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInMPerS)
+        public Vector3 FindDesiredPosition(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInM)
         {
             return
                 new Vector3(
-                    FindDesiredX(cameraPosition, mousePosition, scrollSpeedInMPerS),
-                    FindDesiredY(cameraPosition, mousePosition, scrollSpeedInMPerS),
+                    FindDesiredX(cameraPosition, mousePosition, scrollSpeedInM),
+                    FindDesiredY(cameraPosition, mousePosition, scrollSpeedInM),
                     cameraPosition.z);
         }
 
-        private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInMPerS)
+        private float FindDesiredX(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInM)
         {
             if (mousePosition.x >= _screen.Width - SCROLL_BOUNDARY_IN_PIXELS)
             {
-                return cameraPosition.x + scrollSpeedInMPerS;
+                return cameraPosition.x + scrollSpeedInM;
             }
             else if (mousePosition.x <= 0 + SCROLL_BOUNDARY_IN_PIXELS)
             {
-                return cameraPosition.x - scrollSpeedInMPerS;
+                return cameraPosition.x - scrollSpeedInM;
             }
             return cameraPosition.x;
         }
 
-        private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInMPerS)
+        private float FindDesiredY(Vector3 cameraPosition, Vector3 mousePosition, float scrollSpeedInM)
         {
             if (mousePosition.y >= _screen.Height - SCROLL_BOUNDARY_IN_PIXELS)
             {
-                return cameraPosition.y + scrollSpeedInMPerS;
+                return cameraPosition.y + scrollSpeedInM;
             }
             else if (mousePosition.y <= 0 + SCROLL_BOUNDARY_IN_PIXELS)
             {
-                return cameraPosition.y - scrollSpeedInMPerS;
+                return cameraPosition.y - scrollSpeedInM;
             }
             return cameraPosition.y;
         }
