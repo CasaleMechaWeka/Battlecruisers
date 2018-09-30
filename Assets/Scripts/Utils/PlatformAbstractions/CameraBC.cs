@@ -26,5 +26,10 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		}
 
         public float Aspect { get { return _platfromCamera.aspect; } }
+
+        public Vector3 WorldToViewportPoint(Vector3 worldPoint)
+        {
+            return _platfromCamera.WorldToViewportPoint(worldPoint);
+        }
     }
 }
