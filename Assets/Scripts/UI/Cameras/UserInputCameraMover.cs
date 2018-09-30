@@ -61,37 +61,19 @@ namespace BattleCruisers.UI.Cameras
 				State = CameraState.UserInputControlled;
             }
 		}
-  
-        /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
-		private bool HandleScroll()
-        {
-			Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition);
-
-			if (desiredPosition != _camera.Position)
-            {
-                _camera.Position = desiredPosition;
-
-				if (Scrolled != null)
-				{
-					Scrolled.Invoke(this, EventArgs.Empty);
-				}
-
-                return true;
-            }
-
-            return false;
-        }
 
         /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
         private bool HandleZoom()
         {
-            Debug.Log("_input.MouseScrollDelta.y: " + _input.MouseScrollDelta.y);
-
-            MouseZoomResult zoomResult = _zoomHandler.HandleZoom(_input.MousePosition, _input.MouseScrollDelta.y);
+            Vector3 zoomTargetWorldPosition = _camera.ScreenToWorldPoint(_input.MousePosition);
+            Debug.Log("zoomTargetWorldPosition: " + zoomTargetWorldPosition);
+            MouseZoomResult zoomResult = _zoomHandler.HandleZoom(zoomTargetWorldPosition, _input.MouseScrollDelta.y);
 
             // Scroll for directional zoom :D
             if (zoomResult.CameraPosition != _camera.Position)
             {
+                Debug.Log("UserInputCameraMover zoomResult.CameraPosition: " + zoomResult.CameraPosition);
+
                 _camera.Position = zoomResult.CameraPosition;
             }
 
@@ -110,5 +92,25 @@ namespace BattleCruisers.UI.Cameras
 
             return false;
         }
-	}
+
+        /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
+        private bool HandleScroll()
+        {
+            Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition);
+
+            if (desiredPosition != _camera.Position)
+            {
+                _camera.Position = desiredPosition;
+
+                if (Scrolled != null)
+                {
+                    Scrolled.Invoke(this, EventArgs.Empty);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+    }
 }

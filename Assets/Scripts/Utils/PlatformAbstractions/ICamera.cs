@@ -8,5 +8,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         float Aspect { get; }
 
         Vector3 WorldToViewportPoint(Vector3 worldPoint);
+        Vector3 ScreenToWorldPoint(Vector3 screenPoint);
     }
 }

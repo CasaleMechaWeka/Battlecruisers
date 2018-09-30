@@ -31,5 +31,10 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         {
             return _platfromCamera.WorldToViewportPoint(worldPoint);
         }
+
+        public Vector3 ScreenToWorldPoint(Vector3 screenPoint)
+        {
+            return _platfromCamera.ScreenToWorldPoint(screenPoint);
+        }
     }
 }

@@ -31,6 +31,6 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
 	public interface IMouseZoomHandler
 	{
-		MouseZoomResult HandleZoom(Vector3 zoomTargetPosition, float yMouseScrollDelta);
+		MouseZoomResult HandleZoom(Vector3 zoomTargetWorldPosition, float yMouseScrollDelta);
 	}
 }

@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 			_maxOrthographicSize = maxOrthographicSize;
 		}
 
-        public MouseZoomResult HandleZoom(Vector3 zoomTargetPosition, float yMouseScrollDelta)
+        public MouseZoomResult HandleZoom(Vector3 zoomWorldTargetPosition, float yMouseScrollDelta)
         {
             float newOrthographicSize = FindCameraOrthographicSize(yMouseScrollDelta);
 
@@ -56,7 +56,8 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
             if (yMouseScrollDelta > 0)
             {
                 // Only zooming in is directional
-                newCameraPosition = FindZoomingInCameraPosition(zoomTargetPosition, newOrthographicSize);
+                newCameraPosition = FindZoomingInCameraPosition(zoomWorldTargetPosition, newOrthographicSize);
+                Debug.Log("MouseZoomHandler newCameraPosition: " + newCameraPosition);
             }
 
             return new MouseZoomResult(newOrthographicSize, newCameraPosition);
