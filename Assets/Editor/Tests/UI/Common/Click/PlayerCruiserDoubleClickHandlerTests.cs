@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
     {
         private IDoubleClickHandler<ICruiser> _handler;
         private ICruiser _clickedCruiser;
-        private IDroneManager _droneManager;
+        private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
         private IDroneConsumer _repairDroneConsumer;
         private IRepairCommand _repairCommand;
@@ -23,12 +23,12 @@ namespace BattleCruisers.Tests.UI.Common.Click
         {
             _handler = new PlayerCruiserDoubleClickHandler();
 
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneFocuser = Substitute.For<IDroneFocuser>();
             _repairManager = Substitute.For<IRepairManager>();
             _repairCommand = Substitute.For<IRepairCommand>();
 
             _clickedCruiser = Substitute.For<ICruiser>();
-            _clickedCruiser.DroneManager.Returns(_droneManager);
+            _clickedCruiser.DroneFocuser.Returns(_droneFocuser);
             _clickedCruiser.RepairManager.Returns(_repairManager);
             _clickedCruiser.RepairCommand.Returns(_repairCommand);
 
@@ -53,9 +53,8 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _handler.OnDoubleClick(_clickedCruiser);
 
-            _droneManager.Received().ToggleDroneConsumerFocus(_repairDroneConsumer);
+            _droneFocuser.Received().ToggleDroneConsumerFocus(_repairDroneConsumer, isTriggeredByPlayer: true);
         }
-
 
         [Test]
         public void OnDoubleClick_RightFaction_CannotRepair_DoesNothing()
@@ -65,7 +64,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _handler.OnDoubleClick(_clickedCruiser);
 
-            _droneManager.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(null);
+            _droneFocuser.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(null, default(bool));
         }
     }
 }
