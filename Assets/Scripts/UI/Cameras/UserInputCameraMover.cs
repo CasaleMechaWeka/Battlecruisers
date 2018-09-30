@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.Cameras
 	/// + Scrolling => Via mouse at screen edge
 	/// + Zooming   => Via mouse scroll wheel
 	/// </summary>
-    /// FELIX  Update tests :)
 	public class UserInputCameraMover : CameraMover, IUserInputCameraMover
 	{
 		private readonly ICamera _camera;

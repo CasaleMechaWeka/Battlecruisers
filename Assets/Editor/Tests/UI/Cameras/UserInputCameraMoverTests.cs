@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras
 {
-    // FELIX  Update :P
     public class UserInputCameraMoverTests
     {
         private IUserInputCameraMover _mover;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         private float _sameOrthographicSize, _differentOrthographicSize;
         private Vector3 _samePosition, _differentPosition;
         private int _zoomCounter, _scrollCounter;
-        private Vector3 _zoomTargetWorldPosition, _zoomTargetViewportPosition;
+        private Vector3 _zoomTargetWorldPosition;
 
         [SetUp]
         public void SetuUp()
@@ -60,8 +59,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _mover.Scrolled += (sender, e) => _scrollCounter++;
 
             _zoomTargetWorldPosition = new Vector3(-5, 3, 0);
-            _zoomTargetViewportPosition = new Vector3(0.1f, 0.9f, 0);
-            _camera.WorldToViewportPoint(_zoomTargetWorldPosition).Returns(_zoomTargetViewportPosition);
+            _camera.ScreenToWorldPoint(_input.MousePosition).Returns(_zoomTargetWorldPosition);
         }
 
         [Test]
@@ -70,7 +68,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
         }
 
-        //#region MoveCamera
+        #region MoveCamera
         [Test]
         public void MoveCamere_WhileDisabled_DoesNothing()
         {
@@ -78,116 +76,94 @@ namespace BattleCruisers.Tests.UI.Cameras
 
             _mover.MoveCamera(_deltaTime);
 
-            _zoomHandler.DidNotReceiveWithAnyArgs().HandleZoom(default(Vector3), default(float));
-            _scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3));
+            DidNotReceiveZoom();
+            DidNotReceiveScroll();
         }
 
-        //[Test]
-        //public void MoveCamera_InZoom_InScroll_CurrentState_UserInput()
-        //{
-        //    Scroll(shouldScroll: true);
-        //    Zoom(shouldZoom: true);
+        [Test]
+        public void MoveCamera_InZoom()
+        {
+            Zoom(shouldZoom: true);
+            Scroll(shouldScroll: false);
 
-        //    _mover.MoveCamera(_deltaTime);
+            _mover.MoveCamera(_deltaTime);
 
-        //    ReceivedScroll();
-        //    ReceivedZoom();
+            ReceivedZoom();
+            DidNotReceiveScroll();
 
-        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-        //    Assert.AreEqual(_differentPosition, _camera.Position);
-        //    Assert.IsNull(_lastArgs);
-        //}
+            Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
+            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.IsNull(_lastArgs);
+            Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
+        }
 
-        //[Test]
-        //public void MoveCamera_InZoom_InScroll_CurrentState_NotUserInput()
-        //{
-        //    Scroll(shouldScroll: true);
-        //    Zoom(shouldZoom: true);
+        [Test]
+        public void MoveCamera_InScroll()
+        {
+            Zoom(shouldZoom: false);
+            Scroll(shouldScroll: true);
 
-        //    _mover.Reset(CameraState.Overview);
-        //    _mover.MoveCamera(_deltaTime);
+            _mover.MoveCamera(_deltaTime);
 
-        //    ReceivedScroll();
-        //    ReceivedZoom();
+            ReceivedScroll();
 
-        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-        //    Assert.AreEqual(_differentPosition, _camera.Position);
-        //    Assert.IsNotNull(_lastArgs);
-        //    Assert.AreEqual(CameraState.UserInputControlled, _lastArgs.NewState);
-        //}
+            Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
+            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.IsNull(_lastArgs);
+        }
 
-        //[Test]
-        //public void MoveCamera_NotInZoom_NotInScroll()
-        //{
-        //    Scroll(shouldScroll: false);
-        //    Zoom(shouldZoom: false);
+        [Test]
+        public void MoveCamera_WhileInZoom_DoesNotScroll()
+        {
+            Zoom(shouldZoom: true);
+            Scroll(shouldScroll: true);
 
-        //    _mover.MoveCamera(_deltaTime);
+            _mover.MoveCamera(_deltaTime);
 
-        //    ReceivedScroll();
-        //    ReceivedZoom();
+            ReceivedZoom();
+            DidNotReceiveScroll();
 
-        //    Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
-        //    Assert.AreEqual(_samePosition, _camera.Position);
-        //    Assert.IsNull(_lastArgs);
-        //}
+            Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
+            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.IsNull(_lastArgs);
+        }
+        #endregion MoveCamera
 
-        //[Test]
-        //public void MoveCamera_InZoom_CurrentState_NotUserInput()
-        //{
-        //    Scroll(shouldScroll: false);
-        //    Zoom(shouldZoom: true);
+        [Test]
+        public void ScrollEventFired()
+        {
+            Scroll(shouldScroll: true);
+            Zoom(shouldZoom: false);
 
-        //    _mover.MoveCamera(_deltaTime);
+            _mover.MoveCamera(_deltaTime);
 
-        //    ReceivedScroll();
-        //    ReceivedZoom();
+            Assert.AreEqual(1, _scrollCounter);
+            Assert.AreEqual(0, _zoomCounter);
+        }
 
-        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-        //    Assert.AreEqual(_samePosition, _camera.Position);
-        //    Assert.IsNull(_lastArgs);
-        //}
+        [Test]
+        public void ZoomEventFired()
+        {
+            Zoom(shouldZoom: true);
+            Scroll(shouldScroll: false);
 
-        //[Test]
-        //public void MoveCamera_InScroll_CurrentState_NotUserInput()
-        //{
-        //    Scroll(shouldScroll: true);
-        //    Zoom(shouldZoom: false);
+            _mover.MoveCamera(_deltaTime);
 
-        //    _mover.MoveCamera(_deltaTime);
+            Assert.AreEqual(1, _zoomCounter);
+            Assert.AreEqual(0, _scrollCounter);
+        }
 
-        //    ReceivedScroll();
-        //    ReceivedZoom();
+        [Test]
+        public void EventsNotFired()
+        {
+            Scroll(shouldScroll: false);
+            Zoom(shouldZoom: false);
 
-        //    Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
-        //    Assert.AreEqual(_differentPosition, _camera.Position);
-        //    Assert.IsNull(_lastArgs);
-        //}
-        //#endregion MoveCamera
+            _mover.MoveCamera(_deltaTime);
 
-        //[Test]
-        //public void EventsFired()
-        //{
-        //    Scroll(shouldScroll: true);
-        //    Zoom(shouldZoom: true);
-
-        //    _mover.MoveCamera(_deltaTime);
-
-        //    Assert.AreEqual(1, _scrollCounter);
-        //    Assert.AreEqual(1, _zoomCounter);
-        //}
-
-        //[Test]
-        //public void EventsNotFired()
-        //{
-        //    Scroll(shouldScroll: false);
-        //    Zoom(shouldZoom: false);
-
-        //    _mover.MoveCamera(_deltaTime);
-
-        //    Assert.AreEqual(0, _scrollCounter);
-        //    Assert.AreEqual(0, _zoomCounter);
-        //}
+            Assert.AreEqual(0, _scrollCounter);
+            Assert.AreEqual(0, _zoomCounter);
+        }
 
         private void Zoom(bool shouldZoom)
         {
@@ -203,6 +179,11 @@ namespace BattleCruisers.Tests.UI.Cameras
             _zoomHandler.Received().HandleZoom(_zoomTargetWorldPosition, _input.MouseScrollDelta.y);
         }
 
+        private void DidNotReceiveZoom()
+        {
+            _zoomHandler.DidNotReceiveWithAnyArgs().HandleZoom(default(Vector3), default(float));
+        }
+
         private void Scroll(bool shouldScroll)
         {
             Vector3 desiredPosition = shouldScroll ? _differentPosition : _samePosition;
@@ -212,6 +193,11 @@ namespace BattleCruisers.Tests.UI.Cameras
         private void ReceivedScroll()
         {
             _scrollHandler.Received().FindCameraPosition(_sameOrthographicSize, _samePosition, _input.MousePosition);
+        }
+
+        private void DidNotReceiveScroll()
+        {
+            _scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3));
         }
     }
 }
