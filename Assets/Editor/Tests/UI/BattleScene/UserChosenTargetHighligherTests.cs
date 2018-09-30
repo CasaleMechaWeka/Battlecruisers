@@ -26,18 +26,18 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _target1 = Substitute.For<ITarget>();
             _highlight1 = Substitute.For<IHighlight>();
-            _highlightHelper.CreateHighlight(_target1).Returns(_highlight1);
+            _highlightHelper.CreateHighlight(_target1, usePulsingAnimation: false).Returns(_highlight1);
 
             _target2 = Substitute.For<ITarget>();
             _highlight2 = Substitute.For<IHighlight>();
-            _highlightHelper.CreateHighlight(_target2).Returns(_highlight2);
+            _highlightHelper.CreateHighlight(_target2, usePulsingAnimation: false).Returns(_highlight2);
         }
 
         [Test]
         public void UserChoosesTarget_HighlightsTarget()
         {
             ChooseTarget(_target1);
-            _highlightHelper.Received().CreateHighlight(_target1);
+            _highlightHelper.Received().CreateHighlight(_target1, usePulsingAnimation: false);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             // User chooses a different target
             ChooseTarget(_target2);
             _highlight1.Received().Destroy();
-            _highlightHelper.Received().CreateHighlight(_target2);
+            _highlightHelper.Received().CreateHighlight(_target2, usePulsingAnimation: false);
         }
 
         [Test]
