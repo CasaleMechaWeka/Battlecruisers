@@ -112,5 +112,63 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             Assert.AreEqual(expectedPosition, _calculator.FindCruiserCameraPosition(_cruiser, orthographicSize, zValue));
         }
+
+        [Test]
+        public void FindZoomingCameraPosition_CameraWasSouthWest()
+        {
+            Vector2 zoomTarget = new Vector2(-5, 3);
+            // From when camera was (-1, -1)
+            Vector2 targetViewportPosition = new Vector2(0.2f, 0.9f);
+            float cameraOrthographicSize = 3;
+            float cameraAspectRatio = 1.3333f;
+            float cameraPositionZ = -10;
+
+            float cameraHeight = 2 * cameraOrthographicSize;
+            float cameraWidth = cameraAspectRatio * cameraHeight;
+
+            float expectedX = (cameraWidth / 2) + zoomTarget.x - (targetViewportPosition.x * cameraWidth);
+            float expectedY = (cameraHeight / 2) + zoomTarget.y - (targetViewportPosition.y * cameraHeight);
+            Vector3 expectedCameraPosition = new Vector3(expectedX, expectedY, cameraPositionZ);
+
+            Vector3 actualCameraPosition 
+                = _calculator.FindZoomingCameraPosition(
+                    zoomTarget, 
+                    targetViewportPosition, 
+                    cameraOrthographicSize, 
+                    cameraAspectRatio, 
+                    cameraPositionZ);
+
+            Debug.Log("expectedCameraPosition: " + expectedCameraPosition + "  actualCameraPosition: " + actualCameraPosition);
+            Assert.AreEqual(expectedCameraPosition, actualCameraPosition);
+        }
+
+        [Test]
+        public void FindZoomingCameraPosition_CameraWasNorthEast()
+        {
+            Vector2 zoomTarget = new Vector2(-5, 3);
+            // From when camera was (1, 1)
+            Vector2 targetViewportPosition = new Vector2(0.1f, 0.7f);
+            float cameraOrthographicSize = 3;
+            float cameraAspectRatio = 1.3333f;
+            float cameraPositionZ = -10;
+
+            float cameraHeight = 2 * cameraOrthographicSize;
+            float cameraWidth = cameraAspectRatio * cameraHeight;
+
+            float expectedX = (cameraWidth / 2) + zoomTarget.x - (targetViewportPosition.x * cameraWidth);
+            float expectedY = (cameraHeight / 2) + zoomTarget.y - (targetViewportPosition.y * cameraHeight);
+            Vector3 expectedCameraPosition = new Vector3(expectedX, expectedY, cameraPositionZ);
+
+            Vector3 actualCameraPosition
+                = _calculator.FindZoomingCameraPosition(
+                    zoomTarget,
+                    targetViewportPosition,
+                    cameraOrthographicSize,
+                    cameraAspectRatio,
+                    cameraPositionZ);
+
+            Debug.Log("expectedCameraPosition: " + expectedCameraPosition + "  actualCameraPosition: " + actualCameraPosition);
+            Assert.AreEqual(expectedCameraPosition, actualCameraPosition);
+        }
     }
 }

@@ -16,7 +16,12 @@ namespace BattleCruisers.Scenes.Test
             Debug.Log("Camera size: " + FindSize());
 
             camera.orthographicSize = 3;
-            camera.transform.position = new Vector3(-2.6f, 0.6f, camera.transform.position.z);
+            
+            // Camera position:  (-1, -1)
+            //camera.transform.position = new Vector3(-2.6f, 0.6f, camera.transform.position.z);
+
+            // Camera position:  (1, 1)
+            camera.transform.position = new Vector3(-1.8f, 1.8f, camera.transform.position.z);
 
             //Debug.Log("camera.transform.position: " + camera.transform.position);
 
