@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
+    // FELIX  Update tests :)
 	public class CameraCalculator : ICameraCalculator
 	{
 		private readonly ICamera _camera;
@@ -71,5 +72,27 @@ namespace BattleCruisers.UI.Cameras.Helpers
                     FindCameraYPosition(orthographicSize), 
                     zValue);
         }
-	}
+
+        public Vector3 FindZoomingCameraPosition(
+            Vector2 zoomTarget, 
+            Vector2 targetViewportPosition, 
+            float cameraOrthographicSize, 
+            float cameraAspectRatio,
+            float cameraPositionZ)
+        {
+            float cameraHeight = 2 * cameraOrthographicSize;
+            float cameraWidth = cameraAspectRatio * cameraHeight;
+
+            return
+                new Vector3(
+                    FindDimension(cameraWidth, zoomTarget.x, targetViewportPosition.x),
+                    FindDimension(cameraHeight, zoomTarget.y, targetViewportPosition.y),
+                    cameraPositionZ);
+        }
+
+        private float FindDimension(float dimension, float zoomTargetDimension, float targetViewportDimension)
+        {
+            return (dimension / 2) + zoomTargetDimension - (targetViewportDimension * dimension);
+        }
+    }
 }
