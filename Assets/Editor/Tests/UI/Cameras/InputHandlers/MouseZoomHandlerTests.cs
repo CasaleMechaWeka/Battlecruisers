@@ -1,68 +1,103 @@
-﻿//using BattleCruisers.Data.Settings;
-//using BattleCruisers.UI.Cameras;
-//using BattleCruisers.UI.Cameras.Helpers;
-//using BattleCruisers.UI.Cameras.InputHandlers;
-//using BattleCruisers.Utils.PlatformAbstractions;
-//using NSubstitute;
-//using NUnit.Framework;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.InputHandlers;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
+using NSubstitute;
+using NUnit.Framework;
+using UnityEngine;
 
-//namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
-//{
-//    // FELIX  update :P
-//	public class MouseZoomHandlerTests
-//    {
-//		private IMouseZoomHandler _zoomHandler;
-//		private ISettingsManager _settingsManager;
-//        private IDeltaTimeProvider _deltaTimeProvider;
+namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
+{
+    public class MouseZoomHandlerTests
+    {
+        private IMouseZoomHandler _zoomHandler;
+        private ICamera _camera;
+        private ISettingsManager _settingsManager;
+        private IDeltaTimeProvider _deltaTimeProvider;
+        private ICameraCalculator _calculator;
+        private IPositionClamper _cameraPositionClamper;
+        private Vector3 _zoomWorldTargetPosition;
 
-//        [SetUp]
-//        public void SetuUp()
-//        {
-//			_settingsManager = Substitute.For<ISettingsManager>();
-//			_settingsManager.ZoomSpeed.Returns(0.5f);
+        [SetUp]
+        public void SetuUp()
+        {
+            _camera = Substitute.For<ICamera>();
+            _camera.OrthographicSize.Returns(10);
+            _camera.Aspect.Returns(1.3333f);
+            _camera.Position.Returns(new Vector3(-1, -1, -10));
 
-//            _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
-//            // * ZOOM_SPEED_MULTIPLIER = 1 :)
-//            _deltaTimeProvider.UnscaledDeltaTime.Returns(0.03333333f);
+            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager.ZoomSpeed.Returns(0.5f);
 
-//            _zoomHandler = new MouseZoomHandler(_settingsManager, _deltaTimeProvider, CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
-//        }
+            _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
+            // * ZOOM_SPEED_MULTIPLIER = 1 :)
+            _deltaTimeProvider.UnscaledDeltaTime.Returns(0.03333333f);
 
-//        [Test]
-//		public void FindCameraOrthographicSize_NonZeroScroll()
-//        {
-//			float currentSize = 10;
-//			float yScroll = -5;
-//			float expectedSize = currentSize - _settingsManager.ZoomSpeed * yScroll;
+            _calculator = Substitute.For<ICameraCalculator>();
 
-//			Assert.AreEqual(expectedSize, _zoomHandler.FindCameraOrthographicSize(currentSize, yScroll));
-//        }
+            _cameraPositionClamper = Substitute.For<IPositionClamper>();
 
-//        [Test]
-//        public void FindCameraOrthographicSize_NonZeroScroll_TooBigOrthographicSize_Clamped()
-//        {
-//			float currentSize = CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE;
-//			float yScroll = -5;
-            
-//			Assert.AreEqual(CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE, _zoomHandler.FindCameraOrthographicSize(currentSize, yScroll));
-//        }
+            _zoomHandler
+                = new MouseZoomHandler(
+                    _camera,
+                    _settingsManager,
+                    _deltaTimeProvider,
+                    _calculator,
+                    _cameraPositionClamper,
+                    CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE,
+                    CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 
-//        [Test]
-//        public void FindCameraOrthographicSize_NonZeroScroll_TooSmallOrthographicSize_Clamped()
-//        {
-//			float currentSize = CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE;
-//            float yScroll = 5;
+            _zoomWorldTargetPosition = new Vector3(-5, 3, 0);
+        }
 
-//            Assert.AreEqual(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, _zoomHandler.FindCameraOrthographicSize(currentSize, yScroll));
-//        }
+        [Test]
+        public void HandleZoom_NoZoom()
+        {
+            float yScroll = 0;
+            MouseZoomResult expectedResult = new MouseZoomResult(_camera.OrthographicSize, _camera.Position);
+            MouseZoomResult actualResult = _zoomHandler.HandleZoom(_zoomWorldTargetPosition, yScroll);
 
-//        [Test]
-//        public void FindCameraOrthographicSize_ZeroScroll()
-//        {
-//			float currentSize = 10;
-//            float yScroll = 0;
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
-//            Assert.AreEqual(currentSize, _zoomHandler.FindCameraOrthographicSize(currentSize, yScroll));
-//        }
-//    }
-//}
+        [Test]
+        public void HandleZoom_ZoomOut()
+        {
+            float yScroll = -5;
+            float expectedSize = _camera.OrthographicSize - _settingsManager.ZoomSpeed * yScroll;
+            MouseZoomResult expectedResult = new MouseZoomResult(expectedSize, _camera.Position);
+            MouseZoomResult actualResult = _zoomHandler.HandleZoom(_zoomWorldTargetPosition, yScroll);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
+        public void HandleZoom_ZoomIn()
+        {
+            float yScroll = 5;
+            float expectedSize = _camera.OrthographicSize - _settingsManager.ZoomSpeed * yScroll;
+
+            Vector3 targetViewportPosition = new Vector3(0.1f, 0.9f, 0);
+            _camera.WorldToViewportPoint(_zoomWorldTargetPosition).Returns(targetViewportPosition);
+
+            Vector3 unclampedNewCameraPosition = new Vector3(7, 4, 3);
+            _calculator
+                .FindZoomingCameraPosition(
+                    _zoomWorldTargetPosition,
+                    targetViewportPosition,
+                    expectedSize,
+                    _camera.Aspect,
+                    _camera.Position.z)
+                .Returns(unclampedNewCameraPosition);
+
+            Vector3 clampedNewCameraPosition = new Vector3(4, 4, 3);
+            _cameraPositionClamper.Clamp(unclampedNewCameraPosition).Returns(clampedNewCameraPosition);
+
+            MouseZoomResult expectedResult = new MouseZoomResult(expectedSize, clampedNewCameraPosition);
+            MouseZoomResult actualResult = _zoomHandler.HandleZoom(_zoomWorldTargetPosition, yScroll);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+    }
+}

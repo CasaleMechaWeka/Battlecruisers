@@ -57,6 +57,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
             {
                 // Only zooming in is directional
                 newCameraPosition = FindZoomingInCameraPosition(zoomWorldTargetPosition, newOrthographicSize);
+                newCameraPosition = _cameraPositionClamper.Clamp(newCameraPosition);
                 Debug.Log("MouseZoomHandler newCameraPosition: " + newCameraPosition);
             }
 
@@ -65,13 +66,15 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
 		private float FindCameraOrthographicSize(float yMouseScrollDelta)
 		{
+            float newOrthographicSize = _camera.OrthographicSize;
+
 			if (!Mathf.Approximately(yMouseScrollDelta, 0))
 			{
-                _camera.OrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
-				_camera.OrthographicSize = Mathf.Clamp(_camera.OrthographicSize, _minOrthographicSize, _maxOrthographicSize);
+                newOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
+                newOrthographicSize = Mathf.Clamp(newOrthographicSize, _minOrthographicSize, _maxOrthographicSize);
 			}
 
-			return _camera.OrthographicSize;
+			return newOrthographicSize;
 		}
 
         private Vector3 FindZoomingInCameraPosition(Vector3 zoomTargetPosition, float newOrthographicSize)
