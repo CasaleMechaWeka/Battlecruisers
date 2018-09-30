@@ -73,14 +73,13 @@ namespace BattleCruisers.UI.Cameras
 			Rectangle cameraBounds = new Rectangle(CAMERA_POSITION_MIN_X, CAMERA_POSITION_MAX_X, CAMERA_POSITION_MIN_Y, CAMERA_POSITION_MAX_Y);
 			IPositionClamper cameraPositionClamper = new PositionClamper(cameraBounds);
             IDeltaTimeProvider deltaTimeProvider = new TimeBC();
-            IScrollPositionFinder scrollPositionFinder = new ScreenEdgePositionFinder(screen);
 
-            IScrollHandler scrollHandler
+			IScrollHandler scrollHandler
 				= new ScrollHandler(
 					cameraCalculator,
+					screen,
 					cameraPositionClamper,
-                    deltaTimeProvider,
-                    scrollPositionFinder);
+                    deltaTimeProvider);
 
 			IMouseZoomHandler mouseZoomHandler
 				= new MouseZoomHandler(
