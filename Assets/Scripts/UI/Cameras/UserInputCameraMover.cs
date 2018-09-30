@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Cameras
 	/// + Scrolling => Via mouse at screen edge
 	/// + Zooming   => Via mouse scroll wheel
 	/// </summary>
+    /// FELIX  Update tests :)
 	public class UserInputCameraMover : CameraMover, IUserInputCameraMover
 	{
 		private readonly ICamera _camera;
@@ -19,6 +20,9 @@ namespace BattleCruisers.UI.Cameras
 		private readonly IScrollHandler _scrollHandler;
         private readonly IMouseZoomHandler _zoomHandler;
 		private readonly INavigationSettings _navigationSettings;
+
+		public event EventHandler Zoomed;
+		public event EventHandler Scrolled;
 
 		public UserInputCameraMover(
 			ICamera camera, 
@@ -35,9 +39,6 @@ namespace BattleCruisers.UI.Cameras
 			_zoomHandler = zoomHandler;
 			_navigationSettings = navigationSettings;
 		}
-
-		public event EventHandler Zoomed;
-		public event EventHandler Scrolled;
 
 		public override void MoveCamera(float deltaTime)
 		{
@@ -81,19 +82,22 @@ namespace BattleCruisers.UI.Cameras
         /// <returns><c>true</c>, if in zoom, <c>false</c> otherwise.</returns>
         private bool HandleZoom()
         {
-            float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y);
+            Debug.Log("_input.MouseScrollDelta.y: " + _input.MouseScrollDelta.y);
 
-            if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
-            {
-                _camera.OrthographicSize = desiredOrthographicSize;
+            // FELIX
+            //        float desiredOrthographicSize = _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y);
 
-				if (Zoomed != null)
-				{
-					Zoomed.Invoke(this, EventArgs.Empty);
-				}
+            //        if (!Mathf.Approximately(desiredOrthographicSize, _camera.OrthographicSize))
+            //        {
+            //            _camera.OrthographicSize = desiredOrthographicSize;
 
-                return true;
-            }
+            //if (Zoomed != null)
+            //{
+            //	Zoomed.Invoke(this, EventArgs.Empty);
+            //}
+
+            //            return true;
+            //        }
 
             return false;
         }

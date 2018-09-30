@@ -83,8 +83,11 @@ namespace BattleCruisers.UI.Cameras
 
 			IMouseZoomHandler mouseZoomHandler
 				= new MouseZoomHandler(
+                    camera,
 					settingsManager,
                     deltaTimeProvider,
+                    cameraCalculator,
+                    cameraPositionClamper,
 					CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE,
 					CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 

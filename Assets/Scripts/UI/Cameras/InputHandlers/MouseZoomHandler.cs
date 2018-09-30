@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -13,35 +14,76 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 	/// </summary>
 	public class MouseZoomHandler : IMouseZoomHandler
 	{
+        private readonly ICamera _camera;
 		private readonly ISettingsManager _settingsManager;
         private readonly IDeltaTimeProvider _deltaTimeProvider;
-		private readonly float _minOrthographicSize;
+        private readonly ICameraCalculator _calculator;
+        private readonly IPositionClamper _cameraPositionClamper;
+        private readonly float _minOrthographicSize;
 		private readonly float _maxOrthographicSize;
 
 		// Originally did not take time delta into consideration.  So multiply
 		// by this constant so zoom is roughly the same when time delta is normal.
 		private const float ZOOM_SPEED_MULTIPLIER = 30;
 
-        public MouseZoomHandler(ISettingsManager settingsManager, IDeltaTimeProvider deltaTimeProvider, float minOrthographicSize, float maxOrthographicSize)
+        public MouseZoomHandler(
+            ICamera camera,
+            ISettingsManager settingsManager, 
+            IDeltaTimeProvider deltaTimeProvider,
+            ICameraCalculator calculator, 
+            IPositionClamper cameraPositionClamper,
+            float minOrthographicSize, 
+            float maxOrthographicSize)
 		{
-            Helper.AssertIsNotNull(settingsManager, deltaTimeProvider);
+            Helper.AssertIsNotNull(camera, settingsManager, deltaTimeProvider, calculator, cameraPositionClamper);
 			Assert.IsTrue(minOrthographicSize < maxOrthographicSize);
 
+            _camera = camera;
 			_settingsManager = settingsManager;
             _deltaTimeProvider = deltaTimeProvider;
+            _calculator = calculator;
+            _cameraPositionClamper = cameraPositionClamper;
 			_minOrthographicSize = minOrthographicSize;
 			_maxOrthographicSize = maxOrthographicSize;
 		}
 
-		public float FindCameraOrthographicSize(float cameraOrthographicSize, float yMouseScrollDelta)
+        public MouseZoomResult HandleZoom(Vector3 zoomTargetPosition, float yMouseScrollDelta)
+        {
+            float newOrthographicSize = FindCameraOrthographicSize(yMouseScrollDelta);
+
+            Vector3 newCameraPosition = _camera.Position;
+
+            if (yMouseScrollDelta > 0)
+            {
+                // Only zooming in is directional
+                newCameraPosition = FindZoomingInCameraPosition(zoomTargetPosition, newOrthographicSize);
+            }
+
+            return new MouseZoomResult(newOrthographicSize, newCameraPosition);
+        }
+
+		private float FindCameraOrthographicSize(float yMouseScrollDelta)
 		{
 			if (!Mathf.Approximately(yMouseScrollDelta, 0))
 			{
-                cameraOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
-				cameraOrthographicSize = Mathf.Clamp(cameraOrthographicSize, _minOrthographicSize, _maxOrthographicSize);
+                _camera.OrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
+				_camera.OrthographicSize = Mathf.Clamp(_camera.OrthographicSize, _minOrthographicSize, _maxOrthographicSize);
 			}
 
-			return cameraOrthographicSize;
+			return _camera.OrthographicSize;
 		}
-	}
+
+        private Vector3 FindZoomingInCameraPosition(Vector3 zoomTargetPosition, float newOrthographicSize)
+        {
+            Vector3 targetViewportPosition = _camera.WorldToViewportPoint(zoomTargetPosition);
+
+            return
+                _calculator.FindZoomingCameraPosition(
+                    zoomTargetPosition,
+                    targetViewportPosition,
+                    newOrthographicSize,
+                    _camera.Aspect,
+                    _camera.Position.z);
+        }
+    }
 }
