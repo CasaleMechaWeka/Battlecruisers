@@ -1,208 +1,217 @@
-﻿//using BattleCruisers.UI.BattleScene.Navigation;
-//using BattleCruisers.UI.Cameras;
-//using BattleCruisers.UI.Cameras.InputHandlers;
-//using BattleCruisers.Utils.PlatformAbstractions;
-//using NSubstitute;
-//using NUnit.Framework;
-//using UnityEngine;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.InputHandlers;
+using BattleCruisers.Utils.PlatformAbstractions;
+using NSubstitute;
+using NUnit.Framework;
+using UnityEngine;
 
-//namespace BattleCruisers.Tests.UI.Cameras
-//{
-//    // FELIX  Update :P
-//	public class UserInputCameraMoverTests
-//    {
-//		private IUserInputCameraMover _mover;
+namespace BattleCruisers.Tests.UI.Cameras
+{
+    // FELIX  Update :P
+    public class UserInputCameraMoverTests
+    {
+        private IUserInputCameraMover _mover;
 
-//		private ICamera _camera;
-//        private IInput _input;
-//        private IScrollHandler _scrollHandler;
-//        private IMouseZoomHandler _zoomHandler;
-//		private INavigationSettings _navigationSettings;
-//		private CameraStateChangedArgs _lastArgs;
-//		private float _deltaTime;
-//		private float _sameOrthographicSize, _differentOrthographicSize;
-//		private Vector3 _samePosition, _differentPosition;
-//		private int _zoomCounter, _scrollCounter;
+        private ICamera _camera;
+        private IInput _input;
+        private IScrollHandler _scrollHandler;
+        private IMouseZoomHandler _zoomHandler;
+        private INavigationSettings _navigationSettings;
+        private CameraStateChangedArgs _lastArgs;
+        private float _deltaTime;
+        private float _sameOrthographicSize, _differentOrthographicSize;
+        private Vector3 _samePosition, _differentPosition;
+        private int _zoomCounter, _scrollCounter;
+        private Vector3 _zoomTargetWorldPosition, _zoomTargetViewportPosition;
 
-//        [SetUp]
-//        public void SetuUp()
-//        {
-//			_camera = Substitute.For<ICamera>();
-//			_input = Substitute.For<IInput>();
-//			_scrollHandler = Substitute.For<IScrollHandler>();
-//			_zoomHandler = Substitute.For<IMouseZoomHandler>();
+        [SetUp]
+        public void SetuUp()
+        {
+            _camera = Substitute.For<ICamera>();
+            _input = Substitute.For<IInput>();
+            _scrollHandler = Substitute.For<IScrollHandler>();
+            _zoomHandler = Substitute.For<IMouseZoomHandler>();
 
-//			_navigationSettings = Substitute.For<INavigationSettings>();
-//			_navigationSettings.IsUserInputEnabled.Returns(true);
+            _navigationSettings = Substitute.For<INavigationSettings>();
+            _navigationSettings.IsUserInputEnabled.Returns(true);
 
-//			_mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler, _navigationSettings);
-            
-//			_lastArgs = null;
-//			_mover.StateChanged += (sender, e) => _lastArgs = e;
+            _mover = new UserInputCameraMover(_camera, _input, _scrollHandler, _zoomHandler, _navigationSettings);
 
-//            _samePosition = new Vector3(1, 2, 3);
-//            _differentPosition = new Vector3(3, 2, 1);
-//            _input.MousePosition.Returns(_samePosition);
-//			_input.MouseScrollDelta.Returns(new Vector2(5, 4));
+            _lastArgs = null;
+            _mover.StateChanged += (sender, e) => _lastArgs = e;
 
-//			_sameOrthographicSize = 72.1f;
-//			_differentOrthographicSize = 12.7f;
-//			_camera.OrthographicSize = _sameOrthographicSize;
-//			_camera.Position = _samePosition;
+            _samePosition = new Vector3(1, 2, 3);
+            _differentPosition = new Vector3(3, 2, 1);
+            _input.MousePosition.Returns(_samePosition);
+            _input.MouseScrollDelta.Returns(new Vector2(5, 4));
 
-//			_deltaTime = 0.123f;
+            _sameOrthographicSize = 72.1f;
+            _differentOrthographicSize = 12.7f;
+            _camera.OrthographicSize = _sameOrthographicSize;
+            _camera.Position = _samePosition;
 
-//			_zoomCounter = 0;
-//			_mover.Zoomed += (sender, e) => _zoomCounter++;
+            _deltaTime = 0.123f;
 
-//			_scrollCounter = 0;
-//			_mover.Scrolled += (sender, e) => _scrollCounter++;
-//        }
+            _zoomCounter = 0;
+            _mover.Zoomed += (sender, e) => _zoomCounter++;
 
-//        [Test]
-//		public void State()
-//        {
-//			Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
-//        }
+            _scrollCounter = 0;
+            _mover.Scrolled += (sender, e) => _scrollCounter++;
 
-//		#region MoveCamera
-//		[Test]
-//        public void MoveCamere_WhileDisabled_DoesNothing()
-//		{
-//			_navigationSettings.IsUserInputEnabled.Returns(false);
+            _zoomTargetWorldPosition = new Vector3(-5, 3, 0);
+            _zoomTargetViewportPosition = new Vector3(0.1f, 0.9f, 0);
+            _camera.WorldToViewportPoint(_zoomTargetWorldPosition).Returns(_zoomTargetViewportPosition);
+        }
 
-//			_mover.MoveCamera(_deltaTime);
+        [Test]
+        public void State()
+        {
+            Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
+        }
 
-//			_scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3));
-//		}
+        //#region MoveCamera
+        [Test]
+        public void MoveCamere_WhileDisabled_DoesNothing()
+        {
+            _navigationSettings.IsUserInputEnabled.Returns(false);
 
-//		[Test]
-//		public void MoveCamera_InZoom_InScroll_CurrentState_UserInput()
-//        {
-//			Scroll(shouldScroll: true);
-//            Zoom(shouldZoom: true);
+            _mover.MoveCamera(_deltaTime);
 
-//			_mover.MoveCamera(_deltaTime);
+            _zoomHandler.DidNotReceiveWithAnyArgs().HandleZoom(default(Vector3), default(float));
+            _scrollHandler.DidNotReceiveWithAnyArgs().FindCameraPosition(default(float), default(Vector3), default(Vector3));
+        }
 
-//			ReceivedScroll();
-//            ReceivedZoom();
+        //[Test]
+        //public void MoveCamera_InZoom_InScroll_CurrentState_UserInput()
+        //{
+        //    Scroll(shouldScroll: true);
+        //    Zoom(shouldZoom: true);
 
-//			Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-//			Assert.AreEqual(_differentPosition, _camera.Position);
-//			Assert.IsNull(_lastArgs);
-//        }
+        //    _mover.MoveCamera(_deltaTime);
 
-//		[Test]
-//        public void MoveCamera_InZoom_InScroll_CurrentState_NotUserInput()
-//        {
-//			Scroll(shouldScroll: true);
-//            Zoom(shouldZoom: true);
+        //    ReceivedScroll();
+        //    ReceivedZoom();
 
-//			_mover.Reset(CameraState.Overview);
-//			_mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
+        //    Assert.AreEqual(_differentPosition, _camera.Position);
+        //    Assert.IsNull(_lastArgs);
+        //}
 
-//            ReceivedScroll();
-//            ReceivedZoom();
+        //[Test]
+        //public void MoveCamera_InZoom_InScroll_CurrentState_NotUserInput()
+        //{
+        //    Scroll(shouldScroll: true);
+        //    Zoom(shouldZoom: true);
 
-//            Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-//            Assert.AreEqual(_differentPosition, _camera.Position);
-//			Assert.IsNotNull(_lastArgs);
-//			Assert.AreEqual(CameraState.UserInputControlled, _lastArgs.NewState);
-//        }
+        //    _mover.Reset(CameraState.Overview);
+        //    _mover.MoveCamera(_deltaTime);
 
-//		[Test]
-//        public void MoveCamera_NotInZoom_NotInScroll()
-//        {
-//			Scroll(shouldScroll: false);
-//            Zoom(shouldZoom: false);
+        //    ReceivedScroll();
+        //    ReceivedZoom();
 
-//            _mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
+        //    Assert.AreEqual(_differentPosition, _camera.Position);
+        //    Assert.IsNotNull(_lastArgs);
+        //    Assert.AreEqual(CameraState.UserInputControlled, _lastArgs.NewState);
+        //}
 
-//            ReceivedScroll();
-//            ReceivedZoom();
+        //[Test]
+        //public void MoveCamera_NotInZoom_NotInScroll()
+        //{
+        //    Scroll(shouldScroll: false);
+        //    Zoom(shouldZoom: false);
 
-//			Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
-//            Assert.AreEqual(_samePosition, _camera.Position);
-//            Assert.IsNull(_lastArgs);
-//        }
+        //    _mover.MoveCamera(_deltaTime);
 
-//		[Test]
-//        public void MoveCamera_InZoom_CurrentState_NotUserInput()
-//        {
-//			Scroll(shouldScroll: false);
-//            Zoom(shouldZoom: true);
+        //    ReceivedScroll();
+        //    ReceivedZoom();
 
-//            _mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
+        //    Assert.AreEqual(_samePosition, _camera.Position);
+        //    Assert.IsNull(_lastArgs);
+        //}
 
-//            ReceivedScroll();
-//            ReceivedZoom();
+        //[Test]
+        //public void MoveCamera_InZoom_CurrentState_NotUserInput()
+        //{
+        //    Scroll(shouldScroll: false);
+        //    Zoom(shouldZoom: true);
 
-//            Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-//			Assert.AreEqual(_samePosition, _camera.Position);
-//            Assert.IsNull(_lastArgs);
-//        }
+        //    _mover.MoveCamera(_deltaTime);
 
-//        [Test]
-//        public void MoveCamera_InScroll_CurrentState_NotUserInput()
-//        {
-//			Scroll(shouldScroll: true);
-//            Zoom(shouldZoom: false);
+        //    ReceivedScroll();
+        //    ReceivedZoom();
 
-//            _mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
+        //    Assert.AreEqual(_samePosition, _camera.Position);
+        //    Assert.IsNull(_lastArgs);
+        //}
 
-//            ReceivedScroll();
-//            ReceivedZoom();
+        //[Test]
+        //public void MoveCamera_InScroll_CurrentState_NotUserInput()
+        //{
+        //    Scroll(shouldScroll: true);
+        //    Zoom(shouldZoom: false);
 
-//            Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
-//            Assert.AreEqual(_differentPosition, _camera.Position);
-//            Assert.IsNull(_lastArgs);
-//        }
-//		#endregion MoveCamera
+        //    _mover.MoveCamera(_deltaTime);
 
-//		[Test]
-//		public void EventsFired()
-//		{
-//			Scroll(shouldScroll: true);
-//            Zoom(shouldZoom: true);
+        //    ReceivedScroll();
+        //    ReceivedZoom();
 
-//            _mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
+        //    Assert.AreEqual(_differentPosition, _camera.Position);
+        //    Assert.IsNull(_lastArgs);
+        //}
+        //#endregion MoveCamera
 
-//			Assert.AreEqual(1, _scrollCounter);
-//			Assert.AreEqual(1, _zoomCounter);
-//		}
+        //[Test]
+        //public void EventsFired()
+        //{
+        //    Scroll(shouldScroll: true);
+        //    Zoom(shouldZoom: true);
 
-//        [Test]
-//        public void EventsNotFired()
-//        {
-//			Scroll(shouldScroll: false);
-//            Zoom(shouldZoom: false);
+        //    _mover.MoveCamera(_deltaTime);
 
-//            _mover.MoveCamera(_deltaTime);
+        //    Assert.AreEqual(1, _scrollCounter);
+        //    Assert.AreEqual(1, _zoomCounter);
+        //}
 
-//            Assert.AreEqual(0, _scrollCounter);
-//            Assert.AreEqual(0, _zoomCounter);
-//        }
+        //[Test]
+        //public void EventsNotFired()
+        //{
+        //    Scroll(shouldScroll: false);
+        //    Zoom(shouldZoom: false);
 
-//		private void Zoom(bool shouldZoom)
-//        {
-//            float desiredOrthographicSize = shouldZoom ? _differentOrthographicSize : _sameOrthographicSize;
-//            _zoomHandler.FindCameraOrthographicSize(_camera.OrthographicSize, _input.MouseScrollDelta.y).Returns(desiredOrthographicSize);
-//        }
+        //    _mover.MoveCamera(_deltaTime);
 
-//		private void ReceivedZoom()
-//        {
-//			_zoomHandler.Received().FindCameraOrthographicSize(_sameOrthographicSize, _input.MouseScrollDelta.y);
-//        }
+        //    Assert.AreEqual(0, _scrollCounter);
+        //    Assert.AreEqual(0, _zoomCounter);
+        //}
 
-//        private void Scroll(bool shouldScroll)
-//        {
-//            Vector3 desiredPosition = shouldScroll ? _differentPosition : _samePosition;
-//            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition).Returns(desiredPosition);
-//        }
+        private void Zoom(bool shouldZoom)
+        {
+            float desiredOrthographicSize = shouldZoom ? _differentOrthographicSize : _sameOrthographicSize;
+            Vector3 desiredCameraPosition = shouldZoom ? _differentPosition : _samePosition;
+            MouseZoomResult zoomResult = new MouseZoomResult(desiredOrthographicSize, desiredCameraPosition);
 
-//        private void ReceivedScroll()
-//		{
-//			_scrollHandler.Received().FindCameraPosition(_sameOrthographicSize, _samePosition, _input.MousePosition);
-//		}
-//    }
-//}
+            _zoomHandler.HandleZoom(_zoomTargetWorldPosition, _input.MouseScrollDelta.y).Returns(zoomResult);
+        }
+
+        private void ReceivedZoom()
+        {
+            _zoomHandler.Received().HandleZoom(_zoomTargetWorldPosition, _input.MouseScrollDelta.y);
+        }
+
+        private void Scroll(bool shouldScroll)
+        {
+            Vector3 desiredPosition = shouldScroll ? _differentPosition : _samePosition;
+            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition).Returns(desiredPosition);
+        }
+
+        private void ReceivedScroll()
+        {
+            _scrollHandler.Received().FindCameraPosition(_sameOrthographicSize, _samePosition, _input.MousePosition);
+        }
+    }
+}
