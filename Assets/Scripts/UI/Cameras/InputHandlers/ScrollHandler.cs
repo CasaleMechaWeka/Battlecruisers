@@ -5,13 +5,11 @@ using BattleCruisers.UI.Cameras.Helpers;
 
 namespace BattleCruisers.UI.Cameras.InputHandlers
 {
-    /// <summary>
-    /// When the mouse touches the edge of the screen we want the screen to scroll
-    /// in that direction.  Similar to real time strategy games like Age of Empires.
-    /// </summary>
-    /// FELIX  Use ScreenEdgePositionFinder :)
-    /// FELIX  Update tests :)
-    public class ScrollHandler : IScrollHandler
+	/// <summary>
+	/// When the mouse touches the edge of the screen we want the screen to scroll
+	/// in that direction.  Similar to real time strategy games like Age of Empires.
+	/// </summary>
+	public class ScrollHandler : IScrollHandler
 	{
 		private readonly ICameraCalculator _calculator;
 		private readonly IScreen _screen;
