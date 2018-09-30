@@ -7,12 +7,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.InputHandlers
 {
-	/// <summary>
-	/// Zooms in and out when the mouse wheel is scrolled.  Similar to Forged
-	/// Alliance scroll, except it is not directional (ie, the mouse position is
-	/// irrelevant, we will not zoom towards the mouse position).
-	/// </summary>
-	public class MouseZoomHandler : IMouseZoomHandler
+    /// <summary>
+    /// Zooms in and out when the mouse wheel is scrolled.  Similar to Forged
+    /// Alliance scroll, except it is not directional (ie, the mouse position is
+    /// irrelevant, we will not zoom towards the mouse position).
+    /// </summary>
+    public class MouseZoomHandler : IMouseZoomHandler
 	{
         private readonly ICamera _camera;
 		private readonly ISettingsManager _settingsManager;
@@ -58,7 +58,6 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
                 // Only zooming in is directional
                 newCameraPosition = FindZoomingInCameraPosition(zoomWorldTargetPosition, newOrthographicSize);
                 newCameraPosition = _cameraPositionClamper.Clamp(newCameraPosition);
-                Debug.Log("MouseZoomHandler newCameraPosition: " + newCameraPosition);
             }
 
             return new MouseZoomResult(newOrthographicSize, newCameraPosition);

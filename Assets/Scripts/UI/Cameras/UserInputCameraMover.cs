@@ -1,18 +1,18 @@
-﻿using System;
-using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	/// <summary>
-	/// Handles camera movement in response to user input:
-	/// + Scrolling => Via mouse at screen edge
-	/// + Zooming   => Via mouse scroll wheel
-	/// </summary>
-	public class UserInputCameraMover : CameraMover, IUserInputCameraMover
+    /// <summary>
+    /// Handles camera movement in response to user input:
+    /// + Scrolling => Via mouse at screen edge
+    /// + Zooming   => Via mouse scroll wheel
+    /// </summary>
+    public class UserInputCameraMover : CameraMover, IUserInputCameraMover
 	{
 		private readonly ICamera _camera;
 		private readonly IInput _input;
@@ -65,14 +65,11 @@ namespace BattleCruisers.UI.Cameras
         private bool HandleZoom()
         {
             Vector3 zoomTargetWorldPosition = _camera.ScreenToWorldPoint(_input.MousePosition);
-            Debug.Log("zoomTargetWorldPosition: " + zoomTargetWorldPosition);
             MouseZoomResult zoomResult = _zoomHandler.HandleZoom(zoomTargetWorldPosition, _input.MouseScrollDelta.y);
 
             // Scroll for directional zoom :D
             if (zoomResult.CameraPosition != _camera.Position)
             {
-                Debug.Log("UserInputCameraMover zoomResult.CameraPosition: " + zoomResult.CameraPosition);
-
                 _camera.Position = zoomResult.CameraPosition;
             }
 
