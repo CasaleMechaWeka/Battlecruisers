@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Update tests :)
 	public class CameraCalculator : ICameraCalculator
 	{
 		private readonly ICamera _camera;
