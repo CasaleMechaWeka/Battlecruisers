@@ -60,6 +60,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             VisibleSetIndex = (lastPlayedLevelNum - 1) / SET_SIZE;
             ShowSet(VisibleSetIndex);
+
+            HomeButtonController homeButton = GetComponentInChildren<HomeButtonController>();
+            Assert.IsNotNull(homeButton);
+            homeButton.Initialise(screensSceneGod);
         }
 
         private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, int numOfSets)
