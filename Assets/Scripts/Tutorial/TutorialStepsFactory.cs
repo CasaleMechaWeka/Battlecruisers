@@ -59,25 +59,25 @@ namespace BattleCruisers.Tutorial
 			steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
 
             // 1. Your cruiser
-            steps.Enqueue(CreateStep_YourCruiser());
+            //steps.Enqueue(CreateStep_YourCruiser());
 
-            // 2. Mouse navigation
-            steps.Enqueue(CreateSteps_MouseNavigation());
+            //// 2. Mouse navigation
+            //steps.Enqueue(CreateSteps_MouseNavigation());
 
-            // 3. Navigation buttons
-            steps.Enqueue(CreateSteps_NavigationButtons());
+            //// 3. Navigation buttons
+            //steps.Enqueue(CreateSteps_NavigationButtons());
 
-            // 4. Enemy cruiser
-            steps.Enqueue(CreateStep_EnemyCruiser());
+            //// 4. Enemy cruiser
+            //steps.Enqueue(CreateStep_EnemyCruiser());
 
-            // Navigate back to player cruiser
-            steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
+            //// Navigate back to player cruiser
+            //steps.Enqueue(CreateStep_NavigateToPlayerCruiser());
 
-            // 5. Speed controls
-            steps.Enqueue(CreateSteps_SpeedControls());
+            //// 5. Speed controls
+            //steps.Enqueue(CreateSteps_SpeedControls());
 
-            // 6. Drones
-            steps.Enqueue(CreateStep_Drones());
+            //// 6. Drones
+            //steps.Enqueue(CreateStep_Drones());
 
             // 7. Building a building
             steps.Enqueue(CreateSteps_BuildDroneStation());
@@ -206,9 +206,9 @@ namespace BattleCruisers.Tutorial
         {
             ITutorialStepArgs dronesArgs
                 = CreateTutorialStepArgs(
-                    "Drones are the only resource.  This is how many drones you have.  The " +
-                    "more drones you have the faster your cruiser works and the better " +
-                    "buildings / units you can build.",
+                    "Builders are the only resource.  This is how many builders you have.  The " +
+                    "more builders you have the faster your cruiser works and the better " +
+                    "buildings and units you can build.",
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
             return CreateClickStep(dronesArgs, _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
         }
@@ -218,14 +218,14 @@ namespace BattleCruisers.Tutorial
             IList<ITutorialStep> buildDroneStationSteps
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
                     SlotType.Utility,
-                    "To get more drones build a drone station.");
+                    "To get more builders construct a builder bay.");
 
             // Congrats!  Wait 3 seconds
             ITutorialStepArgs droneStationCompletedArgs
                 = CreateTutorialStepArgs(
-                    "Nice!  You have gained 2 drones :D",
+                    "Nice!  You have gained 2 builders :D",
                     _tutorialArgs.PlayerCruiserInfo.NumOfDronesButton);
 
             buildDroneStationSteps.Add(
@@ -386,15 +386,17 @@ namespace BattleCruisers.Tutorial
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,
                     buildingButton,
                     _tutorialArgs.TutorialProvider.BuildingPermitter,
-                    buildingToConstruct.Key));
+                    buildingToConstruct.Key,
+                    slotsProvider,
+                    _tutorialArgs.TutorialProvider.SlotPermitter));
 
             // Select a slot
-            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
             ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotsProvider);
             constructionSteps.Add(
                 new SlotsStep(
@@ -484,10 +486,10 @@ namespace BattleCruisers.Tutorial
 					BuildSpeed.InfinitelySlow));
 
 			// TEMP  For testing tutorial, when previous step creating drone station is disabled :)
-			if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
-			{
-				_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
-			}
+			//if (_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones < 6)
+			//{
+			//	_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones = 6;
+			//}
 
 			// 1. Build artillery
 			droneFocusSteps.AddRange(
@@ -502,16 +504,16 @@ namespace BattleCruisers.Tutorial
 			droneFocusSteps.AddRange(
 				CreateSteps_ConstructBuilding(
 					BuildingCategory.Factory,
-					new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "drone station"),
+					new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
 					SlotType.Utility,
-					 "Build a drone station",
+					 "Build a builder bay",
 					 waitForBuildingToComplete: false));
 
 			// 3. Bring up drone station details
 			string focusText =
-				"Note that all drones are building the artillery.  But say you want to build " +
-				"the drone station first.  You can 'focus' the drones on the drone station.  " +
-				"Select the drone station.";
+				"Note that all builders are building the artillery.  But say you want to build " +
+				"the builder bay first.  You can 'focus' the builders on the builder bay.  " +
+				"Select the builder bay.";
 			droneFocusSteps.Add(
 				new BuildingDetailsStep(
 					CreateTutorialStepArgs(focusText, _lastPlayerIncompleteBuildingStartedProvider),
@@ -519,7 +521,7 @@ namespace BattleCruisers.Tutorial
 					_tutorialArgs.TutorialProvider.UIManagerPermissions));
 
 			// 4. Focus drones button
-			string droneFocusButtonText = "This is the building details panel.  Select the 'focus' drones button";
+			string droneFocusButtonText = "This is the building details panel.  Select the 'focus' builders button";
 			IButton droneFocusButton = _tutorialArgs.BuildingDetails.DroneFocusButton;
 			ITutorialStepArgs droneFocusButtonArgs = CreateTutorialStepArgs(droneFocusButtonText, droneFocusButton);
 			droneFocusSteps.Add(
@@ -529,7 +531,7 @@ namespace BattleCruisers.Tutorial
 
 			// 6. Dismiss building details
 			string dismissText =
-				"Nice!  All the drones have moved from the artillery to the drone station.  " +
+				"Nice!  All the builders have moved from the artillery to the builder bay.  " +
 				"Now dismiss the details panel by clicking anywhere in the sky.";
 			droneFocusSteps.Add(
 				new DismissStep(

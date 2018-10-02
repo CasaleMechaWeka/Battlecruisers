@@ -6,9 +6,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
+    /// <summary>
+    /// Must be used in tandem with BuildingButtonStep.
+    /// </summary>
+    /// FELIX  Update tests
     public class SlotsStep : ClickStep
     {
-        private readonly IListProvider<ISlot> _slotsProvider;
         private readonly ISlotPermitter _highlightableSlotPermitter;
 
         public SlotsStep(
@@ -18,17 +21,8 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             : base(args, slotsProvider)
         {
             Assert.IsNotNull(highlightableSlotPermitter);
-
-            _slotsProvider = slotsProvider;
             _highlightableSlotPermitter = highlightableSlotPermitter;
         }
-
-		public override void Start(Action completionCallback)
-		{
-            base.Start(completionCallback);
-
-            _highlightableSlotPermitter.PermittedSlots = _slotsProvider.FindItems();
-		}
 
 		protected override void OnCompleted()
 		{

@@ -40,6 +40,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _clickablesProvider = _slotsProvider;
             _clickablesProvider.FindItems().Returns(_slots);
 
+            /// FELIX  Update tests
             _clickStep = new SlotsStep(_args, _permitter, _slotsProvider);
         }
 
