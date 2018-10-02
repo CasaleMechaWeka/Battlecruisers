@@ -106,13 +106,10 @@ namespace BattleCruisers.Data.Static
                     NewDronesReady = new PrioritisedSoundKey(SoundKeys.Events.DronesNewDronesReady, SoundPriority.VeryLow);
                     Idle = new PrioritisedSoundKey(SoundKeys.Events.DronesIdle, SoundPriority.Low);
                     NotEnoughDronesToBuild = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDronesToBuild, SoundPriority.VeryHigh);
-
-                    // FELIX:  Use different sound once Peter provides :)
-                    NotEnoughDronesToFocus = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
+                    NotEnoughDronesToFocus = new PrioritisedSoundKey(SoundKeys.Events.DronesNotEnoughDronesToFocus, SoundPriority.High);
                     Focusing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
                     AllFocused = new PrioritisedSoundKey(SoundKeys.Events.DronesAllFocused, SoundPriority.High);
-                    // FELIX:  Use different sound once Peter provides :)
-                    Dispersing = new PrioritisedSoundKey(SoundKeys.Events.DronesFocusing, SoundPriority.High);
+                    Dispersing = new PrioritisedSoundKey(SoundKeys.Events.DronesDispersing, SoundPriority.High);
                 }
             }
 
@@ -124,8 +121,7 @@ namespace BattleCruisers.Data.Static
                 static Targetting()
                 {
                     NewTarget = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
-                    // FELIX:  Use different sound once Peter provides :)
-                    TargetCleared = new PrioritisedSoundKey(SoundKeys.Events.TargettingNewTarget, SoundPriority.Normal);
+                    TargetCleared = new PrioritisedSoundKey(SoundKeys.Events.TargettingDeselected, SoundPriority.Normal);
                 }
             }
 

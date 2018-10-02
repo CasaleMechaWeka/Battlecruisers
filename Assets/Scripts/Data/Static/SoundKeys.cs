@@ -87,13 +87,16 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey DronesNewDronesReady { get { return new SoundKey(SoundType.Events, "drones-new-drones-ready"); } }
             public static ISoundKey DronesIdle { get { return new SoundKey(SoundType.Events, "drones-idle"); } }
             public static ISoundKey DronesNotEnoughDronesToBuild { get { return new SoundKey(SoundType.Events, "drones-not-enough-drones-to-build"); } }
+            public static ISoundKey DronesNotEnoughDronesToFocus { get { return new SoundKey(SoundType.Events, "drones-not-enough-drones-to-focus"); } }
             public static ISoundKey DronesFocusing { get { return new SoundKey(SoundType.Events, "drones-focusing"); } }
             public static ISoundKey DronesAllFocused { get { return new SoundKey(SoundType.Events, "drones-all-focused"); } }
+            public static ISoundKey DronesDispersing { get { return new SoundKey(SoundType.Events, "drones-dispersing"); } }
 
             // Other
             public static ISoundKey EnemyStartedUltra { get { return new SoundKey(SoundType.Events, "enemy-started-ultra"); } }
             public static ISoundKey ShieldsDown { get { return new SoundKey(SoundType.Events, "shields-down"); } }
             public static ISoundKey TargettingNewTarget { get { return new SoundKey(SoundType.Events, "targeting-new-target"); } }
+            public static ISoundKey TargettingDeselected { get { return new SoundKey(SoundType.Events, "targeting-untargeted"); } }
         }
 
         public static class Music
