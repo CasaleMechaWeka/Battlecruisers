@@ -11,7 +11,6 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// <summary>
     /// Must be used in tandem with SlotsStep.
     /// </summary>
-    /// FELIX  Update tests
     public class BuildingButtonStep : ClickStep
     {
         private readonly IBuildingPermitter _buildingPermitter;
