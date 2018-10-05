@@ -26,7 +26,7 @@ namespace BattleCruisers.Effects
                     }
                     else
                     {
-                        _particleSystem.Pause();
+                        _particleSystem.Stop();
                     }
                 }
             }
