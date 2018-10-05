@@ -15,6 +15,8 @@ namespace BattleCruisers.Effects
             {
                 if (value != _smokeStrength)
                 {
+                    _smokeStrength = value;
+
                     SmokeStats smokeStats = GetStatsForStrength(_smokeStrength);
 
                     if (smokeStats != null)
