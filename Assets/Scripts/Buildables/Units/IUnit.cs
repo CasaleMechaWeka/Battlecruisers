@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Units
