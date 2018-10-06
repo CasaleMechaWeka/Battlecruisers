@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -32,6 +33,10 @@ namespace BattleCruisers.Buildables
         private NumOfDronesTextController _numOfDronesText;
         private HealthBarController _healthBar;
         private IClickHandler _clickHandler;
+        // Keep reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private SmokeInitialiser _smokeInitialiser;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
@@ -169,6 +174,9 @@ namespace BattleCruisers.Buildables
 
             _damageCapabilities = new List<IDamageCapability>();
             this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
+
+            _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
+            Assert.IsNotNull(_smokeInitialiser);
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
@@ -356,6 +364,7 @@ namespace BattleCruisers.Buildables
             RepairCommand.EmitCanExecuteChanged();
 
             _factoryProvider.Sound.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+            _smokeInitialiser.Initialise(this);
         }
 
         private void EnableRenderers(bool enabled)

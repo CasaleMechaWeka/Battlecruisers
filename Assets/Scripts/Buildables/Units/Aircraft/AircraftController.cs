@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Effects;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
@@ -25,10 +24,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private SmokeInitialiser _smokeInitialiser;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         protected ISpriteChooser _spriteChooser;
 
@@ -87,9 +82,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
             Assert.IsNotNull(_spriteRenderer);
-
-            _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
-            Assert.IsNotNull(_smokeInitialiser);
         }
 
 		protected override void OnInitialised()
@@ -119,11 +111,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
-
             ActiveMovementController = PatrollingMovementController;
-
-            // FELIX  Move to Buildable.  Testing here so I only need to modify aircraft prefabs to begin with :)
-            _smokeInitialiser.Initialise(this);
         }
 
 		protected abstract IList<IPatrolPoint> GetPatrolPoints();
