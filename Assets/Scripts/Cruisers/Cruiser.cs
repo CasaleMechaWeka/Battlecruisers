@@ -10,6 +10,7 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
@@ -33,9 +34,10 @@ namespace BattleCruisers.Cruisers
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         private IUnitConstructionMonitor _unitConstructionMonitor;
-        // Just holding a reference so this does not get garbage collected.
+        // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private FogOfWarManager _fogOfWarManager;
+        private SmokeInitialiser _smokeInitialiser;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public int numOfDrones;
@@ -118,6 +120,9 @@ namespace BattleCruisers.Cruisers
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
+
+            _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
+            Assert.IsNotNull(_smokeInitialiser);
         }
 
         protected override ITextMesh GetRepairDroneNumText()
@@ -153,6 +158,7 @@ namespace BattleCruisers.Cruisers
             SlotWrapper.HideAllSlots();
 
             _unitConstructionMonitor = new UnitConstructionMonitor(this);
+            _smokeInitialiser.Initialise(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
