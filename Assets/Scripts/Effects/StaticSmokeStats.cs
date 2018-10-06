@@ -6,6 +6,7 @@
         /// For:
         /// + Airplanes
         /// + Buildings
+        /// + Small ships (attack boat, frigate)
         /// </summary>
         public static class Small
         {
@@ -15,9 +16,45 @@
 
             static Small()
             {
-                WeakSmoke = new SmokeStats(startLifetimeMin: 1, startLifetimeMax: 2, emissionRatePerS: 10);
-                NormalSmoke = new SmokeStats(startLifetimeMin: 2, startLifetimeMax: 4, emissionRatePerS: 20);
-                StrongSmoke = new SmokeStats(startLifetimeMin: 4, startLifetimeMax: 6, emissionRatePerS: 30);
+                WeakSmoke = new SmokeStats(startLifetimeMin: 1, startLifetimeMax: 2, emissionRatePerS: 10, maxNumberOfParticles: 100);
+                NormalSmoke = new SmokeStats(startLifetimeMin: 2, startLifetimeMax: 4, emissionRatePerS: 20, maxNumberOfParticles: 100);
+                StrongSmoke = new SmokeStats(startLifetimeMin: 4, startLifetimeMax: 6, emissionRatePerS: 30, maxNumberOfParticles: 200);
+            }
+        }
+
+        /// <summary>
+        /// For:
+        /// + Big ships (destroyer, archon battleship)
+        /// </summary>
+        public static class Normal
+        {
+            public static SmokeStats WeakSmoke { get; private set; }
+            public static SmokeStats NormalSmoke { get; private set; }
+            public static SmokeStats StrongSmoke { get; private set; }
+
+            static Normal()
+            {
+                WeakSmoke = new SmokeStats(startLifetimeMin: 1, startLifetimeMax: 2, emissionRatePerS: 10, maxNumberOfParticles: 100);
+                NormalSmoke = new SmokeStats(startLifetimeMin: 2, startLifetimeMax: 4, emissionRatePerS: 20, maxNumberOfParticles: 100);
+                StrongSmoke = new SmokeStats(startLifetimeMin: 4, startLifetimeMax: 6, emissionRatePerS: 30, maxNumberOfParticles: 200);
+            }
+        }
+
+        /// <summary>
+        /// For:
+        /// + Cruisers
+        /// </summary>
+        public static class Big
+        {
+            public static SmokeStats WeakSmoke { get; private set; }
+            public static SmokeStats NormalSmoke { get; private set; }
+            public static SmokeStats StrongSmoke { get; private set; }
+
+            static Big()
+            {
+                WeakSmoke = new SmokeStats(startLifetimeMin: 2, startLifetimeMax: 4, emissionRatePerS: 10, maxNumberOfParticles: 100);
+                NormalSmoke = new SmokeStats(startLifetimeMin: 4, startLifetimeMax: 6, emissionRatePerS: 20, maxNumberOfParticles: 100);
+                StrongSmoke = new SmokeStats(startLifetimeMin: 6, startLifetimeMax: 10, emissionRatePerS: 30, maxNumberOfParticles: 250);
             }
         }
     }

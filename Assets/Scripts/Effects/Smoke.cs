@@ -43,6 +43,7 @@ namespace BattleCruisers.Effects
         {
             ParticleSystem.MainModule mainModule = _particleSystem.main;
             mainModule.startLifetime = new ParticleSystem.MinMaxCurve(smokeStats.StartLifetimeMin, smokeStats.StartLifetimeMax);
+            mainModule.maxParticles = smokeStats.MaxNumberOfParticles;
 
             ParticleSystem.EmissionModule emissionModule = _particleSystem.emission;
             emissionModule.rateOverTime = smokeStats.EmissionRatePerS;
