@@ -1,0 +1,69 @@
+﻿using BattleCruisers.Buildables;
+using System;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Cruisers.Damage
+{
+    // FELIX  Test :)
+    public class HealthStateMonitor : IHealthStateMonitor
+    {
+        private readonly IDamagable _damagable;
+
+        private HealthState _healthState;
+        public HealthState HealthState
+        {
+            get { return _healthState; }
+            private set
+            {
+                if (_healthState != value)
+                {
+                    _healthState = value;
+
+                    if (HealthStateChanged != null)
+                    {
+                        HealthStateChanged.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        private const float DAMAGED_THRESHOLD = 0.67f;
+        private const float SEVERELY_DAMAGED_THRESHOLD = 0.33f;
+
+        public event EventHandler HealthStateChanged;
+
+        public HealthStateMonitor(IDamagable damagable)
+        {
+            Assert.IsNotNull(damagable);
+            _damagable = damagable;
+
+            _damagable.HealthChanged += _damagable_HealthChanged;
+        }
+
+        private void _damagable_HealthChanged(object sender, HealthChangedEventArgs e)
+        {
+            float healthProportionRemaining = _damagable.Health / _damagable.MaxHealth;
+            HealthState = FindHealthState(healthProportionRemaining);
+        }
+
+        private HealthState FindHealthState(float healthProportionRemaining)
+        {
+            if (healthProportionRemaining == 1)
+            {
+                return HealthState.FullHealth;
+            }
+            else if (healthProportionRemaining >= DAMAGED_THRESHOLD)
+            {
+                return HealthState.SlightlyDamaged;
+            }
+            else if (healthProportionRemaining >= SEVERELY_DAMAGED_THRESHOLD)
+            {
+                return HealthState.Damaged;
+            }
+            else
+            {
+                return HealthState.SeverelyDamaged;
+            }
+        }
+    }
+}
