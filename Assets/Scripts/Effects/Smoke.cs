@@ -1,9 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects
 {
-    public abstract class Smoke : MonoBehaviour, ISmoke
+    /// <summary>
+    /// Usually I would make this an abstract class, but then Unity complains
+    /// when I do:
+    /// 
+    /// Smoke smoke = GetComponent<Smoke>();
+    /// 
+    /// in SmokeInitialiser.  Sigh, so not making it abstract :)
+    /// </summary>
+    public class Smoke : MonoBehaviour, ISmoke
     {
         private ParticleSystem _particleSystem;
 
@@ -49,6 +58,10 @@ namespace BattleCruisers.Effects
             emissionModule.rateOverTime = smokeStats.EmissionRatePerS;
         }
 
-        protected abstract SmokeStats GetStatsForStrength(SmokeStrength strength);
+        // Would normally make abstract, but see class summary comment.
+        protected virtual SmokeStats GetStatsForStrength(SmokeStrength strength)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
