@@ -4,8 +4,6 @@ using System;
 
 namespace BattleCruisers.Effects
 {
-    // FELIX  Test
-    // FELIX  Use
     public class SmokeEmitter
     {
         private readonly IHealthStateMonitor _healthStateMonitor;
