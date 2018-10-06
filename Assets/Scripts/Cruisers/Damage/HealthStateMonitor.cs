@@ -27,20 +27,22 @@ namespace BattleCruisers.Cruisers.Damage
             }
         }
 
-        private const float DAMAGED_THRESHOLD = 0.67f;
-        private const float SEVERELY_DAMAGED_THRESHOLD = 0.33f;
+        public const float DAMAGED_THRESHOLD = 0.67f;
+        public const float SEVERELY_DAMAGED_THRESHOLD = 0.33f;
 
         public event EventHandler HealthStateChanged;
 
         public HealthStateMonitor(IDamagable damagable)
         {
             Assert.IsNotNull(damagable);
+
             _damagable = damagable;
+            _healthState = HealthState.FullHealth;
 
             _damagable.HealthChanged += _damagable_HealthChanged;
         }
 
-        private void _damagable_HealthChanged(object sender, HealthChangedEventArgs e)
+        private void _damagable_HealthChanged(object sender, EventArgs e)
         {
             float healthProportionRemaining = _damagable.Health / _damagable.MaxHealth;
             HealthState = FindHealthState(healthProportionRemaining);

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,9 +28,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}
 
-		private void Damagable_HealthChanged(object sender, HealthChangedEventArgs e)
+		private void Damagable_HealthChanged(object sender, EventArgs e)
 		{
-			OnProgressChanged(e.NewHealth / _maxHealth);
+			OnProgressChanged(_damagable.Health / _maxHealth);
 		}
 
 		void LateUpdate()

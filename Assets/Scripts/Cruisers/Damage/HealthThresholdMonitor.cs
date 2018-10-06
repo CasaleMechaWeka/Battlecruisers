@@ -33,7 +33,7 @@ namespace BattleCruisers.Cruisers.Damage
             _damagable.HealthChanged += _damagable_HealthChanged;
         }
 
-        private void _damagable_HealthChanged(object sender, HealthChangedEventArgs e)
+        private void _damagable_HealthChanged(object sender, EventArgs e)
         {
             if (_wasAboveThreshold
                 && _damagable.Health < _threshold

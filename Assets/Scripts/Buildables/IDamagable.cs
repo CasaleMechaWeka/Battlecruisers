@@ -13,16 +13,6 @@ namespace BattleCruisers.Buildables
 		}
 	}
 
-	public class HealthChangedEventArgs : EventArgs
-	{
-		public float NewHealth { get; private set; }
-
-		public HealthChangedEventArgs(float newHealth)
-		{
-			NewHealth = newHealth;
-		}
-	}
-
     public class DamagedEventArgs : EventArgs
     {
         public ITarget DamageSource { get; private set; }
@@ -42,7 +32,7 @@ namespace BattleCruisers.Buildables
 		GameObject GameObject { get; }
 
         event EventHandler<DamagedEventArgs> Damaged;
-		event EventHandler<HealthChangedEventArgs> HealthChanged;
+		event EventHandler HealthChanged;
         // When health reaches 0
         event EventHandler<DestroyedEventArgs> Destroyed;
 

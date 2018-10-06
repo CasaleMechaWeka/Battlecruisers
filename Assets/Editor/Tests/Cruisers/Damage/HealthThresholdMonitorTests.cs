@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         public void HealthChange_AboveThreshold_DoesNotEmitEvent()
         {
             _damagable.Health.Returns(_thresholdHealth + 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(0, _eventCount);
         }
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         public void HealthChange_BelowThresholdFirstTime_EmitsEvent()
         {
             _damagable.Health.Returns(_thresholdHealth - 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(1, _eventCount);
         }
 
@@ -49,12 +49,12 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         {
             // Go below threshold
             _damagable.Health.Returns(_thresholdHealth - 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(1, _eventCount);
 
             // Go even further below threshold
             _damagable.Health.Returns(_thresholdHealth - 2);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(1, _eventCount);
         }
 
@@ -63,17 +63,17 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         {
             // Go below threshold
             _damagable.Health.Returns(_thresholdHealth - 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(1, _eventCount);
 
             // Go above threshold
             _damagable.Health.Returns(_thresholdHealth + 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(1, _eventCount);
 
             // Go below threshold again
             _damagable.Health.Returns(_thresholdHealth - 1);
-            _damagable.HealthChanged += Raise.EventWith(new HealthChangedEventArgs(default(float)));
+            _damagable.HealthChanged += Raise.Event();
             Assert.AreEqual(2, _eventCount);
         }
     }

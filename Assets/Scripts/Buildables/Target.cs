@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildables
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 3;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
-        public event EventHandler<HealthChangedEventArgs> HealthChanged;
+        public event EventHandler HealthChanged;
         public event EventHandler<DamagedEventArgs> Damaged;
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
@@ -87,7 +87,7 @@ namespace BattleCruisers.Buildables
                 if (HealthChanged != null)
                 {
                     Logging.Log(Tags.TARGET, "HealthChanged  " + this + "  " + _health);
-                    HealthChanged.Invoke(this, new HealthChangedEventArgs(_health));
+                    HealthChanged.Invoke(this, EventArgs.Empty);
                 }
             }
         }
