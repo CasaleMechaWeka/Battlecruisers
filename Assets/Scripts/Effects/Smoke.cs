@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects
 {
-    public class Smoke : MonoBehaviour, ISmoke
+    public abstract class Smoke : MonoBehaviour, ISmoke
     {
         private ParticleSystem _particleSystem;
 
@@ -49,23 +49,6 @@ namespace BattleCruisers.Effects
             emissionModule.rateOverTime = smokeStats.EmissionRatePerS;
         }
 
-        // FELIX  Make class abstract, give to subclasses (SmokeSmall, SmokeLarge :) )
-        private SmokeStats GetStatsForStrength(SmokeStrength strength)
-        {
-            switch (strength)
-            {
-                case SmokeStrength.Weak:
-                    return StaticSmokeStats.Small.WeakSmoke;
-
-                case SmokeStrength.Normal:
-                    return StaticSmokeStats.Small.NormalSmoke;
-
-                case SmokeStrength.Strong:
-                    return StaticSmokeStats.Small.StrongSmoke;
-
-                default:
-                    return null;
-            }
-        }
+        protected abstract SmokeStats GetStatsForStrength(SmokeStrength strength);
     }
 }
