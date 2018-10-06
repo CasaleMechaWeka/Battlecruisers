@@ -48,6 +48,7 @@ namespace BattleCruisers.Effects
             emissionModule.rateOverTime = smokeStats.EmissionRatePerS;
         }
 
+        // FELIX  Make class abstract, give to subclasses (SmokeSmall, SmokeLarge :) )
         private SmokeStats GetStatsForStrength(SmokeStrength strength)
         {
             switch (strength)
