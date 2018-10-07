@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Projectiles.Explosions;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Projectiles.Explosions
+namespace BattleCruisers.Scenes.Test.Effects.Explosions
 {
     public class BasicExplosionTestGod : MonoBehaviour
     {

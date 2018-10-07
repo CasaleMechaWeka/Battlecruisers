@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test.Projectiles.Explosions
+namespace BattleCruisers.Scenes.Test.Effects.Explosions
 {
     public class FragExplosionTestGod : MonoBehaviour
     {
