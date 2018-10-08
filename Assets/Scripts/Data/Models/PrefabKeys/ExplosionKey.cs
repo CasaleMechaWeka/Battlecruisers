@@ -2,7 +2,7 @@
 {
     public class ExplosionKey : PrefabKey
     {
-        private const string PROJECTILES_FOLDER_NAME = "Projectiles";
+        private const string PROJECTILES_FOLDER_NAME = "Effects";
         private const string EXPLOSION_FOLDER_NAME = "Explosions";
 
         protected override string PrefabPathPrefix
