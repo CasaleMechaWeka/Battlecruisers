@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Smoke
 {
     /// <summary>
     /// Usually I would make this an abstract class, but then Unity complains

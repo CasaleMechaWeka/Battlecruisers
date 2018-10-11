@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
+using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Movement;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.BattleScene.Manager;

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Effects;
+﻿using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using UnityEngine;

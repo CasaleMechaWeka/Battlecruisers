@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Smoke
 {
     public class SmokeEmitter
     {

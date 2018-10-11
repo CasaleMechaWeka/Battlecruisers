@@ -3,7 +3,7 @@ using BattleCruisers.Cruisers.Damage;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Smoke
 {
     public class SmokeInitialiser : MonoBehaviour
     {

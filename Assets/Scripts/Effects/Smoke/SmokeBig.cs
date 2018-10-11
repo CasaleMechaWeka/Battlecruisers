@@ -1,19 +1,19 @@
-﻿namespace BattleCruisers.Effects
+﻿namespace BattleCruisers.Effects.Smoke
 {
-    public class SmokeSmall : Smoke
+    public class SmokeBig : Smoke
     {
         protected override SmokeStats GetStatsForStrength(SmokeStrength strength)
         {
             switch (strength)
             {
                 case SmokeStrength.Weak:
-                    return StaticSmokeStats.Small.WeakSmoke;
+                    return StaticSmokeStats.Big.WeakSmoke;
 
                 case SmokeStrength.Normal:
-                    return StaticSmokeStats.Small.NormalSmoke;
+                    return StaticSmokeStats.Big.NormalSmoke;
 
                 case SmokeStrength.Strong:
-                    return StaticSmokeStats.Small.StrongSmoke;
+                    return StaticSmokeStats.Big.StrongSmoke;
 
                 default:
                     return null;

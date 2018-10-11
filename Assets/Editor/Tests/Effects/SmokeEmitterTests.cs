@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Cruisers.Damage;
-using BattleCruisers.Effects;
+using BattleCruisers.Effects.Smoke;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Effects
+namespace BattleCruisers.Tests.Effects.Smoke
 {
     public class SmokeEmitterTests
     {
