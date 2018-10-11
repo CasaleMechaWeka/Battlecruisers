@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
 
-public class CartoonExplosion : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace BattleCruisers.Effects.Explosions
+{
+    public class CartoonExplosion : MonoBehaviour
+    {
+        public void Initialise(bool showTrails)
+        {
+            GameObject trails = transform.FindNamedComponent<GameObject>("FireworkExplosion");
+            trails.SetActive(showTrails);
+        }
+    }
 }
