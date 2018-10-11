@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Explosions
+namespace BattleCruisers.Effects.Explosions
 {
     public class ExplosionFactory : IExplosionFactory
     {

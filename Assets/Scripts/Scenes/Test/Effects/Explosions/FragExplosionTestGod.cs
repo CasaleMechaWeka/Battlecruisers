@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Projectiles.Explosions;
+﻿using BattleCruisers.Effects.Explosions;
 using UnityEngine;
 using UnityEngine.Assertions;
 

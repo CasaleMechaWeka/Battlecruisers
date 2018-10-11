@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles.Explosions;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 

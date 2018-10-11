@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Explosions
+namespace BattleCruisers.Effects.Explosions
 {
     public class FragExplosion : Explosion
     {

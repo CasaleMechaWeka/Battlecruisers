@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Explosions
+namespace BattleCruisers.Effects.Explosions
 {
     /// <summary>
     /// Explosion scaled by default to have a radius of 1 meter.  Adjust transform

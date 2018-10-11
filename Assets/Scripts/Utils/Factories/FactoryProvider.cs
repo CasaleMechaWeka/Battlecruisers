@@ -5,7 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Projectiles.Explosions;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetTrackers;

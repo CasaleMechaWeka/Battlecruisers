@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Projectiles.Explosions
+﻿namespace BattleCruisers.Effects.Explosions
 {
     public interface IExplosionFactory
     {
