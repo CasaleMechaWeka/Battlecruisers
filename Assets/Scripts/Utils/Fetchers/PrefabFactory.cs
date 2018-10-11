@@ -79,11 +79,40 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
+        // FELIX  Remove once replace by CartoonExplosion :)
         public Explosion CreateExplosion()
         {
-            Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.Explosion);
+            Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.FragExplosion);
             Explosion newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion;
+        }
+
+        public CartoonExplosion CreateCartoonExplosion(IExplosionStats explosionStats)
+        {
+            IPrefabKey explosionKey = GetExplosionKey(explosionStats.Size);
+            CartoonExplosion explosionPrefab = _prefabFetcher.GetPrefab<CartoonExplosion>(explosionKey);
+            return Object.Instantiate(explosionPrefab);
+        }
+
+        private IPrefabKey GetExplosionKey(ExplosionSize explosionSize)
+        {
+            switch (explosionSize)
+            {
+                case ExplosionSize.Small:
+                    return StaticPrefabKeys.Explosions.CartoonExplosion75;
+
+                case ExplosionSize.Medium:
+                    return StaticPrefabKeys.Explosions.CartoonExplosion100;
+
+                case ExplosionSize.Large:
+                    return StaticPrefabKeys.Explosions.CartoonExplosion150;
+
+                case ExplosionSize.Giant:
+                    return StaticPrefabKeys.Explosions.CartoonExplosion1000;
+
+                default:
+                    throw new System.ArgumentException();
+            }
         }
     }
 }
