@@ -1,16 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class IExplosionManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace BattleCruisers.Effects.Explosions
+{
+    public interface IExplosionManager
+    {
+        void ShowExplosion(IExplosionStats explosionStats, Vector2 position);
+    }
 }
