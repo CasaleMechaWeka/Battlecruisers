@@ -33,7 +33,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         private void _rankedTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
-            // PERF
+            // PERF  Copying list to avoid modification while enumeration exception :P
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
             foreach (ITargetConsumer consumer in _targetConsumers.ToList())

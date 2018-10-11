@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
 {
+    // PERF  Cache prefabs, so only need to retrieve the first time :)
     public class PrefabFactory : IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
@@ -91,7 +92,9 @@ namespace BattleCruisers.Utils.Fetchers
         {
             IPrefabKey explosionKey = GetExplosionKey(explosionStats.Size);
             CartoonExplosion explosionPrefab = _prefabFetcher.GetPrefab<CartoonExplosion>(explosionKey);
-            return Object.Instantiate(explosionPrefab);
+            CartoonExplosion newExplosion = Object.Instantiate(explosionPrefab);
+            newExplosion.Initialise(explosionStats.ShowTrails);
+            return newExplosion;
         }
 
         private IPrefabKey GetExplosionKey(ExplosionSize explosionSize)
