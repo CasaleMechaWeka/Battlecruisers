@@ -21,6 +21,7 @@ namespace BattleCruisers.Utils.Factories
         IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
         IExplosionFactory ExplosionFactory { get; }
+        IExplosionManager ExplosionManager { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
