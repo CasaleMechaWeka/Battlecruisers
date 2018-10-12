@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-	public interface IPrefabFactory
+    public interface IPrefabFactory
 	{
         IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
 		IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab);
@@ -22,7 +22,6 @@ namespace BattleCruisers.Utils.Fetchers
 
         CountdownController CreateDeleteCountdown(Transform parent);
 
-        Explosion CreateExplosion();
         CartoonExplosion CreateCartoonExplosion(IExplosionStats explosionStats);
 	}
 }

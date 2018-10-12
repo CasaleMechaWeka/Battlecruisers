@@ -80,14 +80,6 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
-        // FELIX  Remove once replace by CartoonExplosion :)
-        public Explosion CreateExplosion()
-        {
-            Explosion explosionPrefab = _prefabFetcher.GetPrefab<Explosion>(StaticPrefabKeys.Explosions.FragExplosion);
-            Explosion newExplosion = Object.Instantiate(explosionPrefab);
-            return newExplosion;
-        }
-
         public CartoonExplosion CreateCartoonExplosion(IExplosionStats explosionStats)
         {
             IPrefabKey explosionKey = GetExplosionKey(explosionStats.Size);
