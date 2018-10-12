@@ -24,7 +24,6 @@ namespace BattleCruisers.Utils.Factories
         public IBoostFactory BoostFactory { get; private set; }
         public IDamageApplierFactory DamageApplierFactory { get; private set; }
         public IDeferrerProvider DeferrerProvider { get; private set; }
-        public IExplosionFactory ExplosionFactory { get; private set; }
         public IExplosionManager ExplosionManager { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
         public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
@@ -56,7 +55,6 @@ namespace BattleCruisers.Utils.Factories
             BoostFactory = new BoostFactory();
             GlobalBoostProviders = new GlobalBoostProviders();
             DamageApplierFactory = new DamageApplierFactory(TargetsFactory);
-            ExplosionFactory = new ExplosionFactory(PrefabFactory);
             ExplosionManager = new ExplosionManager(PrefabFactory);
             SpriteChooserFactory
                 = new SpriteChooserFactory(

@@ -54,7 +54,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            IExplosionFactory explosionFactory = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
@@ -90,7 +89,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostFactory,
                     globalBoostProviders,
                     damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
-                    explosionFactory ?? new ExplosionFactory(prefabFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
@@ -118,7 +116,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostFactory boostFactory,
             IGlobalBoostProviders globalBoostProviders,
             IDamageApplierFactory damageApplierFactory,
-            IExplosionFactory explosionFactory,
             IAccuracyAdjusterFactory accuracyAdjusterFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
@@ -137,7 +134,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
-            factoryProvider.ExplosionFactory.Returns(explosionFactory);
             factoryProvider.ExplosionManager.Returns(explosionManager);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);

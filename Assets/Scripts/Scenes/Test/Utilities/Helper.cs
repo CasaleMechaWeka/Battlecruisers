@@ -77,7 +77,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
-            IExplosionFactory explosionFactory = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
         {
@@ -99,7 +98,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
-                    explosionFactory,
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     variableDelayDeferrer: _variableDelayDeferrer);
@@ -139,7 +137,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            IExplosionFactory explosionFactory = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null)
 		{
@@ -161,7 +158,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders,
                     damageApplierFactory,
 					parentCruiserDirection,
-                    explosionFactory,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager);
 
