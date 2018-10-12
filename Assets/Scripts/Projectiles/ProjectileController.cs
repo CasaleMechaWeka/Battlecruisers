@@ -65,7 +65,6 @@ namespace BattleCruisers.Projectiles
 			Assert.IsNotNull(_rigidBody);
 
             _explosionStats = GetComponent<IExplosionStats>();
-            Assert.IsNotNull(_explosionStats);
 
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
@@ -134,7 +133,7 @@ namespace BattleCruisers.Projectiles
 
         private void ShowExplosionIfNecessary()
         {
-            if (_projectileStats.HasAreaOfEffectDamage)
+            if (_explosionStats != null)
             {
                 _explosionManager.ShowExplosion(_explosionStats, transform.position);
             }
