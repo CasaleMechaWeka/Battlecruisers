@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Effects.Explosions
 {
-    // FELIX  Can use similar model to simplify ProjectileStatsWrapper?
     public class ExplosionStatsController : MonoBehaviour, IExplosionStats
     {
         public ExplosionSize size;
