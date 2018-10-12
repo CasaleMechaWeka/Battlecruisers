@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -40,10 +38,9 @@ namespace BattleCruisers.Scenes.Test
 
 			ITarget parent = Substitute.For<ITarget>();
             ProjectileStats stats = GetComponent<ProjectileStats>();
-            IProjectileStats missileStats = new ProjectileStatsWrapper(stats);
             int burstSize = 1;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, missileStats, burstSize, args.FactoryProvider);
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider);
 
             _missileSpawner.Initialise(spawnerArgs);
 

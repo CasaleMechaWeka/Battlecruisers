@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
@@ -8,6 +6,8 @@ using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -42,9 +42,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(_spinner);
 			_spinner.StaticInitialise();
 
-            CruisingProjectileStats nukeStats = GetComponent<CruisingProjectileStats>();
-			Assert.IsNotNull(nukeStats);
-            _nukeStats = new NukeStatsWrapper(nukeStats);
+            _nukeStats = GetComponent<NukeProjectileStats>();
+			Assert.IsNotNull(_nukeStats);
             AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
 		}

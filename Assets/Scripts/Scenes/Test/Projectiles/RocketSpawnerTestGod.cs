@@ -37,8 +37,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 
 			ITarget parent = Substitute.For<ITarget>();
-            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
-            ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
+            ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
             int burstSize = 1;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 

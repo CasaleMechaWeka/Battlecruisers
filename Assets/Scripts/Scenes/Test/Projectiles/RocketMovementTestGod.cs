@@ -19,10 +19,9 @@ namespace BattleCruisers.Scenes.Test
 			AirFactory target = FindObjectOfType<AirFactory>();
             helper.InitialiseBuilding(target);
 
-			
+
             // Setup rocket
-            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
-            ICruisingProjectileStats rocketStats = new CruisingProjectileStatsWrapper(stats);
+            ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
             
             Vector2 initialVelocity = new Vector2(0, 5);
 

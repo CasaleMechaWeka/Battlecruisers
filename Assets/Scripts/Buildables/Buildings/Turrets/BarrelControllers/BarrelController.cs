@@ -69,7 +69,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
 			ProjectileStats projectileStats = GetComponent<ProjectileStats>();
 			Assert.IsNotNull(projectileStats);
-			return new ProjectileStatsWrapper(projectileStats);
+			return projectileStats;
 		}
 
         protected virtual TurretStats SetupTurretStats()

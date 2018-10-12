@@ -28,8 +28,7 @@ namespace BattleCruisers.Scenes.Test
 				Target = target
 			};
 
-            CruisingProjectileStats stats = GetComponent<CruisingProjectileStats>();
-            INukeStats nukeStats = new NukeStatsWrapper(stats);
+            INukeStats nukeStats = GetComponent<NukeProjectileStats>();
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 

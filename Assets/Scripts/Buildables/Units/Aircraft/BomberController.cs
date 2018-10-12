@@ -61,8 +61,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
 
-            ProjectileStats stats = GetComponent<ProjectileStats>();
-            _bombStats = new ProjectileStatsWrapper(stats);
+            _bombStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_bombStats);
 
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;

@@ -28,9 +28,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override IProjectileStats GetProjectileStats()
         {
-            CruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
-			Assert.IsNotNull(rocketStats);
-            _rocketStats = new CruisingProjectileStatsWrapper(rocketStats);
+            _rocketStats = GetComponent<CruisingProjectileStats>();
+			Assert.IsNotNull(_rocketStats);
             return _rocketStats;
         }
 
