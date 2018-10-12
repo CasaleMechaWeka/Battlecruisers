@@ -1,6 +1,6 @@
-﻿using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Projectiles.Stats.Wrappers;
+﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;

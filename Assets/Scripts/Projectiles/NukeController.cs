@@ -2,7 +2,7 @@
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats.Wrappers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;

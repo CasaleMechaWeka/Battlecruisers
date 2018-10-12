@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Projectiles.Stats.Wrappers
+﻿namespace BattleCruisers.Projectiles.Stats
 {
     public interface IDamageStats
     {

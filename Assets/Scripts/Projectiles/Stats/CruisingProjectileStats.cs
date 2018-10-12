@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Projectiles.Stats.Wrappers;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
 {

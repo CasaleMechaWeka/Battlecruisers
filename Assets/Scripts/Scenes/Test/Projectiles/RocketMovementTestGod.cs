@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Projectiles.Stats.Wrappers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;

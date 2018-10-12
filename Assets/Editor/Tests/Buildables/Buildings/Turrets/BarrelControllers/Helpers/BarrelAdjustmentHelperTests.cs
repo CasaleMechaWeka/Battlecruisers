@@ -7,7 +7,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles.Stats.Wrappers;
+using BattleCruisers.Projectiles.Stats;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;

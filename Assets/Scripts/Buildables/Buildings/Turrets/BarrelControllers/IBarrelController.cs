@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Projectiles.Stats.Wrappers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using UnityEngine;
 
