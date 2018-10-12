@@ -15,10 +15,11 @@ namespace BattleCruisers.Projectiles
 {
     public class ProjectileController : MonoBehaviour, IDestructable
     {
+        private IExplosionStats _explosionStats;
         private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosion _explosion;
+        private IExplosionManager _explosionManager;
         private ITarget _parent;
         private ISoundPlayer _soundPlayer;
 
@@ -60,8 +61,11 @@ namespace BattleCruisers.Projectiles
 		{
             Helper.AssertIsNotNull(projectileStats, targetFilter, factoryProvider, parent);
 
-			_rigidBody = gameObject.GetComponent<Rigidbody2D>();
+			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
+
+            _explosionStats = GetComponent<IExplosionStats>();
+            Assert.IsNotNull(_explosionStats);
 
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
@@ -74,7 +78,7 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(factoryProvider.DamageApplierFactory);
-            _explosion = CreateExplosion(factoryProvider.ExplosionFactory);
+            _explosionManager = factoryProvider.ExplosionManager;
 		}
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)
@@ -83,14 +87,6 @@ namespace BattleCruisers.Projectiles
                 _projectileStats.HasAreaOfEffectDamage ?
                 damageApplierFactory.CreateAreaOfDamageApplier(_projectileStats) :
                 damageApplierFactory.CreateSingleDamageApplier(_projectileStats);
-        }
-
-        private IExplosion CreateExplosion(IExplosionFactory explosionFactory)
-        {
-            return
-                _projectileStats.HasAreaOfEffectDamage ?
-                explosionFactory.CreateExplosion(_projectileStats.DamageRadiusInM) :
-                explosionFactory.CreateDummyExplosion();
         }
 
 		void FixedUpdate()
@@ -125,7 +121,7 @@ namespace BattleCruisers.Projectiles
 
         protected virtual void DestroyProjectile()
         {
-            _explosion.Show(transform.position);
+            ShowExplosionIfNecessary();
 
             if (ImpactSoundKey != null)
             {
@@ -134,6 +130,15 @@ namespace BattleCruisers.Projectiles
 
 			Destroy(gameObject);
 		}
+
+
+        private void ShowExplosionIfNecessary()
+        {
+            if (_projectileStats.HasAreaOfEffectDamage)
+            {
+                _explosionManager.ShowExplosion(_explosionStats, transform.position);
+            }
+        }
 
         private void AdjustGameObjectDirection()
         {
