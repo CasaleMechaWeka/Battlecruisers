@@ -1,17 +1,30 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
 {
     // Extends MonoBehaviour so can be set in Unity inspector
-    public class ProjectileStats : MonoBehaviour
+    public class ProjectileStats : MonoBehaviour, IProjectileStats
     {
-        public float damage;
-        public float maxVelocityInMPerS;
         public float initialVelocityMultiplier;
+
+        public float damage;
+        public float Damage { get { return damage; } }
+
+        public float maxVelocityInMPerS;
+        public float MaxVelocityInMPerS { get { return maxVelocityInMPerS; } }
+
         public bool ignoreGravity;
+        public bool IgnoreGravity { get { return ignoreGravity; } }
+
         public bool hasAreaOfEffectDamage;
+        public bool HasAreaOfEffectDamage { get { return hasAreaOfEffectDamage; } }
+
         public float damageRadiusInM;
+        public float DamageRadiusInM { get { return damageRadiusInM; } }
+
+        public float InitialVelocityInMPerS { get; private set; }
 
         void Awake()
         {
@@ -23,6 +36,8 @@ namespace BattleCruisers.Projectiles.Stats
             {
                 Assert.IsTrue(damageRadiusInM > 0);
             }
+
+            InitialVelocityInMPerS = MaxVelocityInMPerS * initialVelocityMultiplier;
 
             OnAwake();
         }

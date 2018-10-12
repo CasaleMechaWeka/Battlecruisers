@@ -1,10 +1,12 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Projectiles.Stats.Wrappers;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
 {
-    public class CruisingProjectileStats : ProjectileStats
+    public class CruisingProjectileStats : ProjectileStats, ICruisingProjectileStats
     {
         public float cruisingAltitudeInM;
+        public float CruisingAltitudeInM { get { return cruisingAltitudeInM; } }
 
         protected override void OnAwake()
         {
