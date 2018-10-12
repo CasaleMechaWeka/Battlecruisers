@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IUnit _parentAircraft;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosion _explosion;
+        private IExplosionManager _explosionManager;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     damageRadiusInM: parentAircraft.Size.x);
             _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
 
-            _explosion = factoryProvider.ExplosionFactory.CreateExplosion(kamikazeDamageStats.DamageRadiusInM);
+            _explosionManager = factoryProvider.ExplosionManager;
         }
 
 		private void OnTriggerEnter2D(Collider2D collider)
@@ -64,7 +64,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 _parentAircraft.Destroy();
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-                _explosion.Show(_parentAircraft.Position);
+                IExplosionStats explosionStats = new ExplosionStats(ExplosionSize.Small, showTrails: true);
+                _explosionManager.ShowExplosion(explosionStats, transform.position);
             }
         }
     }
