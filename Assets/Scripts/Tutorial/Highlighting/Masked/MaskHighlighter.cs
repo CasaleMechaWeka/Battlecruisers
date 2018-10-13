@@ -21,11 +21,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             }
         }
 
-        public void Highlight(Vector2 position, Vector2 size)
+        public void Highlight(HighlightArgs args)
         {
             foreach (MaskImage mask in _masks)
             {
-                mask.UpdatePosition(position, size);
+                mask.UpdatePosition(args);
             }
 
             gameObject.SetActive(true);

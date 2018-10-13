@@ -14,11 +14,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             Assert.IsNotNull(_maskImage);
         }
 
-        public void UpdatePosition(Vector2 highlightPosition, Vector2 highlightSize)
+        public void UpdatePosition(HighlightArgs args)
         {
-            _maskImage.transform.position = FindPosition(highlightPosition, highlightSize, _maskImage.rectTransform.sizeDelta);
+            _maskImage.transform.position = FindPosition(args, _maskImage.rectTransform.sizeDelta);
         }
 
-        protected abstract Vector2 FindPosition(Vector2 highlightPosition, Vector2 highlightSize, Vector2 maskSize);
+        protected abstract Vector2 FindPosition(HighlightArgs args, Vector2 maskSize);
     }
 }
