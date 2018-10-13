@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
@@ -16,14 +17,16 @@ namespace BattleCruisers.Tutorial
         private ITutorialStepConsumer _consumer;
 
         public TextDisplayer textDisplayer;
+        public MaskHighlighter maskHighlighter;
 
         public event EventHandler TutorialCompleted;
 
         public void Initialise(ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(tutorialArgs, textDisplayer);
+            Helper.AssertIsNotNull(tutorialArgs, textDisplayer, maskHighlighter);
 
             textDisplayer.Initialise();
+            maskHighlighter.Initialise();
 
             _deferrer = GetComponent<IVariableDelayDeferrer>();
             Assert.IsNotNull(_deferrer);
@@ -43,6 +46,10 @@ namespace BattleCruisers.Tutorial
         public void StartTutorial()
         {
             _consumer.StartConsuming();
+
+            // FELIX  TEMP :P
+            maskHighlighter.Highlight(position: new Vector2(300, 150), size: new Vector2(1200, 800));
+            //maskHighlighter.Unhighlight();
         }
 
         private void _consumer_Completed(object sender, EventArgs e)
