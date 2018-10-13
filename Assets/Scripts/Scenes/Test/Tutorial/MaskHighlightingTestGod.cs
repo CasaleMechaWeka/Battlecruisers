@@ -15,6 +15,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 
         private const int EXPECTED_NUM_OF_BUTTONS = 4;
 
+        public Camera camera;
         public GameObject inGameObject;
         public ConstDelayDeferrer deferrer;
         public MaskHighlighter maskHighlighter;
@@ -26,12 +27,13 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             deferrer.StaticInitialise(delayInMs: 2000);
             maskHighlighter.Initialise();
 
-            Button[] onCanvasButtons = FindObjectsOfType<Button>();
-            Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
-            _onCanvasButtons = new CircularList<Button>(onCanvasButtons);
+            // FELIX  Uncomment :P
+            //Button[] onCanvasButtons = FindObjectsOfType<Button>();
+            //Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
+            //_onCanvasButtons = new CircularList<Button>(onCanvasButtons);
 
-            HighlightNextButton();
-            //CreateInGameHighlight();
+            //HighlightNextButton();
+            CreateInGameHighlight();
         }
 
         private void HighlightNextButton()
@@ -49,14 +51,24 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             maskHighlighter.Highlight(highlightArgs);
         }
 
-        //private void CreateInGameHighlight()
-        //{
-        //    SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
-        //    float radius = renderer.size.x / 2;
+        private void CreateInGameHighlight()
+        {
+            SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
+            Vector2 bottomLeftWorldPosition
+                = new Vector2(
+                    inGameObject.transform.position.x - renderer.size.x / 2,
+                    inGameObject.transform.position.y - renderer.size.y / 2);
+            Vector2 bottomLeftScreenPosition = camera.WorldToScreenPoint(bottomLeftWorldPosition);
 
-        //    IHighlight inGameHighlight = factory.CreateInGameHighlight(radius, inGameObject.transform.position, usePulsingAnimation: true);
+            float cameraHeight = 2 * camera.orthographicSize;
+            float cameraWidth = camera.aspect * cameraHeight;
 
-        //    deferrer.Defer(inGameHighlight.Destroy);
-        //}
+            float objectScreenWidthInPixels = renderer.size.x / cameraWidth * camera.pixelWidth;
+            float objectScreenHeightInPixels = renderer.size.y / cameraHeight * camera.pixelHeight;
+            Vector2 objectScreenSize = new Vector2(objectScreenWidthInPixels, objectScreenHeightInPixels);
+
+            HighlightArgs highlightArgs = new HighlightArgs(bottomLeftScreenPosition, objectScreenSize);
+            maskHighlighter.Highlight(highlightArgs);
+        }
     }
 }
