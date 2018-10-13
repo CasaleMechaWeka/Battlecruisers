@@ -1,46 +1,52 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
     public class MaskHighlightingTestGod : MonoBehaviour
     {
-        public GameObject inGameObject, onCanvasObject;
+        private IHighlightArgsFactory _highlightArgsFactory;
+        private ICircularList<Button> _onCanvasButtons;
+
+        private const int EXPECTED_NUM_OF_BUTTONS = 4;
+
+        public GameObject inGameObject;
         public ConstDelayDeferrer deferrer;
         public MaskHighlighter maskHighlighter;
 
         void Start()
         {
+            _highlightArgsFactory = new HighlightArgsFactory();
+
             deferrer.StaticInitialise(delayInMs: 2000);
             maskHighlighter.Initialise();
 
-            CreateOnCanvasHighglight();
+            Button[] onCanvasButtons = FindObjectsOfType<Button>();
+            Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
+            _onCanvasButtons = new CircularList<Button>(onCanvasButtons);
+
+            HighlightNextButton();
             //CreateInGameHighlight();
         }
 
-        private void CreateOnCanvasHighglight()
+        private void HighlightNextButton()
         {
-            RectTransform onCanvasObjTransform = onCanvasObject.transform.Parse<RectTransform>();
+            Button buttonToHighlight = _onCanvasButtons.Next();
+            CreateOnCanvasHighglight(buttonToHighlight.gameObject);
 
-            // FELIX  TEMP
-            Vector3[] corners = new Vector3[4];
-            onCanvasObjTransform.GetWorldCorners(corners);
+            Invoke("HighlightNextButton", time: 2);
+        }
 
-            foreach (Vector3 corner in corners)
-            {
-                Debug.Log(corner);
-            }
-
-
-            Vector2 bottomLeftPosition
-                = new Vector2(
-                    onCanvasObjTransform.position.x - onCanvasObjTransform.rect.width / 2,
-                    onCanvasObjTransform.position.y - onCanvasObjTransform.rect.height / 2);
-            maskHighlighter.Highlight(bottomLeftPosition, onCanvasObjTransform.rect.size);
-         
-            //deferrer.Defer(maskHighlighter.Unhighlight);
+        private void CreateOnCanvasHighglight(GameObject onCanvasObject)
+        {
+            RectTransform onCanvasObjRectTransform = onCanvasObject.transform.Parse<RectTransform>();
+            HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform);
+            maskHighlighter.Highlight(highlightArgs);
         }
 
         //private void CreateInGameHighlight()
