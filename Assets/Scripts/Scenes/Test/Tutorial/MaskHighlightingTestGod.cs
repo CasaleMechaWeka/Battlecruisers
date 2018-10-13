@@ -12,11 +12,12 @@ namespace BattleCruisers.Scenes.Test.Tutorial
     {
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
+        private ICircularList<SpriteRenderer> _inGameObjects;
 
         private const int EXPECTED_NUM_OF_BUTTONS = 4;
+        private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public GameObject inGameObject;
         public ConstDelayDeferrer deferrer;
         public MaskHighlighter maskHighlighter;
 
@@ -27,13 +28,16 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             deferrer.StaticInitialise(delayInMs: 2000);
             maskHighlighter.Initialise();
 
-            // FELIX  Uncomment :P
-            //Button[] onCanvasButtons = FindObjectsOfType<Button>();
-            //Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
-            //_onCanvasButtons = new CircularList<Button>(onCanvasButtons);
+            Button[] onCanvasButtons = FindObjectsOfType<Button>();
+            Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
+            _onCanvasButtons = new CircularList<Button>(onCanvasButtons);
+
+            SpriteRenderer[] inGameObjects = FindObjectsOfType<SpriteRenderer>();
+            Assert.AreEqual(EXPECTED_NUM_OF_IN_GAME_OBJECTS, inGameObjects.Length);
+            _inGameObjects = new CircularList<SpriteRenderer>(inGameObjects);
 
             //HighlightNextButton();
-            CreateInGameHighlight();
+            HighlightNextInGameObject();
         }
 
         private void HighlightNextButton()
@@ -51,13 +55,20 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             maskHighlighter.Highlight(highlightArgs);
         }
 
-        private void CreateInGameHighlight()
+        private void HighlightNextInGameObject()
         {
-            SpriteRenderer renderer = inGameObject.GetComponent<SpriteRenderer>();
+            SpriteRenderer objectToHighlight = _inGameObjects.Next();
+            CreateInGameHighlight(objectToHighlight);
+
+            Invoke("HighlightNextInGameObject", time: 2);
+        }
+
+        private void CreateInGameHighlight(SpriteRenderer renderer)
+        {
             Vector2 bottomLeftWorldPosition
                 = new Vector2(
-                    inGameObject.transform.position.x - renderer.size.x / 2,
-                    inGameObject.transform.position.y - renderer.size.y / 2);
+                    renderer.transform.position.x - renderer.size.x / 2,
+                    renderer.transform.position.y - renderer.size.y / 2);
             Vector2 bottomLeftScreenPosition = camera.WorldToScreenPoint(bottomLeftWorldPosition);
 
             float cameraHeight = 2 * camera.orthographicSize;
