@@ -7,12 +7,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
     {
 		private readonly Camera _platfromCamera;
 
-		public CameraBC(Camera platformCamera)
-		{
-			Assert.IsNotNull(platformCamera);
-			_platfromCamera = platformCamera;
-		}
-
 		public Vector3 Position 
 		{ 
 			get { return _platfromCamera.transform.position; }
@@ -27,9 +21,30 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 
         public float Aspect { get { return _platfromCamera.aspect; } }
 
+        public Vector2 Size
+        {
+            get
+            {
+                float height = _platfromCamera.orthographicSize * 2;
+                float width = _platfromCamera.aspect * height;
+                return new Vector2(width, height);
+            }
+        }
+
+		public CameraBC(Camera platformCamera)
+		{
+			Assert.IsNotNull(platformCamera);
+			_platfromCamera = platformCamera;
+		}
+
         public Vector3 WorldToViewportPoint(Vector3 worldPoint)
         {
             return _platfromCamera.WorldToViewportPoint(worldPoint);
+        }
+
+        public Vector3 WorldToScreenPoint(Vector3 worldPoint)
+        {
+            return _platfromCamera.WorldToScreenPoint(worldPoint);
         }
 
         public Vector3 ScreenToWorldPoint(Vector3 screenPoint)
