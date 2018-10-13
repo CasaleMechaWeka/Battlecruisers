@@ -6,6 +6,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 	{
 		float OrthographicSize { get; set; }
         float Aspect { get; }
+        float PixelWidth { get; }
+        float PixelHeight { get; }
         Vector2 Size { get; }
 
         Vector3 WorldToViewportPoint(Vector3 worldPoint);

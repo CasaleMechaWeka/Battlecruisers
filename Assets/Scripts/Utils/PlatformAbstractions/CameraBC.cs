@@ -20,6 +20,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		}
 
         public float Aspect { get { return _platfromCamera.aspect; } }
+        public float PixelWidth { get { return _platfromCamera.pixelWidth; } }
+        public float PixelHeight { get { return _platfromCamera.pixelHeight; } }
 
         public Vector2 Size
         {
@@ -31,7 +33,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             }
         }
 
-		public CameraBC(Camera platformCamera)
+        public CameraBC(Camera platformCamera)
 		{
 			Assert.IsNotNull(platformCamera);
 			_platfromCamera = platformCamera;
