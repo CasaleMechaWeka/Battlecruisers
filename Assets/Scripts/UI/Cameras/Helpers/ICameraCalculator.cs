@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         Vector3 FindZoomingCameraPosition(
             Vector2 zoomTarget, 
             Vector2 targetViewportPosition, 
-            float cameraOrthographicSize, 
+            float newCameraOrthographicSize, 
             float cameraAspectRatio,
             float cameraPositionZ);
 	}
