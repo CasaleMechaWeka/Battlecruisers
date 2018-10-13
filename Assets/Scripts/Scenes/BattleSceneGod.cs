@@ -121,7 +121,8 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  Forcing tutorial :)
-            //ApplicationModel.IsTutorial = true;
+            // FELIX  Comment out :P
+            ApplicationModel.IsTutorial = true;
 
 
             // Common setup
