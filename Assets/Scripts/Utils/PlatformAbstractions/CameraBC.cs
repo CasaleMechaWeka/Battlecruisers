@@ -23,21 +23,20 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         public float PixelWidth { get { return _platfromCamera.pixelWidth; } }
         public float PixelHeight { get { return _platfromCamera.pixelHeight; } }
 
-        public Vector2 Size
-        {
-            get
-            {
-                float height = _platfromCamera.orthographicSize * 2;
-                float width = _platfromCamera.aspect * height;
-                return new Vector2(width, height);
-            }
-        }
-
         public CameraBC(Camera platformCamera)
 		{
 			Assert.IsNotNull(platformCamera);
 			_platfromCamera = platformCamera;
 		}
+
+        // Not a getter as the value needs to be calculated.  Ie, not a straight
+        // proxy to the platform object.
+        public Vector2 GetSize()
+        {
+            float height = _platfromCamera.orthographicSize * 2;
+            float width = _platfromCamera.aspect * height;
+            return new Vector2(width, height);
+        }
 
         public Vector3 WorldToViewportPoint(Vector3 worldPoint)
         {
