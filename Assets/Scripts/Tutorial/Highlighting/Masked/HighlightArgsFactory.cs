@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             return new HighlightArgs(corners[0], rectTransform.sizeDelta);
         }
 
-        public HighlightArgs CreateForInGameObject(Vector2 position, Vector2 size)
+        public HighlightArgs CreateForInGameObject(Vector2 worldPosition, Vector2 worldSize)
         {
             // FELIX :D
             throw new NotImplementedException();

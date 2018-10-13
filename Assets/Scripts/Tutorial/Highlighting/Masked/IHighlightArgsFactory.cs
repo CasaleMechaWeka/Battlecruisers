@@ -5,6 +5,6 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
     public interface IHighlightArgsFactory
     {
         HighlightArgs CreateForOnCanvasObject(RectTransform rectTransform);
-        HighlightArgs CreateForInGameObject(Vector2 position, Vector2 size);
+        HighlightArgs CreateForInGameObject(Vector2 worldPosition, Vector2 worldSize);
     }
 }
