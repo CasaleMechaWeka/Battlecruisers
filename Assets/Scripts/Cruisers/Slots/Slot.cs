@@ -18,7 +18,6 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private SpriteRenderer _renderer;
         private BoxCollider2D _collider;
-        private ICruiser _parentCruiser;
         private IBuildingPlacer _buildingPlacer;
         private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
         // Hold reference to avoid garbage collection
@@ -95,7 +94,6 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
 
-            _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
             _buildingPlacer = buildingPlacer;
 
@@ -109,7 +107,7 @@ namespace BattleCruisers.Cruisers.Slots
 
             _defaultState = new DefaultState();
             _highlightedFullState = new HighlightedFullState();
-            _highlightedEmptyState = new HighlightedEmptyState(_parentCruiser, this);
+            _highlightedEmptyState = new HighlightedEmptyState(parentCruiser, this);
 
             CurrentState = _defaultState;
 
