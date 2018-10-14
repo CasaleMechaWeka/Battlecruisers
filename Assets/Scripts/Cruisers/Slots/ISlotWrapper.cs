@@ -11,6 +11,8 @@ namespace BattleCruisers.Cruisers.Slots
 		ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true);
         void HighlightAvailableSlots(SlotType slotType);
         void UnhighlightSlots();
+        // FELIX  Replace with highlighting building instead (ie, make building red 
+        // instead of black, like in Peter's mock ups :) )
         void HighlightBuildingSlot(IBuilding building);
 	}
 }
