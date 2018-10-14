@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Cruisers.Slots.States;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using System;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -16,10 +15,10 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
     {
+        private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
         private BoxCollider2D _collider;
         private IBuildingPlacer _buildingPlacer;
-        private ISlotState _defaultState, _highlightedEmptyState, _highlightedFullState;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SlotBoostFeedback _boostFeedback;
@@ -38,17 +37,6 @@ namespace BattleCruisers.Cruisers.Slots
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
 		
-        private ISlotState _currentState;
-        private ISlotState CurrentState
-        {
-            get { return _currentState; }
-            set
-            {
-                _currentState = value;
-                _renderer.color = _currentState.Colour;
-            }
-        }
-
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.
         /// </summary>
@@ -94,6 +82,7 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
 
+            _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
             _buildingPlacer = buildingPlacer;
 
@@ -105,12 +94,6 @@ namespace BattleCruisers.Cruisers.Slots
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
 
-            _defaultState = new DefaultState();
-            _highlightedFullState = new HighlightedFullState();
-            _highlightedEmptyState = new HighlightedEmptyState(parentCruiser, this);
-
-            CurrentState = _defaultState;
-
             SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
             Assert.IsNotNull(feedbackInitialiser);
             _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
@@ -120,7 +103,12 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Logging.Log(Tags.SLOTS, "OnPointerClick()");
 
-            CurrentState.OnClick();
+            // FELIX  Don't want to steal clicks from cruiser...
+            if (IsVisible)
+            {
+                Assert.IsTrue(IsFree);
+                _parentCruiser.ConstructSelectedBuilding(this);
+            }
 
             if (Clicked != null)
             {
@@ -137,15 +125,5 @@ namespace BattleCruisers.Cruisers.Slots
                 BuildingDestroyed.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
             }
 		}
-
-        public void HighlightSlot()
-        {
-            CurrentState = IsFree ? _highlightedEmptyState : _highlightedFullState;
-        }
-
-        public void UnhighlightSlot()
-        {
-            CurrentState = _defaultState;
-        }
     }
 }

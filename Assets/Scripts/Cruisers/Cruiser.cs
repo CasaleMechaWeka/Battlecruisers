@@ -245,8 +245,6 @@ namespace BattleCruisers.Cruisers
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-
-            SlotWrapper.DisposeManagedState();
             FactoryProvider.Sound.SoundPlayer.PlaySound(SoundKeys.Deaths.Cruiser, Position);
         }
     }

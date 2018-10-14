@@ -25,7 +25,6 @@ namespace BattleCruisers.Cruisers.Slots
             {
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.UnhighlightSlot();
                     _highlightedSlot.IsVisible = false;
                 }
 
@@ -33,7 +32,6 @@ namespace BattleCruisers.Cruisers.Slots
 
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.HighlightSlot();
                     _highlightedSlot.IsVisible = true;
                 }
             }
@@ -58,7 +56,6 @@ namespace BattleCruisers.Cruisers.Slots
                 ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
                 SortSlotsByType(slot);
-                slot.BuildingDestroyed += Slot_BuildingDestroyed;
             }
         }
 
@@ -120,7 +117,7 @@ namespace BattleCruisers.Cruisers.Slots
 				{
                     if (_highlightableFilter.IsMatch(slot))
 					{
-                        slot.HighlightSlot();
+                        slot.IsVisible = true;
 					}
 				}
 			}
@@ -141,7 +138,7 @@ namespace BattleCruisers.Cruisers.Slots
 		{
 			foreach (ISlot slot in _slots[slotType])
 			{
-                slot.UnhighlightSlot();
+                slot.IsVisible = false;
 			}
 		}
 
@@ -168,14 +165,6 @@ namespace BattleCruisers.Cruisers.Slots
             return _slots[building.SlotType].FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
         }
 
-        private void Slot_BuildingDestroyed(object sender, SlotBuildingDestroyedEventArgs e)
-        {
-            if (_highlightedSlotType != e.BuildingParent.Type)
-            {
-                e.BuildingParent.UnhighlightSlot();
-            }
-        }
-
         public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
@@ -186,17 +175,6 @@ namespace BattleCruisers.Cruisers.Slots
                     .ToList();
 
             return freeSlots.AsReadOnly();
-        }
-
-        public void DisposeManagedState()
-        {
-            foreach (IList<ISlot> slotList in _slots.Values)
-            {
-                foreach (ISlot slot in slotList)
-                {
-                    slot.BuildingDestroyed -= Slot_BuildingDestroyed;
-                }
-            }
         }
     }
 }

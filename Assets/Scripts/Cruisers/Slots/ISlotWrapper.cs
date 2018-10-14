@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables.Buildings;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public interface ISlotWrapper : IManagedDisposable
+    public interface ISlotWrapper
     {
         ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);
         bool IsSlotAvailable(SlotType slotType);
