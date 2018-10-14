@@ -4,7 +4,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Cruisers
 {
     // NOTE:  Need to comment out Cruiser.Update() to avoid having to setup cruiser :)
     public class SlotReplacer : MonoBehaviour
