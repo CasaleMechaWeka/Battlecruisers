@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Cruisers
 {
-    public class SlotsTestGod : MonoBehaviour
+    public class SlotBoostersTestGod : MonoBehaviour
     {
         private void Start()
         {
