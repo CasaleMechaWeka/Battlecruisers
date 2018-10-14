@@ -46,11 +46,6 @@ namespace BattleCruisers.Tutorial
         public void StartTutorial()
         {
             _consumer.StartConsuming();
-
-            // FELIX  TEMP :P
-            HighlightArgs args = new HighlightArgs(bottomLeftPosition: new Vector2(300, 150), size: new Vector2(1200, 800));
-            maskHighlighter.Highlight(args);
-            //maskHighlighter.Unhighlight();
         }
 
         private void _consumer_Completed(object sender, EventArgs e)
