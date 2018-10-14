@@ -8,6 +8,8 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
     {
         private readonly ICamera _camera;
 
+        private const int HIGHLIGHT_BORDER_IN_PIXELS = 16;
+
         public HighlightArgsFactory(ICamera camera)
         {
             Assert.IsNotNull(camera);
@@ -18,15 +20,17 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         {
             Vector3[] corners = new Vector3[4];
             rectTransform.GetWorldCorners(corners);
-            return new HighlightArgs(corners[0], rectTransform.sizeDelta);
+            HighlightArgs noBorderArgs = new HighlightArgs(corners[0], rectTransform.sizeDelta);
+            return AddBorder(noBorderArgs);
         }
 
         public HighlightArgs CreateForInGameObject(Vector2 objectWorldPosition, Vector2 objectWorldSize)
         {
-            return 
-                new HighlightArgs(
+            HighlightArgs noBorderArgs 
+                = new HighlightArgs(
                     FindBottomLeftScreenPosition(objectWorldPosition, objectWorldSize),
                     FindObjectScreenSize(objectWorldSize));
+            return AddBorder(noBorderArgs);
         }
 
         private Vector2 FindBottomLeftScreenPosition(Vector2 objectWorldPosition, Vector2 objectWorldSize)
@@ -44,6 +48,14 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             float objectScreenWidthInPixels = objectWorldSize.x / cameraSize.x * _camera.PixelWidth;
             float objectScreenHeightInPixels = objectWorldSize.y / cameraSize.y * _camera.PixelHeight;
             return new Vector2(objectScreenWidthInPixels, objectScreenHeightInPixels);
+        }
+
+        private HighlightArgs AddBorder(HighlightArgs noBorderArgs)
+        {
+            return
+                new HighlightArgs(
+                    new Vector2(noBorderArgs.BottomLeftPosition.x - HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.BottomLeftPosition.y - HIGHLIGHT_BORDER_IN_PIXELS),
+                    new Vector2(noBorderArgs.Size.x + 2 * HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.Size.y + 2 * HIGHLIGHT_BORDER_IN_PIXELS));
         }
     }
 }
