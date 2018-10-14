@@ -56,6 +56,7 @@ namespace BattleCruisers.Cruisers.Slots
                 ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
                 SortSlotsByType(slot);
+                slot.IsVisible = false;
             }
         }
 
