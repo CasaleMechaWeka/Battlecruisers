@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 
         void Start()
         {
-            _highlightArgsFactory = new HighlightArgsFactory();
+            _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
 
             deferrer.StaticInitialise(delayInMs: 2000);
             maskHighlighter.Initialise();
@@ -65,20 +66,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 
         private void CreateInGameHighlight(SpriteRenderer renderer)
         {
-            Vector2 bottomLeftWorldPosition
-                = new Vector2(
-                    renderer.transform.position.x - renderer.size.x / 2,
-                    renderer.transform.position.y - renderer.size.y / 2);
-            Vector2 bottomLeftScreenPosition = camera.WorldToScreenPoint(bottomLeftWorldPosition);
-
-            float cameraHeight = 2 * camera.orthographicSize;
-            float cameraWidth = camera.aspect * cameraHeight;
-
-            float objectScreenWidthInPixels = renderer.size.x / cameraWidth * camera.pixelWidth;
-            float objectScreenHeightInPixels = renderer.size.y / cameraHeight * camera.pixelHeight;
-            Vector2 objectScreenSize = new Vector2(objectScreenWidthInPixels, objectScreenHeightInPixels);
-
-            HighlightArgs highlightArgs = new HighlightArgs(bottomLeftScreenPosition, objectScreenSize);
+            HighlightArgs highlightArgs = _highlightArgsFactory.CreateForInGameObject(renderer.transform.position, renderer.size);
             maskHighlighter.Highlight(highlightArgs);
         }
     }
