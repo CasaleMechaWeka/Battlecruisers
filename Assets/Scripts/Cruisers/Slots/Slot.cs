@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
-        private BoxCollider2D _collider;
+        private CircleCollider2D _collider;
         private IBuildingPlacer _buildingPlacer;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -71,7 +71,7 @@ namespace BattleCruisers.Cruisers.Slots
         // IHighlightable
         public Transform Transform { get { return transform; } }
         public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
-        public Vector2 Size { get { return _collider.size; } }
+        public Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public virtual float SizeMultiplier { get { return 2; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
@@ -89,7 +89,7 @@ namespace BattleCruisers.Cruisers.Slots
 			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
 			Assert.IsNotNull(_renderer);
 
-            _collider = GetComponent<BoxCollider2D>();
+            _collider = GetComponent<CircleCollider2D>();
             Assert.IsNotNull(_collider);
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
