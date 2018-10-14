@@ -155,7 +155,6 @@ namespace BattleCruisers.Cruisers
             _fog.Initialise(args.ShouldShowFog);
 
             SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter);
-            SlotWrapper.HideAllSlots();
 
             _unitConstructionMonitor = new UnitConstructionMonitor(this);
             _smokeInitialiser.Initialise(this);

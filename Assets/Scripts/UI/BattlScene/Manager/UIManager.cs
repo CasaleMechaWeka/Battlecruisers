@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
+    // FELIX  Update tests :/
     public class UIManager : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
@@ -52,7 +53,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 
             _playerCruiser.SlotWrapper.UnhighlightSlots();
-            _playerCruiser.SlotWrapper.HideAllSlots();
             _detailsManager.HideDetails();
             _buildMenu.ShowBuildingGroupsMenu();
         }
@@ -61,7 +61,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 
-			_playerCruiser.SlotWrapper.ShowAllSlots();
 			_buildMenu.ShowBuildingGroupMenu(buildingCategory);
 		}
 

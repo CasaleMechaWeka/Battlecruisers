@@ -79,7 +79,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.ShowBuildingGroups();
 
             _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
-            _playerCruiser.SlotWrapper.Received().HideAllSlots();
             _detailsManager.Received().HideDetails();
             _buildMenu.Received().ShowBuildingGroupsMenu();
         }
@@ -90,7 +89,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             BuildingCategory buildingCategory = BuildingCategory.Ultra;
             _uiManager.SelectBuildingGroup(buildingCategory);
 
-            _playerCruiser.SlotWrapper.Received().ShowAllSlots();
             _buildMenu.Received().ShowBuildingGroupMenu(buildingCategory);
         }
 

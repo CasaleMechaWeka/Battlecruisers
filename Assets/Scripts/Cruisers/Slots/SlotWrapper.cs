@@ -8,12 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
+    // FELIX  Update tests :/
     public class SlotWrapper : ISlotWrapper
 	{
 		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
         private readonly ISlotFilter _highlightableFilter;
 		private SlotType? _highlightedSlotType;
-        private bool _areAllSlotsVisible;
 
 		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
@@ -26,11 +26,7 @@ namespace BattleCruisers.Cruisers.Slots
                 if (_highlightedSlot != null)
                 {
                     _highlightedSlot.UnhighlightSlot();
-
-                    if (!_areAllSlotsVisible)
-                    {
-                        _highlightedSlot.IsVisible = false;
-					}
+                    _highlightedSlot.IsVisible = false;
                 }
 
                 _highlightedSlot = value;
@@ -48,7 +44,6 @@ namespace BattleCruisers.Cruisers.Slots
             Helper.AssertIsNotNull(parentCruiser, slots, highlightableFilter);
 
             _highlightableFilter = highlightableFilter;
-            _areAllSlotsVisible = false;
             _slots = new Dictionary<SlotType, IList<ISlot>>();
 
             // Sort slots by position (cruiser front to cruiser rear)
@@ -99,19 +94,6 @@ namespace BattleCruisers.Cruisers.Slots
 		public bool IsSlotAvailable(SlotType slotType)
 		{
 			return _slots[slotType].Any(slot => slot.IsFree);
-		}
-
-		public void ShowAllSlots()
-		{
-            SetSlotVisibility(isVisible: true);
-            _areAllSlotsVisible = true;
-		}
-
-		public void HideAllSlots()
-		{
-            SetSlotVisibility(isVisible: false);
-            HighlightedSlot = null;
-            _areAllSlotsVisible = false;
 		}
 
         private void SetSlotVisibility(bool isVisible)
@@ -188,22 +170,9 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void Slot_BuildingDestroyed(object sender, SlotBuildingDestroyedEventArgs e)
         {
-            if (_areAllSlotsVisible)
-            {
-                if (_highlightedSlotType != null 
-                    && _highlightedSlotType == e.BuildingParent.Type)
-                {
-                    e.BuildingParent.HighlightSlot();
-                }
-                else
-                {
-                    e.BuildingParent.UnhighlightSlot();
-                }
-            }
-            else
+            if (_highlightedSlotType != e.BuildingParent.Type)
             {
                 e.BuildingParent.UnhighlightSlot();
-                e.BuildingParent.IsVisible = false;
             }
         }
 
