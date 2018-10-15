@@ -198,7 +198,9 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                // FELIX  Revert to bullshark :P
+                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Trident, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                //new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
                 new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
