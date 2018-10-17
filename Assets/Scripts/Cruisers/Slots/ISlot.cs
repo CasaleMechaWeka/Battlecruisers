@@ -6,6 +6,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.DataStrctures;
 using System;
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -40,6 +41,11 @@ namespace BattleCruisers.Cruisers.Slots
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
+
+        /// <summary>
+        /// Reference point used to line up buildings with.
+        /// </summary>
+        Vector2 BuildingPlacementPoint { get; }
 
         /// <summary>
         /// Slots are ordered via their index, from the crusier front (low

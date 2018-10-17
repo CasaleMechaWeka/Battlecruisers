@@ -74,6 +74,7 @@ namespace BattleCruisers.Cruisers.Slots
         public Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public virtual float SizeMultiplier { get { return 2; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
+        public Vector2 BuildingPlacementPoint { get; private set; }
 
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
@@ -87,7 +88,9 @@ namespace BattleCruisers.Cruisers.Slots
             _buildingPlacer = buildingPlacer;
 
 			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
-			Assert.IsNotNull(_renderer);
+
+            GameObject buildingPlacementPoint = transform.FindNamedComponent<GameObject>("BuildingPlacementPoint");
+            BuildingPlacementPoint = buildingPlacementPoint.transform.position;
 
             _collider = GetComponent<CircleCollider2D>();
             Assert.IsNotNull(_collider);
