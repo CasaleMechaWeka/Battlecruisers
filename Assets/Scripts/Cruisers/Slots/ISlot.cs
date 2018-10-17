@@ -45,7 +45,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// <summary>
         /// Reference point used to line up buildings with.
         /// </summary>
-        Vector2 BuildingPlacementPoint { get; }
+        Vector3 BuildingPlacementPoint { get; }
 
         /// <summary>
         /// Slots are ordered via their index, from the crusier front (low

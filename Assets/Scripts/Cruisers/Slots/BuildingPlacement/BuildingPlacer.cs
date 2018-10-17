@@ -24,12 +24,14 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
             switch (parentSlot.Direction)
             {
                 case Direction.Right:
-                    float horizontalChange = (parentSlot.Size.x + buildingToPlace.Size.x) / 2 + (buildingToPlace.CustomOffsetProportion * buildingToPlace.Size.x);
-                    return parentSlot.Transform.position + (parentSlot.Transform.right * horizontalChange);
+                    // Naval factory
+                    float horizontalChange = buildingToPlace.Size.x / 2;
+                    return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.right * horizontalChange);
 
                 case Direction.Up:
-                    float verticalChange = (parentSlot.Size.y + buildingToPlace.Size.y) / 2 + (buildingToPlace.CustomOffsetProportion * buildingToPlace.Size.y);
-                    return parentSlot.Transform.position + (parentSlot.Transform.up * verticalChange);
+                    // All other buildings
+                    float verticalChange = buildingToPlace.Size.y / 2;
+                    return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.up * verticalChange);
 
                 default:
                     throw new ArgumentException("Invalid slot direction");

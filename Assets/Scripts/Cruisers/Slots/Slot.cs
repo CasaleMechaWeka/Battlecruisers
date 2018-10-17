@@ -74,7 +74,7 @@ namespace BattleCruisers.Cruisers.Slots
         public Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public virtual float SizeMultiplier { get { return 2; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
-        public Vector2 BuildingPlacementPoint { get; private set; }
+        public Vector3 BuildingPlacementPoint { get; private set; }
 
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
