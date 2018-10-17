@@ -89,8 +89,8 @@ namespace BattleCruisers.Cruisers.Slots
 
 			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
 
-            GameObject buildingPlacementPoint = transform.FindNamedComponent<GameObject>("BuildingPlacementPoint");
-            BuildingPlacementPoint = buildingPlacementPoint.transform.position;
+            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+            BuildingPlacementPoint = buildingPlacementPoint.position;
 
             _collider = GetComponent<CircleCollider2D>();
             Assert.IsNotNull(_collider);
