@@ -106,7 +106,6 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Logging.Log(Tags.SLOTS, "OnPointerClick()");
 
-            // FELIX  Don't want to steal clicks from cruiser...
             if (IsVisible)
             {
                 Assert.IsTrue(IsFree);
