@@ -106,9 +106,8 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Logging.Log(Tags.SLOTS, "OnPointerClick()");
 
-            if (IsVisible)
+            if (IsVisible && IsFree)
             {
-                Assert.IsTrue(IsFree);
                 _parentCruiser.ConstructSelectedBuilding(this);
             }
 
