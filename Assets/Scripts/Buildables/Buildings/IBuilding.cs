@@ -14,10 +14,6 @@ namespace BattleCruisers.Buildables.Buildings
     public interface IBuilding : IBuildable
     {
         BuildingCategory Category { get; }
-
-        // FELIX  Remove?
-		float CustomOffsetProportion { get; }
-
         bool PreferCruiserFront { get; }
         SlotType SlotType { get; }
 

@@ -20,14 +20,11 @@ namespace BattleCruisers.Buildables.Buildings
         protected ISlot _parentSlot;
 
 		public BuildingCategory category;
-		// Proportional to building size
-		public float customOffsetProportion;
         public bool preferCruiserFront;
 
         public override TargetType TargetType { get { return TargetType.Buildings; } }
         public override Vector2 Size { get { return _collider.size; } }
         public BuildingCategory Category { get { return category; } }
-        public float CustomOffsetProportion { get { return customOffsetProportion; } }
         public bool PreferCruiserFront { get { return preferCruiserFront; } }
         
         public SlotType slotType;
