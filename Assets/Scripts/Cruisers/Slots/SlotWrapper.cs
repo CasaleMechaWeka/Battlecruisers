@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX  Update tests :/
     public class SlotWrapper : ISlotWrapper
 	{
 		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
