@@ -2,12 +2,13 @@
 
 namespace BattleCruisers.Utils.PlatformAbstractions
 {
-	public interface ICamera : ITransform
+	public interface ICamera
 	{
 		float OrthographicSize { get; set; }
         float Aspect { get; }
         float PixelWidth { get; }
         float PixelHeight { get; }
+        ITransform Transform { get; }
 
         Vector2 GetSize();
         Vector3 WorldToViewportPoint(Vector3 worldPoint);

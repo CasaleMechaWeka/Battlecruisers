@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerCruiserIfNeeded_CameraRoughlyOnCruiser_DoesNotMoveCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Position.Returns(new Vector3(9.9f, 0, 0));
+            _camera.Transform.Position.Returns(new Vector3(9.9f, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerCruiserIfNeeded_CameraNotRoughlyOnCruiser_MovesCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Position.Returns(new Vector3(10, 0, 0));
+            _camera.Transform.Position.Returns(new Vector3(10, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 

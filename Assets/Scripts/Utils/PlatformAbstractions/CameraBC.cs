@@ -22,11 +22,14 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         public float Aspect { get { return _platfromCamera.aspect; } }
         public float PixelWidth { get { return _platfromCamera.pixelWidth; } }
         public float PixelHeight { get { return _platfromCamera.pixelHeight; } }
+        public ITransform Transform { get; private set; }
 
         public CameraBC(Camera platformCamera)
 		{
 			Assert.IsNotNull(platformCamera);
 			_platfromCamera = platformCamera;
+
+            Transform = new TransformBC(_platfromCamera.transform);
 		}
 
         // Not a getter as the value needs to be calculated.  Ie, not a straight

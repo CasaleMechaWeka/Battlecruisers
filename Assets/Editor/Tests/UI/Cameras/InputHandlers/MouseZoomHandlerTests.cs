@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
             _camera = Substitute.For<ICamera>();
             _camera.OrthographicSize.Returns(10);
             _camera.Aspect.Returns(1.3333f);
-            _camera.Position.Returns(new Vector3(-1, -1, -10));
+            _camera.Transform.Position.Returns(new Vector3(-1, -1, -10));
 
             _settingsManager = Substitute.For<ISettingsManager>();
             _settingsManager.ZoomSpeed.Returns(0.5f);
@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
         public void HandleZoom_NoZoom()
         {
             float yScroll = 0;
-            MouseZoomResult expectedResult = new MouseZoomResult(_camera.OrthographicSize, _camera.Position);
+            MouseZoomResult expectedResult = new MouseZoomResult(_camera.OrthographicSize, _camera.Transform.Position);
             MouseZoomResult actualResult = _zoomHandler.HandleZoom(_zoomWorldTargetPosition, yScroll);
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -66,7 +66,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
         {
             float yScroll = -5;
             float expectedSize = _camera.OrthographicSize - _settingsManager.ZoomSpeed * yScroll;
-            MouseZoomResult expectedResult = new MouseZoomResult(expectedSize, _camera.Position);
+            MouseZoomResult expectedResult = new MouseZoomResult(expectedSize, _camera.Transform.Position);
             MouseZoomResult actualResult = _zoomHandler.HandleZoom(_zoomWorldTargetPosition, yScroll);
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -88,7 +88,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
                     targetViewportPosition,
                     expectedSize,
                     _camera.Aspect,
-                    _camera.Position.z)
+                    _camera.Transform.Position.z)
                 .Returns(unclampedNewCameraPosition);
 
             Vector3 clampedNewCameraPosition = new Vector3(4, 4, 3);

@@ -118,7 +118,7 @@ namespace BattleCruisers.UI.Cameras
 			    new CameraTransitionManager(
         			camera,
         			cameraTargetsFactory,
-        			new SmoothPositionAdjuster(camera, smoothTime),
+        			new SmoothPositionAdjuster(camera.Transform, smoothTime),
 					new SmoothZoomAdjuster(camera, smoothTime),
 				    navigationSettings);
 		}

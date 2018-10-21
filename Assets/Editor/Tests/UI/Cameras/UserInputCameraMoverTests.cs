@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             _sameOrthographicSize = 72.1f;
             _differentOrthographicSize = 12.7f;
             _camera.OrthographicSize = _sameOrthographicSize;
-            _camera.Position = _samePosition;
+            _camera.Transform.Position = _samePosition;
 
             _deltaTime = 0.123f;
 
@@ -92,7 +92,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             DidNotReceiveScroll();
 
             Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.AreEqual(_differentPosition, _camera.Transform.Position);
             Assert.IsNull(_lastArgs);
             Assert.AreEqual(CameraState.UserInputControlled, _mover.State);
         }
@@ -108,7 +108,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             ReceivedScroll();
 
             Assert.AreEqual(_sameOrthographicSize, _camera.OrthographicSize);
-            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.AreEqual(_differentPosition, _camera.Transform.Position);
             Assert.IsNull(_lastArgs);
         }
 
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.UI.Cameras
             DidNotReceiveScroll();
 
             Assert.AreEqual(_differentOrthographicSize, _camera.OrthographicSize);
-            Assert.AreEqual(_differentPosition, _camera.Position);
+            Assert.AreEqual(_differentPosition, _camera.Transform.Position);
             Assert.IsNull(_lastArgs);
         }
         #endregion MoveCamera
@@ -187,7 +187,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         private void Scroll(bool shouldScroll)
         {
             Vector3 desiredPosition = shouldScroll ? _differentPosition : _samePosition;
-            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition).Returns(desiredPosition);
+            _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Transform.Position, _input.MousePosition).Returns(desiredPosition);
         }
 
         private void ReceivedScroll()

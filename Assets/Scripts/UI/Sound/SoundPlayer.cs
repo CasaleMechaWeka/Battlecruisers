@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Sound
         public void PlaySound(ISoundKey soundKey)
         {
             // Play sound at camera location.  Assumes there is only one camera in the game.
-            PlaySound(soundKey, _soleCamera.Position);
+            PlaySound(soundKey, _soleCamera.Transform.Position);
         }
 
         public void PlaySound(ISoundKey soundKey, Vector2 position)

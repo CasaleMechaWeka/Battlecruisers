@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.Cameras
 			if (_target.IsInstantTransition(previousState))
             {
                 // Move camera instantly
-                _camera.Position = _target.Position;
+                _camera.Transform.Position = _target.Position;
                 _camera.OrthographicSize = _target.OrthographicSize;
 				State = _target.State;
 				return;

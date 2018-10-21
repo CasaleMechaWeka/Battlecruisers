@@ -37,9 +37,9 @@ namespace BattleCruisers.Tests.UI.Sound
         [Test]
         public void PlaySound_ProvideNoPosition_UsesMainCameraPosition()
         {
-            _camera.Position.Returns(new Vector3(99, 88, 77));
+            _camera.Transform.Position.Returns(new Vector3(99, 88, 77));
             _soundPlayer.PlaySound(_soundKey);
-            _audioClipPlayer.Received().PlaySound(_audioClip, _camera.Position);
+            _audioClipPlayer.Received().PlaySound(_audioClip, _camera.Transform.Position);
         }
 
         [Test]

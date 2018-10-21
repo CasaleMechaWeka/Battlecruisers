@@ -136,7 +136,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_transitionManager.MoveCamera(default(float));
 
 			_positionAdjuster.DidNotReceiveWithAnyArgs().AdjustPosition(default(Vector3));
-			Assert.AreEqual(_instaTransitionTarget.Position, _camera.Position);
+			Assert.AreEqual(_instaTransitionTarget.Position, _camera.Transform.Position);
 			Assert.AreEqual(_instaTransitionTarget.OrthographicSize, _camera.OrthographicSize);
 			AssertFullTransition(_instaTransitionTarget.State);
         }

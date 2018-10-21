@@ -68,9 +68,9 @@ namespace BattleCruisers.UI.Cameras
             MouseZoomResult zoomResult = _zoomHandler.HandleZoom(zoomTargetWorldPosition, _input.MouseScrollDelta.y);
 
             // Scroll for directional zoom :D
-            if (zoomResult.CameraPosition != _camera.Position)
+            if (zoomResult.CameraPosition != _camera.Transform.Position)
             {
-                _camera.Position = zoomResult.CameraPosition;
+                _camera.Transform.Position = zoomResult.CameraPosition;
             }
 
             // Update zoom level
@@ -92,11 +92,11 @@ namespace BattleCruisers.UI.Cameras
         /// <returns><c>true</c>, if in scroll, <c>false</c> otherwise.</returns>
         private bool HandleScroll()
         {
-            Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Position, _input.MousePosition);
+            Vector3 desiredPosition = _scrollHandler.FindCameraPosition(_camera.OrthographicSize, _camera.Transform.Position, _input.MousePosition);
 
-            if (desiredPosition != _camera.Position)
+            if (desiredPosition != _camera.Transform.Position)
             {
-                _camera.Position = desiredPosition;
+                _camera.Transform.Position = desiredPosition;
 
                 if (Scrolled != null)
                 {

@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
         {
             float newOrthographicSize = FindCameraOrthographicSize(yMouseScrollDelta);
 
-            Vector3 newCameraPosition = _camera.Position;
+            Vector3 newCameraPosition = _camera.Transform.Position;
 
             if (yMouseScrollDelta > 0)
             {
@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
                     targetViewportPosition,
                     newOrthographicSize,
                     _camera.Aspect,
-                    _camera.Position.z);
+                    _camera.Transform.Position.z);
         }
     }
 }
