@@ -13,18 +13,23 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement
 {
     public class MovementControllerFactory : IMovementControllerFactory
 	{
         private readonly IRotationHelper _rotationHelper;
+        private readonly ITime _time;
 
         public const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
 
-		public MovementControllerFactory()
+		public MovementControllerFactory(ITime time)
 		{
+            Assert.IsNotNull(time);
+
             _rotationHelper = new RotationHelper();
+            _time = time;
 		}
 
         #region Velocity
@@ -99,7 +104,7 @@ namespace BattleCruisers.Movement
         #region Rotation
         public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
-            return new RotationMovementController(_rotationHelper, rotateSpeedInDegreesPerS, new TransformBC(transform));
+            return new RotationMovementController(_rotationHelper, new TransformBC(transform), _time, rotateSpeedInDegreesPerS);
 		}
 
 		public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)

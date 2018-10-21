@@ -465,13 +465,23 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
-                    rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, new TransformBC(barrel.transform)),
+                    rotationMovementController ?? CreateRotationMovementController(barrel),
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
                     parent ?? Substitute.For<ITarget>(),
                     firingSound ?? SoundKeys.Firing.BigCannon,
                     localBoostProviders);
+        }
+
+        private IRotationMovementController CreateRotationMovementController(BarrelController barrel)
+        {
+            return
+                new RotationMovementController(
+                    new RotationHelper(),
+                    new TransformBC(barrel.transform),
+                    new TimeBC(),
+                    barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()

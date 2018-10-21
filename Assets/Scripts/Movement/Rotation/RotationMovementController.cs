@@ -9,19 +9,25 @@ namespace BattleCruisers.Movement.Rotation
     public class RotationMovementController : IRotationMovementController
 	{
 		private readonly IRotationHelper _rotationHelper;
-        private readonly float _rotateSpeedInDegreesPerS;
         private readonly ITransform _transform;
+        private readonly ITime _time;
+        private readonly float _rotateSpeedInDegreesPerS;
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-        public RotationMovementController(IRotationHelper rotationHelper, float rotateSpeedInDegreesPerS, ITransform transform)
+        public RotationMovementController(
+            IRotationHelper rotationHelper, 
+            ITransform transform,
+            ITime time,
+            float rotateSpeedInDegreesPerS)
 		{
-            Helper.AssertIsNotNull(rotationHelper, transform);
+            Helper.AssertIsNotNull(rotationHelper, transform, time);
             Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
 
 			_rotationHelper = rotationHelper;
-            _rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
             _transform = transform;
+            _time = time;
+            _rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
 		}
 
 		public bool IsOnTarget(float desiredAngleInDegrees)
@@ -40,7 +46,7 @@ namespace BattleCruisers.Movement.Rotation
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
             float directionMultiplier = _rotationHelper.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 
-			float rotationIncrement = Time.deltaTime * _rotateSpeedInDegreesPerS;
+			float rotationIncrement = _time.DeltaTime * _rotateSpeedInDegreesPerS;
 			if (rotationIncrement > differenceInDegrees)
 			{
 				rotationIncrement = differenceInDegrees;
