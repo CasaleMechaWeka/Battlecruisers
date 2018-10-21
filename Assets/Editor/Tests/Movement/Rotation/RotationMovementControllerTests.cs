@@ -20,6 +20,7 @@ namespace BattleCruisers.Tests.Movement.Rotation
         {
             _rotationHelper = Substitute.For<IRotationHelper>();
             _transform = Substitute.For<ITransform>();
+            _time = Substitute.For<ITime>();
             _rotateSpeedInDegreesPerS = 10;
 
             _movementController = new RotationMovementController(_rotationHelper, _transform, _time, _rotateSpeedInDegreesPerS);
