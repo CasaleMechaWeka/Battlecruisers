@@ -56,6 +56,7 @@ namespace BattleCruisers.Utils
 
         // Movement
         public const string MOVEMENT = "Movement";
+        public const string ROTATION_MOVEMENT_CONTROLLER = "RotationMovementController";
         public const string SHIP_MOVEMENT_DECIDER = "ShipMovementDecider";
 
         // Other
@@ -106,7 +107,9 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
 			tagsToActiveness.Add(Tags.SHELLS, false);
 
@@ -136,6 +139,9 @@ namespace BattleCruisers.Utils
 
             // Movement
             tagsToActiveness.Add(Tags.MOVEMENT, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
 
             // Other

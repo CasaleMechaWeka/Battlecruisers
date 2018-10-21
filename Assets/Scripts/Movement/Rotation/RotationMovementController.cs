@@ -4,6 +4,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
+    // FELIX  Abstract Transform
+    // FELIX  Test!!!
     public class RotationMovementController : IRotationMovementController
 	{
 		private readonly IRotationHelper _rotationHelper;
@@ -26,7 +28,10 @@ namespace BattleCruisers.Movement.Rotation
 		{
 			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
-			return differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
+			bool isOnTarget = differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
+
+            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, "isOnTarget: " + isOnTarget + " currentAngle: " + currentAngleInDegrees + "  desiredAngle: " + desiredAngleInDegrees);
+            return isOnTarget;
 		}
 
 		public void AdjustRotation(float desiredAngleInDegrees)
@@ -43,6 +48,7 @@ namespace BattleCruisers.Movement.Rotation
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
 
 			_transform.Rotate(rotationIncrementVector);
+            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, "Rotated transform by: " + rotationIncrement);
 		}
 	}
 }
