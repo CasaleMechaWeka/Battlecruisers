@@ -42,6 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
+            // FELIX  This is the job of an angle limiter, NOT the angle calculator :)
 			if (angleInDegrees > MAX_ANGLE_IN_DEGREES)
 			{
 				angleInDegrees = MAX_ANGLE_IN_DEGREES;
