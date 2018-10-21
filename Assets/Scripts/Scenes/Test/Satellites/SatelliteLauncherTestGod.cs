@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes.Test.Satellites
 {
     public class SatelliteLauncherTestGod : CameraToggleTestGod
     {
-        public int numOfDrones;
+        public bool useFastBuildSpeed;
 
         protected override void OnStart()
         {
@@ -19,7 +19,8 @@ namespace BattleCruisers.Scenes.Test.Satellites
             Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
             IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
 
-            Helper helper = new Helper(numOfDrones);
+            float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.VERY_FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
+            Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier);
             helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
             launcher.StartConstruction();
         }
