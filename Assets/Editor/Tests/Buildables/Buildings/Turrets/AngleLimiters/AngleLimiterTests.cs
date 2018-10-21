@@ -22,21 +22,33 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
         }
 
         [Test]
-        public void MinAngle_ReturnsSame()
+        public void LimitAngle_TooSmallDesiredAngle_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _limiter.LimitAngle(-1));
+        }
+
+        [Test]
+        public void LimitAngle_TooLargeDesiredAngle_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _limiter.LimitAngle(361));
+        }
+
+        [Test]
+        public void LimitAngle_MinAngle_ReturnsSame()
         {
             float limitedAngle = _limiter.LimitAngle(_minNonNegativeAngle);
             Assert.AreEqual(_minNonNegativeAngle, limitedAngle);
         }
 
         [Test]
-        public void MaxAngle_ReturnsSame()
+        public void LimitAngle_MaxAngle_ReturnsSame()
         {
             float limitedAngle = _limiter.LimitAngle(_maxAngleInDegrees);
             Assert.AreEqual(_maxAngleInDegrees, limitedAngle);
         }
 
         [Test]
-        public void AngleWithinLimit_CloseToMin_ReturnsSame()
+        public void LimitAngle_AngleWithinLimit_CloseToMin_ReturnsSame()
         {
             float inLimitAngle = _minNonNegativeAngle + 1;
             float limitedAngle = _limiter.LimitAngle(inLimitAngle);
@@ -44,7 +56,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
         }
 
         [Test]
-        public void AngleWithinLimit_CloseToMax_ReturnsSame()
+        public void LimitAngle_AngleWithinLimit_CloseToMax_ReturnsSame()
         {
             float inLimitAngle = _maxAngleInDegrees - 1;
             float limitedAngle = _limiter.LimitAngle(inLimitAngle);
@@ -52,7 +64,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
         }
 
         [Test]
-        public void AngleWithinLimit_JustPositive_ReturnsSame()
+        public void LimitAngle_AngleWithinLimit_JustPositive_ReturnsSame()
         {
             float inLimitAngle = 1;
             float limitedAngle = _limiter.LimitAngle(inLimitAngle);
@@ -60,22 +72,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
         }
 
         [Test]
-        public void AngleWithinLimit_JustNegative_ReturnsSame()
-        {
-            float inLimitAngle = -1;
-            float limitedAngle = _limiter.LimitAngle(inLimitAngle);
-            Assert.AreEqual(inLimitAngle, limitedAngle);
-        }
-
-        [Test]
-        public void TooSmallAngle_ReturnsMinAngle()
+        public void LimitAngle_TooSmallAngle_ReturnsMinAngle()
         {
             float limitedAngle = _limiter.LimitAngle(_minNonNegativeAngle - 1);
             Assert.AreEqual(_minNonNegativeAngle, limitedAngle);
         }
 
         [Test]
-        public void TooLargeAngle_ReturnsMaxAngle()
+        public void LimitAngle_TooLargeAngle_ReturnsMaxAngle()
         {
             float limitedAngle = _limiter.LimitAngle(_maxAngleInDegrees + 1);
             Assert.AreEqual(_maxAngleInDegrees, limitedAngle);

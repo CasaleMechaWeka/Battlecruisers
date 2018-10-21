@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
         private const float MIN_MIN_ANGLE = -180;
         private const float MAX_MAX_ANGLE = 180;
 
-		private const float MIN_DESIRED_ANGLE_IN_DEGREES = -360;
+		private const float MIN_DESIRED_ANGLE_IN_DEGREES = 0;
         private const float MAX_DESIRED_ANGLE_IN_DEGREES = 360;
 
         public AngleLimiter(float minAngle, float maxAngle)
@@ -24,28 +24,35 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
             _maxAngle = maxAngle;
         }
 
-        /// <param name="desiredAngleInDegrees">
-        /// // FELIX  Update comment :/
-        /// Desired angle in degrees: -360 to 360
-        /// </param>
-        /// FELIX  Update tests :)
+        /// <summary>
+        /// NOTE:
+        /// desiredAngleInDegrees: 0 to 360
+        /// allowed range:  -180 to 180
+        /// 
+        /// The allowed range is specified thus to allow facing angle limiters to be
+        /// specified easily.  Ie:
+        ///     -90 to 90
+        /// Instead of:
+        ///     0 to 90 AND 270 to 360
+        /// </summary>
         public float LimitAngle(float desiredAngleInDegrees)
         {
             Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);
             Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES);
 
-            // Convert too large angles to negative angles
-            if (desiredAngleInDegrees > 180)
+            // Convert from 0 > 360 to -180 to 180
+            bool shouldConvert = desiredAngleInDegrees > 180;
+            if (shouldConvert)
             {
-                desiredAngleInDegrees = desiredAngleInDegrees - 360;
+                desiredAngleInDegrees -= 360;
             }
 
             float clampedAngle = Mathf.Clamp(desiredAngleInDegrees, _minAngle, _maxAngle);
 
-            // Convert negative angles to large angles
-            if (clampedAngle < 0)
+            // Convert from -180 to 180 to 0 > 360
+            if (shouldConvert)
             {
-                clampedAngle = clampedAngle + 360;
+                clampedAngle += 360;
             }
 
             return clampedAngle;
