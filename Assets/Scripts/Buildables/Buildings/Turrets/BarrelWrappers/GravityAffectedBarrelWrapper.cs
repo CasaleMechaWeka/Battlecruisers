@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Utils;
 
@@ -30,5 +31,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         barrel.TurretStats);
             }
         }
-	}
+
+        protected override IAngleLimiter CreateAngleLimiter()
+        {
+            return _factoryProvider.Turrets.AngleLimiterFactory.CreateGravityAffectedLimiter();
+        }
+    }
 }

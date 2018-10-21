@@ -9,10 +9,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// 1. Shells ARE affected by gravity
     /// 2. Target is in facing direction of source
     /// </summary>
+    /// FELIX  Double check tests :)
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
-		private const float MAX_ANGLE_IN_DEGREES = 85;
-
         protected abstract bool UseLargerAngle { get; }
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
@@ -41,12 +40,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
             float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
-
-            // FELIX  This is the job of an angle limiter, NOT the angle calculator :)
-			if (angleInDegrees > MAX_ANGLE_IN_DEGREES)
-			{
-				angleInDegrees = MAX_ANGLE_IN_DEGREES;
-			}
 
             Logging.Log(Tags.ANGLE_CALCULATORS, "GravityAffectedAngleCalculator.FindDesiredAngle() " + angleInDegrees + "*");
 
