@@ -99,9 +99,7 @@ namespace BattleCruisers.Utils
 
             // Buildings
             tagsToActiveness.Add(Tags.BUILDABLE, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.BUILDING, true);
-            //tagsToActiveness.Add(Tags.BUILDING, false);
+            tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
             tagsToActiveness.Add(Tags.FACTORY, false);
 
@@ -148,9 +146,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.SLOTS, true);
-            //tagsToActiveness.Add(Tags.SLOTS, false);
+            tagsToActiveness.Add(Tags.SLOTS, false);
 
             return tagsToActiveness;
 		}
