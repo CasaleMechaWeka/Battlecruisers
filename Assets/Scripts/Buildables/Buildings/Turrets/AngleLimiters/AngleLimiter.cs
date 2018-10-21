@@ -25,8 +25,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
         }
 
         /// <param name="desiredAngleInDegrees">
-        /// Desired angle in degrees: 0 - 360
+        /// // FELIX  Update comment :/
+        /// Desired angle in degrees: -360 to 360
         /// </param>
+        /// FELIX  Update tests :)
         public float LimitAngle(float desiredAngleInDegrees)
         {
             Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);
