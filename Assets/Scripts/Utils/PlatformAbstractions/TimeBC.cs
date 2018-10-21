@@ -12,5 +12,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 
         public float TimeSinceGameStartInS { get { return Time.time; } }
         public float UnscaledDeltaTime { get { return Time.unscaledDeltaTime; } }
+        public float DeltaTime { get { return Time.deltaTime; } }
     }
 }
