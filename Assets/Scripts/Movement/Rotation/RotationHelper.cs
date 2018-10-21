@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation
 {
@@ -16,7 +17,14 @@ namespace BattleCruisers.Movement.Rotation
             }
 
             float distance = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+            float directionMultiplier = FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees, distance);
 
+            Logging.Log(Tags.ROTATION_HELPER, "FindDirectionMultiplier()  currentAngle: " + currentAngleInDegrees + "  desiredAngle: " + desiredAngleInDegrees + "  direction: " + directionMultiplier);
+            return directionMultiplier;
+        }
+
+        private float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees, float distance)
+        {
             if (desiredAngleInDegrees > currentAngleInDegrees)
             {
                 return distance < 180 ? 1 : -1;
