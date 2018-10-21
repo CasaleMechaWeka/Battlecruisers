@@ -138,12 +138,8 @@ namespace BattleCruisers.Utils
 
             // Movement
             tagsToActiveness.Add(Tags.MOVEMENT, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.ROTATION_HELPER, true);
-            //tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, true);
-            //tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
+            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
 
             // Other
