@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
-    // FELIX  Test!!!
     public class RotationMovementController : IRotationMovementController
 	{
 		private readonly IRotationHelper _rotationHelper;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Movement.Rotation
         private readonly ITime _time;
         private readonly float _rotateSpeedInDegreesPerS;
 
-		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
+		public const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
         public RotationMovementController(
             IRotationHelper rotationHelper, 
