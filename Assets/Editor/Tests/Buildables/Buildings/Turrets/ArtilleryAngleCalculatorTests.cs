@@ -22,21 +22,21 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 		}
 
 		[Test]
-		public void OutOfRange()
+		public void OutOfRange_Throws()
 		{
 			Vector2 source = new Vector2(-20, 0);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: false, projectileVelocityInMPerS: 2));
 		}
 
 		[Test]
-		public void SourceNotMirrored_ButTargetToLeft()
+		public void SourceNotMirrored_ButTargetToLeft_Throws()
 		{
 			Vector2 source = new Vector2(2, 0);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: false, projectileVelocityInMPerS: 45));
 		}
 
 		[Test]
-		public void SourceMirrored_ButTargetToRight()
+		public void SourceMirrored_ButTargetToRight_Throws()
 		{
 			Vector2 source = new Vector2(-2, 0);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true, projectileVelocityInMPerS: 45));
