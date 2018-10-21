@@ -9,7 +9,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// 1. Shells ARE affected by gravity
     /// 2. Target is in facing direction of source
     /// </summary>
-    /// FELIX  Double check tests :)
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
         protected abstract bool UseLargerAngle { get; }
