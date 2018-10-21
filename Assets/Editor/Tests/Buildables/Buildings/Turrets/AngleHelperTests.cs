@@ -44,14 +44,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
         public void FindDesiredAngle_SameX_SourceIsAbove()
         {
             Vector2 source = new Vector2(0, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: -90);
+            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 270);
         }
 
         [Test]
         public void FindDesiredAngle_SameX_SourceIsAbove_Mirrored()
         {
             Vector2 source = new Vector2(0, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: -90);
+            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 270);
         }
 
         [Test]
@@ -88,28 +88,28 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
         public void FindDesiredAngle_Source_TopLeft()
         {
             Vector2 source = new Vector2(-2, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: -45);
+            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 315);
         }
 
         [Test]
         public void FindDesiredAngle_Source_TopLeft_Mirrored()
         {
             Vector2 source = new Vector2(-2, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: -135);
+            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 225);
         }
 
         [Test]
         public void FindDesiredAngle_Source_TopRight()
         {
             Vector2 source = new Vector2(2, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: -135);
+            TestFindDesiredAngle(source, isSourceMirrored: false, expectedAngleInDegrees: 225);
         }
 
         [Test]
         public void FindDesiredAngle_Source_TopRight_Mirrored()
         {
             Vector2 source = new Vector2(2, 2);
-            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: -45);
+            TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 315);
         }
 
         [Test]
@@ -125,6 +125,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
             Vector2 source = new Vector2(-2, -2);
             TestFindDesiredAngle(source, isSourceMirrored: true, expectedAngleInDegrees: 135);
         }
+
 
         [Test]
         public void FindDesiredAngle_Source_BottomRight()

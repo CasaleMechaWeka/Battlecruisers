@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             if (sourcePosition.x == targetPosition.x)
             {
                 // On same x-axis
-                desiredAngleInDegrees = sourcePosition.y < targetPosition.y ? 90 : -90;
+                desiredAngleInDegrees = sourcePosition.y < targetPosition.y ? 90 : 270;
             }
             else if (sourcePosition.y == targetPosition.y)
             {
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
                     else
                     {
                         // Source is above target
-                        desiredAngleInDegrees = isSourceMirrored ? angleInDegrees - 180 : -angleInDegrees;
+                        desiredAngleInDegrees = isSourceMirrored ? 180 + angleInDegrees : 360 - angleInDegrees;
                     }
                 }
                 else
@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
                     else
                     {
                         // Source is above target
-                        desiredAngleInDegrees = isSourceMirrored ? -angleInDegrees : angleInDegrees - 180;
+                        desiredAngleInDegrees = isSourceMirrored ? 360 - angleInDegrees : 180 + angleInDegrees;
                     }
                 }
             }
