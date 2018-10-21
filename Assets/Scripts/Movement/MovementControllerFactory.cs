@@ -10,6 +10,7 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -98,7 +99,7 @@ namespace BattleCruisers.Movement
         #region Rotation
         public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
-            return new RotationMovementController(_rotationHelper, rotateSpeedInDegreesPerS, transform);
+            return new RotationMovementController(_rotationHelper, rotateSpeedInDegreesPerS, new TransformBC(transform));
 		}
 
 		public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)

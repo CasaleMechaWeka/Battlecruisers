@@ -38,6 +38,7 @@ using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -464,7 +465,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
-                    rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, barrel.transform),
+                    rotationMovementController ?? new RotationMovementController(new RotationHelper(), barrel.TurretStats.TurretRotateSpeedInDegrees, new TransformBC(barrel.transform)),
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,

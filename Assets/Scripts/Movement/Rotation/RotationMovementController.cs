@@ -1,20 +1,20 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
-    // FELIX  Abstract Transform
     // FELIX  Test!!!
     public class RotationMovementController : IRotationMovementController
 	{
 		private readonly IRotationHelper _rotationHelper;
         private readonly float _rotateSpeedInDegreesPerS;
-        private readonly Transform _transform;
+        private readonly ITransform _transform;
 
 		private const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
-        public RotationMovementController(IRotationHelper rotationHelper, float rotateSpeedInDegreesPerS, Transform transform)
+        public RotationMovementController(IRotationHelper rotationHelper, float rotateSpeedInDegreesPerS, ITransform transform)
 		{
             Helper.AssertIsNotNull(rotationHelper, transform);
             Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
@@ -26,7 +26,7 @@ namespace BattleCruisers.Movement.Rotation
 
 		public bool IsOnTarget(float desiredAngleInDegrees)
 		{
-			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
+			float currentAngleInDegrees = _transform.EulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			bool isOnTarget = differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Movement.Rotation
 
 		public void AdjustRotation(float desiredAngleInDegrees)
 		{
-			float currentAngleInDegrees = _transform.rotation.eulerAngles.z;
+			float currentAngleInDegrees = _transform.EulerAngles.z;
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
             float directionMultiplier = _rotationHelper.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 
