@@ -23,6 +23,11 @@ namespace BattleCruisers.Cruisers.Slots
         Deck = 5
 	}
 
+    public enum SlotFunction
+    {
+        Generic, AntiAir, AntiShip, Shield
+    }
+
     public class SlotBuildingDestroyedEventArgs : EventArgs
     {
         public ISlot BuildingParent { get; private set; }
@@ -37,6 +42,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         bool IsFree { get; }
         SlotType Type { get; }
+        SlotFunction Function { get; }
         Direction Direction { get; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
