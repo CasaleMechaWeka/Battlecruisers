@@ -37,6 +37,12 @@ namespace BattleCruisers.Cruisers.Slots
     {
         bool IsFree { get; }
         SlotType Type { get; }
+        /// <summary>
+        /// The type of building this slot is well positioned for.  Eg, for AntiShip
+        /// buildings that is the cruiser front.  For shields that is spread accross
+        /// the cruiser.
+        /// </summary>
+        BuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
