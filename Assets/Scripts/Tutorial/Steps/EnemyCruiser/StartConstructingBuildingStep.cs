@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
@@ -7,6 +6,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
@@ -44,12 +44,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
             IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
-            Assert.IsTrue(_parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.Function));
-			ISlot slot 
-                = _parentCruiser.SlotWrapper.GetFreeSlot(
-                    buildingWrapperPrefab.Buildable.SlotType,
-                    buildingWrapperPrefab.Buildable.Function, 
-                    buildingWrapperPrefab.Buildable.PreferCruiserFront);
+            Assert.IsTrue(_parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotSpecification));
+            ISlot slot = _parentCruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
 
             _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
 

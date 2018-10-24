@@ -27,14 +27,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
             _tasks.IsEmpty.Returns(true);
 
-            _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotWrapper.IsSlotAvailable(SlotType.Platform, default(BuildingFunction)).Returns(true);
-            _slotWrapper.IsSlotAvailable(SlotType.Deck, default(BuildingFunction)).Returns(false);
-
-            _cruiser.SlotWrapper.Returns(_slotWrapper);
-
             _platformSlotBuilding = Substitute.For<IBuilding>();
-            _platformSlotBuilding.SlotType.Returns(SlotType.Platform);
+            _platformSlotBuilding.SlotSpecification.SlotType.Returns(SlotType.Platform);
             _platformSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _platformSlotBuildingWrapper.Buildable.Returns(_platformSlotBuilding);
             _platformBuildingKey = new BuildingKey(BuildingCategory.Ultra, "Kaffeemuehle");
@@ -43,13 +37,19 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _platformBuildingKey).Returns(_platformBuildingTask);
 
             _deckSlotBuilding = Substitute.For<IBuilding>();
-            _deckSlotBuilding.SlotType.Returns(SlotType.Deck);
+            _deckSlotBuilding.SlotSpecification.SlotType.Returns(SlotType.Deck);
             _deckSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _deckSlotBuildingWrapper.Buildable.Returns(_deckSlotBuilding);
             _deckBuildingKey = new BuildingKey(BuildingCategory.Tactical, "Hirsch");
             _prefabFactory.GetBuildingWrapperPrefab(_deckBuildingKey).Returns(_deckSlotBuildingWrapper);
             _deckBuildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _deckBuildingKey).Returns(_deckBuildingTask);
+
+            _slotWrapper = Substitute.For<ISlotWrapper>();
+            _slotWrapper.IsSlotAvailable(_platformSlotBuilding.SlotSpecification).Returns(true);
+            _slotWrapper.IsSlotAvailable(_deckSlotBuilding.SlotSpecification).Returns(false);
+
+            _cruiser.SlotWrapper.Returns(_slotWrapper);
 
             _buildOrder = Substitute.For<IDynamicBuildOrder>();
             _buildOrder.MoveNext().Returns(true);
@@ -97,8 +97,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
             _tasks.IsEmptyChanged += Raise.Event();
 
-            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotType, _deckSlotBuilding.Function);
-            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotType, _platformSlotBuilding.Function);
+            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotSpecification);
+            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotSpecification);
             _tasks.Received().Add(_platformBuildingTask);
         }
 

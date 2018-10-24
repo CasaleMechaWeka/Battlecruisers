@@ -40,13 +40,9 @@ namespace BattleCruisers.AI.Tasks
             bool haveStartedTask = false;
 
             if (_parentCruiser.IsAlive
-                && _parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.Function))
+                && _parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotSpecification))
             {
-                ISlot slot 
-                    = _parentCruiser.SlotWrapper.GetFreeSlot(
-                        buildingWrapperPrefab.Buildable.SlotType,
-                        buildingWrapperPrefab.Buildable.Function,
-                        buildingWrapperPrefab.Buildable.PreferCruiserFront);
+                ISlot slot = _parentCruiser.SlotWrapper.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
 				Assert.IsNotNull(slot);
 				
                 _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);

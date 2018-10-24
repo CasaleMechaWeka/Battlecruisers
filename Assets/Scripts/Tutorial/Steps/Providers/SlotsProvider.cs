@@ -11,6 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     public class SlotsProvider : ISlotsProvider
     {
         private readonly ISlotWrapper _slotWrapper;
+        // FELIX  Use SlotSpecification instead :P
         private readonly SlotType _slotType;
         private readonly BuildingFunction _buildingFunction;
         private readonly bool _preferFrontmostSlot;
@@ -24,7 +25,8 @@ namespace BattleCruisers.Tutorial.Steps.Providers
                 {
                     if (_preferFrontmostSlot)
                     {
-                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot);
+                        SlotSpecification slotSpecification = new SlotSpecification(_slotType, _buildingFunction, _preferFrontmostSlot);
+                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(slotSpecification);
                         Assert.IsNotNull(frontMostSlot);
 
                         _slots = new List<ISlot>()

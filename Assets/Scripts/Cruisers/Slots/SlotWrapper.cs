@@ -89,11 +89,11 @@ namespace BattleCruisers.Cruisers.Slots
 			_slots[slot.Type].Add(slot);
         }
 
-		public bool IsSlotAvailable(SlotType slotType, BuildingFunction buildingFunction)
+		public bool IsSlotAvailable(SlotSpecification slotSpecification)
 		{
 			return 
-                _slots[slotType]
-                    .Any(slot => FreeSlotFilter(slot, buildingFunction));
+                _slots[slotSpecification.SlotType]
+                    .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
         private void SetSlotVisibility(bool isVisible)
@@ -145,11 +145,11 @@ namespace BattleCruisers.Cruisers.Slots
 			}
 		}
 
-		public ISlot GetFreeSlot(SlotType slotType, BuildingFunction buildingFunction, bool preferFromFront = true)
+		public ISlot GetFreeSlot(SlotSpecification slotSpecification)
 		{
-            return preferFromFront ?
-                _slots[slotType].First(slot => FreeSlotFilter(slot, buildingFunction)) :
-                _slots[slotType].Last(slot => FreeSlotFilter(slot, buildingFunction));
+            return slotSpecification.PreferFromFront ?
+                _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :
+                _slots[slotSpecification.SlotType].Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
         private bool FreeSlotFilter(ISlot slot, BuildingFunction buildingFunction)
@@ -173,7 +173,9 @@ namespace BattleCruisers.Cruisers.Slots
         
         private ISlot GetSlot(IBuilding building)
         {
-            return _slots[building.SlotType].FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
+            return 
+                _slots[building.SlotSpecification.SlotType]
+                    .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
         }
 
         public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)

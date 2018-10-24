@@ -7,9 +7,8 @@ namespace BattleCruisers.Cruisers.Slots
     {
         ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);
         int GetSlotCount(SlotType slotType);
-        bool IsSlotAvailable(SlotType slotType, BuildingFunction buildingFunction);
-        // FELIX  Replace parameters with ISlotSpecification :P
-		ISlot GetFreeSlot(SlotType slotType, BuildingFunction buildingFunction, bool preferFromFront = true);
+        bool IsSlotAvailable(SlotSpecification slotSpecification);
+		ISlot GetFreeSlot(SlotSpecification slotSpecification);
         void HighlightAvailableSlots(SlotType slotType);
         void UnhighlightSlots();
         void HighlightBuildingSlot(IBuilding building);

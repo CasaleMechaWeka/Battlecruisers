@@ -38,12 +38,12 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
                 .Returns(buildingWrapper);
 
             _parentCruiser.SlotWrapper
-                .IsSlotAvailable(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function)
+                .IsSlotAvailable(buildingWrapper.Buildable.SlotSpecification)
                 .Returns(true);
 
             ISlot slot = Substitute.For<ISlot>();
             _parentCruiser.SlotWrapper
-                .GetFreeSlot(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function, buildingWrapper.Buildable.PreferCruiserFront)
+                .GetFreeSlot(buildingWrapper.Buildable.SlotSpecification)
                 .Returns(slot);
 
             IBuilding building = Substitute.For<IBuilding>();
@@ -54,8 +54,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             _tutorialStep.Start(_completionCallback);
 
             _prefabFactory.Received().GetBuildingWrapperPrefab(_buildingToConstruct);
-            _parentCruiser.SlotWrapper.Received().IsSlotAvailable(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function);
-            _parentCruiser.SlotWrapper.Received().GetFreeSlot(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function, buildingWrapper.Buildable.PreferCruiserFront);
+            _parentCruiser.SlotWrapper.Received().IsSlotAvailable(buildingWrapper.Buildable.SlotSpecification);
+            _parentCruiser.SlotWrapper.Received().GetFreeSlot(buildingWrapper.Buildable.SlotSpecification);
             _parentCruiser.Received().ConstructBuilding(buildingWrapper.UnityObject, slot);
 
             Assert.AreSame(building, _tutorialStep.FindItem());

@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager = new UIManager(managerArgs);
 
             _building = Substitute.For<IBuilding>();
-            _building.SlotType.Returns(SlotType.Platform);
+            _building.SlotSpecification.SlotType.Returns(SlotType.Platform);
 
             _factory = Substitute.For<IFactory>();
         }
@@ -101,7 +101,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
-            _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotType);
+            _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
         }
 
