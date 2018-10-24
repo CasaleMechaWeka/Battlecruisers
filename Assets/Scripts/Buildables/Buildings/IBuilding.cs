@@ -11,9 +11,15 @@ namespace BattleCruisers.Buildables.Buildings
 		Factory, Defence, Offence, Tactical, Ultra
 	}
 
+    public enum BuildingFunction
+    {
+        Generic, AntiAir, AntiShip, Shield
+    }
+
     public interface IBuilding : IBuildable
     {
         BuildingCategory Category { get; }
+        BuildingFunction Function { get; }
         bool PreferCruiserFront { get; }
         SlotType SlotType { get; }
 
