@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
                 .Returns(buildingWrapper);
 
             _parentCruiser.SlotWrapper
-                .IsSlotAvailable(buildingWrapper.Buildable.SlotType)
+                .IsSlotAvailable(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function)
                 .Returns(true);
 
             ISlot slot = Substitute.For<ISlot>();
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             _tutorialStep.Start(_completionCallback);
 
             _prefabFactory.Received().GetBuildingWrapperPrefab(_buildingToConstruct);
-            _parentCruiser.SlotWrapper.Received().IsSlotAvailable(buildingWrapper.Buildable.SlotType);
+            _parentCruiser.SlotWrapper.Received().IsSlotAvailable(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function);
             _parentCruiser.SlotWrapper.Received().GetFreeSlot(buildingWrapper.Buildable.SlotType, buildingWrapper.Buildable.Function, buildingWrapper.Buildable.PreferCruiserFront);
             _parentCruiser.Received().ConstructBuilding(buildingWrapper.UnityObject, slot);
 

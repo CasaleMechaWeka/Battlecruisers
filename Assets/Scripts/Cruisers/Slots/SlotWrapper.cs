@@ -89,9 +89,11 @@ namespace BattleCruisers.Cruisers.Slots
 			_slots[slot.Type].Add(slot);
         }
 
-		public bool IsSlotAvailable(SlotType slotType)
+		public bool IsSlotAvailable(SlotType slotType, BuildingFunction buildingFunction)
 		{
-			return _slots[slotType].Any(slot => slot.IsFree);
+			return 
+                _slots[slotType]
+                    .Any(slot => FreeSlotFilter(slot, buildingFunction));
 		}
 
         private void SetSlotVisibility(bool isVisible)

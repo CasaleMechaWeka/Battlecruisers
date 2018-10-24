@@ -44,7 +44,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
             IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
-            Assert.IsTrue(_parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType));
+            Assert.IsTrue(_parentCruiser.SlotWrapper.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotType, buildingWrapperPrefab.Buildable.Function));
 			ISlot slot 
                 = _parentCruiser.SlotWrapper.GetFreeSlot(
                     buildingWrapperPrefab.Buildable.SlotType,

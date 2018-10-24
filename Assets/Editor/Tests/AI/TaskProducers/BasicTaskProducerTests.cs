@@ -28,8 +28,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _tasks.IsEmpty.Returns(true);
 
             _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotWrapper.IsSlotAvailable(SlotType.Platform).Returns(true);
-            _slotWrapper.IsSlotAvailable(SlotType.Deck).Returns(false);
+            _slotWrapper.IsSlotAvailable(SlotType.Platform, default(BuildingFunction)).Returns(true);
+            _slotWrapper.IsSlotAvailable(SlotType.Deck, default(BuildingFunction)).Returns(false);
 
             _cruiser.SlotWrapper.Returns(_slotWrapper);
 
@@ -97,8 +97,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
             _tasks.IsEmptyChanged += Raise.Event();
 
-            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotType);
-            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotType);
+            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotType, _deckSlotBuilding.Function);
+            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotType, _platformSlotBuilding.Function);
             _tasks.Received().Add(_platformBuildingTask);
         }
 

@@ -99,14 +99,14 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void IsSlotAvailable_No()
         {
             _middleSlot.IsFree.Returns(false);
-            Assert.IsFalse(_slotWrapper.IsSlotAvailable(SlotType.Platform));
+            Assert.IsFalse(_slotWrapper.IsSlotAvailable(SlotType.Platform, BuildingFunction.Generic));
         }
 
         [Test]
         public void IsSlotAvailable_Yes()
         {
             _middleSlot.IsFree.Returns(true);
-            Assert.IsTrue(_slotWrapper.IsSlotAvailable(SlotType.Platform));
+            Assert.IsTrue(_slotWrapper.IsSlotAvailable(SlotType.Platform, BuildingFunction.Generic));
         }
         #endregion IsSlotAvailable
 
