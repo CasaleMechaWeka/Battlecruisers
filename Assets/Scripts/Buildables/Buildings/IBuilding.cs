@@ -26,9 +26,7 @@ namespace BattleCruisers.Buildables.Buildings
     public interface IBuilding : IBuildable
     {
         BuildingCategory Category { get; }
-        BuildingFunction Function { get; }
-        bool PreferCruiserFront { get; }
-        SlotType SlotType { get; }
+        SlotSpecification SlotSpecification { get; }
 
         void Initialise(
             ICruiser parentCruiser, 

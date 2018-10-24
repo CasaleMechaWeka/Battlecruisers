@@ -19,20 +19,16 @@ namespace BattleCruisers.Buildables.Buildings
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
 
+        public BuildingFunction function;
+        public bool preferCruiserFront;
+        public SlotType slotType;
+
         public override TargetType TargetType { get { return TargetType.Buildings; } }
         public override Vector2 Size { get { return _collider.size; } }
+        public SlotSpecification SlotSpecification { get; private set; }
 
         public BuildingCategory category;
         public BuildingCategory Category { get { return category; } }
-
-        public BuildingFunction function;
-        public BuildingFunction Function { get { return function; } }
-
-        public bool preferCruiserFront;
-        public bool PreferCruiserFront { get { return preferCruiserFront; } }
-        
-        public SlotType slotType;
-        public SlotType SlotType { get { return slotType; } }
 
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building1; } }
 
@@ -51,6 +47,8 @@ namespace BattleCruisers.Buildables.Buildings
 
             _collider = GetComponent<BoxCollider2D>();
             Assert.IsNotNull(_collider);
+
+            SlotSpecification = new SlotSpecification(slotType, function, preferCruiserFront);
         }
 
         public void Initialise(

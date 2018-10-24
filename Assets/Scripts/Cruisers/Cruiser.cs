@@ -192,7 +192,7 @@ namespace BattleCruisers.Cruisers
         public IBuilding ConstructSelectedBuilding(ISlot slot)
 		{
 			Assert.IsNotNull(SelectedBuildingPrefab);
-            Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotType, slot.Type);
+            Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
 
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
             building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, slot, _buildingDoubleClickHandler);
