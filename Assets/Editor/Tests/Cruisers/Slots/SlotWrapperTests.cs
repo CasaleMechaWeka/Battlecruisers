@@ -214,7 +214,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _deckSlot1.IsFree.Returns(true);
             _deckSlot2.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, preferFromFront: true);
+            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: true);
 
             Assert.AreSame(_deckSlot1, freeSlot);
         }
@@ -225,7 +225,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _deckSlot1.IsFree.Returns(true);
             _deckSlot2.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, preferFromFront: false);
+            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: false);
 
             Assert.AreSame(_deckSlot2, freeSlot);
         }
@@ -236,7 +236,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _deckSlot1.IsFree.Returns(false);
             _deckSlot2.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, preferFromFront: true);
+            ISlot freeSlot = _slotWrapper.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: true);
 
             Assert.AreSame(_deckSlot2, freeSlot);
         }

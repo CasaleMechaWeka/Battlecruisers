@@ -44,6 +44,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             _task.Completed += _task_Completed;
 
 			_building = Substitute.For<IBuilding>();
+            _building.Function.Returns(BuildingFunction.AntiAir);
             _building.PreferCruiserFront.Returns(true);
             _prefab = Substitute.For<IBuildableWrapper<IBuilding>>();
 			_prefab.Buildable.Returns(_building);
@@ -57,7 +58,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         {
             _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _cruiser.SlotWrapper.IsSlotAvailable(_building.SlotType).Returns(true);
-            _cruiser.SlotWrapper.GetFreeSlot(_building.SlotType, _building.PreferCruiserFront).Returns(_slot);
+            _cruiser.SlotWrapper.GetFreeSlot(_building.SlotType, _building.Function, _building.PreferCruiserFront).Returns(_slot);
             _cruiser.ConstructBuilding(_prefab.UnityObject, _slot).Returns(_building);
 
             bool haveStarted = _task.Start();
