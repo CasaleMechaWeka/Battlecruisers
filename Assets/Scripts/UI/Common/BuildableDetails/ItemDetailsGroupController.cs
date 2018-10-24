@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,11 +12,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public IComparableItemDetails<IUnit> UnitDetails { get; private set; }
         public IComparableItemDetails<ICruiser> HullDetails { get; private set; }
 
-        public void Initialise(ISpriteProvider spriteProvider)
+        public void Initialise()
         {
             ComparableBuildingDetailsController buildingDetails = GetComponentInChildren<ComparableBuildingDetailsController>();
             Assert.IsNotNull(buildingDetails);
-            buildingDetails.Initialise(spriteProvider);
+            buildingDetails.Initialise();
             BuildingDetails = buildingDetails;
             BuildingDetails.Hide();
 

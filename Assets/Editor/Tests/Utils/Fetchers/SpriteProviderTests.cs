@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Utils.Fetchers
@@ -13,7 +12,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
     {
         private ISpriteProvider _provider;
         private ISpriteFetcher _fetcher;
-        private ISpriteWrapper _slotSprite;
         private IList<ISpriteWrapper> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;
@@ -26,8 +24,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 
             _fetcher = Substitute.For<ISpriteFetcher>();
             _provider = new SpriteProvider(_fetcher);
-
-            _slotSprite = Substitute.For<ISpriteWrapper>();
 
             _bomberSprites = CreateSprites(NUM_OF_BOMBER_SPRITES);
             _fighterSprites = CreateSprites(NUM_OF_FIGHTER_SPRITES);
@@ -43,18 +39,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
             }
 
             return sprites;
-        }
-
-        [Test]
-        public void GetSlotSprite()
-        {
-            SlotType slotType = SlotType.Mast;
-            string slotSpritePath = "Sprites/Slots/slot-" + slotType.ToString();
-
-            _fetcher.GetSprite(slotSpritePath).ReturnsForAnyArgs(_slotSprite);
-            ISpriteWrapper slotSprite = _provider.GetSlotSprite(slotType);
-
-            Assert.AreSame(_slotSprite, slotSprite);
         }
 
         [Test]

@@ -34,8 +34,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildableWrapper)
         {
-            Sprite slotSprite = _spriteProvider.GetSlotSprite(buildableWrapper.Buildable.SlotType).Sprite;
-            button.Initialise(buildableWrapper, _clickHandler, _shouldBeEnabledFilter, slotSprite);
+            button.Initialise(buildableWrapper, _clickHandler, _shouldBeEnabledFilter);
         }
     }
 }

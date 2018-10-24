@@ -2,22 +2,21 @@
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class BuildingDetailsManager : ItemDetailsManager<IBuilding>
     {
-        public void Initialise(ISpriteProvider spriteProvider, IItemStateManager itemStateManager)
+        public void Initialise(IItemStateManager itemStateManager)
         {
             ComparableBuildingDetailsController singleItemDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("SingleItemDetails");
-            singleItemDetails.Initialise(spriteProvider);
+            singleItemDetails.Initialise();
 
             ComparableBuildingDetailsController leftComparableItemDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("LeftItemDetails");
-            leftComparableItemDetails.Initialise(spriteProvider);
+            leftComparableItemDetails.Initialise();
 
             ComparableBuildingDetailsController rightComparableItemDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("RightItemDetails");
-            rightComparableItemDetails.Initialise(spriteProvider);
+            rightComparableItemDetails.Initialise();
 
             Initialise(singleItemDetails, leftComparableItemDetails, rightComparableItemDetails, itemStateManager);
         }

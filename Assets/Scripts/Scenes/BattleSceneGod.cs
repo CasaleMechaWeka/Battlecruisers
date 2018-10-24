@@ -213,7 +213,6 @@ namespace BattleCruisers.Scenes
 
             hudCanvas
                 .Initialise(
-                    spriteProvider,
                     _playerCruiser,
                     _aiCruiser,
                     cameraInitialiser.CameraController,

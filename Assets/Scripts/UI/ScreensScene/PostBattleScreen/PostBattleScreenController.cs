@@ -33,17 +33,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
             IMusicPlayer musicPlayer)
 		{
 			base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage, completedGameMessage);
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, spriteProvider, musicPlayer);
+            Helper.AssertIsNotNull(dataProvider, prefabFactory, musicPlayer);
 
             _dataProvider = dataProvider;
 			
-            _lootManager = CreateLootManager(prefabFactory, spriteProvider);
+            _lootManager = CreateLootManager(prefabFactory);
 
             if (BattleResult == null)
             {
@@ -89,19 +88,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 		}
 
-        private ILootManager CreateLootManager(IPrefabFactory prefabFactory, ISpriteProvider spriteProvider)
+        private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
         {
-            IItemDetailsGroup middleDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
-            IItemDetailsGroup leftDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
-            IItemDetailsGroup rightDetailsGroup = InitialiseGroup(spriteProvider, "UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+            IItemDetailsGroup middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
+            IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
+            IItemDetailsGroup rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
 
             return new LootManager(_dataProvider, prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
         }
 
-        private IItemDetailsGroup InitialiseGroup(ISpriteProvider spriteProvider, string componentPath)
+        private IItemDetailsGroup InitialiseGroup(string componentPath)
         {
             ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
-            detailsGroup.Initialise(spriteProvider);
+            detailsGroup.Initialise();
             return detailsGroup;
         }
 

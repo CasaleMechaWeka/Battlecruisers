@@ -23,7 +23,6 @@ namespace BattleCruisers.Scenes
 		private ScreenController _currentScreen;
 		private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
-        private ISpriteProvider _spriteProvider;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
 
@@ -40,7 +39,6 @@ namespace BattleCruisers.Scenes
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
 			_dataProvider = ApplicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
-            _spriteProvider = new SpriteProvider(new SpriteFetcher());
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
 
@@ -83,7 +81,7 @@ namespace BattleCruisers.Scenes
         private void GoToPostBattleScreen()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider, _musicPlayer);
+            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _musicPlayer);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -144,7 +142,7 @@ namespace BattleCruisers.Scenes
                 // So I can test the ScreensScene without having to go through
                 // the LandingScene each time :P
                 // => Should be able to remove if els, and just keep if content
-                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory, _spriteProvider);
+                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
 
                 if (LandingSceneGod.LoadingScreen != null)
                 {

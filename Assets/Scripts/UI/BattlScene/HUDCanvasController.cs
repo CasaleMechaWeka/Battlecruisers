@@ -60,7 +60,6 @@ namespace BattleCruisers.UI.BattleScene
         }
 
         public void Initialise(
-            ISpriteProvider spriteProvider, 
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICameraController cameraController,
@@ -70,7 +69,6 @@ namespace BattleCruisers.UI.BattleScene
             IFilter<ITarget> deleteButtonVisibilityFilter)
         {
             Helper.AssertIsNotNull(
-                spriteProvider, 
                 playerCruiser, 
                 aiCruiser, 
                 cameraController, 
@@ -79,7 +77,7 @@ namespace BattleCruisers.UI.BattleScene
                 chooseTargetButtonVisibilityFilter,
                 deleteButtonVisibilityFilter);
 
-            _buildingDetails.Initialise(spriteProvider, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
             _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
             _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
 

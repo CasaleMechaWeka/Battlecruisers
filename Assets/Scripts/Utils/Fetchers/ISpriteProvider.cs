@@ -6,7 +6,6 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public interface ISpriteProvider
     {
-        ISpriteWrapper GetSlotSprite(SlotType slotType);
         IList<ISpriteWrapper> GetBomberSprites();
         IList<ISpriteWrapper> GetFighterSprites();
     }
