@@ -19,8 +19,12 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly IStaticData _staticData;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
-        // For spy satellite launcher
-        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+        // For spy satellite launcher and shields.  All cruisers have at least 6
+        // deck slots:
+        // + Anti-air: 2
+        // + Anti-ship: 2
+        // + Shields/spy satellite: 2
+        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 2;
 
         public TaskProducerFactory(
             ICruiserController aiCruiser, 
