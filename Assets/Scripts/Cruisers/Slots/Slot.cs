@@ -27,9 +27,6 @@ namespace BattleCruisers.Cruisers.Slots
         public SlotType type;
         public SlotType Type { get { return type; } }
 
-        public SlotFunction function;
-        public SlotFunction Function { get { return function; } }
-
         public Direction direction;
         public Direction Direction { get { return direction; } }
 

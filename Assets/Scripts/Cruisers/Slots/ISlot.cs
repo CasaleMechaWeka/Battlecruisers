@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers.Slots
     public enum SlotType
 	{
         // Explicitly set integner values, because the Unity inspector binds
-        // to the interger values.  So now, if I decide to get fid of a slot
+        // to the interger values.  So now, if I decide to get rid of a slot
         // type (yet again), I don't need to adjust every single prefab 
         // that has a slot type field.  Thanks Manya!
         Utility = 1, 
@@ -22,11 +22,6 @@ namespace BattleCruisers.Cruisers.Slots
         Platform = 4, 
         Deck = 5
 	}
-
-    public enum SlotFunction
-    {
-        Generic, AntiAir, AntiShip, Shield
-    }
 
     public class SlotBuildingDestroyedEventArgs : EventArgs
     {
@@ -42,7 +37,6 @@ namespace BattleCruisers.Cruisers.Slots
     {
         bool IsFree { get; }
         SlotType Type { get; }
-        SlotFunction Function { get; }
         Direction Direction { get; }
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
