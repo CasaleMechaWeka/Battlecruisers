@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
+    // FELIX   Update tests :)
     public class SlotWrapper : ISlotWrapper
 	{
 		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
@@ -142,12 +143,20 @@ namespace BattleCruisers.Cruisers.Slots
 			}
 		}
 
-		public ISlot GetFreeSlot(SlotType slotType, bool preferFromFront = true)
+		public ISlot GetFreeSlot(SlotType slotType, BuildingFunction buildingFunction, bool preferFromFront = true)
 		{
             return preferFromFront ?
-                _slots[slotType].First(slot => slot.IsFree) :
-                _slots[slotType].Last(slot => slot.IsFree);
+                _slots[slotType].First(slot => FreeSlotFilter(slot, buildingFunction)) :
+                _slots[slotType].Last(slot => FreeSlotFilter(slot, buildingFunction));
 		}
+
+        private bool FreeSlotFilter(ISlot slot, BuildingFunction buildingFunction)
+        {
+            return
+                slot.IsFree
+                && (buildingFunction == BuildingFunction.Generic
+                    || slot.BuildingFunctionAffinity == buildingFunction);
+        }
 
 		public int GetSlotCount(SlotType slotType)
 		{
