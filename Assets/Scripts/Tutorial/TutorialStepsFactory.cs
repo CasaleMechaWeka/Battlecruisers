@@ -90,6 +90,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SingleShipProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
                     preferFrontmostSlot: true,
+                    buildingFunction: BuildingFunction.AntiShip,
                     boostAircraftSpeed: false));
 
             // 9. Enemy bomber
@@ -100,6 +101,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
                     preferFrontmostSlot: false,
+                    buildingFunction: BuildingFunction.AntiAir,
                     boostAircraftSpeed: true));
 			
 			// Navigate back to player cruiser
@@ -242,6 +244,7 @@ namespace BattleCruisers.Tutorial
             BuildableInfo unitToBuild,
             ISingleBuildableProvider unitBuildProvider,
             BuildableInfo defenceToBuild,
+            BuildingFunction buildingFunction,
             bool preferFrontmostSlot,
             bool boostAircraftSpeed)
         {
@@ -271,6 +274,7 @@ namespace BattleCruisers.Tutorial
                     SlotType.Deck,
                     "Quick, build an " + defenceToBuild.Name + "!",
                     waitForBuildingToComplete: true,
+                    buildingFunction: buildingFunction,
                     preferFrontmostSlot: preferFrontmostSlot);
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
@@ -372,6 +376,7 @@ namespace BattleCruisers.Tutorial
             SlotType buildingSlotType,
             string constructBuildingInstruction,
             bool waitForBuildingToComplete = true,
+            BuildingFunction buildingFunction = BuildingFunction.Generic,
             bool preferFrontmostSlot = false)
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
@@ -386,7 +391,7 @@ namespace BattleCruisers.Tutorial
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, preferFrontmostSlot);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, buildingFunction, preferFrontmostSlot);
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,

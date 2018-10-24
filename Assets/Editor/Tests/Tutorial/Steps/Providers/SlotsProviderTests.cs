@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 
         private ISlotWrapper _slotWrapper;
         private SlotType _slotType;
+        private BuildingFunction _buildingFunction;
         private bool _preferFrontmostSlot;
 
         private ReadOnlyCollection<ISlot> _slots;
@@ -27,6 +29,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         {
             _slotWrapper = Substitute.For<ISlotWrapper>();
             _slotType = SlotType.Platform;
+            _buildingFunction = BuildingFunction.Generic;
 
             _slot1 = Substitute.For<ISlot>();
             _slot2 = Substitute.For<ISlot>();
@@ -41,7 +44,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 
         private void CreateProvider()
         {
-            SlotsProvider provider = new SlotsProvider(_slotWrapper, _slotType, _preferFrontmostSlot);
+            SlotsProvider provider = new SlotsProvider(_slotWrapper, _slotType, _buildingFunction, _preferFrontmostSlot);
             
             _slotsProvider = provider;
             _highlightablesProvider = provider;
@@ -54,7 +57,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
             _preferFrontmostSlot = true;
             CreateProvider();
 
-			_slotWrapper.GetFreeSlot(_slotType, _preferFrontmostSlot).Returns(_slot1);
+			_slotWrapper.GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot).Returns(_slot1);
 
             Assert.AreEqual(1, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
@@ -93,14 +96,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
             _preferFrontmostSlot = true;
             CreateProvider();
 
-            _slotWrapper.GetFreeSlot(_slotType, _preferFrontmostSlot).Returns(_slot1);
+            _slotWrapper.GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot).Returns(_slot1);
 
             _slotsProvider.FindItems();
-            _slotWrapper.Received().GetFreeSlot(_slotType, _preferFrontmostSlot);
+            _slotWrapper.Received().GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot);
             _slotWrapper.ClearReceivedCalls();
 
             _slotsProvider.FindItems();
-            _slotWrapper.DidNotReceive().GetFreeSlot(_slotType, _preferFrontmostSlot);
+            _slotWrapper.DidNotReceive().GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot);
         }
     }
 }
