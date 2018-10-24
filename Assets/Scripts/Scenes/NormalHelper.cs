@@ -54,7 +54,9 @@ namespace BattleCruisers.Scenes
                     return BuildSpeedMultipliers.ONE_AND_A_HALF_DEFAULT;
 
                 default:
-                    return BuildSpeedMultipliers.DEFAULT;
+                    // FELIX  TEMP :P
+                    return BuildSpeedMultipliers.VERY_FAST;
+                    //return BuildSpeedMultipliers.DEFAULT;
             }
         }
 
