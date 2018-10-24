@@ -89,8 +89,7 @@ namespace BattleCruisers.Tutorial
                     new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
                     _tutorialArgs.TutorialProvider.SingleShipProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-                    preferFrontmostSlot: true,
-                    buildingFunction: BuildingFunction.AntiShip,
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
                     boostAircraftSpeed: false));
 
             // 9. Enemy bomber
@@ -100,8 +99,7 @@ namespace BattleCruisers.Tutorial
                     new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
                     _tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-                    preferFrontmostSlot: false,
-                    buildingFunction: BuildingFunction.AntiAir,
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
                     boostAircraftSpeed: true));
 			
 			// Navigate back to player cruiser
@@ -221,7 +219,7 @@ namespace BattleCruisers.Tutorial
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Factory,
                     new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
-                    SlotType.Utility,
+                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
                     "To get more builders construct a builder bay.");
 
             // Congrats!  Wait 3 seconds
@@ -244,8 +242,7 @@ namespace BattleCruisers.Tutorial
             BuildableInfo unitToBuild,
             ISingleBuildableProvider unitBuildProvider,
             BuildableInfo defenceToBuild,
-            BuildingFunction buildingFunction,
-            bool preferFrontmostSlot,
+            SlotSpecification slotSpecification,
             bool boostAircraftSpeed)
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
@@ -271,11 +268,8 @@ namespace BattleCruisers.Tutorial
                 = CreateSteps_ConstructBuilding(
                     BuildingCategory.Defence,
                     defenceToBuild,
-                    SlotType.Deck,
-                    "Quick, build an " + defenceToBuild.Name + "!",
-                    waitForBuildingToComplete: true,
-                    buildingFunction: buildingFunction,
-                    preferFrontmostSlot: preferFrontmostSlot);
+                    slotSpecification,
+                    "Quick, build an " + defenceToBuild.Name + "!");
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 			
 			// 6. Navigate to mid left
@@ -373,11 +367,9 @@ namespace BattleCruisers.Tutorial
         private IList<ITutorialStep> CreateSteps_ConstructBuilding(
             BuildingCategory buildingCategory, 
             BuildableInfo buildingToConstruct,
-            SlotType buildingSlotType,
+            SlotSpecification slotSpecification,
             string constructBuildingInstruction,
-            bool waitForBuildingToComplete = true,
-            BuildingFunction buildingFunction = BuildingFunction.Generic,
-            bool preferFrontmostSlot = false)
+            bool waitForBuildingToComplete = true)
         {
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
@@ -391,7 +383,7 @@ namespace BattleCruisers.Tutorial
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, buildingSlotType, buildingFunction, preferFrontmostSlot);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,
@@ -500,17 +492,17 @@ namespace BattleCruisers.Tutorial
 			droneFocusSteps.AddRange(
 				CreateSteps_ConstructBuilding(
 					BuildingCategory.Offence,
-					 new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
-					SlotType.Platform,
-					 "Build an artillery to destroy the enemy cruiser.",
-					 waitForBuildingToComplete: false));
+					new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
+                    new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false),
+					"Build an artillery to destroy the enemy cruiser.",
+					waitForBuildingToComplete: false));
 
 			// 2. Build drone station
 			droneFocusSteps.AddRange(
 				CreateSteps_ConstructBuilding(
 					BuildingCategory.Factory,
 					new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
-					SlotType.Utility,
+					new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
 					 "Build a builder bay",
 					 waitForBuildingToComplete: false));
 

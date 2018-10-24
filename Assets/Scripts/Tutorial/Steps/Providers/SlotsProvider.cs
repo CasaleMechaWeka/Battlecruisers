@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers.Slots;
+﻿using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
@@ -11,10 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     public class SlotsProvider : ISlotsProvider
     {
         private readonly ISlotWrapper _slotWrapper;
-        // FELIX  Use SlotSpecification instead :P
-        private readonly SlotType _slotType;
-        private readonly BuildingFunction _buildingFunction;
-        private readonly bool _preferFrontmostSlot;
+        private readonly SlotSpecification _slotSpecification;
 
         private IList<ISlot> _slots;
         private IList<ISlot> Slots
@@ -23,10 +20,9 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             {
                 if (_slots == null)
                 {
-                    if (_preferFrontmostSlot)
+                    if (_slotSpecification.PreferFromFront)
                     {
-                        SlotSpecification slotSpecification = new SlotSpecification(_slotType, _buildingFunction, _preferFrontmostSlot);
-                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(slotSpecification);
+                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(_slotSpecification);
                         Assert.IsNotNull(frontMostSlot);
 
                         _slots = new List<ISlot>()
@@ -36,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
                     }
                     else
                     {
-                        _slots = _slotWrapper.GetFreeSlots(_slotType);
+                        _slots = _slotWrapper.GetFreeSlots(_slotSpecification.SlotType);
                     }
                 }
 
@@ -44,18 +40,12 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             }
         }
 
-        public SlotsProvider(
-            ISlotWrapper slotWrapper, 
-            SlotType slotType, 
-            BuildingFunction buildingFunction,
-            bool preferFrontmostSlot)
+        public SlotsProvider(ISlotWrapper slotWrapper, SlotSpecification slotSpecification)
         {
-            Assert.IsNotNull(slotWrapper);
+            Helper.AssertIsNotNull(slotWrapper, slotSpecification);
 
             _slotWrapper = slotWrapper;
-            _slotType = slotType;
-            _buildingFunction = buildingFunction;
-            _preferFrontmostSlot = preferFrontmostSlot;
+            _slotSpecification = slotSpecification;
         }
 
         IList<ISlot> IListProvider<ISlot>.FindItems()

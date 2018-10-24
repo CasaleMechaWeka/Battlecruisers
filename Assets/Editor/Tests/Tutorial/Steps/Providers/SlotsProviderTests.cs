@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 {
@@ -17,9 +17,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         private IListProvider<IClickableEmitter> _clickablesProvider;
 
         private ISlotWrapper _slotWrapper;
-        private SlotType _slotType;
-        private BuildingFunction _buildingFunction;
-        private bool _preferFrontmostSlot;
+        private SlotSpecification _slotSpecificationPreferFront, _slotSpecificationPreferRear;
 
         private ReadOnlyCollection<ISlot> _slots;
         private ISlot _slot1, _slot2;
@@ -28,8 +26,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         public void SetuUp()
         {
             _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotType = SlotType.Platform;
-            _buildingFunction = BuildingFunction.Generic;
+            _slotSpecificationPreferFront = new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: true);
+            _slotSpecificationPreferRear = new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false);
 
             _slot1 = Substitute.For<ISlot>();
             _slot2 = Substitute.For<ISlot>();
@@ -42,9 +40,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
                 });
         }
 
-        private void CreateProvider()
+        private void CreateProvider(SlotSpecification specification)
         {
-            SlotsProvider provider = new SlotsProvider(_slotWrapper, _slotType, _buildingFunction, _preferFrontmostSlot);
+            SlotsProvider provider = new SlotsProvider(_slotWrapper, specification);
             
             _slotsProvider = provider;
             _highlightablesProvider = provider;
@@ -54,11 +52,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void PreferFrontmostSlot_ReturnsSingleSlot()
         {
-            _preferFrontmostSlot = true;
-            CreateProvider();
+            CreateProvider(_slotSpecificationPreferFront);
 
-            // FELIX  Use SlotSpecification :P
-            //_slotWrapper.GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot).Returns(_slot1);
+            _slotWrapper.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
 
             Assert.AreEqual(1, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
@@ -73,10 +69,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void DoNotPreferFrontmostSlot_ReturnsMultipleSlots()
         {
-            _preferFrontmostSlot = false;
-            CreateProvider();
+            CreateProvider(_slotSpecificationPreferRear);
 
-            _slotWrapper.GetFreeSlots(_slotType).Returns(_slots);
+            _slotWrapper.GetFreeSlots(_slotSpecificationPreferRear.SlotType).Returns(_slots);
 
             Assert.AreEqual(2, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
@@ -94,18 +89,16 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void SlotsAreCached()
         {
-            _preferFrontmostSlot = true;
-            CreateProvider();
+            CreateProvider(_slotSpecificationPreferFront);
 
-            // FELIX  Use SlotSpecification :P
-            //_slotWrapper.GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot).Returns(_slot1);
+            _slotWrapper.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
 
-            //_slotsProvider.FindItems();
-            //_slotWrapper.Received().GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot);
-            //_slotWrapper.ClearReceivedCalls();
+            _slotsProvider.FindItems();
+            _slotWrapper.Received().GetFreeSlot(_slotSpecificationPreferFront);
+            _slotWrapper.ClearReceivedCalls();
 
-            //_slotsProvider.FindItems();
-            //_slotWrapper.DidNotReceive().GetFreeSlot(_slotType, _buildingFunction, _preferFrontmostSlot);
+            _slotsProvider.FindItems();
+            _slotWrapper.DidNotReceive().GetFreeSlot(_slotSpecificationPreferFront);
         }
     }
 }
