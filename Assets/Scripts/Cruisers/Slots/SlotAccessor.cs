@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Cruisers.Slots
     // FELIX   Copy tests from SlotWrapper :)
     public class SlotAccessor : ISlotAccessor
     {
-		private readonly IDictionary<SlotType, IList<ISlot>> _slots;
+		private readonly IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
 
 		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
@@ -19,22 +20,22 @@ namespace BattleCruisers.Cruisers.Slots
 		{
             Helper.AssertIsNotNull(parentCruiser, slots);
 
-            _slots = new Dictionary<SlotType, IList<ISlot>>();
-
             // Sort slots by position (cruiser front to cruiser rear)
             slots 
                 = slots
                     .OrderBy(slot => slot.Index)
                     .ToList();
 
+            // Initialise slots
             for (int i = 0; i < slots.Count; ++i)
             {
                 ISlot slot = slots[i];
                 ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
-                SortSlotsByType(slot);
                 slot.IsVisible = false;
             }
+
+            _slots = CreateSlotsMap(slots);
         }
 
         private ReadOnlyCollection<ISlot> FindSlotNeighbours(IList<ISlot> slots, int slotIndex)
@@ -56,14 +57,21 @@ namespace BattleCruisers.Cruisers.Slots
             return neighbouringSlots.AsReadOnly();
         }
 
-        private void SortSlotsByType(ISlot slot)
+        private IDictionary<SlotType, ReadOnlyCollection<ISlot>> CreateSlotsMap(IList<ISlot> slots)
         {
-			if (!_slots.ContainsKey(slot.Type))
-			{
-				_slots[slot.Type] = new List<ISlot>();
-			}
-			
-			_slots[slot.Type].Add(slot);
+            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = new Dictionary<SlotType, ReadOnlyCollection<ISlot>>();
+
+            foreach (SlotType slotType in (SlotType[])Enum.GetValues(typeof(SlotType)))
+            {
+                ReadOnlyCollection<ISlot> slotsOfType
+                    = slots
+                        .Where(slot => slot.Type == slotType)
+                        .ToList()
+                        .AsReadOnly();
+                typeToSlots.Add(slotType, slotsOfType);
+            }
+
+            return typeToSlots;
         }
 
 		public bool IsSlotAvailable(SlotSpecification slotSpecification)
@@ -123,11 +131,10 @@ namespace BattleCruisers.Cruisers.Slots
             return freeSlots.AsReadOnly();
         }
 
-        // FELIX  Avoid creating readonly list every time :P
         public ReadOnlyCollection<ISlot> GetSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
-            return new ReadOnlyCollection<ISlot>(_slots[slotType]);
+            return _slots[slotType];
         }
     }
 }
