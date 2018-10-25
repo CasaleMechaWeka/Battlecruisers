@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 
@@ -80,13 +78,6 @@ namespace BattleCruisers.Cruisers.Slots
 			}
 		}
 
-		public ISlot GetFreeSlot(SlotSpecification slotSpecification)
-		{
-            return slotSpecification.PreferFromFront ?
-                _slotAccessor.GetSlots(slotSpecification.SlotType).First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :
-                _slotAccessor.GetSlots(slotSpecification.SlotType).Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
-		}
-
         private bool FreeSlotFilter(ISlot slot, BuildingFunction buildingFunction)
         {
             return
@@ -95,11 +86,6 @@ namespace BattleCruisers.Cruisers.Slots
                     || slot.BuildingFunctionAffinity == buildingFunction);
         }
 
-		public int GetSlotCount(SlotType slotType)
-		{
-			return _slotAccessor.GetSlots(slotType).Count;
-		}
-		
         public void HighlightBuildingSlot(IBuilding building)
         {
             HighlightedSlot = GetSlot(building);
@@ -111,16 +97,6 @@ namespace BattleCruisers.Cruisers.Slots
             return
                 _slotAccessor.GetSlots(building.SlotSpecification.SlotType)
                     .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
-        }
-
-        public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
-        {
-            List<ISlot> freeSlots
-                = _slotAccessor.GetSlots(slotType)
-                    .Where(slot => slot.IsFree)
-                    .ToList();
-
-            return freeSlots.AsReadOnly();
         }
     }
 }
