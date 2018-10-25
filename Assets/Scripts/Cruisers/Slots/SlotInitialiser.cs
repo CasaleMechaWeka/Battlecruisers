@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX   Copy tests from SlotWrapper :)
     public class SlotInitialiser : ISlotInitialiser
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
