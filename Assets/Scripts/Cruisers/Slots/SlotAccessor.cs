@@ -122,5 +122,12 @@ namespace BattleCruisers.Cruisers.Slots
 
             return freeSlots.AsReadOnly();
         }
+
+        // FELIX  Avoid creating readonly list every time :P
+        public ReadOnlyCollection<ISlot> GetSlots(SlotType slotType)
+        {
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+            return new ReadOnlyCollection<ISlot>(_slots[slotType]);
+        }
     }
 }
