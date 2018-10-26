@@ -77,14 +77,6 @@ namespace BattleCruisers.Cruisers.Slots
 			}
 		}
 
-        private bool FreeSlotFilter(ISlot slot, BuildingFunction buildingFunction)
-        {
-            return
-                slot.IsFree
-                && (buildingFunction == BuildingFunction.Generic
-                    || slot.BuildingFunctionAffinity == buildingFunction);
-        }
-
         public void HighlightBuildingSlot(IBuilding building)
         {
             HighlightedSlot = _slotAccessor.GetSlot(building);
