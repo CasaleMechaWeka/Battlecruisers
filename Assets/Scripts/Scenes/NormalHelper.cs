@@ -48,9 +48,7 @@ namespace BattleCruisers.Scenes
                     return BuildSpeedMultipliers.POINT_3_DEFAULT;
 
                 case Difficulty.Normal:
-                    // FELIX  TEMP :P
-                    return BuildSpeedMultipliers.VERY_FAST;
-                    //return BuildSpeedMultipliers.POINT_7_DEFAULT;
+                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
 
                 case Difficulty.Insane:
                     return BuildSpeedMultipliers.ONE_AND_A_HALF_DEFAULT;
