@@ -10,6 +10,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Cruisers.Slots
 {
+    // FELIX  Delete :)
     public class SlotsWrapperTests
     {
         private ISlotWrapper _slotWrapper;

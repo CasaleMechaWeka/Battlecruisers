@@ -52,8 +52,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             ICruiser cruiser = Substitute.For<ICruiser>();
 
-			ISlotWrapper slotWrapper = Substitute.For<ISlotWrapper>();
-            cruiser.SlotWrapper.Returns(slotWrapper);
+			ISlotHighlighter slotHighlighter = Substitute.For<ISlotHighlighter>();
+            cruiser.SlotHighlighter.Returns(slotHighlighter);
 
             return cruiser;
         }
@@ -78,7 +78,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             _uiManager.ShowBuildingGroups();
 
-            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _playerCruiser.SlotHighlighter.Received().UnhighlightSlots();
             _detailsManager.Received().HideDetails();
             _buildMenu.Received().ShowBuildingGroupsMenu();
         }
@@ -101,7 +101,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
-            _playerCruiser.SlotWrapper.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
         }
 
@@ -115,10 +115,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             Expect_HideItemDetails();
 
-            _playerCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _playerCruiser.SlotHighlighter.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building);
 
-            _aiCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
+            _aiCruiser.SlotHighlighter.DidNotReceive().HighlightBuildingSlot(_building);
         }
 
         [Test]
@@ -130,10 +130,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             Expect_HideItemDetails();
 
-            _aiCruiser.SlotWrapper.Received().HighlightBuildingSlot(_building);
+            _aiCruiser.SlotHighlighter.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building);
 
-            _playerCruiser.SlotWrapper.DidNotReceive().HighlightBuildingSlot(_building);
+            _playerCruiser.SlotHighlighter.DidNotReceive().HighlightBuildingSlot(_building);
         }
         #endregion SelectBuilding()
 
@@ -176,8 +176,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private void Expect_HideItemDetails()
         {
             _detailsManager.Received().HideDetails();
-            _playerCruiser.SlotWrapper.Received().UnhighlightSlots();
-            _aiCruiser.SlotWrapper.Received().UnhighlightSlots();
+            _playerCruiser.SlotHighlighter.Received().UnhighlightSlots();
+            _aiCruiser.SlotHighlighter.Received().UnhighlightSlots();
         }
     }
 }

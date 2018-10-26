@@ -74,7 +74,7 @@ namespace BattleCruisers.AI.TaskProducers
 
         private bool CanConstructBuilding(IBuilding building)
         {
-            return _cruiser.SlotWrapper.IsSlotAvailable(building.SlotSpecification);
+            return _cruiser.SlotAccessor.IsSlotAvailable(building.SlotSpecification);
         }
 
         public override void DisposeManagedState()

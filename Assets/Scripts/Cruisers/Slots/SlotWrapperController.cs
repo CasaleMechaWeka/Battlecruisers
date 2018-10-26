@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using BattleCruisers.Cruisers.Slots.BuildingPlacement;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -17,13 +18,15 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         // For in battle scene use
-        public ISlotWrapper Initialise(ICruiser parentCruiser, ISlotFilter highlightableFilter)
+        public ISlotAccessor Initialise(ICruiser parentCruiser)
         {
-            Helper.AssertIsNotNull(parentCruiser, highlightableFilter);
+            Assert.IsNotNull(parentCruiser);
 
             IBuildingPlacer buildingPlacer = new BuildingPlacer();
+            ISlotInitialiser slotInitialiser = new SlotInitialiser();
+            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
-            return new SlotWrapper(parentCruiser, _slots, highlightableFilter, buildingPlacer);
+            return new SlotAccessor(typeToSlots);
         }
 
         public int GetSlotCount(SlotType type)

@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     public class BasicTaskProducerTests : TaskProducerTestsBase
     {
         private BasicTaskProducer _taskProducer;
-        private ISlotWrapper _slotWrapper;
+        private ISlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
@@ -45,11 +45,11 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckBuildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _deckBuildingKey).Returns(_deckBuildingTask);
 
-            _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotWrapper.IsSlotAvailable(_platformSlotBuilding.SlotSpecification).Returns(true);
-            _slotWrapper.IsSlotAvailable(_deckSlotBuilding.SlotSpecification).Returns(false);
+            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor.IsSlotAvailable(_platformSlotBuilding.SlotSpecification).Returns(true);
+            _slotAccessor.IsSlotAvailable(_deckSlotBuilding.SlotSpecification).Returns(false);
 
-            _cruiser.SlotWrapper.Returns(_slotWrapper);
+            _cruiser.SlotAccessor.Returns(_slotAccessor);
 
             _buildOrder = Substitute.For<IDynamicBuildOrder>();
             _buildOrder.MoveNext().Returns(true);
@@ -91,14 +91,14 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _tasks.ClearReceivedCalls();
             _tasks.IsEmpty.Returns(true);
-            _slotWrapper.ClearReceivedCalls();
+            _slotAccessor.ClearReceivedCalls();
 
             _buildOrder.Current.Returns(_deckBuildingKey, _platformBuildingKey);
 
             _tasks.IsEmptyChanged += Raise.Event();
 
-            _slotWrapper.Received().IsSlotAvailable(_deckSlotBuilding.SlotSpecification);
-            _slotWrapper.Received().IsSlotAvailable(_platformSlotBuilding.SlotSpecification);
+            _slotAccessor.Received().IsSlotAvailable(_deckSlotBuilding.SlotSpecification);
+            _slotAccessor.Received().IsSlotAvailable(_platformSlotBuilding.SlotSpecification);
             _tasks.Received().Add(_platformBuildingTask);
         }
 

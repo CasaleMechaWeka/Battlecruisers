@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class AntiThreatTaskProducerTests : TaskProducerTestsBase
     {
-        private ISlotWrapper _slotWrapper;
+        private ISlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
         private IThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
@@ -34,9 +34,9 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _threatMonitor = Substitute.For<IThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
-            _slotWrapper = Substitute.For<ISlotWrapper>();
-            _slotWrapper.GetSlotCount(SlotType.Deck).Returns(5);
-            _cruiser.SlotWrapper.Returns(_slotWrapper);
+            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor.GetSlotCount(SlotType.Deck).Returns(5);
+            _cruiser.SlotAccessor.Returns(_slotAccessor);
 
             _buildingKey = new BuildingKey(BuildingCategory.Tactical, "Zwackelmann");
             _buildOrder = Substitute.For<IDynamicBuildOrder>();

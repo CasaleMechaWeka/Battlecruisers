@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Cruisers.Slots
 {
+    // FELIX  Delete :)
     public interface ISlotWrapper
     {
         ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);

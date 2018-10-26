@@ -51,7 +51,7 @@ namespace BattleCruisers.AI.BuildOrders
         private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
 		{
 			// Create offensive build order
-            int numOfPlatformSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Platform);
+            int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
             IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
 
             // Create defensive build orders (only for basic AI)
@@ -129,7 +129,7 @@ namespace BattleCruisers.AI.BuildOrders
 
         public IDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo)
         {
-            int numOfDeckSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Deck);
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
 
             return
@@ -142,7 +142,7 @@ namespace BattleCruisers.AI.BuildOrders
 
 		public IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
 		{
-            int numOfDeckSlots = levelInfo.AICruiser.SlotWrapper.GetSlotCount(SlotType.Deck);
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
 			return

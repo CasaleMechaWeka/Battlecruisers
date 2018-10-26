@@ -81,7 +81,8 @@ namespace BattleCruisers.Cruisers
 
         // ICruiserController
         public bool IsAlive { get { return !IsDestroyed; } }
-        public ISlotWrapper SlotWrapper { get; private set; }
+        public ISlotAccessor SlotAccessor { get; private set; }
+        public ISlotHighlighter SlotHighlighter { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneFocuser DroneFocuser { get; private set; }
@@ -154,7 +155,8 @@ namespace BattleCruisers.Cruisers
 
             _fog.Initialise(args.ShouldShowFog);
 
-            SlotWrapper = _slotWrapperController.Initialise(this, args.HighlightableFilter);
+            SlotAccessor = _slotWrapperController.Initialise(this);
+            SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter);
 
             _unitConstructionMonitor = new UnitConstructionMonitor(this);
             _smokeInitialiser.Initialise(this);

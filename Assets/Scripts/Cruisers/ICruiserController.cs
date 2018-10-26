@@ -42,7 +42,8 @@ namespace BattleCruisers.Cruisers
 	public interface ICruiserController : IUnitConstructionMonitor
 	{
         bool IsAlive { get; }
-        ISlotWrapper SlotWrapper { get; }
+        ISlotAccessor SlotAccessor { get; }
+        ISlotHighlighter SlotHighlighter { get; }
         ISlotNumProvider SlotNumProvider { get; }
 		IDroneManager DroneManager { get; }
         IDroneFocuser DroneFocuser { get; }

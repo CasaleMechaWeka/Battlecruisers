@@ -43,15 +43,15 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		public virtual void HideItemDetails()
 		{
             _detailsManager.HideDetails();
-            _playerCruiser.SlotWrapper.UnhighlightSlots();
-            _aiCruiser.SlotWrapper.UnhighlightSlots();
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            _aiCruiser.SlotHighlighter.UnhighlightSlots();
 		}
 
 		public void ShowBuildingGroups()
         {
             Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 
-            _playerCruiser.SlotWrapper.UnhighlightSlots();
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _detailsManager.HideDetails();
             _buildMenu.ShowBuildingGroupsMenu();
         }
@@ -68,7 +68,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 			
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			_playerCruiser.SlotWrapper.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+			_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
 		}
 
@@ -88,13 +88,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
-            _playerCruiser.SlotWrapper.HighlightBuildingSlot(building);
+            _playerCruiser.SlotHighlighter.HighlightBuildingSlot(building);
             _detailsManager.ShowDetails(building);
 		}
 
 		private void SelectBuildingFromEnemyCruiser(IBuilding building)
 		{
-            _aiCruiser.SlotWrapper.HighlightBuildingSlot(building);
+            _aiCruiser.SlotHighlighter.HighlightBuildingSlot(building);
             _detailsManager.ShowDetails(building);
 		}
 

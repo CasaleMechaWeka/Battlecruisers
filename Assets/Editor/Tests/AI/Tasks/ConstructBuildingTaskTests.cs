@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 		private IPrefabKey _key;
 		private IPrefabFactory _prefabFactory;
 		private ICruiserController _cruiser;
-        private ISlotWrapper _slotWrapper;
+        private ISlotAccessor _slotAccessor;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
         private ISlot _slot;
@@ -34,10 +34,10 @@ namespace BattleCruisers.Tests.AI.Tasks
 
             _key = Substitute.For<IPrefabKey>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
-			_slotWrapper = Substitute.For<ISlotWrapper>();
+			_slotAccessor = Substitute.For<ISlotAccessor>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.IsAlive.Returns(true);
-            _cruiser.SlotWrapper.Returns(_slotWrapper);
+            _cruiser.SlotAccessor.Returns(_slotAccessor);
 
             _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
 
@@ -57,8 +57,8 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void Start_StartsConstructingBuilding_ReturnsTrue()
         {
             _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
-            _cruiser.SlotWrapper.IsSlotAvailable(_building.SlotSpecification).Returns(true);
-            _cruiser.SlotWrapper.GetFreeSlot(_building.SlotSpecification).Returns(_slot);
+            _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
+            _cruiser.SlotAccessor.GetFreeSlot(_building.SlotSpecification).Returns(_slot);
             _cruiser.ConstructBuilding(_prefab.UnityObject, _slot).Returns(_building);
 
             bool haveStarted = _task.Start();
@@ -96,7 +96,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 		public void Start_NoAvailabeSlots_ReturnsFalse()
 		{
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
-			_cruiser.SlotWrapper.IsSlotAvailable(_building.SlotSpecification).Returns(false);
+			_cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(false);
 
             bool haveStarted = _task.Start();
 

@@ -383,7 +383,7 @@ namespace BattleCruisers.Tutorial
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotWrapper, slotSpecification);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,

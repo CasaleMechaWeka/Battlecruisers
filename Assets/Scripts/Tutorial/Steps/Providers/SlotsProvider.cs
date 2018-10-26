@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 {
     public class SlotsProvider : ISlotsProvider
     {
-        private readonly ISlotWrapper _slotWrapper;
+        private readonly ISlotAccessor _slotAccessor;
         private readonly SlotSpecification _slotSpecification;
 
         private IList<ISlot> _slots;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
                 {
                     if (_slotSpecification.PreferFromFront)
                     {
-                        ISlot frontMostSlot = _slotWrapper.GetFreeSlot(_slotSpecification);
+                        ISlot frontMostSlot = _slotAccessor.GetFreeSlot(_slotSpecification);
                         Assert.IsNotNull(frontMostSlot);
 
                         _slots = new List<ISlot>()
@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
                     }
                     else
                     {
-                        _slots = _slotWrapper.GetFreeSlots(_slotSpecification.SlotType);
+                        _slots = _slotAccessor.GetFreeSlots(_slotSpecification.SlotType);
                     }
                 }
 
@@ -40,11 +40,11 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             }
         }
 
-        public SlotsProvider(ISlotWrapper slotWrapper, SlotSpecification slotSpecification)
+        public SlotsProvider(ISlotAccessor slotAccessor, SlotSpecification slotSpecification)
         {
-            Helper.AssertIsNotNull(slotWrapper, slotSpecification);
+            Helper.AssertIsNotNull(slotAccessor, slotSpecification);
 
-            _slotWrapper = slotWrapper;
+            _slotAccessor = slotAccessor;
             _slotSpecification = slotSpecification;
         }
 

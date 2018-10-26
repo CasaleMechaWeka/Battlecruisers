@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         private IListProvider<IHighlightable> _highlightablesProvider;
         private IListProvider<IClickableEmitter> _clickablesProvider;
 
-        private ISlotWrapper _slotWrapper;
+        private ISlotAccessor _slotAccessor;
         private SlotSpecification _slotSpecificationPreferFront, _slotSpecificationPreferRear;
 
         private ReadOnlyCollection<ISlot> _slots;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [SetUp]
         public void SetuUp()
         {
-            _slotWrapper = Substitute.For<ISlotWrapper>();
+            _slotAccessor = Substitute.For<ISlotAccessor>();
             _slotSpecificationPreferFront = new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: true);
             _slotSpecificationPreferRear = new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false);
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 
         private void CreateProvider(SlotSpecification specification)
         {
-            SlotsProvider provider = new SlotsProvider(_slotWrapper, specification);
+            SlotsProvider provider = new SlotsProvider(_slotAccessor, specification);
             
             _slotsProvider = provider;
             _highlightablesProvider = provider;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         {
             CreateProvider(_slotSpecificationPreferFront);
 
-            _slotWrapper.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
+            _slotAccessor.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
 
             Assert.AreEqual(1, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         {
             CreateProvider(_slotSpecificationPreferRear);
 
-            _slotWrapper.GetFreeSlots(_slotSpecificationPreferRear.SlotType).Returns(_slots);
+            _slotAccessor.GetFreeSlots(_slotSpecificationPreferRear.SlotType).Returns(_slots);
 
             Assert.AreEqual(2, _slotsProvider.FindItems().Count);
             Assert.IsTrue(_slotsProvider.FindItems().Contains(_slot1));
@@ -91,14 +91,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         {
             CreateProvider(_slotSpecificationPreferFront);
 
-            _slotWrapper.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
+            _slotAccessor.GetFreeSlot(_slotSpecificationPreferFront).Returns(_slot1);
 
             _slotsProvider.FindItems();
-            _slotWrapper.Received().GetFreeSlot(_slotSpecificationPreferFront);
-            _slotWrapper.ClearReceivedCalls();
+            _slotAccessor.Received().GetFreeSlot(_slotSpecificationPreferFront);
+            _slotAccessor.ClearReceivedCalls();
 
             _slotsProvider.FindItems();
-            _slotWrapper.DidNotReceive().GetFreeSlot(_slotSpecificationPreferFront);
+            _slotAccessor.DidNotReceive().GetFreeSlot(_slotSpecificationPreferFront);
         }
     }
 }
