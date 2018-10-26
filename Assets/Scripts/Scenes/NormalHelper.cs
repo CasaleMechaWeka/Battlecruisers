@@ -42,6 +42,9 @@ namespace BattleCruisers.Scenes
 
         private float FindBuildSpeedMultiplier(ISettingsManager settingsManager)
         {
+            // FELIX  TEMP
+            return BuildSpeedMultipliers.VERY_FAST;
+
             switch (settingsManager.AIDifficulty)
             {
                 case Difficulty.Easy:
