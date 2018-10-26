@@ -44,12 +44,12 @@ namespace BattleCruisers.Cruisers.Slots
                 _slots[slotSpecification.SlotType].Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
-        private bool FreeSlotFilter(ISlot slot, BuildingFunction buildingFunction)
+        private bool FreeSlotFilter(ISlot slot, BuildingFunction desiredBuildingFunction)
         {
             return
                 slot.IsFree
-                && (buildingFunction == BuildingFunction.Generic
-                    || slot.BuildingFunctionAffinity == buildingFunction);
+                && (desiredBuildingFunction == BuildingFunction.Generic
+                    || slot.BuildingFunctionAffinity == desiredBuildingFunction);
         }
 
 		public int GetSlotCount(SlotType slotType)
