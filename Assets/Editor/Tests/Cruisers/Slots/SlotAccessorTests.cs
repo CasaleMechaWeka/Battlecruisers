@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -10,7 +8,6 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Cruisers.Slots
 {
-    // FELIX  NEXT :D
     public class SlotAccessorTests
     {
         private ISlotAccessor _slotAccessor;
@@ -115,25 +112,25 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion GetSlots
 
-        //#region GetFreeSlots
-        //[Test]
-        //public void GetFreeSlots_NonExistantType_Throws()
-        //{
-        //    Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetFreeSlots(SlotType.Utility));
-        //}
+        #region GetFreeSlots
+        [Test]
+        public void GetFreeSlots_NonExistantType_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetFreeSlots(SlotType.Utility));
+        }
 
-        //[Test]
-        //public void GetFreeSlots()
-        //{
-        //    _deckSlot1.IsFree.Returns(true);
-        //    _deckSlot2.IsFree.Returns(false);
+        [Test]
+        public void GetFreeSlots()
+        {
+            _deckSlot1.IsFree.Returns(true);
+            _deckSlot2.IsFree.Returns(false);
 
-        //    ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
+            ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
 
-        //    Assert.AreEqual(1, deckSlots.Count);
-        //    Assert.IsTrue(deckSlots.Contains(_deckSlot1));
-        //}
-        //#endregion GetFreeSlots
+            Assert.AreEqual(1, deckSlots.Count);
+            Assert.IsTrue(deckSlots.Contains(_deckSlot1));
+        }
+        #endregion GetFreeSlots
 
         #region GetFreeSlot
         [Test]
@@ -177,6 +174,33 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         #endregion GetFreeSlot
 
         #region GetSlot
+        [Test]
+        public void GetSlot_NonExistantSlotType_Throws()
+        {
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Utility, default(BuildingFunction), default(bool));
+            _building.SlotSpecification.Returns(slotSpecification);
+
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetSlot(_building));
+        }
+
+        [Test]
+        public void GetSlot_NoSlotForBuilding_Throws()
+        {
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
+            _building.SlotSpecification.Returns(slotSpecification);
+
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetSlot(_building));
+        }
+
+        [Test]
+        public void GetSlot_ReturnsBuildingSlot()
+        {
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
+            _building.SlotSpecification.Returns(slotSpecification);
+            _deckSlot2.Building.Returns(_building);
+
+            Assert.AreSame(_deckSlot2, _slotAccessor.GetSlot(_building));
+        }
         #endregion GetSlot
 
         [Test]

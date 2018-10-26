@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX   Copy tests from SlotWrapper :)
     public class SlotAccessor : ISlotAccessor
     {
 		private readonly IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
@@ -60,9 +59,15 @@ namespace BattleCruisers.Cruisers.Slots
 		
         public ISlot GetSlot(IBuilding building)
         {
-            return 
-                _slots[building.SlotSpecification.SlotType]
+            Assert.IsTrue(_slots.ContainsKey(building.SlotSpecification.SlotType));
+
+            ISlot buildingSlot
+                = _slots[building.SlotSpecification.SlotType]
                     .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
+            Assert.IsNotNull(buildingSlot);
+
+            return buildingSlot;
+
         }
 
 		public int GetSlotCount(SlotType slotType)
