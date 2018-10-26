@@ -184,12 +184,12 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
 
         [Test]
-        public void GetSlot_NoSlotForBuilding_Throws()
+        public void GetSlot_NoSlotForBuilding_ReturnsNull()
         {
             SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
             _building.SlotSpecification.Returns(slotSpecification);
 
-            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetSlot(_building));
+            Assert.IsNull(_slotAccessor.GetSlot(_building));
         }
 
         [Test]
