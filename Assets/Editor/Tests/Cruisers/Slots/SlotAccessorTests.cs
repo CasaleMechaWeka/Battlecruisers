@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
     public class SlotAccessorTests
     {
         private ISlotAccessor _slotAccessor;
+        private IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
         private ISlot _platformSlot, _deckSlot1, _deckSlot2;
         private IBuilding _building;
 
@@ -26,22 +27,22 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _deckSlot1 = CreateSlot(index: 3, type: SlotType.Deck);
             _deckSlot2 = CreateSlot(index: 4, type: SlotType.Deck);
 
-            IDictionary<SlotType, ReadOnlyCollection<ISlot>> slots = new Dictionary<SlotType, ReadOnlyCollection<ISlot>>();
+            _slots = new Dictionary<SlotType, ReadOnlyCollection<ISlot>>();
 
             ReadOnlyCollection<ISlot> platformSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>()
             {
                 _platformSlot
             });
-            slots.Add(SlotType.Platform, platformSlots);
+            _slots.Add(SlotType.Platform, platformSlots);
 
             ReadOnlyCollection<ISlot> deckSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>()
             {
                 _deckSlot1,
                 _deckSlot2
             });
-            slots.Add(SlotType.Deck, deckSlots);
+            _slots.Add(SlotType.Deck, deckSlots);
 
-            _slotAccessor = new SlotAccessor(slots);
+            _slotAccessor = new SlotAccessor(_slots);
 
             _building = Substitute.For<IBuilding>();
         }
@@ -99,7 +100,40 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion IsSlotAvailable
 
+        #region GetSlots
+        [Test]
+        public void GetSlots_NonExistantSlotType_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetSlots(SlotType.Mast));
+        }
 
+        [Test]
+        public void GetSlots_ExistantSlotType_ReturnsSlots()
+        {
+            ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetSlots(SlotType.Deck);
+            Assert.AreSame(_slots[SlotType.Deck], deckSlots);
+        }
+        #endregion GetSlots
+
+        //#region GetFreeSlots
+        //[Test]
+        //public void GetFreeSlots_NonExistantType_Throws()
+        //{
+        //    Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetFreeSlots(SlotType.Utility));
+        //}
+
+        //[Test]
+        //public void GetFreeSlots()
+        //{
+        //    _deckSlot1.IsFree.Returns(true);
+        //    _deckSlot2.IsFree.Returns(false);
+
+        //    ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
+
+        //    Assert.AreEqual(1, deckSlots.Count);
+        //    Assert.IsTrue(deckSlots.Contains(_deckSlot1));
+        //}
+        //#endregion GetFreeSlots
 
         #region GetFreeSlot
         [Test]
@@ -142,37 +176,14 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion GetFreeSlot
 
-        //[Test]
-        //public void GetSlotCount()
-        //{
-        //    Assert.AreEqual(2, _slotAccessor.GetSlotCount(SlotType.Deck));
-        //    Assert.AreEqual(1, _slotAccessor.GetSlotCount(_platformSlot.Type));
-        //}
+        #region GetSlot
+        #endregion GetSlot
 
-        //[Test]
-        //public void GetSlots()
-        //{
-        //    // FELIX
-        //}
-
-        //#region GetFreeSlots
-        //[Test]
-        //public void GetFreeSlots_NonExistantType_Throws()
-        //{
-        //    Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetFreeSlots(SlotType.Utility));
-        //}
-
-        //[Test]
-        //public void GetFreeSlots()
-        //{
-        //    _deckSlot1.IsFree.Returns(true);
-        //    _deckSlot2.IsFree.Returns(false);
-
-        //    ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
-
-        //    Assert.AreEqual(1, deckSlots.Count);
-        //    Assert.IsTrue(deckSlots.Contains(_deckSlot1));
-        //}
-        //#endregion GetFreeSlots
+        [Test]
+        public void GetSlotCount()
+        {
+            Assert.AreEqual(2, _slotAccessor.GetSlotCount(SlotType.Deck));
+            Assert.AreEqual(1, _slotAccessor.GetSlotCount(_platformSlot.Type));
+        }
     }
 }
