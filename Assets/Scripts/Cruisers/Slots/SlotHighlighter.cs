@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
-using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
@@ -88,15 +87,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void HighlightBuildingSlot(IBuilding building)
         {
-            HighlightedSlot = GetSlot(building);
+            HighlightedSlot = _slotAccessor.GetSlot(building);
             Assert.IsNotNull(HighlightedSlot);
-        }
-        
-        private ISlot GetSlot(IBuilding building)
-        {
-            return
-                _slotAccessor.GetSlots(building.SlotSpecification.SlotType)
-                    .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
         }
     }
 }

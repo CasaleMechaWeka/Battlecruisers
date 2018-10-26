@@ -61,13 +61,9 @@ namespace BattleCruisers.Cruisers.Slots
         {
             Assert.IsTrue(_slots.ContainsKey(building.SlotSpecification.SlotType));
 
-            ISlot buildingSlot
-                = _slots[building.SlotSpecification.SlotType]
+            return
+                _slots[building.SlotSpecification.SlotType]
                     .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
-            Assert.IsNotNull(buildingSlot);
-
-            return buildingSlot;
-
         }
 
 		public int GetSlotCount(SlotType slotType)
