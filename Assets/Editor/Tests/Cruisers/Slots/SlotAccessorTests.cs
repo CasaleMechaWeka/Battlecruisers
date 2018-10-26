@@ -99,43 +99,48 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion IsSlotAvailable
 
-        //#region GetFreeSlot
-        //[Test]
-        //public void GetFreeSlot_PreferFront_ReturnsFrontSlot()
-        //{
-        //    _deckSlot1.IsFree.Returns(true);
-        //    _deckSlot2.IsFree.Returns(true);
 
-        //    // FELIX
-        //    //ISlot freeSlot = _slotAccessor.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: true);
 
-        //    //Assert.AreSame(_deckSlot1, freeSlot);
-        //}
+        #region GetFreeSlot
+        [Test]
+        public void GetFreeSlot_PreferFront_ReturnsFrontSlot()
+        {
+            SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.Generic, preferCruiserFront: true);
 
-        //[Test]
-        //public void GetFreeSlot_PreferBack_ReturnsBackSlot()
-        //{
-        //    _deckSlot1.IsFree.Returns(true);
-        //    _deckSlot2.IsFree.Returns(true);
+            _deckSlot1.IsFree.Returns(true);
+            _deckSlot2.IsFree.Returns(true);
 
-        //    // FELIX
-        //    //ISlot freeSlot = _slotAccessor.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: false);
+            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
 
-        //    //Assert.AreSame(_deckSlot2, freeSlot);
-        //}
+            Assert.AreSame(_deckSlot1, freeSlot);
+        }
 
-        //[Test]
-        //public void GetFreeSlot_ReturnsOnlyFreeSlot()
-        //{
-        //    _deckSlot1.IsFree.Returns(false);
-        //    _deckSlot2.IsFree.Returns(true);
+        [Test]
+        public void GetFreeSlot_PreferBack_ReturnsBackSlot()
+        {
+            SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.Generic, preferCruiserFront: false);
 
-        //    // FELIX
-        //    //ISlot freeSlot = _slotAccessor.GetFreeSlot(SlotType.Deck, buildingFunction: BuildingFunction.Generic, preferFromFront: true);
+            _deckSlot1.IsFree.Returns(true);
+            _deckSlot2.IsFree.Returns(true);
 
-        //    //Assert.AreSame(_deckSlot2, freeSlot);
-        //}
-        //#endregion GetFreeSlot
+            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
+
+            Assert.AreSame(_deckSlot2, freeSlot);
+        }
+
+        [Test]
+        public void GetFreeSlot_ReturnsOnlyFreeSlot()
+        {
+            SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.Generic, preferCruiserFront: false);
+
+            _deckSlot1.IsFree.Returns(false);
+            _deckSlot2.IsFree.Returns(true);
+
+            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
+
+            Assert.AreSame(_deckSlot2, freeSlot);
+        }
+        #endregion GetFreeSlot
 
         //[Test]
         //public void GetSlotCount()

@@ -26,18 +26,24 @@ namespace BattleCruisers.Cruisers.Slots
                     .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
-        private void SetSlotVisibility(bool isVisible)
+        public ReadOnlyCollection<ISlot> GetSlots(SlotType slotType)
         {
-            foreach (IList<ISlot> slots in _slots.Values)
-            {
-                foreach (ISlot slot in slots)
-                {
-                    slot.IsVisible = isVisible;
-                }
-            }
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+            return _slots[slotType];
         }
 
-		public ISlot GetFreeSlot(SlotSpecification slotSpecification)
+        public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
+        {
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+
+            return
+                _slots[slotType]
+                    .Where(slot => slot.IsFree)
+                    .ToList()
+                    .AsReadOnly();
+        }
+
+        public ISlot GetFreeSlot(SlotSpecification slotSpecification)
 		{
             return slotSpecification.PreferFromFront ?
                 _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :
@@ -51,35 +57,17 @@ namespace BattleCruisers.Cruisers.Slots
                 && (desiredBuildingFunction == BuildingFunction.Generic
                     || slot.BuildingFunctionAffinity == desiredBuildingFunction);
         }
-
-		public int GetSlotCount(SlotType slotType)
-		{
-			return _slots[slotType].Count;
-		}
 		
-        private ISlot GetSlot(IBuilding building)
+        public ISlot GetSlot(IBuilding building)
         {
             return 
                 _slots[building.SlotSpecification.SlotType]
                     .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
         }
 
-        public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
-        {
-            Assert.IsTrue(_slots.ContainsKey(slotType));
-
-            List<ISlot> freeSlots
-                = _slots[slotType]
-                    .Where(slot => slot.IsFree)
-                    .ToList();
-
-            return freeSlots.AsReadOnly();
-        }
-
-        public ReadOnlyCollection<ISlot> GetSlots(SlotType slotType)
-        {
-            Assert.IsTrue(_slots.ContainsKey(slotType));
-            return _slots[slotType];
-        }
+		public int GetSlotCount(SlotType slotType)
+		{
+			return _slots[slotType].Count;
+		}
     }
 }
