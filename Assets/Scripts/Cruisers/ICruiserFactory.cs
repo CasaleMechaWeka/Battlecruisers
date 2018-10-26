@@ -12,7 +12,6 @@ namespace BattleCruisers.Cruisers
         void InitialisePlayerCruiser(
             IUIManager uiManager,
             ICruiserHelper helper,
-            // FELIX  Remove :)
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker);
