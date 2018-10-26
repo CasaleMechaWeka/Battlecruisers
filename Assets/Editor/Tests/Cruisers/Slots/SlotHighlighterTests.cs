@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -111,47 +109,49 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion HighlightAvailableSlots
 
-        //#region UnhighlightSlots
-        //[Test]
-        //public void UnhighlightSlots_FreeSlotsOfTypeVisible_Unhighlights()
-        //{
-        //    // Highlight slots
-        //    _slot2.IsFree.Returns(true);
-        //    _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+        #region UnhighlightSlots
+        [Test]
+        public void UnhighlightSlots_FreeSlotsOfTypeVisible_Unhighlights()
+        {
+            _mutableSlotsToReturn2.Add(_slot2);
+            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
 
-        //    // Unhighlight slots
-        //    _slotHighlighter.UnhighlightSlots();
-        //    _slot2.Received().IsVisible = false;
-        //}
+            // Highlight slots
+            _slot2.IsFree.Returns(true);
+            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
 
-        //[Test]
-        //public void UnhighlightSlots_SingleBuildingSlotVisible_Unhighlights()
-        //{
-        //    // Highlight single slot
-        //    HighlightBuildingSlot();
+            // Unhighlight slots
+            _slotHighlighter.UnhighlightSlots();
+            _slot2.Received().IsVisible = false;
+        }
 
-        //    // Unhighlight single slot
-        //    _slotHighlighter.UnhighlightSlots();
-        //    _slot2.Received().IsVisible = false;
-        //    Assert.IsFalse(_slot2.IsVisible);
-        //}
-        //#endregion UnhighlightSlots
+        [Test]
+        public void UnhighlightSlots_SingleBuildingSlotVisible_Unhighlights()
+        {
+            // Highlight single slot
+            HighlightBuildingSlot();
 
-        //#region HighlightBuildingSlot
-        //[Test]
-        //public void HighlightBuildingSlot()
-        //{
-        //    _slot2.Building.Returns(_building);
-        //    _slotHighlighter.HighlightBuildingSlot(_building);
-        //    _slot2.Received().IsVisible = true;
-        //    Assert.IsTrue(_slot2.IsVisible);
-        //}
+            // Unhighlight single slot
+            _slotHighlighter.UnhighlightSlots();
+            _slot2.Received().IsVisible = false;
+        }
+        #endregion UnhighlightSlots
 
-        //[Test]
-        //public void HighlightBuildingSlot_NoSlotForBuilding_Throws()
-        //{
-        //    Assert.Throws<UnityAsserts.AssertionException>(() => _slotHighlighter.HighlightBuildingSlot(_building));
-        //}
-        //#endregion HighlightBuildingSlot
+        #region HighlightBuildingSlot
+        [Test]
+        public void HighlightBuildingSlot()
+        {
+            _slotAccessor.GetSlot(_building).Returns(_slot2);
+            _slotHighlighter.HighlightBuildingSlot(_building);
+            _slot2.Received().IsVisible = true;
+        }
+
+        [Test]
+        public void HighlightBuildingSlot_NoSlotForBuilding_Throws()
+        {
+            _slotAccessor.GetSlot(_building).Returns((ISlot)null);
+            Assert.Throws<UnityAsserts.AssertionException>(() => _slotHighlighter.HighlightBuildingSlot(_building));
+        }
+        #endregion HighlightBuildingSlot
     }
 }

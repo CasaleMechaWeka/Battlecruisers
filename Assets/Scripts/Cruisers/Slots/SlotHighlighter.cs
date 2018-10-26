@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    // FELIX   Copy tests from SlotWrapper :)
     public class SlotHighlighter : ISlotHighlighter
     {
         private readonly ISlotAccessor _slotAccessor;
