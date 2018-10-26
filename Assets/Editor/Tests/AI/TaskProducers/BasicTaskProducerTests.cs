@@ -28,7 +28,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _tasks.IsEmpty.Returns(true);
 
             _platformSlotBuilding = Substitute.For<IBuilding>();
-            _platformSlotBuilding.SlotSpecification.SlotType.Returns(SlotType.Platform);
+            SlotSpecification platformSlotSpecification = new SlotSpecification(SlotType.Platform, default(BuildingFunction), default(bool));
+            _platformSlotBuilding.SlotSpecification.Returns(platformSlotSpecification);
             _platformSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _platformSlotBuildingWrapper.Buildable.Returns(_platformSlotBuilding);
             _platformBuildingKey = new BuildingKey(BuildingCategory.Ultra, "Kaffeemuehle");
@@ -37,7 +38,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _platformBuildingKey).Returns(_platformBuildingTask);
 
             _deckSlotBuilding = Substitute.For<IBuilding>();
-            _deckSlotBuilding.SlotSpecification.SlotType.Returns(SlotType.Deck);
+            SlotSpecification deckSlotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
+            _deckSlotBuilding.SlotSpecification.Returns(deckSlotSpecification);
             _deckSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _deckSlotBuildingWrapper.Buildable.Returns(_deckSlotBuilding);
             _deckBuildingKey = new BuildingKey(BuildingCategory.Tactical, "Hirsch");
