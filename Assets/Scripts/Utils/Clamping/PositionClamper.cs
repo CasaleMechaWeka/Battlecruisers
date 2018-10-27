@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils
+namespace BattleCruisers.Utils.Clamper
 {
 	public class PositionClamper : IPositionClamper
 	{

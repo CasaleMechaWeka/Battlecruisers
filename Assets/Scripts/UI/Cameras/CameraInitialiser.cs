@@ -6,6 +6,7 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.InputHandlers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Clamper;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -13,7 +14,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class CameraInitialiser : MonoBehaviour
+    public class CameraInitialiser : MonoBehaviour
 	{
 		public float smoothTime;
 

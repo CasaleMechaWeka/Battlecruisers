@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils.Clamper;
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Utils
 {
-	public class PositionClamperTests
+    public class PositionClamperTests
     {
 		private IPositionClamper _clamper;
 		private Rectangle _bounds;
