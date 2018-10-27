@@ -38,16 +38,31 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public bool IsValid(Vector2 position)
         {
-            return
-                position.x >= _bottomLeftVertex.x
-                && position.x <= _bottomeRightVertex.x
-                && position.y >= _bottomLeftVertex.y
-                && position.y <= FindMaxY(position);
+            // FELIX  TEMP
+
+            float maxY = FindMaxY(position);
+
+            bool isValid
+                = position.x >= _bottomLeftVertex.x
+                    && position.x <= _bottomeRightVertex.x
+                    && position.y >= _bottomLeftVertex.y
+                    && position.y <= maxY;
+            Debug.Log("IsValid():  " + position + " > " + isValid + "  maxY: " + maxY);
+
+            return isValid;
+
+            //return
+            //    position.x >= _bottomLeftVertex.x
+            //    && position.x <= _bottomeRightVertex.x
+            //    && position.y >= _bottomLeftVertex.y
+            //    && position.y <= FindMaxY(position);
         }
 
         private float FindMaxY(Vector2 position)
         {
-            return Mathf.Abs(_topCenterVertex.x - position.x) / _halfWidth * _height;
+            float proportionOfMaxHeight = _halfWidth - Mathf.Abs(_topCenterVertex.x - position.x);
+            float localMaxY = proportionOfMaxHeight / _halfWidth * _height;
+            return _bottomLeftVertex.y + localMaxY;
         }
     }
 }
