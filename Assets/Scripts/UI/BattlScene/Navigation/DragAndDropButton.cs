@@ -3,39 +3,31 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class DragAndDropButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class DragAndDropButton : 
+        MonoBehaviour, 
+        IDragHandler,
+        IBeginDragHandler
     {
-        private bool _isPointerDown;
         // Offset adjustment (ie, mouse position relative to our center position),
         // to avoid button "jumping" to mouse position when first clicked :)
-        private Vector3 _mouseToCenterOffset;
+        private Vector2 _mouseToCenterOffset;
 
         // FELIX  Replace with Initialise() :)
         private void Start()
         {
-            _isPointerDown = false;
+            _mouseToCenterOffset = new Vector2();
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log("OnPointerDown");
-
-            _isPointerDown = true;
-            _mouseToCenterOffset = transform.position - Input.mousePosition;
+            _mouseToCenterOffset = (Vector2)transform.position - eventData.position;
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnPointerUp");
-            _isPointerDown = false;
-        }
+            Debug.Log("OnDrag()");
 
-        private void Update()
-        {
-            if (_isPointerDown)
-            {
-                transform.position = Input.mousePosition + _mouseToCenterOffset;
-            }
+            transform.position = eventData.position + _mouseToCenterOffset;
         }
     }
 }
