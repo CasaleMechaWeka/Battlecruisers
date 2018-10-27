@@ -1,8 +1,7 @@
-﻿using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Navigation
+namespace BattleCruisers.Utils.Clamper
 {
     /// <summary>
     /// Assumes the triangle:
@@ -14,12 +13,12 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     /// 
     /// <           >
     /// </summary>
-    public class TrianglePositionValidator : IPositionValidator
+    public class TrianglePositionClamper : IPositionClamper
     {
         private Vector2 _bottomLeftVertex, _bottomeRightVertex, _topCenterVertex;
         private float _halfWidth, _height;
 
-        public TrianglePositionValidator(Vector2 bottomLeftVertex, Vector2 bottomRightVertex, Vector2 topCenterVertex)
+        public TrianglePositionClamper(Vector2 bottomLeftVertex, Vector2 bottomRightVertex, Vector2 topCenterVertex)
         {
             Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex);
 
@@ -36,31 +35,33 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _halfWidth = (_bottomeRightVertex.x - _bottomLeftVertex.x) / 2;
         }
 
-        public bool IsValid(Vector2 position)
+        public Vector3 Clamp(Vector3 position)
         {
-            // FELIX  TEMP
-
-            float maxY = FindMaxY(position);
-
-            bool isValid
-                = position.x >= _bottomLeftVertex.x
-                    && position.x <= _bottomeRightVertex.x
-                    && position.y >= _bottomLeftVertex.y
-                    && position.y <= maxY;
-            //Debug.Log("IsValid():  " + position + " > " + isValid + "  maxY: " + maxY);
-
-            return isValid;
-
-            //return
-            //    position.x >= _bottomLeftVertex.x
-            //    && position.x <= _bottomeRightVertex.x
-            //    && position.y >= _bottomLeftVertex.y
-            //    && position.y <= FindMaxY(position);
+            return Clamp((Vector2)position);
         }
 
-        private float FindMaxY(Vector2 position)
+        public Vector2 Clamp(Vector2 position)
         {
-            float proportionOfMaxHeight = _halfWidth - Mathf.Abs(_topCenterVertex.x - position.x);
+            // FELIX  TEMP
+            float minX = _bottomLeftVertex.x;
+            float maxX = _bottomeRightVertex.x;
+            float clampedX = Mathf.Clamp(position.x, minX, maxX);
+
+            float minY = _bottomLeftVertex.y;
+            float maxY = FindMaxY(clampedX);
+            float clampedY = Mathf.Clamp(position.y, minY, maxY);
+
+            Vector2 clampedPosition = new Vector2(clampedX, clampedY);
+            Debug.Log("TrianglePositionClamper.Clamp()  " + position + " > " + clampedPosition);
+            return clampedPosition;
+
+            // FLEIX  Uncomment :)
+            //return new Vector2(clampedX, clampedY);
+        }
+
+        private float FindMaxY(float clampedX)
+        {
+            float proportionOfMaxHeight = _halfWidth - Mathf.Abs(_topCenterVertex.x - clampedX);
             float localMaxY = proportionOfMaxHeight / _halfWidth * _height;
             return _bottomLeftVertex.y + localMaxY;
         }
