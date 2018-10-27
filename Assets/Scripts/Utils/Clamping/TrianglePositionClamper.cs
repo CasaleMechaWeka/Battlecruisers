@@ -13,6 +13,7 @@ namespace BattleCruisers.Utils.Clamper
     /// 
     /// <           >
     /// </summary>
+    /// FELIX  Test :D
     public class TrianglePositionClamper : IPositionClamper
     {
         private Vector2 _bottomLeftVertex, _bottomeRightVertex, _topCenterVertex;
@@ -42,7 +43,6 @@ namespace BattleCruisers.Utils.Clamper
 
         public Vector2 Clamp(Vector2 position)
         {
-            // FELIX  TEMP
             float minX = _bottomLeftVertex.x;
             float maxX = _bottomeRightVertex.x;
             float clampedX = Mathf.Clamp(position.x, minX, maxX);
@@ -51,12 +51,7 @@ namespace BattleCruisers.Utils.Clamper
             float maxY = FindMaxY(clampedX);
             float clampedY = Mathf.Clamp(position.y, minY, maxY);
 
-            Vector2 clampedPosition = new Vector2(clampedX, clampedY);
-            Debug.Log("TrianglePositionClamper.Clamp()  " + position + " > " + clampedPosition);
-            return clampedPosition;
-
-            // FLEIX  Uncomment :)
-            //return new Vector2(clampedX, clampedY);
+            return new Vector2(clampedX, clampedY);
         }
 
         private float FindMaxY(float clampedX)
