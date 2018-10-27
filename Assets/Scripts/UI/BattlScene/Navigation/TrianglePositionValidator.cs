@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
                     && position.x <= _bottomeRightVertex.x
                     && position.y >= _bottomLeftVertex.y
                     && position.y <= maxY;
-            Debug.Log("IsValid():  " + position + " > " + isValid + "  maxY: " + maxY);
+            //Debug.Log("IsValid():  " + position + " > " + isValid + "  maxY: " + maxY);
 
             return isValid;
 

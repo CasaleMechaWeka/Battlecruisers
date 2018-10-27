@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnDrag()");
+            Debug.Log("OnDrag()  eventData.delta: " + eventData.delta);
 
             Vector2 adjustedTargetPosition = eventData.position + _mouseToCenterOffset;
 
