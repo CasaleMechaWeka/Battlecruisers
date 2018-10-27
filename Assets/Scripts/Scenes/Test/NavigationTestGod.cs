@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test
                     bottomRightVertex: new Vector2(1000, 500),
                     topCenterVertex: new Vector2(750, 1000));
 
-            DragAndDropButton navigationWheel = FindObjectOfType<DragAndDropButton>();
+            NavigationWheel navigationWheel = FindObjectOfType<NavigationWheel>();
             navigationWheel.Initialise(navigationWheelPositionClamper);
         }
     }

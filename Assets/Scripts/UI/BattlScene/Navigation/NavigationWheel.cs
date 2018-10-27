@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class DragAndDropButton : MonoBehaviour, IDragHandler
+    public class NavigationWheel : MonoBehaviour, IDragHandler
     {
         private IPositionClamper _positionClamper;
         private Vector2 _halfSize;
