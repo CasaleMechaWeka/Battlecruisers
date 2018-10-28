@@ -5,11 +5,10 @@ namespace BattleCruisers.Utils.DataStrctures
 {
     public class Pyramid : IPyramid
     {
-        private readonly float _width;
-
         public Vector2 BottomLeftVertex { get; private set; }
         public Vector2 BottomRightVertex { get; private set; }
         public Vector2 TopCenterVertex { get; private set; }
+        public float Width { get; private set; }
         public float Height { get; private set; }
 
         // FELIX  Test!  (Including asserts)
@@ -26,7 +25,7 @@ namespace BattleCruisers.Utils.DataStrctures
             TopCenterVertex = topCenterVertex;
 
             Height = TopCenterVertex.y - BottomLeftVertex.y;
-            _width = BottomRightVertex.x - BottomLeftVertex.x;
+            Width = BottomRightVertex.x - BottomLeftVertex.x;
         }
 
         public float FindMaxY(float xPosition)
@@ -34,10 +33,24 @@ namespace BattleCruisers.Utils.DataStrctures
             Assert.IsTrue(xPosition >= BottomLeftVertex.x);
             Assert.IsTrue(xPosition <= BottomRightVertex.x);
 
-            float halfWidth = _width / 2;
+            float halfWidth = Width / 2;
             float proportionOfMaxHeight = halfWidth - Mathf.Abs(TopCenterVertex.x - xPosition);
             float localMaxY = proportionOfMaxHeight / halfWidth * Height;
             return BottomLeftVertex.y + localMaxY;
+        }
+
+        public IRange<float> FindGlobalXRange(float yPosition)
+        {
+            Assert.IsTrue(yPosition >= 0);
+            Assert.IsTrue(yPosition <= Height);
+
+            float proportionOfHeight = yPosition / Height;
+            float widthAtHeight = (1 - proportionOfHeight) * Width;
+            float halfWidth = widthAtHeight / 2;
+
+            float xMin = TopCenterVertex.x - halfWidth;
+            float xMax = TopCenterVertex.x + halfWidth;
+            return new Range<float>(xMin, xMax);
         }
     }
 }
