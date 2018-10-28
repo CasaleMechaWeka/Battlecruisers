@@ -9,18 +9,11 @@ namespace BattleCruisers.UI.Cameras.Helpers
             float navigationWheelPanelHeight,
             IRange<float> validOrthographicSize);
 
+        // FELIX  Use ICameraCalculator.FindCameraYPosition :)
         float FindCameraYPosition(
             float orthographicSize,
             float cameraHeight,
             float waterSurfaceYPosition);
-
-        // FELIX
-        IRange<float> FindValidNavigationWheelXPositions(
-            float navigationWheelYPosition);
-
-        // FELIX
-        IRange<float> FindValidCameraXPositions(
-            float cameraYPosition);
 
         float FindCameraXPosition(
             float navigationWheelXPosition,
