@@ -5,10 +5,18 @@ namespace BattleCruisers.Scenes.Test
 {
     public class NavigationTestGod : MonoBehaviour
     {
-        void Start()
+        private INavigationWheelPanel _navigationWheelPanel;
+
+        private void Start()
         {
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
-            navigationWheelInitialiser.InitialiseNavigationWheel();
+            _navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
+        }
+
+        private void Update()
+        {
+            float yProportion = _navigationWheelPanel.FindNavigationWheelYPositionAsProportionOfMaxHeight();
+            Debug.Log("yProportion: " + yProportion);
         }
     }
 }
