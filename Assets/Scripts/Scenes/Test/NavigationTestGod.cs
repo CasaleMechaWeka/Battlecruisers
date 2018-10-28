@@ -15,6 +15,7 @@ namespace BattleCruisers.Scenes.Test
 
         private void Update()
         {
+            // FLEIX  TEMP
             //float yProportion = _navigationWheelPanel.FindNavigationWheelYPositionAsProportionOfMaxHeight();
             //Debug.Log("yProportion: " + yProportion);
 
