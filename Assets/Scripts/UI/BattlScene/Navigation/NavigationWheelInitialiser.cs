@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamper;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,11 +14,12 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         {
             Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex);
 
-            IPositionClamper navigationWheelPositionClamper
-                = new TrianglePositionClamper(
-                    bottomLeftVertex.transform.position,
-                    bottomRightVertex.transform.position,
+            IPyramid pyramid 
+                = new Pyramid(
+                    bottomLeftVertex.transform.position, 
+                    bottomRightVertex.transform.position, 
                     topCenterVertex.transform.position);
+            IPositionClamper navigationWheelPositionClamper = new PyramidPositionClamper(pyramid);
 
             NavigationWheel navigationWheel = GetComponentInChildren<NavigationWheel>();
             Assert.IsNotNull(navigationWheel);
