@@ -19,12 +19,12 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _navigationWheel = navigationWheel;
         }
 
-        public float FindNavigationWheelYPositionAsProportionOfMaxHeight()
+        public float FindYProportion()
         {
             return FindLocalY() / _panelArea.Height;
         }
 
-        public float FindNavigationWheelXPositionAsProportionOfValidWidth()
+        public float FindXProportion()
         {
             float localYPosition = FindLocalY();
 

@@ -2,12 +2,16 @@
 {
     public interface INavigationWheelPanel
     {
-        // FELIX  Rename both methods :)
+        /// <returns>
+        /// The navigation wheel y position as a proportion of the maximum
+        /// height of the panel pyramid area:  0-1
+        /// </returns>
+        float FindYProportion();
 
-        /// <returns>0-1</returns>
-        float FindNavigationWheelYPositionAsProportionOfMaxHeight();
-
-        /// <returns>0-1</returns>
-        float FindNavigationWheelXPositionAsProportionOfValidWidth();
+        /// <returns>
+        /// The navigation wheel x position as a proportion of valid
+        /// width at the current wheel y position:  0-1
+        /// </returns>
+        float FindXProportion();
     }
 }
