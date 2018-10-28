@@ -15,8 +15,11 @@ namespace BattleCruisers.Scenes.Test
 
         private void Update()
         {
-            float yProportion = _navigationWheelPanel.FindNavigationWheelYPositionAsProportionOfMaxHeight();
-            Debug.Log("yProportion: " + yProportion);
+            //float yProportion = _navigationWheelPanel.FindNavigationWheelYPositionAsProportionOfMaxHeight();
+            //Debug.Log("yProportion: " + yProportion);
+
+            float xProportion = _navigationWheelPanel.FindNavigationWheelXPositionAsProportionOfValidWidth();
+            Debug.Log("xProportion: " + xProportion);
         }
     }
 }
