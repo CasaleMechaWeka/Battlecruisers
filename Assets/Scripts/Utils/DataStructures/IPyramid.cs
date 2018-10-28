@@ -11,6 +11,7 @@ namespace BattleCruisers.Utils.DataStrctures
         Vector2 BottomLeftVertex { get; }
         Vector2 BottomRightVertex { get; }
         Vector2 TopCenterVertex { get; }
+        float Height { get; }
 
         float FindMaxY(float xPosition);
     }

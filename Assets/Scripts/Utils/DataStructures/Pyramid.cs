@@ -5,12 +5,12 @@ namespace BattleCruisers.Utils.DataStrctures
 {
     public class Pyramid : IPyramid
     {
-        private readonly float _height;
         private readonly float _width;
 
         public Vector2 BottomLeftVertex { get; private set; }
         public Vector2 BottomRightVertex { get; private set; }
         public Vector2 TopCenterVertex { get; private set; }
+        public float Height { get; private set; }
 
         // FELIX  Test!  (Including asserts)
         public Pyramid(Vector2 bottomLeftVertex, Vector2 bottomRightVertex, Vector2 topCenterVertex)
@@ -25,7 +25,7 @@ namespace BattleCruisers.Utils.DataStrctures
             BottomRightVertex = bottomRightVertex;
             TopCenterVertex = topCenterVertex;
 
-            _height = TopCenterVertex.y - BottomLeftVertex.y;
+            Height = TopCenterVertex.y - BottomLeftVertex.y;
             _width = BottomRightVertex.x - BottomLeftVertex.x;
         }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils.DataStrctures
 
             float halfWidth = _width / 2;
             float proportionOfMaxHeight = halfWidth - Mathf.Abs(TopCenterVertex.x - xPosition);
-            float localMaxY = proportionOfMaxHeight / halfWidth * _height;
+            float localMaxY = proportionOfMaxHeight / halfWidth * Height;
             return BottomLeftVertex.y + localMaxY;
         }
     }
