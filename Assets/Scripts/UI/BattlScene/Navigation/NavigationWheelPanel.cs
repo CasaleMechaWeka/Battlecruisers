@@ -30,8 +30,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             IRange<float> globalXRangeAtHeight = _panelArea.FindGlobalXRange(localYPosition);
 
-            // Sometimes these can have minor differences (eg: -3 x 10^7), so clamp
-            // to avoid these.
+            // Sometimes _navigationWheel.CenterPosition.x can be slightly smaller (eg: by 3 x 10^7)
+            // than the minimim expected position due to float rounding errors, so clamp to avoid this.
             float navigationWheelClampedXPosition = Mathf.Clamp(_navigationWheel.CenterPosition.x, globalXRangeAtHeight.Min, globalXRangeAtHeight.Max);
 
             float localXPositionAtHeight = navigationWheelClampedXPosition - globalXRangeAtHeight.Min;
