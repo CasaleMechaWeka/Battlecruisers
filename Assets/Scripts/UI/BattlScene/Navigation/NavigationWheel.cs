@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationWheel : MonoBehaviour, IDragHandler
+    public class NavigationWheel : MonoBehaviour, INavigationWheel, IDragHandler
     {
         private IPositionClamper _positionClamper;
         private Vector2 _halfSize;
+
+        public Vector2 CenterPosition { get { return (Vector2)transform.position + _halfSize; } }
 
         public void Initialise(IPositionClamper positionClamper)
         {

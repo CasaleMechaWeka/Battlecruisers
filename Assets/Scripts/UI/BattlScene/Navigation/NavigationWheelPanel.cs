@@ -1,29 +1,30 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.PlatformAbstractions;
-using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationWheelPanel : INavigationWheelPanel
     {
         private readonly IPyramid _panelArea;
-        private readonly ITransform _navigationWheelTransform;
+        private readonly INavigationWheel _navigationWheel;
 
-        private Vector2 NavigationWheelPosition { get { return _navigationWheelTransform.Position; } }
-
-        public NavigationWheelPanel(IPyramid panelArea, ITransform navigationWheelTransform)
+        public NavigationWheelPanel(IPyramid panelArea, INavigationWheel navigationWheel)
         {
-            Helper.AssertIsNotNull(panelArea, navigationWheelTransform);
+            Helper.AssertIsNotNull(panelArea, navigationWheel);
 
             _panelArea = panelArea;
-            _navigationWheelTransform = navigationWheelTransform;
+            _navigationWheel = navigationWheel;
         }
 
         public float FindNavigationWheelYPositionAsProportionOfMaxHeight()
         {
-            // FELIX
-            return 0;
+            float localYPosition = _navigationWheel.CenterPosition.y - _panelArea.BottomLeftVertex.y;
+
+            Assert.IsTrue(localYPosition >= 0);
+            Assert.IsTrue(localYPosition <= _panelArea.Height);
+
+            return localYPosition / _panelArea.Height;
         }
 
         public float FindNavigationWheelXPositionAsProportionOfValidWidth()

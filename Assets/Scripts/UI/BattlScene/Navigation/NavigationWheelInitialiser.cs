@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamper;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -26,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Assert.IsNotNull(navigationWheel);
             navigationWheel.Initialise(navigationWheelPositionClamper);
 
-            return new NavigationWheelPanel(navigationWheelArea, new TransformBC(navigationWheel.transform));
+            return new NavigationWheelPanel(navigationWheelArea, navigationWheel);
         }
     }
 }
