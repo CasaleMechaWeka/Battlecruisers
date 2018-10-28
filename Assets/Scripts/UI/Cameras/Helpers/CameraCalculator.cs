@@ -1,17 +1,26 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-	public class CameraCalculator : ICameraCalculator
+    public class CameraCalculator : ICameraCalculator
 	{
 		private readonly ICamera _camera;
 		private readonly ISettingsManager _settingsManager;
 
-		private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
+        /// <summary>
+        /// The range of possible x values the user could be able to see.  X values
+        /// outside this range should never be seen by the user.
+        /// </summary>
+        // FELIX  Move min/max to other class to make this more testable?
+        private readonly IRange<float> _cameraVisibleRangeX;
+
+        private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
         private const float CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER = 0.08f;
         private const float WATER_RATIO = 0.35f;
         private const float MAX_WATER_Y = -1.5f;
@@ -20,6 +29,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 		private const float SCROLL_SPEED_GRADIENT = 1.43f;  // 10/7
 		private const float SCROLL_SPEED_CONSTANT = 2.86f;  // 20/7
 
+        // FELIX  Move min/max to other class to make this more testable?
 		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
 		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
 
@@ -27,6 +37,12 @@ namespace BattleCruisers.UI.Cameras.Helpers
 		{
 			_camera = camera;
 			_settingsManager = settingsManager;
+
+            // Assumes camera aspect ratio remains constant
+            float maxHeight = 2 * MAX_CAMERA_ORTHOGRAPHIC_SIZE;
+            float maxWidth = maxHeight * camera.Aspect;
+            float halfMaxWidth = maxWidth / 2;
+            _cameraVisibleRangeX = new Range<float>(-halfMaxWidth, halfMaxWidth);
 		}
 
 		// height = 2 * orthographic size
@@ -92,6 +108,24 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private float FindDimension(float dimension, float zoomTargetDimension, float targetViewportDimension)
         {
             return (dimension / 2) + zoomTargetDimension - (targetViewportDimension * dimension);
+        }
+
+        public IRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
+        {
+            // FELIX  Test for max orthographic size, ensure we don't get negative values with rounding errors :)
+            Assert.IsTrue(desiredOrthographicSize <= MAX_CAMERA_ORTHOGRAPHIC_SIZE);
+
+            float cameraHeight = 2 * desiredOrthographicSize;
+            float cameraWidth = _camera.Aspect * cameraHeight;
+            float halfCameraWidth = cameraWidth / 2;
+
+            float minValidX = _cameraVisibleRangeX.Min + halfCameraWidth;
+            Assert.IsTrue(minValidX <= 0);
+
+            float maxValidX = _cameraVisibleRangeX.Max - halfCameraWidth;
+            Assert.IsTrue(maxValidX >= 0);
+
+            return new Range<float>(minValidX, maxValidX);
         }
     }
 }
