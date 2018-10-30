@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Test :)
     public class NavigationWheelPanel : INavigationWheelPanel
     {
         private readonly IPyramid _panelArea;
