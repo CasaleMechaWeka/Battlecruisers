@@ -16,7 +16,9 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiser : MonoBehaviour
 	{
-		public float smoothTime;
+        private ICameraCalculatorSettings _cameraCalculatorSettings;
+
+        public float smoothTime;
 
 		private CameraController _cameraController;
 		public ICameraController CameraController { get { return _cameraController; } }
@@ -55,7 +57,8 @@ namespace BattleCruisers.UI.Cameras
 			Assert.IsNotNull(skybox);
 			skybox.material = skyboxMaterial;
 
-            ICameraCalculator cameraCalculator = new CameraCalculator(MainCamera, settingsManager);
+            _cameraCalculatorSettings = new CameraCalculatorSettings(settingsManager, MainCamera.Aspect);
+            ICameraCalculator cameraCalculator = new CameraCalculator(MainCamera, _cameraCalculatorSettings);
 			ICameraTransitionManager transitionManager = CreateTransitionManager(playerCruiser, aiCruiser, MainCamera, cameraCalculator, navigationSettings);
 			UserInputCameraMover = CreateUserInputMover(settingsManager, MainCamera, cameraCalculator, navigationSettings);
 
@@ -82,15 +85,16 @@ namespace BattleCruisers.UI.Cameras
 					cameraPositionClamper,
                     deltaTimeProvider);
 
-			IMouseZoomHandler mouseZoomHandler
-				= new MouseZoomHandler(
+            IMouseZoomHandler mouseZoomHandler
+                = new MouseZoomHandler(
                     camera,
-					settingsManager,
+                    settingsManager,
                     deltaTimeProvider,
                     cameraCalculator,
                     cameraPositionClamper,
-					CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE,
-					CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
+                    // FELIX  Take range instead of individual floats :)
+                    _cameraCalculatorSettings.OrthographicSize.Min,
+                    _cameraCalculatorSettings.OrthographicSize.Max);
 
             return
 				new UserInputCameraMover(

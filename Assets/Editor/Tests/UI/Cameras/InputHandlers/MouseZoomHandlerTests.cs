@@ -38,6 +38,8 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
 
             _cameraPositionClamper = Substitute.For<IPositionClamper>();
 
+            ICameraCalculatorSettings cameraCalculatorSettings = new CameraCalculatorSettings(_settingsManager, _camera.Aspect);
+
             _zoomHandler
                 = new MouseZoomHandler(
                     _camera,
@@ -45,8 +47,8 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
                     _deltaTimeProvider,
                     _calculator,
                     _cameraPositionClamper,
-                    CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE,
-                    CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE);
+                    cameraCalculatorSettings.OrthographicSize.Min,
+                    cameraCalculatorSettings.OrthographicSize.Max);
 
             _zoomWorldTargetPosition = new Vector3(-5, 3, 0);
         }

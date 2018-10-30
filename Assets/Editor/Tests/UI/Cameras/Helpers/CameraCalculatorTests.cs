@@ -13,37 +13,33 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
     public class CameraCalculatorTests
     {
         private ICameraCalculator _calculator;
-
+        private ICameraCalculatorSettings _settings;
         private ICamera _camera;
-        private ISettingsManager _settingsManager;
         private ICruiser _cruiser;
-
-        // Copied from CameraCalculator
-        private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
-        private const float CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER = 0.08f;
-        private const float WATER_RATIO = 0.35f;
-        private const float MAX_WATER_Y = -1.5f;
-        private const float SCROLL_SPEED_GRADIENT = 1.43f;  // 10/7
-        private const float SCROLL_SPEED_CONSTANT = 2.86f;  // 20/7
 
         [SetUp]
         public void SetuUp()
         {
             _camera = Substitute.For<ICamera>();
-            _camera.Aspect.Returns(5);
+            _camera.Aspect.Returns(1.333333f);  // 4/3
 
-            _settingsManager = Substitute.For<ISettingsManager>();
+            ISettingsManager settingsManager = Substitute.For<ISettingsManager>();
+            settingsManager.ScrollSpeed.Returns(3);
 
-            _calculator = new CameraCalculator(_camera, _settingsManager);
+            _settings = new CameraCalculatorSettings(settingsManager, _camera.Aspect);
+
+            _calculator = new CameraCalculator(_camera, _settings);
 
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.Size.Returns(new Vector2(123, 123));
+
+            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]
         public void FindCameraOrthographicSize()
         {
-            float desiredWidth = _cruiser.Size.x * CRUISER_WIDTH_MULTIPLIER;
+            float desiredWidth = _cruiser.Size.x * _settings.CruiserWidthMultiplier;
             float desiredHeight = desiredWidth / _camera.Aspect;
             float expectedOrthographicSize = desiredHeight / 2;
 
@@ -54,7 +50,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FindCameraOrthographicSize_BelowMinClamps()
         {
             _cruiser.Size.Returns(new Vector2(1.2f, 12));
-            Assert.IsTrue(Mathf.Approximately(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE, _calculator.FindCameraOrthographicSize(_cruiser)));
+            Assert.IsTrue(Mathf.Approximately(_settings.OrthographicSize.Min, _calculator.FindCameraOrthographicSize(_cruiser)));
         }
 
         [Test]
@@ -62,7 +58,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         {
             float desiredOrthographicSize = 1.5f;
             float desiredHeight = 2 * desiredOrthographicSize;
-            float expectedYPosition = desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
+            float expectedYPosition = desiredOrthographicSize + _settings.MaxWaterPositionY - (_settings.WaterProportion * desiredHeight);
 
             Assert.IsTrue(Mathf.Approximately(expectedYPosition, _calculator.FindCameraYPosition(desiredOrthographicSize)));
         }
@@ -72,8 +68,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         {
             float orthographicSize = 1.5f;
             float timeDelta = 0.04f;
-            float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
-            float expectedScrollSpeed = scrollSpeedPerS * timeDelta * _settingsManager.ScrollSpeed;
+            float scrollSpeedPerS = _settings.ScrollSpeedGradient * orthographicSize + _settings.ScrollSpeedConstant;
+            float expectedScrollSpeed = scrollSpeedPerS * timeDelta * _settings.ScrollSpeed;
 
             Assert.IsTrue(Mathf.Approximately(expectedScrollSpeed, _calculator.FindScrollSpeed(orthographicSize, timeDelta)));
         }
@@ -85,7 +81,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float zValue = -10;
             _cruiser.Direction.Returns(Direction.Right);
 
-            float xAdjustmentMagnitudeInM = _cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+            float xAdjustmentMagnitudeInM = _cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
 
             Vector3 expectedPosition =
                 new Vector3(
@@ -103,7 +99,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float zValue = -10;
             _cruiser.Direction.Returns(Direction.Left);
 
-            float xAdjustmentMagnitudeInM = _cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+            float xAdjustmentMagnitudeInM = _cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
 
             Vector3 expectedPosition =
                 new Vector3(
@@ -176,13 +172,13 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void FindValidCameraXPositions_TooSmallOrthographicSize_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE - 0.0001f));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.OrthographicSize.Min - 0.0001f));
         }
 
         [Test]
         public void FindValidCameraXPositions_TooLargeOrthographicSize_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE + 0.0001f));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.OrthographicSize.Max + 0.0001f));
         }
 
         [Test]

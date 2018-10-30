@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -11,51 +11,27 @@ namespace BattleCruisers.UI.Cameras.Helpers
     public class CameraCalculator : ICameraCalculator
 	{
 		private readonly ICamera _camera;
-		private readonly ISettingsManager _settingsManager;
+        private readonly ICameraCalculatorSettings _settings;
 
-        /// <summary>
-        /// The range of possible x values the user could be able to see.  X values
-        /// outside this range should never be seen by the user.
-        /// </summary>
-        // FELIX  Move min/max to other class to make this more testable?
-        private readonly IRange<float> _cameraVisibleRangeX;
-
-        private const float CRUISER_WIDTH_MULTIPLIER = 1.2f;
-        private const float CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER = 0.08f;
-        private const float WATER_RATIO = 0.35f;
-        private const float MAX_WATER_Y = -1.5f;
-
-        // Based off the two points:  (5, 10) and (33, 50)
-		private const float SCROLL_SPEED_GRADIENT = 1.43f;  // 10/7
-		private const float SCROLL_SPEED_CONSTANT = 2.86f;  // 20/7
-
-        // FELIX  Move min/max to other class to make this more testable?
-		public const float MIN_CAMERA_ORTHOGRAPHIC_SIZE = 5;
-		public const float MAX_CAMERA_ORTHOGRAPHIC_SIZE = 33;
-
-		public CameraCalculator(ICamera camera, ISettingsManager settingsManager)
+		public CameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
 		{
-			_camera = camera;
-			_settingsManager = settingsManager;
+            Helper.AssertIsNotNull(camera, settings);
 
-            // Assumes camera aspect ratio remains constant
-            float maxHeight = 2 * MAX_CAMERA_ORTHOGRAPHIC_SIZE;
-            float maxWidth = maxHeight * camera.Aspect;
-            float halfMaxWidth = maxWidth / 2;
-            _cameraVisibleRangeX = new Range<float>(-halfMaxWidth, halfMaxWidth);
+			_camera = camera;
+            _settings = settings;
 		}
 
 		// height = 2 * orthographic size
 		// width = height * aspect ratio
 		public float FindCameraOrthographicSize(ICruiser cruiser)
 		{
-			float desiredWidth = cruiser.Size.x * CRUISER_WIDTH_MULTIPLIER;
+			float desiredWidth = cruiser.Size.x * _settings.CruiserWidthMultiplier;
 			float desiredHeight = desiredWidth / _camera.Aspect;
 			float desiredOrthographicSize = desiredHeight / 2;
 
-			if (desiredOrthographicSize < MIN_CAMERA_ORTHOGRAPHIC_SIZE)
+			if (desiredOrthographicSize < _settings.OrthographicSize.Min)
 			{
-				desiredOrthographicSize = MIN_CAMERA_ORTHOGRAPHIC_SIZE;
+				desiredOrthographicSize = _settings.OrthographicSize.Min;
 			}
 
 			return desiredOrthographicSize;
@@ -64,13 +40,13 @@ namespace BattleCruisers.UI.Cameras.Helpers
 		public float FindCameraYPosition(float desiredOrthographicSize)
 		{
 			float desiredHeight = 2 * desiredOrthographicSize;
-			return desiredOrthographicSize + MAX_WATER_Y - (WATER_RATIO * desiredHeight);
+			return desiredOrthographicSize + _settings.MaxWaterPositionY - (_settings.WaterProportion * desiredHeight);
 		}
 
         public float FindScrollSpeed(float orthographicSize, float timeDelta)
         {
-			float scrollSpeedPerS = SCROLL_SPEED_GRADIENT * orthographicSize + SCROLL_SPEED_CONSTANT;
-			return scrollSpeedPerS * timeDelta * _settingsManager.ScrollSpeed;
+			float scrollSpeedPerS = _settings.ScrollSpeedGradient * orthographicSize + _settings.ScrollSpeedConstant;
+			return scrollSpeedPerS * timeDelta * _settings.ScrollSpeed;
         }
 
         public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)
@@ -78,7 +54,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
             // Want the cruiser camera to be slightly off centre, towards the 
             // front of the cruiser.  That way the naval factory and the ship
             // under construction are easily visible.
-            float xAdjustmentMagnitudeInM = cruiser.Size.x * CRUISER_CAMERA_POSITION_ADJUSTMENT_MULTIPLIER;
+            float xAdjustmentMagnitudeInM = cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
             float xAdjustmentInM = cruiser.Direction == Direction.Right ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
             
             return
@@ -112,18 +88,18 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public IRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
         {
-            Assert.IsTrue(desiredOrthographicSize >= MIN_CAMERA_ORTHOGRAPHIC_SIZE);
+            Assert.IsTrue(desiredOrthographicSize >= _settings.OrthographicSize.Min);
             // FELIX  Test for max orthographic size, ensure we don't get negative values with rounding errors :)
-            Assert.IsTrue(desiredOrthographicSize <= MAX_CAMERA_ORTHOGRAPHIC_SIZE);
+            Assert.IsTrue(desiredOrthographicSize <= _settings.OrthographicSize.Max);
 
             float cameraHeight = 2 * desiredOrthographicSize;
             float cameraWidth = _camera.Aspect * cameraHeight;
             float halfCameraWidth = cameraWidth / 2;
 
-            float minValidX = _cameraVisibleRangeX.Min + halfCameraWidth;
+            float minValidX = _settings.CameraVisibleXRange.Min + halfCameraWidth;
             Assert.IsTrue(minValidX <= 0);
 
-            float maxValidX = _cameraVisibleRangeX.Max - halfCameraWidth;
+            float maxValidX = _settings.CameraVisibleXRange.Max - halfCameraWidth;
             Assert.IsTrue(maxValidX >= 0);
 
             return new Range<float>(minValidX, maxValidX);

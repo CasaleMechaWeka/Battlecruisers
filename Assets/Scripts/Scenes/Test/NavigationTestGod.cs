@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Helpers;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using UnityEngine;
@@ -21,12 +20,13 @@ namespace BattleCruisers.Scenes.Test
 
             Camera platformCamera = FindObjectOfType<Camera>();
             _camera = new CameraBC(platformCamera);
-            ISettingsManager settingsManager = Substitute.For<ISettingsManager>();
-            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settingsManager);
+            ICameraCalculatorSettings settings
+                = new CameraCalculatorSettings(
+                    Substitute.For<ISettingsManager>(),
+                    _camera.Aspect);
+            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settings);
 
-            IRange<float> validOrthographicSizes = new Range<float>(min: 5, max: 33);
-
-            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, cameraCalculator, validOrthographicSizes);
+            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, cameraCalculator, settings.OrthographicSize);
         }
 
         private void Update()
