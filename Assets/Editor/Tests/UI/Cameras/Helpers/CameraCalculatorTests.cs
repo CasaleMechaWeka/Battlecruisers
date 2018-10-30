@@ -6,6 +6,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
+using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Cameras.Helpers
 {
@@ -170,5 +171,31 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             Debug.Log("expectedCameraPosition: " + expectedCameraPosition + "  actualCameraPosition: " + actualCameraPosition);
             Assert.AreEqual(expectedCameraPosition, actualCameraPosition);
         }
+
+        #region FindValidCameraXPositions
+        [Test]
+        public void FindValidCameraXPositions_TooSmallOrthographicSize_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(CameraCalculator.MIN_CAMERA_ORTHOGRAPHIC_SIZE - 0.0001f));
+        }
+
+        [Test]
+        public void FindValidCameraXPositions_TooLargeOrthographicSize_Throws()
+        {
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(CameraCalculator.MAX_CAMERA_ORTHOGRAPHIC_SIZE + 0.0001f));
+        }
+
+        [Test]
+        public void FindValidCameraXPositions_AtMaxOrthographicSize()
+        {
+            // FELIX  Move min/max to other class to make this more testable?
+        }
+
+        [Test]
+        public void FindValidCameraXPositions_AtMidRangeOrthographicSize()
+        {
+            // FELIX  Move min/max to other class to make this more testable?
+        }
+        #endregion FindValidCameraXPositions
     }
 }

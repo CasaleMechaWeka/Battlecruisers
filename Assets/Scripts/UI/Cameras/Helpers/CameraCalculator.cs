@@ -112,6 +112,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public IRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
         {
+            Assert.IsTrue(desiredOrthographicSize >= MIN_CAMERA_ORTHOGRAPHIC_SIZE);
             // FELIX  Test for max orthographic size, ensure we don't get negative values with rounding errors :)
             Assert.IsTrue(desiredOrthographicSize <= MAX_CAMERA_ORTHOGRAPHIC_SIZE);
 
