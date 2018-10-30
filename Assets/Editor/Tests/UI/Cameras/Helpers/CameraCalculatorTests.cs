@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
@@ -182,15 +183,19 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FindValidCameraXPositions_AtMaxOrthographicSize()
+        public void FindValidCameraXPositions_ValidOrthographicSize()
         {
-            // FELIX  Move min/max to other class to make this more testable?
-        }
+            float desiredOrthographicSize = _settings.OrthographicSize.Max;
 
-        [Test]
-        public void FindValidCameraXPositions_AtMidRangeOrthographicSize()
-        {
-            // FELIX  Move min/max to other class to make this more testable?
+            float cameraHeight = 2 * desiredOrthographicSize;
+            float cameraWidth = _camera.Aspect * cameraHeight;
+            float halfCameraWidth = cameraWidth / 2;
+
+            float minValidX = _settings.CameraVisibleXRange.Min + halfCameraWidth;
+            float maxValidX = _settings.CameraVisibleXRange.Max - halfCameraWidth;
+
+            IRange<float> expectedRange = new Range<float>(minValidX, maxValidX);
+            Assert.AreEqual(expectedRange, _calculator.FindValidCameraXPositions(desiredOrthographicSize));
         }
         #endregion FindValidCameraXPositions
     }
