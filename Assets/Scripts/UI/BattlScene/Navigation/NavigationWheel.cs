@@ -29,9 +29,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
             Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
 
-            // FELIX  Remove :)
-            Debug.Log("OnDrag()  clampedPosition: " + clampedCenterPosition + "  halfSize: " + _halfSize + "  bottomLeftPosition: " + clampedBottomLeftPosition);
-
             transform.position = clampedBottomLeftPosition;
         }
     }
