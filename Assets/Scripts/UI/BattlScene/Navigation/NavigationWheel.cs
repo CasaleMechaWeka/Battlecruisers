@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.Clamper;
+using BattleCruisers.Utils.Clamping;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;

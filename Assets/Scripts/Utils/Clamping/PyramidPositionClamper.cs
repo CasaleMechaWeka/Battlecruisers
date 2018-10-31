@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils.Clamper
+namespace BattleCruisers.Utils.Clamping
 {
     // FELIX  Test :D
     public class PyramidPositionClamper : IPositionClamper

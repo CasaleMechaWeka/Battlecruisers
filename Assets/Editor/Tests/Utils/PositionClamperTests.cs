@@ -1,9 +1,9 @@
-﻿using BattleCruisers.Utils.Clamper;
+﻿using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.Utils
+namespace BattleCruisers.Tests.Utils.Clamping
 {
     public class PositionClamperTests
     {

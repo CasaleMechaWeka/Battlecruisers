@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Utils.Clamper
+namespace BattleCruisers.Utils.Clamping
 {
 	public interface IPositionClamper
 	{

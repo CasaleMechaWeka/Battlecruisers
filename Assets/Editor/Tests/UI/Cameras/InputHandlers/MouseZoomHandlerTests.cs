@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.InputHandlers;
-using BattleCruisers.Utils.Clamper;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;

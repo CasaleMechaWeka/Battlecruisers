@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Clamper;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
