@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Test :D
     public class CameraNavigationWheelCalculator : ICameraNavigationWheelCalculator
     {
         private readonly INavigationWheelPanel _navigationWheelPanel;
