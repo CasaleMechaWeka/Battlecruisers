@@ -14,7 +14,7 @@ namespace BattleCruisers.Utils.DataStrctures
         float Width { get; }
         float Height { get; }
 
-        float FindMaxY(float xPosition);
-        IRange<float> FindGlobalXRange(float yPosition);
+        float FindMaxY(float globalXPosition);
+        IRange<float> FindGlobalXRange(float localYPosition);
     }
 }

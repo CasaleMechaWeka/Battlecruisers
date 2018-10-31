@@ -11,7 +11,6 @@ namespace BattleCruisers.Utils.DataStrctures
         public float Width { get; private set; }
         public float Height { get; private set; }
 
-        // FELIX  Test!  (Including asserts)
         public Pyramid(Vector2 bottomLeftVertex, Vector2 bottomRightVertex, Vector2 topCenterVertex)
         {
             Assert.IsTrue(bottomLeftVertex.x < topCenterVertex.x);
@@ -28,23 +27,23 @@ namespace BattleCruisers.Utils.DataStrctures
             Width = BottomRightVertex.x - BottomLeftVertex.x;
         }
 
-        public float FindMaxY(float xPosition)
+        public float FindMaxY(float globalXPosition)
         {
-            Assert.IsTrue(xPosition >= BottomLeftVertex.x);
-            Assert.IsTrue(xPosition <= BottomRightVertex.x);
+            Assert.IsTrue(globalXPosition >= BottomLeftVertex.x);
+            Assert.IsTrue(globalXPosition <= BottomRightVertex.x);
 
             float halfWidth = Width / 2;
-            float proportionOfMaxHeight = halfWidth - Mathf.Abs(TopCenterVertex.x - xPosition);
+            float proportionOfMaxHeight = halfWidth - Mathf.Abs(TopCenterVertex.x - globalXPosition);
             float localMaxY = proportionOfMaxHeight / halfWidth * Height;
             return BottomLeftVertex.y + localMaxY;
         }
 
-        public IRange<float> FindGlobalXRange(float yPosition)
+        public IRange<float> FindGlobalXRange(float localYPosition)
         {
-            Assert.IsTrue(yPosition >= 0);
-            Assert.IsTrue(yPosition <= Height);
+            Assert.IsTrue(localYPosition >= 0);
+            Assert.IsTrue(localYPosition <= Height);
 
-            float proportionOfHeight = yPosition / Height;
+            float proportionOfHeight = localYPosition / Height;
             float widthAtHeight = (1 - proportionOfHeight) * Width;
             float halfWidth = widthAtHeight / 2;
 
