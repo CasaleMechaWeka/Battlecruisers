@@ -2,9 +2,9 @@
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.InputHandlers
 {
@@ -20,8 +20,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly ICameraCalculator _calculator;
         private readonly IPositionClamper _cameraPositionClamper;
-        private readonly float _minOrthographicSize;
-		private readonly float _maxOrthographicSize;
+        private readonly IRange<float> _validOrthographicSizes;
 
 		// Originally did not take time delta into consideration.  So multiply
 		// by this constant so zoom is roughly the same when time delta is normal.
@@ -29,23 +28,20 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 
         public MouseZoomHandler(
             ICamera camera,
-            ISettingsManager settingsManager, 
+            ISettingsManager settingsManager,
             IDeltaTimeProvider deltaTimeProvider,
-            ICameraCalculator calculator, 
+            ICameraCalculator calculator,
             IPositionClamper cameraPositionClamper,
-            float minOrthographicSize, 
-            float maxOrthographicSize)
+            IRange<float> validOrthographicSizes)
 		{
-            Helper.AssertIsNotNull(camera, settingsManager, deltaTimeProvider, calculator, cameraPositionClamper);
-			Assert.IsTrue(minOrthographicSize < maxOrthographicSize);
+            Helper.AssertIsNotNull(camera, settingsManager, deltaTimeProvider, calculator, cameraPositionClamper, validOrthographicSizes);
 
             _camera = camera;
 			_settingsManager = settingsManager;
             _deltaTimeProvider = deltaTimeProvider;
             _calculator = calculator;
             _cameraPositionClamper = cameraPositionClamper;
-			_minOrthographicSize = minOrthographicSize;
-			_maxOrthographicSize = maxOrthographicSize;
+            _validOrthographicSizes = validOrthographicSizes;
 		}
 
         public MouseZoomResult HandleZoom(Vector3 zoomWorldTargetPosition, float yMouseScrollDelta)
@@ -71,7 +67,7 @@ namespace BattleCruisers.UI.Cameras.InputHandlers
 			if (!Mathf.Approximately(yMouseScrollDelta, 0))
 			{
                 newOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
-                newOrthographicSize = Mathf.Clamp(newOrthographicSize, _minOrthographicSize, _maxOrthographicSize);
+                newOrthographicSize = Mathf.Clamp(newOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
 			}
 
 			return newOrthographicSize;

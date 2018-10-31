@@ -92,9 +92,7 @@ namespace BattleCruisers.UI.Cameras
                     deltaTimeProvider,
                     cameraCalculator,
                     cameraPositionClamper,
-                    // FELIX  Take range instead of individual floats :)
-                    _cameraCalculatorSettings.OrthographicSize.Min,
-                    _cameraCalculatorSettings.OrthographicSize.Max);
+                    _cameraCalculatorSettings.OrthographicSize);
 
             return
 				new UserInputCameraMover(

@@ -47,8 +47,7 @@ namespace BattleCruisers.Tests.UI.Cameras.InputHandlers
                     _deltaTimeProvider,
                     _calculator,
                     _cameraPositionClamper,
-                    cameraCalculatorSettings.OrthographicSize.Min,
-                    cameraCalculatorSettings.OrthographicSize.Max);
+                    cameraCalculatorSettings.OrthographicSize);
 
             _zoomWorldTargetPosition = new Vector3(-5, 3, 0);
         }
