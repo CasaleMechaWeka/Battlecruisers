@@ -6,8 +6,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
     {
         float CruiserWidthMultiplier { get; }
         float CruiserCameraPositionAdjustmentMultiplier { get; }
-        // FELIX  Rename to ValidOrthographicSizes :D
-        IRange<float> OrthographicSize { get; }
+        IRange<float> ValidOrthographicSizes { get; }
 
         /// <summary>
         /// The range of possible x values the user could be able to see.  X values

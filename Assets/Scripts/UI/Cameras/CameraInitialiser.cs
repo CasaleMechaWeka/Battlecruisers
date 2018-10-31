@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.Cameras
                     deltaTimeProvider,
                     cameraCalculator,
                     cameraPositionClamper,
-                    _cameraCalculatorSettings.OrthographicSize);
+                    _cameraCalculatorSettings.ValidOrthographicSizes);
 
             return
 				new UserInputCameraMover(

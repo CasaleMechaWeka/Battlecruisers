@@ -51,7 +51,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FindCameraOrthographicSize_BelowMinClamps()
         {
             _cruiser.Size.Returns(new Vector2(1.2f, 12));
-            Assert.IsTrue(Mathf.Approximately(_settings.OrthographicSize.Min, _calculator.FindCameraOrthographicSize(_cruiser)));
+            Assert.IsTrue(Mathf.Approximately(_settings.ValidOrthographicSizes.Min, _calculator.FindCameraOrthographicSize(_cruiser)));
         }
 
         [Test]
@@ -173,19 +173,19 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void FindValidCameraXPositions_TooSmallOrthographicSize_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.OrthographicSize.Min - 0.0001f));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Min - 0.0001f));
         }
 
         [Test]
         public void FindValidCameraXPositions_TooLargeOrthographicSize_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.OrthographicSize.Max + 0.0001f));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Max + 0.0001f));
         }
 
         [Test]
         public void FindValidCameraXPositions_ValidOrthographicSize()
         {
-            float desiredOrthographicSize = _settings.OrthographicSize.Max;
+            float desiredOrthographicSize = _settings.ValidOrthographicSizes.Max;
 
             float cameraHeight = 2 * desiredOrthographicSize;
             float cameraWidth = _camera.Aspect * cameraHeight;

@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         public float ScrollSpeedConstant { get { return 2.86f; } }  // 20/7
         public float ScrollSpeed { get { return _settingsManager.ScrollSpeed; } }
 
-        public IRange<float> OrthographicSize { get; private set; }
+        public IRange<float> ValidOrthographicSizes { get; private set; }
         public IRange<float> CameraVisibleXRange { get; private set; }
 
         public CameraCalculatorSettings(ISettingsManager settingsManager, float cameraAspectRatio)
@@ -27,14 +27,14 @@ namespace BattleCruisers.UI.Cameras.Helpers
             Assert.IsNotNull(settingsManager);
 
             _settingsManager = settingsManager;
-            OrthographicSize = new Range<float>(min: 5, max: 33);
+            ValidOrthographicSizes = new Range<float>(min: 5, max: 33);
             CameraVisibleXRange = FindCameraVisiableXRange(cameraAspectRatio);
         }
 
         // Assumes camera aspect ratio remains constant
         private IRange<float> FindCameraVisiableXRange(float cameraAspectRatio)
         {
-            float maxHeight = 2 * OrthographicSize.Max;
+            float maxHeight = 2 * ValidOrthographicSizes.Max;
             float maxWidth = maxHeight * cameraAspectRatio;
             float halfMaxWidth = maxWidth / 2;
             return new Range<float>(-halfMaxWidth, halfMaxWidth);

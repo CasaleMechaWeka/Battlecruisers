@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
                     _camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settings);
 
-            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, cameraCalculator, settings.OrthographicSize);
+            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
         }
 
         private void Update()
