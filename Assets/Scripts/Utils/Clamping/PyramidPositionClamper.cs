@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Clamping
 {
-    // FELIX  Test :D
     public class PyramidPositionClamper : IPositionClamper
     {
         private readonly IPyramid _pyramid;
