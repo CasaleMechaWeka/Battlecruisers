@@ -40,9 +40,16 @@ namespace BattleCruisers.UI.Cameras
             _navigationWheelCameraTargetFinder = navigationWheelCameraTargetFinder;
 
             _navigationWheel.CenterPositionChanged += _navigationWheel_CenterPositionChanged;
+
+            FindTarget();
         }
 
         private void _navigationWheel_CenterPositionChanged(object sender, EventArgs e)
+        {
+            FindTarget();
+        }
+
+        private void FindTarget()
         {
             Target = _navigationWheelCameraTargetFinder.FindCameraTarget();
         }

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
@@ -9,40 +10,31 @@ namespace BattleCruisers.Scenes.Test
 {
     public class NavigationTestGod : MonoBehaviour
     {
-        private INavigationWheelPanel _navigationWheelPanel;
-        private ICameraNavigationWheelCalculator _cameraNavigationWheelCalculator;
-        private ICamera _camera;
+        private ICameraAdjuster _cameraAdjuster;
 
         private void Start()
         {
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
-            _navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
+            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
 
             Camera platformCamera = FindObjectOfType<Camera>();
-            _camera = new CameraBC(platformCamera);
+            ICamera camera = new CameraBC(platformCamera);
             ICameraCalculatorSettings settings
                 = new CameraCalculatorSettings(
                     Substitute.For<ISettingsManager>(),
-                    _camera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settings);
+                    camera.Aspect);
+            ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
 
-            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
+            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
+            ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder);
+
+            _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, camera);
         }
 
         private void Update()
         {
-            // FLEIX  TEMP
-            //float yProportion = _navigationWheelPanel.FindNavigationWheelYPositionAsProportionOfMaxHeight();
-            //Debug.Log("yProportion: " + yProportion);
-
-            //float xProportion = _navigationWheelPanel.FindXProportion();
-            //Debug.Log("xProportion: " + xProportion);
-
-            float desiredCameraOrthographicSize = _cameraNavigationWheelCalculator.FindOrthographicSize();
-            Vector2 desiredCameraPosition = _cameraNavigationWheelCalculator.FindCameraPosition();
-
-            _camera.OrthographicSize = desiredCameraOrthographicSize;
-            _camera.Transform.Position = new Vector3(desiredCameraPosition.x, desiredCameraPosition.y, _camera.Transform.Position.z);
+            _cameraAdjuster.AdjustCamera(Time.deltaTime);
         }
     }
 }
