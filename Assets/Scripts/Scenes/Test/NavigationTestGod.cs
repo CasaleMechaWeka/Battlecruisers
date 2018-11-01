@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Adjusters
 {
     /// <summary>
     /// Instantly updates camera to target position.  Results in jerky
