@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test
 
         private void Update()
         {
-            _cameraAdjuster.AdjustCamera(Time.deltaTime);
+            _cameraAdjuster.AdjustCamera();
         }
     }
 }

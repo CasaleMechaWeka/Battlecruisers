@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             _positionAdjuster = positionAdjuster;
         }
 
-        public void AdjustCamera(float deltaTime)
+        public void AdjustCamera()
         {
             _zoomAdjuster.AdjustZoom(_cameraTargetProvider.Target.OrthographicSize);
             _positionAdjuster.AdjustPosition(_cameraTargetProvider.Target.Position);
