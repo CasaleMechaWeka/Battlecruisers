@@ -2,7 +2,8 @@
 
 namespace BattleCruisers.UI.Cameras
 {
-    public interface ICameraTarget
+    // FELIX  Remove transitioning camera :)
+    public interface ICameraTargetLegacy
     {
         Vector3 Position { get; }
         float OrthographicSize { get; }

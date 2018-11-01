@@ -4,7 +4,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class CameraTarget : ICameraTarget
+    // FELIX  Remove transitioning camera :)
+    public class CameraTargetLegacy : ICameraTargetLegacy
 	{
 		private readonly IList<CameraState> _instantStates;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.UI.Cameras
 		public float OrthographicSize { get; private set; }
 		public CameraState State { get; private set; }
 
-		public CameraTarget(Vector3 position, float orthographicSize, CameraState state, params CameraState[] instantStates)
+		public CameraTargetLegacy(Vector3 position, float orthographicSize, CameraState state, params CameraState[] instantStates)
 		{
 			Assert.IsNotNull(instantStates);
 

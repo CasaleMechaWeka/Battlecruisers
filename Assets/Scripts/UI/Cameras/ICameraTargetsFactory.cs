@@ -4,6 +4,6 @@ namespace BattleCruisers.UI.Cameras
 {
 	public interface ICameraTargetsFactory
 	{
-		IDictionary<CameraState, ICameraTarget> CreateCameraTargets();
+		IDictionary<CameraState, ICameraTargetLegacy> CreateCameraTargets();
 	}
 }

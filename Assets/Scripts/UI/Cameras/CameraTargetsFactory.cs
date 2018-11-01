@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-	public class CameraTargetsFactory : ICameraTargetsFactory
+    // FELIX  Remove transitioning camera :)
+    public class CameraTargetsFactory : ICameraTargetsFactory
     {
 		private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
@@ -26,14 +27,14 @@ namespace BattleCruisers.UI.Cameras
 			_aiCruiser = aiCruiser;
         }
 
-        public IDictionary<CameraState, ICameraTarget> CreateCameraTargets()
+        public IDictionary<CameraState, ICameraTargetLegacy> CreateCameraTargets()
         {
-			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>();
+			IDictionary<CameraState, ICameraTargetLegacy> stateToTarget = new Dictionary<CameraState, ICameraTargetLegacy>();
 
 			// Overview.  Camera starts in overiview (ish, y-position is only roughly right :P)
 			Vector3 overviewTargetPosition = _camera.Transform.Position;
 			overviewTargetPosition.y = _cameraCalculator.FindCameraYPosition(_camera.OrthographicSize);
-			stateToTarget.Add(CameraState.Overview, new CameraTarget(overviewTargetPosition, _camera.OrthographicSize, CameraState.Overview));
+			stateToTarget.Add(CameraState.Overview, new CameraTargetLegacy(overviewTargetPosition, _camera.OrthographicSize, CameraState.Overview));
 			
 			// Player cruiser view
 			float playerCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(_playerCruiser);
@@ -43,8 +44,8 @@ namespace BattleCruisers.UI.Cameras
 				CameraState.RightMid,
 				CameraState.AiCruiser
 			};
-			ICameraTarget playerCruiserTarget
-    			= new CameraTarget(
+			ICameraTargetLegacy playerCruiserTarget
+    			= new CameraTargetLegacy(
     				playerCruiserTargetPosition,
     				playerCruiserOrthographicSize,
     				CameraState.PlayerCruiser,
@@ -59,8 +60,8 @@ namespace BattleCruisers.UI.Cameras
 				CameraState.LeftMid,
 				CameraState.PlayerCruiser
 			};
-			ICameraTarget aiCruiserTarget
-    			= new CameraTarget(
+			ICameraTargetLegacy aiCruiserTarget
+    			= new CameraTargetLegacy(
     				aiCruiserTargetPosition,
     				aiCruiserOrthographicSize,
     				CameraState.AiCruiser,
@@ -71,11 +72,11 @@ namespace BattleCruisers.UI.Cameras
 			
 			// Left mid view
 			Vector3 leftMidViewPosition = new Vector3(-MID_VIEWS_POSITION_X, midViewsPositionY, _camera.Transform.Position.z);
-			stateToTarget.Add(CameraState.LeftMid, new CameraTarget(leftMidViewPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.LeftMid, leftSideInstants));
+			stateToTarget.Add(CameraState.LeftMid, new CameraTargetLegacy(leftMidViewPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.LeftMid, leftSideInstants));
 			
 			// Right mid view
 			Vector3 rightMidPosition = new Vector3(MID_VIEWS_POSITION_X, midViewsPositionY, _camera.Transform.Position.z);
-			stateToTarget.Add(CameraState.RightMid, new CameraTarget(rightMidPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.RightMid, rightSideInstants));
+			stateToTarget.Add(CameraState.RightMid, new CameraTargetLegacy(rightMidPosition, MID_VIEWS_ORTHOGRAPHIC_SIZE, CameraState.RightMid, rightSideInstants));
 
 			return stateToTarget;
 		}

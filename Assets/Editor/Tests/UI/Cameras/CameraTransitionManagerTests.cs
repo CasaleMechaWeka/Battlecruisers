@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.UI.Cameras
         private ISmoothPositionAdjuster _positionAdjuster;
         private ISmoothZoomAdjuster _zoomAdjuster;
 		private INavigationSettings _navigationSettings;
-		private ICameraTarget _instaTransitionTarget, _smoothTransitionTarget, _startingTarget, _invalidTarget;
+		private ICameraTargetLegacy _instaTransitionTarget, _smoothTransitionTarget, _startingTarget, _invalidTarget;
         private IList<CameraStateChangedArgs> _stateChangedArgs;
 
 		private CameraStateChangedArgs LastArgs
@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 
 			float target1OrthographicSize = 5;
 			_instaTransitionTarget
-    			= new CameraTarget(
+    			= new CameraTargetLegacy(
     				new Vector3(-35, 0, -10),
     				target1OrthographicSize,
     				CameraState.PlayerCruiser,
@@ -49,18 +49,18 @@ namespace BattleCruisers.Tests.UI.Cameras
 
 			float target2OrthographicSize = 35;
 			_smoothTransitionTarget
-    			= new CameraTarget(
+    			= new CameraTargetLegacy(
     				new Vector3(35, 15, -10),
     				target2OrthographicSize,
 				    CameraState.AiCruiser);
 
 			_startingTarget
-    			= new CameraTarget(
+    			= new CameraTargetLegacy(
     				default(Vector3),
     				default(float),
 				    CameraState.UserInputControlled);
 
-			IDictionary<CameraState, ICameraTarget> stateToTarget = new Dictionary<CameraState, ICameraTarget>
+			IDictionary<CameraState, ICameraTargetLegacy> stateToTarget = new Dictionary<CameraState, ICameraTargetLegacy>
 			{
 				{ _instaTransitionTarget.State, _instaTransitionTarget },
 				{ _smoothTransitionTarget.State, _smoothTransitionTarget },
@@ -81,7 +81,7 @@ namespace BattleCruisers.Tests.UI.Cameras
 			_stateChangedArgs = new List<CameraStateChangedArgs>();
 			_transitionManager.StateChanged += (sender, e) => _stateChangedArgs.Add(e);
 
-			_invalidTarget = new CameraTarget(default(Vector3), 0, CameraState.InTransition);
+			_invalidTarget = new CameraTargetLegacy(default(Vector3), 0, CameraState.InTransition);
         }
 
 		#region CameraTarget

@@ -16,9 +16,9 @@ namespace BattleCruisers.UI.Cameras
 		private readonly ISmoothPositionAdjuster _positionAdjuster;
 		private readonly ISmoothZoomAdjuster _zoomAdjuster;
 		private readonly INavigationSettings _navigationSettings;
-		private readonly IDictionary<CameraState, ICameraTarget> _stateToTarget;
+		private readonly IDictionary<CameraState, ICameraTargetLegacy> _stateToTarget;
 
-		private ICameraTarget _target;
+		private ICameraTargetLegacy _target;
 		public CameraState CameraTarget 
 		{ 
 			set
