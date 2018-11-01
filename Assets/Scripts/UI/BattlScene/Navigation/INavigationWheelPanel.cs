@@ -2,6 +2,8 @@
 {
     public interface INavigationWheelPanel
     {
+        INavigationWheel NavigationWheel { get; }
+
         /// <returns>
         /// The navigation wheel y position as a proportion of the maximum
         /// height of the panel pyramid area:  0-1
