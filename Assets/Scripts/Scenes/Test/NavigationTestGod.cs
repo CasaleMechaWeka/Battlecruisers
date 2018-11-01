@@ -13,6 +13,8 @@ namespace BattleCruisers.Scenes.Test
     {
         private ICameraAdjuster _cameraAdjuster;
 
+        public float smoothTime;
+
         private void Start()
         {
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
@@ -30,7 +32,15 @@ namespace BattleCruisers.Scenes.Test
             ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder);
 
+            // Instant, jerky adjuster
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, camera);
+
+            // Smooth adjuster
+            _cameraAdjuster
+                = new SmoothCameraAdjuster(
+                    cameraTargetProvider,
+                    new SmoothZoomAdjuster(camera, smoothTime),
+                    new SmoothPositionAdjuster(camera.Transform, smoothTime));
         }
 
         private void Update()
