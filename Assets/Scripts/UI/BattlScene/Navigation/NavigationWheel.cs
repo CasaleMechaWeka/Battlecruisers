@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using System;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,6 +13,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private Vector2 _halfSize;
 
         public Vector2 CenterPosition { get { return (Vector2)transform.position + _halfSize; } }
+
+        public event EventHandler CenterPositionChanged;
 
         public void Initialise(IPositionClamper positionClamper)
         {
@@ -30,6 +33,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
 
             transform.position = clampedBottomLeftPosition;
+
+            if (CenterPositionChanged != null)
+            {
+                CenterPositionChanged.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
