@@ -4,7 +4,10 @@ using System;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  Test :)
+    /// <summary>
+    /// Only finds the camera target when it has changed.  Better than polling
+    /// every time we want to know the current camera target.
+    /// </summary>
     public class NavigationWheelCameraTargetProvider : ICameraTargetProvider
     {
         private readonly INavigationWheel _navigationWheel;
