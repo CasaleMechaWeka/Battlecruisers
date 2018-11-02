@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  Test :D
     public class NavigationWheelCameraTargetFinder : ICameraTargetFinder
     {
         private readonly ICameraNavigationWheelCalculator _cameraNavigationWheelCalculator;
