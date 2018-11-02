@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  Remove transitioning camera :)
     public class CameraTargetLegacy : ICameraTargetLegacy
 	{
 		private readonly IList<CameraState> _instantStates;

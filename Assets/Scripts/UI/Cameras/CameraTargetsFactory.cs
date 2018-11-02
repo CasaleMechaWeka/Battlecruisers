@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-    // FELIX  Remove transitioning camera :)
     public class CameraTargetsFactory : ICameraTargetsFactory
     {
 		private readonly ICamera _camera;
