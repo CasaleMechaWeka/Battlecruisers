@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    // FELIX  Remove legacy class and rename this :)
     public class GameSpeedButtonNEW : UIElement, IToggleButton, IPointerClickHandler
     {
         private ITime _time;
