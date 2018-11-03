@@ -1,0 +1,30 @@
+﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.BattleScene.GameSpeed
+{
+    public class SpeedPanelController : MonoBehaviour
+    {
+        // Keep reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private ToggleButtonGroup _speedButtonGroup;
+#pragma warning restore CS0414  // Variable is assigned but never used
+
+        private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
+
+        public void Initialise()
+        {
+            GameSpeedButtonNEW[] speedButtons = GetComponentsInChildren<GameSpeedButtonNEW>();
+            Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
+            
+            foreach (GameSpeedButtonNEW speedButton in speedButtons)
+            {
+                speedButton.Initialise();
+            }
+
+            _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());
+        }
+    }
+}
