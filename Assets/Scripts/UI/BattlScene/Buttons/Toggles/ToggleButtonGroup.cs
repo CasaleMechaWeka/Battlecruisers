@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
 {
-    // FELIX  Test :)
     public class ToggleButtonGroup
     {
         private IToggleButton _selectedButton;
