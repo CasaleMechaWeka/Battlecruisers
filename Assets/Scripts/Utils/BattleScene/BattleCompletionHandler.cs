@@ -1,0 +1,39 @@
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Scenes;
+
+namespace BattleCruisers.Utils.BattleScene
+{
+    // FELIX  Test :D
+    public class BattleCompletionHandler : IBattleCompletionHandler
+    {
+        private readonly IApplicationModel _applicationModel;
+        private readonly ISceneNavigator _sceneNavigator;
+
+        public BattleCompletionHandler(IApplicationModel applicationModel, ISceneNavigator sceneNavigator)
+        {
+            Helper.AssertIsNotNull(applicationModel, sceneNavigator);
+
+            _applicationModel = applicationModel;
+            _sceneNavigator = sceneNavigator;
+        }
+
+        public void CompleteBattle(bool wasVictory)
+        {
+            BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
+
+            if (!_applicationModel.IsTutorial)
+            {
+                // Completing the tutorial does not count as a real level, so 
+                // only save save battle result if this was not the tutorial.
+                _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                _applicationModel.DataProvider.SaveGame();
+            }
+
+            _applicationModel.IsTutorial = false;
+            _applicationModel.ShowPostBattleScreen = true;
+
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+        }
+    }
+}
