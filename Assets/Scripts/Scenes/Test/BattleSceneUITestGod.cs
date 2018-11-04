@@ -95,7 +95,7 @@ namespace BattleCruisers.Scenes.Test
             ISpriteProvider spriteProvider)
         {
             // FELIX  Create functional UIManager :P
-            IUIManager uiManager = new UIManagerNEW();
+            IUIManager uiManager = new UIManagerNEW(buildMenuController);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);

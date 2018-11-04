@@ -27,6 +27,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private BuildingMenus _buildingMenus;
         private UnitMenus _unitMenus;
 
+        public GameObject selectorPanel;
+
 		public void Initialise(
 			IUIManager uiManager,
             IList<IBuildingGroup> buildingGroups, 
@@ -38,6 +40,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IPrioritisedSoundPlayer soundPlayer)
 		{
             Helper.AssertIsNotNull(
+                selectorPanel,
                 uiManager,
                 buildingGroups,
                 units,
@@ -68,7 +71,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             //Assert.IsNotNull(_unitMenus);
             //IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
             //_unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
-		}
+
+            selectorPanel.SetActive(false);
+        }
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
         {
@@ -84,7 +89,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
-			ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
+            // FELIX  Initialise _buildngMenus :)
+            //ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
+
+            // FELIX  Remove once above line works :)
+            selectorPanel.SetActive(true);
         }
 
         public void ShowUnitsMenu(IFactory factory)
@@ -102,10 +111,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
             HideCurrentlyShownMenu();
 
+            selectorPanel.SetActive(true);
+
 			menu.OnPresenting(activationParameter);
             menu.IsVisible = true;
 			_currentMenu = menu;
-		}
+        }
 
         public void HideCurrentlyShownMenu()
         {
@@ -113,6 +124,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			{
 				_currentMenu.OnDismissing();
                 _currentMenu.IsVisible = false;
+
+                selectorPanel.SetActive(false);
 			}
         }
 

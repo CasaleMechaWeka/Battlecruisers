@@ -15,8 +15,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
     public class UIManagerNEW : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly IBuildMenu _buildMenu;
+        private readonly IBuildMenuNEW _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
+
+        public UIManagerNEW(IBuildMenuNEW buildMenu)
+        {
+            Assert.IsNotNull(buildMenu);
+            _buildMenu = buildMenu;
+        }
 
   //      public UIManagerNEW(IManagerArgs args)
 		//{
@@ -63,8 +69,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
 
-			//_buildMenu.ShowBuildingGroupMenu(buildingCategory);
-		}
+            _buildMenu.ShowBuildingGroupMenu(buildingCategory);
+        }
 
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
