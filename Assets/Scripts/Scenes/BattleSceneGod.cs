@@ -66,6 +66,7 @@ namespace BattleCruisers.Scenes
         private DangerMusicPlayer _dangerMusicPlayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private IAudioSource _audioSource;
+        private IBattleCompletionHandler _battleCompletionHandler;
 
         public HUDCanvasController hudCanvas;
         public BuildMenuController buildMenuController;
@@ -120,6 +121,7 @@ namespace BattleCruisers.Scenes
             _dataProvider = _applicationModel.DataProvider;
             _currentLevelNum = _applicationModel.SelectedLevel;
             musicPlayer.PlayBattleSceneMusic();
+            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
 
 
             // TEMP  Forcing tutorial :)
@@ -323,15 +325,14 @@ namespace BattleCruisers.Scenes
         private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
 		{
             _pauseGameManager.PauseGame();
-			CompleteBattleAsLoss();
+            CompleteBattle(wasVictory: false);
 		}
 
 		private void AiCruiser_Destroyed(object sender, DestroyedEventArgs e)
 		{
             _pauseGameManager.PauseGame();
-            BattleResult victoryResult = new BattleResult(_currentLevelNum, wasVictory: true);
-			CompleteBattle(victoryResult);
-		}
+            CompleteBattle(wasVictory: true);
+        }
 
         private void GenerateClouds(ILevel level)
         {
@@ -404,35 +405,17 @@ namespace BattleCruisers.Scenes
                     _pauseGameManager.ResumeGame();
 					break;
 				case UserAction.Quit:
-					CompleteBattleAsLoss();
+                    CompleteBattle(wasVictory: false);
 					break;
 				default:
 					throw new ArgumentException();
 			}
 		}
 
-		private void CompleteBattleAsLoss()
-		{
-			BattleResult lossResult = new BattleResult(_currentLevelNum, wasVictory: false);
-			CompleteBattle(lossResult);
-		}
-
-		private void CompleteBattle(BattleResult battleResult)
+		private void CompleteBattle(bool wasVictory)
 		{
 			CleanUp();
-
-            if (!_applicationModel.IsTutorial)
-            {
-                // Completing the tutorial does not count as a real level, so 
-                // only save save battle result if this was not the tutorial.
-				_dataProvider.GameModel.LastBattleResult = battleResult;
-				_dataProvider.SaveGame();
-            }
-
-            _applicationModel.IsTutorial = false;
-            _applicationModel.ShowPostBattleScreen = true;
-
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            _battleCompletionHandler.CompleteBattle(wasVictory);
 		}
 
 		private void CleanUp()
