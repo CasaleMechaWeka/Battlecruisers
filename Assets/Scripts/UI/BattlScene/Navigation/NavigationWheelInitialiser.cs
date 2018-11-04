@@ -9,10 +9,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public class NavigationWheelInitialiser : MonoBehaviour
     {
         public GameObject bottomLeftVertex, bottomRightVertex, topCenterVertex;
+        public GameObject navigationWheelPanelHighlight;
 
         public INavigationWheelPanel InitialiseNavigationWheel()
         {
-            Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex);
+            Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex, navigationWheelPanelHighlight);
 
             IPyramid navigationWheelArea 
                 = new Pyramid(
@@ -23,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             NavigationWheel navigationWheel = GetComponentInChildren<NavigationWheel>();
             Assert.IsNotNull(navigationWheel);
-            navigationWheel.Initialise(navigationWheelPositionClamper);
+            navigationWheel.Initialise(navigationWheelPositionClamper, navigationWheelPanelHighlight);
 
             return new NavigationWheelPanel(navigationWheelArea, navigationWheel);
         }

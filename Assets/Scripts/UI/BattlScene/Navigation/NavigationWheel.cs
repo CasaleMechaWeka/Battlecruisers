@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,22 +16,28 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         private IPositionClamper _positionClamper;
         private Vector2 _halfSize;
-        private GameObject _activeFeedback;
+        private IList<GameObject> _activeFeedbacks;
 
         public Vector2 CenterPosition { get { return (Vector2)transform.position + _halfSize; } }
 
         public event EventHandler CenterPositionChanged;
 
-        public void Initialise(IPositionClamper positionClamper)
+        public void Initialise(IPositionClamper positionClamper, GameObject parentActiveFeedback)
         {
-            Assert.IsNotNull(positionClamper);
+            Helper.AssertIsNotNull(positionClamper, parentActiveFeedback);
             _positionClamper = positionClamper;
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
             _halfSize = rectTransform.sizeDelta / 2;
 
-            _activeFeedback = transform.FindNamedComponent<Image>("ActiveFeedback").gameObject;
-            _activeFeedback.SetActive(false);
+            GameObject activeFeedback = transform.FindNamedComponent<Image>("ActiveFeedback").gameObject;
+            _activeFeedbacks = new List<GameObject>()
+            {
+                activeFeedback,
+                parentActiveFeedback
+            };
+
+            SetFeedbackVisibility(isVisible: false);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -51,12 +57,20 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _activeFeedback.SetActive(true);
+            SetFeedbackVisibility(isVisible: true);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            _activeFeedback.SetActive(false);
+            SetFeedbackVisibility(isVisible: false);
+        }
+
+        private void SetFeedbackVisibility(bool isVisible)
+        {
+            foreach (GameObject feedback in _activeFeedbacks)
+            {
+                feedback.gameObject.SetActive(isVisible);
+            }
         }
     }
 }
