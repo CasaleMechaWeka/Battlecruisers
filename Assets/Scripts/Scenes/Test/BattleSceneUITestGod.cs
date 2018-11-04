@@ -50,6 +50,19 @@ namespace BattleCruisers.Scenes.Test
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
+
+            
+            // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
+            if (_applicationModel.SelectedLevel == -1)
+            {
+                // TEMP  Force level I'm currently testing :)
+                _applicationModel.SelectedLevel = 1;
+
+                //musicPlayer = Substitute.For<IMusicPlayer>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
+            }
+
+
             _dataProvider = _applicationModel.DataProvider;
 
             // Common setup
@@ -58,14 +71,17 @@ namespace BattleCruisers.Scenes.Test
             IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
             ITime time = new TimeBC();
             _pauseGameManager = new PauseGameManager(time);
+            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
             modalMenu.Initialise(_applicationModel.IsTutorial);
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
+            // FELIX  Rename to Setup() :)
             InitialiseSpeedPanel();
             SetupNavigationWheel();
             InitialiseBuildMenuController(playerLoadout, prefabFactory, spriteProvider);
+            SetupMainMenuButton();
         }
 
         private static void InitialiseSpeedPanel()
