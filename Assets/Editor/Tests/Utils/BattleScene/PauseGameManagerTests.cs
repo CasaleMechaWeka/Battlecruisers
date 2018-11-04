@@ -10,11 +10,14 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IPauseGameManager _manager;
         private ITime _time;
         private int _pausedGameCount, _resumedGameCount;
+        private float _prePauseTimeScale;
 
         [SetUp]
         public void TestSetup()
         {
             _time = Substitute.For<ITime>();
+            _prePauseTimeScale = 4;
+            _time.TimeScale = _prePauseTimeScale;
             _manager = new PauseGameManager(_time);
 
             _pausedGameCount = 0;
@@ -27,8 +30,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void PauseGame_SetsTimeScale_EmitsEvent()
         {
-            SetTimeScaleAsPlaying();
-
             _manager.PauseGame();
 
             Assert.AreEqual(1, _pausedGameCount);
@@ -38,8 +39,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void DoublePauseGame_DoesNothingTheSecondTime()
         {
-            SetTimeScaleAsPlaying();
-
             // Pause game the first time pauses game
             _manager.PauseGame();
 
@@ -56,26 +55,26 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         }
 
         [Test]
-        public void ResumeGame_SetsTimeScale_EmitsEvent()
+        public void ResumeGame_SetsPreviousTimeScale_EmitsEvent()
         {
-            SetTimeScaleAsPaused();
+            _manager.PauseGame();
 
             _manager.ResumeGame();
 
             Assert.AreEqual(1, _resumedGameCount);
-            Assert.AreEqual(1, _time.TimeScale);
+            Assert.AreEqual(_prePauseTimeScale, _time.TimeScale);
         }
 
         [Test]
         public void DoubleResumeGame_DoesNothingSecondTime()
         {
-            SetTimeScaleAsPaused();
+            _manager.PauseGame();
 
             // Resume game the first time resumes game
             _manager.ResumeGame();
 
             Assert.AreEqual(1, _resumedGameCount);
-            Assert.AreEqual(1, _time.TimeScale);
+            Assert.AreEqual(_prePauseTimeScale, _time.TimeScale);
 
             // Resume game the second time does nothing
             _time.ClearReceivedCalls();
@@ -84,16 +83,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             Assert.AreEqual(1, _resumedGameCount);
             _time.DidNotReceiveWithAnyArgs().TimeScale = default(float);
-        }
-
-        private void SetTimeScaleAsPlaying()
-        {
-            _time.TimeScale = 1;
-        }
-
-        private void SetTimeScaleAsPaused()
-        {
-            _time.TimeScale = 0;
         }
     }
 }

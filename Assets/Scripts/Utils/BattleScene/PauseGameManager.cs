@@ -8,6 +8,7 @@ namespace BattleCruisers.Utils.BattleScene
     public class PauseGameManager : IPauseGameManager
     {
         private readonly ITime _time;
+        private float _prePauseTimeScale;
 
         private bool IsGamePaused
         {
@@ -33,6 +34,7 @@ namespace BattleCruisers.Utils.BattleScene
                 return;
             }
 
+            _prePauseTimeScale = _time.TimeScale;
             _time.TimeScale = 0;
 
             if (GamePaused != null)
@@ -48,7 +50,7 @@ namespace BattleCruisers.Utils.BattleScene
                 return;
             }
 
-            _time.TimeScale = 1;
+            _time.TimeScale = _prePauseTimeScale;
 
             if (GameResumed != null)
             {
