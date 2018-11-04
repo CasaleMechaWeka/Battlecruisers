@@ -125,7 +125,9 @@ namespace BattleCruisers.Utils
 
             // UI
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
-			tagsToActiveness.Add(Tags.UI_MANAGER, false);
+            // FELIX  Undo temp logging
+			tagsToActiveness.Add(Tags.UI_MANAGER, true);
+			//tagsToActiveness.Add(Tags.UI_MANAGER, false);
 
             // AI
             tagsToActiveness.Add(Tags.AI, false);

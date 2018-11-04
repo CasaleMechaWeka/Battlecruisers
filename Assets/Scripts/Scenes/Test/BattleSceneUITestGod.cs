@@ -102,8 +102,8 @@ namespace BattleCruisers.Scenes.Test
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
-            // FELIX Pass real class :P  (Or create dummy filters that always return true)
-            IButtonVisibilityFilters buttonVisibilityFilters = Substitute.For<IButtonVisibilityFilters>();
+            // FELIX Pass real implementation :P
+            IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
             // FELIX  Pass real class, or remove use :P
             IPlayerCruiserFocusHelper playerCruiserFocusHelper = Substitute.For<IPlayerCruiserFocusHelper>();
             IPrioritisedSoundPlayer soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
