@@ -22,12 +22,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     // FELIX  Separate functionality from initialisation, to make testable :D
     public class BuildMenuControllerNEW : MonoBehaviour, IBuildMenuNEW
 	{
+        private SelectorPanelController _selectorPanel;
         private IMenu _currentMenu;
         private BuildingCategoriesMenuNEW _buildingCategoriesMenu;
         private BuildingMenus _buildingMenus;
         private UnitMenus _unitMenus;
-
-        public GameObject selectorPanel;
 
 		public void Initialise(
 			IUIManager uiManager,
@@ -40,7 +39,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IPrioritisedSoundPlayer soundPlayer)
 		{
             Helper.AssertIsNotNull(
-                selectorPanel,
                 uiManager,
                 buildingGroups,
                 units,
@@ -49,6 +47,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 spriteProvider,
                 playerCruiserFocusHelper,
                 soundPlayer);
+
+            // Selector panel
+            _selectorPanel = GetComponentInChildren<SelectorPanelController>();
+            Assert.IsNotNull(_selectorPanel);
+            _selectorPanel.Initialise(uiManager, buttonVisibilityFilters.BackButtonVisibilityFilter);
+            _selectorPanel.Hide();
 
             // Building categories menu
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenuNEW>();
@@ -71,8 +75,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             //Assert.IsNotNull(_unitMenus);
             //IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
             //_unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
-
-            selectorPanel.SetActive(false);
         }
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
@@ -93,7 +95,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             //ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
 
             // FELIX  Remove once above line works :)
-            selectorPanel.SetActive(true);
+            _selectorPanel.Show();
         }
 
         public void ShowUnitsMenu(IFactory factory)
@@ -111,7 +113,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
             HideCurrentlyShownMenu();
 
-            selectorPanel.SetActive(true);
+            _selectorPanel.Show();
 
 			menu.OnPresenting(activationParameter);
             menu.IsVisible = true;
@@ -125,7 +127,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				_currentMenu.OnDismissing();
                 _currentMenu.IsVisible = false;
 
-                selectorPanel.SetActive(false);
+                _selectorPanel.Hide();
 			}
         }
 

@@ -56,6 +56,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             //_aiCruiser.SlotHighlighter.UnhighlightSlots();
 		}
 
+        // FELIX  Rename, HideCurrentlyShownMenu?
 		public void ShowBuildingGroups()
         {
             Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
@@ -63,6 +64,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             //_playerCruiser.SlotHighlighter.UnhighlightSlots();
             //_detailsManager.HideDetails();
             //_buildMenu.ShowBuildingGroupsMenu();
+            _buildMenu.HideCurrentlyShownMenu();
         }
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
