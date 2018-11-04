@@ -77,14 +77,13 @@ namespace BattleCruisers.Scenes.Test
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
-            // FELIX  Rename to Setup() :)
-            InitialiseSpeedPanel();
+            SetupSpeedPanel();
             SetupNavigationWheel();
-            InitialiseBuildMenuController(playerLoadout, prefabFactory, spriteProvider);
+            SetupBuildMenuController(playerLoadout, prefabFactory, spriteProvider);
             SetupMainMenuButton();
         }
 
-        private static void InitialiseSpeedPanel()
+        private static void SetupSpeedPanel()
         {
             SpeedPanelController speedPanelInitialiser = FindObjectOfType<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
@@ -117,7 +116,7 @@ namespace BattleCruisers.Scenes.Test
                     new SmoothPositionAdjuster(camera.Transform, smoothTime));
         }
 
-        private void InitialiseBuildMenuController(
+        private void SetupBuildMenuController(
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider)
