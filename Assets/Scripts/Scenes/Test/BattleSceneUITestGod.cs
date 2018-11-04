@@ -29,6 +29,7 @@ namespace BattleCruisers.Scenes.Test
     public class BattleSceneUITestGod : MonoBehaviour
     {
         private ICameraAdjuster _cameraAdjuster;
+        private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
 
         public float smoothTime;
@@ -41,7 +42,8 @@ namespace BattleCruisers.Scenes.Test
 
             Helper.AssertIsNotNull(buildMenuController, variableDelayDeferrer);
 
-            _dataProvider = ApplicationModel.DataProvider;
+            _applicationModel = ApplicationModelProvider.ApplicationModel;
+            _dataProvider = _applicationModel.DataProvider;
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());

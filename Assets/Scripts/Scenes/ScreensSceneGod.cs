@@ -21,7 +21,8 @@ namespace BattleCruisers.Scenes
 	{
 		private PrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;
-		private IDataProvider _dataProvider;
+        private IApplicationModel _applicationModel;
+        private IDataProvider _dataProvider;
 		private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
@@ -37,7 +38,8 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
 
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
-			_dataProvider = ApplicationModel.DataProvider;
+            _applicationModel = ApplicationModelProvider.ApplicationModel;
+			_dataProvider = _applicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
@@ -60,9 +62,9 @@ namespace BattleCruisers.Scenes
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
 
 
-            if (ApplicationModel.ShowPostBattleScreen)
+            if (_applicationModel.ShowPostBattleScreen)
             {
-				ApplicationModel.ShowPostBattleScreen = false;
+				_applicationModel.ShowPostBattleScreen = false;
     
                 GoToPostBattleScreen();
             }
@@ -168,7 +170,7 @@ namespace BattleCruisers.Scenes
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-			ApplicationModel.SelectedLevel = levelNum;
+			_applicationModel.SelectedLevel = levelNum;
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
 		}
 

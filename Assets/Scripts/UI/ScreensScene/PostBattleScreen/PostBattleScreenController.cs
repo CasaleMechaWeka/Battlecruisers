@@ -133,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void RetryTutorial()
         {
-            ApplicationModel.IsTutorial = true;
+            ApplicationModelProvider.ApplicationModel.IsTutorial = true;
             _screensSceneGod.LoadLevel(levelNum: 1);
         }
 

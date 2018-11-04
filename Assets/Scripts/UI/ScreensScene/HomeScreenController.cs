@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void StartTutorial()
         {
-            ApplicationModel.IsTutorial = true;
+            ApplicationModelProvider.ApplicationModel.IsTutorial = true;
             _screensSceneGod.LoadLevel(levelNum: 1);
         }
 

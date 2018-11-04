@@ -49,7 +49,8 @@ namespace BattleCruisers.Scenes
     public class BattleSceneGod : MonoBehaviour
 	{
         private ISceneNavigator _sceneNavigator;
-		private IDataProvider _dataProvider;
+        private IApplicationModel _applicationModel;
+        private IDataProvider _dataProvider;
 		private int _currentLevelNum;
 		private Cruiser _playerCruiser, _aiCruiser;
         private ITutorialProvider _tutorialProvider;
@@ -103,20 +104,21 @@ namespace BattleCruisers.Scenes
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             IMusicPlayer musicPlayer = LandingSceneGod.MusicPlayer;
 
+            _applicationModel = ApplicationModelProvider.ApplicationModel;
 
             // TEMP  Only because I'm starting the Battle Scene without a previous Choose Level Scene
-            if (ApplicationModel.SelectedLevel == -1)
+            if (_applicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                ApplicationModel.SelectedLevel = 1;
+                _applicationModel.SelectedLevel = 1;
 
                 musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
 
-            _dataProvider = ApplicationModel.DataProvider;
-            _currentLevelNum = ApplicationModel.SelectedLevel;
+            _dataProvider = _applicationModel.DataProvider;
+            _currentLevelNum = _applicationModel.SelectedLevel;
             musicPlayer.PlayBattleSceneMusic();
 
 
@@ -134,7 +136,7 @@ namespace BattleCruisers.Scenes
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
             _pauseGameManager = new PauseGameManager(time);
-            modalMenuController.Initialise(ApplicationModel.IsTutorial);
+            modalMenuController.Initialise(_applicationModel.IsTutorial);
 
 
             // Instantiate player cruiser
@@ -306,7 +308,7 @@ namespace BattleCruisers.Scenes
 
         private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            if (ApplicationModel.IsTutorial)
+            if (_applicationModel.IsTutorial)
             {
                 TutorialHelper helper = new TutorialHelper(_dataProvider, prefabFactory);
                 _tutorialProvider = helper;
@@ -343,7 +345,7 @@ namespace BattleCruisers.Scenes
 
         private void StartTutorialIfNecessary(IPrefabFactory prefabFactory)
         {
-            if (ApplicationModel.IsTutorial)
+            if (_applicationModel.IsTutorial)
             {
 				_dataProvider.GameModel.LastBattleResult = null;
                 _dataProvider.GameModel.HasAttemptedTutorial = true;
@@ -419,7 +421,7 @@ namespace BattleCruisers.Scenes
 		{
 			CleanUp();
 
-            if (!ApplicationModel.IsTutorial)
+            if (!_applicationModel.IsTutorial)
             {
                 // Completing the tutorial does not count as a real level, so 
                 // only save save battle result if this was not the tutorial.
@@ -427,8 +429,8 @@ namespace BattleCruisers.Scenes
 				_dataProvider.SaveGame();
             }
 
-            ApplicationModel.IsTutorial = false;
-			ApplicationModel.ShowPostBattleScreen = true;
+            _applicationModel.IsTutorial = false;
+            _applicationModel.ShowPostBattleScreen = true;
 
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
 		}

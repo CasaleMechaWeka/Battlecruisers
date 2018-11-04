@@ -1,39 +1,25 @@
-﻿using BattleCruisers.Data.Serialization;
-using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
     /// <summary>
     /// Static class that allows scenes to communicate with each other.
     /// </summary>
-    public static class ApplicationModel
-	{
-		public static int SelectedLevel { get; set; }
-        public static bool ShowPostBattleScreen { get; set; }
-		public static bool IsTutorial { get; set; }
+    public class ApplicationModel : IApplicationModel
+    {
+        public int SelectedLevel { get; set; }
+        public bool ShowPostBattleScreen { get; set; }
+        public bool IsTutorial { get; set; }
+        public IDataProvider DataProvider { get; private set; }
 
-		private static IDataProvider _dataProvider;
-		public static IDataProvider DataProvider
-		{
-			get
-			{
-				if (_dataProvider == null)
-				{
-					_dataProvider = new DataProvider(
-						new StaticData(),
-						new Serializer(new ModelFilePathProvider()),
-                        new SettingsManager());
-				}
-				return _dataProvider;
-			}
-		}
+        public ApplicationModel(IDataProvider dataProvider)
+        {
+            Assert.IsNotNull(dataProvider);
 
-		static ApplicationModel()
-		{
-			SelectedLevel = -1;
+            DataProvider = dataProvider;
+            SelectedLevel = -1;
             ShowPostBattleScreen = false;
             IsTutorial = false;
-		}
-	}
+        }
+    }
 }
