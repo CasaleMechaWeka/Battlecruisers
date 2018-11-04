@@ -6,6 +6,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -15,6 +16,7 @@ using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
@@ -29,19 +31,24 @@ namespace BattleCruisers.Scenes.Test
     public class BattleSceneUITestGod : MonoBehaviour
     {
         private ICameraAdjuster _cameraAdjuster;
+        private ISceneNavigator _sceneNavigator;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
+        private IPauseGameManager _pauseGameManager;
+        private IBattleCompletionHandler _battleCompletionHandler;
 
         public float smoothTime;
         public BuildMenuControllerNEW buildMenuController;
+        public ModalMenuController modalMenu;
 
         private void Start()
         {
             // FELIX  Extract GetComponents() to separate method?
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
-            Helper.AssertIsNotNull(buildMenuController, variableDelayDeferrer);
+            Helper.AssertIsNotNull(buildMenuController, modalMenu, variableDelayDeferrer);
 
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
 
@@ -49,6 +56,9 @@ namespace BattleCruisers.Scenes.Test
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
+            ITime time = new TimeBC();
+            _pauseGameManager = new PauseGameManager(time);
+            modalMenu.Initialise(_applicationModel.IsTutorial);
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
@@ -138,6 +148,16 @@ namespace BattleCruisers.Scenes.Test
                 return new NormalHelper(_dataProvider, prefabFactory, variableDelayDeferrer);
             }
         }
+
+        private void SetupMainMenuButton()
+        {
+            IMainMenuManager mainMenuManager = new MainMenuManager(_pauseGameManager, modalMenu, _battleCompletionHandler);
+
+            MainMenuButtonController mainMenuButton = FindObjectOfType<MainMenuButtonController>();
+            Assert.IsNotNull(mainMenuButton);
+            mainMenuButton.Initialise(mainMenuManager);
+        }
+
         // NEWUI  Move to CameraController?
         private void Update()
         {
