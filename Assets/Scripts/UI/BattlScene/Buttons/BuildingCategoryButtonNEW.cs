@@ -8,6 +8,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     // NEWUI  Replace old UI :P
+    // NEWUI  Remove canvas groups if they are not being used (in inspector, with ButtonWrapper).
+    //      Need separate sprites for this to work?
     public class BuildingCategoryButtonNEW : UIElement, IBuildingCategoryButton, IBroadcastingFilter
 	{
         private IUIManager _uiManager;
@@ -26,6 +28,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
 
         public void Initialise(
+            // FELIX  Should really be a public field set in the inspector, as UI is set :/
             BuildingCategory buildingCategory,
             IUIManager uiManager, 
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)

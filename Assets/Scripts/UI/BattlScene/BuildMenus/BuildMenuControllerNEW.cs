@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public class BuildMenuControllerNEW : MonoBehaviour, IBuildMenuNEW
 	{
         private IMenu _currentMenu;
-        private BuildingCategoriesMenu _buildingCategoriesMenu;
+        private BuildingCategoriesMenuNEW _buildingCategoriesMenu;
         private BuildingMenus _buildingMenus;
         private UnitMenus _unitMenus;
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 soundPlayer);
 
             // Building categories menu
-            _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
+            _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenuNEW>();
             Assert.IsNotNull(_buildingCategoriesMenu);
             _buildingCategoriesMenu.Initialise(uiManager, buttonVisibilityFilters, buildingGroups);
             _currentMenu = _buildingCategoriesMenu;
