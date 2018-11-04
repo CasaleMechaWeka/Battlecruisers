@@ -58,16 +58,15 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenuNEW>();
             Assert.IsNotNull(_buildingCategoriesMenu);
             _buildingCategoriesMenu.Initialise(uiManager, buttonVisibilityFilters, buildingGroups);
-            _currentMenu = _buildingCategoriesMenu;
 
             // FELIX  Implement :P
-            //// Building menus
-            //_buildingMenus = GetComponentInChildren<BuildingMenus>();
-            //Assert.IsNotNull(_buildingMenus);
-            //IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
-            //IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            //IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, soundPlayer);
-            //_buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
+            // Building menus
+            _buildingMenus = GetComponentInChildren<BuildingMenus>();
+            Assert.IsNotNull(_buildingMenus);
+            IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
+            IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
+            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, soundPlayer);
+            _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
             //// Unit menus
             //IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer);
@@ -91,11 +90,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
-            // FELIX  Initialise _buildngMenus :)
-            //ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
-
-            // FELIX  Remove once above line works :)
-            _selectorPanel.Show();
+            ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
         }
 
         public void ShowUnitsMenu(IFactory factory)
@@ -136,12 +131,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             return _buildingCategoriesMenu.GetCategoryButton(category);
         }
 
-        // FELIX  Implement :P
         public ReadOnlyCollection<IBuildableButton> GetBuildableButtons(BuildingCategory category)
         {
-            //IBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesMenu(category);
-            //return buildMenuForCategory.BuildableButtons;
-            throw new NotImplementedException();
+            IBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesMenu(category);
+            return buildMenuForCategory.BuildableButtons;
         }
     }
 }
