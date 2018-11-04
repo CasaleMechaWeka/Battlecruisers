@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private CanvasGroup _canvasGroup;
         private bool _disableButton;
 
+        // NEWUI  Make private, should no longer be used :)
 		public Button Button { get; private set; }
 
         private bool IsEnabled
