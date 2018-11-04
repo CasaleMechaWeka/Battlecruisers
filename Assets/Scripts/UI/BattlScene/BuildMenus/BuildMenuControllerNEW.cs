@@ -11,7 +11,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -59,7 +58,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(_buildingCategoriesMenu);
             _buildingCategoriesMenu.Initialise(uiManager, buttonVisibilityFilters, buildingGroups);
 
-            // FELIX  Implement :P
             // Building menus
             _buildingMenus = GetComponentInChildren<BuildingMenus>();
             Assert.IsNotNull(_buildingMenus);
@@ -68,12 +66,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, soundPlayer);
             _buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
-            //// Unit menus
-            //IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer);
-            //_unitMenus = GetComponentInChildren<UnitMenus>();
-            //Assert.IsNotNull(_unitMenus);
-            //IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            //_unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
+            // Unit menus
+            IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer);
+            _unitMenus = GetComponentInChildren<UnitMenus>();
+            Assert.IsNotNull(_unitMenus);
+            IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
+            _unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
         }
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
