@@ -5,19 +5,12 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public enum UserAction
-	{
-		Dismissed, Quit
-	}
-
-	public class ModalMenuController : MonoBehaviour 
-	{
+	public class ModalMenuController : MonoBehaviour, IModalMenu
+    {
 		private MenuDismissed _onMenuDismissed;
 
 		public Canvas canvas;
         public Button endGameButton, skipTutorialButton;
-
-		public delegate void MenuDismissed(UserAction UserAction);
 
 		public void Initialise(bool isTutorial)
 		{
@@ -46,7 +39,7 @@ namespace BattleCruisers.UI.BattleScene
 			// IPAD  Adapt for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
-				DismissMenu(UserAction.Dismissed);
+                Cancel();
 			}
 		}
 
