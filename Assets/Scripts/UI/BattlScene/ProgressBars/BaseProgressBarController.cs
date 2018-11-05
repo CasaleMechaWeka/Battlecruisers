@@ -23,6 +23,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			}
 		}
 
+        // FELIX  Use excplicit Initalise() instead :/
 		void Awake()
 		{
 			_outlineWidth = ((RectTransform)progressBarOutline.transform).rect.width;
