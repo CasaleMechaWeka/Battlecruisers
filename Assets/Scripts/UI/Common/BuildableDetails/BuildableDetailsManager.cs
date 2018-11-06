@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -12,13 +11,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
 
-        public BuildableDetailsManager(IHUDCanvasController hudCanvas)
+        public BuildableDetailsManager(IInformatorPanel informator)
         {
-            Helper.AssertIsNotNull(hudCanvas);
+            Helper.AssertIsNotNull(informator);
 
-            _buildingDetails = hudCanvas.BuildingDetails;
-            _unitDetails = hudCanvas.UnitDetails;
-            _cruiserDetails = hudCanvas.CruiserDetails;
+            _buildingDetails = informator.BuildingDetails;
+            _unitDetails = informator.UnitDetails;
+            _cruiserDetails = informator.CruiserDetails;
         }
 
         public void ShowDetails(IBuilding building)
