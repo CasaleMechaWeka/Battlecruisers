@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Scenes.Test;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
@@ -14,7 +15,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private RectTransform _rectTransform;
 		private float _maxHeight;
         private DeleteButtonController _deleteButton;
+        // NEWUI  Remove :)
         private BuildableBottomBarController _bottomBar;
+        private ButtonManager _buttonManager;
 
         public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
 
@@ -36,21 +39,40 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_deleteButton);
             _deleteButton.Initialise(this, deleteButtonVisibilityFilter);
 
-            _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
-            Assert.IsNotNull(_bottomBar);
-            _bottomBar.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            if (BattleSceneUITestGod.IsNewUI)
+            {
+                _buttonManager = GetComponentInChildren<ButtonManager>(includeInactive: true);
+                Assert.IsNotNull(_buttonManager);
+                _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            }
+            else
+            {
+                _bottomBar = GetComponentInChildren<BuildableBottomBarController>(includeInactive: true);
+                Assert.IsNotNull(_bottomBar);
+                _bottomBar.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            }
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)
         {
             base.ShowItemDetails(buildable);
 
-            _bottomBar.Buildable = buildable;
+            if (BattleSceneUITestGod.IsNewUI)
+            {
+                _bottomBar.Buildable = buildable;
+            }
+            else
+            {
+                _buttonManager.Buildable = buildable;
+            }
             _deleteButton.Buildable = buildable;
 
-            // Shrink details panel if bottom bar is invisble
-            float desiredHeight = _bottomBar.IsVisible ? _maxHeight : _maxHeight - _bottomBar.Height;
-            _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, desiredHeight);
+            if (!BattleSceneUITestGod.IsNewUI)
+            {
+                // Shrink details panel if bottom bar is invisble
+                float desiredHeight = _bottomBar.IsVisible ? _maxHeight : _maxHeight - _bottomBar.Height;
+                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, desiredHeight);
+            }
         }
 
         protected override void CleanUp()
@@ -58,7 +80,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 			if (_item != null)
 			{
                 _bottomBar.Buildable = null;
-                _deleteButton.Buildable = null;
+                if (BattleSceneUITestGod.IsNewUI)
+                {
+                    _buttonManager.Buildable = null;
+                }
+                else
+                {
+                    _deleteButton.Buildable = null;
+                }
 			}
 		}
 	}

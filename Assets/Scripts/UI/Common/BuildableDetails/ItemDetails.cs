@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Scenes.Test;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
@@ -22,9 +23,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 		public void Initialise()
         {
-            _itemName = transform.FindNamedComponent<Text>("ItemName");
-            _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
-            _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            if (BattleSceneUITestGod.IsNewUI)
+            {
+                _itemName = transform.FindNamedComponent<Text>("LeftColumn/ItemName");
+                _itemDescription = transform.FindNamedComponent<Text>("LeftColumn/ItemDescription");
+                _itemImage = transform.FindNamedComponent<Image>("RightColumn/ItemImage");
+            }
+            else
+            {
+                _itemName = transform.FindNamedComponent<Text>("ItemName");
+                _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
+                _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            }
 
             _statsController = GetStatsController();
             Assert.IsNotNull(_statsController);

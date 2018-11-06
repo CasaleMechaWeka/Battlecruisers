@@ -9,6 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Rename to InformatorButtonManager
     public class ButtonManager : MonoBehaviour, IButtonManager
     {
         private RepairButtonController _repairButton;

@@ -1,9 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
@@ -14,6 +16,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -38,15 +41,19 @@ namespace BattleCruisers.Scenes.Test
         private IBattleCompletionHandler _battleCompletionHandler;
 
         public float smoothTime;
-        public BuildMenuControllerNEW buildMenuController;
+        public BuildMenuControllerNEW buildMenu;
         public ModalMenuController modalMenu;
+        public InformatorPanelController informator;
+
+        // NEWUI  Remove this bool :P
+        public static bool IsNewUI = true;
 
         private void Start()
         {
             // FELIX  Extract GetComponents() to separate method?
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
-            Helper.AssertIsNotNull(buildMenuController, modalMenu, variableDelayDeferrer);
+            Helper.AssertIsNotNull(buildMenu, modalMenu, informator, variableDelayDeferrer);
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -74,13 +81,17 @@ namespace BattleCruisers.Scenes.Test
             _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
             modalMenu.Initialise(_applicationModel.IsTutorial);
 
+            // FELIX Pass real implementation :P
+            IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
+
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
             SetupSpeedPanel();
             SetupNavigationWheel();
-            SetupBuildMenuController(playerLoadout, prefabFactory, spriteProvider);
+            SetupBuildMenuController(playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
             SetupMainMenuButton();
+            SetupInformator(buttonVisibilityFilters);
         }
 
         private static void SetupSpeedPanel()
@@ -119,23 +130,22 @@ namespace BattleCruisers.Scenes.Test
         private void SetupBuildMenuController(
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            IButtonVisibilityFilters buttonVisibilityFilters)
         {
             // FELIX  Create functional UIManager :P
-            IUIManager uiManager = new UIManagerNEW(buildMenuController);
+            IUIManager uiManager = new UIManagerNEW(buildMenu);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
-            // FELIX Pass real implementation :P
-            IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
             // FELIX  Pass real class, or remove use :P
             IPlayerCruiserFocusHelper playerCruiserFocusHelper = Substitute.For<IPlayerCruiserFocusHelper>();
             IPrioritisedSoundPlayer soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
-            buildMenuController
+            buildMenu
                 .Initialise(
                     uiManager,
                     buildingGroups,
@@ -171,6 +181,21 @@ namespace BattleCruisers.Scenes.Test
             MainMenuButtonController mainMenuButton = FindObjectOfType<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
             mainMenuButton.Initialise(mainMenuManager);
+        }
+
+        private void SetupInformator(IButtonVisibilityFilters buttonVisibilityFilters)
+        {
+            informator.StaticInitialise();
+
+            ICruiser playerCruiser = Substitute.For<ICruiser>();
+            IUserChosenTargetHelper userChosenTargetHelper = Substitute.For<IUserChosenTargetHelper>();
+
+            informator
+                .Initialise(
+                    playerCruiser,
+                    userChosenTargetHelper,
+                    buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter,
+                    buttonVisibilityFilters.DeletButtonVisiblityFilter);
         }
 
         // NEWUI  Move to CameraController?
