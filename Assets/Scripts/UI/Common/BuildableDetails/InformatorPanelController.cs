@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class InformatorPanelController : MonoBehaviour
+    public class InformatorPanelController : MonoBehaviour, IInformatorPanel
     {
         private BuildingDetailsController _buildingDetails;
         public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
