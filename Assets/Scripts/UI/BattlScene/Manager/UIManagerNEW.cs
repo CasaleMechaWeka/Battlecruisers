@@ -12,16 +12,27 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.Manager
 {
     // NEWUI  Imlement :D
+    // NEWUI  Update tests :)
     public class UIManagerNEW : IUIManager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenuNEW _buildMenu;
         private readonly IBuildableDetailsManager _detailsManager;
 
-        public UIManagerNEW(IBuildMenuNEW buildMenu)
+        // FELIX  Update IManagerArgs
+        // FELIX  Use IManagerArgs :)
+        public UIManagerNEW(
+            IBuildMenuNEW buildMenu,
+            IBuildableDetailsManager detailsManager,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser)
         {
-            Assert.IsNotNull(buildMenu);
+            Helper.AssertIsNotNull(buildMenu, detailsManager, playerCruiser, aiCruiser);
+
             _buildMenu = buildMenu;
+            _detailsManager = detailsManager;
+            _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
         }
 
   //      public UIManagerNEW(IManagerArgs args)
@@ -42,6 +53,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         /// * Build menu  
         /// Hence need to wait until all classes are set up before executing this method.
         /// </summary>
+        /// NEWUI  Remove?
         public void InitialUI()
         {
 			//_detailsManager.HideDetails();
@@ -51,19 +63,19 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		public virtual void HideItemDetails()
 		{
             Logging.Log(Tags.UI_MANAGER, ".HideItemDetails()");
-            //_detailsManager.HideDetails();
-            //_playerCruiser.SlotHighlighter.UnhighlightSlots();
-            //_aiCruiser.SlotHighlighter.UnhighlightSlots();
-		}
+
+            _detailsManager.HideDetails();
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            _aiCruiser.SlotHighlighter.UnhighlightSlots();
+        }
 
         // FELIX  Rename, HideCurrentlyShownMenu?
 		public void ShowBuildingGroups()
         {
             Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 
-            //_playerCruiser.SlotHighlighter.UnhighlightSlots();
-            //_detailsManager.HideDetails();
-            //_buildMenu.ShowBuildingGroupsMenu();
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            _detailsManager.HideDetails();
             _buildMenu.HideCurrentlyShownMenu();
         }
 
@@ -77,11 +89,12 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
-			
-   //         _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-			//_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
-   //         _detailsManager.ShowDetails(buildingWrapper.Buildable);
-		}
+
+            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
+            // NEWUI  Uncomment :)
+            //_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _detailsManager.ShowDetails(buildingWrapper.Buildable);
+        }
 
 		public virtual void SelectBuilding(IBuilding building)
 		{

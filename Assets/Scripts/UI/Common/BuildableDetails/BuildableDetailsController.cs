@@ -59,11 +59,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             if (BattleSceneUITestGod.IsNewUI)
             {
-                _bottomBar.Buildable = buildable;
+                _buttonManager.Buildable = buildable;
             }
             else
             {
-                _buttonManager.Buildable = buildable;
+                _bottomBar.Buildable = buildable;
             }
             _deleteButton.Buildable = buildable;
 
@@ -79,15 +79,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		{
 			if (_item != null)
 			{
-                _bottomBar.Buildable = null;
                 if (BattleSceneUITestGod.IsNewUI)
                 {
                     _buttonManager.Buildable = null;
                 }
                 else
                 {
-                    _deleteButton.Buildable = null;
+                    _bottomBar.Buildable = null;
                 }
+                _deleteButton.Buildable = null;
 			}
 		}
 	}

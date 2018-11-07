@@ -80,6 +80,8 @@ namespace BattleCruisers.Scenes.Test
             _pauseGameManager = new PauseGameManager(time);
             _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
             modalMenu.Initialise(_applicationModel.IsTutorial);
+            ICruiser playerCruiser = Substitute.For<ICruiser>();
+            ICruiser aiCruiser = Substitute.For<ICruiser>();
 
             // FELIX Pass real implementation :P
             IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
@@ -87,11 +89,12 @@ namespace BattleCruisers.Scenes.Test
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
+            SetupInformator(buttonVisibilityFilters, playerCruiser);
+            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser);
             SetupSpeedPanel();
             SetupNavigationWheel();
-            SetupBuildMenuController(playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
+            SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
             SetupMainMenuButton();
-            SetupInformator(buttonVisibilityFilters);
         }
 
         private static void SetupSpeedPanel()
@@ -127,14 +130,23 @@ namespace BattleCruisers.Scenes.Test
                     new SmoothPositionAdjuster(camera.Transform, smoothTime));
         }
 
+        private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser)
+        {
+            return
+                new UIManagerNEW(
+                    buildMenu,
+                    new BuildableDetailsManager(informator),
+                    playerCruiser,
+                    aiCruiser);
+        }
+
         private void SetupBuildMenuController(
+            IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters)
         {
-            // FELIX  Create functional UIManager :P
-            IUIManager uiManager = new UIManagerNEW(buildMenu);
 
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
@@ -183,11 +195,11 @@ namespace BattleCruisers.Scenes.Test
             mainMenuButton.Initialise(mainMenuManager);
         }
 
-        private void SetupInformator(IButtonVisibilityFilters buttonVisibilityFilters)
+        private void SetupInformator(IButtonVisibilityFilters buttonVisibilityFilters, ICruiser playerCruiser)
         {
             informator.StaticInitialise();
 
-            ICruiser playerCruiser = Substitute.For<ICruiser>();
+            playerCruiser = Substitute.For<ICruiser>();
             IUserChosenTargetHelper userChosenTargetHelper = Substitute.For<IUserChosenTargetHelper>();
 
             informator
