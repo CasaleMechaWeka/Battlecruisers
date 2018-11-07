@@ -8,5 +8,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IBuildableDetails<IBuilding> BuildingDetails { get; }
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
+
+        void Show();
+        void Hide();
     }
 }

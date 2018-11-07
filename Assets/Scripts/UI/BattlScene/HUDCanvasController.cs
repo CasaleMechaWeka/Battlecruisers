@@ -87,5 +87,17 @@ namespace BattleCruisers.UI.BattleScene
             _navigationButtonWrapper.Initialise(cameraController, shouldNavigationBeEnabledFilter);
             _gameSpeedWrapper.Initialise();
         }
+
+        // NEWUI  Class is deprecated :P
+        public void Show()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        // NEWUI  Class is deprecated :P
+        public void Hide()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
