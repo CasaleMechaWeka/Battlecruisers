@@ -236,6 +236,9 @@ namespace BattleCruisers.Scenes.Test
         public void SimulateSelectingCruiser()
         {
             Debug.Log("SimulateSelectingCruiser");
+
+            Cruiser cruiser = _tempPrefabFactory.GetCruiserPrefab(StaticPrefabKeys.Hulls.Longbow);
+            _tempUIManager.ShowCruiserDetails(cruiser);
         }
 
         // To test showing unit details
