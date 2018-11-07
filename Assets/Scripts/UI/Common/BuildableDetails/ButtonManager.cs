@@ -23,23 +23,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             set 
             {
-                IBuildable buildable = value;
-
-                // If the buildable is not initialised, it does not exist in the
-                // scene yet and this bottom bar does not need to be displayed.
-                // FELIX
-                //IsVisible = buildable != null && buildable.IsInitialised;
-
-                _toggleDronesButton.Buildable = buildable;
-                _repairButton.Repairable = buildable;
-                _chooseTargetButton.Target = buildable;
+                _toggleDronesButton.Buildable = value;
+                _repairButton.Repairable = value;
+                _chooseTargetButton.Target = value;
             }
-        }
-
-        private bool IsVisible 
-        { 
-            get { return gameObject.activeSelf; } 
-            set { gameObject.SetActive(value); }
         }
 
         public void Initialise(
