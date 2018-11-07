@@ -218,5 +218,15 @@ namespace BattleCruisers.Scenes.Test
         {
             _cameraAdjuster.AdjustCamera();
         }
+
+        public void SimulateSelectingPlayerFactory()
+        {
+            Debug.Log("SimulateSelectingPlayerFactory");
+        }
+
+        public void SimulateSelectingCruiser()
+        {
+            Debug.Log("SimulateSelectingCruiser");
+        }
     }
 }
