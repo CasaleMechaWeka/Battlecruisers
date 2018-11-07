@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -40,6 +41,10 @@ namespace BattleCruisers.Scenes.Test
         private IPauseGameManager _pauseGameManager;
         private IBattleCompletionHandler _battleCompletionHandler;
 
+        // Just for test scene, should not be transferred to new BattleSceneGod :)
+        private IPrefabFactory _tempPrefabFactory;
+        private IUIManager _tempUIManager;
+
         public float smoothTime;
         public BuildMenuControllerNEW buildMenu;
         public ModalMenuController modalMenu;
@@ -74,6 +79,7 @@ namespace BattleCruisers.Scenes.Test
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            _tempPrefabFactory = prefabFactory;
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
             ITime time = new TimeBC();
@@ -92,6 +98,7 @@ namespace BattleCruisers.Scenes.Test
             // Informator has circular dependency with UIManager :/
             informator.StaticInitialise();
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser);
+            _tempUIManager = uiManager;
             SetupInformator(buttonVisibilityFilters, playerCruiser, uiManager);
             SetupSpeedPanel();
             SetupNavigationWheel();
@@ -219,14 +226,25 @@ namespace BattleCruisers.Scenes.Test
             _cameraAdjuster.AdjustCamera();
         }
 
+        // To test showing unit buttons
         public void SimulateSelectingPlayerFactory()
         {
             Debug.Log("SimulateSelectingPlayerFactory");
         }
 
+        // To test cruiser details
         public void SimulateSelectingCruiser()
         {
             Debug.Log("SimulateSelectingCruiser");
+        }
+
+        // To test showing unit details
+        public void SimulateSelectingUnit()
+        {
+            Debug.Log("SimulateSelectingUnit");
+
+            IBuildableWrapper<IUnit> unit = _tempPrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.ArchonBattleship);
+            _tempUIManager.ShowUnitDetails(unit.Buildable);
         }
     }
 }

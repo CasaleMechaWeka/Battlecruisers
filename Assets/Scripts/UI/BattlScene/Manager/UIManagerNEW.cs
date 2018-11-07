@@ -128,26 +128,26 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectFactoryUnits()");
 
-   //         if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
-			//{
-			//	_buildMenu.ShowUnitsMenu(factory);
-			//}
-		}
+            if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
+            {
+                _buildMenu.ShowUnitsMenu(factory);
+            }
+        }
 
 		public virtual void ShowUnitDetails(IUnit unit)
 		{
             Logging.Log(Tags.UI_MANAGER, ".ShowUnitDetails()");
 
-            //HideItemDetails();
-            //_detailsManager.ShowDetails(unit);
-		}
+            HideItemDetails();
+            _detailsManager.ShowDetails(unit);
+        }
 
         public virtual void ShowCruiserDetails(ICruiser cruiser)
         {
 			Logging.Log(Tags.UI_MANAGER, ".ShowCruiserDetails()");
 
-            //HideItemDetails();
-            //_detailsManager.ShowDetails(cruiser);
+            HideItemDetails();
+            _detailsManager.ShowDetails(cruiser);
         }
     }
 }
