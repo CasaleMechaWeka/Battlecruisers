@@ -89,8 +89,10 @@ namespace BattleCruisers.Scenes.Test
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
-            SetupInformator(buttonVisibilityFilters, playerCruiser);
+            // Informator has circular dependency with UIManager :/
+            informator.StaticInitialise();
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser);
+            SetupInformator(buttonVisibilityFilters, playerCruiser, uiManager);
             SetupSpeedPanel();
             SetupNavigationWheel();
             SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
@@ -195,19 +197,20 @@ namespace BattleCruisers.Scenes.Test
             mainMenuButton.Initialise(mainMenuManager);
         }
 
-        private void SetupInformator(IButtonVisibilityFilters buttonVisibilityFilters, ICruiser playerCruiser)
+        private void SetupInformator(
+            IButtonVisibilityFilters buttonVisibilityFilters, 
+            ICruiser playerCruiser,
+            IUIManager uiManager)
         {
-            informator.StaticInitialise();
-
             playerCruiser = Substitute.For<ICruiser>();
             IUserChosenTargetHelper userChosenTargetHelper = Substitute.For<IUserChosenTargetHelper>();
 
             informator
                 .Initialise(
+                    uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
-                    buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter,
-                    buttonVisibilityFilters.DeletButtonVisiblityFilter);
+                    buttonVisibilityFilters);
         }
 
         // NEWUI  Move to CameraController?

@@ -1,8 +1,10 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,6 +13,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class InformatorPanelController : MonoBehaviour, IInformatorPanel
     {
+        private DismissInformatorButtonController _dismissButton;
+
         private BuildingDetailsController _buildingDetails;
         public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
 
@@ -22,6 +26,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void StaticInitialise()
         {
+            _dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
+            Assert.IsNotNull(_dismissButton);
+
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
             Assert.IsNotNull(_buildingDetails);
 
@@ -32,21 +39,24 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_cruiserDetails);
         }
 
+        // NEWUI  Check if I can get rid of circular dependency and merge initialise methods?
         public void Initialise(
+            IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> chooseTargetButtonVisibilityFilter,
-            IFilter<ITarget> deleteButtonVisibilityFilter)
+            IButtonVisibilityFilters visibilityFilters)
         {
             Helper.AssertIsNotNull(
+                uiManager,
                 playerCruiser,
                 userChosenTargetHelper,
-                chooseTargetButtonVisibilityFilter,
-                deleteButtonVisibilityFilter);
+                visibilityFilters);
 
-            _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
-            _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
-            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            // FELIX  Use new visibility filter (if tutorial still requires informator to not be dismissable sometimes :) )
+            _dismissButton.Initialise(uiManager, visibilityFilters.BackButtonVisibilityFilter);
+            _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+            _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter);
         }
 
         public void Show()
