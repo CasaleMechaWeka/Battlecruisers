@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private DeleteButtonController _deleteButton;
         // NEWUI  Remove :)
         private BuildableBottomBarController _bottomBar;
-        private ButtonManager _buttonManager;
+        private InformatorButtonManager _buttonManager;
 
         public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             if (BattleSceneUITestGod.IsNewUI)
             {
-                _buttonManager = GetComponentInChildren<ButtonManager>(includeInactive: true);
+                _buttonManager = GetComponentInChildren<InformatorButtonManager>(includeInactive: true);
                 Assert.IsNotNull(_buttonManager);
                 _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
             }
