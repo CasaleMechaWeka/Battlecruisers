@@ -1,10 +1,5 @@
-﻿using System;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils;
-using UnityEngine;
+﻿using BattleCruisers.Utils;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
@@ -23,8 +18,8 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
                 Assert.IsTrue(value >= MIN_VALUE);
                 Assert.IsTrue(value <= MAX_VALUE);
 
-                // FELIX  NEXT :D
-                //int firstDigit = 
+                _firstDigit.Num = value / 10;
+                _secondDigit.Num = value % 10;
             }
         }
 
