@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 {
     public class SingleDigitDisplayController : MonoBehaviour, INumberDisplay
     {
-        public Text text;
+        private Text _text;
 
         private const int MIN_VALUE = 0;
         private const int MAX_VALUE = 9;
@@ -18,13 +18,14 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
                 Assert.IsTrue(value >= MIN_VALUE);
                 Assert.IsTrue(value <= MAX_VALUE);
 
-                text.text = value.ToString();
+                _text.text = value.ToString();
             }
         }
 
         public void Initialise()
         {
-            Assert.IsNotNull(text);
+            _text = GetComponent<Text>();
+            Assert.IsNotNull(_text);
         }
     }
 }
