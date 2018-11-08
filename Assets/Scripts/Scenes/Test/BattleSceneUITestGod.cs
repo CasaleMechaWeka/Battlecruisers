@@ -53,7 +53,6 @@ namespace BattleCruisers.Scenes.Test
         public BuildMenuControllerNEW buildMenu;
         public ModalMenuController modalMenu;
         public InformatorPanelController informator;
-        public NumOfDronesController numOfDrones;
 
         // NEWUI  Remove this bool :P
         public static bool IsNewUI = true;
@@ -64,7 +63,7 @@ namespace BattleCruisers.Scenes.Test
             // FELIX  Extract GetComponents() to separate method?
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
-            Helper.AssertIsNotNull(buildMenu, modalMenu, informator, numOfDrones, variableDelayDeferrer);
+            Helper.AssertIsNotNull(buildMenu, modalMenu, informator, variableDelayDeferrer);
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -108,8 +107,6 @@ namespace BattleCruisers.Scenes.Test
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
-
-            numOfDrones.Initialise(playerCruiser.DroneManager);
 
             // Informator has circular dependency with UIManager :/
             informator.StaticInitialise();
