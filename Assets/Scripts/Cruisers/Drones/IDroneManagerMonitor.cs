@@ -5,6 +5,6 @@ namespace BattleCruisers.Cruisers.Drones
     public interface IDroneManagerMonitor
     {
         event EventHandler DroneNumIncreased;
-        event EventHandler IdleDrones;
+        event EventHandler IdleDronesStarted;
     }
 }

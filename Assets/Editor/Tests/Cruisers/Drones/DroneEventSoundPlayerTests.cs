@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         [Test]
         public void IdleDrones_PlaysSound()
         {
-            _droneManagerMonitor.IdleDrones += Raise.Event();
+            _droneManagerMonitor.IdleDronesStarted += Raise.Event();
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.Idle);
         }
     }

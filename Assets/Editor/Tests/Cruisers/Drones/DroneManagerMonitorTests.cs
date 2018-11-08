@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         private IVariableDelayDeferrer _deferrer;
         private IList<IDroneConsumer> _droneConsumers;
         private IDroneConsumer _idleDroneConsumer, _activeDroneConsumer;
-        private int _droneNumIncreasedEventCount, _idleDronesEventCount;
+        private int _droneNumIncreasedEventCount, _idleDronesStartedEventCount;
 
         [SetUp]
         public void TestSetup()
@@ -40,8 +40,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _droneNumIncreasedEventCount = 0;
             _monitor.DroneNumIncreased += (sender, e) => _droneNumIncreasedEventCount++;
 
-            _idleDronesEventCount = 0;
-            _monitor.IdleDrones += (sender, e) => _idleDronesEventCount++;
+            _idleDronesStartedEventCount = 0;
+            _monitor.IdleDronesStarted += (sender, e) => _idleDronesStartedEventCount++;
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Remove, _idleDroneConsumer));
             _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
-            Assert.AreEqual(1, _idleDronesEventCount);
+            Assert.AreEqual(1, _idleDronesStartedEventCount);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneManager.DroneConsumers.Changed += Raise.EventWith(new CollectionChangedEventArgs<IDroneConsumer>(ChangeType.Add, _idleDroneConsumer));
             _deferrer.DidNotReceiveWithAnyArgs().Defer(null, default(float));
-            Assert.AreEqual(0, _idleDronesEventCount);
+            Assert.AreEqual(0, _idleDronesStartedEventCount);
         }
 
         [Test]
@@ -79,14 +79,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(_droneManager.NumOfDrones - 1));
             _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
-            Assert.AreEqual(1, _idleDronesEventCount);
+            Assert.AreEqual(1, _idleDronesStartedEventCount);
         }
 
         [Test]
         public void IdleDrones_NoDroneConsumers_EmitsEvent()
         {
             TriggerIdleDronesCheck();
-            Assert.AreEqual(1, _idleDronesEventCount);
+            Assert.AreEqual(1, _idleDronesStartedEventCount);
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _droneConsumers.Add(_idleDroneConsumer);
 
             TriggerIdleDronesCheck();
-            Assert.AreEqual(1, _idleDronesEventCount);
+            Assert.AreEqual(1, _idleDronesStartedEventCount);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _droneConsumers.Add(_activeDroneConsumer);
 
             TriggerIdleDronesCheck();
-            Assert.AreEqual(0, _idleDronesEventCount);
+            Assert.AreEqual(0, _idleDronesStartedEventCount);
         }
 
         private void TriggerIdleDronesCheck()

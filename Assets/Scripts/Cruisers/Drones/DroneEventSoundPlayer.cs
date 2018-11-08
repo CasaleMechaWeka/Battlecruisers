@@ -18,7 +18,7 @@ namespace BattleCruisers.Cruisers.Drones
             _soundPlayer = soundPlayer;
 
             _droneManagerMonitor.DroneNumIncreased += _droneManagerMonitor_DroneNumIncreased;
-            _droneManagerMonitor.IdleDrones += _droneManagerMonitor_IdleDrones;
+            _droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
         }
 
         private void _droneManagerMonitor_DroneNumIncreased(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers.Drones
             _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NewDronesReady);
         }
 
-        private void _droneManagerMonitor_IdleDrones(object sender, EventArgs e)
+        private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
         {
             _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle);
         }
@@ -34,7 +34,7 @@ namespace BattleCruisers.Cruisers.Drones
         public void DisposeManagedState()
         {
             _droneManagerMonitor.DroneNumIncreased -= _droneManagerMonitor_DroneNumIncreased;
-            _droneManagerMonitor.IdleDrones -= _droneManagerMonitor_IdleDrones;
+            _droneManagerMonitor.IdleDronesStarted -= _droneManagerMonitor_IdleDronesStarted;
         }
     }
 }

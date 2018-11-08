@@ -15,7 +15,7 @@ namespace BattleCruisers.Cruisers.Drones
         private const float IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S = 0.1f;
 
         public event EventHandler DroneNumIncreased;
-        public event EventHandler IdleDrones;
+        public event EventHandler IdleDronesStarted;
 
         public DroneManagerMonitor(IDroneManager droneManager, IVariableDelayDeferrer deferrer)
         {
@@ -63,9 +63,9 @@ namespace BattleCruisers.Cruisers.Drones
         private void CheckForIdleDrones()
         {
             if (AreAllDroneConsumersIdle()
-                && IdleDrones != null)
+                && IdleDronesStarted != null)
             {
-                IdleDrones.Invoke(this, EventArgs.Empty);
+                IdleDronesStarted.Invoke(this, EventArgs.Empty);
             }
         }
 
