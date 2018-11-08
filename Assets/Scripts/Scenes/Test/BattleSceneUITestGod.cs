@@ -120,6 +120,7 @@ namespace BattleCruisers.Scenes.Test
             SetupNavigationWheel();
             SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
             SetupMainMenuButton();
+            SetupDronesPanel(playerCruiser.DroneManager, new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer));
         }
 
         private static void SetupSpeedPanel()
@@ -234,6 +235,13 @@ namespace BattleCruisers.Scenes.Test
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters);
+        }
+
+        private void SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        {
+            DronesPanelInitialiser dronesPanelInitialiser = FindObjectOfType<DronesPanelInitialiser>();
+            Assert.IsNotNull(dronesPanelInitialiser);
+            dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
         // NEWUI  Move to CameraController?
