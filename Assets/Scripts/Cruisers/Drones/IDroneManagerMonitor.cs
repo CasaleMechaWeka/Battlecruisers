@@ -6,5 +6,6 @@ namespace BattleCruisers.Cruisers.Drones
     {
         event EventHandler DroneNumIncreased;
         event EventHandler IdleDronesStarted;
+        event EventHandler IdleDronesEnded;
     }
 }

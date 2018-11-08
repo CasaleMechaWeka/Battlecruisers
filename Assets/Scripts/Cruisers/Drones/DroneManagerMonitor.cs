@@ -14,8 +14,37 @@ namespace BattleCruisers.Cruisers.Drones
 
         private const float IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S = 0.1f;
 
+        private bool _areDronesIdle;
+        private bool AreDronesIdle
+        {
+            get { return _areDronesIdle; }
+            set
+            {
+                if (_areDronesIdle != value)
+                {
+                    _areDronesIdle = value;
+
+                    if (_areDronesIdle)
+                    {
+                        if (IdleDronesStarted != null)
+                        {
+                            IdleDronesStarted.Invoke(this, EventArgs.Empty);
+                        }
+                    }
+                    else
+                    {
+                        if (IdleDronesEnded != null)
+                        {
+                            IdleDronesEnded.Invoke(this, EventArgs.Empty);
+                        }
+                    }
+                }
+            }
+        }
+
         public event EventHandler DroneNumIncreased;
         public event EventHandler IdleDronesStarted;
+        public event EventHandler IdleDronesEnded;
 
         public DroneManagerMonitor(IDroneManager droneManager, IVariableDelayDeferrer deferrer)
         {
@@ -24,6 +53,7 @@ namespace BattleCruisers.Cruisers.Drones
             _droneManager = droneManager;
             _deferrer = deferrer;
             _previousNumOfDrones = _droneManager.NumOfDrones;
+            _areDronesIdle = false;
 
             _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
             _droneManager.DroneConsumers.Changed += DroneConsumers_Changed;
@@ -44,10 +74,7 @@ namespace BattleCruisers.Cruisers.Drones
 
         private void DroneConsumers_Changed(object sender, CollectionChangedEventArgs<IDroneConsumer> e)
         {
-            if (e.Type == ChangeType.Remove)
-            {
-                DeferCheckForIdleDrones();
-            }
+            DeferCheckForIdleDrones();
         }
 
         /// <summary>
@@ -62,11 +89,7 @@ namespace BattleCruisers.Cruisers.Drones
 
         private void CheckForIdleDrones()
         {
-            if (AreAllDroneConsumersIdle()
-                && IdleDronesStarted != null)
-            {
-                IdleDronesStarted.Invoke(this, EventArgs.Empty);
-            }
+            AreDronesIdle = AreAllDroneConsumersIdle();
         }
 
         private bool AreAllDroneConsumersIdle()
