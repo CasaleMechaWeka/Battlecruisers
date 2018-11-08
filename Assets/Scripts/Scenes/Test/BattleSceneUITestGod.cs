@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
@@ -12,6 +13,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -51,16 +53,18 @@ namespace BattleCruisers.Scenes.Test
         public BuildMenuControllerNEW buildMenu;
         public ModalMenuController modalMenu;
         public InformatorPanelController informator;
+        public NumOfDronesController numOfDrones;
 
         // NEWUI  Remove this bool :P
         public static bool IsNewUI = true;
 
+        // FELIX  Split up into Left-/Right-PanelController, they initialise?
         private void Start()
         {
             // FELIX  Extract GetComponents() to separate method?
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
-            Helper.AssertIsNotNull(buildMenu, modalMenu, informator, variableDelayDeferrer);
+            Helper.AssertIsNotNull(buildMenu, modalMenu, informator, numOfDrones, variableDelayDeferrer);
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -88,8 +92,15 @@ namespace BattleCruisers.Scenes.Test
             _pauseGameManager = new PauseGameManager(time);
             _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
             modalMenu.Initialise(_applicationModel.IsTutorial);
+
             ICruiser playerCruiser = Substitute.For<ICruiser>();
             _tempPlayerCruiser = playerCruiser;
+
+            IDroneManager droneManager = Substitute.For<IDroneManager>();
+            droneManager.NumOfDrones.Returns(12);
+            playerCruiser.DroneManager.Returns(droneManager);
+
+
             ICruiser aiCruiser = Substitute.For<ICruiser>();
 
             // FELIX Pass real implementation :P
@@ -97,6 +108,8 @@ namespace BattleCruisers.Scenes.Test
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
+
+            numOfDrones.Initialise(playerCruiser.DroneManager);
 
             // Informator has circular dependency with UIManager :/
             informator.StaticInitialise();
