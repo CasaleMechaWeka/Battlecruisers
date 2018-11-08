@@ -119,6 +119,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			{
 				_currentMenu.OnDismissing();
                 _currentMenu.IsVisible = false;
+                _currentMenu = null;
 
                 _selectorPanel.Hide();
 			}

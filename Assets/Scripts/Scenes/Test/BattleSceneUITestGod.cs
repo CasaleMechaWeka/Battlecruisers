@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
@@ -44,6 +45,7 @@ namespace BattleCruisers.Scenes.Test
         // Just for test scene, should not be transferred to new BattleSceneGod :)
         private IPrefabFactory _tempPrefabFactory;
         private IUIManager _tempUIManager;
+        private ICruiser _tempPlayerCruiser;
 
         public float smoothTime;
         public BuildMenuControllerNEW buildMenu;
@@ -87,6 +89,7 @@ namespace BattleCruisers.Scenes.Test
             _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
             modalMenu.Initialise(_applicationModel.IsTutorial);
             ICruiser playerCruiser = Substitute.For<ICruiser>();
+            _tempPlayerCruiser = playerCruiser;
             ICruiser aiCruiser = Substitute.For<ICruiser>();
 
             // FELIX Pass real implementation :P
@@ -230,6 +233,13 @@ namespace BattleCruisers.Scenes.Test
         public void SimulateSelectingPlayerFactory()
         {
             Debug.Log("SimulateSelectingPlayerFactory");
+
+            IFactory factory = Substitute.For<IFactory>();
+            factory.UnitCategory.Returns(UnitCategory.Naval);
+            factory.ParentCruiser.Returns(_tempPlayerCruiser);
+            factory.BuildableState.Returns(BuildableState.Completed);
+
+            _tempUIManager.ShowFactoryUnits(factory);
         }
 
         // To test cruiser details

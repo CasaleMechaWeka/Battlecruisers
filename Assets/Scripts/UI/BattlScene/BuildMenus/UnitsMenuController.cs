@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
 	{
         private IUnitClickHandler _unitClickHandler;
-        private Factory _factory;
+        private IFactory _factory;
 
 		public void Initialise(
             IUIManager uiManager,
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
 			base.OnPresenting(activationParameter);
 
-			_factory = activationParameter.Parse<Factory>();
+			_factory = activationParameter.Parse<IFactory>();
 			_factory.Destroyed += _factory_Destroyed;
 		}
 
