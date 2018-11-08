@@ -7,6 +7,9 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
     // FELIX  Abstract and test???
+    // FELIX  NEXT
+    // 1. Subscribe to IdleDrones-Started/-Ended events, update highlight
+    // 2. Abstract setting text drone num (allow for different sized digits) :)
     public class NumOfDronesControllerNEW : UIElement, IManagedDisposable, IButton, IPointerClickHandler
     {
         private IDroneManager _droneManager;
