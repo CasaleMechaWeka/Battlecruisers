@@ -10,15 +10,12 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
-using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
@@ -28,11 +25,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
+    // FELIX  Replace all Substitutes :D
     public class BattleSceneUITestGod : MonoBehaviour
     {
-        private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
-
         // Just for test scene, should not be transferred to new BattleSceneGod :)
         private IPrefabFactory _tempPrefabFactory;
         private IUIManager _tempUIManager;
@@ -53,21 +48,18 @@ namespace BattleCruisers.Scenes.Test
             Helper.AssertIsNotNull(variableDelayDeferrer);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            _applicationModel = ApplicationModelProvider.ApplicationModel;
-
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
-            if (_applicationModel.SelectedLevel == -1)
+            if (applicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                _applicationModel.SelectedLevel = 1;
+                applicationModel.SelectedLevel = 1;
 
-                //musicPlayer = Substitute.For<IMusicPlayer>();
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-
-            _dataProvider = _applicationModel.DataProvider;
+            IDataProvider dataProvider = applicationModel.DataProvider;
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
@@ -79,7 +71,7 @@ namespace BattleCruisers.Scenes.Test
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             _tempPrefabFactory = prefabFactory;
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            IBattleSceneHelper helper = CreateHelper(prefabFactory, variableDelayDeferrer);
+            IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
 
             ICruiser playerCruiser = Substitute.For<ICruiser>();
             _tempPlayerCruiser = playerCruiser;
@@ -88,29 +80,20 @@ namespace BattleCruisers.Scenes.Test
             droneManager.NumOfDrones.Returns(12);
             playerCruiser.DroneManager.Returns(droneManager);
 
-
             ICruiser aiCruiser = Substitute.For<ICruiser>();
 
-            // FELIX Pass real implementation :P
             IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
 
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
-            // Informator has circular dependency with UIManager :/
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
             _tempUIManager = uiManager;
-            //SetupInformator(buttonVisibilityFilters, playerCruiser, uiManager);
-            //SetupSpeedPanel();
-            //SetupNavigationWheel();
-            //SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
-            //SetupMainMenuButton();
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
-            //SetupDronesPanel(playerCruiser.DroneManager, _tempDroneManagerMonitor);
-            //SetupDronesPanel(playerCruiser.DroneManager, new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer));
 
             Camera platformCamera = FindObjectOfType<Camera>();
+            Assert.IsNotNull(platformCamera);
             ICamera camera = new CameraBC(platformCamera);
 
             leftPanelInitialiser
@@ -130,19 +113,12 @@ namespace BattleCruisers.Scenes.Test
 
             rightPanelInitialiser
                 .Initialise(
-                    _applicationModel,
+                    applicationModel,
                     sceneNavigator,
                     uiManager,
                     playerCruiser,
                     Substitute.For<IUserChosenTargetHelper>(),
                     buttonVisibilityFilters);
-        }
-
-        private static void SetupSpeedPanel()
-        {
-            SpeedPanelController speedPanelInitialiser = FindObjectOfType<SpeedPanelController>();
-            Assert.IsNotNull(speedPanelInitialiser);
-            speedPanelInitialiser.Initialise();
         }
 
         private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
@@ -155,7 +131,7 @@ namespace BattleCruisers.Scenes.Test
                     aiCruiser);
         }
 
-        private IBattleSceneHelper CreateHelper(IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
+        private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
             // FELIX  Handle tutorial :)
             //if (ApplicationModel.IsTutorial)
@@ -166,34 +142,9 @@ namespace BattleCruisers.Scenes.Test
             //}
             //else
             {
-                return new NormalHelper(_dataProvider, prefabFactory, variableDelayDeferrer);
+                return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
         }
-
-        //private void SetupMainMenuButton()
-        //{
-        //    IMainMenuManager mainMenuManager = new MainMenuManager(_pauseGameManager, modalMenu, _battleCompletionHandler);
-
-        //    MainMenuButtonController mainMenuButton = FindObjectOfType<MainMenuButtonController>();
-        //    Assert.IsNotNull(mainMenuButton);
-        //    mainMenuButton.Initialise(mainMenuManager);
-        //}
-
-        //private void SetupInformator(
-        //    IButtonVisibilityFilters buttonVisibilityFilters, 
-        //    ICruiser playerCruiser,
-        //    IUIManager uiManager)
-        //{
-        //    playerCruiser = Substitute.For<ICruiser>();
-        //    IUserChosenTargetHelper userChosenTargetHelper = Substitute.For<IUserChosenTargetHelper>();
-
-        //    informator
-        //        .Initialise(
-        //            uiManager,
-        //            playerCruiser,
-        //            userChosenTargetHelper,
-        //            buttonVisibilityFilters);
-        //}
 
         // To test showing unit buttons
         public void SimulateSelectingPlayerFactory()
