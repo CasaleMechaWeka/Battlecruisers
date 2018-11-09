@@ -9,6 +9,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         ICruiser PlayerCruiser { get; }
         ICruiser AICruiser { get; }
         IBuildMenu BuildMenu { get; }
-        IBuildableDetailsManager DetailsManager { get; }
+        IItemDetailsManager DetailsManager { get; }
     }
 }

@@ -17,13 +17,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenuNEW _buildMenu;
-        private readonly IBuildableDetailsManager _detailsManager;
+        private readonly IItemDetailsManager _detailsManager;
 
         // FELIX  Update IManagerArgs
         // FELIX  Use IManagerArgs :)
         public UIManagerNEW(
             IBuildMenuNEW buildMenu,
-            IBuildableDetailsManager detailsManager,
+            IItemDetailsManager detailsManager,
             ICruiser playerCruiser,
             ICruiser aiCruiser)
         {

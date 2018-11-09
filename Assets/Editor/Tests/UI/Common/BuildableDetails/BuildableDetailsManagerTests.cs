@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 {
     public class BuildableDetailsManagerTests
     {
-        private IBuildableDetailsManager _detailsManager;
+        private IItemDetailsManager _detailsManager;
         private IBuildableDetails<IBuilding> _buildingDetails;
         private IBuildableDetails<IUnit> _unitDetails;
         private ICruiserDetails _cruiserDetails;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             hudCanvas.UnitDetails.Returns(_unitDetails);
             hudCanvas.CruiserDetails.Returns(_cruiserDetails);
 
-            _detailsManager = new BuildableDetailsManager(hudCanvas);
+            _detailsManager = new ItemDetailsManager(hudCanvas);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();

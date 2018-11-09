@@ -148,7 +148,7 @@ namespace BattleCruisers.Scenes.Test
             return
                 new UIManagerNEW(
                     buildMenu,
-                    new BuildableDetailsManager(informator),
+                    new ItemDetailsManager(informator),
                     playerCruiser,
                     aiCruiser);
         }

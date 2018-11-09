@@ -6,15 +6,14 @@ using BattleCruisers.Utils;
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
     // NEWUI  Update tests :)
-    // FELIX  Rename to ItemDetailsManager :)
-    public class BuildableDetailsManager : IBuildableDetailsManager
+    public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IInformatorPanel _informator;
         private readonly IBuildableDetails<IBuilding> _buildingDetails;
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
 
-        public BuildableDetailsManager(IInformatorPanel informator)
+        public ItemDetailsManager(IInformatorPanel informator)
         {
             Helper.AssertIsNotNull(informator);
 

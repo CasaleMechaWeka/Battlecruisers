@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public interface IBuildableDetailsManager
+    public interface IItemDetailsManager
     {
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);

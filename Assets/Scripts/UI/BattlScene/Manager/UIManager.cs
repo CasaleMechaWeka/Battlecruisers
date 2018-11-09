@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 	{
 		private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBuildMenu _buildMenu;
-        private readonly IBuildableDetailsManager _detailsManager;
+        private readonly IItemDetailsManager _detailsManager;
 
         public UIManager(IManagerArgs args)
 		{
