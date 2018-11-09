@@ -115,13 +115,33 @@ namespace BattleCruisers.Scenes.Test
             _tempUIManager = uiManager;
             SetupInformator(buttonVisibilityFilters, playerCruiser, uiManager);
             SetupSpeedPanel();
-            SetupNavigationWheel();
-            SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
+            //SetupNavigationWheel();
+            //SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
             SetupMainMenuButton();
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
-            SetupDronesPanel(playerCruiser.DroneManager, _tempDroneManagerMonitor);
+            //SetupDronesPanel(playerCruiser.DroneManager, _tempDroneManagerMonitor);
             //SetupDronesPanel(playerCruiser.DroneManager, new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer));
+
+            Camera platformCamera = FindObjectOfType<Camera>();
+            ICamera camera = new CameraBC(platformCamera);
+
+            LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
+            Assert.IsNotNull(leftPanelInitialiser);
+            leftPanelInitialiser
+                .Initialise(
+                    playerCruiser.DroneManager,
+                    _tempDroneManagerMonitor,
+                    camera,
+                    Substitute.For<ISettingsManager>(),
+                    smoothTime,
+                    uiManager,
+                    playerLoadout,
+                    prefabFactory,
+                    spriteProvider,
+                    buttonVisibilityFilters,
+                    Substitute.For<IPlayerCruiserFocusHelper>(),
+                    Substitute.For<IPrioritisedSoundPlayer>());
         }
 
         private static void SetupSpeedPanel()
@@ -248,7 +268,7 @@ namespace BattleCruisers.Scenes.Test
         // NEWUI  Move to CameraController?
         private void Update()
         {
-            _cameraAdjuster.AdjustCamera();
+            //_cameraAdjuster.AdjustCamera();
         }
 
         // To test showing unit buttons
