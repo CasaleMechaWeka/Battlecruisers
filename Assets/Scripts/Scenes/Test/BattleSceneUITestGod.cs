@@ -48,6 +48,7 @@ namespace BattleCruisers.Scenes.Test
         private IPrefabFactory _tempPrefabFactory;
         private IUIManager _tempUIManager;
         private ICruiser _tempPlayerCruiser;
+        private IDroneManagerMonitor _tempDroneManagerMonitor;
 
         public float smoothTime;
         public BuildMenuControllerNEW buildMenu;
@@ -117,7 +118,10 @@ namespace BattleCruisers.Scenes.Test
             SetupNavigationWheel();
             SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters);
             SetupMainMenuButton();
-            SetupDronesPanel(playerCruiser.DroneManager, new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer));
+
+            _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
+            SetupDronesPanel(playerCruiser.DroneManager, _tempDroneManagerMonitor);
+            //SetupDronesPanel(playerCruiser.DroneManager, new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer));
         }
 
         private static void SetupSpeedPanel()
@@ -276,6 +280,22 @@ namespace BattleCruisers.Scenes.Test
 
             IBuildableWrapper<IUnit> unit = _tempPrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.ArchonBattleship);
             _tempUIManager.ShowUnitDetails(unit.Buildable);
+        }
+
+        // To test idle drone highlighting
+        private bool _areDronesIdle = false;
+        public void ToggleIdleDrones()
+        {
+            if (_areDronesIdle)
+            {
+                _tempDroneManagerMonitor.IdleDronesEnded += Raise.Event();
+            }
+            else
+            {
+                _tempDroneManagerMonitor.IdleDronesStarted += Raise.Event();
+            }
+
+            _areDronesIdle = !_areDronesIdle;
         }
     }
 }
