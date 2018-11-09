@@ -35,6 +35,22 @@ namespace BattleCruisers.UI.BattleScene
         // NEWUI  Move to CameraController?
         private ICameraAdjuster _cameraAdjuster;
 
+        // Circular dependency between UIManager and BuildMenuControllerNEW.
+        private BuildMenuControllerNEW _buildMenu;
+        public BuildMenuControllerNEW BuildMenu
+        {
+            get
+            {
+                if (_buildMenu == null)
+                {
+                    _buildMenu = FindObjectOfType<BuildMenuControllerNEW>();
+                    Assert.IsNotNull(_buildMenu);
+                }
+
+                return _buildMenu;
+            }
+        }
+
         // FELIX  Group parameters in classes? :P
         public void Initialise(
             IDroneManager droneManager, 
@@ -110,10 +126,7 @@ namespace BattleCruisers.UI.BattleScene
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
 
-            BuildMenuControllerNEW buildMenu = FindObjectOfType<BuildMenuControllerNEW>();
-            Assert.IsNotNull(buildMenu);
-
-            buildMenu
+            BuildMenu
                 .Initialise(
                     uiManager,
                     buildingGroups,

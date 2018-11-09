@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -39,19 +41,23 @@ namespace BattleCruisers.UI.BattleScene
             }
         }
 
+        // Not using FindObjectOfType() because that ignores inactive objects
+        public ModalMenuController modalMenu;
+
         public void Initialise(
+            IApplicationModel applicationModel,
+            ISceneNavigator sceneNavigator,
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters,
-            IBattleCompletionHandler battleCompletionHandler)
+            IButtonVisibilityFilters buttonVisibilityFilters)
         {
-            Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, battleCompletionHandler);
+            Helper.AssertIsNotNull(modalMenu, applicationModel, sceneNavigator, uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
 
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             SetupSpeedPanel();
             // FELIX  Setup help button
-            SetupMainMenuButton(battleCompletionHandler);
+            SetupMainMenuButton(applicationModel, sceneNavigator);
         }
 
         private void SetupInformator(
@@ -75,10 +81,9 @@ namespace BattleCruisers.UI.BattleScene
             speedPanelInitialiser.Initialise();
         }
 
-        private void SetupMainMenuButton(IBattleCompletionHandler battleCompletionHandler)
+        private void SetupMainMenuButton(IApplicationModel applicationModel, ISceneNavigator sceneNavigator)
         {
-            ModalMenuController modalMenu = FindObjectOfType<ModalMenuController>();
-            Assert.IsNotNull(modalMenu);
+            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
             IPauseGameManager pauseGameManager = new PauseGameManager(new TimeBC());
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
