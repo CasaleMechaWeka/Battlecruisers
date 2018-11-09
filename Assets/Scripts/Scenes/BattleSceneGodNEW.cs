@@ -1,12 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -23,17 +19,11 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes
 {
     // FELIX  Replace all Substitutes :D
     public class BattleSceneGodNEW : MonoBehaviour
     {
-        // Just for test scene, should not be transferred to new BattleSceneGod :)
-        private IPrefabFactory _tempPrefabFactory;
-        private IUIManager _tempUIManager;
-        private ICruiser _tempPlayerCruiser;
-        private IDroneManagerMonitor _tempDroneManagerMonitor;
-
         public float smoothTime;
 
         // NEWUI  Remove this bool :P
@@ -69,12 +59,10 @@ namespace BattleCruisers.Scenes.Test
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
-            _tempPrefabFactory = prefabFactory;
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
 
             ICruiser playerCruiser = Substitute.For<ICruiser>();
-            _tempPlayerCruiser = playerCruiser;
 
             IDroneManager droneManager = Substitute.For<IDroneManager>();
             droneManager.NumOfDrones.Returns(12);
@@ -88,9 +76,6 @@ namespace BattleCruisers.Scenes.Test
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
-            _tempUIManager = uiManager;
-
-            _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
 
             Camera platformCamera = FindObjectOfType<Camera>();
             Assert.IsNotNull(platformCamera);
@@ -99,7 +84,7 @@ namespace BattleCruisers.Scenes.Test
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
-                    _tempDroneManagerMonitor,
+                    Substitute.For<IDroneManagerMonitor>(),
                     camera,
                     Substitute.For<ISettingsManager>(),
                     smoothTime,
@@ -144,53 +129,6 @@ namespace BattleCruisers.Scenes.Test
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
-        }
-
-        // To test showing unit buttons
-        public void SimulateSelectingPlayerFactory()
-        {
-            Debug.Log("SimulateSelectingPlayerFactory");
-
-            IFactory factory = Substitute.For<IFactory>();
-            factory.UnitCategory.Returns(UnitCategory.Naval);
-            factory.ParentCruiser.Returns(_tempPlayerCruiser);
-            factory.BuildableState.Returns(BuildableState.Completed);
-
-            _tempUIManager.ShowFactoryUnits(factory);
-        }
-
-        // To test cruiser details
-        public void SimulateSelectingCruiser()
-        {
-            Debug.Log("SimulateSelectingCruiser");
-
-            Cruiser cruiser = _tempPrefabFactory.GetCruiserPrefab(StaticPrefabKeys.Hulls.Longbow);
-            _tempUIManager.ShowCruiserDetails(cruiser);
-        }
-
-        // To test showing unit details
-        public void SimulateSelectingUnit()
-        {
-            Debug.Log("SimulateSelectingUnit");
-
-            IBuildableWrapper<IUnit> unit = _tempPrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.ArchonBattleship);
-            _tempUIManager.ShowUnitDetails(unit.Buildable);
-        }
-
-        // To test idle drone highlighting
-        private bool _areDronesIdle = false;
-        public void ToggleIdleDrones()
-        {
-            if (_areDronesIdle)
-            {
-                _tempDroneManagerMonitor.IdleDronesEnded += Raise.Event();
-            }
-            else
-            {
-                _tempDroneManagerMonitor.IdleDronesStarted += Raise.Event();
-            }
-
-            _areDronesIdle = !_areDronesIdle;
         }
     }
 }
