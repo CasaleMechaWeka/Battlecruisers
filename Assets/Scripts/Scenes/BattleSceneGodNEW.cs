@@ -131,6 +131,8 @@ namespace BattleCruisers.Scenes
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
             
 
+            // Have circular dependency between cruisers and UI manager.  Hence
+            // create and initialise cruisers separately.
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
 
 
