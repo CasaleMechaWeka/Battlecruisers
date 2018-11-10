@@ -36,6 +36,7 @@ namespace BattleCruisers.Cruisers
         private readonly IAudioSource _audioSource;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
+        private readonly ICameraController _cameraController;
         private Cruiser _playerCruiser, _aiCruiser;
 
         private const int CRUISER_OFFSET_IN_M = 35;
@@ -48,9 +49,10 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IAudioSource audioSource,
             IBattleSceneHelper helper,
-            IApplicationModel applicationModel)
+            IApplicationModel applicationModel,
+            ICameraController cameraController)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, soleCamera, audioSource, helper, applicationModel);
+            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, soleCamera, audioSource, helper, applicationModel, cameraController);
             
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
@@ -60,6 +62,7 @@ namespace BattleCruisers.Cruisers
             _audioSource = audioSource;
             _helper = helper;
             _applicationModel = applicationModel;
+            _cameraController = cameraController;
         }
 
         public ICruiser CreatePlayerCruiser()
@@ -88,20 +91,19 @@ namespace BattleCruisers.Cruisers
 
         public void InitialisePlayerCruiser(
             IUIManager uiManager,
-            ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker)
         {
             Helper.AssertIsNotNull(
                 uiManager,
-                helper,
                 highlightableFilter,
                 buildProgressCalculator,
                 userChosenTargetTracker);
             Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialisePlayerCruiser()");
             Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialisePlayerCruiser()");
 
+            ICruiserHelper helper = CreatePlayerHelper(uiManager, _cameraController);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             bool shouldShowFog = false;
@@ -128,7 +130,6 @@ namespace BattleCruisers.Cruisers
 
         public void InitialiseAICruiser(
             IUIManager uiManager,
-            ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
@@ -136,7 +137,6 @@ namespace BattleCruisers.Cruisers
         {
             Helper.AssertIsNotNull(
                 uiManager,
-                helper,
                 highlightableFilter,
                 buildProgressCalculator,
                 userChosenTargetTracker,
@@ -144,6 +144,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialiseAICruiser()");
             Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialiseAICruiser()");
 
+            ICruiserHelper helper = CreateAIHelper(uiManager, _cameraController);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
             bool shouldShowFog = true;
@@ -237,12 +238,12 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        public ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)
+        private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)
         {
             return new AICruiserHelper(uiManager, camera);
         }
 
-        public ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera)
+        private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera)
         {
             return new PlayerCruiserHelper(uiManager, camera);
         }

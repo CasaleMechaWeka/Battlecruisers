@@ -112,6 +112,9 @@ namespace BattleCruisers.Scenes
             ICamera camera = new CameraBC(platformCamera);
 
 
+            ICameraController cameraController = Substitute.For<ICameraController>();
+
+
             // FELIX  Abstract cruiser creation!
             ICruiserFactoryNEW cruiserFactory
                 = new CruiserFactoryNEW(
@@ -122,7 +125,8 @@ namespace BattleCruisers.Scenes
                     camera,
                     audioSource,
                     helper,
-                    applicationModel);
+                    applicationModel,
+                    cameraController);
 
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
@@ -133,12 +137,9 @@ namespace BattleCruisers.Scenes
 
             // FELIX  Abstract cruiser initialisation
             // Initialise player cruiser
-            ICameraController cameraController = Substitute.For<ICameraController>();
-            ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
             cruiserFactory
                 .InitialisePlayerCruiser(
                     uiManager,
-                    playerHelper,
                     highlightableSlotFilter,
                     helper.PlayerCruiserBuildProgressCalculator,
                     playerCruiserUserChosenTargetManager);
@@ -150,11 +151,9 @@ namespace BattleCruisers.Scenes
                 = new UserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
-            ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
             cruiserFactory
                 .InitialiseAICruiser(
                     uiManager,
-                    aiHelper,
                     highlightableSlotFilter,
                     helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
