@@ -31,8 +31,6 @@ namespace BattleCruisers.Scenes
     public class BattleSceneGodNEW : MonoBehaviour
     {
         // FELIX  Remove all unused fields :)
-        private IBattleCompletionHandler _battleCompletionHandler;
-        private IPauseGameManager _pauseGameManager;
         // FELIX  Dispose or suppress warning :/
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IArtificialIntelligence _ai;
@@ -40,6 +38,7 @@ namespace BattleCruisers.Scenes
         private IManagedDisposable _droneEventSoundPlayer;
         private UltrasConstructionMonitor _ultrasConstructionMonitor;
         private DangerMusicPlayer _dangerMusicPlayer;
+        private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
 
         public float smoothTime;
 
@@ -74,7 +73,7 @@ namespace BattleCruisers.Scenes
             }
 
             IDataProvider dataProvider = applicationModel.DataProvider;
-            _battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
@@ -89,7 +88,7 @@ namespace BattleCruisers.Scenes
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
-            _pauseGameManager = new PauseGameManager(time);
+            IPauseGameManager pauseGameManager = new PauseGameManager(time);
 
 
             // FELIX  Abstract camera related functionality (currently camera moving
@@ -127,8 +126,6 @@ namespace BattleCruisers.Scenes
                 .InitialisePlayerCruiser(
                     uiManager,
                     playerCruiserUserChosenTargetManager);
-            playerCruiser.Destroyed += PlayerCruiser_Destroyed;
-
 
             // Initialise AI cruiser
             IUserChosenTargetHelper userChosenTargetHelper
@@ -140,7 +137,6 @@ namespace BattleCruisers.Scenes
                     uiManager,
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
-            aiCruiser.Destroyed += AiCruiser_Destroyed;
 
 
             // UI
@@ -170,7 +166,7 @@ namespace BattleCruisers.Scenes
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
-                    _pauseGameManager);
+                    pauseGameManager);
 
 
             // FELIX  Abstract??
@@ -189,6 +185,7 @@ namespace BattleCruisers.Scenes
             // FELIX  Abstract event monitors?
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
+            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
         }
 
         private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
@@ -214,20 +211,6 @@ namespace BattleCruisers.Scenes
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
-        }
-
-        // FELIX  Abstract :/
-        private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            _pauseGameManager.PauseGame();
-            _battleCompletionHandler.CompleteBattle(wasVictory: false);
-        }
-
-        // FELIX  Abstract :/
-        private void AiCruiser_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            _pauseGameManager.PauseGame();
-            _battleCompletionHandler.CompleteBattle(wasVictory: true);
         }
 
         // FELIX  Abstract :D
