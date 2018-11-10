@@ -37,6 +37,7 @@ namespace BattleCruisers.Cruisers
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
         private readonly ICameraController _cameraController;
+        private readonly ISlotFilter _highlightableSlotFilter;
         private Cruiser _playerCruiser, _aiCruiser;
 
         private const int CRUISER_OFFSET_IN_M = 35;
@@ -63,6 +64,7 @@ namespace BattleCruisers.Cruisers
             _helper = helper;
             _applicationModel = applicationModel;
             _cameraController = cameraController;
+            _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
         }
 
         public ICruiser CreatePlayerCruiser()
@@ -89,17 +91,9 @@ namespace BattleCruisers.Cruisers
             return _aiCruiser;
         }
 
-        public void InitialisePlayerCruiser(
-            IUIManager uiManager,
-            ISlotFilter highlightableFilter,
-            IBuildProgressCalculator buildProgressCalculator,
-            IRankedTargetTracker userChosenTargetTracker)
+        public void InitialisePlayerCruiser(IUIManager uiManager, IRankedTargetTracker userChosenTargetTracker)
         {
-            Helper.AssertIsNotNull(
-                uiManager,
-                highlightableFilter,
-                buildProgressCalculator,
-                userChosenTargetTracker);
+            Helper.AssertIsNotNull(uiManager, userChosenTargetTracker);
             Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialisePlayerCruiser()");
             Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialisePlayerCruiser()");
 
@@ -119,8 +113,8 @@ namespace BattleCruisers.Cruisers
                 faction,
                 facingDirection,
                 shouldShowFog,
-                highlightableFilter,
-                buildProgressCalculator,
+                _highlightableSlotFilter,
+                _helper.PlayerCruiserBuildProgressCalculator,
                 userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
@@ -130,17 +124,10 @@ namespace BattleCruisers.Cruisers
 
         public void InitialiseAICruiser(
             IUIManager uiManager,
-            ISlotFilter highlightableFilter,
-            IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IUserChosenTargetHelper userChosenTargetHelper)
         {
-            Helper.AssertIsNotNull(
-                uiManager,
-                highlightableFilter,
-                buildProgressCalculator,
-                userChosenTargetTracker,
-                userChosenTargetHelper);
+            Helper.AssertIsNotNull(uiManager, userChosenTargetTracker, userChosenTargetHelper);
             Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialiseAICruiser()");
             Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialiseAICruiser()");
 
@@ -161,8 +148,8 @@ namespace BattleCruisers.Cruisers
                 faction,
                 facingDirection,
                 shouldShowFog,
-                highlightableFilter,
-                buildProgressCalculator,
+                _highlightableSlotFilter,
+                _helper.AICruiserBuildProgressCalculator,
                 userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,

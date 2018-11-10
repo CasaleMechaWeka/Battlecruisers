@@ -98,7 +98,6 @@ namespace BattleCruisers.Scenes
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
-            ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -115,7 +114,7 @@ namespace BattleCruisers.Scenes
             ICameraController cameraController = Substitute.For<ICameraController>();
 
 
-            // FELIX  Abstract cruiser creation!
+            // Create cruisers
             ICruiserFactoryNEW cruiserFactory
                 = new CruiserFactoryNEW(
                     prefabFactory,
@@ -135,13 +134,10 @@ namespace BattleCruisers.Scenes
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
 
 
-            // FELIX  Abstract cruiser initialisation
             // Initialise player cruiser
             cruiserFactory
                 .InitialisePlayerCruiser(
                     uiManager,
-                    highlightableSlotFilter,
-                    helper.PlayerCruiserBuildProgressCalculator,
                     playerCruiserUserChosenTargetManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
 
@@ -154,8 +150,6 @@ namespace BattleCruisers.Scenes
             cruiserFactory
                 .InitialiseAICruiser(
                     uiManager,
-                    highlightableSlotFilter,
-                    helper.AICruiserBuildProgressCalculator,
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
             aiCruiser.Destroyed += AiCruiser_Destroyed;
