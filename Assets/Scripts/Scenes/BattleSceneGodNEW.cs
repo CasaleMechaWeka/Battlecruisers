@@ -1,43 +1,79 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
+// FELIX  Replace all Substitutes :D  (Don't remove this comment until "using NSubstitute;" is removed :)
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes
 {
-    // FELIX  Replace all Substitutes :D
     public class BattleSceneGodNEW : MonoBehaviour
     {
+        // FELIX  Remove all unused fields :)
+        private IBattleCompletionHandler _battleCompletionHandler;
+        private IPauseGameManager _pauseGameManager;
+        // FELIX  Dispose or suppress warning :/
+        private UserChosenTargetHighligher _userChosenTargetHighligher;
+        private IArtificialIntelligence _ai;
+        private CruiserEventMonitor _cruiserEventMonitor;
+        private IManagedDisposable _droneEventSoundPlayer;
+        private UltrasConstructionMonitor _ultrasConstructionMonitor;
+        private DangerMusicPlayer _dangerMusicPlayer;
+
         public float smoothTime;
 
         // NEWUI  Remove this bool :P
         public static bool IsNewUI = true;
 
+        private const int CRUISER_OFFSET_IN_M = 35;
+
         // FELIX  Split up into Left-/Right-PanelController, they initialise?
         private void Start()
         {
-            // FELIX  Extract GetComponents() to separate method?
-            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
+            Assert.raiseExceptions = true;
+            // FELIX  Hm, time scale should be someone else's responsibility :/
+            Time.timeScale = 1;
 
-            Helper.AssertIsNotNull(variableDelayDeferrer);
+
+            // FELIX  Extract GetComponents() to separate method?
+            IDeferrer deferrer = GetComponent<IDeferrer>();
+            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
+            IHighlightFactory highlightFactory = GetComponent<IHighlightFactory>();
+
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(platformAudioSource);
+            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
+
+            Helper.AssertIsNotNull(deferrer, variableDelayDeferrer, highlightFactory);
+
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
+            IMusicPlayer musicPlayer = LandingSceneGod.MusicPlayer;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
@@ -47,9 +83,11 @@ namespace BattleCruisers.Scenes
                 applicationModel.SelectedLevel = 1;
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
+                musicPlayer = Substitute.For<IMusicPlayer>();
             }
 
             IDataProvider dataProvider = applicationModel.DataProvider;
+            _battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
@@ -61,32 +99,93 @@ namespace BattleCruisers.Scenes
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
+            ISlotFilter highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
+            IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
+            ITime time = new TimeBC();
+            _pauseGameManager = new PauseGameManager(time);
 
-            ICruiser playerCruiser = Substitute.For<ICruiser>();
 
-            IDroneManager droneManager = Substitute.For<IDroneManager>();
-            droneManager.NumOfDrones.Returns(12);
-            playerCruiser.DroneManager.Returns(droneManager);
-
-            ICruiser aiCruiser = Substitute.For<ICruiser>();
-
-            IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
-
+            // FELIX  Abstract cruise creation!
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
+            Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
+            Cruiser playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
+            playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
+
+            // Instantiate AI cruiser
+            ILevel currentLevel = dataProvider.GetLevel(applicationModel.SelectedLevel);
+            Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
+            Cruiser aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
+
+            aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
+            Quaternion rotation = aiCruiser.transform.rotation;
+            rotation.eulerAngles = new Vector3(0, 180, 0);
+            aiCruiser.transform.rotation = rotation;
+
 
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
 
+
+            // FELIX  Abstract camera related functionality (currently camera moving
+            // in LeftPanelInitialiser.Update() :P)
             Camera platformCamera = FindObjectOfType<Camera>();
             Assert.IsNotNull(platformCamera);
             ICamera camera = new CameraBC(platformCamera);
 
+
+            // FELIX  Abstract cruiser initialisation
+            // Initialise player cruiser
+            ICruiserFactory cruiserFactory
+                = new CruiserFactory(
+                    prefabFactory,
+                    deferrer,
+                    variableDelayDeferrer,
+                    spriteProvider,
+                    playerCruiser,
+                    aiCruiser,
+                    camera,
+                    audioSource);
+
+            ICameraController cameraController = Substitute.For<ICameraController>();
+            ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
+            cruiserFactory
+                .InitialisePlayerCruiser(
+                    uiManager,
+                    playerHelper,
+                    highlightableSlotFilter,
+                    helper.PlayerCruiserBuildProgressCalculator,
+                    playerCruiserUserChosenTargetManager);
+            playerCruiser.Destroyed += PlayerCruiser_Destroyed;
+
+
+            // Initialise AI cruiser
+            IUserChosenTargetHelper userChosenTargetHelper
+                = new UserChosenTargetHelper(
+                    playerCruiserUserChosenTargetManager,
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+            ICruiserHelper aiHelper = cruiserFactory.CreateAIHelper(uiManager, cameraController);
+            cruiserFactory
+                .InitialiseAICruiser(
+                    uiManager,
+                    aiHelper,
+                    highlightableSlotFilter,
+                    helper.AICruiserBuildProgressCalculator,
+                    aiCruiserUserChosenTargetManager,
+                    userChosenTargetHelper);
+            aiCruiser.Destroyed += AiCruiser_Destroyed;
+
+
+            // UI
+            IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
+            
+
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
-                    Substitute.For<IDroneManagerMonitor>(),
+                    new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer),
                     camera,
-                    Substitute.For<ISettingsManager>(),
+                    dataProvider.SettingsManager,
                     smoothTime,
                     uiManager,
                     playerLoadout,
@@ -94,7 +193,7 @@ namespace BattleCruisers.Scenes
                     spriteProvider,
                     buttonVisibilityFilters,
                     Substitute.For<IPlayerCruiserFocusHelper>(),
-                    Substitute.For<IPrioritisedSoundPlayer>());
+                    helper.GetBuildableButtonSoundPlayer(playerCruiser));
 
             rightPanelInitialiser
                 .Initialise(
@@ -102,8 +201,26 @@ namespace BattleCruisers.Scenes
                     sceneNavigator,
                     uiManager,
                     playerCruiser,
-                    Substitute.For<IUserChosenTargetHelper>(),
-                    buttonVisibilityFilters);
+                    userChosenTargetHelper,
+                    buttonVisibilityFilters,
+                    _pauseGameManager);
+
+
+            // FELIX  Abstract??
+            // User chosen target highlighter
+            IHighlightHelper highlightHelper = new HighlightHelper(highlightFactory);
+            _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
+
+
+            _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+            GenerateClouds(currentLevel);
+            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, variableDelayDeferrer);
+            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, variableDelayDeferrer);
+
+
+            // FELIX  Abstract event monitors?
+            _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
+            _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
         }
 
         private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
@@ -129,6 +246,67 @@ namespace BattleCruisers.Scenes
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
+        }
+
+        // FELIX  Abstract :/
+        private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            _pauseGameManager.PauseGame();
+            _battleCompletionHandler.CompleteBattle(wasVictory: false);
+        }
+
+        // FELIX  Abstract :/
+        private void AiCruiser_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            _pauseGameManager.PauseGame();
+            _battleCompletionHandler.CompleteBattle(wasVictory: true);
+        }
+
+        // FELIX  Abstract :D
+        private void GenerateClouds(ILevel level)
+        {
+            CloudFactory cloudFactory = GetComponent<CloudFactory>();
+            Assert.IsNotNull(cloudFactory);
+            cloudFactory.Initialise();
+
+            ICloudGenerator cloudGenerator = new CloudGenerator(cloudFactory);
+            cloudGenerator.GenerateClouds(level.CloudStats);
+        }
+
+        private DangerMusicPlayer CreateDangerMusicPlayer(
+            IMusicPlayer musicPlayer,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IVariableDelayDeferrer deferrer)
+        {
+            return
+                new DangerMusicPlayer(
+                    musicPlayer,
+                    new DangerMonitor(
+                        playerCruiser,
+                        aiCruiser,
+                        new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                        new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f)),
+                    deferrer);
+        }
+
+        private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)
+        {
+            return
+                new CruiserEventMonitor(
+                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                    new CruiserDamagedMonitorDebouncer(
+                        new CruiserDamageMonitor(playerCruiser),
+                        time),
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+        }
+
+        private UltrasConstructionMonitor CreateUltrasConstructionMonitor(ICruiser aiCruiser)
+        {
+            return
+                new UltrasConstructionMonitor(
+                    aiCruiser,
+                    aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
     }
 }

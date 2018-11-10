@@ -16,6 +16,7 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
@@ -118,7 +119,8 @@ namespace BattleCruisers.Scenes.Test
                     uiManager,
                     playerCruiser,
                     Substitute.For<IUserChosenTargetHelper>(),
-                    buttonVisibilityFilters);
+                    buttonVisibilityFilters,
+                    new PauseGameManager(new TimeBC()));
         }
 
         private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
