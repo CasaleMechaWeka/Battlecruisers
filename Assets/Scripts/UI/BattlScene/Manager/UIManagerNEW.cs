@@ -91,8 +91,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            // NEWUI  Uncomment :)
-            //_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
         }
 
@@ -100,17 +99,17 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuilding()");
 
-   //         HideItemDetails();
+            HideItemDetails();
 
-   //         if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
-			//{
-			//	SelectBuildingFromFriendlyCruiser(building);
-			//}
-			//else if (ReferenceEquals(building.ParentCruiser, _aiCruiser))
-   //         {
-			//	SelectBuildingFromEnemyCruiser(building);
-			//}
-		}
+            if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
+            {
+                SelectBuildingFromFriendlyCruiser(building);
+            }
+            else if (ReferenceEquals(building.ParentCruiser, _aiCruiser))
+            {
+                SelectBuildingFromEnemyCruiser(building);
+            }
+        }
 
 		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{
