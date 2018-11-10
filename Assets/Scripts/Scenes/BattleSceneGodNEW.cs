@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
@@ -10,7 +9,6 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
@@ -177,7 +175,7 @@ namespace BattleCruisers.Scenes
 
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
-            GenerateClouds(currentLevel);
+            components.CloudInitialiser.Initialise(currentLevel);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, components.VariableDelayDeferrer);
             _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, components.VariableDelayDeferrer);
 
@@ -211,17 +209,6 @@ namespace BattleCruisers.Scenes
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
-        }
-
-        // FELIX  Abstract :D
-        private void GenerateClouds(ILevel level)
-        {
-            CloudFactory cloudFactory = GetComponent<CloudFactory>();
-            Assert.IsNotNull(cloudFactory);
-            cloudFactory.Initialise();
-
-            ICloudGenerator cloudGenerator = new CloudGenerator(cloudFactory);
-            cloudGenerator.GenerateClouds(level.CloudStats);
         }
 
         private DangerMusicPlayer CreateDangerMusicPlayer(

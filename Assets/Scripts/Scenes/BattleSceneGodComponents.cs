@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Scenes
         public IVariableDelayDeferrer VariableDelayDeferrer { get; private set; }
         public IHighlightFactory HighlightFactory { get; private set; }
         public IAudioSource AudioSource { get; private set; }
+        public CloudInitialiser CloudInitialiser { get; private set; }
 
         public void Initialise()
         {
@@ -27,6 +29,9 @@ namespace BattleCruisers.Scenes
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             AudioSource = new AudioSourceBC(platformAudioSource);
+
+            CloudInitialiser = GetComponent<CloudInitialiser>();
+            Assert.IsNotNull(CloudInitialiser);
         }
     }
 }
