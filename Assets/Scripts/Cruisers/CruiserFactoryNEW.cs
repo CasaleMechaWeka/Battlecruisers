@@ -19,8 +19,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
-using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -29,11 +27,9 @@ namespace BattleCruisers.Cruisers
     public class CruiserFactoryNEW : ICruiserFactoryNEW
 	{
         private readonly IPrefabFactory _prefabFactory;
-		private readonly IDeferrer _deferrer;
-        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
+        private readonly IBattleSceneGodComponents _components;
         private readonly ISpriteProvider _spriteProvider;
         private readonly ICamera _soleCamera;
-        private readonly IAudioSource _audioSource;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
         private readonly ICameraController _cameraController;
@@ -43,24 +39,20 @@ namespace BattleCruisers.Cruisers
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public CruiserFactoryNEW(
-            IPrefabFactory prefabFactory, 
-            IDeferrer deferrer, 
-            IVariableDelayDeferrer variableDelayDeferrer, 
+            IPrefabFactory prefabFactory,
+            IBattleSceneGodComponents components,
             ISpriteProvider spriteProvider,
             ICamera soleCamera,
-            IAudioSource audioSource,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
             ICameraController cameraController)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, variableDelayDeferrer, spriteProvider, soleCamera, audioSource, helper, applicationModel, cameraController);
+            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, cameraController);
             
             _prefabFactory = prefabFactory;
-            _deferrer = deferrer;
-            _variableDelayDeferrer = variableDelayDeferrer;
+            _components = components;
             _spriteProvider = spriteProvider;
             _soleCamera = soleCamera;
-            _audioSource = audioSource;
             _helper = helper;
             _applicationModel = applicationModel;
             _cameraController = cameraController;
@@ -179,16 +171,16 @@ namespace BattleCruisers.Cruisers
                     cruiser, 
                     enemyCruiser, 
                     _spriteProvider, 
-                    _variableDelayDeferrer, 
+                    _components.VariableDelayDeferrer,
                     userChosenTargetTracker, 
                     _soleCamera, 
                     isPlayerCruiser, 
-                    _audioSource);
+                    _components.AudioSource);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            RepairManager repairManager = new RepairManager(_deferrer, feedbackFactory);
+            RepairManager repairManager = new RepairManager(_components.Deferrer, feedbackFactory);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
 
             ICruiserArgs cruiserArgs

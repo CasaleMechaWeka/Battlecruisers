@@ -4,8 +4,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Cruisers.Helpers;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Tutorial.Highlighting;
@@ -22,7 +20,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 // FELIX  Replace all Substitutes :D  (Don't remove this comment until "using NSubstitute;" is removed :)
 using NSubstitute;
@@ -58,18 +55,9 @@ namespace BattleCruisers.Scenes
             // FELIX  Hm, time scale should be someone else's responsibility :/
             Time.timeScale = 1;
 
-
-            // FELIX  Extract GetComponents() to separate method?
-            IDeferrer deferrer = GetComponent<IDeferrer>();
-            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
-            IHighlightFactory highlightFactory = GetComponent<IHighlightFactory>();
-
-            AudioSource platformAudioSource = GetComponent<AudioSource>();
-            Assert.IsNotNull(platformAudioSource);
-            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
-
-            Helper.AssertIsNotNull(deferrer, variableDelayDeferrer, highlightFactory);
-
+            BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
+            Assert.IsNotNull(components);
+            components.Initialise();
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IMusicPlayer musicPlayer = LandingSceneGod.MusicPlayer;
@@ -97,7 +85,7 @@ namespace BattleCruisers.Scenes
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
+            IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, components.VariableDelayDeferrer);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -118,11 +106,9 @@ namespace BattleCruisers.Scenes
             ICruiserFactoryNEW cruiserFactory
                 = new CruiserFactoryNEW(
                     prefabFactory,
-                    deferrer,
-                    variableDelayDeferrer,
+                    components,
                     spriteProvider,
                     camera,
-                    audioSource,
                     helper,
                     applicationModel,
                     cameraController);
@@ -164,7 +150,7 @@ namespace BattleCruisers.Scenes
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
-                    new DroneManagerMonitor(playerCruiser.DroneManager, variableDelayDeferrer),
+                    new DroneManagerMonitor(playerCruiser.DroneManager, components.VariableDelayDeferrer),
                     camera,
                     dataProvider.SettingsManager,
                     smoothTime,
@@ -189,15 +175,15 @@ namespace BattleCruisers.Scenes
 
             // FELIX  Abstract??
             // User chosen target highlighter
-            IHighlightHelper highlightHelper = new HighlightHelper(highlightFactory);
+            IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
 
 
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             GenerateClouds(currentLevel);
-            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, variableDelayDeferrer);
-            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, variableDelayDeferrer);
+            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, components.VariableDelayDeferrer);
+            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, components.VariableDelayDeferrer);
 
 
             // FELIX  Abstract event monitors?
