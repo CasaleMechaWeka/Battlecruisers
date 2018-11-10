@@ -7,7 +7,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
@@ -106,27 +105,6 @@ namespace BattleCruisers.Scenes
             _pauseGameManager = new PauseGameManager(time);
 
 
-            // FELIX  Abstract cruise creation!
-            // Instantiate player cruiser
-            ILoadout playerLoadout = helper.GetPlayerLoadout();
-            Cruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
-            Cruiser playerCruiser = prefabFactory.CreateCruiser(playerCruiserPrefab);
-            playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
-
-            // Instantiate AI cruiser
-            ILevel currentLevel = dataProvider.GetLevel(applicationModel.SelectedLevel);
-            Cruiser aiCruiserPrefab = prefabFactory.GetCruiserPrefab(currentLevel.Hull);
-            Cruiser aiCruiser = prefabFactory.CreateCruiser(aiCruiserPrefab);
-
-            aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
-            Quaternion rotation = aiCruiser.transform.rotation;
-            rotation.eulerAngles = new Vector3(0, 180, 0);
-            aiCruiser.transform.rotation = rotation;
-
-
-            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
-
-
             // FELIX  Abstract camera related functionality (currently camera moving
             // in LeftPanelInitialiser.Update() :P)
             Camera platformCamera = FindObjectOfType<Camera>();
@@ -134,19 +112,27 @@ namespace BattleCruisers.Scenes
             ICamera camera = new CameraBC(platformCamera);
 
 
-            // FELIX  Abstract cruiser initialisation
-            // Initialise player cruiser
-            ICruiserFactory cruiserFactory
-                = new CruiserFactory(
+            // FELIX  Abstract cruiser creation!
+            ICruiserFactoryNEW cruiserFactory
+                = new CruiserFactoryNEW(
                     prefabFactory,
                     deferrer,
                     variableDelayDeferrer,
                     spriteProvider,
-                    playerCruiser,
-                    aiCruiser,
                     camera,
-                    audioSource);
+                    audioSource,
+                    helper,
+                    applicationModel);
 
+            ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
+            ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
+            
+
+            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
+
+
+            // FELIX  Abstract cruiser initialisation
+            // Initialise player cruiser
             ICameraController cameraController = Substitute.For<ICameraController>();
             ICruiserHelper playerHelper = cruiserFactory.CreatePlayerHelper(uiManager, cameraController);
             cruiserFactory
@@ -188,7 +174,7 @@ namespace BattleCruisers.Scenes
                     dataProvider.SettingsManager,
                     smoothTime,
                     uiManager,
-                    playerLoadout,
+                    helper.GetPlayerLoadout(),
                     prefabFactory,
                     spriteProvider,
                     buttonVisibilityFilters,
@@ -213,6 +199,7 @@ namespace BattleCruisers.Scenes
 
 
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             GenerateClouds(currentLevel);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, variableDelayDeferrer);
             _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, variableDelayDeferrer);
