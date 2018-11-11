@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
     public interface IUIManager
 	{
         void InitialUI();
-        void ShowBuildingGroups();
+        void HideCurrentlyShownMenu();
         void SelectBuildingGroup(BuildingCategory buildingCategory);
         void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper);
         void SelectBuilding(IBuilding building);

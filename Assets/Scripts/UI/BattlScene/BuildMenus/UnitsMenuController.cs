@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		private void _factory_Destroyed(object sender, EventArgs e)
 		{
-			_uiManager.ShowBuildingGroups();
+			_uiManager.HideCurrentlyShownMenu();
 		}
 
 		public override void OnDismissing()

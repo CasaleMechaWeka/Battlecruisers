@@ -45,10 +45,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
         }
 
-        // FELIX  Rename, HideCurrentlyShownMenu?
-		public void ShowBuildingGroups()
+		public void HideCurrentlyShownMenu()
         {
-            Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
+            Logging.Log(Tags.UI_MANAGER, ".HideCurrentlyShownMenu()");
 
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _detailsManager.HideDetails();
