@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    // FELIX  Test :)
     public class HealthDial<TDamagable> : IHealthDial<TDamagable> where TDamagable : IDamagable
     {
         private readonly IFillableImage _healthDialImage;
