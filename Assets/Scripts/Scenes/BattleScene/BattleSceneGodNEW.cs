@@ -172,6 +172,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
 
+            // FELIX  NEXT  Use AudioInitialiser :)
 
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
