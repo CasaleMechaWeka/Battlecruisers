@@ -1,9 +1,9 @@
-﻿using System;
-using BattleCruisers.Buildables;
-using BattleCruisers.Scenes.Test;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 		public void Initialise()
         {
-            if (BattleSceneUITestGod.IsNewUI)
+            if (ApplicationModelProvider.IsNewUI)
             {
                 _itemName = transform.FindNamedComponent<Text>("LeftColumn/ItemName");
                 _itemDescription = transform.FindNamedComponent<Text>("LeftColumn/ItemDescription");

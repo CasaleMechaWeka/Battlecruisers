@@ -36,11 +36,13 @@ namespace BattleCruisers.Scenes.Test
 
         public float smoothTime;
 
-        // NEWUI  Remove this bool :P
-        public static bool IsNewUI = true;
-
         private void Start()
         {
+            Assert.raiseExceptions = true;
+
+            // TEMP  Only while we have both UIs (legacy and new :) )
+            ApplicationModelProvider.IsNewUI = true;
+
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
             Helper.AssertIsNotNull(variableDelayDeferrer);

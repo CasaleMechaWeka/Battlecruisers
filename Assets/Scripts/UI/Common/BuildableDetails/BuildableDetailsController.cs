@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Scenes.Test;
+using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_deleteButton);
             _deleteButton.Initialise(this, deleteButtonVisibilityFilter);
 
-            if (BattleSceneUITestGod.IsNewUI)
+            if (ApplicationModelProvider.IsNewUI)
             {
                 _buttonManager = GetComponentInChildren<InformatorButtonManager>(includeInactive: true);
                 Assert.IsNotNull(_buttonManager);
@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.ShowItemDetails(buildable);
 
-            if (BattleSceneUITestGod.IsNewUI)
+            if (ApplicationModelProvider.IsNewUI)
             {
                 _buttonManager.Buildable = buildable;
             }
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
             _deleteButton.Buildable = buildable;
 
-            if (!BattleSceneUITestGod.IsNewUI)
+            if (!ApplicationModelProvider.IsNewUI)
             {
                 // Shrink details panel if bottom bar is invisble
                 float desiredHeight = _bottomBar.IsVisible ? _maxHeight : _maxHeight - _bottomBar.Height;
@@ -79,7 +79,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		{
 			if (_item != null)
 			{
-                if (BattleSceneUITestGod.IsNewUI)
+                if (ApplicationModelProvider.IsNewUI)
                 {
                     _buttonManager.Buildable = null;
                 }

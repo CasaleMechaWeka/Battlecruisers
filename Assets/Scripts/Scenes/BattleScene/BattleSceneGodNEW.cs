@@ -32,14 +32,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public float smoothTime;
 
-        // NEWUI  Remove this bool :P
-        public static bool IsNewUI = true;
-
         private const int CRUISER_OFFSET_IN_M = 35;
 
         private void Start()
         {
             Assert.raiseExceptions = true;
+
+            // TEMP  Only while we have both UIs (legacy and new :) )
+            ApplicationModelProvider.IsNewUI = true;
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
