@@ -10,8 +10,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    // NEWUI  Imlement :D
-    // NEWUI  Update tests :)
     public class UIManagerNEW : IUIManager
 	{
 		private ICruiser _playerCruiser, _aiCruiser;
