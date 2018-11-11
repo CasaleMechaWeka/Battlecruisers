@@ -16,9 +16,12 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         public void TestSetup()
         {
             _time = Substitute.For<ITime>();
+
+            _manager = new PauseGameManager(_time);
+            Assert.AreEqual(1, _time.TimeScale);
+
             _prePauseTimeScale = 4;
             _time.TimeScale = _prePauseTimeScale;
-            _manager = new PauseGameManager(_time);
 
             _pausedGameCount = 0;
             _manager.GamePaused += (sender, e) => _pausedGameCount++;

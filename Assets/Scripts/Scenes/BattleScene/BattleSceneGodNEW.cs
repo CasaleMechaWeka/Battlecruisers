@@ -25,9 +25,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodNEW : MonoBehaviour
     {
-        // FELIX  Remove all unused fields :)
         private AudioInitialiser _audioInitialiser;
-        // FELIX  Dispose or suppress warning :/
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IArtificialIntelligence _ai;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
@@ -39,12 +37,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
-        // FELIX  Split up into Left-/Right-PanelController, they initialise?
         private void Start()
         {
             Assert.raiseExceptions = true;
-            // FELIX  Hm, time scale should be someone else's responsibility :/
-            Time.timeScale = 1;
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -160,13 +155,11 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager);
 
-
-            // FELIX  Abstract??
             // User chosen target highlighter
             IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
 
-            // FELIX  NEXT  Use AudioInitialiser :)
+            // Audio
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
@@ -176,6 +169,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.VariableDelayDeferrer,
                     time);
 
+            // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
