@@ -10,7 +10,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
@@ -86,7 +85,7 @@ namespace BattleCruisers.Scenes.Test
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
-            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
+            UIManagerNEW uiManager = new UIManagerNEW();
             _tempUIManager = uiManager;
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
@@ -119,18 +118,13 @@ namespace BattleCruisers.Scenes.Test
                     Substitute.For<IUserChosenTargetHelper>(),
                     buttonVisibilityFilters,
                     new PauseGameManager(new TimeBC()));
-        }
 
-        private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
-        {
-            UIManagerNEW uiManager = new UIManagerNEW();
             uiManager
                 .Initialise(
-                    buildMenu,
-                    new ItemDetailsManager(informator),
+                    leftPanelInitialiser.BuildMenu,
+                    new ItemDetailsManager(rightPanelInitialiser.Informator),
                     playerCruiser,
                     aiCruiser);
-            return uiManager;
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)

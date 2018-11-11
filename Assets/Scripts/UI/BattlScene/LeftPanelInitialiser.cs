@@ -35,21 +35,7 @@ namespace BattleCruisers.UI.BattleScene
         // NEWUI  Move to CameraController?
         private ICameraAdjuster _cameraAdjuster;
 
-        // Circular dependency between UIManager and BuildMenuControllerNEW.
-        private BuildMenuInitialiser _buildMenu;
-        public BuildMenuInitialiser BuildMenu
-        {
-            get
-            {
-                if (_buildMenu == null)
-                {
-                    _buildMenu = FindObjectOfType<BuildMenuInitialiser>();
-                    Assert.IsNotNull(_buildMenu);
-                }
-
-                return _buildMenu;
-            }
-        }
+        public IBuildMenuNEW BuildMenu { get; private set; }
 
         // FELIX  Group parameters in classes? :P
         public void Initialise(
@@ -126,8 +112,11 @@ namespace BattleCruisers.UI.BattleScene
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
 
+            BuildMenuInitialiser buildMenuInitialiser = FindObjectOfType<BuildMenuInitialiser>();
+            Assert.IsNotNull(buildMenuInitialiser);
+
             BuildMenu
-                .Initialise(
+                = buildMenuInitialiser.Initialise(
                     uiManager,
                     buildingGroups,
                     units,
