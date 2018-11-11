@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public abstract class BuildableMenus<TBuildable, TCategories, TMenu> : MonoBehaviour
+    public abstract class BuildableMenus<TBuildable, TCategories, TMenu> : MonoBehaviour, IBuildableMenus<TCategories>
         where TBuildable : class, IBuildable
         where TMenu : MonoBehaviour, IBuildablesMenu
     {
