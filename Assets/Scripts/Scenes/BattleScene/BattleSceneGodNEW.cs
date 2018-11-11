@@ -77,16 +77,13 @@ namespace BattleCruisers.Scenes.BattleScene
             ITime time = new TimeBC();
             IPauseGameManager pauseGameManager = new PauseGameManager(time);
 
-
             // FELIX  Abstract camera related functionality (currently camera moving
             // in LeftPanelInitialiser.Update() :P)
             Camera platformCamera = FindObjectOfType<Camera>();
             Assert.IsNotNull(platformCamera);
             ICamera camera = new CameraBC(platformCamera);
 
-
             ICameraController cameraController = Substitute.For<ICameraController>();
-
 
             // Create cruisers
             ICruiserFactoryNEW cruiserFactory
@@ -102,11 +99,9 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
             
-
             // Have circular dependency between cruisers and UI manager.  Hence
             // create and initialise cruisers separately.
             IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
-
 
             // Initialise player cruiser
             cruiserFactory
@@ -125,10 +120,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
 
-
             // UI
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
-            
 
             leftPanelInitialiser
                 .Initialise(
