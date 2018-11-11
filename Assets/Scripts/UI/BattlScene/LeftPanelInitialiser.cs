@@ -37,7 +37,6 @@ namespace BattleCruisers.UI.BattleScene
 
         public IBuildMenuNEW BuildMenu { get; private set; }
 
-        // FELIX  Group parameters in classes? :P
         public void Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
