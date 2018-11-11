@@ -2,8 +2,8 @@
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    public interface IHealthDial
+    public interface IHealthDial<TDamagable> where TDamagable : IDamagable
     {
-        IDamagable Damagable { set; }
+        TDamagable Damagable { set; }
     }
 }

@@ -1,39 +1,45 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
     // FELIX  Test :)
-    public class HealthDial : IHealthDial
+    public class HealthDial<TDamagable> : IHealthDial<TDamagable> where TDamagable : IDamagable
     {
         private readonly IFillableImage _healthDialImage;
+        private readonly IFilter<TDamagable> _visibilityFilter;
 
-        private IDamagable _damagable;
-        public IDamagable Damagable
+        private TDamagable _damagable;
+        public TDamagable Damagable
         {
             set
             {
                 if (_damagable != null)
                 {
                     _damagable.HealthChanged -= _damagable_HealthChanged;
+                    _healthDialImage.IsVisible = false;
                 }
 
                 _damagable = value;
 
-                if (_damagable != null)
+                if (_damagable != null
+                    && _visibilityFilter.IsMatch(_damagable))
                 {
+                    _healthDialImage.IsVisible = true;
                     UpdateDial();
                     _damagable.HealthChanged += _damagable_HealthChanged;
                 }
             }
         }
 
-        public HealthDial(IFillableImage healthDialImage)
+        public HealthDial(IFillableImage healthDialImage, IFilter<TDamagable> visibilityFilter)
         {
-            Assert.IsNotNull(healthDialImage);
+            Helper.AssertIsNotNull(healthDialImage, visibilityFilter);
+
             _healthDialImage = healthDialImage;
+            _visibilityFilter = visibilityFilter;
         }
 
         private void _damagable_HealthChanged(object sender, EventArgs e)
