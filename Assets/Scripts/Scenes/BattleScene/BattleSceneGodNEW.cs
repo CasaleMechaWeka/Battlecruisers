@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
@@ -14,7 +12,6 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -29,13 +26,10 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGodNEW : MonoBehaviour
     {
         // FELIX  Remove all unused fields :)
+        private AudioInitialiser _audioInitialiser;
         // FELIX  Dispose or suppress warning :/
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IArtificialIntelligence _ai;
-        private CruiserEventMonitor _cruiserEventMonitor;
-        private IManagedDisposable _droneEventSoundPlayer;
-        private UltrasConstructionMonitor _ultrasConstructionMonitor;
-        private DangerMusicPlayer _dangerMusicPlayer;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
 
         public float smoothTime;
@@ -173,17 +167,18 @@ namespace BattleCruisers.Scenes.BattleScene
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
 
             // FELIX  NEXT  Use AudioInitialiser :)
+            _audioInitialiser
+                = new AudioInitialiser(
+                    helper,
+                    musicPlayer,
+                    playerCruiser,
+                    aiCruiser,
+                    components.VariableDelayDeferrer,
+                    time);
 
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
-            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, components.VariableDelayDeferrer);
-            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, components.VariableDelayDeferrer);
-
-
-            // FELIX  Abstract event monitors?
-            _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
-            _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
         }
 
@@ -210,42 +205,6 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
-        }
-
-        private DangerMusicPlayer CreateDangerMusicPlayer(
-            IMusicPlayer musicPlayer,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser,
-            IVariableDelayDeferrer deferrer)
-        {
-            return
-                new DangerMusicPlayer(
-                    musicPlayer,
-                    new DangerMonitor(
-                        playerCruiser,
-                        aiCruiser,
-                        new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                        new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f)),
-                    deferrer);
-        }
-
-        private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)
-        {
-            return
-                new CruiserEventMonitor(
-                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                    new CruiserDamagedMonitorDebouncer(
-                        new CruiserDamageMonitor(playerCruiser),
-                        time),
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
-        }
-
-        private UltrasConstructionMonitor CreateUltrasConstructionMonitor(ICruiser aiCruiser)
-        {
-            return
-                new UltrasConstructionMonitor(
-                    aiCruiser,
-                    aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
     }
 }
