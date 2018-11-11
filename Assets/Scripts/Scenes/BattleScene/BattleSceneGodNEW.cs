@@ -150,12 +150,13 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager);
 
-            uiManager
-                .Initialise(
-                    leftPanelInitialiser.BuildMenu,
-                    new ItemDetailsManager(rightPanelInitialiser.Informator),
+            ManagerArgsNEW args
+                = new ManagerArgsNEW(
                     playerCruiser,
-                    aiCruiser);
+                    aiCruiser,
+                    leftPanelInitialiser.BuildMenu,
+                    new ItemDetailsManager(rightPanelInitialiser.Informator));
+            uiManager.Initialise(args);
 
             // User chosen target highlighter
             IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);

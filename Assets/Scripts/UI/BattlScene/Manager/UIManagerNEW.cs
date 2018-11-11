@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
@@ -17,23 +18,17 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IBuildMenuNEW _buildMenu;
         private IItemDetailsManager _detailsManager;
 
-        // FELIX  Update IManagerArgs
-        // FELIX  Use IManagerArgs :)
         // Not in constructor because of circular dependency with:
         // + Build menu
         // + Cruisers
-        public void Initialise(
-            IBuildMenuNEW buildMenu,
-            IItemDetailsManager detailsManager,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser)
+        public void Initialise(ManagerArgsNEW args)
         {
-            Helper.AssertIsNotNull(buildMenu, detailsManager, playerCruiser, aiCruiser);
+            Assert.IsNotNull(args);
 
-            _buildMenu = buildMenu;
-            _detailsManager = detailsManager;
-            _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
+            _buildMenu = args.BuildMenu;
+            _detailsManager = args.DetailsManager;
+            _playerCruiser = args.PlayerCruiser;
+            _aiCruiser = args.AICruiser;
         }
 
         /// NEWUI  Remove?

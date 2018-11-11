@@ -121,12 +121,13 @@ namespace BattleCruisers.Scenes.Test
                     buttonVisibilityFilters,
                     new PauseGameManager(new TimeBC()));
 
-            uiManager
-                .Initialise(
-                    leftPanelInitialiser.BuildMenu,
-                    new ItemDetailsManager(rightPanelInitialiser.Informator),
+            ManagerArgsNEW args
+                = new ManagerArgsNEW(
                     playerCruiser,
-                    aiCruiser);
+                    aiCruiser,
+                    leftPanelInitialiser.BuildMenu,
+                    new ItemDetailsManager(rightPanelInitialiser.Informator));
+            uiManager.Initialise(args);
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
