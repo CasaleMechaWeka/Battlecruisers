@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    // FELIX  test :)
     public class DronesDisplayer
     {
         private readonly IDroneManager _droneManager;
