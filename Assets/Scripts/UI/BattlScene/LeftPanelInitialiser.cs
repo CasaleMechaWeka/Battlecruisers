@@ -36,14 +36,14 @@ namespace BattleCruisers.UI.BattleScene
         private ICameraAdjuster _cameraAdjuster;
 
         // Circular dependency between UIManager and BuildMenuControllerNEW.
-        private BuildMenuControllerNEW _buildMenu;
-        public BuildMenuControllerNEW BuildMenu
+        private BuildMenuInitialiser _buildMenu;
+        public BuildMenuInitialiser BuildMenu
         {
             get
             {
                 if (_buildMenu == null)
                 {
-                    _buildMenu = FindObjectOfType<BuildMenuControllerNEW>();
+                    _buildMenu = FindObjectOfType<BuildMenuInitialiser>();
                     Assert.IsNotNull(_buildMenu);
                 }
 

@@ -19,7 +19,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     // FELIX  Separate functionality from initialisation, to make testable :D
-    public class BuildMenuControllerNEW : MonoBehaviour, IBuildMenuNEW
+    public class BuildMenuInitialiser : MonoBehaviour, IBuildMenuNEW
 	{
         private SelectorPanelController _selectorPanel;
         private IMenu _currentMenu;
