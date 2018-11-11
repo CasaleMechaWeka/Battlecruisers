@@ -36,11 +36,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// === Tag keys :D ===
-// FELIX    => Code todo
-// TEMP     => Temporary for testing
-// IPAD     => Update for IPad (usualy input related)
-// PERF     => Potential performance hit
 namespace BattleCruisers.Scenes.BattleScene
 {
     /// <summary>

@@ -21,6 +21,12 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// === Tag keys :D ===
+// FELIX    => Code todo
+// TEMP     => Temporary for testing
+// IPAD     => Update for IPad (usualy input related)
+// PERF     => Potential performance hit
+// NEWUI    => Should be resolved once legacy UI is replaced :)
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodNEW : MonoBehaviour
