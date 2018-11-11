@@ -24,7 +24,7 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes
+namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodNEW : MonoBehaviour
     {

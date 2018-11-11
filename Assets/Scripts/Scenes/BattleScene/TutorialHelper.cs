@@ -16,7 +16,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
-namespace BattleCruisers.Scenes
+namespace BattleCruisers.Scenes.BattleScene
 {
     public class TutorialHelper : IBattleSceneHelper, ITutorialProvider
     {

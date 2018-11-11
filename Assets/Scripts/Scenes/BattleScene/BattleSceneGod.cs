@@ -41,7 +41,7 @@ using UnityEngine.Assertions;
 // TEMP     => Temporary for testing
 // IPAD     => Update for IPad (usualy input related)
 // PERF     => Potential performance hit
-namespace BattleCruisers.Scenes
+namespace BattleCruisers.Scenes.BattleScene
 {
     /// <summary>
     /// Initialises everything :D

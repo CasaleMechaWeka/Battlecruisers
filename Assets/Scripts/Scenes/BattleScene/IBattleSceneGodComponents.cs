@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
-namespace BattleCruisers.Scenes
+namespace BattleCruisers.Scenes.BattleScene
 {
     public interface IBattleSceneGodComponents
     {

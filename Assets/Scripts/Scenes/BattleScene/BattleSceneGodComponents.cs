@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes
+namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
     {

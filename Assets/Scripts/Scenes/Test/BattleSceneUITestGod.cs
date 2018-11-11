@@ -7,6 +7,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;

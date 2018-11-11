@@ -9,7 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Scenes;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
