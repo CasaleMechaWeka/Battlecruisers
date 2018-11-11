@@ -58,7 +58,6 @@ namespace BattleCruisers.UI.BattleScene
 
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             SetupSpeedPanel();
-            // FELIX  Setup help button
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
         }
 
