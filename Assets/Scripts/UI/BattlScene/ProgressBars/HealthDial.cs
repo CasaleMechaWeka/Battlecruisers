@@ -40,6 +40,8 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
             _healthDialImage = healthDialImage;
             _visibilityFilter = visibilityFilter;
+
+            _healthDialImage.IsVisible = false;
         }
 
         private void _damagable_HealthChanged(object sender, EventArgs e)
