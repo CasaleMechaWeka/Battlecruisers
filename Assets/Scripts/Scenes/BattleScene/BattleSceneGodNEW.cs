@@ -86,8 +86,6 @@ namespace BattleCruisers.Scenes.BattleScene
             ICameraController cameraController = Substitute.For<ICameraController>();
             UIManagerNEW uiManager = new UIManagerNEW();
 
-            // FELIX  Merge cruiser creation and initialisation, UIManager creation
-            // initialisation has been split up instead :)
             // Create cruisers
             ICruiserFactoryNEW cruiserFactory
                 = new CruiserFactoryNEW(
@@ -97,16 +95,15 @@ namespace BattleCruisers.Scenes.BattleScene
                     camera,
                     helper,
                     applicationModel,
-                    cameraController);
+                    cameraController,
+                    uiManager,
+                    playerCruiserUserChosenTargetManager);
 
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
             // Initialise player cruiser
-            cruiserFactory
-                .InitialisePlayerCruiser(
-                    uiManager,
-                    playerCruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);
 
             // Initialise AI cruiser
             IUserChosenTargetHelper userChosenTargetHelper
@@ -115,8 +112,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
             cruiserFactory
                 .InitialiseAICruiser(
-                    uiManager,
-                    aiCruiserUserChosenTargetManager,
+                    playerCruiser,
+                    aiCruiser,
                     userChosenTargetHelper);
 
             // UI

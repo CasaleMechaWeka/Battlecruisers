@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Cruisers
 {
@@ -8,11 +7,7 @@ namespace BattleCruisers.Cruisers
         ICruiser CreatePlayerCruiser();
         ICruiser CreateAICruiser();
 
-        void InitialisePlayerCruiser(IUIManager uiManager, IRankedTargetTracker userChosenTargetTracker);
-
-        void InitialiseAICruiser(
-            IUIManager uiManager, 
-            IRankedTargetTracker userChosenTargetTracker,
-            IUserChosenTargetHelper userChosenTargetHelper);
+        void InitialisePlayerCruiser(ICruiser playerCruiser, ICruiser aiCruiser);
+        void InitialiseAICruiser(ICruiser playerCruiser, ICruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper);
     }
 }

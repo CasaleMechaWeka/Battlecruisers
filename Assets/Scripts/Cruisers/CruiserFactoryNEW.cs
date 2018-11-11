@@ -20,7 +20,6 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
 {
@@ -34,6 +33,8 @@ namespace BattleCruisers.Cruisers
         private readonly IApplicationModel _applicationModel;
         private readonly ICameraController _cameraController;
         private readonly ISlotFilter _highlightableSlotFilter;
+        private readonly IUIManager _uiManager;
+        private readonly IRankedTargetTracker _userChosenTargetTracker;
         private Cruiser _playerCruiser, _aiCruiser;
 
         private const int CRUISER_OFFSET_IN_M = 35;
@@ -45,9 +46,11 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
-            ICameraController cameraController)
+            ICameraController cameraController,
+            IUIManager uiManager,
+            IRankedTargetTracker userChosenTargetTracker)
         {
-            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, cameraController);
+            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, cameraController, uiManager, userChosenTargetTracker);
             
             _prefabFactory = prefabFactory;
             _components = components;
@@ -57,6 +60,8 @@ namespace BattleCruisers.Cruisers
             _applicationModel = applicationModel;
             _cameraController = cameraController;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
+            _uiManager = uiManager;
+            _userChosenTargetTracker = userChosenTargetTracker;
         }
 
         public ICruiser CreatePlayerCruiser()
@@ -83,13 +88,11 @@ namespace BattleCruisers.Cruisers
             return _aiCruiser;
         }
 
-        public void InitialisePlayerCruiser(IUIManager uiManager, IRankedTargetTracker userChosenTargetTracker)
+        public void InitialisePlayerCruiser(ICruiser playerCruiser, ICruiser aiCruiser)
         {
-            Helper.AssertIsNotNull(uiManager, userChosenTargetTracker);
-            Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialisePlayerCruiser()");
-            Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialisePlayerCruiser()");
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
-            ICruiserHelper helper = CreatePlayerHelper(uiManager, _cameraController);
+            ICruiserHelper helper = CreatePlayerHelper(_uiManager, _cameraController);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             bool shouldShowFog = false;
@@ -100,30 +103,25 @@ namespace BattleCruisers.Cruisers
             InitialiseCruiser(
                 _playerCruiser,
                 _aiCruiser,
-                uiManager,
+                _uiManager,
                 helper,
                 faction,
                 facingDirection,
                 shouldShowFog,
                 _highlightableSlotFilter,
                 _helper.PlayerCruiserBuildProgressCalculator,
-                userChosenTargetTracker,
+                _userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
                 isPlayerCruiser: true);
         }
 
-        public void InitialiseAICruiser(
-            IUIManager uiManager,
-            IRankedTargetTracker userChosenTargetTracker,
-            IUserChosenTargetHelper userChosenTargetHelper)
+        public void InitialiseAICruiser(ICruiser playerCruiser, ICruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper)
         {
-            Helper.AssertIsNotNull(uiManager, userChosenTargetTracker, userChosenTargetHelper);
-            Assert.IsNotNull(_aiCruiser, "Must call CreateAICruiser() before InitialiseAICruiser()");
-            Assert.IsNotNull(_playerCruiser, "Must call CreatePlayerCruiser() before InitialiseAICruiser()");
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, userChosenTargetHelper);
 
-            ICruiserHelper helper = CreateAIHelper(uiManager, _cameraController);
+            ICruiserHelper helper = CreateAIHelper(_uiManager, _cameraController);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
             bool shouldShowFog = true;
@@ -135,14 +133,14 @@ namespace BattleCruisers.Cruisers
             InitialiseCruiser(
                 _aiCruiser,
                 _playerCruiser,
-                uiManager,
+                _uiManager,
                 helper,
                 faction,
                 facingDirection,
                 shouldShowFog,
                 _highlightableSlotFilter,
                 _helper.AICruiserBuildProgressCalculator,
-                userChosenTargetTracker,
+                _userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
