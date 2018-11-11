@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class InformatorButtonManager : MonoBehaviour, IInformatorButtonManager
+    public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
