@@ -27,7 +27,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
-    // FELIX  Replace all Substitutes :D
     public class BattleSceneUITestGod : MonoBehaviour
     {
         // Just for test scene, should not be transferred to new BattleSceneGod :)
@@ -41,10 +40,8 @@ namespace BattleCruisers.Scenes.Test
         // NEWUI  Remove this bool :P
         public static bool IsNewUI = true;
 
-        // FELIX  Split up into Left-/Right-PanelController, they initialise?
         private void Start()
         {
-            // FELIX  Extract GetComponents() to separate method?
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
             Helper.AssertIsNotNull(variableDelayDeferrer);
@@ -136,14 +133,6 @@ namespace BattleCruisers.Scenes.Test
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            // FELIX  Handle tutorial :)
-            //if (ApplicationModel.IsTutorial)
-            //{
-            //    TutorialHelper helper = new TutorialHelper(_dataProvider, prefabFactory);
-            //    _tutorialProvider = helper;
-            //    return helper;
-            //}
-            //else
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }
