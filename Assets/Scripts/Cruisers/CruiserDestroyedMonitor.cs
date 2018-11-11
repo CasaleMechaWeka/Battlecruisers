@@ -4,7 +4,6 @@ using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Cruisers
 {
-    // FELIX  Test :)
     public class CruiserDestroyedMonitor
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
