@@ -123,12 +123,14 @@ namespace BattleCruisers.Scenes.Test
 
         private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
         {
-            return
-                new UIManagerNEW(
+            UIManagerNEW uiManager = new UIManagerNEW();
+            uiManager
+                .Initialise(
                     buildMenu,
                     new ItemDetailsManager(informator),
                     playerCruiser,
                     aiCruiser);
+            return uiManager;
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)

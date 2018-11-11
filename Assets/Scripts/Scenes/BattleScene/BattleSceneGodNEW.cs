@@ -84,7 +84,10 @@ namespace BattleCruisers.Scenes.BattleScene
             ICamera camera = new CameraBC(platformCamera);
 
             ICameraController cameraController = Substitute.For<ICameraController>();
+            UIManagerNEW uiManager = new UIManagerNEW();
 
+            // FELIX  Merge cruiser creation and initialisation, UIManager creation
+            // initialisation has been split up instead :)
             // Create cruisers
             ICruiserFactoryNEW cruiserFactory
                 = new CruiserFactoryNEW(
@@ -98,10 +101,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
-            
-            // Have circular dependency between cruisers and UI manager.  Hence
-            // create and initialise cruisers separately.
-            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
 
             // Initialise player cruiser
             cruiserFactory
@@ -148,6 +147,13 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager);
 
+            uiManager
+                .Initialise(
+                    leftPanelInitialiser.BuildMenu,
+                    new ItemDetailsManager(rightPanelInitialiser.Informator),
+                    playerCruiser,
+                    aiCruiser);
+
             // User chosen target highlighter
             IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
@@ -167,16 +173,6 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-        }
-
-        private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
-        {
-            return
-                new UIManagerNEW(
-                    buildMenu,
-                    new ItemDetailsManager(informator),
-                    playerCruiser,
-                    aiCruiser);
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
