@@ -27,5 +27,10 @@ namespace BattleCruisers.UI.Cameras
         {
             return this.GetHashCode(Position, OrthographicSize);
         }
+
+        public override string ToString()
+        {
+            return "CameraTarget: " + Position + "  Orthographic size: " + OrthographicSize;
+        }
     }
 }
