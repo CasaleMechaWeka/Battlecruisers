@@ -46,6 +46,7 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
+            // FELIX  Remove, take as paraemter to InitialiseCruiser methods :P
             ICameraController cameraController,
             IUIManager uiManager,
             IRankedTargetTracker userChosenTargetTracker)
