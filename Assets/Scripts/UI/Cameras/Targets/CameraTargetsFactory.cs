@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Cameras.Targets
     				leftSideInstants);
 			stateToTarget.Add(CameraState.PlayerCruiser, playerCruiserTarget);
 			
-			// Ai cruiser overview
+			// Ai cruiser view
 			float aiCruiserOrthographicSize = _cameraCalculator.FindCameraOrthographicSize(_aiCruiser);
 			Vector3 aiCruiserTargetPosition = _cameraCalculator.FindCruiserCameraPosition(_aiCruiser, aiCruiserOrthographicSize, _camera.Transform.Position.z);
 			CameraState[] rightSideInstants =
