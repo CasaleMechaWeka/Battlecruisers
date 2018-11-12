@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-	/// <summary>
+    /// <summary>
     /// Handle camera transitions triggered by the navigation buttons.
     /// </summary>
-	public class CameraTransitionManager : CameraMover, ICameraTransitionManager
+    public class CameraTransitionManager : CameraMover, ICameraTransitionManager
     {
 		private readonly ICamera _camera;
 		private readonly ISmoothPositionAdjuster _positionAdjuster;

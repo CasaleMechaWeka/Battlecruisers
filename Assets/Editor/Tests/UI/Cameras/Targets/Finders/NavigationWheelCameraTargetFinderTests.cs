@@ -1,11 +1,12 @@
-﻿using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.UI.Cameras
+namespace BattleCruisers.Tests.UI.Cameras.Targets.Finders
 {
     public class NavigationWheelCameraTargetFinderTests
     {

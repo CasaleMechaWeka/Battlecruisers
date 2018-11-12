@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets
 {
     public class CameraTargetLegacy : ICameraTargetLegacy
 	{

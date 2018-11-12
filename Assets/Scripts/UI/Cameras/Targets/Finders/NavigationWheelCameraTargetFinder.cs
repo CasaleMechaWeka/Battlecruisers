@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets.Finders
 {
     public class NavigationWheelCameraTargetFinder : ICameraTargetFinder
     {

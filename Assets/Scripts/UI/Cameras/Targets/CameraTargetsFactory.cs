@@ -5,7 +5,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets
 {
     public class CameraTargetsFactory : ICameraTargetsFactory
     {

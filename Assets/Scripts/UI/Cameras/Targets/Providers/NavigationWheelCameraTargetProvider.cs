@@ -1,9 +1,10 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     /// <summary>
     /// Only finds the camera target when it has changed.  Better than polling

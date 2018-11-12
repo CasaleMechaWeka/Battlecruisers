@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets
 {
 	public interface ICameraTargetsFactory
 	{

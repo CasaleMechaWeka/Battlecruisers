@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public interface ICameraTargetProvider
     {

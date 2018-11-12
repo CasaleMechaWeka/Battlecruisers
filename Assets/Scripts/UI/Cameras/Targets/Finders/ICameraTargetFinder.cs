@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.Cameras
+﻿namespace BattleCruisers.UI.Cameras.Targets.Finders
 {
     public interface ICameraTargetFinder
     {

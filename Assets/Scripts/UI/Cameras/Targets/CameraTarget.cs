@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras
+namespace BattleCruisers.UI.Cameras.Targets
 {
     public class CameraTarget : ICameraTarget
     {

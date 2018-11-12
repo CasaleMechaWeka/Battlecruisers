@@ -1,9 +1,11 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Finders;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.Cameras
+namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class NavigationWheelCameraTargetProviderTests
     {
