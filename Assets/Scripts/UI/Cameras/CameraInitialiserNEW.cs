@@ -2,7 +2,6 @@
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -15,26 +14,18 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
 
-        // Can be called before Initialise(), due to wonderful dependencies :)
-        private ICamera _camera;
-        public ICamera SoleCamera
-        {
-            get
-            {
-                if (_camera == null)
-                {
-                    Camera platformCamera = GetComponent<Camera>();
-                    Assert.IsNotNull(platformCamera);
-                    _camera = new CameraBC(platformCamera);
-                }
+        public ICamera SoleCamera { get; private set; }
 
-                return _camera;
-            }
-        }
-
-        public void Initialise(INavigationWheelPanel navigationWheelPanel, ISettingsManager settingsManager)
+        public void Initialise(ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(navigationWheelPanel, settingsManager);
+            Assert.IsNotNull(settingsManager);
+
+            Camera platformCamera = GetComponent<Camera>();
+            Assert.IsNotNull(platformCamera);
+            SoleCamera = new CameraBC(platformCamera);
+
+            NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
+            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, SoleCamera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(SoleCamera, settings);

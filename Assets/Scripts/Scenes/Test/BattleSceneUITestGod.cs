@@ -5,13 +5,13 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
@@ -33,8 +33,6 @@ namespace BattleCruisers.Scenes.Test
         private IUIManager _tempUIManager;
         private ICruiser _tempPlayerCruiser;
         private IDroneManagerMonitor _tempDroneManagerMonitor;
-
-        public float smoothTime;
 
         private void Start()
         {
@@ -92,17 +90,14 @@ namespace BattleCruisers.Scenes.Test
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
 
-            Camera platformCamera = FindObjectOfType<Camera>();
-            Assert.IsNotNull(platformCamera);
-            ICamera camera = new CameraBC(platformCamera);
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            cameraInitialiser.Initialise(dataProvider.SettingsManager);
 
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
                     _tempDroneManagerMonitor,
-                    camera,
-                    Substitute.For<ISettingsManager>(),
-                    smoothTime,
                     uiManager,
                     playerLoadout,
                     prefabFactory,

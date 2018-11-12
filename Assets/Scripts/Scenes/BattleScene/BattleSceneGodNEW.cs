@@ -36,8 +36,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private IArtificialIntelligence _ai;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
 
-        public float smoothTime;
-
         private const int CRUISER_OFFSET_IN_M = 35;
 
         private void Start()
@@ -68,11 +66,16 @@ namespace BattleCruisers.Scenes.BattleScene
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
+            // FELIX  Move panel initialisers down to whre they get initialised...
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
 
             RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
             Assert.IsNotNull(rightPanelInitialiser);
+
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            cameraInitialiser.Initialise(dataProvider.SettingsManager);
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
@@ -83,12 +86,6 @@ namespace BattleCruisers.Scenes.BattleScene
             ITime time = new TimeBC();
             IPauseGameManager pauseGameManager = new PauseGameManager(time);
 
-            // FELIX  Abstract camera related functionality (currently camera moving
-            // in LeftPanelInitialiser.Update() :P)
-            Camera platformCamera = FindObjectOfType<Camera>();
-            Assert.IsNotNull(platformCamera);
-            ICamera camera = new CameraBC(platformCamera);
-
             ICameraController cameraController = Substitute.For<ICameraController>();
             UIManagerNEW uiManager = new UIManagerNEW();
 
@@ -98,7 +95,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     prefabFactory,
                     components,
                     spriteProvider,
-                    camera,
+                    cameraInitialiser.SoleCamera,
                     helper,
                     applicationModel,
                     cameraController,
@@ -129,9 +126,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 .Initialise(
                     playerCruiser.DroneManager,
                     new DroneManagerMonitor(playerCruiser.DroneManager, components.VariableDelayDeferrer),
-                    camera,
-                    dataProvider.SettingsManager,
-                    smoothTime,
                     uiManager,
                     helper.GetPlayerLoadout(),
                     prefabFactory,
