@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Targets.Finders;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using UnityEngine;

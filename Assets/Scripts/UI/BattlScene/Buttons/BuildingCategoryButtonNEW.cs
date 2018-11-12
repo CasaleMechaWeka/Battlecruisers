@@ -23,23 +23,23 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             remove { _shouldBeEnabledFilter.PotentialMatchChange -= value; }
         }
 
-        public BuildingCategory Category { get; private set; }
+        public BuildingCategory category;
+        public BuildingCategory Category { get { return category; } }
 
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
 
         public void Initialise(
-            // FELIX  Should really be a public field set in the inspector, as UI is set :/
-            BuildingCategory buildingCategory,
+            BuildingCategory expectedBuildingCategory,
             IUIManager uiManager, 
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
 		{
             base.Initialise();
 
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
+            Assert.AreEqual(Category, expectedBuildingCategory);
 
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
-            Category = buildingCategory;
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);

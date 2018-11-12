@@ -24,7 +24,9 @@ namespace BattleCruisers.Utils.BattleScene
         public PauseGameManager(ITime time)
         {
             Assert.IsNotNull(time);
+
             _time = time;
+            _time.TimeScale = 1;
         }
 
         public void PauseGame()

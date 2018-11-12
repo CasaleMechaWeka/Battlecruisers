@@ -9,7 +9,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,14 +49,16 @@ namespace BattleCruisers.UI.BattleScene
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            IPauseGameManager pauseGameManager)
         {
-            Helper.AssertIsNotNull(modalMenu, applicationModel, sceneNavigator, uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
+            Helper.AssertIsNotNull(modalMenu, applicationModel, sceneNavigator, uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, pauseGameManager);
+
+            modalMenu.Initialise(applicationModel.IsTutorial);
 
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             SetupSpeedPanel();
-            // FELIX  Setup help button
-            SetupMainMenuButton(applicationModel, sceneNavigator);
+            SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
         }
 
         private void SetupInformator(
@@ -81,10 +82,12 @@ namespace BattleCruisers.UI.BattleScene
             speedPanelInitialiser.Initialise();
         }
 
-        private void SetupMainMenuButton(IApplicationModel applicationModel, ISceneNavigator sceneNavigator)
+        private void SetupMainMenuButton(
+            IApplicationModel applicationModel, 
+            ISceneNavigator sceneNavigator,
+            IPauseGameManager pauseGameManager)
         {
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
-            IPauseGameManager pauseGameManager = new PauseGameManager(new TimeBC());
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
             MainMenuButtonController mainMenuButton = FindObjectOfType<MainMenuButtonController>();

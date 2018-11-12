@@ -5,17 +5,18 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
@@ -25,7 +26,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
-    // FELIX  Replace all Substitutes :D
     public class BattleSceneUITestGod : MonoBehaviour
     {
         // Just for test scene, should not be transferred to new BattleSceneGod :)
@@ -34,15 +34,13 @@ namespace BattleCruisers.Scenes.Test
         private ICruiser _tempPlayerCruiser;
         private IDroneManagerMonitor _tempDroneManagerMonitor;
 
-        public float smoothTime;
-
-        // NEWUI  Remove this bool :P
-        public static bool IsNewUI = true;
-
-        // FELIX  Split up into Left-/Right-PanelController, they initialise?
         private void Start()
         {
-            // FELIX  Extract GetComponents() to separate method?
+            Assert.raiseExceptions = true;
+
+            // TEMP  Only while we have both UIs (legacy and new :) )
+            ApplicationModelProvider.IsNewUI = true;
+
             IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
 
             Helper.AssertIsNotNull(variableDelayDeferrer);
@@ -87,22 +85,19 @@ namespace BattleCruisers.Scenes.Test
             // Instantiate player cruiser
             ILoadout playerLoadout = helper.GetPlayerLoadout();
 
-            IUIManager uiManager = CreateUIManager(playerCruiser, aiCruiser, leftPanelInitialiser.BuildMenu, rightPanelInitialiser.Informator);
+            UIManagerNEW uiManager = new UIManagerNEW();
             _tempUIManager = uiManager;
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
 
-            Camera platformCamera = FindObjectOfType<Camera>();
-            Assert.IsNotNull(platformCamera);
-            ICamera camera = new CameraBC(platformCamera);
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            cameraInitialiser.Initialise(dataProvider.SettingsManager);
 
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
                     _tempDroneManagerMonitor,
-                    camera,
-                    Substitute.For<ISettingsManager>(),
-                    smoothTime,
                     uiManager,
                     playerLoadout,
                     prefabFactory,
@@ -118,29 +113,20 @@ namespace BattleCruisers.Scenes.Test
                     uiManager,
                     playerCruiser,
                     Substitute.For<IUserChosenTargetHelper>(),
-                    buttonVisibilityFilters);
-        }
+                    buttonVisibilityFilters,
+                    new PauseGameManager(new TimeBC()));
 
-        private IUIManager CreateUIManager(ICruiser playerCruiser, ICruiser aiCruiser, IBuildMenuNEW buildMenu, IInformatorPanel informator)
-        {
-            return
-                new UIManagerNEW(
-                    buildMenu,
-                    new ItemDetailsManager(informator),
+            ManagerArgsNEW args
+                = new ManagerArgsNEW(
                     playerCruiser,
-                    aiCruiser);
+                    aiCruiser,
+                    leftPanelInitialiser.BuildMenu,
+                    new ItemDetailsManager(rightPanelInitialiser.Informator));
+            uiManager.Initialise(args);
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            // FELIX  Handle tutorial :)
-            //if (ApplicationModel.IsTutorial)
-            //{
-            //    TutorialHelper helper = new TutorialHelper(_dataProvider, prefabFactory);
-            //    _tutorialProvider = helper;
-            //    return helper;
-            //}
-            //else
             {
                 return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
             }

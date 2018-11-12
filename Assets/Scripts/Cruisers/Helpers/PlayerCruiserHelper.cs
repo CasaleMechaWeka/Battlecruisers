@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Helpers
 
         public override void ShowBuildingGroupButtons()
         {
-            _uiManager.ShowBuildingGroups();
+            _uiManager.HideCurrentlyShownMenu();
         }
     }
 }

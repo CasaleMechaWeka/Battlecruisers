@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.Utils;
@@ -14,6 +15,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
+        private IHealthDial<ICruiser> _healthDial;
 
         public void Initialise(
             IDroneFocuser droneFocuser, 
@@ -32,6 +34,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
             _chooseTargetButton.Initialise(userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+
+            CruiserHealthDialInitialiser healthDialInitialiser = GetComponentInChildren<CruiserHealthDialInitialiser>(includeInactive: true);
+            Assert.IsNotNull(healthDialInitialiser);
+            _healthDial = healthDialInitialiser.Initialise();
         }
 
         protected override StatsController<ICruiser> GetStatsController()
@@ -45,6 +51,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _repairButton.Repairable = cruiser;
             _chooseTargetButton.Target = cruiser;
+            _healthDial.Damagable = cruiser;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class SelectorPanelController : MonoBehaviour
+    public class SelectorPanelController : MonoBehaviour, IPanel
     {
         public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldDismissButtonBeEnabledFilter)
         {

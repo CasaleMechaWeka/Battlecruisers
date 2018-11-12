@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    // FELIX  Test :)
     public class TwoDigitDisplay : INumberDisplay
     {
         private readonly INumberDisplay _firstDigit, _secondDigit;

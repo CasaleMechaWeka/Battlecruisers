@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Test :)
     public class MainMenuManager : IMainMenuManager
     {
         private readonly IPauseGameManager _pauseGameManager;
@@ -25,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene
 
         public void ShowMenu()
         {
-            _pauseGameManager.ResumeGame();
+            _pauseGameManager.PauseGame();
             _modalMenu.ShowMenu(OnModalMenuDismissed);
         }
 

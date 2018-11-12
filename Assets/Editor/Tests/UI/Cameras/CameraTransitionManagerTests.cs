@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Cameras
 {
-	public class CameraTransitionManagerTests
+    public class CameraTransitionManagerTests
     {
 		private ICameraTransitionManager _transitionManager;
 

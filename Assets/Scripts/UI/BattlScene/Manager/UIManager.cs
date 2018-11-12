@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
 		}
 
-		public void ShowBuildingGroups()
+		public void HideCurrentlyShownMenu()
         {
             Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
 

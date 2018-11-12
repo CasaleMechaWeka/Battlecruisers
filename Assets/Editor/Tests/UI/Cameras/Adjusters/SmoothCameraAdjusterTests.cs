@@ -1,5 +1,6 @@
-﻿using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Cameras.Adjusters;
+﻿using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;

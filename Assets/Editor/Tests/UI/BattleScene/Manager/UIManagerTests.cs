@@ -77,7 +77,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void ShowBuildingGroups()
         {
-            _uiManager.ShowBuildingGroups();
+            _uiManager.HideCurrentlyShownMenu();
 
             _playerCruiser.SlotHighlighter.Received().UnhighlightSlots();
             _detailsManager.Received().HideDetails();

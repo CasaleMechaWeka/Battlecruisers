@@ -6,58 +6,32 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    // NEWUI  Imlement :D
-    // NEWUI  Update tests :)
     public class UIManagerNEW : IUIManager
 	{
-		private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly IBuildMenuNEW _buildMenu;
-        private readonly IItemDetailsManager _detailsManager;
+		private ICruiser _playerCruiser, _aiCruiser;
+        private IBuildMenuNEW _buildMenu;
+        private IItemDetailsManager _detailsManager;
 
-        // FELIX  Update IManagerArgs
-        // FELIX  Use IManagerArgs :)
-        public UIManagerNEW(
-            IBuildMenuNEW buildMenu,
-            IItemDetailsManager detailsManager,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser)
+        // Not in constructor because of circular dependency with:
+        // + Build menu
+        // + Cruisers
+        public void Initialise(ManagerArgsNEW args)
         {
-            Helper.AssertIsNotNull(buildMenu, detailsManager, playerCruiser, aiCruiser);
+            Assert.IsNotNull(args);
 
-            _buildMenu = buildMenu;
-            _detailsManager = detailsManager;
-            _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
+            _buildMenu = args.BuildMenu;
+            _detailsManager = args.DetailsManager;
+            _playerCruiser = args.PlayerCruiser;
+            _aiCruiser = args.AICruiser;
         }
 
-  //      public UIManagerNEW(IManagerArgs args)
-		//{
-  //          Assert.IsNotNull(args);
-
-		//	_playerCruiser = args.PlayerCruiser;
-  //          _aiCruiser = args.AICruiser;
-  //          _buildMenu = args.BuildMenu;
-  //          _detailsManager = args.DetailsManager;
-  //      }
-
-        /// <summary>
-        /// Not in constructor because of circular dependency between:
-        /// * UIManager
-        /// and 
-        /// * Cruisers
-        /// * Build menu  
-        /// Hence need to wait until all classes are set up before executing this method.
-        /// </summary>
         /// NEWUI  Remove?
         public void InitialUI()
         {
-			//_detailsManager.HideDetails();
-   //         _buildMenu.ShowBuildMenu();
         }
 
 		public virtual void HideItemDetails()
@@ -69,10 +43,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
         }
 
-        // FELIX  Rename, HideCurrentlyShownMenu?
-		public void ShowBuildingGroups()
+		public void HideCurrentlyShownMenu()
         {
-            Logging.Log(Tags.UI_MANAGER, ".ShowBuildingGroups()");
+            Logging.Log(Tags.UI_MANAGER, ".HideCurrentlyShownMenu()");
 
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _detailsManager.HideDetails();
@@ -91,8 +64,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            // NEWUI  Uncomment :)
-            //_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
         }
 
@@ -100,17 +72,17 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuilding()");
 
-   //         HideItemDetails();
+            HideItemDetails();
 
-   //         if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
-			//{
-			//	SelectBuildingFromFriendlyCruiser(building);
-			//}
-			//else if (ReferenceEquals(building.ParentCruiser, _aiCruiser))
-   //         {
-			//	SelectBuildingFromEnemyCruiser(building);
-			//}
-		}
+            if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
+            {
+                SelectBuildingFromFriendlyCruiser(building);
+            }
+            else if (ReferenceEquals(building.ParentCruiser, _aiCruiser))
+            {
+                SelectBuildingFromEnemyCruiser(building);
+            }
+        }
 
 		private void SelectBuildingFromFriendlyCruiser(IBuilding building)
 		{

@@ -1,0 +1,29 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.Utils;
+
+namespace BattleCruisers.UI.BattleScene.Manager
+{
+    public class ManagerArgsNEW
+    {
+        public ICruiser PlayerCruiser { get; private set; }
+        public ICruiser AICruiser { get; private set; }
+        public IBuildMenuNEW BuildMenu { get; private set; }
+        public IItemDetailsManager DetailsManager { get; private set; }
+
+        public ManagerArgsNEW(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBuildMenuNEW buildMenu,
+            IItemDetailsManager detailsManager)
+        {
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager);
+
+            PlayerCruiser = playerCruiser;
+            AICruiser = aiCruiser;
+            BuildMenu = buildMenu;
+            DetailsManager = detailsManager;
+        }    
+    }
+}

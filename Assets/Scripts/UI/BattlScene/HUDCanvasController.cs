@@ -10,7 +10,6 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -91,13 +90,13 @@ namespace BattleCruisers.UI.BattleScene
         // NEWUI  Class is deprecated :P
         public void Show()
         {
-            throw new System.NotImplementedException();
+            // empty
         }
 
         // NEWUI  Class is deprecated :P
         public void Hide()
         {
-            throw new System.NotImplementedException();
+            // empty
         }
     }
 }
