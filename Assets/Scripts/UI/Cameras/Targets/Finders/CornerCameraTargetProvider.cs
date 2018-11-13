@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Finders
 {
-    // FELIX  Test :D
     public class CornerCameraTargetProvider : ICornerCameraTargetProvider
     {
         private readonly IDictionary<CameraCorner, ICameraTarget> _cornerToTarget;
