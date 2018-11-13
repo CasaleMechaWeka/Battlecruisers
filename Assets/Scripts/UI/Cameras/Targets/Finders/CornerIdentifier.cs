@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.UI.Cameras.Targets.Finders
 {
-    // FELIX  Test :D
     public class CornerIdentifier : ICornerIdentifier
     {
         // The smallest x-value I can get to via the navigation wheel is:  -37.4
