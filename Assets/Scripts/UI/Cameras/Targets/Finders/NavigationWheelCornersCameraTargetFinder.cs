@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Finders
     /// + Overview
     /// + AI cruiser
     /// </summary>
-    /// FELIX  Test :D
     public class NavigationWheelCornersCameraTargetFinder : ICameraTargetFinder
     {
         private readonly ICameraTargetFinder _coreTargetFinder;
