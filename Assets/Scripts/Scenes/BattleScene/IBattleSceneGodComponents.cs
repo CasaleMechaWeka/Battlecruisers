@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
@@ -10,5 +11,6 @@ namespace BattleCruisers.Scenes.BattleScene
         IVariableDelayDeferrer VariableDelayDeferrer { get; }
         IHighlightFactory HighlightFactory { get; }
         IAudioSource AudioSource { get; }
+        ICamera Camera { get; }
     }
 }

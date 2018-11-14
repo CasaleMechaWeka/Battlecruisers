@@ -90,11 +90,6 @@ namespace BattleCruisers.Scenes.Test
 
             _tempDroneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
 
-            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
-            Assert.IsNotNull(cameraInitialiser);
-            // FELIX  :D
-            cameraInitialiser.Initialise(dataProvider.SettingsManager, null, null);
-
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
@@ -124,6 +119,15 @@ namespace BattleCruisers.Scenes.Test
                     leftPanelInitialiser.BuildMenu,
                     new ItemDetailsManager(rightPanelInitialiser.Informator));
             uiManager.Initialise(args);
+
+            // Camera
+            Camera platformCamera = FindObjectOfType<Camera>();
+            Assert.IsNotNull(platformCamera);
+            ICamera camera = new CameraBC(platformCamera);
+
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            cameraInitialiser.Initialise(camera, dataProvider.SettingsManager, playerCruiser, aiCruiser);
         }
 
         private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)

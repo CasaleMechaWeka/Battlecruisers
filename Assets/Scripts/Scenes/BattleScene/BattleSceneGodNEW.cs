@@ -73,9 +73,6 @@ namespace BattleCruisers.Scenes.BattleScene
             RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
             Assert.IsNotNull(rightPanelInitialiser);
 
-            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
-            Assert.IsNotNull(cameraInitialiser);
-
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
@@ -94,7 +91,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     prefabFactory,
                     components,
                     spriteProvider,
-                    cameraInitialiser.SoleCamera,
+                    components.Camera,
                     helper,
                     applicationModel,
                     cameraController,
@@ -105,7 +102,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
             // Not with GetComponent(), because of circular dependency with cruisers.
-            cameraInitialiser.Initialise(dataProvider.SettingsManager, playerCruiser, aiCruiser);
+            
 
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);
@@ -167,6 +164,11 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     components.VariableDelayDeferrer,
                     time);
+
+            // Camera
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            cameraInitialiser.Initialise(components.Camera, dataProvider.SettingsManager, playerCruiser, aiCruiser);
 
             // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
