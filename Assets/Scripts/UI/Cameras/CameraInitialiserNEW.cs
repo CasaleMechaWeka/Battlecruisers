@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,15 +18,27 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
 
-        public ICamera SoleCamera { get; private set; }
-
-        public void Initialise(ISettingsManager settingsManager)
+        // FELIX  Inject, to avoid stupid lazy instantiation :P
+        // Not in Initialise() method because of circular dependency with cruisers.
+        private ICamera _soleCamera;
+        public ICamera SoleCamera
         {
-            Assert.IsNotNull(settingsManager);
+            get
+            {
+                if (_soleCamera == null)
+                {
+                    Camera platformCamera = GetComponent<Camera>();
+                    Assert.IsNotNull(platformCamera);
+                    _soleCamera = new CameraBC(platformCamera);
+                }
 
-            Camera platformCamera = GetComponent<Camera>();
-            Assert.IsNotNull(platformCamera);
-            SoleCamera = new CameraBC(platformCamera);
+                return _soleCamera;
+            }
+        }
+
+        public void Initialise(ISettingsManager settingsManager, ICruiser playerCruiser, ICruiser aiCruiser)
+        {
+            Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
@@ -33,8 +47,13 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculator cameraCalculator = new CameraCalculator(SoleCamera, settings);
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
-            ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, SoleCamera);
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder);
+            ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, SoleCamera);
+            ICameraTargetFinder cornerCameraTargetFinder
+                = new NavigationWheelCornersCameraTargetFinder(
+                    coreCameraTargetFinder,
+                    new CornerIdentifier(),
+                    new CornerCameraTargetProvider(SoleCamera, cameraCalculator, playerCruiser, aiCruiser));
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(

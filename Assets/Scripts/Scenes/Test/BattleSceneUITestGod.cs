@@ -92,7 +92,8 @@ namespace BattleCruisers.Scenes.Test
 
             CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
             Assert.IsNotNull(cameraInitialiser);
-            cameraInitialiser.Initialise(dataProvider.SettingsManager);
+            // FELIX  :D
+            cameraInitialiser.Initialise(dataProvider.SettingsManager, null, null);
 
             leftPanelInitialiser
                 .Initialise(

@@ -75,7 +75,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
             Assert.IsNotNull(cameraInitialiser);
-            cameraInitialiser.Initialise(dataProvider.SettingsManager);
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
@@ -104,6 +103,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
+
+            // Not with GetComponent(), because of circular dependency with cruisers.
+            cameraInitialiser.Initialise(dataProvider.SettingsManager, playerCruiser, aiCruiser);
 
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);
