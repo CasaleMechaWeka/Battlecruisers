@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Update tests
     public class NavigationWheel : MonoBehaviour, 
         INavigationWheel, 
         IDragHandler, 
