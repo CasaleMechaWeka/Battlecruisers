@@ -95,6 +95,7 @@ namespace BattleCruisers.Scenes.BattleScene
             CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
             Assert.IsNotNull(cameraInitialiser);
             ICameraFocuser cameraFocuser = cameraInitialiser.Initialise(components.Camera, dataProvider.SettingsManager, playerCruiser, aiCruiser);
+            cameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraFocuser);
