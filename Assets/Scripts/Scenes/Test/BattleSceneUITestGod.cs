@@ -23,6 +23,7 @@ using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
+using TestHelper = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -71,14 +72,16 @@ namespace BattleCruisers.Scenes.Test
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, variableDelayDeferrer);
 
-            ICruiser playerCruiser = Substitute.For<ICruiser>();
+
+            TestHelper.Helper testHelper = new TestHelper.Helper();
+            ICruiser playerCruiser = testHelper.CreateCruiser(facingDirection: Direction.Right, faction: Faction.Blues);
             _tempPlayerCruiser = playerCruiser;
 
             IDroneManager droneManager = Substitute.For<IDroneManager>();
             droneManager.NumOfDrones.Returns(12);
             playerCruiser.DroneManager.Returns(droneManager);
 
-            ICruiser aiCruiser = Substitute.For<ICruiser>();
+            ICruiser aiCruiser = testHelper.CreateCruiser(facingDirection: Direction.Left, faction: Faction.Reds);
 
             IButtonVisibilityFilters buttonVisibilityFilters = new StaticButtonVisibilityFilters(isMatch: true);
 

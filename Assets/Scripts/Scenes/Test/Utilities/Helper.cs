@@ -184,7 +184,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			droneConsumer.State.Returns(DroneConsumerState.Active);
 
 			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-			droneConsumerProvider.RequestDroneConsumer(-99).ReturnsForAnyArgs(callInfo =>
+			droneConsumerProvider.RequestDroneConsumer(default(int)).ReturnsForAnyArgs(callInfo =>
 			{
 				droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
 				return droneConsumer;
@@ -198,6 +198,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 			cruiser.Faction.Returns(faction);
             cruiser.BuildProgressCalculator.Returns(buildProgressCalculator);
+            cruiser.Size.Returns(new Vector2(5, 2));
+
+            float xPosition = facingDirection == Direction.Right ? -35 : 35;
+            cruiser.Position.Returns(new Vector2(xPosition, 0));
 
 			return cruiser;
 		}
