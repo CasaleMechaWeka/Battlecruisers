@@ -2,7 +2,6 @@
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
@@ -57,9 +56,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private void FindTarget()
         {
             Target = _navigationWheelCameraTargetFinder.FindCameraTarget();
-
-            // FELIX  Remove
-            Debug.Log("FindCameraTarget():  " + Target);
         }
     }
 }
