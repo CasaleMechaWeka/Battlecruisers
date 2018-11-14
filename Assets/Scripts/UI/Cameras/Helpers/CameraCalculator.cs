@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
             // front of the cruiser.  That way the naval factory and the ship
             // under construction are easily visible.
             float xAdjustmentMagnitudeInM = cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
-            float xAdjustmentInM = cruiser.Direction == Direction.Right ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
+            float xAdjustmentInM = cruiser.IsPlayerCruiser ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
             
             return
                 new Vector3(

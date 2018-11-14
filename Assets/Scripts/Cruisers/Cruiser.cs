@@ -77,7 +77,7 @@ namespace BattleCruisers.Cruisers
 		public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones { get { return numOfDrones; } }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
-        public bool IsPlayerCruiser { get { return Direction == Direction.Right; } }
+        public bool IsPlayerCruiser { get { return Position.x < 0; } }
 
         // ICruiserController
         public bool IsAlive { get { return !IsDestroyed; } }
