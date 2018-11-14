@@ -90,8 +90,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     uiManager,
                     playerCruiserUserChosenTargetManager);
 
-            ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
-            ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
+            Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
+            Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);

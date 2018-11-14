@@ -35,7 +35,6 @@ namespace BattleCruisers.Cruisers
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
-        private Cruiser _playerCruiser, _aiCruiser;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -64,31 +63,31 @@ namespace BattleCruisers.Cruisers
             _userChosenTargetTracker = userChosenTargetTracker;
         }
 
-        public ICruiser CreatePlayerCruiser()
+        public Cruiser CreatePlayerCruiser()
         {
             ILoadout playerLoadout = _helper.GetPlayerLoadout();
             Cruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
-            _playerCruiser = _prefabFactory.CreateCruiser(playerCruiserPrefab);
-            _playerCruiser.transform.position = new Vector3(-CRUISER_OFFSET_IN_M, _playerCruiser.YAdjustmentInM, 0);
+            Cruiser playerCruiser = _prefabFactory.CreateCruiser(playerCruiserPrefab);
+            playerCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
 
-            return _playerCruiser;
+            return playerCruiser;
         }
 
-        public ICruiser CreateAICruiser()
+        public Cruiser CreateAICruiser()
         {
             ILevel currentLevel = _applicationModel.DataProvider.GetLevel(_applicationModel.SelectedLevel);
             Cruiser aiCruiserPrefab = _prefabFactory.GetCruiserPrefab(currentLevel.Hull);
-            _aiCruiser = _prefabFactory.CreateCruiser(aiCruiserPrefab);
+            Cruiser aiCruiser = _prefabFactory.CreateCruiser(aiCruiserPrefab);
 
-            _aiCruiser.transform.position = new Vector3(CRUISER_OFFSET_IN_M, _aiCruiser.YAdjustmentInM, 0);
-            Quaternion rotation = _aiCruiser.transform.rotation;
+            aiCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
+            Quaternion rotation = aiCruiser.Rotation;
             rotation.eulerAngles = new Vector3(0, 180, 0);
-            _aiCruiser.transform.rotation = rotation;
+            aiCruiser.Rotation = rotation;
 
-            return _aiCruiser;
+            return aiCruiser;
         }
 
-        public void InitialisePlayerCruiser(ICruiser playerCruiser, ICruiser aiCruiser)
+        public void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
@@ -101,8 +100,8 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
-                _playerCruiser,
-                _aiCruiser,
+                playerCruiser,
+                aiCruiser,
                 _uiManager,
                 helper,
                 faction,
@@ -117,7 +116,7 @@ namespace BattleCruisers.Cruisers
                 isPlayerCruiser: true);
         }
 
-        public void InitialiseAICruiser(ICruiser playerCruiser, ICruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper)
+        public void InitialiseAICruiser(Cruiser playerCruiser, Cruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, userChosenTargetHelper);
 
@@ -131,8 +130,8 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
             InitialiseCruiser(
-                _aiCruiser,
-                _playerCruiser,
+                aiCruiser,
+                playerCruiser,
                 _uiManager,
                 helper,
                 faction,

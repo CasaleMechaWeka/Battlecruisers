@@ -4,10 +4,10 @@ namespace BattleCruisers.Cruisers
 {
     public interface ICruiserFactoryNEW
     {
-        ICruiser CreatePlayerCruiser();
-        ICruiser CreateAICruiser();
+        Cruiser CreatePlayerCruiser();
+        Cruiser CreateAICruiser();
 
-        void InitialisePlayerCruiser(ICruiser playerCruiser, ICruiser aiCruiser);
-        void InitialiseAICruiser(ICruiser playerCruiser, ICruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper);
+        void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser);
+        void InitialiseAICruiser(Cruiser playerCruiser, Cruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper);
     }
 }
