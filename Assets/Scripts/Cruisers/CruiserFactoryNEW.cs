@@ -12,7 +12,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -31,7 +31,6 @@ namespace BattleCruisers.Cruisers
         private readonly ICamera _soleCamera;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
-        private readonly ICameraController _cameraController;
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
@@ -45,11 +44,10 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
-            ICameraController cameraController,
             IUIManager uiManager,
             IRankedTargetTracker userChosenTargetTracker)
         {
-            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, cameraController, uiManager, userChosenTargetTracker);
+            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager, userChosenTargetTracker);
             
             _prefabFactory = prefabFactory;
             _components = components;
@@ -57,7 +55,6 @@ namespace BattleCruisers.Cruisers
             _soleCamera = soleCamera;
             _helper = helper;
             _applicationModel = applicationModel;
-            _cameraController = cameraController;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
             _userChosenTargetTracker = userChosenTargetTracker;
@@ -87,11 +84,11 @@ namespace BattleCruisers.Cruisers
             return aiCruiser;
         }
 
-        public void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser)
+        public void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser, ICameraFocuser cameraFocuser)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraFocuser);
 
-            ICruiserHelper helper = CreatePlayerHelper(_uiManager, _cameraController);
+            ICruiserHelper helper = CreatePlayerHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             bool shouldShowFog = false;
@@ -116,11 +113,15 @@ namespace BattleCruisers.Cruisers
                 isPlayerCruiser: true);
         }
 
-        public void InitialiseAICruiser(Cruiser playerCruiser, Cruiser aiCruiser, IUserChosenTargetHelper userChosenTargetHelper)
+        public void InitialiseAICruiser(
+            Cruiser playerCruiser, 
+            Cruiser aiCruiser, 
+            ICameraFocuser cameraFocuser, 
+            IUserChosenTargetHelper userChosenTargetHelper)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, userChosenTargetHelper);
 
-            ICruiserHelper helper = CreateAIHelper(_uiManager, _cameraController);
+            ICruiserHelper helper = CreateAIHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
             bool shouldShowFog = true;
@@ -214,14 +215,14 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraController camera)
+        private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new AICruiserHelper(uiManager, camera);
+            return new AICruiserHelperNEW(uiManager, cameraFocuser);
         }
 
-        private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraController camera)
+        private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new PlayerCruiserHelper(uiManager, camera);
+            return new PlayerCruiserHelperNEW(uiManager, cameraFocuser);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
 
-        public void Initialise(
+        public ICameraFocuser  Initialise(
             ICamera camera, 
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
@@ -45,6 +45,8 @@ namespace BattleCruisers.UI.Cameras
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
+
+            return new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel);
         }
 
         public void Update()

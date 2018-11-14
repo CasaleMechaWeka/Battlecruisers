@@ -7,6 +7,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -73,8 +74,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
             IPauseGameManager pauseGameManager = new PauseGameManager(time);
-
-            ICameraController cameraController = Substitute.For<ICameraController>();
             UIManagerNEW uiManager = new UIManagerNEW();
 
             // Create cruisers
@@ -86,15 +85,19 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Camera,
                     helper,
                     applicationModel,
-                    cameraController,
                     uiManager,
                     playerCruiserUserChosenTargetManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
+            // Camera
+            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            Assert.IsNotNull(cameraInitialiser);
+            ICameraFocuser cameraFocuser = cameraInitialiser.Initialise(components.Camera, dataProvider.SettingsManager, playerCruiser, aiCruiser);
+
             // Initialise player cruiser
-            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);
+            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraFocuser);
 
             // Initialise AI cruiser
             IUserChosenTargetHelper userChosenTargetHelper
@@ -105,6 +108,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 .InitialiseAICruiser(
                     playerCruiser,
                     aiCruiser,
+                    cameraFocuser,
                     userChosenTargetHelper);
 
             // UI
@@ -157,11 +161,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     components.VariableDelayDeferrer,
                     time);
-
-            // Camera
-            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
-            Assert.IsNotNull(cameraInitialiser);
-            cameraInitialiser.Initialise(components.Camera, dataProvider.SettingsManager, playerCruiser, aiCruiser);
 
             // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
