@@ -5,7 +5,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
@@ -66,13 +65,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
-            // FELIX  Move panel initialisers down to whre they get initialised...
-            LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
-            Assert.IsNotNull(leftPanelInitialiser);
-
-            RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
-            Assert.IsNotNull(rightPanelInitialiser);
-
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
@@ -101,9 +93,6 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             ICruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
-            // Not with GetComponent(), because of circular dependency with cruisers.
-            
-
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser);
 
@@ -121,6 +110,8 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
 
+            LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
+            Assert.IsNotNull(leftPanelInitialiser);
             leftPanelInitialiser
                 .Initialise(
                     playerCruiser.DroneManager,
@@ -133,8 +124,10 @@ namespace BattleCruisers.Scenes.BattleScene
                     Substitute.For<IPlayerCruiserFocusHelper>(),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser));
 
+            RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
+            Assert.IsNotNull(rightPanelInitialiser);
             rightPanelInitialiser
-                .Initialise(
+                            .Initialise(
                     applicationModel,
                     sceneNavigator,
                     uiManager,
