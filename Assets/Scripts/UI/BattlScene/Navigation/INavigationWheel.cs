@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public interface INavigationWheel
     {
-        Vector2 CenterPosition { get; }
+        Vector2 CenterPosition { get; set; }
 
         event EventHandler CenterPositionChanged;
     }

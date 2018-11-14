@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  Update tests
     public class NavigationWheel : MonoBehaviour, 
         INavigationWheel, 
         IDragHandler, 
@@ -18,7 +19,25 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private Vector2 _halfSize;
         private IList<GameObject> _activeFeedbacks;
 
-        public Vector2 CenterPosition { get { return (Vector2)transform.position + _halfSize; } }
+        private Vector2 _centerPosition;
+        public Vector2 CenterPosition
+        {
+            get { return _centerPosition; }
+            set
+            {
+                Vector2 desiredCenterPosition = value;
+                Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
+                _centerPosition = clampedCenterPosition;
+                Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
+
+                transform.position = clampedBottomLeftPosition;
+
+                if (CenterPositionChanged != null)
+                {
+                    CenterPositionChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
 
         public event EventHandler CenterPositionChanged;
 
@@ -38,21 +57,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             };
 
             SetFeedbackVisibility(isVisible: false);
+
+            _centerPosition = (Vector2)transform.position + _halfSize;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             Vector2 desiredBottomLeftPosition = (Vector2)transform.position + eventData.delta;
-            Vector2 desiredCenterPosition = desiredBottomLeftPosition + _halfSize;
-            Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
-            Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
-
-            transform.position = clampedBottomLeftPosition;
-
-            if (CenterPositionChanged != null)
-            {
-                CenterPositionChanged.Invoke(this, EventArgs.Empty);
-            }
+            CenterPosition = desiredBottomLeftPosition + _halfSize;
         }
 
         public void OnPointerDown(PointerEventData eventData)
