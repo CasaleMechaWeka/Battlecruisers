@@ -1,8 +1,11 @@
-﻿namespace BattleCruisers.UI.BattleScene.Navigation
+﻿using BattleCruisers.Utils.DataStrctures;
+
+namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public interface INavigationWheelPanel
     {
         INavigationWheel NavigationWheel { get; }
+        IPyramid PanelArea { get; }
 
         /// <returns>
         /// The navigation wheel y position as a proportion of the maximum

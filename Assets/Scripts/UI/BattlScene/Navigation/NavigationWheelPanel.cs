@@ -7,28 +7,27 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationWheelPanel : INavigationWheelPanel
     {
-        private readonly IPyramid _panelArea;
-
         public INavigationWheel NavigationWheel { get; private set; }
+        public IPyramid PanelArea { get; private set; }
 
         public NavigationWheelPanel(IPyramid panelArea, INavigationWheel navigationWheel)
         {
             Helper.AssertIsNotNull(panelArea, navigationWheel);
 
-            _panelArea = panelArea;
+            PanelArea = panelArea;
             NavigationWheel = navigationWheel;
         }
 
         public float FindYProportion()
         {
-            return FindLocalY() / _panelArea.Height;
+            return FindLocalY() / PanelArea.Height;
         }
 
         public float FindXProportion()
         {
             float localYPosition = FindLocalY();
 
-            IRange<float> globalXRangeAtHeight = _panelArea.FindGlobalXRange(localYPosition);
+            IRange<float> globalXRangeAtHeight = PanelArea.FindGlobalXRange(localYPosition);
 
             // Sometimes _navigationWheel.CenterPosition.x can be slightly smaller (eg: by 3 x 10^7)
             // than the minimim expected position due to float rounding errors, so clamp to avoid this.
@@ -41,10 +40,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         private float FindLocalY()
         {
-            float localYPosition = NavigationWheel.CenterPosition.y - _panelArea.BottomLeftVertex.y;
+            float localYPosition = NavigationWheel.CenterPosition.y - PanelArea.BottomLeftVertex.y;
 
             Assert.IsTrue(localYPosition >= 0);
-            Assert.IsTrue(localYPosition <= _panelArea.Height);
+            Assert.IsTrue(localYPosition <= PanelArea.Height);
 
             return localYPosition;
         }
