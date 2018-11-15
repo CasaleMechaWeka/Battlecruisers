@@ -3,7 +3,6 @@ using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Test :P
     public class CameraFocuser : ICameraFocuser
     {
         private readonly IPyramid _navigationPanelArea;
