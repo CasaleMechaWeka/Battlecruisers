@@ -127,7 +127,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     spriteProvider,
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelperNEW(components.Camera, cameraFocuser, playerCruiser),
-                    helper.GetBuildableButtonSoundPlayer(playerCruiser));
+                    helper.GetBuildableButtonSoundPlayer(playerCruiser),
+                    playerCruiser);
 
             RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
             Assert.IsNotNull(rightPanelInitialiser);

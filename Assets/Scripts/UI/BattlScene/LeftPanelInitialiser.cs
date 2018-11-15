@@ -1,12 +1,14 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -38,7 +40,8 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            ICruiser playerCruiser)
         {
             Helper.AssertIsNotNull(
                 droneManager, 
@@ -49,10 +52,11 @@ namespace BattleCruisers.UI.BattleScene
                 spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
-                soundPlayer);
+                soundPlayer,
+                playerCruiser);
 
             SetupDronesPanel(droneManager, droneManagerMonitor);
-            // FELIX  Setup cruiser health dial :D
+            SetupHealthDial(playerCruiser);
             SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
         }
 
@@ -61,6 +65,14 @@ namespace BattleCruisers.UI.BattleScene
             DronesPanelInitialiser dronesPanelInitialiser = FindObjectOfType<DronesPanelInitialiser>();
             Assert.IsNotNull(dronesPanelInitialiser);
             dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
+        }
+
+        private void SetupHealthDial(ICruiser playerCruiser)
+        {
+            CruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<CruiserHealthDialInitialiser>();
+            Assert.IsNotNull(dialInitialiser);
+            IHealthDial<ICruiser> healthDial = dialInitialiser.Initialise();
+            healthDial.Damagable = playerCruiser;
         }
 
         private void SetupBuildMenuController(

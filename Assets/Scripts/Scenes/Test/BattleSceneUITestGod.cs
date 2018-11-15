@@ -103,7 +103,8 @@ namespace BattleCruisers.Scenes.Test
                     spriteProvider,
                     buttonVisibilityFilters,
                     Substitute.For<IPlayerCruiserFocusHelper>(),
-                    Substitute.For<IPrioritisedSoundPlayer>());
+                    Substitute.For<IPrioritisedSoundPlayer>(),
+                    playerCruiser);
 
             rightPanelInitialiser
                 .Initialise(
