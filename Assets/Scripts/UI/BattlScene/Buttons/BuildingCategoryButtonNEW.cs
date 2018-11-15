@@ -4,6 +4,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
@@ -14,6 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
+        private Image _activeFeedback;
 
         public event EventHandler Clicked;
 
@@ -27,6 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public BuildingCategory Category { get { return category; } }
 
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
+        public bool IsActiveFeedbackVisible { set { _activeFeedback.enabled = value; } }
 
         public void Initialise(
             BuildingCategory expectedBuildingCategory,
@@ -40,6 +43,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            _activeFeedback = transform.FindNamedComponent<Image>("ActiveFeedback");
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);

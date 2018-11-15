@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // NEWUI  Remove :D
     public class BuildingCategoryButton : UIElement, IBuildingCategoryButton, IBroadcastingFilter
 	{
         private IUIManager _uiManager;
@@ -24,6 +25,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public BuildingCategory Category { get; private set; }
 
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
+
+        public bool IsActiveFeedbackVisible
+        {
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public void Initialise(
             IBuildingGroup buildingGroup, 
