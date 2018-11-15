@@ -7,7 +7,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
@@ -16,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private ISpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
-        public GameObject isPresentedFeedback;
+        public BuildingCategoryButtonNEW buildingCategoryButton;
 
         public void Initialise(
             IUIManager uiManager,
@@ -28,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Need these for abstract method called by base.Initialise().  Codesmell :P
             // NEWUI  Switch back
             Helper.AssertIsNotNull(spriteProvider, clickHandler);
-            //Helper.AssertIsNotNull(isPresentedFeedback, spriteProvider, clickHandler);
+            //Helper.AssertIsNotNull(buildingCategoryButton, spriteProvider, clickHandler);
 
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
@@ -36,9 +35,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             base.Initialise(uiManager, buttonVisibilityFilters, buildings);
 
             // NEWUI  Remove null check
-            if (isPresentedFeedback != null)
+            if (buildingCategoryButton != null)
             {
-                isPresentedFeedback.SetActive(false);
+                buildingCategoryButton.IsActiveFeedbackVisible = false;
             }
         }
 
@@ -52,9 +51,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             base.OnPresenting(activationParameter);
 
             // NEWUI  Remove null check
-            if (isPresentedFeedback != null)
+            if (buildingCategoryButton != null)
             {
-                isPresentedFeedback.SetActive(true);
+                buildingCategoryButton.IsActiveFeedbackVisible = true;
             }
         }
 
@@ -63,9 +62,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             base.OnDismissing();
     
             // NEWUI  Remove null check
-            if (isPresentedFeedback != null)
+            if (buildingCategoryButton != null)
             {
-                isPresentedFeedback.SetActive(false);
+                buildingCategoryButton.IsActiveFeedbackVisible = false;
             }
         }
     }
