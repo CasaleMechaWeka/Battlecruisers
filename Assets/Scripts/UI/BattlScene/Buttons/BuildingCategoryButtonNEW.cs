@@ -15,7 +15,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
-        private Image _activeFeedback;
+
+        public Image activeFeedback;
 
         public event EventHandler Clicked;
 
@@ -29,7 +30,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public BuildingCategory Category { get { return category; } }
 
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
-        public bool IsActiveFeedbackVisible { set { _activeFeedback.enabled = value; } }
+        public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
 
         public void Initialise(
             BuildingCategory expectedBuildingCategory,
@@ -38,12 +39,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		{
             base.Initialise();
 
-            Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter);
             Assert.AreEqual(Category, expectedBuildingCategory);
 
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
-            _activeFeedback = transform.FindNamedComponent<Image>("ActiveFeedback");
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
@@ -59,5 +59,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 Clicked.Invoke(this, EventArgs.Empty);
             }
         }
-	}
+
+        private void OnDestroy()
+        {
+            Destroy(activeFeedback);
+        }
+    }
 }
