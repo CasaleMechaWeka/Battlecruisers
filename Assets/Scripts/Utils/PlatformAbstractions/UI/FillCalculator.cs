@@ -11,7 +11,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
     /// 0.5 -> 0.5
     /// 1   -> 0.75
     /// </summary>
-    /// FELIX  Test :D
     public class FillCalculator : IFillCalculator
     {
         private readonly float _range;
