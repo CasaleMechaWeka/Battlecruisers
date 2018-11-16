@@ -3,13 +3,19 @@
 namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     /// <summary>
-    /// FELIX
+    /// Uses a subset of an underlying fillable image.  For example,
+    /// with an underlying fillable image spanning 180*, and minimum
+    /// and maximum proportions of 0.25 and 0.75 respectively, setting
+    /// the FillAmount to:  Results in:
+    ///                 0   => 0.25
+    ///                 0.5 => 0.5
+    ///                 1   => 0.75
     /// </summary>
     /// FELIX  Test :D
     public class SubsetFillableImage : IFillableImage
     {
         private readonly IFillableImage _baseIamge;
-        private readonly float _logicalFillAmount;
+        private readonly float _range;
         
         // Giving a proportion of 0 will set this minimum proportion on the underlying image
         private readonly float _minProportion;
@@ -25,9 +31,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
 
         public float FillAmount
         {
-            // FELIX  Do reverse transform to get fill amount?
-            get { return _logicalFillAmount; }
-            set { _baseIamge.FillAmount = MapFillAmount(value); }
+            get { return AdjustedToRaw(_baseIamge.FillAmount); }
+            set { _baseIamge.FillAmount = RawToAdjusted(value); }
         }
 
         public SubsetFillableImage(IFillableImage baseImage, float minProportion, float maxProportion)
@@ -41,13 +46,19 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             _minProportion = minProportion;
             _maxProportion = maxProportion;
 
-            _logicalFillAmount = baseImage.FillAmount;
+            _range = _maxProportion - _minProportion;
         }
 
-        private float MapFillAmount(float fillAmount)
+        private float RawToAdjusted(float rawFillAmount)
         {
-            // FELIX  NEXT :D
-            return 0;
+            float additionToMin = rawFillAmount * _range;
+            return _minProportion + additionToMin;
+        }
+
+        private float AdjustedToRaw(float adjustedFillAmount)
+        {
+            float additionToMin = adjustedFillAmount - _minProportion;
+            return additionToMin / _range;
         }
     }
 }
