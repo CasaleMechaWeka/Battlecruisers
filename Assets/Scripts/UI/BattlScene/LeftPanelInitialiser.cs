@@ -69,10 +69,9 @@ namespace BattleCruisers.UI.BattleScene
 
         private void SetupHealthDial(ICruiser playerCruiser)
         {
-            CruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<CruiserHealthDialInitialiser>();
+            PlayerCruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<PlayerCruiserHealthDialInitialiser>();
             Assert.IsNotNull(dialInitialiser);
-            IHealthDial<ICruiser> healthDial = dialInitialiser.Initialise();
-            healthDial.Damagable = playerCruiser;
+            dialInitialiser.Initialise(playerCruiser);
         }
 
         private void SetupBuildMenuController(
