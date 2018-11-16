@@ -20,7 +20,8 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
             IFillableImage coreFillableImage = new FillableImage(platformFillableImage);
-            IFillableImage subsetFillableImage = new SubsetFillableImage(coreFillableImage, MIN_PROPORTION, MAX_PROPORTION);
+            IFillCalculator fillCalculator = new FillCalculator(MIN_PROPORTION, MAX_PROPORTION);
+            IFillableImage subsetFillableImage = new SubsetFillableImage(coreFillableImage, fillCalculator);
 
             IFilter<ICruiser> visibilityFilter = new StaticFilter<ICruiser>(isMatch: true);
 
