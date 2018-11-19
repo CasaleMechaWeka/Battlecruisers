@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Cameras.Targets.Providers;
+﻿using System;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
@@ -13,6 +14,8 @@ namespace BattleCruisers.UI.Cameras.Adjusters
         private readonly ISmoothZoomAdjuster _zoomAdjuster;
         private readonly ISmoothPositionAdjuster _positionAdjuster;
 
+        public event EventHandler CompletedAdjustment;
+
         public SmoothCameraAdjuster(
             ICameraTargetProvider cameraTargetProvider, 
             ISmoothZoomAdjuster zoomAdjuster,
@@ -25,11 +28,16 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             _positionAdjuster = positionAdjuster;
         }
 
-        public bool AdjustCamera()
+        public void AdjustCamera()
         {
             bool reachedTargetZoom = _zoomAdjuster.AdjustZoom(_cameraTargetProvider.Target.OrthographicSize);
             bool reachedTargetPosition = _positionAdjuster.AdjustPosition(_cameraTargetProvider.Target.Position);
-            return reachedTargetZoom && reachedTargetPosition;
+
+            bool reachedTarget = reachedTargetZoom && reachedTargetPosition;
+            if (reachedTarget && CompletedAdjustment != null)
+            {
+                CompletedAdjustment.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

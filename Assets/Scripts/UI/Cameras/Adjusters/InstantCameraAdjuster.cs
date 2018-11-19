@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
@@ -8,10 +9,13 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// Instantly updates camera to target position.  Results in jerky
     /// camera movement.
     /// </summary>
+    /// FELIX  Update tests :)
     public class InstantCameraAdjuster : ICameraAdjuster
     {
         private readonly ICameraTargetProvider _cameraTargetProvider;
         private readonly ICamera _camera;
+
+        public event EventHandler CompletedAdjustment;
 
         public InstantCameraAdjuster(ICameraTargetProvider cameraTargetProvider, ICamera camera)
         {
@@ -21,11 +25,15 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             _camera = camera;
         }
 
-        public bool AdjustCamera()
+        public void AdjustCamera()
         {
             _camera.Transform.Position = _cameraTargetProvider.Target.Position;
             _camera.OrthographicSize = _cameraTargetProvider.Target.OrthographicSize;
-            return true;
+            
+            if (CompletedAdjustment != null)
+            {
+                CompletedAdjustment.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
