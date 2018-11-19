@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.UI.Cameras.Targets.Providers;
+﻿using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
@@ -8,35 +7,32 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// Smoothly moves camera to target postion and orthographic size.
     /// </summary>
     /// FELIX  Update tests :)
-    public class SmoothCameraAdjuster : ICameraAdjuster
+    public class SmoothCameraAdjuster : CameraAdjuster
     {
-        private readonly ICameraTargetProvider _cameraTargetProvider;
         private readonly ISmoothZoomAdjuster _zoomAdjuster;
         private readonly ISmoothPositionAdjuster _positionAdjuster;
-
-        public event EventHandler CompletedAdjustment;
 
         public SmoothCameraAdjuster(
             ICameraTargetProvider cameraTargetProvider, 
             ISmoothZoomAdjuster zoomAdjuster,
             ISmoothPositionAdjuster positionAdjuster)
+            : base(cameraTargetProvider)
         {
-            Helper.AssertIsNotNull(cameraTargetProvider, zoomAdjuster, positionAdjuster);
+            Helper.AssertIsNotNull(zoomAdjuster, positionAdjuster);
 
-            _cameraTargetProvider = cameraTargetProvider;
             _zoomAdjuster = zoomAdjuster;
             _positionAdjuster = positionAdjuster;
         }
 
-        public void AdjustCamera()
+        public override void AdjustCamera()
         {
             bool reachedTargetZoom = _zoomAdjuster.AdjustZoom(_cameraTargetProvider.Target.OrthographicSize);
             bool reachedTargetPosition = _positionAdjuster.AdjustPosition(_cameraTargetProvider.Target.Position);
 
             bool reachedTarget = reachedTargetZoom && reachedTargetPosition;
-            if (reachedTarget && CompletedAdjustment != null)
+            if (reachedTarget)
             {
-                CompletedAdjustment.Invoke(this, EventArgs.Empty);
+                InvokeCompletedAdjustmentEvent();
             }
         }
     }

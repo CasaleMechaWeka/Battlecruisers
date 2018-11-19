@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.UI.Cameras.Targets.Providers;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
-using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
@@ -10,30 +9,22 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// camera movement.
     /// </summary>
     /// FELIX  Update tests :)
-    public class InstantCameraAdjuster : ICameraAdjuster
+    public class InstantCameraAdjuster : CameraAdjuster
     {
-        private readonly ICameraTargetProvider _cameraTargetProvider;
         private readonly ICamera _camera;
 
-        public event EventHandler CompletedAdjustment;
-
         public InstantCameraAdjuster(ICameraTargetProvider cameraTargetProvider, ICamera camera)
+            : base(cameraTargetProvider)
         {
-            Helper.AssertIsNotNull(cameraTargetProvider, camera);
-
-            _cameraTargetProvider = cameraTargetProvider;
+            Assert.IsNotNull(camera);
             _camera = camera;
         }
 
-        public void AdjustCamera()
+        public override void AdjustCamera()
         {
             _camera.Transform.Position = _cameraTargetProvider.Target.Position;
             _camera.OrthographicSize = _cameraTargetProvider.Target.OrthographicSize;
-            
-            if (CompletedAdjustment != null)
-            {
-                CompletedAdjustment.Invoke(this, EventArgs.Empty);
-            }
+            InvokeCompletedAdjustmentEvent();
         }
     }
 }
