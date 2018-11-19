@@ -21,10 +21,11 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             _camera = camera;
         }
 
-        public void AdjustCamera()
+        public bool AdjustCamera()
         {
             _camera.Transform.Position = _cameraTargetProvider.Target.Position;
             _camera.OrthographicSize = _cameraTargetProvider.Target.OrthographicSize;
+            return true;
         }
     }
 }
