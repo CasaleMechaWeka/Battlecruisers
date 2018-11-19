@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -35,6 +36,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IArtificialIntelligence _ai;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
+        private ITutorialProvider _tutorialProvider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -63,13 +65,16 @@ namespace BattleCruisers.Scenes.BattleScene
                 musicPlayer = Substitute.For<IMusicPlayer>();
             }
 
+            // TEMP  Force  tutorial
+            applicationModel.IsTutorial = true;
+
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            IBattleSceneHelper helper = CreateHelper(dataProvider, prefabFactory, components.VariableDelayDeferrer);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.VariableDelayDeferrer);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -171,18 +176,17 @@ namespace BattleCruisers.Scenes.BattleScene
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
         }
 
-        private IBattleSceneHelper CreateHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
+        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {
-            // FELIX  Handle tutorial :)
-            //if (ApplicationModel.IsTutorial)
-            //{
-            //    TutorialHelper helper = new TutorialHelper(_dataProvider, prefabFactory);
-            //    _tutorialProvider = helper;
-            //    return helper;
-            //}
-            //else
+            if (applicationModel.IsTutorial)
             {
-                return new NormalHelper(dataProvider, prefabFactory, variableDelayDeferrer);
+                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory);
+                _tutorialProvider = helper;
+                return helper;
+            }
+            else
+            {
+                return new NormalHelper(applicationModel.DataProvider, prefabFactory, variableDelayDeferrer);
             }
         }
     }
