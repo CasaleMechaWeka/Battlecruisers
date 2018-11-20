@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Tutorial
 {
@@ -10,19 +11,22 @@ namespace BattleCruisers.Tutorial
         public ICruiser AICruiser { get; private set; }
         public ITutorialProvider TutorialProvider { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
-        
+        public ICamera Camera { get; private set; }
+
         public TutorialArgsNEW(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             ITutorialProvider tutorialProvider,
-            IPrefabFactory prefabFactory)
+            IPrefabFactory prefabFactory,
+            ICamera camera)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, camera);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
             TutorialProvider = tutorialProvider;
             PrefabFactory = prefabFactory;
+            Camera = camera;
         }
     }
 }
