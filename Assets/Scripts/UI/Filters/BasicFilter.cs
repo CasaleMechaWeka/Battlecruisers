@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.UI.Filters
 {
+    // FELIX  Rename to: "BroadcastingFilter"
     public class BasicFilter : IBroadcastingFilter
     {
         private bool _isMatch;
