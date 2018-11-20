@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,31 +10,33 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialManagerNEW : MonoBehaviour, ITutorialManager
     {
-		private IVariableDelayDeferrer _deferrer;
-        private IHighlightFactory _highlightFactory;
         private ITutorialStepConsumer _consumer;
-
-        public TextDisplayer textDisplayer;
-        public MaskHighlighter maskHighlighter;
 
         public event EventHandler TutorialCompleted;
 
-        public void Initialise(ITutorialArgs tutorialArgs)
+        public void Initialise(ITutorialArgsNEW tutorialArgs)
         {
-            Helper.AssertIsNotNull(tutorialArgs, textDisplayer, maskHighlighter);
+            Assert.IsNotNull(tutorialArgs);
 
-            textDisplayer.Initialise();
+            MaskHighlighter maskHighlighter = GetComponentInChildren<MaskHighlighter>(includeInactive: true);
+            Assert.IsNotNull(maskHighlighter);
             maskHighlighter.Initialise();
 
-            _deferrer = GetComponent<IVariableDelayDeferrer>();
-            Assert.IsNotNull(_deferrer);
+            IHighlighterNEW highlighter
+                = new HighlighterNEW(
+                    maskHighlighter,
+                    new HighlightArgsFactory(tutorialArgs.Components.Camera));
 
-            _highlightFactory = GetComponent<IHighlightFactory>();
-            Assert.IsNotNull(_highlightFactory);
+            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
+            Assert.IsNotNull(textDisplayer);
+            textDisplayer.Initialise();
 
-            IHighlighter highlighter = new Highlighter(new HighlightHelper(_highlightFactory));
-
-            ITutorialStepsFactory stepsFactory = new TutorialStepsFactoryNEW(highlighter, textDisplayer, _deferrer, tutorialArgs);
+            ITutorialStepsFactory stepsFactory 
+                = new TutorialStepsFactoryNEW(
+                    highlighter, 
+                    textDisplayer, 
+                    tutorialArgs.Components.VariableDelayDeferrer, 
+                    tutorialArgs);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
             _consumer = new TutorialStepConsumer(steps);
 

@@ -174,6 +174,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -187,6 +188,35 @@ namespace BattleCruisers.Scenes.BattleScene
             else
             {
                 return new NormalHelper(applicationModel.DataProvider, prefabFactory, variableDelayDeferrer);
+            }
+        }
+
+        // FELIX  Tutorial :)
+        private void StartTutorialIfNecessary(
+            IPrefabFactory prefabFactory,
+            IApplicationModel applicationModel,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBattleSceneGodComponents battleSceneGodComponents)
+        {
+            if (applicationModel.IsTutorial)
+            {
+                applicationModel.DataProvider.GameModel.LastBattleResult = null;
+                applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
+                applicationModel.DataProvider.SaveGame();
+
+                ITutorialArgsNEW tutorialArgs
+                    = new TutorialArgsNEW(
+                        playerCruiser,
+                        aiCruiser,
+                        _tutorialProvider,
+                        prefabFactory,
+                        battleSceneGodComponents);
+
+                TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
+                Assert.IsNotNull(tutorialManager);
+                tutorialManager.Initialise(tutorialArgs);
+                tutorialManager.StartTutorial();
             }
         }
     }

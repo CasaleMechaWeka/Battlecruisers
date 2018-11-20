@@ -29,17 +29,17 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialStepsFactoryNEW : ITutorialStepsFactory
     {
-        private readonly IHighlighter _highlighter;
+        private readonly IHighlighterNEW _highlighter;
         private readonly ITextDisplayer _displayer;
         private readonly IVariableDelayDeferrer _deferrer;
-        private readonly ITutorialArgs _tutorialArgs;
+        private readonly ITutorialArgsNEW _tutorialArgs;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
         public TutorialStepsFactoryNEW(
-            IHighlighter highlighter,
+            IHighlighterNEW highlighter,
             ITextDisplayer displayer,
             IVariableDelayDeferrer deferrer,
-            ITutorialArgs tutorialArgs)
+            ITutorialArgsNEW tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, displayer, deferrer, tutorialArgs);
 
