@@ -1,29 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.BuildProgress;
-using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
-using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.Tutorial.Steps.ClickSteps;
-using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
-using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene.Buttons;
-using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Strings;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial
 {
@@ -55,10 +38,31 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // 0. Wait until initial camera movement is complete
-            //steps.Enqueue(CreateStep_NavigationWaitStep(CameraState.PlayerCruiser));
+            // 1. Wait until initial camera movement is complete
+            steps.Enqueue(CreateStep_CameraAdjustmentWaitStep());
 
             return steps;
+        }
+
+        private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
+        {
+            return
+                new CameraAdjustmentWaitStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.CameraAdjuster);
+        }
+
+        private ITutorialStepArgsNEW CreateTutorialStepArgs(
+            string textToDisplay = null,
+            IItemProvider<IMaskHighlightable> highlightableProvider = null)
+        {
+            return
+                new TutorialStepArgsNEW(
+                    _highlighter,
+                    textToDisplay,
+                    _displayer,
+                    highlightableProvider ?? new StaticProvider<IMaskHighlightable>(item: null));
+
         }
     }
 }
