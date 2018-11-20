@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(HandleClick, this);
+            buttonWrapper.Initialise(this, HandleClick);
 
             Text buttonText = buttonWrapper.Button.GetComponentInChildren<Text>();
             Assert.IsNotNull(buttonText);

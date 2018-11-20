@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             buildableImage.sprite = Buildable.Sprite;
 
             _buttonWrapper = GetComponent<ButtonWrapper>();
-            _buttonWrapper.Initialise(HandleClick, this, disableButton: false);
+            _buttonWrapper.Initialise(this, HandleClick, disableButton: false);
 		}
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)

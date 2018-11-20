@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Rename:  TogglableButton?  Interface too?
     public class ButtonWrapper : TogglableElement, IButtonWrapper
     {
         private bool _disableButton;
@@ -25,17 +26,20 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(UnityAction clickHandler, IBroadcastingFilter shouldBeEnabledFilter, bool disableButton = true)
+        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter, UnityAction clickHandler = null, bool disableButton = true)
         {
-            base.Initialise(shouldBeEnabledFilter);
-
-            Assert.IsNotNull(clickHandler);
-
             _disableButton = disableButton;
 
             Button = GetComponent<Button>();
             Assert.IsNotNull(Button);
-            Button.onClick.AddListener(clickHandler);
+
+            if (clickHandler != null)
+            {
+                Button.onClick.AddListener(clickHandler);
+            }
+
+            // Sets overriden property, hence at end of Initialise() :P
+            base.Initialise(shouldBeEnabledFilter);
         }
     }
 }

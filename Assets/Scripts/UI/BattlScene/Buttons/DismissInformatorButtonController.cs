@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(uiManager.HideItemDetails, shouldBeEnabledFilter);
+            buttonWrapper.Initialise(shouldBeEnabledFilter, uiManager.HideItemDetails);
 		}
 	}
 }

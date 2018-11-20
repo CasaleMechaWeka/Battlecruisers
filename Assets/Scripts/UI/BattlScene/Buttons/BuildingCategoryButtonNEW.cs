@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(HandleClick, this);
+            buttonWrapper.Initialise(this, HandleClick);
 		}
 
         private void HandleClick()
