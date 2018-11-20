@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Tutorial
 {
@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial
         ICruiser AICruiser { get; }
         ITutorialProvider TutorialProvider { get; }
         IPrefabFactory PrefabFactory { get; }
-        ICamera Camera { get; }
+        IBattleSceneGodComponents Components { get; }
         // FELIX  Adapt for navigation wheel
 		//INavigationSettings NavigationSettings { get; }
     }
