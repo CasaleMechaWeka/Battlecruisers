@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
-    public class MaskHighlighter : MonoBehaviour
+    public class MaskHighlighter : MonoBehaviour, IMaskHighlighter
     {
         private IList<MaskImage> _masks;
         private const int NUM_OF_MASKS = 4;
