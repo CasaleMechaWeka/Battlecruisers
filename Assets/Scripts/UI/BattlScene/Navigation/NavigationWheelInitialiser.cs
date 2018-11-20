@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -11,9 +12,9 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public GameObject bottomLeftVertex, bottomRightVertex, topCenterVertex;
         public GameObject navigationWheelPanelHighlight;
 
-        public INavigationWheelPanel InitialiseNavigationWheel()
+        public INavigationWheelPanel InitialiseNavigationWheel(IBroadcastingFilter navigationWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex, navigationWheelPanelHighlight);
+            Helper.AssertIsNotNull(bottomLeftVertex, bottomRightVertex, topCenterVertex, navigationWheelPanelHighlight, navigationWheelEnabledFilter);
 
             IPyramid navigationWheelArea 
                 = new Pyramid(
@@ -24,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             NavigationWheel navigationWheel = GetComponentInChildren<NavigationWheel>();
             Assert.IsNotNull(navigationWheel);
-            navigationWheel.Initialise(navigationWheelPositionClamper, navigationWheelPanelHighlight);
+            navigationWheel.Initialise(navigationWheelPositionClamper, navigationWheelPanelHighlight, navigationWheelEnabledFilter);
 
             return new NavigationWheelPanel(navigationWheelArea, navigationWheel);
         }

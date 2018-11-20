@@ -22,10 +22,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
             Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(Handleclick, shouldBeEnabledFilter);
+            buttonWrapper.Initialise(shouldBeEnabledFilter, HandleClick);
         }
 
-        private void Handleclick()
+        private void HandleClick()
         {
             _navigationAction.Invoke();
 

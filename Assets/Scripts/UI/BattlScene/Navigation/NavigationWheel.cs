@@ -1,8 +1,11 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -40,9 +43,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public event EventHandler CenterPositionChanged;
 
-        public void Initialise(IPositionClamper positionClamper, GameObject parentActiveFeedback)
+        public void Initialise(
+            IPositionClamper positionClamper, 
+            GameObject parentActiveFeedback, 
+            IBroadcastingFilter shouldBeEnabledFilter)
         {
-            Helper.AssertIsNotNull(positionClamper, parentActiveFeedback);
+            Helper.AssertIsNotNull(positionClamper, parentActiveFeedback, shouldBeEnabledFilter);
+
             _positionClamper = positionClamper;
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
@@ -58,6 +65,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             SetFeedbackVisibility(isVisible: false);
 
             _centerPosition = (Vector2)transform.position + _halfSize;
+
+            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
+            Assert.IsNotNull(buttonWrapper);
+            buttonWrapper.Initialise(shouldBeEnabledFilter);
+
+            // FELIX  TEMP  This does everything :/  1. Disable element  2. Makes slightly transparent.
+            // => Create ITogglable.Enabled & pass to TogglableElement?
+            this.enabled = false;
         }
 
         public void OnDrag(PointerEventData eventData)

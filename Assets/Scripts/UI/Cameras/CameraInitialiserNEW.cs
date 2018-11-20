@@ -5,6 +5,7 @@ using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -17,16 +18,17 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
 
-        public ICameraFocuser  Initialise(
+        public ICameraFocuser Initialise(
             ICamera camera, 
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
-            ICruiser aiCruiser)
+            ICruiser aiCruiser,
+            IBroadcastingFilter navigationWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
-            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel();
+            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
