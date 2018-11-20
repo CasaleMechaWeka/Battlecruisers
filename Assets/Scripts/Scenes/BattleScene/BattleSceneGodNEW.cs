@@ -10,6 +10,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
@@ -174,7 +175,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraInitialiser.CameraAdjuster);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -197,7 +198,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel applicationModel,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBattleSceneGodComponents battleSceneGodComponents)
+            IBattleSceneGodComponents battleSceneGodComponents,
+            ICameraAdjuster cameraAdjuster)
         {
             if (applicationModel.IsTutorial)
             {
@@ -211,7 +213,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         aiCruiser,
                         _tutorialProvider,
                         prefabFactory,
-                        battleSceneGodComponents);
+                        battleSceneGodComponents,
+                        cameraAdjuster);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

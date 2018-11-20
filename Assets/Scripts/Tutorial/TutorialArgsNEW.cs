@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 
@@ -12,21 +13,24 @@ namespace BattleCruisers.Tutorial
         public ITutorialProvider TutorialProvider { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
         public IBattleSceneGodComponents Components { get; private set; }
+        public ICameraAdjuster CameraAdjuster { get; private set; }
 
         public TutorialArgsNEW(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
-            IBattleSceneGodComponents battleSceneGodComponents)
+            IBattleSceneGodComponents battleSceneGodComponents,
+            ICameraAdjuster cameraAdjuster)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraAdjuster);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
             TutorialProvider = tutorialProvider;
             PrefabFactory = prefabFactory;
             Components = battleSceneGodComponents;
+            CameraAdjuster = cameraAdjuster;
         }
     }
 }

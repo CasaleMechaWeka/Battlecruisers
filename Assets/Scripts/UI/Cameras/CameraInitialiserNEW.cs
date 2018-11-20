@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiserNEW : MonoBehaviour
     {
-        private ICameraAdjuster _cameraAdjuster;
+        public ICameraAdjuster CameraAdjuster { get; private set; }
 
         public float cameraSmoothTime;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.Cameras
                     new CornerCameraTargetProvider(camera, cameraCalculator, playerCruiser, aiCruiser));
             ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
-            _cameraAdjuster
+            CameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Cameras
 
         public void Update()
         {
-            _cameraAdjuster.AdjustCamera();
+            CameraAdjuster.AdjustCamera();
         }
     }
 }
