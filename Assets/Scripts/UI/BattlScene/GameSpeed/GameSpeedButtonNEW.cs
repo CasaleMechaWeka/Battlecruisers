@@ -11,6 +11,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     {
         private ITime _time;
 
+        private const float DEFAULT_TIME_SCALE = 1;
+
         public float timeScale;
         public GameObject selectedFeedback;
 
@@ -21,11 +23,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             set
             {
                 selectedFeedback.SetActive(value);
-
-                if (value)
-                {
-                    Time.timeScale = timeScale;
-                }
+                Time.timeScale = value ? timeScale : DEFAULT_TIME_SCALE;
             }
         }
 
