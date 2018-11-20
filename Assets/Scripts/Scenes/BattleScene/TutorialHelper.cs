@@ -31,6 +31,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter BackButtonPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
+        public IBroadcastingFilter IsNavigationEnabledFilter { get; private set; }
 
         public ISingleBuildableProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
@@ -53,6 +54,7 @@ namespace BattleCruisers.Scenes.BattleScene
             BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
+            IsNavigationEnabledFilter = new BasicFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);
@@ -123,6 +125,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
             return new DummySoundPlayer();
+        }
+
+        public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
+        {
+            return IsNavigationEnabledFilter;
         }
     }
 }

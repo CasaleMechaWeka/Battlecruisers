@@ -104,5 +104,10 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
+
+        public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
+        {
+            return new StaticBroadcastingFilter(isMatch: true);
+        }
     }
 }
