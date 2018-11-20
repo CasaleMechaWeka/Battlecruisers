@@ -1,61 +1,41 @@
 ﻿using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils;
-using System;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class ButtonWrapper : MonoBehaviour, IButtonWrapper
+    public class ButtonWrapper : TogglableElement, IButtonWrapper
     {
-        private IBroadcastingFilter _shouldBeEnabledFilter;
-        private CanvasGroup _canvasGroup;
         private bool _disableButton;
 
         // NEWUI  Make private, should no longer be used :)
 		public Button Button { get; private set; }
 
-        private bool IsEnabled
+        protected override bool IsEnabled
         {
             set
             {
+                base.IsEnabled = value;
+
                 if (_disableButton)
                 {
                     Button.enabled = value;
                 }
-
-                _canvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
             }
         }
 
         public void Initialise(UnityAction clickHandler, IBroadcastingFilter shouldBeEnabledFilter, bool disableButton = true)
         {
-            Helper.AssertIsNotNull(clickHandler, shouldBeEnabledFilter);
+            base.Initialise(shouldBeEnabledFilter);
 
-            _shouldBeEnabledFilter = shouldBeEnabledFilter;
-            _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
+            Assert.IsNotNull(clickHandler);
+
             _disableButton = disableButton;
-
-            _canvasGroup = GetComponent<CanvasGroup>();
-            Assert.IsNotNull(_canvasGroup);
 
             Button = GetComponent<Button>();
             Assert.IsNotNull(Button);
             Button.onClick.AddListener(clickHandler);
-
-            UpdateIsEnabled();
-        }
-
-        private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
-        {
-            UpdateIsEnabled();
-        }
-
-        private void UpdateIsEnabled()
-        {
-            IsEnabled = _shouldBeEnabledFilter.IsMatch;
         }
     }
 }
