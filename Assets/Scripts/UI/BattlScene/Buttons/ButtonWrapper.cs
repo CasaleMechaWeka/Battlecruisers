@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Replace with ITogglable and FilterToggler?
     // FELIX  Rename:  TogglableButton?  Interface too?
     public class ButtonWrapper : TogglableElement, IButtonWrapper
     {
