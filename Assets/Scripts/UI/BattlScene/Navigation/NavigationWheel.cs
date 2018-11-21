@@ -4,6 +4,7 @@ using BattleCruisers.Utils.Clamping;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -40,6 +41,9 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             }
         }
 
+        private Image _wheel;
+        protected override Image Image { get { return _wheel; } }
+
         public event EventHandler CenterPositionChanged;
 
         public void Initialise(
@@ -60,6 +64,9 @@ namespace BattleCruisers.UI.BattleScene.Navigation
                 activeFeedback,
                 parentActiveFeedback
             };
+
+            _wheel = GetComponent<Image>();
+            Assert.IsNotNull(_wheel);
 
             SetFeedbackVisibility(isVisible: false);
 
