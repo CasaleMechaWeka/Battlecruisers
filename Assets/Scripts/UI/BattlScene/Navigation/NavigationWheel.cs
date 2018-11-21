@@ -1,17 +1,15 @@
-﻿using BattleCruisers.UI.BattleScene.Buttons;
-using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationWheel : MonoBehaviour, 
+    public class NavigationWheel : Togglable, 
         INavigationWheel, 
         IDragHandler, 
         IPointerDownHandler,
@@ -20,6 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private IPositionClamper _positionClamper;
         private Vector2 _halfSize;
         private IList<GameObject> _activeFeedbacks;
+        private FilterToggler _filterToggler;
 
         private Vector2 _centerPosition;
         public Vector2 CenterPosition
@@ -66,13 +65,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             _centerPosition = (Vector2)transform.position + _halfSize;
 
-            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
-            Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(shouldBeEnabledFilter);
-
-            // FELIX  TEMP  This does everything :/  1. Disable element  2. Makes slightly transparent.
-            // => Create ITogglable.Enabled & pass to TogglableElement?
-            this.enabled = false;
+            _filterToggler = new FilterToggler(this, shouldBeEnabledFilter);
         }
 
         public void OnDrag(PointerEventData eventData)
