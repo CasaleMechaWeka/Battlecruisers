@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI
 {
-    public class Togglable : MonoBehaviour, ITogglable
+    public class Togglable : MonoBehaviourWrapper, ITogglable
     {
         protected virtual Image Image { get { return null; } }
 

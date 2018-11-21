@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI
 {
-    public class UIElement : MonoBehaviourWrapper, IHighlightable
+    public class UIElement : Togglable, IHighlightable
     {
         private RectTransform _rectTransform;
 
