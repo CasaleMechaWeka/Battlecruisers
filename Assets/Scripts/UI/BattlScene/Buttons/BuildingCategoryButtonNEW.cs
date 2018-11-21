@@ -4,6 +4,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -11,10 +12,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     // NEWUI  Replace old UI :P
     // NEWUI  Remove canvas groups if they are not being used (in inspector, with ButtonWrapper).
     //      Need separate sprites for this to work?
-    public class BuildingCategoryButtonNEW : UIElement, IBuildingCategoryButton, IBroadcastingFilter
+    public class BuildingCategoryButtonNEW : UIElement, 
+        IBuildingCategoryButton, 
+        IBroadcastingFilter, 
+        IPointerClickHandler
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
+        private FilterToggler _filterToggler;
 
         public Image activeFeedback;
 
@@ -28,6 +33,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public BuildingCategory category;
         public BuildingCategory Category { get { return category; } }
+
+        private Image _buttonImage;
+        protected override Image Image { get { return _buttonImage; } }
 
         public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
@@ -45,12 +53,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
-            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
-            Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(this, HandleClick);
+            _buttonImage = GetComponent<Image>();
+            Assert.IsNotNull(_buttonImage);
+
+            _filterToggler = new FilterToggler(this, this);
 		}
 
-        private void HandleClick()
+        private void OnDestroy()
+        {
+            Destroy(activeFeedback);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
         {
             _uiManager.SelectBuildingGroup(Category);
 
@@ -58,11 +72,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             {
                 Clicked.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void OnDestroy()
-        {
-            Destroy(activeFeedback);
         }
     }
 }
