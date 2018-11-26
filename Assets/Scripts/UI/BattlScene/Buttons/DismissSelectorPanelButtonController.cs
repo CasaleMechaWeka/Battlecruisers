@@ -10,14 +10,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private IUIManager _uiManager;
         // TUTORIAL  Common base class for all FilterToggler users?
-        private FilterToggler _filterToggler;
+        private FilterToggler _isEnabledToggler;
 
         public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
 		{
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
             _uiManager = uiManager;
-            _filterToggler = new FilterToggler(this, shouldBeEnabledFilter);
+            _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
 		}
 
         public void OnPointerClick(PointerEventData eventData)
