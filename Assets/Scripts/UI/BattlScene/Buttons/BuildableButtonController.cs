@@ -23,6 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
+        // FELIX  Use FilterToggle :D
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();

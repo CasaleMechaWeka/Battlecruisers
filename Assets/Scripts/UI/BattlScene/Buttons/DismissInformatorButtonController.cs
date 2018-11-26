@@ -8,6 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class DismissInformatorButtonController : MonoBehaviour 
 	{
+        // FELIX  Use FilterToggle :D
         public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
 		{
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);

@@ -10,6 +10,7 @@ namespace BattleCruisers.UI
     /// Has a filter that this class listens to, turning itself on
     /// or off accordingly.  
     /// </summary>
+    // NEWUI  Remove :)
     public class TogglableElement : MonoBehaviour
     {
         private IBroadcastingFilter _shouldBeEnabledFilter;

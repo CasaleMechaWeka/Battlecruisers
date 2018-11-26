@@ -7,6 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     // FELIX  Replace with ITogglable and FilterToggler?
     // FELIX  Rename:  TogglableButton?  Interface too?
+    // NEWUI  Remove :)
     public class ButtonWrapper : TogglableElement, IButtonWrapper
     {
         private bool _disableButton;

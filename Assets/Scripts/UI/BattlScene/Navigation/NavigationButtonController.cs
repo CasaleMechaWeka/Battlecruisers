@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // NEWUI  Remove :)
     public class NavigationButtonController : UIElement, IButton
     {
         private Action _navigationAction;
