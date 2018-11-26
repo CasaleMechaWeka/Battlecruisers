@@ -3,14 +3,19 @@ using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : PresentableController, IBuildableButton, IBroadcastingFilter
+    public abstract class BuildableButtonController : PresentableController, 
+        IBuildableButton, 
+        IBroadcastingFilter,
+        IPointerClickHandler
 	{
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
-        private ButtonWrapper _buttonWrapper;
+        // TUTORIAL  Increase image transparency?  (Or Canvas group?)
+        private FilterToggler _isEnabledToggler;
 
 		public Image buildableImage;
 		public Text buildableName;
@@ -23,7 +28,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
-        // FELIX  Use FilterToggle :D
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise();
@@ -39,8 +43,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             buildableImage.sprite = Buildable.Sprite;
 
-            _buttonWrapper = GetComponent<ButtonWrapper>();
-            _buttonWrapper.Initialise(this, HandleClick, disableButton: false);
+            _isEnabledToggler = new FilterToggler(this, this);
 		}
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
@@ -56,7 +59,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-		protected void HandleClick()
+        protected abstract void OnClicked(bool isButtonEnabled);
+
+        public void OnPointerClick(PointerEventData eventData)
         {
             OnClicked(IsMatch);
 
@@ -65,7 +70,5 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 Clicked.Invoke(this, EventArgs.Empty);
             }
         }
-
-        protected abstract void OnClicked(bool isButtonEnabled);
-	}
+    }
 }
