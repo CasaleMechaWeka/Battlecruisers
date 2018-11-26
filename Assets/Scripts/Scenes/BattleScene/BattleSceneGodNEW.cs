@@ -29,6 +29,7 @@ using UnityEngine.Assertions;
 // IPAD     => Update for IPad (usualy input related)
 // PERF     => Potential performance hit
 // NEWUI    => Should be resolved once legacy UI is replaced :)
+// TUTORIAL => Should be resolved once tutorial is sorted :)
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodNEW : MonoBehaviour
@@ -67,7 +68,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             // TEMP  Force  tutorial
-            applicationModel.IsTutorial = true;
+            //applicationModel.IsTutorial = true;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
