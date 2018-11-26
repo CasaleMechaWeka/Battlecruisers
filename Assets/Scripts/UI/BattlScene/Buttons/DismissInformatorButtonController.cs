@@ -1,21 +1,27 @@
 ﻿using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
-using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class DismissInformatorButtonController : MonoBehaviour 
-	{
-        // FELIX  Use FilterToggle :D
+    // TUTORIAL  Do I even need to disable this button?
+    public class DismissInformatorButtonController : Togglable, IPointerClickHandler
+    {
+        private IUIManager _uiManager;
+        private FilterToggler _filterToggler;
+
         public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
 		{
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
-            ButtonWrapper buttonWrapper = GetComponent<ButtonWrapper>();
-            Assert.IsNotNull(buttonWrapper);
-            buttonWrapper.Initialise(shouldBeEnabledFilter, uiManager.HideItemDetails);
-		}
-	}
+            _uiManager = uiManager;
+            _filterToggler = new FilterToggler(this, shouldBeEnabledFilter);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _uiManager.HideItemDetails();
+        }
+    }
 }

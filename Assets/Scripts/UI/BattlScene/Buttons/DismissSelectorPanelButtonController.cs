@@ -9,10 +9,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class DismissSelectorPanelButtonController : Togglable, IPointerClickHandler
 	{
         private IUIManager _uiManager;
-        // FELIX  Common base class for all FilterToggler users?
+        // TUTORIAL  Common base class for all FilterToggler users?
         private FilterToggler _filterToggler;
 
-        // FELIX  Use FilterToggle :D
         public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
 		{
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
