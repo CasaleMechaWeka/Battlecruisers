@@ -30,6 +30,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter BackButtonPermitter { get; private set; }
+        // NEWUI  Create IPermitter to set IsMatch?
+        public BasicFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public IBroadcastingFilter IsNavigationEnabledFilter { get; private set; }
 
@@ -55,6 +57,7 @@ namespace BattleCruisers.Scenes.BattleScene
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             IsNavigationEnabledFilter = new BasicFilter(isMatch: false);
+            SpeedButtonsPermitter = new BasicFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);
@@ -114,7 +117,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     _buildingCategoryFilter,
                     new StaticFilter<ITarget>(isMatch: false),
                     new StaticFilter<ITarget>(isMatch: false),
-                    BackButtonPermitter);
+                    BackButtonPermitter,
+                    SpeedButtonsPermitter);
         }
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)

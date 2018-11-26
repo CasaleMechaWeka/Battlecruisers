@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.BattleScene
             modalMenu.Initialise(applicationModel.IsTutorial);
 
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
-            SetupSpeedPanel();
+            SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
         }
 
@@ -75,11 +75,11 @@ namespace BattleCruisers.UI.BattleScene
                     buttonVisibilityFilters);
         }
 
-        private void SetupSpeedPanel()
+        private void SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = FindObjectOfType<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
-            speedPanelInitialiser.Initialise();
+            speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
         private void SetupMainMenuButton(

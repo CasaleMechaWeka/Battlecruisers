@@ -89,7 +89,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     new StaticBroadcastingFilter<BuildingCategory>(isMatch: true),
                     new ChooseTargetButtonVisibilityFilter(),
                     new DeleteButtonVisibilityFilter(),
-                    new BasicFilter(isMatch: true));
+                    new BasicFilter(isMatch: true),
+                    new StaticBroadcastingFilter(isMatch: true));
         }
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)

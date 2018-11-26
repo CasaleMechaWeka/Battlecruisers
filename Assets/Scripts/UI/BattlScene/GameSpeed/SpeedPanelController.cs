@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
+using BattleCruisers.UI.Filters;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -14,14 +15,16 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
 
-        public void Initialise()
+        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter)
         {
+            Assert.IsNotNull(shouldBeEnabledFilter);
+
             GameSpeedButtonNEW[] speedButtons = GetComponentsInChildren<GameSpeedButtonNEW>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
             
             foreach (GameSpeedButtonNEW speedButton in speedButtons)
             {
-                speedButton.Initialise();
+                speedButton.Initialise(shouldBeEnabledFilter);
             }
 
             _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());

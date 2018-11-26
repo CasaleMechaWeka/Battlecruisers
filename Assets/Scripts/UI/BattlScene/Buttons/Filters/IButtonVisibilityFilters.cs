@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
+    // NEWUI  Remove unused properties :)
     public interface IButtonVisibilityFilters
     {
         IBroadcastingFilter<IBuildable> BuildableButtonVisibilityFilter { get; }
@@ -12,5 +13,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         IFilter<ITarget> ChooseTargetButtonVisiblityFilter { get; }
         IFilter<ITarget> DeletButtonVisiblityFilter { get; }
         BasicFilter BackButtonVisibilityFilter { get; }
+        IBroadcastingFilter SpeedButtonsEnabledFilter { get; }
     }
 }

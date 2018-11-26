@@ -12,21 +12,30 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         public IFilter<ITarget> ChooseTargetButtonVisiblityFilter  { get; private set; }
         public IFilter<ITarget> DeletButtonVisiblityFilter  { get; private set; }
         public BasicFilter BackButtonVisibilityFilter  { get; private set; }
+        public IBroadcastingFilter SpeedButtonsEnabledFilter { get; private set; }
 
         public ButtonVisibilityFilters(
             IBroadcastingFilter<IBuildable> buildableButtonVisibilityFilter,
             IBroadcastingFilter<BuildingCategory> categoryButtonVisibilityFilter,
             IFilter<ITarget> chooseTargetButtonVisiblityFilter,
             IFilter<ITarget> deletButtonVisiblityFilter,
-            BasicFilter backButtonVisibilityFilter)
+            BasicFilter backButtonVisibilityFilter,
+            IBroadcastingFilter speedButtonEnabledFilter)
         {
-            Helper.AssertIsNotNull(buildableButtonVisibilityFilter, categoryButtonVisibilityFilter, chooseTargetButtonVisiblityFilter, deletButtonVisiblityFilter, backButtonVisibilityFilter);
+            Helper.AssertIsNotNull(
+                buildableButtonVisibilityFilter, 
+                categoryButtonVisibilityFilter, 
+                chooseTargetButtonVisiblityFilter, 
+                deletButtonVisiblityFilter, 
+                backButtonVisibilityFilter,
+                speedButtonEnabledFilter);
 
             BuildableButtonVisibilityFilter = buildableButtonVisibilityFilter;
             CategoryButtonVisibilityFilter = categoryButtonVisibilityFilter;
             ChooseTargetButtonVisiblityFilter = chooseTargetButtonVisiblityFilter;
             DeletButtonVisiblityFilter = deletButtonVisiblityFilter;
             BackButtonVisibilityFilter = backButtonVisibilityFilter;
+            SpeedButtonsEnabledFilter = speedButtonEnabledFilter;
         }
     }
 }
