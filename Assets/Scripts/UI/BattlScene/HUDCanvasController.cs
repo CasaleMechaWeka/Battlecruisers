@@ -10,12 +10,12 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class HUDCanvasController : MonoBehaviour, IHUDCanvasController
+    // NEWUI  Class is deprecated :P
+    public class HUDCanvasController : Panel, IHUDCanvasController
     {
         private BuildingDetailsController _buildingDetails;
         public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
@@ -85,18 +85,6 @@ namespace BattleCruisers.UI.BattleScene
 
             _navigationButtonWrapper.Initialise(cameraController, shouldNavigationBeEnabledFilter);
             _gameSpeedWrapper.Initialise();
-        }
-
-        // NEWUI  Class is deprecated :P
-        public void Show()
-        {
-            // empty
-        }
-
-        // NEWUI  Class is deprecated :P
-        public void Hide()
-        {
-            // empty
         }
     }
 }
