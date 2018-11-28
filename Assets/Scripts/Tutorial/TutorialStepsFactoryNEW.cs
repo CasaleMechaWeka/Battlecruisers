@@ -41,7 +41,9 @@ namespace BattleCruisers.Tutorial
             // 1. Wait until initial camera movement is complete
             steps.Enqueue(CreateStep_CameraAdjustmentWaitStep());
 
-            // FELIX  NEXT :D
+            // 2. Player cruiser
+            // FELIX  NEXT
+            //steps.Enqueue(CreateStep_YourCruiser());
 
             return steps;
         }
@@ -52,6 +54,12 @@ namespace BattleCruisers.Tutorial
                 new CameraAdjustmentWaitStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.CameraAdjuster);
+        }
+
+        private ITutorialStep CreateStep_YourCruiser()
+        {
+            // FELIX
+            return null;
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
