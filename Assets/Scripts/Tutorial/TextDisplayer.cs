@@ -2,7 +2,7 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Tutorial.Steps
+namespace BattleCruisers.Tutorial
 {
     public class TextDisplayer : MonoBehaviour, ITextDisplayer
     {

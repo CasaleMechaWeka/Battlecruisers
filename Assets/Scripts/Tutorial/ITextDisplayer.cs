@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Tutorial.Steps
+﻿namespace BattleCruisers.Tutorial
 {
     public interface ITextDisplayer
     {
