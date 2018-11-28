@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Explanation;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
 using System;
@@ -30,6 +31,10 @@ namespace BattleCruisers.Tutorial
             TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
             Assert.IsNotNull(textDisplayer);
             textDisplayer.Initialise();
+
+            ExplanationControl explanationControl = GetComponentInChildren<ExplanationControl>(includeInactive: true);
+            Assert.IsNotNull(explanationControl);
+            explanationControl.Initialise();
 
             ITutorialStepsFactory stepsFactory 
                 = new TutorialStepsFactoryNEW(

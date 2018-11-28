@@ -72,7 +72,6 @@ namespace BattleCruisers.Tutorial
                     textToDisplay,
                     _displayer,
                     highlightableProvider ?? new StaticProvider<IMaskHighlightable>(item: null));
-
         }
     }
 }
