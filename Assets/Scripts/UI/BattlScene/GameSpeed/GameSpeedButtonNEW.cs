@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
@@ -17,6 +18,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public GameObject selectedFeedback;
 
         public event EventHandler Clicked;
+
+        private Image _buttonImage;
+        protected override Image Image { get { return _buttonImage; } }
 
         public bool IsSelected
         {
@@ -34,6 +38,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             Assert.IsTrue(timeScale >= 0);
             Assert.IsNotNull(selectedFeedback);
             Assert.IsNotNull(shouldBeEnabledFilter);
+
+            _buttonImage = GetComponent<Image>();
+            Assert.IsNotNull(_buttonImage);
 
             IsSelected = false;
             _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
