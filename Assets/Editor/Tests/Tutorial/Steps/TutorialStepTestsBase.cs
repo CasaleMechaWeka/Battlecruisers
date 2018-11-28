@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
