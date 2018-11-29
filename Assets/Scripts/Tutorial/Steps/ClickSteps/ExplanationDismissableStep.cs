@@ -1,18 +1,16 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
+using BattleCruisers.Tutorial.Providers;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Rename to ExplanationDismissStep
-    // FELIX  Extend ExplanationClickStep
-    // FELIX  No longer abstract :)
-    public abstract class ExplanationStep : TutorialStepNEW
+    public class ExplanationDismissableStep : ExplanationClickStep
     {
         private readonly IExplanationDismissButton _dismissButton;
 
-        public ExplanationStep(ITutorialStepArgsNEW args, IExplanationDismissButton dismissButton)
-            : base(args)
+        public ExplanationDismissableStep(ITutorialStepArgsNEW args, IExplanationDismissButton dismissButton)
+            : base(args, new StaticProvider<IClickableEmitter>(dismissButton))
         {
             Assert.IsNotNull(dismissButton);
             _dismissButton = dismissButton;
@@ -21,22 +19,15 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-
             _dismissButton.Enabled = true;
-            _dismissButton.Clicked += _dismissButton_Clicked;
         }
 
         private void _dismissButton_Clicked(object sender, EventArgs e)
         {
-            OnCompleted();
-        }
-
-        protected override void OnCompleted()
-        {
-            base.OnCompleted();
-
             _dismissButton.Enabled = false;
             _dismissButton.Clicked -= _dismissButton_Clicked;
+
+            OnCompleted();
         }
     }
 }
