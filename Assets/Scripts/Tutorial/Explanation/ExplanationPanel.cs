@@ -6,7 +6,7 @@ namespace BattleCruisers.Tutorial.Explanation
     public class ExplanationPanel : MonoBehaviour, IExplanationPanel
     {
         public ITextDisplayer TextDisplayer { get; private set; }
-        public IClickableEmitter DismissButton { get; private set; }
+        public IExplanationDismissButton DismissButton { get; private set; }
 
         public void Initialise()
         {
@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial.Explanation
             textDisplayer.Initialise();
             TextDisplayer = textDisplayer;
 
-            DismissButton = GetComponentInChildren<IClickableEmitter>();
+            DismissButton = GetComponentInChildren<IExplanationDismissButton>();
             Assert.IsNotNull(DismissButton);
         }
     }
