@@ -4,6 +4,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
+    // FELIX  Rename to ExplanationDismissStep
+    // FELIX  Extend ExplanationClickStep
+    // FELIX  No longer abstract :)
     public abstract class ExplanationStep : TutorialStepNEW
     {
         private readonly IExplanationDismissButton _dismissButton;
