@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Explanation
+{
+    public class ExplanationPanel : MonoBehaviour, IExplanationPanel
+    {
+        public ITextDisplayer TextDisplayer { get; private set; }
+        public IClickableEmitter DismissButton { get; private set; }
+
+        public void Initialise()
+        {
+            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>();
+            Assert.IsNotNull(textDisplayer);
+            textDisplayer.Initialise();
+            TextDisplayer = textDisplayer;
+
+            DismissButton = GetComponentInChildren<IClickableEmitter>();
+            Assert.IsNotNull(DismissButton);
+        }
+    }
+}

@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(textDisplayer);
             textDisplayer.Initialise();
 
-            ExplanationControl explanationControl = GetComponentInChildren<ExplanationControl>(includeInactive: true);
+            ExplanationPanel explanationControl = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
             Assert.IsNotNull(explanationControl);
             explanationControl.Initialise();
 
