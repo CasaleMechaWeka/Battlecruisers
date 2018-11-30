@@ -23,7 +23,6 @@ namespace BattleCruisers.UI.BattleScene
     /// <summary>
     /// Contains:
     /// + Drone number display
-    /// + Navigation wheel
     /// + Cruiser health dial
     /// + Build menu
     /// </summary>
