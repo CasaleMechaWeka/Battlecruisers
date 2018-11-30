@@ -28,18 +28,14 @@ namespace BattleCruisers.Tutorial
                     maskHighlighter,
                     new HighlightArgsFactory(tutorialArgs.Components.Camera));
 
-            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
-            Assert.IsNotNull(textDisplayer);
-            textDisplayer.Initialise();
-
-            ExplanationPanel explanationControl = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
-            Assert.IsNotNull(explanationControl);
-            explanationControl.Initialise();
+            ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
+            Assert.IsNotNull(explanationPanel);
+            explanationPanel.Initialise();
 
             ITutorialStepsFactory stepsFactory 
                 = new TutorialStepsFactoryNEW(
                     highlighter, 
-                    textDisplayer, 
+                    explanationPanel, 
                     tutorialArgs.Components.VariableDelayDeferrer, 
                     tutorialArgs);
             Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();

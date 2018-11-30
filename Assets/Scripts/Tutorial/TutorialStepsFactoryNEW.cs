@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Explanation;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
@@ -14,20 +15,22 @@ namespace BattleCruisers.Tutorial
     {
         private readonly IHighlighterNEW _highlighter;
         private readonly ITextDisplayer _displayer;
+        private readonly IExplanationDismissButton _explanationDismissButton;
         private readonly IVariableDelayDeferrer _deferrer;
         private readonly ITutorialArgsNEW _tutorialArgs;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
         public TutorialStepsFactoryNEW(
             IHighlighterNEW highlighter,
-            ITextDisplayer displayer,
+            IExplanationPanel explanationPanel,
             IVariableDelayDeferrer deferrer,
             ITutorialArgsNEW tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, displayer, deferrer, tutorialArgs);
+            Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 
             _highlighter = highlighter;
-            _displayer = displayer;
+            _displayer = explanationPanel.TextDisplayer;
+            _explanationDismissButton = explanationPanel.DismissButton;
             _deferrer = deferrer;
             _tutorialArgs = tutorialArgs;
 
@@ -58,7 +61,7 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateStep_YourCruiser()
         {
-            // FELIX
+            // FELIX NEXT :D
             return null;
         }
 
