@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils.Fetchers;
 
@@ -14,7 +15,6 @@ namespace BattleCruisers.Tutorial
         IPrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
         ICameraAdjuster CameraAdjuster { get; }
-        // FELIX  Adapt for navigation wheel
-		//INavigationSettings NavigationSettings { get; }
+        INavigationWheel NavigationWheel { get; }
     }
 }
