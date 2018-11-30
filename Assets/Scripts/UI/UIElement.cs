@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.UI
 {
-    public class UIElement : Togglable, IHighlightable
+    public class UIElement : Togglable, IHighlightable, IMaskHighlightable
     {
         private RectTransform _rectTransform;
 
@@ -17,6 +18,11 @@ namespace BattleCruisers.UI
         public virtual void Initialise()
         {
             _rectTransform = transform.Parse<RectTransform>();
+        }
+
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        {
+            return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform);
         }
     }
 }
