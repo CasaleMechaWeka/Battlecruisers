@@ -19,12 +19,12 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            _dismissButton.Enabled = true;
+            _dismissButton.IsVisible = true;
         }
 
         private void _dismissButton_Clicked(object sender, EventArgs e)
         {
-            _dismissButton.Enabled = false;
+            _dismissButton.IsVisible = false;
             _dismissButton.Clicked -= _dismissButton_Clicked;
 
             OnCompleted();

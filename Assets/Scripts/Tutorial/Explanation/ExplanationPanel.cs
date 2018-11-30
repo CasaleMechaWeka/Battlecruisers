@@ -10,12 +10,12 @@ namespace BattleCruisers.Tutorial.Explanation
 
         public void Initialise()
         {
-            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>();
+            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
             Assert.IsNotNull(textDisplayer);
             textDisplayer.Initialise();
             TextDisplayer = textDisplayer;
 
-            DismissButton = GetComponentInChildren<IExplanationDismissButton>();
+            DismissButton = GetComponentInChildren<IExplanationDismissButton>(includeInactive: true);
             Assert.IsNotNull(DismissButton);
         }
     }
