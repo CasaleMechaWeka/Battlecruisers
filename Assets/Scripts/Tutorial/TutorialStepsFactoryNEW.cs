@@ -3,6 +3,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
@@ -45,8 +46,7 @@ namespace BattleCruisers.Tutorial
             steps.Enqueue(CreateStep_CameraAdjustmentWaitStep());
 
             // 2. Player cruiser
-            // FELIX  NEXT
-            //steps.Enqueue(CreateStep_YourCruiser());
+            steps.Enqueue(CreateStep_YourCruiser());
 
             return steps;
         }
@@ -61,8 +61,14 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateStep_YourCruiser()
         {
-            // FELIX NEXT :D
-            return null;
+            ITutorialStepArgsNEW args
+                = CreateTutorialStepArgs(
+                    textToDisplay: "This is your awesome cruiser :D",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.PlayerCruiser));
+            return
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton);
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
