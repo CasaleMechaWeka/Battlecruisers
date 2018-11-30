@@ -51,6 +51,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             GameObject parentActiveFeedback, 
             IBroadcastingFilter shouldBeEnabledFilter)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(positionClamper, parentActiveFeedback, shouldBeEnabledFilter);
 
             _positionClamper = positionClamper;
