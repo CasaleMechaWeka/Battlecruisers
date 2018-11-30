@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
@@ -206,5 +207,10 @@ namespace BattleCruisers.Buildables
         }
 
 		protected virtual void OnRepair() { }
-	}
+
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        {
+            return highlightArgsFactory.CreateForInGameObject(Position, Size);
+        }
+    }
 }

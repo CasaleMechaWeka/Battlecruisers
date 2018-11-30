@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
@@ -23,8 +24,8 @@ namespace BattleCruisers.Buildables
 		Low, Medium, High
 	}
 
-    public interface ITarget : IDamagable, IRepairable, IHighlightable
-	{
+    public interface ITarget : IDamagable, IRepairable, IHighlightable, IMaskHighlightable
+    {
 		Faction Faction { get; }
 		TargetType TargetType { get; }
 		Vector2 Velocity { get; }
