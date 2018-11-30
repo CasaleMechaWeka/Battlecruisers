@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraInitialiser.CameraAdjuster);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraInitialiser);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -199,14 +199,13 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
-        // FELIX  Tutorial :)
         private void StartTutorialIfNecessary(
             IPrefabFactory prefabFactory,
             IApplicationModel applicationModel,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBattleSceneGodComponents battleSceneGodComponents,
-            ICameraAdjuster cameraAdjuster)
+            CameraInitialiserNEW cameraInitialiser)
         {
             if (applicationModel.IsTutorial)
             {
@@ -221,7 +220,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         _tutorialProvider,
                         prefabFactory,
                         battleSceneGodComponents,
-                        cameraAdjuster);
+                        cameraInitialiser.CameraAdjuster,
+                        cameraInitialiser.NavigationWheel);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

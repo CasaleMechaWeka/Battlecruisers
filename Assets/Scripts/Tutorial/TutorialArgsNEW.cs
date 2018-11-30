@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Tutorial
         public IPrefabFactory PrefabFactory { get; private set; }
         public IBattleSceneGodComponents Components { get; private set; }
         public ICameraAdjuster CameraAdjuster { get; private set; }
+        public INavigationWheel NavigationWheel { get; private set; }
 
         public TutorialArgsNEW(
             ICruiser playerCruiser, 
@@ -21,9 +23,10 @@ namespace BattleCruisers.Tutorial
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
-            ICameraAdjuster cameraAdjuster)
+            ICameraAdjuster cameraAdjuster,
+            INavigationWheel navigationWheel)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraAdjuster);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraAdjuster, navigationWheel);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -31,6 +34,7 @@ namespace BattleCruisers.Tutorial
             PrefabFactory = prefabFactory;
             Components = battleSceneGodComponents;
             CameraAdjuster = cameraAdjuster;
+            NavigationWheel = navigationWheel;
         }
     }
 }

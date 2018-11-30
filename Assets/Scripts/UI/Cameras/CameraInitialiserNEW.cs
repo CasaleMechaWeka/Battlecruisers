@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.Cameras
     public class CameraInitialiserNEW : MonoBehaviour
     {
         public ICameraAdjuster CameraAdjuster { get; private set; }
+        public INavigationWheel NavigationWheel { get; private set; }
 
         public float cameraSmoothTime;
 
@@ -29,6 +30,7 @@ namespace BattleCruisers.UI.Cameras
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
+            NavigationWheel = navigationWheelPanel.NavigationWheel;
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
@@ -40,7 +42,7 @@ namespace BattleCruisers.UI.Cameras
                     coreCameraTargetFinder,
                     new CornerIdentifier(),
                     new CornerCameraTargetProvider(camera, cameraCalculator, playerCruiser, aiCruiser));
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(NavigationWheel, cornerCameraTargetFinder);
 
             CameraAdjuster
                 = new SmoothCameraAdjuster(
@@ -48,7 +50,7 @@ namespace BattleCruisers.UI.Cameras
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
 
-            return new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel);
+            return new CameraFocuser(navigationWheelPanel.PanelArea, NavigationWheel);
         }
 
         public void Update()
