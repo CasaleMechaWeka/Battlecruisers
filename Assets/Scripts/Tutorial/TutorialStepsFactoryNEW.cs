@@ -48,6 +48,9 @@ namespace BattleCruisers.Tutorial
             // 2. Player cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
+            // 3. Navigation wheel
+            steps.Enqueue(CreateSteps_NavigationWheel());
+
             return steps;
         }
 
@@ -65,10 +68,30 @@ namespace BattleCruisers.Tutorial
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is your awesome cruiser :D",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.PlayerCruiser));
+
             return
                 new ExplanationDismissableStep(
                     args,
                     _explanationDismissButton);
+        }
+
+        private IList<ITutorialStep> CreateSteps_NavigationWheel()
+        {
+            IList<ITutorialStep> steps = new List<ITutorialStep>();
+
+            ITutorialStepArgsNEW args
+                = CreateTutorialStepArgs(
+                    textToDisplay: "This is the navigation wheel, which you use to navigate around the map.",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.NavigationWheel));
+
+            steps.Add(
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton));
+
+            // FELIX  Free navigation step :)
+
+            return steps;
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
