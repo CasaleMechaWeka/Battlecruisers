@@ -52,8 +52,8 @@ namespace BattleCruisers.Tutorial
             // 3. Navigation wheel
             steps.Enqueue(CreateSteps_NavigationWheel());
 
-            // 4. Navigate to player cruiser
-            steps.Enqueue(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
+            // 4. Navigate to enemy cruiser
+            steps.Enqueue(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
 
             return steps;
         }
