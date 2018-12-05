@@ -14,12 +14,11 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiserNEW : MonoBehaviour
     {
-        public ICameraAdjuster CameraAdjuster { get; private set; }
-        public INavigationWheel NavigationWheel { get; private set; }
+        private ICameraAdjuster _cameraAdjuster;
 
         public float cameraSmoothTime;
 
-        public ICameraFocuser Initialise(
+        public ICameraComponents Initialise(
             ICamera camera, 
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
@@ -30,7 +29,6 @@ namespace BattleCruisers.UI.Cameras
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
-            NavigationWheel = navigationWheelPanel.NavigationWheel;
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
@@ -42,20 +40,24 @@ namespace BattleCruisers.UI.Cameras
                     coreCameraTargetFinder,
                     new CornerIdentifier(),
                     new CornerCameraTargetProvider(camera, cameraCalculator, playerCruiser, aiCruiser));
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(NavigationWheel, cornerCameraTargetFinder);
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
-            CameraAdjuster
+            _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
 
-            return new CameraFocuser(navigationWheelPanel.PanelArea, NavigationWheel);
+            return
+                new CameraComponents(
+                    _cameraAdjuster,
+                    navigationWheelPanel.NavigationWheel,
+                    new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel));
         }
 
         public void Update()
         {
-            CameraAdjuster.AdjustCamera();
+            _cameraAdjuster.AdjustCamera();
         }
     }
 }

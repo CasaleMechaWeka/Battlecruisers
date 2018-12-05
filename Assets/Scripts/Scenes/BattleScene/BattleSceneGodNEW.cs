@@ -101,17 +101,17 @@ namespace BattleCruisers.Scenes.BattleScene
             // Camera
             CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
             Assert.IsNotNull(cameraInitialiser);
-            ICameraFocuser cameraFocuser 
+            ICameraComponents cameraComponents
                 = cameraInitialiser.Initialise(
                     components.Camera, 
                     dataProvider.SettingsManager, 
                     playerCruiser, 
                     aiCruiser,
                     helper.CreateNavigationWheelEnabledFilter());
-            cameraFocuser.FocusOnPlayerCruiser();
+            cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
-            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraFocuser);
+            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser);
 
             // Initialise AI cruiser
             IUserChosenTargetHelper userChosenTargetHelper
@@ -122,7 +122,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 .InitialiseAICruiser(
                     playerCruiser,
                     aiCruiser,
-                    cameraFocuser,
+                    cameraComponents.CameraFocuser,
                     userChosenTargetHelper);
 
             // UI
@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     prefabFactory,
                     spriteProvider,
                     buttonVisibilityFilters,
-                    new PlayerCruiserFocusHelperNEW(components.Camera, cameraFocuser, playerCruiser),
+                    new PlayerCruiserFocusHelperNEW(components.Camera, cameraComponents.CameraFocuser, playerCruiser),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     playerCruiser);
 
@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraInitialiser);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -205,7 +205,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBattleSceneGodComponents battleSceneGodComponents,
-            CameraInitialiserNEW cameraInitialiser)
+            ICameraComponents cameraComponents)
         {
             if (applicationModel.IsTutorial)
             {
@@ -220,8 +220,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         _tutorialProvider,
                         prefabFactory,
                         battleSceneGodComponents,
-                        cameraInitialiser.CameraAdjuster,
-                        cameraInitialiser.NavigationWheel);
+                        cameraComponents.CameraAdjuster,
+                        cameraComponents.NavigationWheel);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);
