@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
@@ -14,7 +13,6 @@ namespace BattleCruisers.Tutorial
         ITutorialProvider TutorialProvider { get; }
         IPrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
-        ICameraAdjuster CameraAdjuster { get; }
-        INavigationWheel NavigationWheel { get; }
+        ICameraComponents CameraComponents { get; }
     }
 }

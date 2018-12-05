@@ -220,8 +220,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         _tutorialProvider,
                         prefabFactory,
                         battleSceneGodComponents,
-                        cameraComponents.CameraAdjuster,
-                        cameraComponents.NavigationWheel);
+                        cameraComponents);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

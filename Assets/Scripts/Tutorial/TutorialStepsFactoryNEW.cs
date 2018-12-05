@@ -60,7 +60,7 @@ namespace BattleCruisers.Tutorial
             return
                 new CameraAdjustmentWaitStep(
                     CreateTutorialStepArgs(),
-                    _tutorialArgs.CameraAdjuster);
+                    _tutorialArgs.CameraComponents.CameraAdjuster);
         }
 
         private ITutorialStep CreateStep_YourCruiser()
@@ -83,7 +83,7 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgsNEW navigationWheelStepArgs
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is the navigation wheel, which you use to navigate around the map.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.NavigationWheel));
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.CameraComponents.NavigationWheel));
             steps.Add(
                 new ExplanationDismissableStep(
                     navigationWheelStepArgs,
