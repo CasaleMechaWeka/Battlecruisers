@@ -9,7 +9,11 @@ namespace BattleCruisers.UI
     {
         protected RectTransform _rectTransform;
 
+        private const float DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER = 1;
+
         protected virtual Image Image { get { return null; } }
+
+        public float highlightSizeMultiplier;
 
         public bool Enabled
         {
@@ -29,11 +33,16 @@ namespace BattleCruisers.UI
         public virtual void Initialise()
         {
             _rectTransform = transform.Parse<RectTransform>();
+
+            if (highlightSizeMultiplier == default(float))
+            {
+                highlightSizeMultiplier = DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER;
+            }
         }
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
-            return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform);
+            return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform, highlightSizeMultiplier);
         }
     }
 }

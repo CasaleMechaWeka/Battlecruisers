@@ -16,12 +16,24 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             _camera = camera;
         }
 
-        public HighlightArgs CreateForOnCanvasObject(RectTransform rectTransform)
+        public HighlightArgs CreateForOnCanvasObject(RectTransform rectTransform, float sizeMultiplier)
         {
+            Vector2 bottomLeftPosition = FindBottomLeftPosition(rectTransform, sizeMultiplier);
+            Vector2 size = sizeMultiplier * rectTransform.sizeDelta;
+            HighlightArgs noBorderArgs = new HighlightArgs(bottomLeftPosition, size);
+            return AddBorder(noBorderArgs);
+        }
+
+        private Vector2 FindBottomLeftPosition(RectTransform rectTransform, float sizeMultiplier)
+        {
+            float xAdjustment = rectTransform.sizeDelta.x * (1 - sizeMultiplier) / 2;
+            float yAdjustment = rectTransform.sizeDelta.y * (1 - sizeMultiplier) / 2;
+
             Vector3[] corners = new Vector3[4];
             rectTransform.GetWorldCorners(corners);
-            HighlightArgs noBorderArgs = new HighlightArgs(corners[0], rectTransform.sizeDelta);
-            return AddBorder(noBorderArgs);
+            Vector2 bottomLeftCorner = corners[0];
+
+            return new Vector2(bottomLeftCorner.x + xAdjustment, bottomLeftCorner.y + yAdjustment);
         }
 
         public HighlightArgs CreateForInGameObject(Vector2 objectWorldPosition, Vector2 objectWorldSize)

@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private void CreateOnCanvasHighglight(GameObject onCanvasObject)
         {
             RectTransform onCanvasObjRectTransform = onCanvasObject.transform.Parse<RectTransform>();
-            HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform);
+            HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform, sizeMultiplier: 1);
             maskHighlighter.Highlight(highlightArgs);
         }
 
