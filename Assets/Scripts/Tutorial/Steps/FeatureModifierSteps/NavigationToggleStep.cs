@@ -23,6 +23,7 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
         {
             base.Start(completionCallback);
             _isNavigationEnabledFilter.IsMatch = _enableNavigation;
+            OnCompleted();
         }
     }
 }
