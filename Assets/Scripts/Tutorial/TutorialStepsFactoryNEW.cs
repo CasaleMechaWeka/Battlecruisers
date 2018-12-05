@@ -52,15 +52,10 @@ namespace BattleCruisers.Tutorial
             // 3. Navigation wheel
             steps.Enqueue(CreateSteps_NavigationWheel());
 
-            return steps;
-        }
+            // 4. Navigate to player cruiser
+            steps.Enqueue(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
-        private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
-        {
-            return
-                new CameraAdjustmentWaitStep(
-                    CreateTutorialStepArgs(),
-                    _tutorialArgs.CameraComponents.CameraAdjuster);
+            return steps;
         }
 
         private ITutorialStep CreateStep_YourCruiser()
@@ -104,13 +99,36 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
-        private NavigationToggleStep CreateStep_NavigationToggle(bool enableNavigation)
+        private ITutorialStep CreateStep_NavigationToggle(bool enableNavigation)
         {
             return 
                 new NavigationToggleStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
                     enableNavigation);
+        }
+
+        private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget)
+        {
+            IList<ITutorialStep> steps = new List<ITutorialStep>();
+
+            steps.Add(
+                new CameraFocuserStep(
+                    CreateTutorialStepArgs(), 
+                    _tutorialArgs.CameraComponents.CameraFocuser,
+                    cameraFocuserTarget));
+
+            steps.Add(CreateStep_CameraAdjustmentWaitStep());
+
+            return steps;
+        }
+
+        private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
+        {
+            return
+                new CameraAdjustmentWaitStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.CameraComponents.CameraAdjuster);
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
