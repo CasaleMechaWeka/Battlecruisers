@@ -4,6 +4,7 @@ using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
@@ -79,19 +80,37 @@ namespace BattleCruisers.Tutorial
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            ITutorialStepArgsNEW args
+            ITutorialStepArgsNEW navigationWheelStepArgs
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is the navigation wheel, which you use to navigate around the map.",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.NavigationWheel));
-
             steps.Add(
                 new ExplanationDismissableStep(
-                    args,
+                    navigationWheelStepArgs,
                     _explanationDismissButton));
 
-            // FELIX  Free navigation step :)
+            steps.Add(CreateStep_NavigationToggle(enableNavigation: true));
+
+            ITutorialStepArgsNEW freeNavigationArgs
+                = CreateTutorialStepArgs(
+                    textToDisplay: "Drag the navigation wheel to navigate.");
+            steps.Add(
+                new ExplanationDismissableStep(
+                    freeNavigationArgs,
+                    _explanationDismissButton));
+
+            steps.Add(CreateStep_NavigationToggle(enableNavigation: false));
 
             return steps;
+        }
+
+        private NavigationToggleStep CreateStep_NavigationToggle(bool enableNavigation)
+        {
+            return 
+                new NavigationToggleStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
+                    enableNavigation);
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
