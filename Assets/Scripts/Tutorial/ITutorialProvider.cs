@@ -16,7 +16,8 @@ namespace BattleCruisers.Tutorial
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
-        IBroadcastingFilter IsNavigationEnabledFilter { get; }
+        // FELIX  Rnemae to Permitter?
+        BasicFilter IsNavigationEnabledFilter { get; }
         BasicFilter SpeedButtonsPermitter { get; }
 
         ISingleBuildableProvider SingleAircraftProvider { get; }

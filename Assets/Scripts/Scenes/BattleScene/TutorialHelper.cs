@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.BattleScene
         // NEWUI  Create IPermitter to set IsMatch?
         public BasicFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
-        public IBroadcastingFilter IsNavigationEnabledFilter { get; private set; }
+        public BasicFilter IsNavigationEnabledFilter { get; private set; }
 
         public ISingleBuildableProvider LastBuildingStartedProvider { get; private set; }
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
