@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
+using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -8,5 +9,6 @@ namespace BattleCruisers.UI.Cameras
         ICameraAdjuster CameraAdjuster { get; }
         INavigationWheel NavigationWheel { get; }
         ICameraFocuser CameraFocuser { get; }
+        Skybox Skybox { get; }
     }
 }

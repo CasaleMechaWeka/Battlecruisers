@@ -24,12 +24,9 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
-            IBroadcastingFilter navigationWheelEnabledFilter,
-            Material skyboxMaterial)
+            IBroadcastingFilter navigationWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, skyboxMaterial);
-
-            SetupSkybox(skyboxMaterial);
+            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
@@ -52,18 +49,15 @@ namespace BattleCruisers.UI.Cameras
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
 
+            Skybox skybox = GetComponent<Skybox>();
+            Assert.IsNotNull(skybox);
+
             return
                 new CameraComponents(
                     _cameraAdjuster,
                     navigationWheelPanel.NavigationWheel,
-                    new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel));
-        }
-
-        private void SetupSkybox(Material skyboxMaterial)
-        {
-            Skybox skybox = GetComponent<Skybox>();
-            Assert.IsNotNull(skybox);
-            skybox.material = skyboxMaterial;
+                    new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel),
+                    skybox);
         }
 
         public void Update()

@@ -101,19 +101,14 @@ namespace BattleCruisers.Scenes.BattleScene
             // Camera
             CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
             Assert.IsNotNull(cameraInitialiser);
-            // FELIX  Create SkyboxInitialiser
-            IMaterialFetcher materialFetcher = new MaterialFetcher();
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
-            Material skyboxMaterial = materialFetcher.GetMaterial(currentLevel.SkyMaterialName);
 
             ICameraComponents cameraComponents
                 = cameraInitialiser.Initialise(
-                    components.Camera, 
-                    dataProvider.SettingsManager, 
-                    playerCruiser, 
+                    components.Camera,
+                    dataProvider.SettingsManager,
+                    playerCruiser,
                     aiCruiser,
-                    helper.CreateNavigationWheelEnabledFilter(),
-                    skyboxMaterial);
+                    helper.CreateNavigationWheelEnabledFilter());
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
@@ -185,7 +180,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
+            components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
             StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents);
         }

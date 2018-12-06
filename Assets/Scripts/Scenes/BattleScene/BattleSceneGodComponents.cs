@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Clouds;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IHighlightFactory HighlightFactory { get; private set; }
         public IAudioSource AudioSource { get; private set; }
         public CloudInitialiser CloudInitialiser { get; private set; }
+        public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public ICamera Camera { get; private set; }
 
         public void Initialise()
@@ -34,6 +36,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
             CloudInitialiser = GetComponent<CloudInitialiser>();
             Assert.IsNotNull(CloudInitialiser);
+
+            SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
+            Assert.IsNotNull(SkyboxInitialiser);
 
             Camera platformCamera = FindObjectOfType<Camera>();
             Assert.IsNotNull(platformCamera);
