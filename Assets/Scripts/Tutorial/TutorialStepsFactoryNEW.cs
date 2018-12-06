@@ -43,17 +43,16 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // 1. Wait until initial camera movement is complete
+            // 1. Player cruiser
             steps.Enqueue(CreateStep_CameraAdjustmentWaitStep());
-
-            // 2. Player cruiser
             steps.Enqueue(CreateStep_YourCruiser());
 
-            // 3. Navigation wheel
+            // 2. Navigation wheel
             steps.Enqueue(CreateSteps_NavigationWheel());
 
-            // 4. Navigate to enemy cruiser
+            // 3. Enemy cruiser
             steps.Enqueue(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
+            steps.Enqueue(CreateStep_EnemyCruiser());
 
             return steps;
         }
@@ -64,6 +63,19 @@ namespace BattleCruisers.Tutorial
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is your awesome cruiser :D",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.PlayerCruiser));
+
+            return
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton);
+        }
+
+        private ITutorialStep CreateStep_EnemyCruiser()
+        {
+            ITutorialStepArgsNEW args
+                = CreateTutorialStepArgs(
+                    textToDisplay: "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.AICruiser));
 
             return
                 new ExplanationDismissableStep(
