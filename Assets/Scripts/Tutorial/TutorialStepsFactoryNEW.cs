@@ -44,43 +44,34 @@ namespace BattleCruisers.Tutorial
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
             // 1. Player cruiser
-            steps.Enqueue(CreateStep_CameraAdjustmentWaitStep());
-            steps.Enqueue(CreateStep_YourCruiser());
+            steps.Enqueue(CreateSteps_YourCruiser());
 
             // 2. Navigation wheel
             steps.Enqueue(CreateSteps_NavigationWheel());
 
             // 3. Enemy cruiser
-            steps.Enqueue(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
-            steps.Enqueue(CreateStep_EnemyCruiser());
+            steps.Enqueue(CreateSteps_EnemyCruiser());
 
             return steps;
         }
 
-        private ITutorialStep CreateStep_YourCruiser()
+        private IList<ITutorialStep> CreateSteps_YourCruiser()
         {
+            IList<ITutorialStep> steps = new List<ITutorialStep>();
+
+            steps.Add(CreateStep_CameraAdjustmentWaitStep());
+
             ITutorialStepArgsNEW args
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is your awesome cruiser :D",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.PlayerCruiser));
 
-            return
+            steps.Add(
                 new ExplanationDismissableStep(
                     args,
-                    _explanationDismissButton);
-        }
+                    _explanationDismissButton));
 
-        private ITutorialStep CreateStep_EnemyCruiser()
-        {
-            ITutorialStepArgsNEW args
-                = CreateTutorialStepArgs(
-                    textToDisplay: "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.AICruiser));
-
-            return
-                new ExplanationDismissableStep(
-                    args,
-                    _explanationDismissButton);
+            return steps;
         }
 
         private IList<ITutorialStep> CreateSteps_NavigationWheel()
@@ -118,6 +109,25 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(),
                     _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
                     enableNavigation);
+        }
+
+        private IList<ITutorialStep> CreateSteps_EnemyCruiser()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
+
+            ITutorialStepArgsNEW args
+                = CreateTutorialStepArgs(
+                    textToDisplay: "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.AICruiser));
+
+            steps.Add(
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton));
+
+            return steps;
         }
 
         private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget)
