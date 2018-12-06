@@ -9,6 +9,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -23,9 +24,12 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
-            IBroadcastingFilter navigationWheelEnabledFilter)
+            IBroadcastingFilter navigationWheelEnabledFilter,
+            Material skyboxMaterial)
         {
-            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter);
+            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, skyboxMaterial);
+
+            SetupSkybox(skyboxMaterial);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
@@ -53,6 +57,13 @@ namespace BattleCruisers.UI.Cameras
                     _cameraAdjuster,
                     navigationWheelPanel.NavigationWheel,
                     new CameraFocuser(navigationWheelPanel.PanelArea, navigationWheelPanel.NavigationWheel));
+        }
+
+        private void SetupSkybox(Material skyboxMaterial)
+        {
+            Skybox skybox = GetComponent<Skybox>();
+            Assert.IsNotNull(skybox);
+            skybox.material = skyboxMaterial;
         }
 
         public void Update()
