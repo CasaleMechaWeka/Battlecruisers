@@ -142,17 +142,26 @@ namespace BattleCruisers.Tutorial
             steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
             // Health dial
-            ITutorialStepArgsNEW args
+            ITutorialStepArgsNEW healthDialArgs
                 = CreateTutorialStepArgs(
                     textToDisplay: "This is your cruiser's health dial.",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.HealthDialHighlightable));
 
             steps.Add(
                 new ExplanationDismissableStep(
-                    args,
+                    healthDialArgs,
                     _explanationDismissButton));
 
             // Drone number
+            ITutorialStepArgsNEW droneNumberArgs
+                = CreateTutorialStepArgs(
+                    textToDisplay: "Drones are the only resource.  This is how many drones you have.  The more drones you have the faster your cruiser works and the better buildings and units you can build.",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable));
+
+            steps.Add(
+                new ExplanationDismissableStep(
+                    droneNumberArgs,
+                    _explanationDismissButton));
 
             return steps;
         }
