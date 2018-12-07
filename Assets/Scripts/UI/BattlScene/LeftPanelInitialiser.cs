@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Cruisers;
@@ -30,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         public IBuildMenuNEW BuildMenu { get; private set; }
 
-        public void Initialise(
+        public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
             IUIManager uiManager,
@@ -54,23 +55,25 @@ namespace BattleCruisers.UI.BattleScene
                 soundPlayer,
                 playerCruiser);
 
-            SetupDronesPanel(droneManager, droneManagerMonitor);
-            SetupHealthDial(playerCruiser);
+            IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
+            IMaskHighlightable healthDialHighlightable = SetupHealthDial(playerCruiser);
             SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
+
+            return new LeftPanelComponents(healthDialHighlightable, numberOfDronesHighlightable);
         }
 
-        private void SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        private IMaskHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             DronesPanelInitialiser dronesPanelInitialiser = FindObjectOfType<DronesPanelInitialiser>();
             Assert.IsNotNull(dronesPanelInitialiser);
-            dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
+            return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
-        private void SetupHealthDial(ICruiser playerCruiser)
+        private IMaskHighlightable SetupHealthDial(ICruiser playerCruiser)
         {
             PlayerCruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<PlayerCruiserHealthDialInitialiser>();
             Assert.IsNotNull(dialInitialiser);
-            dialInitialiser.Initialise(playerCruiser);
+            return dialInitialiser.Initialise(playerCruiser);
         }
 
         private void SetupBuildMenuController(
