@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Tutorial
         public IPrefabFactory PrefabFactory { get; private set; }
         public IBattleSceneGodComponents Components { get; private set; }
         public ICameraComponents CameraComponents { get; private set; }
+        public LeftPanelComponents LeftPanelComponents { get; private set; }
 
         public TutorialArgsNEW(
             ICruiser playerCruiser, 
@@ -21,9 +23,10 @@ namespace BattleCruisers.Tutorial
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
-            ICameraComponents cameraComponents)
+            ICameraComponents cameraComponents,
+            LeftPanelComponents leftPanelComponents)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraComponents);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraComponents, leftPanelComponents);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -31,6 +34,7 @@ namespace BattleCruisers.Tutorial
             PrefabFactory = prefabFactory;
             Components = battleSceneGodComponents;
             CameraComponents = cameraComponents;
+            LeftPanelComponents = leftPanelComponents;
         }
     }
 }

@@ -8,9 +8,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
@@ -131,8 +129,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
-            leftPanelInitialiser
-                .Initialise(
+            LeftPanelComponents leftPanelComponents 
+                = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
                     new DroneManagerMonitor(playerCruiser.DroneManager, components.VariableDelayDeferrer),
                     uiManager,
@@ -184,7 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents, leftPanelComponents);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -207,7 +205,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBattleSceneGodComponents battleSceneGodComponents,
-            ICameraComponents cameraComponents)
+            ICameraComponents cameraComponents,
+            LeftPanelComponents leftPanelComponents)
         {
             if (applicationModel.IsTutorial)
             {
@@ -222,7 +221,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         _tutorialProvider,
                         prefabFactory,
                         battleSceneGodComponents,
-                        cameraComponents);
+                        cameraComponents,
+                        leftPanelComponents);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

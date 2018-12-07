@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.Fetchers;
 
@@ -14,5 +15,6 @@ namespace BattleCruisers.Tutorial
         IPrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
         ICameraComponents CameraComponents { get; }
+        LeftPanelComponents LeftPanelComponents { get; }
     }
 }
