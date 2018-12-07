@@ -54,6 +54,9 @@ namespace BattleCruisers.Tutorial
             // 3. Enemy cruiser
             steps.Enqueue(CreateSteps_EnemyCruiser());
 
+            // 4. Player cruiser widgets
+            steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
+
             return steps;
         }
 
@@ -139,7 +142,15 @@ namespace BattleCruisers.Tutorial
             steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
             // Health dial
+            ITutorialStepArgsNEW args
+                = CreateTutorialStepArgs(
+                    textToDisplay: "This is your cruiser's health dial.",
+                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.HealthDialHighlightable));
 
+            steps.Add(
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton));
 
             // Drone number
 
