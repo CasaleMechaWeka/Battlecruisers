@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -13,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private const float MIN_PROPORTION = 0.12f;
         private const float MAX_PROPORTION = 0.77f;
 
-        public IHealthDial<ICruiser> Initialise(ICruiser playerCruiser)
+        public IMaskHighlightable Initialise(ICruiser playerCruiser)
         {
             Assert.IsNotNull(playerCruiser);
 
@@ -27,7 +28,11 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
             IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(subsetFillableImage, visibilityFilter);
             healthDial.Damagable = playerCruiser;
-            return healthDial;
+
+            MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
+            Assert.IsNotNull(highlightable);
+            highlightable.Initialise();
+            return highlightable;
         }
     }
 }
