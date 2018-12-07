@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
@@ -13,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
         private DronesDisplayer _dronesDisplayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public void Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        public IMaskHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             Helper.AssertIsNotNull(droneManager, droneManagerMonitor);
 
@@ -24,6 +26,11 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
             INumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
 
             _dronesDisplayer = new DronesDisplayer(droneManager, droneManagerMonitor, twoDigitDisplayer, highlightGameObject);
+
+            MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
+            Assert.IsNotNull(highlightable);
+            highlightable.Initialise();
+            return highlightable;
         }
     }
 }
