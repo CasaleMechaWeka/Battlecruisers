@@ -46,8 +46,10 @@ namespace BattleCruisers.Tutorial
             // 1. Player cruiser
             steps.Enqueue(CreateSteps_YourCruiser());
 
-            // 2. Navigation wheel
-            steps.Enqueue(CreateSteps_NavigationWheel());
+            // FELIX  Uncomment :)
+
+            //// 2. Navigation wheel
+            //steps.Enqueue(CreateSteps_NavigationWheel());
 
             // 3. Enemy cruiser
             steps.Enqueue(CreateSteps_EnemyCruiser());
@@ -126,6 +128,20 @@ namespace BattleCruisers.Tutorial
                 new ExplanationDismissableStep(
                     args,
                     _explanationDismissButton));
+
+            return steps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_PlayerCruiserWidgets()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
+
+            // Health dial
+
+
+            // Drone number
 
             return steps;
         }
