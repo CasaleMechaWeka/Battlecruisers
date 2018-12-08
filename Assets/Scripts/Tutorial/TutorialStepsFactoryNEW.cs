@@ -248,8 +248,7 @@ namespace BattleCruisers.Tutorial
             {
                 // Wait for building to complete construction
                 string waitText = "Wait for " + buildingToConstruct.Name + " to complete.  Patience :)";
-                // FELIX 
-                //constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
+                constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
             }
 
             return constructionSteps;
@@ -271,12 +270,11 @@ namespace BattleCruisers.Tutorial
             return buildableButton;
         }
 
-        // FELIX
-        //private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
-        //{
-        //    ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay, _lastPlayerIncompleteBuildingStartedProvider);
-        //    return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
-        //}
+        private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
+        {
+            ITutorialStepArgsNEW args = CreateTutorialStepArgs(textToDisplay);
+            return new BuildableCompletedWaitStepNEW(args, _lastPlayerIncompleteBuildingStartedProvider);
+        }
 
         private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
         {
