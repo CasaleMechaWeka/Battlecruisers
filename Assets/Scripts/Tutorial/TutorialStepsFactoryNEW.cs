@@ -236,13 +236,13 @@ namespace BattleCruisers.Tutorial
                     slotProvider,
                     _tutorialArgs.TutorialProvider.SlotPermitter));
 
-            //// Select a slot
-            //ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotP);
-            //constructionSteps.Add(
-            //    new SlotsStep(
-            //        buildingSlotsArgs,
-            //        _tutorialArgs.TutorialProvider.SlotPermitter,
-            //        slotsProvider));
+            // Select a slot
+            ITutorialStepArgsNEW buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotProvider);
+            constructionSteps.Add(
+                new SlotStep(
+                    buildingSlotsArgs,
+                    _tutorialArgs.TutorialProvider.SlotPermitter,
+                    slotProvider));
 
             //if (waitForBuildingToComplete)
             //{
