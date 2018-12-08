@@ -226,18 +226,18 @@ namespace BattleCruisers.Tutorial
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgsNEW buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
+            ISlotProvider slotProvider = new SlotProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStepNEW(
                     buldingButtonArgs,
                     buildingButton,
                     _tutorialArgs.TutorialProvider.BuildingPermitter,
                     buildingToConstruct.Key,
-                    slotsProvider,
+                    slotProvider,
                     _tutorialArgs.TutorialProvider.SlotPermitter));
 
             //// Select a slot
-            //ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotsProvider);
+            //ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotP);
             //constructionSteps.Add(
             //    new SlotsStep(
             //        buildingSlotsArgs,
