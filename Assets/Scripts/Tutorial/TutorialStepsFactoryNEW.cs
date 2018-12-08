@@ -155,7 +155,7 @@ namespace BattleCruisers.Tutorial
             // Drone number
             ITutorialStepArgsNEW droneNumberArgs
                 = CreateTutorialStepArgs(
-                    textToDisplay: "Drones are the only resource.  This is how many drones you have.  The more drones you have the faster your cruiser works and the better buildings and units you can build.",
+                    textToDisplay: "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
                     highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable));
 
             steps.Add(
