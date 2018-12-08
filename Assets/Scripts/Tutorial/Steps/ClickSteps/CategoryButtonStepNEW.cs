@@ -1,0 +1,42 @@
+﻿using System;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Steps.ClickSteps
+{
+    // FELIX  Copy tests
+    public class CategoryButtonStepNEW : ExplanationClickStep
+    {
+        private readonly IBuildingCategoryPermitter _permitter;
+        private readonly BuildingCategory _category;
+
+        public CategoryButtonStepNEW(
+            ITutorialStepArgsNEW args, 
+            IBuildingCategoryButton buildingCategoryButton,
+            IBuildingCategoryPermitter permitter) 
+            : base(args, new StaticProvider<IClickableEmitter>(buildingCategoryButton))
+        {
+            Assert.IsNotNull(permitter);
+
+            _permitter = permitter;
+            _category = buildingCategoryButton.Category;
+        }
+
+		public override void Start(Action completionCallback)
+		{
+            base.Start(completionCallback);
+
+            _permitter.PermittedCategory = _category;
+		}
+
+		protected override void OnCompleted()
+		{
+            _permitter.PermittedCategory = null;
+
+			base.OnCompleted();
+		}
+	}
+}
