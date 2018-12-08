@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
@@ -14,6 +15,8 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
@@ -181,7 +184,7 @@ namespace BattleCruisers.Tutorial
                 CreateSteps_ConstructBuilding(
                     BuildingCategory.Factory,
                     new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
-                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
+                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: true),
                     "To get more builders construct a builder bay."));
 
             // FELIX  Congratulations message :P
@@ -219,19 +222,19 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStepNEW(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
-            //// Select building
-            //IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
-            //string textToDisplay = null;  // Means previous text is displayed
-            //ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
-            //ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
-            //constructionSteps.Add(
-            //    new BuildingButtonStep(
-            //        buldingButtonArgs,
-            //        buildingButton,
-            //        _tutorialArgs.TutorialProvider.BuildingPermitter,
-            //        buildingToConstruct.Key,
-            //        slotsProvider,
-            //        _tutorialArgs.TutorialProvider.SlotPermitter));
+            // Select building
+            IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
+            string textToDisplay = null;  // Means previous text is displayed
+            ITutorialStepArgsNEW buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
+            ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
+            constructionSteps.Add(
+                new BuildingButtonStepNEW(
+                    buldingButtonArgs,
+                    buildingButton,
+                    _tutorialArgs.TutorialProvider.BuildingPermitter,
+                    buildingToConstruct.Key,
+                    slotsProvider,
+                    _tutorialArgs.TutorialProvider.SlotPermitter));
 
             //// Select a slot
             //ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotsProvider);
@@ -249,6 +252,22 @@ namespace BattleCruisers.Tutorial
             //}
 
             return constructionSteps;
+        }
+
+        private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
+        {
+            _tutorialArgs.TutorialProvider.BuildingPermitter.PermittedBuilding = buildingKey;
+
+            ReadOnlyCollection<IBuildableButton> categoryButtons = _tutorialArgs.LeftPanelComponents.BuildMenu.GetBuildableButtons(buildingCategory);
+
+            IBuildableButton buildableButton
+                = categoryButtons
+                    .FirstOrDefault(button => _tutorialArgs.TutorialProvider.ShouldBuildingBeEnabledFilter.IsMatch(button.Buildable));
+
+            _tutorialArgs.TutorialProvider.BuildingPermitter.PermittedBuilding = null;
+
+            Assert.IsNotNull(buildableButton);
+            return buildableButton;
         }
 
         private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
