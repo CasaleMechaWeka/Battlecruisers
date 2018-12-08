@@ -10,6 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickableEmitter;
 
+        // FELIX  Most child classes create StaticProvider<IClickableEmitter>, create helper constructor?
         public ExplanationClickStep(ITutorialStepArgsNEW args, IItemProvider<IClickableEmitter> clickableProvider)
             : base(args)
         {
