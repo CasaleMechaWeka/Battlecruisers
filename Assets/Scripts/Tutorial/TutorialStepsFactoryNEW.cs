@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Tutorial.Explanation;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
@@ -7,9 +9,11 @@ using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
@@ -181,6 +185,53 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
+        private IList<ITutorialStep> CreateSteps_ConstructBuilding(
+            BuildingCategory buildingCategory,
+            BuildableInfo buildingToConstruct,
+            SlotSpecification slotSpecification,
+            string constructBuildingInstruction,
+            bool waitForBuildingToComplete = true)
+        {
+            IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
+
+            // Select building category
+            IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.LeftPanelComponents.BuildMenu.GetCategoryButton(buildingCategory);
+            Assert.IsNotNull(buildingCategoryButton);
+            ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, new StaticProvider<IMaskHighlightable>(buildingCategoryButton));
+            constructionSteps.Add(new CategoryButtonStepNEW(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
+
+            //// Select building
+            //IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
+            //string textToDisplay = null;  // Means previous text is displayed
+            //ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
+            //ISlotsProvider slotsProvider = new SlotsProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
+            //constructionSteps.Add(
+            //    new BuildingButtonStep(
+            //        buldingButtonArgs,
+            //        buildingButton,
+            //        _tutorialArgs.TutorialProvider.BuildingPermitter,
+            //        buildingToConstruct.Key,
+            //        slotsProvider,
+            //        _tutorialArgs.TutorialProvider.SlotPermitter));
+
+            //// Select a slot
+            //ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotsProvider);
+            //constructionSteps.Add(
+            //    new SlotsStep(
+            //        buildingSlotsArgs,
+            //        _tutorialArgs.TutorialProvider.SlotPermitter,
+            //        slotsProvider));
+
+            //if (waitForBuildingToComplete)
+            //{
+            //    // Wait for building to complete construction
+            //    string waitText = "Wait for " + buildingToConstruct.Name + " to complete, patience :)";
+            //    constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
+            //}
+
+            return constructionSteps;
+        }
+
         private ITutorialStep CreateStep_CameraAdjustmentWaitStep()
         {
             return
@@ -189,6 +240,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.CameraComponents.CameraAdjuster);
         }
 
+        // FELIX  Almost every use creates a StaticProvider<IMaskHighlightable>.  Create helper method?
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
             string textToDisplay = null,
             IItemProvider<IMaskHighlightable> highlightableProvider = null)
