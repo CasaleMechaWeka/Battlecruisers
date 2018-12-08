@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using System;
@@ -129,5 +130,10 @@ namespace BattleCruisers.Cruisers.Slots
                 BuildingDestroyed.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
             }
 		}
+
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        {
+            return highlightArgsFactory.CreateForInGameObject(Transform.position, Size);
+        }
     }
 }

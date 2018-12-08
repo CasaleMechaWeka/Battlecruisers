@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils.DataStrctures;
 using System;
 using System.Collections.ObjectModel;
@@ -33,7 +34,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
     }
 
-    public interface ISlot : IHighlightable, IClickableEmitter
+    public interface ISlot : IHighlightable, IClickableEmitter, IMaskHighlightable
     {
         bool IsFree { get; }
         SlotType Type { get; }
