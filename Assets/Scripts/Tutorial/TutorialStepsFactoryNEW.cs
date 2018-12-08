@@ -72,8 +72,8 @@ namespace BattleCruisers.Tutorial
 
             ITutorialStepArgsNEW args
                 = CreateTutorialStepArgs(
-                    textToDisplay: "This is your awesome cruiser :D",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.PlayerCruiser));
+                    "This is your awesome cruiser :D",
+                    _tutorialArgs.PlayerCruiser);
 
             steps.Add(
                 new ExplanationDismissableStep(
@@ -89,8 +89,8 @@ namespace BattleCruisers.Tutorial
 
             ITutorialStepArgsNEW navigationWheelStepArgs
                 = CreateTutorialStepArgs(
-                    textToDisplay: "This is the navigation wheel, which you use to navigate around the map.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.CameraComponents.NavigationWheel));
+                    "This is the navigation wheel, which you use to navigate around the map.",
+                    _tutorialArgs.CameraComponents.NavigationWheel);
             steps.Add(
                 new ExplanationDismissableStep(
                     navigationWheelStepArgs,
@@ -128,8 +128,8 @@ namespace BattleCruisers.Tutorial
 
             ITutorialStepArgsNEW args
                 = CreateTutorialStepArgs(
-                    textToDisplay: "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.AICruiser));
+                    "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
+                    _tutorialArgs.AICruiser);
 
             steps.Add(
                 new ExplanationDismissableStep(
@@ -148,8 +148,8 @@ namespace BattleCruisers.Tutorial
             // Health dial
             ITutorialStepArgsNEW healthDialArgs
                 = CreateTutorialStepArgs(
-                    textToDisplay: "This is your cruiser's health dial.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.HealthDialHighlightable));
+                    "This is your cruiser's health dial.",
+                    _tutorialArgs.LeftPanelComponents.HealthDialHighlightable);
 
             steps.Add(
                 new ExplanationDismissableStep(
@@ -159,8 +159,8 @@ namespace BattleCruisers.Tutorial
             // Drone number
             ITutorialStepArgsNEW droneNumberArgs
                 = CreateTutorialStepArgs(
-                    textToDisplay: "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
-                    highlightableProvider: new StaticProvider<IMaskHighlightable>(_tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable));
+                    "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
+                    _tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable);
 
             steps.Add(
                 new ExplanationDismissableStep(
@@ -197,7 +197,7 @@ namespace BattleCruisers.Tutorial
             // Select building category
             IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.LeftPanelComponents.BuildMenu.GetCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
-            ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, new StaticProvider<IMaskHighlightable>(buildingCategoryButton));
+            ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStepNEW(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
             //// Select building
@@ -240,17 +240,25 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.CameraComponents.CameraAdjuster);
         }
 
-        // FELIX  Almost every use creates a StaticProvider<IMaskHighlightable>.  Create helper method?
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
             string textToDisplay = null,
-            IItemProvider<IMaskHighlightable> highlightableProvider = null)
+            IMaskHighlightable highlightable = null)
         {
+            return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IMaskHighlightable>(highlightable));
+        }
+
+        private ITutorialStepArgsNEW CreateTutorialStepArgs(
+            string textToDisplay,
+            IItemProvider<IMaskHighlightable> highlightableProvider)
+        {
+            Assert.IsNotNull(highlightableProvider);
+
             return
                 new TutorialStepArgsNEW(
                     _highlighter,
                     textToDisplay,
                     _displayer,
-                    highlightableProvider ?? new StaticProvider<IMaskHighlightable>(item: null));
+                    highlightableProvider);
         }
     }
 }
