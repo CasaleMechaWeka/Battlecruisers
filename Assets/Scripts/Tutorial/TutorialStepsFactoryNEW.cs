@@ -28,7 +28,7 @@ namespace BattleCruisers.Tutorial
         private readonly IExplanationDismissButton _explanationDismissButton;
         private readonly IVariableDelayDeferrer _deferrer;
         private readonly ITutorialArgsNEW _tutorialArgs;
-        private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
+        private readonly ISingleBuildableProviderNEW _lastPlayerIncompleteBuildingStartedProvider;
 
         public TutorialStepsFactoryNEW(
             IHighlighterNEW highlighter,

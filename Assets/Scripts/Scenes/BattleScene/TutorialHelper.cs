@@ -99,9 +99,9 @@ namespace BattleCruisers.Scenes.BattleScene
             return _slotFilter;
 		}
 
-        public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
+        public ISingleBuildableProviderNEW CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
-            return new LastIncompleteBuildingStartedProvider(cruiser);
+            return new LastIncompleteBuildingStartedProviderNEW(cruiser);
         }
 
         public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
