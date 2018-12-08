@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
+    // TUTORIAL  Remove?
     public class SlotsProvider : ISlotsProvider
     {
         private readonly ISlotAccessor _slotAccessor;
