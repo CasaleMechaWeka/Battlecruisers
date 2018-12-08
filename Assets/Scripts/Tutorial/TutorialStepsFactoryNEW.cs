@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
@@ -47,19 +48,21 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // 1. Player cruiser
-            steps.Enqueue(CreateSteps_YourCruiser());
-
             // FELIX  Uncomment :)
+            //// 1. Player cruiser
+            //steps.Enqueue(CreateSteps_YourCruiser());
 
             //// 2. Navigation wheel
             //steps.Enqueue(CreateSteps_NavigationWheel());
 
-            // 3. Enemy cruiser
-            steps.Enqueue(CreateSteps_EnemyCruiser());
+            //// 3. Enemy cruiser
+            //steps.Enqueue(CreateSteps_EnemyCruiser());
 
-            // 4. Player cruiser widgets
-            steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
+            //// 4. Player cruiser widgets
+            //steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
+
+            // 5. Construct drone station
+            steps.Enqueue(CreateSteps_ConstructDroneStation());
 
             return steps;
         }
@@ -166,6 +169,22 @@ namespace BattleCruisers.Tutorial
                 new ExplanationDismissableStep(
                     droneNumberArgs,
                     _explanationDismissButton));
+
+            return steps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_ConstructDroneStation()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Factory,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
+                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
+                    "To get more builders construct a builder bay."));
+
+            // FELIX  Congratulations message :P
 
             return steps;
         }
