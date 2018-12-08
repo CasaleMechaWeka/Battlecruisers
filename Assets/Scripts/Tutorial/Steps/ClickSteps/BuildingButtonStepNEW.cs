@@ -5,7 +5,6 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Utils;
 using System;
-using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
@@ -17,7 +16,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     {
         private readonly IBuildingPermitter _buildingPermitter;
         private readonly IPrefabKey _buildingToAllow;
-        private readonly IItemProvider<ISlot> _slotProvider;
+        private readonly IListProvider<ISlot> _slotsProvider;
         private readonly ISlotPermitter _highlightableSlotPermitter;
 
         public BuildingButtonStepNEW(
@@ -25,7 +24,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             IBuildableButton buildableButton,
             IBuildingPermitter buildingPermitter,
             IPrefabKey buildingToAllow,
-            IItemProvider<ISlot> slotProvider,
+            IListProvider<ISlot> slotProvider,
             ISlotPermitter highlightableSlotPermitter) 
             : base(args, new StaticProvider<IClickableEmitter>(buildableButton))
         {
@@ -33,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
             _buildingPermitter = buildingPermitter;
             _buildingToAllow = buildingToAllow;
-            _slotProvider = slotProvider;
+            _slotsProvider = slotProvider;
             _highlightableSlotPermitter = highlightableSlotPermitter;
         }
 
@@ -46,7 +45,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             // This was previously in SlotsStep.Start(), but clicking the buliding button
             // and highlighting slots happens at the same time, hence need to set both
             // permitters at the same time.
-            _highlightableSlotPermitter.PermittedSlots = new List<ISlot>() { _slotProvider.FindItem() };
+            _highlightableSlotPermitter.PermittedSlots = _slotsProvider.FindItems();
 		}
 
 		protected override void OnCompleted()

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers.Slots;
+﻿using System.Collections.Generic;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Utils;
@@ -10,6 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     {
         private readonly ISlotAccessor _slotAccessor;
         private readonly SlotSpecification _slotSpecification;
+        private IList<ISlot> _slots;
 
         private ISlot _slot;
         private ISlot Slot
@@ -34,11 +36,6 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             _slotSpecification = slotSpecification;
         }
 
-        ISlot IItemProvider<ISlot>.FindItem()
-        {
-            return Slot;
-        }
-
         IClickableEmitter IItemProvider<IClickableEmitter>.FindItem()
         {
             return Slot;
@@ -47,6 +44,15 @@ namespace BattleCruisers.Tutorial.Steps.Providers
         IMaskHighlightable IItemProvider<IMaskHighlightable>.FindItem()
         {
             return Slot;
+        }
+
+        public IList<ISlot> FindItems()
+        {
+            if (_slots == null)
+            {
+                _slots = new List<ISlot>() { Slot };
+            }
+            return _slots;
         }
     }
 }
