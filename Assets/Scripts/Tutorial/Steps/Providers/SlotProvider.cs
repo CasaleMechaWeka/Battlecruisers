@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -36,18 +36,17 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
         ISlot IItemProvider<ISlot>.FindItem()
         {
-            return _slot;
-        }
-
-        // TUTORIAL  Remove?
-        public IHighlightable FindItem()
-        {
-            return _slot;
+            return Slot;
         }
 
         IClickableEmitter IItemProvider<IClickableEmitter>.FindItem()
         {
-            return _slot;
+            return Slot;
+        }
+
+        IMaskHighlightable IItemProvider<IMaskHighlightable>.FindItem()
+        {
+            return Slot;
         }
     }
 }
