@@ -3,6 +3,8 @@ using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -26,6 +28,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public IBuildable Buildable { get; private set; }
 
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
@@ -42,6 +47,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             buildableName.text = Buildable.Name;
             droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             buildableImage.sprite = Buildable.Sprite;
+
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
 
             _isEnabledToggler = new FilterToggler(this, this);
 		}

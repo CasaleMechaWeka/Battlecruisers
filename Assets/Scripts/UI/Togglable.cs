@@ -12,6 +12,7 @@ namespace BattleCruisers.UI
         private const float DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER = 1;
 
         protected virtual Image Image { get { return null; } }
+        protected virtual CanvasGroup CanvasGroup { get { return null; } }
 
         public float highlightSizeMultiplier;
 
@@ -26,6 +27,11 @@ namespace BattleCruisers.UI
                     Color color = Image.color;
                     color.a = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
                     Image.color = color;
+                }
+
+                if (CanvasGroup != null)
+                {
+                    CanvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
                 }
             }
         }
