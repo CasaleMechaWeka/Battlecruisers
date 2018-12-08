@@ -158,7 +158,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 = new ManagerArgsNEW(
                     playerCruiser,
                     aiCruiser,
-                    leftPanelInitialiser.BuildMenu,
+                    leftPanelComponents.BuildMenu,
                     new ItemDetailsManager(rightPanelInitialiser.Informator));
             uiManager.Initialise(args);
 

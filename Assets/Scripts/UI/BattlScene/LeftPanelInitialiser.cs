@@ -29,8 +29,6 @@ namespace BattleCruisers.UI.BattleScene
     /// </summary>
     public class LeftPanelInitialiser : MonoBehaviour
     {
-        public IBuildMenuNEW BuildMenu { get; private set; }
-
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
@@ -57,9 +55,9 @@ namespace BattleCruisers.UI.BattleScene
 
             IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IMaskHighlightable healthDialHighlightable = SetupHealthDial(playerCruiser);
-            SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
+            IBuildMenuNEW buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
 
-            return new LeftPanelComponents(healthDialHighlightable, numberOfDronesHighlightable);
+            return new LeftPanelComponents(healthDialHighlightable, numberOfDronesHighlightable, buildMenu);
         }
 
         private IMaskHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
@@ -76,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene
             return dialInitialiser.Initialise(playerCruiser);
         }
 
-        private void SetupBuildMenuController(
+        private IBuildMenuNEW SetupBuildMenuController(
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
@@ -94,8 +92,8 @@ namespace BattleCruisers.UI.BattleScene
             BuildMenuInitialiser buildMenuInitialiser = FindObjectOfType<BuildMenuInitialiser>();
             Assert.IsNotNull(buildMenuInitialiser);
 
-            BuildMenu
-                = buildMenuInitialiser.Initialise(
+            return
+                buildMenuInitialiser.Initialise(
                     uiManager,
                     buildingGroups,
                     units,
