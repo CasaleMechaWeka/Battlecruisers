@@ -225,6 +225,7 @@ namespace BattleCruisers.Tutorial
             FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
+            // FELIX  Could navigate to enemy factory/unit?  :D
             // 2. Navigate to enemey cruiser
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
             enemyUnitDefenceSteps.AddRange(
