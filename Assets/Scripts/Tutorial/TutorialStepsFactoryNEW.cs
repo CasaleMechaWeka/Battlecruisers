@@ -444,6 +444,28 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
+        private IList<ITutorialStep> CreateSteps_GameSpeed()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Explain game speed buttons
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs(
+                        "These two buttons control the game speed.",
+                        _tutorialArgs.RightPanelComponents.SpeedButtonPanel),
+                    _explanationDismissButton));
+
+            // Enable speed buttons
+            //_tutorialArgs.TutorialProvider.SpeedButtonsPermitter.IsMatch = true
+            
+            // Enable navigation wheel
+
+            // Encourage user to experiment
+
+            return steps;
+        }
+
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
         {
             return
