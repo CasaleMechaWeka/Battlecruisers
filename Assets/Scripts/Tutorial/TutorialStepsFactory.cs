@@ -88,7 +88,8 @@ namespace BattleCruisers.Tutorial
                 CreateSteps_EnemyUnitDefence(
                     StaticPrefabKeys.Buildings.NavalFactory,
                     new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    null,
+                    //_tutorialArgs.TutorialProvider.SingleShipProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
                     boostAircraftSpeed: false));
@@ -98,7 +99,8 @@ namespace BattleCruisers.Tutorial
                 CreateSteps_EnemyUnitDefence(
                     StaticPrefabKeys.Buildings.AirFactory,
                     new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    null,
+                    //_tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
                     boostAircraftSpeed: true));
