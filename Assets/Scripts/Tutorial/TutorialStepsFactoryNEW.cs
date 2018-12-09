@@ -408,7 +408,7 @@ namespace BattleCruisers.Tutorial
                 CreateSteps_ConstructBuilding(
                     BuildingCategory.Offence,
                     new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
-                    new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: true),
+                    new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false),
                     "And lastly, an artillery.",
                     waitForBuildingToComplete: false));
 
