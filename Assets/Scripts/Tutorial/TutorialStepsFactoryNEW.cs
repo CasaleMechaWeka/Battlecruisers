@@ -58,50 +58,49 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
-            // FELIX  TEMP  So I can build artillery without previous steps :)
-            _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
+            // TEMP  So I can build artillery without previous steps :)
+            //_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
 
-            // FELIX  Uncomment :)
-            //// 1. Player cruiser
-            //steps.Enqueue(CreateSteps_YourCruiser());
+            // 1. Player cruiser
+            steps.Enqueue(CreateSteps_YourCruiser());
 
-            //// 2. Navigation wheel
-            //steps.Enqueue(CreateSteps_NavigationWheel());
+            // 2. Navigation wheel
+            steps.Enqueue(CreateSteps_NavigationWheel());
 
-            //// 3. Enemy cruiser
-            //steps.Enqueue(CreateSteps_EnemyCruiser());
+            // 3. Enemy cruiser
+            steps.Enqueue(CreateSteps_EnemyCruiser());
 
-            //// 4. Player cruiser widgets
-            //steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
+            // 4. Player cruiser widgets
+            steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
 
-            //// 5. Construct drone station
-            //steps.Enqueue(CreateSteps_ConstructDroneStation());
+            // 5. Construct drone station
+            steps.Enqueue(CreateSteps_ConstructDroneStation());
 
-            //// 6. Enemy ship
-            //steps.Enqueue(
-            //    CreateSteps_EnemyUnitDefence(
-            //        StaticPrefabKeys.Buildings.NavalFactory,
-            //        new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-            //        _tutorialArgs.TutorialProvider.SingleShipProvider,
-            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
-            //        boostAircraftSpeed: false));
+            // 6. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
+                    boostAircraftSpeed: false));
 
-            //// 7. Enemy bomber
-            //steps.Enqueue(
-            //    CreateSteps_EnemyUnitDefence(
-            //        StaticPrefabKeys.Buildings.AirFactory,
-            //        new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-            //        _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
-            //        boostAircraftSpeed: true));
+            // 7. Enemy bomber
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
+                    boostAircraftSpeed: true));
 
-            //// 8. Drone focus
-            //steps.Enqueue(CreateSteps_DroneFocus());
+            // 8. Drone focus
+            steps.Enqueue(CreateSteps_DroneFocus());
 
-            //// 9. Game speed
-            //steps.Enqueue(CreateSteps_GameSpeed());
+            // 9. Game speed
+            steps.Enqueue(CreateSteps_GameSpeed());
 
             // 10. Endgame
             steps.Enqueue(CreateSteps_Endgame());
@@ -132,25 +131,24 @@ namespace BattleCruisers.Tutorial
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            ITutorialStepArgsNEW navigationWheelStepArgs
-                = CreateTutorialStepArgs(
-                    "This is the navigation wheel, which you use to navigate around the map.",
-                    _tutorialArgs.CameraComponents.NavigationWheel);
-            steps.Add(
-                new ExplanationDismissableStep(
-                    navigationWheelStepArgs,
-                    _explanationDismissButton));
-
+            // Enable navigation wheel
             steps.Add(CreateStep_NavigationToggle(enableNavigation: true));
 
-            ITutorialStepArgsNEW freeNavigationArgs
-                = CreateTutorialStepArgs(
-                    textToDisplay: "Drag the navigation wheel to navigate.  (Click the checkmark when you have had enough.)");
+            // Explain navigation wheel
             steps.Add(
                 new ExplanationDismissableStep(
-                    freeNavigationArgs,
+                    CreateTutorialStepArgs(
+                        "This is the navigation wheel, which you use to navigate around the map.",
+                        _tutorialArgs.CameraComponents.NavigationWheel),
                     _explanationDismissButton));
 
+            // Encourage user to experiment
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Drag the navigation wheel to navigate.  (Click the checkmark when you have had enough.)"),
+                    _explanationDismissButton));
+
+            // Disable navigation
             steps.Add(CreateStep_NavigationToggle(enableNavigation: false));
 
             return steps;
@@ -376,6 +374,9 @@ namespace BattleCruisers.Tutorial
         private IList<ITutorialStep> CreateSteps_DroneFocus()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Navigate to player cruiser
+            steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
             // Explanation
             steps.Add(
