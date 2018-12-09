@@ -87,16 +87,16 @@ namespace BattleCruisers.Tutorial
             //        boostAircraftSpeed: false,
             //        unitCameraFocusTarget: CameraFocuserTarget.AICruiserNavalFactory));
 
-            // 7. Enemy bomber
-            steps.Enqueue(
-                CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.AirFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
-                    boostAircraftSpeed: true,
-                    unitCameraFocusTarget: CameraFocuserTarget.AICruiser));
+            //// 7. Enemy bomber
+            //steps.Enqueue(
+            //    CreateSteps_EnemyUnitDefence(
+            //        StaticPrefabKeys.Buildings.AirFactory,
+            //        new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+            //        _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
+            //        boostAircraftSpeed: true,
+            //        unitCameraFocusTarget: CameraFocuserTarget.AICruiser));
 
             // 8. Drone focus
             steps.Enqueue(CreateSteps_DroneFocus());
@@ -454,6 +454,12 @@ namespace BattleCruisers.Tutorial
         private IList<ITutorialStep> CreateSteps_GameSpeed()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Hide informator, in case it is visible
+            steps.Add(
+                new HideItemDetailsStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.UIManager));
 
             // Enable speed buttons and navgiation wheel (before explanation so game speed
             // buttons aren't semi-transparent :P)
