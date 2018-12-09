@@ -1,0 +1,29 @@
+﻿using System;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Tutorial.Providers;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
+{
+    // FELIX  Update tests :)
+    public class StopUnitConstructionStepNEW : TutorialStepNEW
+    {
+        private readonly IItemProvider<IFactory> _factoryProvider;
+
+        public StopUnitConstructionStepNEW(ITutorialStepArgsNEW args, IItemProvider<IFactory> factoryProvider)
+            : base(args)
+        {
+            Assert.IsNotNull(factoryProvider);
+            _factoryProvider = factoryProvider;
+        }
+
+        public override void Start(Action completionCallback)
+        {
+            base.Start(completionCallback);
+
+            _factoryProvider.FindItem().StopBuildingUnit();
+
+            OnCompleted();
+        }
+    }
+}
