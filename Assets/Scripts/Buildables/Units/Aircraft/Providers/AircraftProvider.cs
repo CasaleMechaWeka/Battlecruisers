@@ -59,7 +59,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
 		{
-            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+            // Only let bombers fuzz downwards, so:
+            // 1. They will always be in range of AA guns
+            // 2. The don't cover the tutorial explanation text :)
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM, onlyDownwards: true);
 
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
@@ -134,9 +137,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		/// Randomise cruising altitude slightly, to avoid all planes
 		/// flying at exactly the same height :P
 		/// </summary>
-        private float FuzzCruisingAltitude(float crusingAltitudeInM)
+        private float FuzzCruisingAltitude(float cruisingAltitudeInM, bool onlyDownwards = false)
         {
-            return _random.RangeFromCenter(crusingAltitudeInM, CRUISING_ALTITUDE_ERROR_MARGIN_IN_M); 
+            if (onlyDownwards)
+            {
+                cruisingAltitudeInM = cruisingAltitudeInM - CRUISING_ALTITUDE_ERROR_MARGIN_IN_M;
+            }
+
+            return _random.RangeFromCenter(cruisingAltitudeInM, CRUISING_ALTITUDE_ERROR_MARGIN_IN_M); 
         }
 	}
 }
