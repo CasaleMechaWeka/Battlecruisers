@@ -100,6 +100,7 @@ namespace BattleCruisers.Tutorial
             //steps.Enqueue(CreateSteps_DroneFocus());
 
             // 9. Game speed
+            steps.Enqueue(CreateSteps_GameSpeed());
 
             return steps;
         }
@@ -149,15 +150,6 @@ namespace BattleCruisers.Tutorial
             steps.Add(CreateStep_NavigationToggle(enableNavigation: false));
 
             return steps;
-        }
-
-        private ITutorialStep CreateStep_NavigationToggle(bool enableNavigation)
-        {
-            return 
-                new FeaturePermitterStep(
-                    CreateTutorialStepArgs(),
-                    _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
-                    enableNavigation);
         }
 
         private IList<ITutorialStep> CreateSteps_EnemyCruiser()
@@ -448,6 +440,11 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
+            // Enable speed buttons and navgiation wheel (before explanation so game speed
+            // buttons aren't semi-transparent :P)
+            steps.Add(CreateStep_GamgeSpeedButtonsToggle(enableButtons: true));
+            steps.Add(CreateStep_NavigationToggle(enableNavigation: true));
+
             // Explain game speed buttons
             steps.Add(
                 new ExplanationDismissableStep(
@@ -456,12 +453,11 @@ namespace BattleCruisers.Tutorial
                         _tutorialArgs.RightPanelComponents.SpeedButtonPanel),
                     _explanationDismissButton));
 
-            // Enable speed buttons
-            //_tutorialArgs.TutorialProvider.SpeedButtonsPermitter.IsMatch = true
-            
-            // Enable navigation wheel
-
             // Encourage user to experiment
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Play around with the speed buttons a bit.  (Click the checkmark when you have had enough.)"),
+                    _explanationDismissButton));
 
             return steps;
         }
@@ -565,6 +561,24 @@ namespace BattleCruisers.Tutorial
                 new CameraAdjustmentWaitStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.CameraComponents.CameraAdjuster);
+        }
+
+        private ITutorialStep CreateStep_NavigationToggle(bool enableNavigation)
+        {
+            return
+                new FeaturePermitterStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
+                    enableNavigation);
+        }
+
+        private ITutorialStep CreateStep_GamgeSpeedButtonsToggle(bool enableButtons)
+        {
+            return
+                new FeaturePermitterStep(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
+                    enableButtons);
         }
 
         private ITutorialStepArgsNEW CreateTutorialStepArgs(
