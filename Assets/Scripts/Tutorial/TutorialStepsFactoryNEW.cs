@@ -84,7 +84,8 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SingleShipProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
-                    boostAircraftSpeed: false));
+                    boostAircraftSpeed: false,
+                    unitCameraFocusTarget: CameraFocuserTarget.AICruiserNavalFactory));
 
             // 7. Enemy bomber
             steps.Enqueue(
@@ -94,7 +95,8 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SingleAircraftProvider,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
-                    boostAircraftSpeed: true));
+                    boostAircraftSpeed: true,
+                    unitCameraFocusTarget: CameraFocuserTarget.AICruiser));
 
             // 8. Drone focus
             steps.Enqueue(CreateSteps_DroneFocus());
@@ -224,13 +226,15 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
+        // FELIX  Should really be 2 classes with common parent class :/  Would avoid all these flags.
         private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
             IPrefabKey factoryKey,
             BuildableInfo unitToBuild,
             ISingleBuildableProviderNEW unitBuildProvider,
             BuildableInfo defenceToBuild,
             SlotSpecification slotSpecification,
-            bool boostAircraftSpeed)
+            bool boostAircraftSpeed,
+            CameraFocuserTarget unitCameraFocusTarget)
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
@@ -238,9 +242,8 @@ namespace BattleCruisers.Tutorial
             FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
-            // FELIX  Could navigate to enemy factory/unit?  :D
             // 2. Navigate to enemey cruiser
-            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
+            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(unitCameraFocusTarget));
 
             // 3. Acknowledge the unit
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
