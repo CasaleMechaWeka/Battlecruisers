@@ -20,12 +20,12 @@ namespace BattleCruisers.Tutorial
         BasicFilter IsNavigationEnabledFilter { get; }
         BasicFilter SpeedButtonsPermitter { get; }
 
-        ISingleBuildableProviderNEW SingleAircraftProvider { get; }
-		ISingleBuildableProviderNEW SingleShipProvider { get; }
-
         IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
         IBuildSpeedController AICruiserBuildSpeedController { get; }
 
+        ISingleBuildableProviderNEW SingleAircraftProvider { get; }
+		ISingleBuildableProviderNEW SingleShipProvider { get; }
+        ISingleBuildableProviderNEW SingleOffensiveProvider { get; }
         ISingleBuildableProviderNEW CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser);
     }
 }

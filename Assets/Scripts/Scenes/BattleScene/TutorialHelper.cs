@@ -37,6 +37,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public ISingleBuildableProviderNEW SingleAircraftProvider { get; private set; }
         public ISingleBuildableProviderNEW SingleShipProvider { get; private set; }
+        public ISingleBuildableProviderNEW SingleOffensiveProvider { get; private set; }
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
 		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; private set; }
@@ -55,6 +56,7 @@ namespace BattleCruisers.Scenes.BattleScene
             BackButtonPermitter = new BasicFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProviderNEW(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProviderNEW(GameObjectTags.SHIP);
+            SingleOffensiveProvider = new SingleBuildableProviderNEW(GameObjectTags.OFFENSIVE);
             IsNavigationEnabledFilter = new BasicFilter(isMatch: false);
             SpeedButtonsPermitter = new BasicFilter(isMatch: false);
 

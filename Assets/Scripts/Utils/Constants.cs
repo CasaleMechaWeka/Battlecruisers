@@ -35,5 +35,6 @@
     {
         public const string AIRCRAFT = "Aircraft";
         public const string SHIP = "Ship";
+        public const string OFFENSIVE = "Offensive";
     }
 }
