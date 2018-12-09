@@ -187,7 +187,11 @@ namespace BattleCruisers.Tutorial
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: true),
                     "To get more builders construct a builder bay."));
 
-            // FELIX  Congratulations message :P
+            ITutorialStepArgsNEW args = CreateTutorialStepArgs("Nice!  You have gained 2 builders :D");
+            steps.Add(
+                new ExplanationDismissableStep(
+                    args,
+                    _explanationDismissButton));
 
             return steps;
         }
