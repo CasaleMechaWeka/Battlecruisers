@@ -30,7 +30,7 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
             base.Start(completionCallback);
 
             _permissions.CanShowItemDetails = _canShowItemDetails;
-            _permissions.CanShowItemDetails = _canShowItemDetails;
+            _permissions.CanDismissItemDetails = _canDismissItemDetails;
 
             OnCompleted();
         }
