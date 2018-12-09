@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
+    // FELIX  Test :D
     public class ExplanationDismissableStep : ExplanationClickStep
     {
         private readonly IExplanationDismissButton _dismissButton;
@@ -22,12 +23,10 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             _dismissButton.IsVisible = true;
         }
 
-        private void _dismissButton_Clicked(object sender, EventArgs e)
+        protected override void OnCompleted()
         {
+            base.OnCompleted();
             _dismissButton.IsVisible = false;
-            _dismissButton.Clicked -= _dismissButton_Clicked;
-
-            OnCompleted();
         }
     }
 }
