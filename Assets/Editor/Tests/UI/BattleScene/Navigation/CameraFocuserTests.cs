@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAiCruiser()
         {
-            _cameraFocuser.FocusOnAiCruiser();
+            _cameraFocuser.FocusOnAICruiser();
             _navigationWheel.Received().CenterPosition = _positionProvider.AICruiserPosition;
         }
 

@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _navigationWheel.CenterPosition = _positionProvider.PlayerCruiserPosition;
         }
 
-        public void FocusOnAiCruiser()
+        public void FocusOnAICruiser()
         {
             _navigationWheel.CenterPosition = _positionProvider.AICruiserPosition;
         }

@@ -12,7 +12,7 @@ namespace BattleCruisers.Cruisers.Helpers
 
         public override void FocusCameraOnCruiser()
         {
-            _cameraFocuser.FocusOnAiCruiser();
+            _cameraFocuser.FocusOnAICruiser();
         }
 
         public override void ShowBuildingGroupButtons()

@@ -35,7 +35,7 @@ namespace BattleCruisers.Tutorial.Steps
                     break;
 
                 case CameraFocuserTarget.AICruiser:
-                    _cameraFocuser.FocusOnAiCruiser();
+                    _cameraFocuser.FocusOnAICruiser();
                     break;
 
                 case CameraFocuserTarget.MidLeft:
