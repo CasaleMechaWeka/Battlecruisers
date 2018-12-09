@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-    public class TargetInFrontFilter : AliveTargetFilter
+    public class TargetInFrontFilter : ITargetFilter
     {
         private readonly IUnit _source;
 
@@ -14,14 +14,13 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
             _source = source;
         }
 
-        public override bool IsMatch(ITarget target)
+        public bool IsMatch(ITarget target)
         {
             return 
-                base.IsMatch(target)
-                && ((_source.FacingDirection == Direction.Right
-                        && target.Position.x > _source.Position.x)
-                    || (_source.FacingDirection == Direction.Left
-                        && target.Position.x < _source.Position.x));
+                (_source.FacingDirection == Direction.Right
+                    && target.Position.x > _source.Position.x)
+                || (_source.FacingDirection == Direction.Left
+                    && target.Position.x < _source.Position.x);
         }
     }
 }
