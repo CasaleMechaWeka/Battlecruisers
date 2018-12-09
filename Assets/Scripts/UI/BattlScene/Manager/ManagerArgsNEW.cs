@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
+    // FELIX  Rename to UIManagerARgs :)
     public class ManagerArgsNEW
     {
         public ICruiser PlayerCruiser { get; private set; }

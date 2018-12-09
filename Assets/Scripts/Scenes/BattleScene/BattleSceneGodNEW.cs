@@ -79,7 +79,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
             IPauseGameManager pauseGameManager = new PauseGameManager(time);
-            UIManagerNEW uiManager = new UIManagerNEW();
+            IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
             ICruiserFactoryNEW cruiserFactory
@@ -160,7 +160,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
                     new ItemDetailsManager(rightPanelInitialiser.Informator));
-            uiManager.Initialise(args);
+            helper.InitialiseUIManager(args);
 
             // User chosen target highlighter
             IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);

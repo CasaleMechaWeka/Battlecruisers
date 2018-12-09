@@ -162,7 +162,9 @@ namespace BattleCruisers.Scenes.BattleScene
                     _aiCruiser,
                     buildMenuController,
                     new ItemDetailsManager(hudCanvas));
-            IUIManager uiManager = helper.CreateUIManager(managerArgs);
+            // NEWUI Everythings' broken anyway :/
+            //IUIManager uiManager = helper.CreateUIManager(managerArgs);
+            IUIManager uiManager = null;
             backgroundController.Initialise(uiManager);
 
 

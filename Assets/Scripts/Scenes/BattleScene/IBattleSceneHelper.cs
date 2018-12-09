@@ -15,7 +15,10 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public interface IBattleSceneHelper
     {
-        IUIManager CreateUIManager(IManagerArgs args);
+        // Separate methods because of circular dependency between UIManager and everything else :/
+        IUIManager CreateUIManager();
+        void InitialiseUIManager(ManagerArgsNEW args);
+
         ILoadout GetPlayerLoadout();
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();

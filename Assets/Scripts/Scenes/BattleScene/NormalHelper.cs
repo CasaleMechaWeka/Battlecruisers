@@ -110,5 +110,15 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             return new StaticBroadcastingFilter(isMatch: true);
         }
+
+        public IUIManager CreateUIManager()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void InitialiseUIManager(ManagerArgsNEW args)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

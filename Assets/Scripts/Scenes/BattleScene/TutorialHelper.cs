@@ -15,6 +15,8 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -24,6 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildingNameFilter _buildingNameFilter;
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
+        private LimitableUIManagerNEW _uiManager;
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
@@ -72,16 +75,17 @@ namespace BattleCruisers.Scenes.BattleScene
             AICruiserBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
-
+        
+        // NEWUI  Remove :)
         public IUIManager CreateUIManager(IManagerArgs args)
         {
-            UIManagerPermissions uiManagerPermissions = new UIManagerPermissions()
-            {
-                CanDismissItemDetails = false,
-                CanShowItemDetails = false
-            };
-            UIManagerPermissions = uiManagerPermissions;
-            return new LimitableUIManager(args, uiManagerPermissions);
+            //_uiManagerPermissions = new UIManagerPermissions()
+            //{
+            //    CanDismissItemDetails = false,
+            //    CanShowItemDetails = false
+            //};
+            //return new LimitableUIManager(args, _uiManagerPermissions);
+            throw new NotImplementedException();
         }
 
         public ILoadout GetPlayerLoadout()
@@ -135,6 +139,27 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
         {
             return IsNavigationEnabledFilter;
+        }
+
+        public IUIManager CreateUIManager()
+        {
+            Assert.IsNull(_uiManager, "CreateUIManager() should only be called once");
+            _uiManager = new LimitableUIManagerNEW();
+            return _uiManager;
+        }
+
+        public void InitialiseUIManager(ManagerArgsNEW args)
+        {
+            Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
+
+            UIManagerPermissions uiManagerPermissions = new UIManagerPermissions()
+            {
+                CanDismissItemDetails = false,
+                CanShowItemDetails = false
+            };
+            UIManagerPermissions = uiManagerPermissions;
+
+            _uiManager.Initialise(args, uiManagerPermissions);
         }
     }
 }
