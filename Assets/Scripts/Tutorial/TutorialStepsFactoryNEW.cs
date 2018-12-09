@@ -462,6 +462,21 @@ namespace BattleCruisers.Tutorial
             return steps;
         }
 
+        private IList<ITutorialStep> CreateSteps_Endgame()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Return build speed to normal
+            steps.Add(
+                CreateStep_ChangeBuildSpeed(
+                    _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, 
+                    BuildSpeed.Normal));
+
+            
+
+            return steps;
+        }
+
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
         {
             return
