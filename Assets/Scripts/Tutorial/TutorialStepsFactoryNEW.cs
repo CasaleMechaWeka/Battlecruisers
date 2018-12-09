@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
@@ -266,13 +267,13 @@ namespace BattleCruisers.Tutorial
                     CreateTutorialStepArgs(),
                     factoryStepsResult.FactoryProvider));
 
-            //string unitComingText = "Here comes the enemy " + unitToBuild.Name + ".";
+            string unitComingText = "Here comes the enemy " + unitToBuild.Name + ".";
 
-            //// 7.5  Boost unit speed until just before it reaches the user's camera view
-            //if (boostAircraftSpeed)
-            //{
-            //    enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
-            //}
+            // 7.5  Boost unit speed until just before it reaches the user's camera view
+            if (boostAircraftSpeed)
+            {
+                enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
+            }
 
             //// 8. Wait for defence turret to destroy unit
             //enemyUnitDefenceSteps.Add(
@@ -334,6 +335,29 @@ namespace BattleCruisers.Tutorial
                     factoryProvider));
 
             return new FactoryStepsResult(factorySteps, factoryProvider);
+        }
+
+        private IList<ITutorialStep> CreateSteps_AircraftSpeedBoost(string textToDisplay, float speedBoostMultiplier, float boostDurationInS)
+        {
+            IBoostProvider boostProvider = new BoostProvider(speedBoostMultiplier);
+
+            return new List<ITutorialStep>()
+            {
+                new AddAircraftBoostStepNEW(
+                    CreateTutorialStepArgs(textToDisplay),
+                    _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
+                    boostProvider),
+
+                new DelayWaitStepNEW(
+                    CreateTutorialStepArgs(),
+                    _deferrer,
+                    boostDurationInS),
+
+                new RemoveAircraftBoostStepNEW(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
+                    boostProvider)
+            };
         }
 
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
