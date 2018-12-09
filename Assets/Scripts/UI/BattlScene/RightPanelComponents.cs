@@ -5,13 +5,12 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class RightPanelComponents
     {
-        // FELIX  Rename property to InformatorPanel
-        public IInformatorPanel Informator { get; private set; }
+        public IInformatorPanel InformatorPanel { get; private set; }
 
-        public RightPanelComponents(IInformatorPanel informator)
+        public RightPanelComponents(IInformatorPanel informatorPanel)
         {
-            Assert.IsNotNull(informator);
-            Informator = informator;
+            Assert.IsNotNull(informatorPanel);
+            InformatorPanel = informatorPanel;
         }
     }
 }
