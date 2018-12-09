@@ -214,7 +214,7 @@ namespace BattleCruisers.Tutorial
         private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
             IPrefabKey factoryKey,
             BuildableInfo unitToBuild,
-            ISingleBuildableProvider unitBuildProvider,
+            ISingleBuildableProviderNEW unitBuildProvider,
             BuildableInfo defenceToBuild,
             SlotSpecification slotSpecification,
             bool boostAircraftSpeed)
@@ -227,16 +227,13 @@ namespace BattleCruisers.Tutorial
 
             // FELIX  Could navigate to enemy factory/unit?  :D
             // 2. Navigate to enemey cruiser
-            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
-            enemyUnitDefenceSteps.AddRange(
-                CreateSteps_AutoNavigation(
-                    CameraFocuserTarget.AICruiser,
-                    "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!  Have a look!"));
+            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
 
-            //// 3. Click on the unit
-            //string textToDisplay = null;
-            //ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
-            //enemyUnitDefenceSteps.Add(CreateClickStep(clickUnitArgs, unitBuildProvider));
+            // 3. Acknowledge the unit
+            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
+            string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!";
+            ITutorialStepArgsNEW clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
 
             //// 4. Navigate back to player cruiser
             //enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToPlayerCruiser());
@@ -351,13 +348,13 @@ namespace BattleCruisers.Tutorial
                     buildSpeed);
         }
 
-        private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget, string textToDisplay = null)
+        private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget)
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
             steps.Add(
                 new CameraFocuserStep(
-                    CreateTutorialStepArgs(textToDisplay), 
+                    CreateTutorialStepArgs(), 
                     _tutorialArgs.CameraComponents.CameraFocuser,
                     cameraFocuserTarget));
 
