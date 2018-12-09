@@ -57,6 +57,9 @@ namespace BattleCruisers.Tutorial
         {
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
 
+            // FELIX  TEMP  So I can build artillery without previous steps :)
+            _tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
+
             // FELIX  Uncomment :)
             //// 1. Player cruiser
             //steps.Enqueue(CreateSteps_YourCruiser());
@@ -83,15 +86,18 @@ namespace BattleCruisers.Tutorial
             //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
             //        boostAircraftSpeed: false));
 
-            // 7. Enemy bomber
-            steps.Enqueue(
-                CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.AirFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
-                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
-                    boostAircraftSpeed: true));
+            //// 7. Enemy bomber
+            //steps.Enqueue(
+            //    CreateSteps_EnemyUnitDefence(
+            //        StaticPrefabKeys.Buildings.AirFactory,
+            //        new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+            //        _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
+            //        boostAircraftSpeed: true));
+
+            // 8. Drone focus
+            steps.Enqueue(CreateSteps_DroneFocus());
 
             return steps;
         }
@@ -367,6 +373,55 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider)
             };
+        }
+
+        private IList<ITutorialStep> CreateSteps_DroneFocus()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Explanation
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Deciding where your builders are working is vital.  Let's start 3 buildings, so we can see how managing your builders works:)"),
+                    _explanationDismissButton));
+
+            // Infinitely slow build speed
+            steps.Add(CreateStep_ChangeBuildSpeed(_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, BuildSpeed.InfinitelySlow));
+
+            // Start 3 buildings
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Defence,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
+                    "First, an anti-air turret.",
+                    waitForBuildingToComplete: false));
+
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Factory,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
+                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
+                    "Second, a builder bay.",
+                    waitForBuildingToComplete: false));
+
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Offence,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
+                    new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: true),
+                    "And lastly, an artillery.",
+                    waitForBuildingToComplete: false));
+
+            // Slow build speed explanation
+
+            // Show details panel
+
+            // Explain drone focus buttons
+
+            // Encourage user to experiment
+
+            return steps;
         }
 
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
