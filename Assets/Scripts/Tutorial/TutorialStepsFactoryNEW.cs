@@ -275,18 +275,17 @@ namespace BattleCruisers.Tutorial
                 enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
             }
 
-            //// 8. Wait for defence turret to destroy unit
-            //enemyUnitDefenceSteps.Add(
-            //    new TargetDestroyedWaitStep(
-            //        CreateTutorialStepArgs(unitComingText),
-            //        new BuildableToTargetProvider(unitBuildProvider)));
+            // 8. Wait for defence turret to destroy unit
+            enemyUnitDefenceSteps.Add(
+                new TargetDestroyedWaitStepNEW(
+                    CreateTutorialStepArgs(unitComingText),
+                    new BuildableToTargetProvider(unitBuildProvider)));
 
-            //// 9. Congrats!  Wait 3 seconds
-            //enemyUnitDefenceSteps.Add(
-            //    new DelayWaitStep(
-            //        CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
-            //        _deferrer,
-            //        waitTimeInS: 3));
+            // 9. Congrats!
+            enemyUnitDefenceSteps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
+                    _explanationDismissButton));
 
             return enemyUnitDefenceSteps;
         }
