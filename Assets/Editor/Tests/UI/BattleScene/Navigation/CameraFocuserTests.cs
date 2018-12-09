@@ -20,6 +20,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
             _positionProvider.AICruiserPosition.Returns(new Vector2(-3, -3));
+            _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
         }
 
@@ -31,10 +32,17 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         }
 
         [Test]
-        public void FocusOnAiCruiser()
+        public void FocusOnAICruiser()
         {
             _cameraFocuser.FocusOnAICruiser();
             _navigationWheel.Received().CenterPosition = _positionProvider.AICruiserPosition;
+        }
+
+        [Test]
+        public void FocusOnAINavalFactory()
+        {
+            _cameraFocuser.FocusOnAINavalFactory();
+            _navigationWheel.Received().CenterPosition = _positionProvider.AINavalFactoryPosition;
         }
 
         [Test]

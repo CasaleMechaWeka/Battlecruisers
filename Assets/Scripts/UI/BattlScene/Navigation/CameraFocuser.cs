@@ -25,6 +25,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _navigationWheel.CenterPosition = _positionProvider.AICruiserPosition;
         }
 
+        public void FocusOnAINavalFactory()
+        {
+            _navigationWheel.CenterPosition = _positionProvider.AINavalFactoryPosition;
+        }
+
         public void FocusMidLeft()
         {
             _navigationWheel.CenterPosition = _positionProvider.MidLeftPosition;

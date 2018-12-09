@@ -4,6 +4,7 @@
     {
         void FocusOnPlayerCruiser();
         void FocusOnAICruiser();
+        void FocusOnAINavalFactory();
         void FocusMidLeft();
     }
 }
