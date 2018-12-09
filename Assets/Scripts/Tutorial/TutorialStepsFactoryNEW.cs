@@ -73,15 +73,25 @@ namespace BattleCruisers.Tutorial
             //// 5. Construct drone station
             //steps.Enqueue(CreateSteps_ConstructDroneStation());
 
-            // 6. Enemy ship
+            //// 6. Enemy ship
+            //steps.Enqueue(
+            //    CreateSteps_EnemyUnitDefence(
+            //        StaticPrefabKeys.Buildings.NavalFactory,
+            //        new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+            //        _tutorialArgs.TutorialProvider.SingleShipProvider,
+            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
+            //        boostAircraftSpeed: false));
+
+            // 7. Enemy bomber
             steps.Enqueue(
                 CreateSteps_EnemyUnitDefence(
-                    StaticPrefabKeys.Buildings.NavalFactory,
-                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
-                    _tutorialArgs.TutorialProvider.SingleShipProvider,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
-                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
-                    boostAircraftSpeed: false));
+                    StaticPrefabKeys.Buildings.AirFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
+                    _tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
+                    boostAircraftSpeed: true));
 
             return steps;
         }
