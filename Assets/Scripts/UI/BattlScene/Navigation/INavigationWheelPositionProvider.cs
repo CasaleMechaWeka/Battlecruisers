@@ -1,0 +1,11 @@
+﻿using UnityEngine;
+
+namespace BattleCruisers.UI.BattleScene.Navigation
+{
+    public interface INavigationWheelPositionProvider
+    {
+        Vector2 PlayerCruiserPosition { get; }
+        Vector2 AICruiserPosition { get; }
+        Vector2 MidLeftPosition { get; }
+    }
+}
