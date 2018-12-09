@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -21,6 +23,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
+    // FELIX  Split up monster class?  :P
     public class TutorialStepsFactoryNEW : ITutorialStepsFactory
     {
         private readonly IHighlighterNEW _highlighter;
@@ -194,6 +197,145 @@ namespace BattleCruisers.Tutorial
                     _explanationDismissButton));
 
             return steps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
+            IPrefabKey factoryKey,
+            BuildableInfo unitToBuild,
+            ISingleBuildableProvider unitBuildProvider,
+            BuildableInfo defenceToBuild,
+            SlotSpecification slotSpecification,
+            bool boostAircraftSpeed)
+        {
+            List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
+
+            //// 1. Create factory and start producing units
+            //FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
+            //enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
+
+            //// 2. Navigate to enemey cruiser
+            //string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
+            //enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!  Have a look!"));
+
+            //// 3. Click on the unit
+            //string textToDisplay = null;
+            //ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            //enemyUnitDefenceSteps.Add(CreateClickStep(clickUnitArgs, unitBuildProvider));
+
+            //// 4. Navigate back to player cruiser
+            //enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToPlayerCruiser());
+
+            //// 5. Build defence turret
+            //IList<ITutorialStep> buildTurretSteps
+            //    = CreateSteps_ConstructBuilding(
+            //        BuildingCategory.Defence,
+            //        defenceToBuild,
+            //        slotSpecification,
+            //        "Quick, build an " + defenceToBuild.Name + "!");
+            //enemyUnitDefenceSteps.AddRange(buildTurretSteps);
+
+            //// 6. Navigate to mid left
+            //enemyUnitDefenceSteps.AddRange(
+            //    CreateSteps_AutoNavigationButton(
+            //        CreateTutorialStepArgs(textToDisplay: null),
+            //        CameraState.LeftMid));
+
+            //// 7. Insta-complete unit
+            //enemyUnitDefenceSteps.Add(
+            //    CreateChangeBuildSpeedStep(
+            //        _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+            //        BuildSpeed.VeryFast));
+
+            //enemyUnitDefenceSteps.Add(
+            //    new BuildableCompletedWaitStep(
+            //        CreateTutorialStepArgs(textToDisplay: null),
+            //        unitBuildProvider));
+
+            //enemyUnitDefenceSteps.Add(
+            //    new StopUnitConstructionStep(
+            //        CreateTutorialStepArgs(textToDisplay: null),
+            //        factoryStepsResult.FactoryProvider));
+
+            //string unitComingText = "Here comes the enemy " + unitToBuild.Name + ".";
+
+            //// 7.5  Boost unit speed until just before it reaches the user's camera view
+            //if (boostAircraftSpeed)
+            //{
+            //    enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
+            //}
+
+            //// 8. Wait for defence turret to destroy unit
+            //enemyUnitDefenceSteps.Add(
+            //    new TargetDestroyedWaitStep(
+            //        CreateTutorialStepArgs(unitComingText),
+            //        new BuildableToTargetProvider(unitBuildProvider)));
+
+            //// 9. Congrats!  Wait 3 seconds
+            //enemyUnitDefenceSteps.Add(
+            //    new DelayWaitStep(
+            //        CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser."),
+            //        _deferrer,
+            //        waitTimeInS: 3));
+
+            return enemyUnitDefenceSteps;
+        }
+
+        private FactoryStepsResult CreateSteps_CreateProducingFactory(IPrefabKey factoryKey, IPrefabKey unitKey)
+        {
+            IList<ITutorialStep> factorySteps = new List<ITutorialStep>();
+
+            // These steps should complete very quickly and require no user input.
+            // There is no need to display any text to the user or highlight any
+            // elements.
+            string textToDisplay = null;
+            ITutorialStepArgsNEW commonArgs = CreateTutorialStepArgs(textToDisplay);
+
+            // 1. Change build speed to super fast
+            factorySteps.Add(
+                CreateStep_ChangeBuildSpeed(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    BuildSpeed.VeryFast));
+
+            //// 2. Start building factory
+            //StartConstructingBuildingStep startConstructingFactoryStep
+            //    = new StartConstructingBuildingStep(
+            //        commonArgs,
+            //        factoryKey,
+            //        _tutorialArgs.PrefabFactory,
+            //        _tutorialArgs.AICruiser);
+            //factorySteps.Add(startConstructingFactoryStep);
+
+            //// 3. Wait for factory completion
+            //factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
+
+            //// 4. Change build speed to infinitely slow
+            //factorySteps.Add(
+            //    CreateChangeBuildSpeedStep(
+            //        _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+            //        BuildSpeed.InfinitelySlow));
+
+            //// 5. Start building unit
+            //IItemProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
+            //factorySteps.Add(
+            //    new StartConstructingUnitStep(
+            //        commonArgs,
+            //        unitKey,
+            //        _tutorialArgs.PrefabFactory,
+            //        factoryProvider));
+
+            //return new FactoryStepsResult(factorySteps, factoryProvider);
+
+            // FELIX  Remove :P
+            return null;
+        }
+
+        private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
+        {
+            return
+                new ChangeCruiserBuildSpeedStepNEW(
+                    CreateTutorialStepArgs(),
+                    speedController,
+                    buildSpeed);
         }
 
         private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget)
