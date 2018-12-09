@@ -154,7 +154,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_NavigationToggle(bool enableNavigation)
         {
             return 
-                new NavigationToggleStep(
+                new FeaturePermitterStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
                     enableNavigation);
