@@ -47,7 +47,9 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
                 ITarget target = result.collider.gameObject.GetComponent<ITarget>();
 
-                if (target != null && _targetFilter.IsMatch(target))
+                if (target != null 
+                    && !target.IsDestroyed
+                    && _targetFilter.IsMatch(target))
                 {
                     return new LaserCollision(target, result.point);
                 }

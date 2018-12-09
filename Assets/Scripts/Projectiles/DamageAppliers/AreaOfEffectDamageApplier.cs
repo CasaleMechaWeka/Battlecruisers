@@ -38,7 +38,9 @@ namespace BattleCruisers.Projectiles.DamageAppliers
             {
 				ITarget target = collider.gameObject.GetComponent<ITarget>();
 
-                if (target != null && _targetFilter.IsMatch(target))
+                if (target != null 
+                    && !target.IsDestroyed
+                    && _targetFilter.IsMatch(target))
                 {
                     target.TakeDamage(_damageStats.Damage, damageSource);
                 }

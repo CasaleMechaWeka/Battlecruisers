@@ -48,8 +48,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
 
 			if (target != null 
-                && _targetFilter.IsMatch(target)
                 && !target.IsDestroyed
+                && _targetFilter.IsMatch(target)
                 && !_parentAircraft.IsDestroyed
                 && _targetToDamage == null)
 			{

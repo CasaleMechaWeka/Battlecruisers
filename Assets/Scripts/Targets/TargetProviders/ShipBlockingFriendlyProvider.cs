@@ -43,7 +43,9 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendFound()");
 
-            if (_isInFrontFilter.IsMatch(args.Target))
+            // FELIX  Update tests :)
+            if (!args.Target.IsDestroyed
+                && _isInFrontFilter.IsMatch(args.Target))
             {
                 Target = args.Target;
             }

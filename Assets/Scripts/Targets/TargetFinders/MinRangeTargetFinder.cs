@@ -49,7 +49,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
         private void OnTargetLost(object sender, TargetEventArgs args)
         {
-            if (_targetFilter.IsMatch(args.Target) && TargetLost != null)
+            if (_targetFilter.IsMatch(args.Target) 
+                && TargetLost != null)
             {
                 TargetLost.Invoke(this, args);
             }

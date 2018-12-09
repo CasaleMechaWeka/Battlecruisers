@@ -111,6 +111,7 @@ namespace BattleCruisers.Projectiles
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
 
 			if (target != null 
+                && !target.IsDestroyed
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
 			{
