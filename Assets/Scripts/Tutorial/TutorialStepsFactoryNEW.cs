@@ -221,51 +221,50 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
-            // FELIX  Uncomment :)
-            //// 1. Create factory and start producing units
-            //FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
-            //enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
+            // 1. Create factory and start producing units
+            FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
+            enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
-            //// FELIX  Could navigate to enemy factory/unit?  :D
-            //// 2. Navigate to enemey cruiser
-            //enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
+            // FELIX  Could navigate to enemy factory/unit?  :D
+            // 2. Navigate to enemey cruiser
+            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
 
-            //// 3. Acknowledge the unit
-            //string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
-            //string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!";
-            //ITutorialStepArgsNEW clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
-            //enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
+            // 3. Acknowledge the unit
+            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
+            string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!";
+            ITutorialStepArgsNEW clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
 
-            //// 4. Navigate back to player cruiser
-            //enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
+            // 4. Navigate back to player cruiser
+            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
-            //// 5. Build defence turret
-            //IList<ITutorialStep> buildTurretSteps
-            //    = CreateSteps_ConstructBuilding(
-            //        BuildingCategory.Defence,
-            //        defenceToBuild,
-            //        slotSpecification,
-            //        "Quick, build an " + defenceToBuild.Name + "!");
-            //enemyUnitDefenceSteps.AddRange(buildTurretSteps);
+            // 5. Build defence turret
+            IList<ITutorialStep> buildTurretSteps
+                = CreateSteps_ConstructBuilding(
+                    BuildingCategory.Defence,
+                    defenceToBuild,
+                    slotSpecification,
+                    "Quick, build an " + defenceToBuild.Name + "!");
+            enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 
             // 6. Navigate to mid left
             enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.MidLeft));
 
-            //// 7. Insta-complete unit
-            //enemyUnitDefenceSteps.Add(
-            //    CreateChangeBuildSpeedStep(
-            //        _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
-            //        BuildSpeed.VeryFast));
+            // 7. Insta-complete unit
+            enemyUnitDefenceSteps.Add(
+                CreateStep_ChangeBuildSpeed(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    BuildSpeed.VeryFast));
 
-            //enemyUnitDefenceSteps.Add(
-            //    new BuildableCompletedWaitStep(
-            //        CreateTutorialStepArgs(textToDisplay: null),
-            //        unitBuildProvider));
+            enemyUnitDefenceSteps.Add(
+                new BuildableCompletedWaitStepNEW(
+                    CreateTutorialStepArgs(), 
+                    unitBuildProvider));
 
-            //enemyUnitDefenceSteps.Add(
-            //    new StopUnitConstructionStep(
-            //        CreateTutorialStepArgs(textToDisplay: null),
-            //        factoryStepsResult.FactoryProvider));
+            enemyUnitDefenceSteps.Add(
+                new StopUnitConstructionStepNEW(
+                    CreateTutorialStepArgs(),
+                    factoryStepsResult.FactoryProvider));
 
             //string unitComingText = "Here comes the enemy " + unitToBuild.Name + ".";
 
