@@ -138,7 +138,7 @@ namespace BattleCruisers.Tutorial
 
             ITutorialStepArgsNEW freeNavigationArgs
                 = CreateTutorialStepArgs(
-                    textToDisplay: "Drag the navigation wheel to navigate.");
+                    textToDisplay: "Drag the navigation wheel to navigate.  (Click the checkmark when you have had enough.)");
             steps.Add(
                 new ExplanationDismissableStep(
                     freeNavigationArgs,
@@ -437,6 +437,10 @@ namespace BattleCruisers.Tutorial
                     _explanationDismissButton));
 
             // Encourage user to experiment
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Now play around with the drones button for these 3 buildings, and see how the drones move between buildings.  (Click the checkmark when you have had enough.)"),
+                    _explanationDismissButton));
 
             return steps;
         }
