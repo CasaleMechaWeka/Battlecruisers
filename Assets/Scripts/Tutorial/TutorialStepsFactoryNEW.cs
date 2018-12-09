@@ -384,7 +384,7 @@ namespace BattleCruisers.Tutorial
             // Explanation
             steps.Add(
                 new ExplanationDismissableStep(
-                    CreateTutorialStepArgs("Deciding where your builders are working is vital.  Let's start 3 buildings, so we can see how managing your builders works:)"),
+                    CreateTutorialStepArgs("Managing your builders is vital.  Let's start 3 buildings, so we can see how this works :)"),
                     _explanationDismissButton));
 
             // Infinitely slow build speed
@@ -396,7 +396,7 @@ namespace BattleCruisers.Tutorial
                     BuildingCategory.Defence,
                     new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
-                    "First, an anti-air turret.",
+                    "First, another anti-air turret.",
                     waitForBuildingToComplete: false));
 
             steps.AddRange(
@@ -404,7 +404,7 @@ namespace BattleCruisers.Tutorial
                     BuildingCategory.Factory,
                     new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
-                    "Second, a builder bay.",
+                    "Second, another builder bay.",
                     waitForBuildingToComplete: false));
 
             steps.AddRange(
@@ -418,7 +418,7 @@ namespace BattleCruisers.Tutorial
             // Slow build speed explanation
             steps.Add(
                 new ExplanationDismissableStep(
-                    CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your drones without the buildings completing."),
+                    CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your builders without the buildings completing."),
                     _explanationDismissButton));
 
             // Show informator
@@ -438,14 +438,14 @@ namespace BattleCruisers.Tutorial
             steps.Add(
                 new ExplanationDismissableStep(
                     CreateTutorialStepArgs(
-                        "This is the builders button.  You can change how many builders a building uses via this button (or by double clicking the building).",
+                        "This is the \"builders\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
                         _tutorialArgs.RightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButtonNEW),
                     _explanationDismissButton));
 
             // Encourage user to experiment
             steps.Add(
                 new ExplanationDismissableStep(
-                    CreateTutorialStepArgs("Now play around with the drones button for these 3 buildings, and see how the drones move between buildings.  (Click the checkmark when you have had enough.)"),
+                    CreateTutorialStepArgs("Now play around with the \"builders\" button for these 3 buildings, and see how the builders move between buildings.  (Click the checkmark when you have had enough.)"),
                     _explanationDismissButton));
 
             return steps;
