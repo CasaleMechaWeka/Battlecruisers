@@ -182,7 +182,17 @@ namespace BattleCruisers.Scenes.BattleScene
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents, leftPanelComponents, rightPanelComponents);
+
+            StartTutorialIfNecessary(
+                prefabFactory, 
+                applicationModel, 
+                playerCruiser, 
+                aiCruiser, 
+                components, 
+                cameraComponents, 
+                leftPanelComponents, 
+                rightPanelComponents, 
+                uiManager);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -207,7 +217,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
             LeftPanelComponents leftPanelComponents,
-            RightPanelComponents rightPanelComponents)
+            RightPanelComponents rightPanelComponents,
+            IUIManager uiManager)
         {
             if (applicationModel.IsTutorial)
             {
@@ -224,7 +235,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleSceneGodComponents,
                         cameraComponents,
                         leftPanelComponents,
-                        rightPanelComponents);
+                        rightPanelComponents,
+                        uiManager);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

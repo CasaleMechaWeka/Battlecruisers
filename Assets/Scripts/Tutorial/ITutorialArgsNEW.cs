@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
-    // FELIX  Expand as needed :)
     public interface ITutorialArgsNEW
     {
         ICruiser PlayerCruiser { get; }
@@ -17,5 +17,6 @@ namespace BattleCruisers.Tutorial
         ICameraComponents CameraComponents { get; }
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }
+        IUIManager UIManager { get; }
     }
 }
