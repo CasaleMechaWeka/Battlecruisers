@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Repairables;
+﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -161,6 +161,8 @@ namespace BattleCruisers.Buildables
 
 		protected void InvokeDestroyedEvent()
 		{
+            Logging.Log(Tags.TARGET, this + " destroyed :/");
+
 			if (Destroyed != null)
 			{
 				Destroyed.Invoke(this, new DestroyedEventArgs(this));

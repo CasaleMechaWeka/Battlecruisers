@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             get
             {
-                return _rankedTargetTracker.HighestPriorityTarget != null ? _rankedTargetTracker.HighestPriorityTarget.Target : null;
+                ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget != null ? _rankedTargetTracker.HighestPriorityTarget.Target : null;
+                Logging.Log(Tags.TARGET_PROCESSORS, "TargetProcessor.get_HighestPriorityTarget: " + highestPriorityTarget);
+                return highestPriorityTarget;
             }
         }
 
@@ -33,6 +36,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         private void _rankedTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
+            Logging.Log(Tags.TARGET_PROCESSORS, "TargetProcessor._rankedTargetTracker_HighestPriorityTargetChanged()  Updating " + _targetConsumers.Count + " target consumer :)");
+
             // PERF  Copying list to avoid modification while enumeration exception :P
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
