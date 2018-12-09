@@ -422,13 +422,19 @@ namespace BattleCruisers.Tutorial
             //        CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your drones without the buildings completing."),
             //        _explanationDismissButton));
 
-            // Show details panel
+            // Show informator
             steps.Add(
                 new ExplanationClickStep(
                     CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider),
                     _lastPlayerIncompleteBuildingStartedProvider));
 
             // Explain drone focus buttons
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs(
+                        "This is the builders button.  You can change how many builders a building uses via this button (or by double clicking the building).",
+                        _tutorialArgs.RightPanelComponents.Informator.BuildingDetails.DroneFocusButtonNEW),
+                    _explanationDismissButton));
 
             // Encourage user to experiment
 

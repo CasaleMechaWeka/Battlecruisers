@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private InformatorWidgetManager _buttonManager;
 
         public IButton DroneFocusButton { get { return _bottomBar.ToggleDronesButton; } }
+        public IButton DroneFocusButtonNEW { get { return _buttonManager.ToggleDronesButton; } }
 
         public void Initialise(
             IDroneFocuser droneFocuser, 
