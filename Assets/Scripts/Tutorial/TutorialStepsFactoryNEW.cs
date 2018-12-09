@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
@@ -99,8 +100,11 @@ namespace BattleCruisers.Tutorial
             //// 8. Drone focus
             //steps.Enqueue(CreateSteps_DroneFocus());
 
-            // 9. Game speed
-            steps.Enqueue(CreateSteps_GameSpeed());
+            //// 9. Game speed
+            //steps.Enqueue(CreateSteps_GameSpeed());
+
+            // 10. Endgame
+            steps.Enqueue(CreateSteps_Endgame());
 
             return steps;
         }
@@ -472,9 +476,39 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, 
                     BuildSpeed.Normal));
 
-            
+            // Wait for artillery to complete
+            steps.Add(
+                new BuildableCompletedWaitStepNEW(
+                    CreateTutorialStepArgs("Now we wait until your artillery is finished.  Patience :)"),
+                    _tutorialArgs.TutorialProvider.SingleOffensiveProvider));
+
+            // Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
+            steps.AddRange(CreateSteps_BoostArtillery());
+
+            // Wait for enemy cruiser to be destroyed
+            steps.Add(
+                new TargetDestroyedWaitStepNEW(
+                    CreateTutorialStepArgs("Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around!"),
+                    new StaticProvider<ITarget>(_tutorialArgs.AICruiser)));
 
             return steps;
+        }
+
+        private IList<ITutorialStep> CreateSteps_BoostArtillery()
+        {
+            return new List<ITutorialStep>()
+            {
+                new AddTurretAccuracyBoostStepNEW(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
+                    // 0.05 * 20 = 1 (100% accuracy)
+                    new BoostProvider(20)),
+
+                new AddTurretFireRateBoostStepNEW(
+                    CreateTutorialStepArgs(),
+                    _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
+                    new BoostProvider(3))
+            };
         }
 
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
