@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;
@@ -57,10 +58,10 @@ namespace BattleCruisers.UI.BattleScene
             modalMenu.Initialise(applicationModel.IsTutorial);
 
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
-            SetupSpeedPanel(buttonVisibilityFilters);
+            IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
 
-            return new RightPanelComponents(Informator);
+            return new RightPanelComponents(Informator, speedButtonPanel);
         }
 
         private void SetupInformator(
@@ -77,11 +78,11 @@ namespace BattleCruisers.UI.BattleScene
                     buttonVisibilityFilters);
         }
 
-        private void SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
+        private IMaskHighlightable SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = FindObjectOfType<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
-            speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
+            return speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
         private void SetupMainMenuButton(

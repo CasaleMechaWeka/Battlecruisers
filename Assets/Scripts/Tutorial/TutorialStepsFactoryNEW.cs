@@ -96,8 +96,10 @@ namespace BattleCruisers.Tutorial
             //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true),
             //        boostAircraftSpeed: true));
 
-            // 8. Drone focus
-            steps.Enqueue(CreateSteps_DroneFocus());
+            //// 8. Drone focus
+            //steps.Enqueue(CreateSteps_DroneFocus());
+
+            // 9. Game speed
 
             return steps;
         }

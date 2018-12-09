@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
+﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
 
-        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter)
+        public IMaskHighlightable Initialise(IBroadcastingFilter shouldBeEnabledFilter)
         {
             Assert.IsNotNull(shouldBeEnabledFilter);
 
@@ -28,6 +29,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             }
 
             _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());
+
+            MaskHighlightable speedButtonPanel = GetComponent<MaskHighlightable>();
+            Assert.IsNotNull(speedButtonPanel);
+            speedButtonPanel.Initialise();
+            return speedButtonPanel;
         }
     }
 }
