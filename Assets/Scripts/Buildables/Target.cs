@@ -38,11 +38,14 @@ namespace BattleCruisers.Buildables
         }
 
         // IHighlightable
-		public Transform Transform { get { return transform; } }
-		public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
+        public Transform Transform { get { return transform; } }
+        public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public abstract Vector2 Size { get; }
-		public virtual float SizeMultiplier { get { return 1; } }
+        public virtual float SizeMultiplier { get { return 1; } }
         public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
+
+        // IMaskHighlightable
+        protected virtual Vector2 MaskHighlightableSize { get { return Size; } }
 
         // Seems to be an okay approximation (for cruisers at least).
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
@@ -210,7 +213,7 @@ namespace BattleCruisers.Buildables
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
-            return highlightArgsFactory.CreateForInGameObject(Position, Size);
+            return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }
     }
 }

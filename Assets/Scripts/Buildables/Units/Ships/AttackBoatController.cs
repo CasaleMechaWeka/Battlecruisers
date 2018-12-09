@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
@@ -14,6 +15,17 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override float OptimalArmamentRangeInM { get { return _antiSeaTurret.RangeInM; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.AttackBoat; } }
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.AtatckBoat; } }
+
+        protected override Vector2 MaskHighlightableSize
+        {
+            get
+            {
+                return
+                    new Vector2(
+                        base.MaskHighlightableSize.x * 1.5f,
+                        base.MaskHighlightableSize.y * 2);
+            }
+        }
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {
