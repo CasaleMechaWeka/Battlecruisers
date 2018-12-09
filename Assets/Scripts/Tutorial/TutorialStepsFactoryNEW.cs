@@ -10,6 +10,7 @@ using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
@@ -296,37 +297,34 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
                     BuildSpeed.VeryFast));
 
-            //// 2. Start building factory
-            //StartConstructingBuildingStep startConstructingFactoryStep
-            //    = new StartConstructingBuildingStep(
-            //        commonArgs,
-            //        factoryKey,
-            //        _tutorialArgs.PrefabFactory,
-            //        _tutorialArgs.AICruiser);
-            //factorySteps.Add(startConstructingFactoryStep);
+            // 2. Start building factory
+            StartConstructingBuildingStepNEW startConstructingFactoryStep
+                = new StartConstructingBuildingStepNEW(
+                    commonArgs,
+                    factoryKey,
+                    _tutorialArgs.PrefabFactory,
+                    _tutorialArgs.AICruiser);
+            factorySteps.Add(startConstructingFactoryStep);
 
-            //// 3. Wait for factory completion
-            //factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
+            // 3. Wait for factory completion
+            factorySteps.Add(new BuildableCompletedWaitStepNEW(commonArgs, startConstructingFactoryStep));
 
-            //// 4. Change build speed to infinitely slow
-            //factorySteps.Add(
-            //    CreateChangeBuildSpeedStep(
-            //        _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
-            //        BuildSpeed.InfinitelySlow));
+            // 4. Change build speed to infinitely slow
+            factorySteps.Add(
+                CreateStep_ChangeBuildSpeed(
+                    _tutorialArgs.TutorialProvider.AICruiserBuildSpeedController,
+                    BuildSpeed.InfinitelySlow));
 
-            //// 5. Start building unit
-            //IItemProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
-            //factorySteps.Add(
-            //    new StartConstructingUnitStep(
-            //        commonArgs,
-            //        unitKey,
-            //        _tutorialArgs.PrefabFactory,
-            //        factoryProvider));
+            // 5. Start building unit
+            IItemProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
+            factorySteps.Add(
+                new StartConstructingUnitStepNEW(
+                    commonArgs,
+                    unitKey,
+                    _tutorialArgs.PrefabFactory,
+                    factoryProvider));
 
-            //return new FactoryStepsResult(factorySteps, factoryProvider);
-
-            // FELIX  Remove :P
-            return null;
+            return new FactoryStepsResult(factorySteps, factoryProvider);
         }
 
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
