@@ -235,17 +235,17 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgsNEW clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
             enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
 
-            //// 4. Navigate back to player cruiser
-            //enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToPlayerCruiser());
+            // 4. Navigate back to player cruiser
+            enemyUnitDefenceSteps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
-            //// 5. Build defence turret
-            //IList<ITutorialStep> buildTurretSteps
-            //    = CreateSteps_ConstructBuilding(
-            //        BuildingCategory.Defence,
-            //        defenceToBuild,
-            //        slotSpecification,
-            //        "Quick, build an " + defenceToBuild.Name + "!");
-            //enemyUnitDefenceSteps.AddRange(buildTurretSteps);
+            // 5. Build defence turret
+            IList<ITutorialStep> buildTurretSteps
+                = CreateSteps_ConstructBuilding(
+                    BuildingCategory.Defence,
+                    defenceToBuild,
+                    slotSpecification,
+                    "Quick, build an " + defenceToBuild.Name + "!");
+            enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 
             //// 6. Navigate to mid left
             //enemyUnitDefenceSteps.AddRange(
