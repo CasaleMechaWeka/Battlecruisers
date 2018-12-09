@@ -6,7 +6,7 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public enum CameraFocuserTarget
     {
-        PlayerCruiser, AICruiser
+        PlayerCruiser, AICruiser, MidLeft
     }
 
     // FELIX  Test :D
@@ -36,6 +36,10 @@ namespace BattleCruisers.Tutorial.Steps
 
                 case CameraFocuserTarget.AICruiser:
                     _cameraFocuser.FocusOnAiCruiser();
+                    break;
+
+                case CameraFocuserTarget.MidLeft:
+                    _cameraFocuser.FocusMidLeft();
                     break;
 
                 default:
