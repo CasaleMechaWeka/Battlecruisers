@@ -16,6 +16,7 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Strings;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,8 +69,18 @@ namespace BattleCruisers.Tutorial
             //// 4. Player cruiser widgets
             //steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
 
-            // 5. Construct drone station
-            steps.Enqueue(CreateSteps_ConstructDroneStation());
+            //// 5. Construct drone station
+            //steps.Enqueue(CreateSteps_ConstructDroneStation());
+
+            // 6. Enemy ship
+            steps.Enqueue(
+                CreateSteps_EnemyUnitDefence(
+                    StaticPrefabKeys.Buildings.NavalFactory,
+                    new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
+                    _tutorialArgs.TutorialProvider.SingleShipProvider,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "anti-ship turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true),
+                    boostAircraftSpeed: false));
 
             return steps;
         }
@@ -210,13 +221,16 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
-            //// 1. Create factory and start producing units
-            //FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
-            //enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
+            // 1. Create factory and start producing units
+            FactoryStepsResult factoryStepsResult = CreateSteps_CreateProducingFactory(factoryKey, unitToBuild.Key);
+            enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
-            //// 2. Navigate to enemey cruiser
-            //string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
-            //enemyUnitDefenceSteps.AddRange(CreateStep_NavigateToEnemyCruiser("Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!  Have a look!"));
+            // 2. Navigate to enemey cruiser
+            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
+            enemyUnitDefenceSteps.AddRange(
+                CreateSteps_AutoNavigation(
+                    CameraFocuserTarget.AICruiser,
+                    "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!  Have a look!"));
 
             //// 3. Click on the unit
             //string textToDisplay = null;
@@ -336,13 +350,13 @@ namespace BattleCruisers.Tutorial
                     buildSpeed);
         }
 
-        private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget)
+        private IList<ITutorialStep> CreateSteps_AutoNavigation(CameraFocuserTarget cameraFocuserTarget, string textToDisplay = null)
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
             steps.Add(
                 new CameraFocuserStep(
-                    CreateTutorialStepArgs(), 
+                    CreateTutorialStepArgs(textToDisplay), 
                     _tutorialArgs.CameraComponents.CameraFocuser,
                     cameraFocuserTarget));
 
