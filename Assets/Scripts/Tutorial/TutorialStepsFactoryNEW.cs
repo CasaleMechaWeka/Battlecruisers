@@ -379,33 +379,31 @@ namespace BattleCruisers.Tutorial
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // FELIX  Uncomment
-            //// Explanation
-            //steps.Add(
-            //    new ExplanationDismissableStep(
-            //        CreateTutorialStepArgs("Deciding where your builders are working is vital.  Let's start 3 buildings, so we can see how managing your builders works:)"),
-            //        _explanationDismissButton));
+            // Explanation
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Deciding where your builders are working is vital.  Let's start 3 buildings, so we can see how managing your builders works:)"),
+                    _explanationDismissButton));
 
             // Infinitely slow build speed
             steps.Add(CreateStep_ChangeBuildSpeed(_tutorialArgs.TutorialProvider.PlayerCruiserBuildSpeedController, BuildSpeed.InfinitelySlow));
 
-            // FELIX  Uncomment
-            //// Start 3 buildings
-            //steps.AddRange(
-            //    CreateSteps_ConstructBuilding(
-            //        BuildingCategory.Defence,
-            //        new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
-            //        new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
-            //        "First, an anti-air turret.",
-            //        waitForBuildingToComplete: false));
+            // Start 3 buildings
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Defence,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
+                    "First, an anti-air turret.",
+                    waitForBuildingToComplete: false));
 
-            //steps.AddRange(
-            //    CreateSteps_ConstructBuilding(
-            //        BuildingCategory.Factory,
-            //        new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
-            //        new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
-            //        "Second, a builder bay.",
-            //        waitForBuildingToComplete: false));
+            steps.AddRange(
+                CreateSteps_ConstructBuilding(
+                    BuildingCategory.Factory,
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
+                    new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
+                    "Second, a builder bay.",
+                    waitForBuildingToComplete: false));
 
             steps.AddRange(
                 CreateSteps_ConstructBuilding(
@@ -415,12 +413,11 @@ namespace BattleCruisers.Tutorial
                     "And lastly, an artillery.",
                     waitForBuildingToComplete: false));
 
-            // FELIX  Uncomment
-            //// Slow build speed explanation
-            //steps.Add(
-            //    new ExplanationDismissableStep(
-            //        CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your drones without the buildings completing."),
-            //        _explanationDismissButton));
+            // Slow build speed explanation
+            steps.Add(
+                new ExplanationDismissableStep(
+                    CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your drones without the buildings completing."),
+                    _explanationDismissButton));
 
             // Show informator
             steps.Add(
