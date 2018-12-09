@@ -5,6 +5,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -52,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 visibilityFilters);
 
             // FELIX  Use new visibility filter (if tutorial still requires informator to not be dismissable sometimes :) )
-            _dismissButton.Initialise(uiManager, visibilityFilters.BackButtonVisibilityFilter);
+            _dismissButton.Initialise(uiManager, new StaticBroadcastingFilter(isMatch: true));
             _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
             _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
             _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter);
