@@ -16,6 +16,7 @@ namespace BattleCruisers.Tutorial
         public IBattleSceneGodComponents Components { get; private set; }
         public ICameraComponents CameraComponents { get; private set; }
         public LeftPanelComponents LeftPanelComponents { get; private set; }
+        public RightPanelComponents RightPanelComponents { get; private set; }
 
         public TutorialArgsNEW(
             ICruiser playerCruiser, 
@@ -24,9 +25,18 @@ namespace BattleCruisers.Tutorial
             IPrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
-            LeftPanelComponents leftPanelComponents)
+            LeftPanelComponents leftPanelComponents,
+            RightPanelComponents rightPanelComponents)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, tutorialProvider, prefabFactory, battleSceneGodComponents, cameraComponents, leftPanelComponents);
+            Helper.AssertIsNotNull(
+                playerCruiser, 
+                aiCruiser, 
+                tutorialProvider, 
+                prefabFactory, 
+                battleSceneGodComponents, 
+                cameraComponents, 
+                leftPanelComponents, 
+                rightPanelComponents);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -35,6 +45,7 @@ namespace BattleCruisers.Tutorial
             Components = battleSceneGodComponents;
             CameraComponents = cameraComponents;
             LeftPanelComponents = leftPanelComponents;
+            RightPanelComponents = rightPanelComponents;
         }
     }
 }

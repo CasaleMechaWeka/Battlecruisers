@@ -16,5 +16,6 @@ namespace BattleCruisers.Tutorial
         IBattleSceneGodComponents Components { get; }
         ICameraComponents CameraComponents { get; }
         LeftPanelComponents LeftPanelComponents { get; }
+        RightPanelComponents RightPanelComponents { get; }
     }
 }

@@ -144,8 +144,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
             Assert.IsNotNull(rightPanelInitialiser);
-            rightPanelInitialiser
-                            .Initialise(
+            RightPanelComponents rightPanelComponents
+                = rightPanelInitialiser.Initialise(
                     applicationModel,
                     sceneNavigator,
                     uiManager,
@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
-            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents, leftPanelComponents);
+            StartTutorialIfNecessary(prefabFactory, applicationModel, playerCruiser, aiCruiser, components, cameraComponents, leftPanelComponents, rightPanelComponents);
         }
 
         private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
@@ -206,7 +206,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser aiCruiser,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
-            LeftPanelComponents leftPanelComponents)
+            LeftPanelComponents leftPanelComponents,
+            RightPanelComponents rightPanelComponents)
         {
             if (applicationModel.IsTutorial)
             {
@@ -222,7 +223,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         prefabFactory,
                         battleSceneGodComponents,
                         cameraComponents,
-                        leftPanelComponents);
+                        leftPanelComponents,
+                        rightPanelComponents);
 
                 TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
                 Assert.IsNotNull(tutorialManager);

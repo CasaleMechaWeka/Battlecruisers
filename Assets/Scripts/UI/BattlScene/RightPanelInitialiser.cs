@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene
         // Not using FindObjectOfType() because that ignores inactive objects
         public ModalMenuController modalMenu;
 
-        public void Initialise(
+        public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator,
             IUIManager uiManager,
@@ -59,6 +59,8 @@ namespace BattleCruisers.UI.BattleScene
             SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
+
+            return new RightPanelComponents(Informator);
         }
 
         private void SetupInformator(
