@@ -287,7 +287,7 @@ namespace BattleCruisers.Tutorial
             // 7.5  Boost unit speed until just before it reaches the user's camera view
             if (boostAircraftSpeed)
             {
-                enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.4f));
+                enemyUnitDefenceSteps.AddRange(CreateSteps_AircraftSpeedBoost(unitComingText, speedBoostMultiplier: 8, boostDurationInS: 3.3f));
             }
 
             // 8. Wait for defence turret to destroy unit
