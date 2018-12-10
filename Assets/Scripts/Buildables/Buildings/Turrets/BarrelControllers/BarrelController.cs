@@ -24,22 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
 
-        // FELIX  TEMP
-        private ITarget _target;
-        public ITarget Target
-        {
-            get
-            {
-                return _target;
-            }
-            set
-            {
-                Debug.Log("BarrelController.set_Target: " + value);
-                _target = value;
-            }
-        }
-        //public ITarget Target { get; set; }
-
+        public ITarget Target { get; set; }
         public ITarget CurrentTarget { get { return Target; } }
         public bool IsSourceMirrored { get { return transform.IsMirrored(); } }
         protected virtual int NumOfBarrels { get { return 1; } }
