@@ -33,7 +33,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
 			Logging.Log(Tags.TARGET_FINDER, "OnEnemyEntered()");
 
-            // FELIX  Update tests :)
             if (!args.Target.IsDestroyed
                 && _targetFilter.IsMatch(args.Target) 
                 && TargetFound != null)

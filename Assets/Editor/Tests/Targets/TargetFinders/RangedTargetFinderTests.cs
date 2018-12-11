@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Targets.TargetFinders
 {
-    public class RangedTargetFinderTests 
+    public class RangedTargetFinderTests
 	{
 		private ITargetFinder _targetFinder;
 		private ITargetDetector _enemyDetector;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 		}
 
 		[Test]
-		public void EnemyEntered_IsMatch_EmitsTargetFound()
+		public void EnemyEntered_IsMatch_AndNotDestroyed_EmitsTargetFound()
 		{
 			bool wasCalled = false;
 
@@ -42,7 +42,20 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			Assert.IsTrue(wasCalled);
 		}
 
-		[Test]
+        [Test]
+        public void EnemyEntered_IsMatch_IsDestroyed_EmitsNothing()
+        {
+            _targetFinder.TargetFound += (object sender, TargetEventArgs e) =>
+            {
+                Assert.Fail();
+            };
+
+            _target.IsDestroyed.Returns(true);
+            _targetFilter.IsMatch(_target).Returns(true);
+            _enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+        }
+
+        [Test]
 		public void EnemyEntered_IsNotMatch_EmitsNothing()
 		{
 			_targetFinder.TargetFound += (object sender, TargetEventArgs e) => 
