@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.DataStrctures;
@@ -76,11 +75,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FindCruiserCameraPosition_CruiserFacingRight()
+        public void FindCruiserCameraPosition_IsPlayerCruiser()
         {
             float orthographicSize = 1.5f;
             float zValue = -10;
-            _cruiser.Direction.Returns(Direction.Right);
+            _cruiser.IsPlayerCruiser.Returns(true);
 
             float xAdjustmentMagnitudeInM = _cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
 
@@ -94,11 +93,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FindCruiserCameraPosition_CruiserFacingLeft()
+        public void FindCruiserCameraPosition_IsNotPlayerCruiser()
         {
             float orthographicSize = 1.5f;
             float zValue = -10;
-            _cruiser.Direction.Returns(Direction.Left);
+            _cruiser.IsPlayerCruiser.Returns(false);
 
             float xAdjustmentMagnitudeInM = _cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
 
