@@ -64,8 +64,8 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			IList<Vector2> patrolPoints = _playerAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
 
-			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude)));  	// -30 + 10
-			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude)));		// 30 - 10
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));  	// -30 + 10
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));		// 30 - 10
 		}
 
 		[Test]
@@ -73,8 +73,8 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			IList<Vector2> patrolPoints = _aiAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
 
-			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude)));  	// -30 + 10
-			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude)));		// 30 - 10
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));  	// -30 + 10
+			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));		// 30 - 10
 		}
 
 		[Test]

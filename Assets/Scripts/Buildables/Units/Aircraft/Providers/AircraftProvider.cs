@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
         private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
-        private const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
+        public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
         private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
 		public Rectangle FighterSafeZone { get; private set; }
