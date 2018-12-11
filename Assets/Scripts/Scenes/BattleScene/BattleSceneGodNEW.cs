@@ -114,8 +114,8 @@ namespace BattleCruisers.Scenes.BattleScene
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser);
 
             // Initialise AI cruiser
-            IUserChosenTargetHelper userChosenTargetHelper
-                = new UserChosenTargetHelper(
+            IUserChosenTargetHelper userChosenTargetHelper 
+                = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
             cruiserFactory
