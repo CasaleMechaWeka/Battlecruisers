@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -46,6 +47,7 @@ namespace BattleCruisers.Scenes.BattleScene
 		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
         public IBuildSpeedController AICruiserBuildSpeedController { get; private set; }
+        public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -160,6 +162,21 @@ namespace BattleCruisers.Scenes.BattleScene
             UIManagerPermissions = uiManagerPermissions;
 
             _uiManager.Initialise(args, uiManagerPermissions);
+        }
+
+        public IUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
+            IPrioritisedSoundPlayer soundPlayer)
+        {
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer);
+
+            UserChosenTargetHelperPermissions permissions = new UserChosenTargetHelperPermissions(isEnabled: false);
+            UserChosenTargetPermissions = permissions;
+
+            return
+                new TogglableUserChosenTargetHelper(
+                    new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer),
+                    permissions);
         }
     }
 }

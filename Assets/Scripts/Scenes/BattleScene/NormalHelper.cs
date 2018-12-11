@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
@@ -125,6 +126,15 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(args);
+        }
+
+        public IUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IPrioritisedSoundPlayer soundPlayer)
+        {
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer);
+
+            return new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer);
         }
     }
 }

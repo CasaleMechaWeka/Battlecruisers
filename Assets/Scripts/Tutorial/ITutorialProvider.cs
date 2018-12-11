@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -19,6 +20,7 @@ namespace BattleCruisers.Tutorial
         // FELIX  Rnemae to Permitter?
         BasicFilter IsNavigationEnabledFilter { get; }
         BasicFilter SpeedButtonsPermitter { get; }
+        IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
 
         IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
         IBuildSpeedController AICruiserBuildSpeedController { get; }

@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
@@ -26,6 +27,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         IBroadcastingFilter CreateNavigationWheelEnabledFilter();
+        IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer);
 
         IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
