@@ -55,7 +55,16 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         }
 
         [Test]
-        public void TargetFound_IsInFront_UpdatesTarget()
+        public void TargetFound_InFront_Destroyed_DoesNothing()
+        {
+            _isInFrontFilter.IsMatch(_target).Returns(true);
+            _target.IsDestroyed.Returns(true);
+            _friendFinder.TargetFound += Raise.EventWith(_friendFinder, new TargetEventArgs(_target));
+            Assert.IsNull(_targetProvider.Target);
+        }
+
+        [Test]
+        public void TargetFound_IsInFront_AndNotDestroyed_UpdatesTarget()
         {
             FindFriend(_target);
             Assert.AreSame(_target, _targetProvider.Target);
