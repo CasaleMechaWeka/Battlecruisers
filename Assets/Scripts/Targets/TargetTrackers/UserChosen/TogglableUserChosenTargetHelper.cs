@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 {
-    // FELIX  Test :D
     public class TogglableUserChosenTargetHelper : IUserChosenTargetHelper
     {
         private readonly IUserChosenTargetHelper _baseHelper;
