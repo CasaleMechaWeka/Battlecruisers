@@ -3,7 +3,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.Targets.TargetTrackers
+namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 {
     public class UserChosenTargetHelper : IUserChosenTargetHelper
     {

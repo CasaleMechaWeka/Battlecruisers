@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Targets.TargetTrackers;
+﻿using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Cruisers

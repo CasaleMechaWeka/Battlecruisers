@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;

@@ -1,11 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
-using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Targets.TargetTrackers
+namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
 {
     public class UserChosenTargetManagerTests
     {

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using System;
 
 namespace BattleCruisers.Targets.TargetTrackers

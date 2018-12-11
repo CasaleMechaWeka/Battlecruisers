@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Targets.TargetTrackers
+namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 {
     public class UserChosenInRangeTargetTracker : IRankedTargetTracker
     {

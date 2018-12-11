@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Targets.TargetTrackers
+﻿namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 {
     public interface IUserChosenTargetHelperSettablePermissions
     {

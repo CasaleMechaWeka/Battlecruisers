@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.Targets.TargetTrackers
+namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
 {
     public class UserChosenTargetHelperTests
     {
