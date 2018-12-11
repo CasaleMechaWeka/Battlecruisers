@@ -15,6 +15,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -23,6 +24,8 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IDataProvider _dataProvider;
         private readonly IPrefabFactory _prefabFactory;
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
+
+        private UIManagerNEW _uiManager;
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
@@ -113,12 +116,15 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public IUIManager CreateUIManager()
         {
-            throw new System.NotImplementedException();
+            Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
+            _uiManager = new UIManagerNEW();
+            return _uiManager;
         }
 
         public void InitialiseUIManager(ManagerArgsNEW args)
         {
-            throw new System.NotImplementedException();
+            Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
+            _uiManager.Initialise(args);
         }
     }
 }
