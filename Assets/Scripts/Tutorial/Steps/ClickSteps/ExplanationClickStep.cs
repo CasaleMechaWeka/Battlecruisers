@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Test :)
     public class ExplanationClickStep : TutorialStepNEW
     {
         private readonly IItemProvider<IClickableEmitter> _clickableProvider;
