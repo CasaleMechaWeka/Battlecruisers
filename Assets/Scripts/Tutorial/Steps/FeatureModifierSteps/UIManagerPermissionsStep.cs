@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
 {
-    // FELIX  Test :D
     public class UIManagerPermissionsStep : TutorialStepNEW
     {
         private readonly IUIManagerSettablePermissions _permissions;
