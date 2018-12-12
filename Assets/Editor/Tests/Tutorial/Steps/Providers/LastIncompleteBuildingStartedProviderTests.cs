@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Tests.Utils.Extensions;
-using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;
 using NSubstitute;
@@ -13,8 +13,8 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
     public class LastIncompleteBuildingStartedProviderTests
     {
         private IItemProvider<IBuildable> _buildableProvider;
-        private IListProvider<IHighlightable> _highlightablesProvider;
-        private IListProvider<IClickableEmitter> _clickablesProvider;
+        private IItemProvider<IMaskHighlightable> _highlightableProvider;
+        private IItemProvider<IClickableEmitter> _clickableProvider;
         private ICruiserController _cruiser;
         private IBuilding _building1, _building2;
 
@@ -22,11 +22,11 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         public void SetuUp()
         {
             _cruiser = Substitute.For<ICruiserController>();
-            LastIncompleteBuildingStartedProvider provider = new LastIncompleteBuildingStartedProvider(_cruiser);
+            LastIncompleteBuildingStartedProviderNEW provider = new LastIncompleteBuildingStartedProviderNEW(_cruiser);
 
             _buildableProvider = provider;
-            _highlightablesProvider = provider;
-            _clickablesProvider = provider;
+            _highlightableProvider = provider;
+            _clickableProvider = provider;
 
             _building1 = Substitute.For<IBuilding>();
             _building2 = Substitute.For<IBuilding>();
@@ -73,15 +73,15 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 
         private void AssertNoItem()
         {
-            Assert.AreEqual(0, _highlightablesProvider.FindItems().Count);
-            Assert.AreEqual(0, _clickablesProvider.FindItems().Count);
+            Assert.IsNull(_highlightableProvider.FindItem());
+            Assert.IsNull(_clickableProvider.FindItem());
             Assert.IsNull(_buildableProvider.FindItem());            
         }
 
         private void AssertItem(IBuildable item)
         {
-            Assert.IsTrue(_highlightablesProvider.FindItems().Contains(item));
-            Assert.IsTrue(_clickablesProvider.FindItems().Contains(item));
+            Assert.AreSame(item, _highlightableProvider.FindItem());
+            Assert.AreSame(item, _clickableProvider.FindItem());
             Assert.AreSame(item, _buildableProvider.FindItem());            
         }
     }

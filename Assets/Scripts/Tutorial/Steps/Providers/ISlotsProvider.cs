@@ -4,7 +4,7 @@ using BattleCruisers.Tutorial.Providers;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    // TUTORIAL  Remove?
+    // TUTORIAL  Remove?  Hmm, used in one place?  But is it necessary???
     public interface ISlotsProvider :
         IListProvider<ISlot>,
         IListProvider<IHighlightable>,
