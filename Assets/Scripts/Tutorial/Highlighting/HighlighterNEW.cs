@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    // FELIX  TEst :)
     public class HighlighterNEW : IHighlighterNEW
     {
         private readonly IMaskHighlighter _maskHighlighter;

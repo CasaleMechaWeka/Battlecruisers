@@ -3,6 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
+    // NEWUI  Remove, tests have been converted :P
     public class Highlighter : IHighlighter
     {
         private readonly IHighlightHelper _highlightHelper;

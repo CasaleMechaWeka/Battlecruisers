@@ -1,72 +1,57 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using NSubstitute;
 using NUnit.Framework;
-using System.Collections.Generic;
+using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
     public class HighlighterTests
     {
-        private IHighlighter _highlighter;
-        private IHighlightHelper _helper;
-        private IHighlightable _highlightable;
-        private IList<IHighlightable> _highlightables;
-        private IHighlight _highlight;
+        private IHighlighterNEW _highlighter;
+        private IMaskHighlighter _maskHighlighter;
+        private IHighlightArgsFactory _highlightArgsFactory;
+        private IMaskHighlightable _highlightable;
+        private HighlightArgs _highlightArgs;
 
         [SetUp]
         public void SetuUp()
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _helper = Substitute.For<IHighlightHelper>();
-            _highlighter = new Highlighter(_helper);
+            _maskHighlighter = Substitute.For<IMaskHighlighter>();
+            _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
 
-            _highlight = Substitute.For<IHighlight>();
-            _highlightable = Substitute.For<IHighlightable>();
-            _helper.CreateHighlight(_highlightable).Returns(_highlight);
+            _highlighter = new HighlighterNEW(_maskHighlighter, _highlightArgsFactory);
 
-            _highlightables = new List<IHighlightable>()
-            {
-                _highlightable
-            };
-        }
-
-        #region Highlight
-        [Test]
-        public void Highlight_CreatesHighlight()
-        {
-            _highlighter.Highlight(_highlightables);
-            _helper.Received().CreateHighlight(_highlightable);
+            _highlightArgs = new HighlightArgs(new Vector2(1, 2), new Vector2(-1, 2));
+            _highlightable = Substitute.For<IMaskHighlightable>();
+            _highlightable.CreateHighlightArgs(_highlightArgsFactory).Returns(_highlightArgs);
         }
 
         [Test]
-        public void Highlight_DoubleHighlightThrows()
+        public void Highlight()
         {
-            // Valid first highlight
-            _highlighter.Highlight(_highlightables);
-
-            // Invalid second highlight (without intervening UnhighlightAll())
-            Assert.Throws<UnityAsserts.AssertionException>(() => _highlighter.Highlight(_highlightables));
+            _highlighter.Highlight(_highlightable);
+            _maskHighlighter.Received().Highlight(_highlightArgs);
         }
-        #endregion Highlight
 
         [Test]
         public void UnHighlight()
         {
-            _highlighter.Highlight(_highlightables);
+            _highlighter.Highlight(_highlightable);
+            _highlighter.Unhighlight();
 
-            _highlighter.UnhighlightAll();
-
-            _highlight.Received().Destroy();
+            _maskHighlighter.Received().Unhighlight();
         }
 
         [Test]
         public void Highlight_UnHighlight_Highlight()
         {
-            _highlighter.Highlight(_highlightables);
-            _highlighter.UnhighlightAll();
-            _highlighter.Highlight(_highlightables);
+            _highlighter.Highlight(_highlightable);
+            _highlighter.Unhighlight();
+            _highlighter.Highlight(_highlightable);
         }
     }
 }
