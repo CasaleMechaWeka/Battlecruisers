@@ -18,10 +18,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         private IBuildingPermitter _buildingPermitter;
         private IPrefabKey _buildingToAllow;
         private ISlotPermitter _slotPermitter;
-        private ISlot _slot1, _slot2;
-        private ISlot[] _slots;
-        private ISlotsProvider _slotsProvider;
-        private IListProvider<ISlot> _explicitSlotsProvider;
+        private ISlot _slot;
+        private ISlotProvider _slotProvider;
+        private IItemProvider<ISlot> _explicitSlotProvider;
 
         [SetUp]
         public override void SetuUp()
@@ -34,19 +33,13 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 
             _slotPermitter = Substitute.For<ISlotPermitter>();
 
-            _slot1 = Substitute.For<ISlot>();
-            _slot2 = Substitute.For<ISlot>();
-            _slots = new ISlot[]
-            {
-                _slot1,
-                _slot2
-            };
-            _slotsProvider = Substitute.For<ISlotsProvider>();
+            _slot = Substitute.For<ISlot>();
+            _slotProvider = Substitute.For<ISlotProvider>();
 
-            _explicitSlotsProvider = _slotsProvider;
-            _explicitSlotsProvider.FindItems().Returns(_slots);
+            _explicitSlotProvider = _slotProvider;
+            _explicitSlotProvider.FindItem().Returns(_slot);
 
-            _clickStep = new BuildingButtonStepNEW(_args, _buildableButton, _buildingPermitter, _buildingToAllow, _slotsProvider, _slotPermitter);
+            _clickStep = new BuildingButtonStepNEW(_args, _buildableButton, _buildingPermitter, _buildingToAllow, _slotProvider, _slotPermitter);
         }
 
         [Test]
@@ -55,7 +48,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _clickStep.Start(_completionCallback);
 
             _buildingPermitter.Received().PermittedBuilding = _buildingToAllow;
-            _slotPermitter.Received().PermittedSlots = _slots;
+            _slotPermitter.Received().PermittedSlot = _slot;
         }
 
         [Test]
@@ -67,7 +60,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _buildableButton.Clicked += Raise.Event();
 
             _buildingPermitter.Received().PermittedBuilding = null;
-            _slotPermitter.DidNotReceiveWithAnyArgs().PermittedSlots = null;
+            _slotPermitter.DidNotReceiveWithAnyArgs().PermittedSlot = null;
         }
     }
 }

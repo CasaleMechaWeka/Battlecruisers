@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _clickStep.Start(_completionCallback);
 
             _slot.Clicked += Raise.Event();
-            _permitter.Received().PermittedSlots = null;
+            _permitter.Received().PermittedSlot = null;
         }
     }
 }

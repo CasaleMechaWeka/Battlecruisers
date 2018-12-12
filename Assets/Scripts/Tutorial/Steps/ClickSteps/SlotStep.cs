@@ -23,7 +23,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 
 		protected override void OnCompleted()
 		{
-            _highlightableSlotPermitter.PermittedSlots = null;
+            _highlightableSlotPermitter.PermittedSlot = null;
 
 			base.OnCompleted();
 		}

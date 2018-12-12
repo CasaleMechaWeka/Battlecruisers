@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers.Slots;
+﻿using BattleCruisers.Cruisers.Slots;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -28,14 +27,14 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void IsMatch_False_BecauseDifferentSlotPermitted()
         {
-            _filter.PermittedSlots = new List<ISlot>() { _slot2 };
+            _filter.PermittedSlot = _slot2;
             Assert.IsFalse(_filter.IsMatch(_slot1));
         }
 		
 		[Test]
 		public void IsMatch_True()
 		{
-            _filter.PermittedSlots = new List<ISlot>() { _slot1 };
+            _filter.PermittedSlot = _slot1;
 			Assert.IsTrue(_filter.IsMatch(_slot1));
 		}
     }

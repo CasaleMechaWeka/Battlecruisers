@@ -5,7 +5,7 @@ using BattleCruisers.Tutorial.Providers;
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
     public interface ISlotProvider :
-        IListProvider<ISlot>,
+        IItemProvider<ISlot>,
         IItemProvider<IMaskHighlightable>,
         IItemProvider<IClickableEmitter>
     {
