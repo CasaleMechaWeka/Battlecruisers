@@ -8,7 +8,6 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// <summary>
     /// Completed when the target is destroyed.
     /// </summary>
-    /// FELIX  Copy tests :)
     public class TargetDestroyedWaitStepNEW : TutorialStepNEW
     {
         private readonly IItemProvider<ITarget> _targetProvider;
