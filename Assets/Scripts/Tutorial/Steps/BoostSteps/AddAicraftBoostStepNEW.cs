@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables.Boost;
 
+// FELIX  Change namespace to "BoostSteps"
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Copy tests :)
     // FELIX  Rename, type :P
     public class AddAircraftBoostStepNEW : BoostStepNEW
     {
