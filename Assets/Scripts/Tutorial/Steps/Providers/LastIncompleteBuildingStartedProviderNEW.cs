@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    // FELIX  Copy tests :)
     public class LastIncompleteBuildingStartedProviderNEW : ISingleBuildableProviderNEW
     {
         // Sorted list of buildings, with the most recently started
