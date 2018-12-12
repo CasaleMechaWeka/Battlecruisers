@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    // FELIX  Copy TutorialStep tests :)
     public abstract class TutorialStepNEW : ITutorialStep
     {
         private readonly IHighlighterNEW _highlighter;
