@@ -7,7 +7,6 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// <summary>
     /// Completed when camera completes it's current adjustment.
     /// </summary>
-    /// FELIX  Test :D
     public class CameraAdjustmentWaitStep : TutorialStepNEW
     {
         private readonly ICameraAdjuster _cameraAdjuster;
