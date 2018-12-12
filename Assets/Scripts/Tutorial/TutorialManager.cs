@@ -36,11 +36,12 @@ namespace BattleCruisers.Tutorial
 
             IHighlighter highlighter = new Highlighter(new HighlightHelper(_highlightFactory));
 
-            ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, _deferrer, tutorialArgs);
-            Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
-            _consumer = new TutorialStepConsumer(steps);
+            // FELIX  Delete whole class :P
+            //ITutorialStepsFactory stepsFactory = new TutorialStepsFactory(highlighter, textDisplayer, _deferrer, tutorialArgs);
+            //Queue<ITutorialStep> steps = stepsFactory.CreateTutorialSteps();
+            //_consumer = new TutorialStepConsumer(steps);
 
-            _consumer.Completed += _consumer_Completed;
+            //_consumer.Completed += _consumer_Completed;
         }
 
         public void StartTutorial()

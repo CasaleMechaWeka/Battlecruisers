@@ -27,6 +27,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
+    // FELIX  Rename :D  (Remove NEW)
     // FELIX  Split up monster class?  :P
     public class TutorialStepsFactoryNEW : ITutorialStepsFactory
     {
