@@ -1,28 +1,27 @@
-﻿// FELIX  Convert or delete :)
-//using BattleCruisers.Tutorial.Steps;
-//using BattleCruisers.Tutorial.Steps.EnemyCruiser;
-//using NSubstitute;
-//using NUnit.Framework;
+﻿using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.EnemyCruiser;
+using NSubstitute;
+using NUnit.Framework;
 
-//namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
-//{
-//    public class AddTurretFireRateBoostStepTests : BoostStepTestsBase
-//    {
-//        private ITutorialStep _boostStep;
+namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
+{
+    public class AddTurretFireRateBoostStepTests : BoostStepTestsBase
+    {
+        private ITutorialStep _boostStep;
 
-//        [SetUp]
-//        public override void SetuUp()
-//        {
-//            base.SetuUp();
+        [SetUp]
+        public override void SetuUp()
+        {
+            base.SetuUp();
 
-//            _boostStep = new AddTurretFireRateBoostStep(_args, _globalBoostProviders, _boostProvider);
-//        }
+            _boostStep = new AddTurretFireRateBoostStepNEW(_args, _globalBoostProviders, _boostProvider);
+        }
 
-//        [Test]
-//        public void Start_AddsBoost_AndCompletes()
-//        {
-//            _boostStep.Start(_completionCallback);
-//            _globalBoostProviders.TurretFireRateBoostProviders.Received().Add(_boostProvider);
-//        }
-//    }
-//}
+        [Test]
+        public void Start_AddsBoost_AndCompletes()
+        {
+            _boostStep.Start(_completionCallback);
+            _globalBoostProviders.TurretFireRateBoostProviders.Received().Add(_boostProvider);
+        }
+    }
+}

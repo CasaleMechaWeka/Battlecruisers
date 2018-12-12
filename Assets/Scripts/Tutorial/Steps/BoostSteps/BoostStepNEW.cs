@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Copy tests :)
     public abstract class BoostStepNEW : TutorialStepNEW
     {
         protected readonly IGlobalBoostProviders _globalBoostProviders;

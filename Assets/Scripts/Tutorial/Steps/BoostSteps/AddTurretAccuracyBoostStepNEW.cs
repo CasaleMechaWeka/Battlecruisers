@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Copy tests :)
     public class AddTurretAccuracyBoostStepNEW : BoostStepNEW
     {
         public AddTurretAccuracyBoostStepNEW(
