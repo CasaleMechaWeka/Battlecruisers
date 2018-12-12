@@ -1,23 +1,23 @@
 ﻿using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
 {
     public abstract class TutorialStepTestsBase
     {
-        protected ITutorialStepArgs _args;
-        protected IHighlighter _highlighter;
+        protected ITutorialStepArgsNEW _args;
+        protected IHighlighterNEW _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;
-        protected IListProvider<IHighlightable> _highlightablesProvider;
-        protected IList<IHighlightable> _highlightables;
+        protected IItemProvider<IMaskHighlightable> _highlightableProvider;
+        protected IMaskHighlightable _highlightable;
         protected Action _completionCallback;
         protected int _callbackCounter;
 
@@ -26,19 +26,15 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _highlighter = Substitute.For<IHighlighter>();
+            _highlighter = Substitute.For<IHighlighterNEW>();
             _textToDisplay = "Staub";
             _displayer = Substitute.For<ITextDisplayer>();
 
-            _highlightablesProvider = Substitute.For<IListProvider<IHighlightable>>();
-            _highlightables = new List<IHighlightable>()
-            {
-                Substitute.For<IHighlightable>(),
-                Substitute.For<IHighlightable>()
-            };
-            _highlightablesProvider.FindItems().Returns(_highlightables);
+            _highlightable = Substitute.For<IMaskHighlightable>();
+            _highlightableProvider = Substitute.For<IItemProvider<IMaskHighlightable>>();
+            _highlightableProvider.FindItem().Returns(_highlightable);
 
-            _args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightablesProvider);
+            _args = new TutorialStepArgsNEW(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
 
             _completionCallback = () => _callbackCounter++;
             _callbackCounter = 0;
