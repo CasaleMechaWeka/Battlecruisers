@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Update tests :)
     public class StopUnitConstructionStepNEW : TutorialStepNEW
     {
         private readonly IItemProvider<IFactory> _factoryProvider;

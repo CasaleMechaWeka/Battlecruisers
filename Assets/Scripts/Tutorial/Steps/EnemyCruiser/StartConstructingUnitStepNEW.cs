@@ -9,7 +9,6 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Copy tests :)
     public class StartConstructingUnitStepNEW : TutorialStepNEW
     {
         private readonly IPrefabKey _unitToConstruct;

@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    // FELIX  Copy tests :)
     public class StartConstructingBuildingStepNEW : TutorialStepNEW, IItemProvider<IBuildable>
     {
         private readonly IPrefabKey _buildingToConstruct;
