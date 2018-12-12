@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    // FELIX  Test :D
     public class HideItemDetailsStep : TutorialStepNEW
     {
         private readonly IUIManager _uiManager;
