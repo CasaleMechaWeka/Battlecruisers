@@ -9,7 +9,6 @@ namespace BattleCruisers.Tutorial.Steps
         PlayerCruiser, AICruiser, AICruiserNavalFactory, MidLeft
     }
 
-    // FELIX  Test :D
     public class CameraFocuserStep : TutorialStepNEW
     {
         private readonly ICameraFocuser _cameraFocuser;
