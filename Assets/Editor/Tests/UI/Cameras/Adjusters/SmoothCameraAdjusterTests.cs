@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
         private ICameraTarget _cameraTarget;
         private ISmoothZoomAdjuster _zoomAdjuster;
         private ISmoothPositionAdjuster _positionAdjuster;
+        private int _adjustmentCompletedCounter;
 
         [SetUp]
         public void TestSetup()
@@ -25,15 +26,37 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
 
             _cameraTarget = new CameraTarget(position: new Vector3(1, 2, 3), orthographicSize: 4);
             _cameraTargetProvider.Target.Returns(_cameraTarget);
+
+            _adjustmentCompletedCounter = 0;
+            _adjuster.CompletedAdjustment += (sender, e) => _adjustmentCompletedCounter++;
         }
 
         [Test]
-        public void AdjustCamera()
+        public void AdjustCamera_ReachedTarget_EmitsEvent()
         {
+            _zoomAdjuster.AdjustZoom(_cameraTarget.OrthographicSize).Returns(true);
+            _positionAdjuster.AdjustPosition(_cameraTarget.Position).Returns(true);
+
             _adjuster.AdjustCamera();
 
             _zoomAdjuster.Received().AdjustZoom(_cameraTarget.OrthographicSize);
             _positionAdjuster.Received().AdjustPosition(_cameraTarget.Position);
+
+            Assert.AreEqual(1, _adjustmentCompletedCounter);
+        }
+
+        [Test]
+        public void AdjustCamera_HaveNotReachedTarget_DoesNotEmitEvent()
+        {
+            _zoomAdjuster.AdjustZoom(_cameraTarget.OrthographicSize).Returns(true);
+            _positionAdjuster.AdjustPosition(_cameraTarget.Position).Returns(false);
+
+            _adjuster.AdjustCamera();
+
+            _zoomAdjuster.Received().AdjustZoom(_cameraTarget.OrthographicSize);
+            _positionAdjuster.Received().AdjustPosition(_cameraTarget.Position);
+
+            Assert.AreEqual(0, _adjustmentCompletedCounter);
         }
     }
 }

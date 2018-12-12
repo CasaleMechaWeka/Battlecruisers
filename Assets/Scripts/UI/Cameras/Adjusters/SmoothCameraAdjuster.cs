@@ -6,7 +6,6 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// <summary>
     /// Smoothly moves camera to target postion and orthographic size.
     /// </summary>
-    /// FELIX  Update tests :)
     public class SmoothCameraAdjuster : CameraAdjuster
     {
         private readonly ISmoothZoomAdjuster _zoomAdjuster;

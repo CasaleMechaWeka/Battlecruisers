@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// Instantly updates camera to target position.  Results in jerky
     /// camera movement.
     /// </summary>
-    /// FELIX  Update tests :)
     public class InstantCameraAdjuster : CameraAdjuster
     {
         private readonly ICamera _camera;

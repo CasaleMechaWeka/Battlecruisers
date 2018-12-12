@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
         private ICameraTargetProvider _cameraTargetProvider;
         private ICamera _camera;
         private ICameraTarget _cameraTarget;
+        private int _adjustmentCompletedCounter;
 
         [SetUp]
         public void TestSetup()
@@ -24,6 +25,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
 
             _cameraTarget = new CameraTarget(position: new Vector3(1, 2, 3), orthographicSize: 4);
             _cameraTargetProvider.Target.Returns(_cameraTarget);
+
+            _adjustmentCompletedCounter = 0;
+            _adjuster.CompletedAdjustment += (sender, e) => _adjustmentCompletedCounter++;
         }
 
         [Test]
@@ -33,6 +37,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
 
             Assert.AreEqual(_cameraTarget.Position, _camera.Transform.Position);
             Assert.AreEqual(_cameraTarget.OrthographicSize, _camera.OrthographicSize);
+            Assert.AreEqual(1, _adjustmentCompletedCounter);
         }
     }
 }
