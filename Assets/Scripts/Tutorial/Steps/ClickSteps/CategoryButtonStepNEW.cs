@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    // FELIX  Copy tests
     public class CategoryButtonStepNEW : ExplanationClickStep
     {
         private readonly IBuildingCategoryPermitter _permitter;

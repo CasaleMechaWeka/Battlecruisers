@@ -7,7 +7,6 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// <summary>
     /// Must be used in tandem with BuildingButtonStep.
     /// </summary>
-    /// FELIX  Copy tests :)
     public class SlotStep : ExplanationClickStep
     {
         private readonly ISlotPermitter _highlightableSlotPermitter;
