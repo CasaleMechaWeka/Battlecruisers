@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    // FELIX  Copy tests :)
     public class ChangeCruiserBuildSpeedStepNEW : TutorialStepNEW
     {
         private readonly IBuildSpeedController _buildSpeedController;
