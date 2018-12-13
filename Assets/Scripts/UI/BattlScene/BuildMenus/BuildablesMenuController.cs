@@ -58,19 +58,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     .Select(button => (IBuildableButton)button)
                     .ToList()
                     .AsReadOnly();
-
-            InitialiseBackButton(uiManager, buttonVisibilityFilters);
-        }
-
-        private void InitialiseBackButton(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters)
-        {
-            // NEWUI  Remove, as we no longer have back button :)
-            BackButtonController backButton = GetComponentInChildren<BackButtonController>();
-            //Assert.IsNotNull(backButton);
-            if (backButton != null)
-            {
-                backButton.Initialise(uiManager, buttonVisibilityFilters.BackButtonVisibilityFilter);
-            }
         }
 
         protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildableWrapper);
