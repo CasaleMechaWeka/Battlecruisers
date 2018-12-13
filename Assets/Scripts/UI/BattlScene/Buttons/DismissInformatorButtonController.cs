@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // TUTORIAL  Do I even need to disable this button?
     public class DismissInformatorButtonController : Togglable, IPointerClickHandler
     {
         private IUIManager _uiManager;
