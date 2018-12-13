@@ -23,18 +23,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 		public void Initialise()
         {
-            if (ApplicationModelProvider.IsNewUI)
-            {
-                _itemName = transform.FindNamedComponent<Text>("LeftColumn/ItemName");
-                _itemDescription = transform.FindNamedComponent<Text>("LeftColumn/ItemDescription");
-                _itemImage = transform.FindNamedComponent<Image>("RightColumn/ItemImage");
-            }
-            else
-            {
-                _itemName = transform.FindNamedComponent<Text>("ItemName");
-                _itemDescription = transform.FindNamedComponent<Text>("ItemDescription");
-                _itemImage = transform.FindNamedComponent<Image>("ItemImage");
-            }
+            _itemName = transform.FindNamedComponent<Text>("LeftColumn/ItemName");
+            _itemDescription = transform.FindNamedComponent<Text>("LeftColumn/ItemDescription");
+            _itemImage = transform.FindNamedComponent<Image>("RightColumn/ItemImage");
 
             _statsController = GetStatsController();
             Assert.IsNotNull(_statsController);

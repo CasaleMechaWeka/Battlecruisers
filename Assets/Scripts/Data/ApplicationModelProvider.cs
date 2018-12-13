@@ -11,9 +11,6 @@ namespace BattleCruisers.Data
     {
         public static IApplicationModel ApplicationModel { get; private set; }
 
-        // NEWUI  Remove :P
-        public static bool IsNewUI { get; set; }
-
         static ApplicationModelProvider()
 		{
             IDataProvider dataProvider 
@@ -23,8 +20,6 @@ namespace BattleCruisers.Data
                     new SettingsManager());
 
             ApplicationModel = new ApplicationModel(dataProvider);
-
-            IsNewUI = false;
         }
     }
 }

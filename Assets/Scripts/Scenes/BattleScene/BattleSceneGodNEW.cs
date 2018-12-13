@@ -45,9 +45,6 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Assert.raiseExceptions = true;
 
-            // TEMP  Only while we have both UIs (legacy and new :) )
-            ApplicationModelProvider.IsNewUI = true;
-
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
             components.Initialise();
