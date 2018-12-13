@@ -13,7 +13,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Manager
 {
-    public class UIManagerNEWTests
+    public class UIManagerTests
     {
         private UIManager _uiManager;
 
