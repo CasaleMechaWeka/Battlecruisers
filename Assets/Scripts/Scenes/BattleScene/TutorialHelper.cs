@@ -16,7 +16,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -34,7 +33,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BasicFilter BackButtonPermitter { get; private set; }
-        // NEWUI  Create IPermitter to set IsMatch?
+        // FELIX  Create IPermitter to set IsMatch?
         public BasicFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public BasicFilter IsNavigationEnabledFilter { get; private set; }
@@ -78,18 +77,6 @@ namespace BattleCruisers.Scenes.BattleScene
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
         
-        // NEWUI  Remove :)
-        public IUIManager CreateUIManager(IManagerArgs args)
-        {
-            //_uiManagerPermissions = new UIManagerPermissions()
-            //{
-            //    CanDismissItemDetails = false,
-            //    CanShowItemDetails = false
-            //};
-            //return new LimitableUIManager(args, _uiManagerPermissions);
-            throw new NotImplementedException();
-        }
-
         public ILoadout GetPlayerLoadout()
         {
             return _dataProvider.StaticData.InitialGameModel.PlayerLoadout;
