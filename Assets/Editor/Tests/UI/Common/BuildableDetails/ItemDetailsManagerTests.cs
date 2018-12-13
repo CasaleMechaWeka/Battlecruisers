@@ -8,7 +8,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 {
-    public class BuildableDetailsManagerTests
+    public class ItemDetailsManagerTests
     {
         private IItemDetailsManager _detailsManager;
         private IBuildableDetails<IBuilding> _buildingDetails;
