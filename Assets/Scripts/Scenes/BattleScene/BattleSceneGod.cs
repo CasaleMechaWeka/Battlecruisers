@@ -29,7 +29,7 @@ using UnityEngine.Assertions;
 // PERF     => Potential performance hit
 namespace BattleCruisers.Scenes.BattleScene
 {
-    public class BattleSceneGodNEW : MonoBehaviour
+    public class BattleSceneGod : MonoBehaviour
     {
         private AudioInitialiser _audioInitialiser;
         private UserChosenTargetHighligher _userChosenTargetHighligher;
