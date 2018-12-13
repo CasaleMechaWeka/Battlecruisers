@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         public IBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter  { get; private set; }
         public IFilter<ITarget> ChooseTargetButtonVisiblityFilter  { get; private set; }
         public IFilter<ITarget> DeletButtonVisiblityFilter  { get; private set; }
-        public BasicFilter BackButtonVisibilityFilter  { get; private set; }
+        public BasicFilter DismissButtonVisibilityFilter  { get; private set; }
         public IBroadcastingFilter SpeedButtonsEnabledFilter { get; private set; }
 
         public ButtonVisibilityFilters(
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             CategoryButtonVisibilityFilter = categoryButtonVisibilityFilter;
             ChooseTargetButtonVisiblityFilter = chooseTargetButtonVisiblityFilter;
             DeletButtonVisiblityFilter = deletButtonVisiblityFilter;
-            BackButtonVisibilityFilter = backButtonVisibilityFilter;
+            DismissButtonVisibilityFilter = backButtonVisibilityFilter;
             SpeedButtonsEnabledFilter = speedButtonEnabledFilter;
         }
     }
