@@ -27,22 +27,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
-    // FELIX  Rename :D  (Remove NEW)
     // FELIX  Split up monster class?  :P
-    public class TutorialStepsFactoryNEW : ITutorialStepsFactory
+    public class TutorialStepsFactory : ITutorialStepsFactory
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
         private readonly IExplanationDismissButton _explanationDismissButton;
         private readonly IVariableDelayDeferrer _deferrer;
-        private readonly ITutorialArgsNEW _tutorialArgs;
+        private readonly ITutorialArgs _tutorialArgs;
         private readonly ISingleBuildableProviderNEW _lastPlayerIncompleteBuildingStartedProvider;
 
-        public TutorialStepsFactoryNEW(
+        public TutorialStepsFactory(
             IHighlighter highlighter,
             IExplanationPanel explanationPanel,
             IVariableDelayDeferrer deferrer,
-            ITutorialArgsNEW tutorialArgs)
+            ITutorialArgs tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 

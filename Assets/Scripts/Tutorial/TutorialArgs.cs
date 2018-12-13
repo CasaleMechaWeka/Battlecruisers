@@ -8,7 +8,7 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialArgsNEW : ITutorialArgsNEW
+    public class TutorialArgs : ITutorialArgs
     {
         public ICruiser PlayerCruiser { get; private set; }
         public ICruiser AICruiser { get; private set; }
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial
         public RightPanelComponents RightPanelComponents { get; private set; }
         public IUIManager UIManager { get; private set; }
 
-        public TutorialArgsNEW(
+        public TutorialArgs(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             ITutorialProvider tutorialProvider,

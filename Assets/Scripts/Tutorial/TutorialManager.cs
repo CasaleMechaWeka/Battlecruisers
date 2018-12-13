@@ -9,13 +9,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialManagerNEW : MonoBehaviour, ITutorialManager
+    public class TutorialManager : MonoBehaviour, ITutorialManager
     {
         private ITutorialStepConsumer _consumer;
 
         public event EventHandler TutorialCompleted;
 
-        public void Initialise(ITutorialArgsNEW tutorialArgs)
+        public void Initialise(ITutorialArgs tutorialArgs)
         {
             Assert.IsNotNull(tutorialArgs);
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial
             explanationPanel.Initialise();
 
             ITutorialStepsFactory stepsFactory 
-                = new TutorialStepsFactoryNEW(
+                = new TutorialStepsFactory(
                     highlighter, 
                     explanationPanel, 
                     tutorialArgs.Components.VariableDelayDeferrer, 

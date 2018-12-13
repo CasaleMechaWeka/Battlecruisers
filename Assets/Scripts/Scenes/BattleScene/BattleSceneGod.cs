@@ -222,8 +222,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
                 applicationModel.DataProvider.SaveGame();
 
-                ITutorialArgsNEW tutorialArgs
-                    = new TutorialArgsNEW(
+                ITutorialArgs tutorialArgs
+                    = new TutorialArgs(
                         playerCruiser,
                         aiCruiser,
                         _tutorialProvider,
@@ -234,7 +234,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         rightPanelComponents,
                         uiManager);
 
-                TutorialManagerNEW tutorialManager = FindObjectOfType<TutorialManagerNEW>();
+                TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
                 tutorialManager.Initialise(tutorialArgs);
                 tutorialManager.StartTutorial();

@@ -7,7 +7,7 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
-    public interface ITutorialArgsNEW
+    public interface ITutorialArgs
     {
         ICruiser PlayerCruiser { get; }
         ICruiser AICruiser { get; }
