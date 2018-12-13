@@ -5,10 +5,9 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // NEWUI  Update tests :)
     public class ItemDetailsManager : IItemDetailsManager
     {
-        private readonly IInformatorPanel _informator;
+        private readonly IInformatorPanel _informatorPanel;
         private readonly IBuildableDetails<IBuilding> _buildingDetails;
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
@@ -17,19 +16,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             Helper.AssertIsNotNull(informator);
 
-            _informator = informator;
+            _informatorPanel = informator;
             _buildingDetails = informator.BuildingDetails;
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
 
-            _informator.Hide();
+            _informatorPanel.Hide();
         }
 
         public void ShowDetails(IBuilding building)
         {
             HideDetails();
 
-            _informator.Show();
+            _informatorPanel.Show();
             _buildingDetails.ShowBuildableDetails(building);
         }
 
@@ -37,7 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideDetails();
 
-            _informator.Show();
+            _informatorPanel.Show();
             _unitDetails.ShowBuildableDetails(unit);
         }
 
@@ -45,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideDetails();
 
-            _informator.Show();
+            _informatorPanel.Show();
             _cruiserDetails.ShowCruiserDetails(cruiser);
         }
 		
@@ -54,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _buildingDetails.Hide();
             _unitDetails.Hide();
             _cruiserDetails.Hide();
-            _informator.Hide();
+            _informatorPanel.Hide();
         }
     }
 }

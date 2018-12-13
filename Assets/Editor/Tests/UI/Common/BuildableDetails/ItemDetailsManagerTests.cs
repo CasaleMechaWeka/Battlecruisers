@@ -11,6 +11,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
     public class ItemDetailsManagerTests
     {
         private IItemDetailsManager _detailsManager;
+        private IInformatorPanel _informatorPanel;
         private IBuildableDetails<IBuilding> _buildingDetails;
         private IBuildableDetails<IUnit> _unitDetails;
         private ICruiserDetails _cruiserDetails;
@@ -27,16 +28,18 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             _cruiserDetails = Substitute.For<ICruiserDetails>();
 
-            IInformatorPanel informatorPanel = Substitute.For<IInformatorPanel>();
-            informatorPanel.BuildingDetails.Returns(_buildingDetails);
-            informatorPanel.UnitDetails.Returns(_unitDetails);
-            informatorPanel.CruiserDetails.Returns(_cruiserDetails);
+            _informatorPanel = Substitute.For<IInformatorPanel>();
+            _informatorPanel.BuildingDetails.Returns(_buildingDetails);
+            _informatorPanel.UnitDetails.Returns(_unitDetails);
+            _informatorPanel.CruiserDetails.Returns(_cruiserDetails);
 
-            _detailsManager = new ItemDetailsManager(informatorPanel);
+            _detailsManager = new ItemDetailsManager(_informatorPanel);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();
             _cruiser = Substitute.For<ICruiser>();
+
+            _informatorPanel.Received().Hide();   
         }
 
         [Test]
@@ -77,7 +80,8 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _buildingDetails.Received().Hide();
             _unitDetails.Received().Hide();
-            _cruiserDetails.Received().Hide();            
+            _cruiserDetails.Received().Hide();
+            _informatorPanel.Received().Hide();
         }
     }
 }
