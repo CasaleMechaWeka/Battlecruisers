@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
     public class UIManagerNEW : IUIManager
 	{
 		private ICruiser _playerCruiser, _aiCruiser;
-        private IBuildMenuNEW _buildMenu;
+        private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
 
         // Not in constructor because of circular dependency with:

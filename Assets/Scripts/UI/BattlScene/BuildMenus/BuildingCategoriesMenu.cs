@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildingCategoriesMenuNEW : PresentableController, IBuildingCategoriesMenu
+    public class BuildingCategoriesMenu : PresentableController, IBuildingCategoriesMenu
     {
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 

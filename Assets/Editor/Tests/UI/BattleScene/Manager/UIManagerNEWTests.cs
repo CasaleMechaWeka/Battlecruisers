@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private UIManagerNEW _uiManager;
 
         private ICruiser _playerCruiser, _aiCruiser;
-        private IBuildMenuNEW _buildMenu;
+        private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
 
         private IBuilding _building;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _playerCruiser = CreateMockCruiser();
             _aiCruiser = CreateMockCruiser();
-            _buildMenu = Substitute.For<IBuildMenuNEW>();
+            _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IItemDetailsManager>();
 
             ManagerArgsNEW managerArgs

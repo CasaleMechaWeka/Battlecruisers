@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildMenu : IBuildMenuNEW
+    public class BuildMenu : IBuildMenu
 	{
         private readonly IPanel _selectorPanel;
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;

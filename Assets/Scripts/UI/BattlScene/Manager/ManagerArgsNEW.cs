@@ -10,13 +10,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
     {
         public ICruiser PlayerCruiser { get; private set; }
         public ICruiser AICruiser { get; private set; }
-        public IBuildMenuNEW BuildMenu { get; private set; }
+        public IBuildMenu BuildMenu { get; private set; }
         public IItemDetailsManager DetailsManager { get; private set; }
 
         public ManagerArgsNEW(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBuildMenuNEW buildMenu,
+            IBuildMenu buildMenu,
             IItemDetailsManager detailsManager)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager);

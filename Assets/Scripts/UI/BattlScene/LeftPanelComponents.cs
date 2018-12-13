@@ -8,12 +8,12 @@ namespace BattleCruisers.UI.BattleScene
     {
         public IMaskHighlightable HealthDialHighlightable { get; private set; }
         public IMaskHighlightable NumberOfDronesHighlightable { get; private set; }
-        public IBuildMenuNEW BuildMenu { get; private set; }
+        public IBuildMenu BuildMenu { get; private set; }
 
         public LeftPanelComponents(
             IMaskHighlightable healthDialHighlightable, 
             IMaskHighlightable numberOfDronesHighlightable, 
-            IBuildMenuNEW buildMenu)
+            IBuildMenu buildMenu)
         {
             Helper.AssertIsNotNull(healthDialHighlightable, numberOfDronesHighlightable, buildMenu);
 

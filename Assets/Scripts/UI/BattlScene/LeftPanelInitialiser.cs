@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene
 
             IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IMaskHighlightable healthDialHighlightable = SetupHealthDial(playerCruiser);
-            IBuildMenuNEW buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
+            IBuildMenu buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
 
             return new LeftPanelComponents(healthDialHighlightable, numberOfDronesHighlightable, buildMenu);
         }
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene
             return dialInitialiser.Initialise(playerCruiser);
         }
 
-        private IBuildMenuNEW SetupBuildMenuController(
+        private IBuildMenu SetupBuildMenuController(
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,

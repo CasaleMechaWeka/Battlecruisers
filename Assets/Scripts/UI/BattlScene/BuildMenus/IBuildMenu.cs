@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public interface IBuildMenuNEW : IBuildMenuButtons
+    public interface IBuildMenu : IBuildMenuButtons
     {
         /// <summary>
         /// Shows the building group menu for the given buildingCategory.
