@@ -439,7 +439,7 @@ namespace BattleCruisers.Tutorial
                 new ExplanationDismissableStep(
                     CreateTutorialStepArgs(
                         "This is the \"builders\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
-                        _tutorialArgs.RightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButtonNEW),
+                        _tutorialArgs.RightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButton),
                     _explanationDismissButton));
 
             // Encourage user to experiment
