@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         IPointerClickHandler
 	{
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
-        // TUTORIAL  Increase image transparency?  (Or Canvas group?)
         private FilterToggler _isEnabledToggler;
 
 		public Image buildableImage;

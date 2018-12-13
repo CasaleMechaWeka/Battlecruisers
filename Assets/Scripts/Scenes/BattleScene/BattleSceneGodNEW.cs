@@ -27,7 +27,6 @@ using UnityEngine.Assertions;
 // TEMP     => Temporary for testing
 // IPAD     => Update for IPad (usualy input related)
 // PERF     => Potential performance hit
-// TUTORIAL => Should be resolved once tutorial is sorted :)
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodNEW : MonoBehaviour
