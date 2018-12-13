@@ -2,9 +2,9 @@
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class AddTurretAccuracyBoostStepNEW : BoostStepNEW
+    public class AddTurretFireRateBoostStep : BoostStep
     {
-        public AddTurretAccuracyBoostStepNEW(
+        public AddTurretFireRateBoostStep(
             ITutorialStepArgsNEW args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
         protected override void BoostProviderAction()
         {
-            _globalBoostProviders.TurretAccuracyBoostProviders.Add(_boostProvider);
+            _globalBoostProviders.TurretFireRateBoostProviders.Add(_boostProvider);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class RemoveAircraftBoostStepNEW : BoostStepNEW
+    public class RemoveAircraftBoostStep : BoostStep
     {
-        public RemoveAircraftBoostStepNEW(
+        public RemoveAircraftBoostStep(
             ITutorialStepArgsNEW args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)

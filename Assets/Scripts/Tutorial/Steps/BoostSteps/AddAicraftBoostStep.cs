@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Buildables.Boost;
 
+// FELIX  Change namespace to "BoostSteps"
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class AddTurretFireRateBoostStepNEW : BoostStepNEW
+    public class AddAircraftBoostStep : BoostStep
     {
-        public AddTurretFireRateBoostStepNEW(
+        public AddAircraftBoostStep(
             ITutorialStepArgsNEW args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
@@ -14,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
         protected override void BoostProviderAction()
         {
-            _globalBoostProviders.TurretFireRateBoostProviders.Add(_boostProvider);
+            _globalBoostProviders.AircraftBoostProviders.Add(_boostProvider);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         {
             base.SetuUp();
 
-            _boostStep = new AddTurretFireRateBoostStepNEW(_args, _globalBoostProviders, _boostProvider);
+            _boostStep = new AddTurretFireRateBoostStep(_args, _globalBoostProviders, _boostProvider);
         }
 
         [Test]

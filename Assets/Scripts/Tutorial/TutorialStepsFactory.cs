@@ -357,7 +357,7 @@ namespace BattleCruisers.Tutorial
 
             return new List<ITutorialStep>()
             {
-                new AddAircraftBoostStepNEW(
+                new AddAircraftBoostStep(
                     CreateTutorialStepArgs(textToDisplay),
                     _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider),
@@ -367,7 +367,7 @@ namespace BattleCruisers.Tutorial
                     _deferrer,
                     boostDurationInS),
 
-                new RemoveAircraftBoostStepNEW(
+                new RemoveAircraftBoostStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider)
@@ -515,13 +515,13 @@ namespace BattleCruisers.Tutorial
         {
             return new List<ITutorialStep>()
             {
-                new AddTurretAccuracyBoostStepNEW(
+                new AddTurretAccuracyBoostStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
                     // 0.05 * 20 = 1 (100% accuracy)
                     new BoostProvider(20)),
 
-                new AddTurretFireRateBoostStepNEW(
+                new AddTurretFireRateBoostStep(
                     CreateTutorialStepArgs(),
                     _tutorialArgs.PlayerCruiser.FactoryProvider.GlobalBoostProviders,
                     new BoostProvider(3))
