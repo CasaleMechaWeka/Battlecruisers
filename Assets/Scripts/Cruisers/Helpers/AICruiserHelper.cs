@@ -3,9 +3,9 @@ using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Cruisers.Helpers
 {
-    public class AICruiserHelperNEW : CruiserHelperNEW
+    public class AICruiserHelper : CruiserHelper
     {
-        public AICruiserHelperNEW(IUIManager uIManager, ICameraFocuser cameraFocuser) 
+        public AICruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser) 
             : base(uIManager, cameraFocuser)
         {
         }

@@ -218,12 +218,12 @@ namespace BattleCruisers.Cruisers
 
         private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new AICruiserHelperNEW(uiManager, cameraFocuser);
+            return new AICruiserHelper(uiManager, cameraFocuser);
         }
 
         private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new PlayerCruiserHelperNEW(uiManager, cameraFocuser);
+            return new PlayerCruiserHelper(uiManager, cameraFocuser);
         }
     }
 }

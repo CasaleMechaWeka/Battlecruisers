@@ -4,12 +4,12 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Helpers
 {
-    public abstract class CruiserHelperNEW : ICruiserHelper
+    public abstract class CruiserHelper : ICruiserHelper
     {
         protected readonly IUIManager _uiManager;
         protected readonly ICameraFocuser _cameraFocuser;
 
-        protected CruiserHelperNEW(IUIManager uIManager, ICameraFocuser cameraFocuser)
+        protected CruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser)
         {
             Helper.AssertIsNotNull(uIManager, cameraFocuser);
 
