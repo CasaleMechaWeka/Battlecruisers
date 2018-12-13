@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_cruiserDetails);
         }
 
-        // NEWUI  Check if I can get rid of circular dependency and merge initialise methods?
+        // FELIX  Check if I can get rid of circular dependency and merge initialise methods?
         public void Initialise(
             IUIManager uiManager,
             ICruiser playerCruiser,
