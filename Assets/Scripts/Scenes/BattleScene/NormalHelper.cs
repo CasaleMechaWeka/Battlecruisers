@@ -62,11 +62,6 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
-        public IUIManager CreateUIManager(IManagerArgs args)
-        {
-            return new UIManager(args);
-        }
-
         public ILoadout GetPlayerLoadout()
         {
             return _dataProvider.GameModel.PlayerLoadout;

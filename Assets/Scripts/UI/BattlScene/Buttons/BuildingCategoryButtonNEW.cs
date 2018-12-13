@@ -9,9 +9,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // NEWUI  Replace old UI :P
-    // NEWUI  Remove canvas groups if they are not being used (in inspector, with ButtonWrapper).
-    //      Need separate sprites for this to work?
     public class BuildingCategoryButtonNEW : UIElement, 
         IBuildingCategoryButton, 
         IBroadcastingFilter, 
