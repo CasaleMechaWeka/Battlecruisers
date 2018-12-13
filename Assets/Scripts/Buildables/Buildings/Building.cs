@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings
         protected ISlot _parentSlot;
 
         public BuildingFunction function;
+        // FELIX  Is this still needed?
         public bool preferCruiserFront;
         public SlotType slotType;
 
