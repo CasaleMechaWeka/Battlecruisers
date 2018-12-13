@@ -273,7 +273,7 @@ namespace BattleCruisers.Tutorial
                     BuildSpeed.VeryFast));
 
             enemyUnitDefenceSteps.Add(
-                new BuildableCompletedWaitStepNEW(
+                new BuildableCompletedWaitStep(
                     CreateTutorialStepArgs(), 
                     unitBuildProvider));
 
@@ -292,7 +292,7 @@ namespace BattleCruisers.Tutorial
 
             // 8. Wait for defence turret to destroy unit
             enemyUnitDefenceSteps.Add(
-                new TargetDestroyedWaitStepNEW(
+                new TargetDestroyedWaitStep(
                     CreateTutorialStepArgs(unitComingText),
                     new BuildableToTargetProvider(unitBuildProvider)));
 
@@ -331,7 +331,7 @@ namespace BattleCruisers.Tutorial
             factorySteps.Add(startConstructingFactoryStep);
 
             // 3. Wait for factory completion
-            factorySteps.Add(new BuildableCompletedWaitStepNEW(commonArgs, startConstructingFactoryStep));
+            factorySteps.Add(new BuildableCompletedWaitStep(commonArgs, startConstructingFactoryStep));
 
             // 4. Change build speed to infinitely slow
             factorySteps.Add(
@@ -362,7 +362,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.AICruiser.FactoryProvider.GlobalBoostProviders,
                     boostProvider),
 
-                new DelayWaitStepNEW(
+                new DelayWaitStep(
                     CreateTutorialStepArgs(),
                     _deferrer,
                     boostDurationInS),
@@ -495,7 +495,7 @@ namespace BattleCruisers.Tutorial
 
             // Wait for artillery to complete
             steps.Add(
-                new BuildableCompletedWaitStepNEW(
+                new BuildableCompletedWaitStep(
                     CreateTutorialStepArgs("Now we wait until your artillery is finished.  Patience :)"),
                     _tutorialArgs.TutorialProvider.SingleOffensiveProvider));
 
@@ -504,7 +504,7 @@ namespace BattleCruisers.Tutorial
 
             // Wait for enemy cruiser to be destroyed
             steps.Add(
-                new TargetDestroyedWaitStepNEW(
+                new TargetDestroyedWaitStep(
                     CreateTutorialStepArgs("Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around!"),
                     new StaticProvider<ITarget>(_tutorialArgs.AICruiser)));
 
@@ -618,7 +618,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
             ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay);
-            return new BuildableCompletedWaitStepNEW(args, _lastPlayerIncompleteBuildingStartedProvider);
+            return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
         }
 
         private ITutorialStep CreateStep_CameraAdjustmentWaitStep()

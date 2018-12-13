@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
             _target = Substitute.For<ITarget>();
             _targetProvider.FindItem().Returns(_target);
 
-            _tutorialStep = new TargetDestroyedWaitStepNEW(_args, _targetProvider);
+            _tutorialStep = new TargetDestroyedWaitStep(_args, _targetProvider);
         }
 
         #region Start

@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
             _buildableProvider = Substitute.For<IItemProvider<IBuildable>>();
             _buildableProvider.FindItem().Returns(_buildable);
 
-            _tutorialStep = new BuildableCompletedWaitStepNEW(_args, _buildableProvider);
+            _tutorialStep = new BuildableCompletedWaitStep(_args, _buildableProvider);
         }
 
         #region Start

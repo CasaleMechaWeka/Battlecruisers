@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 
             _deferrer = Substitute.For<IVariableDelayDeferrer>();
             _waitTimeInS = 12;
-            _tutorialStep = new DelayWaitStepNEW(_args, _deferrer, _waitTimeInS);
+            _tutorialStep = new DelayWaitStep(_args, _deferrer, _waitTimeInS);
         }
 
         [Test]
