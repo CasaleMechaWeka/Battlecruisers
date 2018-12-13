@@ -13,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras
 {
-    public class CameraInitialiserNEW : MonoBehaviour
+    public class CameraInitialiser : MonoBehaviour
     {
         private ICameraAdjuster _cameraAdjuster;
 

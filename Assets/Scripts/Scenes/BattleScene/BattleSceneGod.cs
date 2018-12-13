@@ -93,7 +93,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
             // Camera
-            CameraInitialiserNEW cameraInitialiser = FindObjectOfType<CameraInitialiserNEW>();
+            CameraInitialiser cameraInitialiser = FindObjectOfType<CameraInitialiser>();
             Assert.IsNotNull(cameraInitialiser);
 
             ICameraComponents cameraComponents
