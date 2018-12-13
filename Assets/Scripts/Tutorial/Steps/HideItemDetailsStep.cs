@@ -4,11 +4,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    public class HideItemDetailsStep : TutorialStepNEW
+    public class HideItemDetailsStep : TutorialStep
     {
         private readonly IUIManager _uiManager;
 
-        public HideItemDetailsStep(ITutorialStepArgsNEW args, IUIManager uiManager) 
+        public HideItemDetailsStep(ITutorialStepArgs args, IUIManager uiManager) 
             : base(args)
         {
             Assert.IsNotNull(uiManager);

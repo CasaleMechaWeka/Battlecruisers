@@ -5,7 +5,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     public class AddTurretAccuracyBoostStep : BoostStep
     {
         public AddTurretAccuracyBoostStep(
-            ITutorialStepArgsNEW args,
+            ITutorialStepArgs args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args, globalBoostProviders, boostProvider)

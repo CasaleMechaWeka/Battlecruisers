@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 
             _factoryProvider = Substitute.For<IItemProvider<IFactory>>();
 
-            _tutorialStep = new StopUnitConstructionStepNEW(_args, _factoryProvider);
+            _tutorialStep = new StopUnitConstructionStep(_args, _factoryProvider);
         }
 
         [Test]

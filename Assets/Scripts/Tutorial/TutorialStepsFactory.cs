@@ -116,7 +116,7 @@ namespace BattleCruisers.Tutorial
 
             steps.Add(CreateStep_CameraAdjustmentWaitStep());
 
-            ITutorialStepArgsNEW args
+            ITutorialStepArgs args
                 = CreateTutorialStepArgs(
                     "This is your awesome cruiser :D",
                     _tutorialArgs.PlayerCruiser);
@@ -162,7 +162,7 @@ namespace BattleCruisers.Tutorial
 
             steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.AICruiser));
 
-            ITutorialStepArgsNEW args
+            ITutorialStepArgs args
                 = CreateTutorialStepArgs(
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _tutorialArgs.AICruiser);
@@ -182,7 +182,7 @@ namespace BattleCruisers.Tutorial
             steps.AddRange(CreateSteps_AutoNavigation(CameraFocuserTarget.PlayerCruiser));
 
             // Health dial
-            ITutorialStepArgsNEW healthDialArgs
+            ITutorialStepArgs healthDialArgs
                 = CreateTutorialStepArgs(
                     "This is your cruiser's health dial.",
                     _tutorialArgs.LeftPanelComponents.HealthDialHighlightable);
@@ -193,7 +193,7 @@ namespace BattleCruisers.Tutorial
                     _explanationDismissButton));
 
             // Drone number
-            ITutorialStepArgsNEW droneNumberArgs
+            ITutorialStepArgs droneNumberArgs
                 = CreateTutorialStepArgs(
                     "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
                     _tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable);
@@ -217,7 +217,7 @@ namespace BattleCruisers.Tutorial
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: true),
                     "To get more builders construct a builder bay."));
 
-            ITutorialStepArgsNEW args = CreateTutorialStepArgs("Nice!  You have gained 2 builders :D");
+            ITutorialStepArgs args = CreateTutorialStepArgs("Nice!  You have gained 2 builders :D");
             steps.Add(
                 new ExplanationDismissableStep(
                     args,
@@ -248,7 +248,7 @@ namespace BattleCruisers.Tutorial
             // 3. Acknowledge the unit
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
             string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!";
-            ITutorialStepArgsNEW clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
             enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
 
             // 4. Navigate back to player cruiser
@@ -278,7 +278,7 @@ namespace BattleCruisers.Tutorial
                     unitBuildProvider));
 
             enemyUnitDefenceSteps.Add(
-                new StopUnitConstructionStepNEW(
+                new StopUnitConstructionStep(
                     CreateTutorialStepArgs(),
                     factoryStepsResult.FactoryProvider));
 
@@ -313,7 +313,7 @@ namespace BattleCruisers.Tutorial
             // There is no need to display any text to the user or highlight any
             // elements.
             string textToDisplay = null;
-            ITutorialStepArgsNEW commonArgs = CreateTutorialStepArgs(textToDisplay);
+            ITutorialStepArgs commonArgs = CreateTutorialStepArgs(textToDisplay);
 
             // 1. Change build speed to super fast
             factorySteps.Add(
@@ -322,8 +322,8 @@ namespace BattleCruisers.Tutorial
                     BuildSpeed.VeryFast));
 
             // 2. Start building factory
-            StartConstructingBuildingStepNEW startConstructingFactoryStep
-                = new StartConstructingBuildingStepNEW(
+            StartConstructingBuildingStep startConstructingFactoryStep
+                = new StartConstructingBuildingStep(
                     commonArgs,
                     factoryKey,
                     _tutorialArgs.PrefabFactory,
@@ -342,7 +342,7 @@ namespace BattleCruisers.Tutorial
             // 5. Start building unit
             IItemProvider<IFactory> factoryProvider = new BuildableToFactoryProvider(startConstructingFactoryStep);
             factorySteps.Add(
-                new StartConstructingUnitStepNEW(
+                new StartConstructingUnitStep(
                     commonArgs,
                     unitKey,
                     _tutorialArgs.PrefabFactory,
@@ -531,7 +531,7 @@ namespace BattleCruisers.Tutorial
         private ITutorialStep CreateStep_ChangeBuildSpeed(IBuildSpeedController speedController, BuildSpeed buildSpeed)
         {
             return
-                new ChangeCruiserBuildSpeedStepNEW(
+                new ChangeCruiserBuildSpeedStep(
                     CreateTutorialStepArgs(),
                     speedController,
                     buildSpeed);
@@ -564,13 +564,13 @@ namespace BattleCruisers.Tutorial
             // Select building category
             IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.LeftPanelComponents.BuildMenu.GetCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
-            ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
+            ITutorialStepArgs buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
-            ITutorialStepArgsNEW buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
+            ITutorialStepArgs buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
             ISlotProvider slotProvider = new SlotProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStep(
@@ -582,7 +582,7 @@ namespace BattleCruisers.Tutorial
                     _tutorialArgs.TutorialProvider.SlotPermitter));
 
             // Select a slot
-            ITutorialStepArgsNEW buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotProvider);
+            ITutorialStepArgs buildingSlotsArgs = CreateTutorialStepArgs(textToDisplay, slotProvider);
             constructionSteps.Add(
                 new SlotStep(
                     buildingSlotsArgs,
@@ -617,7 +617,7 @@ namespace BattleCruisers.Tutorial
 
         private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
-            ITutorialStepArgsNEW args = CreateTutorialStepArgs(textToDisplay);
+            ITutorialStepArgs args = CreateTutorialStepArgs(textToDisplay);
             return new BuildableCompletedWaitStepNEW(args, _lastPlayerIncompleteBuildingStartedProvider);
         }
 
@@ -647,21 +647,21 @@ namespace BattleCruisers.Tutorial
                     enableButtons);
         }
 
-        private ITutorialStepArgsNEW CreateTutorialStepArgs(
+        private ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
             IMaskHighlightable highlightable = null)
         {
             return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IMaskHighlightable>(highlightable));
         }
 
-        private ITutorialStepArgsNEW CreateTutorialStepArgs(
+        private ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
             IItemProvider<IMaskHighlightable> highlightableProvider)
         {
             Assert.IsNotNull(highlightableProvider);
 
             return
-                new TutorialStepArgsNEW(
+                new TutorialStepArgs(
                     _highlighter,
                     textToDisplay,
                     _displayer,

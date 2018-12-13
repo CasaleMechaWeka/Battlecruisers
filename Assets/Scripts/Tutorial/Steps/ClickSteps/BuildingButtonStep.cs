@@ -19,7 +19,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly ISlotPermitter _highlightableSlotPermitter;
 
         public BuildingButtonStep(
-            ITutorialStepArgsNEW args, 
+            ITutorialStepArgs args, 
             IBuildableButton buildableButton,
             IBuildingPermitter buildingPermitter,
             IPrefabKey buildingToAllow,

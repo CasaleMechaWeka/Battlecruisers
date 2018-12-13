@@ -9,12 +9,12 @@ namespace BattleCruisers.Tutorial.Steps
         PlayerCruiser, AICruiser, AICruiserNavalFactory, MidLeft
     }
 
-    public class CameraFocuserStep : TutorialStepNEW
+    public class CameraFocuserStep : TutorialStep
     {
         private readonly ICameraFocuser _cameraFocuser;
         private readonly CameraFocuserTarget _target;
 
-        public CameraFocuserStep(ITutorialStepArgsNEW args, ICameraFocuser cameraFocuser, CameraFocuserTarget target)
+        public CameraFocuserStep(ITutorialStepArgs args, ICameraFocuser cameraFocuser, CameraFocuserTarget target)
             : base(args)
         {
             Assert.IsNotNull(cameraFocuser);

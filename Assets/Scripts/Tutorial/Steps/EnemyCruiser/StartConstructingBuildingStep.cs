@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class StartConstructingBuildingStepNEW : TutorialStepNEW, IItemProvider<IBuildable>
+    public class StartConstructingBuildingStep : TutorialStep, IItemProvider<IBuildable>
     {
         private readonly IPrefabKey _buildingToConstruct;
         private readonly IPrefabFactory _prefabFactory;
@@ -19,8 +19,8 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 
         private IBuilding _building;
 
-        public StartConstructingBuildingStepNEW(
-            ITutorialStepArgsNEW args, 
+        public StartConstructingBuildingStep(
+            ITutorialStepArgs args, 
             IPrefabKey buildingToConstruct, 
             IPrefabFactory prefabFactory, 
             ICruiserController parentCruiser) 

@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 {
     public abstract class TutorialStepTestsBase
     {
-        protected ITutorialStepArgsNEW _args;
+        protected ITutorialStepArgs _args;
         protected IHighlighter _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             _highlightableProvider = Substitute.For<IItemProvider<IMaskHighlightable>>();
             _highlightableProvider.FindItem().Returns(_highlightable);
 
-            _args = new TutorialStepArgsNEW(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
+            _args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
 
             _completionCallback = () => _callbackCounter++;
             _callbackCounter = 0;

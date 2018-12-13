@@ -4,13 +4,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    public class ExplanationClickStep : TutorialStepNEW
+    public class ExplanationClickStep : TutorialStep
     {
         private readonly IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickableEmitter;
 
         // FELIX  Most child classes create StaticProvider<IClickableEmitter>, create helper constructor?
-        public ExplanationClickStep(ITutorialStepArgsNEW args, IItemProvider<IClickableEmitter> clickableProvider)
+        public ExplanationClickStep(ITutorialStepArgs args, IItemProvider<IClickableEmitter> clickableProvider)
             : base(args)
         {
             Assert.IsNotNull(clickableProvider);

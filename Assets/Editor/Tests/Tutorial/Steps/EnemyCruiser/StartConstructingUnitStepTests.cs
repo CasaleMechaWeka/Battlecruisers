@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _factoryProvider = Substitute.For<IItemProvider<IFactory>>();
 
-            _tutorialStep = new StartConstructingUnitStepNEW(_args, _unitToConstruct, _prefabFactory, _factoryProvider);
+            _tutorialStep = new StartConstructingUnitStep(_args, _unitToConstruct, _prefabFactory, _factoryProvider);
         }
 
         [Test]

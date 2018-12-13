@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
     {
         public int BoostActionCount { get; private set; }
 
-        public DummyBoostStep(ITutorialStepArgsNEW args, IGlobalBoostProviders globalBoostProviders, IBoostProvider boostProvider)
+        public DummyBoostStep(ITutorialStepArgs args, IGlobalBoostProviders globalBoostProviders, IBoostProvider boostProvider)
             : base(args, globalBoostProviders, boostProvider)
         {
             BoostActionCount = 0;

@@ -4,7 +4,7 @@ using BattleCruisers.Tutorial.Providers;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    public interface ITutorialStepArgsNEW
+    public interface ITutorialStepArgs
     {
         IHighlighter Highlighter { get; }
         string TextToDisplay { get; }

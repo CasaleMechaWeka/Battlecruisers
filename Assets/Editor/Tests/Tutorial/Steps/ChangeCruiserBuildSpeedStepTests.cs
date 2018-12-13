@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 
             _buildSpeedController = Substitute.For<IBuildSpeedController>();
             _buildSpeed = BuildSpeed.VeryFast;
-            _tutorialStep = new ChangeCruiserBuildSpeedStepNEW(_args, _buildSpeedController, _buildSpeed);
+            _tutorialStep = new ChangeCruiserBuildSpeedStep(_args, _buildSpeedController, _buildSpeed);
         }
 
         [Test]

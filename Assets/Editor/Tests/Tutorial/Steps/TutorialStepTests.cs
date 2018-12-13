@@ -6,9 +6,9 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
 {
-    public class DummyTutorialStep : TutorialStepNEW
+    public class DummyTutorialStep : TutorialStep
     {
-        public DummyTutorialStep(ITutorialStepArgsNEW args) : base(args)
+        public DummyTutorialStep(ITutorialStepArgs args) : base(args)
         {
         }
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         public void Start_NullText_DoesNotDisplayText()
         {
             _textToDisplay = null;
-            ITutorialStepArgsNEW args = new TutorialStepArgsNEW(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
+            ITutorialStepArgs args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
             _tutorialStep = new DummyTutorialStep(args);
 
             _tutorialStep.Start(_completionCallback);

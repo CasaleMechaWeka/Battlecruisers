@@ -9,14 +9,14 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class StartConstructingUnitStepNEW : TutorialStepNEW
+    public class StartConstructingUnitStep : TutorialStep
     {
         private readonly IPrefabKey _unitToConstruct;
         private readonly IPrefabFactory _prefabFactory;
         private readonly IItemProvider<IFactory> _factoryProvider;
 
-        public StartConstructingUnitStepNEW(
-            ITutorialStepArgsNEW args,
+        public StartConstructingUnitStep(
+            ITutorialStepArgs args,
             IPrefabKey unitToConstruct,
             IPrefabFactory prefabFactory,
             IItemProvider<IFactory> factoryProvider)

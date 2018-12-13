@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    public class ChangeCruiserBuildSpeedStepNEW : TutorialStepNEW
+    public class ChangeCruiserBuildSpeedStep : TutorialStep
     {
         private readonly IBuildSpeedController _buildSpeedController;
         private readonly BuildSpeed _buildSpeed;
 
-        public ChangeCruiserBuildSpeedStepNEW(ITutorialStepArgsNEW args, IBuildSpeedController buildSpeedController, BuildSpeed buildSpeed)
+        public ChangeCruiserBuildSpeedStep(ITutorialStepArgs args, IBuildSpeedController buildSpeedController, BuildSpeed buildSpeed)
             : base(args)
         {
             Assert.IsNotNull(buildSpeedController);

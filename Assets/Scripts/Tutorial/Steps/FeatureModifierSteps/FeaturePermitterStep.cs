@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
 {
-    public class FeaturePermitterStep : TutorialStepNEW
+    public class FeaturePermitterStep : TutorialStep
     {
         private readonly BasicFilter _featurePermitter;
         private readonly bool _enableFeature;
 
-        public FeaturePermitterStep(ITutorialStepArgsNEW args, BasicFilter featurePermitter, bool enableFeature)
+        public FeaturePermitterStep(ITutorialStepArgs args, BasicFilter featurePermitter, bool enableFeature)
             : base(args)
         {
             Assert.IsNotNull(featurePermitter);

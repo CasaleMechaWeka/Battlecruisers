@@ -4,14 +4,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
 {
-    public class UIManagerPermissionsStep : TutorialStepNEW
+    public class UIManagerPermissionsStep : TutorialStep
     {
         private readonly IUIManagerSettablePermissions _permissions;
         private readonly bool _canShowItemDetails;
         private readonly bool _canDismissItemDetails;
 
         public UIManagerPermissionsStep(
-            ITutorialStepArgsNEW args,
+            ITutorialStepArgs args,
             IUIManagerSettablePermissions permissions, 
             bool canShowItemDetails, 
             bool canDismissItemDetails)

@@ -5,11 +5,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public class StopUnitConstructionStepNEW : TutorialStepNEW
+    public class StopUnitConstructionStep : TutorialStep
     {
         private readonly IItemProvider<IFactory> _factoryProvider;
 
-        public StopUnitConstructionStepNEW(ITutorialStepArgsNEW args, IItemProvider<IFactory> factoryProvider)
+        public StopUnitConstructionStep(ITutorialStepArgs args, IItemProvider<IFactory> factoryProvider)
             : base(args)
         {
             Assert.IsNotNull(factoryProvider);

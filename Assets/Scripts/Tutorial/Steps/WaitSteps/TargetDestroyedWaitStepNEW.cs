@@ -8,12 +8,12 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// <summary>
     /// Completed when the target is destroyed.
     /// </summary>
-    public class TargetDestroyedWaitStepNEW : TutorialStepNEW
+    public class TargetDestroyedWaitStepNEW : TutorialStep
     {
         private readonly IItemProvider<ITarget> _targetProvider;
         private ITarget _target;
 
-        public TargetDestroyedWaitStepNEW(ITutorialStepArgsNEW args, IItemProvider<ITarget> targetProvider)
+        public TargetDestroyedWaitStepNEW(ITutorialStepArgs args, IItemProvider<ITarget> targetProvider)
             : base(args)
         {
             Assert.IsNotNull(targetProvider);

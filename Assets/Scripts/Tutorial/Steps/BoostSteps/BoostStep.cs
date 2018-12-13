@@ -4,13 +4,13 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
 {
-    public abstract class BoostStep : TutorialStepNEW
+    public abstract class BoostStep : TutorialStep
     {
         protected readonly IGlobalBoostProviders _globalBoostProviders;
         protected readonly IBoostProvider _boostProvider;
 
         protected BoostStep(
-            ITutorialStepArgsNEW args,
+            ITutorialStepArgs args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args)
