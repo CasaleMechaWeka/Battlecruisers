@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButtonNEW : UIElement, IToggleButton, IPointerClickHandler
+    public class GameSpeedButton : UIElement, IToggleButton, IPointerClickHandler
     {
         private FilterToggler _isEnabledToggler;
 

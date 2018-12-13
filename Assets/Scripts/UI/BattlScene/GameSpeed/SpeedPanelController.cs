@@ -20,10 +20,10 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         {
             Assert.IsNotNull(shouldBeEnabledFilter);
 
-            GameSpeedButtonNEW[] speedButtons = GetComponentsInChildren<GameSpeedButtonNEW>();
+            GameSpeedButton[] speedButtons = GetComponentsInChildren<GameSpeedButton>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
             
-            foreach (GameSpeedButtonNEW speedButton in speedButtons)
+            foreach (GameSpeedButton speedButton in speedButtons)
             {
                 speedButton.Initialise(shouldBeEnabledFilter);
             }
