@@ -24,7 +24,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {
-    public class CruiserFactoryNEW : ICruiserFactoryNEW
+    public class CruiserFactory : ICruiserFactory
 	{
         private readonly IPrefabFactory _prefabFactory;
         private readonly IBattleSceneGodComponents _components;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Cruisers
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
-        public CruiserFactoryNEW(
+        public CruiserFactory(
             IPrefabFactory prefabFactory,
             IBattleSceneGodComponents components,
             ISpriteProvider spriteProvider,

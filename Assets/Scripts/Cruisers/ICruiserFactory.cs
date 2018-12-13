@@ -3,7 +3,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Cruisers
 {
-    public interface ICruiserFactoryNEW
+    public interface ICruiserFactory
     {
         Cruiser CreatePlayerCruiser();
         Cruiser CreateAICruiser();

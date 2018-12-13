@@ -78,8 +78,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
-            ICruiserFactoryNEW cruiserFactory
-                = new CruiserFactoryNEW(
+            ICruiserFactory cruiserFactory
+                = new CruiserFactory(
                     prefabFactory,
                     components,
                     spriteProvider,
