@@ -27,7 +27,6 @@ using UnityEngine.Assertions;
 // TEMP     => Temporary for testing
 // IPAD     => Update for IPad (usualy input related)
 // PERF     => Potential performance hit
-// NEWUI    => Should be resolved once legacy UI is replaced :)
 // TUTORIAL => Should be resolved once tutorial is sorted :)
 namespace BattleCruisers.Scenes.BattleScene
 {
