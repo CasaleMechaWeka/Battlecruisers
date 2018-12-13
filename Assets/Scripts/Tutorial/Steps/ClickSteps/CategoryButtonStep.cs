@@ -7,12 +7,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
-    public class CategoryButtonStepNEW : ExplanationClickStep
+    public class CategoryButtonStep : ExplanationClickStep
     {
         private readonly IBuildingCategoryPermitter _permitter;
         private readonly BuildingCategory _category;
 
-        public CategoryButtonStepNEW(
+        public CategoryButtonStep(
             ITutorialStepArgsNEW args, 
             IBuildingCategoryButton buildingCategoryButton,
             IBuildingCategoryPermitter permitter) 

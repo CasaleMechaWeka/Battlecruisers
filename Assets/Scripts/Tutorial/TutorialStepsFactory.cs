@@ -565,7 +565,7 @@ namespace BattleCruisers.Tutorial
             IBuildingCategoryButton buildingCategoryButton = _tutorialArgs.LeftPanelComponents.BuildMenu.GetCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
             ITutorialStepArgsNEW buildingCategoryArgs = CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
-            constructionSteps.Add(new CategoryButtonStepNEW(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
+            constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialArgs.TutorialProvider.BuildingCategoryPermitter));
 
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
@@ -573,7 +573,7 @@ namespace BattleCruisers.Tutorial
             ITutorialStepArgsNEW buldingButtonArgs = CreateTutorialStepArgs(textToDisplay, buildingButton);
             ISlotProvider slotProvider = new SlotProvider(_tutorialArgs.PlayerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
-                new BuildingButtonStepNEW(
+                new BuildingButtonStep(
                     buldingButtonArgs,
                     buildingButton,
                     _tutorialArgs.TutorialProvider.BuildingPermitter,

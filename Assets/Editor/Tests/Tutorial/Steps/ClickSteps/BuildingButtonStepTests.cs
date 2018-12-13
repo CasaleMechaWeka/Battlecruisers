@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _explicitSlotProvider = _slotProvider;
             _explicitSlotProvider.FindItem().Returns(_slot);
 
-            _clickStep = new BuildingButtonStepNEW(_args, _buildableButton, _buildingPermitter, _buildingToAllow, _slotProvider, _slotPermitter);
+            _clickStep = new BuildingButtonStep(_args, _buildableButton, _buildingPermitter, _buildingToAllow, _slotProvider, _slotPermitter);
         }
 
         [Test]

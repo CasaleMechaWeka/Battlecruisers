@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _buildingCategoryButton.Category.Returns(BuildingCategory.Ultra);
             _permitter = Substitute.For<IBuildingCategoryPermitter>();
 
-            _clickStep = new CategoryButtonStepNEW(_args, _buildingCategoryButton, _permitter);
+            _clickStep = new CategoryButtonStep(_args, _buildingCategoryButton, _permitter);
         }
 
         [Test]

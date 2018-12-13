@@ -11,14 +11,14 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// <summary>
     /// Must be used in tandem with SlotsStep.
     /// </summary>
-    public class BuildingButtonStepNEW : ExplanationClickStep
+    public class BuildingButtonStep : ExplanationClickStep
     {
         private readonly IBuildingPermitter _buildingPermitter;
         private readonly IPrefabKey _buildingToAllow;
         private readonly IItemProvider<ISlot> _slotProvider;
         private readonly ISlotPermitter _highlightableSlotPermitter;
 
-        public BuildingButtonStepNEW(
+        public BuildingButtonStep(
             ITutorialStepArgsNEW args, 
             IBuildableButton buildableButton,
             IBuildingPermitter buildingPermitter,
