@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.UI
 {
-    // FELIX  TEst :D
     public class FilterToggler
     {
         private readonly ITogglable _togglable;
