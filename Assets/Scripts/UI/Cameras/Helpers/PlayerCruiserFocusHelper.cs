@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -8,17 +9,17 @@ namespace BattleCruisers.UI.Cameras.Helpers
     public class PlayerCruiserFocusHelper : IPlayerCruiserFocusHelper
     {
         private readonly ICamera _camera;
-        private readonly ICameraController _cameraController;
+        private readonly ICameraFocuser _cameraFocuser;
         private readonly ICruiser _playerCruiser;
 
         private const float CAMERA_MARGIN_IN_M = 10;
 
-        public PlayerCruiserFocusHelper(ICamera camera, ICameraController cameraController, ICruiser playerCruiser)
+        public PlayerCruiserFocusHelper(ICamera camera, ICameraFocuser cameraFocuser, ICruiser playerCruiser)
         {
-            Helper.AssertIsNotNull(camera, cameraController, playerCruiser);
+            Helper.AssertIsNotNull(camera, cameraFocuser, playerCruiser);
 
             _camera = camera;
-            _cameraController = cameraController;
+            _cameraFocuser = cameraFocuser;
             _playerCruiser = playerCruiser;
         }
 
@@ -26,7 +27,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         {
             if (!IsCameraRoughlyOnPlayerCruiser())
             {
-                _cameraController.FocusOnPlayerCruiser();
+                _cameraFocuser.FocusOnPlayerCruiser();
             }
         }
 

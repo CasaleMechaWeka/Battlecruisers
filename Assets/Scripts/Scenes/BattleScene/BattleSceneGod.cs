@@ -134,7 +134,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     prefabFactory,
                     spriteProvider,
                     buttonVisibilityFilters,
-                    new PlayerCruiserFocusHelperNEW(components.Camera, cameraComponents.CameraFocuser, playerCruiser),
+                    new PlayerCruiserFocusHelper(components.Camera, cameraComponents.CameraFocuser, playerCruiser),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     playerCruiser);
 

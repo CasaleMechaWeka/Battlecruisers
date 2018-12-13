@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
@@ -12,17 +12,17 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
     {
         private IPlayerCruiserFocusHelper _helper;
         private ICamera _camera;
-        private ICameraController _cameraController;
+        private ICameraFocuser _cameraFocuser;
         private ICruiser _playerCruiser;
 
         [SetUp]
         public void TestSetup()
         {
             _camera = Substitute.For<ICamera>();
-            _cameraController = Substitute.For<ICameraController>();
+            _cameraFocuser = Substitute.For<ICameraFocuser>();
             _playerCruiser = Substitute.For<ICruiser>();
 
-            _helper = new PlayerCruiserFocusHelper(_camera, _cameraController, _playerCruiser);
+            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
-            _cameraController.DidNotReceive().FocusOnPlayerCruiser();
+            _cameraFocuser.DidNotReceive().FocusOnPlayerCruiser();
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
-            _cameraController.Received().FocusOnPlayerCruiser();
+            _cameraFocuser.Received().FocusOnPlayerCruiser();
         }
     }
 }
