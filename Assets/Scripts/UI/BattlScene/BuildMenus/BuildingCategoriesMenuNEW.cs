@@ -41,8 +41,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 }
                 else
                 {
-                    // NEWUI  Need individual sprites from Peter to be able to destroy button,
-                    // currently just part of backgroudn image :P
                     // Have no buildable for button (user has not unlocked it yet)
                     Destroy(button.gameObject);
                 }
