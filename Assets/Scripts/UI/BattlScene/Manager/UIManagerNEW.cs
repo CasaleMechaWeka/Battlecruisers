@@ -29,11 +29,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _aiCruiser = args.AICruiser;
         }
 
-        /// NEWUI  Remove?
-        public void InitialUI()
-        {
-        }
-
 		public virtual void HideItemDetails()
 		{
             Logging.Log(Tags.UI_MANAGER, ".HideItemDetails()");
