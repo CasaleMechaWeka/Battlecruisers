@@ -9,11 +9,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
     /// Wraps a normal UIManager, and only allows the noraml UIManager methods
     /// to execute if the IUIManagerPermissions allow it.
     /// </summary>
-    public class LimitableUIManagerNEW : UIManagerNEW
+    public class LimitableUIManager : UIManager
     {
         private IUIManagerPermissions _permissions;
 
-        public void Initialise(ManagerArgsNEW args, IUIManagerPermissions permissions)
+        public void Initialise(ManagerArgs args, IUIManagerPermissions permissions)
         {
             base.Initialise(args);
 

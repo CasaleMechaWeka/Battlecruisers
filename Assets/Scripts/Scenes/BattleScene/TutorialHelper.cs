@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildingNameFilter _buildingNameFilter;
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
-        private LimitableUIManagerNEW _uiManager;
+        private LimitableUIManager _uiManager;
 
         public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
@@ -133,11 +133,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public IUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "CreateUIManager() should only be called once");
-            _uiManager = new LimitableUIManagerNEW();
+            _uiManager = new LimitableUIManager();
             return _uiManager;
         }
 
-        public void InitialiseUIManager(ManagerArgsNEW args)
+        public void InitialiseUIManager(ManagerArgs args)
         {
             Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
 

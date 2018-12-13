@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         // Separate methods because of circular dependency between UIManager and everything else :/
         IUIManager CreateUIManager();
-        void InitialiseUIManager(ManagerArgsNEW args);
+        void InitialiseUIManager(ManagerArgs args);
 
         ILoadout GetPlayerLoadout();
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);

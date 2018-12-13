@@ -150,8 +150,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager);
 
-            ManagerArgsNEW args
-                = new ManagerArgsNEW(
+            ManagerArgs args
+                = new ManagerArgs(
                     playerCruiser,
                     aiCruiser,
                     leftPanelComponents.BuildMenu,

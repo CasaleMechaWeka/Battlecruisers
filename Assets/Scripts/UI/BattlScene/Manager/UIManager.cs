@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    public class UIManagerNEW : IUIManager
+    public class UIManager : IUIManager
 	{
 		private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         // Not in constructor because of circular dependency with:
         // + Build menu
         // + Cruisers
-        public void Initialise(ManagerArgsNEW args)
+        public void Initialise(ManagerArgs args)
         {
             Assert.IsNotNull(args);
 

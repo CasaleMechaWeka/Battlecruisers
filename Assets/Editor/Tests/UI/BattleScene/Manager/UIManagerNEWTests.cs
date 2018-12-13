@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 {
     public class UIManagerNEWTests
     {
-        private UIManagerNEW _uiManager;
+        private UIManager _uiManager;
 
         private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
@@ -34,13 +34,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IItemDetailsManager>();
 
-            ManagerArgsNEW managerArgs
-                = new ManagerArgsNEW(
+            ManagerArgs managerArgs
+                = new ManagerArgs(
                     _playerCruiser,
                     _aiCruiser,
                     _buildMenu,
                     _detailsManager);
-            _uiManager = new UIManagerNEW();
+            _uiManager = new UIManager();
             _uiManager.Initialise(managerArgs);
 
             _building = Substitute.For<IBuilding>();

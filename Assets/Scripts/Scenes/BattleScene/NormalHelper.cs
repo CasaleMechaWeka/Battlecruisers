@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IPrefabFactory _prefabFactory;
         private readonly IVariableDelayDeferrer _variableDelayDeferrer;
 
-        private UIManagerNEW _uiManager;
+        private UIManager _uiManager;
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
@@ -113,11 +113,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public IUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
-            _uiManager = new UIManagerNEW();
+            _uiManager = new UIManager();
             return _uiManager;
         }
 
-        public void InitialiseUIManager(ManagerArgsNEW args)
+        public void InitialiseUIManager(ManagerArgs args)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(args);
