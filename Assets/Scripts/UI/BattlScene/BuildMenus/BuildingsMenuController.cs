@@ -25,20 +25,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
-            // NEWUI  Switch back
-            Helper.AssertIsNotNull(spriteProvider, clickHandler);
-            //Helper.AssertIsNotNull(buildingCategoryButton, spriteProvider, clickHandler);
+            Helper.AssertIsNotNull(buildingCategoryButton, spriteProvider, clickHandler);
 
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
             base.Initialise(uiManager, buttonVisibilityFilters, buildings);
-
-            // NEWUI  Remove null check
-            if (buildingCategoryButton != null)
-            {
-                buildingCategoryButton.IsActiveFeedbackVisible = false;
-            }
+            buildingCategoryButton.IsActiveFeedbackVisible = false;
         }
 
         protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildableWrapper)
@@ -49,23 +42,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public override void OnPresenting(object activationParameter)
         {
             base.OnPresenting(activationParameter);
-
-            // NEWUI  Remove null check
-            if (buildingCategoryButton != null)
-            {
-                buildingCategoryButton.IsActiveFeedbackVisible = true;
-            }
+            buildingCategoryButton.IsActiveFeedbackVisible = true;
         }
 
         public override void OnDismissing()
         {
             base.OnDismissing();
-    
-            // NEWUI  Remove null check
-            if (buildingCategoryButton != null)
-            {
-                buildingCategoryButton.IsActiveFeedbackVisible = false;
-            }
+            buildingCategoryButton.IsActiveFeedbackVisible = false;
         }
     }
 }
