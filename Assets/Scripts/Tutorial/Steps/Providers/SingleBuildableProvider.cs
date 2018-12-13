@@ -6,11 +6,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public class SingleBuildableProviderNEW : ISingleBuildableProviderNEW
+    public class SingleBuildableProvider : ISingleBuildableProvider
     {
         private readonly string _buildableTag;
 
-        public SingleBuildableProviderNEW(string targetTag)
+        public SingleBuildableProvider(string targetTag)
         {
             _buildableTag = targetTag;
         }

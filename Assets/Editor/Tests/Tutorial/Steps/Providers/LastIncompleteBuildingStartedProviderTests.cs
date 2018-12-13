@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         public void SetuUp()
         {
             _cruiser = Substitute.For<ICruiserController>();
-            LastIncompleteBuildingStartedProviderNEW provider = new LastIncompleteBuildingStartedProviderNEW(_cruiser);
+            LastIncompleteBuildingStartedProvider provider = new LastIncompleteBuildingStartedProvider(_cruiser);
 
             _buildableProvider = provider;
             _highlightableProvider = provider;

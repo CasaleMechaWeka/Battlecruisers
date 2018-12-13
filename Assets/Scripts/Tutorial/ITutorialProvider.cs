@@ -25,9 +25,9 @@ namespace BattleCruisers.Tutorial
         IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
         IBuildSpeedController AICruiserBuildSpeedController { get; }
 
-        ISingleBuildableProviderNEW SingleAircraftProvider { get; }
-		ISingleBuildableProviderNEW SingleShipProvider { get; }
-        ISingleBuildableProviderNEW SingleOffensiveProvider { get; }
-        ISingleBuildableProviderNEW CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser);
+        ISingleBuildableProvider SingleAircraftProvider { get; }
+		ISingleBuildableProvider SingleShipProvider { get; }
+        ISingleBuildableProvider SingleOffensiveProvider { get; }
+        ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser);
     }
 }

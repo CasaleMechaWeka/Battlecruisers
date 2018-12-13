@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public class LastIncompleteBuildingStartedProviderNEW : ISingleBuildableProviderNEW
+    public class LastIncompleteBuildingStartedProvider : ISingleBuildableProvider
     {
         // Sorted list of buildings, with the most recently started
         // building at the end.
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             }
         }
 
-        public LastIncompleteBuildingStartedProviderNEW(ICruiserController cruiser)
+        public LastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
             Assert.IsNotNull(cruiser);
 

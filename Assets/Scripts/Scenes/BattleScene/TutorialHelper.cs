@@ -38,9 +38,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public BasicFilter IsNavigationEnabledFilter { get; private set; }
 
-        public ISingleBuildableProviderNEW SingleAircraftProvider { get; private set; }
-        public ISingleBuildableProviderNEW SingleShipProvider { get; private set; }
-        public ISingleBuildableProviderNEW SingleOffensiveProvider { get; private set; }
+        public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
+        public ISingleBuildableProvider SingleShipProvider { get; private set; }
+        public ISingleBuildableProvider SingleOffensiveProvider { get; private set; }
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
 		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; private set; }
@@ -58,9 +58,9 @@ namespace BattleCruisers.Scenes.BattleScene
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
             BackButtonPermitter = new BasicFilter(isMatch: false);
-            SingleAircraftProvider = new SingleBuildableProviderNEW(GameObjectTags.AIRCRAFT);
-            SingleShipProvider = new SingleBuildableProviderNEW(GameObjectTags.SHIP);
-            SingleOffensiveProvider = new SingleBuildableProviderNEW(GameObjectTags.OFFENSIVE);
+            SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
+            SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
+            SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
             IsNavigationEnabledFilter = new BasicFilter(isMatch: false);
             SpeedButtonsPermitter = new BasicFilter(isMatch: false);
 
@@ -93,9 +93,9 @@ namespace BattleCruisers.Scenes.BattleScene
             return _slotFilter;
 		}
 
-        public ISingleBuildableProviderNEW CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
+        public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
-            return new LastIncompleteBuildingStartedProviderNEW(cruiser);
+            return new LastIncompleteBuildingStartedProvider(cruiser);
         }
 
         public IFilter<ITarget> CreateDeletButtonVisiblityFilter()

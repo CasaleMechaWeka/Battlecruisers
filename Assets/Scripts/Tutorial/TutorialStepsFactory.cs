@@ -35,7 +35,7 @@ namespace BattleCruisers.Tutorial
         private readonly IExplanationDismissButton _explanationDismissButton;
         private readonly IVariableDelayDeferrer _deferrer;
         private readonly ITutorialArgs _tutorialArgs;
-        private readonly ISingleBuildableProviderNEW _lastPlayerIncompleteBuildingStartedProvider;
+        private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
         public TutorialStepsFactory(
             IHighlighter highlighter,
@@ -230,7 +230,7 @@ namespace BattleCruisers.Tutorial
         private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
             IPrefabKey factoryKey,
             BuildableInfo unitToBuild,
-            ISingleBuildableProviderNEW unitBuildProvider,
+            ISingleBuildableProvider unitBuildProvider,
             BuildableInfo defenceToBuild,
             SlotSpecification slotSpecification,
             bool boostAircraftSpeed,

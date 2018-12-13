@@ -4,7 +4,7 @@ using BattleCruisers.Tutorial.Providers;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public interface ISingleBuildableProviderNEW :
+    public interface ISingleBuildableProvider :
         IItemProvider<IBuildable>,
         IItemProvider<IMaskHighlightable>,
         IItemProvider<IClickableEmitter>
