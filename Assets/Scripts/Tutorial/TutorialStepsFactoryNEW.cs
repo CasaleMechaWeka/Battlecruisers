@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial
     // FELIX  Split up monster class?  :P
     public class TutorialStepsFactoryNEW : ITutorialStepsFactory
     {
-        private readonly IHighlighterNEW _highlighter;
+        private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
         private readonly IExplanationDismissButton _explanationDismissButton;
         private readonly IVariableDelayDeferrer _deferrer;
@@ -39,7 +39,7 @@ namespace BattleCruisers.Tutorial
         private readonly ISingleBuildableProviderNEW _lastPlayerIncompleteBuildingStartedProvider;
 
         public TutorialStepsFactoryNEW(
-            IHighlighterNEW highlighter,
+            IHighlighter highlighter,
             IExplanationPanel explanationPanel,
             IVariableDelayDeferrer deferrer,
             ITutorialArgsNEW tutorialArgs)

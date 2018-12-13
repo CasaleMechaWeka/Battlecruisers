@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    public class HighlighterNEW : IHighlighterNEW
+    public class Highlighter : IHighlighter
     {
         private readonly IMaskHighlighter _maskHighlighter;
         private readonly IHighlightArgsFactory _highlightArgsFactory;
 
-        public HighlighterNEW(IMaskHighlighter maskHighlighter, IHighlightArgsFactory highlightArgsFactory)
+        public Highlighter(IMaskHighlighter maskHighlighter, IHighlightArgsFactory highlightArgsFactory)
         {
             Helper.AssertIsNotNull(maskHighlighter, highlightArgsFactory);
 

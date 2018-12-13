@@ -8,7 +8,7 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public abstract class TutorialStepNEW : ITutorialStep
     {
-        private readonly IHighlighterNEW _highlighter;
+        private readonly IHighlighter _highlighter;
         private readonly string _textToDisplay;
         private readonly ITextDisplayer _displayer;
         private readonly IItemProvider<IMaskHighlightable> _highlightableProvider;

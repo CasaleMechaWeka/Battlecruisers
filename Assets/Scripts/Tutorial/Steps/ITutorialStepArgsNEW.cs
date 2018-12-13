@@ -6,7 +6,7 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public interface ITutorialStepArgsNEW
     {
-        IHighlighterNEW Highlighter { get; }
+        IHighlighter Highlighter { get; }
         string TextToDisplay { get; }
         ITextDisplayer Displayer { get; }
 		IItemProvider<IMaskHighlightable> HighlightableProvider { get; }

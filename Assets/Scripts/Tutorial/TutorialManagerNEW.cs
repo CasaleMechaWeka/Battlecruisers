@@ -23,8 +23,8 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(maskHighlighter);
             maskHighlighter.Initialise();
 
-            IHighlighterNEW highlighter
-                = new HighlighterNEW(
+            IHighlighter highlighter
+                = new Highlighter(
                     maskHighlighter,
                     new HighlightArgsFactory(tutorialArgs.Components.Camera));
 

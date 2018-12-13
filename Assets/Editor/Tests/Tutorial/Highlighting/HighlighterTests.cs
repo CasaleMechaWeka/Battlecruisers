@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
     public class HighlighterTests
     {
-        private IHighlighterNEW _highlighter;
+        private IHighlighter _highlighter;
         private IMaskHighlighter _maskHighlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private IMaskHighlightable _highlightable;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
             _maskHighlighter = Substitute.For<IMaskHighlighter>();
             _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
 
-            _highlighter = new HighlighterNEW(_maskHighlighter, _highlightArgsFactory);
+            _highlighter = new Highlighter(_maskHighlighter, _highlightArgsFactory);
 
             _highlightArgs = new HighlightArgs(new Vector2(1, 2), new Vector2(-1, 2));
             _highlightable = Substitute.For<IMaskHighlightable>();

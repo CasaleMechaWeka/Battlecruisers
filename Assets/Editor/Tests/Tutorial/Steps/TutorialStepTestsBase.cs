@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
     public abstract class TutorialStepTestsBase
     {
         protected ITutorialStepArgsNEW _args;
-        protected IHighlighterNEW _highlighter;
+        protected IHighlighter _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;
         protected IItemProvider<IMaskHighlightable> _highlightableProvider;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _highlighter = Substitute.For<IHighlighterNEW>();
+            _highlighter = Substitute.For<IHighlighter>();
             _textToDisplay = "Staub";
             _displayer = Substitute.For<ITextDisplayer>();
 

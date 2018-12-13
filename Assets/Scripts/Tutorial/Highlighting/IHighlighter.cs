@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    public interface IHighlighterNEW
+    public interface IHighlighter
     {
         void Highlight(IMaskHighlightable toHighlight);
         void Unhighlight();
