@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButtonNEW : UIElement, 
+    public class BuildingCategoryButton : UIElement, 
         IBuildingCategoryButton, 
         IBroadcastingFilter, 
         IPointerClickHandler

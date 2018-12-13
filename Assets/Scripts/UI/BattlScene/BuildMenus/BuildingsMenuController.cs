@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private ISpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
-        public BuildingCategoryButtonNEW buildingCategoryButton;
+        public BuildingCategoryButton buildingCategoryButton;
 
         public void Initialise(
             IUIManager uiManager,

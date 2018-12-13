@@ -25,12 +25,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
 
-            IList<BuildingCategoryButtonNEW> categoryButtons = GetComponentsInChildren<BuildingCategoryButtonNEW>().ToList();
+            IList<BuildingCategoryButton> categoryButtons = GetComponentsInChildren<BuildingCategoryButton>().ToList();
             Assert.IsTrue(buildingGroups.Count <= categoryButtons.Count);
 
             for (int i = 0; i < buildingGroups.Count; ++i)
             {
-                BuildingCategoryButtonNEW button = categoryButtons[i];
+                BuildingCategoryButton button = categoryButtons[i];
                 IBuildingGroup group = buildingGroups[i];
 
                 if (group.Buildings.Count != 0)
