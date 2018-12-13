@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Common.BuildableDetails;
 using NSubstitute;
 using NUnit.Framework;
@@ -28,12 +27,12 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             _cruiserDetails = Substitute.For<ICruiserDetails>();
 
-            IHUDCanvasController hudCanvas = Substitute.For<IHUDCanvasController>();
-            hudCanvas.BuildingDetails.Returns(_buildingDetails);
-            hudCanvas.UnitDetails.Returns(_unitDetails);
-            hudCanvas.CruiserDetails.Returns(_cruiserDetails);
+            IInformatorPanel informatorPanel = Substitute.For<IInformatorPanel>();
+            informatorPanel.BuildingDetails.Returns(_buildingDetails);
+            informatorPanel.UnitDetails.Returns(_unitDetails);
+            informatorPanel.CruiserDetails.Returns(_cruiserDetails);
 
-            _detailsManager = new ItemDetailsManager(hudCanvas);
+            _detailsManager = new ItemDetailsManager(informatorPanel);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();
