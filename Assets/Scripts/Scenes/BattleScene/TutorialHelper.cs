@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public BroadcastingFilter BackButtonPermitter { get; private set; }
         public BroadcastingFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
-        public BroadcastingFilter IsNavigationEnabledFilter { get; private set; }
+        public BroadcastingFilter NavigationPermitter { get; private set; }
 
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
@@ -60,7 +60,7 @@ namespace BattleCruisers.Scenes.BattleScene
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
-            IsNavigationEnabledFilter = new BroadcastingFilter(isMatch: false);
+            NavigationPermitter = new BroadcastingFilter(isMatch: false);
             SpeedButtonsPermitter = new BroadcastingFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
@@ -126,7 +126,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
         {
-            return IsNavigationEnabledFilter;
+            return NavigationPermitter;
         }
 
         public IUIManager CreateUIManager()

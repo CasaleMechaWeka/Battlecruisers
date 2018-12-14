@@ -634,7 +634,7 @@ namespace BattleCruisers.Tutorial
             return
                 new FeaturePermitterStep(
                     CreateTutorialStepArgs(),
-                    _tutorialArgs.TutorialProvider.IsNavigationEnabledFilter,
+                    _tutorialArgs.TutorialProvider.NavigationPermitter,
                     enableNavigation);
         }
 
