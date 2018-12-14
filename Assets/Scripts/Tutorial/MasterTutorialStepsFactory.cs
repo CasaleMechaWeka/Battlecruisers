@@ -29,7 +29,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Tutorial
 {
     // FELIX  Split up monster class?  :P
-    public class TutorialStepsFactory : ITutorialStepsFactory
+    public class MasterTutorialStepsFactory : ITutorialStepsFactory
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Tutorial
         private readonly ITutorialArgs _tutorialArgs;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
-        public TutorialStepsFactory(
+        public MasterTutorialStepsFactory(
             IHighlighter highlighter,
             IExplanationPanel explanationPanel,
             IVariableDelayDeferrer deferrer,

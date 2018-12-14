@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial
             explanationPanel.Initialise();
 
             ITutorialStepsFactory stepsFactory 
-                = new TutorialStepsFactory(
+                = new MasterTutorialStepsFactory(
                     highlighter, 
                     explanationPanel, 
                     tutorialArgs.Components.VariableDelayDeferrer, 
