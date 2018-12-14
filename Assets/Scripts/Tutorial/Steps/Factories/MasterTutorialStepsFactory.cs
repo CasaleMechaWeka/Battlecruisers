@@ -10,7 +10,6 @@ using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
@@ -26,7 +25,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial
+namespace BattleCruisers.Tutorial.Steps.Factories
 {
     // FELIX  Split up monster class?  :P
     public class MasterTutorialStepsFactory : ITutorialStepsFactory

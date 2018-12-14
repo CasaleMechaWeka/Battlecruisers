@@ -1,12 +1,11 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Tutorial
+namespace BattleCruisers.Tutorial.Steps.Factories
 {
     // FELIX  Split up monster class?  :P
     public abstract class TutorialStepsFactory : ITutorialStepsFactory

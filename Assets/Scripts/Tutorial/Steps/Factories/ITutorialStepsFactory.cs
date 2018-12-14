@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Tutorial.Steps;
 
-namespace BattleCruisers.Tutorial
+namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public interface ITutorialStepsFactory
     {

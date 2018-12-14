@@ -2,6 +2,7 @@
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.Factories;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
