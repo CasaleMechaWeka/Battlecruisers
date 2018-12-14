@@ -154,7 +154,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
-                    new ItemDetailsManager(rightPanelInitialiser.Informator));
+                    new ItemDetailsManager(rightPanelComponents.InformatorPanel));
             helper.InitialiseUIManager(args);
 
             // User chosen target highlighter

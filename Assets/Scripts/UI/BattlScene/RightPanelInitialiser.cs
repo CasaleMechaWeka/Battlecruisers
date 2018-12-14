@@ -24,23 +24,6 @@ namespace BattleCruisers.UI.BattleScene
     /// </summary>
     public class RightPanelInitialiser : MonoBehaviour
     {
-        // Circular dependency between UIManager and InformatorPanelController.
-        private InformatorPanelController _informator;
-        public InformatorPanelController Informator
-        {
-            get
-            {
-                if (_informator == null)
-                {
-                    _informator = FindObjectOfType<InformatorPanelController>();
-                    Assert.IsNotNull(_informator);
-                    _informator.StaticInitialise();
-                }
-
-                return _informator;
-            }
-        }
-
         // Not using FindObjectOfType() because that ignores inactive objects
         public ModalMenuController modalMenu;
 
@@ -57,25 +40,32 @@ namespace BattleCruisers.UI.BattleScene
 
             modalMenu.Initialise(applicationModel.IsTutorial);
 
-            SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
+            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
 
-            return new RightPanelComponents(Informator, speedButtonPanel);
+            return new RightPanelComponents(informator, speedButtonPanel);
         }
 
-        private void SetupInformator(
+        private IInformatorPanel SetupInformator(
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters)
         {
-            Informator
+            InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
+            Assert.IsNotNull(informator);
+
+            // FELIX  Merge 2 methods
+            informator.StaticInitialise();
+            informator
                 .Initialise(
                     uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters);
+
+            return informator;
         }
 
         private IMaskHighlightable SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
