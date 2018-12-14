@@ -1,6 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
-using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.UI;
 using System;
 using UnityEngine.Assertions;
 
@@ -11,7 +9,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly IExplanationDismissButton _dismissButton;
 
         public ExplanationDismissableStep(ITutorialStepArgs args, IExplanationDismissButton dismissButton)
-            : base(args, new StaticProvider<IClickableEmitter>(dismissButton))
+            : base(args, dismissButton)
         {
             Assert.IsNotNull(dismissButton);
             _dismissButton = dismissButton;

@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Utils;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             IPrefabKey buildingToAllow,
             IItemProvider<ISlot> slotProvider,
             ISlotPermitter highlightableSlotPermitter) 
-            : base(args, new StaticProvider<IClickableEmitter>(buildableButton))
+            : base(args, buildableButton)
         {
             Helper.AssertIsNotNull(buildingPermitter, buildingToAllow, slotProvider, highlightableSlotPermitter);
 

@@ -1,6 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Tutorial.Providers;
-using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using System;
@@ -17,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             ITutorialStepArgs args, 
             IBuildingCategoryButton buildingCategoryButton,
             IBuildingCategoryPermitter permitter) 
-            : base(args, new StaticProvider<IClickableEmitter>(buildingCategoryButton))
+            : base(args, buildingCategoryButton)
         {
             Assert.IsNotNull(permitter);
 
