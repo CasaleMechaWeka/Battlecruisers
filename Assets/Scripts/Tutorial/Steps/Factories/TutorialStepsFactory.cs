@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
@@ -10,8 +9,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     // FELIX  Split up monster class?  :P
     public abstract class TutorialStepsFactory : ITutorialStepsFactory
     {
-        private readonly IHighlighter _highlighter;
-        private readonly ITextDisplayer _displayer;
+        protected readonly ITutorialStepArgsFactory _argsFactory;
         protected readonly IExplanationDismissButton _explanationDismissButton;
         // FELIX  Make each factory only require what it needs, instead of every factory having access to everything??
         protected readonly IVariableDelayDeferrer _deferrer;
@@ -19,16 +17,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         protected readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
         protected TutorialStepsFactory(
-            IHighlighter highlighter,
-            IExplanationPanel explanationPanel,
+            ITutorialStepArgsFactory argsFactory,
+            IExplanationDismissButton explanationDismissButton,
             IVariableDelayDeferrer deferrer,
             ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
+            Helper.AssertIsNotNull(argsFactory, explanationDismissButton, deferrer, tutorialArgs);
 
-            _highlighter = highlighter;
-            _displayer = explanationPanel.TextDisplayer;
-            _explanationDismissButton = explanationPanel.DismissButton;
+            _argsFactory = argsFactory;
+            _explanationDismissButton = explanationDismissButton;
             _deferrer = deferrer;
             _tutorialArgs = tutorialArgs;
 
