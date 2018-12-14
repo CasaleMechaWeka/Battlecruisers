@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public interface ITutorialStepFromArgsFactory
+    public interface IExplanationDismissableStepFactory
     {
         ITutorialStep CreateTutorialStep(ITutorialStepArgs args);
     }

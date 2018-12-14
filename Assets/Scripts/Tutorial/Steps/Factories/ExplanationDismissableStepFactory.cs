@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class ExplanationDismissableStepFactory : TutorialFactoryBase, ITutorialStepFromArgsFactory
+    public class ExplanationDismissableStepFactory : TutorialFactoryBase, IExplanationDismissableStepFactory
     {
         private readonly IExplanationDismissButton _dismissButton;
 
