@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.UI;
 using NSubstitute;
 using NUnit.Framework;
 

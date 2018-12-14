@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.UI;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {

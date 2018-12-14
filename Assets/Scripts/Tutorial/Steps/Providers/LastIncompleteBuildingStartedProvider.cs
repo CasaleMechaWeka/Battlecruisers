@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 

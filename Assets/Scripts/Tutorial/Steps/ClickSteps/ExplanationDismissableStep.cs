@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.UI;
 using System;
 using UnityEngine.Assertions;
 

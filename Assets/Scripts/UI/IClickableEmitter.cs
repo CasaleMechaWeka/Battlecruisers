@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace BattleCruisers
+namespace BattleCruisers.UI
 {
-    // FELIX  Move to UI namespace :)
     public interface IClickableEmitter
     {
         event EventHandler Clicked;

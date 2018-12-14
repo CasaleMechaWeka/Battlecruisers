@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.UI;
 using NSubstitute;
 using NUnit.Framework;
 

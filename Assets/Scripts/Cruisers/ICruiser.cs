@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils.Factories;
 
