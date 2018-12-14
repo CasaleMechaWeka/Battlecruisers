@@ -1,0 +1,43 @@
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.Utils;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class TutorialStepArgsFactory : ITutorialStepArgsFactory
+    {
+        private readonly IHighlighter _highlighter;
+        private readonly ITextDisplayer _displayer;
+
+        public TutorialStepArgsFactory(IHighlighter highlighter, ITextDisplayer displayer)
+        {
+            Helper.AssertIsNotNull(highlighter, displayer);
+
+            _highlighter = highlighter;
+            _displayer = displayer;
+        }
+
+        public ITutorialStepArgs CreateTutorialStepArgs(
+            string textToDisplay = null,
+            IMaskHighlightable highlightable = null)
+        {
+            return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IMaskHighlightable>(highlightable));
+        }
+
+        public ITutorialStepArgs CreateTutorialStepArgs(
+            string textToDisplay,
+            IItemProvider<IMaskHighlightable> highlightableProvider)
+        {
+            Assert.IsNotNull(highlightableProvider);
+
+            return
+                new TutorialStepArgs(
+                    _highlighter,
+                    textToDisplay,
+                    _displayer,
+                    highlightableProvider);
+        }
+    }
+}
