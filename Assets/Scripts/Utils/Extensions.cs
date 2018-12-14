@@ -81,6 +81,7 @@ namespace BattleCruisers.Utils
                 || (original != null && original.Equals(other));
         }
 
+        // FELIX  Remove?
         public static void Enqueue<T>(this Queue<T> queue, IEnumerable<T> itemsToEnqueue)
         {
             foreach (T itemToEnqueue in itemsToEnqueue)

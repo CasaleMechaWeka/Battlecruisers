@@ -55,30 +55,30 @@ namespace BattleCruisers.Tutorial
             _lastPlayerIncompleteBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
         }
 
-        public Queue<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateTutorialSteps()
         {
-            Queue<ITutorialStep> steps = new Queue<ITutorialStep>();
+            List<ITutorialStep> steps = new List<ITutorialStep>();
 
             // TEMP  So I can build artillery without previous steps :)
             //_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
 
             // 1. Player cruiser
-            steps.Enqueue(CreateSteps_YourCruiser());
+            steps.AddRange(CreateSteps_YourCruiser());
 
             // 2. Navigation wheel
-            steps.Enqueue(CreateSteps_NavigationWheel());
+            steps.AddRange(CreateSteps_NavigationWheel());
 
             // 3. Enemy cruiser
-            steps.Enqueue(CreateSteps_EnemyCruiser());
+            steps.AddRange(CreateSteps_EnemyCruiser());
 
             // 4. Player cruiser widgets
-            steps.Enqueue(CreateSteps_PlayerCruiserWidgets());
+            steps.AddRange(CreateSteps_PlayerCruiserWidgets());
 
             // 5. Construct drone station
-            steps.Enqueue(CreateSteps_ConstructDroneStation());
+            steps.AddRange(CreateSteps_ConstructDroneStation());
 
             // 6. Enemy ship
-            steps.Enqueue(
+            steps.AddRange(
                 CreateSteps_EnemyUnitDefence(
                     StaticPrefabKeys.Buildings.NavalFactory,
                     new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat"),
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tutorial
                     unitCameraFocusTarget: CameraFocuserTarget.AICruiserNavalFactory));
 
             // 7. Enemy bomber
-            steps.Enqueue(
+            steps.AddRange(
                 CreateSteps_EnemyUnitDefence(
                     StaticPrefabKeys.Buildings.AirFactory,
                     new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber"),
@@ -100,13 +100,13 @@ namespace BattleCruisers.Tutorial
                     unitCameraFocusTarget: CameraFocuserTarget.AICruiser));
 
             // 8. Drone focus
-            steps.Enqueue(CreateSteps_DroneFocus());
+            steps.AddRange(CreateSteps_DroneFocus());
 
             // 9. Game speed
-            steps.Enqueue(CreateSteps_GameSpeed());
+            steps.AddRange(CreateSteps_GameSpeed());
 
             // 10. Endgame
-            steps.Enqueue(CreateSteps_Endgame());
+            steps.AddRange(CreateSteps_Endgame());
 
             return steps;
         }

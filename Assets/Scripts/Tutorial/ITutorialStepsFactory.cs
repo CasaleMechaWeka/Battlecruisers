@@ -5,6 +5,6 @@ namespace BattleCruisers.Tutorial
 {
     public interface ITutorialStepsFactory
     {
-        Queue<ITutorialStep> CreateTutorialSteps();
+        IList<ITutorialStep> CreateTutorialSteps();
     }
 }
