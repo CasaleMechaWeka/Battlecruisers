@@ -56,8 +56,6 @@ namespace BattleCruisers.UI.BattleScene
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
 
-            // FELIX  Merge 2 methods
-            informator.StaticInitialise();
             informator
                 .Initialise(
                     uiManager,

@@ -24,22 +24,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private CruiserDetailsController _cruiserDetails;
         public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
 
-        public void StaticInitialise()
-        {
-            _dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
-            Assert.IsNotNull(_dismissButton);
-
-            _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_buildingDetails);
-
-            _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_unitDetails);
-
-            _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_cruiserDetails);
-        }
-
-        // FELIX  Check if I can get rid of circular dependency and merge initialise methods?
         public void Initialise(
             IUIManager uiManager,
             ICruiser playerCruiser,
@@ -52,9 +36,24 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 userChosenTargetHelper,
                 visibilityFilters);
 
+            // Dismiss button
+            _dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
+            Assert.IsNotNull(_dismissButton);
             _dismissButton.Initialise(uiManager, new StaticBroadcastingFilter(isMatch: true));
+            
+            // Building details
+            _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_buildingDetails);
             _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+
+            // Unit details
+            _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_unitDetails);
             _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+
+            // Cruiser details
+            _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_cruiserDetails);
             _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter);
         }
     }
