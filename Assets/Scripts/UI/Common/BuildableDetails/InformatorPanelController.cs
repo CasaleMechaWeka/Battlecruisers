@@ -52,7 +52,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 userChosenTargetHelper,
                 visibilityFilters);
 
-            // FELIX  Use new visibility filter (if tutorial still requires informator to not be dismissable sometimes :) )
             _dismissButton.Initialise(uiManager, new StaticBroadcastingFilter(isMatch: true));
             _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
             _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
