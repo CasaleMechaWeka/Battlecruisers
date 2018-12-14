@@ -10,6 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         protected readonly ITutorialStepArgsFactory _argsFactory;
         protected readonly IExplanationDismissButton _explanationDismissButton;
         // FELIX  Make each factory only require what it needs, instead of every factory having access to everything??
+        // FELIX  If not, create args class so every implementation doesn't need to list all 4 parameters :P
         protected readonly IVariableDelayDeferrer _deferrer;
         protected readonly ITutorialArgs _tutorialArgs;
         protected readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
