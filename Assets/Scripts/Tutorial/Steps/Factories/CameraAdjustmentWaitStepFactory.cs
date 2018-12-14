@@ -4,7 +4,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase, ITutorialStepFactory
     {
-        protected CameraAdjustmentWaitStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
+        public CameraAdjustmentWaitStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
             : base(argsFactory, tutorialArgs)
         {
             // empty
