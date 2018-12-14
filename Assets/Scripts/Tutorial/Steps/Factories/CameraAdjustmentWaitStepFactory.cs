@@ -1,17 +1,11 @@
-﻿using BattleCruisers.Tutorial.Explanation;
-using BattleCruisers.Tutorial.Steps.WaitSteps;
-using BattleCruisers.Utils.Threading;
+﻿using BattleCruisers.Tutorial.Steps.WaitSteps;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase, ITutorialStepFactory
     {
-        protected CameraAdjustmentWaitStepFactory(
-            ITutorialStepArgsFactory argsFactory, 
-            IExplanationDismissButton explanationDismissButton, 
-            IVariableDelayDeferrer deferrer, 
-            ITutorialArgs tutorialArgs) 
-            : base(argsFactory, explanationDismissButton, deferrer, tutorialArgs)
+        protected CameraAdjustmentWaitStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
+            : base(argsFactory, tutorialArgs)
         {
             // empty
         }
