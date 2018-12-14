@@ -17,7 +17,6 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
-// FELIX  Replace all Substitutes :D  (Don't remove this comment until "using NSubstitute;" is removed :)
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
