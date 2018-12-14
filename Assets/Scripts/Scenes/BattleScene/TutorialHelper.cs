@@ -33,7 +33,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
         public BroadcastingFilter BackButtonPermitter { get; private set; }
-        // FELIX  Create IPermitter to set IsMatch?
         public BroadcastingFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public BroadcastingFilter IsNavigationEnabledFilter { get; private set; }
