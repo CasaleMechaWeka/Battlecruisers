@@ -2,12 +2,10 @@
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
-using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    // FELIX  Split up monster class?  :P
-    public abstract class TutorialStepsFactory : ITutorialStepsFactory
+    public abstract class TutorialFactoryBase
     {
         protected readonly ITutorialStepArgsFactory _argsFactory;
         protected readonly IExplanationDismissButton _explanationDismissButton;
@@ -16,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         protected readonly ITutorialArgs _tutorialArgs;
         protected readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
 
-        protected TutorialStepsFactory(
+        protected TutorialFactoryBase(
             ITutorialStepArgsFactory argsFactory,
             IExplanationDismissButton explanationDismissButton,
             IVariableDelayDeferrer deferrer,
@@ -31,7 +29,5 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             _lastPlayerIncompleteBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
         }
-
-        public abstract IList<ITutorialStep> CreateTutorialSteps();
    }
 }
