@@ -88,7 +88,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new StaticBroadcastingFilter<BuildingCategory>(isMatch: true),
                     new ChooseTargetButtonVisibilityFilter(),
                     new DeleteButtonVisibilityFilter(),
-                    new BasicFilter(isMatch: true),
+                    new BroadcastingFilter(isMatch: true),
                     new StaticBroadcastingFilter(isMatch: true));
         }
 

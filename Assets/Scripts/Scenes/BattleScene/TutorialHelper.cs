@@ -32,11 +32,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
-        public BasicFilter BackButtonPermitter { get; private set; }
+        public BroadcastingFilter BackButtonPermitter { get; private set; }
         // FELIX  Create IPermitter to set IsMatch?
-        public BasicFilter SpeedButtonsPermitter { get; private set; }
+        public BroadcastingFilter SpeedButtonsPermitter { get; private set; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
-        public BasicFilter IsNavigationEnabledFilter { get; private set; }
+        public BroadcastingFilter IsNavigationEnabledFilter { get; private set; }
 
         public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
         public ISingleBuildableProvider SingleShipProvider { get; private set; }
@@ -57,12 +57,12 @@ namespace BattleCruisers.Scenes.BattleScene
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
-            BackButtonPermitter = new BasicFilter(isMatch: false);
+            BackButtonPermitter = new BroadcastingFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
-            IsNavigationEnabledFilter = new BasicFilter(isMatch: false);
-            SpeedButtonsPermitter = new BasicFilter(isMatch: false);
+            IsNavigationEnabledFilter = new BroadcastingFilter(isMatch: false);
+            SpeedButtonsPermitter = new BroadcastingFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);

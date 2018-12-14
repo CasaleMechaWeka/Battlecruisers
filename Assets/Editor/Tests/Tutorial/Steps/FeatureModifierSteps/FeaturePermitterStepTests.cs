@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.FeatureModifierSteps
         [Test]
         public void Start()
         {
-            BasicFilter permitter = new BasicFilter(isMatch: false);
+            BroadcastingFilter permitter = new BroadcastingFilter(isMatch: false);
             ITutorialStep step = new FeaturePermitterStep(_args, permitter, enableFeature: true);
 
             step.Start(_completionCallback);

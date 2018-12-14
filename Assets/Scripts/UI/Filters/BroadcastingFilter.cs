@@ -2,8 +2,7 @@
 
 namespace BattleCruisers.UI.Filters
 {
-    // FELIX  Rename to: "BroadcastingFilter"
-    public class BasicFilter : IBroadcastingFilter
+    public class BroadcastingFilter : IBroadcastingFilter
     {
         private bool _isMatch;
         public bool IsMatch
@@ -25,7 +24,7 @@ namespace BattleCruisers.UI.Filters
 
         public event EventHandler PotentialMatchChange;
 
-        public BasicFilter(bool isMatch)
+        public BroadcastingFilter(bool isMatch)
         {
             _isMatch = isMatch;
         }

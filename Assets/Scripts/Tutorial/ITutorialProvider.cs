@@ -18,8 +18,8 @@ namespace BattleCruisers.Tutorial
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
         // FELIX  Rnemae to Permitter?
-        BasicFilter IsNavigationEnabledFilter { get; }
-        BasicFilter SpeedButtonsPermitter { get; }
+        BroadcastingFilter IsNavigationEnabledFilter { get; }
+        BroadcastingFilter SpeedButtonsPermitter { get; }
         IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
 
         IBuildSpeedController PlayerCruiserBuildSpeedController { get; }

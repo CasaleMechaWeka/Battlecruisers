@@ -5,12 +5,12 @@ namespace BattleCruisers.Tests.UI.Filters
 {
     public class BasicFilterTests
     {
-        private BasicFilter _filter;
+        private BroadcastingFilter _filter;
 
         [SetUp]
         public void SetuUp()
         {
-            _filter = new BasicFilter(isMatch: false);
+            _filter = new BroadcastingFilter(isMatch: false);
         }
 
         [Test]

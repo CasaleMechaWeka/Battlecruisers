@@ -6,10 +6,10 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
 {
     public class FeaturePermitterStep : TutorialStep
     {
-        private readonly BasicFilter _featurePermitter;
+        private readonly BroadcastingFilter _featurePermitter;
         private readonly bool _enableFeature;
 
-        public FeaturePermitterStep(ITutorialStepArgs args, BasicFilter featurePermitter, bool enableFeature)
+        public FeaturePermitterStep(ITutorialStepArgs args, BroadcastingFilter featurePermitter, bool enableFeature)
             : base(args)
         {
             Assert.IsNotNull(featurePermitter);

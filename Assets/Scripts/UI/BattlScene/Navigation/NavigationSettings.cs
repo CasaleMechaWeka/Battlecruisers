@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 		public bool AreTransitionsEnabled { get { return AreTransitionsEnabledFilter.IsMatch; } }
 		public bool IsUserInputEnabled { get { return IsUserInputEnabledFilter.IsMatch; } }
 
-		private readonly BasicFilter _areTransitionsEnabledFilter;
+		private readonly BroadcastingFilter _areTransitionsEnabledFilter;
 		public IBroadcastingFilter AreTransitionsEnabledFilter { get { return _areTransitionsEnabledFilter; } }
 
-		private readonly BasicFilter _isUserInputEnabledFilter;
+		private readonly BroadcastingFilter _isUserInputEnabledFilter;
 		public IBroadcastingFilter IsUserInputEnabledFilter { get { return _isUserInputEnabledFilter; } }
         
 		public NavigationPermission Permission
@@ -48,8 +48,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
 		public NavigationSettings()
 		{
-			_areTransitionsEnabledFilter = new BasicFilter(isMatch: true);
-			_isUserInputEnabledFilter = new BasicFilter(isMatch: true);
+			_areTransitionsEnabledFilter = new BroadcastingFilter(isMatch: true);
+			_isUserInputEnabledFilter = new BroadcastingFilter(isMatch: true);
 		}
 	}
 }
