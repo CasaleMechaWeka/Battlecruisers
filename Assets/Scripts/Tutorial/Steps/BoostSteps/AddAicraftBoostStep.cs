@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 
-// FELIX  Change namespace to "BoostSteps"
-namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
+namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
     public class AddAircraftBoostStep : BoostStep
     {

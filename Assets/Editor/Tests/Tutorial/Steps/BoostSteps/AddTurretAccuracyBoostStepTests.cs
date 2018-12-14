@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.Tutorial.Steps.EnemyCruiser;
+using BattleCruisers.Tutorial.Steps.BoostSteps;
 using NSubstitute;
 using NUnit.Framework;
 

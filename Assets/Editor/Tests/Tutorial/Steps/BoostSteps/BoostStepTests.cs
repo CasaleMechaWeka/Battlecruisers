@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Tutorial.Steps;
-using BattleCruisers.Tutorial.Steps.EnemyCruiser;
+using BattleCruisers.Tutorial.Steps.BoostSteps;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps

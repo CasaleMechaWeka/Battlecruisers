@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
+namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
     public abstract class BoostStep : TutorialStep
     {

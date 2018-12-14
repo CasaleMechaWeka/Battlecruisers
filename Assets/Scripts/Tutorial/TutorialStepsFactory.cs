@@ -11,6 +11,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;

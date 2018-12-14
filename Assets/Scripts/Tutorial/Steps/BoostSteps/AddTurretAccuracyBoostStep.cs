@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 
-namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
+namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
     public class AddTurretAccuracyBoostStep : BoostStep
     {
