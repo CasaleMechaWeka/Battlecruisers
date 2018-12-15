@@ -35,12 +35,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyBomberStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
             IVariableDelayDeferrer deferrer,
             ISingleBuildableProvider unitBuiltProvider)
-            : base(argsFactory, tutorialArgs, enemyUnitArgs)
+            : base(argsFactory, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider);
 

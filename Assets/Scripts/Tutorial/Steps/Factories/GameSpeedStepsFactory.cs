@@ -16,14 +16,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public GameSpeedStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             IExplanationDismissableStepFactory explanationDismissableStepFactory, 
             IFeaturePermitterStepFactory featurePermitterStepFactory, 
             BroadcastingFilter gameSpeedPermitter, 
             BroadcastingFilter navigationPermitter, 
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(
                 explanationDismissableStepFactory, 

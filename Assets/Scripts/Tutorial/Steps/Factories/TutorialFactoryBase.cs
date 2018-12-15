@@ -5,15 +5,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public abstract class TutorialFactoryBase
     {
         protected readonly ITutorialStepArgsFactory _argsFactory;
-        // FELIX  Even break this down into only waht specific StepsFactory needs!
-        protected readonly ITutorialArgs _tutorialArgs;
 
-        protected TutorialFactoryBase(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs)
+        protected TutorialFactoryBase(ITutorialStepArgsFactory argsFactory)
         {
-            Helper.AssertIsNotNull(argsFactory, tutorialArgs);
-
+            Helper.AssertIsNotNull(argsFactory);
             _argsFactory = argsFactory;
-            _tutorialArgs = tutorialArgs;
         }
    }
 }

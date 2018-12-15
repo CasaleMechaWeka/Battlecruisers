@@ -21,12 +21,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public CreateProducingFactoryStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
             IPrefabFactory prefabFactory,
             ICruiser aiCruiser)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, prefabFactory, aiCruiser);
 

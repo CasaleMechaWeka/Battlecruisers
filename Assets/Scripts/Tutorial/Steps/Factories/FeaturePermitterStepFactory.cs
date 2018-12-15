@@ -5,8 +5,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class FeaturePermitterStepFactory : TutorialFactoryBase, IFeaturePermitterStepFactory
     {
-        public FeaturePermitterStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
-            : base(argsFactory, tutorialArgs)
+        public FeaturePermitterStepFactory(ITutorialStepArgsFactory argsFactory) 
+            : base(argsFactory)
         {
             // empty
         }

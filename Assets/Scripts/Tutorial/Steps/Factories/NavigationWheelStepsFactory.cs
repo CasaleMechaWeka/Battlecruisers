@@ -14,12 +14,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public NavigationWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             BroadcastingFilter navigationPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             ICameraComponents cameraComponents) 
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, navigationPermitter, explanationDismissableStepFactory, cameraComponents);
 

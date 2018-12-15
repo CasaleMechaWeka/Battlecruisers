@@ -24,12 +24,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ConstructBuildingStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             LeftPanelComponents leftPanelComponents,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider);
 

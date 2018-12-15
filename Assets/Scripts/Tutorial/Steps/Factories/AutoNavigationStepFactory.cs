@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.Cameras;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
@@ -11,12 +11,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public AutoNavigationStepFactory(
             ITutorialStepArgsFactory argsFactory, 
-            ITutorialArgs tutorialArgs,
-            ITutorialStepFactory cameraAdjustmentWaitStepFactory) 
-            : base(argsFactory, tutorialArgs)
+            ITutorialStepFactory cameraAdjustmentWaitStepFactory,
+            ICameraComponents cameraComponents) 
+            : base(argsFactory)
         {
-            Assert.IsNotNull(cameraAdjustmentWaitStepFactory);
+            Helper.AssertIsNotNull(cameraAdjustmentWaitStepFactory, cameraComponents);
+
             _cameraAdjustmentWaitStepFactory = cameraAdjustmentWaitStepFactory;
+            _cameraComponents = cameraComponents;
         }
 
         public IList<ITutorialStep> CreateSteps(CameraFocuserTarget cameraFocuserTarget)

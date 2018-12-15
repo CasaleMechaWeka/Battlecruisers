@@ -12,11 +12,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public YourCruiserStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             ICruiser playerCruiser,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(playerCruiser, cameraAdjustmentWaitStepFactory, explanationDismissableStepFactory);
 

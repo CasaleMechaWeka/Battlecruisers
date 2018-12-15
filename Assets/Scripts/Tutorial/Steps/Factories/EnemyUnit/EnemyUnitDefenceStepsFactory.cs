@@ -29,9 +29,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyUnitDefenceStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             EnemyUnitArgs enemyUnitArgs) 
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Assert.IsNotNull(enemyUnitArgs);
 

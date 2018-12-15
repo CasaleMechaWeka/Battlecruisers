@@ -8,8 +8,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly IExplanationDismissButton _dismissButton;
 
-        public ExplanationDismissableStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs, IExplanationDismissButton dismissButton) 
-            : base(argsFactory, tutorialArgs)
+        public ExplanationDismissableStepFactory(ITutorialStepArgsFactory argsFactory, IExplanationDismissButton dismissButton) 
+            : base(argsFactory)
         {
             Assert.IsNotNull(dismissButton);
             _dismissButton = dismissButton;

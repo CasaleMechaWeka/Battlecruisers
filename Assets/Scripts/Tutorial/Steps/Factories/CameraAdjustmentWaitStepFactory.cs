@@ -10,9 +10,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public CameraAdjustmentWaitStepFactory(
             ITutorialStepArgsFactory argsFactory, 
-            ITutorialArgs tutorialArgs,
             ICameraComponents cameraComponents) 
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Assert.IsNotNull(cameraComponents);
             _cameraComponents = cameraComponents;

@@ -22,7 +22,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public DroneFocusStepsFactory(
             ITutorialStepArgsFactory argsFactory, 
-            ITutorialArgs tutorialArgs,
             IAutoNavigationStepFactory autoNavigationStepFactory, 
             IExplanationDismissableStepFactory explanationDismissableStepFactory, 
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
@@ -30,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialProvider tutorialProvider, 
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
             RightPanelComponents rightPanelComponents)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(
                 autoNavigationStepFactory,

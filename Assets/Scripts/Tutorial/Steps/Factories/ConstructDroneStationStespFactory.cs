@@ -13,10 +13,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ConstructDroneStationStespFactory(
             ITutorialStepArgsFactory argsFactory,
-            ITutorialArgs tutorialArgs,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory);
 

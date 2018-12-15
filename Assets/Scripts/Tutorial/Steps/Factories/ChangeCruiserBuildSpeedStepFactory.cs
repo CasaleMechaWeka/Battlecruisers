@@ -4,8 +4,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ChangeCruiserBuildSpeedStepFactory : TutorialFactoryBase, IChangeCruiserBuildSpeedStepFactory
     {
-        public ChangeCruiserBuildSpeedStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
-            : base(argsFactory, tutorialArgs)
+        public ChangeCruiserBuildSpeedStepFactory(ITutorialStepArgsFactory argsFactory) 
+            : base(argsFactory)
         {
             // empty
         }

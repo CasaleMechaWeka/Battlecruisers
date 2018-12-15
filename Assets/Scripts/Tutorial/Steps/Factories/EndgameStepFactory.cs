@@ -18,14 +18,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public EndgameStepFactory(
             ITutorialStepArgsFactory argsFactory, 
-            ITutorialArgs tutorialArgs,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
             ITutorialProvider tutorialProvider, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser)
-            : base(argsFactory, tutorialArgs)
+            : base(argsFactory)
         {
-            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialArgs, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, playerCruiser, aiCruiser);
 
             _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
             _tutorialProvider = tutorialProvider;
