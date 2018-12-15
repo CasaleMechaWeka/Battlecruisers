@@ -5,9 +5,9 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Strings;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
@@ -30,28 +30,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         public EnemyUnitDefenceStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ITutorialArgs tutorialArgs,
-            ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory,
-            IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IConstructBuildingStepsFactory constructBuildingStepsFactory,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
-            ITutorialProvider tutorialProvider) 
+            EnemyUnitArgs enemyUnitArgs) 
             : base(argsFactory, tutorialArgs)
         {
-            Helper.AssertIsNotNull(
-                createProducingFactoryStepsFactory,
-                autoNavigationStepFactory,
-                explanationDismissableStepFactory,
-                constructBuildingStepsFactory,
-                changeCruiserBuildSpeedStepFactory,
-                tutorialProvider);
+            Assert.IsNotNull(enemyUnitArgs);
 
-            _createProducingFactoryStepsFactory = createProducingFactoryStepsFactory;
-            _autoNavigationStepFactory = autoNavigationStepFactory;
-            _explanationDismissableStepFactory = explanationDismissableStepFactory;
-            _constructBuildingStepsFactory = constructBuildingStepsFactory;
-            _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
-            _tutorialProvider = tutorialProvider;
+            _createProducingFactoryStepsFactory = enemyUnitArgs.CreateProducingFactoryStepsFactory;
+            _autoNavigationStepFactory = enemyUnitArgs.AutoNavigationStepFactory;
+            _explanationDismissableStepFactory = enemyUnitArgs.ExplanationDismissableStepFactory;
+            _constructBuildingStepsFactory = enemyUnitArgs.ConstructBuildingStepsFactory;
+            _changeCruiserBuildSpeedStepFactory = enemyUnitArgs.ChangeCruiserBuildSpeedStepFactory;
+            _tutorialProvider = enemyUnitArgs.TutorialProvider;
         }
 
         public IList<ITutorialStep> CreateTutorialSteps()
