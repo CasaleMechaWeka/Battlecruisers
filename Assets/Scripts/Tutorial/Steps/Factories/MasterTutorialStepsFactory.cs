@@ -230,7 +230,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private IList<ITutorialStep> CreateSteps_EnemyUnitDefence(
             IPrefabKey factoryKey,
             BuildableInfo unitToBuild,
-            ISingleBuildableProvider unitBuildProvider,
+            ISingleBuildableProvider unitBuiltProvider,
             BuildableInfo defenceToBuild,
             SlotSpecification slotSpecification,
             bool boostAircraftSpeed,
@@ -248,7 +248,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // 3. Acknowledge the unit
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(unitToBuild.Name);
             string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + unitToBuild.Name + "!";
-            ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuildProvider);
+            ITutorialStepArgs clickUnitArgs = CreateTutorialStepArgs(textToDisplay, unitBuiltProvider);
             enemyUnitDefenceSteps.Add(new ExplanationDismissableStep(clickUnitArgs, _explanationDismissButton));
 
             // 4. Navigate back to player cruiser
@@ -275,7 +275,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             enemyUnitDefenceSteps.Add(
                 new BuildableCompletedWaitStep(
                     CreateTutorialStepArgs(), 
-                    unitBuildProvider));
+                    unitBuiltProvider));
 
             enemyUnitDefenceSteps.Add(
                 new StopUnitConstructionStep(
@@ -294,7 +294,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             enemyUnitDefenceSteps.Add(
                 new TargetDestroyedWaitStep(
                     CreateTutorialStepArgs(unitComingText),
-                    new BuildableToTargetProvider(unitBuildProvider)));
+                    new BuildableToTargetProvider(unitBuiltProvider)));
 
             // 9. Congrats!
             enemyUnitDefenceSteps.Add(
