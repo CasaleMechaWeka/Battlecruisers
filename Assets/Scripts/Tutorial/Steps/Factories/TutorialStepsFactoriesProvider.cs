@@ -16,6 +16,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ITutorialStepsFactory ConstructDroneStationStepsFactory { get; private set; }
         public ITutorialStepsFactory EnemyBomberStepsFactory { get; private set; }
         public ITutorialStepsFactory EnemyShipStepsFactory { get; private set; }
+        public ITutorialStepsFactory DroneFocusStepsFactory { get; private set; }
+        public ITutorialStepsFactory GameSpeedStepsFactory { get; private set; }
+        public ITutorialStepsFactory EndgameStepsFactory { get; private set; }
 
         public TutorialStepsFactoriesProvider(
             IHighlighter highlighter,
@@ -110,15 +113,34 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     enemyUnitArgs,
                     tutorialArgs.TutorialProvider.SingleShipProvider);
 
-            // FELIX  NEXT  Last 3 factories :D
-            //// 8. Drone focus
-            //steps.AddRange(CreateSteps_DroneFocus());
+            DroneFocusStepsFactory
+                = new DroneFocusStepsFactory(
+                    argsFactory,
+                    autoNavigationStepFactory,
+                    explanationDismissableStepFactory,
+                    changeCruiserBuildSpeedStepFactory,
+                    constructBuildingStepsFactory,
+                    tutorialArgs.TutorialProvider,
+                    lastPlayerIncompleteBuildingStartedProvider,
+                    tutorialArgs.RightPanelComponents);
 
-            //// 9. Game speed
-            //steps.AddRange(CreateSteps_GameSpeed());
+            GameSpeedStepsFactory
+                = new GameSpeedStepsFactory(
+                    argsFactory,
+                    explanationDismissableStepFactory,
+                    featurePermitterStepFactory,
+                    tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
+                    tutorialArgs.TutorialProvider.NavigationPermitter,
+                    tutorialArgs.RightPanelComponents,
+                    tutorialArgs.UIManager);
 
-            //// 10. Endgame
-            //steps.AddRange(CreateSteps_Endgame());
+            EndgameStepsFactory
+                = new EndgameStepsFactory(
+                    argsFactory,
+                    changeCruiserBuildSpeedStepFactory,
+                    tutorialArgs.TutorialProvider,
+                    tutorialArgs.PlayerCruiser,
+                    tutorialArgs.AICruiser);
         }
     }
 }
