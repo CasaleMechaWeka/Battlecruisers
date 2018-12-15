@@ -1,22 +1,26 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class YourCruiserStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
+        private readonly ICruiser _playerCruiser;
         private readonly ITutorialStepFactory _cameraAdjustmentWaitStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public YourCruiserStepsFactory(
+            ICruiser playerCruiser,
             ITutorialStepArgsFactory argsFactory,
             ITutorialArgs tutorialArgs,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory, tutorialArgs)
         {
-            Helper.AssertIsNotNull(cameraAdjustmentWaitStepFactory, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(playerCruiser, cameraAdjustmentWaitStepFactory, explanationDismissableStepFactory);
 
+            _playerCruiser = playerCruiser;
             _cameraAdjustmentWaitStepFactory = cameraAdjustmentWaitStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
@@ -30,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is your awesome cruiser :D",
-                    _tutorialArgs.PlayerCruiser);
+                    _playerCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateTutorialStep(args));
 
