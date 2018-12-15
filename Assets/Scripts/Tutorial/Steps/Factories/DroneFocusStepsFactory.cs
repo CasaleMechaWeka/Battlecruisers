@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
@@ -107,8 +108,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     canDismissItemDetails: true));
 
             steps.Add(
-                _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider)));
+                new ExplanationClickStep(
+                    _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider),
+                    _lastPlayerIncompleteBuildingStartedProvider));
 
             // Explain drone focus buttons
             steps.Add(
