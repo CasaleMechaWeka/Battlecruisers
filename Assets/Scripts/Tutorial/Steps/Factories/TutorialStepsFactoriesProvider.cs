@@ -138,6 +138,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new EndgameStepsFactory(
                     argsFactory,
                     changeCruiserBuildSpeedStepFactory,
+                    autoNavigationStepFactory,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PlayerCruiser,
                     tutorialArgs.AICruiser);

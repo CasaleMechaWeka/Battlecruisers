@@ -13,20 +13,23 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class EndgameStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
 
         public EndgameStepsFactory(
             ITutorialStepArgsFactory argsFactory, 
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
+            IAutoNavigationStepFactory autoNavigationStepFactory,
             ITutorialProvider tutorialProvider, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser);
 
             _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
+            _autoNavigationStepFactory = autoNavigationStepFactory;
             _tutorialProvider = tutorialProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
@@ -41,6 +44,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 _changeCruiserBuildSpeedStepFactory.CreateStep(
                     _tutorialProvider.PlayerCruiserBuildSpeedController,
                     BuildSpeed.Normal));
+
+            // Navigate to player cruiser
+            steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
             // Wait for artillery to complete
             steps.Add(
