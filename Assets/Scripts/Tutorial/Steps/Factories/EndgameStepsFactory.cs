@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class EndgameStepFactory : TutorialFactoryBase, ITutorialStepsFactory
+    public class EndgameStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
 
-        public EndgameStepFactory(
+        public EndgameStepsFactory(
             ITutorialStepArgsFactory argsFactory, 
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
             ITutorialProvider tutorialProvider, 
