@@ -2,6 +2,6 @@
 {
     public interface IExplanationDismissableStepFactory
     {
-        ITutorialStep CreateTutorialStep(ITutorialStepArgs args);
+        ITutorialStep CreateStep(ITutorialStepArgs args);
     }
 }

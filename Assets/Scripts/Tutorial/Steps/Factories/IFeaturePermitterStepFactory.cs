@@ -4,6 +4,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public interface IFeaturePermitterStepFactory
     {
-        ITutorialStep CreateTutorialStep(BroadcastingFilter featurePermitter, bool enableFeature);
+        ITutorialStep CreateStep(BroadcastingFilter featurePermitter, bool enableFeature);
     }
 }

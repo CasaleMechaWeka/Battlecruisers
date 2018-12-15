@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     "This is your cruiser's health dial.",
                     _leftPanelComponents.HealthDialHighlightable);
 
-            steps.Add(_explanationDismissableStepFactory.CreateTutorialStep(healthDialArgs));
+            steps.Add(_explanationDismissableStepFactory.CreateStep(healthDialArgs));
 
             // Drone number
             ITutorialStepArgs droneNumberArgs
@@ -45,7 +45,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
                     _leftPanelComponents.NumberOfDronesHighlightable);
 
-            steps.Add(_explanationDismissableStepFactory.CreateTutorialStep(droneNumberArgs));
+            steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
 
             return steps;
         }

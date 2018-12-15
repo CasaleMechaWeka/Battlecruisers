@@ -54,7 +54,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _lastPlayerIncompleteBuildingStartedProvider = _tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(_tutorialArgs.PlayerCruiser);
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 

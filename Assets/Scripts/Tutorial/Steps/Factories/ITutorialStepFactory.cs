@@ -2,6 +2,6 @@
 {
     public interface ITutorialStepFactory
     {
-        ITutorialStep CreateTutorialStep();
+        ITutorialStep CreateStep();
     }
 }

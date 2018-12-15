@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
                     _aiCruiser);
 
-            steps.Add(_explanationDismissableStepFactory.CreateTutorialStep(args));
+            steps.Add(_explanationDismissableStepFactory.CreateStep(args));
 
             return steps;
         }

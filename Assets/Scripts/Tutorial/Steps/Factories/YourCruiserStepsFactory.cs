@@ -25,18 +25,18 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            steps.Add(_cameraAdjustmentWaitStepFactory.CreateTutorialStep());
+            steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is your awesome cruiser :D",
                     _playerCruiser);
 
-            steps.Add(_explanationDismissableStepFactory.CreateTutorialStep(args));
+            steps.Add(_explanationDismissableStepFactory.CreateStep(args));
 
             return steps;
         }

@@ -50,7 +50,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _rightPanelComponents = rightPanelComponents;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
@@ -59,13 +59,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Explanation
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
                     "Managing your builders is vital.  Let's start 3 buildings, so we can see how this works :)")));
 
             // Infinitely slow build speed
             steps.Add(
-                _changeCruiserBuildSpeedStepFactory.CreateTutorialStep(
+                _changeCruiserBuildSpeedStepFactory.CreateStep(
                     _tutorialProvider.PlayerCruiserBuildSpeedController, 
                     BuildSpeed.InfinitelySlow));
 
@@ -96,7 +96,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Slow build speed explanation
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your builders without the buildings completing.")));
 
             // Show informator
@@ -108,19 +108,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     canDismissItemDetails: true));
 
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider)));
 
             // Explain drone focus buttons
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
                         "This is the \"builders\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
                         _rightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButton)));
 
             // Encourage user to experiment
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these 3 buildings, and see how the builders move between buildings.  (Click the checkmark when you have had enough.)")));
 
             return steps;

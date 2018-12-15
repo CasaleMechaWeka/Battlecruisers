@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     _tutorialArgs.CameraComponents.CameraFocuser,
                     cameraFocuserTarget));
 
-            steps.Add(_cameraAdjustmentWaitStepFactory.CreateTutorialStep());
+            steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());
 
             return steps;
         }

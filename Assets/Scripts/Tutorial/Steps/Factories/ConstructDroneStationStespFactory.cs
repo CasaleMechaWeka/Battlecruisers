@@ -24,7 +24,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     "To get more builders construct a builder bay."));
 
             steps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs("Nice!  You have gained 2 builders :D")));
 
             return steps;

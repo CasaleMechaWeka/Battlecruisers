@@ -4,6 +4,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public interface ITutorialStepsFactory
     {
-        IList<ITutorialStep> CreateTutorialSteps();
+        IList<ITutorialStep> CreateSteps();
     }
 }

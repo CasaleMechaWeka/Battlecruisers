@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // empty
         }
 
-        public ITutorialStep CreateTutorialStep(BroadcastingFilter featurePermitter, bool enableFeature)
+        public ITutorialStep CreateStep(BroadcastingFilter featurePermitter, bool enableFeature)
         {
             return
                 new FeaturePermitterStep(

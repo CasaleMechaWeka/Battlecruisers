@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // empty
         }
 
-        public ITutorialStep CreateTutorialStep()
+        public ITutorialStep CreateStep()
         {
             return
                 new CameraAdjustmentWaitStep(

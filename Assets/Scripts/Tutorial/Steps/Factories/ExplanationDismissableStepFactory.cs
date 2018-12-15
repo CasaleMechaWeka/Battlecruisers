@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _dismissButton = dismissButton;
         }
 
-        public ITutorialStep CreateTutorialStep(ITutorialStepArgs args)
+        public ITutorialStep CreateStep(ITutorialStepArgs args)
         {
             return
                 new ExplanationDismissableStep(

@@ -46,7 +46,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ITutorialStepArgs commonArgs = _argsFactory.CreateTutorialStepArgs();
 
             // 1. Change build speed to super fast
-            factorySteps.Add(_changeCruiserBuildSpeedStepFactory.CreateTutorialStep(
+            factorySteps.Add(_changeCruiserBuildSpeedStepFactory.CreateStep(
                     _tutorialProvider.AICruiserBuildSpeedController,
                     BuildSpeed.VeryFast));
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             // 4. Change build speed to infinitely slow
             factorySteps.Add(
-                _changeCruiserBuildSpeedStepFactory.CreateTutorialStep(
+                _changeCruiserBuildSpeedStepFactory.CreateStep(
                     _tutorialProvider.AICruiserBuildSpeedController,
                     BuildSpeed.InfinitelySlow));
 

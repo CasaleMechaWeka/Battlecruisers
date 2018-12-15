@@ -4,6 +4,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public interface IChangeCruiserBuildSpeedStepFactory
     {
-        ITutorialStep CreateTutorialStep(IBuildSpeedController speedController, BuildSpeed buildSpeed);
+        ITutorialStep CreateStep(IBuildSpeedController speedController, BuildSpeed buildSpeed);
     }
 }

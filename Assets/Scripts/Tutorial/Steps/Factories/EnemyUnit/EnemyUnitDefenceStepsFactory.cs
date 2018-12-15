@@ -43,7 +43,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _tutorialProvider = enemyUnitArgs.TutorialProvider;
         }
 
-        public IList<ITutorialStep> CreateTutorialSteps()
+        public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
@@ -58,7 +58,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(UnitToBuild.Name);
             string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + UnitToBuild.Name + "!";
             ITutorialStepArgs clickUnitArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, UnitBuiltProvider);
-            enemyUnitDefenceSteps.Add(_explanationDismissableStepFactory.CreateTutorialStep(clickUnitArgs));
+            enemyUnitDefenceSteps.Add(_explanationDismissableStepFactory.CreateStep(clickUnitArgs));
 
             // 4. Navigate back to player cruiser
             enemyUnitDefenceSteps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
@@ -77,7 +77,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             // 7. Insta-complete unit
             enemyUnitDefenceSteps.Add(
-                _changeCruiserBuildSpeedStepFactory.CreateTutorialStep(
+                _changeCruiserBuildSpeedStepFactory.CreateStep(
                     _tutorialProvider.AICruiserBuildSpeedController,
                     BuildSpeed.VeryFast));
 
@@ -104,7 +104,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             // 9. Congrats!
             enemyUnitDefenceSteps.Add(
-                _explanationDismissableStepFactory.CreateTutorialStep(
+                _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs("Nice!  You have successfully defended your cruiser.")));
 
             return enemyUnitDefenceSteps;
