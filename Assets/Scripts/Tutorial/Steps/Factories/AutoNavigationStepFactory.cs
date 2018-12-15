@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BattleCruisers.UI.Cameras;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -6,6 +7,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class AutoNavigationStepFactory : TutorialFactoryBase, IAutoNavigationStepFactory
     {
         private readonly ITutorialStepFactory _cameraAdjustmentWaitStepFactory;
+        private readonly ICameraComponents _cameraComponents;
 
         public AutoNavigationStepFactory(
             ITutorialStepArgsFactory argsFactory, 
@@ -24,7 +26,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 new CameraFocuserStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _tutorialArgs.CameraComponents.CameraFocuser,
+                    _cameraComponents.CameraFocuser,
                     cameraFocuserTarget));
 
             steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());

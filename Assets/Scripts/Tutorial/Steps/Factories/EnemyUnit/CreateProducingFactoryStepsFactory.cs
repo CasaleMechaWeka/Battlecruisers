@@ -55,8 +55,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                 = new StartConstructingBuildingStep(
                     commonArgs,
                     factoryKey,
-                    _tutorialArgs.PrefabFactory,
-                    _tutorialArgs.AICruiser);
+                    _prefabFactory,
+                    _aiCruiser);
             factorySteps.Add(startConstructingFactoryStep);
 
             // 3. Wait for factory completion
@@ -74,7 +74,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                 new StartConstructingUnitStep(
                     commonArgs,
                     unitKey,
-                    _tutorialArgs.PrefabFactory,
+                    _prefabFactory,
                     factoryProvider));
 
             return new FactoryStepsResult(factorySteps, factoryProvider);

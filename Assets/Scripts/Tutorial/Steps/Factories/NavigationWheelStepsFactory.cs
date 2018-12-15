@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -9,20 +10,23 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly BroadcastingFilter _navigationPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ICameraComponents _cameraComponents;
 
         public NavigationWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ITutorialArgs tutorialArgs,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             BroadcastingFilter navigationPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            ICameraComponents cameraComponents) 
             : base(argsFactory, tutorialArgs)
         {
-            Helper.AssertIsNotNull(featurePermitterStepFactory, navigationPermitter, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(featurePermitterStepFactory, navigationPermitter, explanationDismissableStepFactory, cameraComponents);
 
             _featurePermitterStepFactory = featurePermitterStepFactory;
             _navigationPermitter = navigationPermitter;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
+            _cameraComponents = cameraComponents;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -37,7 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
                         "This is the navigation wheel, which you use to navigate around the map.",
-                        _tutorialArgs.CameraComponents.NavigationWheel)));
+                        _cameraComponents.NavigationWheel)));
 
             // Encourage user to experiment
             steps.Add(

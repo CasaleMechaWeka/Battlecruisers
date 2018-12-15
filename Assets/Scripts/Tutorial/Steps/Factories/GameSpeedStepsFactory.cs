@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly BroadcastingFilter _gameSpeedPermitter, _navigationPermitter;
         private readonly RightPanelComponents _rightPanelComponents;
+        private readonly IUIManager _uiManager;
 
         public GameSpeedStepsFactory(
             ITutorialStepArgsFactory argsFactory,
@@ -19,16 +21,24 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IFeaturePermitterStepFactory featurePermitterStepFactory, 
             BroadcastingFilter gameSpeedPermitter, 
             BroadcastingFilter navigationPermitter, 
-            RightPanelComponents rightPanelComponents)
+            RightPanelComponents rightPanelComponents,
+            IUIManager uiManager)
             : base(argsFactory, tutorialArgs)
         {
-            Helper.AssertIsNotNull(explanationDismissableStepFactory, featurePermitterStepFactory, gameSpeedPermitter, navigationPermitter, rightPanelComponents);
+            Helper.AssertIsNotNull(
+                explanationDismissableStepFactory, 
+                featurePermitterStepFactory, 
+                gameSpeedPermitter, 
+                navigationPermitter, 
+                rightPanelComponents, 
+                uiManager);
 
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
             _featurePermitterStepFactory = featurePermitterStepFactory;
             _gameSpeedPermitter = gameSpeedPermitter;
             _navigationPermitter = navigationPermitter;
             _rightPanelComponents = rightPanelComponents;
+            _uiManager = uiManager;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -39,7 +49,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 new HideItemDetailsStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _tutorialArgs.UIManager));
+                    _uiManager));
 
             // Enable speed buttons and navgiation wheel (before explanation so game speed
             // buttons aren't semi-transparent :P)

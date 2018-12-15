@@ -1,13 +1,21 @@
 ﻿using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.UI.Cameras;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase, ITutorialStepFactory
     {
-        public CameraAdjustmentWaitStepFactory(ITutorialStepArgsFactory argsFactory, ITutorialArgs tutorialArgs) 
+        private readonly ICameraComponents _cameraComponents;
+
+        public CameraAdjustmentWaitStepFactory(
+            ITutorialStepArgsFactory argsFactory, 
+            ITutorialArgs tutorialArgs,
+            ICameraComponents cameraComponents) 
             : base(argsFactory, tutorialArgs)
         {
-            // empty
+            Assert.IsNotNull(cameraComponents);
+            _cameraComponents = cameraComponents;
         }
 
         public ITutorialStep CreateStep()
@@ -15,7 +23,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             return
                 new CameraAdjustmentWaitStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _tutorialArgs.CameraComponents.CameraAdjuster);
+                    _cameraComponents.CameraAdjuster);
         }
     }
 }
