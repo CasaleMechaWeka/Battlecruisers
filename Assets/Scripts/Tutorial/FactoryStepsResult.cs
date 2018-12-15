@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial
 {
+    // FELIX  Move to factory interface :)
     public class FactoryStepsResult
     {
         public IList<ITutorialStep> Steps { get; private set; }
