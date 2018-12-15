@@ -11,9 +11,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public YourCruiserStepsFactory(
-            ICruiser playerCruiser,
             ITutorialStepArgsFactory argsFactory,
             ITutorialArgs tutorialArgs,
+            ICruiser playerCruiser,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory, tutorialArgs)
