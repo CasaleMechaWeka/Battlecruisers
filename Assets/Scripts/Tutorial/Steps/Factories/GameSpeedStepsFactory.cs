@@ -1,0 +1,64 @@
+﻿using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class GameSpeedStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
+    {
+        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly BroadcastingFilter _gameSpeedPermitter, _navigationPermitter;
+        private readonly RightPanelComponents _rightPanelComponents;
+
+        public GameSpeedStepsFactory(
+            ITutorialStepArgsFactory argsFactory,
+            ITutorialArgs tutorialArgs,
+            IExplanationDismissableStepFactory explanationDismissableStepFactory, 
+            IFeaturePermitterStepFactory featurePermitterStepFactory, 
+            BroadcastingFilter gameSpeedPermitter, 
+            BroadcastingFilter navigationPermitter, 
+            RightPanelComponents rightPanelComponents)
+            : base(argsFactory, tutorialArgs)
+        {
+            Helper.AssertIsNotNull(explanationDismissableStepFactory, featurePermitterStepFactory, gameSpeedPermitter, navigationPermitter, rightPanelComponents);
+
+            _explanationDismissableStepFactory = explanationDismissableStepFactory;
+            _featurePermitterStepFactory = featurePermitterStepFactory;
+            _gameSpeedPermitter = gameSpeedPermitter;
+            _navigationPermitter = navigationPermitter;
+            _rightPanelComponents = rightPanelComponents;
+        }
+
+        public IList<ITutorialStep> CreateSteps()
+        {
+            List<ITutorialStep> steps = new List<ITutorialStep>();
+
+            // Hide informator, in case it is visible
+            steps.Add(
+                new HideItemDetailsStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    _tutorialArgs.UIManager));
+
+            // Enable speed buttons and navgiation wheel (before explanation so game speed
+            // buttons aren't semi-transparent :P)
+            steps.Add(_featurePermitterStepFactory.CreateStep(_gameSpeedPermitter, enableFeature: true));
+            steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: true));
+
+            // Explain game speed buttons
+            steps.Add(
+                _explanationDismissableStepFactory.CreateStep(
+                    _argsFactory.CreateTutorialStepArgs(
+                        "These two buttons control the game speed.",
+                        _rightPanelComponents.SpeedButtonPanel)));
+
+            // Encourage user to experiment
+            steps.Add(
+                _explanationDismissableStepFactory.CreateStep(
+                    _argsFactory.CreateTutorialStepArgs("Play around with the speed buttons a bit.  (Click the checkmark when you have had enough.)")));
+
+            return steps;
+        }
+    }
+}
