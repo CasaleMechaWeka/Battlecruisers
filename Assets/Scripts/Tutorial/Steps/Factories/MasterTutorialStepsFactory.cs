@@ -30,9 +30,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // TEMP  So I can build artillery without previous steps :)
-            //_tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 2;
-
             // 1. Player cruiser
             steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
 
