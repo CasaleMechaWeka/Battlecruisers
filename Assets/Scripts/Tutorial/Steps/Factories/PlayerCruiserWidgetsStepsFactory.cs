@@ -11,9 +11,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public PlayerCruiserWidgetsStepsFactory(
-            LeftPanelComponents leftPanelComponents,
             ITutorialStepArgsFactory argsFactory,
             ITutorialArgs tutorialArgs,
+            LeftPanelComponents leftPanelComponents,
             IAutoNavigationStepFactory autoNavigationStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory, tutorialArgs)
