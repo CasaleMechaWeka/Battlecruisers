@@ -10,7 +10,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Tutorial.Steps.Factories
+namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public class CreateProducingFactoryStepsFactory : TutorialFactoryBase, ICreateProducingFactoryStepsFactory
     {

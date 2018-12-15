@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 
-namespace BattleCruisers.Tutorial.Steps.Factories
+namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public interface ICreateProducingFactoryStepsFactory
     {

@@ -9,7 +9,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Strings;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Tutorial.Steps.Factories
+namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public abstract class EnemyUnitDefenceStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
