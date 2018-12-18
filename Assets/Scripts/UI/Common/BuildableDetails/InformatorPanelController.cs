@@ -44,12 +44,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             // Building details
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
             Assert.IsNotNull(_buildingDetails);
-            _buildingDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+            _buildingDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
 
             // Unit details
             _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
             Assert.IsNotNull(_unitDetails);
-            _unitDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
+            _unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter, visibilityFilters.DeletButtonVisiblityFilter);
 
             // Cruiser details
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);

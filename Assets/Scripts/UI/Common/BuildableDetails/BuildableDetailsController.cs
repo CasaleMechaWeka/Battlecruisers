@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public IButton DroneFocusButton { get { return _buttonManager.ToggleDronesButton; } }
 
         public void Initialise(
+            IUIManager uiManager,
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
@@ -26,13 +28,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
 
             _rectTransform = transform.Parse<RectTransform>();
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
-            _deleteButton.Initialise(this, deleteButtonVisibilityFilter);
+            _deleteButton.Initialise(uiManager, deleteButtonVisibilityFilter);
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);

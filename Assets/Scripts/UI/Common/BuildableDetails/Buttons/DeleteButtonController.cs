@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     public class DeleteButtonController : MonoBehaviour
     {
         private Button _button;
-        private IHidable _details;
+        private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
 
         private IBuildable _buildable;
@@ -23,11 +24,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             }
         }
 
-        public void Initialise(IHidable details, IFilter<ITarget> buttonVisibilityFilter)
+        public void Initialise(IUIManager uiManager, IFilter<ITarget> buttonVisibilityFilter)
         {
-            Helper.AssertIsNotNull(details, buttonVisibilityFilter);
+            Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter);
 
-            _details = details;
+            _uiManager = uiManager;
             _buttonVisibilityFilter = buttonVisibilityFilter;
 
             _button = GetComponent<Button>();
@@ -38,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private void DeleteBuildable()
         {
             Buildable.InitiateDelete();
-            _details.Hide();
+            _uiManager.HideItemDetails();
         }
     }
 }
