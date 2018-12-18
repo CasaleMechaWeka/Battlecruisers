@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public Vector2 AICruiserPosition { get; private set; }
         public Vector2 MidLeftPosition { get; private set; }
         public Vector2 AINavalFactoryPosition { get; private set; }
+        public Vector2 PlayerNavalFactoryPosition { get; private set; }
 
         public NavigationWheelPositionProvider(IPyramid navigationPanelArea)
         {
@@ -22,8 +23,12 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
             MidLeftPosition = new Vector2(midLeftX, midLeftY);
 
-            float navalFactoryX = navigationPanelArea.BottomRightVertex.x - navigationPanelArea.Width / 10;
-            AINavalFactoryPosition = new Vector2(navalFactoryX, 0);
+            float navigationFactoryXDelta = navigationPanelArea.Width / 10;
+            float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navigationFactoryXDelta;
+            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, 0);
+
+            float playerNavalFactoryX = navigationPanelArea.BottomLeftVertex.x + navigationFactoryXDelta;
+            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, 0);
         }
     }
 }

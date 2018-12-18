@@ -3,6 +3,7 @@
     public interface ICameraFocuser
     {
         void FocusOnPlayerCruiser();
+        void FocusOnPlayerNavalFactory();
         void FocusOnAICruiser();
         void FocusOnAINavalFactory();
         void FocusMidLeft();

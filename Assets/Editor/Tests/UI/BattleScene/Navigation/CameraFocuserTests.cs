@@ -19,6 +19,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel);
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
+            _positionProvider.PlayerNavalFactoryPosition.Returns(new Vector2(4, 4));
             _positionProvider.AICruiserPosition.Returns(new Vector2(-3, -3));
             _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
@@ -29,6 +30,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         {
             _cameraFocuser.FocusOnPlayerCruiser();
             _navigationWheel.Received().CenterPosition = _positionProvider.PlayerCruiserPosition;
+        }
+
+        [Test]
+        public void FocusOnPlayerNavalFactory()
+        {
+            _cameraFocuser.FocusOnPlayerNavalFactory();
+            _navigationWheel.Received().CenterPosition = _positionProvider.PlayerNavalFactoryPosition;
         }
 
         [Test]

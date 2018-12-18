@@ -20,6 +20,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _navigationWheel.CenterPosition = _positionProvider.PlayerCruiserPosition;
         }
 
+        public void FocusOnPlayerNavalFactory()
+        {
+            _navigationWheel.CenterPosition = _positionProvider.PlayerNavalFactoryPosition;
+        }
+
         public void FocusOnAICruiser()
         {
             _navigationWheel.CenterPosition = _positionProvider.AICruiserPosition;
