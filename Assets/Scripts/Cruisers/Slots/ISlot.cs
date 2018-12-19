@@ -49,6 +49,7 @@ namespace BattleCruisers.Cruisers.Slots
         IBuilding Building { get; set; }
         IObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
+        Vector2 Position { get; }
 
         /// <summary>
         /// Reference point used to line up buildings with.

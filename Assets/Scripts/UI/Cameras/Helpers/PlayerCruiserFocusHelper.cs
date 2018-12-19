@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
             Assert.IsNotNull(bowSlot);
 
-            return Vector2.Distance(_camera.Transform.Position, bowSlot.Transform.position) < BOW_SLOT_CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Transform.Position, bowSlot.Position) < BOW_SLOT_CAMERA_MARGIN_IN_M;
         }
     }
 }
