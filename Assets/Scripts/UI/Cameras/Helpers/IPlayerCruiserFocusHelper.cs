@@ -12,6 +12,7 @@
         /// Focuses in the player cruiser bow slot if the camera is not already
         /// roughly on the bow slot.
         /// </summary>
+        /// FELIX  Rename :D
         void FocusOnPlayerNavalFactoryIfNeeded();
     }
 }
