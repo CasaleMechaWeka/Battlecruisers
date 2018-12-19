@@ -9,15 +9,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Update tests :)
     public class PlayerCruiserFocusHelper : IPlayerCruiserFocusHelper
     {
         private readonly ICamera _camera;
         private readonly ICameraFocuser _cameraFocuser;
         private readonly ICruiser _playerCruiser;
 
-        private const float PLAYER_CRUISER_CAMERA_MARGIN_IN_M = 10;
-        private const float BOW_SLOT_CAMERA_MARGIN_IN_M = 3;
+        public const float PLAYER_CRUISER_CAMERA_MARGIN_IN_M = 10;
+        public const float BOW_SLOT_CAMERA_MARGIN_IN_M = 3;
 
         public PlayerCruiserFocusHelper(ICamera camera, ICameraFocuser cameraFocuser, ICruiser playerCruiser)
         {

@@ -1,9 +1,12 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Helpers
@@ -14,6 +17,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         private ICamera _camera;
         private ICameraFocuser _cameraFocuser;
         private ICruiser _playerCruiser;
+        private ISlot _bowSlot;
 
         [SetUp]
         public void TestSetup()
@@ -23,13 +27,19 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _playerCruiser = Substitute.For<ICruiser>();
 
             _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser);
+
+            _bowSlot = Substitute.For<ISlot>();
+            ReadOnlyCollection<ISlot> bowSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { _bowSlot });
+            _playerCruiser.SlotAccessor
+                .GetSlots(SlotType.Bow)
+                .Returns(bowSlots);
         }
 
         [Test]
         public void FocusOnPlayerCruiserIfNeeded_CameraRoughlyOnCruiser_DoesNotMoveCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(9.9f, 0, 0));
+            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
@@ -40,11 +50,33 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerCruiserIfNeeded_CameraNotRoughlyOnCruiser_MovesCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(10, 0, 0));
+            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
             _cameraFocuser.Received().FocusOnPlayerCruiser();
+        }
+
+        [Test]
+        public void FocusOnPlayerNavalFactoryIfNeeded_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
+        {
+            _bowSlot.Position.Returns(Vector2.zero);
+            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
+
+            _helper.FocusOnPlayerNavalFactoryIfNeeded();
+
+            _cameraFocuser.DidNotReceive().FocusOnPlayerNavalFactory();
+        }
+
+        [Test]
+        public void FocusOnPlayerNavalFactoryIfNeeded_CameraNOtRoughlyOnBowSlot_MovesCamera()
+        {
+            _bowSlot.Position.Returns(Vector2.zero);
+            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M, 0, 0));
+
+            _helper.FocusOnPlayerNavalFactoryIfNeeded();
+
+            _cameraFocuser.Received().FocusOnPlayerNavalFactory();
         }
     }
 }
