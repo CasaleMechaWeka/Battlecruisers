@@ -22,7 +22,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             _playerCruiserFocusHelper = playerCruiserFocusHelper;
         }
 
-        // FELIX  Update tests :)
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IBuilding> buildingClicked)
         {
             Assert.IsNotNull(buildingClicked);
