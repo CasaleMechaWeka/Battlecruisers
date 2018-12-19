@@ -47,20 +47,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             buildingDetailsManager.Initialise(_itemStateManager);
             AddChildPresentable(buildingDetailsManager);
 
-            unitDetailsManager.Initialise(_itemStateManager);
-            AddChildPresentable(unitDetailsManager);
+            // FELIX
+            //unitDetailsManager.Initialise(_itemStateManager);
+            //AddChildPresentable(unitDetailsManager);
 
-            cruiserDetailsManager.Initialise(_itemStateManager);
-            AddChildPresentable(cruiserDetailsManager);
+            //cruiserDetailsManager.Initialise(_itemStateManager);
+            //AddChildPresentable(cruiserDetailsManager);
 
-			yield return null;
-            SetupHullsRow();
+			//yield return null;
+   //         SetupHullsRow();
 
-			yield return null;
-            SetupBuildingRows();
+			//yield return null;
+   //         SetupBuildingRows();
 
-			yield return null;
-            SetupUnitRows();
+			//yield return null;
+   //         SetupUnitRows();
         }
 
         private void SetupHullsRow()
