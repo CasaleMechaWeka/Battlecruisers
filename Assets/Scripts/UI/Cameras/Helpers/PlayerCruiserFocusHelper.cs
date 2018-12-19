@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
             return Vector2.Distance(_camera.Transform.Position, _playerCruiser.Position) < PLAYER_CRUISER_CAMERA_MARGIN_IN_M;
         }
 
-        public void FocusOnPlayerNavalFactoryIfNeeded()
+        public void FocusOnPlayerBowSlotIfNeeded()
         {
             if (!IsCameraRoughlyOnPlayerNavalFactory())
             {

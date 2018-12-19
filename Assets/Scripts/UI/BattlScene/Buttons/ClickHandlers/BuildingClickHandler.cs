@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
                 {
-                    _playerCruiserFocusHelper.FocusOnPlayerNavalFactoryIfNeeded();
+                    _playerCruiserFocusHelper.FocusOnPlayerBowSlotIfNeeded();
                 }
                 else
                 {

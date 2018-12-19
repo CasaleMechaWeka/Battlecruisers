@@ -58,23 +58,23 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FocusOnPlayerNavalFactoryIfNeeded_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
+        public void FocusOnPlayerBowSlotIfNeeded_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
         {
             _bowSlot.Position.Returns(Vector2.zero);
             _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
 
-            _helper.FocusOnPlayerNavalFactoryIfNeeded();
+            _helper.FocusOnPlayerBowSlotIfNeeded();
 
             _cameraFocuser.DidNotReceive().FocusOnPlayerNavalFactory();
         }
 
         [Test]
-        public void FocusOnPlayerNavalFactoryIfNeeded_CameraNOtRoughlyOnBowSlot_MovesCamera()
+        public void FocusOnPlayerBowSlotIfNeeded_CameraNOtRoughlyOnBowSlot_MovesCamera()
         {
             _bowSlot.Position.Returns(Vector2.zero);
             _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M, 0, 0));
 
-            _helper.FocusOnPlayerNavalFactoryIfNeeded();
+            _helper.FocusOnPlayerBowSlotIfNeeded();
 
             _cameraFocuser.Received().FocusOnPlayerNavalFactory();
         }
