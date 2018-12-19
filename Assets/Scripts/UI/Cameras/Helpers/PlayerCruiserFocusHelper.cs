@@ -16,7 +16,8 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly ICameraFocuser _cameraFocuser;
         private readonly ICruiser _playerCruiser;
 
-        private const float CAMERA_MARGIN_IN_M = 10;
+        private const float PLAYER_CRUISER_CAMERA_MARGIN_IN_M = 10;
+        private const float BOW_SLOT_CAMERA_MARGIN_IN_M = 3;
 
         public PlayerCruiserFocusHelper(ICamera camera, ICameraFocuser cameraFocuser, ICruiser playerCruiser)
         {
@@ -37,7 +38,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         private bool IsCameraRoughlyOnPlayerCruiser()
         {
-            return Vector2.Distance(_camera.Transform.Position, _playerCruiser.Position) < CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Transform.Position, _playerCruiser.Position) < PLAYER_CRUISER_CAMERA_MARGIN_IN_M;
         }
 
         public void FocusOnPlayerNavalFactoryIfNeeded()
@@ -57,8 +58,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
             Assert.IsNotNull(bowSlot);
 
-            // FELI  If don't end up adjusting margin for naval factory, can merge with corresponding cruiser method :)
-            return Vector2.Distance(_camera.Transform.Position, bowSlot.Transform.position) < CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Transform.Position, bowSlot.Transform.position) < BOW_SLOT_CAMERA_MARGIN_IN_M;
         }
     }
 }
