@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(true);
-            _maxRangeDetector.OnEntered += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
+            _maxRangeDetector.TargetEntered += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
 
             Assert.IsTrue(wasCalled);
         }
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(false);
-            _maxRangeDetector.OnEntered += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
+            _maxRangeDetector.TargetEntered += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(true);
-            _maxRangeDetector.OnExited += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
+            _maxRangeDetector.TargetExited += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
 
             Assert.IsTrue(wasCalled);
         }
@@ -84,7 +84,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(false);
-            _maxRangeDetector.OnExited += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
+            _maxRangeDetector.TargetExited += Raise.EventWith(_maxRangeDetector, new TargetEventArgs(_target));
         }
         #endregion Max range detector
 
@@ -102,7 +102,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(true);
-            _minRangeDetector.OnEntered += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
+            _minRangeDetector.TargetEntered += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
 
             Assert.IsTrue(wasCalled);
         }
@@ -116,7 +116,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
             };
 
             _targetFilter.IsMatch(_target).Returns(false);
-            _minRangeDetector.OnEntered += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
+            _minRangeDetector.TargetEntered += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 
             _targetFilter.IsMatch(_target).Returns(true);
             _target.IsDestroyed.Returns(true);
-            _minRangeDetector.OnExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
+            _minRangeDetector.TargetExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 
             _targetFilter.IsMatch(_target).Returns(false);
             _target.IsDestroyed.Returns(false);
-            _minRangeDetector.OnExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
+            _minRangeDetector.TargetExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 
             _targetFilter.IsMatch(_target).Returns(true);
             _target.IsDestroyed.Returns(false);
-            _minRangeDetector.OnExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
+            _minRangeDetector.TargetExited += Raise.EventWith(_minRangeDetector, new TargetEventArgs(_target));
 
             Assert.IsTrue(wasCalled);
         }

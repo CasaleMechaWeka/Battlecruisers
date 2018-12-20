@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			};
 
 			_targetFilter.IsMatch(_target).Returns(true);
-			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+			_enemyDetector.TargetEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}
@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 
             _target.IsDestroyed.Returns(true);
             _targetFilter.IsMatch(_target).Returns(true);
-            _enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+            _enemyDetector.TargetEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			};
 
 			_targetFilter.IsMatch(_target).Returns(false);
-			_enemyDetector.OnEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+			_enemyDetector.TargetEntered += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 		}
 		
 		[Test]
@@ -81,7 +81,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			};
 
 			_targetFilter.IsMatch(_target).Returns(true);
-			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+			_enemyDetector.TargetExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 
 			Assert.IsTrue(wasCalled);
 		}
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			};
 
 			_targetFilter.IsMatch(_target).Returns(false);
-			_enemyDetector.OnExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
+			_enemyDetector.TargetExited += Raise.EventWith(_enemyDetector, new TargetEventArgs(_target));
 		}
 	}
 }

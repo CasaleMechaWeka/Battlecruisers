@@ -17,8 +17,7 @@ namespace BattleCruisers.Targets.TargetDetectors
 	{
         void StartDetecting();
 
-        // FELIX  Rename:  TargetEntered, TargetExited :)
-		event EventHandler<TargetEventArgs> OnEntered;
-		event EventHandler<TargetEventArgs> OnExited;
+		event EventHandler<TargetEventArgs> TargetEntered;
+		event EventHandler<TargetEventArgs> TargetExited;
 	}
 }

@@ -10,8 +10,8 @@ namespace BattleCruisers.Targets.TargetDetectors
     {
         private ITargetColliderHandler _targetColliderHandler;
 
-		public event EventHandler<TargetEventArgs> OnEntered;
-		public event EventHandler<TargetEventArgs> OnExited;
+		public event EventHandler<TargetEventArgs> TargetEntered;
+		public event EventHandler<TargetEventArgs> TargetExited;
 
         public void Initialise()
         {
@@ -51,17 +51,17 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         public void InvokeTargetEnteredEvent(ITarget target)
         {
-            if (OnEntered != null)
+            if (TargetEntered != null)
             {
-                OnEntered.Invoke(this, new TargetEventArgs(target));
+                TargetEntered.Invoke(this, new TargetEventArgs(target));
             }
         }
 
         public void InvokeTargetExitedEvent(ITarget target)
         {
-            if (OnExited != null)
+            if (TargetExited != null)
             {
-                OnExited.Invoke(this, new TargetEventArgs(target));
+                TargetExited.Invoke(this, new TargetEventArgs(target));
             }
         }
     }

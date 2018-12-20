@@ -28,11 +28,11 @@ namespace BattleCruisers.Targets.TargetFinders
             _minRangeDetector = minRangeDetector;
             _targetFilter = targetFilter;
 
-            _maxRangeDetector.OnEntered += OnTargetFound;
-            _maxRangeDetector.OnExited += OnTargetLost;
+            _maxRangeDetector.TargetEntered += OnTargetFound;
+            _maxRangeDetector.TargetExited += OnTargetLost;
 
-            _minRangeDetector.OnEntered += OnTargetLost;
-            _minRangeDetector.OnExited += OnTargetFound;
+            _minRangeDetector.TargetEntered += OnTargetLost;
+            _minRangeDetector.TargetExited += OnTargetFound;
 
             _maxRangeDetector.StartDetecting();
             _minRangeDetector.StartDetecting();
@@ -59,11 +59,11 @@ namespace BattleCruisers.Targets.TargetFinders
 
         public void DisposeManagedState()
         {
-            _maxRangeDetector.OnEntered -= OnTargetFound;
-            _maxRangeDetector.OnExited -= OnTargetLost;
+            _maxRangeDetector.TargetEntered -= OnTargetFound;
+            _maxRangeDetector.TargetExited -= OnTargetLost;
 
-            _minRangeDetector.OnEntered -= OnTargetLost;
-            _minRangeDetector.OnExited -= OnTargetFound;
+            _minRangeDetector.TargetEntered -= OnTargetLost;
+            _minRangeDetector.TargetExited -= OnTargetFound;
         }
     }
 }

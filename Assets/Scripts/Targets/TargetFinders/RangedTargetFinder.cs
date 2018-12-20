@@ -24,8 +24,8 @@ namespace BattleCruisers.Targets.TargetFinders
 			_enemyDetector = enemyDetector;
 			_targetFilter = targetFilter;
 
-            _enemyDetector.OnEntered += OnEnemyEntered;
-			_enemyDetector.OnExited += OnEnemyExited;
+            _enemyDetector.TargetEntered += OnEnemyEntered;
+			_enemyDetector.TargetExited += OnEnemyExited;
 
             _enemyDetector.StartDetecting();
 		}
@@ -58,8 +58,8 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		public void DisposeManagedState()
 		{
-			_enemyDetector.OnEntered -= OnEnemyEntered;
-			_enemyDetector.OnExited -= OnEnemyExited;
+			_enemyDetector.TargetEntered -= OnEnemyEntered;
+			_enemyDetector.TargetExited -= OnEnemyExited;
 		}
 	}
 }
