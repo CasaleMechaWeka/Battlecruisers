@@ -34,7 +34,6 @@ namespace BattleCruisers.Cruisers
         private readonly IApplicationModel _applicationModel;
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
-        private readonly IRankedTargetTracker _userChosenTargetTracker;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -45,10 +44,9 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
-            IUIManager uiManager,
-            IRankedTargetTracker userChosenTargetTracker)
+            IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager, userChosenTargetTracker);
+            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager);
             
             _prefabFactory = prefabFactory;
             _components = components;
@@ -58,7 +56,6 @@ namespace BattleCruisers.Cruisers
             _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
-            _userChosenTargetTracker = userChosenTargetTracker;
         }
 
         public Cruiser CreatePlayerCruiser()
@@ -85,9 +82,13 @@ namespace BattleCruisers.Cruisers
             return aiCruiser;
         }
 
-        public void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser, ICameraFocuser cameraFocuser)
+        public void InitialisePlayerCruiser(
+            Cruiser playerCruiser, 
+            Cruiser aiCruiser, 
+            ICameraFocuser cameraFocuser,
+            IRankedTargetTracker userChosenTargetTracker)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraFocuser);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, cameraFocuser, userChosenTargetTracker);
 
             ICruiserHelper helper = CreatePlayerHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Blues;
@@ -107,7 +108,7 @@ namespace BattleCruisers.Cruisers
                 shouldShowFog,
                 _highlightableSlotFilter,
                 _helper.PlayerCruiserBuildProgressCalculator,
-                _userChosenTargetTracker,
+                userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
@@ -117,10 +118,11 @@ namespace BattleCruisers.Cruisers
         public void InitialiseAICruiser(
             Cruiser playerCruiser, 
             Cruiser aiCruiser, 
-            ICameraFocuser cameraFocuser, 
+            ICameraFocuser cameraFocuser,
+            IRankedTargetTracker userChosenTargetTracker,
             IUserChosenTargetHelper userChosenTargetHelper)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, userChosenTargetHelper);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, userChosenTargetTracker, userChosenTargetHelper);
 
             ICruiserHelper helper = CreateAIHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Reds;
@@ -141,7 +143,7 @@ namespace BattleCruisers.Cruisers
                 shouldShowFog,
                 _highlightableSlotFilter,
                 _helper.AICruiserBuildProgressCalculator,
-                _userChosenTargetTracker,
+                userChosenTargetTracker,
                 feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,

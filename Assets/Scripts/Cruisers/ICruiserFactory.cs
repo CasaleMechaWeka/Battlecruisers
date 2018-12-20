@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Targets.TargetTrackers.UserChosen;
+﻿using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Cruisers
@@ -8,7 +9,17 @@ namespace BattleCruisers.Cruisers
         Cruiser CreatePlayerCruiser();
         Cruiser CreateAICruiser();
 
-        void InitialisePlayerCruiser(Cruiser playerCruiser, Cruiser aiCruiser, ICameraFocuser cameraFocuser);
-        void InitialiseAICruiser(Cruiser playerCruiser, Cruiser aiCruiser, ICameraFocuser cameraFocuser, IUserChosenTargetHelper userChosenTargetHelper);
+        void InitialisePlayerCruiser(
+            Cruiser playerCruiser, 
+            Cruiser aiCruiser, 
+            ICameraFocuser cameraFocuser, 
+            IRankedTargetTracker userChosenTargetTracker);
+
+        void InitialiseAICruiser(
+            Cruiser playerCruiser, 
+            Cruiser aiCruiser, 
+            ICameraFocuser cameraFocuser,
+            IRankedTargetTracker userChosenTargetTracker,
+            IUserChosenTargetHelper userChosenTargetHelper);
     }
 }

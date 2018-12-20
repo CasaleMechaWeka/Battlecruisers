@@ -85,8 +85,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Camera,
                     helper,
                     applicationModel,
-                    uiManager,
-                    playerCruiserUserChosenTargetManager);
+                    uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
@@ -105,7 +104,7 @@ namespace BattleCruisers.Scenes.BattleScene
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
-            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser);
+            cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser, playerCruiserUserChosenTargetManager);
 
             // Initialise AI cruiser
             IUserChosenTargetHelper userChosenTargetHelper 
@@ -117,6 +116,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     cameraComponents.CameraFocuser,
+                    aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
 
             // UI
