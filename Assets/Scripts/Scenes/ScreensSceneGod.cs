@@ -46,10 +46,10 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  For showing PostBattleScreen :)
-   //         _gameModel.LastBattleResult = new BattleResult(1, true);
-			//ApplicationModel.ShowPostBattleScreen = true;
+            //_gameModel.LastBattleResult = new BattleResult(1, true);
+            //_applicationModel.ShowPostBattleScreen = true;
 
-            
+
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
             {
