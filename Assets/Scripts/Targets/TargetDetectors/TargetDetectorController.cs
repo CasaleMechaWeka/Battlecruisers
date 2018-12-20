@@ -13,7 +13,7 @@ namespace BattleCruisers.Targets.TargetDetectors
 		public event EventHandler<TargetEventArgs> TargetEntered;
 		public event EventHandler<TargetEventArgs> TargetExited;
 
-        public void Initialise()
+        private void Start()
         {
             _targetColliderHandler = new TargetColliderHandler(this);
         }

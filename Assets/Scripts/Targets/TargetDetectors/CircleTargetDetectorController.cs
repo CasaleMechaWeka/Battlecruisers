@@ -10,8 +10,6 @@ namespace BattleCruisers.Targets.TargetDetectors
 
 		public void Initialise(float radiusInM)
 		{
-            base.Initialise();
-
             _radiusInM = radiusInM;
 
 			_circleCollider = gameObject.GetComponent<CircleCollider2D>();
