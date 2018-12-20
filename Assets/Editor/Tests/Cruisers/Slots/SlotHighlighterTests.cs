@@ -26,7 +26,8 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _slotAccessor = Substitute.For<ISlotAccessor>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
 
-            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter);
+            // FELIX Fix test :P
+            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, null);
 
             _slot1 = Substitute.For<ISlot>();
             _slot1.Type.Returns(SlotType.Deck);

@@ -8,7 +8,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private readonly ISlotAccessor _slotAccessor;
         private readonly ISlotFilter _highlightableFilter;
-		private SlotType? _highlightedSlotType;
+        private SlotType? _highlightedSlotType;
 
 		private ISlot _highlightedSlot;
         private ISlot HighlightedSlot
@@ -30,29 +30,37 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotHighlighter(ISlotAccessor slotAccessor, ISlotFilter highlightableFilter)
+        public SlotHighlighter(ISlotAccessor slotAccessor, ISlotFilter highlightableFilter, ICruiserController parentCruiser)
 		{
-            Helper.AssertIsNotNull(slotAccessor, highlightableFilter);
+            Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiser);
 
             _slotAccessor = slotAccessor;
             _highlightableFilter = highlightableFilter;
+
+            // FELIX  Update tests :)
+            parentCruiser.BuildingDestroyed += ParentCruiser_BuildingDestroyed;
         }
 
-		// Only highlight one slot type at a time
-		public void HighlightAvailableSlots(SlotType slotType)
+        private void ParentCruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
+        {
+            if (_highlightedSlotType != null)
+            {
+                HighlightAvailableSlots((SlotType)_highlightedSlotType);
+            }
+        }
+
+        // Only highlight one slot type at a time
+        public void HighlightAvailableSlots(SlotType slotType)
 		{
-			if (_highlightedSlotType != slotType)
+			UnhighlightSlots();
+
+			_highlightedSlotType = slotType;
+
+			foreach (ISlot slot in _slotAccessor.GetSlots(slotType))
 			{
-				UnhighlightSlots();
-
-				_highlightedSlotType = slotType;
-
-				foreach (ISlot slot in _slotAccessor.GetSlots(slotType))
+                if (_highlightableFilter.IsMatch(slot))
 				{
-                    if (_highlightableFilter.IsMatch(slot))
-					{
-                        slot.IsVisible = true;
-					}
+                    slot.IsVisible = true;
 				}
 			}
 		}
