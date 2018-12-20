@@ -41,7 +41,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-			CircleTargetDetector enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetector>();
+			CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
 			Assert.IsNotNull(enemyDetector);
 			
 			// Create target finder

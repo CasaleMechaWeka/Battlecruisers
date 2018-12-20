@@ -30,9 +30,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Fighter; } }
 
         // Detects enemies that come within following range
-        public CircleTargetDetector followableEnemyDetector;
+        public CircleTargetDetectorController followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
-		public CircleTargetDetector shootableEnemyDetector;
+		public CircleTargetDetectorController shootableEnemyDetector;
 
 		public float enemyFollowDetectionRangeInM;
 

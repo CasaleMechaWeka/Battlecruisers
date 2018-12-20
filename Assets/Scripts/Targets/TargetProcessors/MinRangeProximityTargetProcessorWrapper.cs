@@ -9,10 +9,10 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-			CircleTargetDetector maxRangeDetector = transform.FindNamedComponent<CircleTargetDetector>("MaxRangeDetector");
+			CircleTargetDetectorController maxRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MaxRangeDetector");
             maxRangeDetector.Initialise(args.MaxRangeInM);
 
-            CircleTargetDetector minRangeDetector = transform.FindNamedComponent<CircleTargetDetector>("MinRangeDetector");
+            CircleTargetDetectorController minRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MinRangeDetector");
             minRangeDetector.Initialise(args.MinRangeInM);
 
             // Create target finder

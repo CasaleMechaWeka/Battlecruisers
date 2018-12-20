@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes.Test.Targets
     public class DestroyedTriggerExitTestGod : MonoBehaviour
     {
         private AttackBoatController _ship;
-        public CircleTargetDetector _detector;
+        public CircleTargetDetectorController _detector;
 
         void Start()
         {
@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Targets
 
             // Setup target detector
             //CircleTargetDetector[] detectors = FindObjectsOfType<CircleTargetDetector>();
-            //foreach (CircleTargetDetector detector in detectors)
+            //foreach (CircleTargetDetectorController detector in detectors)
             {
                 _detector.Initialise(radiusInM: 3.5f);
                 _detector.StartDetecting();

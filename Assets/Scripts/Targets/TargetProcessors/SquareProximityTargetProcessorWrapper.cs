@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-            TargetDetector enemyDetector = GetComponentInChildren<TargetDetector>();
+            TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
             Assert.IsNotNull(enemyDetector);
 
             ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);

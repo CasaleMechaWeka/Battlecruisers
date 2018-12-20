@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-	public class CircleTargetDetector : TargetDetector
+	public class CircleTargetDetectorController : TargetDetectorController
 	{
 		private CircleCollider2D _circleCollider;
         private float _radiusInM;

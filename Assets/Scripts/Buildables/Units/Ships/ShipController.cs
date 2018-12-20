@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
-		public CircleTargetDetector enemyDetector, friendDetector;
+		public CircleTargetDetectorController enemyDetector, friendDetector;
 
         public override TargetType TargetType { get { return TargetType.Ships; } }
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }

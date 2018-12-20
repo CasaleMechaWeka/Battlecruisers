@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
-		public CircleTargetDetector hoverRangeEnemyDetector;
+		public CircleTargetDetectorController hoverRangeEnemyDetector;
         public float enemyHoverRangeInM, enemyFollowRangeInM;
 
 		private ITarget _target;

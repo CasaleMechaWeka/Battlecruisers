@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    public class TargetDetector : MonoBehaviour, ITargetDetector
+    public class TargetDetectorController : MonoBehaviour, ITargetDetector
 	{
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
