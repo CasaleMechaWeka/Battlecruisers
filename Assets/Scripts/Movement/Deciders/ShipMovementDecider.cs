@@ -102,6 +102,9 @@ namespace BattleCruisers.Movement.Deciders
 
             _blockingFriendlyProvider.TargetChanged -= TriggerDecideMovement;
             _blockingFriendlyProvider.DisposeManagedState();
+
+            _inRangeTargetTracker.TargetsChanged -= TriggerDecideMovement;
+            _inRangeTargetTracker.DisposeManagedState();
         }
     }
 }
