@@ -53,15 +53,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             cruiserDetailsManager.Initialise(_itemStateManager);
             AddChildPresentable(cruiserDetailsManager);
 
-            // FELIX
-            //yield return null;
-            //         SetupHullsRow();
+            yield return null;
+            SetupHullsRow();
 
-            //yield return null;
-            //         SetupBuildingRows();
+            yield return null;
+            SetupBuildingRows();
 
-            //yield return null;
-            //         SetupUnitRows();
+            yield return null;
+            SetupUnitRows();
         }
 
         private void SetupHullsRow()
