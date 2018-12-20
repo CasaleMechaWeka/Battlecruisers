@@ -26,20 +26,37 @@ namespace BattleCruisers.Targets.TargetFinders
 			if (OnEntered != null)
 			{
 				ITarget target = GetTarget(collider);
+                target.Destroyed += Target_Destroyed;
 				OnEntered.Invoke(this, new TargetEventArgs(target));
 			}
 		}
 
-		void OnTriggerExit2D(Collider2D collider)
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            e.DestroyedTarget.Destroyed -= Target_Destroyed;
+            InvokeExited(e.DestroyedTarget);
+        }
+
+        void OnTriggerExit2D(Collider2D collider)
 		{
             Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerExit2D()  collider id: " + collider.GetInstanceID());
 
-			if (OnExited != null)
-			{
-				ITarget target = GetTarget(collider);
-				OnExited.Invoke(this, new TargetEventArgs(target));
-			}
+			ITarget target = GetTarget(collider);
+
+            if (!target.IsDestroyed)
+            {
+                target.Destroyed -= Target_Destroyed;
+                InvokeExited(target);
+            }
 		}
+
+        private void InvokeExited(ITarget target)
+        {
+            if (OnExited != null)
+            {
+                OnExited.Invoke(this, new TargetEventArgs(target));
+            }
+        }
 
 		private ITarget GetTarget(Collider2D collider)
 		{
