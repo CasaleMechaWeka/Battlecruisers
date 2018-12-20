@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetDetectors;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Targets

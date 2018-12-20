@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Targets.TargetFinders;
+﻿using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 

@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Targets.TargetFinders
+namespace BattleCruisers.Targets.TargetDetectors
 {
     public class TargetDetector : MonoBehaviour, ITargetDetector
 	{

@@ -14,6 +14,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {

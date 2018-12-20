@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
