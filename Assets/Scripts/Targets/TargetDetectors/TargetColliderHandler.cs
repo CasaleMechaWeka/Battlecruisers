@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    // FELIX  Test :)
     public class TargetColliderHandler : ITargetColliderHandler
     {
         private readonly ITargetDetectorEventEmitter _eventEmitter;
