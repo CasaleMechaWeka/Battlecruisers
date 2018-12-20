@@ -122,7 +122,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these 3 buildings, and see how the builders move between buildings.  (Click the checkmark when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these 3 buildings, and see how the builders move between buildings.  (Click the \"Okay\" when you have had enough.)")));
 
             return steps;
         }
