@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private ISlotHighlighter _slotHighlighter;
         private ISlotAccessor _slotAccessor;
         private ISlotFilter _highlightableFilter;
+        private ICruiserController _parentCruiser;
         private ISlot _slot1, _slot2;
         private ReadOnlyCollection<ISlot> _slotsToReturn1, _slotsToReturn2;
         private IList<ISlot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
@@ -25,9 +27,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             _slotAccessor = Substitute.For<ISlotAccessor>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
+            _parentCruiser = Substitute.For<ICruiserController>();
 
-            // FELIX Fix test :P
-            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, null);
+            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, _parentCruiser);
 
             _slot1 = Substitute.For<ISlot>();
             _slot1.Type.Returns(SlotType.Deck);
@@ -70,24 +72,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
 
         [Test]
-        public void HighlightAvailableSlots_HighlightHighlightedSlotType_DoesNothing()
-        {
-            _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
-            _highlightableFilter.IsMatch(_slot2).Returns(true);
-
-            // First highlight
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
-            _slot2.Received().IsVisible = true;
-
-            _slot2.ClearReceivedCalls();
-
-            // Second highlight, SAME slot type
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
-            _slot2.DidNotReceive().IsVisible = true;
-        }
-
-        [Test]
         public void HighlightAvailableSlots_UnhighlightsCurrentlyHighlightedSlots_HighlightsFreeSlots()
         {
             // First highlight
@@ -98,7 +82,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
             _slot2.Received().IsVisible = true;
 
-            // Second highlight, different slot type
+            // Second highlight
             _mutableSlotsToReturn1.Add(_slot1);
             _slotAccessor.GetSlots(_slot1.Type).Returns(_slotsToReturn1);
 
@@ -154,5 +138,43 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             Assert.Throws<UnityAsserts.AssertionException>(() => _slotHighlighter.HighlightBuildingSlot(_building));
         }
         #endregion HighlightBuildingSlot
+
+        #region BuildingDestroyed event
+        [Test]
+        public void BuildingDestroyed_AreHighlightingSlots_Rehighlights()
+        {
+            // Highlight slots
+            _mutableSlotsToReturn2.Add(_slot2);
+            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _highlightableFilter.IsMatch(_slot2).Returns(true);
+
+            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+
+            _slot2.Received().IsVisible = true;
+
+            // Building destroyed
+            _slot2.ClearReceivedCalls();
+            _parentCruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(null));
+
+            // Received highlight refresh
+            _slot2.Received().IsVisible = false;
+            _slot2.Received().IsVisible = true;
+        }
+
+        [Test]
+        public void BuildingDestroyed_AreNotHighlightingSlots_DoesNothing()
+        {
+            // Make a slot match the highlightable filter
+            _mutableSlotsToReturn2.Add(_slot2);
+            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _highlightableFilter.IsMatch(_slot2).Returns(true);
+
+            // Building destroyed
+            _parentCruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(null));
+
+            // Received no highlight refresh
+            _slot2.DidNotReceiveWithAnyArgs().IsVisible = default(bool);
+        }
+        #endregion BuildingDestroyed event
     }
 }

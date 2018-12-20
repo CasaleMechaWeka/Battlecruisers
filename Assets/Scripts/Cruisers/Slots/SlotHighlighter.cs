@@ -37,7 +37,6 @@ namespace BattleCruisers.Cruisers.Slots
             _slotAccessor = slotAccessor;
             _highlightableFilter = highlightableFilter;
 
-            // FELIX  Update tests :)
             parentCruiser.BuildingDestroyed += ParentCruiser_BuildingDestroyed;
         }
 
