@@ -1,15 +1,22 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    public class TargetDetectorController : MonoBehaviour, ITargetDetector
-	{
+    public class TargetDetectorController : MonoBehaviour, ITargetDetector, ITargetDetectorEventEmitter
+    {
+        private ITargetColliderHandler _targetColliderHandler;
+
 		public event EventHandler<TargetEventArgs> OnEntered;
 		public event EventHandler<TargetEventArgs> OnExited;
+
+        public void Initialise()
+        {
+            _targetColliderHandler = new TargetColliderHandler(this);
+        }
 
         public virtual void StartDetecting()
         {
@@ -23,46 +30,39 @@ namespace BattleCruisers.Targets.TargetDetectors
 		{
 			Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerEnter2D()  collider id: " + collider.GetInstanceID());
 
-			if (OnEntered != null)
-			{
-				ITarget target = GetTarget(collider);
-                target.Destroyed += Target_Destroyed;
-				OnEntered.Invoke(this, new TargetEventArgs(target));
-			}
+            ITarget target = GetTarget(collider);
+            _targetColliderHandler.OnTargetColliderEntered(target);
 		}
-
-        private void Target_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            e.DestroyedTarget.Destroyed -= Target_Destroyed;
-            InvokeExited(e.DestroyedTarget);
-        }
 
         void OnTriggerExit2D(Collider2D collider)
 		{
             Logging.Log(Tags.TARGET_DETECTOR, "OnTriggerExit2D()  collider id: " + collider.GetInstanceID());
 
 			ITarget target = GetTarget(collider);
-
-            if (!target.IsDestroyed)
-            {
-                target.Destroyed -= Target_Destroyed;
-                InvokeExited(target);
-            }
+            _targetColliderHandler.OnTargetColliderExited(target);
 		}
 
-        private void InvokeExited(ITarget target)
+        private ITarget GetTarget(Collider2D collider)
+		{
+			ITarget target = collider.gameObject.GetComponent<ITarget>();
+            Assert.IsNotNull(target, "Should only collide with game objects that have a ITarget component.");
+			return target;
+		}
+
+        public void InvokeTargetEnteredEvent(ITarget target)
+        {
+            if (OnEntered != null)
+            {
+                OnEntered.Invoke(this, new TargetEventArgs(target));
+            }
+        }
+
+        public void InvokeTargetExitedEvent(ITarget target)
         {
             if (OnExited != null)
             {
                 OnExited.Invoke(this, new TargetEventArgs(target));
             }
         }
-
-		private ITarget GetTarget(Collider2D collider)
-		{
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
-            Assert.IsNotNull(target, "Should only collide with game objects that have a ITarget component.");
-			return target;
-		}
     }
 }
