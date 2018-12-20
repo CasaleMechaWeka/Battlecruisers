@@ -6,7 +6,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.TargetProviders
 {
@@ -20,8 +19,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _friendFinder = Substitute.For<ITargetFinder>();
             _isInFrontFilter = Substitute.For<ITargetFilter>();
             _target = Substitute.For<ITarget>();
@@ -81,23 +78,10 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         }
 
         [Test]
-        public void TargetLost_InFront_NoCurrentTarget_Throws()
+        public void TargetLost_NoCurrentTarget_DoesNothing()
         {
-            _isInFrontFilter.IsMatch(_target).Returns(true);
-            Assert.Throws<UnityAsserts.AssertionException>(() =>
-            {
-                _friendFinder.TargetLost += Raise.EventWith(_friendFinder, new TargetEventArgs(_target));
-            });
-        }
-
-        [Test]
-        public void TargetLost_IsInFront_NotCurrentTarget_DoesNothing()
-        {
-            FindFriend(_target);
-
-            _isInFrontFilter.IsMatch(_target2).Returns(false);
-            _friendFinder.TargetLost += Raise.EventWith(_friendFinder, new TargetEventArgs(_target2));
-            Assert.AreSame(_target, _targetProvider.Target);
+            _friendFinder.TargetLost += Raise.EventWith(_friendFinder, new TargetEventArgs(_target));
+            Assert.IsNull(_targetProvider.Target);
         }
 
         [Test]
@@ -105,7 +89,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         {
             FindFriend(_target);
 
-            _isInFrontFilter.IsMatch(_target).Returns(true);
             _friendFinder.TargetLost += Raise.EventWith(_friendFinder, new TargetEventArgs(_target));
             Assert.IsNull(_targetProvider.Target);
         }

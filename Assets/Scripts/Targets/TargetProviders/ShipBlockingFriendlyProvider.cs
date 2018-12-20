@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.TargetProviders
 {
@@ -54,14 +53,9 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendLost()");
 
-            if (_isInFrontFilter.IsMatch(args.Target))
+            if (ReferenceEquals(Target, args.Target))
             {
-                Assert.IsTrue(Target != null);
-
-                if (ReferenceEquals(Target, args.Target))
-                {
-                    Target = null;
-                }
+                Target = null;
             }
         }
 
