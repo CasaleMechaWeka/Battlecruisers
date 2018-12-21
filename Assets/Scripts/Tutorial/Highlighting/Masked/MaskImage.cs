@@ -16,7 +16,8 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
 
         public void UpdatePosition(HighlightArgs args)
         {
-            _maskImage.transform.position = FindPosition(args, _maskImage.rectTransform.sizeDelta);
+            Vector2 maskSize = _maskImage.rectTransform.sizeDelta * _maskImage.rectTransform.lossyScale;
+            _maskImage.transform.position = FindPosition(args, maskSize);
         }
 
         protected abstract Vector2 FindPosition(HighlightArgs args, Vector2 maskSize);
