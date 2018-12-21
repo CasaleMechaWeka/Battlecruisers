@@ -19,7 +19,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         public HighlightArgs CreateForOnCanvasObject(RectTransform rectTransform, float sizeMultiplier)
         {
             Vector2 bottomLeftPosition = FindBottomLeftPosition(rectTransform, sizeMultiplier);
-            Vector2 size = sizeMultiplier * rectTransform.sizeDelta;
+            Vector2 size = sizeMultiplier * rectTransform.sizeDelta * rectTransform.lossyScale;
             HighlightArgs noBorderArgs = new HighlightArgs(bottomLeftPosition, size);
             return AddBorder(noBorderArgs);
         }
