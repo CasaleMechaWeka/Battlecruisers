@@ -58,7 +58,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _positionClamper = positionClamper;
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
-            _halfSize = rectTransform.sizeDelta / 2;
+            Vector2 scaleAdjustedSizeDelta = rectTransform.sizeDelta * rectTransform.lossyScale;
+            _halfSize = scaleAdjustedSizeDelta / 2;
 
             GameObject activeFeedback = transform.FindNamedComponent<Image>("ActiveFeedback").gameObject;
             _activeFeedbacks = new List<GameObject>()
@@ -72,7 +73,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             SetFeedbackVisibility(isVisible: false);
 
-            _centerPosition = (Vector2)transform.position + _halfSize;
+            this.CenterPosition = Vector2.zero;
 
             _filterToggler = new FilterToggler(this, shouldBeEnabledFilter);
         }
