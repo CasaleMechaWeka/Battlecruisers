@@ -14,6 +14,7 @@ namespace BattleCruisers.UI
         protected virtual bool Disable { get { return true; } }
         protected virtual Image Image { get { return null; } }
         protected virtual CanvasGroup CanvasGroup { get { return null; } }
+        protected virtual bool ToggleVisibility { get { return false; } }
 
         public float highlightSizeMultiplier;
 
@@ -36,6 +37,11 @@ namespace BattleCruisers.UI
                 if (CanvasGroup != null)
                 {
                     CanvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
+                }
+
+                if (ToggleVisibility)
+                {
+                    gameObject.SetActive(value);
                 }
             }
         }
