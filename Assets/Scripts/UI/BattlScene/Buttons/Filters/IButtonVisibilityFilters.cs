@@ -13,5 +13,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         IFilter<ITarget> DeletButtonVisiblityFilter { get; }
         BroadcastingFilter DismissButtonVisibilityFilter { get; }
         IBroadcastingFilter SpeedButtonsEnabledFilter { get; }
+        BroadcastingFilter HelpLabelsVisibilityFilter { get; }
     }
 }

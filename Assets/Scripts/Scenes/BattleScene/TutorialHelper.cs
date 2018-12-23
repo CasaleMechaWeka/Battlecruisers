@@ -111,7 +111,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     new StaticFilter<ITarget>(isMatch: false),
                     new StaticFilter<ITarget>(isMatch: false),
                     BackButtonPermitter,
-                    SpeedButtonsPermitter);
+                    SpeedButtonsPermitter,
+                    new BroadcastingFilter(isMatch: false));
         }
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)

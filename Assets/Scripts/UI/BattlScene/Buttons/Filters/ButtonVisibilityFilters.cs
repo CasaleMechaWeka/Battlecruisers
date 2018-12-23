@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         public IFilter<ITarget> DeletButtonVisiblityFilter  { get; private set; }
         public BroadcastingFilter DismissButtonVisibilityFilter  { get; private set; }
         public IBroadcastingFilter SpeedButtonsEnabledFilter { get; private set; }
+        public BroadcastingFilter HelpLabelsVisibilityFilter { get; private set; }
 
         public ButtonVisibilityFilters(
             IBroadcastingFilter<IBuildable> buildableButtonVisibilityFilter,
@@ -20,7 +21,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             IFilter<ITarget> chooseTargetButtonVisiblityFilter,
             IFilter<ITarget> deletButtonVisiblityFilter,
             BroadcastingFilter backButtonVisibilityFilter,
-            IBroadcastingFilter speedButtonEnabledFilter)
+            IBroadcastingFilter speedButtonEnabledFilter,
+            BroadcastingFilter helpLabelsVisibilityFilter)
         {
             Helper.AssertIsNotNull(
                 buildableButtonVisibilityFilter, 
@@ -28,7 +30,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
                 chooseTargetButtonVisiblityFilter, 
                 deletButtonVisiblityFilter, 
                 backButtonVisibilityFilter,
-                speedButtonEnabledFilter);
+                speedButtonEnabledFilter,
+                helpLabelsVisibilityFilter);
 
             BuildableButtonVisibilityFilter = buildableButtonVisibilityFilter;
             CategoryButtonVisibilityFilter = categoryButtonVisibilityFilter;
@@ -36,6 +39,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             DeletButtonVisiblityFilter = deletButtonVisiblityFilter;
             DismissButtonVisibilityFilter = backButtonVisibilityFilter;
             SpeedButtonsEnabledFilter = speedButtonEnabledFilter;
+            HelpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
         }
     }
 }
