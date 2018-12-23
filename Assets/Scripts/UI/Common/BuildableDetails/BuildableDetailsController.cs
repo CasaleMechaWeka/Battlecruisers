@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);
-            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)

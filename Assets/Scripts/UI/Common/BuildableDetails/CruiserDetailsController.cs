@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
@@ -20,12 +21,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void Initialise(
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
-            IUserChosenTargetHelper userChosenTargetHelper, 
-            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
+            IUserChosenTargetHelper userChosenTargetHelper,
+            IButtonVisibilityFilters buttonVisibilityFilters)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
@@ -33,11 +34,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _chooseTargetButton.Initialise(userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
 
             CruiserHealthDialInitialiser healthDialInitialiser = GetComponentInChildren<CruiserHealthDialInitialiser>(includeInactive: true);
             Assert.IsNotNull(healthDialInitialiser);
-            _healthDial = healthDialInitialiser.Initialise();
+            _healthDial = healthDialInitialiser.Initialise(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
         }
 
         protected override StatsController<ICruiser> GetStatsController()

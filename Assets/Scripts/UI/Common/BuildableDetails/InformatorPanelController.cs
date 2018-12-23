@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             // Cruiser details
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
-            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters.ChooseTargetButtonVisiblityFilter);
+            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
         }
     }
 }
