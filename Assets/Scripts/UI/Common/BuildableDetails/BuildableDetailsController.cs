@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Utils;
@@ -20,25 +21,24 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void Initialise(
             IUIManager uiManager,
-            IDroneFocuser droneFocuser, 
-            IRepairManager repairManager, 
+            IDroneFocuser droneFocuser,
+            IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> chooseTargetButtonVisibilityFilter,
-            IFilter<ITarget> deleteButtonVisibilityFilter)
+            IButtonVisibilityFilters buttonVisibilityFilters)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, deleteButtonVisibilityFilter);
+            Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
 
             _rectTransform = transform.Parse<RectTransform>();
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
-            _deleteButton.Initialise(uiManager, deleteButtonVisibilityFilter);
+            _deleteButton.Initialise(uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);
-            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)
