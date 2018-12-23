@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             // Dismiss button
             _dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
             Assert.IsNotNull(_dismissButton);
-            _dismissButton.Initialise(uiManager, new StaticBroadcastingFilter(isMatch: true));
+            _dismissButton.Initialise(uiManager, new StaticBroadcastingFilter(isMatch: true), visibilityFilters.HelpLabelsVisibilityFilter);
             
             // Building details
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
