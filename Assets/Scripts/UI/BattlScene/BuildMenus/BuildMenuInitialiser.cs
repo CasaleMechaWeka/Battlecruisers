@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenuInitialiser : MonoBehaviour
 	{
-		public IBuildMenu Initialise(
+        public IBuildMenu Initialise(
 			IUIManager uiManager,
             IList<IBuildingGroup> buildingGroups, 
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
             Assert.IsNotNull(selectorPanel);
-            selectorPanel.Initialise(uiManager, buttonVisibilityFilters.DismissButtonVisibilityFilter);
+            selectorPanel.Initialise(uiManager, buttonVisibilityFilters);
             selectorPanel.Hide();
 
             // Building categories menu
