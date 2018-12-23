@@ -11,6 +11,7 @@ namespace BattleCruisers.UI
 
         private const float DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER = 1;
 
+        protected virtual bool Disable { get { return true; } }
         protected virtual Image Image { get { return null; } }
         protected virtual CanvasGroup CanvasGroup { get { return null; } }
 
@@ -20,7 +21,10 @@ namespace BattleCruisers.UI
         {
             set
             {
-                enabled = value;
+                if (Disable)
+                {
+                    enabled = value;
+                }
 
                 if (Image != null)
                 {

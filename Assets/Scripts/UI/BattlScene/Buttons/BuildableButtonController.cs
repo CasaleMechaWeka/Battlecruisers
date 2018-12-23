@@ -30,6 +30,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
 
+        protected override bool Disable { get { return false; } }
+
         public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
 
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
