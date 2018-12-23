@@ -28,6 +28,11 @@ namespace BattleCruisers.UI.BattleScene
         // Not using FindObjectOfType() because that ignores inactive objects
         public ModalMenuController modalMenu;
 
+        // Keep reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private FilterToggler _helpLabelsVisibilityToggler;
+#pragma warning restore CS0414  // Variable is assigned but never used
+
         public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator,
@@ -45,6 +50,7 @@ namespace BattleCruisers.UI.BattleScene
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
             SetupHelpButton(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+            SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return new RightPanelComponents(informator, speedButtonPanel);
         }
@@ -93,6 +99,14 @@ namespace BattleCruisers.UI.BattleScene
             HelpButton helpButton = GetComponentInChildren<HelpButton>();
             Assert.IsNotNull(helpButton);
             helpButton.Initialise(helpLabelsVisibilityFilter);
+        }
+
+        private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
+        {
+            HelpLabel helpLabels = GetComponentInChildren<HelpLabel>();
+            Assert.IsNotNull(helpLabels);
+            helpLabels.Initialise();
+            _helpLabelsVisibilityToggler = new FilterToggler(helpLabels, helpLabelsVisibilityFilter);
         }
     }
 }
