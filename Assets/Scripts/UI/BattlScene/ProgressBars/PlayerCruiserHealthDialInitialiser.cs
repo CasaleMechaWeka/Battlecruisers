@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -11,6 +13,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
     public class PlayerCruiserHealthDialInitialiser : MonoBehaviour
     {
+        private Image _lowHealthFeedback;
+        private IHealthStateMonitor _cruiserHealthMonitor;
+
         private const float MIN_PROPORTION = 0.12f;
         private const float MAX_PROPORTION = 0.77f;
 
@@ -29,10 +34,20 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(subsetFillableImage, visibilityFilter);
             healthDial.Damagable = playerCruiser;
 
+            _lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
+
+            _cruiserHealthMonitor = new HealthStateMonitor(playerCruiser);
+            _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
+
             MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;
+        }
+
+        private void CruiserHealthMonitor_HealthStateChanged(object sender, EventArgs e)
+        {
+            _lowHealthFeedback.enabled = _cruiserHealthMonitor.HealthState == HealthState.SeverelyDamaged;
         }
     }
 }
