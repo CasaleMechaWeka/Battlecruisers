@@ -36,7 +36,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 if (group.Buildings.Count != 0)
                 {
                     // Have category for button
-                    button.Initialise(group.BuildingCategory, uiManager, buttonVisibilityFilters.CategoryButtonVisibilityFilter);
+                    button
+                        .Initialise(
+                            group.BuildingCategory, 
+                            uiManager, 
+                            buttonVisibilityFilters.CategoryButtonVisibilityFilter,
+                            buttonVisibilityFilters.HelpLabelsVisibilityFilter);
                     _categoryToCategoryButtons.Add(group.BuildingCategory, button);
                 }
                 else

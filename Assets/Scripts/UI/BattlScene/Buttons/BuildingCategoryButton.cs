@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
-        private FilterToggler _filterToggler;
+        private FilterToggler _filterToggler, _helpLabelToggler;
 
         public Image activeFeedback;
 
@@ -40,11 +40,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             BuildingCategory expectedBuildingCategory,
             IUIManager uiManager, 
-            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
+            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter,
+            IBroadcastingFilter helpLabelEnabledFilter)
 		{
             base.Initialise();
 
-            Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter, helpLabelEnabledFilter);
             Assert.AreEqual(Category, expectedBuildingCategory);
 
             _uiManager = uiManager;
@@ -54,6 +55,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(_buttonImage);
 
             _filterToggler = new FilterToggler(this, this);
+
+            Togglable helpLabel = transform.FindNamedComponent<Togglable>("HelpLabel");
+            helpLabel.Initialise();
+            _helpLabelToggler = new FilterToggler(helpLabel, helpLabelEnabledFilter);
 		}
 
         private void OnDestroy()
