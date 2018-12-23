@@ -8,6 +8,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace BattleCruisers.UI.BattleScene
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
             SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
+            SetupHelpButton(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return new RightPanelComponents(informator, speedButtonPanel);
         }
@@ -68,7 +70,7 @@ namespace BattleCruisers.UI.BattleScene
 
         private IMaskHighlightable SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
         {
-            SpeedPanelController speedPanelInitialiser = FindObjectOfType<SpeedPanelController>();
+            SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
             return speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
@@ -81,9 +83,16 @@ namespace BattleCruisers.UI.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
-            MainMenuButtonController mainMenuButton = FindObjectOfType<MainMenuButtonController>();
+            MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
             mainMenuButton.Initialise(mainMenuManager);
+        }
+
+        private void SetupHelpButton(BroadcastingFilter helpLabelsVisibilityFilter)
+        {
+            HelpButton helpButton = GetComponentInChildren<HelpButton>();
+            Assert.IsNotNull(helpButton);
+            helpButton.Initialise(helpLabelsVisibilityFilter);
         }
     }
 }
