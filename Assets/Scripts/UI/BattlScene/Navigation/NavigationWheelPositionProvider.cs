@@ -24,11 +24,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             MidLeftPosition = new Vector2(midLeftX, midLeftY);
 
             float navigationFactoryXDelta = navigationPanelArea.Width / 10;
+            float navigationFactoryY = navigationPanelArea.BottomLeftVertex.y;
+
             float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navigationFactoryXDelta;
-            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, 0);
+            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, navigationFactoryY);
 
             float playerNavalFactoryX = navigationPanelArea.BottomLeftVertex.x + navigationFactoryXDelta;
-            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, 0);
+            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, navigationFactoryY);
         }
     }
 }
