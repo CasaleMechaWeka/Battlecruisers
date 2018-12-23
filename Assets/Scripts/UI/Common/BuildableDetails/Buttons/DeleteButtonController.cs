@@ -5,13 +5,13 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class DeleteButtonController : MonoBehaviour
+    public class DeleteButtonController : MonoBehaviour, IPointerClickHandler
     {
-        private Button _button;
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
         // Keep reference to avoid garbage collection
@@ -40,17 +40,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _uiManager = uiManager;
             _buttonVisibilityFilter = buttonVisibilityFilter;
 
-            _button = GetComponent<Button>();
-            Assert.IsNotNull(_button);
-            _button.onClick.AddListener(DeleteBuildable);
-
             HelpLabel helpLabel = GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabel);
             helpLabel.Initialise();
             _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
         }
 
-        private void DeleteBuildable()
+        public void OnPointerClick(PointerEventData eventData)
         {
             Buildable.InitiateDelete();
             _uiManager.HideItemDetails();
