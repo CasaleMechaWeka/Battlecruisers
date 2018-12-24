@@ -39,7 +39,8 @@ namespace BattleCruisers.UI.Cameras
             ICameraTargetFinder cornerCameraTargetFinder
                 = new NavigationWheelCornersCameraTargetFinder(
                     coreCameraTargetFinder,
-                    new CornerIdentifier(),
+                    new CornerIdentifier(
+                        new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, playerCruiser, aiCruiser));
             ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
@@ -65,6 +66,9 @@ namespace BattleCruisers.UI.Cameras
         public void Update()
         {
             _cameraAdjuster.AdjustCamera();
+
+            // FELIX  TEMP :D
+            Debug.Log(Camera.main.transform.position + "  " + Camera.main.orthographicSize);
         }
     }
 }

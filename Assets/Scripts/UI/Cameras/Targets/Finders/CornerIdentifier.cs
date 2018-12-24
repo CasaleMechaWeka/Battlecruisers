@@ -4,28 +4,27 @@ namespace BattleCruisers.UI.Cameras.Targets.Finders
 {
     public class CornerIdentifier : ICornerIdentifier
     {
-        // The smallest x-value I can get to via the navigation wheel is:  -37.4
-        public const float PLAYER_CRUISER_CORNER_X_POSITION_CUTOFF = -35;
-        
-        // The largest x-value I can get to via the navigation wheel is:  37.4
-        public const float AI_CRUISER_CORNER_X_POSITION_CUTOFF = 35;
+        private readonly ICornerCutoffProvider _cornerCutoffProvider;
 
-        // The largest orthographic size I can get to via the navigation wheel is 32.7
-        public const float OVERVIEW_ORTHOGRAPHIC_SIZE_CUTOFF = 29;
+        public CornerIdentifier(ICornerCutoffProvider cornerCutoffProvider)
+        {
+            Assert.IsNotNull(cornerCutoffProvider);
+            _cornerCutoffProvider = cornerCutoffProvider;
+        }
 
         public CameraCorner? FindCorner(ICameraTarget cameraTarget)
         {
             Assert.IsNotNull(cameraTarget);
 
-            if (cameraTarget.Position.x <= PLAYER_CRUISER_CORNER_X_POSITION_CUTOFF)
+            if (cameraTarget.Position.x <= _cornerCutoffProvider.PlayerCruiserCornerXPositionCutoff)
             {
                 return CameraCorner.PlayerCruiser;
             }
-            else if (cameraTarget.Position.x >= AI_CRUISER_CORNER_X_POSITION_CUTOFF)
+            else if (cameraTarget.Position.x >= _cornerCutoffProvider.AICruiserCornerXPositionCutoff)
             {
                 return CameraCorner.AICruiser;
             }
-            else if (cameraTarget.OrthographicSize >= OVERVIEW_ORTHOGRAPHIC_SIZE_CUTOFF)
+            else if (cameraTarget.OrthographicSize >= _cornerCutoffProvider.OverviewOrthographicSizeCutoff)
             {
                 return CameraCorner.Overview;
             }
