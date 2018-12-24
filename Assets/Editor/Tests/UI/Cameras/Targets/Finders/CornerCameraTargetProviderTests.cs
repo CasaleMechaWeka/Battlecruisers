@@ -36,7 +36,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Finders
             // AI cruiser
             _expectedAICruiserTarget = FindExpectedCruiserTarget(camera, cameraCalculator, aiCruiser);
 
-            _targetProvider = new CornerCameraTargetProvider(camera, cameraCalculator, playerCruiser, aiCruiser);
+            // FELIX  Update tests :)
+            _targetProvider = new CornerCameraTargetProvider(camera, cameraCalculator, null, playerCruiser, aiCruiser);
         }
 
         private ICameraTarget FindExpectedCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)

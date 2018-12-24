@@ -12,13 +12,18 @@ namespace BattleCruisers.UI.Cameras.Targets.Finders
     {
         private readonly IDictionary<CameraCorner, ICameraTarget> _cornerToTarget;
 
-        public CornerCameraTargetProvider(ICamera camera, ICameraCalculator cameraCalculator, ICruiser playerCruiser, ICruiser aiCruiser)
+        public CornerCameraTargetProvider(
+            ICamera camera, 
+            ICameraCalculator cameraCalculator, 
+            ICameraCalculatorSettings cameraCalculatorSettings,
+            ICruiser playerCruiser, 
+            ICruiser aiCruiser)
         {
-            Helper.AssertIsNotNull(camera, cameraCalculator, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(camera, cameraCalculator, cameraCalculatorSettings, playerCruiser, aiCruiser);
 
             _cornerToTarget = new Dictionary<CameraCorner, ICameraTarget>();
 
-            ICameraTarget overviewTarget = FindOverviewTarget(camera, cameraCalculator);
+            ICameraTarget overviewTarget = FindOverviewTarget(camera, cameraCalculator, cameraCalculatorSettings);
             _cornerToTarget.Add(CameraCorner.Overview, overviewTarget);
 
             ICameraTarget playerCruiserTarget = FindCruiserTarget(camera, cameraCalculator, playerCruiser);
@@ -28,11 +33,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Finders
             _cornerToTarget.Add(CameraCorner.AICruiser, aiCruiserTarget);
         }
 
-        private ICameraTarget FindOverviewTarget(ICamera camera, ICameraCalculator cameraCalculator)
+        private ICameraTarget FindOverviewTarget(ICamera camera, ICameraCalculator cameraCalculator, ICameraCalculatorSettings cameraCalculatorSettings)
         {
             Vector3 targetPosition = camera.Transform.Position;
-            targetPosition.y = cameraCalculator.FindCameraYPosition(camera.OrthographicSize);
-            return new CameraTarget(targetPosition, camera.OrthographicSize);
+            targetPosition.y = cameraCalculator.FindCameraYPosition(cameraCalculatorSettings.ValidOrthographicSizes.Max);
+            return new CameraTarget(targetPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
         }
 
         private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
