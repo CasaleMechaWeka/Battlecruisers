@@ -19,16 +19,17 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Finders
         {
             ICamera camera = Substitute.For<ICamera>();
             ICameraCalculator cameraCalculator = Substitute.For<ICameraCalculator>();
+            ICameraCalculatorSettings settings = Substitute.For<ICameraCalculatorSettings>();
             ICruiser playerCruiser = Substitute.For<ICruiser>();
             ICruiser aiCruiser = Substitute.For<ICruiser>();
 
             // Overview
             Vector3 cameraPosition = new Vector3(1, 2, 3);
             camera.Transform.Position = cameraPosition;
-            camera.OrthographicSize = 33;
-            cameraCalculator.FindCameraYPosition(camera.OrthographicSize).Returns(7);
+            settings.ValidOrthographicSizes.Max.Returns(33);
+            cameraCalculator.FindCameraYPosition(settings.ValidOrthographicSizes.Max).Returns(7);
             Vector3 expectedOverviewPosition = new Vector3(1, 7, 3);
-            _expectedOverviewTarget = new CameraTarget(expectedOverviewPosition, camera.OrthographicSize);
+            _expectedOverviewTarget = new CameraTarget(expectedOverviewPosition, settings.ValidOrthographicSizes.Max);
 
             // Player cruiser
             _expectedPlayerCruiserTarget = FindExpectedCruiserTarget(camera, cameraCalculator, playerCruiser);
@@ -36,8 +37,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Finders
             // AI cruiser
             _expectedAICruiserTarget = FindExpectedCruiserTarget(camera, cameraCalculator, aiCruiser);
 
-            // FELIX  Update tests :)
-            _targetProvider = new CornerCameraTargetProvider(camera, cameraCalculator, null, playerCruiser, aiCruiser);
+            _targetProvider = new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser);
         }
 
         private ICameraTarget FindExpectedCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
