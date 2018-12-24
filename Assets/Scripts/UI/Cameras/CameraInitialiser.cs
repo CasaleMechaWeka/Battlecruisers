@@ -66,9 +66,6 @@ namespace BattleCruisers.UI.Cameras
         public void Update()
         {
             _cameraAdjuster.AdjustCamera();
-
-            // FELIX  TEMP :D
-            Debug.Log(Camera.main.transform.position + "  " + Camera.main.orthographicSize);
         }
     }
 }
