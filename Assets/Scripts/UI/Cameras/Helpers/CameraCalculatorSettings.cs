@@ -8,6 +8,10 @@ namespace BattleCruisers.UI.Cameras.Helpers
     {
         private readonly ISettingsManager _settingsManager;
 
+        private const float DEFAULT_ASPECT_RATIO = 1.333f;  // 4/3
+        // Just large enough to see both cruisers fully :)
+        private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 33;  
+
         public float CruiserWidthMultiplier { get { return 1.2f; } }
         public float CruiserCameraPositionAdjustmentMultiplier { get { return 0.08f; } }
 
@@ -27,7 +31,10 @@ namespace BattleCruisers.UI.Cameras.Helpers
             Assert.IsNotNull(settingsManager);
 
             _settingsManager = settingsManager;
-            ValidOrthographicSizes = new Range<float>(min: 5, max: 33);
+
+            float adjustmentMultiplier = DEFAULT_ASPECT_RATIO / cameraAspectRatio;
+            ValidOrthographicSizes = new Range<float>(min: 5, max: DEFAULT_MAX_ORTHOGRAPHIC_SIZE * adjustmentMultiplier);
+
             CameraVisibleXRange = FindCameraVisiableXRange(cameraAspectRatio);
         }
 

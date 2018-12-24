@@ -21,11 +21,7 @@
 
             PlayerCruiserCornerXPositionCutoff = DEFAULT_PLAYER_CRUISER_CORNER_X_POSITION_CUTOFF * adjustmentMultiplier;
             AICruiserCornerXPositionCutoff = DEFAULT_AI_CRUISER_CORNER_X_POSITION_CUTOFF * adjustmentMultiplier;
-
-            // FELIX  Incorrect :/  Fix!
-            // Because we scale the UI via height (keep height ratios constant), the
-            // orthographic size cutoff is the same regardless of aspect ratio.
-            OverviewOrthographicSizeCutoff = DEFAULT_OVERVIEW_ORTHOGRAPHIC_SIZE_CUTOFF;
+            OverviewOrthographicSizeCutoff = DEFAULT_OVERVIEW_ORTHOGRAPHIC_SIZE_CUTOFF / adjustmentMultiplier;
         }
     }
 }
