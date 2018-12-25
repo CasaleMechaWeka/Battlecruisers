@@ -9,6 +9,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Projectiles.Trackers;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -28,5 +29,6 @@ namespace BattleCruisers.Utils.Factories
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ITargetsFactory TargetsFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        ITrackerFactory TrackerFactory { get; }
     }
 }

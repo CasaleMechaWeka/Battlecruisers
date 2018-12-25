@@ -13,6 +13,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Projectiles.Trackers;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -32,6 +33,7 @@ namespace BattleCruisers.Utils.Factories
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
         public ITargetsFactory TargetsFactory { get; private set; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
+        public ITrackerFactory TrackerFactory { get; private set; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -64,6 +66,10 @@ namespace BattleCruisers.Utils.Factories
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
             Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
             DeferrerProvider = new DeferrerProvider(deferrer);
+            TrackerFactory
+                = new TrackerFactory(
+                    new MarkerFactory(),
+                    soleCamera);
         }
 	}
 }
