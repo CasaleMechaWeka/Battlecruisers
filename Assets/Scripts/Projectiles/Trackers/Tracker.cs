@@ -32,6 +32,8 @@ namespace BattleCruisers.Projectiles.Trackers
             _marker = marker;
             _camera = camera;
 
+            UpdateMarkerVisibility();
+
             _trackable.PositionChanged += _trackable_PositionChanged;
             _trackable.Destroyed += _trackable_Destroyed;
             _trackerVisibilityFilter.PotentialMatchChange += _trackerVisibilityFilter_PotentialMatchChange;
@@ -49,6 +51,11 @@ namespace BattleCruisers.Projectiles.Trackers
         }
 
         private void _trackerVisibilityFilter_PotentialMatchChange(object sender, EventArgs e)
+        {
+            UpdateMarkerVisibility();
+        }
+
+        private void UpdateMarkerVisibility()
         {
             _marker.IsVisible = _trackerVisibilityFilter.IsMatch;
         }
