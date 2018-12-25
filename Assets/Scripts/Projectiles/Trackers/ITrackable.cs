@@ -7,6 +7,7 @@ namespace BattleCruisers.Projectiles.Trackers
     {
         Vector2 Position { get; }
 
+        event EventHandler PositionChanged;
         event EventHandler Destroyed;
     }
 }

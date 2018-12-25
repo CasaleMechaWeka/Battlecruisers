@@ -36,6 +36,7 @@ namespace BattleCruisers.Projectiles
         private IMovementController _movementController;
 
         public event EventHandler Destroyed;
+        public event EventHandler PositionChanged;
 
         protected IMovementController MovementController
         {
@@ -106,6 +107,11 @@ namespace BattleCruisers.Projectiles
 			else if (MovementController != null)
             {
                 MovementController.AdjustVelocity();
+
+                if (PositionChanged != null)
+                {
+                    PositionChanged.Invoke(this, EventArgs.Empty);
+                }
 
                 AdjustGameObjectDirection();
             }
