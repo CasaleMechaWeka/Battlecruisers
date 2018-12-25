@@ -48,6 +48,8 @@ namespace BattleCruisers.Projectiles.Trackers
         {
             _trackable.PositionChanged -= _trackable_PositionChanged;
             _trackable.Destroyed -= _trackable_Destroyed;
+
+            _marker.Destroy();
         }
 
         private void _trackerVisibilityFilter_PotentialMatchChange(object sender, EventArgs e)
