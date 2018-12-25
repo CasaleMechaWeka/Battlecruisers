@@ -1,22 +1,7 @@
-﻿using System;
-
-namespace BattleCruisers.Buildables
+﻿namespace BattleCruisers.Utils.BattleScene
 {
-    // FELIX   Move to right folder
-    public class DestroyedEventArgs : EventArgs
-    {
-        public ITarget DestroyedTarget { get; private set; }
-
-        public DestroyedEventArgs(ITarget destroyedTarget)
-        {
-            DestroyedTarget = destroyedTarget;
-        }
-    }
-
     public interface IDestructable
     {
-        event EventHandler<DestroyedEventArgs> Destroyed;
-
         void Destroy();
     }
 }
