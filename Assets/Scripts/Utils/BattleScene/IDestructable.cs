@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Buildables
 {
+    // FELIX   Move to right folder
     public class DestroyedEventArgs : EventArgs
     {
         public ITarget DestroyedTarget { get; private set; }
