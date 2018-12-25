@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
+    // FELIX  Fix scene, or remove :P
     public class NavigationTestGod : MonoBehaviour
     {
         private ICameraAdjuster _cameraAdjuster;
