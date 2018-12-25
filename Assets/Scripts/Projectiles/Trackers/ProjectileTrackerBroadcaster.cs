@@ -1,0 +1,36 @@
+﻿using System;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Projectiles.Trackers
+{
+    // FELIX  Test :)
+    public class ProjectileTrackerBroadcaster : IBroadcastingFilter
+    {
+        private readonly ICamera _camera;
+        private readonly float _orthographicSizeThreshold;
+
+        public event EventHandler PotentialMatchChange;
+
+        public bool IsMatch { get { return _camera.OrthographicSize >= _orthographicSizeThreshold; } }
+
+        public ProjectileTrackerBroadcaster(ICamera camera, float orthographicSizeThreshold)
+        {
+            Assert.IsNotNull(camera);
+
+            _camera = camera;
+            _orthographicSizeThreshold = orthographicSizeThreshold;
+
+            _camera.OrthographicSizeChanged += _camera_OrthographicSizeChanged;
+        }
+
+        private void _camera_OrthographicSizeChanged(object sender, EventArgs e)
+        {
+            if (PotentialMatchChange != null)
+            {
+                PotentialMatchChange.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+}
