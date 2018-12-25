@@ -44,9 +44,10 @@ namespace BattleCruisers.Utils.Factories
             IRankedTargetTracker userChosenTargetTracker,
             ICamera soleCamera,
             bool isPlayerCruiser,
-            IAudioSource audioSource)
+            IAudioSource audioSource,
+            IMarkerFactory markerFactory)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, markerFactory);
 
 			PrefabFactory = prefabFactory;
 			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
@@ -66,10 +67,7 @@ namespace BattleCruisers.Utils.Factories
             Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
             Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
             DeferrerProvider = new DeferrerProvider(deferrer);
-            TrackerFactory
-                = new TrackerFactory(
-                    new MarkerFactory(),
-                    soleCamera);
+            TrackerFactory = new TrackerFactory(markerFactory, soleCamera);
         }
 	}
 }

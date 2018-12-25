@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -34,6 +35,7 @@ namespace BattleCruisers.Cruisers
         private readonly IApplicationModel _applicationModel;
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
+        private readonly IMarkerFactory _markerFactory;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -44,9 +46,10 @@ namespace BattleCruisers.Cruisers
             ICamera soleCamera,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
-            IUIManager uiManager)
+            IUIManager uiManager,
+            IMarkerFactory markerFactory)
         {
-            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager);
+            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager, markerFactory);
             
             _prefabFactory = prefabFactory;
             _components = components;
@@ -56,6 +59,7 @@ namespace BattleCruisers.Cruisers
             _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
+            _markerFactory = markerFactory;
         }
 
         public Cruiser CreatePlayerCruiser()
@@ -176,7 +180,8 @@ namespace BattleCruisers.Cruisers
                     userChosenTargetTracker, 
                     _soleCamera, 
                     isPlayerCruiser, 
-                    _components.AudioSource);
+                    _components.AudioSource,
+                    _markerFactory);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);

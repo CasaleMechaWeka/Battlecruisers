@@ -15,6 +15,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -62,7 +63,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory = null,
             IVariableDelayDeferrer variableDelayDeferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
-            IExplosionManager explosionManager = null)
+            IExplosionManager explosionManager = null,
+            ITrackerFactory trackerFactory = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
@@ -102,7 +104,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(variableDelayDeferrer),
-                    explosionManager);
+                    explosionManager,
+                    trackerFactory ?? Substitute.For<ITrackerFactory>());
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -126,7 +129,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITurretStatsFactory turretStatsFactory,
             IAttackablePositionFinderFactory attackablePositionFinderFactory,
             IDeferrerProvider deferrerProvider,
-            IExplosionManager explosionManager)
+            IExplosionManager explosionManager,
+            ITrackerFactory trackerFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -137,6 +141,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.ExplosionManager.Returns(explosionManager);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
+            factoryProvider.TrackerFactory.Returns(trackerFactory);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);

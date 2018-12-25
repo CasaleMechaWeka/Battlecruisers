@@ -19,6 +19,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -80,7 +81,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
+            ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
+            ITrackerFactory trackerFactory = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -102,7 +104,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parentCruiserDirection,
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
-                    variableDelayDeferrer: _variableDelayDeferrer);
+                    variableDelayDeferrer: _variableDelayDeferrer,
+                    trackerFactory: trackerFactory);
 
             InitialiseBuilding(building, args, parentSlot);
         }
@@ -140,7 +143,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            IUserChosenTargetManager userChosenTargetManager = null)
+            IUserChosenTargetManager userChosenTargetManager = null,
+            ITrackerFactory trackerFactory = null)
 		{
 			BuildableInitialisationArgs args
 				= new BuildableInitialisationArgs(
@@ -161,7 +165,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     damageApplierFactory,
 					parentCruiserDirection,
                     accuracyAdjusterFactory,
-                    userChosenTargetManager: userChosenTargetManager);
+                    userChosenTargetManager: userChosenTargetManager,
+                    trackerFactory: trackerFactory);
 
             InitialiseUnit(unit, args);
 		}
