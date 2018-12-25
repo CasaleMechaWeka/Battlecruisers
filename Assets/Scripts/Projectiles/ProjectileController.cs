@@ -3,9 +3,11 @@ using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using System;
 using UnityEngine;
@@ -13,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public class ProjectileController : MonoBehaviour, IProjectile
+    public class ProjectileController : MonoBehaviour, IDestructable, ITrackable
     {
         private IExplosionStats _explosionStats;
         private IProjectileStats _projectileStats;
