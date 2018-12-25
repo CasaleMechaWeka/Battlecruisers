@@ -6,8 +6,8 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -32,7 +32,10 @@ namespace BattleCruisers.Projectiles
 		protected Rigidbody2D _rigidBody;
 
         private IMovementController _movementController;
-		protected IMovementController MovementController
+
+        public event EventHandler<DestroyedEventArgs> Destroyed;
+
+        protected IMovementController MovementController
         {
             get { return _movementController; }
             set

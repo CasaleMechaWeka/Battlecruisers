@@ -3,16 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables
 {
-    public class DestroyedEventArgs : EventArgs
-	{
-		public ITarget DestroyedTarget { get; private set; }
-
-		public DestroyedEventArgs(ITarget destroyedTarget)
-		{
-			DestroyedTarget = destroyedTarget;
-		}
-	}
-
     public class DamagedEventArgs : EventArgs
     {
         public ITarget DamageSource { get; private set; }
@@ -23,7 +13,7 @@ namespace BattleCruisers.Buildables
         }
     }
 
-	public interface IDamagable
+	public interface IDamagable : IDestructable
 	{
 		/// <value><c>true</c> if health is 0; otherwise, <c>false</c>.</value>
 		bool IsDestroyed { get; }
@@ -33,10 +23,7 @@ namespace BattleCruisers.Buildables
 
         event EventHandler<DamagedEventArgs> Damaged;
 		event EventHandler HealthChanged;
-        // When health reaches 0
-        event EventHandler<DestroyedEventArgs> Destroyed;
 
 		void TakeDamage(float damageAmount, ITarget damageSource);
-		void Destroy();
 	}
 }

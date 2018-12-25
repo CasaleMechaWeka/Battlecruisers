@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.BattleScene;
+﻿using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles
