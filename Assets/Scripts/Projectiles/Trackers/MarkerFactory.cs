@@ -1,9 +1,5 @@
 ﻿using BattleCruisers.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Trackers
 {
@@ -21,7 +17,7 @@ namespace BattleCruisers.Projectiles.Trackers
 
         public IMarker CreateMarker()
         {
-            throw new NotImplementedException();
+            return Instantiate(markerPrefab, markerCanvas.transform);
         }
     }
 }
