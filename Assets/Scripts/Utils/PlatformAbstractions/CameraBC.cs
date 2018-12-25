@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions
@@ -7,7 +8,9 @@ namespace BattleCruisers.Utils.PlatformAbstractions
     {
 		private readonly Camera _platfromCamera;
 
-		public Vector3 Position 
+        public event EventHandler OrthographicSizeChanged;
+
+        public Vector3 Position 
 		{ 
 			get { return _platfromCamera.transform.position; }
 			set { _platfromCamera.transform.position = value; }
@@ -16,7 +19,15 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		public float OrthographicSize
 		{
 			get { return _platfromCamera.orthographicSize; }
-			set { _platfromCamera.orthographicSize = value; }
+			set
+            {
+                _platfromCamera.orthographicSize = value;
+
+                if (OrthographicSizeChanged != null)
+                {
+                    OrthographicSizeChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
 		}
 
         public float Aspect { get { return _platfromCamera.aspect; } }
