@@ -108,12 +108,13 @@ namespace BattleCruisers.Projectiles
             {
                 MovementController.AdjustVelocity();
 
-                if (PositionChanged != null)
-                {
-                    PositionChanged.Invoke(this, EventArgs.Empty);
-                }
 
                 AdjustGameObjectDirection();
+            }
+
+            if (PositionChanged != null)
+            {
+                PositionChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
