@@ -10,7 +10,7 @@ namespace BattleCruisers.Projectiles.Trackers
         private readonly ICamera _camera;
 
         // Min:  5, Max:  @16:9  24.75  @4:3  33
-        private const float ORTHOGRAPHIC_THRESHOLD_SIZE = 10;
+        private const float ORTHOGRAPHIC_THRESHOLD_SIZE = 15;
 
         public TrackerFactory(IMarkerFactory markerFactory, ICamera camera)
         {
