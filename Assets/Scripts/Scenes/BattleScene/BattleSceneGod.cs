@@ -86,8 +86,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     helper,
                     applicationModel,
                     uiManager,
-                    // FELIX  Fix :D
-                    null);
+                    components.MarkerFactory);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
