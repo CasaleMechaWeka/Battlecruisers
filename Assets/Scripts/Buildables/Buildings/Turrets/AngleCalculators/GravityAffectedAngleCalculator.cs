@@ -12,6 +12,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// </summary>
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
+        private readonly float _adjustedGravity;
+
         protected abstract bool UseLargerAngle { get; }
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
@@ -19,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
             : base(angleHelper, projectileFlightStats)
         {
+            _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
 
 		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed)
@@ -27,14 +30,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float targetAltitude = targetPosition.y - source.y;
 
             float velocitySquared = _projectileFlightStats.MaxVelocityInMPerS * _projectileFlightStats.MaxVelocityInMPerS;
-			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
+			float squareRootArg = (velocitySquared * velocitySquared) - _adjustedGravity * ((_adjustedGravity * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)
 			{
 				throw new ArgumentException("Out of range :/  source: " + source + "  target: " + targetPosition);
 			}
 
-			float denominator = Constants.GRAVITY * distanceInM;
+			float denominator = _adjustedGravity * distanceInM;
 			float firstAngleInRadians = Mathf.Atan((velocitySquared + Mathf.Sqrt(squareRootArg)) / denominator);
 			float secondAngleInRadians = Mathf.Atan((velocitySquared - Mathf.Sqrt(squareRootArg)) / denominator);
 
