@@ -101,18 +101,16 @@ namespace BattleCruisers.Data.Static
 
         public static class Music
         {
-            // Kentient
-            public static ISoundKey Kentient { get { return new SoundKey(SoundType.Music, "kentient"); } }
-            public static ISoundKey KentientDanger { get { return new SoundKey(SoundType.Music, "kentient-danger"); } }
-            public static ISoundKey KentientVictory { get { return new SoundKey(SoundType.Music, "kentient-victory"); } }
-
-            // Experimental
-            public static ISoundKey Experimental { get { return new SoundKey(SoundType.Music, "experimental"); } }
-            public static ISoundKey ExperimentalDanger { get { return new SoundKey(SoundType.Music, "experimental-danger"); } }
-            public static ISoundKey ExperimentalVictory { get { return new SoundKey(SoundType.Music, "experimental-victory"); } }
-            
-            // Other
             public static ISoundKey MainTheme { get { return new SoundKey(SoundType.Music, "main-theme"); } }
+            public static ISoundKey Danger { get { return new SoundKey(SoundType.Music, "danger"); } }
+            public static ISoundKey Victory { get { return new SoundKey(SoundType.Music, "victory"); } }
+            
+            public static class Background
+            {
+                public static ISoundKey Kentient { get { return new SoundKey(SoundType.Music, "kentient"); } }
+                public static ISoundKey Experimental { get { return new SoundKey(SoundType.Music, "experimental"); } }
+                public static ISoundKey Bobby { get { return new SoundKey(SoundType.Music, "bobby"); } }
+            }
         }
     }
 }
