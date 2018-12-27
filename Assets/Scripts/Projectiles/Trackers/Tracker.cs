@@ -11,7 +11,6 @@ namespace BattleCruisers.Projectiles.Trackers
     /// Eg:  When the user zooms out past a certain level, provide
     /// a marker for projectiles so they are still easily visible.
     /// </summary>
-    // FELIX  Test :)
     public class Tracker
     {
         private readonly ITrackable _trackable;
