@@ -2,7 +2,8 @@
 {
 	public static class Constants
 	{
-		public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
+        // FELIX  Replace with Physics2D.gravity :/
+        public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
 		public const float PI = 3.14f;
 		public const int MS_PER_S = 1000;
 
