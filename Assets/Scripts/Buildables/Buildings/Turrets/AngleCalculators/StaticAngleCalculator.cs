@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Projectiles.Stats;
-using NSubstitute;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
@@ -9,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		private readonly float _desiredAngleInDegrees;
 
         public StaticAngleCalculator(IAngleHelper angleHelper, float desiredAngleInDegrees)
-            : base(angleHelper, Substitute.For<IProjectileFlightStats>())
+            : base(angleHelper)
 		{ 
 			_desiredAngleInDegrees = desiredAngleInDegrees;
 		}

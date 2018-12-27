@@ -12,13 +12,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// </summary>
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
+        private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
 
         protected abstract bool UseLargerAngle { get; }
 
         public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
-            : base(angleHelper, projectileFlightStats)
+            : base(angleHelper)
         {
+            _projectileFlightStats = projectileFlightStats;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
 

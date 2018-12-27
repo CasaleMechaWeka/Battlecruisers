@@ -1,20 +1,16 @@
-﻿using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class AngleCalculator : IAngleCalculator
 	{
         private readonly IAngleHelper _angleHelper;
-        protected readonly IProjectileFlightStats _projectileFlightStats;
 
-        public AngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats)
+        public AngleCalculator(IAngleHelper angleHelper)
         {
-            Helper.AssertIsNotNull(angleHelper, projectileFlightStats);
-
+            Assert.IsNotNull(angleHelper);
             _angleHelper = angleHelper;
-            _projectileFlightStats = projectileFlightStats;
         }
 
         public virtual float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)

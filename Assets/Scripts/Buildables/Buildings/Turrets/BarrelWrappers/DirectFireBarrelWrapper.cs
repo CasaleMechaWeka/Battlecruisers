@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     {
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(projectileStats);
+            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator();
 		}
     }
 }
