@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Trackers
 {
-    // FELIX  Test :)
     public class ProjectileTrackerBroadcaster : IBroadcastingFilter
     {
         private readonly ICamera _camera;
