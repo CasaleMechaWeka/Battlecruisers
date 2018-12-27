@@ -32,6 +32,7 @@ namespace BattleCruisers.Projectiles.Trackers
             _marker = marker;
             _camera = camera;
 
+            UpdateMarkerPosition();
             UpdateMarkerVisibility();
 
             _trackable.PositionChanged += _trackable_PositionChanged;
@@ -40,6 +41,11 @@ namespace BattleCruisers.Projectiles.Trackers
         }
 
         private void _trackable_PositionChanged(object sender, EventArgs e)
+        {
+            UpdateMarkerPosition();
+        }
+
+        private void UpdateMarkerPosition()
         {
             _marker.OnScreenPostion = _camera.WorldToScreenPoint(_trackable.Position);
         }
