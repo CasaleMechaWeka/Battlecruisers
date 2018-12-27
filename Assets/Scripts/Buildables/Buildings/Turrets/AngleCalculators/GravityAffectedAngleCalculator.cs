@@ -15,7 +15,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         private readonly float _adjustedGravity;
 
         protected abstract bool UseLargerAngle { get; }
-		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
 
         public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
