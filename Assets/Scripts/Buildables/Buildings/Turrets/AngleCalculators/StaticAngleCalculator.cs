@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			_desiredAngleInDegrees = desiredAngleInDegrees;
 		}
 
-		protected override float CalculateDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
+		public override float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
 		{
 			return _desiredAngleInDegrees;
 		}

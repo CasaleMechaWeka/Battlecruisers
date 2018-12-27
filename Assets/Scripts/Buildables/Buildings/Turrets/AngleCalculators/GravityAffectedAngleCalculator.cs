@@ -15,7 +15,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         private readonly float _adjustedGravity;
 
         protected abstract bool UseLargerAngle { get; }
-		protected override bool MustFaceTarget { get { return true; } }
 
         public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
             : base(angleHelper, projectileFlightStats)
@@ -23,17 +22,22 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
 
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed)
+		public override float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
 		{
-			float distanceInM = Math.Abs(source.x - targetPosition.x);
-			float targetAltitude = targetPosition.y - source.y;
+            if (!Helper.IsFacingTarget(targetPosition, sourcePosition, isSourceMirrored))
+            {
+                throw new ArgumentException("Source does not face target :(  source: " + sourcePosition + "  target: " + targetPosition + "  isSourceMirrored: " + isSourceMirrored);
+            }
+
+            float distanceInM = Math.Abs(sourcePosition.x - targetPosition.x);
+			float targetAltitude = targetPosition.y - sourcePosition.y;
 
             float velocitySquared = _projectileFlightStats.MaxVelocityInMPerS * _projectileFlightStats.MaxVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - _adjustedGravity * ((_adjustedGravity * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)
 			{
-				throw new ArgumentException("Out of range :/  source: " + source + "  target: " + targetPosition);
+				throw new ArgumentException("Out of range :/  source: " + sourcePosition + "  target: " + targetPosition);
 			}
 
 			float denominator = _adjustedGravity * distanceInM;
