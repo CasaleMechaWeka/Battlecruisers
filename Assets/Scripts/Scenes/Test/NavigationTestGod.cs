@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test
 
         public float smoothTime;
 
-        private void Start()
+        protected virtual void Start()
         {
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
