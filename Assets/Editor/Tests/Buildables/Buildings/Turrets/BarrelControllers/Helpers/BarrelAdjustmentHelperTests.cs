@@ -90,8 +90,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
                 .FindDesiredAngle(
                     projectileSpawnerPosition,
                     _predictedTargetPosition,
-                    _barrelController.IsSourceMirrored,
-                    _projectileStats.MaxVelocityInMPerS)
+                    _barrelController.IsSourceMirrored)
                 .Returns(_desiredAngleInDegrees);
 
             _limitedAngelInDegrees = 17.39f;

@@ -51,7 +51,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
 
             _projectileVelocityInMPerS = 10;
 
-            _accuracyAdjuster = new AccuracyAdjuster(_boundsFinder, _angleCalculator, _angleRangeFinder, _random, _projectileVelocityInMPerS, _turretStats);
+            _accuracyAdjuster = new AccuracyAdjuster(_boundsFinder, _angleCalculator, _angleRangeFinder, _random, _turretStats);
         }
 
         private void CreateMethodParameters()
@@ -75,12 +75,12 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
 
             // Min on target angle
             _angleCalculator
-                .FindDesiredAngle(_sourcePosition, _onTargetBounds.Min, _isMirrored, _projectileVelocityInMPerS)
+                .FindDesiredAngle(_sourcePosition, _onTargetBounds.Min, _isMirrored)
                 .Returns(onTargetRange.Min);
 
             // Max on target angle
             _angleCalculator
-                .FindDesiredAngle(_sourcePosition, _onTargetBounds.Max, _isMirrored, _projectileVelocityInMPerS)
+                .FindDesiredAngle(_sourcePosition, _onTargetBounds.Max, _isMirrored)
                 .Returns(onTargetRange.Max);
 
             IRange<float> fireRange = new Range<float>(40, 50);

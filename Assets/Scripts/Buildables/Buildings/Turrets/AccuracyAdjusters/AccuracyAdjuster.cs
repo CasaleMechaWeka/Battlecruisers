@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
@@ -17,7 +16,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         private readonly IAngleCalculator _angleCalculator;
         private readonly IAngleRangeFinder _angleRangeFinder;
         private readonly IRandomGenerator _random;
-        private readonly float _projectileVelocityInMPerS;
         private readonly ITurretStats _turretStats;
 
         public AccuracyAdjuster(
@@ -25,17 +23,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             IAngleCalculator angleCalculator,
             IAngleRangeFinder angleRangeFinder,
             IRandomGenerator random,
-            float projectileVelocityInMPerS,
             ITurretStats turretStats)
         {
             Helper.AssertIsNotNull(boundsFinder, angleCalculator, angleRangeFinder, random, turretStats);
-            Assert.IsTrue(projectileVelocityInMPerS > 0);
 
             _boundsFinder = boundsFinder;
             _angleCalculator = angleCalculator;
             _angleRangeFinder = angleRangeFinder;
             _random = random;
-            _projectileVelocityInMPerS = projectileVelocityInMPerS;
             _turretStats = turretStats;
         }
 
@@ -43,8 +38,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         {
             IRange<Vector2> onTargetBounds = _boundsFinder.FindTargetBounds(sourcePosition, targetPosition);
 
-            float angleForCloserTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Min, isSourceMirrored, _projectileVelocityInMPerS);
-            float angleForFurtherTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Max, isSourceMirrored, _projectileVelocityInMPerS);
+            float angleForCloserTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Min, isSourceMirrored);
+            float angleForFurtherTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Max, isSourceMirrored);
 
             Logging.Log(Tags.ACCURACY_ADJUSTERS, "angleForCloserTarget: " + angleForCloserTarget + "  angleForFurtherTarget: " + angleForFurtherTarget);
 

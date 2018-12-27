@@ -99,7 +99,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = new BarrelControllerArgs(
                     _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
-                    _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
+                    _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(_barrelController.ProjectileStats),
                     _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
                     _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),

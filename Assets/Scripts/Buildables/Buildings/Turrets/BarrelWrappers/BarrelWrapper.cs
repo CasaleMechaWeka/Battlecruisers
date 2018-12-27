@@ -8,6 +8,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
@@ -48,6 +49,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 {
                     barrel.Target = _target;
                 }
+            }
+        }
+
+        // Assumes all barrel projectile stats are the same.
+        private IProjectileStats ProjectileStats
+        {
+            get
+            {
+                Assert.IsTrue(_barrels.Length != 0);
+                return _barrels[0].ProjectileStats;
             }
         }
 
@@ -101,7 +112,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
-            IAngleCalculator angleCalculator = CreateAngleCalculator();
+            IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
             IAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
 
             foreach (BarrelController barrel in _barrels)
@@ -163,7 +174,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor();
         }
 
-        protected abstract IAngleCalculator CreateAngleCalculator();
+        protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
 
         private IAttackablePositionFinder CreateAttackablePositionFinder()
         {

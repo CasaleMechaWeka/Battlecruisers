@@ -472,7 +472,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 new BarrelControllerArgs(
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionpredictor(),
-                    angleCalculator ?? new AngleCalculator(new AngleHelper()),
+                    angleCalculator ?? new AngleCalculator(new AngleHelper(), barrel.ProjectileStats),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
                     rotationMovementController ?? CreateRotationMovementController(barrel),
@@ -500,8 +500,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             IAccuracyAdjuster dummyAccuracyAdjuster = new DummyAccuracyAdjuster();
 
-            factory.CreateVerticalImpactProjectileAdjuster(null, 0, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
-            factory.CreateHorizontalImpactProjectileAdjuster(null, 0, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
+            factory.CreateVerticalImpactProjectileAdjuster(null, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
+            factory.CreateHorizontalImpactProjectileAdjuster(null, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
             factory.CreateDummyAdjuster().ReturnsForAnyArgs(dummyAccuracyAdjuster);
 
             return factory;

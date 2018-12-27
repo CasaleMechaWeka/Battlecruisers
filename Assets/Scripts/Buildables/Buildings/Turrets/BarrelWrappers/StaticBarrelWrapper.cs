@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -6,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 	{
         protected abstract float DesiredAngleInDegrees { get; }
 
-		protected override IAngleCalculator CreateAngleCalculator()
+		protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
 		{
             return _factoryProvider.Turrets.AngleCalculatorFactory.CreateStaticAngleCalculator(DesiredAngleInDegrees);
 		}

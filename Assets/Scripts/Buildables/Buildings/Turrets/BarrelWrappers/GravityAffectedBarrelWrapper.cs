@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
@@ -11,9 +12,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     /// </summary>
     public class GravityAffectedBarrelWrapper : BarrelWrapper
 	{
-		protected override IAngleCalculator CreateAngleCalculator()
+		protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
 		{
-            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateArtilleryAngleCalculator();
+            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateArtilleryAngleCalculator(projectileStats);
 		}
 		
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
@@ -27,7 +28,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 return
                     _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
                         angleCalculator,
-                        barrel.ProjectileStats.MaxVelocityInMPerS,
                         barrel.TurretStats);
             }
         }

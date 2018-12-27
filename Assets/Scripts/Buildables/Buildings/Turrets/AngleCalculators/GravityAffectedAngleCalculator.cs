@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -15,17 +16,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		protected override bool LeadsTarget { get { return true; } }
 		protected override bool MustFaceTarget { get { return true; } }
 
-        public GravityAffectedAngleCalculator(IAngleHelper angleHelper) 
-            : base(angleHelper)
+        public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IFlightStats projectileFlightStats) 
+            : base(angleHelper, projectileFlightStats)
         {
         }
 
-		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed, float projectileVelocityInMPerS)
+		protected override float CalculateDesiredAngle(Vector2 source, Vector2 targetPosition, bool isSourceMirroed)
 		{
 			float distanceInM = Math.Abs(source.x - targetPosition.x);
 			float targetAltitude = targetPosition.y - source.y;
 
-			float velocitySquared = projectileVelocityInMPerS * projectileVelocityInMPerS;
+            float velocitySquared = _projectileFlightStats.MaxVelocityInMPerS * _projectileFlightStats.MaxVelocityInMPerS;
 			float squareRootArg = (velocitySquared * velocitySquared) - Constants.GRAVITY * ((Constants.GRAVITY * distanceInM * distanceInM) + (2 * targetAltitude * velocitySquared));
 
 			if (squareRootArg < 0)

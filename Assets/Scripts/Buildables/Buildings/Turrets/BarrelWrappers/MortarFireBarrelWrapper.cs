@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -10,9 +11,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return _factoryProvider.TargetPositionPredictorFactory.CreateMortarPredictor();
         }
 
-		protected override IAngleCalculator CreateAngleCalculator()
+		protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
 		{
-            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateMortarAngleCalculator();
+            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateMortarAngleCalculator(projectileStats);
 		}
 
         protected override PositionValidators.ITargetPositionValidator CreatePositionValidator()

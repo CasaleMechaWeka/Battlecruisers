@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using UnityEngine;
@@ -10,8 +11,6 @@ namespace BattleCruisers.Scenes.Test
     public abstract class BarrelControllerTestGod : MonoBehaviour
 	{
 		public GameObject targetGameObject;
-
-        protected abstract IAngleCalculator AngleCalculator { get; }
 
 		void Start()
 		{
@@ -29,10 +28,12 @@ namespace BattleCruisers.Scenes.Test
 				barrel.Target = target;
 
                 IBarrelControllerArgs barrelControllerArgs
-                    = helper.CreateBarrelControllerArgs(barrel, angleCalculator: AngleCalculator);
+                    = helper.CreateBarrelControllerArgs(barrel, angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
 
                 barrel.Initialise(barrelControllerArgs);
 			}
 		}
+
+        protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
 	}
 }

@@ -68,8 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 = _angleCalculator.FindDesiredAngle(
                     _barrelController.ProjectileSpawnerPosition,
                     predictedTargetPosition,
-                    _barrelController.IsSourceMirrored,
-                    _barrelController.ProjectileStats.MaxVelocityInMPerS);
+                    _barrelController.IsSourceMirrored);
 
             float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
 

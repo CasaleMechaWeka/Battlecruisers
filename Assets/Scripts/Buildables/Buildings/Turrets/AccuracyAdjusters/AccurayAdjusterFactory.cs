@@ -15,35 +15,26 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             return new DummyAccuracyAdjuster();
         }
 
-        public IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(
-            IAngleCalculator angleCalculator, 
-            float projectileVelocityInMPerS, 
-            ITurretStats turretStats)
+        public IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
         {
             return 
                 CreateAccuracyAdjuster(
                     angleCalculator, 
-                    projectileVelocityInMPerS, 
                     turretStats, 
                     new HorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
         }
 
-        public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(
-            IAngleCalculator angleCalculator,
-            float projectileVelocityInMPerS,
-            ITurretStats turretStats)
+        public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
                     angleCalculator,
-                    projectileVelocityInMPerS,
                     turretStats,
                     new VerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
         }
 
         private IAccuracyAdjuster CreateAccuracyAdjuster(
             IAngleCalculator angleCalculator, 
-            float projectileVelocityInMPerS, 
             ITurretStats turretStats,
             ITargetBoundsFinder targetBoundsFinder)
         {
@@ -53,7 +44,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                     angleCalculator,
                     new LinearRangeFinder(),
                     new RandomGenerator(),
-                    projectileVelocityInMPerS,
                     turretStats);
         }
     }
