@@ -79,7 +79,7 @@ namespace BattleCruisers.Projectiles
             _parent = parent;
             _soundPlayer = factoryProvider.Sound.SoundPlayer;
             _rigidBody.velocity = velocityInMPerS;
-			_rigidBody.gravityScale = _projectileStats.IgnoreGravity ? 0 : 1;
+            _rigidBody.gravityScale = _projectileStats.GravityScale;
             _targetToDamage = null;
 
             AdjustGameObjectDirection();

@@ -14,8 +14,8 @@ namespace BattleCruisers.Projectiles.Stats
         public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS { get { return maxVelocityInMPerS; } }
 
-        public bool ignoreGravity;
-        public bool IgnoreGravity { get { return ignoreGravity; } }
+        public float gravityScale;
+        public float GravityScale { get { return gravityScale; } }
 
         public bool hasAreaOfEffectDamage;
         public bool HasAreaOfEffectDamage { get { return hasAreaOfEffectDamage; } }
@@ -30,6 +30,7 @@ namespace BattleCruisers.Projectiles.Stats
             Assert.IsTrue(damage > 0);
             Assert.IsTrue(maxVelocityInMPerS > 0);
             Assert.IsTrue(initialVelocityMultiplier >= 0);
+            Assert.IsTrue(gravityScale >= 0);
 
             if (hasAreaOfEffectDamage)
             {
