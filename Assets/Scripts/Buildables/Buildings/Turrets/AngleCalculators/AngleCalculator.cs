@@ -21,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             _projectileFlightStats = projectileFlightStats;
         }
 
+        // FELIX  I don't like how there are 2 identical methods!  Merge into one :)
         public float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
 		{
             if (MustFaceTarget && !Helper.IsFacingTarget(targetPosition, sourcePosition, isSourceMirrored))
