@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		// Choose larger angle, because we want the mortar to fire in a high arc instead of a flat arc.
 		protected override bool UseLargerAngle { get { return true; } }
 
-        public MortarAngleCalculator(IAngleHelper angleHelper, IFlightStats projectileFlightStats) 
+        public MortarAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
             : base(angleHelper, projectileFlightStats)
         {
         }

@@ -8,12 +8,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     public class AngleCalculator : IAngleCalculator
 	{
         private readonly IAngleHelper _angleHelper;
-        protected readonly IFlightStats _projectileFlightStats;
+        protected readonly IProjectileFlightStats _projectileFlightStats;
 
 		protected virtual bool LeadsTarget { get { return false; } }
 		protected virtual bool MustFaceTarget { get { return false; } }
 
-        public AngleCalculator(IAngleHelper angleHelper, IFlightStats projectileFlightStats)
+        public AngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats)
         {
             Helper.AssertIsNotNull(angleHelper, projectileFlightStats);
 

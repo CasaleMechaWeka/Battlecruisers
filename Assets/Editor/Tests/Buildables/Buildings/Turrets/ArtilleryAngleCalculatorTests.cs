@@ -12,14 +12,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 	{
 		private IAngleCalculator _angleCalculator;
         private IAngleHelper _angleHelper;
-        private IFlightStats _projectileFlightStats;
+        private IProjectileFlightStats _projectileFlightStats;
         private Vector2 _targetPosition;
 
 		[SetUp]
 		public void TestSetup()
 		{
             _angleHelper = Substitute.For<IAngleHelper>();
-            _projectileFlightStats = Substitute.For<IFlightStats>();
+            _projectileFlightStats = Substitute.For<IProjectileFlightStats>();
             _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _projectileFlightStats);
 
             _targetPosition = new Vector2(0, 0);
