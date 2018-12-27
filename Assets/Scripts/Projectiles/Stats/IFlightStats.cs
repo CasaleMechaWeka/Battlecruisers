@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Projectiles.Stats
 {
-    public interface IProjectileFlight
+    public interface IFlightStats
     {
         float MaxVelocityInMPerS { get; }
         // FELIX  Convert to float GravityScale :D
