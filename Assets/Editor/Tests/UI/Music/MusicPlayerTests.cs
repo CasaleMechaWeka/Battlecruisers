@@ -8,16 +8,14 @@ namespace BattleCruisers.Tests.UI.Music
     public class MusicPlayerTests
     {
         private IMusicPlayer _musicPlayer;
-        private IMusicProvider _musicProvider;
         private ISingleSoundPlayer _soundPlayer;
         private ISoundKey _soundToPlay;
 
         [SetUp]
         public void TestSetup()
         {
-            _musicProvider = Substitute.For<IMusicProvider>();
             _soundPlayer = Substitute.For<ISingleSoundPlayer>();
-            _musicPlayer = new MusicPlayer(_musicProvider, _soundPlayer);
+            _musicPlayer = new MusicPlayer(_soundPlayer);
 
             _soundToPlay = Substitute.For<ISoundKey>();
         }
@@ -25,7 +23,6 @@ namespace BattleCruisers.Tests.UI.Music
         [Test]
         public void PlayScreensSceneMusic_PlaysCorrectMusic()
         {
-            _musicProvider.ScreensSceneKey.Returns(_soundToPlay);
             _musicPlayer.PlayScreensSceneMusic();
             _soundPlayer.Received().PlaySound(_soundToPlay, loop: true);
         }
@@ -33,7 +30,6 @@ namespace BattleCruisers.Tests.UI.Music
         [Test]
         public void PlayBattleSceneMusic_PlaysCorrectMusic()
         {
-            _musicProvider.BattleSceneKey.Returns(_soundToPlay);
             _musicPlayer.PlayBattleSceneMusic();
             _soundPlayer.Received().PlaySound(_soundToPlay, loop: true);
         }
@@ -41,7 +37,6 @@ namespace BattleCruisers.Tests.UI.Music
         [Test]
         public void PlayDangerMusic_PlaysCorrectMusic()
         {
-            _musicProvider.DangerKey.Returns(_soundToPlay);
             _musicPlayer.PlayDangerMusic();
             _soundPlayer.Received().PlaySound(_soundToPlay, loop: true);
         }
@@ -49,7 +44,6 @@ namespace BattleCruisers.Tests.UI.Music
         [Test]
         public void PlayVictoryMusic_PlaysCorrectMusic()
         {
-            _musicProvider.VictoryKey.Returns(_soundToPlay);
             _musicPlayer.PlayVictoryMusic();
             _soundPlayer.Received().PlaySound(_soundToPlay, loop: true);
         }
@@ -58,7 +52,6 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayCurrentlyPlayingMusic_DoesNothing()
         {
             // First time playing music
-            _musicProvider.ScreensSceneKey.Returns(_soundToPlay);
             _musicPlayer.PlayScreensSceneMusic();
             _soundPlayer.Received().PlaySound(_soundToPlay, loop: true);
 

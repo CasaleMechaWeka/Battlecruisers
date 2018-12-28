@@ -1,50 +1,53 @@
-﻿using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
     // FELIX  Update tests :)
     public class MusicPlayer : IMusicPlayer
     {
-        private readonly IMusicProvider _musicProvider;
         private readonly ISingleSoundPlayer _soundPlayer;
-        private Music? _currentlyPlaying;
+        private ISoundKey _currentlyPlaying;
 
-        public MusicPlayer(IMusicProvider musicProvider, ISingleSoundPlayer soundPlayer)
+        public ISoundKey LevelMusicKey { private get; set; }
+
+        public MusicPlayer(ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(musicProvider, soundPlayer);
+            Assert.IsNotNull(soundPlayer);
 
-            _musicProvider = musicProvider;
             _soundPlayer = soundPlayer;
             _currentlyPlaying = null;
+            LevelMusicKey = null;
         }
 
         public void PlayScreensSceneMusic()
         {
-            PlayMusic(Music.ScreensScene, _musicProvider.ScreensSceneKey);
+            PlayMusic(SoundKeys.Music.MainTheme);
         }
 
         public void PlayBattleSceneMusic()
         {
-            PlayMusic(Music.BattleScene, _musicProvider.BattleSceneKey);
+            Assert.IsNotNull(LevelMusicKey);
+            PlayMusic(LevelMusicKey);
         }
 
         public void PlayDangerMusic()
         {
-            PlayMusic(Music.Danger, _musicProvider.DangerKey);
+            PlayMusic(SoundKeys.Music.Danger);
         }
 
         public void PlayVictoryMusic()
         {
-            PlayMusic(Music.Victory, _musicProvider.VictoryKey);
+            PlayMusic(SoundKeys.Music.Victory);
         }
 
-        private void PlayMusic(Music musicToPlay, ISoundKey soundKeyToPlay)
+        private void PlayMusic(ISoundKey soundKeyToPlay)
         {
-            if (musicToPlay != _currentlyPlaying)
+            if (!soundKeyToPlay.Equals(_currentlyPlaying))
             {
                 _soundPlayer.PlaySound(soundKeyToPlay, loop: true);
-                _currentlyPlaying = musicToPlay;
+                _currentlyPlaying = soundKeyToPlay;
             }
         }
 

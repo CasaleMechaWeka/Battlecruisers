@@ -49,7 +49,6 @@ namespace BattleCruisers.Scenes
 
             return
                 new MusicPlayer(
-                    new ExperimentalMusicProvider(),
                     new SingleSoundPlayer(
                         new SoundFetcher(),
                         audioSource));
