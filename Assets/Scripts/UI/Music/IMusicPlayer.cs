@@ -2,12 +2,6 @@
 
 namespace BattleCruisers.UI.Music
 {
-    // FELIX  Remove :P
-    public enum Music
-    {
-        ScreensScene, BattleScene, Danger, Victory
-    }
-
     public interface IMusicPlayer
     {
         ISoundKey LevelMusicKey { set; }
