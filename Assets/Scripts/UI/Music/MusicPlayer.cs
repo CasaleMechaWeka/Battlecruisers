@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Music
 {
+    // FELIX  Update tests :)
     public class MusicPlayer : IMusicPlayer
     {
         private readonly IMusicProvider _musicProvider;
@@ -46,5 +47,11 @@ namespace BattleCruisers.UI.Music
                 _currentlyPlaying = musicToPlay;
             }
         }
-   }
+
+        public void Stop()
+        {
+            _soundPlayer.Stop();
+            _currentlyPlaying = null;
+        }
+    }
 }

@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.Sound
     /// If a second sound is played while the previous sound has not completed playing,
     /// then the first sound is stopped.
     /// </summary>
+    // FELIX  Update tests :)
     public class SingleSoundPlayer : ISingleSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
@@ -32,6 +33,11 @@ namespace BattleCruisers.UI.Sound
             _audioSource.Stop();
             _audioSource.AudioClip = soundToPlay;
             _audioSource.Play(isSpatial: false, loop: loop);
+        }
+
+        public void Stop()
+        {
+            _audioSource.Stop();
         }
     }
 }

@@ -5,5 +5,6 @@
         bool IsPlayingSound { get; }
 
         void PlaySound(ISoundKey soundKey, bool loop = false);
+        void Stop();
     }
 }

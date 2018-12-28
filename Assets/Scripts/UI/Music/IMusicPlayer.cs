@@ -11,5 +11,6 @@
         void PlayBattleSceneMusic();
         void PlayDangerMusic();
         void PlayVictoryMusic();
+        void Stop();
     }
 }
