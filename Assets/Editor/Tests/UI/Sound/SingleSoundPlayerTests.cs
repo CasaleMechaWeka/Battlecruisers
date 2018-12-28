@@ -36,5 +36,12 @@ namespace BattleCruisers.Tests.UI.Sound
             _audioSource.Received().AudioClip = _soundToPlay;
             _audioSource.Received().Play(isSpatial: false);
         }
+
+        [Test]
+        public void Stop()
+        {
+            _soundPlayer.Stop();
+            _audioSource.Received().Stop();
+        }
     }
 }
