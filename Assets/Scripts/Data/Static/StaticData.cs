@@ -198,31 +198,31 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Raptor, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
 
                 // Set 2
-                new Level(8, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(9, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(10, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(11, "Battle of Watercress", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(12, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(13, "Dunspock", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(14, "Gallient Flippery", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(8, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Kentient, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(9, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(10, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(11, "Battle of Watercress", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Kentient, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(12, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Bobby, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(13, "Dunspock", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(14, "Gallient Flippery", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
 
                 // Set 3
-                new Level(15, "Sprawl Brawl", StaticPrefabKeys.Hulls.Longbow, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(16, "Fisticuffs", StaticPrefabKeys.Hulls.Hammerhead, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(17, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast))
+                new Level(15, "Sprawl Brawl", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(16, "Fisticuffs", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(17, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Kentient, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Kentient, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast))
 			};
 		}
 

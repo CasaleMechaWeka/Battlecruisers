@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.BattleScene.Clouds;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Data
 {
@@ -8,6 +9,7 @@ namespace BattleCruisers.Data
         int Num { get; }
         string Name { get; }
         IPrefabKey Hull { get; }
+        ISoundKey MusicKey { get; }
         string SkyMaterialName { get; }
         ICloudGenerationStats CloudStats { get; }
     }
