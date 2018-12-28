@@ -163,6 +163,9 @@ namespace BattleCruisers.Scenes.BattleScene
             _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
 
             // Audio
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
+            musicPlayer.LevelMusicKey = currentLevel.MusicKey;
+            musicPlayer.PlayBattleSceneMusic();
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
@@ -174,7 +177,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
