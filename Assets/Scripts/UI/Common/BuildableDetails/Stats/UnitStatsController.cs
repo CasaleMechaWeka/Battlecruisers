@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             base.Initialise();
 
             _movementSpeedRow = transform.FindNamedComponent<StatsRowStarsController>("MovementSpeedRow");
+            _movementSpeedRow.Initialise();
         }
 
         protected override void InternalShowStats(IUnit item, IUnit itemToCompareTo)

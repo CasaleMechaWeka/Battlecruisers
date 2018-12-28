@@ -14,10 +14,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             base.Initialise();
 
             _healthRow = transform.FindNamedComponent<StatsRowStarsController>("HealthRow");
+            _healthRow.Initialise();
+
             _platformSlotsRow = transform.FindNamedComponent<StatsRowNumberController>("PlatformSlotsRow");
+            _platformSlotsRow.Initialise();
+
             _deckSlotsRow = transform.FindNamedComponent<StatsRowNumberController>("DeckSlotsRow");
+            _deckSlotsRow.Initialise();
+
             _utilitySlotsRow = transform.FindNamedComponent<StatsRowNumberController>("UtilitySlotsRow");
+            _utilitySlotsRow.Initialise();
+
             _mastSlotsRow = transform.FindNamedComponent<StatsRowNumberController>("MastSlotsRow");
+            _mastSlotsRow.Initialise();
         }
 
 		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)

@@ -51,8 +51,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void HideDetails()
         {
             _buildingDetails.Hide();
+            _unitDetails.Hide();
             // FELIX  Uncomment :P
-            //_unitDetails.Hide();
             //_cruiserDetails.Hide();
             _informatorPanel.Hide();
         }
