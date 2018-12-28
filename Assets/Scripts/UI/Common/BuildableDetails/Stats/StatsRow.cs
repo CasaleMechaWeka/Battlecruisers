@@ -8,10 +8,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 	{
         private Image _comparisonFeedbackBackground;
 
-		public void Iniitalise(ComparisonResult comparisonResult)
-		{
+        public virtual void Initialise()
+        {
             _comparisonFeedbackBackground = GetComponent<Image>();
             Assert.IsNotNull(_comparisonFeedbackBackground);
+        }
+
+		public void ShowResult(ComparisonResult comparisonResult)
+		{
 			_comparisonFeedbackBackground.color = comparisonResult.Color;
 		}
 	}

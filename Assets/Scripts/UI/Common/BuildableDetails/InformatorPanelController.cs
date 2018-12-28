@@ -46,15 +46,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_buildingDetails);
             _buildingDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
 
-            // Unit details
-            _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_unitDetails);
-            _unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
+            // FELIX  Uncomment :P
+            //// Unit details
+            //_unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
+            //Assert.IsNotNull(_unitDetails);
+            //_unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
 
-            // Cruiser details
-            _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
-            Assert.IsNotNull(_cruiserDetails);
-            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
+            //// Cruiser details
+            //_cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
+            //Assert.IsNotNull(_cruiserDetails);
+            //_cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
         }
     }
 }

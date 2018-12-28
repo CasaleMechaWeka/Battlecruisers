@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
             int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS);
             ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
-            _movementSpeedRow.Initialise(starRating, comparisonResult);
+            _movementSpeedRow.ShowResult(starRating, comparisonResult);
         }
 
         // For units that can attack both ships and the cruiser (ships),

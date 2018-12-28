@@ -17,18 +17,29 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             base.Initialise();
 
             _dronesRow = transform.FindNamedComponent<StatsRowNumberController>("DronesRow");
+            _dronesRow.Initialise();
+
             _buildTimeRow = transform.FindNamedComponent<StatsRowNumberController>("BuildTimeRow");
+            _buildTimeRow.Initialise();
+
             _healthRow = transform.FindNamedComponent<StatsRowStarsController>("HealthRow");
+            _healthRow.Initialise();
+
             _antiShipDamageRow = transform.FindNamedComponent<StatsRowStarsController>("AntiShipDamageRow");
+            _antiShipDamageRow.Initialise();
+
             _antiAirDamageRow = transform.FindNamedComponent<StatsRowStarsController>("AntiAirDamageRow");
+            _antiAirDamageRow.Initialise();
+
             _antiCruiserDamageRow = transform.FindNamedComponent<StatsRowStarsController>("AntiCruiserDamageRow");
+            _antiCruiserDamageRow.Initialise();
         }
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
 		{
-			_dronesRow.Initialise(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
-			_buildTimeRow.Initialise(item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
-            _healthRow.Initialise(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+			_dronesRow.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+			_buildTimeRow.ShowResult(item.BuildTimeInS.ToString() + BUILD_TIME_SUFFIX, _lowerIsBetterComparer.CompareStats(item.BuildTimeInS, itemToCompareTo.BuildTimeInS));
+            _healthRow.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(_antiAirDamageRow, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
             ShowDamageStat(_antiShipDamageRow, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
@@ -42,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
             if (shouldShowRow)
             {
-                damageStatsRow.Initialise(converter.ConvertValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
+                damageStatsRow.ShowResult(converter.ConvertValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
 

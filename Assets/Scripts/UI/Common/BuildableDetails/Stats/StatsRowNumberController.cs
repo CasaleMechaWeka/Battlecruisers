@@ -1,25 +1,32 @@
-﻿using UnityEngine.UI;
+﻿using BattleCruisers.Utils;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class StatsRowNumberController : StatsRow
 	{
-		public Text rowValue;
-		
-		public void Initialise(int value, ComparisonResult comparisonResult)
+		private Text _rowValue;
+
+        public override void Initialise()
+        {
+            base.Initialise();
+            _rowValue = transform.FindNamedComponent<Text>("RowValue");
+        }
+
+        public void ShowResult(int value, ComparisonResult comparisonResult)
 		{
-			Initialise(value.ToString(), comparisonResult);
+			ShowResult(value.ToString(), comparisonResult);
 		}
 
-		public void Initialise(float value, ComparisonResult comparisonResult)
+		public void ShowResult(float value, ComparisonResult comparisonResult)
 		{
-			Initialise(value.ToString(), comparisonResult);
+			ShowResult(value.ToString(), comparisonResult);
 		}
 
-		public void Initialise(string value, ComparisonResult comparisonResult)
+		public void ShowResult(string value, ComparisonResult comparisonResult)
 		{
-			base.Iniitalise(comparisonResult);
-			rowValue.text = value;
+			base.ShowResult(comparisonResult);
+			_rowValue.text = value;
 		}
 	}
 }
