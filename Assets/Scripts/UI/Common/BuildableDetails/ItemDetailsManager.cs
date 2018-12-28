@@ -52,8 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             _buildingDetails.Hide();
             _unitDetails.Hide();
-            // FELIX  Uncomment :P
-            //_cruiserDetails.Hide();
+            _cruiserDetails.Hide();
             _informatorPanel.Hide();
         }
     }

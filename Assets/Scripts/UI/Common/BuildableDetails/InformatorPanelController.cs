@@ -51,11 +51,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Assert.IsNotNull(_unitDetails);
             _unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
 
-            // FELIX  Uncomment :P
-            //// Cruiser details
-            //_cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
-            //Assert.IsNotNull(_cruiserDetails);
-            //_cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
+            // Cruiser details
+            _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
+            Assert.IsNotNull(_cruiserDetails);
+            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
         }
     }
 }
