@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -16,12 +17,15 @@ namespace BattleCruisers.UI.ScreensScene
 		public Button continueButton;
         public Button selectLevelButton;
         public Button tutorialButton;
+        public Button loadoutButton;
+        public Button settingsButton;
 
         public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
 			base.Initialise(screensSceneGod);
 
-            Assert.IsNotNull(gameModel);
+            Helper.AssertIsNotNull(firstTimePlayButton, continueButton, selectLevelButton, tutorialButton, loadoutButton, settingsButton);
+            Helper.AssertIsNotNull(screensSceneGod, gameModel);
 
             _lastBattleResult = gameModel.LastBattleResult;
 			_totalNumOfLevels = totalNumOfLevels;
@@ -34,6 +38,8 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 selectLevelButton.gameObject.SetActive(false);
                 tutorialButton.gameObject.SetActive(false);
+                loadoutButton.gameObject.SetActive(false);
+                settingsButton.gameObject.SetActive(false);
             }
 
             // Player has never played a (non-tutorial) battle!
