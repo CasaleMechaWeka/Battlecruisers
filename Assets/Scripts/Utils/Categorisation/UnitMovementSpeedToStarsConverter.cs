@@ -4,9 +4,10 @@
     {
         private static readonly float[] CATEGORY_THRESHOLDS =
         {
-            0.1f,   // Archon
+            1.5f,   // Archon
             2,      // Destroyer
-            4,      // Frigate
+            // 3, Bomber
+            4,      // Frigate, Gunship
             6,      // Attack boat
             8       // Fighter
         };
