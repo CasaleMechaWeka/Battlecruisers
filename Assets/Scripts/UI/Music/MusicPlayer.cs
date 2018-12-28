@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
-    // FELIX  Update tests :)
     public class MusicPlayer : IMusicPlayer
     {
         private readonly ISingleSoundPlayer _soundPlayer;
