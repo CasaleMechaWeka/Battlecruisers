@@ -13,43 +13,58 @@ namespace BattleCruisers.UI.ScreensScene
 		private BattleResult _lastBattleResult;
 		private int _totalNumOfLevels;
 
-        public Button firstTimePlayButton;
-		public Button continueButton;
-        public Button selectLevelButton;
-        public Button tutorialButton;
-        public Button loadoutButton;
-        public Button settingsButton;
+        private Button _firstTimePlayButton, _continueButton, _selectLevelButton, _loadoutButton, _settingsButton, _tutorialButton, _quitButton;
 
         public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(firstTimePlayButton, continueButton, selectLevelButton, tutorialButton, loadoutButton, settingsButton);
-            Helper.AssertIsNotNull(screensSceneGod, gameModel);
+            Assert.IsNotNull(gameModel);
+
+            _firstTimePlayButton = transform.FindNamedComponent<Button>("FirstTimePlayButton");
+            _firstTimePlayButton.onClick.AddListener(StartTutorial);
+
+            _continueButton = transform.FindNamedComponent<Button>("ContinueButton");
+            _continueButton.onClick.AddListener(Continue);
+
+            _selectLevelButton = transform.FindNamedComponent<Button>("SelectLevelButton");
+            _selectLevelButton.onClick.AddListener(GoToLevelsScreen);
+
+            _loadoutButton = transform.FindNamedComponent<Button>("LoadoutButton");
+            _loadoutButton.onClick.AddListener(GoToLoadoutScreen);
+
+            _settingsButton = transform.FindNamedComponent<Button>("SettingsButton");
+            _settingsButton.onClick.AddListener(GoToSettingsScreen);
+
+            _tutorialButton = transform.FindNamedComponent<Button>("TutorialButton");
+            _tutorialButton.onClick.AddListener(StartTutorial);
+
+            _quitButton = transform.FindNamedComponent<Button>("QuitButton");
+            _quitButton.onClick.AddListener(Quit);
 
             _lastBattleResult = gameModel.LastBattleResult;
 			_totalNumOfLevels = totalNumOfLevels;
 
             if (gameModel.HasAttemptedTutorial)
             {
-                firstTimePlayButton.gameObject.SetActive(false);
+                _firstTimePlayButton.gameObject.SetActive(false);
             }
             else
             {
-                selectLevelButton.gameObject.SetActive(false);
-                tutorialButton.gameObject.SetActive(false);
-                loadoutButton.gameObject.SetActive(false);
-                settingsButton.gameObject.SetActive(false);
+                _selectLevelButton.gameObject.SetActive(false);
+                _tutorialButton.gameObject.SetActive(false);
+                _loadoutButton.gameObject.SetActive(false);
+                _settingsButton.gameObject.SetActive(false);
             }
 
             // Player has never played a (non-tutorial) battle!
 			if (_lastBattleResult == null)
 			{
-				continueButton.gameObject.SetActive(false);
+				_continueButton.gameObject.SetActive(false);
 			}
 		}
 
-		public void Continue()
+		private void Continue()
 		{
 			Assert.IsNotNull(_lastBattleResult);
 
@@ -63,28 +78,28 @@ namespace BattleCruisers.UI.ScreensScene
 			_screensSceneGod.LoadLevel(nextLevelToPlay);
 		}
 
-		public void GoToLevelsScreen()
+		private void GoToLevelsScreen()
 		{
 			_screensSceneGod.GoToLevelsScreen();
 		}
 
-		public void GoToLoadoutScreen()
+		private void GoToLoadoutScreen()
 		{
 			_screensSceneGod.GoToLoadoutScreen();
 		}
 
-        public void GoToSettingsScreen()
+        private void GoToSettingsScreen()
         {
             _screensSceneGod.GoToSettingsScreen();
         }
 
-        public void StartTutorial()
+        private void StartTutorial()
         {
             ApplicationModelProvider.ApplicationModel.IsTutorial = true;
             _screensSceneGod.LoadLevel(levelNum: 1);
         }
 
-		public void Quit()
+		private void Quit()
 		{
 			Application.Quit();
 		}
