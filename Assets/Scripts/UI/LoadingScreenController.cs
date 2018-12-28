@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using BattleCruisers.UI.Music;
+using BattleCruisers.Utils;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
 {
     public class LoadingScreenController : MonoBehaviour, ILoadingScreen
     {
+        private IMusicPlayer _musicPlayer;
+
         public Canvas root; 
 
         private bool IsVisible 
@@ -13,14 +16,17 @@ namespace BattleCruisers.UI
             set { root.gameObject.SetActive(value); } 
         }
 
-        public void Initialise()
+        public void Initialise(IMusicPlayer musicPlayer)
         {
-            Assert.IsNotNull(root);
+            Helper.AssertIsNotNull(root, musicPlayer);
+            _musicPlayer = musicPlayer;
         }
 
         public IEnumerator PerformLongOperation(IEnumerator longOperation)
         {
             IsVisible = true;
+
+            _musicPlayer.Stop();
 
             yield return StartCoroutine(longOperation);
 
