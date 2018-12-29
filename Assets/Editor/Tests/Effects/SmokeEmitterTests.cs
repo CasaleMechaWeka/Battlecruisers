@@ -21,8 +21,7 @@ namespace BattleCruisers.Tests.Effects.Smoke
             _healthStateMonitor = Substitute.For<IHealthStateMonitor>();
             _smoke = Substitute.For<ISmoke>();
 
-            // FELIX  Fix :P
-            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: true);
+            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: default(bool));
         }
 
         [Test]
@@ -47,6 +46,20 @@ namespace BattleCruisers.Tests.Effects.Smoke
         public void HealthStateChanged_Severely_SetsStrongSmokeStrength()
         {
             ExpectHealthStateChange(HealthState.SeverelyDamaged, SmokeStrength.Strong);
+        }
+
+        [Test]
+        public void HealthStateChanged_None_ShowSmokeWhenDestroyed_SetsStrongSmokeStrength()
+        {
+            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: true);
+            ExpectHealthStateChange(HealthState.NoHealth, SmokeStrength.Strong);
+        }
+
+        [Test]
+        public void HealthStateChanged_None_DoNotShowSmokeWhenDestroyed_SetsNoSmokeStrength()
+        {
+            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: false);
+            ExpectHealthStateChange(HealthState.NoHealth, SmokeStrength.None);
         }
 
         private void ExpectHealthStateChange(HealthState newHealthState, SmokeStrength expectedSmokeStrength)
