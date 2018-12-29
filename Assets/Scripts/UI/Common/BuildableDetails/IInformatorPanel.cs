@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -9,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
 
-        void Show();
+        void Show(ITarget itemToShow);
         void Hide();
     }
 }
