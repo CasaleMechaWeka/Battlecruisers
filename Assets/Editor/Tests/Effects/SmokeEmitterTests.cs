@@ -21,7 +21,8 @@ namespace BattleCruisers.Tests.Effects.Smoke
             _healthStateMonitor = Substitute.For<IHealthStateMonitor>();
             _smoke = Substitute.For<ISmoke>();
 
-            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke);
+            // FELIX  Fix :P
+            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: true);
         }
 
         [Test]

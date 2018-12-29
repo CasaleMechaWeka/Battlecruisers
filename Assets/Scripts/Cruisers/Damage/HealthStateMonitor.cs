@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Damage
 {
+    // FELIX  Update tests :)
     public class HealthStateMonitor : IHealthStateMonitor
     {
         private readonly IDamagable _damagable;
@@ -39,6 +40,7 @@ namespace BattleCruisers.Cruisers.Damage
             _healthState = HealthState.FullHealth;
 
             _damagable.HealthChanged += _damagable_HealthChanged;
+            _damagable.Destroyed += _damagable_Destroyed;
         }
 
         private void _damagable_HealthChanged(object sender, EventArgs e)
@@ -65,6 +67,14 @@ namespace BattleCruisers.Cruisers.Damage
             {
                 return HealthState.SeverelyDamaged;
             }
+        }
+
+        private void _damagable_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            HealthState = HealthState.NoHealth;
+
+            _damagable.HealthChanged -= _damagable_HealthChanged;
+            _damagable.Destroyed -= _damagable_Destroyed;
         }
     }
 }

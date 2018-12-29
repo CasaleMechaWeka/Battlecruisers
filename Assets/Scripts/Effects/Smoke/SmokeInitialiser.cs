@@ -12,7 +12,7 @@ namespace BattleCruisers.Effects.Smoke
         private SmokeEmitter _smokeEmitter;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public void Initialise(IDamagable parentDamagable)
+        public void Initialise(IDamagable parentDamagable, bool showSmokeWhenDestroyed)
         {
             Smoke smoke = GetComponent<Smoke>();
             Assert.IsNotNull(smoke);
@@ -21,7 +21,8 @@ namespace BattleCruisers.Effects.Smoke
             _smokeEmitter
                 = new SmokeEmitter(
                     new HealthStateMonitor(parentDamagable),
-                    smoke);
+                    smoke,
+                    showSmokeWhenDestroyed);
         }
     }
 }

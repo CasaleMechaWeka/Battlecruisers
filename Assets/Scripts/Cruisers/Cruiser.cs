@@ -159,7 +159,7 @@ namespace BattleCruisers.Cruisers
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);
 
             _unitConstructionMonitor = new UnitConstructionMonitor(this);
-            _smokeInitialiser.Initialise(this);
+            _smokeInitialiser.Initialise(this, showSmokeWhenDestroyed: true);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;

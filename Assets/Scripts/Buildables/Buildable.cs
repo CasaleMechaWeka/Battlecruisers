@@ -70,6 +70,7 @@ namespace BattleCruisers.Buildables
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
         protected abstract PrioritisedSoundKey ConstructionCompletedSoundKey { get; }
         public ICruiser ParentCruiser { get; private set; }
+        protected virtual bool ShowSmokeWhenDestroyed { get { return false; } }
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -365,7 +366,7 @@ namespace BattleCruisers.Buildables
             RepairCommand.EmitCanExecuteChanged();
 
             _factoryProvider.Sound.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
-            _smokeInitialiser.Initialise(this);
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
 
         private void EnableRenderers(bool enabled)

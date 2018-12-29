@@ -4,17 +4,20 @@ using System;
 
 namespace BattleCruisers.Effects.Smoke
 {
+    // FELIX  Update tests :)
     public class SmokeEmitter
     {
         private readonly IHealthStateMonitor _healthStateMonitor;
         private readonly ISmoke _smoke;
+        private readonly bool _showSmokeWhenDestroyed;
 
-        public SmokeEmitter(IHealthStateMonitor healthStateMonitor, ISmoke smoke)
+        public SmokeEmitter(IHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 
             _healthStateMonitor = healthStateMonitor;
             _smoke = smoke;
+            _showSmokeWhenDestroyed = showSmokeWhenDestroyed;
 
             _healthStateMonitor.HealthStateChanged += _healthStateMonitor_HealthStateChanged;
         }
@@ -39,6 +42,9 @@ namespace BattleCruisers.Effects.Smoke
 
                 case HealthState.SeverelyDamaged:
                     return SmokeStrength.Strong;
+
+                case HealthState.NoHealth:
+                    return _showSmokeWhenDestroyed ? SmokeStrength.Strong : SmokeStrength.None;
 
                 default:
                     throw new ArgumentException();
