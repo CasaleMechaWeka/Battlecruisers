@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Damage
 {
-    // FELIX  Update tests :)
     public class HealthStateMonitor : IHealthStateMonitor
     {
         private readonly IDamagable _damagable;

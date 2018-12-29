@@ -87,6 +87,23 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             ExpectHealthChange(newHealth: _severelyDamagedThreashold - 1, expectStateChange: true, expectedState: HealthState.SeverelyDamaged);
         }
 
+        [Test]
+        public void Destroyed_EmitsNoHealthState_Unsubscribes()
+        {
+            _damagable.Destroyed += Raise.EventWith(new DestroyedEventArgs(null));
+
+            Assert.AreEqual(1, _healthStateChangedEventCount);
+            Assert.AreEqual(HealthState.NoHealth, _healthStateMonitor.HealthState);
+
+            // Subsequent events are ignored
+            _damagable.Destroyed += Raise.EventWith(new DestroyedEventArgs(null));
+            Assert.AreEqual(1, _healthStateChangedEventCount);
+
+            _damagable.Health.Returns(1);
+            _damagable.HealthChanged += Raise.Event();
+            Assert.AreEqual(1, _healthStateChangedEventCount);
+        }
+
         private void ExpectHealthChange(float newHealth, bool expectStateChange, HealthState expectedState)
         {
             int expectedEventCount = expectStateChange ? _healthStateChangedEventCount + 1: _healthStateChangedEventCount;
