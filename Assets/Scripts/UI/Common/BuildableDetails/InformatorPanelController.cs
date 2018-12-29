@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             {
                 if (_shownItem != null)
                 {
-                    // FELIX
+                    _shownItem.Destroyed -= _shownItem_Destroyed;
                 }
 
                 _shownItem = value;
