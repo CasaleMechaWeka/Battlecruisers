@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.PostProcessing;
+// Fixes build error :/
+//using UnityEngine.PostProcessing;
 
 namespace UnityEditor.PostProcessing
 {
