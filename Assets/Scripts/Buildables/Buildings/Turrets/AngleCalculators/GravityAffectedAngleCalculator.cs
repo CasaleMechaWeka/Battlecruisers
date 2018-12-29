@@ -2,6 +2,7 @@
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
@@ -20,6 +21,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
             : base(angleHelper)
         {
+            Assert.IsTrue(projectileFlightStats.GravityScale > 0);
+
             _projectileFlightStats = projectileFlightStats;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
