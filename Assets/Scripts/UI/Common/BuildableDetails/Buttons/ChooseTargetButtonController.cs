@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
                 _target = value;
 
                 gameObject.SetActive(ShowButton);
-                _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? UNTARGET : TARGET;
+                UpdateButtonText();
             }
         }
 
@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _userChosenTargetHelper = userChosenTargetHelper;
             _buttonVisibilityFilter = buttonVisibilityFilter;
 
+            _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateButtonText();
+
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
             _button.onClick.AddListener(OnClick);
@@ -54,11 +56,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private void OnClick()
         {
             _userChosenTargetHelper.ToggleChosenTarget(_target);
-   
+
             if (Clicked != null)
             {
                 Clicked.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void UpdateButtonText()
+        {
+            _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? UNTARGET : TARGET;
         }
     }
 }
