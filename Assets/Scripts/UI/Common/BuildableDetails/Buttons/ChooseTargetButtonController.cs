@@ -10,8 +10,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     public class ChooseTargetButtonController : UIElement, IButton
     {
         private Button _button;
+        private Text _buttonText;
         private IUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;
+
+        private const string TARGET = "Target";
+        private const string UNTARGET = "Untarget";
 
         private ITarget _target;
         public ITarget Target
@@ -20,7 +24,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             set
             {
                 _target = value;
-				UpdateVisibility();
+
+                gameObject.SetActive(ShowButton);
+                _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? UNTARGET : TARGET;
             }
         }
 
@@ -40,6 +46,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _button = GetComponent<Button>();
             Assert.IsNotNull(_button);
             _button.onClick.AddListener(OnClick);
+
+            _buttonText = GetComponentInChildren<Text>();
+            Assert.IsNotNull(_buttonText);
         }
 
         private void OnClick()
@@ -50,11 +59,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             {
                 Clicked.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void UpdateVisibility()
-        {
-            gameObject.SetActive(ShowButton);
         }
     }
 }
