@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         public void UserChosenTarget_ManagerHasRankedTarget()
         {
             _targetManager.HighestPriorityTarget.Returns(_target1);
-            Assert.AreSame(_targetHelper.UserChosenTarget, _target1.Target);
+            Assert.AreSame(_target1.Target, _targetHelper.UserChosenTarget);
         }
 
         [Test]
