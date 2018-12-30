@@ -26,6 +26,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _target2 = new RankedTarget(Substitute.For<ITarget>(), rank: 71);
         }
 
+        #region ToggleChosenTarget
         [Test]
         public void ToggleChosenTarget_CurrentTargetIsNull_ChoosesGivenTarget()
         {
@@ -51,6 +52,32 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _targetHelper.ToggleChosenTarget(_target1.Target);
             _targetManager.Received().Target = null;
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargetCleared);
+        }
+        #endregion ToggleChosenTarget
+
+        [Test]
+        public void UserChosenTarget_ManagerHasRankedTarget()
+        {
+            _targetManager.HighestPriorityTarget.Returns(_target1);
+            Assert.AreSame(_targetHelper.UserChosenTarget, _target1.Target);
+        }
+
+        [Test]
+        public void UserChosenTarget_ManagerHasNoRankedTarget()
+        {
+            _targetManager.HighestPriorityTarget.Returns((RankedTarget)null);
+            Assert.IsNull(_targetHelper.UserChosenTarget);
+        }
+
+        [Test]
+        public void ManagerTargetChanged_TriggersUserChosenTargetChangedEvent()
+        {
+            int eventCount = 0;
+            _targetHelper.UserChosenTargetChanged += (sender, e) => eventCount++;
+
+            _targetManager.HighestPriorityTargetChanged += Raise.Event();
+
+            Assert.AreEqual(1, eventCount);
         }
     }
 }
