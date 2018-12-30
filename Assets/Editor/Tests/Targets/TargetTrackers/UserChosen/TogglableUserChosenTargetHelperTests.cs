@@ -37,5 +37,25 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _togglabeHelper.ToggleChosenTarget(_target);
             _baseHelper.Received().ToggleChosenTarget(_target);
         }
+
+        [Test]
+        public void UserChosenTarget_ForwardsBase()
+        {
+            ITarget userChosenTarget = Substitute.For<ITarget>();
+            _baseHelper.UserChosenTarget.Returns(userChosenTarget);
+
+            Assert.AreSame(userChosenTarget, _togglabeHelper.UserChosenTarget);
+        }
+
+        [Test]
+        public void BaseUserChosenTargetChanged_GetsForwarded()
+        {
+            int eventCount = 0;
+            _togglabeHelper.UserChosenTargetChanged += (sender, e) => eventCount++;
+
+            _baseHelper.UserChosenTargetChanged += Raise.Event();
+
+            Assert.AreEqual(1, eventCount);
+        }
     }
 }
