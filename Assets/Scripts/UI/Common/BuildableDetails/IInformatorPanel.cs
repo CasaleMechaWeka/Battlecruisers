@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
 
+        // FELIX  Remove, extend IPanel :)
         void Show(ITarget itemToShow);
         void Hide();
     }

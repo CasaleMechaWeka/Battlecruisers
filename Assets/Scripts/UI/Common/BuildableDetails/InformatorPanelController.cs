@@ -13,6 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Extend Panel :)
     public class InformatorPanelController : MonoBehaviour, IInformatorPanel
     {
         private DismissInformatorButtonController _dismissButton;
@@ -26,6 +27,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private CruiserDetailsController _cruiserDetails;
         public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
 
+        // FELIX  Remove :)
         private ITarget _shownItem;
         private ITarget ShownItem
         {
@@ -38,10 +40,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
                 _shownItem = value;
 
-                if (_shownItem != null)
-                {
-                    _shownItem.Destroyed += _shownItem_Destroyed;
-                }
+                //if (_shownItem != null)
+                //{
+                //    _shownItem.Destroyed += _shownItem_Destroyed;
+                //}
             }
         }
 

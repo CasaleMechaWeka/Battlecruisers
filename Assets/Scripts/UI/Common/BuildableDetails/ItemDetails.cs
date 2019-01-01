@@ -49,11 +49,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _itemDescription.text = item.Description;
             _itemImage.sprite = item.Sprite;
 
-            _item.Destroyed += _item_Destroyed;
+            //_item.Destroyed += _item_Destroyed;
 
 			gameObject.SetActive(true);
 		}
 
+        // FELIX  Remove :)
         private void _item_Destroyed(object sender, DestroyedEventArgs e)
         {
             _item.Destroyed -= _item_Destroyed;
