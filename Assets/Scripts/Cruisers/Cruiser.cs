@@ -153,7 +153,7 @@ namespace BattleCruisers.Cruisers
             args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
 
-            _fog.Initialise(args.ShouldShowFog);
+            _fog.Initialise(args.FogStrength);
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);

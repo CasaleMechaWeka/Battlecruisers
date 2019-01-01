@@ -2,6 +2,11 @@
 
 namespace BattleCruisers.Cruisers.Fog
 {
+    public enum FogStrength
+    {
+        Weak, Strong
+    }
+
 	public interface IFogOfWar
 	{
 		bool IsFogEnabled { get; }

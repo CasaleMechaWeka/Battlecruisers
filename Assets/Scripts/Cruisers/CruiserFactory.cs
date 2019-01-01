@@ -97,7 +97,7 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper = CreatePlayerHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
-            bool shouldShowFog = false;
+            FogStrength fogStrength = FogStrength.Weak;
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new PlayerBuildingDoubleClickHandler();
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
@@ -109,7 +109,7 @@ namespace BattleCruisers.Cruisers
                 helper,
                 faction,
                 facingDirection,
-                shouldShowFog,
+                fogStrength,
                 _highlightableSlotFilter,
                 _helper.PlayerCruiserBuildProgressCalculator,
                 userChosenTargetTracker,
@@ -131,7 +131,7 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper = CreateAIHelper(_uiManager, cameraFocuser);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
-            bool shouldShowFog = true;
+            FogStrength fogStrength = FogStrength.Strong;
 
             IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
@@ -144,7 +144,7 @@ namespace BattleCruisers.Cruisers
                 helper,
                 faction,
                 facingDirection,
-                shouldShowFog,
+                fogStrength,
                 _highlightableSlotFilter,
                 _helper.AICruiserBuildProgressCalculator,
                 userChosenTargetTracker,
@@ -161,7 +161,7 @@ namespace BattleCruisers.Cruisers
             ICruiserHelper helper,
             Faction faction, 
             Direction facingDirection,
-            bool shouldShowFog,
+            FogStrength fogStrength,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
@@ -200,7 +200,7 @@ namespace BattleCruisers.Cruisers
                     factoryProvider,
                     facingDirection,
                     repairManager,
-                    shouldShowFog,
+                    fogStrength,
                     helper,
                     highlightableFilter,
                     buildProgressCalculator,

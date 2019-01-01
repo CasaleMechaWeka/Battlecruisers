@@ -25,7 +25,7 @@ namespace BattleCruisers.Cruisers
         public IFactoryProvider FactoryProvider { get; private set; }
         public Direction FacingDirection { get; private set; }
         public RepairManager RepairManager { get; private set; }
-        public bool ShouldShowFog { get; private set; }
+        public FogStrength FogStrength { get; private set; }
         public ICruiserHelper Helper { get; private set; }
         public ISlotFilter HighlightableFilter { get; private set; }
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
@@ -43,7 +43,7 @@ namespace BattleCruisers.Cruisers
             IFactoryProvider factoryProvider, 
             Direction facingDirection, 
             RepairManager repairManager, 
-            bool shouldShowFog,
+            FogStrength fogStrength,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
@@ -75,7 +75,7 @@ namespace BattleCruisers.Cruisers
             FactoryProvider = factoryProvider;
             FacingDirection = facingDirection;
             RepairManager = repairManager;
-            ShouldShowFog = shouldShowFog;
+            FogStrength = fogStrength;
             Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;

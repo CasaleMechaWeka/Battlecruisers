@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
         IFactoryProvider FactoryProvider { get; }
         Direction FacingDirection { get; }
         RepairManager RepairManager { get; }
-        bool ShouldShowFog { get; }
+        FogStrength FogStrength { get; }
         ICruiserHelper Helper { get; }
         ISlotFilter HighlightableFilter { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
