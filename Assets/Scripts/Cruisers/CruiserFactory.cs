@@ -36,6 +36,7 @@ namespace BattleCruisers.Cruisers
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
         private readonly IMarkerFactory _markerFactory;
+        private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -60,6 +61,7 @@ namespace BattleCruisers.Cruisers
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
             _markerFactory = markerFactory;
+            _fogVisibilityDecider = new FogVisibilityDecider();
         }
 
         public Cruiser CreatePlayerCruiser()
@@ -187,7 +189,7 @@ namespace BattleCruisers.Cruisers
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(_components.Deferrer, feedbackFactory);
-            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser, enemyCruiser);
+            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser, enemyCruiser);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(

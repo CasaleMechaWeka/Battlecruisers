@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Tests.Utils.Extensions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -12,7 +13,8 @@ namespace BattleCruisers.Tests.Cruisers
 {
     public class FogOfWarManagerTests
 	{
-		private IFogOfWar _fog;
+		private IGameObject _fog;
+        private IFogVisibilityDecider _visibilityDecider;
 		private ICruiserController _friendlyCruiser, _enemyCruiser;
         private ISpySatelliteLauncher _satelliteLauncher;
         private IStealthGenerator _stealthGenerator;
@@ -23,112 +25,149 @@ namespace BattleCruisers.Tests.Cruisers
 		{
 			UnityAsserts.Assert.raiseExceptions = true;
    
-            _fog = Substitute.For<IFogOfWar>();
+            _fog = Substitute.For<IGameObject>();
+            _visibilityDecider = Substitute.For<IFogVisibilityDecider>();
             _friendlyCruiser = Substitute.For<ICruiserController>();
             _enemyCruiser = Substitute.For<ICruiserController>();
             _satelliteLauncher = Substitute.For<ISpySatelliteLauncher>();
             _stealthGenerator = Substitute.For<IStealthGenerator>();
             _randomBuilding = Substitute.For<IBuilding>();
 
-            new FogOfWarManager(_fog, _friendlyCruiser, _enemyCruiser);
+            new FogOfWarManager(_fog, _visibilityDecider, _friendlyCruiser, _enemyCruiser);
 		}
 
         #region Friendly cruiser building completed
         [Test]
-		public void FriendlyStealthGeneratorBuilt_Updates()
+		public void FriendlyStealthGeneratorBuilt()
         {
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0)
+                .Returns(true);
             BuildStealthGenerator();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
+            _fog.Received().IsVisible = true;
         }
 
         [Test]
-		public void SecondFriendlyStealthGeneratorBuilt_Updates()
+		public void SecondFriendlyStealthGeneratorBuilt()
 		{
+            // First stealth generator
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0)
+                .Returns(true);
             BuildStealthGenerator();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
+            _fog.Received().IsVisible = true;
 
-			BuildStealthGenerator();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 2, numOfEnemySpySatellites: 0);
+            // Second stealth generator
+            _fog.ClearReceivedCalls();
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 2, numOfEnemySpySatellites: 0)
+                .Returns(true);
+            BuildStealthGenerator();
+            _fog.Received().IsVisible = true;
 		}
 
         [Test]
-		public void RandomFriendlyBuildingBuilt_DoesNotUpdate()
+		public void RandomFriendlyBuildingBuilt()
 		{
             _friendlyCruiser.CompleteConstructingBuliding(_randomBuilding);
-            _fog.DidNotReceiveWithAnyArgs().UpdateIsEnabled(numOfFriendlyStealthGenerators: -99, numOfEnemySpySatellites: -99);
+            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default(int), default(int));
 		}
 		#endregion Friendly cruiser building completed
 
 		[Test]
-		public void FriendlyStealthGeneratorDestroyed_Updates()
+		public void FriendlyStealthGeneratorDestroyed()
         {
             // Build generator
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0)
+                .Returns(true);
             BuildStealthGenerator();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
+            _fog.Received().IsVisible = true;
 
             // Destroy generator
-            DestroyStealthGenerator();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0);
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0)
+                .Returns(false); DestroyStealthGenerator();
+            _fog.Received().IsVisible = false;
         }
 
         #region Enemy cruiser building completed
         [Test]
-		public void EnemySpySatelliteBuilt_Updates()
+		public void EnemySpySatelliteBuilt()
         {
-			BuildSpySatellite();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1);
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1)
+                .Returns(false);
+            BuildSpySatellite();
+            _fog.Received().IsVisible = false;
         }
 
 		[Test]
-		public void SecondEnemySpySatelliteBuilt_Updates()
+		public void SecondEnemySpySatelliteBuilt()
         {
-			BuildSpySatellite();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1);
+            // First spy satellite
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1)
+                .Returns(false);
+            BuildSpySatellite();
+            _fog.Received().IsVisible = false;
 
-			BuildSpySatellite();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 2);
+            // Second spy satellite
+            _fog.ClearReceivedCalls();
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 2)
+                .Returns(false);
+            BuildSpySatellite();
+            _fog.Received().IsVisible = false;
         }
 
 		[Test]
-		public void RandomEnemyBuildingBuilt_DoesNotUpdate()
+		public void RandomEnemyBuildingBuilt()
 		{
             _enemyCruiser.CompleteConstructingBuliding(_randomBuilding);
-            _fog.DidNotReceiveWithAnyArgs().UpdateIsEnabled(numOfFriendlyStealthGenerators: -99, numOfEnemySpySatellites: -99);
+            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default(int), default(int));
 		}
 		#endregion Enemy cruiser building completed
 
         [Test]
-        public void EnemySpySatelliteDestroyed_Updates()
+        public void EnemySpySatelliteDestroyed()
         {
             // Build satellite
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1)
+                .Returns(false);
             BuildSpySatellite();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1);
+            _fog.Received().IsVisible = false;
 
             // Destroy satellite
+            _fog.ClearReceivedCalls();
+            _visibilityDecider
+                .ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0)
+                .Returns(false);
             DestroySpySatellite();
-            _fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0);
+            _fog.Received().IsVisible = false;
         }
 
         [Test]
         public void Combo()
         {
             BuildStealthGenerator();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
+            _visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
 
             BuildSpySatellite();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1);
+			_visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1);
 
             BuildSpySatellite();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 2);
+			_visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 2);
 
             DestroyStealthGenerator();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 2);
+			_visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 2);
 
             DestroySpySatellite();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1);
+			_visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1);
 
             BuildStealthGenerator();
-			_fog.Received().UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1);
+			_visibilityDecider.Received().ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1);
 		}
 
         private void BuildStealthGenerator()

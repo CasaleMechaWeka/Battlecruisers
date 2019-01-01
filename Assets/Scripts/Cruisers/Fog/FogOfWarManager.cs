@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -13,16 +14,22 @@ namespace BattleCruisers.Cruisers.Fog
     /// </summary>
     public class FogOfWarManager : IManagedDisposable
     {
-        private readonly IFogOfWar _fog;
+        private readonly IGameObject _fog;
+        private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly ICruiserController _friendlyCruiser, _enemyCruiser;
         private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
         private readonly IList<ISpySatelliteLauncher> _enemySpySatellites;
 
-        public FogOfWarManager(IFogOfWar fog, ICruiserController friendlyCruiser, ICruiserController enemyCruiser)
+        public FogOfWarManager(
+            IGameObject fog, 
+            IFogVisibilityDecider visibilityDecider,
+            ICruiserController friendlyCruiser, 
+            ICruiserController enemyCruiser)
         {
-            Helper.AssertIsNotNull(fog, friendlyCruiser, enemyCruiser);
+            Helper.AssertIsNotNull(fog, visibilityDecider, friendlyCruiser, enemyCruiser);
 
             _fog = fog;
+            _visibilityDecider = visibilityDecider;
             _friendlyCruiser = friendlyCruiser;
             _enemyCruiser = enemyCruiser;
 
@@ -84,7 +91,7 @@ namespace BattleCruisers.Cruisers.Fog
 
         private void UpdateFogState()
         {
-            _fog.UpdateIsEnabled(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count);
+            _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count);
         }
 
         public void DisposeManagedState()

@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
         {
             FogOfWar fog = FindObjectOfType<FogOfWar>();
             fog.Initialise(fogStrength);
-            fog.UpdateIsEnabled(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0);
+            fog.IsVisible = true;
         }
     }
 }
