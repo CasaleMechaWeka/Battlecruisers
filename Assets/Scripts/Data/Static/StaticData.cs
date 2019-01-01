@@ -222,8 +222,17 @@ namespace BattleCruisers.Data.Static
                 new Level(18, "Battle of Watercress", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(19, "Little big elbow", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
                 new Level(20, "Dunspock", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Kentient, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast))
-			};
+                new Level(21, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+
+                // Set 4
+                new Level(22, "Sprawl Brawl", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(23, "Fisticuffs", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Kentient, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(24, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(25, "Battle of Watercress", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(26, "Little big elbow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(27, "Dunspock", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(28, "Gallient Flippery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow))
+            };
 		}
 
         private ICloudGenerationStats CreateCloudStats(CloudDensity density, CloudMovementSpeed movementSpeed)
