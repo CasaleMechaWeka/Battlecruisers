@@ -5,7 +5,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Satellites
+namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class SatelliteLauncherTestGod : CameraToggleTestGod
     {
