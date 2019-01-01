@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
 
-        // FELIX  Update tests :)
         private ITarget _shownItem;
         private ITarget ShownItem
         {
@@ -88,7 +87,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
-            ShownItem = buildingWrapper.Buildable;
         }
 
 		public virtual void SelectBuilding(IBuilding building)

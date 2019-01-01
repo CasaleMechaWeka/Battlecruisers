@@ -20,9 +20,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
-
         private IBuilding _building;
         private IFactory _factory;
+        private IUnit _unit;
 
         [SetUp]
         public void SetuUp()
@@ -48,6 +48,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _building.SlotSpecification.Returns(slotSpecification);
 
             _factory = Substitute.For<IFactory>();
+
+            _unit = Substitute.For<IUnit>();
         }
 
         private ICruiser CreateMockCruiser()
@@ -129,6 +131,19 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _playerCruiser.SlotHighlighter.DidNotReceive().HighlightBuildingSlot(_building);
         }
+
+        [Test]
+        public void SelectBuilding_Destroyed_HidesDetails()
+        {
+            // Select building
+            _building.ParentCruiser.Returns(_playerCruiser);
+            _uiManager.SelectBuilding(_building);
+            ClearHideItemDetails();
+
+            // Building destroyed
+            _building.Destroyed += Raise.EventWith(new DestroyedEventArgs(_building));
+            Received_HideItemDetails();
+        }
         #endregion SelectBuilding()
 
         #region ShowFactoryUnits
@@ -152,12 +167,22 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [Test]
         public void ShowUnitDetails()
         {
-            IUnit unit = Substitute.For<IUnit>();
-
-            _uiManager.ShowUnitDetails(unit);
+            _uiManager.ShowUnitDetails(_unit);
 
             Received_HideItemDetails();
-            _detailsManager.Received().ShowDetails(unit);
+            _detailsManager.Received().ShowDetails(_unit);
+        }
+
+        [Test]
+        public void ShowUnitDetails_Destroyed_HidesDetails()
+        {
+            // Show unit
+            _uiManager.ShowUnitDetails(_unit);
+            ClearHideItemDetails();
+
+            // Unit destroyed
+            _unit.Destroyed += Raise.EventWith(new DestroyedEventArgs(_unit));
+            Received_HideItemDetails();
         }
 
         [Test]
@@ -169,11 +194,30 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _detailsManager.Received().ShowDetails(_playerCruiser);
         }
 
+        [Test]
+        public void ShowCruiserDetails_Destroyed_HidesDetails()
+        {
+            // Show cruiser
+            _uiManager.ShowCruiserDetails(_playerCruiser);
+            ClearHideItemDetails();
+
+            // Cruiser destroyed
+            _playerCruiser.Destroyed += Raise.EventWith(new DestroyedEventArgs(_playerCruiser));
+            Received_HideItemDetails();
+        }
+
         private void Received_HideItemDetails()
         {
             _detailsManager.Received().HideDetails();
             _playerCruiser.SlotHighlighter.Received().UnhighlightSlots();
             _aiCruiser.SlotHighlighter.Received().UnhighlightSlots();
+        }
+
+        private void ClearHideItemDetails()
+        {
+            _detailsManager.ClearReceivedCalls();
+            _playerCruiser.SlotHighlighter.ClearReceivedCalls();
+            _aiCruiser.SlotHighlighter.ClearReceivedCalls();
         }
     }
 }
