@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -8,13 +7,11 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Extend Panel :)
-    public class InformatorPanelController : MonoBehaviour, IInformatorPanel
+    public class InformatorPanelController : Panel, IInformatorPanel
     {
         private DismissInformatorButtonController _dismissButton;
 
@@ -26,26 +23,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private CruiserDetailsController _cruiserDetails;
         public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
-
-        // FELIX  Remove :)
-        private ITarget _shownItem;
-        private ITarget ShownItem
-        {
-            set
-            {
-                if (_shownItem != null)
-                {
-                    _shownItem.Destroyed -= _shownItem_Destroyed;
-                }
-
-                _shownItem = value;
-
-                //if (_shownItem != null)
-                //{
-                //    _shownItem.Destroyed += _shownItem_Destroyed;
-                //}
-            }
-        }
 
         public void Initialise(
             IUIManager uiManager,
@@ -78,23 +55,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
             _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters);
-        }
-
-        private void _shownItem_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            Hide();
-        }
-
-        public void Show(ITarget itemToShow)
-        {
-            ShownItem = itemToShow;
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            ShownItem = null;
-            gameObject.SetActive(false);
         }
     }
 }

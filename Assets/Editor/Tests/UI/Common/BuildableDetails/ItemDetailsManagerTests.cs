@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -49,7 +50,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 
             AllDetails_ReceivedHide();
             _buildingDetails.Received().ShowBuildableDetails(_building);
-            _informatorPanel.Received().Show(_building);
+            _informatorPanel.Received().Show();
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 
             AllDetails_ReceivedHide();
             _unitDetails.Received().ShowBuildableDetails(_unit);
-            _informatorPanel.Received().Show(_unit);
+            _informatorPanel.Received().Show();
         }
 
         [Test]
@@ -69,7 +70,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 
             AllDetails_ReceivedHide();
             _cruiserDetails.Received().ShowCruiserDetails(_cruiser);
-            _informatorPanel.Received().Show(_cruiser);
+            _informatorPanel.Received().Show();
         }
 
         [Test]

@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideDetails();
 
-            _informatorPanel.Show(building);
+            _informatorPanel.Show();
             _buildingDetails.ShowBuildableDetails(building);
         }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideDetails();
 
-            _informatorPanel.Show(unit);
+            _informatorPanel.Show();
             _unitDetails.ShowBuildableDetails(unit);
         }
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideDetails();
 
-            _informatorPanel.Show(cruiser);
+            _informatorPanel.Show();
             _cruiserDetails.ShowCruiserDetails(cruiser);
         }
 		
