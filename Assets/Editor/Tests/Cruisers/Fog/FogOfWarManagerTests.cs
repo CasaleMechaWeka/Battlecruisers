@@ -9,7 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.Cruisers
+namespace BattleCruisers.Tests.Cruisers.Fog
 {
     public class FogOfWarManagerTests
 	{
