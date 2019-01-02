@@ -9,8 +9,9 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly ISettingsManager _settingsManager;
 
         private const float DEFAULT_ASPECT_RATIO = 1.333f;  // 4/3
-        // Just large enough to see both cruisers fully :)
-        private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 33;  
+        // Large enough to see both cruisers fully with a bit of space,
+        // so can see bombers as they overshoot the cruiser :)
+        private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 38;  
 
         public float CruiserWidthMultiplier { get { return 1.2f; } }
         public float CruiserCameraPositionAdjustmentMultiplier { get { return 0.08f; } }

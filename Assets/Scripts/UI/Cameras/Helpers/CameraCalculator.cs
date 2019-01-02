@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -57,11 +56,15 @@ namespace BattleCruisers.UI.Cameras.Helpers
             float xAdjustmentMagnitudeInM = cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
             float xAdjustmentInM = cruiser.IsPlayerCruiser ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
             
-            return
-                new Vector3(
+            Vector3 cameraPosition
+                = new Vector3(
                     cruiser.Position.x + xAdjustmentInM, 
                     FindCameraYPosition(orthographicSize), 
                     zValue);
+
+            Logging.Log(Tags.CAMERA_CALCULATOR, "Cruiser position: " + cruiser.Position + "   Camera position: " + cameraPosition);
+
+            return cameraPosition;
         }
 
         public Vector3 FindZoomingCameraPosition(

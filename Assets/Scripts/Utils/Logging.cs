@@ -60,8 +60,11 @@ namespace BattleCruisers.Utils
         public const string ROTATION_MOVEMENT_CONTROLLER = "RotationMovementController";
         public const string SHIP_MOVEMENT_DECIDER = "ShipMovementDecider";
 
-        // Other
+        // Camera
         public const string CAMERA = "Camera";
+        public const string CAMERA_CALCULATOR = "CameraCalculator";
+
+        // Other
         public const string CRUISER = "Cruiser";
 		public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
@@ -142,8 +145,15 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
 
+            // Camera
+            // FELIX
+            tagsToActiveness.Add(Tags.CAMERA, true);
+            //tagsToActiveness.Add(Tags.CAMERA, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, true);
+            //tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
+
             // Other
-            tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -35,6 +36,8 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             {
                 _cameraTransform.Position = targetPosition;
             }
+
+            Logging.Log(Tags.CAMERA, "SmoothPositionAdjuster.AdjustCamera()  target: " + targetPosition + "  Actual: " + _cameraTransform.Position);
 
             return isInPosition;
 		}
