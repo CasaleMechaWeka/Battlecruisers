@@ -7,7 +7,7 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class DeathstarTargetChangeTestGod : MonoBehaviour
     {

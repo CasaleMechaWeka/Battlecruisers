@@ -6,7 +6,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class DeathstarTestGod : MonoBehaviour 
 	{

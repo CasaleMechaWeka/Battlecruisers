@@ -4,7 +4,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BCUtils = BattleCruisers.Utils;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class SpySatelliteTestGod : MonoBehaviour
     {
