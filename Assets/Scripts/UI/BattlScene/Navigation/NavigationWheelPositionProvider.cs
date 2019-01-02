@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
             MidLeftPosition = new Vector2(midLeftX, midLeftY);
 
-            float navigationFactoryXDelta = navigationPanelArea.Width / 10;
+            float navigationFactoryXDelta = navigationPanelArea.Width / 6;
             float navigationFactoryY = navigationPanelArea.BottomLeftVertex.y;
 
             float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navigationFactoryXDelta;
