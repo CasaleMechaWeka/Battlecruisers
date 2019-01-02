@@ -23,14 +23,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
             MidLeftPosition = new Vector2(midLeftX, midLeftY);
 
-            float navigationFactoryXDelta = navigationPanelArea.Width / 6;
-            float navigationFactoryY = navigationPanelArea.BottomLeftVertex.y;
+            float navalFactoryXDelta = navigationPanelArea.Width / 6;
+            float navalFactoryY = navigationPanelArea.BottomLeftVertex.y;
 
-            float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navigationFactoryXDelta;
-            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, navigationFactoryY);
+            float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navalFactoryXDelta;
+            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, navalFactoryY);
 
-            float playerNavalFactoryX = navigationPanelArea.BottomLeftVertex.x + navigationFactoryXDelta;
-            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, navigationFactoryY);
+            float playerNavalFactoryX = navigationPanelArea.BottomLeftVertex.x + navalFactoryXDelta;
+            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, navalFactoryY);
         }
     }
 }
