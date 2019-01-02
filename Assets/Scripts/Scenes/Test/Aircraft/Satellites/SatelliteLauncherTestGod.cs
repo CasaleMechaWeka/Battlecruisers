@@ -11,18 +11,32 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
     {
         public bool useFastBuildSpeed;
 
+        private SatelliteLauncherController[] _launchers;
+
         protected override void OnStart()
         {
-            SatelliteLauncherController launcher = FindObjectOfType<SatelliteLauncherController>();
-
-            Vector2 parentCruiserPosition = launcher.transform.position;
-            Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
-
-            float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.VERY_FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
+            float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
             Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier);
-            helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
-            launcher.StartConstruction();
+
+            _launchers = FindObjectsOfType<SatelliteLauncherController>();
+
+            foreach (SatelliteLauncherController launcher in _launchers)
+            {
+                Vector2 parentCruiserPosition = launcher.transform.position;
+                Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
+                IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
+
+                helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
+                launcher.StartConstruction();
+            }
+        }
+
+        public void DestroyLaunchers()
+        {
+            foreach (SatelliteLauncherController launcher in _launchers)
+            {
+                launcher.Destroy();
+            }
         }
     }
 }
