@@ -21,8 +21,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
                 new BuildableInitialisationArgs(
                     helper, 
                     Faction.Blues, 
-                    parentCruiserDirection: Direction.Right, 
-                    targetsFactory: helper.CreateTargetsFactory(_targetsOnRight));
+                    parentCruiserDirection: Direction.Right,
+                    targetFactories: helper.CreateTargetFactories(_targetsOnRight));
         }
 
         protected override BuildableInitialisationArgs CreateRightGroupArgs(Helper helper, Vector2 spawnPosition)
@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     helper,
                     Faction.Reds,
                     parentCruiserDirection: Direction.Left,
-                    targetsFactory: helper.CreateTargetsFactory(_targetsOnLeft));
+                    targetFactories: helper.CreateTargetFactories(_targetsOnLeft));
         }
 
         protected override void OnInitialised()

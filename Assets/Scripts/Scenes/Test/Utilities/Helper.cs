@@ -294,11 +294,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
         /// Targets can be added later, once they are know, and the target finder
         /// will emit appropriate target found events.
         /// </summary>
-        public ITargetsFactory CreateTargetsFactory(IObservableCollection<ITarget> targets)
+        public ITargetFactoriesProvider CreateTargetFactories(IObservableCollection<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
-            ITargetsFactory targetsFactory = CreateTargetsFactory(targetFinder);
+            ITargetFactoriesProvider targetFactories = CreateTargetFactories(targetFinder);
 
             // Emit target found events AFTER targets factory (target processor) is created
             targets.Changed += (sender, e) =>
@@ -310,7 +310,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 }                    
             };
 
-            return targetsFactory;
+            return targetFactories;
         }
 
         private ITargetsFactory CreateTargetsFactory(ITargetFinder targetFinder)
