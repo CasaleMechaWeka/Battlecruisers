@@ -19,7 +19,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
 		{
             _targetFinder = CreateTargetFinder(args);
-            ITargetRanker targetRanker = CreateTargetRanker(args.TargetsFactory);
+            ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
             _targetTracker = args.TargetsFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
@@ -33,11 +33,11 @@ namespace BattleCruisers.Targets.TargetProcessors
             return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
         }
 
-        protected ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
         {
             ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
             Assert.IsNotNull(targetRankerWrapper);
-            return targetRankerWrapper.CreateTargetRanker(targetsFactory);
+            return targetRankerWrapper.CreateTargetRanker(rankerFactory);
         }
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)

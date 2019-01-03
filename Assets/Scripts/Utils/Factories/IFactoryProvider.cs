@@ -27,6 +27,8 @@ namespace BattleCruisers.Utils.Factories
         IMovementControllerFactory MovementControllerFactory { get; }
         IPrefabFactory PrefabFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
+        ITargetFactoriesProvider TargetFactories { get; }
+        // FELIX  Remove :P
         ITargetsFactory TargetsFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         ITrackerFactory TrackerFactory { get; }

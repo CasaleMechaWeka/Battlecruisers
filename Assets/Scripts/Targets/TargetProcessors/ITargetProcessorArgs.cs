@@ -6,6 +6,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public interface ITargetProcessorArgs
     {
+        ITargetFactoriesProvider TargetFactories { get; }
+        // FELIX  Remove :P
         ITargetsFactory TargetsFactory { get; }
         Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }

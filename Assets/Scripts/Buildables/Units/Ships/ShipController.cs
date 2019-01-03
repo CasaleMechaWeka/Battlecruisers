@@ -134,6 +134,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
+                    _factoryProvider.TargetFactories,
                     _factoryProvider.TargetsFactory,
                     enemyFaction,
                     targetProcessorTargetTypes,

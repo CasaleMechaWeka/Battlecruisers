@@ -18,7 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             // In range targets
             InRangeTargetFinder = CreateTargetFinder(args);
-            ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetsFactory);
+            ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
             IRankedTargetTracker inRangeTargetTracker = args.TargetsFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets

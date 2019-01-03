@@ -31,6 +31,7 @@ namespace BattleCruisers.Utils.Factories
         public IMovementControllerFactory MovementControllerFactory { get; private set; }
         public IPrefabFactory PrefabFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
+        public ITargetFactoriesProvider TargetFactories { get; private set; }
         public ITargetsFactory TargetsFactory { get; private set; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
         public ITrackerFactory TrackerFactory { get; private set; }
@@ -50,6 +51,7 @@ namespace BattleCruisers.Utils.Factories
             Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, markerFactory);
 
 			PrefabFactory = prefabFactory;
+            TargetFactories = new TargetFactoriesProvider(enemyCruiser, userChosenTargetTracker);
 			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory(new TimeBC());

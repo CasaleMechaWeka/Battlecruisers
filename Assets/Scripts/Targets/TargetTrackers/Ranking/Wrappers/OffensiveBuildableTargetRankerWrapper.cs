@@ -5,9 +5,9 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
     public class OffensiveBuildableTargetRankerWrapper : MonoBehaviour, ITargetRankerWrapper
     {
-        public ITargetRanker CreateTargetRanker(ITargetsFactory targetsFactory)
+        public ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
         {
-            return targetsFactory.OffensiveBuildableTargetRanker;
+            return rankerFactory.OffensiveBuildableTargetRanker;
         }
     }
 }
