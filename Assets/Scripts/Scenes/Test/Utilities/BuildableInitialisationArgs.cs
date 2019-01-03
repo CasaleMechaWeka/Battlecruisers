@@ -46,6 +46,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
+            ITargetFactoriesProvider targetFactories = null,
+            // FELIX  Remove :P
             ITargetsFactory targetsFactory = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
@@ -71,6 +73,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
+            targetFactories = targetFactories ?? new TargetFactoriesProvider(EnemyCruiser, userChosenTargetManager);
             targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser, userChosenTargetManager);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
@@ -90,7 +93,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
                     globalBoostProviders,
-                    damageApplierFactory ?? new DamageApplierFactory(targetsFactory),
+                    damageApplierFactory ?? new DamageApplierFactory(targetFactories.FilterFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),

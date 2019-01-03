@@ -8,12 +8,12 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 {
     public class DamageApplierFactory : IDamageApplierFactory
     {
-        private readonly ITargetsFactory _targetsFactory;
+        private readonly ITargetFilterFactory _filterFacotry;
 
-        public DamageApplierFactory(ITargetsFactory targetsFactory)
+        public DamageApplierFactory(ITargetFilterFactory filterFactory)
         {
-            Assert.IsNotNull(targetsFactory);
-            _targetsFactory = targetsFactory;
+            Assert.IsNotNull(filterFactory);
+            _filterFacotry = filterFactory;
         }
 		
 		public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
@@ -32,7 +32,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
-            ITargetFilter damageTargetFilter = _targetsFactory.CreateDummyTargetFilter(isMatchResult: true);
+            ITargetFilter damageTargetFilter = _filterFacotry.CreateDummyTargetFilter(isMatchResult: true);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
         {
-            ITargetFilter damageTargetFilter = _targetsFactory.CreateTargetFilter(enemyFaction);
+            ITargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
     }
