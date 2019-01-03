@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test

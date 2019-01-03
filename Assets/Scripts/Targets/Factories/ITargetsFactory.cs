@@ -11,7 +11,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.Factories
 {
     public interface ITargetsFactory
 	{

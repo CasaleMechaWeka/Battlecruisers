@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 

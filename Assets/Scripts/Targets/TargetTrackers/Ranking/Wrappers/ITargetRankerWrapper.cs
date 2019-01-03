@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
+﻿using BattleCruisers.Targets.Factories;
+
+namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
     public interface ITargetRankerWrapper
     {

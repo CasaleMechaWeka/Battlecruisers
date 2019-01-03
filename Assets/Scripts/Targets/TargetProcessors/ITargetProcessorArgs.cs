@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.Factories;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {

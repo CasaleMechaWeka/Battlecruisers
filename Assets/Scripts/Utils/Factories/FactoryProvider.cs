@@ -2,18 +2,18 @@
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Targets;
+using BattleCruisers.Projectiles.Trackers;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Projectiles.Trackers;
 
 namespace BattleCruisers.Utils.Factories
 {

@@ -14,7 +14,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
-namespace BattleCruisers.Targets
+namespace BattleCruisers.Targets.Factories
 {
     // FELIX  Create separate factories, and contain in a TargetFactoriesProvider :)
     public class TargetsFactory : ITargetsFactory

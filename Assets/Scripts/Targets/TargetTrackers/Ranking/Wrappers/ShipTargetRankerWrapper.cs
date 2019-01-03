@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Targets.Factories;
+using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
