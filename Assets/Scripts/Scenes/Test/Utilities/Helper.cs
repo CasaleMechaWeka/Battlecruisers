@@ -229,6 +229,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		/// <summary>
 		/// Target processors only assign the specified target once, and then chill forever.
 		/// </summary>
+        /// FELIX  Remove :D
 		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget, ITargetFilter targetFilter = null, IExactMatchTargetFilter exactMatchTargetFilter = null)
 		{
 			// The enemy cruiser is added as a target by the global target finder.
@@ -268,6 +269,49 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 			return targetsFactory;
 		}
+
+        public ITargetFactoriesProvider CreateTargetFactories(
+            GameObject globalTarget, 
+            ITargetFilter targetFilter = null, 
+            IExactMatchTargetFilter exactMatchTargetFilter = null)
+        {
+            // The enemy cruiser is added as a target by the global target finder.
+            // So pretend the cruiser game object is the specified target.
+            ICruiser enemyCruiser = Substitute.For<ICruiser>();
+            enemyCruiser.GameObject.Returns(globalTarget);
+            enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
+
+            GlobalTargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
+            ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
+            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+            targetFinder.EmitCruiserAsGlobalTarget();
+
+            if (exactMatchTargetFilter == null)
+            {
+                exactMatchTargetFilter = new ExactMatchTargetFilter();
+            }
+
+            targetFactories.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetFactories.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
+            targetFactories.TrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
+            targetFactories.ProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
+            targetFactories.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetFactories.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetFactories.FilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
+
+            if (targetFilter != null)
+            {
+                targetFactories.FilterFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
+            }
+            else
+            {
+                SetupCreateTargetFilter(targetFactories.FilterFactory);
+            }
+
+            return targetFactories;
+        }
 
         /// <summary>
         /// Target processors assign all the provided targets.  The targets are lost
@@ -337,10 +381,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetsFactory;
         }
 
+        // FELIX  Remove :P
         // Copy real TargetsFactory behaviour
         private void SetupCreateTargetFilter(ITargetsFactory targetsFactory)
         {
             targetsFactory
+                .CreateTargetFilter(default(Faction), null)
+                .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
+        }
+        
+        // Copy real filter factory behaviour
+        private void SetupCreateTargetFilter(ITargetFilterFactory filterFactory)
+        {
+            filterFactory
                 .CreateTargetFilter(default(Faction), null)
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
