@@ -273,11 +273,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
         /// Target processors assign all the provided targets.  The targets are lost
         /// as they are destroyed.
         /// </summary>
-        public ITargetsFactory CreateTargetsFactory(IList<ITarget> targets)
+        public ITargetFactoriesProvider CreateTargetFactories(IList<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-			
-            ITargetsFactory targetsFactory = CreateTargetsFactory(targetFinder);
+
+            ITargetFactoriesProvider targetFactories = CreateTargetFactories(targetFinder);
 
             // Emit target found events AFTER targets factory (target processor) is created
             foreach (ITarget target in targets)
@@ -286,7 +286,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target));
             }
 
-            return targetsFactory;
+            return targetFactories;
         }
 
         /// <summary>
