@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _isInFrontFilter = Substitute.For<ITargetFilter>();
             _target = Substitute.For<ITarget>();
 
-            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
+            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
             ITargetDetector enemyDetector = Substitute.For<ITargetDetector>();
             ITargetFilter enemyFilter = Substitute.For<ITargetFilter>();
             ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
@@ -39,14 +39,14 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
-            targetsFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
-            targetsFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
-            targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
-            targetsFactory.EqualTargetRanker.Returns(enemyRanker);
-            targetsFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
-            targetsFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
+            targetFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
+            targetFactories.FilterFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
+            targetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
+            targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
+            targetFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
+            targetFactories.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 
-            _targetProvider = new ShipBlockingEnemyProvider(targetsFactory, enemyDetector, parentUnit);
+            _targetProvider = new ShipBlockingEnemyProvider(targetFactories, enemyDetector, parentUnit);
             _asTargetConsumer = _targetProvider;
 
             targetProcessor.Received().AddTargetConsumer(_targetProvider);

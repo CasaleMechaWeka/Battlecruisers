@@ -24,17 +24,17 @@ namespace BattleCruisers.Targets.TargetProviders
         private readonly ITargetFilter _isInFrontFilter;
 
         public ShipBlockingFriendlyProvider(
-			ITargetsFactory targetsFactory, 
+            ITargetFactoriesProvider targetsFactories, 
             ITargetDetector friendDetector, 
             IUnit parentUnit)
         {
-            Helper.AssertIsNotNull(targetsFactory, friendDetector, parentUnit);
+            Helper.AssertIsNotNull(targetsFactories, friendDetector, parentUnit);
 
-            _isInFrontFilter = targetsFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            ITargetFilter friendFilter = targetsFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
-            _friendFinder = targetsFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+            ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
+            _friendFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;
             _friendFinder.TargetLost += OnFriendLost;

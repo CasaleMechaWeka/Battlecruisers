@@ -162,12 +162,12 @@ namespace BattleCruisers.Targets.Factories
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {
-            return new ShipBlockingEnemyProvider(this, enemyDetector, parentUnit);
+            return new ShipBlockingEnemyProvider(null, enemyDetector, parentUnit);
         }
 
         public IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
         {
-            return new ShipBlockingFriendlyProvider(this, friendlyDetector, parentUnit);
+            return new ShipBlockingFriendlyProvider(null, friendlyDetector, parentUnit);
         }
         #endregion TargetProviders
 

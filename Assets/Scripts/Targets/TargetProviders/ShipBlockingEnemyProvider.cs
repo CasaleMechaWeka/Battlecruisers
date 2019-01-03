@@ -38,20 +38,20 @@ namespace BattleCruisers.Targets.TargetProviders
             }
         }
 
-        public ShipBlockingEnemyProvider(ITargetsFactory targetsFactory, ITargetDetector enemyDetector, IUnit parentUnit)
+        public ShipBlockingEnemyProvider(ITargetFactoriesProvider targetsFactories, ITargetDetector enemyDetector, IUnit parentUnit)
         {
-            Helper.AssertIsNotNull(targetsFactory, enemyDetector, parentUnit);
+            Helper.AssertIsNotNull(targetsFactories, enemyDetector, parentUnit);
 
-            _isInFrontFilter = targetsFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(parentUnit.Faction);
-            ITargetFilter enemyDetectionFilter = targetsFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
-            ITargetFinder enemyFinder = targetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            ITargetFilter enemyDetectionFilter = targetsFactories.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
+            ITargetFinder enemyFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
-            ITargetRanker targetRanker = targetsFactory.EqualTargetRanker;
-            IRankedTargetTracker targetTracker = targetsFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
-            _targetProcessor = targetsFactory.CreateTargetProcessor(targetTracker);
+            ITargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;
+            IRankedTargetTracker targetTracker = targetsFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
+            _targetProcessor = targetsFactories.ProcessorFactory.CreateTargetProcessor(targetTracker);
 
             _targetProcessor.AddTargetConsumer(this);
         }
