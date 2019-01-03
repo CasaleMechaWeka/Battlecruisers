@@ -337,6 +337,30 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetsFactory;
         }
 
+        private ITargetFactoriesProvider CreateTargetFactories(ITargetFinder targetFinder)
+        {
+            ITargetRanker targetRanker = new EqualTargetRanker();
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, targetRanker);
+            ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+            IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
+
+            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+
+            targetFactories.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactories.FilterFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
+            targetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetFactories.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetFactories.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+
+            SetupCreateTargetFilter(targetFactories.FilterFactory);
+            SetupCreateRangedTargetFinder(targetFactories.FinderFactory);
+            SetupCreateRankedTargetTracker(targetFactories.TrackerFactory);
+            SetupCreateTargetProcessor(targetFactories.ProcessorFactory);
+
+            return targetFactories;
+        }
+
         // FELIX  Remove :P
         // Copy real TargetsFactory behaviour
         private void SetupCreateTargetFilter(ITargetsFactory targetsFactory)
@@ -354,6 +378,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
 
+        // FELIX  Remove :)
         // Copy real TargetsFactory behaviour
         private void SetupCreateRangedTargetFinder(ITargetsFactory targetsFactory)
         {
@@ -362,6 +387,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 .ReturnsForAnyArgs(arg => new RangedTargetFinder((ITargetDetector)arg.Args()[0], (ITargetFilter)arg.Args()[1]));
         }
 
+        // Copy real target finder behaviour
+        private void SetupCreateRangedTargetFinder(ITargetFinderFactory finderFactory)
+        {
+            finderFactory
+                .CreateRangedTargetFinder(null, null)
+                .ReturnsForAnyArgs(arg => new RangedTargetFinder((ITargetDetector)arg.Args()[0], (ITargetFilter)arg.Args()[1]));
+        }
+
+        // FELIX  Remove :)
         // Copy real TargetsFactory behaviour
         private void SetupCreateRankedTargetTracker(ITargetsFactory targetsFactory)
         {
@@ -370,6 +404,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 .ReturnsForAnyArgs(arg => new RankedTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
         }
 
+        // Copy real tracker factory behaviour
+        private void SetupCreateRankedTargetTracker(ITargetTrackerFactory trackerFactory)
+        {
+            trackerFactory
+                .CreateRankedTargetTracker(null, null)
+                .ReturnsForAnyArgs(arg => new RankedTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
+        }
+
+        // FELIX  Remove :)
         // Copy real TargetsFactory behaviour
         private void SetupCreateTargetProcessor(ITargetsFactory targetsFactory)
         {
@@ -378,7 +421,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 .ReturnsForAnyArgs(arg => new TargetProcessor((IRankedTargetTracker)arg.Args()[0]));
         }
 
-		public IAircraftProvider CreateAircraftProvider(
+        // Copy real processor factory behaviour
+        private void SetupCreateTargetProcessor(ITargetProcessorFactory processorFactory)
+        {
+            processorFactory
+                .CreateTargetProcessor(null)
+                .ReturnsForAnyArgs(arg => new TargetProcessor((IRankedTargetTracker)arg.Args()[0]));
+        }
+
+        public IAircraftProvider CreateAircraftProvider(
 			IList<Vector2> bomberPatrolPoints = null,
             IList<Vector2> gunshipPatrolPoints = null,
 			IList<Vector2> fighterPatrolPoints = null,
